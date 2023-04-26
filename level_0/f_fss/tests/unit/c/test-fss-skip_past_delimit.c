@@ -11,9 +11,9 @@ void test__f_fss_skip_past_delimit__parameter_checking(void **state) {
   f_state_t state_data = f_state_t_initialize;
 
   {
-    const f_status_t status = f_fss_skip_past_delimit(state_data, test, 0);
+    f_fss_skip_past_delimit(test, 0, &state_data);
 
-    assert_int_equal(status, F_status_set_error(F_parameter));
+    assert_int_equal(state_data.status, F_status_set_error(F_parameter));
   }
 }
 
@@ -25,33 +25,33 @@ void test__f_fss_skip_past_delimit__returns_data_not(void **state) {
   {
     f_string_range_t range = f_string_range_t_initialize;
 
-    const f_status_t status = f_fss_skip_past_delimit(state_data, f_string_empty_s, &range);
+    f_fss_skip_past_delimit(f_string_empty_s, &range, &state_data);
 
-    assert_int_equal(status, F_data_not);
+    assert_int_equal(state_data.status, F_data_not);
   }
 
   {
     f_string_range_t range = f_string_range_t_initialize;
 
-    const f_status_t status = f_fss_skip_past_delimit(state_data, test, &range);
+    f_fss_skip_past_delimit(test, &range, &state_data);
 
-    assert_int_equal(status, F_data_not);
+    assert_int_equal(state_data.status, F_data_not);
   }
 
   {
     f_string_range_t range = macro_f_string_range_t_initialize_1(0, test.used - 1);
 
-    const f_status_t status = f_fss_skip_past_delimit(state_data, f_string_empty_s, &range);
+    f_fss_skip_past_delimit(f_string_empty_s, &range, &state_data);
 
-    assert_int_equal(status, F_data_not);
+    assert_int_equal(state_data.status, F_data_not);
   }
 
   {
     f_string_range_t range = macro_f_string_range_t_initialize_1(test.used, test.used + 2);
 
-    const f_status_t status = f_fss_skip_past_delimit(state_data, test, &range);
+    f_fss_skip_past_delimit(test, &range, &state_data);
 
-    assert_int_equal(status, F_data_not);
+    assert_int_equal(state_data.status, F_data_not);
   }
 }
 
@@ -77,9 +77,9 @@ void test__f_fss_skip_past_delimit__works(void **state) {
 
     f_string_range_t range = macro_f_string_range_t_initialize_1(0, tests[i].used - 1);
 
-    const f_status_t status = f_fss_skip_past_delimit(state_data, tests[i], &range);
+    f_fss_skip_past_delimit(tests[i], &range, &state_data);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(state_data.status, F_none);
     assert_int_equal(range.start, expects[i]);
   } // for
 }

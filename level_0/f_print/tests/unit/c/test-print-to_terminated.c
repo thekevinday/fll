@@ -8,6 +8,7 @@ extern "C" {
 void test__f_print_to_terminated__fails(void **state) {
 
   const f_string_static_t test = macro_f_string_static_t_initialize_1("test", 0, 4);
+  const f_file_t output = macro_f_file_t_initialize_2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
 
   int errnos[] = {
     EAGAIN,
@@ -48,41 +49,45 @@ void test__f_print_to_terminated__fails(void **state) {
     will_return(__wrap_write, true);
     will_return(__wrap_write, errnos[i]);
 
-    const f_status_t status = f_print_to_terminated(test.string, 0);
+    const f_status_t status = f_print_to_terminated(test.string, output);
 
     assert_int_equal(status, F_status_set_error(statuss[i]));
   } // for
 }
 
-void test__f_print_to_terminated__parameter_checking(void **state) {
+void test__f_print_to_terminated__returns_data_not(void **state) {
 
-  const f_string_static_t test = macro_f_string_static_t_initialize_1("test", 0, 4);
+  const f_file_t output = macro_f_file_t_initialize_2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
 
   {
-    const f_status_t status = f_print_to_terminated(test.string, -1);
+    const f_status_t status = f_print_to_terminated(0, output);
 
-    assert_int_equal(F_status_set_fine(status), F_parameter);
+    assert_int_equal(status, F_data_not);
   }
 }
 
-void test__f_print_to_terminated__returns_data_not(void **state) {
+void test__f_print_to_terminated__returns_file_descriptor_not(void **state) {
+
+  const f_string_static_t test = macro_f_string_static_t_initialize_1("test", 0, 4);
+  const f_file_t output = macro_f_file_t_initialize_2(0, -1, F_file_flag_write_only_d);
 
   {
-    const f_status_t status = f_print_to_terminated(0, 0);
+    const f_status_t status = f_print_to_terminated(test.string, output);
 
-    assert_int_equal(status, F_data_not);
+    assert_int_equal(status, F_file_descriptor_not);
   }
 }
 
 void test__f_print_to_terminated__works(void **state) {
 
   const f_string_static_t test = macro_f_string_static_t_initialize_1("test", 0, 4);
+  const f_file_t output = macro_f_file_t_initialize_2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
 
   {
     will_return(__wrap_write, false);
     will_return(__wrap_write, test.used);
 
-    const f_status_t status = f_print_to_terminated(test.string, 0);
+    const f_status_t status = f_print_to_terminated(test.string, output);
 
     assert_int_equal(status, F_none);
   }

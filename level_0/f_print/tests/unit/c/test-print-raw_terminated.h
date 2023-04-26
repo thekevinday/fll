@@ -18,18 +18,18 @@
 extern void test__f_print_raw_terminated__fails(void **state);
 
 /**
- * Test that parameter checking works as expected.
- *
- * @see f_print_raw_terminated()
- */
-extern void test__f_print_raw_terminated__parameter_checking(void **state);
-
-/**
  * Test that function works but returns F_data_not.
  *
  * @see f_print_raw_terminated()
  */
 extern void test__f_print_raw_terminated__returns_data_not(void **state);
+
+/**
+ * Test that function works but returns F_stream_not.
+ *
+ * @see f_print_raw_terminated()
+ */
+extern void test__f_print_raw_terminated__returns_stream_not(void **state);
 
 /**
  * Test that function works.

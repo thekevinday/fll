@@ -25,7 +25,7 @@ build_language c
 build_libraries -lc -lcmocka
 build_libraries-individual -lf_memory -lf_string -lf_type_array -lf_utf -lf_pipe
 
-build_sources_program test-pipe-debug_exists.c test-pipe-error_exists.c test-pipe-input_exists.c test-pipe-warning_exists.c
+build_sources_program test-pipe-error_exists.c test-pipe-input_exists.c test-pipe-output_exists.c
 build_sources_program test-pipe.c
 
 build_script no

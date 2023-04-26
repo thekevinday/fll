@@ -11,9 +11,9 @@ void test__f_fss_seek_to_eol__parameter_checking(void **state) {
   f_state_t state_data = f_state_t_initialize;
 
   {
-    const f_status_t status = f_fss_seek_to_eol(state_data, test, 0);
+    f_fss_seek_to_eol(test, 0, &state_data);
 
-    assert_int_equal(status, F_status_set_error(F_parameter));
+    assert_int_equal(state_data.status, F_status_set_error(F_parameter));
   }
 }
 
@@ -24,23 +24,26 @@ void test__f_fss_seek_to_eol__returns_data_not(void **state) {
 
   {
     f_string_range_t range = f_string_range_t_initialize;
-    const f_status_t status = f_fss_seek_to_eol(state_data, f_string_empty_s, &range);
 
-    assert_int_equal(status, F_data_not);
+    f_fss_seek_to_eol(f_string_empty_s, &range, &state_data);
+
+    assert_int_equal(state_data.status, F_data_not);
   }
 
   {
     f_string_range_t range = f_string_range_t_initialize;
-    const f_status_t status = f_fss_seek_to_eol(state_data, test, &range);
 
-    assert_int_equal(status, F_data_not);
+    f_fss_seek_to_eol(test, &range, &state_data);
+
+    assert_int_equal(state_data.status, F_data_not);
   }
 
   {
     f_string_range_t range = macro_f_string_range_t_initialize_1(0, 1);
-    const f_status_t status = f_fss_seek_to_eol(state_data, f_string_empty_s, &range);
 
-    assert_int_equal(status, F_data_not);
+    f_fss_seek_to_eol(f_string_empty_s, &range, &state_data);
+
+    assert_int_equal(state_data.status, F_data_not);
   }
 }
 
@@ -112,9 +115,9 @@ void test__f_fss_seek_to_eol__works(void **state) {
 
     f_string_range_t range = ranges[i];
 
-    const f_status_t status = f_fss_seek_to_eol(state_data, tests[i], &range);
+    f_fss_seek_to_eol(tests[i], &range, &state_data);
 
-    assert_int_equal(status, statuss[i]);
+    assert_int_equal(state_data.status, statuss[i]);
     assert_int_equal(range.start, expects[i]);
   } // for
 }

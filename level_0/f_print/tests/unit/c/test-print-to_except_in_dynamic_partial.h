@@ -18,18 +18,18 @@
 extern void test__f_print_to_except_in_dynamic_partial__fails(void **state);
 
 /**
- * Test that parameter checking works as expected.
- *
- * @see f_print_to_except_in_dynamic_partial()
- */
-extern void test__f_print_to_except_in_dynamic_partial__parameter_checking(void **state);
-
-/**
  * Test that function works but returns F_data_not.
  *
  * @see f_print_to_except_in_dynamic_partial()
  */
 extern void test__f_print_to_except_in_dynamic_partial__returns_data_not(void **state);
+
+/**
+ * Test that function works but returns F_file_descriptor_not.
+ *
+ * @see f_print_to_except_in_dynamic_partial()
+ */
+extern void test__f_print_to_except_in_dynamic_partial__returns_file_descriptor_not(void **state);
 
 /**
  * Test that function works.

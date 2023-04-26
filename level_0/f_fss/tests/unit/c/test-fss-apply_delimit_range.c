@@ -12,9 +12,9 @@ void test__f_fss_apply_delimit_range__parameter_checking(void **state) {
   const f_string_range_t range = f_string_range_t_initialize;
 
   {
-    const f_status_t status = f_fss_apply_delimit_range(state_data, delimits, range, 0);
+    f_fss_apply_delimit_range(delimits, range, 0, &state_data);
 
-    assert_int_equal(status, F_status_set_error(F_parameter));
+    assert_int_equal(state_data.status, F_status_set_error(F_parameter));
   }
 }
 
@@ -28,26 +28,26 @@ void test__f_fss_apply_delimit_range__returns_data_not(void **state) {
     const f_string_range_t range = f_string_range_t_initialize;
     f_string_static_t empty = f_string_static_t_initialize;
 
-    const f_status_t status = f_fss_apply_delimit_range(state_data, delimits, range, &empty);
+    f_fss_apply_delimit_range(delimits, range, &empty, &state_data);
 
-    assert_int_equal(status, F_data_not);
+    assert_int_equal(state_data.status, F_data_not);
   }
 
   {
     const f_string_range_t range = f_string_range_t_initialize;
 
-    const f_status_t status = f_fss_apply_delimit_range(state_data, delimits, range, &test);
+    f_fss_apply_delimit_range(delimits, range, &test, &state_data);
 
-    assert_int_equal(status, F_data_not);
+    assert_int_equal(state_data.status, F_data_not);
   }
 
   {
     const f_string_range_t range = macro_f_string_range_t_initialize_1(0, test.used - 1);
     f_string_static_t empty = f_string_static_t_initialize;
 
-    const f_status_t status = f_fss_apply_delimit_range(state_data, delimits, range, &empty);
+    f_fss_apply_delimit_range(delimits, range, &empty, &state_data);
 
-    assert_int_equal(status, F_data_not);
+    assert_int_equal(state_data.status, F_data_not);
   }
 }
 
@@ -135,9 +135,9 @@ void test__f_fss_apply_delimit_range__works(void **state) {
 
     const f_string_range_t range = macro_f_string_range_t_initialize_1(0, tests[i].used - 1);
 
-    const f_status_t status = f_fss_apply_delimit_range(state_data, delimitss[i], range, &tests[i]);
+    f_fss_apply_delimit_range(delimitss[i], range, &tests[i], &state_data);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(state_data.status, F_none);
     assert_int_equal(tests[i].used, expects[i].used);
 
     for (uint8_t j = 0; j < tests[i].used; ++j) {

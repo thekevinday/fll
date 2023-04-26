@@ -7,83 +7,83 @@ extern "C" {
 
 void test__f_iki_read__parameter_checking(void **state) {
 
-  const f_state_t the_state = f_state_t_initialize;
+  f_state_t state_data = f_state_t_initialize;
   f_string_static_t empty = macro_f_string_static_t_initialize_1(f_string_empty_s.string, f_string_empty_s.size, f_string_empty_s.used);
 
   {
     f_string_range_t range = f_string_range_t_initialize;
     f_iki_data_t iki = f_iki_data_t_initialize;
 
-    const f_status_t status = f_iki_read(the_state, 0, &range, &iki);
+    f_iki_read(0, &range, &iki, &state_data);
 
-    assert_int_equal(status, F_status_set_error(F_parameter));
+    assert_int_equal(state_data.status, F_status_set_error(F_parameter));
   }
 
   {
     f_iki_data_t iki = f_iki_data_t_initialize;
 
-    const f_status_t status = f_iki_read(the_state, &empty, 0, &iki);
+    f_iki_read(&empty, 0, &iki, &state_data);
 
-    assert_int_equal(status, F_status_set_error(F_parameter));
+    assert_int_equal(state_data.status, F_status_set_error(F_parameter));
   }
 
   {
     f_string_range_t range = f_string_range_t_initialize;
 
-    const f_status_t status = f_iki_read(the_state, &empty, &range, 0);
+    f_iki_read(&empty, &range, 0, &state_data);
 
-    assert_int_equal(status, F_status_set_error(F_parameter));
+    assert_int_equal(state_data.status, F_status_set_error(F_parameter));
   }
 }
 
 void test__f_iki_read__returns_data_not(void **state) {
 
-  const f_state_t the_state = f_state_t_initialize;
+  f_state_t state_data = f_state_t_initialize;
   f_string_static_t empty = macro_f_string_static_t_initialize_1(f_string_empty_s.string, f_string_empty_s.size, f_string_empty_s.used);
 
   {
     f_string_range_t range = f_string_range_t_initialize;
     f_iki_data_t iki = f_iki_data_t_initialize;
 
-    const f_status_t status = f_iki_read(the_state, &empty, &range, &iki);
+    f_iki_read(&empty, &range, &iki, &state_data);
 
-    assert_int_equal(F_status_set_fine(status), F_data_not);
+    assert_int_equal(F_status_set_fine(state_data.status), F_data_not);
   }
 }
 
 void test__f_iki_read__returns_data_not_eos(void **state) {
 
-  const f_state_t the_state = f_state_t_initialize;
+  f_state_t state_data = f_state_t_initialize;
   f_string_static_t ascii_a = macro_f_string_static_t_initialize_1(f_string_ascii_a_s.string, f_string_ascii_a_s.size, f_string_ascii_a_s.used);
 
   {
     f_string_range_t range = macro_f_string_range_t_initialize_1(f_string_ascii_a_s.used, f_string_ascii_a_s.used);
     f_iki_data_t iki = f_iki_data_t_initialize;
 
-    const f_status_t status = f_iki_read(the_state, &ascii_a, &range, &iki);
+    f_iki_read(&ascii_a, &range, &iki, &state_data);
 
-    assert_int_equal(F_status_set_fine(status), F_data_not_eos);
+    assert_int_equal(F_status_set_fine(state_data.status), F_data_not_eos);
   }
 }
 
 void test__f_iki_read__returns_data_not_stop(void **state) {
 
-  const f_state_t the_state = f_state_t_initialize;
+  f_state_t state_data = f_state_t_initialize;
   f_string_static_t ascii_a = macro_f_string_static_t_initialize_1(f_string_ascii_a_s.string, f_string_ascii_a_s.size, f_string_ascii_a_s.used);
 
   {
     f_string_range_t range = f_string_range_t_initialize;
     f_iki_data_t iki = f_iki_data_t_initialize;
 
-    const f_status_t status = f_iki_read(the_state, &ascii_a, &range, &iki);
+    f_iki_read(&ascii_a, &range, &iki, &state_data);
 
-    assert_int_equal(F_status_set_fine(status), F_data_not_stop);
+    assert_int_equal(F_status_set_fine(state_data.status), F_data_not_stop);
   }
 }
 
 void test__f_iki_read__works(void **state) {
 
-  const f_state_t the_state = f_state_t_initialize;
+  f_state_t state_data = f_state_t_initialize;
   f_string_static_t empty = macro_f_string_static_t_initialize_1(f_string_empty_s.string, f_string_empty_s.size, f_string_empty_s.used);
   f_string_static_t ascii_a = macro_f_string_static_t_initialize_1(f_string_ascii_a_s.string, f_string_ascii_a_s.size, f_string_ascii_a_s.used);
 
@@ -242,14 +242,14 @@ void test__f_iki_read__works(void **state) {
     f_string_range_t range = macro_f_string_range_t_initialize_2(buffers[i].used);
     f_iki_data_t iki = f_iki_data_t_initialize;
 
-    const f_status_t status = f_iki_read(the_state, &buffers[i], &range, &iki);
+    f_iki_read(&buffers[i], &range, &iki, &state_data);
 
-    assert_int_equal(status, statuss[i]);
+    assert_int_equal(state_data.status, statuss[i]);
 
     if (matches[i] == 2) {
-      const f_status_t status = f_iki_read(the_state, &buffers[i], &range, &iki);
+      f_iki_read(&buffers[i], &range, &iki, &state_data);
 
-      assert_int_equal(F_status_is_error_not(status) ? 0 : 1, 0);
+      assert_int_equal(F_status_is_error_not(state_data.status) ? 0 : 1, 0);
     }
 
     assert_int_equal(iki.variable.used, matches[i]);

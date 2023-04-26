@@ -23,14 +23,14 @@ main:
 
   operate ld_library_path
 
-  if exist build/programs/shared/test-fll_status_string
-    shell build/programs/shared/test-fll_status_string
+  if exist build/programs/shared/test-fl_status_string
+    shell build/programs/shared/test-fl_status_string
 
-  if exist build/programs/static/test-fll_status_string
-    shell build/programs/static/test-fll_status_string
+  if exist build/programs/static/test-fl_status_string
+    shell build/programs/static/test-fl_status_string
 
-  if not exist build/programs/shared/test-fll_status_string
-  and not exist build/programs/static/test-fll_status_string
+  if not exist build/programs/shared/test-fl_status_string
+  and not exist build/programs/static/test-fl_status_string
     operate not_created
 
 not_created:

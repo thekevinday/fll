@@ -43,7 +43,7 @@ void test__f_fss_is_space__works(void **state) {
 
     const f_string_range_t range = macro_f_string_range_t_initialize_1(0, tests[i].used - 1);
 
-    const f_status_t status = f_fss_is_space(state_data, tests[i], range);
+    const f_status_t status = f_fss_is_space(tests[i], range, &state_data);
 
     assert_int_equal(status, expects[i]);
   } // for
@@ -51,7 +51,7 @@ void test__f_fss_is_space__works(void **state) {
   {
     const f_string_range_t range = f_string_range_t_initialize;
 
-    const f_status_t status = f_fss_is_space(state_data, f_string_empty_s, range);
+    const f_status_t status = f_fss_is_space(f_string_empty_s, range, &state_data);
 
     assert_int_equal(status, F_false);
   }
@@ -59,7 +59,7 @@ void test__f_fss_is_space__works(void **state) {
   {
     const f_string_range_t range = macro_f_string_range_t_initialize_1(0, 2);
 
-    const f_status_t status = f_fss_is_space(state_data, f_string_empty_s, range);
+    const f_status_t status = f_fss_is_space(f_string_empty_s, range, &state_data);
 
     assert_int_equal(status, F_false);
   }
@@ -68,7 +68,7 @@ void test__f_fss_is_space__works(void **state) {
     const f_string_static_t test = macro_f_string_static_t_initialize_1("test", 0, 4);
     const f_string_range_t range = f_string_range_t_initialize;
 
-    const f_status_t status = f_fss_is_space(state_data, test, range);
+    const f_status_t status = f_fss_is_space(test, range, &state_data);
 
     assert_int_equal(status, F_false);
   }

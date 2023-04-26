@@ -101,7 +101,7 @@ void test__fll_path_canonical__back_paths(void **state) {
 
   for (uint8_t i = 0; i < 24; ++i) {
 
-    const f_status_t status = fll_path_canonical(contents[i], &path);
+    const f_status_t status = fl_path_canonical(contents[i], &path);
 
     assert_int_equal(status, F_none);
 
@@ -160,7 +160,7 @@ void test__fll_path_canonical__empty_becomes_pwd(void **state) {
   f_string_dynamic_t path = f_string_dynamic_t_initialize;
 
   {
-    const f_status_t status = fll_path_canonical(f_string_empty_s, &path);
+    const f_status_t status = fl_path_canonical(f_string_empty_s, &path);
 
     assert_int_equal(status, F_none);
     assert_int_equal(pwd_length, path.used);
@@ -227,7 +227,7 @@ void test__fll_path_canonical__present_paths(void **state) {
 
   for (uint8_t i = 0; i < 18; ++i) {
 
-    const f_status_t status = fll_path_canonical(contents[i], &path);
+    const f_status_t status = fl_path_canonical(contents[i], &path);
 
     assert_int_equal(status, F_none);
 
@@ -315,7 +315,7 @@ void test__fll_path_canonical__root_paths(void **state) {
 
   for (uint8_t i = 0; i < 18; ++i) {
 
-    const f_status_t status = fll_path_canonical(contents[i], &path);
+    const f_status_t status = fl_path_canonical(contents[i], &path);
 
     // Assert_string_equal() is NULL terminated, so ensure NULL termination at end of path.used.
     if (status == F_none) {
@@ -423,7 +423,7 @@ void test__fll_path_canonical__tilde_remains(void **state) {
 
   for (uint8_t i = 0; i < 23; ++i) {
 
-    const f_status_t status = fll_path_canonical(contents[i], &path);
+    const f_status_t status = fl_path_canonical(contents[i], &path);
 
     assert_int_equal(status, F_none);
 
@@ -472,7 +472,7 @@ void test__fll_path_canonical__tilde_remains(void **state) {
 void test__fll_path_canonical__parameter_checking(void **state) {
 
   {
-    const f_status_t status = fll_path_canonical(f_string_empty_s, 0);
+    const f_status_t status = fl_path_canonical(f_string_empty_s, 0);
 
     assert_int_equal(status, F_status_set_error(F_parameter));
   }

@@ -63,7 +63,7 @@ void test__f_fss_is_zero_width__works(void **state) {
 
   for (f_array_length_t i = 0; i < 14; ++i) {
 
-    const f_status_t status = f_fss_is_zero_width(state_data, tests[i], ranges[i]);
+    const f_status_t status = f_fss_is_zero_width(tests[i], ranges[i], &state_data);
 
     assert_int_equal(status, expects[i]);
   } // for
@@ -71,7 +71,7 @@ void test__f_fss_is_zero_width__works(void **state) {
   {
     const f_string_range_t range = f_string_range_t_initialize;
 
-    const f_status_t status = f_fss_is_zero_width(state_data, f_string_empty_s, range);
+    const f_status_t status = f_fss_is_zero_width(f_string_empty_s, range, &state_data);
 
     assert_int_equal(status, F_false);
   }
@@ -79,7 +79,7 @@ void test__f_fss_is_zero_width__works(void **state) {
   {
     const f_string_range_t range = macro_f_string_range_t_initialize_1(0, 2);
 
-    const f_status_t status = f_fss_is_zero_width(state_data, f_string_empty_s, range);
+    const f_status_t status = f_fss_is_zero_width(f_string_empty_s, range, &state_data);
 
     assert_int_equal(status, F_false);
   }
@@ -88,7 +88,7 @@ void test__f_fss_is_zero_width__works(void **state) {
     const f_string_static_t test = macro_f_string_static_t_initialize_1("test", 0, 4);
     const f_string_range_t range = f_string_range_t_initialize;
 
-    const f_status_t status = f_fss_is_zero_width(state_data, test, range);
+    const f_status_t status = f_fss_is_zero_width(test, range, &state_data);
 
     assert_int_equal(status, F_false);
   }

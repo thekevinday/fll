@@ -45,7 +45,7 @@ void test__f_thread_semaphore_file_open__fails(void **state) {
     will_return(__wrap_sem_open, true);
     will_return(__wrap_sem_open, errnos[i]);
 
-    const f_status_t status = f_thread_semaphore_file_open(name, flag, mode, value, &semaphore_ptr);
+    const f_status_t status = f_thread_semaphore_file_open(name, flag, &mode, value, &semaphore_ptr);
 
     assert_int_equal(status, F_status_set_error(statuss[i]));
   } // for
@@ -57,7 +57,7 @@ void test__f_thread_semaphore_file_open__fails(void **state) {
     will_return(__wrap_sem_open, true);
     will_return(__wrap_sem_open, errnos[i]);
 
-    const f_status_t status = f_thread_semaphore_file_open(name, flag, mode, value, &semaphore_ptr);
+    const f_status_t status = f_thread_semaphore_file_open(name, flag, &mode, value, &semaphore_ptr);
 
     assert_int_equal(status, F_status_set_error(statuss[i]));
   } // for
@@ -66,12 +66,22 @@ void test__f_thread_semaphore_file_open__fails(void **state) {
 void test__f_thread_semaphore_file_open__parameter_checking(void **state) {
 
   f_string_static_t name = macro_f_string_static_t_initialize_1("test", 0, 4);
+  f_thread_semaphore_t semaphore = f_thread_semaphore_t_initialize;
+  f_thread_semaphore_t *semaphore_ptr = &semaphore;
   int flag = 0;
   mode_t mode = 0;
   unsigned value = 0;
 
   {
-    const f_status_t status = f_thread_semaphore_file_open(name, flag, mode, value, 0);
+    const f_status_t status = f_thread_semaphore_file_open(name, flag, &mode, value, 0);
+
+    assert_int_equal(status, F_status_set_error(F_parameter));
+  }
+
+  {
+    flag = O_CREAT;
+
+    const f_status_t status = f_thread_semaphore_file_open(name, flag, 0, value, &semaphore_ptr);
 
     assert_int_equal(status, F_status_set_error(F_parameter));
   }
@@ -89,7 +99,7 @@ void test__f_thread_semaphore_file_open__works(void **state) {
   {
     will_return(__wrap_sem_open, false);
 
-    const f_status_t status = f_thread_semaphore_file_open(name, flag, mode, value, &semaphore_ptr);
+    const f_status_t status = f_thread_semaphore_file_open(name, flag, &mode, value, &semaphore_ptr);
 
     assert_int_equal(status, F_none);
   }
@@ -100,7 +110,7 @@ void test__f_thread_semaphore_file_open__works(void **state) {
 
     will_return(__wrap_sem_open, false);
 
-    const f_status_t status = f_thread_semaphore_file_open(name, flag, mode, value, &semaphore_ptr);
+    const f_status_t status = f_thread_semaphore_file_open(name, flag, &mode, value, &semaphore_ptr);
 
     assert_int_equal(status, F_none);
   }

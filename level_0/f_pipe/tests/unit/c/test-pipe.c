@@ -19,10 +19,6 @@ int setdown(void **state) {
 int main(void) {
 
   const struct CMUnitTest tests[] = {
-    cmocka_unit_test(test__f_pipe_debug_exists__fails),
-    cmocka_unit_test(test__f_pipe_debug_exists__returns_false),
-    cmocka_unit_test(test__f_pipe_debug_exists__returns_true),
-
     cmocka_unit_test(test__f_pipe_error_exists__fails),
     cmocka_unit_test(test__f_pipe_error_exists__returns_false),
     cmocka_unit_test(test__f_pipe_error_exists__returns_true),
@@ -31,15 +27,14 @@ int main(void) {
     cmocka_unit_test(test__f_pipe_input_exists__returns_false),
     cmocka_unit_test(test__f_pipe_input_exists__returns_true),
 
-    cmocka_unit_test(test__f_pipe_warning_exists__fails),
-    cmocka_unit_test(test__f_pipe_warning_exists__returns_false),
-    cmocka_unit_test(test__f_pipe_warning_exists__returns_true),
+    cmocka_unit_test(test__f_pipe_output_exists__fails),
+    cmocka_unit_test(test__f_pipe_output_exists__returns_false),
+    cmocka_unit_test(test__f_pipe_output_exists__returns_true),
 
     #ifndef _di_level_0_parameter_checking_
-      // f_pipe_debug_exists() doesn't use parameter checking.
       // f_pipe_error_exists() doesn't use parameter checking.
       // f_pipe_input_exists() doesn't use parameter checking.
-      // f_pipe_warning_exists() doesn't use parameter checking.
+      // f_pipe_output_exists() doesn't use parameter checking.
     #endif // _di_level_0_parameter_checking_
   };
 

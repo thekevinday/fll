@@ -27,10 +27,9 @@
 #include "mock-pipe.h"
 
 // Test includes.
-#include "test-pipe-debug_exists.h"
 #include "test-pipe-error_exists.h"
 #include "test-pipe-input_exists.h"
-#include "test-pipe-warning_exists.h"
+#include "test-pipe-output_exists.h"
 
 #ifdef __cplusplus
 extern "C" {

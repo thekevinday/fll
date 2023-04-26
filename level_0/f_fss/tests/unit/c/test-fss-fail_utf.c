@@ -20,17 +20,19 @@ void test__f_fss_fail_utf__works_for_error(void **state) {
 
     for (f_status_t i = 0; i < F_status_code_last; ++i) {
 
-      const f_status_t status = f_fss_fail_utf(state_data, F_status_set_error(i));
+      state_data.status = F_status_set_error(i);
+
+      f_fss_fail_utf(&state_data);
 
       for (j = 0; j < 3; ++j) {
         if (i == statuss[j]) break;
       } // for
 
       if (j == 3) {
-        assert_int_equal(status, F_status_set_error(i));
+        assert_int_equal(state_data.status, F_status_set_error(i));
       }
       else {
-        assert_int_equal(status, statuss[j]);
+        assert_int_equal(state_data.status, statuss[j]);
       }
     } // for
   }
@@ -39,9 +41,11 @@ void test__f_fss_fail_utf__works_for_error(void **state) {
 
   for (f_status_t i = 0; i < F_status_code_last; ++i) {
 
-    const f_status_t status = f_fss_fail_utf(state_data, F_status_set_error(i));
+    state_data.status = F_status_set_error(i);
 
-    assert_int_equal(status, F_status_set_error(i));
+    f_fss_fail_utf(&state_data);
+
+    assert_int_equal(state_data.status, F_status_set_error(i));
   } // for
 }
 
@@ -51,18 +55,22 @@ void test__f_fss_fail_utf__works_for_no_error(void **state) {
 
   for (f_status_t i = 0; i < F_status_code_last; ++i) {
 
-    const f_status_t status = f_fss_fail_utf(state_data, i);
+    state_data.status = i;
 
-    assert_int_equal(status, i);
+    f_fss_fail_utf(&state_data);
+
+    assert_int_equal(state_data.status, i);
   } // for
 
   state_data.flag |= f_fss_state_flag_utf_fail_on_valid_not_e;
 
   for (f_status_t i = 0; i < F_status_code_last; ++i) {
 
-    const f_status_t status = f_fss_fail_utf(state_data, i);
+    state_data.status = i;
 
-    assert_int_equal(status, i);
+    f_fss_fail_utf(&state_data);
+
+    assert_int_equal(state_data.status, i);
   } // for
 }
 

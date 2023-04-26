@@ -11,9 +11,9 @@ void test__f_fss_count_lines_range__parameter_checking(void **state) {
   const f_string_range_t range = f_string_range_t_initialize;
 
   {
-    const f_status_t status = f_fss_count_lines_range(state_data, f_string_empty_s, range, 0);
+    f_fss_count_lines_range(f_string_empty_s, range, 0, &state_data);
 
-    assert_int_equal(status, F_status_set_error(F_parameter));
+    assert_int_equal(state_data.status, F_status_set_error(F_parameter));
   }
 }
 
@@ -26,27 +26,27 @@ void test__f_fss_count_lines_range__returns_data_not(void **state) {
     f_array_length_t line = 0;
     f_string_range_t range = f_string_range_t_initialize;
 
-    const f_status_t status = f_fss_count_lines_range(state_data, f_string_empty_s, range, &line);
+    f_fss_count_lines_range(f_string_empty_s, range, &line, &state_data);
 
-    assert_int_equal(status, F_data_not);
+    assert_int_equal(state_data.status, F_data_not);
   }
 
   {
     f_array_length_t line = 0;
     f_string_range_t range = f_string_range_t_initialize;
 
-    const f_status_t status = f_fss_count_lines_range(state_data, test, range, &line);
+    f_fss_count_lines_range(test, range, &line, &state_data);
 
-    assert_int_equal(status, F_data_not);
+    assert_int_equal(state_data.status, F_data_not);
   }
 
   {
     f_array_length_t line = 0;
     f_string_range_t range = macro_f_string_range_t_initialize_1(0, test.used - 1);
 
-    const f_status_t status = f_fss_count_lines_range(state_data, f_string_empty_s, range, &line);
+    f_fss_count_lines_range(f_string_empty_s, range, &line, &state_data);
 
-    assert_int_equal(status, F_data_not);
+    assert_int_equal(state_data.status, F_data_not);
   }
 }
 
@@ -69,9 +69,9 @@ void test__f_fss_count_lines_range__works(void **state) {
 
     f_string_range_t range = macro_f_string_range_t_initialize_1(0, buffers[i].used - 1);
 
-    const f_status_t status = f_fss_count_lines_range(state_data, buffers[i], range, &line);
+    f_fss_count_lines_range(buffers[i], range, &line, &state_data);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(state_data.status, F_none);
     assert_int_equal(line, expect);
   } // for
 }

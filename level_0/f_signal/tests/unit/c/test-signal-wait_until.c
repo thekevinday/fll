@@ -16,7 +16,7 @@ void test__f_signal_wait_until__fails(void **state) {
 
   f_status_t statuss[] = {
     F_time_out,
-    F_status_set_error(F_interrupt),
+    F_interrupt,
     F_status_set_error(F_parameter),
     F_status_set_error(F_failure),
   };

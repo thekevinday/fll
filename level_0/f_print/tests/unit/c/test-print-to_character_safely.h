@@ -18,11 +18,11 @@
 extern void test__f_print_to_character_safely__fails(void **state);
 
 /**
- * Test that parameter checking works as expected.
+ * Test that function works but returns F_file_descriptor_not.
  *
  * @see f_print_to_character_safely()
  */
-extern void test__f_print_to_character_safely__parameter_checking(void **state);
+extern void test__f_print_to_character_safely__returns_file_descriptor_not(void **state);
 
 /**
  * Test that function works but returns F_utf.
