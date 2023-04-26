@@ -103,12 +103,12 @@ extern "C" {
  *
  * @see f_states_resize()
  * @see f_states_append()
- * @see f_states_decimate_by()
+ * @see f_states_decrease_by()
  * @see f_statess_append()
  */
-#if !defined(_di_f_states_resize_) || !defined(_di_f_states_append_) || !defined(_di_f_states_decimate_by_) || !defined(_di_f_statess_append_)
+#if !defined(_di_f_states_resize_) || !defined(_di_f_states_append_) || !defined(_di_f_states_decrease_by_) || !defined(_di_f_statess_append_)
   extern f_status_t private_f_states_resize(const f_array_length_t length, f_states_t *states) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_states_resize_) || !defined(_di_f_states_append_) || !defined(_di_f_states_decimate_by_) || !defined(_di_f_statess_append_)
+#endif // !defined(_di_f_states_resize_) || !defined(_di_f_states_append_) || !defined(_di_f_states_decrease_by_) || !defined(_di_f_statess_append_)
 
 /**
  * Private implementation for resizing the statess array.

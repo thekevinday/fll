@@ -103,12 +103,12 @@ extern "C" {
  *
  * @see f_array_lengths_resize()
  * @see f_array_lengths_append()
- * @see f_array_lengths_decimate_by()
+ * @see f_array_lengths_decrease_by()
  * @see f_array_lengthss_append()
  */
-#if !defined(_di_f_array_lengths_resize_) || !defined(_di_f_array_lengths_append_) || !defined(_di_f_array_lengths_decimate_by_) || !defined(_di_f_array_lengthss_append_)
+#if !defined(_di_f_array_lengths_resize_) || !defined(_di_f_array_lengths_append_) || !defined(_di_f_array_lengths_decrease_by_) || !defined(_di_f_array_lengthss_append_)
   extern f_status_t private_f_array_lengths_resize(const f_array_length_t length, f_array_lengths_t *lengths) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_array_lengths_resize_) || !defined(_di_f_array_lengths_append_) || !defined(_di_f_array_lengths_decimate_by_) || !defined(_di_f_array_lengthss_append_)
+#endif // !defined(_di_f_array_lengths_resize_) || !defined(_di_f_array_lengths_append_) || !defined(_di_f_array_lengths_decrease_by_) || !defined(_di_f_array_lengthss_append_)
 
 /**
  * Private implementation for resizing the lengthss array.

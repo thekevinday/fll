@@ -51,7 +51,7 @@ extern "C" {
   }
 #endif // !defined(_di_f_int8s_append_) || !defined(_di_f_int8s_append_all_) || !defined(_di_f_int8ss_append_all_)
 
-#if !defined(_di_f_int8s_resize_) || !defined(_di_f_int8s_append_) || !defined(_di_f_int8s_decimate_by_) || !defined(_di_f_int8ss_append_)
+#if !defined(_di_f_int8s_append_) || !defined(_di_f_int8s_append_all_) || !defined(_di_f_int8s_decrease_by_) || !defined(_di_f_int8s_increase_) || !defined(_di_f_int8s_increase_by_) || !defined(_di_f_int8s_resize_) || !defined(_di_f_int8ss_append_) || !defined(_di_f_int8ss_append_all_)
   f_status_t private_f_int8s_resize(const f_array_length_t length, f_int8s_t *int8s) {
 
     const f_status_t status = f_memory_resize(int8s->size, length, sizeof(int8_t), (void **) & int8s->array);
@@ -65,7 +65,7 @@ extern "C" {
 
     return F_none;
   }
-#endif // !defined(_di_f_int8s_resize_) || !defined(_di_f_int8s_append_) || !defined(_di_f_int8s_decimate_by_) || !defined(_di_f_int8ss_append_)
+#endif // !defined(_di_f_int8s_append_) || !defined(_di_f_int8s_append_all_) || !defined(_di_f_int8s_decrease_by_) || !defined(_di_f_int8s_increase_) || !defined(_di_f_int8s_increase_by_) || !defined(_di_f_int8s_resize_) || !defined(_di_f_int8ss_append_) || !defined(_di_f_int8ss_append_all_)
 
 #if !defined(_di_f_int8ss_adjust_) || !defined(_di_f_int8ss_decimate_by_)
   f_status_t private_f_int8ss_adjust(const f_array_length_t length, f_int8ss_t *int8ss) {

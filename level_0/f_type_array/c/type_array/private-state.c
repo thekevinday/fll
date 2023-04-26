@@ -68,7 +68,7 @@ extern "C" {
   }
 #endif // !defined(_di_f_states_append_) || !defined(_di_f_states_append_all_) || !defined(_di_f_statess_append_all_)
 
-#if !defined(_di_f_states_resize_) || !defined(_di_f_states_append_) || !defined(_di_f_states_decimate_by_) || !defined(_di_f_statess_append_)
+#if !defined(_di_f_states_resize_) || !defined(_di_f_states_append_) || !defined(_di_f_states_decrease_by_) || !defined(_di_f_statess_append_)
   f_status_t private_f_states_resize(const f_array_length_t length, f_states_t *states) {
 
     const f_status_t status = f_memory_resize(states->size, length, sizeof(f_state_t), (void **) & states->array);
@@ -82,7 +82,7 @@ extern "C" {
 
     return F_none;
   }
-#endif // !defined(_di_f_states_resize_) || !defined(_di_f_states_append_) || !defined(_di_f_states_decimate_by_) || !defined(_di_f_statess_append_)
+#endif // !defined(_di_f_states_resize_) || !defined(_di_f_states_append_) || !defined(_di_f_states_decrease_by_) || !defined(_di_f_statess_append_)
 
 #if !defined(_di_f_statess_adjust_) || !defined(_di_f_statess_decimate_by_)
   f_status_t private_f_statess_adjust(const f_array_length_t length, f_statess_t *statess) {

@@ -103,12 +103,12 @@ extern "C" {
  *
  * @see f_statuss_resize()
  * @see f_statuss_append()
- * @see f_statuss_decimate_by()
+ * @see f_statuss_decrease_by()
  * @see f_statusss_append()
  */
-#if !defined(_di_f_statuss_resize_) || !defined(_di_f_statuss_append_) || !defined(_di_f_statuss_decimate_by_) || !defined(_di_f_statusss_append_)
+#if !defined(_di_f_statuss_resize_) || !defined(_di_f_statuss_append_) || !defined(_di_f_statuss_decrease_by_) || !defined(_di_f_statusss_append_)
   extern f_status_t private_f_statuss_resize(const f_array_length_t length, f_statuss_t *statuss) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_statuss_resize_) || !defined(_di_f_statuss_append_) || !defined(_di_f_statuss_decimate_by_) || !defined(_di_f_statusss_append_)
+#endif // !defined(_di_f_statuss_resize_) || !defined(_di_f_statuss_append_) || !defined(_di_f_statuss_decrease_by_) || !defined(_di_f_statusss_append_)
 
 /**
  * Private implementation for resizing the statusss array.

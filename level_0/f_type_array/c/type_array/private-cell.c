@@ -54,7 +54,7 @@ extern "C" {
   }
 #endif // !defined(_di_f_cells_append_) || !defined(_di_f_cells_append_all_) || !defined(_di_f_cellss_append_all_)
 
-#if !defined(_di_f_cells_resize_) || !defined(_di_f_cells_append_) || !defined(_di_f_cells_decimate_by_) || !defined(_di_f_cellss_append_)
+#if !defined(_di_f_cells_resize_) || !defined(_di_f_cells_append_) || !defined(_di_f_cells_decrease_by_) || !defined(_di_f_cellss_append_)
   f_status_t private_f_cells_resize(const f_array_length_t length, f_cells_t *cells) {
 
     const f_status_t status = f_memory_resize(cells->size, length, sizeof(f_cell_t), (void **) & cells->array);
@@ -68,7 +68,7 @@ extern "C" {
 
     return F_none;
   }
-#endif // !defined(_di_f_cells_resize_) || !defined(_di_f_cells_append_) || !defined(_di_f_cells_decimate_by_) || !defined(_di_f_cellss_append_)
+#endif // !defined(_di_f_cells_resize_) || !defined(_di_f_cells_append_) || !defined(_di_f_cells_decrease_by_) || !defined(_di_f_cellss_append_)
 
 #if !defined(_di_f_cellss_adjust_) || !defined(_di_f_cellss_decimate_by_)
   f_status_t private_f_cellss_adjust(const f_array_length_t length, f_cellss_t *cellss) {

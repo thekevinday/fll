@@ -37,7 +37,7 @@ extern "C" {
   }
 #endif // !defined(_di_f_compare_) || !defined(_di_f_compare_dynamic_) || !defined(_di_f_compare_dynamic_string_) || !defined(_di_f_compare_dynamic_partial_) || !defined(_di_f_compare_dynamic_partial_dynamic_)
 
-#if !defined(_di_f_compare_except_) || !defined(_di_f_compare_dynamic_except_) || !defined(_di_f_compare_dynamic_partial_except_)
+#if !defined(_di_f_compare_dynamic_except_) || !defined(_di_f_compare_dynamic_except_string_) || !defined(_di_f_compare_dynamic_partial_except_) || !defined(_di_f_compare_dynamic_partial_except_dynamic_) || !defined(_di_f_compare_dynamic_partial_except_string_) || !defined(_di_f_compare_except_)
   f_status_t private_f_compare_except(const f_string_t string1, const f_string_t string2, const f_array_length_t offset1, const f_array_length_t offset2, const f_array_length_t stop1, const f_array_length_t stop2, const f_array_lengths_t except1, const f_array_lengths_t except2) {
 
     f_array_length_t i1 = offset1;
@@ -99,9 +99,9 @@ extern "C" {
 
     return F_equal_to;
   }
-#endif // !defined(_di_f_compare_except_) || !defined(_di_f_compare_dynamic_except_) || !defined(_di_f_compare_dynamic_partial_except_)
+#endif // !defined(_di_f_compare_dynamic_except_) || !defined(_di_f_compare_dynamic_except_string_) || !defined(_di_f_compare_dynamic_partial_except_) || !defined(_di_f_compare_dynamic_partial_except_dynamic_) || !defined(_di_f_compare_dynamic_partial_except_string_) || !defined(_di_f_compare_except_)
 
-#if !defined(_di_f_compare_except_trim_) || !defined(_di_f_compare_dynamic_except_trim_) || !defined(_di_f_compare_dynamic_partial_except_trim_)
+#if !defined(_di_f_compare_dynamic_except_trim_) || !defined(_di_f_compare_dynamic_except_trim_string_) || !defined(_di_f_compare_dynamic_partial_except_trim_) || !defined(_di_f_compare_dynamic_partial_except_trim_dynamic_) || !defined(_di_f_compare_dynamic_partial_except_trim_string_) || !defined(_di_f_compare_except_trim_)
   f_status_t private_f_compare_except_trim(const f_string_t string1, const f_string_t string2, const f_array_length_t offset1, const f_array_length_t offset2, const f_array_length_t stop1, const f_array_length_t stop2, const f_array_lengths_t except1, const f_array_lengths_t except2) {
 
     f_array_length_t i1 = offset1;
@@ -384,9 +384,9 @@ extern "C" {
 
     return F_equal_to;
   }
-#endif // !defined(_di_f_compare_except_trim_) || !defined(_di_f_compare_dynamic_except_trim_) || !defined(_di_f_compare_dynamic_partial_except_trim_)
+#endif // !defined(_di_f_compare_dynamic_except_trim_) || !defined(_di_f_compare_dynamic_except_trim_string_) || !defined(_di_f_compare_dynamic_partial_except_trim_) || !defined(_di_f_compare_dynamic_partial_except_trim_dynamic_) || !defined(_di_f_compare_dynamic_partial_except_trim_string_) || !defined(_di_f_compare_except_trim_)
 
-#if !defined(_di_f_compare_trim_) || !defined(_di_f_compare_dynamic_trim_) || !defined(_di_f_compare_dynamic_partial_trim_)
+#if !defined(_di_f_compare_dynamic_trim_) || !defined(_di_f_compare_dynamic_trim_string_) || !defined(_di_f_compare_dynamic_partial_trim_) || !defined(_di_f_compare_dynamic_partial_trim_dynamic_) || !defined(_di_f_compare_dynamic_partial_trim_string_) || !defined(_di_f_compare_trim_)
   f_status_t private_f_compare_trim(const f_string_t string1, const f_string_t string2, const f_array_length_t offset1, const f_array_length_t offset2, const f_array_length_t stop1, const f_array_length_t stop2) {
 
     f_array_length_t i1 = offset1;
@@ -599,7 +599,7 @@ extern "C" {
 
     return F_equal_to;
   }
-#endif // !defined(_di_f_compare_trim_) || !defined(_di_f_compare_dynamic_trim_) || !defined(_di_f_compare_dynamic_partial_trim_)
+#endif // !defined(_di_f_compare_dynamic_trim_) || !defined(_di_f_compare_dynamic_trim_string_) || !defined(_di_f_compare_dynamic_partial_trim_) || !defined(_di_f_compare_dynamic_partial_trim_dynamic_) || !defined(_di_f_compare_dynamic_partial_trim_string_) || !defined(_di_f_compare_trim_)
 
 #ifdef __cplusplus
 } // extern "C"

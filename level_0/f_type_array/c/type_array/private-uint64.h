@@ -103,12 +103,12 @@ extern "C" {
  *
  * @see f_uint64s_resize()
  * @see f_uint64s_append()
- * @see f_uint64s_decimate_by()
+ * @see f_uint64s_decrease_by()
  * @see f_uint64ss_append()
  */
-#if !defined(_di_f_uint64s_resize_) || !defined(_di_f_uint64s_append_) || !defined(_di_f_uint64s_decimate_by_) || !defined(_di_f_uint64ss_append_)
+#if !defined(_di_f_uint64s_resize_) || !defined(_di_f_uint64s_append_) || !defined(_di_f_uint64s_decrease_by_) || !defined(_di_f_uint64ss_append_)
   extern f_status_t private_f_uint64s_resize(const f_array_length_t length, f_uint64s_t *uint64s) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_uint64s_resize_) || !defined(_di_f_uint64s_append_) || !defined(_di_f_uint64s_decimate_by_) || !defined(_di_f_uint64ss_append_)
+#endif // !defined(_di_f_uint64s_resize_) || !defined(_di_f_uint64s_append_) || !defined(_di_f_uint64s_decrease_by_) || !defined(_di_f_uint64ss_append_)
 
 /**
  * Private implementation for resizing the uint64ss array.

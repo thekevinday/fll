@@ -51,7 +51,7 @@ extern "C" {
   }
 #endif // !defined(_di_f_uint64s_append_) || !defined(_di_f_uint64s_append_all_) || !defined(_di_f_uint64ss_append_all_)
 
-#if !defined(_di_f_uint64s_resize_) || !defined(_di_f_uint64s_append_) || !defined(_di_f_uint64s_decimate_by_) || !defined(_di_f_uint64ss_append_)
+#if !defined(_di_f_uint64s_resize_) || !defined(_di_f_uint64s_append_) || !defined(_di_f_uint64s_decrease_by_) || !defined(_di_f_uint64ss_append_)
   f_status_t private_f_uint64s_resize(const f_array_length_t length, f_uint64s_t *uint64s) {
 
     const f_status_t status = f_memory_resize(uint64s->size, length, sizeof(uint64_t), (void **) & uint64s->array);
@@ -65,7 +65,7 @@ extern "C" {
 
     return F_none;
   }
-#endif // !defined(_di_f_uint64s_resize_) || !defined(_di_f_uint64s_append_) || !defined(_di_f_uint64s_decimate_by_) || !defined(_di_f_uint64ss_append_)
+#endif // !defined(_di_f_uint64s_resize_) || !defined(_di_f_uint64s_append_) || !defined(_di_f_uint64s_decrease_by_) || !defined(_di_f_uint64ss_append_)
 
 #if !defined(_di_f_uint64ss_adjust_) || !defined(_di_f_uint64ss_decimate_by_)
   f_status_t private_f_uint64ss_adjust(const f_array_length_t length, f_uint64ss_t *uint64ss) {

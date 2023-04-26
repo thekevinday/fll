@@ -103,12 +103,12 @@ extern "C" {
  *
  * @see f_fll_ids_resize()
  * @see f_fll_ids_append()
- * @see f_fll_ids_decimate_by()
+ * @see f_fll_ids_decrease_by()
  * @see f_fll_idss_append()
  */
-#if !defined(_di_f_fll_ids_resize_) || !defined(_di_f_fll_ids_append_) || !defined(_di_f_fll_ids_decimate_by_) || !defined(_di_f_fll_idss_append_)
+#if !defined(_di_f_fll_ids_resize_) || !defined(_di_f_fll_ids_append_) || !defined(_di_f_fll_ids_decrease_by_) || !defined(_di_f_fll_idss_append_)
   extern f_status_t private_f_fll_ids_resize(const f_array_length_t length, f_fll_ids_t *fll_ids) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_fll_ids_resize_) || !defined(_di_f_fll_ids_append_) || !defined(_di_f_fll_ids_decimate_by_) || !defined(_di_f_fll_idss_append_)
+#endif // !defined(_di_f_fll_ids_resize_) || !defined(_di_f_fll_ids_append_) || !defined(_di_f_fll_ids_decrease_by_) || !defined(_di_f_fll_idss_append_)
 
 /**
  * Private implementation for resizing the fll_idss array.
