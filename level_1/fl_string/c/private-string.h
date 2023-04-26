@@ -77,11 +77,14 @@ extern "C" {
  *
  * @see fl_string_compare_except()
  * @see fl_string_dynamic_compare_except()
+ * @see fl_string_dynamic_compare_except_string()
  * @see fl_string_dynamic_partial_compare_except()
+ * @see fl_string_dynamic_partial_compare_except_dynamic()
+ * @see fl_string_dynamic_partial_compare_except_string()
  */
-#if !defined(_di_fl_string_compare_except_) || !defined(_di_fl_string_dynamic_compare_except_) || !defined(_di_fl_string_dynamic_partial_compare_except_)
+#if !defined(_di_fl_string_compare_except_) || !defined(_di_fl_string_dynamic_compare_except_) || !defined(_di_fl_string_dynamic_compare_except_string_) || !defined(_di_fl_string_dynamic_partial_compare_except_) || !defined(_di_fl_string_dynamic_partial_compare_except_dynamic_) || !defined(_di_fl_string_dynamic_partial_compare_except_string_)
   extern f_status_t private_fl_string_compare_except(const f_string_t string1, const f_string_t string2, const f_array_length_t offset1, const f_array_length_t offset2, const f_array_length_t stop1, const f_array_length_t stop2, const f_array_lengths_t except1, const f_array_lengths_t except2) F_attribute_visibility_internal_d;
-#endif // !defined(_di_fl_string_compare_except_) || !defined(_di_fl_string_dynamic_compare_except_) || !defined(_di_fl_string_dynamic_partial_compare_except_)
+#endif // !defined(_di_fl_string_compare_except_) || !defined(_di_fl_string_dynamic_compare_except_) || !defined(_di_fl_string_dynamic_compare_except_string_) || !defined(_di_fl_string_dynamic_partial_compare_except_) || !defined(_di_fl_string_dynamic_partial_compare_except_dynamic_) || !defined(_di_fl_string_dynamic_partial_compare_except_string_)
 
 /**
  * Private implementation of fl_string_compare_except_trim().
@@ -121,11 +124,14 @@ extern "C" {
  *
  * @see fl_string_compare_except_trim()
  * @see fl_string_dynamic_compare_except_trim()
+ * @see fl_string_dynamic_compare_except_string_trim()
  * @see fl_string_dynamic_partial_compare_except_trim()
+ * @see fl_string_dynamic_partial_compare_except_dynamic_trim()
+ * @see fl_string_dynamic_partial_compare_except_string_trim()
  */
-#if !defined(_di_fl_string_compare_except_trim_) || !defined(_di_fl_string_dynamic_compare_except_trim_) || !defined(_di_fl_string_dynamic_partial_compare_except_trim_)
+#if !defined(_di_fl_string_compare_except_trim_) || !defined(_di_fl_string_dynamic_compare_except_trim_) || !defined(_di_fl_string_dynamic_compare_except_string_trim_) || !defined(_di_fl_string_dynamic_partial_compare_except_trim_) || !defined(_di_fl_string_dynamic_partial_compare_except_dynamic_trim_) || !defined(_di_fl_string_dynamic_partial_compare_except_string_trim_)
   extern f_status_t private_fl_string_compare_except_trim(const f_string_t string1, const f_string_t string2, const f_array_length_t offset1, const f_array_length_t offset2, const f_array_length_t stop1, const f_array_length_t stop2, const f_array_lengths_t except1, const f_array_lengths_t except2) F_attribute_visibility_internal_d;
-#endif // !defined(_di_fl_string_compare_except_trim_) || !defined(_di_fl_string_dynamic_compare_except_trim_) || !defined(_di_fl_string_dynamic_partial_compare_except_trim_)
+#endif // !defined(_di_fl_string_compare_except_trim_) || !defined(_di_fl_string_dynamic_compare_except_trim_) || !defined(_di_fl_string_dynamic_compare_except_string_trim_) || !defined(_di_fl_string_dynamic_partial_compare_except_trim_) || !defined(_di_fl_string_dynamic_partial_compare_except_dynamic_trim_) || !defined(_di_fl_string_dynamic_partial_compare_except_string_trim_)
 
 /**
  * Private implementation of fl_string_compare_trim().

@@ -103,12 +103,12 @@ extern "C" {
  *
  * @see f_cells_resize()
  * @see f_cells_append()
- * @see f_cells_decimate_by()
+ * @see f_cells_decrease_by()
  * @see f_cellss_append()
  */
-#if !defined(_di_f_cells_resize_) || !defined(_di_f_cells_append_) || !defined(_di_f_cells_decimate_by_) || !defined(_di_f_cellss_append_)
+#if !defined(_di_f_cells_resize_) || !defined(_di_f_cells_append_) || !defined(_di_f_cells_decrease_by_) || !defined(_di_f_cellss_append_)
   extern f_status_t private_f_cells_resize(const f_array_length_t length, f_cells_t *cells) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_cells_resize_) || !defined(_di_f_cells_append_) || !defined(_di_f_cells_decimate_by_) || !defined(_di_f_cellss_append_)
+#endif // !defined(_di_f_cells_resize_) || !defined(_di_f_cells_append_) || !defined(_di_f_cells_decrease_by_) || !defined(_di_f_cellss_append_)
 
 /**
  * Private implementation for resizing the cellss array.

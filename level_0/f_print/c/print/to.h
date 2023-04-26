@@ -1032,7 +1032,7 @@ extern "C" {
  *
  * @see write()
  */
-#ifndef _di_f_print_dynamic_except_partial_
+#ifndef _di_f_print_to_except_in_dynamic_partial_
   extern f_status_t f_print_to_except_in_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const int id);
 #endif // _di_f_print_to_except_in_dynamic_partial_
 
@@ -1084,7 +1084,7 @@ extern "C" {
  *
  * @see write()
  */
-#ifndef _di_f_print_dynamic_except_partial_raw_
+#ifndef _di_f_print_to_except_in_dynamic_partial_raw_
   extern f_status_t f_print_to_except_in_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const int id);
 #endif // _di_f_print_to_except_in_dynamic_partial_raw_
 
@@ -1136,7 +1136,7 @@ extern "C" {
  *
  * @see write()
  */
-#ifndef _di_f_print_dynamic_except_partial_raw_safely_
+#ifndef _di_f_print_to_except_in_dynamic_partial_raw_safely_
   extern f_status_t f_print_to_except_in_dynamic_partial_raw_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const int id);
 #endif // _di_f_print_to_except_in_dynamic_partial_raw_safely_
 
@@ -1188,7 +1188,7 @@ extern "C" {
  *
  * @see f_utf_is_valid()
  */
-#ifndef _di_f_print_dynamic_except_partial_safely_
+#ifndef _di_f_print_to_except_in_dynamic_partial_safely_
   extern f_status_t f_print_to_except_in_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const int id);
 #endif // _di_f_print_to_except_in_dynamic_partial_safely_
 

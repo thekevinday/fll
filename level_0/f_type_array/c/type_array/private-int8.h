@@ -103,12 +103,12 @@ extern "C" {
  *
  * @see f_int8s_resize()
  * @see f_int8s_append()
- * @see f_int8s_decimate_by()
+ * @see f_int8s_decrease_by()
  * @see f_int8ss_append()
  */
-#if !defined(_di_f_int8s_resize_) || !defined(_di_f_int8s_append_) || !defined(_di_f_int8s_decimate_by_) || !defined(_di_f_int8ss_append_)
+#if !defined(_di_f_int8s_resize_) || !defined(_di_f_int8s_append_) || !defined(_di_f_int8s_decrease_by_) || !defined(_di_f_int8ss_append_)
   extern f_status_t private_f_int8s_resize(const f_array_length_t length, f_int8s_t *int8s) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_int8s_resize_) || !defined(_di_f_int8s_append_) || !defined(_di_f_int8s_decimate_by_) || !defined(_di_f_int8ss_append_)
+#endif // !defined(_di_f_int8s_resize_) || !defined(_di_f_int8s_append_) || !defined(_di_f_int8s_decrease_by_) || !defined(_di_f_int8ss_append_)
 
 /**
  * Private implementation for resizing the int8ss array.
