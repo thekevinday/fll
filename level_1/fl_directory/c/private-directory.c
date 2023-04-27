@@ -51,10 +51,20 @@ extern "C" {
     uint8_t j = 0;
     const f_array_length_t used_original = recurse->path.used;
 
-    const uint8_t flag_actions[] = {
+    static const uint8_t flag_actions[] = {
       f_directory_recurse_do_flag_before_e,
       0,
       f_directory_recurse_do_flag_after_e,
+    };
+
+    static const uint16_t flags[] = {
+      f_directory_recurse_do_flag_block_e,
+      f_directory_recurse_do_flag_character_e,
+      f_directory_recurse_do_flag_regular_e,
+      f_directory_recurse_do_flag_link_e,
+      f_directory_recurse_do_flag_fifo_e,
+      f_directory_recurse_do_flag_socket_e,
+      f_directory_recurse_do_flag_unknown_e,
     };
 
     {
@@ -66,16 +76,6 @@ extern "C" {
         &recurse->listing.fifo,
         &recurse->listing.socket,
         &recurse->listing.unknown,
-      };
-
-      const uint16_t flags[] = {
-        f_directory_recurse_do_flag_block_e,
-        f_directory_recurse_do_flag_character_e,
-        f_directory_recurse_do_flag_regular_e,
-        f_directory_recurse_do_flag_link_e,
-        f_directory_recurse_do_flag_fifo_e,
-        f_directory_recurse_do_flag_socket_e,
-        f_directory_recurse_do_flag_unknown_e,
       };
 
       for (uint8_t k = 0; k < 7; ++k) {
