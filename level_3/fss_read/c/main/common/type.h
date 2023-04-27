@@ -1,7 +1,7 @@
 /**
  * FLL - Level 3
  *
- * Project: FSS Write
+ * Project: FSS Read
  * API Version: 0.7
  * Licenses: lgpl-2.1-or-later
  *
@@ -9,20 +9,20 @@
  *
  * This is auto-included and should not need to be explicitly included.
  */
-#ifndef _fss_write_common_type_h
-#define _fss_write_common_type_h
+#ifndef _fss_read_common_type_h
+#define _fss_read_common_type_h
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 /**
- * The fss write main program settings.
+ * The fss read main program settings.
  *
  * This is passed to the program-specific main entry point to designate program settings.
  * These program settings are often processed from the program arguments (often called the command line arguments).
  *
- * For all function pointers on this structure, the main variable must be of type fss_write_main_t.
+ * For all function pointers on this structure, the main variable must be of type fss_read_main_t.
  *
  * flag: Flags passed to the main function.
  *
@@ -54,7 +54,7 @@ extern "C" {
  * process_pipe:    Process using the data from input pipe.
  * process_set:     Process a set of Object and one or more Content.
  */
-#ifndef _di_fss_write_setting_t_
+#ifndef _di_fss_read_setting_t_
   typedef struct {
     uint16_t flag;
 
@@ -86,13 +86,13 @@ extern "C" {
     void (*process_object)(void * const main);
     void (*process_pipe)(void * const main);
     void (*process_set)(void * const main);
-  } fss_write_setting_t;
+  } fss_read_setting_t;
 
-  #define fss_write_setting_t_initialize \
+  #define fss_read_setting_t_initialize \
     { \
-      fss_write_main_flag_none_e, \
+      fss_read_main_flag_none_e, \
       F_none, \
-      macro_f_state_t_initialize_1(fss_write_allocation_large_d, fss_write_allocation_small_d, F_none, 0, 0, &fll_program_standard_signal_handle, 0, 0, 0, 0), \
+      macro_f_state_t_initialize_1(fss_read_allocation_large_d, fss_read_allocation_small_d, F_none, 0, 0, &fll_program_standard_signal_handle, 0, 0, 0, 0), \
       f_string_range_t_initialize, \
       f_string_static_t_initialize, \
       f_string_static_t_initialize, \
@@ -114,7 +114,7 @@ extern "C" {
       0, \
       0, \
     }
-#endif // _di_fss_write_setting_t_
+#endif // _di_fss_read_setting_t_
 
 /**
  * The main program data as a single structure.
@@ -122,18 +122,18 @@ extern "C" {
  * program: The main program data.
  * setting: The settings data.
  */
-#ifndef _di_fss_write_main_t_
+#ifndef _di_fss_read_main_t_
   typedef struct {
     fll_program_data_t program;
-    fss_write_setting_t setting;
-  } fss_write_main_t;
+    fss_read_setting_t setting;
+  } fss_read_main_t;
 
-  #define fss_write_main_t_initialize \
+  #define fss_read_main_t_initialize \
     { \
       fll_program_data_t_initialize, \
-      fss_write_setting_t_initialize, \
+      fss_read_setting_t_initialize, \
     }
-#endif // _di_fss_write_main_t_
+#endif // _di_fss_read_main_t_
 
 /**
  * Deallocate main program data.
@@ -143,9 +143,9 @@ extern "C" {
  *
  *   This does not alter data_make.main.setting.state.status.
  */
-#ifndef _di_fss_write_main_data_delete_
-  extern void fss_write_main_delete(fss_write_main_t * const main);
-#endif // _di_fss_write_main_data_delete_
+#ifndef _di_fss_read_main_data_delete_
+  extern void fss_read_main_delete(fss_read_main_t * const main);
+#endif // _di_fss_read_main_data_delete_
 
 /**
  * Delete the program main setting data.
@@ -160,12 +160,12 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  */
-#ifndef _di_fss_write_setting_delete_
-  extern f_status_t fss_write_setting_delete(fss_write_setting_t * const setting);
-#endif // _di_fss_write_setting_delete_
+#ifndef _di_fss_read_setting_delete_
+  extern f_status_t fss_read_setting_delete(fss_read_setting_t * const setting);
+#endif // _di_fss_read_setting_delete_
 
 #ifdef __cplusplus
 } // extern "C"
 #endif
 
-#endif // _fss_write_common_type_h
+#endif // _fss_read_common_type_h

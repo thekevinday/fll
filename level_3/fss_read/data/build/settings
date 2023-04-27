@@ -1,0 +1,86 @@
+# fss-0001
+#
+# Builds the main library of the project with all parts except "main" program related.
+#
+# Modes:
+#   - individual:        Compile using per project (individual) libraries, does not handle thread or threadless cases.
+#   - individual_thread: This is required when compiling in individual mode with "thread" mode.
+#   - level:             Compile using per level libraries.
+#   - monolithic:        Compile using per monolithic libraries.
+#   - clang:             Use clang rather than the default, which is generally gcc.
+#   - test:              Compile for a test, such as unit testing.
+#   - fanalyzer:         Compile using GCC's -fanalyzer compile time option.
+#   - thread:            Compile with thread support.
+#   - threadless:        Compile without thread support.
+#
+
+build_name fss_read
+
+version_major 0
+version_minor 7
+version_micro 0
+version_file micro
+version_target minor
+
+modes individual individual_thread level monolithic clang test fanalyzer thread threadless
+modes_default monolithic thread
+
+build_compiler gcc
+build_compiler-clang clang
+build_indexer ar
+build_indexer_arguments rcs
+build_language c
+
+build_libraries -lc
+build_libraries-individual -lfll_error -lfll_file -lfll_fss -lfll_print -lfll_program -lfl_conversion -lfl_directory -lfl_fss -lfl_print -lf_color -lf_compare -lf_console -lf_conversion -lf_directory -lf_environment -lf_file -lf_fss -lf_memory -lf_parse -lf_path -lf_pipe -lf_print -lf_rip -lf_signal -lf_status_string -lf_string -lf_type_array -lf_utf
+build_libraries-individual_thread -lf_thread
+build_libraries-level -lfll_2 -lfll_1 -lfll_0
+build_libraries-monolithic -lfll
+
+build_sources_library main/fss_read.c main/common.c main/common/define.c main/common/enumeration.c main/common/print.c main/common/string.c main/common/type.c main/print/error.c main/print/message.c main/signal.c main/thread.c
+build_sources_library basic/fss_read.c basic/common.c basic/print.c
+build_sources_library basic_list/fss_read.c basic_list/common.c basic_list/print.c
+build_sources_library embedded_list/fss_read.c embedded_list/common.c embedded_list/print.c
+build_sources_library extended/fss_read.c extended/common.c extended/print.c
+build_sources_library extended_list/fss_read.c extended_list/common.c extended_list/print.c
+build_sources_library payload/fss_read.c payload/common.c payload/print.c
+
+build_sources_headers main/fss_read.h main/common.h main/common/define.h main/common/enumeration.h main/common/print.h main/common/string.h main/common/type.h main/print/error.h main/print/message.h main/signal.h main/thread.h
+build_sources_headers basic/fss_read.h basic/common.h basic/print.h basic/private-common.h
+build_sources_headers basic_list/fss_read.h basic_list/common.h basic_list/print.h
+build_sources_headers embedded_list/fss_read.h embedded_list/common.h embedded_list/print.h
+build_sources_headers extended/fss_read.h extended/common.h extended/print.h
+build_sources_headers extended_list/fss_read.h extended_list/common.h extended_list/print.h
+build_sources_headers payload/fss_read.h payload/common.h payload/print.h
+
+build_script yes
+build_shared yes
+build_static no
+
+path_headers program/fss_read
+
+has_path_standard yes
+preserve_path_headers yes
+
+search_exclusive yes
+search_shared yes
+search_static yes
+
+environment PATH LD_LIBRARY_PATH
+environment LANG LC_ALL LC_COLLATE LC_CTYPE LC_FASTMSG LC_MESSAGES LC_MONETARY LC_NUMERIC LC_TIME LOCPATH NLSPATH
+
+#defines -D_di_libcap_
+defines -D_libcap_legacy_only_
+defines-threadless -D_di_thread_support_
+defines-thread -D_pthread_attr_unsupported_ -D_pthread_sigqueue_unsupported_
+
+flags -O2 -z now -g -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-parentheses -Wno-missing-braces
+flags-thread -pthread
+flags-clang -Wno-logical-op-parentheses
+flags-test -O0 -fstack-protector -Wall
+flags-fanalyzer -fanalyzer
+flags-coverage -O0 --coverage -fprofile-abs-path -fprofile-dir=build/coverage/
+
+flags_library -fPIC
+flags_object -fPIC
+flags_program -fPIE
