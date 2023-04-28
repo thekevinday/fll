@@ -29,6 +29,7 @@ extern "C" {
   #define FSS_READ_format_code_long_0001_s    "fss-0001"
   #define FSS_READ_format_code_human_0001_s   "extended"
   #define FSS_READ_format_code_machine_0001_s "extended"
+  #define FSS_READ_format_code_name_0001_s    "Extended"
 
   #define FSS_READ_extended_standard_s_length 19
 
@@ -39,6 +40,7 @@ extern "C" {
   #define FSS_READ_format_code_long_0001_s_length    8
   #define FSS_READ_format_code_human_0001_s_length   8
   #define FSS_READ_format_code_machine_0001_s_length 8
+  #define FSS_READ_format_code_name_0001_s_length    8
 
   extern const f_string_static_t fss_read_extended_standard_s;
 
@@ -49,6 +51,7 @@ extern "C" {
   extern const f_string_static_t fss_read_format_code_long_0001_s;
   extern const f_string_static_t fss_read_format_code_human_0001_s;
   extern const f_string_static_t fss_read_format_code_machine_0001_s;
+  extern const f_string_static_t fss_read_format_code_name_0001_s;
 #endif // _di_fss_read_extended_s_
 
 #ifdef __cplusplus

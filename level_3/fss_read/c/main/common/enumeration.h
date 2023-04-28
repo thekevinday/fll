@@ -123,6 +123,33 @@ extern "C" {
   }; // enum
 #endif // _di_fss_read_print_flag_e_
 
+/**
+ * FSS Delimit Parameter enumerations.
+ *
+ * fss_read_delimit_mode_*_e:
+ *   - all:                    All delimits are to be applied.
+ *   - content:                Content are to have delimits applied.
+ *   - content_greater:        Content at this number or higher are to have delimits applied.
+ *   - content_greater_object: Objects and Content at this number or higher are to have delimits applied.
+ *   - content_lesser:         Content at this number or lower are to have delimits applied.
+ *   - content_lesser_object:  Objects and Content at this number or lower are to have delimits applied.
+ *   - content_object:         Objects and Content are to have delimits applied
+ *   - object:                 Objects arre to have delimits applied.
+ */
+#ifndef _di_fss_read_delimit_mode_e_
+  enum {
+    fss_read_delimit_mode_none_e = 0,
+    fss_read_delimit_mode_all_e,
+    fss_read_delimit_mode_content_e,
+    fss_read_delimit_mode_content_greater_e,
+    fss_read_delimit_mode_content_greater_object_e,
+    fss_read_delimit_mode_content_lesser_e,
+    fss_read_delimit_mode_content_lesser_object_e,
+    fss_read_delimit_mode_content_object_e,
+    fss_read_delimit_mode_object_e,
+  }; // enum
+#endif // _di_fss_read_delimit_mode_e_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

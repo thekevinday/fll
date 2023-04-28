@@ -31,6 +31,7 @@ extern "C" {
   #define FSS_WRITE_format_code_long_000e_s    "fss-000e"
   #define FSS_WRITE_format_code_human_000e_s   "payload"
   #define FSS_WRITE_format_code_machine_000e_s "payload"
+  #define FSS_WRITE_format_code_name_000e_s    "Payload"
 
   #define FSS_WRITE_payload_s_length 7
 
@@ -43,6 +44,7 @@ extern "C" {
   #define FSS_WRITE_format_code_long_000e_s_length    8
   #define FSS_WRITE_format_code_human_000e_s_length   7
   #define FSS_WRITE_format_code_machine_000e_s_length 7
+  #define FSS_WRITE_format_code_name_000e_s_length    7
 
   extern const f_string_static_t fss_write_payload_s;
 
@@ -55,6 +57,7 @@ extern "C" {
   extern const f_string_static_t fss_write_format_code_long_000e_s;
   extern const f_string_static_t fss_write_format_code_human_000e_s;
   extern const f_string_static_t fss_write_format_code_machine_000e_s;
+  extern const f_string_static_t fss_write_format_code_name_000e_s;
 #endif // _di_fss_write_payload_s_
 
 #ifdef __cplusplus

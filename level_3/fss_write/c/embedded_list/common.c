@@ -14,6 +14,7 @@ extern "C" {
   const f_string_static_t fss_write_format_code_long_0008_s = macro_f_string_static_t_initialize_1(FSS_WRITE_format_code_long_0008_s, 0, FSS_WRITE_format_code_long_0008_s_length);
   const f_string_static_t fss_write_format_code_human_0008_s = macro_f_string_static_t_initialize_1(FSS_WRITE_format_code_human_0008_s, 0, FSS_WRITE_format_code_human_0008_s_length);
   const f_string_static_t fss_write_format_code_machine_0008_s = macro_f_string_static_t_initialize_1(FSS_WRITE_format_code_machine_0008_s, 0, FSS_WRITE_format_code_machine_0008_s_length);
+  const f_string_static_t fss_write_format_code_name_0008_s = macro_f_string_static_t_initialize_1(FSS_WRITE_format_code_name_0008_s, 0, FSS_WRITE_format_code_name_0008_s_length);
 #endif // _di_fss_write_embedded_list_s_
 
 #ifdef __cplusplus

@@ -23,6 +23,14 @@ extern "C" {
   const f_string_static_t fss_read_string_two_s = macro_f_string_static_t_initialize_1(FSS_READ_string_two_s, 0, FSS_READ_string_two_s_length);
 #endif // _di_fss_read_s_
 
+#ifndef _di_fss_read_delimit_mode_s_
+  const f_string_static_t fss_read_delimit_mode_name_none_s = macro_f_string_static_t_initialize_1(FSS_READ_delimit_mode_name_none_s, 0, FSS_READ_delimit_mode_name_none_s_length);
+  const f_string_static_t fss_read_delimit_mode_name_all_s = macro_f_string_static_t_initialize_1(FSS_READ_delimit_mode_name_all_s, 0, FSS_READ_delimit_mode_name_all_s_length);
+  const f_string_static_t fss_read_delimit_mode_name_object_s = macro_f_string_static_t_initialize_1(FSS_READ_delimit_mode_name_object_s, 0, FSS_READ_delimit_mode_name_object_s_length);
+  const f_string_static_t fss_read_delimit_mode_name_greater_s = macro_f_string_static_t_initialize_1(FSS_READ_delimit_mode_name_greater_s, 0, FSS_READ_delimit_mode_name_greater_s_length);
+  const f_string_static_t fss_read_delimit_mode_name_lesser_s = macro_f_string_static_t_initialize_1(FSS_READ_delimit_mode_name_lesser_s, 0, FSS_READ_delimit_mode_name_lesser_s_length);
+#endif // _di_fss_read_delimit_mode_s_
+
 #ifndef _di_fss_read_parameter_s_
   const f_string_static_t fss_read_short_at_s = macro_f_string_static_t_initialize_1(FSS_READ_short_at_s, 0, FSS_READ_short_at_s_length);
   const f_string_static_t fss_read_short_content_s = macro_f_string_static_t_initialize_1(FSS_READ_short_content_s, 0, FSS_READ_short_content_s_length);

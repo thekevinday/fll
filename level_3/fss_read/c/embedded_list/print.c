@@ -19,18 +19,11 @@ extern "C" {
 
     fll_program_print_help_usage(print, fss_read_embedded_list_program_name_s, f_string_empty_s);
 
+    fss_read_print_message_help_note_header(print, fss_read_format_code_short_0008_s, fss_read_format_code_name_0008_s);
+
     fss_read_print_message_help_pipe(print);
 
-    fss_read_print_message_help_end_next(print);
-
-    fl_print_format("%r  The FSS-0008 (Embedded List) specification does not support quoted names, therefore the parameters '%[%r%r%]'", print->to, f_string_eol_s, print->set->notable, f_console_symbol_long_normal_s, fss_read_long_single_s, print->set->notable);
-    fl_print_format(" and '%[%r%r%]' do nothing.%r%r", print->to, print->set->notable, f_console_symbol_long_normal_s, fss_read_long_double_s, print->set->notable, f_string_eol_s, f_string_eol_s);
-
-    fl_print_format("  The parameter '%[%r%r%]' designates to not escape any valid nested Object or Content within some Content.%r", print->to, print->set->notable, f_console_symbol_long_normal_s, fss_read_long_ignore_s, print->set->notable, f_string_eol_s);
-    fl_print_format("  This parameter requires two values.%r", print->to, f_string_eol_s);
-    fl_print_format("  This parameter is not used for ignoring anything from the input pipe.%r", print->to, f_string_eol_s);
-    fl_print_format("  This parameter must be specified after a '%[%r%r%]'", print->to, print->set->notable, f_console_symbol_long_normal_s, fss_read_long_content_s, print->set->notable);
-    fl_print_format(" parameter and this applies only to the Content represented by that specific '%[%r%r%]' parameter.%r", print->to, print->set->notable, f_console_symbol_long_normal_s, fss_read_long_content_s, print->set->notable, f_string_eol_s);
+    fss_read_print_message_help_note(print, F_true);
 
     f_file_stream_flush(print->to);
     f_file_stream_unlock(print->to);

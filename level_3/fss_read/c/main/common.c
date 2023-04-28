@@ -116,6 +116,10 @@ extern "C" {
     if (main->program.parameters.array[fss_read_parameter_help_e].result & f_console_result_found_e) return;
     if (main->program.parameters.array[fss_read_parameter_version_e].result & f_console_result_found_e) return;
 
+    if (main->program.parameters.array[fss_read_parameter_strip_invalid_e].result & f_console_result_found_e) {
+      main->setting.flag |= fss_read_main_flag_strip_invalid_e;
+    }
+
     if ((main->program.parameters.array[fss_read_parameter_file_e].result & f_console_result_value_e) && main->program.parameters.array[fss_read_parameter_file_e].values.used) {
       if (main->program.parameters.array[fss_read_parameter_file_e].values.used > 1) {
         main->setting.state.status = F_status_set_error(F_parameter);

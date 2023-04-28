@@ -29,6 +29,7 @@ extern "C" {
   #define FSS_READ_format_code_long_0000_s    "fss-0000"
   #define FSS_READ_format_code_human_0000_s   "basic"
   #define FSS_READ_format_code_machine_0000_s "basic"
+  #define FSS_READ_format_code_name_0000_s    "Basic"
 
   #define FSS_READ_basic_standard_s_length 16
 
@@ -39,6 +40,7 @@ extern "C" {
   #define FSS_READ_format_code_long_0000_s_length    8
   #define FSS_READ_format_code_human_0000_s_length   5
   #define FSS_READ_format_code_machine_0000_s_length 5
+  #define FSS_READ_format_code_name_0000_s_length    4
 
   extern const f_string_static_t fss_read_basic_standard_s;
 
@@ -49,6 +51,7 @@ extern "C" {
   extern const f_string_static_t fss_read_format_code_long_0000_s;
   extern const f_string_static_t fss_read_format_code_human_0000_s;
   extern const f_string_static_t fss_read_format_code_machine_0000_s;
+  extern const f_string_static_t fss_read_format_code_name_0000_s;
 #endif // _di_fss_read_basic_s_
 
 #ifdef __cplusplus

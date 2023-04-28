@@ -19,15 +19,11 @@ extern "C" {
 
     fll_program_print_help_usage(print, fss_read_extended_program_name_s, f_string_empty_s);
 
+    fss_read_print_message_help_note_header(print, fss_read_format_code_short_0001_s, fss_read_format_code_name_0001_s);
+
     fss_read_print_message_help_pipe(print);
 
-    fss_read_print_message_help_end_next(print);
-
-    fl_print_format("%r  The FSS-0001 (Extended) specification does not support multi-line Content, therefore the parameter '%[%r%r%]'", print->to, f_string_eol_s, print->set->notable, f_console_symbol_long_normal_s, fss_read_long_prepend_s, print->set->notable);
-    fl_print_format(" does nothing.%r%r", print->to, f_string_eol_s, f_string_eol_s);
-
-    fl_print_format("  This program does not use the parameter '%[%r%r%]', which therefore does nothing.%r", print->to, print->set->notable, f_console_symbol_long_normal_s, fss_read_long_ignore_s, print->set->notable, f_string_eol_s);
-    fl_print_format("  This parameter requires two values.%r", print->to, f_string_eol_s);
+    fss_read_print_message_help_note(print, F_false);
 
     f_file_stream_flush(print->to);
     f_file_stream_unlock(print->to);

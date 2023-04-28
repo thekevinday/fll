@@ -89,7 +89,7 @@ extern "C" {
 #endif // _di_fss_read_pipe_s_
 
 /**
- * A collection of static strings associated with FSS Payload Write.
+ * A collection of static strings associated with FSS Read.
  */
 #ifndef _di_fss_read_s_
   #define FSS_READ_string_two_s "two"
@@ -98,6 +98,39 @@ extern "C" {
 
   extern const f_string_static_t fss_read_string_two_s;
 #endif // _di_fss_read_s_
+
+/**
+ * FSS Delimit Parameter strings.
+ *
+ * fss_read_delimit_mode_*:
+ *   - all:                    All delimits are to be aplied.
+ *   - content:                Content are to have delimits applied.
+ *   - content_greater:        Content at this number or higher are to have delimits applied.
+ *   - content_greater_object: Objects and Content at this number or higher are to have delimits applied.
+ *   - content_lesser:         Content at this number or lower are to have delimits applied.
+ *   - content_lesser_object:  Objects and Content at this number or lower are to have delimits applied.
+ *   - content_object:         Objects and Content are to have delimits applied
+ *   - object:                 Objects arre to have delimits applied.
+ */
+#ifndef _di_fss_read_delimit_mode_s_
+  #define FSS_READ_delimit_mode_name_none_s    "none"
+  #define FSS_READ_delimit_mode_name_all_s     "all"
+  #define FSS_READ_delimit_mode_name_object_s  "object"
+  #define FSS_READ_delimit_mode_name_greater_s "+"
+  #define FSS_READ_delimit_mode_name_lesser_s  "-"
+
+  #define FSS_READ_delimit_mode_name_none_s_length    4
+  #define FSS_READ_delimit_mode_name_all_s_length     3
+  #define FSS_READ_delimit_mode_name_object_s_length  6
+  #define FSS_READ_delimit_mode_name_greater_s_length 1
+  #define FSS_READ_delimit_mode_name_lesser_s_length  1
+
+  extern const f_string_static_t fss_read_delimit_mode_name_none_s;
+  extern const f_string_static_t fss_read_delimit_mode_name_all_s;
+  extern const f_string_static_t fss_read_delimit_mode_name_object_s;
+  extern const f_string_static_t fss_read_delimit_mode_name_greater_s;
+  extern const f_string_static_t fss_read_delimit_mode_name_lesser_s;
+#endif // _di_fss_read_delimit_mode_s_
 
 /**
  * The main program parameters.
@@ -150,7 +183,7 @@ extern "C" {
 
   #define FSS_READ_long_at_s_length       2
   #define FSS_READ_long_content_s_length  7
-  #define FSS_READ_long_columns_s_length  8
+  #define FSS_READ_long_columns_s_length  7
   #define FSS_READ_long_delimit_s_length  7
   #define FSS_READ_long_depth_s_length    5
   #define FSS_READ_long_empty_s_length    5
