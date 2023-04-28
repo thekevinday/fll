@@ -80,7 +80,7 @@ extern "C" {
 
     fl_print_format(" %[Notes:%]%r", file.stream, context.set.important, context.set.important, f_string_eol_s);
 
-    fl_print_format("  This program will print the Content associated with the given Object and Content main based on the FSS-000E Payload standard.%r%r", file.stream, f_string_eol_s, f_string_eol_s);
+    fl_print_format("  This program will print the data associated with the given Object and Content based on the FSS-000E Payload standard.%r%r", file.stream, f_string_eol_s, f_string_eol_s);
 
     fl_print_format("  All numeric positions (indexes) start at 0 instead of 1.%r", file.stream, f_string_eol_s);
     fl_print_format("  For example, a file of 17 lines would range from 0 to 16.%r%r", file.stream, f_string_eol_s, f_string_eol_s);
