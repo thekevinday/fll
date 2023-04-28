@@ -243,7 +243,7 @@ extern "C" {
  * FSS Delimit Parameter data.
  *
  * fss_payload_read_delimit_mode_*:
- *   - all:                    All delimits are to be aplied.
+ *   - all:                    All delimits are to be applied.
  *   - content:                Content are to have delimits applied.
  *   - content_greater:        Content at this number or higher are to have delimits applied.
  *   - content_greater_object: Objects and Content at this number or higher are to have delimits applied.
