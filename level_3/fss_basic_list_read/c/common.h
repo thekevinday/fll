@@ -141,7 +141,7 @@ extern "C" {
 
   #define FSS_BASIC_LIST_READ_long_at_s_length       2
   #define FSS_BASIC_LIST_READ_long_content_s_length  7
-  #define FSS_BASIC_LIST_READ_long_columns_s_length  8
+  #define FSS_BASIC_LIST_READ_long_columns_s_length  7
   #define FSS_BASIC_LIST_READ_long_delimit_s_length  7
   #define FSS_BASIC_LIST_READ_long_depth_s_length    5
   #define FSS_BASIC_LIST_READ_long_empty_s_length    5
