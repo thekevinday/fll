@@ -3,10 +3,6 @@
 #define _di_f_print_character_safely_
 #define _di_f_print_character_safely_get_
 #define _di_f_print_dynamic_
-#define _di_f_print_dynamic_except_partial_
-#define _di_f_print_dynamic_except_partial_raw_
-#define _di_f_print_dynamic_except_partial_raw_safely_
-#define _di_f_print_dynamic_except_partial_safely_
 #define _di_f_print_dynamic_partial_
 #define _di_f_print_dynamic_partial_raw_
 #define _di_f_print_dynamic_partial_raw_safely_
