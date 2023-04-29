@@ -43,7 +43,7 @@ install_main() {
   local c_subtle="\\033[1;30m"
   local c_prefix="\\"
 
-  local failure=
+  local failure=0
   local operation=
   local operation_failure=
   local verbosity=normal
@@ -445,18 +445,18 @@ install_main() {
   install_perform_install
 
   if [[ ${verbosity} != "quiet" ]] ; then
-    if [[ ${failure} != "" || ${verbosity} != "error" ]] ; then
+    if [[ ${failure} -eq 1 || ${verbosity} != "error" ]] ; then
       install_print_last
     fi
   fi
 
   install_cleanup
 
-  if [[ ${failure} == "" ]] ; then
-    return 0
+  if [[ ${failure} -eq 1 ]] ; then
+    return 1
   fi
 
-  return 1
+  return 0
 }
 
 install_handle_colors() {
@@ -733,7 +733,7 @@ install_perform_install() {
     fi
   fi
 
-  if [[ ${failure} == "" && -d ${path_build}${path_includes} && ${enable_includes} == "yes" ]] ; then
+  if [[ ${failure} -eq 0 && -d ${path_build}${path_includes} && ${enable_includes} == "yes" ]] ; then
     for i in ${path_build}${path_includes}* ; do
 
       file=$(echo ${i} | sed -e "s|^${path_build}${path_includes}||")
@@ -766,7 +766,7 @@ install_perform_install() {
     fi
   fi
 
-  if [[ ${failure} == "" && -d ${path_build}${path_libraries} && ( ${enable_shared_libraries} == "yes" || ${enable_static_libraries} == "yes" ) ]] ; then
+  if [[ ${failure} -eq 0 && -d ${path_build}${path_libraries} && ( ${enable_shared_libraries} == "yes" || ${enable_static_libraries} == "yes" ) ]] ; then
     if [[ -d ${path_build}${path_libraries}${path_static} && ${enable_static_libraries} == "yes" ]] ; then
       for i in ${path_build}${path_libraries}${path_static}* ; do
 
@@ -800,7 +800,7 @@ install_perform_install() {
       fi
     fi
 
-    if [[ ${failure} == "" && -d ${path_build}${path_libraries}${path_shared} && ${enable_shared_libraries} == "yes" ]] ; then
+    if [[ ${failure} -eq 0 && -d ${path_build}${path_libraries}${path_shared} && ${enable_shared_libraries} == "yes" ]] ; then
       for i in ${path_build}${path_libraries}${path_shared}* ; do
 
         file=$(echo ${i} | sed -e "s|^${path_build}${path_libraries}${path_shared}||")
@@ -834,7 +834,7 @@ install_perform_install() {
     fi
   fi
 
-  if [[ ${failure} == "" && -d ${path_build}${path_programs} && ( ${enable_shared_programs} == "yes" || ${enable_static_programs} == "yes" ) ]] ; then
+  if [[ ${failure} -eq 0 && -d ${path_build}${path_programs} && ( ${enable_shared_programs} == "yes" || ${enable_static_programs} == "yes" ) ]] ; then
     if [[ -d ${path_build}${path_programs}${path_static} && ${enable_static_programs} == "yes" ]] ; then
       for i in ${path_build}${path_programs}${path_static}* ; do
 
@@ -868,7 +868,7 @@ install_perform_install() {
       fi
     fi
 
-    if [[ ${failure} == "" && -d ${path_build}${path_programs}${path_shared} && ${enable_shared_programs} == "yes" ]] ; then
+    if [[ ${failure} -eq 0 && -d ${path_build}${path_programs}${path_shared} && ${enable_shared_programs} == "yes" ]] ; then
       for i in ${path_build}${path_programs}${path_shared}* ; do
 
         file=$(echo ${i} | sed -e "s|^${path_build}${path_programs}${path_shared}||")
@@ -902,7 +902,7 @@ install_perform_install() {
     fi
   fi
 
-  if [[ ${failure} == "" && -d ${path_build}${path_settings} && ${enable_settings} == "yes" ]] ; then
+  if [[ ${failure} -eq 0 && -d ${path_build}${path_settings} && ${enable_settings} == "yes" ]] ; then
     for i in ${path_build}${path_settings}* ; do
 
       file=$(echo ${i} | sed -e "s|^${path_build}${path_settings}||")
@@ -935,7 +935,7 @@ install_perform_install() {
     fi
   fi
 
-  if [[ ${failure} == "" && -d ${path_build}${path_documentation} && ${enable_documentation} == "yes" ]] ; then
+  if [[ ${failure} -eq 0 && -d ${path_build}${path_documentation} && ${enable_documentation} == "yes" ]] ; then
     for i in ${path_build}${path_documentation}* ; do
 
       file=$(echo ${i} | sed -e "s|^${path_build}${path_documentation}||")
@@ -968,11 +968,11 @@ install_perform_install() {
     fi
   fi
 
-  if [[ ${failure} == "" ]] ; then
-    return 0
+  if [[ ${failure} -eq 1 ]] ; then
+    return 1
   fi
 
-  return 1
+  return 0
 }
 
 install_print_first() {
