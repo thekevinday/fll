@@ -16,7 +16,7 @@ build_name fss_embedded_list_read
 
 version_major 0
 version_minor 6
-version_micro 5
+version_micro 6
 version_file micro
 version_target minor
 

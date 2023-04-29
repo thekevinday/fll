@@ -20,7 +20,7 @@ package_main() {
   local public_name="Simple FLL Project Package Script"
   local system_name=package
   local called_name=$(basename $0)
-  local version=0.6.5
+  local version=0.6.6
 
   local grab_next=
   local do_color=dark

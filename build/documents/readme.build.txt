@@ -39,7 +39,7 @@ Build Readme Documentation:
   Build Example, explicitly using code:"make"\:
     code:"fake make"
 
-  Build Tree Structure Example (using the FLL:"Featureless Linux Library" code:"status_code-0.6.5" project)\:
+  Build Tree Structure Example (using the FLL:"Featureless Linux Library" code:"status_code-0.6.6" project)\:
     block:"
       build/
       ├── documents
@@ -53,8 +53,8 @@ Build Readme Documentation:
       │   ├── shared
       │   │   ├── libstatus_code.so -> libstatus_code.so.0
       │   │   ├── libstatus_code.so.0 -> libstatus_code.so.0.6
-      │   │   ├── libstatus_code.so.0.6 -> libstatus_code.so.0.6.5
-      │   │   └── libstatus_code.so.0.6.5
+      │   │   ├── libstatus_code.so.0.6 -> libstatus_code.so.0.6.6
+      │   │   └── libstatus_code.so.0.6.6
       │   └── static
       │       └── libstatus_code.a
       ├── objects
@@ -84,7 +84,7 @@ Build Readme Documentation:
           └── sources_settings-settings.built
     "
 
-  Work Tree Structure Example at file:"/tmp/work" (using the FLL:"Featureless Linux Library" code:"status_code-0.6.5" project)\:
+  Work Tree Structure Example at file:"/tmp/work" (using the FLL:"Featureless Linux Library" code:"status_code-0.6.6" project)\:
     block:"
       /tmp/work/
       ├── includes
@@ -96,8 +96,8 @@ Build Readme Documentation:
       │   ├── shared
       │   │   ├── libstatus_code.so -> libstatus_code.so.0
       │   │   ├── libstatus_code.so.0 -> libstatus_code.so.0.6
-      │   │   ├── libstatus_code.so.0.6 -> libstatus_code.so.0.6.5
-      │   │   └── libstatus_code.so.0.6.5
+      │   │   ├── libstatus_code.so.0.6 -> libstatus_code.so.0.6.6
+      │   │   └── libstatus_code.so.0.6.6
       │   └── static
       │       └── libstatus_code.a
       └── programs
