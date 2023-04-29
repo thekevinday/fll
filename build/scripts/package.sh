@@ -13,7 +13,7 @@
 
 package_main() {
 
-  if [[ $SHELL_ENGINE == "zsh" ]] ; then
+  if [[ ${SHELL_ENGINE} == "zsh" ]] ; then
     emulate ksh
   fi
 
@@ -41,7 +41,7 @@ package_main() {
   local c_prefix="\\"
 
   local -A variables=()
-  local failure=
+  local failure=0
   local operation=
   local operation_failure=
   local mode_individual=
@@ -63,89 +63,89 @@ package_main() {
   if [[ $# -gt 0 ]] ; then
     t=$#
 
-    while [[ $i -lt $t ]] ; do
-      let i=$i+1
+    while [[ ${i} -lt ${t} ]] ; do
+      let i=${i}+1
 
-      if [[ $SHELL_ENGINE == "zsh" ]] ; then
+      if [[ ${SHELL_ENGINE} == "zsh" ]] ; then
         p=${(P)i}
       else
         p=${!i}
       fi
 
       if [[ $grab_next == "" ]] ; then
-        if [[ $p == "-h" || $p == "--help" ]] ; then
+        if [[ ${p} == "-h" || ${p} == "--help" ]] ; then
           do_help=yes
-        elif [[ $p == "+C" || $p == "++copyright" ]] ; then
+        elif [[ ${p} == "+C" || ${p} == "++copyright" ]] ; then
           do_copyright="yes"
-        elif [[ $p == "+d" || $p == "++dark" ]] ; then
+        elif [[ ${p} == "+d" || ${p} == "++dark" ]] ; then
           do_color=dark
           context="+d"
-        elif [[ $p == "+l" || $p == "++light" ]] ; then
+        elif [[ ${p} == "+l" || ${p} == "++light" ]] ; then
           do_color=light
           context="+l"
-        elif [[ $p == "+n" || $p == "++no_color" ]] ; then
+        elif [[ ${p} == "+n" || ${p} == "++no_color" ]] ; then
           do_color=none
           context="+n"
-        elif [[ $p == "+Q" || $p == "++quiet" ]] ; then
+        elif [[ ${p} == "+Q" || ${p} == "++quiet" ]] ; then
           verbosity="quiet"
           verbose="+Q"
           verbose_common=
-        elif [[ $p == "+E" || $p == "++error" ]] ; then
+        elif [[ ${p} == "+E" || ${p} == "++error" ]] ; then
           verbosity="error"
           verbose="+E"
           verbose_common=
-        elif [[ $p == "+N" || $p == "++normal" ]] ; then
+        elif [[ ${p} == "+N" || ${p} == "++normal" ]] ; then
           verbosity=
           verbose="+N"
           verbose_common=
-        elif [[ $p == "+V" || $p == "++verbose" ]] ; then
+        elif [[ ${p} == "+V" || ${p} == "++verbose" ]] ; then
           verbosity="verbose"
           verbose="+V"
           verbose_common="-v"
-        elif [[ $p == "+D" || $p == "++debug" ]] ; then
+        elif [[ ${p} == "+D" || ${p} == "++debug" ]] ; then
           verbosity="debug"
           verbose="+D"
           verbose_common="-v"
-        elif [[ $p == "+v" || $p == "++version" ]] ; then
+        elif [[ ${p} == "+v" || ${p} == "++version" ]] ; then
           echo $version
           return 0
-        elif [[ $p == "-b" || $p == "--build" ]] ; then
+        elif [[ ${p} == "-b" || ${p} == "--build" ]] ; then
           grab_next=path_build
-        elif [[ $p == "-d" || $p == "--destination" ]] ; then
+        elif [[ ${p} == "-d" || ${p} == "--destination" ]] ; then
           grab_next=path_destination
-        elif [[ $p == "-i" || $p == "--individual" ]] ; then
+        elif [[ ${p} == "-i" || ${p} == "--individual" ]] ; then
           mode_individual="yes"
-        elif [[ $p == "-l" || $p == "--level" ]] ; then
+        elif [[ ${p} == "-l" || ${p} == "--level" ]] ; then
           mode_level="yes"
-        elif [[ $p == "-m" || $p == "--monolithic" ]] ; then
+        elif [[ ${p} == "-m" || ${p} == "--monolithic" ]] ; then
           mode_monolithic="yes"
-        elif [[ $p == "-P" || $p == "--prepend" ]] ; then
+        elif [[ ${p} == "-P" || ${p} == "--prepend" ]] ; then
           grab_next=prepend
-        elif [[ $p == "-p" || $p == "--program" ]] ; then
+        elif [[ ${p} == "-p" || ${p} == "--program" ]] ; then
           mode_program="yes"
-        elif [[ $p == "-s" || $p == "--sources" ]] ; then
+        elif [[ ${p} == "-s" || ${p} == "--sources" ]] ; then
           grab_next=path_sources
-        elif [[ $p == "-S" || $p == "--stand_alone" ]] ; then
+        elif [[ ${p} == "-S" || ${p} == "--stand_alone" ]] ; then
           grab_next=stand_alone
-        elif [[ $operation == "" ]] ; then
-          operation="$p"
-        elif [[ $operation_failure == "" ]] ; then
+        elif [[ ${operation} == "" ]] ; then
+          operation="${p}"
+        elif [[ ${operation_failure} == "" ]] ; then
           operation_failure=fail-multiple
-          operation="$p"
+          operation="${p}"
         fi
       else
         if [[ $grab_next == "path_build" ]] ; then
-          path_build=$(echo $p | sed -e 's|^//*|/|' -e 's|/*$|/|')
+          path_build=$(echo ${p} | sed -e 's|^//*|/|' -e 's|/*$|/|')
         elif [[ $grab_next == "path_destination" ]] ; then
-          path_destination=$(echo $p | sed -e 's|^//*|/|' -e 's|/*$|/|')
+          path_destination=$(echo ${p} | sed -e 's|^//*|/|' -e 's|/*$|/|')
         elif [[ $grab_next == "path_sources" ]] ; then
-          path_sources=$(echo $p | sed -e 's|^//*|/|' -e 's|/*$|/|')
+          path_sources=$(echo ${p} | sed -e 's|^//*|/|' -e 's|/*$|/|')
         elif [[ $grab_next == "stand_alone" ]] ; then
           mode_stand_alone="${mode_stand_alone}${p} "
         elif [[ $grab_next == "prepend" ]] ; then
 
           # Provide a bare minimal sanitizer that probably doesn't catch everything that it ideally should.
-          prepend=$(echo $p | sed -e 's|[\!~\`@#$%^&*();:><?/"\\]||g' -e 's@|@@g' -e "s|'||g" -e "s|\s*||g")
+          prepend=$(echo ${p} | sed -e 's|[\!~\`@#$%^&*();:><?/"\\]||g' -e 's@|@@g' -e "s|'||g" -e "s|\s*||g")
         fi
 
         grab_next=
@@ -155,7 +155,7 @@ package_main() {
     p=
   fi
 
-  if [[ $verbosity == "quiet" ]] ; then
+  if [[ ${verbosity} == "quiet" ]] ; then
     print_line_first="no"
     print_line_last="no"
   fi
@@ -176,8 +176,8 @@ package_main() {
     return 0
   fi
 
-  if [[ $operation_failure == "fail-multiple" ]] ; then
-    if [[ $verbosity != "quiet" ]] ; then
+  if [[ ${operation_failure} == "fail-multiple" ]] ; then
+    if [[ ${verbosity} != "quiet" ]] ; then
       package_print_first
 
       echo -e "${c_error}ERROR: Only one operation may be specified at a time.${c_reset}"
@@ -190,20 +190,20 @@ package_main() {
     return 1
   fi
 
-  if [[ $mode_stand_alone != "" ]] ; then
-    for i in $mode_stand_alone ; do
+  if [[ ${mode_stand_alone} != "" ]] ; then
+    for i in ${mode_stand_alone} ; do
 
-      if [[ $i == "all" ]] ; then
+      if [[ ${i} == "all" ]] ; then
         mode_stand_alone="all"
 
         break
       fi
 
-      if [[ ! -f build/stand_alone/$i.settings ]] ; then
-        if [[ $verbosity != "quiet" ]] ; then
+      if [[ ! -f build/stand_alone/${i}.settings ]] ; then
+        if [[ ${verbosity} != "quiet" ]] ; then
           package_print_first
 
-          echo -e "${c_error}ERROR: Unknown or unsupported stand alone program '${c_notice}$i${c_error}'.${c_reset}"
+          echo -e "${c_error}ERROR: Unknown or unsupported stand alone program '${c_notice}${i}${c_error}'.${c_reset}"
 
           package_print_last
         fi
@@ -214,22 +214,22 @@ package_main() {
       fi
     done
 
-    if [[ $mode_stand_alone == "all" ]] ; then
+    if [[ ${mode_stand_alone} == "all" ]] ; then
       mode_stand_alone=
 
       for i in build/stand_alone/*.settings ; do
 
-        mode_stand_alone="${mode_stand_alone}$(echo $i | sed -e 's|build/stand_alone/||' -e 's|\.settings$||') "
+        mode_stand_alone="${mode_stand_alone}$(echo ${i} | sed -e 's|build/stand_alone/||' -e 's|\.settings$||') "
       done
     fi
   fi
 
-  if [[ $operation == "build" || $operation == "rebuild" ]] ; then
-    if [[ ! -d $path_build ]] ; then
-      if [[ $verbosity != "quiet" ]] ; then
+  if [[ ${operation} == "build" || ${operation} == "rebuild" ]] ; then
+    if [[ ! -d ${path_build} ]] ; then
+      if [[ ${verbosity} != "quiet" ]] ; then
         package_print_first
 
-        echo -e "${c_error}ERROR: Build directory '${c_notice}$path_build${c_error}' is invalid or missing.${c_reset}"
+        echo -e "${c_error}ERROR: Build directory '${c_notice}${path_build}${c_error}' is invalid or missing.${c_reset}"
 
         package_print_last
       fi
@@ -239,14 +239,14 @@ package_main() {
       return 1
     fi
 
-    if [[ ! -d $path_destination ]] ; then
-      mkdir $verbose_common -p $path_destination
+    if [[ ! -d ${path_destination} ]] ; then
+      mkdir ${verbose_common} -p ${path_destination}
 
       if [[ $? -ne 0 ]] ; then
-        if [[ $verbosity != "quiet" ]] ; then
+        if [[ ${verbosity} != "quiet" ]] ; then
           package_print_first
 
-          echo -e "${c_error}ERROR: Package directory '${c_notice}$path_destination${c_error}' is invalid or could not be created.${c_reset}"
+          echo -e "${c_error}ERROR: Package directory '${c_notice}${path_destination}${c_error}' is invalid or could not be created.${c_reset}"
 
           package_print_last
         fi
@@ -257,11 +257,11 @@ package_main() {
       fi
     fi
 
-    if [[ ! -d $path_sources ]] ; then
-      if [[ $verbosity != "quiet" ]] ; then
+    if [[ ! -d ${path_sources} ]] ; then
+      if [[ ${verbosity} != "quiet" ]] ; then
         package_print_first
 
-        echo -e "${c_error}ERROR: Sources directory '${c_notice}$path_sources${c_error}' is invalid or missing.${c_reset}"
+        echo -e "${c_error}ERROR: Sources directory '${c_notice}${path_sources}${c_error}' is invalid or missing.${c_reset}"
 
         package_print_last
       fi
@@ -272,7 +272,7 @@ package_main() {
     fi
 
     if [[ ! -d ${path_sources}level_0/ ]] ; then
-      if [[ $verbosity != "quiet" ]] ; then
+      if [[ ${verbosity} != "quiet" ]] ; then
         package_print_first
 
         echo -e "${c_error}ERROR: Build sources directory '${c_notice}${path_sources}level_0/${c_error}' is invalid or missing.${c_reset}"
@@ -286,7 +286,7 @@ package_main() {
     fi
 
     if [[ ! -d ${path_sources}level_1/ ]] ; then
-      if [[ $verbosity != "quiet" ]] ; then
+      if [[ ${verbosity} != "quiet" ]] ; then
         package_print_first
 
         echo -e "${c_error}ERROR: Build sources directory '${c_notice}${path_sources}level_1/${c_error}' is invalid or missing.${c_reset}"
@@ -300,7 +300,7 @@ package_main() {
     fi
 
     if [[ ! -d ${path_sources}level_2/ ]] ; then
-      if [[ $verbosity != "quiet" ]] ; then
+      if [[ ${verbosity} != "quiet" ]] ; then
         package_print_first
 
         echo -e "${c_error}ERROR: Build sources directory '${c_notice}${path_sources}level_2/${c_error}' is invalid or missing.${c_reset}"
@@ -314,7 +314,7 @@ package_main() {
     fi
 
     if [[ ! -d ${path_sources}level_3/ ]] ; then
-      if [[ $verbosity != "quiet" ]] ; then
+      if [[ ${verbosity} != "quiet" ]] ; then
         package_print_first
 
         echo -e "${c_error}ERROR: Build sources directory '${c_notice}${path_sources}level_3/${c_error}' is invalid or missing.${c_reset}"
@@ -327,7 +327,7 @@ package_main() {
       return 1
     fi
 
-    if [[ $operation == "rebuild" ]] ; then
+    if [[ ${operation} == "rebuild" ]] ; then
       package_operation_clean
 
       if [[ $? -ne 0 ]] ; then
@@ -335,11 +335,11 @@ package_main() {
       fi
     fi
 
-    if [[ $mode_individual == "" && $mode_level == "" && $mode_monolithic == "" && $mode_program == "" && $mode_stand_alone == "" ]] ; then
+    if [[ ${mode_individual} == "" && ${mode_level} == "" && ${mode_monolithic} == "" && ${mode_program} == "" && ${mode_stand_alone} == "" ]] ; then
       mode_individual="yes"
     fi
 
-    if [[ $failure == "" && $mode_individual == "yes" ]] ; then
+    if [[ ${failure} -eq 0 && ${mode_individual} == "yes" ]] ; then
       package_operation_individual
 
       if [[ $? -ne 0 ]] ; then
@@ -347,7 +347,7 @@ package_main() {
       fi
     fi
 
-    if [[ $failure == "" && $mode_level == "yes" ]] ; then
+    if [[ ${failure} -eq 0 && ${mode_level} == "yes" ]] ; then
       package_operation_level
 
       if [[ $? -ne 0 ]] ; then
@@ -355,7 +355,7 @@ package_main() {
       fi
     fi
 
-    if [[ $failure == "" && $mode_monolithic == "yes" ]] ; then
+    if [[ ${failure} -eq 0 && ${mode_monolithic} == "yes" ]] ; then
       package_operation_monolithic
 
       if [[ $? -ne 0 ]] ; then
@@ -363,7 +363,7 @@ package_main() {
       fi
     fi
 
-    if [[ $failure == "" && $mode_program == "yes" ]] ; then
+    if [[ ${failure} -eq 0 && ${mode_program} == "yes" ]] ; then
       package_operation_program
 
       if [[ $? -ne 0 ]] ; then
@@ -371,16 +371,16 @@ package_main() {
       fi
     fi
 
-    if [[ $failure == "" && $mode_stand_alone != "" ]] ; then
+    if [[ ${failure} -eq 0 && ${mode_stand_alone} != "" ]] ; then
       package_operation_stand_alone
 
       if [[ $? -ne 0 ]] ; then
         failure=1
       fi
     fi
-  elif [[ $operation == "dependencies" ]] ; then
-    if [[ ! -d $path_sources ]] ; then
-      if [[ $verbosity != "quiet" ]] ; then
+  elif [[ ${operation} == "dependencies" ]] ; then
+    if [[ ! -d ${path_sources} ]] ; then
+      if [[ ${verbosity} != "quiet" ]] ; then
         package_print_first
 
         echo -e "${c_error}ERROR: Sources directory '${c_notice}${path_sources}${c_error}' is invalid or missing.${c_reset}"
@@ -394,9 +394,9 @@ package_main() {
     fi
 
     package_operation_dependencies
-  elif [[ $operation == "clean" ]] ; then
-    if [[ ! -d $path_destination ]] ; then
-      if [[ $verbosity != "quiet" && $verbosity != "error" ]] ; then
+  elif [[ ${operation} == "clean" ]] ; then
+    if [[ ! -d ${path_destination} ]] ; then
+      if [[ ${verbosity} != "quiet" && ${verbosity} != "error" ]] ; then
         package_print_first
 
         echo -e "${c_warning}WARNING: Package directory '${c_notice}${path_destination}${c_error}' does not exist, there is nothing to clean.${c_reset}"
@@ -410,8 +410,8 @@ package_main() {
     fi
 
     package_operation_clean
-  elif [[ $operation == "" ]] ; then
-    if [[ $verbosity != "quiet" ]] ; then
+  elif [[ ${operation} == "" ]] ; then
+    if [[ ${verbosity} != "quiet" ]] ; then
       package_print_first
 
       echo -e "${c_error}ERROR: No operation was given.${c_reset}"
@@ -423,7 +423,7 @@ package_main() {
 
     return 1
   else
-    if [[ $verbosity != "quiet" ]] ; then
+    if [[ ${verbosity} != "quiet" ]] ; then
       package_print_first
 
       echo -e "${c_error}ERROR: The operation ${c_notice}${operation}${c_error} was not recognized.${c_reset}"
@@ -436,19 +436,19 @@ package_main() {
     return 1
   fi
 
-  if [[ $verbosity != "quiet" ]] ; then
-    if [[ $failure != "" || $verbosity != "error" ]] ; then
+  if [[ ${verbosity} != "quiet" ]] ; then
+    if [[ ${failure} -eq 1 || ${verbosity} != "error" ]] ; then
       package_print_last
     fi
   fi
 
   package_cleanup
 
-  if [[ $failure == "" ]] ; then
-    return 0
+  if [[ ${failure} -eq 1 ]] ; then
+    return 1
   fi
 
-  return 1
+  return 0
 }
 
 package_handle_colors() {
@@ -527,11 +527,11 @@ package_copyright() {
 
 package_create_base_files() {
 
-  if [[ ! -d $package ]] ; then
-    mkdir $verbose_common -p $package
+  if [[ ! -d ${package} ]] ; then
+    mkdir ${verbose_common} -p ${package}
 
     if [[ $? -ne 0 ]] ; then
-      if [[ $verbosity != "quiet" ]] ; then
+      if [[ ${verbosity} != "quiet" ]] ; then
         package_print_first
 
         echo -e "${c_error}ERROR: Failed to create directory ${c_notice}${package}${c_error}.${c_reset}"
@@ -541,8 +541,8 @@ package_create_base_files() {
     fi
   fi
 
-  if [[ $failure == "" && ! -d ${path_build}documents ]] ; then
-    if [[ $verbosity != "quiet" ]] ; then
+  if [[ ${failure} -eq 0 && ! -d ${path_build}documents ]] ; then
+    if [[ ${verbosity} != "quiet" ]] ; then
       package_print_first
 
       echo -e "${c_error}ERROR: The build directory ${c_notice}${path_build}documents${c_error} cannot be found or is invalid.${c_reset}"
@@ -551,26 +551,26 @@ package_create_base_files() {
     let failure=1
   fi
 
-  if [[ $failure == "" ]] ; then
-    cp $verbose_common -R ${path_build}documents $package
+  if [[ ${failure} -eq 0 ]] ; then
+    cp ${verbose_common} -R ${path_build}documents ${package}
 
     if [[ $? -ne 0 ]] ; then
-      if [[ $verbosity != "quiet" ]] ; then
+      if [[ ${verbosity} != "quiet" ]] ; then
         package_print_first
 
-        echo -e "${c_error}ERROR: Failed to copy directory ${c_notice}${path_build}documents${c_error} to ${c_notice}$package${c_error}.${c_reset}"
+        echo -e "${c_error}ERROR: Failed to copy directory ${c_notice}${path_build}documents${c_error} to ${c_notice}${package}${c_error}.${c_reset}"
       fi
 
       let failure=1
     fi
   fi
 
-  if [[ $failure == "" ]] ; then
+  if [[ ${failure} -eq 0 ]] ; then
     if [[ -d ${path_build}licenses ]] ; then
-      cp $verbose_common -R ${path_build}licenses $package
+      cp ${verbose_common} -R ${path_build}licenses ${package}
 
       if [[ $? -ne 0 ]] ; then
-        if [[ $verbosity != "quiet" ]] ; then
+        if [[ ${verbosity} != "quiet" ]] ; then
           package_print_first
 
           echo -e "${c_error}ERROR: Failed to copy directory ${c_notice}${path_build}licenses${c_error} to ${c_notice}${package}${c_error}.${c_reset}"
@@ -579,10 +579,10 @@ package_create_base_files() {
         let failure=1
       fi
     elif [[ -d ${path_build}../licenses ]] ; then
-      cp $verbose_common -R ${path_build}../licenses $package
+      cp ${verbose_common} -R ${path_build}../licenses ${package}
 
       if [[ $? -ne 0 ]] ; then
-        if [[ $verbosity != "quiet" ]] ; then
+        if [[ ${verbosity} != "quiet" ]] ; then
           package_print_first
 
           echo -e "${c_error}ERROR: Failed to copy directory ${c_notice}${path_build}../licenses${c_error} to ${c_notice}${package}${c_error}.${c_reset}"
@@ -591,7 +591,7 @@ package_create_base_files() {
         let failure=1
       fi
     else
-      if [[ $verbosity != "quiet" ]] ; then
+      if [[ ${verbosity} != "quiet" ]] ; then
         package_print_first
 
         echo -e "${c_error}ERROR: Neither directory ${c_notice}${path_build}licenses${c_error} nor ${c_notice}${path_build}../licenses${c_error} can be found or are invalid.${c_reset}"
@@ -601,11 +601,11 @@ package_create_base_files() {
     fi
   fi
 
-  if [[ $failure == "" ]] ; then
-    cp $verbose_common -R ${path_build}scripts/bootstrap.sh $package
+  if [[ ${failure} -eq 0 ]] ; then
+    cp ${verbose_common} -R ${path_build}scripts/bootstrap.sh ${package}
 
     if [[ $? -ne 0 ]] ; then
-      if [[ $verbosity != "quiet" ]] ; then
+      if [[ ${verbosity} != "quiet" ]] ; then
         package_print_first
 
         echo -e "${c_error}ERROR: Failed to copy script ${c_notice}${path_build}bootstrap.sh${c_error} to ${c_notice}${package}${c_error}.${c_reset}"
@@ -614,11 +614,11 @@ package_create_base_files() {
       let failure=1
     fi
 
-    if [[ $failure == "" ]] ; then
+    if [[ ${failure} -eq 0 ]] ; then
       chmod ugo+x ${package}bootstrap.sh
 
       if [[ $? -ne 0 ]] ; then
-        if [[ $verbosity != "quiet" ]] ; then
+        if [[ ${verbosity} != "quiet" ]] ; then
           package_print_first
 
           echo -e "${c_error}ERROR: Failed to set executable permissions on script ${c_notice}${package}bootstrap.sh${c_error}.${c_reset}"
@@ -628,11 +628,11 @@ package_create_base_files() {
       fi
     fi
 
-    if [[ $failure == "" ]] ; then
-      cp $verbose_common -R ${path_build}scripts/install.sh $package
+    if [[ ${failure} -eq 0 ]] ; then
+      cp ${verbose_common} -R ${path_build}scripts/install.sh ${package}
 
       if [[ $? -ne 0 ]] ; then
-        if [[ $verbosity != "quiet" ]] ; then
+        if [[ ${verbosity} != "quiet" ]] ; then
           package_print_first
 
           echo -e "${c_error}ERROR: Failed to copy script ${c_notice}${path_build}install.sh${c_error} to ${c_notice}${package}${c_error}.${c_reset}"
@@ -642,11 +642,11 @@ package_create_base_files() {
       fi
     fi
 
-    if [[ $failure == "" ]] ; then
+    if [[ ${failure} -eq 0 ]] ; then
       chmod ugo+x ${package}install.sh
 
       if [[ $? -ne 0 ]] ; then
-        if [[ $verbosity != "quiet" ]] ; then
+        if [[ ${verbosity} != "quiet" ]] ; then
           package_print_first
 
           echo -e "${c_error}ERROR: Failed to set executable permissions on script ${c_notice}${package}install.sh${c_error}.${c_reset}"
@@ -657,11 +657,11 @@ package_create_base_files() {
     fi
   fi
 
-  if [[ $failure != "" && ! -d ${package}build ]] ; then
-    mkdir $verbose_common -p ${package}build
+  if [[ ${failure} -eq 1 && ! -d ${package}build ]] ; then
+    mkdir ${verbose_common} -p ${package}build
 
     if [[ $? -ne 0 ]] ; then
-      if [[ $verbosity != "quiet" ]] ; then
+      if [[ ${verbosity} != "quiet" ]] ; then
         package_print_first
 
         echo -e "${c_error}ERROR: Failed to create directory ${c_notice}${package}build${c_error}.${c_reset}"
@@ -671,11 +671,11 @@ package_create_base_files() {
     fi
   fi
 
-  if [[ $failure != "" && ! -d ${package}sources ]] ; then
-    mkdir $verbose_common -p ${package}sources
+  if [[ ${failure} -eq 1 && ! -d ${package}sources ]] ; then
+    mkdir ${verbose_common} -p ${package}sources
 
     if [[ $? -ne 0 ]] ; then
-      if [[ $verbosity != "quiet" ]] ; then
+      if [[ ${verbosity} != "quiet" ]] ; then
         package_print_first
 
         echo -e "${c_error}ERROR: Failed to create directory ${c_notice}${package}sources${c_error}.${c_reset}"
@@ -685,11 +685,11 @@ package_create_base_files() {
     fi
   fi
 
-  if [[ $failure != "" && ! -d ${package}documents ]] ; then
-    mkdir $verbose_common -p ${package}documents
+  if [[ ${failure} -eq 1 && ! -d ${package}documents ]] ; then
+    mkdir ${verbose_common} -p ${package}documents
 
     if [[ $? -ne 0 ]] ; then
-      if [[ $verbosity != "quiet" ]] ; then
+      if [[ ${verbosity} != "quiet" ]] ; then
         package_print_first
 
         echo -e "${c_error}ERROR: Failed to create directory ${c_notice}${package}documents${c_error}.${c_reset}"
@@ -699,11 +699,11 @@ package_create_base_files() {
     fi
   fi
 
-  if [[ $failure != "" && ! -d ${package}licenses ]] ; then
-    mkdir $verbose_common -p ${package}licenses
+  if [[ ${failure} -eq 1 && ! -d ${package}licenses ]] ; then
+    mkdir ${verbose_common} -p ${package}licenses
 
     if [[ $? -ne 0 ]] ; then
-      if [[ $verbosity != "quiet" ]] ; then
+      if [[ ${verbosity} != "quiet" ]] ; then
         package_print_first
 
         echo -e "${c_error}ERROR: Failed to create directory ${c_notice}${package}licenses${c_error}.${c_reset}"
@@ -713,11 +713,11 @@ package_create_base_files() {
     fi
   fi
 
-  if [[ $failure == "" ]] ; then
-    return 0
+  if [[ ${failure} -eq 1 ]] ; then
+    return 1
   fi
 
-  return 1
+  return 0
 }
 
 package_dependencies_individual() {
@@ -747,18 +747,18 @@ package_dependencies_individual() {
 
   for directory in ${path_sources}level_0/* ${path_sources}level_1/* ${path_sources}level_2/* ${path_sources}level_3/* ; do
 
-    name="$(echo $directory | sed -e "s|${path_sources}level_0/||" -e "s|${path_sources}level_1/||" -e "s|${path_sources}level_2/||" -e "s|${path_sources}level_3/||")"
+    name="$(echo ${directory} | sed -e "s|${path_sources}level_0/||" -e "s|${path_sources}level_1/||" -e "s|${path_sources}level_2/||" -e "s|${path_sources}level_3/||")"
 
-    level_current="$(echo $directory | grep -o '\<level_[[:digit:]]/' | sed -e 's|level_||' -e 's|/$||')"
+    level_current="$(echo ${directory} | grep -o '\<level_[[:digit:]]/' | sed -e 's|level_||' -e 's|/$||')"
 
-    if [[ $verbosity != "quiet" && $verbosity != "error" ]] ; then
+    if [[ ${verbosity} != "quiet" && ${verbosity} != "error" ]] ; then
       package_print_first_or_always
 
       echo -e "${c_highlight}Building Dependencies for ${c_reset}${c_notice}${name}${c_reset}${c_highlight}.${c_reset}"
     fi
 
     if [[ ! -d ${directory}/data/build/ ]] ; then
-      if [[ $verbosity != "quiet" && $verbosity != "error" ]] ; then
+      if [[ ${verbosity} != "quiet" && ${verbosity} != "error" ]] ; then
         package_print_first
 
         echo -e "${c_warning}WARNING: The project build directory ${c_notice}${dependency_file}${c_warning} is not found.${c_reset}"
@@ -768,14 +768,14 @@ package_dependencies_individual() {
     fi
 
     # Additional dependency files are only supported in level_3.
-    if [[ $(echo "$directory" | grep -o "^${path_sources}level_3/") != "" ]] ; then
+    if [[ $(echo "${directory}" | grep -o "^${path_sources}level_3/") != "" ]] ; then
       dependency_files="yes"
 
       # When the files don't exist bash treats the pattern as a literal file.
       # Do not loop through this wild-carded name (a file with the unexpanded name 'dependencies.*' is therefore not supported).
       for dependency_file in ${directory}/data/build/dependencies.* ; do
 
-        if [[ "${directory}/data/build/dependencies.*" == $dependency_file ]] ; then
+        if [[ "${directory}/data/build/dependencies.*" == ${dependency_file} ]] ; then
           dependency_files="no"
         fi
 
@@ -787,16 +787,16 @@ package_dependencies_individual() {
 
     for dependency_file in ${directory}/data/build/dependencies{,.*} ; do
 
-      if [[ ! -f $dependency_file ]] ; then
+      if [[ ! -f ${dependency_file} ]] ; then
 
-        if [[ $dependency_files == "yes" && "${directory}/data/build/dependencies" != $dependency_file ]] ; then
-          if [[ $verbosity != "quiet" && $verbosity != "error" ]] ; then
+        if [[ $dependency_files == "yes" && "${directory}/data/build/dependencies" != ${dependency_file} ]] ; then
+          if [[ ${verbosity} != "quiet" && ${verbosity} != "error" ]] ; then
             package_print_first
 
             echo -e "${c_warning}WARNING: The dependency file ${c_notice}${dependency_file}${c_warning} is not found.${c_reset}"
           fi
-        elif [[ $dependency_files == "no" && "${directory}/data/build/dependencies.*" != $dependency_file ]] ; then
-          if [[ $verbosity != "quiet" ]] ; then
+        elif [[ $dependency_files == "no" && "${directory}/data/build/dependencies.*" != ${dependency_file} ]] ; then
+          if [[ ${verbosity} != "quiet" ]] ; then
             package_print_first
 
             echo -e "${c_error}ERROR: Cannot build dependencies, failed to find ${c_notice}${dependency_file}${c_error} file(s).${c_reset}"
@@ -806,14 +806,14 @@ package_dependencies_individual() {
         continue
       fi
 
-      if [[ $dependency_file == "${directory}/data/build/dependencies" ]] ; then
+      if [[ ${dependency_file} == "${directory}/data/build/dependencies" ]] ; then
         dependency_suffix=
       else
-        dependency_suffix=$(echo $dependency_file | sed -e "s|^${directory}/data/build/dependencies||")
+        dependency_suffix=$(echo ${dependency_file} | sed -e "s|^${directory}/data/build/dependencies||")
       fi
 
       if [[ ! -f ${directory}/data/build/settings${dependency_suffix} ]] ; then
-        if [[ $verbosity != "quiet" ]] ; then
+        if [[ ${verbosity} != "quiet" ]] ; then
           package_print_first
 
           echo -e "${c_error}ERROR: Cannot build dependencies for ${c_reset}${c_notice}${name}${c_reset}${c_error}, failed to find ${c_notice}${directory}/data/build/settings${dependency_suffix}${c_error}.${c_reset}"
@@ -832,7 +832,7 @@ package_dependencies_individual() {
       dependencies_individual=
       has_thread=
 
-      dependencies=$(cat $dependency_file | sed -e "/^\s*#/d" -e "s|#\.*$||")
+      dependencies=$(cat ${dependency_file} | sed -e "/^\s*#/d" -e "s|#\.*$||")
 
       if [[ $(echo "$dependencies" | grep -o "\<f_thread\>") != "" ]] ; then
         has_thread="yes"
@@ -840,14 +840,14 @@ package_dependencies_individual() {
 
       for dependency in $dependencies ; do
 
-        if [[ $(echo "$dependency" | grep -o "^f_") != "" ]] ; then
+        if [[ $(echo "${dependency}" | grep -o "^f_") != "" ]] ; then
           level=level_0
-        elif [[ $(echo "$dependency" | grep -o "^fl_") != "" ]] ; then
+        elif [[ $(echo "${dependency}" | grep -o "^fl_") != "" ]] ; then
           level=level_1
-        elif [[ $(echo "$dependency" | grep -o "^fll_") != "" ]] ; then
+        elif [[ $(echo "${dependency}" | grep -o "^fll_") != "" ]] ; then
           level=level_2
         else
-          if [[ $verbosity != "quiet" && $verbosity != "error" ]] ; then
+          if [[ ${verbosity} != "quiet" && ${verbosity} != "error" ]] ; then
             package_print_first
 
             echo -e "${c_warning}WARNING: Failed to detect level for dependency ${c_notice}${dependency}${c_warning}.${c_reset}"
@@ -857,7 +857,7 @@ package_dependencies_individual() {
         fi
 
         if [[ ! -d ${path_sources}${level}/${dependency}/data/build/ ]] ; then
-          if [[ $verbosity != "quiet" ]] ; then
+          if [[ ${verbosity} != "quiet" ]] ; then
             package_print_first
 
             echo -e "${c_error}ERROR: Failed to find dependency data directory ${c_notice}${path_sources}${level}/${dependency}/data/build/${c_error}.${c_reset}"
@@ -875,12 +875,12 @@ package_dependencies_individual() {
 
         for sub_dependency in $sub_dependencies ; do
 
-          if [[ $(echo "$sub_dependency" | grep -o "^f_") != "" ]] ; then
+          if [[ $(echo "${sub_dependency}" | grep -o "^f_") != "" ]] ; then
             sub_level=level_0
-          elif [[ $(echo "$sub_dependency" | grep -o "^fl_") != "" ]] ; then
+          elif [[ $(echo "${sub_dependency}" | grep -o "^fl_") != "" ]] ; then
             sub_level=level_1
           else
-            if [[ $verbosity != "quiet" && $verbosity != "error" ]] ; then
+            if [[ ${verbosity} != "quiet" && ${verbosity} != "error" ]] ; then
               package_print_first
 
               echo -e "${c_warning}WARNING: Failed to detect level for sub-dependency ${c_notice}${sub_dependency}${c_warning}.${c_reset}"
@@ -890,7 +890,7 @@ package_dependencies_individual() {
           fi
 
           if [[ ! -d ${path_sources}${sub_level}/${sub_dependency}/data/build/ ]] ; then
-            if [[ $verbosity != "quiet" ]] ; then
+            if [[ ${verbosity} != "quiet" ]] ; then
               package_print_first
 
               echo -e "${c_error}ERROR: Failed to find dependency data directory ${c_notice}${path_sources}${sub_level}/${sub_dependency}/data/build/${c_error}.${c_reset}"
@@ -908,66 +908,66 @@ package_dependencies_individual() {
 
           for sub_sub_dependency in $sub_sub_dependencies ; do
 
-            if [[ $(echo "$sub_sub_dependency" | grep -o "^f_") != "" ]] ; then
+            if [[ $(echo "${sub_sub_dependency}" | grep -o "^f_") != "" ]] ; then
               sub_sub_level=level_0
             else
-              if [[ $verbosity != "quiet" && $verbosity != "error" ]] ; then
+              if [[ ${verbosity} != "quiet" && ${verbosity} != "error" ]] ; then
                 package_print_first
 
-                echo -e "${c_warning}WARNING: Failed to detect level for sub-sub-dependency ${c_notice}$sub_sub_dependency${c_warning}.${c_reset}"
+                echo -e "${c_warning}WARNING: Failed to detect level for sub-sub-dependency ${c_notice}${sub_sub_dependency}${c_warning}.${c_reset}"
               fi
 
               continue
             fi
 
-            package_dependencies_individual_append "$sub_sub_level" "$sub_sub_dependency"
+            package_dependencies_individual_append "${sub_sub_level}" "${sub_sub_dependency}"
           done
 
-          if [[ $failure != "" ]] ; then
+          if [[ ${failure} -eq 1 ]] ; then
             break;
           fi
 
-          package_dependencies_individual_append "$sub_level" "$sub_dependency"
+          package_dependencies_individual_append "${sub_level}" "${sub_dependency}"
 
-          if [[ $failure != "" ]] ; then
+          if [[ ${failure} -eq 1 ]] ; then
             break;
           fi
         done
 
-        if [[ $failure != "" ]] ; then
+        if [[ ${failure} -eq 1 ]] ; then
           break;
         fi
 
-        package_dependencies_individual_append "$level" "$dependency"
+        package_dependencies_individual_append "${level}" "${dependency}"
 
-        if [[ $failure != "" ]] ; then
+        if [[ ${failure} -eq 1 ]] ; then
           break;
         fi
       done
 
-      if [[ $failure != "" ]] ; then
+      if [[ ${failure} -eq 1 ]] ; then
         break;
       fi
 
-      if [[ $failure != "" ]] ; then
+      if [[ ${failure} -eq 1 ]] ; then
         break;
       fi
 
-      dependencies_individual=$(echo "$dependencies_individual" | sed -e 's|^[[:space:]]*||' -e 's|[[:space:]]*$||' -e 's|[[:space:]][[:space:]]*$| |')
-      if [[ $dependencies_individual != "" ]] ; then
-        if [[ $verbosity == "verbose" ]] ; then
-          echo -e " $dependencies_individual"
+      dependencies_individual=$(echo "${dependencies_individual}" | sed -e 's|^[[:space:]]*||' -e 's|[[:space:]]*$||' -e 's|[[:space:]][[:space:]]*$| |')
+      if [[ ${dependencies_individual} != "" ]] ; then
+        if [[ ${verbosity} == "verbose" ]] ; then
+          echo -e " ${dependencies_individual}"
         fi
 
-        dependencies_individual=" $dependencies_individual"
+        dependencies_individual=" ${dependencies_individual}"
       fi
 
       settings=${directory}/data/build/settings${dependency_suffix}
-      sed -i -e "s|^\s*build_libraries-individual[[:space:]].*\$|build_libraries-individual${dependencies_individual}|" $settings &&
-      sed -i -e "s|^\s*build_libraries-individual\$|build_libraries-individual${dependencies_individual}|" $settings
+      sed -i -e "s|^\s*build_libraries-individual[[:space:]].*\$|build_libraries-individual${dependencies_individual}|" ${settings} &&
+      sed -i -e "s|^\s*build_libraries-individual\$|build_libraries-individual${dependencies_individual}|" ${settings}
 
       if [[ $? -ne 0 ]] ; then
-        if [[ $verbosity != "quiet" ]] ; then
+        if [[ ${verbosity} != "quiet" ]] ; then
           package_print_first
 
           echo -e "${c_error}ERROR: Failed to update settings file ${c_notice}${settings}${c_error}.${c_reset}"
@@ -978,21 +978,21 @@ package_dependencies_individual() {
         break
       fi
 
-      if [[ $has_thread == "yes" && $dependencies_individual != "" && $(grep -o "^\s*build_libraries-individual_threadless\>" $settings) != "" ]] ; then
-        dependencies_individual_threadless=$(echo "$dependencies_individual" | sed -e "s| \-lf_thread\>||g")
+      if [[ $has_thread == "yes" && ${dependencies_individual} != "" && $(grep -o "^\s*build_libraries-individual_threadless\>" ${settings}) != "" ]] ; then
+        dependencies_individual_threadless=$(echo "${dependencies_individual}" | sed -e "s| \-lf_thread\>||g")
 
-        if [[ $verbosity == "verbose" ]] ; then
+        if [[ ${verbosity} == "verbose" ]] ; then
           package_print_first
 
-          echo -e " (threadless) $dependencies_individual_threadless"
+          echo -e " (threadless) ${dependencies_individual_threadless}"
         fi
 
         settings=${directory}/data/build/settings
-        sed -i -e "s|^\s*build_libraries-individual_threadless[[:space:]].*\$|build_libraries-individual_threadless${dependencies_individual_threadless}|" $settings &&
-        sed -i -e "s|^\s*build_libraries-individual_threadless\$|build_libraries-individual_threadless${dependencies_individual_threadless}|" $settings
+        sed -i -e "s|^\s*build_libraries-individual_threadless[[:space:]].*\$|build_libraries-individual_threadless${dependencies_individual_threadless}|" ${settings} &&
+        sed -i -e "s|^\s*build_libraries-individual_threadless\$|build_libraries-individual_threadless${dependencies_individual_threadless}|" ${settings}
 
         if [[ $? -ne 0 ]] ; then
-          if [[ $verbosity != "quiet" ]] ; then
+          if [[ ${verbosity} != "quiet" ]] ; then
             package_print_first
 
             echo -e "${c_error}ERROR: Failed to update settings file ${c_notice}${settings}${c_error}.${c_reset}"
@@ -1005,12 +1005,12 @@ package_dependencies_individual() {
       fi
 
       # All level 3 are expected to support all modes: individual, level, and monolithic.
-      if [[ $level_current == "3" ]] ; then
-        sed -i -e "s|^\s*build_libraries-level\>.*\$|build_libraries-level -lfll_2 -lfll_1 -lfll_0|" $settings &&
-        sed -i -e "s|^\s*build_libraries-level\$|build_libraries-level -lfll_2 -lfll_1 -lfll_0|" $settings
+      if [[ ${level_current} == "3" ]] ; then
+        sed -i -e "s|^\s*build_libraries-level\>.*\$|build_libraries-level -lfll_2 -lfll_1 -lfll_0|" ${settings} &&
+        sed -i -e "s|^\s*build_libraries-level\$|build_libraries-level -lfll_2 -lfll_1 -lfll_0|" ${settings}
 
         if [[ $? -ne 0 ]] ; then
-          if [[ $verbosity != "quiet" ]] ; then
+          if [[ ${verbosity} != "quiet" ]] ; then
             package_print_first
 
             echo -e "${c_error}ERROR: Failed to update settings file ${c_notice}${settings}${c_error}.${c_reset}"
@@ -1021,11 +1021,11 @@ package_dependencies_individual() {
           break
         fi
 
-        sed -i -e "s|^\s*build_libraries-monolithic\>.*\$|build_libraries-monolithic -lfll|" $settings &&
-        sed -i -e "s|^\s*build_libraries-monolithic\$|build_libraries-monolithic -lfll|" $settings
+        sed -i -e "s|^\s*build_libraries-monolithic\>.*\$|build_libraries-monolithic -lfll|" ${settings} &&
+        sed -i -e "s|^\s*build_libraries-monolithic\$|build_libraries-monolithic -lfll|" ${settings}
 
         if [[ $? -ne 0 ]] ; then
-          if [[ $verbosity != "quiet" ]] ; then
+          if [[ ${verbosity} != "quiet" ]] ; then
             package_print_first
 
             echo -e "${c_error}ERROR: Failed to update settings file ${c_notice}${settings}${c_error}.${c_reset}"
@@ -1038,16 +1038,16 @@ package_dependencies_individual() {
       fi
     done
 
-    if [[ $failure != "" ]] ; then
+    if [[ ${failure} -eq 1 ]] ; then
       break;
     fi
   done
 
-  if [[ $failure == "" ]] ; then
-    return 0
+  if [[ ${failure} -eq 1 ]] ; then
+    return 1
   fi
 
-  return 1
+  return 0
 }
 
 package_dependencies_individual_append() {
@@ -1057,8 +1057,8 @@ package_dependencies_individual_append() {
   local libraries=
 
   settings=${path_sources}${level}/${dependency}/data/build/settings
-  if [[ ! -f $settings ]] ; then
-    if [[ $verbosity != "quiet" ]] ; then
+  if [[ ! -f ${settings} ]] ; then
+    if [[ ${verbosity} != "quiet" ]] ; then
       package_print_first
 
       echo -e "${c_error}ERROR: Failed to find dependency settings file ${c_notice}${settings}${c_error}.${c_reset}"
@@ -1069,58 +1069,58 @@ package_dependencies_individual_append() {
     return 1
   fi
 
-  libraries=$(grep -o '^\s*build_sources_library\s.*$' $settings | sed -e 's|^\s*build_sources_library\>||' -e 's|^\s*||' -e 's|\s*$||')
+  libraries=$(grep -o '^\s*build_sources_library\s.*$' ${settings} | sed -e 's|^\s*build_sources_library\>||' -e 's|^\s*||' -e 's|\s*$||')
 
   if [[ $libraries != "" ]] ; then
-    if [[ $(echo -n $dependencies_individual | grep -o "\-l$dependency\>") == "" ]] ; then
+    if [[ $(echo -n ${dependencies_individual} | grep -o "\-l${dependency}\>") == "" ]] ; then
 
       if [[ "$(type -p sort)" != "" ]] ; then
-        if [[ $level == "level_0" ]] ; then
-          dependencies_0="-l$dependency $dependencies_0"
-          dependencies_0="$(for i in $dependencies_0; do echo $i ; done | sort)"
-          dependencies_0=$(echo $dependencies_0)
-        elif [[ $level == "level_1" ]] ; then
-          dependencies_1="-l$dependency $dependencies_1"
-          dependencies_1=" $(for i in $dependencies_1; do echo $i ; done | sort)"
-          dependencies_1=$(echo $dependencies_1)
+        if [[ ${level} == "level_0" ]] ; then
+          dependencies_0="-l${dependency} ${dependencies_0}"
+          dependencies_0="$(for i in ${dependencies_0}; do echo ${i} ; done | sort)"
+          dependencies_0=$(echo ${dependencies_0})
+        elif [[ ${level} == "level_1" ]] ; then
+          dependencies_1="-l${dependency} ${dependencies_1}"
+          dependencies_1=" $(for i in ${dependencies_1}; do echo ${i} ; done | sort)"
+          dependencies_1=$(echo ${dependencies_1})
         else
-          dependencies_2="-l$dependency $dependencies_2"
-          dependencies_2=" $(for i in $dependencies_2; do echo $i ; done | sort)"
-          dependencies_2=$(echo $dependencies_2)
+          dependencies_2="-l${dependency} ${dependencies_2}"
+          dependencies_2=" $(for i in ${dependencies_2}; do echo ${i} ; done | sort)"
+          dependencies_2=$(echo ${dependencies_2})
         fi
       else
 
         # Sort is not available, so do not bother trying to sort.
-        if [[ $level == "level_0" ]] ; then
-          dependencies_0="-l$dependency $dependencies_0"
-        elif [[ $level == "level_1" ]] ; then
-          dependencies_1="-l$dependency $dependencies_1"
+        if [[ ${level} == "level_0" ]] ; then
+          dependencies_0="-l${dependency} ${dependencies_0}"
+        elif [[ ${level} == "level_1" ]] ; then
+          dependencies_1="-l${dependency} ${dependencies_1}"
         else
-          dependencies_2="-l$dependency $dependencies_2"
+          dependencies_2="-l${dependency} ${dependencies_2}"
         fi
       fi
 
       dependencies_individual=
 
-      if [[ $dependencies_0 != "" ]] ; then
-        dependencies_individual="$dependencies_0"
+      if [[ ${dependencies_0} != "" ]] ; then
+        dependencies_individual="${dependencies_0}"
       fi
 
-      if [[ $dependencies_1 != "" ]] ; then
-        dependencies_individual="$dependencies_1 $dependencies_individual"
+      if [[ ${dependencies_1} != "" ]] ; then
+        dependencies_individual="${dependencies_1} ${dependencies_individual}"
       fi
 
-      if [[ $dependencies_2 != "" ]] ; then
-        dependencies_individual="$dependencies_2 $dependencies_individual"
+      if [[ ${dependencies_2} != "" ]] ; then
+        dependencies_individual="${dependencies_2} ${dependencies_individual}"
       fi
     fi
   fi
 
-  if [[ $failure == "" ]] ; then
-    return 0
+  if [[ ${failure} -eq 1 ]] ; then
+    return 1
   fi
 
-  return 1
+  return 0
 }
 
 package_dependencies_level() {
@@ -1134,19 +1134,19 @@ package_dependencies_level() {
 
   package_dependencies_level_update "level_0" ""
 
-  if [[ $failure == "" ]] ; then
+  if [[ ${failure} -eq 0 ]] ; then
     package_dependencies_level_update "level_1" " -lfll_0"
   fi
 
-  if [[ $failure == "" ]] ; then
+  if [[ ${failure} -eq 0 ]] ; then
     package_dependencies_level_update "level_2" " -lfll_1 -lfll_0"
   fi
 
-  if [[ $failure == "" ]] ; then
-    return 0
+  if [[ ${failure} -eq 1 ]] ; then
+    return 1
   fi
 
-  return 1
+  return 0
 }
 
 package_dependencies_level_update() {
@@ -1161,19 +1161,19 @@ package_dependencies_level_update() {
   local monolithic_libraries_threaded=
   local monolithic_headers_threaded=
 
-  if [[ $verbosity != "quiet" && $verbosity != "error" ]] ; then
+  if [[ ${verbosity} != "quiet" && ${verbosity} != "error" ]] ; then
     package_print_first_or_always
 
     echo -e "${c_highlight}Building Dependencies: ${c_notice}${level}${c_highlight}.${c_reset}"
   fi
 
-  for directory in $path_sources${level}/* ; do
+  for directory in ${path_sources}${level}/* ; do
 
-    name="$(echo $directory | sed -e "s|${path_sources}${level}/||")"
+    name="$(echo ${directory} | sed -e "s|${path_sources}${level}/||")"
 
     settings=${directory}/data/build/settings
-    if [[ ! -f $settings ]] ; then
-      if [[ $verbosity != "quiet" ]] ; then
+    if [[ ! -f ${settings} ]] ; then
+      if [[ ${verbosity} != "quiet" ]] ; then
         package_print_first
 
         echo -e "${c_error}ERROR: Failed to find settings file ${c_notice}${settings}${c_error}.${c_reset}"
@@ -1184,37 +1184,37 @@ package_dependencies_level_update() {
       return 1
     fi
 
-    libraries=$(grep -o '^\s*build_sources_library\s.*$' $settings | sed -e 's|^\s*build_sources_library\>||' -e 's|^\s*||' -e 's|\s*$||')
+    libraries=$(grep -o '^\s*build_sources_library\s.*$' ${settings} | sed -e 's|^\s*build_sources_library\>||' -e 's|^\s*||' -e 's|\s*$||')
 
     for library in $libraries ; do
 
-      if [[ $name == "f_thread" ]] ; then
-        level_sources_library_threaded="$level_sources_library_threaded $library"
-        monolithic_libraries_threaded="$monolithic_libraries_threaded ${level}/${library}"
+      if [[ ${name} == "f_thread" ]] ; then
+        level_sources_library_threaded="${level_sources_library_threaded} $library"
+        monolithic_libraries_threaded="${monolithic_libraries_threaded} ${level}/${library}"
       else
-        level_sources_library="$level_sources_library $library"
-        monolithic_libraries="$monolithic_libraries ${level}/${library}"
+        level_sources_library="${level_sources_library} $library"
+        monolithic_libraries="${monolithic_libraries} ${level}/${library}"
       fi
     done
 
-    headers=$(grep -o '^\s*build_sources_headers\s.*$' $settings | sed -e 's|^\s*build_sources_headers\>||' -e 's|^\s*||' -e 's|\s*$||')
+    headers=$(grep -o '^\s*build_sources_headers\s.*$' ${settings} | sed -e 's|^\s*build_sources_headers\>||' -e 's|^\s*||' -e 's|\s*$||')
 
     for header in $headers ; do
 
-      if [[ $name == "f_thread" ]] ; then
-        level_sources_headers_threaded="$level_sources_headers_threaded $header"
-        monolithic_headers_threaded="$monolithic_headers_threaded ${level}/${header}"
+      if [[ ${name} == "f_thread" ]] ; then
+        level_sources_headers_threaded="${level_sources_headers_threaded} $header"
+        monolithic_headers_threaded="${monolithic_headers_threaded} ${level}/${header}"
       else
-        level_sources_headers="$level_sources_headers $header"
-        monolithic_headers="$monolithic_headers ${level}/${header}"
+        level_sources_headers="${level_sources_headers} $header"
+        monolithic_headers="${monolithic_headers} ${level}/${header}"
       fi
     done
   done
 
   settings=${path_sources}/build/${level}/settings
 
-  if [[ ! -f $settings ]] ; then
-    if [[ $verbosity != "quiet" ]] ; then
+  if [[ ! -f ${settings} ]] ; then
+    if [[ ${verbosity} != "quiet" ]] ; then
       package_print_first
 
       echo -e "${c_error}ERROR: Failed to find settings file ${c_notice}${settings}${c_error}.${c_reset}"
@@ -1225,13 +1225,13 @@ package_dependencies_level_update() {
     return 1
   fi
 
-  sed -i -e "s|^\s*build_libraries-level\s.*\$|build_libraries-level${level_libraries}|" $settings &&
-  sed -i -e "s|^\s*build_libraries-level\$|build_libraries-level${level_libraries}|" $settings &&
-  sed -i -e "s|^\s*build_libraries-level_threadless\s.*\$|build_libraries-level_threadless${level_libraries}|" $settings &&
-  sed -i -e "s|^\s*build_libraries-level_threadless\$|build_libraries-level_threadless${level_libraries}|" $settings
+  sed -i -e "s|^\s*build_libraries-level\s.*\$|build_libraries-level${level_libraries}|" ${settings} &&
+  sed -i -e "s|^\s*build_libraries-level\$|build_libraries-level${level_libraries}|" ${settings} &&
+  sed -i -e "s|^\s*build_libraries-level_threadless\s.*\$|build_libraries-level_threadless${level_libraries}|" ${settings} &&
+  sed -i -e "s|^\s*build_libraries-level_threadless\$|build_libraries-level_threadless${level_libraries}|" ${settings}
 
   if [[ $? -ne 0 ]] ; then
-    if [[ $verbosity != "quiet" ]] ; then
+    if [[ ${verbosity} != "quiet" ]] ; then
       package_print_first
 
       echo -e "${c_error}ERROR: Failed to update libraries for settings file ${c_notice}${settings}${c_error}.${c_reset}"
@@ -1242,19 +1242,19 @@ package_dependencies_level_update() {
     return 1
   fi
 
-  level_sources_library=$(echo "$level_sources_library" | sed -e 's|^[[:space:]]*||' -e 's|[[:space:]]*$||')
-  if [[ $level_sources_library != "" ]] ; then
-    echo " $level_sources_library"
-    level_sources_library=" $level_sources_library"
+  level_sources_library=$(echo "${level_sources_library}" | sed -e 's|^[[:space:]]*||' -e 's|[[:space:]]*$||')
+  if [[ ${level_sources_library} != "" ]] ; then
+    echo " ${level_sources_library}"
+    level_sources_library=" ${level_sources_library}"
   fi
 
-  sed -i -e "s|^\s*build_sources_library\s.*\$|build_sources_library${level_sources_library}|" $settings &&
-  sed -i -e "s|^\s*build_sources_library\$|build_sources_library${level_sources_library}|" $settings &&
-  sed -i -e "s|^\s*build_sources_library-level\s.*\$|build_sources_library-level${level_sources_library_threaded}|" $settings &&
-  sed -i -e "s|^\s*build_sources_library-level\$|build_sources_library-level${level_sources_library_threaded}|" $settings
+  sed -i -e "s|^\s*build_sources_library\s.*\$|build_sources_library${level_sources_library}|" ${settings} &&
+  sed -i -e "s|^\s*build_sources_library\$|build_sources_library${level_sources_library}|" ${settings} &&
+  sed -i -e "s|^\s*build_sources_library-level\s.*\$|build_sources_library-level${level_sources_library_threaded}|" ${settings} &&
+  sed -i -e "s|^\s*build_sources_library-level\$|build_sources_library-level${level_sources_library_threaded}|" ${settings}
 
   if [[ $? -ne 0 ]] ; then
-    if [[ $verbosity != "quiet" ]] ; then
+    if [[ ${verbosity} != "quiet" ]] ; then
       package_print_first
 
       echo -e "${c_error}ERROR: Failed to update libraries for settings file ${c_notice}${settings}${c_error}.${c_reset}"
@@ -1265,19 +1265,19 @@ package_dependencies_level_update() {
     return 1
   fi
 
-  level_sources_headers=$(echo "$level_sources_headers" | sed -e 's|^[[:space:]]*||' -e 's|[[:space:]]*$||')
-  if [[ $level_sources_headers != "" ]] ; then
-    echo " $level_sources_headers"
-    level_sources_headers=" $level_sources_headers"
+  level_sources_headers=$(echo "${level_sources_headers}" | sed -e 's|^[[:space:]]*||' -e 's|[[:space:]]*$||')
+  if [[ ${level_sources_headers} != "" ]] ; then
+    echo " ${level_sources_headers}"
+    level_sources_headers=" ${level_sources_headers}"
   fi
 
-  sed -i -e "s|^\s*build_sources_headers\s.*\$|build_sources_headers${level_sources_headers}|" $settings &&
-  sed -i -e "s|^\s*build_sources_headers\$|build_sources_headers${level_sources_headers}|" $settings &&
-  sed -i -e "s|^\s*build_sources_headers-level\s.*\$|build_sources_headers-level${level_sources_headers_threaded}|" $settings &&
-  sed -i -e "s|^\s*build_sources_headers-level\$|build_sources_headers-level${level_sources_headers_threaded}|" $settings
+  sed -i -e "s|^\s*build_sources_headers\s.*\$|build_sources_headers${level_sources_headers}|" ${settings} &&
+  sed -i -e "s|^\s*build_sources_headers\$|build_sources_headers${level_sources_headers}|" ${settings} &&
+  sed -i -e "s|^\s*build_sources_headers-level\s.*\$|build_sources_headers-level${level_sources_headers_threaded}|" ${settings} &&
+  sed -i -e "s|^\s*build_sources_headers-level\$|build_sources_headers-level${level_sources_headers_threaded}|" ${settings}
 
   if [[ $? -ne 0 ]] ; then
-    if [[ $verbosity != "quiet" ]] ; then
+    if [[ ${verbosity} != "quiet" ]] ; then
       package_print_first
 
       echo -e "${c_error}ERROR: Failed to update headers for settings file ${c_notice}${settings}${c_error}.${c_reset}"
@@ -1288,24 +1288,24 @@ package_dependencies_level_update() {
     return 1
   fi
 
-  if [[ $level == "level_0" ]] ; then
-    level_0_libraries=$(echo "$monolithic_libraries" | sed -e 's|^[[:space:]]*||' -e 's|[[:space:]]*$||')
-    level_0_headers=$(echo "$monolithic_headers" | sed -e 's|^[[:space:]]*||' -e 's|[[:space:]]*$||')
+  if [[ ${level} == "level_0" ]] ; then
+    level_0_libraries=$(echo "${monolithic_libraries}" | sed -e 's|^[[:space:]]*||' -e 's|[[:space:]]*$||')
+    level_0_headers=$(echo "${monolithic_headers}" | sed -e 's|^[[:space:]]*||' -e 's|[[:space:]]*$||')
 
-    level_0_libraries_threaded=$(echo "$monolithic_libraries_threaded" | sed -e 's|^[[:space:]]*||' -e 's|[[:space:]]*$||')
-    level_0_headers_threaded=$(echo "$monolithic_headers_threaded" | sed -e 's|^[[:space:]]*||' -e 's|[[:space:]]*$||')
-  elif [[ $level == "level_1" ]] ; then
-    level_1_libraries=$(echo "$monolithic_libraries" | sed -e 's|^[[:space:]]*||' -e 's|[[:space:]]*$||')
-    level_1_headers=$(echo "$monolithic_headers" | sed -e 's|^[[:space:]]*||' -e 's|[[:space:]]*$||')
+    level_0_libraries_threaded=$(echo "${monolithic_libraries_threaded}" | sed -e 's|^[[:space:]]*||' -e 's|[[:space:]]*$||')
+    level_0_headers_threaded=$(echo "${monolithic_headers_threaded}" | sed -e 's|^[[:space:]]*||' -e 's|[[:space:]]*$||')
+  elif [[ ${level} == "level_1" ]] ; then
+    level_1_libraries=$(echo "${monolithic_libraries}" | sed -e 's|^[[:space:]]*||' -e 's|[[:space:]]*$||')
+    level_1_headers=$(echo "${monolithic_headers}" | sed -e 's|^[[:space:]]*||' -e 's|[[:space:]]*$||')
 
-    level_1_libraries_threaded=$(echo "$monolithic_libraries_threaded" | sed -e 's|^[[:space:]]*||' -e 's|[[:space:]]*$||')
-    level_1_headers_threaded=$(echo "$monolithic_headers_threaded" | sed -e 's|^[[:space:]]*||' -e 's|[[:space:]]*$||')
-  elif [[ $level == "level_2" ]] ; then
-    level_2_libraries=$(echo "$monolithic_libraries" | sed -e 's|^[[:space:]]*||' -e 's|[[:space:]]*$||')
-    level_2_headers=$(echo "$monolithic_headers" | sed -e 's|^[[:space:]]*||' -e 's|[[:space:]]*$||')
+    level_1_libraries_threaded=$(echo "${monolithic_libraries_threaded}" | sed -e 's|^[[:space:]]*||' -e 's|[[:space:]]*$||')
+    level_1_headers_threaded=$(echo "${monolithic_headers_threaded}" | sed -e 's|^[[:space:]]*||' -e 's|[[:space:]]*$||')
+  elif [[ ${level} == "level_2" ]] ; then
+    level_2_libraries=$(echo "${monolithic_libraries}" | sed -e 's|^[[:space:]]*||' -e 's|[[:space:]]*$||')
+    level_2_headers=$(echo "${monolithic_headers}" | sed -e 's|^[[:space:]]*||' -e 's|[[:space:]]*$||')
 
-    level_2_libraries_threaded=$(echo "$monolithic_libraries_threaded" | sed -e 's|^[[:space:]]*||' -e 's|[[:space:]]*$||')
-    level_2_headers_threaded=$(echo "$monolithic_headers_threaded" | sed -e 's|^[[:space:]]*||' -e 's|[[:space:]]*$||')
+    level_2_libraries_threaded=$(echo "${monolithic_libraries_threaded}" | sed -e 's|^[[:space:]]*||' -e 's|[[:space:]]*$||')
+    level_2_headers_threaded=$(echo "${monolithic_headers_threaded}" | sed -e 's|^[[:space:]]*||' -e 's|[[:space:]]*$||')
   fi
 
   return 0
@@ -1317,117 +1317,117 @@ package_dependencies_monolithic() {
   local monolithic_headers=""
   local monolithic_headers_threaded=""
 
-  if [[ $verbosity != "quiet" && $verbosity != "error" ]] ; then
+  if [[ ${verbosity} != "quiet" && ${verbosity} != "error" ]] ; then
     package_print_first_or_always
 
     echo -e "${c_highlight}Building Dependencies: ${c_notice}monolithic${c_highlight}.${c_reset}"
   fi
 
-  if [[ $level_0_libraries != "" ]] ; then
-    monolithic_libraries="$level_0_libraries"
+  if [[ ${level_0_libraries} != "" ]] ; then
+    monolithic_libraries="${level_0_libraries}"
   fi
 
-  if [[ $level_0_libraries_threaded != "" ]] ; then
-    monolithic_libraries_threaded="$level_0_libraries_threaded"
+  if [[ ${level_0_libraries_threaded} != "" ]] ; then
+    monolithic_libraries_threaded="${level_0_libraries_threaded}"
   fi
 
-  if [[ $level_0_headers != "" ]] ; then
-    monolithic_headers="$level_0_headers"
+  if [[ ${level_0_headers} != "" ]] ; then
+    monolithic_headers="${level_0_headers}"
   fi
 
-  if [[ $level_0_headers_threaded != "" ]] ; then
-    monolithic_headers_threaded="$level_0_headers_threaded"
+  if [[ ${level_0_headers_threaded} != "" ]] ; then
+    monolithic_headers_threaded="${level_0_headers_threaded}"
   fi
 
-  if [[ $level_1_libraries != "" ]] ; then
-    if [[ $monolithic_libraries == "" ]] ; then
-      monolithic_libraries="$level_1_libraries"
+  if [[ ${level_1_libraries} != "" ]] ; then
+    if [[ ${monolithic_libraries} == "" ]] ; then
+      monolithic_libraries="${level_1_libraries}"
     else
-      monolithic_libraries="$monolithic_libraries $level_1_libraries"
+      monolithic_libraries="${monolithic_libraries} ${level_1_libraries}"
     fi
   fi
 
-  if [[ $level_1_libraries_threaded != "" ]] ; then
-    if [[ $monolithic_libraries_threaded == "" ]] ; then
-      monolithic_libraries_threaded="$level_1_libraries_threaded"
+  if [[ ${level_1_libraries_threaded} != "" ]] ; then
+    if [[ ${monolithic_libraries_threaded} == "" ]] ; then
+      monolithic_libraries_threaded="${level_1_libraries_threaded}"
     else
-      monolithic_libraries_threaded="$monolithic_libraries_threaded $level_1_libraries_threaded"
+      monolithic_libraries_threaded="${monolithic_libraries_threaded} ${level_1_libraries_threaded}"
     fi
   fi
 
-  if [[ $level_1_headers != "" ]] ; then
-    if [[ $monolithic_libraries == "" ]] ; then
-      monolithic_headers="$level_1_headers"
+  if [[ ${level_1_headers} != "" ]] ; then
+    if [[ ${monolithic_libraries} == "" ]] ; then
+      monolithic_headers="${level_1_headers}"
     else
-      monolithic_headers="$monolithic_headers $level_1_headers"
+      monolithic_headers="${monolithic_headers} ${level_1_headers}"
     fi
   fi
 
-  if [[ $level_1_headers_threaded != "" ]] ; then
-    if [[ $monolithic_libraries_threaded == "" ]] ; then
-      monolithic_headers_threaded="$level_1_headers_threaded"
+  if [[ ${level_1_headers_threaded} != "" ]] ; then
+    if [[ ${monolithic_libraries_threaded} == "" ]] ; then
+      monolithic_headers_threaded="${level_1_headers_threaded}"
     else
-      monolithic_headers_threaded="$monolithic_headers_threaded $level_1_headers_threaded"
+      monolithic_headers_threaded="${monolithic_headers_threaded} ${level_1_headers_threaded}"
     fi
   fi
 
-  if [[ $level_2_libraries != "" ]] ; then
-    if [[ $monolithic_libraries == "" ]] ; then
-      monolithic_libraries="$level_2_libraries"
+  if [[ ${level_2_libraries} != "" ]] ; then
+    if [[ ${monolithic_libraries} == "" ]] ; then
+      monolithic_libraries="${level_2_libraries}"
     else
-      monolithic_libraries="$monolithic_libraries $level_2_libraries"
+      monolithic_libraries="${monolithic_libraries} ${level_2_libraries}"
     fi
   fi
 
-  if [[ $level_2_libraries_threaded != "" ]] ; then
-    if [[ $monolithic_libraries_threaded == "" ]] ; then
-      monolithic_libraries_threaded="$level_2_libraries_threaded"
+  if [[ ${level_2_libraries_threaded} != "" ]] ; then
+    if [[ ${monolithic_libraries_threaded} == "" ]] ; then
+      monolithic_libraries_threaded="${level_2_libraries_threaded}"
     else
-      monolithic_libraries_threaded="$monolithic_libraries_threaded $level_2_libraries_threaded"
+      monolithic_libraries_threaded="${monolithic_libraries_threaded} ${level_2_libraries_threaded}"
     fi
   fi
 
-  if [[ $level_2_headers != "" ]] ; then
-    if [[ $monolithic_libraries == "" ]] ; then
-      monolithic_headers="$level_2_headers"
+  if [[ ${level_2_headers} != "" ]] ; then
+    if [[ ${monolithic_libraries} == "" ]] ; then
+      monolithic_headers="${level_2_headers}"
     else
-      monolithic_headers="$monolithic_headers $level_2_headers"
+      monolithic_headers="${monolithic_headers} ${level_2_headers}"
     fi
   fi
 
-  if [[ $level_2_headers_threaded != "" ]] ; then
-    if [[ $monolithic_libraries_threaded == "" ]] ; then
-      monolithic_headers_threaded="$level_2_headers_threaded"
+  if [[ ${level_2_headers_threaded} != "" ]] ; then
+    if [[ ${monolithic_libraries_threaded} == "" ]] ; then
+      monolithic_headers_threaded="${level_2_headers_threaded}"
     else
-      monolithic_headers_threaded="$monolithic_headers_threaded $level_2_headers_threaded"
+      monolithic_headers_threaded="${monolithic_headers_threaded} ${level_2_headers_threaded}"
     fi
   fi
 
   settings=${path_sources}/build/monolithic/settings
 
-  if [[ $monolithic_libraries != "" ]] ; then
-    if [[ $verbosity != "quiet" && $verbosity != "error" ]] ; then
-      echo " $monolithic_libraries"
+  if [[ ${monolithic_libraries} != "" ]] ; then
+    if [[ ${verbosity} != "quiet" && ${verbosity} != "error" ]] ; then
+      echo " ${monolithic_libraries}"
     fi
 
-    monolithic_libraries=" $monolithic_libraries"
+    monolithic_libraries=" ${monolithic_libraries}"
   fi
 
-  if [[ $monolithic_libraries_threaded != "" ]] ; then
-    if [[ $verbosity != "quiet" && $verbosity != "error" ]] ; then
-      echo " (threaded) $monolithic_libraries_threaded"
+  if [[ ${monolithic_libraries_threaded} != "" ]] ; then
+    if [[ ${verbosity} != "quiet" && ${verbosity} != "error" ]] ; then
+      echo " (threaded) ${monolithic_libraries_threaded}"
     fi
 
-    monolithic_libraries_threaded=" $monolithic_libraries_threaded"
+    monolithic_libraries_threaded=" ${monolithic_libraries_threaded}"
   fi
 
-  sed -i -e "s|^\s*build_sources_library\s.*\$|build_sources_library${monolithic_libraries}|" $settings &&
-  sed -i -e "s|^\s*build_sources_library\$|build_sources_library${monolithic_libraries}|" $settings &&
-  sed -i -e "s|^\s*build_sources_library-monolithic\s.*\$|build_sources_library-monolithic${monolithic_libraries_threaded}|" $settings &&
-  sed -i -e "s|^\s*build_sources_library-monolithic\$|build_sources_library-monolithic${monolithic_libraries_threaded}|" $settings
+  sed -i -e "s|^\s*build_sources_library\s.*\$|build_sources_library${monolithic_libraries}|" ${settings} &&
+  sed -i -e "s|^\s*build_sources_library\$|build_sources_library${monolithic_libraries}|" ${settings} &&
+  sed -i -e "s|^\s*build_sources_library-monolithic\s.*\$|build_sources_library-monolithic${monolithic_libraries_threaded}|" ${settings} &&
+  sed -i -e "s|^\s*build_sources_library-monolithic\$|build_sources_library-monolithic${monolithic_libraries_threaded}|" ${settings}
 
   if [[ $? -ne 0 ]] ; then
-    if [[ $verbosity != "quiet" ]] ; then
+    if [[ ${verbosity} != "quiet" ]] ; then
       package_print_first
 
       echo -e "${c_error}ERROR: Failed to update libraries for settings file ${c_notice}${settings}${c_error}.${c_reset}"
@@ -1438,29 +1438,29 @@ package_dependencies_monolithic() {
     return 1
   fi
 
-  if [[ $monolithic_headers != "" ]] ; then
-    if [[ $verbosity != "quiet" && $verbosity != "error" ]] ; then
-      echo " $monolithic_headers"
+  if [[ ${monolithic_headers} != "" ]] ; then
+    if [[ ${verbosity} != "quiet" && ${verbosity} != "error" ]] ; then
+      echo " ${monolithic_headers}"
     fi
 
-    monolithic_headers=" $monolithic_headers"
+    monolithic_headers=" ${monolithic_headers}"
   fi
 
-  if [[ $monolithic_headers_threaded != "" ]] ; then
-    if [[ $verbosity != "quiet" && $verbosity != "error" ]] ; then
-      echo " (threaded) $monolithic_headers_threaded"
+  if [[ ${monolithic_headers_threaded} != "" ]] ; then
+    if [[ ${verbosity} != "quiet" && ${verbosity} != "error" ]] ; then
+      echo " (threaded) ${monolithic_headers_threaded}"
     fi
 
-    monolithic_headers_threaded=" $monolithic_headers_threaded"
+    monolithic_headers_threaded=" ${monolithic_headers_threaded}"
   fi
 
-  sed -i -e "s|^\s*build_sources_headers\s.*\$|build_sources_headers${monolithic_headers}|" $settings &&
-  sed -i -e "s|^\s*build_sources_headers\$|build_sources_headers${monolithic_headers}|" $settings &&
-  sed -i -e "s|^\s*build_sources_headers-monolithic\s.*\$|build_sources_headers-monolithic${monolithic_headers_threaded}|" $settings &&
-  sed -i -e "s|^\s*build_sources_headers-monolithic\$|build_sources_headers-monolithic${monolithic_headers_threaded}|" $settings
+  sed -i -e "s|^\s*build_sources_headers\s.*\$|build_sources_headers${monolithic_headers}|" ${settings} &&
+  sed -i -e "s|^\s*build_sources_headers\$|build_sources_headers${monolithic_headers}|" ${settings} &&
+  sed -i -e "s|^\s*build_sources_headers-monolithic\s.*\$|build_sources_headers-monolithic${monolithic_headers_threaded}|" ${settings} &&
+  sed -i -e "s|^\s*build_sources_headers-monolithic\$|build_sources_headers-monolithic${monolithic_headers_threaded}|" ${settings}
 
   if [[ $? -ne 0 ]] ; then
-    if [[ $verbosity != "quiet" ]] ; then
+    if [[ ${verbosity} != "quiet" ]] ; then
       package_print_first
 
       echo -e "${c_error}ERROR: Failed to update headers for settings file ${c_notice}${settings}${c_error}.${c_reset}"
@@ -1477,15 +1477,15 @@ package_dependencies_monolithic() {
 package_operation_clean() {
   local i=
 
-  if [[ $verbosity != "quiet" && $verbosity != "error" ]] ; then
+  if [[ ${verbosity} != "quiet" && ${verbosity} != "error" ]] ; then
     package_print_first_or_always
 
     echo -e "${c_highlight}Cleaning Package Directory '${c_reset}${c_notice}${path_destination}${c_reset}${c_highlight}'.${c_reset}"
   fi
 
-  if [[ $mode_individual == "yes" ]] ; then
+  if [[ ${mode_individual} == "yes" ]] ; then
     if [[ -d ${path_destination}individual ]] ; then
-      rm $verbose_common -Rf ${path_destination}individual
+      rm ${verbose_common} -Rf ${path_destination}individual
 
       if [[ $? -ne 0 ]] ; then
         let failure=1
@@ -1494,16 +1494,16 @@ package_operation_clean() {
       fi
     fi
 
-    if [[ $verbosity != "quiet" && $verbosity != "error" ]] ; then
+    if [[ ${verbosity} != "quiet" && ${verbosity} != "error" ]] ; then
       package_print_first_or_always
 
       echo "Cleaned '${path_destination}individual'."
     fi
   fi
 
-  if [[ $mode_level == "yes" ]] ; then
+  if [[ ${mode_level} == "yes" ]] ; then
     if [[ -d ${path_destination}level ]] ; then
-      rm $verbose_common -Rf ${path_destination}level
+      rm ${verbose_common} -Rf ${path_destination}level
 
       if [[ $? -ne 0 ]] ; then
         let failure=1
@@ -1512,16 +1512,16 @@ package_operation_clean() {
       fi
     fi
 
-    if [[ $verbosity != "quiet" && $verbosity != "error" ]] ; then
+    if [[ ${verbosity} != "quiet" && ${verbosity} != "error" ]] ; then
       package_print_first_or_always
 
       echo "Cleaned '${path_destination}level'."
     fi
   fi
 
-  if [[ $mode_monolithic == "yes" ]] ; then
+  if [[ ${mode_monolithic} == "yes" ]] ; then
     if [[ -d ${path_destination}monolithic ]] ; then
-      rm $verbose_common -Rf ${path_destination}monolithic
+      rm ${verbose_common} -Rf ${path_destination}monolithic
 
       if [[ $? -ne 0 ]] ; then
         let failure=1
@@ -1530,16 +1530,16 @@ package_operation_clean() {
       fi
     fi
 
-    if [[ $verbosity != "quiet" && $verbosity != "error" ]] ; then
+    if [[ ${verbosity} != "quiet" && ${verbosity} != "error" ]] ; then
       package_print_first_or_always
 
       echo "Cleaned '${path_destination}monolithic'."
     fi
   fi
 
-  if [[ $mode_program == "yes" ]] ; then
+  if [[ ${mode_program} == "yes" ]] ; then
     if [[ -d ${path_destination}program ]] ; then
-      rm $verbose_common -Rf ${path_destination}program
+      rm ${verbose_common} -Rf ${path_destination}program
 
       if [[ $? -ne 0 ]] ; then
         let failure=1
@@ -1548,20 +1548,20 @@ package_operation_clean() {
       fi
     fi
 
-    if [[ $verbosity != "quiet" && $verbosity != "error" ]] ; then
+    if [[ ${verbosity} != "quiet" && ${verbosity} != "error" ]] ; then
       package_print_first_or_always
 
       echo "Cleaned '${path_destination}program'."
     fi
   fi
 
-  if [[ $mode_stand_alone != "" ]] ; then
+  if [[ ${mode_stand_alone} != "" ]] ; then
     if [[ -d ${path_destination}stand_alone ]] ; then
 
-      for i in $mode_stand_alone ; do
+      for i in ${mode_stand_alone} ; do
 
         if [[ -d ${path_destination}stand_alone/${prepend}${i}-${version}/ ]] ; then
-          rm $verbose_common -Rf ${path_destination}stand_alone/${prepend}${i}-${version}/
+          rm ${verbose_common} -Rf ${path_destination}stand_alone/${prepend}${i}-${version}/
 
           if [[ $? -ne 0 ]] ; then
             let failure=1
@@ -1570,16 +1570,16 @@ package_operation_clean() {
           fi
         fi
 
-        if [[ $verbosity != "quiet" && $verbosity != "error" ]] ; then
+        if [[ ${verbosity} != "quiet" && ${verbosity} != "error" ]] ; then
           package_print_first_or_always
 
           echo "Cleaned '${path_destination}stand_alone/${prepend}${i}-${version}/'."
         fi
       done
 
-      rmdir $verbose_common --ignore-fail-on-non-empty ${path_destination}stand_alone
+      rmdir ${verbose_common} --ignore-fail-on-non-empty ${path_destination}stand_alone
 
-      if [[ $verbosity != "quiet" && $verbosity != "error" ]] ; then
+      if [[ ${verbosity} != "quiet" && ${verbosity} != "error" ]] ; then
         package_print_first_or_always
 
         echo "Cleaned '${path_destination}stand_alone'."
@@ -1593,13 +1593,13 @@ package_operation_clean() {
 package_operation_copy_package() {
 
   if [[ -d ${package}sources/data/ ]] ; then
-    cp $verbose_common -R ${package}sources/data ${package}
+    cp ${verbose_common} -R ${package}sources/data ${package}
 
     if [[ $? -ne 0 ]] ; then
-      if [[ $verbosity != "quiet" ]] ; then
+      if [[ ${verbosity} != "quiet" ]] ; then
         package_print_first
 
-        echo -e "${c_error}ERROR: Failed to copy the data directory ${c_notice}${package}sources/data${c_error} to ${c_notice}$package${c_error}.${c_reset}"
+        echo -e "${c_error}ERROR: Failed to copy the data directory ${c_notice}${package}sources/data${c_error} to ${c_notice}${package}${c_error}.${c_reset}"
       fi
 
       let failure=1
@@ -1607,10 +1607,10 @@ package_operation_copy_package() {
       return 1
     fi
 
-    rm $verbose_common -Rf ${package}sources/data
+    rm ${verbose_common} -Rf ${package}sources/data
 
     if [[ $? -ne 0 ]] ; then
-      if [[ $verbosity != "quiet" ]] ; then
+      if [[ ${verbosity} != "quiet" ]] ; then
         package_print_first
 
         echo -e "${c_error}ERROR: Failed to remove directory ${c_notice}${package}sources/data${c_error}.${c_reset}"
@@ -1625,10 +1625,10 @@ package_operation_copy_package() {
   fi
 
   if [[ -d ${package}sources/documents/ ]] ; then
-    cp $verbose_common -R ${package}sources/documents/ ${package}
+    cp ${verbose_common} -R ${package}sources/documents/ ${package}
 
     if [[ $? -ne 0 ]] ; then
-      if [[ $verbosity != "quiet" ]] ; then
+      if [[ ${verbosity} != "quiet" ]] ; then
         package_print_first
 
         echo -e "${c_error}ERROR: Failed to move sources documents directory ${c_notice}${path_sources}sources/documents${c_error} to ${c_notice}${package}${c_error}.${c_reset}"
@@ -1639,10 +1639,10 @@ package_operation_copy_package() {
       return 1
     fi
 
-    rm $verbose_common -Rf ${package}sources/documents/
+    rm ${verbose_common} -Rf ${package}sources/documents/
 
     if [[ $? -ne 0 ]] ; then
-      if [[ $verbosity != "quiet" ]] ; then
+      if [[ ${verbosity} != "quiet" ]] ; then
         package_print_first
 
         echo -e "${c_error}ERROR: Failed to remove sources documents directory ${c_notice}${path_sources}sources/documents${c_error} to ${c_notice}${package}${c_error}.${c_reset}"
@@ -1655,10 +1655,10 @@ package_operation_copy_package() {
   fi
 
   if [[ -d ${package}sources/licenses/ ]] ; then
-    cp $verbose_common -R ${package}sources/licenses/ ${package}
+    cp ${verbose_common} -R ${package}sources/licenses/ ${package}
 
     if [[ $? -ne 0 ]] ; then
-      if [[ $verbosity != "quiet" ]] ; then
+      if [[ ${verbosity} != "quiet" ]] ; then
         package_print_first
 
         echo -e "${c_error}ERROR: Failed to move sources licenses directory ${c_notice}${path_sources}sources/licenses${c_error} to ${c_notice}${package}${c_error}.${c_reset}"
@@ -1669,10 +1669,10 @@ package_operation_copy_package() {
       return 1
     fi
 
-    rm $verbose_common -Rf ${package}sources/licenses/
+    rm ${verbose_common} -Rf ${package}sources/licenses/
 
     if [[ $? -ne 0 ]] ; then
-      if [[ $verbosity != "quiet" ]] ; then
+      if [[ ${verbosity} != "quiet" ]] ; then
         package_print_first
 
         echo -e "${c_error}ERROR: Failed to remove sources licenses directory ${c_notice}${path_sources}sources/licenses${c_error} to ${c_notice}${package}${c_error}.${c_reset}"
@@ -1685,10 +1685,10 @@ package_operation_copy_package() {
   fi
 
   if [[ -d ${package}sources/specifications/ ]] ; then
-    cp $verbose_common -R ${package}sources/specifications/ ${package}
+    cp ${verbose_common} -R ${package}sources/specifications/ ${package}
 
     if [[ $? -ne 0 ]] ; then
-      if [[ $verbosity != "quiet" ]] ; then
+      if [[ ${verbosity} != "quiet" ]] ; then
         package_print_first
 
         echo -e "${c_error}ERROR: Failed to move sources specifications directory ${c_notice}${path_sources}sources/specifications${c_error} to ${c_notice}${package}${c_error}.${c_reset}"
@@ -1696,13 +1696,13 @@ package_operation_copy_package() {
 
       let failure=1
 
-      return $failure
+      return ${failure}
     fi
 
-    rm $verbose_common -Rf ${package}sources/specifications/
+    rm ${verbose_common} -Rf ${package}sources/specifications/
 
     if [[ $? -ne 0 ]] ; then
-      if [[ $verbosity != "quiet" ]] ; then
+      if [[ ${verbosity} != "quiet" ]] ; then
         package_print_first
 
         echo -e "${c_error}ERROR: Failed to remove sources specifications directory ${c_notice}${path_sources}sources/specifications${c_error} to ${c_notice}${package}${c_error}.${c_reset}"
@@ -1715,10 +1715,10 @@ package_operation_copy_package() {
   fi
 
   if [[ -d ${package}sources/tests/ ]] ; then
-    cp $verbose_common -R ${package}sources/tests/ ${package}
+    cp ${verbose_common} -R ${package}sources/tests/ ${package}
 
     if [[ $? -ne 0 ]] ; then
-      if [[ $verbosity != "quiet" ]] ; then
+      if [[ ${verbosity} != "quiet" ]] ; then
         package_print_first
 
         echo -e "${c_error}ERROR: Failed to move sources tests directory ${c_notice}${path_sources}sources/tests${c_error} to ${c_notice}${package}${c_error}.${c_reset}"
@@ -1729,10 +1729,10 @@ package_operation_copy_package() {
       return 1
     fi
 
-    rm $verbose_common -Rf ${package}sources/tests/
+    rm ${verbose_common} -Rf ${package}sources/tests/
 
     if [[ $? -ne 0 ]] ; then
-      if [[ $verbosity != "quiet" ]] ; then
+      if [[ ${verbosity} != "quiet" ]] ; then
         package_print_first
 
         echo -e "${c_error}ERROR: Failed to remove sources tests directory ${c_notice}${path_sources}sources/tests${c_error} to ${c_notice}${package}${c_error}.${c_reset}"
@@ -1761,12 +1761,12 @@ package_operation_create_config_stubs() {
     return 0
   fi
 
-  if [[ $language == "c" && ! -f ${package}sources/c/config.c ]] ; then
+  if [[ ${language} == "c" && ! -f ${package}sources/c/config.c ]] ; then
     if [[ $(grep -soP '^\s*\bbuild_sources_program\b\s+\S' ${package}data/build/settings) != "" ]] ; then
       sed -i -E -e "s|^\s*\bbuild_sources_program\s+|&config.c |" ${package}data/build/settings
 
       if [[ $? -ne 0 ]] ; then
-        if [[ $verbosity != "quiet" ]] ; then
+        if [[ ${verbosity} != "quiet" ]] ; then
           package_print_first
 
           echo -e "${c_error}ERROR: Failed to insert the config.c into ${c_notice}${package}data/build/settings${c_error}.${c_reset}"
@@ -1774,13 +1774,13 @@ package_operation_create_config_stubs() {
 
         let failure=1
 
-        return $failure
+        return ${failure}
       fi
     elif [[ $(grep -soP '^\s*\bbuild_sources_library\b\s+\S' ${package}data/build/settings) != "" ]] ; then
       sed -i -E -e "s|^\s*\bbuild_sources_library\s+|&config.c |" ${package}data/build/settings
 
       if [[ $? -ne 0 ]] ; then
-        if [[ $verbosity != "quiet" ]] ; then
+        if [[ ${verbosity} != "quiet" ]] ; then
           package_print_first
 
           echo -e "${c_error}ERROR: Failed to insert the config.c into ${c_notice}${package}data/build/settings${c_error}.${c_reset}"
@@ -1788,7 +1788,7 @@ package_operation_create_config_stubs() {
 
         let failure=1
 
-        return $failure
+        return ${failure}
       fi
     fi
 
@@ -1797,7 +1797,7 @@ package_operation_create_config_stubs() {
       echo "#include \"config.h\"" >> ${package}sources/c/config.c
 
       if [[ $? -ne 0 ]] ; then
-        if [[ $verbosity != "quiet" ]] ; then
+        if [[ ${verbosity} != "quiet" ]] ; then
           package_print_first
 
           echo -e "${c_error}ERROR: Failed to create the config.c at ${c_notice}${package}sources/c/config.c${c_error}.${c_reset}"
@@ -1805,15 +1805,15 @@ package_operation_create_config_stubs() {
 
         let failure=1
 
-        return $failure
+        return ${failure}
       fi
     fi
-  elif [[ $language == "c++" && ! -f ${package}sources/c/config.cpp ]] ; then
+  elif [[ ${language} == "c++" && ! -f ${package}sources/c/config.cpp ]] ; then
     if [[ $(grep -soP '^\s*\bbuild_sources_program\b\s+\S' ${package}data/build/settings) != "" ]] ; then
       sed -i -E -e "s|^\s*\bbuild_sources_program\s+|&config.cpp |" ${package}data/build/settings
 
       if [[ $? -ne 0 ]] ; then
-        if [[ $verbosity != "quiet" ]] ; then
+        if [[ ${verbosity} != "quiet" ]] ; then
           package_print_first
 
           echo -e "${c_error}ERROR: Failed to insert the config.cpp into ${c_notice}${package}data/build/settings${c_error}.${c_reset}"
@@ -1821,13 +1821,13 @@ package_operation_create_config_stubs() {
 
         let failure=1
 
-        return $failure
+        return ${failure}
       fi
     elif [[ $(grep -soP '^\s*\bbuild_sources_library\b\s+\S' ${package}data/build/settings) != "" ]] ; then
       sed -i -E -e "s|^\s*\bbuild_sources_library\s+|&config.cpp |" ${package}data/build/settings
 
       if [[ $? -ne 0 ]] ; then
-        if [[ $verbosity != "quiet" ]] ; then
+        if [[ ${verbosity} != "quiet" ]] ; then
           package_print_first
 
           echo -e "${c_error}ERROR: Failed to insert the config.cpp into ${c_notice}${package}data/build/settings${c_error}.${c_reset}"
@@ -1835,7 +1835,7 @@ package_operation_create_config_stubs() {
 
         let failure=1
 
-        return $failure
+        return ${failure}
       fi
     fi
 
@@ -1844,7 +1844,7 @@ package_operation_create_config_stubs() {
       echo "#include \"config.h\"" >> ${package}sources/c++/config.cpp
 
       if [[ $? -ne 0 ]] ; then
-        if [[ $verbosity != "quiet" ]] ; then
+        if [[ ${verbosity} != "quiet" ]] ; then
           package_print_first
 
           echo -e "${c_error}ERROR: Failed to create the config.cpp at ${c_notice}${package}sources/c++/config.cpp${c_error}.${c_reset}"
@@ -1852,17 +1852,17 @@ package_operation_create_config_stubs() {
 
         let failure=1
 
-        return $failure
+        return ${failure}
       fi
     fi
   fi
 
-  if [[ ( $language == "c" && ! -f ${package}sources/c/config.h ) || ( $language == "c++" && ! -f ${package}sources/c++/config.h ) ]] ; then
+  if [[ ( ${language} == "c" && ! -f ${package}sources/c/config.h ) || ( ${language} == "c++" && ! -f ${package}sources/c++/config.h ) ]] ; then
     if [[ $(grep -soP '^\s*\bbuild_language\b\s+c\s*$' ${package}data/build/settings) != "" ]] ; then
       echo > ${package}sources/c/config.h
 
       if [[ $? -ne 0 ]] ; then
-        if [[ $verbosity != "quiet" ]] ; then
+        if [[ ${verbosity} != "quiet" ]] ; then
           package_print_first
 
           echo -e "${c_error}ERROR: Failed to create the config.cpp at ${c_notice}${package}sources/c/config.h${c_error}.${c_reset}"
@@ -1870,13 +1870,13 @@ package_operation_create_config_stubs() {
 
         let failure=1
 
-        return $failure
+        return ${failure}
       fi
     else
       echo > ${package}sources/c++/config.h
 
       if [[ $? -ne 0 ]] ; then
-        if [[ $verbosity != "quiet" ]] ; then
+        if [[ ${verbosity} != "quiet" ]] ; then
           package_print_first
 
           echo -e "${c_error}ERROR: Failed to create the config.cpp at ${c_notice}${package}sources/c++/config.h${c_error}.${c_reset}"
@@ -1884,7 +1884,7 @@ package_operation_create_config_stubs() {
 
         let failure=1
 
-        return $failure
+        return ${failure}
       fi
     fi
   fi
@@ -1902,14 +1902,14 @@ package_operation_dependencies() {
 
   package_dependencies_individual
 
-  if [[ $failure != "" ]] ; then
-    return $failure;
+  if [[ ${failure} -eq 1 ]] ; then
+    return ${failure};
   fi
 
   package_dependencies_level
 
-  if [[ $failure != "" ]] ; then
-    return $failure;
+  if [[ ${failure} -eq 1 ]] ; then
+    return ${failure};
   fi
 
   package_dependencies_monolithic
@@ -1923,25 +1923,25 @@ package_operation_individual() {
   local package=
 
   if [[ ! -d ${path_destination}individual ]] ; then
-    mkdir $verbose_common -p ${path_destination}individual
+    mkdir ${verbose_common} -p ${path_destination}individual
 
     if [[ $? -ne 0 ]] ; then
-      if [[ $verbosity != "quiet" ]] ; then
+      if [[ ${verbosity} != "quiet" ]] ; then
         package_print_first
 
         echo -e "${c_error}ERROR: Failed to create directory ${c_notice}${path_destination}individual${c_error}.${c_reset}"
       fi
 
-      return $failure
+      return ${failure}
     fi
   fi
 
   for directory in ${path_sources}level_0/* ${path_sources}level_1/* ${path_sources}level_2/* ; do
 
-    name="$(echo $directory | sed -e "s|${path_sources}level_0/||" -e "s|${path_sources}level_1/||" -e "s|${path_sources}level_2/||")"
+    name="$(echo ${directory} | sed -e "s|${path_sources}level_0/||" -e "s|${path_sources}level_1/||" -e "s|${path_sources}level_2/||")"
     package="${path_destination}individual/${prepend}${name}-${version}/"
 
-    if [[ $verbosity != "quiet" && $verbosity != "error" ]] ; then
+    if [[ ${verbosity} != "quiet" && ${verbosity} != "error" ]] ; then
       package_print_first_or_always
 
       echo -e "${c_highlight}Packaging Project${c_reset} (individual) ${c_notice}${prepend}${name}-${version}${c_reset}${c_highlight}.${c_reset}"
@@ -1949,10 +1949,10 @@ package_operation_individual() {
 
     package_create_base_files
 
-    cp $verbose_common -R $directory ${package}sources/
+    cp ${verbose_common} -R ${directory} ${package}sources/
 
     if [[ $? -ne 0 ]] ; then
-      if [[ $verbosity != "quiet" ]] ; then
+      if [[ ${verbosity} != "quiet" ]] ; then
         package_print_first
 
         echo -e "${c_error}ERROR: Failed to copy sources directory ${c_notice}${directory}${c_error} to ${c_notice}${package}sources${c_error}.${c_reset}"
@@ -1965,16 +1965,16 @@ package_operation_individual() {
 
     package_operation_copy_package
 
-    if [[ $failure != "" ]] ; then
+    if [[ ${failure} -eq 1 ]] ; then
       break;
     fi
   done
 
-  if [[ $failure == "" ]] ; then
-    return 0
+  if [[ ${failure} -eq 1 ]] ; then
+    return 1
   fi
 
-  return 1
+  return 0
 }
 
 package_operation_level() {
@@ -1985,17 +1985,17 @@ package_operation_level() {
 
   for level in level_0 level_1 level_2 ; do
 
-    name="fll-$level"
+    name="fll-${level}"
     package="${path_destination}level/${prepend}${name}-${version}/"
 
-    if [[ $verbosity != "quiet" && $verbosity != "error" ]] ; then
+    if [[ ${verbosity} != "quiet" && ${verbosity} != "error" ]] ; then
       package_print_first_or_always
 
       echo -e "${c_highlight}Packaging Project${c_reset} (level) ${c_notice}${prepend}${name}-${version}${c_reset}${c_highlight}.${c_reset}"
     fi
 
-    if [[ ! -d $path_build$level ]] ; then
-      if [[ $verbosity != "quiet" ]] ; then
+    if [[ ! -d ${path_build}${level} ]] ; then
+      if [[ ${verbosity} != "quiet" ]] ; then
         package_print_first
 
         echo -e "${c_error}ERROR: Build settings directory ${c_notice}${path_build}${level}${c_error} is invalid or missing.${c_reset}"
@@ -2009,10 +2009,10 @@ package_operation_level() {
     package_create_base_files
 
     if [[ ! -d ${package}data/ ]] ; then
-      mkdir $verbose_common ${package}data/
+      mkdir ${verbose_common} ${package}data/
 
       if [[ $? -ne 0 ]] ; then
-        if [[ $verbosity != "quiet" ]] ; then
+        if [[ ${verbosity} != "quiet" ]] ; then
           package_print_first
 
           echo -e "${c_error}ERROR: Failed to create directory ${c_notice}${package}data${c_error}.${c_reset}"
@@ -2024,14 +2024,14 @@ package_operation_level() {
       fi
     fi
 
-    if [[ -d $path_build${level}/build ]] ; then
-      cp $verbose_common -R ${path_build}${level}/build ${package}data/
+    if [[ -d ${path_build}${level}/build ]] ; then
+      cp ${verbose_common} -R ${path_build}${level}/build ${package}data/
     else
-      cp $verbose_common -R ${path_build}${level} ${package}data/build
+      cp ${verbose_common} -R ${path_build}${level} ${package}data/build
     fi
 
     if [[ $? -ne 0 ]] ; then
-      if [[ $verbosity != "quiet" ]] ; then
+      if [[ ${verbosity} != "quiet" ]] ; then
         package_print_first
 
         echo -e "${c_error}ERROR: Failed to move the directory ${c_notice}${path_build}${level}${c_error} as ${c_notice}${path_build}${level}build${c_error}.${c_reset}"
@@ -2043,10 +2043,10 @@ package_operation_level() {
     fi
 
     if [[ ! -d ${package}sources/ ]] ; then
-      mkdir $verbose_common ${package}sources/
+      mkdir ${verbose_common} ${package}sources/
 
       if [[ $? -ne 0 ]] ; then
-        if [[ $verbosity != "quiet" ]] ; then
+        if [[ ${verbosity} != "quiet" ]] ; then
           package_print_first
 
           echo -e "${c_error}ERROR: Failed to create directory ${c_notice}${package}sources${c_error}.${c_reset}"
@@ -2060,10 +2060,10 @@ package_operation_level() {
 
     for directory in ${path_sources}${level}/* ; do
 
-      cp $verbose_common -R ${directory}/* ${package}sources/
+      cp ${verbose_common} -R ${directory}/* ${package}sources/
 
       if [[ $? -ne 0 ]] ; then
-        if [[ $verbosity != "quiet" ]] ; then
+        if [[ ${verbosity} != "quiet" ]] ; then
           package_print_first
 
           echo -e "${c_error}ERROR: Failed to copy files from sources directory ${c_notice}${directory}${c_error} to ${c_notice}${package}sources${c_error}.${c_reset}"
@@ -2074,10 +2074,10 @@ package_operation_level() {
         break
       fi
 
-      rm $verbose_common -Rf ${package}sources/data/build/
+      rm ${verbose_common} -Rf ${package}sources/data/build/
 
       if [[ $? -ne 0 ]] ; then
-        if [[ $verbosity != "quiet" ]] ; then
+        if [[ ${verbosity} != "quiet" ]] ; then
           package_print_first
 
           echo -e "${c_error}ERROR: Failed to remove directory ${c_notice}${package}sources/data/build${c_error}.${c_reset}"
@@ -2089,21 +2089,21 @@ package_operation_level() {
 
       package_operation_copy_package
 
-      if [[ $failure != "" ]] ; then
+      if [[ ${failure} -eq 1 ]] ; then
         break;
       fi
     done
 
-    if [[ $failure != "" ]] ; then
+    if [[ ${failure} -eq 1 ]] ; then
       break;
     fi
   done
 
-  if [[ $failure == "" ]] ; then
-    return 0
+  if [[ ${failure} -eq 1 ]] ; then
+    return 1
   fi
 
-  return 1
+  return 0
 }
 
 package_operation_monolithic() {
@@ -2117,14 +2117,14 @@ package_operation_monolithic() {
   name="fll"
   package="${path_destination}monolithic/${prepend}${name}-${version}/"
 
-  if [[ $verbosity != "quiet" && $verbosity != "error" ]] ; then
+  if [[ ${verbosity} != "quiet" && ${verbosity} != "error" ]] ; then
     package_print_first_or_always
 
     echo -e "${c_highlight}Packaging Project${c_reset} (monolithic) ${c_notice}${prepend}${name}-${version}${c_reset}${c_highlight}.${c_reset}"
   fi
 
   if [[ ! -d ${path_build}monolithic ]] ; then
-    if [[ $verbosity != "quiet" ]] ; then
+    if [[ ${verbosity} != "quiet" ]] ; then
       package_print_first
 
       echo -e "${c_error}ERROR: Build settings directory ${c_notice}${path_build}monolithic${c_error} is invalid or missing.${c_reset}"
@@ -2138,10 +2138,10 @@ package_operation_monolithic() {
   package_create_base_files
 
   if [[ ! -d ${package}data/ ]] ; then
-    mkdir $verbose_common ${package}data/
+    mkdir ${verbose_common} ${package}data/
 
     if [[ $? -ne 0 ]] ; then
-      if [[ $verbosity != "quiet" ]] ; then
+      if [[ ${verbosity} != "quiet" ]] ; then
         package_print_first
 
         echo -e "${c_error}ERROR: Failed to create directory ${c_notice}${package}data${c_error}.${c_reset}"
@@ -2154,13 +2154,13 @@ package_operation_monolithic() {
   fi
 
   if [[ -d ${path_build}monolithic/build ]] ; then
-    cp $verbose_common -R ${path_build}monolithic/build ${package}data
+    cp ${verbose_common} -R ${path_build}monolithic/build ${package}data
   else
-    cp $verbose_common -R ${path_build}monolithic ${package}data/build
+    cp ${verbose_common} -R ${path_build}monolithic ${package}data/build
   fi
 
   if [[ $? -ne 0 ]] ; then
-    if [[ $verbosity != "quiet" ]] ; then
+    if [[ ${verbosity} != "quiet" ]] ; then
       package_print_first
 
       echo -e "${c_error}ERROR: Failed to move the directory ${c_notice}${path_build}${level}${c_error} as ${c_notice}${path_build}${level}build${c_error}.${c_reset}"
@@ -2172,10 +2172,10 @@ package_operation_monolithic() {
   fi
 
   if [[ ! -d ${package}sources/ ]] ; then
-    mkdir $verbose_common ${package}sources/
+    mkdir ${verbose_common} ${package}sources/
 
     if [[ $? -ne 0 ]] ; then
-      if [[ $verbosity != "quiet" ]] ; then
+      if [[ ${verbosity} != "quiet" ]] ; then
         package_print_first
 
         echo -e "${c_error}ERROR: Failed to create directory ${c_notice}${package}sources${c_error}.${c_reset}"
@@ -2188,10 +2188,10 @@ package_operation_monolithic() {
   fi
 
   if [[ ! -d ${package}tests/ ]] ; then
-    mkdir $verbose_common ${package}tests/
+    mkdir ${verbose_common} ${package}tests/
 
     if [[ $? -ne 0 ]] ; then
-      if [[ $verbosity != "quiet" ]] ; then
+      if [[ ${verbosity} != "quiet" ]] ; then
         package_print_first
 
         echo -e "${c_error}ERROR: Failed to create directory ${c_notice}${package}tests${c_error}.${c_reset}"
@@ -2205,18 +2205,18 @@ package_operation_monolithic() {
 
   for level in level_0 level_1 level_2 ; do
 
-    for directory in $path_sources${level}/* ; do
+    for directory in ${path_sources}${level}/* ; do
 
-      for directory_sub in $directory/* ; do
+      for directory_sub in ${directory}/* ; do
 
-        path_name="$(basename $directory_sub)"
+        path_name="$(basename ${directory_sub})"
 
-        if [[ $path_name == "data" ]] ; then
-          if [[ ! -d ${package}data/$level ]] ; then
-            mkdir $verbose_common -p ${package}data/$level
+        if [[ ${path_name} == "data" ]] ; then
+          if [[ ! -d ${package}data/${level} ]] ; then
+            mkdir ${verbose_common} -p ${package}data/${level}
 
             if [[ $? -ne 0 ]] ; then
-              if [[ $verbosity != "quiet" ]] ; then
+              if [[ ${verbosity} != "quiet" ]] ; then
                 package_print_first
 
                 echo -e "${c_error}ERROR: Failed to create package data directory ${c_notice}${package}data/${level}${c_error}.${c_reset}"
@@ -2228,13 +2228,13 @@ package_operation_monolithic() {
             fi
           fi
 
-          cp $verbose_common -R $directory_sub ${package}sources/data
+          cp ${verbose_common} -R ${directory_sub} ${package}sources/data
 
           if [[ $? -ne 0 ]] ; then
-            if [[ $verbosity != "quiet" ]] ; then
+            if [[ ${verbosity} != "quiet" ]] ; then
               package_print_first
 
-              echo -e "${c_error}ERROR: Failed to copy files from data directory ${c_notice}${directory_sub}${c_error} to ${c_notice}${package}sources/data$level${c_error}.${c_reset}"
+              echo -e "${c_error}ERROR: Failed to copy files from data directory ${c_notice}${directory_sub}${c_error} to ${c_notice}${package}sources/data${level}${c_error}.${c_reset}"
             fi
 
             let failure=1
@@ -2242,10 +2242,10 @@ package_operation_monolithic() {
             break
           fi
 
-          rm $verbose_common -Rf ${package}sources/data/build/
+          rm ${verbose_common} -Rf ${package}sources/data/build/
 
           if [[ $? -ne 0 ]] ; then
-            if [[ $verbosity != "quiet" ]] ; then
+            if [[ ${verbosity} != "quiet" ]] ; then
               package_print_first
 
               echo -e "${c_error}ERROR: Failed to remove directory ${c_notice}${package}sources/data/build${c_error}.${c_reset}"
@@ -2257,10 +2257,10 @@ package_operation_monolithic() {
           fi
 
           if [[ "$(ls ${package}sources/data)" != "" ]] ; then
-            cp $verbose_common -R ${package}sources/data/* ${package}data/${level}
+            cp ${verbose_common} -R ${package}sources/data/* ${package}data/${level}
 
             if [[ $? -ne 0 ]] ; then
-              if [[ $verbosity != "quiet" ]] ; then
+              if [[ ${verbosity} != "quiet" ]] ; then
                 package_print_first
 
                 echo -e "${c_error}ERROR: Failed to copy the data directory ${c_notice}${package}sources/data/${level}/data${c_error} to ${c_notice}${package}data/${level}${c_error}.${c_reset}"
@@ -2272,10 +2272,10 @@ package_operation_monolithic() {
             fi
           fi
 
-          rm $verbose_common -Rf ${package}sources/data
+          rm ${verbose_common} -Rf ${package}sources/data
 
           if [[ $? -ne 0 ]] ; then
-            if [[ $verbosity != "quiet" ]] ; then
+            if [[ ${verbosity} != "quiet" ]] ; then
               package_print_first
 
               echo -e "${c_error}ERROR: Failed to remove directory ${c_notice}${package}sources/data${c_error}.${c_reset}"
@@ -2285,11 +2285,11 @@ package_operation_monolithic() {
 
             break
           fi
-        elif [[ $path_name == "documents" ]] ; then
-          cp $verbose_common -R $directory_sub ${package}sources/
+        elif [[ ${path_name} == "documents" ]] ; then
+          cp ${verbose_common} -R ${directory_sub} ${package}sources/
 
           if [[ $? -ne 0 ]] ; then
-            if [[ $verbosity != "quiet" ]] ; then
+            if [[ ${verbosity} != "quiet" ]] ; then
               package_print_first
 
               echo -e "${c_error}ERROR: Failed to copy files from data directory ${c_notice}${directory_sub}${c_error} to ${c_notice}${package}sources/documents${c_error}.${c_reset}"
@@ -2299,11 +2299,11 @@ package_operation_monolithic() {
 
             break
           fi
-        elif [[ $path_name == "licenses" ]] ; then
-          cp $verbose_common -R $directory_sub ${package}sources/
+        elif [[ ${path_name} == "licenses" ]] ; then
+          cp ${verbose_common} -R ${directory_sub} ${package}sources/
 
           if [[ $? -ne 0 ]] ; then
-            if [[ $verbosity != "quiet" ]] ; then
+            if [[ ${verbosity} != "quiet" ]] ; then
               package_print_first
 
               echo -e "${c_error}ERROR: Failed to copy files from data directory ${c_notice}${directory_sub}${c_error} to ${c_notice}${package}sources/licenses${c_error}.${c_reset}"
@@ -2313,11 +2313,11 @@ package_operation_monolithic() {
 
             break
           fi
-        elif [[ $path_name == "specifications" ]] ; then
-          cp $verbose_common -R $directory_sub ${package}sources/
+        elif [[ ${path_name} == "specifications" ]] ; then
+          cp ${verbose_common} -R ${directory_sub} ${package}sources/
 
           if [[ $? -ne 0 ]] ; then
-            if [[ $verbosity != "quiet" ]] ; then
+            if [[ ${verbosity} != "quiet" ]] ; then
               package_print_first
 
               echo -e "${c_error}ERROR: Failed to copy files from data directory ${c_notice}${directory_sub}${c_error} to ${c_notice}${package}sources/specifications${c_error}.${c_reset}"
@@ -2327,11 +2327,11 @@ package_operation_monolithic() {
 
             break
           fi
-        elif [[ $path_name == "tests" ]] ; then
-          cp $verbose_common -R $directory_sub ${package}
+        elif [[ ${path_name} == "tests" ]] ; then
+          cp ${verbose_common} -R ${directory_sub} ${package}
 
           if [[ $? -ne 0 ]] ; then
-            if [[ $verbosity != "quiet" ]] ; then
+            if [[ ${verbosity} != "quiet" ]] ; then
               package_print_first
 
               echo -e "${c_error}ERROR: Failed to copy files from data directory ${c_notice}${directory_sub}${c_error} to ${c_notice}${package}tests${c_error}.${c_reset}"
@@ -2343,10 +2343,10 @@ package_operation_monolithic() {
           fi
         else
           if [[ ! -d ${package}sources/${path_name}/${level} ]] ; then
-            mkdir $verbose_common -p ${package}sources/${path_name}/${level}
+            mkdir ${verbose_common} -p ${package}sources/${path_name}/${level}
 
             if [[ $? -ne 0 ]] ; then
-              if [[ $verbosity != "quiet" ]] ; then
+              if [[ ${verbosity} != "quiet" ]] ; then
                 package_print_first
 
                 echo -e "${c_error}ERROR: Failed to create package sources directory ${c_notice}${package}sources/${path_name}/${level}${c_error}.${c_reset}"
@@ -2358,10 +2358,10 @@ package_operation_monolithic() {
             fi
           fi
 
-          cp $verbose_common -R ${directory_sub}/* ${package}sources/${path_name}/${level}
+          cp ${verbose_common} -R ${directory_sub}/* ${package}sources/${path_name}/${level}
 
           if [[ $? -ne 0 ]] ; then
-            if [[ $verbosity != "quiet" ]] ; then
+            if [[ ${verbosity} != "quiet" ]] ; then
               package_print_first
 
               echo -e "${c_error}ERROR: Failed to copy files from sources directory ${c_notice}${directory_sub}${c_error} to ${c_notice}${package}sources/${path_name}/${level}${c_error}.${c_reset}"
@@ -2374,17 +2374,17 @@ package_operation_monolithic() {
         fi
       done
 
-      if [[ $failure != "" ]] ; then
+      if [[ ${failure} -eq 1 ]] ; then
         break;
       fi
     done
 
-    if [[ $failure != "" ]] ; then
+    if [[ ${failure} -eq 1 ]] ; then
       break;
     fi
   done
 
-  if [[ $failure == "" ]] ; then
+  if [[ ${failure} -eq 0 ]] ; then
     package_operation_create_config_stubs
 
     if [[ $? -ne 0 ]] ; then
@@ -2392,11 +2392,11 @@ package_operation_monolithic() {
     fi
   fi
 
-  if [[ $failure == "" ]] ; then
-    return 0
+  if [[ ${failure} -eq 1 ]] ; then
+    return 1
   fi
 
-  return 1
+  return 0
 }
 
 package_operation_program() {
@@ -2405,10 +2405,10 @@ package_operation_program() {
   local package=
 
   if [[ ! -d ${path_destination}program ]] ; then
-    mkdir $verbose_common -p ${path_destination}program
+    mkdir ${verbose_common} -p ${path_destination}program
 
     if [[ $? -ne 0 ]] ; then
-      if [[ $verbosity != "quiet" ]] ; then
+      if [[ ${verbosity} != "quiet" ]] ; then
         package_print_first
 
         echo -e "${c_error}ERROR: Failed to create directory ${c_notice}${path_destination}program${c_error}.${c_reset}"
@@ -2416,16 +2416,16 @@ package_operation_program() {
 
       package_cleanup
 
-      exit $failure
+      exit ${failure}
     fi
   fi
 
   for directory in ${path_sources}level_3/* ; do
 
-    name="$(echo $directory | sed -e "s|${path_sources}level_3/||")"
+    name="$(echo ${directory} | sed -e "s|${path_sources}level_3/||")"
     package="${path_destination}program/${prepend}${name}-${version}/"
 
-    if [[ $verbosity != "quiet" && $verbosity != "error" ]] ; then
+    if [[ ${verbosity} != "quiet" && ${verbosity} != "error" ]] ; then
       package_print_first_or_always
 
       echo -e "${c_highlight}Packaging Project${c_reset} (program) ${c_notice}${prepend}${name}-${version}${c_reset}${c_highlight}.${c_reset}"
@@ -2433,10 +2433,10 @@ package_operation_program() {
 
     package_create_base_files
 
-    cp $verbose_common -R $directory ${package}sources/
+    cp ${verbose_common} -R ${directory} ${package}sources/
 
     if [[ $? -ne 0 ]] ; then
-      if [[ $verbosity != "quiet" ]] ; then
+      if [[ ${verbosity} != "quiet" ]] ; then
         package_print_first
 
         echo -e "${c_error}ERROR: Failed to copy sources directory ${c_notice}${directory}${c_error} to ${c_notice}${package}sources${c_error}.${c_reset}"
@@ -2456,11 +2456,11 @@ package_operation_program() {
     fi
   done
 
-  if [[ $failure == "" ]] ; then
-    return 0
+  if [[ ${failure} -eq 1 ]] ; then
+    return 1
   fi
 
-  return 1
+  return 0
 }
 
 package_operation_stand_alone() {
@@ -2478,10 +2478,10 @@ package_operation_stand_alone() {
   local path_name_sub=
 
   if [[ ! -d ${path_destination}stand_alone ]] ; then
-    mkdir $verbose_common -p ${path_destination}stand_alone
+    mkdir ${verbose_common} -p ${path_destination}stand_alone
 
     if [[ $? -ne 0 ]] ; then
-      if [[ $verbosity != "quiet" ]] ; then
+      if [[ ${verbosity} != "quiet" ]] ; then
         package_print_first
 
         echo -e "${c_error}ERROR: Failed to create directory ${c_notice}${path_destination}stand_alone${c_error}.${c_reset}"
@@ -2493,12 +2493,12 @@ package_operation_stand_alone() {
     fi
   fi
 
-  for name in $mode_stand_alone ; do
+  for name in ${mode_stand_alone} ; do
 
     directory="${path_sources}level_3/${name}"
     package="${path_destination}stand_alone/${prepend}${name}-${version}/"
 
-    if [[ $verbosity != "quiet" && $verbosity != "error" ]] ; then
+    if [[ ${verbosity} != "quiet" && ${verbosity} != "error" ]] ; then
       package_print_first_or_always
 
       echo -e "${c_highlight}Packaging Project${c_reset} (stand_alone) ${c_notice}${prepend}${name}-${version}${c_reset}${c_highlight}.${c_reset}"
@@ -2512,10 +2512,10 @@ package_operation_stand_alone() {
       break
     fi
 
-    cp $verbose_common -R $directory ${package}sources/
+    cp ${verbose_common} -R ${directory} ${package}sources/
 
     if [[ $? -ne 0 ]] ; then
-      if [[ $verbosity != "quiet" ]] ; then
+      if [[ ${verbosity} != "quiet" ]] ; then
         package_print_first
 
         echo -e "${c_error}ERROR: Failed to copy sources directory ${c_notice}${directory}${c_error} to ${c_notice}${package}sources${c_error}.${c_reset}"
@@ -2534,10 +2534,10 @@ package_operation_stand_alone() {
       break
     fi
 
-    cp $verbose_common -R ${path_build}stand_alone/${name}.settings ${package}data/build/settings
+    cp ${verbose_common} -R ${path_build}stand_alone/${name}.settings ${package}data/build/settings
 
     if [[ $? -ne 0 ]] ; then
-      if [[ $verbosity != "quiet" ]] ; then
+      if [[ ${verbosity} != "quiet" ]] ; then
         package_print_first
 
         echo -e "${c_error}ERROR: Failed to copy file ${c_notice}${path_build}stand_alone/${name}.settings${c_error} to ${c_notice}${package}data/build/settings${c_error}.${c_reset}"
@@ -2548,10 +2548,10 @@ package_operation_stand_alone() {
       break
     fi
 
-    cp $verbose_common -R ${path_build}stand_alone/${name}.fakefile ${package}data/build/fakefile
+    cp ${verbose_common} -R ${path_build}stand_alone/${name}.fakefile ${package}data/build/fakefile
 
     if [[ $? -ne 0 ]] ; then
-      if [[ $verbosity != "quiet" ]] ; then
+      if [[ ${verbosity} != "quiet" ]] ; then
         package_print_first
 
         echo -e "${c_error}ERROR: Failed to copy file ${c_notice}${path_build}stand_alone/${name}.fakefile${c_error} to ${c_notice}${package}data/build/fakefile${c_error}.${c_reset}"
@@ -2563,10 +2563,10 @@ package_operation_stand_alone() {
     fi
 
     if [[ ! -d ${package}sources/c/program/${name}/ ]] ; then
-      mkdir $verbose_common -p ${package}sources/c/program/$name/
+      mkdir ${verbose_common} -p ${package}sources/c/program/${name}/
 
       if [[ $? -ne 0 ]] ; then
-        if [[ $verbosity != "quiet" ]] ; then
+        if [[ ${verbosity} != "quiet" ]] ; then
           package_print_first
 
           echo -e "${c_error}ERROR: Failed to create package sources directory ${c_notice}${package}sources/c/program/${name}/${c_error}.${c_reset}"
@@ -2585,7 +2585,7 @@ package_operation_stand_alone() {
 
       for path_sub in ${package}sources/${path_name}/* ; do
 
-        path_name_sub="$(basename $path_sub)"
+        path_name_sub="$(basename ${path_sub})"
 
         # Do not attempt copying into self.
         if [[ $path_name_sub == "program" ]] ; then
@@ -2593,10 +2593,10 @@ package_operation_stand_alone() {
         fi
 
         if [[ ! -d ${package}sources/${path_name}/program/${name}/ ]] ; then
-          mkdir $verbose_common -p ${package}sources/${path_name}/program/${name}/
+          mkdir ${verbose_common} -p ${package}sources/${path_name}/program/${name}/
 
           if [[ $? -ne 0 ]] ; then
-            if [[ $verbosity != "quiet" ]] ; then
+            if [[ ${verbosity} != "quiet" ]] ; then
               package_print_first
 
               echo -e "${c_error}ERROR: Failed to create package sources directory ${c_notice}${package}sources/${path_name}/program/${name}/${c_error}.${c_reset}"
@@ -2608,10 +2608,10 @@ package_operation_stand_alone() {
           fi
         fi
 
-        mv $verbose_common $path_sub ${package}sources/${path_name}/program/${name}/
+        mv ${verbose_common} ${path_sub} ${package}sources/${path_name}/program/${name}/
 
         if [[ $? -ne 0 ]] ; then
-          if [[ $verbosity != "quiet" ]] ; then
+          if [[ ${verbosity} != "quiet" ]] ; then
             package_print_first
 
             echo -e "${c_error}ERROR: Failed to move path ${c_notice}${path_sub}${c_error} to ${c_notice}${package}sources/${path_name}/program/${name}/${c_error}.${c_reset}"
@@ -2623,20 +2623,20 @@ package_operation_stand_alone() {
         fi
       done
 
-      if [[ $failure != "" ]] ; then
+      if [[ ${failure} -eq 1 ]] ; then
         break
       fi
     done
 
-    if [[ $failure != "" ]] ; then
+    if [[ ${failure} -eq 1 ]] ; then
       break
     fi
 
     if [[ -f ${path_build}stand_alone/${name}.config.h ]] ; then
-      cp $verbose_common -R ${path_build}stand_alone/${name}.config.h ${package}sources/c/config.h
+      cp ${verbose_common} -R ${path_build}stand_alone/${name}.config.h ${package}sources/c/config.h
 
       if [[ $? -ne 0 ]] ; then
-        if [[ $verbosity != "quiet" ]] ; then
+        if [[ ${verbosity} != "quiet" ]] ; then
           package_print_first
 
           echo -e "${c_error}ERROR: Failed to copy file ${c_notice}${path_build}stand_alone/config.h${c_error} to ${c_notice}${package}sources/c/${c_error}.${c_reset}"
@@ -2651,8 +2651,8 @@ package_operation_stand_alone() {
     if [[ -f ${package}data/build/dependencies ]] ; then
       packages=$(grep -soP '^\s*[^\s]+' ${package}data/build/dependencies | sed -e 's|^[[:space:]]*||g')
 
-      if [[ $packages != "" ]] ; then
-        for package_sub in $packages ; do
+      if [[ ${packages} != "" ]] ; then
+        for package_sub in ${packages} ; do
 
           if [[ -d ${path_sources}level_0/${package_sub}/ ]] ; then
             level=level_0
@@ -2670,18 +2670,18 @@ package_operation_stand_alone() {
 
           for directory_sub in ${directory_level}* ; do
 
-            path_name="$(basename $directory_sub)"
+            path_name="$(basename ${directory_sub})"
 
             # Skip directories that are not to be copied.
-            if [[ $path_name == "data" || $path_name == "documents" || $path_name == "licenses" || $path_name == "specifications" || $path_name == "tests" ]] ; then
+            if [[ ${path_name} == "data" || ${path_name} == "documents" || ${path_name} == "licenses" || ${path_name} == "specifications" || ${path_name} == "tests" ]] ; then
               continue
             fi
 
             if [[ ! -d ${package}sources/${path_name}/fll/${level}/ ]] ; then
-              mkdir $verbose_common -p ${package}sources/${path_name}/fll/${level}/
+              mkdir ${verbose_common} -p ${package}sources/${path_name}/fll/${level}/
 
               if [[ $? -ne 0 ]] ; then
-                if [[ $verbosity != "quiet" ]] ; then
+                if [[ ${verbosity} != "quiet" ]] ; then
                   package_print_first
 
                   echo -e "${c_error}ERROR: Failed to create package sources directory ${c_notice}${package}sources/${path_name}/fll/${level}/${c_error}.${c_reset}"
@@ -2693,10 +2693,10 @@ package_operation_stand_alone() {
               fi
             fi
 
-            cp $verbose_common -R ${directory_level}${path_name}/* ${package}sources/${path_name}/fll/${level}/
+            cp ${verbose_common} -R ${directory_level}${path_name}/* ${package}sources/${path_name}/fll/${level}/
 
             if [[ $? -ne 0 ]] ; then
-              if [[ $verbosity != "quiet" ]] ; then
+              if [[ ${verbosity} != "quiet" ]] ; then
                 package_print_first
 
                 echo -e "${c_error}ERROR: Failed to copy files from sources directory ${c_notice}${directory_level}${path_name}/${c_error} to ${c_notice}${package}sources/${path_name}/fll/${level}/${c_error}.${c_reset}"
@@ -2708,28 +2708,28 @@ package_operation_stand_alone() {
             fi
           done
 
-          if [[ $failure != "" ]] ; then
+          if [[ ${failure} -eq 1 ]] ; then
             break
           fi
         done
 
-        if [[ $failure != "" ]] ; then
+        if [[ ${failure} -eq 1 ]] ; then
           break
         fi
       fi
     fi
   done
 
-  if [[ $failure == "" ]] ; then
-    return 0
+  if [[ ${failure} -eq 1 ]] ; then
+    return 1
   fi
 
-  return 1
+  return 0
 }
 
 package_print_first() {
 
-  if [[ $print_line_first == "yes" ]] ; then
+  if [[ ${print_line_first} == "yes" ]] ; then
     echo
 
     print_line_first=
@@ -2738,11 +2738,11 @@ package_print_first() {
 
 package_print_first_or_always() {
 
-  if [[ $print_line_first == "yes" ]] ; then
+  if [[ ${print_line_first} == "yes" ]] ; then
     echo
 
     print_line_first=
-  elif [[ $print_line_first == "no" ]] ; then
+  elif [[ ${print_line_first} == "no" ]] ; then
     print_line_first=
   else
     echo
@@ -2751,7 +2751,7 @@ package_print_first_or_always() {
 
 package_print_last() {
 
-  if [[ $print_line_last == "yes" ]] ; then
+  if [[ ${print_line_last} == "yes" ]] ; then
     echo
   fi
 }

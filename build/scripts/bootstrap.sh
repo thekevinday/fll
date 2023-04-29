@@ -44,7 +44,7 @@ bootstrap_main() {
 
   local key=
   local -A variables=()
-  local failure=
+  local failure=0
   local settings_name=settings
   local settings_file=
   local settings_defines=
@@ -507,7 +507,7 @@ bootstrap_main() {
   fi
 
   if [[ ${verbosity} != "quiet" ]] ; then
-    if [[ ${failure} != "" || ${verbosity} != "error" ]] ; then
+    if [[ ${failure} -eq 1 || ${verbosity} != "error" ]] ; then
       bootstrap_print_last
     fi
   fi
@@ -852,7 +852,7 @@ bootstrap_load_settings() {
     let failure=1
   fi
 
-  if [[ ${failure} != "" ]] ; then
+  if [[ ${failure} -eq 1 ]] ; then
     return 1
   fi
 
@@ -1059,7 +1059,7 @@ bootstrap_prepare_build() {
 
   mkdir ${verbose_common} -p ${path_build}{documents,includes,libraries/{script,shared,static},objects/{script,shared,static},programs/{script,shared,static},settings,stage} || failure=1
 
-  if [[ ${failure} != "" ]] ; then
+  if [[ ${failure} -eq 1 ]] ; then
     if [[ ${verbosity} != "quiet" && ${verbosity} != "error" ]] ; then
       echo -e "${c_warning}WARNING: Failed to create build directories in '${c_notice}${path_build}${c_error}'.${c_reset}"
     fi
@@ -1078,7 +1078,7 @@ bootstrap_prepare_build() {
     fi
   fi
 
-  if [[ ${failure} != "" ]] ; then
+  if [[ ${failure} -eq 1 ]] ; then
     if [[ ${verbosity} != "quiet" && ${verbosity} != "error" ]] ; then
       echo -e "${c_warning}WARNING: Failed to create ${c_notice}path_heades${c_error} build directories in '${c_notice}${path_build}${c_error}'.${c_reset}"
     fi
@@ -1088,11 +1088,11 @@ bootstrap_prepare_build() {
 
   touch ${project_built}-${settings_name}.prepared
 
-  if [[ ${failure} == "" ]] ; then
-    return 0
+  if [[ ${failure} -eq 1 ]] ; then
+    return 1
   fi
 
-  return 1
+  return 0
 }
 
 bootstrap_operation_build() {
@@ -1392,7 +1392,7 @@ bootstrap_operation_build() {
 
   bootstrap_operation_build_validate_build
 
-  if [[ ${failure} != "" ]] ; then
+  if [[ ${failure} -eq 1 ]] ; then
     return 1
   fi
 
@@ -1405,7 +1405,7 @@ bootstrap_operation_build() {
       else
         mkdir ${verbose_common} -p ${path_build}documentation/${directory} || failure=1
 
-        if [[ ${failure} == "" ]] ; then
+        if [[ ${failure} -eq 0 ]] ; then
           cp ${verbose_common} -R ${path_documentation}${i} ${path_build}documentation/${directory}/ || failure=1
         fi
       fi
@@ -1421,14 +1421,14 @@ bootstrap_operation_build() {
       else
         mkdir ${verbose_common} -p ${path_build}settings/${directory} || failure=1
 
-        if [[ ${failure} == "" ]] ; then
+        if [[ ${failure} -eq 0 ]] ; then
           cp ${verbose_common} -R ${path_settings}${i} ${path_build}settings/${directory}/ || failure=1
         fi
       fi
     done
   fi
 
-  if [[ ${failure} == "" && ${sources_headers} != "" ]] ; then
+  if [[ ${failure} -eq 0 && ${sources_headers} != "" ]] ; then
     if [[ ${preserve_path_headers} == "yes" ]] ; then
       for i in ${sources_headers} ; do
         directory=$(dirname ${i})
@@ -1440,7 +1440,7 @@ bootstrap_operation_build() {
             mkdir ${verbose_common} -p ${path_build}includes/${path_headers}${directory} || failure=1
           fi
 
-          if [[ ${failure} == "" ]] ; then
+          if [[ ${failure} -eq 0 ]] ; then
             cp ${verbose_common} -f ${path_sources}${path_language}${i} ${path_build}includes/${path_headers}${i} || failure=1
           fi
         fi
@@ -1452,7 +1452,7 @@ bootstrap_operation_build() {
     fi
   fi
 
-  if [[ ${failure} == "" && ${build_shared} == "yes" && ! -f ${project_built_shared}.built ]] ; then
+  if [[ ${failure} -eq 0 && ${build_shared} == "yes" && ! -f ${project_built_shared}.built ]] ; then
     if [[ ${sources_object} != "" || ${sources_object_shared} != "" ]] ; then
       sources=
       let count=0
@@ -1518,20 +1518,20 @@ bootstrap_operation_build() {
 
       ${build_compiler} ${sources} -shared -Wl,-soname,lib${build_name}.so${version_target} -o ${path_build}libraries/${path_library_shared}lib${build_name}.so${version_file} ${arguments_shared} ${arguments_include} ${libraries} ${libraries_shared} ${flags} ${flags_shared} ${flags_library} ${flags_library_shared} ${defines} ${defines_shared} ${defines_library} ${defines_library_shared} ${define_extra} || failure=1
 
-      if [[ ${failure} == "" ]] ; then
+      if [[ ${failure} -eq 0 ]] ; then
         if [[ ${version_file_value} != "major" ]] ; then
           if [[ ${version_file_value} == "minor" ]] ; then
             ln ${verbose_common} -sf lib${build_name}.so${version_file} ${path_build}libraries/${path_library_shared}lib${build_name}.so${version_major_prefix}${version_major} || failure=1
           else
             ln ${verbose_common} -sf lib${build_name}.so${version_major_prefix}${version_major}${version_minor_prefix}${version_minor} ${path_build}libraries/${path_library_shared}lib${build_name}.so${version_major_prefix}${version_major} || failure=1
 
-            if [[ ${failure} == "" ]] ; then
+            if [[ ${failure} -eq 0 ]] ; then
               if [[ ${version_file_value} == "micro" ]] ; then
                 ln ${verbose_common} -sf lib${build_name}.so${version_file} ${path_build}libraries/${path_library_shared}lib${build_name}.so${version_major_prefix}${version_major}${version_minor_prefix}${version_minor} || failure=1
               else
                 ln ${verbose_common} -sf lib${build_name}.so${version_major_prefix}${version_major}${version_minor_prefix}${version_minor}${version_micro_prefix}${version_micro} ${path_build}libraries/${path_library_shared}lib${build_name}.so${version_major_prefix}${version_major}${version_minor_prefix}${version_minor} || failure=1
 
-                if [[ ${failure} == "" ]] ; then
+                if [[ ${failure} -eq 0 ]] ; then
                   ln ${verbose_common} -sf lib${build_name}.so${version_file} ${path_build}libraries/${path_library_shared}lib${build_name}.so${version_major_prefix}${version_major}${version_minor_prefix}${version_minor_prefix}${version_minor}${version_micro_prefix}${version_micro} || failure=1
                 fi
               fi
@@ -1539,13 +1539,13 @@ bootstrap_operation_build() {
           fi
         fi
 
-        if [[ ${failure} == "" ]] ; then
+        if [[ ${failure} -eq 0 ]] ; then
           ln ${verbose_common} -sf lib${build_name}.so${version_major_prefix}${version_major} ${path_build}libraries/${path_library_shared}lib${build_name}.so || failure=1
         fi
       fi
     fi
 
-    if [[ ${failure} == "" && ${sources_program} != "" ]] ; then
+    if [[ ${failure} -eq 0 && ${sources_program} != "" ]] ; then
       sources=
       links=
 
@@ -1570,12 +1570,12 @@ bootstrap_operation_build() {
       ${build_compiler} ${sources} -o ${path_build}programs/${path_program_shared}${build_name} ${arguments_shared} ${arguments_include} ${links} ${libraries} ${libraries_shared} ${flags} ${flags_shared} ${flags_program} ${flags_program_shared} ${defines} ${defines_shared} ${defines_program} ${defines_program_shared} ${define_extra} || failure=1
     fi
 
-    if [[ ${failure} == "" ]] ; then
+    if [[ ${failure} -eq 0 ]] ; then
       touch ${project_built_shared}-${settings_name}.built
     fi
   fi
 
-  if [[ ${failure} == "" && ${build_static} == "yes" && ! -f ${project_built_static}.built ]] ; then
+  if [[ ${failure} -eq 0 && ${build_static} == "yes" && ! -f ${project_built_static}.built ]] ; then
     if [[ ${sources_object} != "" || ${sources_object_static} != "" ]] ; then
       let count=0
 
@@ -1653,12 +1653,12 @@ bootstrap_operation_build() {
 
         ${build_compiler} ${path_sources}${path_language}${i} -c -static -o ${path_build}objects/${directory}/${n}.o ${arguments_static} ${arguments_include} ${libraries} ${libraries_static} ${flags} ${flags_static} ${flags_library} ${flags_library_static} ${defines} ${defines_static} ${defines_library} ${defines_library_static} ${define_extra} || failure=1
 
-        if [[ ${failure} != "" ]] ; then
+        if [[ ${failure} -eq 1 ]] ; then
           break;
         fi
       done
 
-      if [[ ${failure} == "" && ( ${sources_library} != "" || ${sources_library_static} != "" ) ]] ; then
+      if [[ ${failure} -eq 0 && ( ${sources_library} != "" || ${sources_library_static} != "" ) ]] ; then
 
         if [[ ${verbosity} == "verbose" ]] ; then
           echo ${build_indexer} ${build_indexer_arguments} ${path_build}libraries/${path_library_static}lib${build_name}.a ${sources}
@@ -1668,7 +1668,7 @@ bootstrap_operation_build() {
       fi
     fi
 
-    if [[ ${failure} == "" && ${sources_program} != "" ]] ; then
+    if [[ ${failure} -eq 0 && ${sources_program} != "" ]] ; then
       sources=
       links=
 
@@ -1693,12 +1693,12 @@ bootstrap_operation_build() {
       ${build_compiler} ${sources} -static -o ${path_build}programs/${path_program_static}${build_name} ${arguments_static} ${arguments_include} ${links} ${libraries} ${libraries_static} ${flags} ${flags_static} ${flags_program} ${flags_program_static} ${defines} ${defines_static} ${defines_program} ${defines_program_static} ${define_extra} || failure=1
     fi
 
-    if [[ ${failure} == "" ]] ; then
+    if [[ ${failure} -eq 0 ]] ; then
       touch ${project_built_static}-${settings_name}.built
     fi
   fi
 
-  if [[ ${failure} != "" ]] ; then
+  if [[ ${failure} -eq 1 ]] ; then
     if [[ ${verbosity} != "quiet" ]] ; then
       bootstrap_print_first
 
@@ -1710,11 +1710,11 @@ bootstrap_operation_build() {
     return 1
   fi
 
-  if [[ ${failure} == "" ]] ; then
-    return 0
+  if [[ ${failure} -eq 1 ]] ; then
+    return 1
   fi
 
-  return 1
+  return 0
 }
 
 bootstrap_operation_build_prepare_defaults() {
@@ -2783,11 +2783,11 @@ bootstrap_operation_build_validate_build() {
     let failure=1
   fi
 
-  if [[ ${failure} == "" ]] ; then
-    return 0
+  if [[ ${failure} -eq 1 ]] ; then
+    return 1
   fi
 
-  return 1
+  return 0
 }
 
 bootstrap_operation_build_validate_paths() {
@@ -2802,7 +2802,7 @@ bootstrap_operation_build_validate_paths() {
     let failure=1
   fi
 
-  if [[ ${failure} == "" && ${path_sources_object} != "" && ! -d ${path_sources_object} ]] ; then
+  if [[ ${failure} -eq 0 && ${path_sources_object} != "" && ! -d ${path_sources_object} ]] ; then
     if [[ ${verbosity} != "quiet" ]] ; then
       bootstrap_print_first
 
@@ -2812,11 +2812,11 @@ bootstrap_operation_build_validate_paths() {
     let failure=1
   fi
 
-  if [[ ${failure} == "" ]] ; then
-    return 0
+  if [[ ${failure} -eq 1 ]] ; then
+    return 1
   fi
 
-  return 1
+  return 0
 }
 
 bootstrap_operation_build_validate_search() {
@@ -2849,11 +2849,11 @@ bootstrap_operation_build_validate_shared_static() {
     let failure=1
   fi
 
-  if [[ ${failure} == "" ]] ; then
-    return 0
+  if [[ ${failure} -eq 1 ]] ; then
+    return 1
   fi
 
-  return 1
+  return 0
 }
 
 bootstrap_operation_build_validate_sources() {
@@ -2954,11 +2954,11 @@ bootstrap_operation_build_validate_sources() {
     fi
   done
 
-  if [[ ${failure} == "" ]] ; then
-    return 0
+  if [[ ${failure} -eq 1 ]] ; then
+    return 1
   fi
 
-  return 1
+  return 0
 }
 
 bootstrap_operation_build_prepare_versions() {
