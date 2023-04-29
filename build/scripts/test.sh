@@ -63,7 +63,7 @@ test_main() {
   local test_thread_individual="thread_individual"
 
   local context=
-  local failure=
+  local failure=0
   local operation=
   local operation_failure=
   local verbosity=normal
@@ -312,18 +312,18 @@ test_main() {
   fi
 
   if [[ ${verbosity} != "quiet" ]] ; then
-    if [[ ${failure} != "" || ${verbosity} != "error" ]] ; then
+    if [[ ${failure} -eq 1 || ${verbosity} != "error" ]] ; then
       test_print_last
     fi
   fi
 
   test_cleanup
 
-  if [[ ${failure} == "" ]] ; then
-    return 0
+  if [[ ${failure} -eq 1 ]] ; then
+    return 1
   fi
 
-  return 1
+  return 0
 }
 
 test_handle_colors() {
@@ -504,11 +504,11 @@ test_operate_build_individual() {
     cd ${path_original}
   done
 
-  if [[ ${failure} == "" ]] ; then
-    return 0
+  if [[ ${failure} -eq 1 ]] ; then
+    return 1
   fi
 
-  return 1
+  return 0
 }
 
 test_operate_build_project() {
@@ -689,11 +689,11 @@ test_operate_build_tools() {
 
   cd ${path_original}
 
-  if [[ ${failure} == "" ]] ; then
-    return 0
+  if [[ ${failure} -eq 1 ]] ; then
+    return 1
   fi
 
-  return 1
+  return 0
 }
 
 test_operate_ci_prebuild() {
@@ -721,11 +721,11 @@ test_operate_ci_prebuild() {
 
   cd ${path_original}
 
-  if [[ ${failure} == "" ]] ; then
-    return 0
+  if [[ ${failure} -eq 1 ]] ; then
+    return 1
   fi
 
-  return 1
+  return 0
 }
 
 test_operate_ci_pretest() {
@@ -753,11 +753,11 @@ test_operate_ci_pretest() {
 
   cd ${path_original}
 
-  if [[ ${failure} == "" ]] ; then
-    return 0
+  if [[ ${failure} -eq 1 ]] ; then
+    return 1
   fi
 
-  return 1
+  return 0
 }
 
 test_operate_ci_pretest_cmocka() {
@@ -1036,7 +1036,7 @@ test_operate_tests() {
       let failure=1
     fi
 
-    if [[ ${failure} == "" ]] ; then
+    if [[ ${failure} -eq 0 ]] ; then
       if [[ ! -f ${path_test_package_individual}${project}-${version}/data/build/testfile ]] ; then
         if [[ $(echo ${projects_no_tests} | grep -o "\<${project}\>") == "" ]] ; then
           if [[ ${verbosity} == "verbose" || ${verbosity} == "debug" ]] ; then
@@ -1054,7 +1054,7 @@ test_operate_tests() {
       fi
     fi
 
-    if [[ ${failure} == "" ]] ; then
+    if [[ ${failure} -eq 0 ]] ; then
       if [[ ${verbosity} == "debug" ]] ; then
         test_print_first_or_always
 
@@ -1076,7 +1076,7 @@ test_operate_tests() {
       fi
     fi
 
-    if [[ ${failure} == "" ]] ; then
+    if [[ ${failure} -eq 0 ]] ; then
       if [[ ${verbosity} == "debug" ]] ; then
         test_print_first_or_always
 
@@ -1108,16 +1108,16 @@ test_operate_tests() {
 
     cd ${path_original}
 
-    if [[ ${failure} != "" ]] ; then
+    if [[ ${failure} -eq 1 ]] ; then
       break;
     fi
   done
 
-  if [[ ${failure} == "" ]] ; then
-    return 0
+  if [[ ${failure} -eq 1 ]] ; then
+    return 1
   fi
 
-  return 1
+  return 0
 }
 
 test_print_first() {
