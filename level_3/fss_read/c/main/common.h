@@ -27,10 +27,10 @@ extern "C" {
  *   The parameters passed to the process (often referred to as command line arguments).
  * @param main
  *   The main program data.
- * @param setting
- *   The main program settings.
  *
- *   This alters setting.state.status:
+ *   This alters main.setting.range.
+ *
+ *   This alters main.setting.state.status:
  *     F_none on success.
  *     F_data_not on success but nothing was provided to operate with.
  *

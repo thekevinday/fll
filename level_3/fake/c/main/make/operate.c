@@ -1043,7 +1043,7 @@ extern "C" {
         data_make->setting_build.modes_default,
       };
 
-      const uint8_t dynamics_flag[] = {
+      static const uint8_t dynamics_flag[] = {
         0,                                         // build_libraries
         0,                                         // build_libraries_shared
         0,                                         // build_libraries_static
@@ -1306,7 +1306,7 @@ extern "C" {
       fake_make_operation_write_s,
     };
 
-    const uint8_t operations_type[] = {
+    static const uint8_t operations_type[] = {
       fake_make_operation_type_and_e,
       fake_make_operation_type_break_e,
       fake_make_operation_type_build_e,

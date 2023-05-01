@@ -49,7 +49,7 @@ extern "C" {
         choices.array = choices_array;
         choices.used = 3;
 
-        const uint8_t modes[3] = { f_color_mode_not_e, f_color_mode_light_e, f_color_mode_dark_e };
+        static const uint8_t modes[3] = { f_color_mode_not_e, f_color_mode_light_e, f_color_mode_dark_e };
 
         main->setting.state.status = fll_program_parameter_process_context(choices, modes, F_true, &main->program);
 
@@ -70,7 +70,7 @@ extern "C" {
         choices.array = choices_array;
         choices.used = 5;
 
-        const uint8_t verbosity[5] = { f_console_verbosity_quiet_e, f_console_verbosity_error_e, f_console_verbosity_verbose_e, f_console_verbosity_debug_e, f_console_verbosity_normal_e };
+        static const uint8_t verbosity[5] = { f_console_verbosity_quiet_e, f_console_verbosity_error_e, f_console_verbosity_verbose_e, f_console_verbosity_debug_e, f_console_verbosity_normal_e };
 
         main->setting.state.status = fll_program_parameter_process_verbosity(choices, verbosity, F_true, &main->program);
 
@@ -447,7 +447,7 @@ extern "C" {
     }
 
     if (main->program.parameters.array[iki_read_parameter_literal_e].result & f_console_result_found_e) {
-      const uint8_t ids[3] = {
+      static const uint8_t ids[3] = {
         iki_read_parameter_object_e,
         iki_read_parameter_content_e,
         iki_read_parameter_total_e,
@@ -477,7 +477,7 @@ extern "C" {
       main->setting.flag |= iki_read_main_flag_literal_e;
     }
     else if (main->program.parameters.array[iki_read_parameter_object_e].result & f_console_result_found_e) {
-      const uint8_t ids[2] = {
+      static const uint8_t ids[2] = {
         iki_read_parameter_content_e,
         iki_read_parameter_total_e,
       };

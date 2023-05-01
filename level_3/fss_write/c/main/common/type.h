@@ -29,7 +29,7 @@ extern "C" {
  * status_thread: A status used eclusively by the threaded signal handler.
  * state:         The state data used when processing the FSS data.
  *
- * range: A range used as a buffer during processing.
+ * range: A range used in conjunction with some buffer during processing.
  *
  * quote:    This holds the quote used during processing.
  * standard: A human-friendly string describing the standard in use, such as "FSS-0000 (Basic)".

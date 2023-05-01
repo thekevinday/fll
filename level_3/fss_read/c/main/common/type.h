@@ -17,6 +17,47 @@ extern "C" {
 #endif
 
 /**
+ * A structure for designating where within the buffer a particular file exists, using a statically allocated array.
+ *
+ * name:  The name of the file representing the range.
+ * range: A range within the buffer representing the file.
+ */
+#ifndef _di_fss_read_file_t_
+  typedef struct {
+    f_string_static_t name;
+    f_string_range_t range;
+  } fss_read_file_t;
+
+  #define fss_read_file_t_initialize \
+    { \
+      f_string_static_t_initialize, \
+      f_string_range_t_initialize, \
+    }
+#endif // _di_fss_read_file_t_
+
+/**
+ * An array of files.
+ *
+ * This is intended to be defined and used statically allocated and as such no dynamic allocation or dynamic deallocation methods are provided.
+ *
+ * The STDIN pipe is reserved for index 0 and as such the first index must be reserved and the used should be set to at least 1.
+ *
+ * array: The array of depths.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
+ */
+#ifndef _di_fss_read_files_t_
+  typedef struct {
+    fss_read_file_t *array;
+
+    f_array_length_t size;
+    f_array_length_t used;
+  } fss_read_files_t;
+
+  #define fss_read_files_t_initialize { 0, 0, 0 }
+#endif // _di_fss_read_files_t_
+
+/**
  * The fss read main program settings.
  *
  * This is passed to the program-specific main entry point to designate program settings.
@@ -24,28 +65,29 @@ extern "C" {
  *
  * For all function pointers on this structure, the main variable must be of type fss_read_main_t.
  *
- * flag: Flags passed to the main function.
+ * flag:         Flags passed to the main function.
+ * delimit_mode: The delimit mode.
  *
  * status_thread: A status used eclusively by the threaded signal handler.
  * state:         The state data used when processing the FSS data.
  *
- * range: A range used as a buffer during processing.
+ * delimit_depth: The delimit depth.
+ * select:        The Content to select (column number).
+ * line:          The Content to select (row number).
  *
- * quote:    This holds the quote used during processing.
+ * range: A range used in conjunction with some buffer during processing.
+ *
+ * files:  A statically allocated array of files for designating where in the buffer a file is represented.
+ * depths: The array of parameters for each given depth.
+ *
  * standard: A human-friendly string describing the standard in use, such as "FSS-0000 (Basic)".
+ * buffer:   The buffer containing all loaded files (and STDIN pipe).
  *
- * escaped: A buffer used for escaping strings during processing.
- * block:   A buffer used to storing one or more blocks while processing a file line by line.
- * buffer:  A buffer used during processing the file.
- * prepend: A string to prepend to each multi-line Content.
- *
- * ignoress:  An array of range sets passed as values to the "--ignore" parameter or via the input pipe.
- * objects:   An array of objects passed as values to the "--object" parameter or via the input pipe.
- * contentss: An array of content sets passed as values to the "--content" parameter or via the input pipe.
- *
- * object:   A pointer to a specific Object used during processing.
- * content:  A pointer to a specific Content used during processing.
- * contents: A pointer to a specific set of Content used during processing.
+ * objects:          The positions within the buffer representing Objects.
+ * contents:         The positions within the buffer representing Contents.
+ * delimits_object:  The positions within the buffer representing Object character delimits.
+ * delimits_content: The positions within the buffer representing Content character delimits.
+ * comments:         The positions within the buffer representing comments.
  *
  * process_content: Process a single Content.
  * process_help:    Process help (generally printing help).
@@ -57,28 +99,28 @@ extern "C" {
 #ifndef _di_fss_read_setting_t_
   typedef struct {
     uint16_t flag;
+    uint8_t delimit_mode;
 
     f_status_t status_thread;
     f_state_t state;
 
+    f_array_length_t delimit_depth;
+    f_number_unsigned_t select;
+    f_number_unsigned_t line;
+
     f_string_range_t range;
 
-    f_string_static_t quote;
+    fss_read_files_t files;
+    fss_read_depths_t depths;
+
     f_string_static_t standard;
-
-    f_string_dynamic_t escaped;
-    f_string_dynamic_t block;
     f_string_dynamic_t buffer;
-    f_string_dynamic_t prepend;
 
-    f_string_rangess_t ignoress;
-    f_string_dynamics_t objects;
-    f_string_dynamicss_t contentss;
-
-    f_string_ranges_t *ignores;
-    f_string_static_t *object;
-    f_string_static_t *content;
-    f_string_statics_t *contents;
+    f_fss_objects_t objects;
+    f_fss_contents_t contents;
+    f_fss_delimits_t delimits_object;
+    f_fss_delimits_t delimits_content;
+    f_fss_comments_t comments;
 
     void (*process_content)(void * const main, const bool last);
     void (*process_help)(void * const main);
@@ -91,22 +133,22 @@ extern "C" {
   #define fss_read_setting_t_initialize \
     { \
       fss_read_main_flag_none_e, \
+      fss_read_delimit_mode_all_e, \
       F_none, \
       macro_f_state_t_initialize_1(fss_read_allocation_large_d, fss_read_allocation_small_d, F_none, 0, 0, &fll_program_standard_signal_handle, 0, 0, 0, 0), \
+      0, \
+      0, \
+      0, \
       f_string_range_t_initialize, \
+      fss_read_files_t_initialize, \
+      fss_read_depths_t_initialize, \
       f_string_static_t_initialize, \
-      f_string_static_t_initialize, \
       f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_rangess_t_initialize, \
-      f_string_dynamics_t_initialize, \
-      f_string_dynamicss_t_initialize, \
-      0, \
-      0, \
-      0, \
-      0, \
+      f_fss_objects_t_initialize, \
+      f_fss_contents_t_initialize, \
+      f_fss_delimits_t_initialize, \
+      f_fss_delimits_t_initialize, \
+      f_fss_comments_t_initialize, \
       0, \
       0, \
       0, \

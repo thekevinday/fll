@@ -253,7 +253,7 @@ extern "C" {
         fake_make_operation_argument_if_success_s,
       };
 
-      const uint8_t if_type_codes[] = {
+      static const uint8_t if_type_codes[] = {
         fake_make_operation_if_type_if_define_e,
         fake_make_operation_if_type_if_equal_e,
         fake_make_operation_if_type_if_equal_not_e,
@@ -289,7 +289,7 @@ extern "C" {
         fake_make_operation_argument_if_parameter_s,
       };
 
-      const uint8_t if_not_type_codes[] = {
+      static const uint8_t if_not_type_codes[] = {
         fake_make_operation_if_type_if_not_define_e,
         fake_make_operation_if_type_if_not_exist_e,
         fake_make_operation_if_type_if_not_group_e,

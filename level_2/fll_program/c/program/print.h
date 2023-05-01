@@ -305,6 +305,36 @@ extern "C" {
 #endif // _di_fll_program_print_error_parameter_allows_either_xor_
 
 /**
+ * Print message about parameter the parameter value being an empty string.
+ *
+ * This is only printed when verbosity is not set to quiet.
+ *
+ * This uses the following:
+ *   - print.set->error: For the error context.
+ *   - print.set->strong: For the highlighting context
+ *   - print.prefix: For the prefixing a string to the message (such as "ERROR:").
+ *
+ * @param print
+ *   The output structure.
+ *   This locks, uses, and unlocks the file stream.
+ * @param symbol
+ *   The symbol string prepended to both parameters.
+ *   This locks, uses, and unlocks the file stream.
+ *   This is usually f_console_symbol_long_normal_s.
+ * @param name
+ *   The parameter name.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_fll_program_print_error_parameter_empty_value_
+  extern f_status_t fll_program_print_error_parameter_empty_value(fl_print_t * const print, const f_string_static_t symbol, const f_string_static_t name);
+#endif // _di_fll_program_print_error_parameter_empty_value_
+
+/**
  * Print message about parameter not being a valid integer.
  *
  * This is only printed when verbosity is not set to quiet.

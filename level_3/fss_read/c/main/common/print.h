@@ -57,6 +57,7 @@ extern "C" {
     fss_read_f_f_string_rangess_increase_by_e,
     fss_read_f_f_string_read_block_increase_e,
     fss_read_f_f_thread_create_e,
+    fss_read_f_fl_conversion_dynamic_partial_to_unsigned_detect_e,
     fss_read_f_fl_fss_basic_content_read_e,
     fss_read_f_fl_fss_basic_list_content_read_e,
     fss_read_f_fl_fss_basic_list_object_read_e,
@@ -71,6 +72,7 @@ extern "C" {
     fss_read_f_fll_program_parameter_process_context_e,
     fss_read_f_fll_program_parameter_process_verbosity_e,
     fss_read_f_fll_fss_payload_read_e,
+    fss_rerad_f_fss_read_depth_process_e,
   }; // enum
 #endif // _di_fss_read_f_e_
 

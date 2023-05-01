@@ -210,6 +210,26 @@ extern "C" {
   }
 #endif // _di_fll_program_print_error_parameter_cannot_use_with_xor_
 
+#ifndef _di_fll_program_print_error_parameter_empty_value_
+  f_status_t fll_program_print_error_parameter_empty_value(fl_print_t * const print, const f_string_static_t symbol, const f_string_static_t name) {
+    #ifndef _di_level_2_parameter_checking_
+      if (!print) return F_status_set_error(F_parameter);
+    #endif // _di_level_2_parameter_checking_
+
+    if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
+
+    f_file_stream_lock(print->to);
+
+    fl_print_format("%[%QThe parameter%] ", print->to, print->set->error, print->prefix, print->set->error);
+    fl_print_format("%[%Q%Q%]", print->to, print->set->notable, symbol, name, print->set->notable);
+    fl_print_format(" %[is specified as an empty string, but an empty string is not allowed.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
+
+    f_file_stream_unlock(print->to);
+
+    return F_none;
+  }
+#endif // _di_fll_program_print_error_parameter_empty_value_
+
 #ifndef _di_fll_program_print_error_parameter_integer_not_
   f_status_t fll_program_print_error_parameter_integer_not(fl_print_t * const print, const f_string_static_t symbol, const f_string_static_t name, const f_string_static_t value) {
     #ifndef _di_level_2_parameter_checking_

@@ -948,7 +948,7 @@ extern "C" {
         &setting->version_target,                    // version_target
       };
 
-      const uint8_t settings_single_version_default[] = {
+      static const uint8_t settings_single_version_default[] = {
         0,                                           // build_compiler
         0,                                           // build_indexer
         0,                                           // build_language
@@ -1035,7 +1035,7 @@ extern "C" {
       };
 
       // 1 = "yes" or "no", 2 = path/, 3 = literal, 4 = "bash", "c", or "c++", 5 = "major", "minor", "micro", or "nano".
-      const uint8_t settings_single_type[] = {
+      static const uint8_t settings_single_type[] = {
         3,                                           // build_compiler
         3,                                           // build_indexer
         4,                                           // build_language

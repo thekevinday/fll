@@ -21,20 +21,40 @@ extern "C" {
  *
  * fss_read_main_flag_*_e:
  *   - none:        No flags set.
+ *   - at:          The object at the given position is being selected (Think of this as select a row for some Object).
+ *   - columns:     The total columns found and selected is printed instead of the Content.
+ *   - content:     The Content is to be printed.
  *   - copyright:   Print copyright.
+ *   - empty:       Empty Content will be printed (Objects that have no Content will have their empty Content printed).
  *   - help:        Print help.
+ *   - line:        A specific Content at a given line is to be selected (Think of this as select a row for some Content).
+ *   - name:        A specific Object name has been requested.
+ *   - object:      The Object is to be printed.
+ *   - original:    Enable original printing, where the quotes are printed and no delimits are applied.
  *   - print_first: When set, print new line to message output on program begin after loading settings.
  *   - print_last:  When set, print new line to message output on program end.
- *   - trim:        Trim Object names.
+ *   - select:      A specific Content at a given position is to be selected (Think of this as select a column for some Content).
+ *   - total:       The total lines found and selected is printed instead of the Content.
+ *   - trim:        Empty space before and after Objects and Content will not be printed (They will be trimmed).
  *   - version:     Print version.
  */
 #ifndef _di_fss_read_main_flag_e_
   enum {
     fss_read_main_flag_none_e        = 0x0,
-    fss_read_main_flag_copyright_e   = 0x10,
-    fss_read_main_flag_help_e        = 0x40,
-    fss_read_main_flag_print_first_e = 0x1000,
-    fss_read_main_flag_print_last_e  = 0x2000,
+    fss_read_main_flag_at_d          = 0x1,
+    fss_read_main_flag_columns_d     = 0x2,
+    fss_read_main_flag_content_d     = 0x4,
+    fss_read_main_flag_copyright_e   = 0x8,
+    fss_read_main_flag_empty_d       = 0x10,
+    fss_read_main_flag_help_e        = 0x20,
+    fss_read_main_flag_line_d        = 0x40,
+    fss_read_main_flag_name_d        = 0x80,
+    fss_read_main_flag_object_d      = 0x100,
+    fss_read_main_flag_original_d    = 0x200,
+    fss_read_main_flag_print_first_e = 0x400,
+    fss_read_main_flag_print_last_e  = 0x800,
+    fss_read_main_flag_select_d      = 0x1000,
+    fss_read_main_flag_total_d       = 0x2000,
     fss_read_main_flag_trim_e        = 0x4000,
     fss_read_main_flag_version_e     = 0x8000,
   }; // enum
@@ -127,6 +147,8 @@ extern "C" {
  * FSS Delimit Parameter enumerations.
  *
  * fss_read_delimit_mode_*_e:
+ *   - auto:                   Delimit mode is automatically set.
+ *   - none:                   Delimit mode is set to none.
  *   - all:                    All delimits are to be applied.
  *   - content:                Content are to have delimits applied.
  *   - content_greater:        Content at this number or higher are to have delimits applied.
@@ -138,7 +160,8 @@ extern "C" {
  */
 #ifndef _di_fss_read_delimit_mode_e_
   enum {
-    fss_read_delimit_mode_none_e = 0,
+    fss_read_delimit_mode_auto_e = 0,
+    fss_read_delimit_mode_none_e,
     fss_read_delimit_mode_all_e,
     fss_read_delimit_mode_content_e,
     fss_read_delimit_mode_content_greater_e,

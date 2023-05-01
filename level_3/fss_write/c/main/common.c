@@ -49,7 +49,7 @@ extern "C" {
         choices.array = choices_array;
         choices.used = 3;
 
-        const uint8_t modes[3] = { f_color_mode_not_e, f_color_mode_light_e, f_color_mode_dark_e };
+        static const uint8_t modes[3] = { f_color_mode_not_e, f_color_mode_light_e, f_color_mode_dark_e };
 
         main->setting.state.status = fll_program_parameter_process_context(choices, modes, F_true, &main->program);
 
@@ -70,7 +70,7 @@ extern "C" {
         choices.array = choices_array;
         choices.used = 5;
 
-        const uint8_t verbosity[5] = { f_console_verbosity_quiet_e, f_console_verbosity_error_e, f_console_verbosity_verbose_e, f_console_verbosity_debug_e, f_console_verbosity_normal_e };
+        static const uint8_t verbosity[5] = { f_console_verbosity_quiet_e, f_console_verbosity_error_e, f_console_verbosity_verbose_e, f_console_verbosity_debug_e, f_console_verbosity_normal_e };
 
         main->setting.state.status = fll_program_parameter_process_verbosity(choices, verbosity, F_true, &main->program);
 
@@ -569,13 +569,13 @@ extern "C" {
     }
 
     {
-      const uint32_t has[] = {
+      static const uint32_t has[] = {
         fss_write_parameter_content_end_e,
         fss_write_parameter_content_next_e,
         fss_write_parameter_object_open_e,
       };
 
-      const uint16_t has_flag[] = {
+      static const uint16_t has_flag[] = {
         fss_write_main_flag_content_end_e,
         fss_write_main_flag_content_next_e,
         fss_write_main_flag_object_open_e,
@@ -587,7 +587,7 @@ extern "C" {
         fss_write_long_object_open_s,
       };
 
-      const uint16_t has_cannots[][2] = {
+      static const uint16_t has_cannots[][2] = {
         { fss_write_parameter_content_next_e, fss_write_parameter_object_open_e },
         { fss_write_parameter_content_end_e, fss_write_parameter_object_open_e },
         { fss_write_parameter_content_end_e, fss_write_parameter_content_next_e },

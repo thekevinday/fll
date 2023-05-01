@@ -24,6 +24,7 @@ extern "C" {
     "f_string_rangess_increase_by",
     "f_string_read_block_increase",
     "f_thread_create",
+    "fl_conversion_dynamic_partial_to_unsigned_detect",
     "fl_fss_basic_content_read",
     "fl_fss_basic_list_content_read",
     "fl_fss_basic_list_object_read",
@@ -38,6 +39,7 @@ extern "C" {
     "fll_program_parameter_process_context",
     "fll_program_parameter_process_verbosity",
     "fll_fss_payload_read",
+    "fss_read_depth_process",
   };
 #endif // _di_fss_read_f_a_
 

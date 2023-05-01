@@ -59,7 +59,7 @@ extern "C" {
         choices.array = choices_array;
         choices.used = 3;
 
-        const uint8_t modes[3] = { f_color_mode_not_e, f_color_mode_light_e, f_color_mode_dark_e };
+        static const uint8_t modes[3] = { f_color_mode_not_e, f_color_mode_light_e, f_color_mode_dark_e };
 
         main->setting.state.status = fll_program_parameter_process_context(choices, modes, F_true, &main->program);
 
@@ -80,7 +80,7 @@ extern "C" {
         choices.array = choices_array;
         choices.used = 5;
 
-        const uint8_t verbosity[5] = { f_console_verbosity_quiet_e, f_console_verbosity_error_e, f_console_verbosity_verbose_e, f_console_verbosity_debug_e, f_console_verbosity_normal_e };
+        static const uint8_t verbosity[5] = { f_console_verbosity_quiet_e, f_console_verbosity_error_e, f_console_verbosity_verbose_e, f_console_verbosity_debug_e, f_console_verbosity_normal_e };
 
         main->setting.state.status = fll_program_parameter_process_verbosity(choices, verbosity, F_true, &main->program);
 
@@ -121,19 +121,19 @@ extern "C" {
       uint8_t i = 0;
 
       {
-        const uint8_t enables[] = {
+        static const uint8_t enables[] = {
           fake_parameter_documents_enable_e,
           fake_parameter_shared_enable_e,
           fake_parameter_static_enable_e,
         };
 
-        const uint8_t disables[] = {
+        static const uint8_t disables[] = {
           fake_parameter_documents_enable_e,
           fake_parameter_shared_enable_e,
           fake_parameter_static_enable_e,
         };
 
-        const uint16_t flags[] = {
+        static const uint16_t flags[] = {
           fake_main_flag_enable_documents_e,
           fake_main_flag_enable_shared_e,
           fake_main_flag_enable_static_e,
@@ -161,7 +161,7 @@ extern "C" {
       }
 
       {
-        const f_array_length_t parameters[] = {
+        static const f_array_length_t parameters[] = {
           fake_parameter_build_e,
           fake_parameter_data_e,
           fake_parameter_documents_e,
@@ -219,7 +219,7 @@ extern "C" {
           fake_default_work_s,
         };
 
-        const bool cleanups[] = {
+        static const bool cleanups[] = {
           F_true,  // fake_parameter_build_e
           F_true,  // fake_parameter_data_e
           F_true,  // fake_parameter_documents_e
@@ -363,7 +363,7 @@ extern "C" {
       }
 
       {
-        const f_array_length_t parameters[] = {
+        static const f_array_length_t parameters[] = {
           fake_parameter_define_e,
           fake_parameter_mode_e,
         };

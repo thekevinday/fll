@@ -22,7 +22,7 @@ extern "C" {
         main->setting.data,
       };
 
-      const uint8_t parameters_size[] = {
+      static const uint8_t parameters_size[] = {
         9,
         3,
       };
@@ -121,7 +121,7 @@ extern "C" {
         data->path_documents,
       };
 
-      const uint8_t parameters_size[] = {
+      static const uint8_t parameters_size[] = {
         3,
         3,
         3,
@@ -293,7 +293,7 @@ extern "C" {
           data->path_work_programs,
         };
 
-        const uint8_t parameters_size[] = {
+        static const uint8_t parameters_size[] = {
           3,
           3,
         };

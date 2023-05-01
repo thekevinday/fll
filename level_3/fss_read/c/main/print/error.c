@@ -50,6 +50,24 @@ extern "C" {
   }
 #endif // _di_fss_read_print_error_parameter_same_times_at_least_
 
+#ifndef _di_fss_read_print_error_parameter_requires_message_
+  f_status_t fss_read_print_error_parameter_requires_message(fl_print_t * const print, const f_string_static_t symbol, const f_string_static_t name, const f_string_static_t message) {
+
+    if (!print) return F_status_set_error(F_output_not);
+    if (print->verbosity == f_console_verbosity_quiet_e) return F_output_not;
+
+    f_file_stream_lock(print->to);
+
+    fl_print_format("%[%QThe parameter '%]", print->to, print->context, print->prefix, print->context);
+    fl_print_format("%[%r%r%]", print->to, print->notable, symbol, name, print->notable);
+    fl_print_format("%[' requires %s.%]%r", print->to, print->context, message, print->context, f_string_eol_s);
+
+    f_file_stream_unlock(print->to);
+
+    return F_none;
+  }
+#endif // _di_fss_read_print_error_parameter_requires_message_
+
 #ifndef _di_fss_read_print_error_one_content_only_
   f_status_t fss_read_print_error_one_content_only(fl_print_t * const print) {
 

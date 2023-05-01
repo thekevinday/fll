@@ -86,6 +86,25 @@ extern "C" {
 #endif // _di_fss_read_print_error_parameter_same_times_at_least_
 
 /**
+ * Print an error message about the parameter requires something that is explained by the message parameter.
+ *
+ * @param print
+ *   The output structure to print to.
+ *
+ *   This does not alter print.custom.setting.state.status.
+ * @param symbol
+ *   The symbol string prepended to the first parameter.
+ *   This is usually f_console_symbol_long_normal_s.
+ * @param name
+ *   The parameter name.
+ * @param message
+ *   The message to print regarding why the message should be displayed.
+ */
+#ifndef _di_fss_read_print_error_parameter_requires_message_
+  extern f_status_t fss_read_print_error_parameter_requires_message(fl_print_t * const print, const f_string_static_t symbol, const f_string_static_t name, const f_string_static_t message);
+#endif // _di_fss_read_print_error_parameter_requires_message_
+
+/**
  * Print an message about a multiple Content being unsupported for a particular standard.
  *
  * @param print
