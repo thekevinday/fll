@@ -68,6 +68,48 @@ extern "C" {
   }
 #endif // _di_fss_read_print_error_parameter_requires_message_
 
+#ifndef _di_fss_read_print_error_parameter_value_before_value_number_
+  f_status_t fss_read_print_error_parameter_value_before_value_number(fl_print_t * const print, const f_string_static_t symbol, const f_string_static_t name, const f_array_length_t value, const f_array_length_t before) {
+
+    if (!print) return F_status_set_error(F_output_not);
+    if (print->verbosity == f_console_verbosity_quiet_e) return F_output_not;
+
+    f_file_stream_lock(print->to);
+
+    fl_print_format("%[%QThe parameter '%]", print->to, print->context, print->prefix, print->context);
+    fl_print_format("%[%r%r%]", print->to, print->notable, symbol, name, print->notable);
+    fl_print_format("%[' may not have the value '%]", print->to, print->context, print->context);
+    fl_print_format("%[%ul%]", print->to, print->notable, value, print->notable);
+    fl_print_format("%[' before the value '%]", print->to, print->context, print->context);
+    fl_print_format("%[%ul%]", print->to, print->notable, before, print->notable);
+    fl_print_format("%['.%]%r", print->to, print->context, print->context, f_string_eol_s);
+
+    f_file_stream_unlock(print->to);
+
+    return F_none;
+  }
+#endif // _di_fss_read_print_error_parameter_value_before_value_number_
+
+#ifndef _di_fss_read_print_error_parameter_value_once_only_number_
+  f_status_t fss_read_print_error_parameter_value_once_only_number(fl_print_t * const print, const f_string_static_t symbol, const f_string_static_t name, const f_array_length_t value) {
+
+    if (!print) return F_status_set_error(F_output_not);
+    if (print->verbosity == f_console_verbosity_quiet_e) return F_output_not;
+
+    f_file_stream_lock(print->to);
+
+    fl_print_format("%[%QThe value '%]", print->to, print->context, print->prefix, print->context);
+    fl_print_format("%[%ul%]", print->to, print->notable, value, print->notable);
+    fl_print_format("%[' may only be specified once for the parameter '%]", print->to, print->context, print->context);
+    fl_print_format("%[%r%r%]", print->to, print->notable, symbol, name, print->notable);
+    fl_print_format("%['.%]%r", print->to, print->context, print->context, f_string_eol_s);
+
+    f_file_stream_unlock(print->to);
+
+    return F_none;
+  }
+#endif // _di_fss_read_print_error_parameter_value_once_only_number_
+
 #ifndef _di_fss_read_print_error_one_content_only_
   f_status_t fss_read_print_error_one_content_only(fl_print_t * const print) {
 

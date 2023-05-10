@@ -34,6 +34,7 @@ extern "C" {
  *     F_none on success.
  *     F_data_not on success but nothing was provided to operate with.
  *
+ *     F_interrupt (with error bit) on interrupt signal received.
  *     F_parameter (with error bit) on parameter error.
  *
  *     Errors (with error bit) from: f_console_parameter_process().
@@ -41,6 +42,8 @@ extern "C" {
  *     Errors (with error bit) from: f_string_dynamics_resize().
  *     Errors (with error bit) from: fll_program_parameter_process_context().
  *     Errors (with error bit) from: fll_program_parameter_process_verbosity().
+ *
+ *     Errors (with error bit) from: fss_read_setting_load_depth(). @todo fss_read_depths_resize() is to be relocated to "callback".
  * @param callback
  *   (optional) Designate a function to call after performing the initial processing, but before printing help.
  *   If the function returns F_done, then this function immediately returns, resetting status to F_none.
@@ -51,10 +54,50 @@ extern "C" {
  * @see f_string_dynamics_resize()
  * @see fll_program_parameter_process_context()
  * @see fll_program_parameter_process_verbosity()
+ *
+ * @see fss_read_setting_load_depth() @todo fss_read_depths_resize() is to be relocated to "callback".
  */
 #ifndef _di_fss_read_setting_load_
   extern void fss_read_setting_load(const f_console_arguments_t arguments, fss_read_main_t * const main, void (*callback)(const f_console_arguments_t arguments, fss_read_main_t * const main));
 #endif // _di_fss_read_setting_load_
+
+/**
+ * Process the depth and depth related parameters.
+ *
+ * Will handle depth-sensitive parameter conflicts, such as --name being used with --at (which is not allowed).
+ *
+ * This should only be called by standards that support this behavior.
+ *
+ * This is intended to be called within the scope of a setting load callback in fss_read_setting_load().
+ *
+ * @param arguments
+ *   The parameters passed to the process (often referred to as command line arguments).
+ * @param main
+ *   The main program data.
+ *
+ *   This alters main.setting.state.status:
+ *     F_none on success.
+ *
+ *     F_interrupt (with error bit) on interrupt signal received.
+ *     F_parameter (with error bit) on parameter error.
+ *
+ *     Errors (with error bit) from: f_rip_dynamic().
+ *     Errors (with error bit) from: f_string_dynamic_append().
+ *     Errors (with error bit) from: fl_conversion_dynamic_partial_to_unsigned_detect().
+ *
+ *     Errors (with error bit) from: fss_read_depths_resize().
+ *
+ * @see f_rip_dynamic()
+ * @see f_string_dynamic_append()
+ * @see fl_conversion_dynamic_partial_to_unsigned_detect()
+ * @see fll_program_print_signal_received()
+ *
+ * @see fss_read_depths_resize()
+ * @see fss_read_setting_load()
+ */
+#ifndef _di_fss_read_setting_load_depth_
+  extern void fss_read_setting_load_depth(const f_console_arguments_t arguments, fss_read_main_t * const main);
+#endif // _di_fss_read_setting_load_depth_
 
 #ifdef __cplusplus
 } // extern "C"

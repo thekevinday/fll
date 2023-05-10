@@ -105,6 +105,46 @@ extern "C" {
 #endif // _di_fss_read_print_error_parameter_requires_message_
 
 /**
+ * Print an error message about the parameter not allowing a value before another value.
+ *
+ * @param print
+ *   The output structure to print to.
+ *
+ *   This does not alter print.custom.setting.state.status.
+ * @param symbol
+ *   The symbol string prepended to the first parameter.
+ *   This is usually f_console_symbol_long_normal_s.
+ * @param name
+ *   The parameter name.
+ * @param value
+ *   The parameter value that cannot be specified before the "before" function parameter.
+ * @param before
+ *   The parameter value that is before the "value" function parameter.
+ */
+#ifndef _di_fss_read_print_error_parameter_value_before_value_number_
+  extern f_status_t fss_read_print_error_parameter_value_before_value_number(fl_print_t * const print, const f_string_static_t symbol, const f_string_static_t name, const f_array_length_t value, const f_array_length_t before);
+#endif // _di_fss_read_print_error_parameter_value_before_value_number_
+
+/**
+ * Print an error message about the parameter only allowing the given value to be specified one time.
+ *
+ * @param print
+ *   The output structure to print to.
+ *
+ *   This does not alter print.custom.setting.state.status.
+ * @param symbol
+ *   The symbol string prepended to the first parameter.
+ *   This is usually f_console_symbol_long_normal_s.
+ * @param name
+ *   The parameter name.
+ * @param value
+ *   The parameter value that is already specified.
+ */
+#ifndef _di_fss_read_print_error_parameter_value_once_only_number_
+  extern f_status_t fss_read_print_error_parameter_value_once_only_number(fl_print_t * const print, const f_string_static_t symbol, const f_string_static_t name, const f_array_length_t value);
+#endif // _di_fss_read_print_error_parameter_value_once_only_number_
+
+/**
  * Print an message about a multiple Content being unsupported for a particular standard.
  *
  * @param print

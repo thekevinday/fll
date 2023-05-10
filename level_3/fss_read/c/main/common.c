@@ -388,17 +388,9 @@ extern "C" {
       }
     }
 
-    main->setting.state.status = fss_read_depth_process(main, &data);
-
-    if (F_status_is_error(main->setting.state.status) {
-      if ((main->setting.flag & fss_read_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
-        fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
-      }
-
-      fss_read_print_error(&main->program.error, macro_fss_read_f(fss_read_depth_process));
-
-      return;
-    }
+    // The standards providing the setting load callback must call this rather than calling this here because they need to perfom tests after this is called based on the results.
+    main->setting.state.status = fss_read_setting_load_depth(arguments, main);
+    if (F_status_is_error(main->setting.state.status)) return;
 
     // @todo: Some standards do not support nesting, so any depth greater than 0 can be predicted without processing the file, this check needs to happen in the program specific settings processing function.
     // if (data.depths.array[0].depth) { ...
@@ -418,13 +410,188 @@ extern "C" {
     if (main->program.parameters.array[fss_read_parameter_trim_e].result & f_console_result_found_e) {
       main->setting.flag |= fss_read_main_flag_trim_e;
     }
-
-    // @fixme this is from fss_write, but doing some sort of file check, such as no pipe and no files may be a good idea here. Replace this with such logic if deemed desirable.
-    if (!(main->setting.flag & (fll_program_data_pipe_input_e | fss_read_main_flag_content_e | fss_read_parameter_object_e))) {
-      main->setting.state.status = F_data_not;
-    }
   }
 #endif // _di_fss_read_setting_load_
+
+#ifndef _di_fss_read_setting_load_depth_
+  void fss_read_setting_load_depth(const f_console_arguments_t arguments, fss_read_main_t * const main) {
+
+    if (!main) return;
+
+    f_array_length_t i = 1;
+
+    if (main->parameters.array[fss_read_parameter_depth_e].result & f_console_result_value_e) {
+      i = main->parameters.array[fss_read_parameter_depth_e].values.used;
+    }
+
+    if (i > data->depths.size) {
+      main->setting.state.status = fss_read_depths_resize(i, &data->depths);
+
+      if (F_status_is_error(main->setting.state.status)) {
+        if ((main->setting.flag & fss_read_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
+          fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
+        }
+
+        fss_read_print_error(&main->program.error, macro_fss_read_f(fss_read_depths_resize));
+
+        return;
+      }
+    }
+
+    data->depths.used = depth_size;
+
+    f_array_length_t position_depth = 0;
+    f_array_length_t position_at = 0;
+    f_array_length_t position_name = 0;
+
+    for (i = 0; i < data->depths.used; ++i) {
+
+      if (!((++main->signal_check) % fss_read_signal_check_d)) {
+        if (fll_program_standard_signal_received(&main->program)) {
+          fll_program_print_signal_received(main->warning, main->signal_received);
+
+          main->setting.state.status = F_status_set_error(F_interrupt);
+
+          return;
+        }
+
+        main->signal_check = 0;
+      }
+
+      data->depths.array[i].depth = 0;
+      data->depths.array[i].index_at = 0;
+      data->depths.array[i].index_name = 0;
+      data->depths.array[i].value_at = 0;
+
+      // This dynamic string is actually a static string, so clear it between loops.
+      macro_f_string_dynamic_t_clear(data->depths.array[i].value_name);
+
+      if (!main->parameters.array[fss_read_parameter_depth_e].values.used) {
+        position_depth = 0;
+      }
+      else {
+        position_depth = main->parameters.array[fss_read_parameter_depth_e].values.array[i];
+
+        main->setting.state.status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, data->argv[position_depth], &data->depths.array[i].depth);
+
+        if (F_status_is_error(main->setting.state.status)) {
+          if ((main->setting.flag & fss_read_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
+            fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
+          }
+
+          fll_error_parameter_integer_print(&main->program.error, F_status_set_fine(main->setting.state.status), macro_fss_read_f(fl_conversion_dynamic_to_unsigned_detect), F_true, fss_read_long_depth_s, data->argv[position_depth]);
+
+          return;
+        }
+      }
+
+      if (main->parameters.array[fss_read_parameter_at_e].result & f_console_result_value_e) {
+        for (; position_at < main->parameters.array[fss_read_parameter_at_e].values.used; ++position_at) {
+
+          if (main->parameters.array[fss_read_parameter_at_e].values.array[position_at] < position_depth) {
+            continue;
+          }
+
+          if (i + 1 < data->depths.used && main->parameters.array[fss_read_parameter_at_e].values.array[position_at] > main->parameters.array[fss_read_parameter_depth_e].values.array[i + 1]) {
+            break;
+          }
+
+          data->depths.array[i].index_at = main->parameters.array[fss_read_parameter_at_e].values.array[position_at];
+
+          main->setting.state.status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, data->argv[data->depths.array[i].index_at], &data->depths.array[i].value_at);
+
+          if (F_status_is_error(main->setting.state.status)) {
+            if ((main->setting.flag & fss_read_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
+              fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
+            }
+
+            fll_error_parameter_integer_print(&main->program.error, F_status_set_fine(main->setting.state.status), macro_fss_read_f(fl_conversion_dynamic_to_unsigned_detect), F_true, fss_read_long_at_s, data->argv[data->depths.array[i].index_at]);
+
+            return;
+          }
+        } // for
+      }
+
+      if (main->parameters.array[fss_read_parameter_name_e].result & f_console_result_value_e) {
+        for (; position_name < main->parameters.array[fss_read_parameter_name_e].values.used; ++position_name) {
+
+          if (main->parameters.array[fss_read_parameter_name_e].values.array[position_name] < position_depth) {
+            continue;
+          }
+
+          if (i + 1 < data->depths.used && main->parameters.array[fss_read_parameter_name_e].values.array[position_name] > main->parameters.array[fss_read_parameter_depth_e].values.array[i + 1]) {
+            break;
+          }
+
+          data->depths.array[i].index_name = main->parameters.array[fss_read_parameter_name_e].values.array[position_name];
+
+          if (main->parameters.array[fss_read_parameter_trim_e].result & f_console_result_found_e) {
+            main->setting.state.status = f_rip_dynamic(data->argv[data->depths.array[i].index_name], &data->depths.array[i].value_name);
+          }
+          else {
+            main->setting.state.status = f_string_dynamic_append(data->argv[data->depths.array[i].index_name], &data->depths.array[i].value_name);
+          }
+
+          if (F_status_is_error(main->setting.state.status)) {
+            if ((main->setting.flag & fss_read_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
+              fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
+            }
+
+            fss_read_print_error(&main->program.error, (main->parameters.array[fss_read_parameter_trim_e].result & f_console_result_found_e) ? macro_fss_read_f(f_rip_dynamic) : macro_fss_read_f(f_string_dynamic_append));
+
+            return;
+          }
+        } // for
+      }
+    } // for
+
+    f_array_length_t j = 0;
+
+    for (i = 0; i < data->depths.used; ++i) {
+
+      for (j = i + 1; j < data->depths.used; ++j) {
+
+        if (!((++main->signal_check) % fss_read_signal_check_d)) {
+          if (fll_program_standard_signal_received(&main->program)) {
+            fll_program_print_signal_received(main->warning, main->signal_received);
+
+            main->setting.state.status = F_status_set_error(F_interrupt);
+
+            return;
+          }
+
+          main->signal_check = 0;
+        }
+
+        if (data->depths.array[i].depth == data->depths.array[j].depth) {
+          main->setting.state.status = F_status_set_error(F_parameter);
+
+          if ((main->setting.flag & fss_read_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
+            fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
+          }
+
+          fss_read_print_error_parameter_value_once_only_number(&main->program.error, f_console_symbol_long_normal_s, fss_read_long_depth_s, data->depths.array[i].depth);
+
+          return;
+        }
+
+        if (data->depths.array[i].depth > data->depths.array[j].depth) {
+          main->setting.state.status = F_status_set_error(F_parameter);
+
+          if ((main->setting.flag & fss_read_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
+            fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
+          }
+
+          fss_read_print_error_parameter_value_before_value_number(&main->program.error, f_console_symbol_long_normal_s, fss_read_long_depth_s, data->depths.array[i].depth, data->depths.array[j].depth);
+
+          return;
+        }
+      } // for
+    } // for
+
+    main->setting.state.status = F_none;
+  }
+#endif // _di_fss_read_setting_load_depth_
 
 #ifdef __cplusplus
 } // extern "C"

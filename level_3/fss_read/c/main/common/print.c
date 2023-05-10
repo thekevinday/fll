@@ -10,6 +10,7 @@ extern "C" {
     "f_file_read_block",
     "f_file_stream_open",
     "f_fss_is_space",
+    "f_rip_dynamic",
     "f_string_dynamic_append",
     "f_string_dynamic_append_nulless",
     "f_string_dynamic_increase_by",
@@ -25,6 +26,7 @@ extern "C" {
     "f_string_read_block_increase",
     "f_thread_create",
     "fl_conversion_dynamic_partial_to_unsigned_detect",
+    "fl_conversion_dynamic_to_unsigned_detect",
     "fl_fss_basic_content_read",
     "fl_fss_basic_list_content_read",
     "fl_fss_basic_list_object_read",
@@ -39,7 +41,8 @@ extern "C" {
     "fll_program_parameter_process_context",
     "fll_program_parameter_process_verbosity",
     "fll_fss_payload_read",
-    "fss_read_depth_process",
+    "fss_read_depths_resize",
+    "fss_read_setting_load_depth",
   };
 #endif // _di_fss_read_f_a_
 
