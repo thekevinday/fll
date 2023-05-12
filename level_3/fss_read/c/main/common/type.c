@@ -4,6 +4,15 @@
 extern "C" {
 #endif
 
+#ifndef _di_fss_read_depth_delete_
+  void fss_read_depth_delete(fss_read_depth_t * const depth) {
+
+    if (!depth) return;
+
+    f_string_dynamic_resize(0, &depth->value_name);
+  }
+#endif // _di_fss_read_depth_delete_
+
 #ifndef _di_fss_read_main_data_delete_
   void fss_read_main_delete(fss_read_main_t * const main) {
 

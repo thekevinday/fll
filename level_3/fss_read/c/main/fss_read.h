@@ -92,7 +92,34 @@ extern "C" {
 #endif // _di_fss_read_main_
 
 /**
- * Process normally, writing to the output for the assigned FSS format.
+ * Process the current buffer, guarantee that a newline exists at the end of the buffer.
+ *
+ * Most standards are new line sensitive.
+ * When appending files to the buffer, if the file lacks a final new line then this could break the format for files appended thereafter.
+ *
+ * @param main
+ *   The program and settings data.
+ *   Must be of type fss_read_main_t.
+ *
+ *   This alters main.custom.setting.state.status:
+ *     F_none on success.
+ *
+ *     F_parameter (with error bit) if main is NULL or setting is NULL.
+ *
+ *     Errors (with error bit) from: f_string_dynamic_append_assure().
+ *
+ *     Errors (with error bit) from: fss_read_signal_check().
+ *
+ * @see f_string_dynamic_append_assure()
+ *
+ * @see fss_read_signal_check()
+ */
+#ifndef _di_fss_read_process_last_line_
+  extern void fss_read_process_last_line(void * const void_main);
+#endif // _di_fss_read_process_last_line_
+
+/**
+ * Process normally, reading from the input for the assigned FSS format.
  *
  * @param main
  *   The program and settings data.
@@ -101,7 +128,7 @@ extern "C" {
  *   This alters main.custom.setting.state.status:
  *     status from fss_read_process_normal_data().
  *
- *     Errors (with error bit) from fss_read_process_normal_data().
+ *     Errors (with error bit) from: fss_read_process_normal_data().
  *
  * @see fss_read_process_normal_data()
  */
@@ -110,7 +137,7 @@ extern "C" {
 #endif // _di_fss_read_process_normal_
 
 /**
- * Process the data normally, writing to the output for the assigned FSS format.
+ * Process the data normally, reading from the input for the assigned FSS format.
  *
  * @param main
  *   The program and settings data.
@@ -118,9 +145,12 @@ extern "C" {
  *
  *   This alters main.custom.setting.state.status:
  *     F_none on success.
- *     F_interrupt on (exit) signal received.
  *
  *     F_parameter (with error bit) if main is NULL or setting is NULL.
+ *
+ *     Errors (with error bit) from: fss_read_signal_check().
+ *
+ * @see fss_read_signal_check()
  */
 #ifndef _di_fss_read_process_normal_data_
   void fss_read_process_normal_data(void * const main, const f_array_length_t length);
@@ -137,9 +167,12 @@ extern "C" {
  *     F_none on success.
  *     F_data_not on success but pipe contained no relevant data.
  *     F_basic on success and the basic has been printed.
- *     F_interrupt on (exit) signal received.
  *
  *     F_parameter (with error bit) if main is NULL or setting is NULL.
+ *
+ *     Errors (with error bit) from: fss_read_signal_check().
+ *
+ * @see fss_read_signal_check()
  */
 #ifndef _di_fss_read_process_pipe_
   extern void fss_read_process_pipe(void * const main);

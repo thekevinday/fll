@@ -70,10 +70,31 @@ extern "C" {
   }
 #endif // _di_fss_read_main_
 
+#ifndef _di_fss_read_process_last_line_
+  void fss_read_process_last_line(void * const void_main) {
+
+    if (!void_main) return;
+
+    fss_read_main_t * const main = (fss_read_main_t *) void_main;
+
+    status = f_string_dynamic_append_assure(f_string_eol_s, &main->setting.buffer);
+
+    if (F_status_is_error(status)) {
+      if ((main->setting.flag & fss_read_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
+        fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
+      }
+
+      fll_error_file_print(&main->error, F_status_set_fine(main->setting.state.status), macro_fss_read_f(f_string_dynamic_append_assure), fll_error_file_flag_fallback_e, f_string_ascii_minus_s, f_file_operation_read_s, fll_error_file_type_pipe_e);
+    }
+  }
+#endif // _di_fss_read_process_last_line_
+
 #ifndef _di_fss_read_process_normal_
   void fss_read_process_normal(void * const void_main) {
 
     if (!void_main) return;
+
+    // @todo this is entirely copied from fss_write and may not represent how fss_read needs to handle this.
 
     fss_read_process_normal_data(
       (fss_read_main_t *) void_main,
@@ -91,6 +112,8 @@ extern "C" {
 
     fss_read_main_t * const main = (fss_read_main_t *) void_main;
 
+    // @todo this is entirely copied from fss_write and may not represent how fss_read needs to handle this.
+
     main->setting.ignores = 0;
     main->setting.object = 0;
     main->setting.content = 0;
@@ -99,16 +122,7 @@ extern "C" {
     if (length) {
       for (f_array_length_t i = 0; i < length; ++i) {
 
-        // @todo replace all signal checks with forked main process that independently checks and assigns main->program.signal_received.
-        if (!((++main->program.signal_check) % fss_read_signal_check_d)) {
-          if (fll_program_standard_signal_received(&main->program)) {
-            main->setting.state.status = F_status_set_error(F_interrupt);
-
-            return;
-          }
-
-          main->program.signal_check = 0;
-        }
+        if (fss_read_signal_check(main)) return;
 
         if (main->setting.objects.used) {
           main->setting.object = &main->setting.objects.array[i];
@@ -146,6 +160,8 @@ extern "C" {
     fss_read_main_t * const main = (fss_read_main_t *) void_main;
 
     if (!main->setting.process_set) return;
+
+    // @todo this is entirely copied from fss_write and may not represent how fss_read needs to handle this.
 
     if (main->program.message.verbosity > f_console_verbosity_error_e) {
       fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
@@ -217,17 +233,7 @@ extern "C" {
 
     for (;;) {
 
-      if (!((++main->program.signal_check) % fss_read_signal_check_d)) {
-        if (fll_program_standard_signal_received(&main->program)) {
-          fll_program_print_signal_received(&main->program.warning, main->program.signal_received);
-
-          main->setting.state.status = F_status_set_error(F_interrupt);
-
-          break;
-        }
-
-        main->program.signal_check = 0;
-      }
+      if (fss_read_signal_check(main)) break;
 
       if (range.start > range.stop) {
         if (status_pipe == F_none_eof) break;
@@ -452,70 +458,6 @@ extern "C" {
     }
   }
 #endif // _di_fss_read_process_pipe_
-
-#ifndef _di_fss_read_process_set_
-  void fss_read_process_set(void * const void_main) {
-
-    if (!void_main) return;
-
-    fss_read_main_t * const main = (fss_read_main_t *) void_main;
-
-    main->setting.buffer.used = 0;
-
-    if ((!(main->setting.flag & fss_read_main_flag_partial_e) || (main->setting.flag & fss_read_main_flag_partial_e) && (main->setting.flag & fss_read_main_flag_object_e)) && main->setting.object || (main->setting.flag & fss_read_main_flag_object_open_e)) {
-
-      if (main->setting.object) {
-        if (main->setting.object->used) {
-          main->setting.range.start = 0;
-          main->setting.range.stop = main->setting.object->used - 1;
-        }
-        else {
-          main->setting.range.start = 1;
-          main->setting.range.stop = 0;
-        }
-      }
-
-      if (main->setting.process_object) {
-        main->setting.process_object(void_main);
-        if (F_status_is_error(main->setting.state.status)) return;
-      }
-    }
-
-    if ((!(main->setting.flag & fss_read_main_flag_partial_e) || (main->setting.flag & fss_read_main_flag_partial_e) && (main->setting.flag & fss_read_main_flag_content_e)) && main->setting.contents || (main->setting.flag & (fss_read_main_flag_content_next_e | fss_read_main_flag_content_end_e))) {
-
-      if (main->setting.process_content) {
-        if (main->setting.contents && main->setting.contents->used) {
-          for (f_array_length_t i = 0; i < main->setting.contents->used; ++i) {
-
-            if (main->setting.contents->array[i].used) {
-              main->setting.range.start = 0;
-              main->setting.range.stop = main->setting.contents->array[i].used - 1;
-            }
-            else {
-              main->setting.range.start = 1;
-              main->setting.range.stop = 0;
-            }
-
-            main->setting.content = &main->setting.contents->array[i];
-
-            main->setting.process_content(void_main, i + 1 == main->setting.contents->used);
-            if (F_status_is_error(main->setting.state.status)) return;
-          } // for
-        }
-        else {
-          main->setting.content = 0;
-
-          main->setting.process_content(void_main, F_true);
-          if (F_status_is_error(main->setting.state.status)) return;
-        }
-      }
-    }
-
-    if (main->setting.buffer.used) {
-      fll_print_dynamic(main->setting.buffer, main->program.output.to);
-    }
-  }
-#endif // _di_fss_read_process_set_
 
 #ifdef __cplusplus
 } // extern "C"

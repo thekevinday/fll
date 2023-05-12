@@ -91,6 +91,10 @@ extern "C" {
  *     F_interrupt on (exit) signal received.
  *
  *     F_parameter (with error bit) if main is NULL or setting is NULL.
+ *
+ *     Errors (with error bit) from: fss_read_signal_check().
+ *
+ * @see fss_read_signal_check()
  */
 #ifndef _di_fss_read_payload_process_pipe_
   extern void fss_read_payload_process_pipe(void * const main);

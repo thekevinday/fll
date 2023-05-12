@@ -17,6 +17,65 @@ extern "C" {
 #endif
 
 /**
+ * A structure of parameters applied at some depth.
+ *
+ * depth: The depth number in which this is to be processed at.
+ *
+ * index_at:   Position of the "--at" parameter value in the argv list, when 0 there is no parameter.
+ * index_name: Position of the "--name" parameter value in the argv list, when 0 there is no parameter.
+ *
+ * value_at:   The value of the "--at" parameter, already processed and ready to use, only when index_at > 0.
+ * value_name: The value of the "--name" parameter, already processed and ready to use, only when index_name > 0.
+ */
+#ifndef _di_fss_read_depth_t_
+  typedef struct {
+    f_array_length_t depth;
+
+    f_array_length_t index_at;
+    f_array_length_t index_name;
+
+    f_number_unsigned_t value_at;
+    f_string_dynamic_t  value_name;
+  } fss_read_depth_t;
+
+  #define fss_read_depth_t_initialize \
+    { \
+      0, \
+      0, \
+      0, \
+      0, \
+      f_string_dynamic_t_initialize, \
+    }
+
+  #define macro_fss_read_depth_t_clear(structure) \
+    structure.depth = 0; \
+    structure.index_at = 0; \
+    structure.index_name = 0; \
+    structure.value_at = 0; \
+    macro_f_string_dynamic_t_clear(structure.value_name)
+#endif // _di_fss_read_depth_t_
+
+/**
+ * An array of depth parameters.
+ *
+ * array: The array of depths.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
+ */
+#ifndef _di_fss_read_depths_t_
+  typedef struct {
+    fss_read_depth_t *array;
+
+    f_array_length_t size;
+    f_array_length_t used;
+  } fss_read_depths_t;
+
+  #define fss_read_depths_t_initialize { 0, 0, 0 }
+
+  #define macro_fss_read_depths_t_clear(depths) macro_f_memory_structure_clear(depths)
+#endif // _di_fss_read_depths_t_
+
+/**
  * A structure for designating where within the buffer a particular file exists, using a statically allocated array.
  *
  * name:  The name of the file representing the range.
@@ -89,12 +148,10 @@ extern "C" {
  * delimits_content: The positions within the buffer representing Content character delimits.
  * comments:         The positions within the buffer representing comments.
  *
- * process_content: Process a single Content.
- * process_help:    Process help (generally printing help).
- * process_normal:  Process normally (data from parameters and files).
- * process_object:  Process a single Object.
- * process_pipe:    Process using the data from input pipe.
- * process_set:     Process a set of Object and one or more Content.
+ * process_help:      Process help (generally printing help).
+ * process_last_line: Process printing last line if necessary when loading in a file (or pipe).
+ * process_normal:    Process normally (data from parameters and files).
+ * process_pipe:      Process using the data from input pipe.
  */
 #ifndef _di_fss_read_setting_t_
   typedef struct {
@@ -122,12 +179,10 @@ extern "C" {
     f_fss_delimits_t delimits_content;
     f_fss_comments_t comments;
 
-    void (*process_content)(void * const main, const bool last);
     void (*process_help)(void * const main);
+    void (*process_last_line)(void * const main);
     void (*process_normal)(void * const main);
-    void (*process_object)(void * const main);
     void (*process_pipe)(void * const main);
-    void (*process_set)(void * const main);
   } fss_read_setting_t;
 
   #define fss_read_setting_t_initialize \
@@ -153,8 +208,6 @@ extern "C" {
       0, \
       0, \
       0, \
-      0, \
-      0, \
     }
 #endif // _di_fss_read_setting_t_
 
@@ -176,6 +229,16 @@ extern "C" {
       fss_read_setting_t_initialize, \
     }
 #endif // _di_fss_read_main_t_
+
+/**
+ * Deallocate the read depth.
+ *
+ * @param depth
+ *   The depth to deallocate.
+ */
+#ifndef _di_fss_read_depth_delete_
+  extern void fss_read_depth_delete(fss_read_depth_t * const depth);
+#endif // _di_fss_read_depth_delete_
 
 /**
  * Deallocate main program data.

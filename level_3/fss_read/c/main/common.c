@@ -241,17 +241,7 @@ extern "C" {
 
       for (i = 0; i < main->parameters.array[fss_read_parameter_delimit_e].values.used; ++i) {
 
-        if (!((++main->signal_check) % fss_read_signal_check_d)) {
-          if (fll_program_standard_signal_received(&main->program)) {
-            fll_program_print_signal_received(main->warning, main->signal_received);
-
-            main->setting.state.status = F_status_set_error(F_interrupt);
-
-            return;
-          }
-
-          main->signal_check = 0;
-        }
+        if (fss_read_signal_check(main)) return;
 
         index = main->parameters.array[fss_read_parameter_delimit_e].values.array[i];
         length = main->program.parameters.arguments.array[index].used;
@@ -410,6 +400,153 @@ extern "C" {
     if (main->program.parameters.array[fss_read_parameter_trim_e].result & f_console_result_found_e) {
       main->setting.flag |= fss_read_main_flag_trim_e;
     }
+
+    f_file_t file = f_file_t_initialize;
+
+    if (main->pipe & fll_program_data_pipe_input_e) {
+      file.id = F_type_descriptor_input_d;
+      file.stream = F_type_input_d;
+
+      main->setting.files.array[0].range.start = 0;
+
+      main->setting.state.status = f_file_stream_read(file, &main->setting.buffer);
+
+      if (F_status_is_error(main->setting.state.status)) {
+        if ((main->setting.flag & fss_read_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
+          fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
+        }
+
+        fll_error_file_print(&main->error, F_status_set_fine(main->setting.state.status), macro_fss_read_f(f_file_stream_read), fll_error_file_flag_fallback_e, f_string_ascii_minus_s, f_file_operation_read_s, fll_error_file_type_pipe_e);
+
+        return;
+      }
+
+      if (main->setting.buffer.used) {
+        main->setting.files.array[0].range.stop = main->setting.buffer.used - 1;
+
+        if (main->setting.process_last_line) {
+          main->setting.process_last_line((void *) &main);
+          if (F_status_is_error(main->setting.state.status)) return;
+        }
+      }
+      else {
+        main->setting.files.array[0].range.start = 1;
+      }
+    }
+
+    if (main->program.parameters.remaining.used) {
+      f_array_length_t index = 0;
+      off_t size_block = 0;
+      off_t size_file = 0;
+      off_t size_read = 0;
+
+      for (i = 0; i < main->parameters.remaining.used; ++i) {
+
+        if (fss_read_signal_check(main)) return;
+
+        index = main->parameters.remaining.array[i];
+
+        main->setting.files.array[main->setting.files.used].name = main->program.parameters.arguments.array[index];
+        main->setting.files.array[main->setting.files.used].range.start = main->setting.buffer.used;
+
+        file.id = -1;
+        file.stream = 0;
+
+        main->setting.state.status = f_file_stream_open(main->setting.files.array[main->setting.files.used].name, f_string_empty_s, &file);
+
+        if (F_status_is_error(main->setting.state.status)) {
+          if ((main->setting.flag & fss_read_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
+            fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
+          }
+
+          fll_error_file_print(&main->error, F_status_set_fine(main->setting.state.status), macro_fss_read_f(f_file_stream_open), fll_error_file_flag_fallback_e, main->program.parameters.arguments.array[index], f_file_operation_open_s, fll_error_file_type_file_e);
+
+          break;
+        }
+
+        size_file = 0;
+
+        main->setting.state.status = f_file_size_by_id(file.id, &size_file);
+
+        if (F_status_is_error(main->setting.state.status)) {
+          if ((main->setting.flag & fss_read_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
+            fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
+          }
+
+          fll_error_file_print(&main->error, F_status_set_fine(main->setting.state.status), macro_fss_read_f(f_file_size_by_id), fll_error_file_flag_fallback_e, main->program.parameters.arguments.array[index], f_file_operation_read_s, fll_error_file_type_file_e);
+
+          break;
+        }
+
+        if (size_file) {
+
+          // Enforce a max block read size to allow for interrupts to be processed between blocks.
+          if (size_file > fss_basic_list_read_block_max) {
+            file.size_read = fss_basic_list_read_block_read_large;
+            size_block = fss_basic_list_read_block_max;
+
+            // Pre-allocate entire file buffer plus space for the terminating NULL.
+            f_string_dynamic_increase_by(size_file + (size_block - (size_file % size_block)) + 1, &main->setting.buffer);
+          }
+          else {
+            file.size_read = fss_basic_list_read_block_read_small;
+            size_block = size_file;
+
+            // Pre-allocate entire file buffer plus space for the terminating NULL.
+            f_string_dynamic_increase_by(size_file + 1, &main->setting.buffer);
+          }
+
+          if (F_status_is_error(main->setting.state.status)) {
+            if ((main->setting.flag & fss_read_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
+              fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
+            }
+
+            fll_error_file_print(&main->error, F_status_set_fine(main->setting.state.status), macro_fss_read_f(f_string_dynamic_increase_by), fll_error_file_flag_fallback_e, main->program.parameters.arguments.array[index], f_file_operation_process_s, fll_error_file_type_file_e);
+
+            break;
+          }
+
+          for (size_read = 0; size_read < size_file; size_read += size_block) {
+
+            if (size_file > fss_basic_list_read_block_max && fss_read_signal_check(main)) break;
+
+            main->setting.state.status = f_file_stream_read_until(file, size_block, &main->setting.buffer);
+            if (F_status_is_error(main->setting.state.status)) break;
+          } // for
+
+          if (F_status_is_error(main->setting.state.status)) {
+            if (F_status_set_fine(status) != F_interrupt) {
+              if ((main->setting.flag & fss_read_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
+                fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
+              }
+
+              fll_error_file_print(&main->error, F_status_set_fine(main->setting.state.status), macro_fss_read_f(f_file_stream_read_until), fll_error_file_flag_fallback_e, main->program.parameters.arguments.array[index], f_file_operation_read_s, fll_error_file_type_file_e);
+            }
+
+            break;
+          }
+
+          f_file_stream_flush(file);
+          f_file_stream_close(&file);
+
+          if (main->setting.buffer.used > main->setting.files.array[main->setting.files.used].range.start) {
+            main->setting.files.array[main->setting.files.used++].range.stop = main->setting.buffer.used - 1;
+
+            if (main->setting.process_last_line) {
+              main->setting.process_last_line((void *) &main);
+              if (F_status_is_error(main->setting.state.status)) break;
+            }
+          }
+        }
+        else {
+          main->setting.files.array[main->setting.files.used].range.start = 1;
+          main->setting.files.array[main->setting.files.used].range.stop = 1;
+        }
+      } // for
+
+      f_file_stream_flush(file);
+      f_file_stream_close(&file);
+    }
   }
 #endif // _di_fss_read_setting_load_
 
@@ -446,17 +583,7 @@ extern "C" {
 
     for (i = 0; i < data->depths.used; ++i) {
 
-      if (!((++main->signal_check) % fss_read_signal_check_d)) {
-        if (fll_program_standard_signal_received(&main->program)) {
-          fll_program_print_signal_received(main->warning, main->signal_received);
-
-          main->setting.state.status = F_status_set_error(F_interrupt);
-
-          return;
-        }
-
-        main->signal_check = 0;
-      }
+      if (fss_read_signal_check(main)) return;
 
       data->depths.array[i].depth = 0;
       data->depths.array[i].index_at = 0;
@@ -551,17 +678,7 @@ extern "C" {
 
       for (j = i + 1; j < data->depths.used; ++j) {
 
-        if (!((++main->signal_check) % fss_read_signal_check_d)) {
-          if (fll_program_standard_signal_received(&main->program)) {
-            fll_program_print_signal_received(main->warning, main->signal_received);
-
-            main->setting.state.status = F_status_set_error(F_interrupt);
-
-            return;
-          }
-
-          main->signal_check = 0;
-        }
+        if (fss_read_signal_check(main)) return;
 
         if (data->depths.array[i].depth == data->depths.array[j].depth) {
           main->setting.state.status = F_status_set_error(F_parameter);
