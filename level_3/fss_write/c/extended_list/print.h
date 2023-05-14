@@ -18,13 +18,15 @@ extern "C" {
  * @param print
  *   The output structure to print to.
  *
+ *   The print.custom is expected to be of type fss_read_main_t.
+ *
  *   This does not alter print.custom.setting.state.status.
  *
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
  *
- *   F_output_not (with error bit) if setting is NULL.
+ *   F_output_not (with error bit) if a parameter is NULL.
  */
 #ifndef _di_fss_write_extended_list_print_help_
   extern f_status_t fss_write_extended_list_print_help(fl_print_t * const print);

@@ -21,9 +21,9 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
   data.setting.process_help = &fss_read_embedded_list_process_help;
   data.setting.process_last_line = &fss_read_process_last_line;
   data.setting.process_normal = &fss_read_process_normal;
-  data.setting.process_pipe = &fss_read_process_pipe;
   data.setting.flag |= fss_read_main_flag_ignore_e;
   data.setting.flag |= fss_read_main_flag_content_multiple_e;
+  data.setting.flag |= fss_read_main_flag_depth_support_e | fss_read_main_flag_select_support_e;
 
   f_console_parameter_t parameters[] = fss_read_console_parameter_t_initialize;
   data.program.parameters.array = parameters;

@@ -24,6 +24,8 @@ extern "C" {
  * @param print
  *   The output structure to print to.
  *
+ *   The print.custom is expected to be of type fss_read_main_t.
+ *
  *   This does not alter print.custom.setting.state.status.
  */
 #ifndef _di_fss_write_print_message_help_
@@ -38,6 +40,8 @@ extern "C" {
  * @param print
  *   The output structure to print to.
  *
+ *   The print.custom is expected to be of type fss_read_main_t.
+ *
  *   This does not alter print.custom.setting.state.status.
  */
 #ifndef _di_fss_write_print_message_help_end_next_
@@ -51,6 +55,8 @@ extern "C" {
  *
  * @param print
  *   The output structure to print to.
+ *
+ *   The print.custom is expected to be of type fss_read_main_t.
  *
  *   This does not alter print.custom.setting.state.status.
  */

@@ -199,6 +199,8 @@ extern "C" {
  *   The main program data.
  * @param data
  *   The program data.
+ * @param at
+ *   The position within the buffer.
  * @param delimits_object
  *   The delimits to be applied to an Object.
  * @param delimits_content

@@ -22,15 +22,15 @@ extern "C" {
  * @param print
  *   The output structure to print to.
  *
+ *   The print.custom is expected to be of type fss_read_main_t.
+ *
  *   This does not alter print.custom.setting.state.status.
  *
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
  *
- *   F_output_not (with error bit) if setting is NULL.
- *
- * @see fll_error_print()
+ *   F_output_not (with error bit) if a parameter is NULL.
  */
 #ifndef _di_fss_write_print_error_
   extern f_status_t fss_write_print_error(fl_print_t * const print, const f_string_t function);
@@ -41,6 +41,8 @@ extern "C" {
  *
  * @param print
  *   The output structure to print to.
+ *
+ *   The print.custom is expected to be of type fss_read_main_t.
  *
  *   This does not alter print.custom.setting.state.status.
  * @param function
@@ -57,7 +59,7 @@ extern "C" {
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
  *
- *   F_output_not (with error bit) if setting is NULL.
+ *   F_output_not (with error bit) if a parameter is NULL.
  *
  * @see fll_error_file_print()
  */
@@ -71,13 +73,15 @@ extern "C" {
  * @param print
  *   The output structure to print to.
  *
+ *   The print.custom is expected to be of type fss_read_main_t.
+ *
  *   This does not alter print.custom.setting.state.status.
  *
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
  *
- *   F_output_not (with error bit) if setting is NULL.
+ *   F_output_not (with error bit) if a parameter is NULL.
  *
  * @see fll_error_print()
  */
@@ -91,13 +95,15 @@ extern "C" {
  * @param print
  *   The output structure to print to.
  *
+ *   The print.custom is expected to be of type fss_read_main_t.
+ *
  *   This does not alter print.custom.setting.state.status.
  *
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
  *
- *   F_output_not (with error bit) if setting is NULL.
+ *   F_output_not (with error bit) if a parameter is NULL.
  */
 #ifndef _di_fss_write_print_error_one_content_only_
   extern f_status_t fss_write_print_error_one_content_only(fl_print_t * const print);
@@ -109,13 +115,15 @@ extern "C" {
  * @param print
  *   The output structure to print to.
  *
+ *   The print.custom is expected to be of type fss_read_main_t.
+ *
  *   This does not alter print.custom.setting.state.status.
  *
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
  *
- *   F_output_not (with error bit) if setting is NULL.
+ *   F_output_not (with error bit) if a parameter is NULL.
  */
 #ifndef _fss_write_print_error_prepend_only_whitespace_
   extern f_status_t fss_write_print_error_prepend_only_whitespace(fl_print_t * const print);
@@ -127,13 +135,15 @@ extern "C" {
  * @param print
  *   The output structure to print to.
  *
+ *   The print.custom is expected to be of type fss_read_main_t.
+ *
  *   This does not alter print.custom.setting.state.status.
  *
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
  *
- *   F_output_not (with error bit) if setting is NULL.
+ *   F_output_not (with error bit) if a parameter is NULL.
  */
 #ifndef _di_fss_write_print_error_unsupported_eol_
   extern f_status_t fss_write_print_error_unsupported_eol(fl_print_t * const print);

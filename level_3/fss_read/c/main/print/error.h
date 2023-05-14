@@ -22,13 +22,15 @@ extern "C" {
  * @param print
  *   The output structure to print to.
  *
+ *   The print.custom is expected to be of type fss_read_main_t.
+ *
  *   This does not alter print.custom.setting.state.status.
  *
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
  *
- *   F_output_not (with error bit) if setting is NULL.
+ *   F_output_not (with error bit) if a parameter is NULL.
  *
  * @see fll_error_print()
  */
@@ -41,6 +43,8 @@ extern "C" {
  *
  * @param print
  *   The output structure to print to.
+ *
+ *   The print.custom is expected to be of type fss_read_main_t.
  *
  *   This does not alter print.custom.setting.state.status.
  * @param function
@@ -57,7 +61,7 @@ extern "C" {
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
  *
- *   F_output_not (with error bit) if setting is NULL.
+ *   F_output_not (with error bit) if a parameter is NULL.
  *
  * @see fll_error_file_print()
  */
@@ -71,13 +75,15 @@ extern "C" {
  * @param print
  *   The output structure to print to.
  *
+ *   The print.custom is expected to be of type fss_read_main_t.
+ *
  *   This does not alter print.custom.setting.state.status.
  *
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
  *
- *   F_output_not (with error bit) if setting is NULL.
+ *   F_output_not (with error bit) if a parameter is NULL.
  *
  * @see fll_error_print()
  */
@@ -91,6 +97,8 @@ extern "C" {
  * @param print
  *   The output structure to print to.
  *
+ *   The print.custom is expected to be of type fss_read_main_t.
+ *
  *   This does not alter print.custom.setting.state.status.
  * @param symbol
  *   The symbol string prepended to the first parameter.
@@ -99,6 +107,12 @@ extern "C" {
  *   The parameter name.
  * @param message
  *   The message to print regarding why the message should be displayed.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ *
+ *   F_output_not (with error bit) if a parameter is NULL.
  */
 #ifndef _di_fss_read_print_error_parameter_requires_message_
   extern f_status_t fss_read_print_error_parameter_requires_message(fl_print_t * const print, const f_string_static_t symbol, const f_string_static_t name, const f_string_static_t message);
@@ -110,6 +124,8 @@ extern "C" {
  * @param print
  *   The output structure to print to.
  *
+ *   The print.custom is expected to be of type fss_read_main_t.
+ *
  *   This does not alter print.custom.setting.state.status.
  * @param symbol
  *   The symbol string prepended to the first parameter.
@@ -120,6 +136,12 @@ extern "C" {
  *   The parameter value that cannot be specified before the "before" function parameter.
  * @param before
  *   The parameter value that is before the "value" function parameter.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ *
+ *   F_output_not (with error bit) if a parameter is NULL.
  */
 #ifndef _di_fss_read_print_error_parameter_value_before_value_number_
   extern f_status_t fss_read_print_error_parameter_value_before_value_number(fl_print_t * const print, const f_string_static_t symbol, const f_string_static_t name, const f_array_length_t value, const f_array_length_t before);
@@ -131,6 +153,8 @@ extern "C" {
  * @param print
  *   The output structure to print to.
  *
+ *   The print.custom is expected to be of type fss_read_main_t.
+ *
  *   This does not alter print.custom.setting.state.status.
  * @param symbol
  *   The symbol string prepended to the first parameter.
@@ -139,6 +163,12 @@ extern "C" {
  *   The parameter name.
  * @param value
  *   The parameter value that is already specified.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ *
+ *   F_output_not (with error bit) if a parameter is NULL.
  */
 #ifndef _di_fss_read_print_error_parameter_value_once_only_number_
   extern f_status_t fss_read_print_error_parameter_value_once_only_number(fl_print_t * const print, const f_string_static_t symbol, const f_string_static_t name, const f_array_length_t value);
@@ -150,13 +180,15 @@ extern "C" {
  * @param print
  *   The output structure to print to.
  *
+ *   The print.custom is expected to be of type fss_read_main_t.
+ *
  *   This does not alter print.custom.setting.state.status.
  *
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
  *
- *   F_output_not (with error bit) if setting is NULL.
+ *   F_output_not (with error bit) if a parameter is NULL.
  */
 #ifndef _di_fss_read_print_error_one_content_only_
   extern f_status_t fss_read_print_error_one_content_only(fl_print_t * const print);
@@ -168,13 +200,15 @@ extern "C" {
  * @param print
  *   The output structure to print to.
  *
+ *   The print.custom is expected to be of type fss_read_main_t.
+ *
  *   This does not alter print.custom.setting.state.status.
  *
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
  *
- *   F_output_not (with error bit) if setting is NULL.
+ *   F_output_not (with error bit) if a parameter is NULL.
  */
 #ifndef _fss_read_print_error_prepend_only_whitespace_
   extern f_status_t fss_read_print_error_prepend_only_whitespace(fl_print_t * const print);
@@ -186,13 +220,15 @@ extern "C" {
  * @param print
  *   The output structure to print to.
  *
+ *   The print.custom is expected to be of type fss_read_main_t.
+ *
  *   This does not alter print.custom.setting.state.status.
  *
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
  *
- *   F_output_not (with error bit) if setting is NULL.
+ *   F_output_not (with error bit) if a parameter is NULL.
  */
 #ifndef _di_fss_read_print_error_unsupported_eol_
   extern f_status_t fss_read_print_error_unsupported_eol(fl_print_t * const print);

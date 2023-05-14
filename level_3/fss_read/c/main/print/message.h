@@ -24,6 +24,8 @@ extern "C" {
  * @param print
  *   The output structure to print to.
  *
+ *   The print.custom is expected to be of type fss_read_main_t.
+ *
  *   This does not alter print.custom.setting.state.status.
  */
 #ifndef _di_fss_read_print_message_help_
@@ -37,12 +39,14 @@ extern "C" {
  *
  * @param print
  *   The output structure to print to.
+ *
+ *   The print.custom is expected to be of type fss_read_main_t.
+ *
+ *   This does not alter print.custom.setting.state.status.
  * @param number
  *   The FSS standard number, such as "0000".
  * @param name
  *   The FSS standard name, such as "Basic".
- *
- *   This does not alter print.custom.setting.state.status.
  */
 #ifndef _di_fss_read_print_message_help_note_header_
   extern void fss_read_print_message_help_note_header(fl_print_t * const print, const f_string_static_t number, const f_string_static_t name);
@@ -55,6 +59,8 @@ extern "C" {
  *
  * @param print
  *   The output structure to print to.
+ *
+ *   The print.custom is expected to be of type fss_read_main_t.
  *
  *   This does not alter print.custom.setting.state.status.
  * @param new_line
@@ -73,6 +79,8 @@ extern "C" {
  *
  * @param print
  *   The output structure to print to.
+ *
+ *   The print.custom is expected to be of type fss_read_main_t.
  *
  *   This does not alter print.custom.setting.state.status.
  */

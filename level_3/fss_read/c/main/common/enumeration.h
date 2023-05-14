@@ -20,45 +20,59 @@ extern "C" {
  * Flags passed to the main function or program.
  *
  * fss_read_main_flag_*_e:
- *   - none:        No flags set.
- *   - at:          The object at the given position is being selected (Think of this as select a row for some Object).
- *   - columns:     The total columns found and selected is printed instead of the Content.
- *   - content:     The Content is to be printed.
- *   - copyright:   Print copyright.
- *   - empty:       Empty Content will be printed (Objects that have no Content will have their empty Content printed).
- *   - help:        Print help.
- *   - line:        A specific Content at a given line is to be selected (Think of this as select a row for some Content).
- *   - name:        A specific Object name has been requested.
- *   - object:      The Object is to be printed.
- *   - original:    Enable original printing, where the quotes are printed and no delimits are applied.
- *   - print_first: When set, print new line to message output on program begin after loading settings.
- *   - print_last:  When set, print new line to message output on program end.
- *   - select:      A specific Content at a given position is to be selected (Think of this as select a column for some Content).
- *   - total:       The total lines found and selected is printed instead of the Content.
- *   - trim:        Empty space before and after Objects and Content will not be printed (They will be trimmed).
- *   - version:     Print version.
+ *   - none:             No flags set.
+ *   - at:               The object at the given position is being selected (Think of this as select a row for some Object).
+ *   - columns:          The total columns found and selected is printed instead of the Content.
+ *   - content:          The Content is to be printed.
+ *   - content_multiple: Designate that multiple Content is allowed for an Object for this standard rather than a single Content per Object.
+ *   - copyright:        Print copyright.
+ *   - delimit:          How delimits are to be handled is designated.
+ *   - depth:            The depth is specified at least once.
+ *   - depth_multiple:   Designate that multiple depths are allowed within Content rather than being single depth Content.
+ *   - empty:            Empty Content will be printed (Objects that have no Content will have their empty Content printed).
+ *   - help:             Print help.
+ *   - line:             A specific Content at a given line is to be selected (Think of this as select a row for some Content).
+ *   - line_single:      Designate that only a single line for Content is allowed for an Object for this standard rather than allowing multiple lines per Content per Object.
+ *   - name:             A specific Object name has been requested.
+ *   - object:           The Object is to be printed.
+ *   - original:         Enable original printing, where the quotes are printed and no delimits are applied.
+ *   - pipe:             Print using the special pipe format.
+ *   - print_first:      When set, print new line to message output on program begin after loading settings.
+ *   - print_last:       When set, print new line to message output on program end.
+ *   - select:           A specific Content at a given position is to be selected (Think of this as select a column for some Content).
+ *   - total:            The total lines found and selected is printed instead of the Content.
+ *   - trim:             Empty space before and after Objects and Content will not be printed (They will be trimmed).
+ *   - version:          Print version.
  */
 #ifndef _di_fss_read_main_flag_e_
   enum {
-    fss_read_main_flag_none_e        = 0x0,
-    fss_read_main_flag_at_d          = 0x1,
-    fss_read_main_flag_columns_d     = 0x2,
-    fss_read_main_flag_content_d     = 0x4,
-    fss_read_main_flag_copyright_e   = 0x8,
-    fss_read_main_flag_empty_d       = 0x10,
-    fss_read_main_flag_help_e        = 0x20,
-    fss_read_main_flag_line_d        = 0x40,
-    fss_read_main_flag_name_d        = 0x80,
-    fss_read_main_flag_object_d      = 0x100,
-    fss_read_main_flag_original_d    = 0x200,
-    fss_read_main_flag_print_first_e = 0x400,
-    fss_read_main_flag_print_last_e  = 0x800,
-    fss_read_main_flag_select_d      = 0x1000,
-    fss_read_main_flag_total_d       = 0x2000,
-    fss_read_main_flag_trim_e        = 0x4000,
-    fss_read_main_flag_version_e     = 0x8000,
+    fss_read_main_flag_none_e             = 0x0,
+    fss_read_main_flag_at_e               = 0x1,
+    fss_read_main_flag_columns_e          = 0x2,
+    fss_read_main_flag_content_e          = 0x4,
+    fss_read_main_flag_content_multiple_e = 0x8,
+    fss_read_main_flag_copyright_e        = 0x10,
+    fss_read_main_flag_delimit_e          = 0x20,
+    fss_read_main_flag_depth_e            = 0x40,
+    fss_read_main_flag_depth_multiple_e   = 0x80,
+    fss_read_main_flag_empty_e            = 0x100,
+    fss_read_main_flag_help_e             = 0x200,
+    fss_read_main_flag_line_e             = 0x400,
+    fss_read_main_flag_line_single_e      = 0x800,
+    fss_read_main_flag_name_e             = 0x1000,
+    fss_read_main_flag_object_e           = 0x2000,
+    fss_read_main_flag_original_e         = 0x4000,
+    fss_read_main_flag_pipe_e             = 0x8000,
+    fss_read_main_flag_print_first_e      = 0x10000,
+    fss_read_main_flag_print_last_e       = 0x20000,
+    fss_read_main_flag_select_e           = 0x40000,
+    fss_read_main_flag_total_e            = 0x80000,
+    fss_read_main_flag_trim_e             = 0x100000,
+    fss_read_main_flag_version_e          = 0x200000,
   }; // enum
 #endif // _di_fss_read_main_flag_e_
+
+//@todo figure out if fss_read_main_flag_ignore_e is needed
 
 /**
  * The main program parameters.

@@ -148,14 +148,22 @@ extern "C" {
  * delimits_content: The positions within the buffer representing Content character delimits.
  * comments:         The positions within the buffer representing comments.
  *
- * process_help:      Process help (generally printing help).
- * process_last_line: Process printing last line if necessary when loading in a file (or pipe).
- * process_normal:    Process normally (data from parameters and files).
- * process_pipe:      Process using the data from input pipe.
+ * process_help:       Process help (generally printing help).
+ * process_last_line:  Process printing last line if necessary when loading in a file (or pipe).
+ * process_load_depth: Process loading of the depth related parameters when loading the settings.
+ * process_normal:     Process normally (data from parameters and files).
+ *
+ * process_at:       Process at parameter, usually called by process_normal() callback.
+ * process_columns:  Process columns parameter, usually called by process_normal() callback.
+ * process_line:     Process line parameter, usually called by process_normal() callback.
+ * process_load:     Process loading of FSS data from buffer (not to be confused with loading settings), usually called by process_normal() callback.
+ * process_name:     Process name parameter, usually called by process_normal() callback.
+ * process_print_at: Process printing a given line, usually called by process_normal() callback.
+ * process_total:    Process total parameter, usually called by process_normal() callback.
  */
 #ifndef _di_fss_read_setting_t_
   typedef struct {
-    uint16_t flag;
+    uint32_t flag;
     uint8_t delimit_mode;
 
     f_status_t status_thread;
@@ -181,8 +189,16 @@ extern "C" {
 
     void (*process_help)(void * const main);
     void (*process_last_line)(void * const main);
+    void (*process_load_depth)(const f_console_arguments_t arguments, void * const main);
     void (*process_normal)(void * const main);
-    void (*process_pipe)(void * const main);
+
+    void (*process_at)(void * const main, const bool names[], const f_fss_delimits_t delimits_object, const f_fss_delimits_t delimits_content);
+    void (*process_columns)(void * const main, const bool names[]);
+    void (*process_line)(void * const main, const bool names[]);
+    void (*process_load)(void * const main);
+    void (*process_name)(void * const main, bool names[]);
+    void (*process_print_at)(void * const main, const f_array_length_t at, const f_fss_delimits_t delimits_object, const f_fss_delimits_t delimits_content);
+    void (*process_total)(void * const main, const bool names[]);
   } fss_read_setting_t;
 
   #define fss_read_setting_t_initialize \
@@ -204,6 +220,13 @@ extern "C" {
       f_fss_delimits_t_initialize, \
       f_fss_delimits_t_initialize, \
       f_fss_comments_t_initialize, \
+      0, \
+      0, \
+      0, \
+      0, \
+      0, \
+      0, \
+      0, \
       0, \
       0, \
       0, \

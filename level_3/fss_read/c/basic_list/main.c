@@ -21,7 +21,6 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
   data.setting.process_help = &fss_read_basic_list_process_help;
   data.setting.process_last_line = &fss_read_process_last_line;
   data.setting.process_normal = &fss_read_process_normal;
-  data.setting.process_pipe = &fss_read_process_pipe;
 
   f_console_parameter_t parameters[] = fss_read_console_parameter_t_initialize;
   data.program.parameters.array = parameters;

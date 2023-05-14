@@ -89,6 +89,14 @@ extern "C" {
   }
 #endif // _di_fss_basic_list_read_print_object_end_
 
+#ifndef _di_fss_basic_list_read_print_one_
+  void fss_basic_list_read_print_one(fll_program_data_t * const main) {
+
+    f_print_dynamic_raw(f_string_ascii_1_s, main->output.to);
+    f_print_dynamic_raw(f_string_eol_s, main->output.to);
+  }
+#endif // _di_fss_basic_list_read_print_one_
+
 #ifndef _di_fss_basic_list_read_print_set_end_
   void fss_basic_list_read_print_set_end(fll_program_data_t * const main) {
 
@@ -97,14 +105,6 @@ extern "C" {
     }
   }
 #endif // _di_fss_basic_list_read_print_set_end_
-
-#ifndef _di_fss_basic_list_read_print_one_
-  void fss_basic_list_read_print_one(fll_program_data_t * const main) {
-
-    f_print_dynamic_raw(f_string_ascii_1_s, main->output.to);
-    f_print_dynamic_raw(f_string_eol_s, main->output.to);
-  }
-#endif // _di_fss_basic_list_read_print_one_
 
 #ifndef _di_fss_basic_list_read_print_zero_
   void fss_basic_list_read_print_zero(fll_program_data_t * const main) {

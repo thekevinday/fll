@@ -98,9 +98,9 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
     main->setting.standard = fss_read_basic_standard_s;
     main->setting.process_content = &fss_read_basic_process_content;
     main->setting.process_help = &fss_read_main_process_help;
+    main->setting.process_load_depth = 0;
     main->setting.process_normal = &fss_read_process_normal;
     main->setting.process_object = &fss_read_basic_process_object;
-    main->setting.process_pipe = &fss_read_process_pipe;
     main->setting.process_set = &fss_read_process_set;
 
     if (main->program.parameters.array[fss_read_parameter_as_e].result & f_console_result_value_e && main->program.parameters.array[fss_read_parameter_as_e].values.used) {
@@ -120,8 +120,8 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
           main->setting.standard = fss_read_basic_standard_s;
           main->setting.process_content = &fss_read_basic_process_content;
           main->setting.process_help = &fss_read_basic_process_help;
+          main->setting.process_load_depth = 0;
           main->setting.process_object = &fss_read_basic_process_object;
-          main->setting.process_pipe = &fss_read_process_pipe;
           main->setting.process_normal = &fss_read_process_normal;
           main->setting.process_set = &fss_read_process_set;
           main->setting.flag -= main->setting.flag & fss_read_main_flag_ignore_e; // Not supported by basic.
@@ -135,8 +135,8 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
           main->setting.standard = fss_read_extended_standard_s;
           main->setting.process_content = &fss_read_extended_process_content;
           main->setting.process_help = &fss_read_extended_process_help;
+          main->setting.process_load_depth = 0;
           main->setting.process_object = &fss_read_extended_process_object;
-          main->setting.process_pipe = &fss_read_process_pipe;
           main->setting.process_normal = &fss_read_process_normal;
           main->setting.process_set = &fss_read_process_set;
           main->setting.flag -= main->setting.flag & fss_read_main_flag_ignore_e; // Not supported by extended.
@@ -150,8 +150,8 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
           main->setting.standard = fss_read_basic_list_standard_s;
           main->setting.process_content = &fss_read_basic_list_process_content;
           main->setting.process_help = &fss_read_basic_list_process_help;
+          main->setting.process_load_depth = 0;
           main->setting.process_object = &fss_read_basic_list_process_object;
-          main->setting.process_pipe = &fss_read_process_pipe;
           main->setting.process_normal = &fss_read_process_normal;
           main->setting.process_set = &fss_read_process_set;
           main->setting.flag -= main->setting.flag & fss_read_main_flag_ignore_e; // Not supported by basic list.
@@ -165,8 +165,8 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
           main->setting.standard = fss_read_extended_list_standard_s;
           main->setting.process_content = &fss_read_extended_list_process_content;
           main->setting.process_help = &fss_read_extended_list_process_help;
+          main->setting.process_load_depth = 0;
           main->setting.process_object = &fss_read_extended_list_process_object;
-          main->setting.process_pipe = &fss_read_process_pipe;
           main->setting.process_normal = &fss_read_process_normal;
           main->setting.process_set = &fss_read_process_set;
           main->setting.flag |= fss_read_main_flag_ignore_e;
@@ -180,8 +180,8 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
           main->setting.standard = fss_read_embedded_list_standard_s;
           main->setting.process_content = &fss_read_embedded_list_process_content;
           main->setting.process_help = &fss_read_embedded_list_process_help;
+          main->setting.process_load_depth = 0;
           main->setting.process_object = &fss_read_embedded_list_process_object;
-          main->setting.process_pipe = &fss_read_process_pipe;
           main->setting.process_normal = &fss_read_process_normal;
           main->setting.process_set = &fss_read_process_set;
           main->setting.flag |= fss_read_main_flag_ignore_e;
@@ -195,9 +195,9 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
           main->setting.standard = fss_read_payload_standard_s;
           main->setting.process_content = 0; // Not used by payload.
           main->setting.process_help = &fss_read_payload_process_help;
+          main->setting.process_load_depth = 0;
           main->setting.process_normal = &fss_read_process_normal;
           main->setting.process_object = 0; // Not used by payload.
-          main->setting.process_pipe = &fss_read_payload_process_pipe;
           main->setting.process_set = &fss_read_payload_process_set;
           main->setting.flag -= main->setting.flag & fss_read_main_flag_ignore_e; // Not supported by payload.
           main->setting.flag -= main->setting.flag & fss_read_main_flag_content_multiple_e; // Not supported by payload.

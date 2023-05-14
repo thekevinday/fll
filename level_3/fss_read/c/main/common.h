@@ -28,6 +28,8 @@ extern "C" {
  * @param main
  *   The main program data.
  *
+ *   This calls main.setting.process_last_line() if not NULL.
+ *
  *   This alters main.setting.range.
  *
  *   This alters main.setting.state.status:
@@ -77,6 +79,8 @@ extern "C" {
  * @param main
  *   The main program data.
  *
+ *   This calls main.setting.process_load_depth() if not NULL.
+ *
  *   This alters main.setting.state.status:
  *     F_none on success.
  *
@@ -88,6 +92,10 @@ extern "C" {
  *     Errors (with error bit) from: fl_conversion_dynamic_partial_to_unsigned_detect().
  *
  *     Errors (with error bit) from: fss_read_depths_resize().
+ * @param parameters
+ *   The console parameters structure representing the processed arguments.
+ *
+ *   Must not be NULL.
  *
  * @see f_rip_dynamic()
  * @see f_string_dynamic_append()
@@ -98,7 +106,7 @@ extern "C" {
  * @see fss_read_setting_load()
  */
 #ifndef _di_fss_read_setting_load_depth_
-  extern void fss_read_setting_load_depth(const f_console_arguments_t arguments, fss_read_main_t * const main);
+  extern void fss_read_setting_load_depth(const f_console_arguments_t arguments, fss_read_main_t * const main, f_console_parameters_t * const parameters);
 #endif // _di_fss_read_setting_load_depth_
 
 #ifdef __cplusplus
