@@ -17,9 +17,50 @@ extern "C" {
 #endif
 
 /**
+ * Process printing the buffer according to "at" position and given delimits.
+ *
+ * This locks, uses, and unlocks the file stream.
+ *
+ * @param print
+ *   The output structure to print to.
+ *
+ *   The print.custom is expected to be of type fss_read_main_t.
+ *
+ *   This does not alter print.custom.setting.state.status.
+ * @param at
+ *   The "at" position to be printed.
+ * @param delimits_object
+ *   The delimits array representing a delimited Object.
+ *   This represents the positions within the current Object at the "at" position.
+ * @param delimits_content
+ *   The delimits array representing a delimited Content.
+ *   This represents the positions within the current Content at the "at" position.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ *
+ *   F_output_not (with error bit) if a parameter is NULL.
+ *
+ * @see fll_print_dynamic_partial()
+ * @see fll_print_except_dynamic_partial()
+ * @see fll_print_trim_dynamic_partial()
+ * @see fll_print_trim_except_dynamic_partial()
+ *
+ * @see fss_read_print_quote()
+ * @see fss_read_signal_check()
+ * @see main.callback.print_object()
+ * @see main.callback.print_object_end()
+ * @see main.callback.print_set_end()
+ */
+#ifndef _di_fss_read_print_at_
+  extern f_status_t fss_read_print_at(fl_print_t * const print, const f_array_length_t at, const f_fss_delimits_t delimits_object, const f_fss_delimits_t delimits_content);
+#endif // _di_fss_read_print_at_
+
+/**
  * Print the Content.
  *
- * This does not lock the stream.
+ * This locks, uses, and unlocks the file stream.
  *
  * This does not print a new line after the Content.
  *
@@ -31,6 +72,8 @@ extern "C" {
  *   This does not alter print.custom.setting.state.status.
  * @param range
  *   The range within the buffer representing the Content to print.
+ * @param quote
+ *   The quote in use, if any.
  * @param delimits
  *   The delimits array representing a delimited Content.
  *
@@ -40,16 +83,43 @@ extern "C" {
  *
  *   F_output_not (with error bit) if a parameter is NULL.
  *
- * @see f_print_except_in_dynamic_partial()
+ * @see fll_print_except_in_dynamic_partial()
+ * @see main.callback.print_content()
+ * @see main.callback.print_object_end()
+ * @see main.callback.print_set_end()
  */
 #ifndef _di_fss_read_print_content_
-  extern f_status_t fss_read_print_content(fl_print_t * const print, const f_array_length_t at, const f_fss_delimits_t delimits);
+  extern f_status_t fss_read_print_content(fl_print_t * const print, const f_array_length_t at, const uint8_t quote, const f_fss_delimits_t delimits);
 #endif // _di_fss_read_print_content_
+
+/**
+ * Print the ignore character for Content.
+ *
+ * This locks, uses, and unlocks the file stream.
+ *
+ * @param print
+ *   The output structure to print to.
+ *
+ *   The print.custom is expected to be of type fss_read_main_t.
+ *
+ *   This does not alter print.custom.setting.state.status.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ *
+ *   F_output_not (with error bit) if a parameter is NULL.
+ *
+ * @see fll_print_dynamic_raw()
+ */
+#ifndef _di_fss_read_print_content_ignore_
+  extern f_status_t fss_read_print_content_ignore(fl_print_t * const print);
+#endif // _di_fss_read_print_content_ignore_
 
 /**
  * Print the number and a newline.
  *
- * This does not lock the stream.
+ * This locks, uses, and unlocks the file stream.
  *
  * @param print
  *   The output structure to print to.
@@ -75,7 +145,9 @@ extern "C" {
 /**
  * Print the Object at the given position.
  *
- * This does not lock the stream.
+ * This locks, uses, and unlocks the file stream.
+ *
+ * Different standards may want to call this before they perform their final printing.
  *
  * @param print
  *   The output structure to print to.
@@ -95,14 +167,93 @@ extern "C" {
  *
  *   F_output_not (with error bit) if a parameter is NULL.
  *
- * @see f_print_except_dynamic_partial()
- * @see fl_print_trim_except_dynamic_partial()
+ * @see fll_print_dynamic_partial()
+ * @see fll_print_except_dynamic_partial()
+ * @see fll_print_trim_dynamic_partial()
+ * @see fll_print_trim_except_dynamic_partial()
  *
- * @see fss_read_print_object_end() @todo replace this with appropriate print callback.
+ * @see fss_read_print_quote()
  */
-#ifndef _di_fss_read_print_object_at_
-  extern f_status_t fss_read_print_object_at(fl_print_t * const print, const f_array_length_t at, const f_fss_delimits_t delimits);
-#endif // _di_fss_read_print_object_at_
+#ifndef _di_fss_read_print_object_
+  extern f_status_t fss_read_print_object(fl_print_t * const print, const f_array_length_t at, const f_fss_delimits_t delimits);
+#endif // _di_fss_read_print_object_
+
+/**
+ * Print the end of an Object (which is often the start of Content).
+ *
+ * This locks, uses, and unlocks the file stream.
+ *
+ * @param print
+ *   The output structure to print to.
+ *
+ *   The print.custom is expected to be of type fss_read_main_t.
+ *
+ *   This does not alter print.custom.setting.state.status.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ *
+ *   F_output_not (with error bit) if a parameter is NULL.
+ *
+ * @see fll_print_dynamic_raw()
+ */
+#ifndef _di_fss_read_print_object_end_
+  extern f_status_t fss_read_print_object_end(fl_print_t * const print);
+#endif // _di_fss_read_print_object_end_
+
+/**
+ * Print the Object at the given position.
+ *
+ * This locks, uses, and unlocks the file stream.
+ *
+ * @param print
+ *   The output structure to print to.
+ *
+ *   The print.custom is expected to be of type fss_read_main_t.
+ *
+ *   This does not alter print.custom.setting.state.status.
+ * @param at
+ *   The "at" position to be printed.
+ * @param delimits
+ *   The delimits array representing a delimited Object.
+ *   This represents the positions within the current Object at the "at" position.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ *
+ *   F_output_not (with error bit) if a parameter is NULL.
+ *
+ * @see fll_print_dynamic_raw()
+ */
+#ifndef _di_fss_read_print_quote_
+  extern f_status_t fss_read_print_quote(fl_print_t * const print, const uint8_t type);
+#endif // _di_fss_read_print_quote_
+
+/**
+ * Print the end of an Object/Content set.
+ *
+ * This locks, uses, and unlocks the file stream.
+ *
+ * @param print
+ *   The output structure to print to.
+ *
+ *   The print.custom is expected to be of type fss_read_main_t.
+ *
+ *   This does not alter print.custom.setting.state.status.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ *
+ *   F_output_not (with error bit) if a parameter is NULL.
+ *
+ * @see fll_print_dynamic_raw()
+ */
+#ifndef _di_fss_read_print_set_end_
+  extern f_status_t fss_read_print_set_end(fl_print_t * const print);
+#endif // _di_fss_read_print_set_end_
 
 #ifdef __cplusplus
 } // extern "C"

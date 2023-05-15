@@ -46,17 +46,16 @@
 #include <fll/level_2/print.h>
 #include <fll/level_2/program.h>
 
-// FSS Write includes.
+// FSS Read includes.
 #include <program/fss_read/main/common/define.h>
 #include <program/fss_read/main/common/enumeration.h>
 #include <program/fss_read/main/common/print.h>
+#include <program/fss_read/main/common/static.h>
 #include <program/fss_read/main/common/string.h>
 #include <program/fss_read/main/common/type.h>
 #include <program/fss_read/main/common.h>
-#include <program/fss_read/basic/common.h>
 #include <program/fss_read/main/print/error.h>
 #include <program/fss_read/main/print/message.h>
-#include <program/fss_read/basic/print.h>
 #include <program/fss_read/main/process_normal.h>
 #include <program/fss_read/main/signal.h>
 #include <program/fss_read/main/thread.h>
@@ -64,6 +63,46 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+/**
+ * Determine if the given depth is to be delimited or not for Content.
+ *
+ * @param main
+ *   The program and settings data.
+ *
+ *   Must not be NULL.
+ *
+ *   This does not alter main.setting.state.status.
+ * @param depth
+ *   The depth to check.
+ *
+ * @return
+ *   F_true if to apply delimits.
+ *   F_false if to not apply delimits (fallback when main is NULL).
+ */
+#ifndef _di_fss_read_delimit_content_is_
+  extern f_status_t fss_read_delimit_content_is(fss_read_main_t * const main, const f_array_length_t depth) F_attribute_visibility_internal_d;
+#endif // _di_fss_read_delimit_content_is_
+
+/**
+ * Determine if the given depth is to be delimited or not for an Object.
+ *
+ * @param main
+ *   The program and settings data.
+ *
+ *   Must not be NULL.
+ *
+ *   This does not alter main.setting.state.status.
+ * @param depth
+ *   The depth to check.
+ *
+ * @return
+ *   F_true if to apply delimits.
+ *   F_false if to not apply delimits (fallback when main is NULL).
+ */
+#ifndef _di_fss_read_delimit_object_is_
+  extern f_status_t fss_read_delimit_object_is(fss_read_main_t * const main, const f_array_length_t depth) F_attribute_visibility_internal_d;
+#endif // _di_fss_read_delimit_object_is_
 
 /**
  * Execute main program.
@@ -78,6 +117,8 @@ extern "C" {
  *
  * @param main
  *   The program and settings data.
+ *
+ *   Must not be NULL.
  *   Must be of type fss_read_main_t.
  *
  *   This alters main.setting.state.status:
@@ -93,10 +134,12 @@ extern "C" {
 #endif // _di_fss_read_main_
 
 /**
- * Process based on at parameter.
+ * Process based on at parameter for a specific line.
  *
  * @param main
  *   The program and settings data.
+ *
+ *   Must not be NULL.
  *   Must be of type fss_read_main_t.
  *
  *   This alters main.setting.state.status:
@@ -122,12 +165,28 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *
- * @see fss_read_process_at_line()
  */
-#ifndef _di_fss_read_process_at_
-  extern f_status_t fss_read_process_at_line(fss_read_main_t * const main, const f_array_length_t at, const f_array_lengths_t delimits_object, const f_array_lengths_t delimits_content, f_array_length_t * const line);
-#endif // _di_fss_read_process_at_
+#ifndef _di_fss_read_process_at_line_
+  extern void fss_read_process_at_line(fss_read_main_t * const main, const f_array_length_t at, const f_array_lengths_t delimits_object, const f_array_lengths_t delimits_content, f_array_length_t * const line);
+#endif // _di_fss_read_process_at_line_
+
+/**
+ * Get the name of the file the given position represents within the buffer.
+ *
+ * @param at
+ *   The position within the buffer.
+ * @param files
+ *   The representation of files and their respective ranges within the buffer.
+ *
+ * @return
+ *   A string with the name when found.
+ *   NULL is returned if the range represents the STDIN pipe.
+ *
+ *   On failure to identify, an empty string is returned.
+ */
+#ifndef _di_fss_read_file_identify_
+  extern f_string_static_t fss_read_file_identify(const f_array_length_t at, const fss_read_files_t files) F_attribute_visibility_internal_d;
+#endif // _di_fss_read_file_identify_
 
 /**
  * Process the current buffer, guarantee that a newline exists at the end of the buffer.
@@ -137,6 +196,8 @@ extern "C" {
  *
  * @param main
  *   The program and settings data.
+ *
+ *   Must not be NULL.
  *   Must be of type fss_read_main_t.
  *
  *   This alters main.setting.state.status:

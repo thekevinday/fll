@@ -36,6 +36,8 @@ extern int main(const int argc, const f_string_t *argv, const f_string_t *envp);
  *
  * @param main
  *   The program and settings data.
+ *
+ *   Must not be NULL.
  *   Must be of type fss_write_main_t.
  *
  *   This does not alter main.setting.state.status.

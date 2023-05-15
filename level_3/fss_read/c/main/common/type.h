@@ -117,6 +117,71 @@ extern "C" {
 #endif // _di_fss_read_files_t_
 
 /**
+ * The FSS read callbacks.
+ *
+ * process_help:       Process help (generally printing help).
+ * process_last_line:  Process printing last line if necessary when loading in a file (or pipe).
+ * process_load_depth: Process loading of the depth related parameters when loading the settings.
+ * process_normal:     Process normally (data from parameters and files).
+ *
+ * process_at:       Process at parameter, usually called by the process_normal() callback.
+ * process_columns:  Process columns parameter, usually called by the process_normal() callback.
+ * process_line:     Process line parameter, usually called by the process_normal() callback.
+ * process_load:     Process loading of FSS data from buffer (not to be confused with loading settings), usually called by the process_normal() callback.
+ * process_name:     Process name parameter, usually called by the process_normal() callback.
+ * process_total:    Process total parameter, usually called by the process_normal() callback.
+ *
+ * print_at:             Print at the given location, usually called by the process_normal() callback.
+ * print_object:         Print the Object, usually called by the process_normal() callback.
+ * print_content:        Print the Object, usually called by the process_normal() callback.
+ * print_content_ignore: Print the Content ignore character, usually called by several callbacks within the process_normal() callback for a pipe.
+ * print_object_end:     Print the Object end, usually called by several callbacks within the process_normal() callback.
+ * print_set_end:        Print the set end, usually called by several callbacks within the process_normal() callback.
+ */
+#ifndef _di_fss_read_callback_t_
+  typedef struct {
+    void (*process_help)(void * const main);
+    void (*process_last_line)(void * const main);
+    void (*process_load_depth)(const f_console_arguments_t arguments, void * const main);
+    void (*process_normal)(void * const main);
+
+    void (*process_at)(void * const main, const bool names[], const f_fss_delimits_t delimits_object, const f_fss_delimits_t delimits_content);
+    void (*process_columns)(void * const main, const bool names[]);
+    void (*process_line)(void * const main, const bool names[]);
+    void (*process_load)(void * const main);
+    void (*process_name)(void * const main, bool names[]);
+    void (*process_total)(void * const main, const bool names[]);
+
+    void (*print_at)(void * const main, const f_array_length_t at, const f_fss_delimits_t delimits_object, const f_fss_delimits_t delimits_content);
+    void (*print_object)(fl_print_t * const print, const f_array_length_t at, const f_fss_delimits_t delimits);
+    void (*print_content)(fl_print_t * const print, const f_array_length_t at, const uint8_t quote, const f_fss_delimits_t delimits);
+    void (*print_content_ignore)(fl_print_t * const print);
+    void (*print_object_end)(fl_print_t * const print);
+    void (*print_set_end)(fl_print_t * const print);
+  } fss_read_callback_t;
+
+  #define fss_read_callback_t_initialize \
+    { \
+      0, \
+      0, \
+      0, \
+      0, \
+      0, \
+      0, \
+      0, \
+      0, \
+      0, \
+      0, \
+      0, \
+      0, \
+      0, \
+      0, \
+      0, \
+      0, \
+    }
+#endif // _di_fss_read_callback_t_
+
+/**
  * The fss read main program settings.
  *
  * This is passed to the program-specific main entry point to designate program settings.
@@ -147,19 +212,6 @@ extern "C" {
  * delimits_object:  The positions within the buffer representing Object character delimits.
  * delimits_content: The positions within the buffer representing Content character delimits.
  * comments:         The positions within the buffer representing comments.
- *
- * process_help:       Process help (generally printing help).
- * process_last_line:  Process printing last line if necessary when loading in a file (or pipe).
- * process_load_depth: Process loading of the depth related parameters when loading the settings.
- * process_normal:     Process normally (data from parameters and files).
- *
- * process_at:       Process at parameter, usually called by process_normal() callback.
- * process_columns:  Process columns parameter, usually called by process_normal() callback.
- * process_line:     Process line parameter, usually called by process_normal() callback.
- * process_load:     Process loading of FSS data from buffer (not to be confused with loading settings), usually called by process_normal() callback.
- * process_name:     Process name parameter, usually called by process_normal() callback.
- * process_print_at: Process printing a given line, usually called by process_normal() callback.
- * process_total:    Process total parameter, usually called by process_normal() callback.
  */
 #ifndef _di_fss_read_setting_t_
   typedef struct {
@@ -186,19 +238,8 @@ extern "C" {
     f_fss_delimits_t delimits_object;
     f_fss_delimits_t delimits_content;
     f_fss_comments_t comments;
-
-    void (*process_help)(void * const main);
-    void (*process_last_line)(void * const main);
-    void (*process_load_depth)(const f_console_arguments_t arguments, void * const main);
-    void (*process_normal)(void * const main);
-
-    void (*process_at)(void * const main, const bool names[], const f_fss_delimits_t delimits_object, const f_fss_delimits_t delimits_content);
-    void (*process_columns)(void * const main, const bool names[]);
-    void (*process_line)(void * const main, const bool names[]);
-    void (*process_load)(void * const main);
-    void (*process_name)(void * const main, bool names[]);
-    void (*process_print_at)(void * const main, const f_array_length_t at, const f_fss_delimits_t delimits_object, const f_fss_delimits_t delimits_content);
-    void (*process_total)(void * const main, const bool names[]);
+    f_uint8s_t quotes_object;
+    f_uint8ss_t quotes_content;
   } fss_read_setting_t;
 
   #define fss_read_setting_t_initialize \
@@ -220,34 +261,28 @@ extern "C" {
       f_fss_delimits_t_initialize, \
       f_fss_delimits_t_initialize, \
       f_fss_comments_t_initialize, \
-      0, \
-      0, \
-      0, \
-      0, \
-      0, \
-      0, \
-      0, \
-      0, \
-      0, \
-      0, \
-      0, \
+      f_uint8s_t_initialize, \
+      f_uint8ss_t_initialize, \
     }
 #endif // _di_fss_read_setting_t_
 
 /**
  * The main program data as a single structure.
  *
- * program: The main program data.
- * setting: The settings data.
+ * callback: The callback data.
+ * program:  The main program data.
+ * setting:  The settings data.
  */
 #ifndef _di_fss_read_main_t_
   typedef struct {
+    fss_read_callback_t callback;
     fll_program_data_t program;
     fss_read_setting_t setting;
   } fss_read_main_t;
 
   #define fss_read_main_t_initialize \
     { \
+      fss_read_callback_t_initialize, \
       fll_program_data_t_initialize, \
       fss_read_setting_t_initialize, \
     }
@@ -258,18 +293,66 @@ extern "C" {
  *
  * @param depth
  *   The depth to deallocate.
+ *   Must not be NULL.
  */
 #ifndef _di_fss_read_depth_delete_
-  extern void fss_read_depth_delete(fss_read_depth_t * const depth);
+  extern f_status_t fss_read_depth_delete(fss_read_depth_t * const depth);
 #endif // _di_fss_read_depth_delete_
+
+/**
+ * Resize the program setting depths data.
+ *
+ * @param length
+ *   The new size to use.
+ * @param depths
+ *   The depths to resize.
+ *   Must not be NULL.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ *
+ * @see f_memory_resize()
+ */
+#ifndef _di_fss_read_depths_resize_
+  extern f_status_t fss_read_depths_resize(const f_array_length_t length, fss_read_depths_t * const depths);
+#endif // _di_fss_read_depths_resize_
+
+/**
+ * Resize the program setting files data.
+ *
+ * @param length
+ *   The new size to use.
+ * @param files
+ *   The files to resize.
+ *   Must not be NULL.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ *
+ * @see f_memory_resize()
+ */
+#ifndef _di_fss_read_files_resize_
+  extern f_status_t fss_read_files_resize(const f_array_length_t length, fss_read_files_t * const files);
+#endif // _di_fss_read_files_resize_
 
 /**
  * Deallocate main program data.
  *
- * @param setting_make
- *   The make setting data.
+ * @param main
+ *   The program and settings data.
  *
- *   This does not alter data_make.main.setting.state.status.
+ *   Must not be NULL.
+ *   Must be of type fss_read_main_t.
+ *
+ *   This does not alter main.setting.state.status.
  */
 #ifndef _di_fss_read_main_data_delete_
   extern void fss_read_main_delete(fss_read_main_t * const main);
@@ -280,6 +363,8 @@ extern "C" {
  *
  * @param setting
  *   The program main setting data.
+ *
+ *   Must not be NULL.
  *
  *   This does not alter setting.state.status.
  *

@@ -28,7 +28,7 @@ extern "C" {
  * @param main
  *   The main program data.
  *
- *   This calls main.setting.process_last_line() if not NULL.
+ *   This calls main.callback.process_last_line() if not NULL.
  *
  *   This alters main.setting.range.
  *
@@ -79,7 +79,7 @@ extern "C" {
  * @param main
  *   The main program data.
  *
- *   This calls main.setting.process_load_depth() if not NULL.
+ *   This calls main.callback.process_load_depth() if not NULL.
  *
  *   This alters main.setting.state.status:
  *     F_none on success.

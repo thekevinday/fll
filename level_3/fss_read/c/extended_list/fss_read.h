@@ -43,16 +43,20 @@
 #include <fll/level_2/print.h>
 #include <fll/level_2/program.h>
 
-// FSS Write includes.
+// FSS Read includes.
 #include <program/fss_read/main/common/define.h>
 #include <program/fss_read/main/common/enumeration.h>
 #include <program/fss_read/main/common/print.h>
+#include <program/fss_read/main/common/static.h>
 #include <program/fss_read/main/common/string.h>
 #include <program/fss_read/main/common/type.h>
 #include <program/fss_read/main/common.h>
-#include <program/fss_read/extended_list/common.h>
 #include <program/fss_read/main/print/error.h>
 #include <program/fss_read/main/print/message.h>
+#include <program/fss_read/main/process_normal.h>
+#include <program/fss_read/main/signal.h>
+#include <program/fss_read/main/thread.h>
+#include <program/fss_read/extended_list/common.h>
 #include <program/fss_read/extended_list/print.h>
 
 #ifdef __cplusplus
@@ -60,27 +64,12 @@ extern "C" {
 #endif
 
 /**
- * Process a single Content, printing the FSS-0003 (Extended List) if valid or an error if invalid.
- *
- * @param main
- *   The program and settings data.
- *   Must be of type fss_read_main_t.
- *
- *   This alters main.setting.state.status.
- *   This uses and alters main.setting.buffer.
- * @param last
- *   If TRUE, then this is the last Content in the Content set.
- *   If FALSE, then this is not the last Content in the Content set.
- */
-#ifndef _di_fss_read_extended_list_process_content_
-  extern void fss_read_extended_list_process_content(void * const main, const bool last);
-#endif // _di_fss_read_extended_list_process_content_
-
-/**
  * Process help for FSS-0003 (Extended List).
  *
  * @param main
  *   The program and settings data.
+ *
+ *   Must not be NULL.
  *   Must be of type fss_read_main_t.
  *
  *   This does not alter main.setting.state.status.
@@ -92,20 +81,6 @@ extern "C" {
 #ifndef _di_fss_read_extended_list_process_help_
   extern void fss_read_extended_list_process_help(void * const main);
 #endif // _di_fss_read_extended_list_process_help_
-
-/**
- * Process a single Object, printing the FSS-0003 (Extended List) if valid or an error if invalid.
- *
- * @param main
- *   The program and settings data.
- *   Must be of type fss_read_main_t.
- *
- *   This alters main.setting.state.status.
- *   This uses and alters main.setting.buffer.
- */
-#ifndef _di_fss_read_extended_list_process_object_
-  extern void fss_read_extended_list_process_object(void * const main);
-#endif // _di_fss_read_extended_list_process_object_
 
 #ifdef __cplusplus
 } // extern "C"

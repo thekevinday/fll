@@ -19,7 +19,6 @@ extern "C" {
 
     if (!setting) return F_status_set_error(F_parameter);
 
-    f_string_dynamic_resize(0, &setting->escaped);
     f_string_dynamic_resize(0, &setting->block);
     f_string_dynamic_resize(0, &setting->buffer);
     f_string_dynamic_resize(0, &setting->prepend);

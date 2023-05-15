@@ -37,7 +37,7 @@ build_libraries-individual_thread -lf_thread
 build_libraries-level -lfll_2 -lfll_1 -lfll_0
 build_libraries-monolithic -lfll
 
-build_sources_library main/fss_read.c main/common.c main/common/define.c main/common/enumeration.c main/common/print.c main/common/string.c main/common/type.c main/print/error.c main/print/message.c main/process_normal.c main/signal.c main/thread.c
+build_sources_library main/fss_read.c main/common.c main/common/define.c main/common/enumeration.c main/common/print.c main/common/static.c main/common/string.c main/common/type.c main/print/error.c main/print/message.c main/process_normal.c main/signal.c main/thread.c
 build_sources_library basic/fss_read.c basic/common.c basic/print.c
 build_sources_library basic_list/fss_read.c basic_list/common.c basic_list/print.c
 build_sources_library embedded_list/fss_read.c embedded_list/common.c embedded_list/print.c
@@ -45,7 +45,7 @@ build_sources_library extended/fss_read.c extended/common.c extended/print.c
 build_sources_library extended_list/fss_read.c extended_list/common.c extended_list/print.c
 build_sources_library payload/fss_read.c payload/common.c payload/print.c
 
-build_sources_headers main/fss_read.h main/common.h main/common/define.h main/common/enumeration.h main/common/print.h main/common/string.h main/common/type.h main/print/error.h main/print/message.h main/process_normal.h main/signal.h main/thread.h
+build_sources_headers main/fss_read.h main/common.h main/common/define.h main/common/enumeration.h main/common/print.h main/common/static.h main/common/string.h main/common/type.h main/print/error.h main/print/message.h main/process_normal.h main/signal.h main/thread.h
 build_sources_headers basic/fss_read.h basic/common.h basic/print.h basic/private-common.h
 build_sources_headers basic_list/fss_read.h basic_list/common.h basic_list/print.h
 build_sources_headers embedded_list/fss_read.h embedded_list/common.h embedded_list/print.h

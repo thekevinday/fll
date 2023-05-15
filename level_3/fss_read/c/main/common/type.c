@@ -13,6 +13,52 @@ extern "C" {
   }
 #endif // _di_fss_read_depth_delete_
 
+#ifndef _di_fss_read_depths_resize_
+  f_status_t fss_read_depths_resize(const f_array_length_t length, fss_read_depths_t * const depths) {
+
+    if (!depths) return F_status_set_error(F_parameter);
+    if (depths->used + length > F_array_length_t_size_d) return F_status_set_error(F_array_too_large);
+
+    f_status_t status = F_none;
+
+    for (f_array_length_t i = length; i < depths->size; ++i) {
+
+      status = private_f_string_ranges_adjust(0, &depths->array[i]);
+      if (F_status_is_error(status)) return status;
+    } // for
+
+    status = f_memory_adjust(depths->size, length, sizeof(fss_read_file_t), (void **) & depths->array);
+    if (F_status_is_error(status)) return status;
+
+    depths->size = length;
+
+    if (depths->used > depths->size) {
+      depths->used = length;
+    }
+
+    return F_none;
+  }
+#endif // _di_fss_read_depths_resize_
+
+#ifndef _di_fss_read_files_resize_
+  f_status_t fss_read_files_resize(const f_array_length_t length, fss_read_files_t * const files) {
+
+    if (!files) return F_status_set_error(F_parameter);
+    if (files->used + length > F_array_length_t_size_d) return F_status_set_error(F_array_too_large);
+
+    const f_status_t status = f_memory_adjust(files->size, length, sizeof(fss_read_file_t), (void **) & files->array);
+    if (F_status_is_error(status)) return status;
+
+    files->size = length;
+
+    if (files->used > files->size) {
+      files->used = length;
+    }
+
+    return F_none;
+  }
+#endif // _di_fss_read_files_resize_
+
 #ifndef _di_fss_read_main_data_delete_
   void fss_read_main_delete(fss_read_main_t * const main) {
 
@@ -33,9 +79,18 @@ extern "C" {
     f_string_dynamic_resize(0, &setting->buffer);
     f_string_dynamic_resize(0, &setting->prepend);
 
-    f_string_rangess_resize(0, &setting->ignoress);
-    f_string_dynamics_resize(0, &setting->objects);
-    f_string_dynamicss_resize(0, &setting->contentss);
+    fss_read_files_resize(0, &setting->files);
+    fss_read_depths_resize(0, &setting->depths);
+
+    f_string_ranges_resize(0, &setting->objects);
+    f_string_ranges_resize(0, &setting->comments);
+    f_string_rangess_resize(0, &setting->contents);
+
+    f_array_lengths_resize(0, &setting->delimits_object);
+    f_array_lengths_resize(0, &setting->delimits_content);
+
+    f_uint8s_resize(0, &setting->quotes_object);
+    f_uint8ss_resize(0, &setting->quotes_content);
 
     return F_none;
   }

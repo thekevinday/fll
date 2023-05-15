@@ -44,16 +44,20 @@
 #include <fll/level_2/print.h>
 #include <fll/level_2/program.h>
 
-// FSS Write includes.
+// FSS Read includes.
 #include <program/fss_read/main/common/define.h>
 #include <program/fss_read/main/common/enumeration.h>
 #include <program/fss_read/main/common/print.h>
+#include <program/fss_read/main/common/static.h>
 #include <program/fss_read/main/common/string.h>
 #include <program/fss_read/main/common/type.h>
 #include <program/fss_read/main/common.h>
-#include <program/fss_read/payload/common.h>
 #include <program/fss_read/main/print/error.h>
 #include <program/fss_read/main/print/message.h>
+#include <program/fss_read/main/process_normal.h>
+#include <program/fss_read/main/signal.h>
+#include <program/fss_read/main/thread.h>
+#include <program/fss_read/payload/common.h>
 #include <program/fss_read/payload/print.h>
 
 #ifdef __cplusplus
@@ -65,6 +69,8 @@ extern "C" {
  *
  * @param main
  *   The program and settings data.
+ *
+ *   Must not be NULL.
  *   Must be of type fss_read_main_t.
  *
  *   This does not alter main.setting.state.status.
@@ -82,6 +88,8 @@ extern "C" {
  *
  * @param main
  *   The program and settings data.
+ *
+ *   Must not be NULL.
  *   Must be of type fss_read_main_t.
  *
  *   This alters main.setting.state.status:
@@ -105,6 +113,8 @@ extern "C" {
  *
  * @param main
  *   The program and settings data.
+ *
+ *   Must not be NULL.
  *   Must be of type fss_read_main_t.
  *
  *   This alters main.setting.state.status:

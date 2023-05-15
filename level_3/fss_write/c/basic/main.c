@@ -18,12 +18,13 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
   data.setting.state.custom = (void *) &data;
   data.setting.standard = fss_write_basic_standard_s;
-  data.setting.process_content = &fss_write_basic_process_content;
-  data.setting.process_help = &fss_write_basic_process_help;
-  data.setting.process_normal = &fss_write_process_normal;
-  data.setting.process_object = &fss_write_basic_process_object;
-  data.setting.process_pipe = &fss_write_process_pipe;
-  data.setting.process_set = &fss_write_process_set;
+
+  data.callback.process_content = &fss_write_basic_process_content;
+  data.callback.process_help = &fss_write_basic_process_help;
+  data.callback.process_normal = &fss_write_process_normal;
+  data.callback.process_object = &fss_write_basic_process_object;
+  data.callback.process_pipe = &fss_write_process_pipe;
+  data.callback.process_set = &fss_write_process_set;
 
   f_console_parameter_t parameters[] = fss_write_console_parameter_t_initialize;
   data.program.parameters.array = parameters;

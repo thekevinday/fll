@@ -10,11 +10,7 @@ extern "C" {
     if (!print) return F_status_set_error(F_output_not);
     if (!print || print->verbosity == f_console_verbosity_quiet_e) return F_output_not;
 
-    f_file_stream_lock(print->to);
-
-    fl_print_format("%r%[%QThe payload may only be specified last.%]%r", print->to, f_string_eol_s, print->set->error, print->prefix, print->set->error, f_string_eol_s);
-
-    f_file_stream_unlock(print->to);
+    fll_print_format("%r%[%QThe payload may only be specified last.%]%r", print->to, f_string_eol_s, print->set->error, print->prefix, print->set->error, f_string_eol_s);
 
     return F_none;
   }

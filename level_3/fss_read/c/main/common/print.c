@@ -42,9 +42,10 @@ extern "C" {
     "fl_fss_extended_list_object_read",
     "fl_fss_extended_object_read",
     "fl_fss_payload_content_read",
+    "fll_fss_basic_read",
+    "fll_fss_payload_read",
     "fll_program_parameter_process_context",
     "fll_program_parameter_process_verbosity",
-    "fll_fss_payload_read",
     "fss_read_depths_resize",
     "fss_read_setting_load_depth",
   };

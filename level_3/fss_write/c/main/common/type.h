@@ -17,6 +17,37 @@ extern "C" {
 #endif
 
 /**
+ * The FSS write callbacks.
+ *
+ * process_content: Process a single Content.
+ * process_help:    Process help (generally printing help).
+ * process_normal:  Process normally (data from parameters and files).
+ * process_object:  Process a single Object.
+ * process_pipe:    Process using the data from input pipe.
+ * process_set:     Process a set of Object and one or more Content.
+ */
+#ifndef _di_fss_write_callback_t_
+  typedef struct {
+    void (*process_content)(void * const main, const bool last);
+    void (*process_help)(void * const main);
+    void (*process_normal)(void * const main);
+    void (*process_object)(void * const main);
+    void (*process_pipe)(void * const main);
+    void (*process_set)(void * const main);
+  } fss_write_callback_t;
+
+  #define fss_write_callback_t_initialize \
+    { \
+      0, \
+      0, \
+      0, \
+      0, \
+      0, \
+      0, \
+    }
+#endif // _di_fss_write_callback_t_
+
+/**
  * The fss write main program settings.
  *
  * This is passed to the program-specific main entry point to designate program settings.
@@ -46,13 +77,6 @@ extern "C" {
  * object:   A pointer to a specific Object used during processing.
  * content:  A pointer to a specific Content used during processing.
  * contents: A pointer to a specific set of Content used during processing.
- *
- * process_content: Process a single Content.
- * process_help:    Process help (generally printing help).
- * process_normal:  Process normally (data from parameters and files).
- * process_object:  Process a single Object.
- * process_pipe:    Process using the data from input pipe.
- * process_set:     Process a set of Object and one or more Content.
  */
 #ifndef _di_fss_write_setting_t_
   typedef struct {
@@ -66,7 +90,6 @@ extern "C" {
     f_string_static_t quote;
     f_string_static_t standard;
 
-    f_string_dynamic_t escaped;
     f_string_dynamic_t block;
     f_string_dynamic_t buffer;
     f_string_dynamic_t prepend;
@@ -79,13 +102,6 @@ extern "C" {
     f_string_static_t *object;
     f_string_static_t *content;
     f_string_statics_t *contents;
-
-    void (*process_content)(void * const main, const bool last);
-    void (*process_help)(void * const main);
-    void (*process_normal)(void * const main);
-    void (*process_object)(void * const main);
-    void (*process_pipe)(void * const main);
-    void (*process_set)(void * const main);
   } fss_write_setting_t;
 
   #define fss_write_setting_t_initialize \
@@ -99,16 +115,9 @@ extern "C" {
       f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
       f_string_rangess_t_initialize, \
       f_string_dynamics_t_initialize, \
       f_string_dynamicss_t_initialize, \
-      0, \
-      0, \
-      0, \
-      0, \
-      0, \
-      0, \
       0, \
       0, \
       0, \
@@ -119,17 +128,20 @@ extern "C" {
 /**
  * The main program data as a single structure.
  *
- * program: The main program data.
- * setting: The settings data.
+ * callback: The callback data.
+ * program:  The main program data.
+ * setting:  The settings data.
  */
 #ifndef _di_fss_write_main_t_
   typedef struct {
+    fss_write_callback_t callback;
     fll_program_data_t program;
     fss_write_setting_t setting;
   } fss_write_main_t;
 
   #define fss_write_main_t_initialize \
     { \
+      fss_write_callback_t_initialize, \
       fll_program_data_t_initialize, \
       fss_write_setting_t_initialize, \
     }

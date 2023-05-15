@@ -96,12 +96,13 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
     if (!main || F_status_is_error(main->setting.state.status) || (main->setting.flag & fss_read_main_flag_version_e)) return;
 
     main->setting.standard = fss_read_basic_standard_s;
-    main->setting.process_content = &fss_read_basic_process_content;
-    main->setting.process_help = &fss_read_main_process_help;
-    main->setting.process_load_depth = 0;
-    main->setting.process_normal = &fss_read_process_normal;
-    main->setting.process_object = &fss_read_basic_process_object;
-    main->setting.process_set = &fss_read_process_set;
+
+    main->callback.process_content = &fss_read_basic_process_content;
+    main->callback.process_help = &fss_read_main_process_help;
+    main->callback.process_load_depth = 0;
+    main->callback.process_normal = &fss_read_process_normal;
+    main->callback.process_object = &fss_read_basic_process_object;
+    main->callback.process_set = &fss_read_process_set;
 
     if (main->program.parameters.array[fss_read_parameter_as_e].result & f_console_result_value_e && main->program.parameters.array[fss_read_parameter_as_e].values.used) {
 
@@ -118,14 +119,16 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
             f_compare_dynamic(argv[index], fss_read_format_code_machine_0000_s) == F_equal_to) {
 
           main->setting.standard = fss_read_basic_standard_s;
-          main->setting.process_content = &fss_read_basic_process_content;
-          main->setting.process_help = &fss_read_basic_process_help;
-          main->setting.process_load_depth = 0;
-          main->setting.process_object = &fss_read_basic_process_object;
-          main->setting.process_normal = &fss_read_process_normal;
-          main->setting.process_set = &fss_read_process_set;
+
           main->setting.flag -= main->setting.flag & fss_read_main_flag_ignore_e; // Not supported by basic.
           main->setting.flag -= main->setting.flag & fss_read_main_flag_content_multiple_e; // Not supported by basic.
+
+          main->callback.process_content = &fss_read_basic_process_content;
+          main->callback.process_help = &fss_read_basic_process_help;
+          main->callback.process_load_depth = 0;
+          main->callback.process_object = &fss_read_basic_process_object;
+          main->callback.process_normal = &fss_read_process_normal;
+          main->callback.process_set = &fss_read_process_set;
         }
         else if (f_compare_dynamic(argv[index], fss_read_format_code_short_0001_s) == F_equal_to ||
                  f_compare_dynamic(argv[index], fss_read_format_code_long_0001_s) == F_equal_to ||
@@ -133,14 +136,16 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
                  f_compare_dynamic(argv[index], fss_read_format_code_machine_0001_s) == F_equal_to) {
 
           main->setting.standard = fss_read_extended_standard_s;
-          main->setting.process_content = &fss_read_extended_process_content;
-          main->setting.process_help = &fss_read_extended_process_help;
-          main->setting.process_load_depth = 0;
-          main->setting.process_object = &fss_read_extended_process_object;
-          main->setting.process_normal = &fss_read_process_normal;
-          main->setting.process_set = &fss_read_process_set;
+
           main->setting.flag -= main->setting.flag & fss_read_main_flag_ignore_e; // Not supported by extended.
           main->setting.flag |= fss_read_main_flag_content_multiple_e;
+
+          main->callback.process_content = &fss_read_extended_process_content;
+          main->callback.process_help = &fss_read_extended_process_help;
+          main->callback.process_load_depth = 0;
+          main->callback.process_object = &fss_read_extended_process_object;
+          main->callback.process_normal = &fss_read_process_normal;
+          main->callback.process_set = &fss_read_process_set;
         }
         else if (f_compare_dynamic(argv[index], fss_read_format_code_short_0002_s) == F_equal_to ||
                  f_compare_dynamic(argv[index], fss_read_format_code_long_0002_s) == F_equal_to ||
@@ -148,14 +153,16 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
                  f_compare_dynamic(argv[index], fss_read_format_code_machine_0002_s) == F_equal_to) {
 
           main->setting.standard = fss_read_basic_list_standard_s;
-          main->setting.process_content = &fss_read_basic_list_process_content;
-          main->setting.process_help = &fss_read_basic_list_process_help;
-          main->setting.process_load_depth = 0;
-          main->setting.process_object = &fss_read_basic_list_process_object;
-          main->setting.process_normal = &fss_read_process_normal;
-          main->setting.process_set = &fss_read_process_set;
+
           main->setting.flag -= main->setting.flag & fss_read_main_flag_ignore_e; // Not supported by basic list.
           main->setting.flag -= main->setting.flag & fss_read_main_flag_content_multiple_e; // Not supported by basic list.
+
+          main->callback.process_content = &fss_read_basic_list_process_content;
+          main->callback.process_help = &fss_read_basic_list_process_help;
+          main->callback.process_load_depth = 0;
+          main->callback.process_object = &fss_read_basic_list_process_object;
+          main->callback.process_normal = &fss_read_process_normal;
+          main->callback.process_set = &fss_read_process_set;
         }
         else if (f_compare_dynamic(argv[index], fss_read_format_code_short_0003_s) == F_equal_to ||
                  f_compare_dynamic(argv[index], fss_read_format_code_long_0003_s) == F_equal_to ||
@@ -163,14 +170,16 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
                  f_compare_dynamic(argv[index], fss_read_format_code_machine_0003_s) == F_equal_to) {
 
           main->setting.standard = fss_read_extended_list_standard_s;
-          main->setting.process_content = &fss_read_extended_list_process_content;
-          main->setting.process_help = &fss_read_extended_list_process_help;
-          main->setting.process_load_depth = 0;
-          main->setting.process_object = &fss_read_extended_list_process_object;
-          main->setting.process_normal = &fss_read_process_normal;
-          main->setting.process_set = &fss_read_process_set;
+
           main->setting.flag |= fss_read_main_flag_ignore_e;
           main->setting.flag -= main->setting.flag & fss_read_main_flag_content_multiple_e; // Not supported by extended list.
+
+          main->callback.process_content = &fss_read_extended_list_process_content;
+          main->callback.process_help = &fss_read_extended_list_process_help;
+          main->callback.process_load_depth = 0;
+          main->callback.process_object = &fss_read_extended_list_process_object;
+          main->callback.process_normal = &fss_read_process_normal;
+          main->callback.process_set = &fss_read_process_set;
         }
         else if (f_compare_dynamic(argv[index], fss_read_format_code_short_0008_s) == F_equal_to ||
                  f_compare_dynamic(argv[index], fss_read_format_code_long_0008_s) == F_equal_to ||
@@ -178,14 +187,16 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
                  f_compare_dynamic(argv[index], fss_read_format_code_machine_0008_s) == F_equal_to) {
 
           main->setting.standard = fss_read_embedded_list_standard_s;
-          main->setting.process_content = &fss_read_embedded_list_process_content;
-          main->setting.process_help = &fss_read_embedded_list_process_help;
-          main->setting.process_load_depth = 0;
-          main->setting.process_object = &fss_read_embedded_list_process_object;
-          main->setting.process_normal = &fss_read_process_normal;
-          main->setting.process_set = &fss_read_process_set;
+
           main->setting.flag |= fss_read_main_flag_ignore_e;
           main->setting.flag |= fss_read_main_flag_content_multiple_e;
+
+          main->callback.process_content = &fss_read_embedded_list_process_content;
+          main->callback.process_help = &fss_read_embedded_list_process_help;
+          main->callback.process_load_depth = 0;
+          main->callback.process_object = &fss_read_embedded_list_process_object;
+          main->callback.process_normal = &fss_read_process_normal;
+          main->callback.process_set = &fss_read_process_set;
         }
         else if (f_compare_dynamic(argv[index], fss_read_format_code_short_000e_s) == F_equal_to ||
                  f_compare_dynamic(argv[index], fss_read_format_code_long_000e_s) == F_equal_to ||
@@ -193,14 +204,16 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
                  f_compare_dynamic(argv[index], fss_read_format_code_machine_000e_s) == F_equal_to) {
 
           main->setting.standard = fss_read_payload_standard_s;
-          main->setting.process_content = 0; // Not used by payload.
-          main->setting.process_help = &fss_read_payload_process_help;
-          main->setting.process_load_depth = 0;
-          main->setting.process_normal = &fss_read_process_normal;
-          main->setting.process_object = 0; // Not used by payload.
-          main->setting.process_set = &fss_read_payload_process_set;
+
           main->setting.flag -= main->setting.flag & fss_read_main_flag_ignore_e; // Not supported by payload.
           main->setting.flag -= main->setting.flag & fss_read_main_flag_content_multiple_e; // Not supported by payload.
+
+          main->callback.process_content = 0; // Not used by payload.
+          main->callback.process_help = &fss_read_payload_process_help;
+          main->callback.process_load_depth = 0;
+          main->callback.process_normal = &fss_read_process_normal;
+          main->callback.process_object = 0; // Not used by payload.
+          main->callback.process_set = &fss_read_payload_process_set;
         }
         else {
           if (main->setting.flag & fss_read_main_flag_help_e) {

@@ -51,9 +51,9 @@
 #include <program/fss_write/main/common/string.h>
 #include <program/fss_write/main/common/type.h>
 #include <program/fss_write/main/common.h>
-#include <program/fss_write/basic_list/common.h>
 #include <program/fss_write/main/print/error.h>
 #include <program/fss_write/main/print/message.h>
+#include <program/fss_write/basic_list/common.h>
 #include <program/fss_write/basic_list/print.h>
 
 #ifdef __cplusplus
@@ -65,6 +65,8 @@ extern "C" {
  *
  * @param main
  *   The program and settings data.
+ *
+ *   Must not be NULL.
  *   Must be of type fss_write_main_t.
  *
  *   This alters main.setting.state.status.
@@ -82,6 +84,8 @@ extern "C" {
  *
  * @param main
  *   The program and settings data.
+ *
+ *   Must not be NULL.
  *   Must be of type fss_write_main_t.
  *
  *   This does not alter main.setting.state.status.
@@ -99,6 +103,8 @@ extern "C" {
  *
  * @param main
  *   The program and settings data.
+ *
+ *   Must not be NULL.
  *   Must be of type fss_write_main_t.
  *
  *   This alters main.setting.state.status.

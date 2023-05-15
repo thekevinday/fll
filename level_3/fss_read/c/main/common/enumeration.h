@@ -39,6 +39,8 @@ extern "C" {
  *   - pipe:             Print using the special pipe format.
  *   - print_first:      When set, print new line to message output on program begin after loading settings.
  *   - print_last:       When set, print new line to message output on program end.
+ *   - quote_content:    Designate that the standard supports quotes on Content.
+ *   - quote_object:     Designate that the standard supports quotes on Objects.
  *   - select:           A specific Content at a given position is to be selected (Think of this as select a column for some Content).
  *   - total:            The total lines found and selected is printed instead of the Content.
  *   - trim:             Empty space before and after Objects and Content will not be printed (They will be trimmed).
@@ -65,10 +67,12 @@ extern "C" {
     fss_read_main_flag_pipe_e             = 0x8000,
     fss_read_main_flag_print_first_e      = 0x10000,
     fss_read_main_flag_print_last_e       = 0x20000,
-    fss_read_main_flag_select_e           = 0x40000,
-    fss_read_main_flag_total_e            = 0x80000,
-    fss_read_main_flag_trim_e             = 0x100000,
-    fss_read_main_flag_version_e          = 0x200000,
+    fss_read_main_flag_quote_content_e    = 0x40000,
+    fss_read_main_flag_quote_object_e     = 0x80000,
+    fss_read_main_flag_select_e           = 0x100000,
+    fss_read_main_flag_total_e            = 0x200000,
+    fss_read_main_flag_trim_e             = 0x400000,
+    fss_read_main_flag_version_e          = 0x800000,
   }; // enum
 #endif // _di_fss_read_main_flag_e_
 

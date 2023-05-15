@@ -405,6 +405,7 @@ extern "C" {
             }
           }
           else {
+            // @fixme: is this block correct? It makes no sense here with the print at function below printing both Object and Content.
             if ((data->option & fss_extended_read_data_option_original_d) && data->quotes_object.array[at]) {
               f_print_dynamic_raw(
                 data->quotes_object.array[at] == f_fss_quote_type_single_e
@@ -418,6 +419,7 @@ extern "C" {
 
             fss_extended_read_print_at(main, i, *delimits_object, *delimits_content, data);
 
+            // @fixme: is this block correct? It makes no sense here with the print at function above printing both Object and Content.
             if ((data->option & fss_extended_read_data_option_original_d) && data->quotes_object.array[at]) {
               f_print_dynamic_raw(
                 data->quotes_object.array[at] == f_fss_quote_type_single_e
@@ -439,6 +441,7 @@ extern "C" {
           }
         }
         else {
+          // @fixme: is this block correct? It makes no sense here with the print at function below printing both Object and Content.
           if ((data->option & fss_extended_read_data_option_original_d) && data->quotes_content.array[at].array[i]) {
             f_print_dynamic_raw(
               data->quotes_content.array[at].array[i] == f_fss_quote_type_single_e
@@ -452,6 +455,7 @@ extern "C" {
 
           fss_extended_read_print_at(main, i, *delimits_object, *delimits_content, data);
 
+          // @fixme: is this block correct? It makes no sense here with the print at function above printing both Object and Content.
           if ((data->option & fss_extended_read_data_option_original_d) && data->quotes_content.array[at].array[i]) {
             f_print_dynamic_raw(
               data->quotes_content.array[at].array[i] == f_fss_quote_type_single_e

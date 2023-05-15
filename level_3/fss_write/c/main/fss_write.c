@@ -27,8 +27,8 @@ extern "C" {
 
     if (main->setting.flag & (fss_write_main_flag_help_e | fss_write_main_flag_version_e | fss_write_main_flag_copyright_e)) {
       if (main->setting.flag & fss_write_main_flag_help_e) {
-        if (main->setting.process_help) {
-          main->setting.process_help(void_main);
+        if (main->callback.process_help) {
+          main->callback.process_help(void_main);
         }
         else {
           fss_write_print_message_help(&main->program.message);
@@ -48,18 +48,16 @@ extern "C" {
       return;
     }
 
-    main->setting.escaped.used = 0;
-
     if (main->program.pipe & fll_program_data_pipe_input_e) {
-      if (main->setting.process_pipe) {
-        main->setting.process_pipe(void_main);
+      if (main->callback.process_pipe) {
+        main->callback.process_pipe(void_main);
       }
     }
 
     if (F_status_is_error_not(main->setting.state.status)) {
       if (main->setting.flag & (fss_write_main_flag_object_e | fss_write_main_flag_content_e | fss_write_main_flag_object_open_e | fss_write_main_flag_content_next_e | fss_write_main_flag_content_end_e)) {
-        if (main->setting.process_normal) {
-          main->setting.process_normal(void_main);
+        if (main->callback.process_normal) {
+          main->callback.process_normal(void_main);
         }
       }
     }
@@ -122,7 +120,7 @@ extern "C" {
           main->setting.ignores = &main->setting.ignoress.array[i];
         }
 
-        main->setting.process_set(void_main);
+        main->callback.process_set(void_main);
         if (F_status_is_error(main->setting.state.status)) break;
       } // for
     }
@@ -132,7 +130,7 @@ extern "C" {
         main->setting.contents = 0;
         main->setting.ignores = 0;
 
-        main->setting.process_set(void_main);
+        main->callback.process_set(void_main);
       }
     }
   }
@@ -145,7 +143,7 @@ extern "C" {
 
     fss_write_main_t * const main = (fss_write_main_t *) void_main;
 
-    if (!main->setting.process_set) return;
+    if (!main->callback.process_set) return;
 
     if (main->program.message.verbosity > f_console_verbosity_error_e) {
       fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
@@ -416,7 +414,7 @@ extern "C" {
 
       // End Object or Content set.
       if (state == 0x3) {
-        main->setting.process_set(void_main);
+        main->callback.process_set(void_main);
         if (F_status_is_error(main->setting.state.status)) break;
 
         state = 0;
@@ -433,7 +431,7 @@ extern "C" {
 
     // If the pipe ended before finishing, then attempt to wrap up.
     if (F_status_is_error_not(main->setting.state.status) && status_pipe == F_none_eof && state) {
-      main->setting.process_set(void_main);
+      main->callback.process_set(void_main);
 
       flag |= 0x1;
     }
@@ -475,15 +473,15 @@ extern "C" {
         }
       }
 
-      if (main->setting.process_object) {
-        main->setting.process_object(void_main);
+      if (main->callback.process_object) {
+        main->callback.process_object(void_main);
         if (F_status_is_error(main->setting.state.status)) return;
       }
     }
 
     if ((!(main->setting.flag & fss_write_main_flag_partial_e) || (main->setting.flag & fss_write_main_flag_partial_e) && (main->setting.flag & fss_write_main_flag_content_e)) && main->setting.contents || (main->setting.flag & (fss_write_main_flag_content_next_e | fss_write_main_flag_content_end_e))) {
 
-      if (main->setting.process_content) {
+      if (main->callback.process_content) {
         if (main->setting.contents && main->setting.contents->used) {
           for (f_array_length_t i = 0; i < main->setting.contents->used; ++i) {
 
@@ -498,14 +496,14 @@ extern "C" {
 
             main->setting.content = &main->setting.contents->array[i];
 
-            main->setting.process_content(void_main, i + 1 == main->setting.contents->used);
+            main->callback.process_content(void_main, i + 1 == main->setting.contents->used);
             if (F_status_is_error(main->setting.state.status)) return;
           } // for
         }
         else {
           main->setting.content = 0;
 
-          main->setting.process_content(void_main, F_true);
+          main->callback.process_content(void_main, F_true);
           if (F_status_is_error(main->setting.state.status)) return;
         }
       }

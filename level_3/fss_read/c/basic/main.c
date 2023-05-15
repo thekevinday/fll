@@ -16,11 +16,29 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
   data.program.output.custom = (void *) &data;
   data.program.warning.custom = (void *) &data;
 
+  data.setting.flag |= fss_read_main_flag_quote_content_e | fss_read_main_flag_quote_object_e | fss_read_main_flag_line_single_e;
+
   data.setting.state.custom = (void *) &data;
   data.setting.standard = fss_read_basic_standard_s;
-  data.setting.process_help = &fss_read_basic_process_help;
-  data.setting.process_last_line = &fss_read_process_last_line;
-  data.setting.process_normal = &fss_read_process_normal;
+
+  data.callback.process_help = &fss_read_basic_process_help;
+  data.callback.process_last_line = &fss_read_process_last_line;
+  data.callback.process_load_depth = &fss_read_setting_load_depth;
+  data.callback.process_normal = &fss_read_process_normal;
+
+  data.callback.process_at = &fss_read_process_normal_at;
+  data.callback.process_columns = &fss_read_process_normal_columns;
+  data.callback.process_line = &fss_read_process_normal_line;
+  data.callback.process_load = &fss_read_basic_process_load;
+  data.callback.process_name = &fss_read_process_normal_name;
+  data.callback.process_total = &fss_read_process_normal_total;
+
+  data.callback.print_at = &fss_read_print_at;
+  data.callback.print_content = &fss_read_print_content;
+  data.callback.print_content_ignore = 0;
+  data.callback.print_object = &fss_read_print_object;
+  data.callback.print_object_end = &fss_read_print_object_end;
+  data.callback.print_set_end = &fss_read_print_set_end;
 
   f_console_parameter_t parameters[] = fss_read_console_parameter_t_initialize;
   data.program.parameters.array = parameters;

@@ -36,6 +36,8 @@ extern int main(const int argc, const f_string_t *argv, const f_string_t *envp);
  *
  * @param main
  *   The program and settings data.
+ *
+ *   Must not be NULL.
  *   Must be of type fss_read_main_t.
  *
  *   This does not alter main.setting.state.status.
@@ -60,7 +62,7 @@ extern int main(const int argc, const f_string_t *argv, const f_string_t *envp);
  * @param main
  *   The main program and settings data.
  *
- *   This alters main.setting.process_help, main.setting.process_normal, and main.setting.process_pipe.
+ *   This alters main.callback.process_help, main.callback.process_normal, and main.callback.process_pipe.
  *
  *   This alters main.setting.state.status:
  *     F_none on success.

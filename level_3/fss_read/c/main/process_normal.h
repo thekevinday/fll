@@ -21,19 +21,21 @@ extern "C" {
  *
  * @param main
  *   The program and settings data.
+ *
+ *   Must not be NULL.
  *   Must be of type fss_read_main_t.
  *
  *   This alters main.setting.state.status:
  *     F_none on success.
  *
- *     Errors (with error bit) from: main.setting.process_at().
- *     Errors (with error bit) from: main.setting.process_columns().
- *     Errors (with error bit) from: main.setting.process_line().
- *     Errors (with error bit) from: main.setting.process_load().
- *     Errors (with error bit) from: main.setting.process_name().
- *     Errors (with error bit) from: main.setting.process_print_at().
- *     Errors (with error bit) from: main.setting.process_read().
- *     Errors (with error bit) from: main.setting.process_total().
+ *     Errors (with error bit) from: main.callback.process_at().
+ *     Errors (with error bit) from: main.callback.process_columns().
+ *     Errors (with error bit) from: main.callback.process_line().
+ *     Errors (with error bit) from: main.callback.process_load().
+ *     Errors (with error bit) from: main.callback.process_name().
+ *     Errors (with error bit) from: main.callback.print_at().
+ *     Errors (with error bit) from: main.callback.process_read().
+ *     Errors (with error bit) from: main.callback.process_total().
  *
  *     Errors (with error bit) from: fss_read_signal_check().
  *
@@ -48,6 +50,8 @@ extern "C" {
  *
  * @param main
  *   The program and settings data.
+ *
+ *   Must not be NULL.
  *   Must be of type fss_read_main_t.
  *
  *   This alters main.setting.state.status:
@@ -75,6 +79,8 @@ extern "C" {
  *
  * @param main
  *   The program and settings data.
+ *
+ *   Must not be NULL.
  *   Must be of type fss_read_main_t.
  *
  *   This alters main.setting.state.status:
@@ -96,6 +102,8 @@ extern "C" {
  *
  * @param main
  *   The program and settings data.
+ *
+ *   Must not be NULL.
  *   Must be of type fss_read_main_t.
  *
  *   This alters main.setting.state.status:
@@ -107,34 +115,19 @@ extern "C" {
  *   (If TRUE, then the name is to be used and if FALSE, then the name is not to be used.)
  *
  * @see fss_read_signal_check()
+ * @see main.callback.print_set_end()
  */
 #ifndef _di_fss_read_process_normal_line_
   extern void fss_read_process_normal_line(void * const main, const bool names[]);
 #endif // _di_fss_read_process_normal_line_
 
 /**
- * Process buffer according to "load" parameter rules.
- *
- * @param main
- *   The program and settings data.
- *   Must be of type fss_read_main_t.
- *
- *   This alters main.setting.state.status:
- *     F_none on success.
- *
- *     Errors (with error bit) from: fss_read_signal_check().
- *
- * @see fss_read_signal_check()
- */
-#ifndef _di_fss_read_process_normal_load_
-  extern void fss_read_process_normal_load(void * const main);
-#endif // _di_fss_read_process_normal_load_
-
-/**
  * Process buffer according to "name" parameter rules.
  *
  * @param main
  *   The program and settings data.
+ *
+ *   Must not be NULL.
  *   Must be of type fss_read_main_t.
  *
  *   This alters main.setting.state.status:
@@ -152,57 +145,12 @@ extern "C" {
 #endif // _di_fss_read_process_normal_name_
 
 /**
- * Process printing the buffer according to "at" position and given delimits.
- *
- * @param main
- *   The program and settings data.
- *   Must be of type fss_read_main_t.
- *
- *   This alters main.setting.state.status:
- *     F_none on success.
- *
- *     Errors (with error bit) from: fss_read_signal_check().
- * @param at
- *   The "at" position to be printed.
- * @param delimits_object
- *   The delimits array representing a delimited Object.
- *   This represents the positions within the current Object at the "at" position.
- * @param delimits_content
- *   The delimits array representing a delimited Content.
- *   This represents the positions within the current Content at the "at" position.
- *
- * @see fss_read_signal_check()
- */
-#ifndef _di_fss_read_process_normal_print_at_
-  extern void fss_read_process_normal_print_at(void * const main, const f_array_length_t at, const f_fss_delimits_t delimits_object, const f_fss_delimits_t delimits_content);
-#endif // _di_fss_read_process_normal_print_at_
-
-/**
- * Process buffer according to "read" parameter rules.
- *
- * @param main
- *   The program and settings data.
- *   Must be of type fss_read_main_t.
- *
- *   This alters main.setting.state.status:
- *     F_none on success.
- *
- *     Errors (with error bit) from: fss_read_signal_check().
- * @param names
- *   An array of booleans representing if the name at a given index is enabled.
- *   (If TRUE, then the name is to be used and if FALSE, then the name is not to be used.)
- *
- * @see fss_read_signal_check()
- */
-#ifndef _di_fss_read_process_normal_read_
-  extern void fss_read_process_normal_read(void * const main, const bool names[]);
-#endif // _di_fss_read_process_normal_read_
-
-/**
  * Process buffer according to "total" parameter rules.
  *
  * @param main
  *   The program and settings data.
+ *
+ *   Must not be NULL.
  *   Must be of type fss_read_main_t.
  *
  *   This alters main.setting.state.status:

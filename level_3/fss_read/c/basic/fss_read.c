@@ -5,51 +5,6 @@
 extern "C" {
 #endif
 
-#ifndef _di_fss_read_basic_process_content_
-  void fss_read_basic_process_content(void * const void_main, const bool last) {
-
-    if (!void_main) return;
-
-    fss_read_main_t * const main = (fss_read_main_t *) void_main;
-
-    if (main->setting.content) {
-      fl_fss_basic_content_write(
-        *main->setting.content,
-        (main->setting.flag & fss_read_main_flag_partial_e)
-          ? f_fss_complete_partial_e
-          : f_fss_complete_full_e,
-        &main->setting.range,
-        &main->setting.buffer,
-        &main->setting.state
-      );
-
-      if (F_status_set_fine(main->setting.state.status) == F_none_eol) {
-        main->setting.state.status = F_status_set_error(F_support_not);
-
-        fss_read_print_error_unsupported_eol(&main->program.error);
-
-        return;
-      }
-
-      if (F_status_is_error(main->setting.state.status)) {
-        fss_read_print_error(&main->program.error, macro_fss_read_f(fl_fss_basic_content_write));
-
-        return;
-      }
-    }
-
-    if ((main->setting.flag & fss_read_main_flag_partial_e) && !(main->setting.flag & fss_read_main_flag_object_e) || !(main->setting.flag & (fss_read_main_flag_object_e | fss_read_main_flag_content_e))) {
-      if (main->setting.flag & fss_read_main_flag_content_end_e) {
-        main->setting.state.status = f_string_dynamic_append(f_fss_basic_close_s, &main->setting.buffer);
-
-        if (F_status_is_error(main->setting.state.status)) {
-          fss_read_print_error(&main->program.error, macro_fss_read_f(f_string_dynamic_append));
-        }
-      }
-    }
-  }
-#endif // _di_fss_read_basic_process_content_
-
 #ifndef _di_fss_read_basic_process_help_
   void fss_read_basic_process_help(void * const void_main) {
 
@@ -59,57 +14,45 @@ extern "C" {
   }
 #endif // _di_fss_read_basic_process_help_
 
-#ifndef _di_fss_read_basic_process_object_
-  void fss_read_basic_process_object(void * const void_main) {
+#ifndef _di_fss_read_basic_process_load_
+  void fss_read_basic_process_load(fss_read_main_t * const main) {
 
-    if (!void_main) return;
+    if (!main) return;
 
-    fss_read_main_t * const main = (fss_read_main_t *) void_main;
+    f_string_range_t input = macro_f_string_range_t_initialize_2(main->setting.buffer.used);
 
-    if (main->setting.object) {
-      fl_fss_basic_object_write(
-        *main->setting.object,
-        main->setting.quote.used
-          ? main->setting.quote.string[0]
-          : f_fss_quote_double_s.string[0],
-        (main->setting.flag & fss_read_main_flag_partial_e)
-          ? (main->setting.flag & fss_read_main_flag_trim_e)
-            ? f_fss_complete_trim_e
-            : f_fss_complete_none_e
-          : (main->setting.flag & fss_read_main_flag_trim_e)
-            ? f_fss_complete_full_trim_e
-            : f_fss_complete_full_e,
-        &main->setting.range,
-        &main->setting.buffer,
-        &main->setting.state
+    main->setting.delimits.used = 0;
+    main->setting.quotes.used = 0;
+
+    fll_fss_basic_read(main->setting.buffer, &input, &main->setting.objects, &main->setting.contents, &main->setting.quotes_object, &main->setting.delimits, 0, &main->setting.state);
+
+    if (F_status_is_error(data.setting.state.status)) {
+      if (F_status_set_fine(data.setting.state.status) == F_interrupt) return;
+
+      fll_error_file_print(
+        &main->error,
+        F_status_set_fine(data.setting.state.status),
+        macro_fss_read_f(fll_fss_basic_read),
+        fll_error_file_flag_fallback_e,
+        fss_read_file_identify(input.start, main->setting.files),
+        f_file_operation_process_s,
+        fll_error_file_type_file_e
       );
 
-      if (F_status_set_fine(main->setting.state.status) == F_none_eol) {
-        main->setting.state.status = F_status_set_error(F_support_not);
+      return;
+    }
 
-        fss_read_print_error_unsupported_eol(&main->program.error);
-
-        return;
-      }
-
-      if (F_status_is_error(main->setting.state.status)) {
-        fss_read_print_error(&main->program.error, macro_fss_read_f(fl_fss_basic_object_write));
+    if (data.setting.state.status == F_data_not_stop || data.setting.state.status == F_data_not_eos) {
+      if (!(main->setting.flag & fss_read_main_flag_total_e)) {
+        data.setting.state.status = F_status_set_warning(status);
 
         return;
       }
     }
 
-    if ((main->setting.flag & fss_read_main_flag_partial_e) && !(main->setting.flag & fss_read_main_flag_content_e) || !(main->setting.flag & (fss_read_main_flag_object_e | fss_read_main_flag_content_e))) {
-      if (main->setting.flag & fss_read_main_flag_object_open_e) {
-        main->setting.state.status = f_string_dynamic_append(f_fss_basic_open_s, &main->setting.buffer);
-
-        if (F_status_is_error(main->setting.state.status)) {
-          fss_read_print_error(&main->program.error, macro_fss_read_f(f_string_dynamic_append));
-        }
-      }
-    }
+    data.setting.state.status = F_none;
   }
-#endif // _di_fss_read_basic_process_object_
+#endif // _di_fss_read_basic_process_load_
 
 #ifdef __cplusplus
 } // extern "C"

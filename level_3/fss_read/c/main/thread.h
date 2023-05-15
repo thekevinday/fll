@@ -26,6 +26,7 @@
  * @param main
  *   The program and settings data.
  *
+ *   Must not be NULL.
  *   Must be of type fss_read_main_t.
  *
  * @return

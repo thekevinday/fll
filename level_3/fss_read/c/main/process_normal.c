@@ -18,11 +18,7 @@ extern "C" {
     // For select, most standards do not support multiple select, so any select greater than 0 can be predicted without processing the buffer.
     if (!(main->setting.flag & fss_read_main_flag_depth_multiple_e) && main->setting.depths.array[0].depth || !(main->setting.flag & fss_read_main_flag_content_multiple_e) && ((main->setting.flag & fss_read_main_flag_select_e) && data->select)) {
       if (main->setting.flag & fss_read_main_flag_total_e) {
-        f_file_stream_lock(main->program.output.to);
-
         fss_read_print_number(&main->program.output, 0);
-
-        f_file_stream_unlock(main->program.output.to);
       }
 
       main->setting.state.status = F_none;
@@ -31,61 +27,57 @@ extern "C" {
     }
 
     // The process_load() callback is required to be non-NULL.
-    if (!main->setting.process_load) return;
+    if (!main->callback.process_load) return;
 
-    main->setting.process_load(main);
+    main->callback.process_load(main);
     if (F_status_is_error(main->setting.state.status)) return;
 
-    f_array_lengths_t except_none = f_array_lengths_t_initialize;
-    f_array_lengths_t *delimits_object = fss_read_delimit_object_is(main, 0) ? &main->setting.delimits_object : &except_none;
-    f_array_lengths_t *delimits_content = fss_read_delimit_content_is(main, 0) ? &main->setting.delimits_content : &except_none;
-
-    if (main->setting.flag & fss_read_main_flag_original_e) {
-      delimits_object = &except_none;
-      delimits_content = &except_none;
-    }
+    const f_array_lengths_t * const delimits_object = !(main->setting.flag & fss_read_main_flag_original_e) && fss_read_delimit_object_is(main, 0) ? &main->setting.delimits_object : &fss_read_except_none_c;
+    const f_array_lengths_t * const delimits_content = !(main->setting.flag & fss_read_main_flag_original_e) && fss_read_delimit_content_is(main, 0) ? &main->setting.delimits_content : &fss_read_except_none_c;
 
     bool names[main->setting.objects.used];
 
-    if (main->setting.process_name) {
-      main->setting.process_name(main, names);
+    if (main->callback.process_name) {
+      main->callback.process_name(main, names);
       if (F_status_is_error(main->setting.state.status)) return;
     }
     else if (main->setting.objects.used) {
-      memset(names, 0, sizeof(bool) * main->setting.objects.used);
+
+      // If no processing is enabled, then default to F_true to enable all names.
+      memset(names, F_true, sizeof(bool) * main->setting.objects.used);
     }
 
-    if (main->setting.process_at) {
-      main->setting.process_at(main, names, *delimits_object, *delimits_content);
+    if (main->callback.process_at) {
+      main->callback.process_at(main, names, *delimits_object, *delimits_content);
 
       return;
     }
 
-    if ((main->setting.flag & fss_read_main_flag_columns_e) && main->setting.process_columns) {
-      main->setting.process_columns(main, names);
+    if ((main->setting.flag & fss_read_main_flag_columns_e) && main->callback.process_columns) {
+      main->callback.process_columns(main, names);
 
       return;
     }
 
-    if ((main->setting.flag & fss_read_main_flag_total_e) && main->setting.process_total) {
-      main->setting.process_total(main, names);
+    if ((main->setting.flag & fss_read_main_flag_total_e) && main->callback.process_total) {
+      main->callback.process_total(main, names);
 
       return;
     }
 
-    if ((main->setting.flag & fss_read_main_flag_line_e) && main->setting.process_line) {
-      main->setting.process_line(main, names);
+    if ((main->setting.flag & fss_read_main_flag_line_e) && main->callback.process_line) {
+      main->callback.process_line(main, names);
 
       return;
     }
 
-    if (main->setting.process_print_at) {
+    if (main->callback.print_at) {
       for (f_array_length_t i = 0; i < main->setting.contents.used; ++i) {
 
         if (!names[i]) continue;
         if (fss_read_signal_check(main)) return;
 
-        main->setting.process_print_at(main, i, *delimits_object, *delimits_content);
+        main->callback.print_at(main, i, *delimits_object, *delimits_content);
       } // for
     }
 
@@ -102,11 +94,7 @@ extern "C" {
 
     if (main->setting.depths.array[0].value_at >= main->setting.objects.used) {
       if (main->setting.flag & (fss_read_main_flag_columns_e | fss_read_main_flag_total_e)) {
-        f_file_stream_lock(main->program.output.to);
-
         fss_read_print_number(&main->program.output, 0);
-
-        f_file_stream_unlock(main->program.output.to);
       }
 
       main->setting.state.status = F_none;
@@ -118,11 +106,7 @@ extern "C" {
     if (main->setting.flag & (fss_read_main_flag_line_e | fss_read_main_flag_line_single_e) == (fss_read_main_flag_line_e | fss_read_main_flag_line_single_e)) {
       if (main->setting.line) {
         if (main->setting.flag & fss_read_main_flag_total_e) {
-          f_file_stream_lock(main->program.output.to);
-
           fss_read_print_zero(main);
-
-          f_file_stream_unlock(main->program.output.to);
         }
 
         main->setting.state.status = F_none;
@@ -137,19 +121,6 @@ extern "C" {
     f_array_length_t at = 0;
     f_array_length_t line = 0;
     f_array_length_t total = 0;
-
-    // @todo this is originally from basic list, compare this against extended and determine what else needs to be done when it comes to quotes (consider checking if flags exist and performing appropriate modifications,  or perhaps custom callback). There probably should be a standard flag for designating that quotes should be printed around Objects and the same for Contents.
-    // Example:
-    /*
-              f_print_dynamic_raw(
-                data->quotes_object.array[at] == f_fss_quote_type_single_e
-                  ? f_fss_quote_single_s
-                  : data->quotes_object.array[at] == f_fss_quote_type_backtick_e
-                    ? f_fss_quote_backtick_s
-                    : f_fss_quote_double_s,
-                main->program.output.to
-              );
-    */
 
     for (; i < main->setting.objects.used; ++i) {
 
@@ -183,31 +154,34 @@ extern "C" {
           fss_read_print_number(&main->program.output, main->setting.contents.array[i].used);
         }
         else if (main->setting.flag & fss_read_main_flag_total_e) {
-          total = 0;
-          k = 0;
-
-          // @todo this is originally from basic list, compare this against extended list and determine what else needs to be done.
-
-          // Count each new line.
-          for (j = 0; j < main->setting.contents.array[i].used; ++j) {
-
-            if (main->setting.contents.array[i].array[j].start > main->setting.contents.array[i].array[j].stop) continue;
-            if (main->setting.contents.array[i].array[j].start > main->setting.buffer.used) continue;
-
-            for (k = main->setting.contents.array[i].array[j].start; k <= main->setting.contents.array[i].array[j].stop && k < main->setting.buffer.used; ++k) {
-              if (main->setting.buffer.string[k] == f_string_eol_s.string[0]) ++total;
-            } // for
-          } // for
-
-          // If there are no newline characters but there is data, then this represents a single line.
-          if (main->setting.contents.array[i].used && !total) {
-            total = 1;
+          if (main->setting.flag & fss_read_main_flag_line_single_e) {
+            fss_read_print_number(main, main->setting.contents.array[i].used ? 1 : 0);
           }
+          else {
+            total = 0;
+            k = 0;
 
-          fss_read_print_number(&main->program.output, total);
+            // Count each new line.
+            for (j = 0; j < main->setting.contents.array[i].used; ++j) {
+
+              if (main->setting.contents.array[i].array[j].start > main->setting.contents.array[i].array[j].stop) continue;
+              if (main->setting.contents.array[i].array[j].start > main->setting.buffer.used) continue;
+
+              for (k = main->setting.contents.array[i].array[j].start; k <= main->setting.contents.array[i].array[j].stop && k < main->setting.buffer.used; ++k) {
+                if (main->setting.buffer.string[k] == f_string_eol_s.string[0]) ++total;
+              } // for
+            } // for
+
+            // If there are no newline characters but there is data, then this represents a single line.
+            if (main->setting.contents.array[i].used && !total) {
+              total = 1;
+            }
+
+            fss_read_print_number(&main->program.output, total);
+          }
         }
-        else if (main->setting.process_print_at) {
-          main->setting.process_print_at(main, i, delimits_object, delimits_content);
+        else if (main->callback.print_at) {
+          main->callback.print_at(main, i, delimits_object, delimits_content);
         }
 
         main->setting.state.status = F_none;
@@ -219,11 +193,7 @@ extern "C" {
     } // for
 
     if (main->setting.flag & fss_read_main_flag_total_e) {
-      f_file_stream_lock(main->program.output.to);
-
       fss_read_print_number(&main->program.output, 0);
-
-      f_file_stream_unlock(main->program.output.to);
     }
 
     main->setting.state.status = F_none;
@@ -237,6 +207,28 @@ extern "C" {
 
     fss_read_main_t * const main = (fss_read_main_t *) void_main;
 
+    if (!(main->setting.flag & fss_read_main_flag_content_e)) {
+      fss_read_print_number(&main->program.output, 0);
+
+      main->setting.state.status = F_none;
+
+      return;
+    }
+
+    f_array_length_t max = 0;
+
+    for (f_array_length_t at = 0; at < main->setting.contents.used; ++at) {
+
+      if (!names[at]) continue;
+      if (fss_read_signal_check(main)) return;
+
+      if (main->setting.contents.array[at].used > max) {
+        max = main->setting.contents.array[at].used;
+      }
+    } // for
+
+    fss_read_print_number(&main->program.output, max);
+
     main->setting.state.status = F_none;
   }
 #endif // _di_fss_read_process_normal_columns_
@@ -248,20 +240,47 @@ extern "C" {
 
     fss_read_main_t * const main = (fss_read_main_t *) void_main;
 
+    const f_array_lengths_t * const delimits = !(main->setting.flag & fss_read_main_flag_original_e) && fss_read_delimit_object_is(main, 0) ? &main->setting.delimits : &fss_read_except_none_c;
+
+    f_array_length_t line = 0;
+
+    for (f_array_length_t i = 0; i < main->setting.contents.used; ++i) {
+
+      if (!names[i]) continue;
+      if (fss_read_signal_check(main)) return;
+
+      if (!(main->setting.flag & fss_read_main_flag_object_e) && (main->setting.flag & fss_read_main_flag_content_e)) {
+        if (!main->setting.contents.array[i].used) {
+          if (main->setting.flag & fss_read_main_flag_empty_e) {
+            if (line == main->setting.line) {
+              if (main->callback.print_set_end) {
+                main->callback.print_set_end(&main->program.output);
+              }
+
+              break;
+            }
+
+            ++line;
+          }
+
+          continue;
+        }
+      }
+
+      if (line == main->setting.line) {
+        if (main->callback.print_at) {
+          main->callback.print_at(main, i, *delimits, fss_read_except_none_c);
+        }
+
+        break;
+      }
+
+      ++line;
+    } // for
+
     main->setting.state.status = F_none;
   }
 #endif // _di_fss_read_process_normal_line_
-
-#ifndef _di_fss_read_process_normal_load_
-  void fss_read_process_normal_load(void * const main) {
-
-    if (!void_main) return;
-
-    fss_read_main_t * const main = (fss_read_main_t *) void_main;
-
-    main->setting.state.status = F_none;
-  }
-#endif // _di_fss_read_process_normal_load_
 
 #ifndef _di_fss_read_process_normal_name_
   void fss_read_process_normal_name(void * const main, const bool names[]) {
@@ -270,31 +289,39 @@ extern "C" {
 
     fss_read_main_t * const main = (fss_read_main_t *) void_main;
 
+    if (main->setting.depths.array[0].index_name) {
+      f_array_length_t i = 0;
+
+      memset(names, F_false, sizeof(bool) * main->setting.objects.used);
+
+      if (main->setting.flag & fss_read_main_flag_trim_e) {
+        for (i = 0; i < main->setting.objects.used; ++i) {
+
+          if (fss_read_signal_check(main)) return;
+
+          if (f_compare_dynamic_partial_except_trim_dynamic(main->setting.depths.array[0].value_name, main->setting.buffer, main->setting.objects.array[i], fss_read_except_none_c, main->setting.delimits) == F_equal_to) {
+            names[i] = F_true;
+          }
+        } // for
+      }
+      else {
+        for (i = 0; i < main->setting.objects.used; ++i) {
+
+          if (fss_read_signal_check(main)) return;
+
+          if (f_compare_dynamic_partial_except_dynamic(main->setting.depths.array[0].value_name, main->setting.buffer, main->setting.objects.array[i], fss_read_except_none_c, main->setting.delimits) == F_equal_to) {
+            names[i] = F_true;
+          }
+        } // for
+      }
+    }
+    else {
+      memset(names, F_true, sizeof(bool) * main->setting.objects.used);
+    }
+
     main->setting.state.status = F_none;
   }
 #endif // _di_fss_read_process_normal_name_
-
-#ifndef _di_fss_read_process_normal_print_at_
-  void fss_read_process_normal_print_at(void * const main, const f_array_length_t at, const f_fss_delimits_t delimits_object, const f_fss_delimits_t delimits_content) {
-
-    if (!void_main) return;
-
-    fss_read_main_t * const main = (fss_read_main_t *) void_main;
-
-    main->setting.state.status = F_none;
-  }
-#endif // _di_fss_read_process_normal_print_at_
-
-#ifndef _di_fss_read_process_normal_read_
-  void fss_read_process_normal_read(void * const main, const bool names[]) {
-
-    if (!void_main) return;
-
-    fss_read_main_t * const main = (fss_read_main_t *) void_main;
-
-    main->setting.state.status = F_none;
-  }
-#endif // _di_fss_read_process_normal_read_
 
 #ifndef _di_fss_read_process_normal_total_
   void fss_read_process_normal_total(void * const main, const bool names[]) {
@@ -302,6 +329,27 @@ extern "C" {
     if (!void_main) return;
 
     fss_read_main_t * const main = (fss_read_main_t *) void_main;
+
+    f_array_length_t total = 0;
+
+    for (f_array_length_t i = 0; i < main->setting.objects.used; ++i) {
+
+      if (!names[i]) continue;
+      if (fss_read_signal_check(main)) return;
+
+      if (!(main->setting.flag & fss_read_main_flag_object_e) && main->setting.flag & fss_read_main_flag_content_e) {
+        if (!(main->setting.contents.array[i].used || (main->setting.flag & fss_read_main_flag_empty_e))) continue;
+      }
+
+      ++total;
+    } // for
+
+    fss_read_print_number(
+      &main->program.output,
+      main->setting.flag & fss_read_main_flag_line_e
+        ? main->setting.line < total ? 1 : 0
+        : total
+    );
 
     main->setting.state.status = F_none;
   }

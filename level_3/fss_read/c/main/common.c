@@ -499,8 +499,8 @@ extern "C" {
       if (main->setting.buffer.used) {
         main->setting.files.array[0].range.stop = main->setting.buffer.used - 1;
 
-        if (main->setting.process_last_line) {
-          main->setting.process_last_line((void *) &main);
+        if (main->callback.process_last_line) {
+          main->callback.process_last_line((void *) &main);
           if (F_status_is_error(main->setting.state.status)) return;
         }
       }
@@ -603,8 +603,8 @@ extern "C" {
           if (main->setting.buffer.used > main->setting.files.array[main->setting.files.used].range.start) {
             main->setting.files.array[main->setting.files.used++].range.stop = main->setting.buffer.used - 1;
 
-            if (main->setting.process_last_line) {
-              main->setting.process_last_line((void *) &main);
+            if (main->callback.process_last_line) {
+              main->callback.process_last_line((void *) &main);
               if (F_status_is_error(main->setting.state.status)) break;
             }
           }
@@ -780,8 +780,8 @@ extern "C" {
       } // for
     } // for
 
-    if (main->setting.process_load_depth) {
-      main->setting.process_load_depth(arguments, (void *) main);
+    if (main->callback.process_load_depth) {
+      main->callback.process_load_depth(arguments, (void *) main);
       if (F_status_is_error(main->setting.state.status)) return;
     }
 
