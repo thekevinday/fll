@@ -123,6 +123,7 @@ extern "C" {
  * process_last_line:  Process printing last line if necessary when loading in a file (or pipe).
  * process_load_depth: Process loading of the depth related parameters when loading the settings.
  * process_normal:     Process normally (data from parameters and files).
+ * process_pipe:       Process data piped to the program from standard input (stdin).
  *
  * process_at:       Process at parameter, usually called by the process_normal() callback.
  * process_columns:  Process columns parameter, usually called by the process_normal() callback.
@@ -144,6 +145,7 @@ extern "C" {
     void (*process_last_line)(void * const main);
     void (*process_load_depth)(const f_console_arguments_t arguments, void * const main);
     void (*process_normal)(void * const main);
+    void (*process_pipe)(void * const main);
 
     void (*process_at)(void * const main, const bool names[], const f_fss_delimits_t delimits_object, const f_fss_delimits_t delimits_content);
     void (*process_columns)(void * const main, const bool names[]);
@@ -154,7 +156,7 @@ extern "C" {
 
     void (*print_at)(void * const main, const f_array_length_t at, const f_fss_delimits_t delimits_object, const f_fss_delimits_t delimits_content);
     void (*print_object)(fl_print_t * const print, const f_array_length_t at, const f_fss_delimits_t delimits);
-    void (*print_content)(fl_print_t * const print, const f_array_length_t at, const uint8_t quote, const f_fss_delimits_t delimits);
+    void (*print_content)(fl_print_t * const print, const f_string_range_t range, const uint8_t quote, const f_fss_delimits_t delimits);
     void (*print_content_ignore)(fl_print_t * const print);
     void (*print_object_end)(fl_print_t * const print);
     void (*print_set_end)(fl_print_t * const print);
@@ -293,10 +295,11 @@ extern "C" {
  *
  * @param depth
  *   The depth to deallocate.
+ *
  *   Must not be NULL.
  */
 #ifndef _di_fss_read_depth_delete_
-  extern f_status_t fss_read_depth_delete(fss_read_depth_t * const depth);
+  extern void fss_read_depth_delete(fss_read_depth_t * const depth);
 #endif // _di_fss_read_depth_delete_
 
 /**
@@ -306,6 +309,7 @@ extern "C" {
  *   The new size to use.
  * @param depths
  *   The depths to resize.
+ *
  *   Must not be NULL.
  *
  * @return
@@ -328,6 +332,7 @@ extern "C" {
  *   The new size to use.
  * @param files
  *   The files to resize.
+ *
  *   Must not be NULL.
  *
  * @return
@@ -336,8 +341,10 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_string_ranges_resize().
  *
  * @see f_memory_resize()
+ * @see f_string_ranges_resize()
  */
 #ifndef _di_fss_read_files_resize_
   extern f_status_t fss_read_files_resize(const f_array_length_t length, fss_read_files_t * const files);

@@ -40,6 +40,7 @@
 
 // FLL-2 includes.
 #include <fll/level_2/error.h>
+#include <fll/level_2/fss/extended.h>
 #include <fll/level_2/print.h>
 #include <fll/level_2/program.h>
 
@@ -51,6 +52,7 @@
 #include <program/fss_read/main/common/string.h>
 #include <program/fss_read/main/common/type.h>
 #include <program/fss_read/main/common.h>
+#include <program/fss_read/main/print/data.h>
 #include <program/fss_read/main/print/error.h>
 #include <program/fss_read/main/print/message.h>
 #include <program/fss_read/main/process_normal.h>

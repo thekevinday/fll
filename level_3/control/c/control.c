@@ -110,7 +110,7 @@ extern "C" {
           status = F_status_set_error(F_parameter);
         }
         else if (main->parameters.array[ids[i]].result & f_console_result_value_e) {
-          index = main->parameters.array[ids[i]].values.array[main->parameters.array[ids[i]].values.used - 1];
+          index = main->parameters.array[ids[i]].values.array[main->parameters.array[ids[i]].location];
 
           if (!main->parameters.arguments.array[index].used) {
             control_print_error_parameter_value_empty(main, names[i]);

@@ -54,6 +54,7 @@
 #include <program/fss_read/main/common/string.h>
 #include <program/fss_read/main/common/type.h>
 #include <program/fss_read/main/common.h>
+#include <program/fss_read/main/print/data.h>
 #include <program/fss_read/main/print/error.h>
 #include <program/fss_read/main/print/message.h>
 #include <program/fss_read/main/process_normal.h>
@@ -81,7 +82,7 @@ extern "C" {
  *   F_false if to not apply delimits (fallback when main is NULL).
  */
 #ifndef _di_fss_read_delimit_content_is_
-  extern f_status_t fss_read_delimit_content_is(fss_read_main_t * const main, const f_array_length_t depth) F_attribute_visibility_internal_d;
+  extern f_status_t fss_read_delimit_content_is(fss_read_main_t * const main, const f_array_length_t depth);
 #endif // _di_fss_read_delimit_content_is_
 
 /**
@@ -101,7 +102,7 @@ extern "C" {
  *   F_false if to not apply delimits (fallback when main is NULL).
  */
 #ifndef _di_fss_read_delimit_object_is_
-  extern f_status_t fss_read_delimit_object_is(fss_read_main_t * const main, const f_array_length_t depth) F_attribute_visibility_internal_d;
+  extern f_status_t fss_read_delimit_object_is(fss_read_main_t * const main, const f_array_length_t depth);
 #endif // _di_fss_read_delimit_object_is_
 
 /**
@@ -161,6 +162,7 @@ extern "C" {
  * @param line
  *   The current line being processed.
  *   This will be incremented as necessary.
+ *
  *   Must not be NULL.
  *
  * @return
@@ -185,7 +187,7 @@ extern "C" {
  *   On failure to identify, an empty string is returned.
  */
 #ifndef _di_fss_read_file_identify_
-  extern f_string_static_t fss_read_file_identify(const f_array_length_t at, const fss_read_files_t files) F_attribute_visibility_internal_d;
+  extern f_string_static_t fss_read_file_identify(const f_array_length_t at, const fss_read_files_t files);
 #endif // _di_fss_read_file_identify_
 
 /**

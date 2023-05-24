@@ -30,13 +30,14 @@ extern "C" {
     f_array_length_t length = 0;
     f_string_range_t range = f_string_range_t_initialize;
 
-    const f_array_length_t used_objects = main->setting.objects.used;
-    const f_array_length_t used_contentss = main->setting.contentss.used;
-    const f_array_length_t used_ignoress = main->setting.ignoress.used;
+    // @todo much of this is copied from fss_write and needs to be updated or removed accordingly.
 
+    const f_array_length_t used_objects = main->setting.objects.used;
+    const f_array_length_t used_contents = main->setting.contents.used;
+
+    // @fixme really? why am I setting a pointer to the used position, which may not even be allocated? Review this and perhaps first pre-allocate the space so the used is within the size.
     main->setting.object = &main->setting.objects.array[used_objects];
-    main->setting.contents = &main->setting.contentss.array[used_contentss];
-    main->setting.ignores = &main->setting.ignoress.array[used_ignoress];
+    main->setting.contents = &main->setting.contents.array[used_contents];
 
     // 0x0 = nothing printed, 0x1 = something printed, 0x2 = ignore enabled, 0x4 = added Content for Object, 0x8 = "payload" matched.
     uint8_t flag = 0;
@@ -70,19 +71,9 @@ extern "C" {
       return;
     }
 
-    // This is processed in a single set, so there is only ever one Ignores added.
-    main->setting.state.status = f_string_rangess_increase(main->setting.state.step_small, &main->setting.ignoress);
-
-    if (F_status_is_error(main->setting.state.status)) {
-      fss_read_print_error(&main->program.error, macro_fss_read_f(f_string_rangess_increase));
-
-      return;
-    }
-
     // Reset all of the used data before starting the loop.
     main->setting.object->used = 0;
     main->setting.contents->used = 0;
-    main->setting.ignores->used = 0;
 
     for (;;) {
 
@@ -297,7 +288,6 @@ extern "C" {
         // Reset all of the used data for next set.
         main->setting.object->used = 0;
         main->setting.contents->used = 0;
-        main->setting.ignores->used = 0;
 
         continue;
       }
@@ -327,7 +317,6 @@ extern "C" {
         // Reset all of the used data for next set.
         main->setting.object->used = 0;
         main->setting.contents->used = 0;
-        main->setting.ignores->used = 0;
       }
     } // for
 
@@ -342,10 +331,8 @@ extern "C" {
     main->setting.buffer.used = 0;
     main->setting.object->used = 0;
     main->setting.contents->used = 0;
-    main->setting.ignores->used = 0;
     main->setting.objects.used = used_objects;
-    main->setting.contentss.used = used_contentss;
-    main->setting.ignoress.used = used_ignoress;
+    main->setting.contentss.used = used_contents;
 
     if (F_status_is_error_not(main->setting.state.status)) {
       if (flag & 0x1) {
@@ -476,7 +463,7 @@ extern "C" {
         const f_string_static_t *prepend = 0;
 
         if (main->setting.flag & fss_read_main_flag_prepend_e) {
-          const f_array_length_t index = main->program.parameters.array[fss_read_parameter_prepend_e].values.array[main->program.parameters.array[fss_read_parameter_prepend_e].values.used - 1];
+          const f_array_length_t index = main->program.parameters.array[fss_read_parameter_prepend_e].values.array[main->program.parameters.array[fss_read_parameter_prepend_e].location]];
 
           prepend = &main->program.parameters.arguments.array[index];
         }
@@ -500,14 +487,12 @@ extern "C" {
       }
 
       if ((main->setting.flag & fss_read_main_flag_partial_e) && !(main->setting.flag & fss_read_main_flag_object_e) || !(main->setting.flag & (fss_read_main_flag_object_e | fss_read_main_flag_content_e))) {
-        if (main->setting.flag & fss_read_main_flag_content_end_e) {
-          main->setting.state.status = f_string_dynamic_append(f_fss_basic_list_close_s, &main->setting.buffer);
+        main->setting.state.status = f_string_dynamic_append(f_fss_basic_list_close_s, &main->setting.buffer);
 
-          if (F_status_is_error(main->setting.state.status)) {
-            fss_read_print_error(&main->program.error, macro_fss_read_f(f_string_dynamic_append));
+        if (F_status_is_error(main->setting.state.status)) {
+          fss_read_print_error(&main->program.error, macro_fss_read_f(f_string_dynamic_append));
 
-            return;
-          }
+          return;
         }
       }
     }

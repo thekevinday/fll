@@ -144,7 +144,7 @@ extern "C" {
         status = F_status_set_error(F_parameter);
       }
       else if (main->parameters.array[controller_parameter_settings_e].locations.used) {
-        const f_array_length_t index = main->parameters.array[controller_parameter_settings_e].values.array[main->parameters.array[controller_parameter_settings_e].values.used - 1];
+        const f_array_length_t index = main->parameters.array[controller_parameter_settings_e].values.array[main->parameters.array[controller_parameter_settings_e].location];
 
         status = controller_path_canonical_relative(&setting, argv[index], &setting.path_setting);
 
@@ -185,7 +185,7 @@ extern "C" {
       else if (main->parameters.array[controller_parameter_pid_e].locations.used) {
         setting.path_pid.used = 0;
 
-        const f_array_length_t index = main->parameters.array[controller_parameter_pid_e].values.array[main->parameters.array[controller_parameter_pid_e].values.used - 1];
+        const f_array_length_t index = main->parameters.array[controller_parameter_pid_e].values.array[main->parameters.array[controller_parameter_pid_e].location];
 
         if (argv[index].used) {
           status = controller_path_canonical_relative(&setting, argv[index], &setting.path_pid);
@@ -241,7 +241,7 @@ extern "C" {
         status = F_status_set_error(F_parameter);
       }
       else if (main->parameters.array[controller_parameter_cgroup_e].locations.used) {
-        const f_array_length_t index = main->parameters.array[controller_parameter_cgroup_e].values.array[main->parameters.array[controller_parameter_cgroup_e].values.used - 1];
+        const f_array_length_t index = main->parameters.array[controller_parameter_cgroup_e].values.array[main->parameters.array[controller_parameter_cgroup_e].location];
 
         if (argv[index].used) {
           status = controller_path_canonical_relative(&setting, argv[index], &setting.path_cgroup);

@@ -615,7 +615,7 @@ extern "C" {
     data->cache.small.used = 0;
 
     if (main->parameters.array[control_parameter_settings_e].result & f_console_result_value_e) {
-      const f_array_length_t index = main->parameters.array[control_parameter_settings_e].values.array[main->parameters.array[control_parameter_settings_e].values.used - 1];
+      const f_array_length_t index = main->parameters.array[control_parameter_settings_e].values.array[main->parameters.array[control_parameter_settings_e].location];
 
       status = f_string_dynamic_append(data->argv[index], &data->cache.small);
     }
@@ -707,7 +707,7 @@ extern "C" {
       data->cache.small.used = 0;
 
       if (main->parameters.array[control_parameter_socket_e].result & f_console_result_value_e) {
-        const f_array_length_t index = main->parameters.array[control_parameter_socket_e].values.array[main->parameters.array[control_parameter_socket_e].values.used - 1];
+        const f_array_length_t index = main->parameters.array[control_parameter_socket_e].values.array[main->parameters.array[control_parameter_socket_e].location];
 
         status = f_string_dynamic_append(data->argv[index], &data->cache.small);
       }
@@ -772,7 +772,7 @@ extern "C" {
           for (uint8_t i = 0; i < 3; ++i) {
 
             if (append_ids[i] && main->parameters.array[append_ids[i]].result & f_console_result_value_e) {
-              const f_array_length_t index = main->parameters.array[append_ids[i]].values.array[main->parameters.array[append_ids[i]].values.used - 1];
+              const f_array_length_t index = main->parameters.array[append_ids[i]].values.array[main->parameters.array[append_ids[i]].location];
 
               status = f_string_dynamic_append(data->argv[index], &data->cache.small);
             }

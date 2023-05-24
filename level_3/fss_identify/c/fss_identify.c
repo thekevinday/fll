@@ -103,7 +103,7 @@ extern "C" {
         status = F_status_set_error(F_parameter);
       }
       else if (main->parameters.array[fss_identify_parameter_line_e].result & f_console_result_value_e) {
-        const f_array_length_t index = main->parameters.array[fss_identify_parameter_line_e].values.array[main->parameters.array[fss_identify_parameter_line_e].values.used - 1];
+        const f_array_length_t index = main->parameters.array[fss_identify_parameter_line_e].values.array[main->parameters.array[fss_identify_parameter_line_e].location];
 
         status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, data.argv[index], &data.line);
 
@@ -143,7 +143,7 @@ extern "C" {
         status = F_status_set_error(F_parameter);
       }
       else if (main->parameters.array[fss_identify_parameter_name_e].result & f_console_result_value_e) {
-        const f_array_length_t index = main->parameters.array[fss_identify_parameter_name_e].values.array[main->parameters.array[fss_identify_parameter_name_e].values.used - 1];
+        const f_array_length_t index = main->parameters.array[fss_identify_parameter_name_e].values.array[main->parameters.array[fss_identify_parameter_name_e].location];
         const f_array_length_t length = data.argv[index].used;
         const f_string_range_t range = macro_f_string_range_t_initialize_2(length);
 

@@ -61,15 +61,15 @@ extern "C" {
  *
  *   F_interrupt (with error bit) on receiving a process signal, such as an interrupt signal.
  *
+ *   Errors (with error bit) from: f_rip_dynamic().
  *   Errors (with error bit) from: f_string_append().
  *   Errors (with error bit) from: fl_conversion_dynamic_partial_to_unsigned_detect().
- *   Errors (with error bit) from: f_rip_dynamic().
  *
  *   Errors (with error bit) from: fss_payload_read_depths_resize().
  *
+ * @see f_rip_dynamic()
  * @see f_string_append()
  * @see fl_conversion_dynamic_partial_to_unsigned_detect()
- * @see f_rip_dynamic()
  *
  * @see fss_payload_read_depths_resize()
  */

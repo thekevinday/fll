@@ -16,7 +16,7 @@ extern "C" {
 
     // For depth, most standards do not support nesting, so any depth greater than 0 can be predicted without processing the buffer.
     // For select, most standards do not support multiple select, so any select greater than 0 can be predicted without processing the buffer.
-    if (!(main->setting.flag & fss_read_main_flag_depth_multiple_e) && main->setting.depths.array[0].depth || !(main->setting.flag & fss_read_main_flag_content_multiple_e) && ((main->setting.flag & fss_read_main_flag_select_e) && data->select)) {
+    if (!(main->setting.flag & fss_read_main_flag_depth_multiple_e) && main->setting.depths.array[0].depth || !(main->setting.flag & fss_read_main_flag_content_multiple_e) && ((main->setting.flag & fss_read_main_flag_select_e) && main->setting.select)) {
       if (main->setting.flag & fss_read_main_flag_total_e) {
         fss_read_print_number(&main->program.output, 0);
       }
@@ -86,7 +86,7 @@ extern "C" {
 #endif // _di_fss_read_process_normal_
 
 #ifndef _di_fss_read_process_normal_at_
-  void fss_read_process_normal_at(void * const main, const bool names[], const f_array_lengths_t delimits_object, f_array_lengths_t delimits_content) {
+  void fss_read_process_normal_at(void * const void_main, const bool names[], const f_array_lengths_t delimits_object, f_array_lengths_t delimits_content) {
 
     if (!void_main) return;
 
@@ -106,7 +106,7 @@ extern "C" {
     if (main->setting.flag & (fss_read_main_flag_line_e | fss_read_main_flag_line_single_e) == (fss_read_main_flag_line_e | fss_read_main_flag_line_single_e)) {
       if (main->setting.line) {
         if (main->setting.flag & fss_read_main_flag_total_e) {
-          fss_read_print_zero(main);
+          fss_read_print_number(&main->program.output, 0);
         }
 
         main->setting.state.status = F_none;
@@ -135,13 +135,13 @@ extern "C" {
 
           line = 0;
 
-          if (data->option & fss_basic_list_read_data_option_total_d) {
+          if (main->setting.flag & fss_read_main_flag_total_e) {
 
             // Total is always 1 in this case because "line" parameter forces a single line.
             fss_read_print_number(&main->program.output, 1);
           }
           else {
-            fss_read_process_at_line(main, data, i, delimits_object, delimits_content, &line);
+            fss_read_process_at_line(main, i, delimits_object, delimits_content, &line);
           }
 
           if (main->setting.state.status == F_success) {
@@ -155,7 +155,7 @@ extern "C" {
         }
         else if (main->setting.flag & fss_read_main_flag_total_e) {
           if (main->setting.flag & fss_read_main_flag_line_single_e) {
-            fss_read_print_number(main, main->setting.contents.array[i].used ? 1 : 0);
+            fss_read_print_number(&main->program.output, main->setting.contents.array[i].used ? 1 : 0);
           }
           else {
             total = 0;
@@ -201,7 +201,7 @@ extern "C" {
 #endif // _di_fss_read_process_normal_at_
 
 #ifndef _di_fss_read_process_normal_columns_
-  void fss_read_process_normal_columns(void * const main, const bool names[]) {
+  void fss_read_process_normal_columns(void * const void_main, const bool names[]) {
 
     if (!void_main) return;
 
@@ -234,13 +234,11 @@ extern "C" {
 #endif // _di_fss_read_process_normal_columns_
 
 #ifndef _di_fss_read_process_normal_line_
-  void fss_read_process_normal_line(void * const main, const bool names[]) {
+  void fss_read_process_normal_line(void * const void_main, const bool names[]) {
 
     if (!void_main) return;
 
     fss_read_main_t * const main = (fss_read_main_t *) void_main;
-
-    const f_array_lengths_t * const delimits = !(main->setting.flag & fss_read_main_flag_original_e) && fss_read_delimit_object_is(main, 0) ? &main->setting.delimits : &fss_read_except_none_c;
 
     f_array_length_t line = 0;
 
@@ -269,7 +267,16 @@ extern "C" {
 
       if (line == main->setting.line) {
         if (main->callback.print_at) {
-          main->callback.print_at(main, i, *delimits, fss_read_except_none_c);
+          main->callback.print_at(
+            main,
+            i,
+            !(main->setting.flag & fss_read_main_flag_original_e) && fss_read_delimit_object_is(main, 0)
+              ? main->setting.delimits_object
+              : fss_read_except_none_c,
+            !(main->setting.flag & fss_read_main_flag_original_e) && fss_read_delimit_content_is(main, 0)
+              ? main->setting.delimits_content
+              : fss_read_except_none_c
+          );
         }
 
         break;
@@ -283,7 +290,7 @@ extern "C" {
 #endif // _di_fss_read_process_normal_line_
 
 #ifndef _di_fss_read_process_normal_name_
-  void fss_read_process_normal_name(void * const main, const bool names[]) {
+  void fss_read_process_normal_name(void * const void_main, bool names[]) {
 
     if (!void_main) return;
 
@@ -299,7 +306,7 @@ extern "C" {
 
           if (fss_read_signal_check(main)) return;
 
-          if (f_compare_dynamic_partial_except_trim_dynamic(main->setting.depths.array[0].value_name, main->setting.buffer, main->setting.objects.array[i], fss_read_except_none_c, main->setting.delimits) == F_equal_to) {
+          if (f_compare_dynamic_partial_except_trim_dynamic(main->setting.depths.array[0].value_name, main->setting.buffer, main->setting.objects.array[i], fss_read_except_none_c, main->setting.delimits_object) == F_equal_to) {
             names[i] = F_true;
           }
         } // for
@@ -309,7 +316,7 @@ extern "C" {
 
           if (fss_read_signal_check(main)) return;
 
-          if (f_compare_dynamic_partial_except_dynamic(main->setting.depths.array[0].value_name, main->setting.buffer, main->setting.objects.array[i], fss_read_except_none_c, main->setting.delimits) == F_equal_to) {
+          if (f_compare_dynamic_partial_except_dynamic(main->setting.depths.array[0].value_name, main->setting.buffer, main->setting.objects.array[i], fss_read_except_none_c, main->setting.delimits_object) == F_equal_to) {
             names[i] = F_true;
           }
         } // for
@@ -324,7 +331,7 @@ extern "C" {
 #endif // _di_fss_read_process_normal_name_
 
 #ifndef _di_fss_read_process_normal_total_
-  void fss_read_process_normal_total(void * const main, const bool names[]) {
+  void fss_read_process_normal_total(void * const void_main, const bool names[]) {
 
     if (!void_main) return;
 

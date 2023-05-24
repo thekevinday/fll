@@ -5,7 +5,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fss_read_print_at_
-  void fss_read_print_at(fl_print_t * const print, const f_array_length_t at, const f_fss_delimits_t delimits_object, const f_fss_delimits_t delimits_content) {
+  f_status_t fss_read_print_at(fl_print_t * const print, const f_array_length_t at, const f_fss_delimits_t delimits_object, const f_fss_delimits_t delimits_content) {
 
     if (!print || !print->custom) return F_status_set_error(F_output_not);
 
@@ -28,7 +28,7 @@ extern "C" {
 
       if ((main->setting.flag & fss_read_main_flag_content_e) && main->setting.contents.array[at].used) {
         if (main->callback.print_content) {
-          main->callback.print_content(&main->program.output, main->setting.contents.array[at].array[0], main->setting.quotes_content.array[at], delimits_content);
+          main->callback.print_content(&main->program.output, main->setting.contents.array[at].array[0], main->setting.quotes_content.array[at].array[0], delimits_content);
         }
       }
 
@@ -48,8 +48,8 @@ extern "C" {
 
     fss_read_main_t * const main = (fss_read_main_t *) print->custom;
 
-    if (data.callback.print_content_ignore) {
-      data.callback.print_content_ignore(&main->program.output);
+    if (main->callback.print_content_ignore) {
+      main->callback.print_content_ignore(&main->program.output);
     }
 
     if (main->setting.flag & fss_read_main_flag_original_e) {
@@ -66,24 +66,26 @@ extern "C" {
       }
     }
 
-    if (data.callback.print_content_ignore) {
-      data.callback.print_content_ignore(&main->program.output);
+    if (main->callback.print_content_ignore) {
+      main->callback.print_content_ignore(&main->program.output);
     }
 
     return F_none;
   }
-#endif _di_fss_read_print_content_
+#endif // _di_fss_read_print_content_
 
 #ifndef _di_fss_read_print_content_ignore_
-  void fss_read_print_content_ignore(fl_print_t * const print) {
+  f_status_t fss_read_print_content_ignore(fl_print_t * const print) {
 
     if (!print || !print->custom) return F_status_set_error(F_output_not);
 
-    fss_read_main_t * const main = (fss_read_main_t *) print->custom,
+    fss_read_main_t * const main = (fss_read_main_t *) print->custom;
 
     if (main->setting.flag & fss_read_main_flag_pipe_e) {
       fll_print_dynamic_raw(fss_read_pipe_content_ignore_s, print->to);
     }
+
+    return F_none;
   }
 #endif // _di_fss_read_print_content_ignore_
 
@@ -103,40 +105,40 @@ extern "C" {
 
     if (!print || !print->custom) return F_status_set_error(F_output_not);
 
-    fss_read_main_t * const main = (fss_read_main_t *) print->custom,
+    fss_read_main_t * const main = (fss_read_main_t *) print->custom;
 
     if (at >= main->setting.objects.used) return F_output_not;
 
-    if (main->setting.flag & fss_read_data_option_trim_d) {
-      if (main->setting.flag & fss_read_data_option_original_d) {
-        if (main->setting.quotes.array[at]) {
+    if (main->setting.flag & fss_read_main_flag_trim_e) {
+      if (main->setting.flag & fss_read_main_flag_original_e) {
+        if (main->setting.quotes_object.array[at]) {
           fss_read_print_quote(&main->program.output, main->setting.quotes_object.array[at]);
         }
 
         fll_print_trim_dynamic_partial(main->setting.buffer, main->setting.objects.array[at], main->program.output.to);
 
-        if (main->setting.quotes.array[at]) {
+        if (main->setting.quotes_object.array[at]) {
           fss_read_print_quote(&main->program.output, main->setting.quotes_object.array[at]);
         }
       }
       else {
-        fll_print_trim_except_dynamic_partial(main->setting.buffer, main->setting.objects.array[at], delimits_object, main->program.output.to);
+        fll_print_trim_except_dynamic_partial(main->setting.buffer, main->setting.objects.array[at], delimits, main->program.output.to);
       }
     }
     else {
       if (main->setting.flag & fss_read_main_flag_original_e) {
-        if (main->setting.quotes.array[at]) {
+        if (main->setting.quotes_object.array[at]) {
           fss_read_print_quote(&main->program.output, main->setting.quotes_object.array[at]);
         }
 
         fll_print_dynamic_partial(main->setting.buffer, main->setting.objects.array[at], main->program.output.to);
 
-        if (main->setting.quotes.array[at]) {
+        if (main->setting.quotes_object.array[at]) {
           fss_read_print_quote(&main->program.output, main->setting.quotes_object.array[at]);
         }
       }
       else {
-        fll_print_except_dynamic_partial(main->setting.buffer, main->setting.objects.array[at], delimits_object, main->program.output.to);
+        fll_print_except_dynamic_partial(main->setting.buffer, main->setting.objects.array[at], delimits, main->program.output.to);
       }
     }
 
@@ -149,7 +151,7 @@ extern "C" {
 
     if (!print || !print->custom) return F_status_set_error(F_output_not);
 
-    fss_read_main_t * const main = (fss_read_main_t *) print->custom,
+    fss_read_main_t * const main = (fss_read_main_t *) print->custom;
 
     if (main->setting.flag & fss_read_main_flag_pipe_e) {
       fll_print_dynamic_raw(fss_read_pipe_content_start_s, print->to);
@@ -168,6 +170,8 @@ extern "C" {
       }
       */
     }
+
+    return F_none;
   }
 #endif // _di_fss_read_print_object_end_
 
@@ -194,7 +198,7 @@ extern "C" {
 
     if (!print || !print->custom) return F_status_set_error(F_output_not);
 
-    fss_read_main_t * const main = (fss_read_main_t *) print->custom,
+    fss_read_main_t * const main = (fss_read_main_t *) print->custom;
 
     if (main->setting.flag & fss_read_main_flag_pipe_e) {
       fll_print_dynamic_raw(fss_read_pipe_content_end_s, print->to);

@@ -141,7 +141,7 @@ extern "C" {
  * @see fss_read_signal_check()
  */
 #ifndef _di_fss_read_process_normal_name_
-  extern void fss_read_process_normal_name(void * const main, const bool names[]);
+  extern void fss_read_process_normal_name(void * const main, bool names[]);
 #endif // _di_fss_read_process_normal_name_
 
 /**

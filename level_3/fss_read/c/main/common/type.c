@@ -22,12 +22,10 @@ extern "C" {
     f_status_t status = F_none;
 
     for (f_array_length_t i = length; i < depths->size; ++i) {
-
-      status = private_f_string_ranges_adjust(0, &depths->array[i]);
-      if (F_status_is_error(status)) return status;
+      fss_read_depth_delete(&depths->array[i]);
     } // for
 
-    status = f_memory_adjust(depths->size, length, sizeof(fss_read_file_t), (void **) & depths->array);
+    status = f_memory_resize(depths->size, length, sizeof(fss_read_file_t), (void **) & depths->array);
     if (F_status_is_error(status)) return status;
 
     depths->size = length;
@@ -74,13 +72,10 @@ extern "C" {
 
     if (!setting) return F_status_set_error(F_parameter);
 
-    f_string_dynamic_resize(0, &setting->escaped);
-    f_string_dynamic_resize(0, &setting->block);
-    f_string_dynamic_resize(0, &setting->buffer);
-    f_string_dynamic_resize(0, &setting->prepend);
-
     fss_read_files_resize(0, &setting->files);
     fss_read_depths_resize(0, &setting->depths);
+
+    f_string_dynamic_resize(0, &setting->buffer);
 
     f_string_ranges_resize(0, &setting->objects);
     f_string_ranges_resize(0, &setting->comments);

@@ -9,21 +9,10 @@ extern "C" {
 
     if (!main) return F_false;
 
-    if (main->setting.delimit_mode == fss_read_delimit_mode_none_e) {
-      return F_false;
-    }
-
-    if (main->setting.delimit_mode == fss_read_delimit_mode_all_e) {
-      return F_true;
-    }
-
-    if (depth < main->setting.delimit_depth) {
-      return main->setting.delimit_mode == fss_read_delimit_mode_content_lesser_e;
-    }
-
-    if (depth == main->setting.delimit_depth) {
-      return F_true;
-    }
+    if (main->setting.delimit_mode == fss_read_delimit_mode_none_e) return F_false;
+    if (main->setting.delimit_mode == fss_read_delimit_mode_all_e) return F_true;
+    if (depth < main->setting.delimit_depth) return main->setting.delimit_mode == fss_read_delimit_mode_content_lesser_e;
+    if (depth == main->setting.delimit_depth) return F_true;
 
     return main->setting.delimit_mode == fss_read_delimit_mode_content_greater_e;
   }
@@ -107,7 +96,7 @@ extern "C" {
     }
 
     if (F_status_is_error_not(main->setting.state.status)) {
-      if (main->setting.flag & (fss_read_main_flag_object_e | fss_read_main_flag_content_e | fss_read_main_flag_object_open_e | fss_read_main_flag_content_next_e | fss_read_main_flag_content_end_e)) {
+      if (main->setting.flag & (fss_read_main_flag_object_e | fss_read_main_flag_content_e)) {
         if (main->callback.process_normal) {
           main->callback.process_normal(void_main);
         }
@@ -180,7 +169,7 @@ extern "C" {
               fss_read_print_number(&main->program.output, 1);
             }
             else {
-              fss_read_print_content(&main->program.output, range, main->setting.quotes_content.array[at], delimits_content);
+              fss_read_print_content(&main->program.output, range, main->setting.quotes_content.array[at].array[0], delimits_content);
             }
 
             main->setting.state.status = F_success;
@@ -207,7 +196,7 @@ extern "C" {
           else {
             range.stop = main->setting.contents.array[at].array[0].stop;
 
-            fss_read_print_content(&main->program.output, range, main->setting.quotes_content.array[at], delimits_content);
+            fss_read_print_content(&main->program.output, range, main->setting.quotes_content.array[at].array[0], delimits_content);
             f_print_dynamic_raw(f_string_eol_s, main->program.output.to);
           }
 
@@ -226,16 +215,11 @@ extern "C" {
   f_string_static_t fss_read_file_identify(const f_array_length_t at, const fss_read_files_t files) {
 
     for (f_array_length_t i = 0; i < files.used; ++i) {
-
-      if (at >= files.array[i].range.start && at <= files.array[i].range.stop) {
-        return files.array[i].name;
-      }
+      if (at >= files.array[i].range.start && at <= files.array[i].range.stop) return files.array[i].name;
     } // for
 
     // When stopped after the end of the buffer, the last file in the list is the correct file.
-    if (at > files.array[files.used - 1].range.stop) {
-      return files.array[files.used - 1].name;
-    }
+    if (at > files.array[files.used - 1].range.stop) return files.array[files.used - 1].name;
 
     return f_string_empty_s;
   }
@@ -255,7 +239,7 @@ extern "C" {
         fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
       }
 
-      fll_error_file_print(&main->error, F_status_set_fine(main->setting.state.status), macro_fss_read_f(f_string_dynamic_append_assure), fll_error_file_flag_fallback_e, f_string_ascii_minus_s, f_file_operation_read_s, fll_error_file_type_pipe_e);
+      fll_error_file_print(&main->program.error, F_status_set_fine(main->setting.state.status), macro_fss_read_f(f_string_dynamic_append_assure), fll_error_file_flag_fallback_e, f_string_ascii_minus_s, f_file_operation_read_s, fll_error_file_type_pipe_e);
     }
   }
 #endif // _di_fss_read_process_last_line_

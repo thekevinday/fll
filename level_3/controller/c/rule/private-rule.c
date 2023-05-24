@@ -2218,7 +2218,7 @@ extern "C" {
         if (f_compare_dynamic_partial_string(options[i].string, source, options[i].used, content) == F_equal_to) {
           if (values[i]) {
             if (parameters->array[codes[i]].result & f_console_result_value_e) {
-              const f_array_length_t index = parameters->array[codes[i]].values.array[parameters->array[codes[i]].values.used - 1];
+              const f_array_length_t index = parameters->array[codes[i]].values.array[parameters->array[codes[i]].location];
 
               status = f_string_dynamic_increase_by(symbols[i].used + expands[i].used + f_string_ascii_space_s.used + argv[index].used + 1, destination);
               if (F_status_is_error(status)) return status;
@@ -2290,7 +2290,7 @@ extern "C" {
 
           if (f_compare_dynamic_partial_string(buffer.string, source, buffer.used, content) == F_equal_to) {
             if (parameters->array[codes[i]].result & f_console_result_value_e) {
-              const f_array_length_t index = parameters->array[codes[i]].values.array[parameters->array[codes[i]].values.used - 1];
+              const f_array_length_t index = parameters->array[codes[i]].values.array[parameters->array[codes[i]].location];
 
               status = f_string_dynamic_append(argv[index], destination);
               if (F_status_is_error(status)) return status;

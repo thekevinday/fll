@@ -305,7 +305,7 @@ extern "C" {
     }
 
     if ((main->program.parameters.array[fss_write_parameter_prepend_e].result & f_console_result_value_e) && main->program.parameters.array[fss_write_parameter_prepend_e].values.used) {
-      const f_array_length_t index = main->program.parameters.array[fss_write_parameter_prepend_e].values.array[main->program.parameters.array[fss_write_parameter_prepend_e].values.used - 1];
+      const f_array_length_t index = main->program.parameters.array[fss_write_parameter_prepend_e].values.array[main->program.parameters.array[fss_write_parameter_prepend_e].location];
 
       main->setting.prepend.used = 0;
 

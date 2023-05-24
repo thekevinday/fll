@@ -33,6 +33,20 @@ extern "C" {
 #endif // _di_fss_read_allocation_d_
 
 /**
+ * The program allocation block defines.
+ *
+ * fss_payload_read_block_*:
+ *   - max:        The max block read size before checking for interrupt.
+ *   - read_small: The block read size for small files.
+ *   - read_large: The block read size for large files.
+ */
+#ifndef _di_fss_read_allocation_d_
+  #define fss_read_allocation_block_max_d        16777216
+  #define fss_read_allocation_block_read_small_d 8192
+  #define fss_read_allocation_block_read_large_d 65536
+#endif // _di_fss_read_allocation_d_
+
+/**
  * The program signal defines.
  *
  * fss_read_signal_*_d:

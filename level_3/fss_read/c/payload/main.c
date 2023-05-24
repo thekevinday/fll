@@ -19,7 +19,7 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
   data.setting.state.custom = (void *) &data;
   data.setting.standard = fss_read_payload_standard_s;
 
-  // @todo see if there needs to be this: data.callback.process_pipe = &fss_read_payload_process_pipe;
+  data.callback.process_pipe = &fss_read_payload_process_pipe;
   data.callback.process_help = &fss_read_payload_process_help;
   data.callback.process_last_line = &fss_read_process_last_line;
   //data.callback.process_load_depth = &fss_read_setting_load_depth;

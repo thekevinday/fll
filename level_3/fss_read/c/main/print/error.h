@@ -70,28 +70,6 @@ extern "C" {
 #endif // _di_fss_read_print_error_file_
 
 /**
- * Print an error message about the object and content parameters not being specified at least the same number of times when partial is not requested.
- *
- * @param print
- *   The output structure to print to.
- *
- *   The print.custom is expected to be of type fss_read_main_t.
- *
- *   This does not alter print.custom.setting.state.status.
- *
- * @return
- *   F_none on success.
- *   F_output_not on success, but no printing is performed.
- *
- *   F_output_not (with error bit) if a parameter is NULL.
- *
- * @see fll_error_print()
- */
-#ifndef _di_fss_read_print_error_parameter_same_times_at_least_
-  extern f_status_t fss_read_print_error_parameter_same_times_at_least(fl_print_t * const print);
-#endif // _di_fss_read_print_error_parameter_same_times_at_least_
-
-/**
  * Print an error message about the parameter requires something that is explained by the message parameter.
  *
  * @param print
@@ -193,26 +171,6 @@ extern "C" {
 #ifndef _di_fss_read_print_error_one_content_only_
   extern f_status_t fss_read_print_error_one_content_only(fl_print_t * const print);
 #endif // _di_fss_read_print_error_one_content_only_
-
-/**
- * Print error when prepend parameter has something other than white space.
- *
- * @param print
- *   The output structure to print to.
- *
- *   The print.custom is expected to be of type fss_read_main_t.
- *
- *   This does not alter print.custom.setting.state.status.
- *
- * @return
- *   F_none on success.
- *   F_output_not on success, but no printing is performed.
- *
- *   F_output_not (with error bit) if a parameter is NULL.
- */
-#ifndef _fss_read_print_error_prepend_only_whitespace_
-  extern f_status_t fss_read_print_error_prepend_only_whitespace(fl_print_t * const print);
-#endif // _fss_read_print_error_prepend_only_whitespace_
 
 /**
  * Print an error message about a parameter New Line character '\n' (U+000A) being unsupported.

@@ -454,7 +454,7 @@ extern "C" {
         ];
 
       if (parameter->result & f_console_result_value_e) {
-        const f_array_length_t index = parameter->values.array[parameter->values.used - 1];
+        const f_array_length_t index = parameter->values.array[parameter->location];
 
         if (f_path_is_absolute(main->program.parameters.arguments.array[index]) == F_true || f_path_is_relative_current(main->program.parameters.arguments.array[index]) == F_true) {
           requireds[1] = F_none; // fake_long_data_s

@@ -299,7 +299,7 @@ extern "C" {
       f_number_unsigned_t select = 0;
 
       if (data->main->parameters.array[fss_embedded_list_read_parameter_select_e].result & f_console_result_value_e) {
-        const f_array_length_t index = data->main->parameters.array[fss_embedded_list_read_parameter_select_e].values.array[data->main->parameters.array[fss_embedded_list_read_parameter_select_e].values.used - 1];
+        const f_array_length_t index = data->main->parameters.array[fss_embedded_list_read_parameter_select_e].values.array[data->main->parameters.array[fss_embedded_list_read_parameter_select_e].location];
 
         status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, data->main->parameters.arguments.array[index], &select);
 
@@ -319,7 +319,7 @@ extern "C" {
     f_array_length_t line = 0;
 
     if (data->main->parameters.array[fss_embedded_list_read_parameter_line_e].result & f_console_result_value_e) {
-      const f_array_length_t index = data->main->parameters.array[fss_embedded_list_read_parameter_line_e].values.array[data->main->parameters.array[fss_embedded_list_read_parameter_line_e].values.used - 1];
+      const f_array_length_t index = data->main->parameters.array[fss_embedded_list_read_parameter_line_e].values.array[data->main->parameters.array[fss_embedded_list_read_parameter_line_e].location];
 
       status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, data->main->parameters.arguments.array[index], &line);
 

@@ -40,6 +40,7 @@
 
 // FLL-2 includes.
 #include <fll/level_2/error.h>
+#include <fll/level_2/fss/basic.h>
 #include <fll/level_2/print.h>
 #include <fll/level_2/program.h>
 
@@ -51,6 +52,7 @@
 #include <program/fss_read/main/common/string.h>
 #include <program/fss_read/main/common/type.h>
 #include <program/fss_read/main/common.h>
+#include <program/fss_read/main/print/data.h>
 #include <program/fss_read/main/print/error.h>
 #include <program/fss_read/main/print/message.h>
 #include <program/fss_read/main/process_normal.h>
@@ -105,7 +107,7 @@ extern "C" {
  * @see fss_read_file_identify()
  */
 #ifndef _di_fss_read_basic_process_load_
-  extern f_status_t fss_read_basic_process_load(fss_read_main_t * const main);
+  extern void fss_read_basic_process_load(fss_read_main_t * const main);
 #endif // _di_fss_read_basic_process_load_
 
 #ifdef __cplusplus

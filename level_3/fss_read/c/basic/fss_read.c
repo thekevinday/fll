@@ -21,17 +21,19 @@ extern "C" {
 
     f_string_range_t input = macro_f_string_range_t_initialize_2(main->setting.buffer.used);
 
-    main->setting.delimits.used = 0;
-    main->setting.quotes.used = 0;
+    main->setting.delimits_object.used = 0;
+    main->setting.delimits_content.used = 0;
+    main->setting.quotes_object.used = 0;
+    main->setting.quotes_content.used = 0;
 
-    fll_fss_basic_read(main->setting.buffer, &input, &main->setting.objects, &main->setting.contents, &main->setting.quotes_object, &main->setting.delimits, 0, &main->setting.state);
+    fll_fss_basic_read(main->setting.buffer, &input, &main->setting.objects, &main->setting.contents, &main->setting.quotes_object, &main->setting.delimits_object, &main->setting.delimits_content, &main->setting.state);
 
-    if (F_status_is_error(data.setting.state.status)) {
-      if (F_status_set_fine(data.setting.state.status) == F_interrupt) return;
+    if (F_status_is_error(main->setting.state.status)) {
+      if (F_status_set_fine(main->setting.state.status) == F_interrupt) return;
 
       fll_error_file_print(
-        &main->error,
-        F_status_set_fine(data.setting.state.status),
+        &main->program.error,
+        F_status_set_fine(main->setting.state.status),
         macro_fss_read_f(fll_fss_basic_read),
         fll_error_file_flag_fallback_e,
         fss_read_file_identify(input.start, main->setting.files),
@@ -42,15 +44,15 @@ extern "C" {
       return;
     }
 
-    if (data.setting.state.status == F_data_not_stop || data.setting.state.status == F_data_not_eos) {
+    if (main->setting.state.status == F_data_not_stop || main->setting.state.status == F_data_not_eos) {
       if (!(main->setting.flag & fss_read_main_flag_total_e)) {
-        data.setting.state.status = F_status_set_warning(status);
+        main->setting.state.status = F_status_set_warning(main->setting.state.status);
 
         return;
       }
     }
 
-    data.setting.state.status = F_none;
+    main->setting.state.status = F_none;
   }
 #endif // _di_fss_read_basic_process_load_
 
