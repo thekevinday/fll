@@ -480,20 +480,34 @@ extern "C" {
 
     f_file_t file = f_file_t_initialize;
 
+    fss_read_files_resize(((main->program.pipe & fll_program_data_pipe_input_e) ? 1 : 0) + parameters->remaining.used, &main->setting.files);
+
+    if (F_status_is_error(main->setting.state.status)) {
+      fss_read_print_error(&main->program.error, macro_fss_read_f(fss_read_files_resize));
+
+      return;
+    }
+
     if (main->program.pipe & fll_program_data_pipe_input_e) {
       file.id = F_type_descriptor_input_d;
       file.stream = F_type_input_d;
 
       main->setting.files.array[0].range.start = 0;
 
-      main->setting.state.status = f_file_stream_read(file, &main->setting.buffer);
+      while (main->setting.state.status != F_none_eof) {
+
+        if (fss_read_signal_check(main)) break;
+
+        main->setting.state.status = f_file_stream_read_block(file, &main->setting.buffer);
+        if (F_status_is_error(main->setting.state.status)) break;
+      } // while
 
       if (F_status_is_error(main->setting.state.status)) {
         if ((main->setting.flag & fss_read_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
           fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
         }
 
-        fll_error_file_print(&main->program.error, F_status_set_fine(main->setting.state.status), macro_fss_read_f(f_file_stream_read), fll_error_file_flag_fallback_e, f_string_ascii_minus_s, f_file_operation_read_s, fll_error_file_type_pipe_e);
+        fll_error_file_print(&main->program.error, F_status_set_fine(main->setting.state.status), macro_fss_read_f(f_file_stream_read_block), fll_error_file_flag_fallback_e, f_string_ascii_minus_s, f_file_operation_read_s, fll_error_file_type_pipe_e);
 
         return;
       }
@@ -627,9 +641,11 @@ extern "C" {
 #endif // _di_fss_read_setting_load_
 
 #ifndef _di_fss_read_setting_load_depth_
-  void fss_read_setting_load_depth(const f_console_arguments_t arguments, fss_read_main_t * const main, f_console_parameters_t * const parameters) {
+  void fss_read_setting_load_depth(const f_console_arguments_t arguments, void * const void_main, f_console_parameters_t * const parameters) {
 
-    if (!main || !parameters) return;
+    if (!void_main || !parameters) return;
+
+    fss_read_main_t * const main = (fss_read_main_t *) void_main;
 
     f_array_length_t i = 1;
 
@@ -637,8 +653,9 @@ extern "C" {
       i = parameters->array[fss_read_parameter_depth_e].values.used;
     }
 
-    if (i > main->setting.depths.size) {
-      main->setting.state.status = fss_read_depths_resize(i, &main->setting.depths);
+    // @fixme: much of the logic in this depths handling was static and is now dynamic, this needs to be reviewed and updated.
+    if (i + 1 > main->setting.depths.size) {
+      main->setting.state.status = fss_read_depths_resize(i + 1, &main->setting.depths);
 
       if (F_status_is_error(main->setting.state.status)) {
         if ((main->setting.flag & fss_read_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
@@ -665,9 +682,7 @@ extern "C" {
       main->setting.depths.array[i].index_at = 0;
       main->setting.depths.array[i].index_name = 0;
       main->setting.depths.array[i].value_at = 0;
-
-      // This dynamic string is actually a static string, so clear it between loops.
-      macro_f_string_dynamic_t_clear(main->setting.depths.array[i].value_name);
+      main->setting.depths.array[i].value_name.used = 0; // @fixme this needs to be fully reset to 0.
 
       if (!parameters->array[fss_read_parameter_depth_e].values.used) {
         position_depth = 0;
@@ -783,7 +798,7 @@ extern "C" {
     } // for
 
     if (main->callback.process_load_depth) {
-      main->callback.process_load_depth(arguments, (void *) main);
+      main->callback.process_load_depth(arguments, (void *) main, parameters);
       if (F_status_is_error(main->setting.state.status)) return;
     }
 

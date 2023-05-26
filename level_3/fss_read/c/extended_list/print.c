@@ -19,6 +19,8 @@ extern "C" {
 
     fll_program_print_help_usage(print, fss_read_extended_list_program_name_s, f_string_empty_s);
 
+    f_print_dynamic_raw(f_string_eol_s, print->to);
+
     fss_read_print_message_help_note_header(print, fss_read_format_code_short_0003_s, fss_read_format_code_name_0003_s);
 
     fss_read_print_message_help_pipe(print);
@@ -31,6 +33,20 @@ extern "C" {
     return F_none;
   }
 #endif // _di_fss_read_extended_list_print_help_
+
+#ifndef _di_fss_read_extended_list_print_set_end_
+  f_status_t fss_read_extended_list_print_set_end(fl_print_t * const print) {
+
+    if (!print || !print->custom) return F_status_set_error(F_output_not);
+
+    fss_read_main_t * const main = (fss_read_main_t *) print->custom;
+
+    // @todo
+    //fll_print_dynamic_raw((main->setting.flag & fss_read_main_flag_pipe_e) ? fss_read_pipe_content_end_s : f_string_eol_s, print->to);
+
+    return F_none;
+  }
+#endif // _di_fss_read_extended_list_print_set_end_
 
 #ifdef __cplusplus
 } // extern "C"

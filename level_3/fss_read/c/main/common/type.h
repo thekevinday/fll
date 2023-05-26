@@ -123,7 +123,6 @@ extern "C" {
  * process_last_line:  Process printing last line if necessary when loading in a file (or pipe).
  * process_load_depth: Process loading of the depth related parameters when loading the settings.
  * process_normal:     Process normally (data from parameters and files).
- * process_pipe:       Process data piped to the program from standard input (stdin).
  *
  * process_at:       Process at parameter, usually called by the process_normal() callback.
  * process_columns:  Process columns parameter, usually called by the process_normal() callback.
@@ -134,18 +133,17 @@ extern "C" {
  *
  * print_at:             Print at the given location, usually called by the process_normal() callback.
  * print_object:         Print the Object, usually called by the process_normal() callback.
- * print_content:        Print the Object, usually called by the process_normal() callback.
+ * print_content:        Print the Content, usually called by the process_normal() callback.
  * print_content_ignore: Print the Content ignore character, usually called by several callbacks within the process_normal() callback for a pipe.
  * print_object_end:     Print the Object end, usually called by several callbacks within the process_normal() callback.
- * print_set_end:        Print the set end, usually called by several callbacks within the process_normal() callback.
+ * print_set_end:        Print the Content set end, usually called by several callbacks within the process_normal() callback.
  */
 #ifndef _di_fss_read_callback_t_
   typedef struct {
     void (*process_help)(void * const main);
     void (*process_last_line)(void * const main);
-    void (*process_load_depth)(const f_console_arguments_t arguments, void * const main);
+    void (*process_load_depth)(const f_console_arguments_t arguments, void * const main, f_console_parameters_t * const parameters);
     void (*process_normal)(void * const main);
-    void (*process_pipe)(void * const main);
 
     void (*process_at)(void * const main, const bool names[], const f_fss_delimits_t delimits_object, const f_fss_delimits_t delimits_content);
     void (*process_columns)(void * const main, const bool names[]);
@@ -154,17 +152,16 @@ extern "C" {
     void (*process_name)(void * const main, bool names[]);
     void (*process_total)(void * const main, const bool names[]);
 
-    void (*print_at)(void * const main, const f_array_length_t at, const f_fss_delimits_t delimits_object, const f_fss_delimits_t delimits_content);
-    void (*print_object)(fl_print_t * const print, const f_array_length_t at, const f_fss_delimits_t delimits);
-    void (*print_content)(fl_print_t * const print, const f_string_range_t range, const uint8_t quote, const f_fss_delimits_t delimits);
-    void (*print_content_ignore)(fl_print_t * const print);
-    void (*print_object_end)(fl_print_t * const print);
-    void (*print_set_end)(fl_print_t * const print);
+    f_status_t (*print_at)(fl_print_t * const print, const f_array_length_t at, const f_fss_delimits_t delimits_object, const f_fss_delimits_t delimits_content);
+    f_status_t (*print_object)(fl_print_t * const print, const f_array_length_t at, const f_fss_delimits_t delimits);
+    f_status_t (*print_content)(fl_print_t * const print, const f_string_range_t range, const uint8_t quote, const f_fss_delimits_t delimits);
+    f_status_t (*print_content_ignore)(fl_print_t * const print);
+    f_status_t (*print_object_end)(fl_print_t * const print);
+    f_status_t (*print_set_end)(fl_print_t * const print);
   } fss_read_callback_t;
 
   #define fss_read_callback_t_initialize \
     { \
-      0, \
       0, \
       0, \
       0, \
@@ -209,11 +206,14 @@ extern "C" {
  * standard: A human-friendly string describing the standard in use, such as "FSS-0000 (Basic)".
  * buffer:   The buffer containing all loaded files (and STDIN pipe).
  *
- * objects:          The positions within the buffer representing Objects.
+ * comments:         The positions within the buffer representing comments.
  * contents:         The positions within the buffer representing Contents.
  * delimits_object:  The positions within the buffer representing Object character delimits.
  * delimits_content: The positions within the buffer representing Content character delimits.
- * comments:         The positions within the buffer representing comments.
+ * nests:            The positions within the buffer representing nested Objects and Contents.
+ * objects:          The positions within the buffer representing Objects.
+ * quotes_object:    The quotes within the Object structure.
+ * quotes_content:   The quotes within the Content structure.
  */
 #ifndef _di_fss_read_setting_t_
   typedef struct {
@@ -235,11 +235,13 @@ extern "C" {
     f_string_static_t standard;
     f_string_dynamic_t buffer;
 
-    f_fss_objects_t objects;
+    f_fss_comments_t comments;
     f_fss_contents_t contents;
     f_fss_delimits_t delimits_object;
     f_fss_delimits_t delimits_content;
-    f_fss_comments_t comments;
+    f_fss_nest_t nest;
+    f_fss_objects_t objects;
+
     f_uint8s_t quotes_object;
     f_uint8ss_t quotes_content;
   } fss_read_setting_t;
@@ -258,11 +260,12 @@ extern "C" {
       fss_read_depths_t_initialize, \
       f_string_static_t_initialize, \
       f_string_dynamic_t_initialize, \
-      f_fss_objects_t_initialize, \
+      f_fss_comments_t_initialize, \
       f_fss_contents_t_initialize, \
       f_fss_delimits_t_initialize, \
       f_fss_delimits_t_initialize, \
-      f_fss_comments_t_initialize, \
+      f_fss_nest_t_initialize, \
+      f_fss_objects_t_initialize, \
       f_uint8s_t_initialize, \
       f_uint8ss_t_initialize, \
     }

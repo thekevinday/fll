@@ -19,6 +19,8 @@ extern "C" {
 
     fll_program_print_help_usage(print, fss_read_embedded_list_program_name_s, f_string_empty_s);
 
+    f_print_dynamic_raw(f_string_eol_s, print->to);
+
     fss_read_print_message_help_note_header(print, fss_read_format_code_short_0008_s, fss_read_format_code_name_0008_s);
 
     fss_read_print_message_help_pipe(print);

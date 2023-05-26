@@ -35,7 +35,7 @@ extern "C" {
 
     if (!print) return;
 
-    fl_print_format(" %[Notes:%]%r  This program will print the data associated with the given Object and Content based on the FSS", print->to, f_string_eol_s);
+    fl_print_format(" %[Notes:%]%r  This program will print the data associated with the given Object and Content based on the FSS", print->to, print->set->notable, print->set->notable, f_string_eol_s);
 
     if (number.used) {
       fl_print_format("-%Q", print->to, number);

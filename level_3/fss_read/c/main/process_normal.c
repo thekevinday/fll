@@ -77,7 +77,7 @@ extern "C" {
         if (!names[i]) continue;
         if (fss_read_signal_check(main)) return;
 
-        main->callback.print_at(main, i, *delimits_object, *delimits_content);
+        main->callback.print_at(&main->program.output, i, *delimits_object, *delimits_content);
       } // for
     }
 
@@ -181,7 +181,7 @@ extern "C" {
           }
         }
         else if (main->callback.print_at) {
-          main->callback.print_at(main, i, delimits_object, delimits_content);
+          main->callback.print_at(&main->program.output, i, delimits_object, delimits_content);
         }
 
         main->setting.state.status = F_none;
@@ -217,15 +217,28 @@ extern "C" {
 
     f_array_length_t max = 0;
 
-    for (f_array_length_t at = 0; at < main->setting.contents.used; ++at) {
+    if (main->setting.flag & fss_read_main_flag_content_multiple_e) {
+      for (f_array_length_t at = 0; at < main->setting.contents.used; ++at) {
 
-      if (!names[at]) continue;
-      if (fss_read_signal_check(main)) return;
+        if (!names[at]) continue;
+        if (fss_read_signal_check(main)) return;
 
-      if (main->setting.contents.array[at].used > max) {
-        max = main->setting.contents.array[at].used;
-      }
-    } // for
+        if (main->setting.contents.array[at].used > max) {
+          max = main->setting.contents.array[at].used;
+        }
+      } // for
+    }
+    else {
+      for (f_array_length_t at = 0; at < main->setting.contents.used; ++at) {
+
+        if (names[at]) {
+          max = 1;
+          break;
+        }
+
+        if (fss_read_signal_check(main)) return;
+      } // for
+    }
 
     fss_read_print_number(&main->program.output, max);
 
@@ -268,7 +281,7 @@ extern "C" {
       if (line == main->setting.line) {
         if (main->callback.print_at) {
           main->callback.print_at(
-            main,
+            &main->program.output,
             i,
             !(main->setting.flag & fss_read_main_flag_original_e) && fss_read_delimit_object_is(main, 0)
               ? main->setting.delimits_object
@@ -301,7 +314,7 @@ extern "C" {
 
       memset(names, F_false, sizeof(bool) * main->setting.objects.used);
 
-      if (main->setting.flag & fss_read_main_flag_trim_e) {
+      if (main->setting.flag & (fss_read_main_flag_trim_e | fss_read_main_flag_trim_object_e)) {
         for (i = 0; i < main->setting.objects.used; ++i) {
 
           if (fss_read_signal_check(main)) return;

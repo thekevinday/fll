@@ -44,6 +44,7 @@ extern "C" {
     fss_read_f_f_file_size_by_id_e,
     fss_read_f_f_file_stream_open_e,
     fss_read_f_f_file_stream_read_e,
+    fss_read_f_f_file_stream_read_block_e,
     fss_read_f_f_file_stream_read_until_e,
     fss_read_f_f_fss_is_space_e,
     fss_read_f_f_rip_dynamic_e,
@@ -76,10 +77,15 @@ extern "C" {
     fss_read_f_fl_fss_extended_object_read_e,
     fss_read_f_fl_fss_payload_content_read_e,
     fss_read_f_fll_fss_basic_read_e,
+    fss_read_f_fll_fss_basic_list_read_e,
+    fss_read_f_fll_fss_embedded_list_read_e,
+    fss_read_f_fll_fss_extended_read_e,
+    fss_read_f_fll_fss_extended_list_read_e,
     fss_read_f_fll_fss_payload_read_e,
     fss_read_f_fll_program_parameter_process_context_e,
     fss_read_f_fll_program_parameter_process_verbosity_e,
     fss_read_f_fss_read_depths_resize_e,
+    fss_read_f_fss_read_files_resize_e,
     fss_read_f_fss_read_setting_load_depth_e,
   }; // enum
 #endif // _di_fss_read_f_e_

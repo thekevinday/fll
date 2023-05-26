@@ -41,11 +41,13 @@ extern "C" {
     //
     //The Content of the explicit Object of 'payload' will not contain any Content close pipe control codes when using --pipe.
 
+    /*
     fl_print_format("%r  The FSS-000E (Payload) specification does not support quoted names, therefore the parameters '%[%r%r%]'", print->to, f_string_eol_s, print->set->notable, f_console_symbol_long_normal_s, fss_read_long_single_s, print->set->notable);
     fl_print_format(" and '%[%r%r%]' do nothing.%r%r", print->to, print->set->notable, f_console_symbol_long_normal_s, fss_read_long_double_s, print->set->notable, f_string_eol_s, f_string_eol_s);
 
     fl_print_format("  This program does not use the parameter '%[%r%r%]', which therefore does nothing.%r", print->to, print->set->notable, f_console_symbol_long_normal_s, fss_read_long_ignore_s, print->set->notable, f_string_eol_s);
     fl_print_format("  This parameter requires two values.%r", print->to, f_string_eol_s);
+    */
 
     f_file_stream_flush(print->to);
     f_file_stream_unlock(print->to);

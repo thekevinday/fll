@@ -10,13 +10,15 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
   data.program.output.flag |= fss_read_print_flag_out_e;
   data.program.message.flag |= fss_read_print_flag_message_e | fss_read_print_flag_out_e;
   data.program.warning.flag |= fss_read_print_flag_warning_e | fss_read_print_flag_out_e;
+
   data.program.error.custom = (void *) &data;
   data.program.debug.custom = (void *) &data;
   data.program.message.custom = (void *) &data;
   data.program.output.custom = (void *) &data;
   data.program.warning.custom = (void *) &data;
 
-  data.setting.flag |= fss_read_main_flag_quote_content_e | fss_read_main_flag_quote_object_e | fss_read_main_flag_line_single_e;
+  data.setting.flag |= fss_read_main_flag_line_single_e;
+  data.setting.flag |= fss_read_main_flag_quote_content_e | fss_read_main_flag_quote_object_e;
 
   data.setting.state.custom = (void *) &data;
   data.setting.standard = fss_read_basic_standard_s;

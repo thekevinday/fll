@@ -30,6 +30,32 @@ extern "C" {
   extern f_status_t fss_read_basic_list_print_help(fl_print_t * const print);
 #endif // _di_fss_read_basic_list_print_help_
 
+/**
+ * Print the end of an Object (which is often the start of Content).
+ *
+ * This locks, uses, and unlocks the file stream.
+ *
+ * @param print
+ *   The output structure to print to.
+ *
+ *   The print.custom is expected to be of type fss_read_main_t.
+ *
+ *   This does not alter print.custom.setting.state.status.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ *
+ *   F_output_not (with error bit) if a parameter is NULL.
+ *
+ * @see f_file_stream_lock()
+ * @see f_file_stream_unlock()
+ * @see f_print_dynamic_raw()
+ */
+#ifndef _di_fss_read_basic_list_print_object_end_
+  extern f_status_t fss_read_basic_list_print_object_end(fl_print_t * const print);
+#endif // _di_fss_read_basic_list_print_object_end_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

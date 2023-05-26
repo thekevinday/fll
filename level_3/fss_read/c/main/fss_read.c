@@ -89,17 +89,9 @@ extern "C" {
       return;
     }
 
-    if (main->program.pipe & fll_program_data_pipe_input_e) {
-      if (main->callback.process_pipe) {
-        main->callback.process_pipe(void_main);
-      }
-    }
-
-    if (F_status_is_error_not(main->setting.state.status)) {
-      if (main->setting.flag & (fss_read_main_flag_object_e | fss_read_main_flag_content_e)) {
-        if (main->callback.process_normal) {
-          main->callback.process_normal(void_main);
-        }
+    if (main->setting.flag & (fss_read_main_flag_object_e | fss_read_main_flag_content_e)) {
+      if (main->callback.process_normal) {
+        main->callback.process_normal(void_main);
       }
     }
 

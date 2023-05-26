@@ -79,6 +79,9 @@ extern "C" {
  * @param main
  *   The main program data.
  *
+ *   Must not be NULL.
+ *   Must be of type fss_read_main_t.
+ *
  *   This calls main.callback.process_load_depth() if not NULL.
  *
  *   This alters main.setting.state.status:
@@ -106,7 +109,7 @@ extern "C" {
  * @see fss_read_setting_load()
  */
 #ifndef _di_fss_read_setting_load_depth_
-  extern void fss_read_setting_load_depth(const f_console_arguments_t arguments, fss_read_main_t * const main, f_console_parameters_t * const parameters);
+  extern void fss_read_setting_load_depth(const f_console_arguments_t arguments, void * const main, f_console_parameters_t * const parameters);
 #endif // _di_fss_read_setting_load_depth_
 
 #ifdef __cplusplus

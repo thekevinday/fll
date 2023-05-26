@@ -109,7 +109,7 @@ extern "C" {
 
     if (at >= main->setting.objects.used) return F_output_not;
 
-    if (main->setting.flag & fss_read_main_flag_trim_e) {
+    if (main->setting.flag & (fss_read_main_flag_trim_e | fss_read_main_flag_trim_object_e)) {
       if (main->setting.flag & fss_read_main_flag_original_e) {
         if (main->setting.quotes_object.array[at]) {
           fss_read_print_quote(&main->program.output, main->setting.quotes_object.array[at]);
@@ -153,23 +153,7 @@ extern "C" {
 
     fss_read_main_t * const main = (fss_read_main_t *) print->custom;
 
-    if (main->setting.flag & fss_read_main_flag_pipe_e) {
-      fll_print_dynamic_raw(fss_read_pipe_content_start_s, print->to);
-    }
-    else {
-      fll_print_dynamic_raw(f_fss_space_s, main->program.output.to);
-
-      // @todo this is basic list read, move this appropriately and use "basic" for the common object end, which is a space.
-      /*
-      if (main->parameters.array[fss_read_parameter_content_e].result & f_console_result_found_e) {
-        f_print_dynamic_raw(f_fss_basic_list_open_s, print->to);
-        f_print_dynamic_raw(f_fss_basic_list_open_end_s, print->to);
-      }
-      else {
-        f_print_dynamic_raw(f_fss_eol_s, print->to);
-      }
-      */
-    }
+    fll_print_dynamic_raw((main->setting.flag & fss_read_main_flag_pipe_e) ? fss_read_pipe_content_start_s : f_fss_space_s, print->to);
 
     return F_none;
   }
@@ -200,16 +184,26 @@ extern "C" {
 
     fss_read_main_t * const main = (fss_read_main_t *) print->custom;
 
-    if (main->setting.flag & fss_read_main_flag_pipe_e) {
-      fll_print_dynamic_raw(fss_read_pipe_content_end_s, print->to);
-    }
-    else {
-      fll_print_dynamic_raw(f_string_eol_s, main->program.output.to);
-    }
+    fll_print_dynamic_raw((main->setting.flag & fss_read_main_flag_pipe_e) ? fss_read_pipe_content_end_s : f_string_eol_s, print->to);
 
     return F_none;
   }
 #endif // _di_fss_read_print_set_end_
+
+#ifndef _di_fss_read_print_set_end_no_eol_
+  f_status_t fss_read_print_set_end_no_eol(fl_print_t * const print) {
+
+    if (!print || !print->custom) return F_status_set_error(F_output_not);
+
+    fss_read_main_t * const main = (fss_read_main_t *) print->custom;
+
+    if (main->setting.flag & fss_read_main_flag_pipe_e) {
+      fll_print_dynamic_raw(fss_read_pipe_content_end_s, print->to);
+    }
+
+    return F_none;
+  }
+#endif // _di_fss_read_print_set_end_no_eol_
 
 #ifdef __cplusplus
 } // extern "C"

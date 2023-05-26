@@ -32,6 +32,7 @@ extern "C" {
 #endif // _di_fss_read_delimit_mode_s_
 
 #ifndef _di_fss_read_parameter_s_
+  const f_string_static_t fss_read_short_as_s = macro_f_string_static_t_initialize_1(FSS_READ_short_as_s, 0, FSS_READ_short_as_s_length);
   const f_string_static_t fss_read_short_at_s = macro_f_string_static_t_initialize_1(FSS_READ_short_at_s, 0, FSS_READ_short_at_s_length);
   const f_string_static_t fss_read_short_content_s = macro_f_string_static_t_initialize_1(FSS_READ_short_content_s, 0, FSS_READ_short_content_s_length);
   const f_string_static_t fss_read_short_columns_s = macro_f_string_static_t_initialize_1(FSS_READ_short_columns_s, 0, FSS_READ_short_columns_s_length);
@@ -47,6 +48,7 @@ extern "C" {
   const f_string_static_t fss_read_short_total_s = macro_f_string_static_t_initialize_1(FSS_READ_short_total_s, 0, FSS_READ_short_total_s_length);
   const f_string_static_t fss_read_short_trim_s = macro_f_string_static_t_initialize_1(FSS_READ_short_trim_s, 0, FSS_READ_short_trim_s_length);
 
+  const f_string_static_t fss_read_long_as_s = macro_f_string_static_t_initialize_1(FSS_READ_long_as_s, 0, FSS_READ_long_as_s_length);
   const f_string_static_t fss_read_long_at_s = macro_f_string_static_t_initialize_1(FSS_READ_long_at_s, 0, FSS_READ_long_at_s_length);
   const f_string_static_t fss_read_long_content_s = macro_f_string_static_t_initialize_1(FSS_READ_long_content_s, 0, FSS_READ_long_content_s_length);
   const f_string_static_t fss_read_long_columns_s = macro_f_string_static_t_initialize_1(FSS_READ_long_columns_s, 0, FSS_READ_long_columns_s_length);

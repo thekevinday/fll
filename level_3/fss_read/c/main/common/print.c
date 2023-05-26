@@ -11,6 +11,7 @@ extern "C" {
     "f_file_size_by_id",
     "f_file_stream_open",
     "f_file_stream_read",
+    "f_file_stream_read_block",
     "f_file_stream_read_until",
     "f_fss_is_space",
     "f_rip_dynamic",
@@ -43,10 +44,15 @@ extern "C" {
     "fl_fss_extended_object_read",
     "fl_fss_payload_content_read",
     "fll_fss_basic_read",
+    "fll_fss_basic_list_read",
+    "fll_fss_embedded_list_read",
+    "fll_fss_extended_read",
+    "fll_fss_extended_list_read",
     "fll_fss_payload_read",
     "fll_program_parameter_process_context",
     "fll_program_parameter_process_verbosity",
     "fss_read_depths_resize",
+    "fss_read_files_resize",
     "fss_read_setting_load_depth",
   };
 #endif // _di_fss_read_f_a_

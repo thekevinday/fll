@@ -48,6 +48,8 @@ extern "C" {
 
     fll_program_print_help_usage(print, fss_read_program_name_s, f_string_empty_s);
 
+    f_print_dynamic_raw(f_string_eol_s, print->to);
+
     fss_read_print_message_help_note_header(print, f_string_empty_s, f_string_empty_s);
 
     fss_read_print_message_help_pipe(print);

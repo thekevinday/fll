@@ -17,6 +17,7 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
   data.program.output.flag |= fss_write_print_flag_out_e;
   data.program.message.flag |= fss_write_print_flag_message_e | fss_write_print_flag_out_e;
   data.program.warning.flag |= fss_write_print_flag_warning_e | fss_write_print_flag_out_e;
+
   data.program.error.custom = (void *) &data;
   data.program.debug.custom = (void *) &data;
   data.program.message.custom = (void *) &data;
@@ -120,8 +121,9 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
           main->setting.standard = fss_write_basic_standard_s;
 
-          main->setting.flag -= main->setting.flag & fss_write_main_flag_ignore_e; // Not supported by basic.
-          main->setting.flag -= main->setting.flag & fss_write_main_flag_content_multiple_e; // Not supported by basic.
+          // Remove flags not supported for this standard.
+          main->setting.flag -= main->setting.flag & fss_write_main_flag_ignore_e;
+          main->setting.flag -= main->setting.flag & fss_write_main_flag_content_multiple_e;
 
           main->callback.process_content = &fss_write_basic_process_content;
           main->callback.process_help = &fss_write_basic_process_help;
@@ -137,7 +139,9 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
           main->setting.standard = fss_write_extended_standard_s;
 
-          main->setting.flag -= main->setting.flag & fss_write_main_flag_ignore_e; // Not supported by extended.
+          // Remove flags not supported for this standard.
+          main->setting.flag -= main->setting.flag & fss_write_main_flag_ignore_e;
+
           main->setting.flag |= fss_write_main_flag_content_multiple_e;
 
           main->callback.process_content = &fss_write_extended_process_content;
@@ -154,8 +158,9 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
           main->setting.standard = fss_write_basic_list_standard_s;
 
-          main->setting.flag -= main->setting.flag & fss_write_main_flag_ignore_e; // Not supported by basic list.
-          main->setting.flag -= main->setting.flag & fss_write_main_flag_content_multiple_e; // Not supported by basic list.
+          // Remove flags not supported for this standard.
+          main->setting.flag -= main->setting.flag & fss_write_main_flag_ignore_e;
+          main->setting.flag -= main->setting.flag & fss_write_main_flag_content_multiple_e;
 
           main->callback.process_content = &fss_write_basic_list_process_content;
           main->callback.process_help = &fss_write_basic_list_process_help;
@@ -171,8 +176,10 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
           main->setting.standard = fss_write_extended_list_standard_s;
 
+          // Remove flags not supported for this standard.
+          main->setting.flag -= main->setting.flag & fss_write_main_flag_content_multiple_e;
+
           main->setting.flag |= fss_write_main_flag_ignore_e;
-          main->setting.flag -= main->setting.flag & fss_write_main_flag_content_multiple_e; // Not supported by extended list.
 
           main->callback.process_content = &fss_write_extended_list_process_content;
           main->callback.process_help = &fss_write_extended_list_process_help;
@@ -205,8 +212,9 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
           main->setting.standard = fss_write_payload_standard_s;
 
-          main->setting.flag -= main->setting.flag & fss_write_main_flag_ignore_e; // Not supported by payload.
-          main->setting.flag -= main->setting.flag & fss_write_main_flag_content_multiple_e; // Not supported by payload.
+          // Remove flags not supported for this standard.
+          main->setting.flag -= main->setting.flag & fss_write_main_flag_ignore_e;
+          main->setting.flag -= main->setting.flag & fss_write_main_flag_content_multiple_e;
 
           main->callback.process_content = 0;
           main->callback.process_help = &fss_write_payload_process_help;

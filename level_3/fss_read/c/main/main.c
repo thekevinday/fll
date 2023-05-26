@@ -17,6 +17,7 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
   data.program.output.flag |= fss_read_print_flag_out_e;
   data.program.message.flag |= fss_read_print_flag_message_e | fss_read_print_flag_out_e;
   data.program.warning.flag |= fss_read_print_flag_warning_e | fss_read_print_flag_out_e;
+
   data.program.error.custom = (void *) &data;
   data.program.debug.custom = (void *) &data;
   data.program.message.custom = (void *) &data;
@@ -97,12 +98,24 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
     main->setting.standard = fss_read_basic_standard_s;
 
-    main->callback.process_content = &fss_read_basic_process_content;
     main->callback.process_help = &fss_read_main_process_help;
-    main->callback.process_load_depth = 0;
+    main->callback.process_last_line = &fss_read_process_last_line;
+    main->callback.process_load_depth = &fss_read_setting_load_depth;
     main->callback.process_normal = &fss_read_process_normal;
-    main->callback.process_object = &fss_read_basic_process_object;
-    main->callback.process_set = &fss_read_process_set;
+
+    main->callback.process_at = &fss_read_process_normal_at;
+    main->callback.process_columns = &fss_read_process_normal_columns;
+    main->callback.process_line = &fss_read_process_normal_line;
+    main->callback.process_load = 0;
+    main->callback.process_name = &fss_read_process_normal_name;
+    main->callback.process_total = &fss_read_process_normal_total;
+
+    main->callback.print_at = &fss_read_print_at;
+    main->callback.print_content = &fss_read_print_content;
+    main->callback.print_content_ignore = &fss_read_print_content_ignore;
+    main->callback.print_object = &fss_read_print_object;
+    main->callback.print_object_end = &fss_read_print_object_end;
+    main->callback.print_set_end = &fss_read_print_set_end;
 
     if (main->program.parameters.array[fss_read_parameter_as_e].result & f_console_result_value_e && main->program.parameters.array[fss_read_parameter_as_e].values.used) {
 
@@ -120,15 +133,19 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
           main->setting.standard = fss_read_basic_standard_s;
 
-          main->setting.flag -= main->setting.flag & fss_read_main_flag_ignore_e; // Not supported by basic.
-          main->setting.flag -= main->setting.flag & fss_read_main_flag_content_multiple_e; // Not supported by basic.
+          // Remove flags not supported for this standard.
+          main->setting.flag -= main->setting.flag & fss_read_main_flag_content_multiple_e;
+          main->setting.flag -= main->setting.flag & fss_read_main_flag_depth_multiple_e;
+          main->setting.flag -= main->setting.flag & fss_read_main_flag_trim_object_e;
 
-          main->callback.process_content = &fss_read_basic_process_content;
+          main->setting.flag |= fss_read_main_flag_line_single_e;
+          main->setting.flag |= fss_read_main_flag_quote_content_e | fss_read_main_flag_quote_object_e;
+
           main->callback.process_help = &fss_read_basic_process_help;
-          main->callback.process_load_depth = 0;
-          main->callback.process_object = &fss_read_basic_process_object;
-          main->callback.process_normal = &fss_read_process_normal;
-          main->callback.process_set = &fss_read_process_set;
+          main->callback.process_load = &fss_read_basic_process_load;
+          main->callback.print_set_end = &fss_read_print_set_end;
+
+          main->callback.print_object_end = &fss_read_print_object_end;
         }
         else if (f_compare_dynamic(argv[index], fss_read_format_code_short_0001_s) == F_equal_to ||
                  f_compare_dynamic(argv[index], fss_read_format_code_long_0001_s) == F_equal_to ||
@@ -137,15 +154,18 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
           main->setting.standard = fss_read_extended_standard_s;
 
-          main->setting.flag -= main->setting.flag & fss_read_main_flag_ignore_e; // Not supported by extended.
-          main->setting.flag |= fss_read_main_flag_content_multiple_e;
+          // Remove flags not supported for this standard.
+          main->setting.flag -= main->setting.flag & fss_read_main_flag_depth_multiple_e;
+          main->setting.flag -= main->setting.flag & fss_read_main_flag_trim_object_e;
 
-          main->callback.process_content = &fss_read_extended_process_content;
+          main->setting.flag |= fss_read_main_flag_line_single_e | fss_read_main_flag_content_multiple_e;
+          main->setting.flag |= fss_read_main_flag_quote_content_e | fss_read_main_flag_quote_object_e;
+
           main->callback.process_help = &fss_read_extended_process_help;
-          main->callback.process_load_depth = 0;
-          main->callback.process_object = &fss_read_extended_process_object;
-          main->callback.process_normal = &fss_read_process_normal;
-          main->callback.process_set = &fss_read_process_set;
+          main->callback.process_load = &fss_read_extended_process_load;
+          main->callback.print_set_end = &fss_read_print_set_end_no_eol;
+
+          main->callback.print_object_end = &fss_read_print_object_end;
         }
         else if (f_compare_dynamic(argv[index], fss_read_format_code_short_0002_s) == F_equal_to ||
                  f_compare_dynamic(argv[index], fss_read_format_code_long_0002_s) == F_equal_to ||
@@ -154,15 +174,20 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
           main->setting.standard = fss_read_basic_list_standard_s;
 
-          main->setting.flag -= main->setting.flag & fss_read_main_flag_ignore_e; // Not supported by basic list.
-          main->setting.flag -= main->setting.flag & fss_read_main_flag_content_multiple_e; // Not supported by basic list.
+          // Remove flags not supported for this standard.
+          main->setting.flag -= main->setting.flag & fss_read_main_flag_line_single_e;
+          main->setting.flag -= main->setting.flag & fss_read_main_flag_content_multiple_e;
+          main->setting.flag -= main->setting.flag & fss_read_main_flag_depth_multiple_e;
+          main->setting.flag -= main->setting.flag & fss_read_main_flag_quote_content_e;
+          main->setting.flag -= main->setting.flag & fss_read_main_flag_quote_object_e;
 
-          main->callback.process_content = &fss_read_basic_list_process_content;
+          main->setting.flag |= fss_read_main_flag_trim_object_e;
+
           main->callback.process_help = &fss_read_basic_list_process_help;
-          main->callback.process_load_depth = 0;
-          main->callback.process_object = &fss_read_basic_list_process_object;
-          main->callback.process_normal = &fss_read_process_normal;
-          main->callback.process_set = &fss_read_process_set;
+          main->callback.process_load = &fss_read_basic_list_process_load;
+          main->callback.print_set_end = &fss_read_print_set_end;
+
+          main->callback.print_object_end = &fss_read_basic_list_print_object_end;
         }
         else if (f_compare_dynamic(argv[index], fss_read_format_code_short_0003_s) == F_equal_to ||
                  f_compare_dynamic(argv[index], fss_read_format_code_long_0003_s) == F_equal_to ||
@@ -171,15 +196,20 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
           main->setting.standard = fss_read_extended_list_standard_s;
 
-          main->setting.flag |= fss_read_main_flag_ignore_e;
-          main->setting.flag -= main->setting.flag & fss_read_main_flag_content_multiple_e; // Not supported by extended list.
+          // Remove flags not supported for this standard.
+          main->setting.flag -= main->setting.flag & fss_read_main_flag_line_single_e;
+          main->setting.flag -= main->setting.flag & fss_read_main_flag_content_multiple_e;
+          main->setting.flag -= main->setting.flag & fss_read_main_flag_depth_multiple_e;
+          main->setting.flag -= main->setting.flag & fss_read_main_flag_quote_content_e;
+          main->setting.flag -= main->setting.flag & fss_read_main_flag_quote_object_e;
 
-          main->callback.process_content = &fss_read_extended_list_process_content;
+          main->setting.flag |= fss_read_main_flag_trim_object_e;
+
           main->callback.process_help = &fss_read_extended_list_process_help;
-          main->callback.process_load_depth = 0;
-          main->callback.process_object = &fss_read_extended_list_process_object;
-          main->callback.process_normal = &fss_read_process_normal;
-          main->callback.process_set = &fss_read_process_set;
+          main->callback.process_load = &fss_read_extended_list_process_load;
+          main->callback.print_set_end = &fss_read_print_set_end;
+
+          main->callback.print_object_end = &fss_read_print_object_end;
         }
         else if (f_compare_dynamic(argv[index], fss_read_format_code_short_0008_s) == F_equal_to ||
                  f_compare_dynamic(argv[index], fss_read_format_code_long_0008_s) == F_equal_to ||
@@ -188,15 +218,19 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
           main->setting.standard = fss_read_embedded_list_standard_s;
 
-          main->setting.flag |= fss_read_main_flag_ignore_e;
-          main->setting.flag |= fss_read_main_flag_content_multiple_e;
+          // Remove flags not supported for this standard.
+          main->setting.flag -= main->setting.flag & fss_read_main_flag_line_single_e;
+          main->setting.flag -= main->setting.flag & fss_read_main_flag_quote_content_e;
+          main->setting.flag -= main->setting.flag & fss_read_main_flag_quote_object_e;
 
-          main->callback.process_content = &fss_read_embedded_list_process_content;
+          main->setting.flag |= fss_read_main_flag_trim_object_e;
+          main->setting.flag |= fss_read_main_flag_content_multiple_e | fss_read_main_flag_depth_multiple_e;
+
           main->callback.process_help = &fss_read_embedded_list_process_help;
-          main->callback.process_load_depth = 0;
-          main->callback.process_object = &fss_read_embedded_list_process_object;
-          main->callback.process_normal = &fss_read_process_normal;
-          main->callback.process_set = &fss_read_process_set;
+          main->callback.process_load = &fss_read_embedded_list_process_load;
+          main->callback.print_set_end = &fss_read_print_set_end;
+
+          main->callback.print_object_end = &fss_read_print_object_end;
         }
         else if (f_compare_dynamic(argv[index], fss_read_format_code_short_000e_s) == F_equal_to ||
                  f_compare_dynamic(argv[index], fss_read_format_code_long_000e_s) == F_equal_to ||
@@ -205,15 +239,20 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
           main->setting.standard = fss_read_payload_standard_s;
 
-          main->setting.flag -= main->setting.flag & fss_read_main_flag_ignore_e; // Not supported by payload.
-          main->setting.flag -= main->setting.flag & fss_read_main_flag_content_multiple_e; // Not supported by payload.
+          // Remove flags not supported for this standard.
+          main->setting.flag -= main->setting.flag & fss_read_main_flag_line_single_e;
+          main->setting.flag -= main->setting.flag & fss_read_main_flag_content_multiple_e;
+          main->setting.flag -= main->setting.flag & fss_read_main_flag_depth_multiple_e;
+          main->setting.flag -= main->setting.flag & fss_read_main_flag_quote_content_e;
+          main->setting.flag -= main->setting.flag & fss_read_main_flag_quote_object_e;
 
-          main->callback.process_content = 0; // Not used by payload.
+          main->setting.flag |= fss_read_main_flag_trim_object_e;
+
           main->callback.process_help = &fss_read_payload_process_help;
-          main->callback.process_load_depth = 0;
-          main->callback.process_normal = &fss_read_process_normal;
-          main->callback.process_object = 0; // Not used by payload.
-          main->callback.process_set = &fss_read_payload_process_set;
+          main->callback.process_load = &fss_read_payload_process_load;
+          main->callback.print_set_end = &fss_read_print_set_end;
+
+          main->callback.print_object_end = &fss_read_print_object_end;
         }
         else {
           if (main->setting.flag & fss_read_main_flag_help_e) {

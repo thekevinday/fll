@@ -93,6 +93,7 @@ extern "C" {
  *   The program and settings data.
  *
  *   Must not be NULL.
+ *   Must be of type fss_read_main_t.
  *
  *   This alters main.setting.state.status:
  *     F_none on success.
@@ -107,7 +108,7 @@ extern "C" {
  * @see fss_read_file_identify()
  */
 #ifndef _di_fss_read_basic_process_load_
-  extern void fss_read_basic_process_load(fss_read_main_t * const main);
+  extern void fss_read_basic_process_load(void * const main);
 #endif // _di_fss_read_basic_process_load_
 
 #ifdef __cplusplus

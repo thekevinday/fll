@@ -84,6 +84,33 @@ extern "C" {
   extern void fss_read_basic_list_process_help(void * const main);
 #endif // _di_fss_read_basic_list_process_help_
 
+/**
+ * Process the buffer, loading the FSS data.
+ *
+ * This will print an error message on error.
+ *
+ * @param main
+ *   The program and settings data.
+ *
+ *   Must not be NULL.
+ *   Must be of type fss_read_main_t.
+ *
+ *   This alters main.setting.state.status:
+ *     F_none on success.
+ *
+ *     F_data_not_stop (with warning bit) on no valid FSS data found and reached stopping point.
+ *     F_data_not_eos (with warning bit) on no valid FSS data found and reached end of string.
+ *
+ *     Errors (with error bit) from: fll_fss_basic_list_read()
+ *
+ * @see fll_fss_basic_list_read()
+ *
+ * @see fss_read_file_identify()
+ */
+#ifndef _di_fss_read_basic_list_process_load_
+  extern void fss_read_basic_list_process_load(void * const main);
+#endif // _di_fss_read_basic_list_process_load_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

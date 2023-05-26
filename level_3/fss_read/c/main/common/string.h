@@ -136,6 +136,7 @@ extern "C" {
  * The main program parameters.
  */
 #ifndef _di_fss_read_parameter_s_
+  #define FSS_READ_short_as_s       "A"
   #define FSS_READ_short_at_s       "a"
   #define FSS_READ_short_content_s  "c"
   #define FSS_READ_short_columns_s  "C"
@@ -151,6 +152,7 @@ extern "C" {
   #define FSS_READ_short_total_s    "t"
   #define FSS_READ_short_trim_s     "T"
 
+  #define FSS_READ_long_as_s       "as"
   #define FSS_READ_long_at_s       "at"
   #define FSS_READ_long_content_s  "content"
   #define FSS_READ_long_columns_s  "columns"
@@ -166,6 +168,7 @@ extern "C" {
   #define FSS_READ_long_total_s    "total"
   #define FSS_READ_long_trim_s     "trim"
 
+  #define FSS_READ_short_as_s_length       1
   #define FSS_READ_short_at_s_length       1
   #define FSS_READ_short_content_s_length  1
   #define FSS_READ_short_columns_s_length  1
@@ -181,6 +184,7 @@ extern "C" {
   #define FSS_READ_short_total_s_length    1
   #define FSS_READ_short_trim_s_length     1
 
+  #define FSS_READ_long_as_s_length       2
   #define FSS_READ_long_at_s_length       2
   #define FSS_READ_long_content_s_length  7
   #define FSS_READ_long_columns_s_length  7
@@ -196,6 +200,7 @@ extern "C" {
   #define FSS_READ_long_total_s_length    5
   #define FSS_READ_long_trim_s_length     4
 
+  extern const f_string_static_t fss_read_short_as_s;
   extern const f_string_static_t fss_read_short_at_s;
   extern const f_string_static_t fss_read_short_content_s;
   extern const f_string_static_t fss_read_short_columns_s;
@@ -211,6 +216,7 @@ extern "C" {
   extern const f_string_static_t fss_read_short_total_s;
   extern const f_string_static_t fss_read_short_trim_s;
 
+  extern const f_string_static_t fss_read_long_as_s;
   extern const f_string_static_t fss_read_long_at_s;
   extern const f_string_static_t fss_read_long_content_s;
   extern const f_string_static_t fss_read_long_columns_s;

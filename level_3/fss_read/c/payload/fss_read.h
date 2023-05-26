@@ -86,7 +86,9 @@ extern "C" {
 #endif // _di_fss_read_payload_process_help_
 
 /**
- * Process the pipe, reading from the pipe and writing to the output.
+ * Process the buffer, loading the FSS data.
+ *
+ * This will print an error message on error.
  *
  * @param main
  *   The program and settings data.
@@ -96,19 +98,19 @@ extern "C" {
  *
  *   This alters main.setting.state.status:
  *     F_none on success.
- *     F_data_not on success but pipe contained no relevant data.
- *     F_payload on success and the payload has been printed.
- *     F_interrupt on (exit) signal received.
  *
- *     F_parameter (with error bit) if main is NULL or setting is NULL.
+ *     F_data_not_stop (with warning bit) on no valid FSS data found and reached stopping point.
+ *     F_data_not_eos (with warning bit) on no valid FSS data found and reached end of string.
  *
- *     Errors (with error bit) from: fss_read_signal_check().
+ *     Errors (with error bit) from: fll_fss_payload_read()
  *
- * @see fss_read_signal_check()
+ * @see fll_fss_payload_read()
+ *
+ * @see fss_read_file_identify()
  */
-#ifndef _di_fss_read_payload_process_pipe_
-  extern void fss_read_payload_process_pipe(void * const main);
-#endif // _di_fss_read_payload_process_pipe_
+#ifndef _di_fss_read_payload_process_load_
+  extern void fss_read_payload_process_load(void * const main);
+#endif // _di_fss_read_payload_process_load_
 
 /**
  * Process a given object and content, printing the FSS if valid or an error if invalid.
@@ -143,11 +145,8 @@ extern "C" {
  * @param setting
  *   The main program settings.
  *
- *   This alters setting.process_help, setting.process_normal, and setting.process_pipe.
- *
  *   This alters setting.state.status:
  *     F_none on success.
- *     F_interrupt on (exit) signal received.
  *
  *     F_parameter (with error bit) if main is NULL or setting is NULL.
  *     F_parameter (with error bit) on parameter error.
@@ -157,6 +156,7 @@ extern "C" {
  *     F_data_not on success but nothing was provided to operate with.
  *
  * @see fss_read_setting_load()
+ * @see fss_read_signal_check()
  */
 #ifndef _di_fss_read_payload_setting_load_
   extern void fss_read_payload_setting_load(const f_console_arguments_t arguments, fss_read_main_t * const main);

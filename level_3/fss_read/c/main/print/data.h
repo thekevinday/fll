@@ -47,8 +47,7 @@ extern "C" {
  * @see fll_print_trim_dynamic_partial()
  * @see fll_print_trim_except_dynamic_partial()
  *
- * @see fss_read_print_quote()
- * @see fss_read_signal_check()
+ * @see main.callback.print_content()
  * @see main.callback.print_object()
  * @see main.callback.print_object_end()
  * @see main.callback.print_set_end()
@@ -254,6 +253,32 @@ extern "C" {
 #ifndef _di_fss_read_print_set_end_
   extern f_status_t fss_read_print_set_end(fl_print_t * const print);
 #endif // _di_fss_read_print_set_end_
+
+/**
+ * Print the end of an Object/Content set.
+ *
+ * This is a variation of fss_read_print_set_end() that does not print the EOL.
+ *
+ * This locks, uses, and unlocks the file stream.
+ *
+ * @param print
+ *   The output structure to print to.
+ *
+ *   The print.custom is expected to be of type fss_read_main_t.
+ *
+ *   This does not alter print.custom.setting.state.status.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ *
+ *   F_output_not (with error bit) if a parameter is NULL.
+ *
+ * @see fll_print_dynamic_raw()
+ */
+#ifndef _di_fss_read_print_set_end_no_eol_
+  extern f_status_t fss_read_print_set_end_no_eol(fl_print_t * const print);
+#endif // _di_fss_read_print_set_end_no_eol_
 
 #ifdef __cplusplus
 } // extern "C"

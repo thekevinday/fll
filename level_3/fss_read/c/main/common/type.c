@@ -81,6 +81,8 @@ extern "C" {
     f_string_ranges_resize(0, &setting->comments);
     f_string_rangess_resize(0, &setting->contents);
 
+    f_fss_nest_resize(0, &setting->nest);
+
     f_array_lengths_resize(0, &setting->delimits_object);
     f_array_lengths_resize(0, &setting->delimits_content);
 

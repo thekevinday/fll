@@ -44,6 +44,7 @@ extern "C" {
  *   - select:           A specific Content at a given position is to be selected (Think of this as select a column for some Content).
  *   - total:            The total lines found and selected is printed instead of the Content.
  *   - trim:             Empty space before and after Objects and Content will not be printed (They will be trimmed).
+ *   - trim_object:      Empty space before and after Objects (but not Content) will not be printed (They will be trimmed).
  *   - version:          Print version.
  */
 #ifndef _di_fss_read_main_flag_e_
@@ -72,11 +73,10 @@ extern "C" {
     fss_read_main_flag_select_e           = 0x100000,
     fss_read_main_flag_total_e            = 0x200000,
     fss_read_main_flag_trim_e             = 0x400000,
-    fss_read_main_flag_version_e          = 0x800000,
+    fss_read_main_flag_trim_object_e      = 0x800000,
+    fss_read_main_flag_version_e          = 0x1000000,
   }; // enum
 #endif // _di_fss_read_main_flag_e_
-
-//@todo figure out if fss_read_main_flag_ignore_e is needed
 
 /**
  * The main program parameters.
@@ -97,6 +97,7 @@ extern "C" {
     fss_read_parameter_line_first_no_e,
     fss_read_parameter_line_last_no_e,
 
+    fss_read_parameter_as_e,
     fss_read_parameter_at_e,
     fss_read_parameter_content_e,
     fss_read_parameter_columns_e,
@@ -117,23 +118,24 @@ extern "C" {
     { \
       macro_fll_program_console_parameter_standard_initialize, \
       \
-      macro_f_console_parameter_t_initialize_3(fss_read_short_at_s, fss_read_long_at_s, 0, 1, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize_3(fss_read_short_content_s, fss_read_long_content_s, 0, 0, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize_3(fss_read_short_columns_s, fss_read_long_columns_s, 0, 0, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize_3(fss_read_short_delimit_s, fss_read_long_delimit_s, 0, 1, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize_3(fss_read_short_depth_s, fss_read_long_depth_s, 0, 1, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize_3(fss_read_short_empty_s, fss_read_long_empty_s, 0, 0, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize_3(fss_read_short_line_s, fss_read_long_line_s, 0, 1, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize_3(fss_read_short_name_s, fss_read_long_name_s, 0, 1, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize_3(fss_read_short_object_s, fss_read_long_object_s, 0, 0, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize_3(fss_read_short_pipe_s, fss_read_long_pipe_s, 0, 0, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize_3(fss_read_short_original_s, fss_read_long_original_s, 0, 0, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize_3(fss_read_short_select_s, fss_read_long_select_s, 0, 1, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize_3(fss_read_short_total_s, fss_read_long_total_s, 0, 0, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize_3(fss_read_short_trim_s, fss_read_long_trim_s, 0, 0, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(fss_read_short_as_s,       fss_read_long_as_s,       1, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(fss_read_short_at_s,       fss_read_long_at_s,       1, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(fss_read_short_content_s,  fss_read_long_content_s,  0, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(fss_read_short_columns_s,  fss_read_long_columns_s,  0, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(fss_read_short_delimit_s,  fss_read_long_delimit_s,  1, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(fss_read_short_depth_s,    fss_read_long_depth_s,    1, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(fss_read_short_empty_s,    fss_read_long_empty_s,    0, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(fss_read_short_line_s,     fss_read_long_line_s,     1, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(fss_read_short_name_s,     fss_read_long_name_s,     1, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(fss_read_short_object_s,   fss_read_long_object_s,   0, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(fss_read_short_pipe_s,     fss_read_long_pipe_s,     0, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(fss_read_short_original_s, fss_read_long_original_s, 0, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(fss_read_short_select_s,   fss_read_long_select_s,   1, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(fss_read_short_total_s,    fss_read_long_total_s,    0, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(fss_read_short_trim_s,     fss_read_long_trim_s,     0, f_console_flag_normal_e), \
     }
 
-  #define fss_read_total_parameters_d 27
+  #define fss_read_total_parameters_d 28
 #endif // _di_fss_read_parameter_e_
 
 /**
