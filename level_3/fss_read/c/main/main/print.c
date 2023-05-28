@@ -42,7 +42,7 @@ extern "C" {
 
     fss_read_print_message_help(print);
 
-    fll_program_print_help_option(print, fss_read_short_as_s, fss_read_long_as_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "Designate the supported format to read as.");
+    fll_program_print_help_option(print, fss_read_short_as_s, fss_read_long_as_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "      Designate the supported format to read as.");
 
     f_print_dynamic_raw(f_string_eol_s, print->to);
 

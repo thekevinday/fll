@@ -103,7 +103,7 @@ extern "C" {
  * The main program parameters.
  */
 #ifndef _di_fss_write_parameter_s_
-  #define FSS_WRITE_short_as_s           "a"
+  #define FSS_WRITE_short_as_s           "A"
   #define FSS_WRITE_short_backtick_s     "b"
   #define FSS_WRITE_short_content_s      "c"
   #define FSS_WRITE_short_content_end_s  "E"
