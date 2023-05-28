@@ -60,6 +60,12 @@ extern "C" {
           }
 
           // Returning without a "payload" is an error.
+          if (state->status == F_data_not) {
+            state->status = F_status_set_error(F_data_not);
+
+            return;
+          }
+
           if (found_data) {
             state->status = F_status_set_error((range->start >= buffer.used) ? F_none_eos : F_none_stop);
           }
@@ -155,18 +161,13 @@ extern "C" {
         return;
       }
 
-      if (state->status == F_data_not_eos || state->status == F_data_not_stop) {
+      if (state->status == F_data_not || state->status == F_data_not_eos || state->status == F_data_not_stop) {
 
         // If at least some valid object was found, then return F_none equivalents.
         if (objects->used > initial_used) {
 
           // Returning without a "payload" is an error.
-          if (state->status == F_data_not_eos) {
-            state->status = F_status_set_error(F_none_eos);
-          }
-          else if (state->status == F_data_not_stop) {
-            state->status = F_status_set_error(F_none_stop);
-          }
+          state->status = (state->status == F_data_not_eos) ? F_status_set_error(F_none_eos) : F_status_set_error(F_none_stop);
         }
         else {
           state->status = F_status_set_error(state->status);
@@ -227,7 +228,7 @@ extern "C" {
 
     fl_fss_basic_list_object_write(object, trim ? f_fss_complete_full_trim_e : f_fss_complete_full_e, &range, destination, state);
 
-    if (F_status_is_error(state->status) || state->status == F_data_not_stop || state->status == F_data_not_eos) {
+    if (F_status_is_error(state->status) || state->status == F_data_not || state->status == F_data_not_stop || state->status == F_data_not_eos) {
       return;
     }
 

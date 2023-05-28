@@ -19,6 +19,7 @@ extern "C" {
 
     f_fss_skip_past_space(buffer, range, state);
     if (F_status_is_error(state->status)) return;
+    if (state->status == F_data_not) return;
 
     if (state->status == F_none_eol) {
       ++range->start;
@@ -85,6 +86,7 @@ extern "C" {
 
     f_fss_skip_past_delimit(content, range, state);
     if (F_status_is_error(state->status)) return;
+    if (state->status == F_data_not) return;
 
     if (range->start > range->stop || range->start >= content.used) {
 

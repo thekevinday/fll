@@ -22,6 +22,7 @@ extern "C" {
 
     f_fss_skip_past_delimit(buffer, range, state);
     if (F_status_is_error(state->status)) return;
+    if (state->status == F_data_not) return;
 
     if (range->start >= buffer.used || range->start > range->stop) {
       delimits->used = delimits_used;
@@ -303,6 +304,7 @@ extern "C" {
 
     f_fss_skip_past_delimit(content, range, state);
     if (F_status_is_error(state->status)) return;
+    if (state->status == F_data_not) return;
 
     if (state->status == F_none_stop || state->status == F_none_eos) {
       if (complete == f_fss_complete_full_e || complete == f_fss_complete_full_trim_e || complete == f_fss_complete_end_e) {
@@ -553,6 +555,7 @@ extern "C" {
 
     f_fss_skip_past_space(buffer, range, state);
     if (F_status_is_error(state->status)) return;
+    if (state->status == F_data_not) return;
 
     if (state->status == F_none_eol) {
 
@@ -856,6 +859,7 @@ extern "C" {
 
     f_fss_skip_past_delimit(object, range, state);
     if (F_status_is_error(state->status)) return;
+    if (state->status == F_data_not) return;
 
     if (state->status == F_none_stop || state->status == F_none_eos) {
       if (complete == f_fss_complete_partial_e || complete == f_fss_complete_partial_trim_e || complete == f_fss_complete_full_e || complete == f_fss_complete_full_trim_e) {

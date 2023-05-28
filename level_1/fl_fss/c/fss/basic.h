@@ -55,23 +55,24 @@ extern "C" {
  *   Error bit designates an error but must be passed along with F_interrupt.
  *   All other statuses are ignored.
  *
- * @return
- *   F_fss_found_content on success and content was found (start location is at end of content).
- *   F_fss_found_content_not on success and no content was found (start location is after character designating this is not a content).
- *   F_none_eos on success after reaching the end of the buffer (a valid object is not yet confirmed).
- *   F_none_stop on success after reaching stopping point (a valid object is not yet confirmed).
- *   F_data_not_eos no objects found after reaching the end of the buffer (essentially only comments are found).
- *   F_data_not_stop no data found after reaching stopping point (essentially only comments are found).
- *   F_end_not_group_eos if EOS was reached before the a group termination was reached.
- *   F_end_not_group_stop if stop point was reached before the a group termination was reached.
+ *   This alters state.status:
+ *     F_fss_found_content on success and content was found (start location is at end of content).
+ *     F_fss_found_content_not on success and no content was found (start location is after character designating this is not a content).
+ *     F_none_eos on success after reaching the end of the buffer (a valid object is not yet confirmed).
+ *     F_none_stop on success after reaching stopping point (a valid object is not yet confirmed).
+ *     F_data_not if buffer is empty (buffer.used is 0).
+ *     F_data_not_eos no objects found after reaching the end of the buffer (essentially only comments are found).
+ *     F_data_not_stop no data found after reaching stopping point (essentially only comments are found).
+ *     F_end_not_group_eos if EOS was reached before the a group termination was reached.
+ *     F_end_not_group_stop if stop point was reached before the a group termination was reached.
  *
- *   F_interrupt (with error bit) if stopping due to an interrupt.
- *   F_parameter (with error bit) if a parameter is invalid.
+ *     F_interrupt (with error bit) if stopping due to an interrupt.
+ *     F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_fss_skip_past_delimit().
- *   Errors (with error bit) from: f_fss_skip_past_space().
- *   Errors (with error bit) from: f_string_ranges_increase().
- *   Errors (with error bit) from: f_utf_buffer_increment().
+ *     Errors (with error bit) from: f_fss_skip_past_delimit().
+ *     Errors (with error bit) from: f_fss_skip_past_space().
+ *     Errors (with error bit) from: f_string_ranges_increase().
+ *     Errors (with error bit) from: f_utf_buffer_increment().
  *
  * @see f_fss_skip_past_delimit()
  * @see f_fss_skip_past_space()
@@ -111,20 +112,21 @@ extern "C" {
  *   When state.interrupt() returns, only F_interrupt and F_interrupt_not are processed.
  *   Error bit designates an error but must be passed along with F_interrupt.
  *
- * @return
- *   F_none on success.
- *   F_none_eos on success after reaching the end of the buffer.
- *   F_none_stop on success after reaching the range stop.
- *   F_data_not_stop no data to write due start location being greater than stop location.
- *   F_data_not_eos no data to write due start location being greater than or equal to buffer size.
+ *   This alters state.status:
+ *     F_none on success.
+ *     F_none_eos on success after reaching the end of the buffer.
+ *     F_none_stop on success after reaching the range stop.
+ *     F_data_not if content is empty (content.used is 0).
+ *     F_data_not_eos no data to write due start location being greater than or equal to buffer size.
+ *     F_data_not_stop no data to write due start location being greater than stop location.
  *
- *   F_interrupt (with error bit) if stopping due to an interrupt.
- *   F_none_eol (with error bit) after reaching an EOL, which is not supported by the standard.
- *   F_parameter (with error bit) if a parameter is invalid.
+ *     F_interrupt (with error bit) if stopping due to an interrupt.
+ *     F_none_eol (with error bit) after reaching an EOL, which is not supported by the standard.
+ *     F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_fss_skip_past_delimit().
- *   Errors (with error bit) from: f_string_dynamic_increase().
- *   Errors (with error bit) from: f_string_dynamic_increase_by().
+ *     Errors (with error bit) from: f_fss_skip_past_delimit().
+ *     Errors (with error bit) from: f_string_dynamic_increase().
+ *     Errors (with error bit) from: f_string_dynamic_increase_by().
  *
  * @see f_fss_skip_past_delimit()
  * @see f_string_dynamic_increase()
@@ -163,29 +165,30 @@ extern "C" {
  *   Error bit designates an error but must be passed along with F_interrupt.
  *   All other statuses are ignored.
  *
- * @return
- *   F_fss_found_object on success and object was found (start location is at end of object).
- *   F_fss_found_object_content_not on success but object ended at the line so there can be no content.
- *   F_fss_found_object_not on success and no object was found (start location is after character designating this is not an object).
- *   F_none_eos on success after reaching the end of the buffer (a valid object is not yet confirmed).
- *   F_none_stop on success after reaching stopping point (a valid object is not yet confirmed).
- *   F_data_not_eos no objects found after reaching the end of the buffer (essentially only comments are found).
- *   F_data_not_stop no data found after reaching stopping point (essentially only comments are found).
- *   F_end_not_group_eos if EOS was reached before the a group termination was reached.
- *   F_end_not_group_stop if stop point was reached before the a group termination was reached.
+ *   This alters state.status:
+ *     F_fss_found_object on success and object was found (start location is at end of object).
+ *     F_fss_found_object_content_not on success but object ended at the line so there can be no content.
+ *     F_fss_found_object_not on success and no object was found (start location is after character designating this is not an object).
+ *     F_none_eos on success after reaching the end of the buffer (a valid object is not yet confirmed).
+ *     F_none_stop on success after reaching stopping point (a valid object is not yet confirmed).
+ *     F_data_not if buffer is empty (buffer.used is 0).
+ *     F_data_not_eos no objects found after reaching the end of the buffer (essentially only comments are found).
+ *     F_data_not_stop no data found after reaching stopping point (essentially only comments are found).
+ *     F_end_not_group_eos if EOS was reached before the a group termination was reached.
+ *     F_end_not_group_stop if stop point was reached before the a group termination was reached.
  *
- *   F_interrupt (with error bit) if stopping due to an interrupt.
- *   F_parameter (with error bit) if a parameter is invalid.
+ *     F_interrupt (with error bit) if stopping due to an interrupt.
+ *     F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_array_lengths_increase().
- *   Errors (with error bit) from: f_array_lengths_increase_by().
- *   Errors (with error bit) from: f_fss_is_graph().
- *   Errors (with error bit) from: f_fss_is_space().
- *   Errors (with error bit) from: f_fss_is_zero_width().
- *   Errors (with error bit) from: f_fss_seek_to_eol().
- *   Errors (with error bit) from: f_fss_skip_past_delimit().
- *   Errors (with error bit) from: f_fss_skip_past_space().
- *   Errors (with error bit) from: f_utf_buffer_increment().
+ *     Errors (with error bit) from: f_array_lengths_increase().
+ *     Errors (with error bit) from: f_array_lengths_increase_by().
+ *     Errors (with error bit) from: f_fss_is_graph().
+ *     Errors (with error bit) from: f_fss_is_space().
+ *     Errors (with error bit) from: f_fss_is_zero_width().
+ *     Errors (with error bit) from: f_fss_seek_to_eol().
+ *     Errors (with error bit) from: f_fss_skip_past_delimit().
+ *     Errors (with error bit) from: f_fss_skip_past_space().
+ *     Errors (with error bit) from: f_utf_buffer_increment().
  *
  * @see f_array_lengths_increase()
  * @see f_array_lengths_increase_by()
@@ -235,22 +238,23 @@ extern "C" {
  *   Error bit designates an error but must be passed along with F_interrupt.
  *   All other statuses are ignored.
  *
- * @return
- *   F_none on success.
- *   F_none_eos on success after reaching the end of the buffer.
- *   F_none_stop on success after reaching the range stop.
- *   F_data_not_stop no data to write due start location being greater than stop location.
- *   F_data_not_eos no data to write due start location being greater than or equal to buffer size.
+ *   This alters state.status:
+ *     F_none on success.
+ *     F_none_eos on success after reaching the end of the buffer.
+ *     F_none_stop on success after reaching the range stop.
+ *     F_data_not if object is empty (object.used is 0).
+ *     F_data_not_eos no data to write due start location being greater than or equal to buffer size.
+ *     F_data_not_stop no data to write due start location being greater than stop location.
  *
- *   F_interrupt (with error bit) if stopping due to an interrupt.
- *   F_none_eol (with error bit) after reaching an EOL, which is not supported by the standard.
- *   F_parameter (with error bit) if a parameter is invalid.
+ *     F_interrupt (with error bit) if stopping due to an interrupt.
+ *     F_none_eol (with error bit) after reaching an EOL, which is not supported by the standard.
+ *     F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_fss_is_space().
- *   Errors (with error bit) from: f_fss_skip_past_delimit().
- *   Errors (with error bit) from: f_fss_skip_past_space().
- *   Errors (with error bit) from: f_string_dynamic_increase().
- *   Errors (with error bit) from: f_string_dynamic_increase_by().
+ *     Errors (with error bit) from: f_fss_is_space().
+ *     Errors (with error bit) from: f_fss_skip_past_delimit().
+ *     Errors (with error bit) from: f_fss_skip_past_space().
+ *     Errors (with error bit) from: f_string_dynamic_increase().
+ *     Errors (with error bit) from: f_string_dynamic_increase_by().
  *
  * @see f_fss_is_space()
  * @see f_fss_skip_past_delimit()

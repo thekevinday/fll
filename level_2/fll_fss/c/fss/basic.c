@@ -66,6 +66,8 @@ extern "C" {
             return;
           }
 
+          if (state->status == F_data_not) return;
+
           if (found_data) {
             state->status = (range->start >= buffer.used) ? F_none_eos : F_none_stop;
 
@@ -114,16 +116,11 @@ extern "C" {
         return;
       }
 
-      if (state->status == F_data_not_eos || state->status == F_data_not_stop) {
+      if (state->status == F_data_not || state->status == F_data_not_eos || state->status == F_data_not_stop) {
 
         // If at least some valid object was found, then return F_none equivelents.
         if (objects->used > initial_used) {
-          if (state->status == F_data_not_eos) {
-            state->status = F_none_eos;
-          }
-          else if (state->status == F_data_not_stop) {
-            state->status = F_none_stop;
-          }
+          state->status = (state->status == F_data_not_eos) ? F_none_eos : F_none_stop;
         }
 
         return;
@@ -187,7 +184,7 @@ extern "C" {
 
     fl_fss_basic_object_write(object, quote, f_fss_complete_full_e, &range, destination, state);
 
-    if (F_status_is_error(state->status) || state->status == F_data_not_stop || state->status == F_data_not_eos) {
+    if (F_status_is_error(state->status) || state->status == F_data_not || state->status == F_data_not_stop || state->status == F_data_not_eos) {
       return;
     }
 

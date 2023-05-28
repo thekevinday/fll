@@ -19,6 +19,7 @@ extern "C" {
 
     f_fss_skip_past_delimit(buffer, range, state);
     if (F_status_is_error(state->status)) return;
+    if (state->status == F_data_not) return;
     if (state->status == F_none_eos || state->status == F_none_stop) return;
 
     state->status = f_fss_nest_increase(state->step_small, found);
@@ -805,6 +806,7 @@ extern "C" {
 
     f_fss_skip_past_delimit(content, range, state);
     if (F_status_is_error(state->status)) return;
+    if (state->status == F_data_not) return;
 
     if (state->status == F_none_eos) {
       state->status = F_data_not_eos;
@@ -1100,6 +1102,7 @@ extern "C" {
 
     f_fss_skip_past_space(buffer, range, state);
     if (F_status_is_error(state->status)) return;
+    if (state->status == F_data_not) return;
 
     if (state->status == F_none_eol) {
 
@@ -1439,6 +1442,7 @@ extern "C" {
 
     f_fss_skip_past_delimit(object, range, state);
     if (F_status_is_error(state->status)) return;
+    if (state->status == F_data_not) return;
 
     if (state->status == F_none_eos) {
       state->status = F_data_not_eos;
