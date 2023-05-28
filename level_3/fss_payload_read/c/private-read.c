@@ -687,6 +687,7 @@ extern "C" {
 
       f_string_range_t range = f_string_range_t_initialize;
       f_array_length_t i = 0;
+      f_array_length_t j = 0;
 
       range.start = data->contents.array[at].array[0].start;
       range.stop = data->contents.array[at].array[0].stop;
@@ -706,6 +707,16 @@ extern "C" {
           }
 
           main->signal_check = 0;
+        }
+
+        if (j < data->comments.used) {
+          while (data->comments.array[j].stop < i) ++j;
+
+          if (i >= data->comments.array[j].start && i <= data->comments.array[j].stop) {
+            i = data->comments.array[j++].stop;
+
+            continue;
+          }
         }
 
         if (data->buffer.string[i] == f_string_eol_s.string[0]) {
@@ -1051,6 +1062,7 @@ extern "C" {
     f_array_length_t total = 0;
     f_string_range_t range = f_string_range_t_initialize;
     f_array_length_t i = 0;
+    f_array_length_t j = 0;
 
     for (f_array_length_t at = 0; at < data->contents.used; ++at) {
 
@@ -1084,6 +1096,16 @@ extern "C" {
         }
 
         for (i = range.start; i <= range.stop; ++i) {
+
+          if (j < data->comments.used) {
+            while (data->comments.array[j].stop < i) ++j;
+
+            if (i >= data->comments.array[j].start && i <= data->comments.array[j].stop) {
+              i = data->comments.array[j++].stop;
+
+              continue;
+            }
+          }
 
           if (data->buffer.string[i] == f_string_eol_s.string[0]) {
             range.start = i + 1;
