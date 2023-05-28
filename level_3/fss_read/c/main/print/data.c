@@ -28,7 +28,7 @@ extern "C" {
 
       if ((main->setting.flag & fss_read_main_flag_content_e) && main->setting.contents.array[at].used) {
         if (main->callback.print_content) {
-          main->callback.print_content(&main->program.output, main->setting.contents.array[at].array[0], main->setting.quotes_content.array[at].array[0], delimits_content);
+          main->callback.print_content(&main->program.output, main->setting.contents.array[at].array[0], main->setting.quotes_content.array[at].used ? main->setting.quotes_content.array[at].array[0] : 0, delimits_content);
         }
       }
 
@@ -164,14 +164,16 @@ extern "C" {
 
     if (!print) return F_status_set_error(F_output_not);
 
-    fll_print_dynamic_raw(
-      type == f_fss_quote_type_single_e
-        ? f_fss_quote_single_s
-        : type == f_fss_quote_type_backtick_e
-          ? f_fss_quote_backtick_s
-          : f_fss_quote_double_s,
-      print->to
-    );
+    if (type) {
+      fll_print_dynamic_raw(
+        type == f_fss_quote_type_single_e
+          ? f_fss_quote_single_s
+          : type == f_fss_quote_type_backtick_e
+            ? f_fss_quote_backtick_s
+            : f_fss_quote_double_s,
+        print->to
+      );
+    }
 
     return F_none;
   }

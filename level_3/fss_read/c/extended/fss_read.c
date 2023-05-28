@@ -63,6 +63,14 @@ extern "C" {
       }
     }
 
+    fss_read_ensure_quotes_length(main);
+
+    if (F_status_is_error(main->setting.state.status)) {
+      fss_read_print_error(&main->program.error, macro_fss_read_f(fss_read_ensure_quotes_length));
+
+      return;
+    }
+
     main->setting.state.status = F_none;
   }
 #endif // _di_fss_read_extended_process_load_

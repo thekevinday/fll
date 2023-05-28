@@ -35,7 +35,7 @@ extern "C" {
     f_array_length_t index_name;
 
     f_number_unsigned_t value_at;
-    f_string_dynamic_t  value_name;
+    f_string_dynamic_t value_name;
   } fss_read_depth_t;
 
   #define fss_read_depth_t_initialize \
@@ -119,17 +119,16 @@ extern "C" {
 /**
  * The FSS read callbacks.
  *
- * process_help:       Process help (generally printing help).
- * process_last_line:  Process printing last line if necessary when loading in a file (or pipe).
- * process_load_depth: Process loading of the depth related parameters when loading the settings.
- * process_normal:     Process normally (data from parameters and files).
+ * process_help:      Process help (generally printing help).
+ * process_last_line: Process printing last line if necessary when loading in a file (or pipe).
+ * process_normal:    Process normally (data from parameters and files).
  *
- * process_at:       Process at parameter, usually called by the process_normal() callback.
- * process_columns:  Process columns parameter, usually called by the process_normal() callback.
- * process_line:     Process line parameter, usually called by the process_normal() callback.
- * process_load:     Process loading of FSS data from buffer (not to be confused with loading settings), usually called by the process_normal() callback.
- * process_name:     Process name parameter, usually called by the process_normal() callback.
- * process_total:    Process total parameter, usually called by the process_normal() callback.
+ * process_at:      Process at parameter, usually called by the process_normal() callback.
+ * process_columns: Process columns parameter, usually called by the process_normal() callback.
+ * process_line:    Process line parameter, usually called by the process_normal() callback.
+ * process_load:    Process loading of FSS data from buffer (not to be confused with loading settings), usually called by the process_normal() callback.
+ * process_name:    Process name parameter, usually called by the process_normal() callback.
+ * process_total:   Process total parameter, usually called by the process_normal() callback.
  *
  * print_at:             Print at the given location, usually called by the process_normal() callback.
  * print_object:         Print the Object, usually called by the process_normal() callback.
@@ -142,7 +141,6 @@ extern "C" {
   typedef struct {
     void (*process_help)(void * const main);
     void (*process_last_line)(void * const main);
-    void (*process_load_depth)(const f_console_arguments_t arguments, void * const main, f_console_parameters_t * const parameters);
     void (*process_normal)(void * const main);
 
     void (*process_at)(void * const main, const bool names[], const f_fss_delimits_t delimits_object, const f_fss_delimits_t delimits_content);

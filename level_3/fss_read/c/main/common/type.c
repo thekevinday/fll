@@ -19,13 +19,11 @@ extern "C" {
     if (!depths) return F_status_set_error(F_parameter);
     if (depths->used + length > F_array_length_t_size_d) return F_status_set_error(F_array_too_large);
 
-    f_status_t status = F_none;
-
     for (f_array_length_t i = length; i < depths->size; ++i) {
       fss_read_depth_delete(&depths->array[i]);
     } // for
 
-    status = f_memory_resize(depths->size, length, sizeof(fss_read_file_t), (void **) & depths->array);
+    const f_status_t status = f_memory_resize(depths->size, length, sizeof(fss_read_depth_t), (void **) & depths->array);
     if (F_status_is_error(status)) return status;
 
     depths->size = length;

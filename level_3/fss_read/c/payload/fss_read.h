@@ -104,6 +104,9 @@ extern "C" {
  *
  *     Errors (with error bit) from: fll_fss_payload_read()
  *
+ *     Errors (with error bit) from: fss_read_ensure_quotes_length()
+ *
+ * @see fss_read_ensure_quotes_length()
  * @see fll_fss_payload_read()
  *
  * @see fss_read_file_identify()

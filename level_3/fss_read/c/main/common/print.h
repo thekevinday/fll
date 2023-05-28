@@ -41,7 +41,7 @@ extern "C" {
   enum {
     fss_read_f_f_console_parameter_process_e,
     fss_read_f_f_file_read_block_e,
-    fss_read_f_f_file_size_by_id_e,
+    fss_read_f_f_file_size_e,
     fss_read_f_f_file_stream_open_e,
     fss_read_f_f_file_stream_read_e,
     fss_read_f_f_file_stream_read_block_e,
@@ -85,6 +85,7 @@ extern "C" {
     fss_read_f_fll_program_parameter_process_context_e,
     fss_read_f_fll_program_parameter_process_verbosity_e,
     fss_read_f_fss_read_depths_resize_e,
+    fss_read_f_fss_read_ensure_quotes_length_e,
     fss_read_f_fss_read_files_resize_e,
     fss_read_f_fss_read_setting_load_depth_e,
   }; // enum

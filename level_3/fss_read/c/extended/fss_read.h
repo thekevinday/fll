@@ -122,8 +122,11 @@ extern "C" {
  *
  *     Errors (with error bit) from: fll_fss_extended_read()
  *
+ *     Errors (with error bit) from: fss_read_ensure_quotes_length()
+ *
  * @see fll_fss_extended_read()
  *
+ * @see fss_read_ensure_quotes_length()
  * @see fss_read_file_identify()
  */
 #ifndef _di_fss_read_extended_process_load_

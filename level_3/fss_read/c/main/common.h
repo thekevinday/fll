@@ -17,6 +17,25 @@ extern "C" {
 #endif
 
 /**
+ * Make sure the array size of quotes_object and quotes_content matches the respective objects and contents.
+ *
+ * @param main
+ *   The main program data.
+ *
+ *   This alters main.setting.state.status:
+ *     F_none on success.
+ *
+ *     Errors (with error bit) from: f_uint8s_increase_by().
+ *     Errors (with error bit) from: f_uint8ss_increase_by().
+ *
+ * @see f_uint8s_increase_by()
+ * @see f_uint8ss_increase_by()
+ */
+#ifndef _di_fss_read_ensure_quotes_length_
+  extern void fss_read_ensure_quotes_length(fss_read_main_t * const main);
+#endif // _di_fss_read_ensure_quotes_length_
+
+/**
  * Perform the standard program setting load process.
  *
  * This prints error messages as appropriate.
@@ -81,8 +100,6 @@ extern "C" {
  *
  *   Must not be NULL.
  *   Must be of type fss_read_main_t.
- *
- *   This calls main.callback.process_load_depth() if not NULL.
  *
  *   This alters main.setting.state.status:
  *     F_none on success.

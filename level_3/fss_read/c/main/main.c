@@ -100,7 +100,6 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
     main->callback.process_help = &fss_read_main_process_help;
     main->callback.process_last_line = &fss_read_process_last_line;
-    main->callback.process_load_depth = &fss_read_setting_load_depth;
     main->callback.process_normal = &fss_read_process_normal;
 
     main->callback.process_at = &fss_read_process_normal_at;
@@ -181,8 +180,6 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
           main->setting.flag -= main->setting.flag & fss_read_main_flag_quote_content_e;
           main->setting.flag -= main->setting.flag & fss_read_main_flag_quote_object_e;
 
-          main->setting.flag |= fss_read_main_flag_trim_object_e;
-
           main->callback.process_help = &fss_read_basic_list_process_help;
           main->callback.process_load = &fss_read_basic_list_process_load;
           main->callback.print_set_end = &fss_read_print_set_end;
@@ -203,8 +200,6 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
           main->setting.flag -= main->setting.flag & fss_read_main_flag_quote_content_e;
           main->setting.flag -= main->setting.flag & fss_read_main_flag_quote_object_e;
 
-          main->setting.flag |= fss_read_main_flag_trim_object_e;
-
           main->callback.process_help = &fss_read_extended_list_process_help;
           main->callback.process_load = &fss_read_extended_list_process_load;
           main->callback.print_set_end = &fss_read_print_set_end;
@@ -223,7 +218,6 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
           main->setting.flag -= main->setting.flag & fss_read_main_flag_quote_content_e;
           main->setting.flag -= main->setting.flag & fss_read_main_flag_quote_object_e;
 
-          main->setting.flag |= fss_read_main_flag_trim_object_e;
           main->setting.flag |= fss_read_main_flag_content_multiple_e | fss_read_main_flag_depth_multiple_e;
 
           main->callback.process_help = &fss_read_embedded_list_process_help;
@@ -245,8 +239,6 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
           main->setting.flag -= main->setting.flag & fss_read_main_flag_depth_multiple_e;
           main->setting.flag -= main->setting.flag & fss_read_main_flag_quote_content_e;
           main->setting.flag -= main->setting.flag & fss_read_main_flag_quote_object_e;
-
-          main->setting.flag |= fss_read_main_flag_trim_object_e;
 
           main->callback.process_help = &fss_read_payload_process_help;
           main->callback.process_load = &fss_read_payload_process_load;

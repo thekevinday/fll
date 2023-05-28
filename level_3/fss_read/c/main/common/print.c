@@ -8,7 +8,7 @@ extern "C" {
   const f_string_t fss_read_f_a[] = {
     "f_console_parameter_process",
     "f_file_read_block",
-    "f_file_size_by_id",
+    "f_file_size",
     "f_file_stream_open",
     "f_file_stream_read",
     "f_file_stream_read_block",
@@ -52,6 +52,7 @@ extern "C" {
     "fll_program_parameter_process_context",
     "fll_program_parameter_process_verbosity",
     "fss_read_depths_resize",
+    "fss_read_ensure_quotes_length",
     "fss_read_files_resize",
     "fss_read_setting_load_depth",
   };

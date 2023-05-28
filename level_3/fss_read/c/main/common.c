@@ -4,6 +4,23 @@
 extern "C" {
 #endif
 
+#ifndef _di_fss_read_ensure_quotes_length_
+  void fss_read_ensure_quotes_length(fss_read_main_t * const main) {
+
+    if (main->setting.quotes_object.size < main->setting.objects.used) {
+      main->setting.state.status = f_uint8s_increase_by(main->setting.objects.used - main->setting.quotes_object.size, &main->setting.quotes_object);
+      if (F_status_is_error(main->setting.state.status)) return;
+    }
+
+    if (main->setting.quotes_content.size < main->setting.contents.used) {
+      main->setting.state.status = f_uint8ss_increase_by(main->setting.contents.used - main->setting.quotes_content.size, &main->setting.quotes_content);
+      if (F_status_is_error(main->setting.state.status)) return;
+    }
+
+    main->setting.state.status = F_none;
+  }
+#endif // _di_fss_read_ensure_quotes_length_
+
 #ifndef _di_fss_read_setting_load_
   void fss_read_setting_load(const f_console_arguments_t arguments, fss_read_main_t * const main, void (*callback)(const f_console_arguments_t arguments, fss_read_main_t * const main)) {
 
@@ -417,16 +434,10 @@ extern "C" {
 
     if (parameters->array[fss_read_parameter_content_e].result & f_console_result_found_e) {
       if (parameters->array[fss_read_parameter_object_e].result & f_console_result_found_e) {
-        if (parameters->array[fss_read_parameter_content_e].location < parameters->array[fss_read_parameter_object_e].location) {
-          main->setting.flag |= fss_read_main_flag_object_e;
-        }
-        else {
-          main->setting.flag |= fss_read_main_flag_content_e;
-        }
+        main->setting.flag |= fss_read_main_flag_object_e;
       }
-      else {
-        main->setting.flag |= fss_read_main_flag_content_e;
-      }
+
+      main->setting.flag |= fss_read_main_flag_content_e;
     }
     else if (parameters->array[fss_read_parameter_object_e].result & f_console_result_found_e) {
       main->setting.flag |= fss_read_main_flag_object_e;
@@ -516,12 +527,15 @@ extern "C" {
         main->setting.files.array[0].range.stop = main->setting.buffer.used - 1;
 
         if (main->callback.process_last_line) {
-          main->callback.process_last_line((void *) &main);
+          main->callback.process_last_line((void *) main);
           if (F_status_is_error(main->setting.state.status)) return;
         }
+
+        ++main->setting.files.used;
       }
       else {
         main->setting.files.array[0].range.start = 1;
+        main->setting.files.array[0].range.stop = 0;
       }
     }
 
@@ -529,20 +543,21 @@ extern "C" {
       off_t size_block = 0;
       off_t size_file = 0;
       off_t size_read = 0;
+      fss_read_file_t *file_data = 0;
 
       for (i = 0; i < parameters->remaining.used; ++i) {
 
         if (fss_read_signal_check(main)) return;
 
         index = parameters->remaining.array[i];
-
-        main->setting.files.array[main->setting.files.used].name = parameters->arguments.array[index];
-        main->setting.files.array[main->setting.files.used].range.start = main->setting.buffer.used;
+        file_data = &main->setting.files.array[main->setting.files.used];
+        file_data->name = parameters->arguments.array[index];
+        file_data->range.start = main->setting.buffer.used;
 
         file.id = -1;
         file.stream = 0;
 
-        main->setting.state.status = f_file_stream_open(main->setting.files.array[main->setting.files.used].name, f_string_empty_s, &file);
+        main->setting.state.status = f_file_stream_open(file_data->name, f_string_empty_s, &file);
 
         if (F_status_is_error(main->setting.state.status)) {
           if ((main->setting.flag & fss_read_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
@@ -556,14 +571,14 @@ extern "C" {
 
         size_file = 0;
 
-        main->setting.state.status = f_file_size_by_id(file, &size_file);
+        main->setting.state.status = f_file_size(file_data->name, F_true, &size_file);
 
         if (F_status_is_error(main->setting.state.status)) {
           if ((main->setting.flag & fss_read_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
             fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
           }
 
-          fll_error_file_print(&main->program.error, F_status_set_fine(main->setting.state.status), macro_fss_read_f(f_file_size_by_id), fll_error_file_flag_fallback_e, parameters->arguments.array[index], f_file_operation_read_s, fll_error_file_type_file_e);
+          fll_error_file_print(&main->program.error, F_status_set_fine(main->setting.state.status), macro_fss_read_f(f_file_size), fll_error_file_flag_fallback_e, parameters->arguments.array[index], f_file_operation_read_s, fll_error_file_type_file_e);
 
           break;
         }
@@ -574,17 +589,14 @@ extern "C" {
           if (size_file > fss_read_allocation_block_max_d) {
             file.size_read = fss_read_allocation_block_read_large_d;
             size_block = fss_read_allocation_block_max_d;
-
-            // Pre-allocate entire file buffer plus space for the terminating NULL.
-            f_string_dynamic_increase_by(size_file + (size_block - (size_file % size_block)) + 1, &main->setting.buffer);
           }
           else {
             file.size_read = fss_read_allocation_block_read_small_d;
             size_block = size_file;
-
-            // Pre-allocate entire file buffer plus space for the terminating NULL.
-            f_string_dynamic_increase_by(size_file + 1, &main->setting.buffer);
           }
+
+          // Pre-allocate entire file buffer plus space for the terminating NULL.
+          f_string_dynamic_increase_by(size_file + 1, &main->setting.buffer);
 
           if (F_status_is_error(main->setting.state.status)) {
             if ((main->setting.flag & fss_read_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
@@ -616,11 +628,11 @@ extern "C" {
             break;
           }
 
-          if (main->setting.buffer.used > main->setting.files.array[main->setting.files.used].range.start) {
+          if (main->setting.buffer.used > file_data->range.start) {
             main->setting.files.array[main->setting.files.used++].range.stop = main->setting.buffer.used - 1;
 
             if (main->callback.process_last_line) {
-              main->callback.process_last_line((void *) &main);
+              main->callback.process_last_line((void *) main);
               if (F_status_is_error(main->setting.state.status)) break;
             }
           }
@@ -629,8 +641,8 @@ extern "C" {
           f_file_stream_close(&file);
         }
         else {
-          main->setting.files.array[main->setting.files.used].range.start = 1;
-          main->setting.files.array[main->setting.files.used].range.stop = 1;
+          file_data->range.start = 1;
+          file_data->range.stop = 0;
         }
       } // for
 
@@ -653,9 +665,8 @@ extern "C" {
       i = parameters->array[fss_read_parameter_depth_e].values.used;
     }
 
-    // @fixme: much of the logic in this depths handling was static and is now dynamic, this needs to be reviewed and updated.
-    if (i + 1 > main->setting.depths.size) {
-      main->setting.state.status = fss_read_depths_resize(i + 1, &main->setting.depths);
+    if (i > main->setting.depths.size) {
+      main->setting.state.status = fss_read_depths_resize(i, &main->setting.depths);
 
       if (F_status_is_error(main->setting.state.status)) {
         if ((main->setting.flag & fss_read_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
@@ -673,24 +684,23 @@ extern "C" {
     f_array_length_t position_depth = 0;
     f_array_length_t position_at = 0;
     f_array_length_t position_name = 0;
+    fss_read_depth_t *current = 0;
 
     for (i = 0; i < main->setting.depths.used; ++i) {
 
       if (fss_read_signal_check(main)) return;
 
-      main->setting.depths.array[i].depth = 0;
-      main->setting.depths.array[i].index_at = 0;
-      main->setting.depths.array[i].index_name = 0;
-      main->setting.depths.array[i].value_at = 0;
-      main->setting.depths.array[i].value_name.used = 0; // @fixme this needs to be fully reset to 0.
+      current = &main->setting.depths.array[i];
+      current->depth = 0;
+      current->index_at = 0;
+      current->index_name = 0;
+      current->value_at = 0;
+      current->value_name.used = 0;
 
-      if (!parameters->array[fss_read_parameter_depth_e].values.used) {
-        position_depth = 0;
-      }
-      else {
+      if (parameters->array[fss_read_parameter_depth_e].values.used) {
         position_depth = parameters->array[fss_read_parameter_depth_e].values.array[i];
 
-        main->setting.state.status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, parameters->arguments.array[position_depth], &main->setting.depths.array[i].depth);
+        main->setting.state.status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, parameters->arguments.array[position_depth], &current->depth);
 
         if (F_status_is_error(main->setting.state.status)) {
           if ((main->setting.flag & fss_read_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
@@ -701,6 +711,9 @@ extern "C" {
 
           return;
         }
+      }
+      else {
+        position_depth = 0;
       }
 
       if (parameters->array[fss_read_parameter_at_e].result & f_console_result_value_e) {
@@ -714,16 +727,16 @@ extern "C" {
             break;
           }
 
-          main->setting.depths.array[i].index_at = parameters->array[fss_read_parameter_at_e].values.array[position_at];
+          current->index_at = parameters->array[fss_read_parameter_at_e].values.array[position_at];
 
-          main->setting.state.status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, parameters->arguments.array[main->setting.depths.array[i].index_at], &main->setting.depths.array[i].value_at);
+          main->setting.state.status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, parameters->arguments.array[current->index_at], &current->value_at);
 
           if (F_status_is_error(main->setting.state.status)) {
             if ((main->setting.flag & fss_read_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
               fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
             }
 
-            fll_error_parameter_integer_print(&main->program.error, F_status_set_fine(main->setting.state.status), macro_fss_read_f(fl_conversion_dynamic_to_unsigned_detect), F_true, fss_read_long_at_s, parameters->arguments.array[main->setting.depths.array[i].index_at]);
+            fll_error_parameter_integer_print(&main->program.error, F_status_set_fine(main->setting.state.status), macro_fss_read_f(fl_conversion_dynamic_to_unsigned_detect), F_true, fss_read_long_at_s, parameters->arguments.array[current->index_at]);
 
             return;
           }
@@ -741,13 +754,13 @@ extern "C" {
             break;
           }
 
-          main->setting.depths.array[i].index_name = parameters->array[fss_read_parameter_name_e].values.array[position_name];
+          current->index_name = parameters->array[fss_read_parameter_name_e].values.array[position_name];
 
           if (parameters->array[fss_read_parameter_trim_e].result & f_console_result_found_e) {
-            main->setting.state.status = f_rip_dynamic(parameters->arguments.array[main->setting.depths.array[i].index_name], &main->setting.depths.array[i].value_name);
+            main->setting.state.status = f_rip_dynamic(parameters->arguments.array[current->index_name], &current->value_name);
           }
           else {
-            main->setting.state.status = f_string_dynamic_append(parameters->arguments.array[main->setting.depths.array[i].index_name], &main->setting.depths.array[i].value_name);
+            main->setting.state.status = f_string_dynamic_append(parameters->arguments.array[current->index_name], &current->value_name);
           }
 
           if (F_status_is_error(main->setting.state.status)) {
@@ -771,36 +784,33 @@ extern "C" {
 
         if (fss_read_signal_check(main)) return;
 
-        if (main->setting.depths.array[i].depth == main->setting.depths.array[j].depth) {
+        current = &main->setting.depths.array[i];
+
+        if (current->depth == main->setting.depths.array[j].depth) {
           main->setting.state.status = F_status_set_error(F_parameter);
 
           if ((main->setting.flag & fss_read_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
             fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
           }
 
-          fss_read_print_error_parameter_value_once_only_number(&main->program.error, f_console_symbol_long_normal_s, fss_read_long_depth_s, main->setting.depths.array[i].depth);
+          fss_read_print_error_parameter_value_once_only_number(&main->program.error, f_console_symbol_long_normal_s, fss_read_long_depth_s, current->depth);
 
           return;
         }
 
-        if (main->setting.depths.array[i].depth > main->setting.depths.array[j].depth) {
+        if (current->depth > main->setting.depths.array[j].depth) {
           main->setting.state.status = F_status_set_error(F_parameter);
 
           if ((main->setting.flag & fss_read_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
             fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
           }
 
-          fss_read_print_error_parameter_value_before_value_number(&main->program.error, f_console_symbol_long_normal_s, fss_read_long_depth_s, main->setting.depths.array[i].depth, main->setting.depths.array[j].depth);
+          fss_read_print_error_parameter_value_before_value_number(&main->program.error, f_console_symbol_long_normal_s, fss_read_long_depth_s, current->depth, main->setting.depths.array[j].depth);
 
           return;
         }
       } // for
     } // for
-
-    if (main->callback.process_load_depth) {
-      main->callback.process_load_depth(arguments, (void *) main, parameters);
-      if (F_status_is_error(main->setting.state.status)) return;
-    }
 
     main->setting.state.status = F_none;
   }

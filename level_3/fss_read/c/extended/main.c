@@ -25,7 +25,6 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
   data.callback.process_help = &fss_read_extended_process_help;
   data.callback.process_last_line = &fss_read_process_last_line;
-  data.callback.process_load_depth = &fss_read_setting_load_depth;
   data.callback.process_normal = &fss_read_process_normal;
 
   data.callback.process_at = &fss_read_process_normal_at;
