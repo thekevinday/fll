@@ -1,4 +1,9 @@
 # fss-0001
+#
+# Builds a program that is links to the generated library and is executed to perform tests.
+#
+# Memory leaks in the test program can be checked for by running valgrind with this executable.
+#
 
 build_name test-fl_path
 
