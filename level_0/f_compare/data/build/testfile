@@ -21,6 +21,7 @@ main:
   build settings individual test
   build settings-tests individual test
 
+  operate build_path
   operate ld_library_path
 
   if exist build/programs/shared/test-f_compare

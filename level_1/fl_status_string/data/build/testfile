@@ -18,9 +18,10 @@ settings:
   #define CMOCKA_XML_FILE ./out.xml
 
 main:
-  build settings individual tests
+  build settings individual test
   build settings-tests individual test
 
+  operate build_path
   operate ld_library_path
 
   if exist build/programs/shared/test-fl_status_string
