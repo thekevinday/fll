@@ -78,7 +78,7 @@ extern "C" {
       return F_false;
     }
 
-    if (status == F_directory) {
+    if (status == F_directory || status == F_directory_not) {
       if (print->verbosity != f_console_verbosity_quiet_e) {
         flockfile(print->to.stream);
 
