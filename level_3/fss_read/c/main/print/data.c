@@ -19,16 +19,21 @@ extern "C" {
           main->callback.print_object(&main->program.output, at, delimits_object);
         }
 
-        if (main->setting.flag & fss_read_main_flag_content_e) {
-          if (main->callback.print_object_end) {
-            main->callback.print_object_end(&main->program.output);
-          }
+        if (main->callback.print_object_end) {
+          main->callback.print_object_end(&main->program.output);
         }
       }
 
       if ((main->setting.flag & fss_read_main_flag_content_e) && main->setting.contents.array[at].used) {
         if (main->callback.print_content) {
-          main->callback.print_content(&main->program.output, main->setting.contents.array[at].array[0], main->setting.quotes_content.array[at].used ? main->setting.quotes_content.array[at].array[0] : 0, delimits_content);
+          for (f_array_length_t i = 0; i < main->setting.contents.array[at].used; ++i) {
+
+            main->callback.print_content(&main->program.output, main->setting.contents.array[at].array[i], main->setting.quotes_content.array[at].used ? main->setting.quotes_content.array[at].array[i] : 0, delimits_content);
+
+            if (main->callback.print_content_next && i + 1 < main->setting.contents.array[at].used) {
+              main->callback.print_content_next(&main->program.output);
+            }
+          } // for
         }
       }
 
@@ -145,19 +150,6 @@ extern "C" {
     return F_none;
   }
 #endif // _di_fss_read_print_object_
-
-#ifndef _di_fss_read_print_object_end_
-  f_status_t fss_read_print_object_end(fl_print_t * const print) {
-
-    if (!print || !print->custom) return F_status_set_error(F_output_not);
-
-    fss_read_main_t * const main = (fss_read_main_t *) print->custom;
-
-    fll_print_dynamic_raw((main->setting.flag & fss_read_main_flag_pipe_e) ? fss_read_pipe_content_start_s : f_fss_space_s, print->to);
-
-    return F_none;
-  }
-#endif // _di_fss_read_print_object_end_
 
 #ifndef _di_fss_read_print_quote_
   f_status_t fss_read_print_quote(fl_print_t * const print, const uint8_t type) {

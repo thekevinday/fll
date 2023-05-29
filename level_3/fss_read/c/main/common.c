@@ -190,22 +190,11 @@ extern "C" {
 
       for (i = 0; i < 6; ++i) {
 
-        if (parameters->array[parameter_code[i]].result & f_console_result_found_e) {
-          main->setting.state.status = F_status_set_error(F_parameter);
-
-          if ((main->setting.flag & fss_read_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
-            fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
-          }
-
-          fss_read_print_error_parameter_requires_message(&main->program.error, f_console_symbol_long_normal_s, parameter_name[i], parameter_message[i]);
-
-          return;
-        }
-        else if (parameters->array[parameter_code[i]].result & f_console_result_value_e) {
-          main->setting.state.flag |= parameter_flag[i];
+        if (parameters->array[parameter_code[i]].result & f_console_result_value_e) {
+          main->setting.flag |= parameter_flag[i];
 
           if (parameter_value_digit[i]) {
-            index = parameters->array[parameter_code[i]].values.array[parameters->array[parameter_code[i]].location];
+            index = parameters->array[parameter_code[i]].values.array[parameters->array[parameter_code[i]].values.used - 1];
 
             main->setting.state.status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, parameters->arguments.array[index], parameter_value_digit[i]);
 
@@ -215,6 +204,17 @@ extern "C" {
               return;
             }
           }
+        }
+        else if (parameters->array[parameter_code[i]].result & f_console_result_found_e) {
+          main->setting.state.status = F_status_set_error(F_parameter);
+
+          if ((main->setting.flag & fss_read_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
+            fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
+          }
+
+          fss_read_print_error_parameter_requires_message(&main->program.error, f_console_symbol_long_normal_s, parameter_name[i], parameter_message[i]);
+
+          return;
         }
       } // for
     }

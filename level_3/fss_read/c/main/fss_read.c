@@ -117,10 +117,8 @@ extern "C" {
             main->callback.print_object(&main->program.output, at, delimits_object);
           }
 
-          if (main->setting.flag & fss_read_main_flag_content_e) {
-            if (main->callback.print_object_end) {
-              main->callback.print_object_end(&main->program.output);
-            }
+          if (main->callback.print_object_end) {
+            main->callback.print_object_end(&main->program.output);
           }
         }
 

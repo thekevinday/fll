@@ -107,14 +107,15 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
     main->callback.process_line = &fss_read_process_normal_line;
     main->callback.process_load = 0;
     main->callback.process_name = &fss_read_process_normal_name;
-    main->callback.process_total = &fss_read_process_normal_total;
+    main->callback.process_total = 0;
 
     main->callback.print_at = &fss_read_print_at;
     main->callback.print_content = &fss_read_print_content;
+    main->callback.print_content_next = 0;
     main->callback.print_content_ignore = &fss_read_print_content_ignore;
     main->callback.print_object = &fss_read_print_object;
-    main->callback.print_object_end = &fss_read_print_object_end;
-    main->callback.print_set_end = &fss_read_print_set_end;
+    main->callback.print_object_end = 0;
+    main->callback.print_set_end = 0;
 
     if (main->program.parameters.array[fss_read_parameter_as_e].result & f_console_result_value_e && main->program.parameters.array[fss_read_parameter_as_e].values.used) {
 
@@ -142,9 +143,11 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
           main->callback.process_help = &fss_read_basic_process_help;
           main->callback.process_load = &fss_read_basic_process_load;
-          main->callback.print_set_end = &fss_read_print_set_end;
+          main->callback.process_total = &fss_read_process_normal_total;
 
-          main->callback.print_object_end = &fss_read_print_object_end;
+          main->callback.print_content_next = 0;
+          main->callback.print_object_end = &fss_read_basic_print_object_end;
+          main->callback.print_set_end = &fss_read_print_set_end;
         }
         else if (f_compare_dynamic(argv[index], fss_read_format_code_short_0001_s) == F_equal_to ||
                  f_compare_dynamic(argv[index], fss_read_format_code_long_0001_s) == F_equal_to ||
@@ -162,9 +165,11 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
           main->callback.process_help = &fss_read_extended_process_help;
           main->callback.process_load = &fss_read_extended_process_load;
-          main->callback.print_set_end = &fss_read_print_set_end_no_eol;
+          main->callback.process_total = &fss_read_process_normal_total;
 
-          main->callback.print_object_end = &fss_read_print_object_end;
+          main->callback.print_content_next = &fss_read_extended_print_content_next;
+          main->callback.print_object_end = &fss_read_extended_print_object_end;
+          main->callback.print_set_end = &fss_read_print_set_end_no_eol;
         }
         else if (f_compare_dynamic(argv[index], fss_read_format_code_short_0002_s) == F_equal_to ||
                  f_compare_dynamic(argv[index], fss_read_format_code_long_0002_s) == F_equal_to ||
@@ -182,9 +187,11 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
           main->callback.process_help = &fss_read_basic_list_process_help;
           main->callback.process_load = &fss_read_basic_list_process_load;
-          main->callback.print_set_end = &fss_read_print_set_end;
+          main->callback.process_total = &fss_read_process_normal_total_multiple;
 
+          main->callback.print_content_next = 0;
           main->callback.print_object_end = &fss_read_basic_list_print_object_end;
+          main->callback.print_set_end = &fss_read_print_set_end;
         }
         else if (f_compare_dynamic(argv[index], fss_read_format_code_short_0003_s) == F_equal_to ||
                  f_compare_dynamic(argv[index], fss_read_format_code_long_0003_s) == F_equal_to ||
@@ -202,9 +209,11 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
           main->callback.process_help = &fss_read_extended_list_process_help;
           main->callback.process_load = &fss_read_extended_list_process_load;
-          main->callback.print_set_end = &fss_read_print_set_end;
+          main->callback.process_total = &fss_read_process_normal_total_multiple;
 
-          main->callback.print_object_end = &fss_read_print_object_end;
+          main->callback.print_content_next = 0;
+          main->callback.print_object_end = &fss_read_extended_list_print_object_end;
+          main->callback.print_set_end = &fss_read_print_set_end;
         }
         else if (f_compare_dynamic(argv[index], fss_read_format_code_short_0008_s) == F_equal_to ||
                  f_compare_dynamic(argv[index], fss_read_format_code_long_0008_s) == F_equal_to ||
@@ -222,9 +231,11 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
           main->callback.process_help = &fss_read_embedded_list_process_help;
           main->callback.process_load = &fss_read_embedded_list_process_load;
-          main->callback.print_set_end = &fss_read_print_set_end;
+          main->callback.process_total = &fss_read_process_normal_total_multiple;
 
-          main->callback.print_object_end = &fss_read_print_object_end;
+          main->callback.print_content_next = 0;
+          main->callback.print_object_end = &fss_read_embedded_list_print_object_end;
+          main->callback.print_set_end = &fss_read_print_set_end;
         }
         else if (f_compare_dynamic(argv[index], fss_read_format_code_short_000e_s) == F_equal_to ||
                  f_compare_dynamic(argv[index], fss_read_format_code_long_000e_s) == F_equal_to ||
@@ -242,9 +253,11 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
           main->callback.process_help = &fss_read_payload_process_help;
           main->callback.process_load = &fss_read_payload_process_load;
-          main->callback.print_set_end = &fss_read_print_set_end;
+          main->callback.process_total = &fss_read_process_normal_total_multiple;
 
-          main->callback.print_object_end = &fss_read_print_object_end;
+          main->callback.print_content_next = 0;
+          main->callback.print_object_end = &fss_read_payload_print_object_end;
+          main->callback.print_set_end = &fss_read_print_set_end;
         }
         else {
           if (main->setting.flag & fss_read_main_flag_help_e) {

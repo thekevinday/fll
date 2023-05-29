@@ -29,10 +29,11 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
   data.callback.process_line = &fss_read_process_normal_line;
   data.callback.process_load = &fss_read_basic_list_process_load;
   data.callback.process_name = &fss_read_process_normal_name;
-  data.callback.process_total = &fss_read_process_normal_total;
+  data.callback.process_total = &fss_read_process_normal_total_multiple;
 
   data.callback.print_at = &fss_read_print_at;
   data.callback.print_content = &fss_read_print_content;
+  data.callback.print_content_next = 0;
   data.callback.print_content_ignore = &fss_read_print_content_ignore;
   data.callback.print_object = &fss_read_print_object;
   data.callback.print_object_end = &fss_read_basic_list_print_object_end;

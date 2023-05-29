@@ -30,6 +30,8 @@ extern "C" {
       main->setting.range.stop = 0;
     }
 
+    main->setting.objects.used = 0;
+    main->setting.contents.used = 0;
     main->setting.comments.used = 0;
     main->setting.delimits_object.used = 0;
     main->setting.delimits_content.used = 0;

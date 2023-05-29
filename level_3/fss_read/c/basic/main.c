@@ -36,9 +36,10 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
   data.callback.print_at = &fss_read_print_at;
   data.callback.print_content = &fss_read_print_content;
+  data.callback.print_content_next = 0;
   data.callback.print_content_ignore = 0;
   data.callback.print_object = &fss_read_print_object;
-  data.callback.print_object_end = &fss_read_print_object_end;
+  data.callback.print_object_end = &fss_read_basic_print_object_end;
   data.callback.print_set_end = &fss_read_print_set_end;
 
   f_console_parameter_t parameters[] = fss_read_console_parameter_t_initialize;

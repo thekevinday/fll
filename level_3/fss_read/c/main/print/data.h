@@ -21,6 +21,8 @@ extern "C" {
  *
  * This locks, uses, and unlocks the file stream.
  *
+ * This processes multiple Content ranges and calls main.callback.print_content() for each individual Content range.
+ *
  * @param print
  *   The output structure to print to.
  *
@@ -61,6 +63,7 @@ extern "C" {
  *
  * This locks, uses, and unlocks the file stream.
  *
+ * This processes single Content range.
  * This does not print a new line after the Content.
  *
  * @param print
@@ -176,30 +179,6 @@ extern "C" {
 #ifndef _di_fss_read_print_object_
   extern f_status_t fss_read_print_object(fl_print_t * const print, const f_array_length_t at, const f_fss_delimits_t delimits);
 #endif // _di_fss_read_print_object_
-
-/**
- * Print the end of an Object (which is often the start of Content).
- *
- * This locks, uses, and unlocks the file stream.
- *
- * @param print
- *   The output structure to print to.
- *
- *   The print.custom is expected to be of type fss_read_main_t.
- *
- *   This does not alter print.custom.setting.state.status.
- *
- * @return
- *   F_none on success.
- *   F_output_not on success, but no printing is performed.
- *
- *   F_output_not (with error bit) if a parameter is NULL.
- *
- * @see fll_print_dynamic_raw()
- */
-#ifndef _di_fss_read_print_object_end_
-  extern f_status_t fss_read_print_object_end(fl_print_t * const print);
-#endif // _di_fss_read_print_object_end_
 
 /**
  * Print the Object at the given position.

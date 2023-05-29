@@ -48,6 +48,8 @@ extern "C" {
 /**
  * Process buffer according to "at" parameter rules.
  *
+ * This handles only a single depth (index 0 of the depth array).
+ *
  * @param main
  *   The program and settings data.
  *
@@ -147,6 +149,8 @@ extern "C" {
 /**
  * Process buffer according to "total" parameter rules.
  *
+ * This processes single line Content only.
+ *
  * @param main
  *   The program and settings data.
  *
@@ -166,6 +170,31 @@ extern "C" {
 #ifndef _di_fss_read_process_normal_total_
   extern void fss_read_process_normal_total(void * const main, const bool names[]);
 #endif // _di_fss_read_process_normal_total_
+
+/**
+ * Process buffer according to "total" parameter rules.
+ *
+ * This processes multi-line Content only.
+ *
+ * @param main
+ *   The program and settings data.
+ *
+ *   Must not be NULL.
+ *   Must be of type fss_read_main_t.
+ *
+ *   This alters main.setting.state.status:
+ *     F_none on success.
+ *
+ *     Errors (with error bit) from: fss_read_signal_check().
+ * @param names
+ *   An array of booleans representing if the name at a given index is enabled.
+ *   (If TRUE, then the name is to be used and if FALSE, then the name is not to be used.)
+ *
+ * @see fss_read_signal_check()
+ */
+#ifndef _di_fss_read_process_normal_total_multiple_
+  extern void fss_read_process_normal_total_multiple(void * const main, const bool names[]);
+#endif // _di_fss_read_process_normal_total_multiple_
 
 #ifdef __cplusplus
 } // extern "C"

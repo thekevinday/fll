@@ -38,7 +38,7 @@ extern "C" {
 
     fl_print_format("%[%QThe parameter '%]", print->to, print->context, print->prefix, print->context);
     fl_print_format("%[%r%r%]", print->to, print->notable, symbol, name, print->notable);
-    fl_print_format("%[' requires %s.%]%r", print->to, print->context, message, print->context, f_string_eol_s);
+    fl_print_format("%[' requires %Q.%]%r", print->to, print->context, message, print->context, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
 

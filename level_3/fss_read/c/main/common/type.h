@@ -134,6 +134,7 @@ extern "C" {
  * print_object:         Print the Object, usually called by the process_normal() callback.
  * print_content:        Print the Content, usually called by the process_normal() callback.
  * print_content_ignore: Print the Content ignore character, usually called by several callbacks within the process_normal() callback for a pipe.
+ * print_content_next:   Print the Content next (content separator), usually called by several callbacks within the process_normal() callback.
  * print_object_end:     Print the Object end, usually called by several callbacks within the process_normal() callback.
  * print_set_end:        Print the Content set end, usually called by several callbacks within the process_normal() callback.
  */
@@ -154,12 +155,14 @@ extern "C" {
     f_status_t (*print_object)(fl_print_t * const print, const f_array_length_t at, const f_fss_delimits_t delimits);
     f_status_t (*print_content)(fl_print_t * const print, const f_string_range_t range, const uint8_t quote, const f_fss_delimits_t delimits);
     f_status_t (*print_content_ignore)(fl_print_t * const print);
+    f_status_t (*print_content_next)(fl_print_t * const print);
     f_status_t (*print_object_end)(fl_print_t * const print);
     f_status_t (*print_set_end)(fl_print_t * const print);
   } fss_read_callback_t;
 
   #define fss_read_callback_t_initialize \
     { \
+      0, \
       0, \
       0, \
       0, \
