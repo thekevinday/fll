@@ -21,16 +21,17 @@ main:
   build settings individual tests
   build settings-tests individual test
 
+  operate build_path
   operate ld_library_path
 
-  if exist build/programs/shared/test-fll_status_string
-    shell build/programs/shared/test-fll_status_string
+  if exist parameter:"build_path"programs/shared/test-fll_status_string
+    shell parameter:"build_path"programs/shared/test-fll_status_string
 
-  if exist build/programs/static/test-fll_status_string
-    shell build/programs/static/test-fll_status_string
+  if exist parameter:"build_path"programs/static/test-fll_status_string
+    shell parameter:"build_path"programs/static/test-fll_status_string
 
-  if not exist build/programs/shared/test-fll_status_string
-  and not exist build/programs/static/test-fll_status_string
+  if not exist parameter:"build_path"programs/shared/test-fll_status_string
+  and not exist parameter:"build_path"programs/static/test-fll_status_string
     operate not_created
 
 not_created:
@@ -39,18 +40,24 @@ not_created:
 
   exit failure
 
+build_path:
+  parameter build_path build/
+
+  if parameter build:value
+    parameter build_path parameter:"build:value"
+
 ld_library_path:
   if define LD_LIBRARY_PATH
-  and parameter work
-    define LD_LIBRARY_PATH 'build/libraries/shared:parameter:"work:value"libraries/shared:define:"LD_LIBRARY_PATH"'
+  and parameter work:value
+    define LD_LIBRARY_PATH 'parameter:"build_path"libraries/shared:parameter:"work:value"libraries/shared:define:"LD_LIBRARY_PATH"'
 
   else
   if define LD_LIBRARY_PATH
-    define LD_LIBRARY_PATH 'build/libraries/shared:define:"LD_LIBRARY_PATH"'
+    define LD_LIBRARY_PATH 'parameter:"build_path"libraries/shared:define:"LD_LIBRARY_PATH"'
 
   else
-  if parameter work
-    define LD_LIBRARY_PATH 'build/libraries/shared:parameter:"work:value"libraries/shared'
+  if parameter work:value
+    define LD_LIBRARY_PATH 'parameter:"build_path"libraries/shared:parameter:"work:value"libraries/shared'
 
   else
-    define LD_LIBRARY_PATH build/libraries/shared
+    define LD_LIBRARY_PATH parameter:"build_path"libraries/shared

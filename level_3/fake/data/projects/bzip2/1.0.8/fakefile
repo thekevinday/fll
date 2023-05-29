@@ -38,21 +38,27 @@ tests:
   print
   print Performing tests.
 
+  # Conditionally setup the build_path.
+  parameter build_path build/
+
+  if parameter build:value
+    parameter build_path parameter:"build:value"
+
   # Conditionally setup the LD_LIBRARY_PATH to include the just compiled libraries.
   if define LD_LIBRARY_PATH
-  and parameter work
-    define LD_LIBRARY_PATH 'build/libraries/shared:parameter:"work:value"libraries/shared:define:"LD_LIBRARY_PATH"'
+  and parameter work:value
+    define LD_LIBRARY_PATH 'parameter:"build_path"libraries/shared:parameter:"work:value"libraries/shared:define:"LD_LIBRARY_PATH"'
 
   else
   if define LD_LIBRARY_PATH
-    define LD_LIBRARY_PATH 'build/libraries/shared:define:"LD_LIBRARY_PATH"'
+    define LD_LIBRARY_PATH 'parameter:"build_path"libraries/shared:define:"LD_LIBRARY_PATH"'
 
   else
-  if parameter work
-    define LD_LIBRARY_PATH 'build/libraries/shared:parameter:"work:value"libraries/shared'
+  if parameter work:value
+    define LD_LIBRARY_PATH 'parameter:"build_path"libraries/shared:parameter:"work:value"libraries/shared'
 
   # Setup the PATH to use the just compiled programs.
-  define PATH programs/static:programs/shared:define:"PATH"
+  define PATH parameter:"build_path"programs/static:parameter:"build_path"programs/shared:define:"PATH"
 
   # Execute the tests (redirects are not currently supported, so execute using bash).
   run cat words1
