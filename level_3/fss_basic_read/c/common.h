@@ -242,7 +242,7 @@ extern "C" {
       macro_f_console_parameter_t_initialize(fss_basic_read_short_trim_s.string, fss_basic_read_long_trim_s.string, 0, 0, f_console_type_normal_e), \
     }
 
-  #define fss_basic_read_total_parameters_d 24
+  #define fss_basic_read_total_parameters_d 25
 #endif // _di_fss_basic_read_parameters_
 
 /**
