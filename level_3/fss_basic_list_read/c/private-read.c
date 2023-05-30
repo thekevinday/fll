@@ -274,7 +274,7 @@ extern "C" {
   f_status_t fss_basic_list_read_load_number(fll_program_data_t * const main, fss_basic_list_read_data_t * const data, const f_array_length_t parameter, const f_string_static_t name, f_number_unsigned_t *number) {
 
     if (main->parameters.array[parameter].result & f_console_result_value_e) {
-      const f_array_length_t index = main->parameters.array[parameter].values.array[main->parameters.array[parameter].location];
+      const f_array_length_t index = main->parameters.array[parameter].values.array[main->parameters.array[parameter].values.used - 1];
 
       const f_status_t status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, data->argv[index], number);
 

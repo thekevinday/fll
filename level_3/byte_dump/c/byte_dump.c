@@ -184,7 +184,7 @@ extern "C" {
       }
 
       if (main->parameters.array[byte_dump_parameter_width_e].result & f_console_result_value_e) {
-        const f_array_length_t index = main->parameters.array[byte_dump_parameter_width_e].values.array[main->parameters.array[byte_dump_parameter_width_e].location];
+        const f_array_length_t index = main->parameters.array[byte_dump_parameter_width_e].values.array[main->parameters.array[byte_dump_parameter_width_e].values.used - 1];
         f_number_unsigned_t number = 0;
 
         status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, data.argv[index], &number);
@@ -223,7 +223,7 @@ extern "C" {
       }
 
       if (main->parameters.array[byte_dump_parameter_first_e].result & f_console_result_value_e) {
-        const f_array_length_t index = main->parameters.array[byte_dump_parameter_first_e].values.array[main->parameters.array[byte_dump_parameter_first_e].location];
+        const f_array_length_t index = main->parameters.array[byte_dump_parameter_first_e].values.array[main->parameters.array[byte_dump_parameter_first_e].values.used - 1];
         f_number_unsigned_t number = 0;
 
         status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, data.argv[index], &number);
@@ -262,7 +262,7 @@ extern "C" {
       }
 
       if (main->parameters.array[byte_dump_parameter_last_e].result & f_console_result_value_e) {
-        const f_array_length_t index = main->parameters.array[byte_dump_parameter_last_e].values.array[main->parameters.array[byte_dump_parameter_last_e].location];
+        const f_array_length_t index = main->parameters.array[byte_dump_parameter_last_e].values.array[main->parameters.array[byte_dump_parameter_last_e].values.used - 1];
         f_number_unsigned_t number = 0;
 
         status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, data.argv[index], &number);

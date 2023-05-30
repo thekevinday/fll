@@ -486,7 +486,7 @@ extern "C" {
         const f_string_static_t *prepend = 0;
 
         if (main->setting.flag & fss_write_main_flag_prepend_e) {
-          const f_array_length_t index = main->program.parameters.array[fss_write_parameter_prepend_e].values.array[main->program.parameters.array[fss_write_parameter_prepend_e].location];
+          const f_array_length_t index = main->program.parameters.array[fss_write_parameter_prepend_e].values.array[main->program.parameters.array[fss_write_parameter_prepend_e].values.used - 1];
 
           prepend = &main->program.parameters.arguments.array[index];
         }

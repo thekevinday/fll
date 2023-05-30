@@ -129,7 +129,7 @@ extern "C" {
         return;
       }
 
-      const f_array_length_t index = main->program.parameters.array[iki_read_parameter_at_e].values.array[main->program.parameters.array[iki_read_parameter_at_e].location];
+      const f_array_length_t index = main->program.parameters.array[iki_read_parameter_at_e].values.array[main->program.parameters.array[iki_read_parameter_at_e].values.used - 1];
 
       main->setting.at = 0;
 
@@ -162,7 +162,7 @@ extern "C" {
     }
 
     if (main->program.parameters.array[iki_read_parameter_line_e].result & f_console_result_value_e) {
-      const f_array_length_t index = main->program.parameters.array[iki_read_parameter_line_e].values.array[main->program.parameters.array[iki_read_parameter_line_e].location];
+      const f_array_length_t index = main->program.parameters.array[iki_read_parameter_line_e].values.array[main->program.parameters.array[iki_read_parameter_line_e].values.used - 1];
 
       main->setting.line = 0;
 

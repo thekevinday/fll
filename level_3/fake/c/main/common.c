@@ -248,7 +248,7 @@ extern "C" {
           }
 
           if (main->program.parameters.array[parameters[i]].result & f_console_result_value_e) {
-            index = main->program.parameters.array[parameters[i]].values.array[main->program.parameters.array[parameters[i]].location;
+            index = main->program.parameters.array[parameters[i]].values.array[main->program.parameters.array[parameters[i]].values.used - 1];
 
             if (main->program.parameters.arguments.array[index].used) {
               if (parameters[i] == fake_parameter_process_e) {
