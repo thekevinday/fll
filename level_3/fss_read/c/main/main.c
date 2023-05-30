@@ -169,7 +169,7 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
           main->callback.print_content_next = &fss_read_extended_print_content_next;
           main->callback.print_object_end = &fss_read_extended_print_object_end;
-          main->callback.print_set_end = &fss_read_print_set_end_no_eol;
+          main->callback.print_set_end = &fss_read_print_set_end;
         }
         else if (f_compare_dynamic(argv[index], fss_read_format_code_short_0002_s) == F_equal_to ||
                  f_compare_dynamic(argv[index], fss_read_format_code_long_0002_s) == F_equal_to ||
@@ -191,7 +191,7 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
           main->callback.print_content_next = 0;
           main->callback.print_object_end = &fss_read_basic_list_print_object_end;
-          main->callback.print_set_end = &fss_read_print_set_end;
+          main->callback.print_set_end = &fss_read_print_set_end_no_eol;
         }
         else if (f_compare_dynamic(argv[index], fss_read_format_code_short_0003_s) == F_equal_to ||
                  f_compare_dynamic(argv[index], fss_read_format_code_long_0003_s) == F_equal_to ||
