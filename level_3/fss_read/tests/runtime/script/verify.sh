@@ -92,9 +92,9 @@ verify_operate_test_standard() {
     basename_file=$(echo -n ${basename_file} | sed -e 's|\.expect$||')
 
     if [[ $hash_build == $hash_expect ]] ; then
-      echo "[ Success ] = ${basename_file}."
+      echo "[ Success ] ${basename_file}."
     else
-      echo "[ Failure ] = ${basename_file}."
+      echo "[ Failure ] ${basename_file}."
 
       let failure=1
     fi

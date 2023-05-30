@@ -24,33 +24,36 @@ main:
 generate:
   print
   print Generating Test 0000 for Basic (FSS-0000).
+  print
 
   touch directory parameter:"build_path"test/fss_0000
   run bash ./tests/runtime/script/generate.sh test-0000 tests/runtime/fss_0000/source/test-0000-quotes_and_escapes.fss parameter:"build_path"test/fss_0000
 
   print
   print Generating Test 0001 for Basic (FSS-0000).
+  print
   run bash ./tests/runtime/script/generate.sh test-0000 tests/runtime/fss_0000/source/test-0001-unicode.fss parameter:"build_path"test/fss_0000
-
-  touch directory parameter:"build_path"test/fss_0001
 
   print
   print Generating Test 0000 for Extended (FSS-0001).
-
+  print
   touch directory parameter:"build_path"test/fss_0001
   run bash ./tests/runtime/script/generate.sh test-0001 tests/runtime/fss_0001/source/test-0000-quotes_and_escapes.fss parameter:"build_path"test/fss_0001
 
   print
   print Generating Test 0001 for Extended (FSS-0001).
+  print
   run bash ./tests/runtime/script/generate.sh test-0001 tests/runtime/fss_0001/source/test-0001-unicode.fss parameter:"build_path"test/fss_0001
 
 verify:
   print
   print Verifying Tests for Basic (FSS-0000).
+  print
   run bash ./tests/runtime/script/verify.sh build/test/fss_0000/ tests/runtime/fss_0000/expect/
 
   print
   print Verifying Tests for Extended (FSS-0001).
+  print
   run bash ./tests/runtime/script/verify.sh build/test/fss_0001/ tests/runtime/fss_0001/expect/
 
 build_path:
@@ -83,6 +86,7 @@ ld_library_path:
 help:
   print
   print context:'title'Fakefile Options for FSS Read Software Testing.context:'reset'
+  print
 
   print
   print The following operations are available\:
