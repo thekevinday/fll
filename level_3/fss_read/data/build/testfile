@@ -1,0 +1,92 @@
+# fss-0005 iki-0002
+#
+# Performs runtime testing, which includes building the program.
+#
+# To keep things simple, this only runs tests against fss_read.
+#
+
+settings:
+  fail exit
+  modes individual level monolithic clang test
+
+  environment PATH LD_LIBRARY_PATH
+  environment LANG LC_ALL LC_COLLATE LC_CTYPE LC_FASTMSG LC_MESSAGES LC_MONETARY LC_NUMERIC LC_TIME LOCPATH NLSPATH
+
+main:
+  build settings
+  build settings.main
+
+  operate build_path
+  operate ld_library_path
+  operate generate
+  operate verify
+
+generate:
+  print
+  print Generating Test 0000 for Basic (FSS-0000).
+
+  touch directory parameter:"build_path"test/fss_0000
+  run bash ./tests/runtime/script/generate.sh test-0000 tests/runtime/fss_0000/source/test-0000-quotes_and_escapes.fss parameter:"build_path"test/fss_0000
+
+  print
+  print Generating Test 0001 for Basic (FSS-0000).
+  run bash ./tests/runtime/script/generate.sh test-0000 tests/runtime/fss_0000/source/test-0001-unicode.fss parameter:"build_path"test/fss_0000
+
+  touch directory parameter:"build_path"test/fss_0001
+
+  print
+  print Generating Test 0000 for Extended (FSS-0001).
+
+  touch directory parameter:"build_path"test/fss_0001
+  run bash ./tests/runtime/script/generate.sh test-0001 tests/runtime/fss_0001/source/test-0000-quotes_and_escapes.fss parameter:"build_path"test/fss_0001
+
+  print
+  print Generating Test 0001 for Extended (FSS-0001).
+  run bash ./tests/runtime/script/generate.sh test-0001 tests/runtime/fss_0001/source/test-0001-unicode.fss parameter:"build_path"test/fss_0001
+
+verify:
+  print
+  print Verifying Tests for Basic (FSS-0000).
+  run bash ./tests/runtime/script/verify.sh build/test/fss_0000/ tests/runtime/fss_0000/expect/
+
+  print
+  print Verifying Tests for Extended (FSS-0001).
+  run bash ./tests/runtime/script/verify.sh build/test/fss_0001/ tests/runtime/fss_0001/expect/
+
+build_path:
+  parameter build_path build/
+
+  if parameter build:value
+    parameter build_path parameter:"build:value"
+
+  touch directory parameter:"build_path" parameter:"build_path"test
+
+  # Setup the PATH to use the just compiled programs.
+  define PATH parameter:"build_path"programs/static:parameter:"build_path"programs/shared:define:"PATH"
+
+ld_library_path:
+  if define LD_LIBRARY_PATH
+  and parameter work:value
+    define LD_LIBRARY_PATH 'parameter:"build_path"libraries/shared:parameter:"work:value"libraries/shared:define:"LD_LIBRARY_PATH"'
+
+  else
+  if define LD_LIBRARY_PATH
+    define LD_LIBRARY_PATH 'parameter:"build_path"libraries/shared:define:"LD_LIBRARY_PATH"'
+
+  else
+  if parameter work:value
+    define LD_LIBRARY_PATH 'parameter:"build_path"libraries/shared:parameter:"work:value"libraries/shared'
+
+  else
+    define LD_LIBRARY_PATH parameter:"build_path"libraries/shared
+
+help:
+  print
+  print context:'title'Fakefile Options for FSS Read Software Testing.context:'reset'
+
+  print
+  print The following operations are available\:
+  print "  - context:'notable'help:context:'reset'      Perform the help operation, printing this message."
+  print "  - context:'notable'main:context:'reset'      Build the main program, generate the data, and verify the tests."
+  print "  - context:'notable'generate:context:'reset'  Generate the data (main program must be built)."
+  print "  - context:'notable'verify:context:'reset'    Verify the tests (main program must be built)."

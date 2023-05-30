@@ -1,0 +1,21 @@
+# fss-0000
+Hi there.
+\\hi there
+\\\\\\"Hello to you."
+
+"\\\\\" quoted stuff." and so on..
+
+"" zero
+\"" a b
+\" one
+"""" c d
+"\" " e f
+"\\\\\" sss" there
+
+"\\"\\\" xx" bb
+"\\"\\\"" bb
+
+#comment
+\#not a comment...should have no slashes.
+\\#not a comment either...should have one slash.
+\\\#not a comment either...should have two slashes.

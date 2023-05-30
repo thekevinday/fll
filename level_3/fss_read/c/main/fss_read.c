@@ -108,7 +108,6 @@ extern "C" {
 
     if (main->setting.flag & fss_read_main_flag_object_e) {
       if (*line == main->setting.line) {
-
         if (main->setting.flag & fss_read_main_flag_total_e) {
           fss_read_print_number(&main->program.output, 1);
         }

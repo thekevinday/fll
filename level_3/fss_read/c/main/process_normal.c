@@ -288,6 +288,7 @@ extern "C" {
 
         if (names[at]) {
           max = 1;
+
           break;
         }
 
