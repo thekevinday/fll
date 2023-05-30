@@ -471,20 +471,6 @@ extern "C" {
     fss_read_setting_load_depth(arguments, main, parameters);
     if (F_status_is_error(main->setting.state.status)) return;
 
-    if (parameters->array[fss_read_parameter_select_e].result & f_console_result_found_e) {
-      main->setting.state.status = F_status_set_error(F_parameter);
-
-      if ((main->setting.flag & fss_read_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
-        fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
-      }
-
-      index = parameters->array[fss_read_parameter_select_e].values.array[i];
-
-      fll_program_print_error_parameter_integer_not_positive(&main->program.error, f_console_symbol_long_normal_s, fss_read_long_select_s, parameters->arguments.array[index]);
-
-      return;
-    }
-
     if (parameters->array[fss_read_parameter_trim_e].result & f_console_result_found_e) {
       main->setting.flag |= fss_read_main_flag_trim_e;
     }
