@@ -75,7 +75,7 @@ extern "C" {
  * @param range
  *   The range within the buffer representing the Content to print.
  * @param quote
- *   The quote in use, if any.
+ *   The quote type representing the character to use (from the f_fss_quote_type_*_e).
  * @param delimits
  *   The delimits array representing a delimited Content.
  *

@@ -4,3 +4,7 @@ c d zero​width
 мир e␠
 spaced out  
 UTF space! <-- should have the word 'space!'
+hi 
+a line܀܀܀with some random text
+a 偐 ぐ
+a b c d e f ሴ䌡

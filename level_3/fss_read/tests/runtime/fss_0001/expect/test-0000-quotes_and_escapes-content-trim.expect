@@ -12,4 +12,7 @@ bb
 bb
 a comment...should have no slashes.
 a comment either...should have one slash.
-a comment either...should have two slashes.
+a comment either...should 'have two' \'slashes'.
+line...with some random text
+nother line.
+b c d 'e f' \'g

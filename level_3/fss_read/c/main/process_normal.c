@@ -407,18 +407,32 @@ extern "C" {
     fss_read_main_t * const main = (fss_read_main_t *) void_main;
 
     f_array_length_t total = 0;
+    f_array_length_t i = 0;
 
-    for (f_array_length_t i = 0; i < main->setting.objects.used; ++i) {
+    if (main->setting.flag & fss_read_main_flag_select_e) {
+      for (; i < main->setting.contents.used; ++i) {
 
-      if (!names[i]) continue;
-      if (fss_read_signal_check(main)) return;
+        if (!names[i]) continue;
+        if (fss_read_signal_check(main)) return;
 
-      if (!(main->setting.flag & fss_read_main_flag_object_e) && (main->setting.flag & fss_read_main_flag_content_e)) {
-        if (!(main->setting.contents.array[i].used || (main->setting.flag & fss_read_main_flag_empty_e))) continue;
-      }
+        if (main->setting.select < main->setting.contents.array[i].used && main->setting.contents.array[i].array[main->setting.select].start <= main->setting.contents.array[i].array[main->setting.select].stop) {
+          ++total;
+        }
+      } // for
+    }
+    else {
+      for (; i < main->setting.objects.used; ++i) {
 
-      ++total;
-    } // for
+        if (!names[i]) continue;
+        if (fss_read_signal_check(main)) return;
+
+        if (!(main->setting.flag & fss_read_main_flag_object_e) && (main->setting.flag & fss_read_main_flag_content_e)) {
+          if (!(main->setting.contents.array[i].used || (main->setting.flag & fss_read_main_flag_empty_e))) continue;
+        }
+
+        ++total;
+      } // for
+    }
 
     fss_read_print_number(
       &main->program.output,

@@ -10,6 +10,9 @@ Hi there.
 "\\\\\" sss" there
 "\\"\\\" xx" bb
 "\\"\\\"" bb
-\#not a comment...should have no slashes.
-\\#not a comment either...should have one slash.
-\\\#not a comment either...should have two slashes.
+\#not a "comment...should have" no slashes.
+\\#not a comment either...should 'have one' slash.
+\\\#not a comment either...should \'have two' \\'slashes'.
+a "line...with some" random text
+a nother line.
+a b 'c d' \'e f' \\'g

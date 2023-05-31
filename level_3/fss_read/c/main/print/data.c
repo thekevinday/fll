@@ -13,6 +13,8 @@ extern "C" {
 
     if (at >= main->setting.contents.used) return F_output_not;
 
+    bool print_set_end = F_false;
+
     if ((main->setting.flag & fss_read_main_flag_object_e) || (main->setting.flag & fss_read_main_flag_content_e) && (main->setting.contents.array[at].used || (main->setting.flag & fss_read_main_flag_empty_e))) {
       if (main->setting.flag & fss_read_main_flag_object_e) {
         if (main->callback.print_object) {
@@ -22,22 +24,37 @@ extern "C" {
         if (main->callback.print_object_end) {
           main->callback.print_object_end(&main->program.output);
         }
+
+        print_set_end = F_true;
       }
 
-      if ((main->setting.flag & fss_read_main_flag_content_e) && main->setting.contents.array[at].used) {
-        if (main->callback.print_content) {
-          for (f_array_length_t i = 0; i < main->setting.contents.array[at].used; ++i) {
+      if (main->setting.flag & fss_read_main_flag_content_e) {
+        if(main->setting.flag & fss_read_main_flag_select_e) {
+          if (main->setting.select < main->setting.contents.array[at].used && main->setting.contents.array[at].array[main->setting.select].start <= main->setting.contents.array[at].array[main->setting.select].stop) {
+            print_set_end = F_true;
 
-            main->callback.print_content(&main->program.output, main->setting.contents.array[at].array[i], main->setting.quotes_content.array[at].used ? main->setting.quotes_content.array[at].array[i] : 0, delimits_content);
-
-            if (main->callback.print_content_next && i + 1 < main->setting.contents.array[at].used) {
-              main->callback.print_content_next(&main->program.output);
+            if (main->callback.print_content) {
+              main->callback.print_content(&main->program.output, main->setting.contents.array[at].array[main->setting.select], main->setting.quotes_content.array[at].used ? main->setting.quotes_content.array[at].array[main->setting.select] : 0, delimits_content);
             }
-          } // for
+          }
+        }
+        else if (main->setting.contents.array[at].used) {
+          print_set_end = F_true;
+
+          if (main->callback.print_content) {
+            for (f_array_length_t i = 0; i < main->setting.contents.array[at].used; ++i) {
+
+              main->callback.print_content(&main->program.output, main->setting.contents.array[at].array[i], main->setting.quotes_content.array[at].used ? main->setting.quotes_content.array[at].array[i] : 0, delimits_content);
+
+              if (main->callback.print_content_next && i + 1 < main->setting.contents.array[at].used) {
+                main->callback.print_content_next(&main->program.output);
+              }
+            } // for
+          }
         }
       }
 
-      if (main->callback.print_set_end) {
+      if (print_set_end && main->callback.print_set_end) {
         main->callback.print_set_end(&main->program.output);
       }
     }
@@ -58,7 +75,7 @@ extern "C" {
     }
 
     if (main->setting.flag & fss_read_main_flag_original_e) {
-      if ((main->setting.flag & fss_read_main_flag_quote_content_e) && quote) {
+      if (main->setting.flag & fss_read_main_flag_quote_content_e) {
         fss_read_print_quote(&main->program.output, quote);
       }
     }
@@ -66,7 +83,7 @@ extern "C" {
     fll_print_except_in_dynamic_partial(main->setting.buffer, range, delimits, main->setting.comments, print->to);
 
     if (main->setting.flag & fss_read_main_flag_original_e) {
-      if ((main->setting.flag & fss_read_main_flag_quote_content_e) && quote) {
+      if (main->setting.flag & fss_read_main_flag_quote_content_e) {
         fss_read_print_quote(&main->program.output, quote);
       }
     }
