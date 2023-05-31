@@ -180,7 +180,7 @@ extern "C" {
     f_char_t quote_found = 0;
 
     if (quote) {
-      *quote = 0;
+      *quote = f_fss_quote_type_none_e;
     }
 
     // Identify where the object begins.
@@ -365,11 +365,17 @@ extern "C" {
 
             if (state->status == F_true) {
               if (quote) {
-                if (quote_found == f_fss_quote_single_s.string[0] || quote_found == f_fss_quote_double_s.string[0] || quote_found == f_fss_quote_backtick_s.string[0]) {
-                  *quote = quote_found;
+                if (quote_found == f_fss_quote_double_s.string[0]) {
+                  *quote = f_fss_quote_type_double_e;
+                }
+                else if (quote_found == f_fss_quote_single_s.string[0]) {
+                  *quote = f_fss_quote_type_single_e;
+                }
+                else if (quote_found == f_fss_quote_backtick_s.string[0]) {
+                  *quote = f_fss_quote_type_backtick_e;
                 }
                 else {
-                  *quote = 0;
+                  *quote = f_fss_quote_type_none_e;
                 }
               }
 
@@ -532,8 +538,14 @@ extern "C" {
 
           if (state->status == F_true) {
             if (quote) {
-              if (quote_found == f_fss_quote_single_s.string[0] || quote_found == f_fss_quote_double_s.string[0] || quote_found == f_fss_quote_backtick_s.string[0]) {
-                *quote = quote_found;
+              if (quote_found == f_fss_quote_double_s.string[0]) {
+                *quote = f_fss_quote_type_double_e;
+              }
+              else if (quote_found == f_fss_quote_single_s.string[0]) {
+                *quote = f_fss_quote_type_single_e;
+              }
+              else if (quote_found == f_fss_quote_backtick_s.string[0]) {
+                *quote = f_fss_quote_type_backtick_e;
               }
               else {
                 *quote = f_fss_quote_type_none_e;

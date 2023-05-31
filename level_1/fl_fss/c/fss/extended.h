@@ -44,7 +44,7 @@ extern "C" {
  * @param found
  *   A set of all locations where a valid content was found.
  * @param quotes
- *   An array of quotes designating whether or not content is quoted and what quote is in use.
+ *   This will store the quote type representing the character to use (from the f_fss_quote_type_*_e).
  *   Set pointer address to 0 to not use.
  * @param delimits
  *   A delimits array representing where delimits exist within the buffer.
@@ -178,7 +178,7 @@ extern "C" {
  * @param found
  *   A location where a valid object was found.
  * @param quote
- *   This will store the quote character to use (if value is 0, then there is not quote).
+ *   This will store the quote type representing the character to use (from the f_fss_quote_type_*_e).
  *   Set pointer address to 0 to not use.
  * @param delimits
  *   A delimits array representing where delimits exist within the buffer.
