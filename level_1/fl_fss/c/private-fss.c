@@ -253,7 +253,7 @@ extern "C" {
         return F_none_stop;
       }
 
-      if (buffer.string[range->start] == f_fss_delimit_quote_single_s.string[0] || buffer.string[range->start] == f_fss_delimit_quote_double_s.string[0] || (object_as && buffer.string[range->start] == f_fss_comment_s.string[0])) {
+      if (buffer.string[range->start] == f_fss_quote_single_s.string[0] || buffer.string[range->start] == f_fss_quote_double_s.string[0] || buffer.string[range->start] == f_fss_quote_backtick_s.string[0] || (object_as && buffer.string[range->start] == f_fss_comment_s.string[0])) {
 
         // Only the first slash before a quote needs to be escaped (or not) as once there is a slash before a quote, this cannot ever be a quote object.
         // This simplifies the number of slashes needed.
@@ -266,7 +266,7 @@ extern "C" {
         if (F_status_is_error(status)) return status;
       }
     }
-    else if (buffer.string[range->start] == f_fss_delimit_quote_single_s.string[0] || buffer.string[range->start] == f_fss_delimit_quote_double_s.string[0]) {
+    else if (buffer.string[range->start] == f_fss_quote_single_s.string[0] || buffer.string[range->start] == f_fss_delimit_quote_double_s.string[0] || buffer.string[range->start] == f_fss_quote_backtick_s.string[0]) {
       quote_found = buffer.string[range->start];
 
       status = f_utf_buffer_increment(buffer, range, 1);
@@ -366,11 +366,14 @@ extern "C" {
 
             if (status == F_true) {
               if (quote) {
-                if (quote_found == f_fss_delimit_quote_single_s.string[0]) {
+                if (quote_found == f_fss_quote_double_s.string[0]) {
+                  *quote = f_fss_quote_type_double_e;
+                }
+                else if (quote_found == f_fss_quote_single_s.string[0]) {
                   *quote = f_fss_quote_type_single_e;
                 }
-                else if (quote_found == f_fss_delimit_quote_double_s.string[0]) {
-                  *quote = f_fss_quote_type_double_e;
+                else if (quote_found == f_fss_quote_backtick_s.string[0]) {
+                  *quote = f_fss_quote_type_backtick_e;
                 }
                 else {
                   *quote = f_fss_quote_type_none_e;
@@ -526,11 +529,14 @@ extern "C" {
 
           if (status == F_true) {
             if (quote) {
-              if (quote_found == f_fss_delimit_quote_single_s.string[0]) {
+              if (quote_found == f_fss_quote_double_s.string[0]) {
+                *quote = f_fss_quote_type_double_e;
+              }
+              else if (quote_found == f_fss_quote_single_s.string[0]) {
                 *quote = f_fss_quote_type_single_e;
               }
-              else if (quote_found == f_fss_delimit_quote_double_s.string[0]) {
-                *quote = f_fss_quote_type_double_e;
+              else if (quote_found == f_fss_quote_backtick_s.string[0]) {
+                *quote = f_fss_quote_type_backtick_e;
               }
               else {
                 *quote = f_fss_quote_type_none_e;

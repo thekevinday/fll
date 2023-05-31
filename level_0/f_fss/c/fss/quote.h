@@ -20,15 +20,17 @@ extern "C" {
  * Types for FSS quote.
  *
  * f_fss_quote_type_*:
- *   - none:   Not a quote.
- *   - single: Quote type is a single quote.
- *   - double: Quote type is a double quote.
+ *   - none:     Not a quote.
+ *   - single:   Quote type is a single quote.
+ *   - double:   Quote type is a double quote.
+ *   - backtick: Quote type is a backtick.
  */
 #ifndef _di_f_fss_quote_type_
   enum {
     f_fss_quote_type_none_e = 0,
     f_fss_quote_type_single_e,
     f_fss_quote_type_double_e,
+    f_fss_quote_type_backtick_e,
   };
 #endif // _di_f_fss_quote_type_
 

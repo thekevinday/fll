@@ -406,13 +406,27 @@ extern "C" {
           }
           else {
             if ((data->option & fss_extended_read_data_option_original_d) && data->quotes_object.array[at]) {
-              f_print_character_safely(data->quotes_object.array[at] == f_fss_quote_type_single_e ? f_fss_quote_single_s.string[0] : f_fss_quote_double_s.string[0], main->output.to.stream);
+              f_print_character_safely(
+                data->quotes_object.array[at] == f_fss_quote_type_single_e
+                  ? f_fss_quote_single_s.string[0]
+                  : data->quotes_object.array[at] == f_fss_quote_type_double_e
+                    ? f_fss_quote_double_s.string[0]
+                    : f_fss_quote_backtick_s.string[0],
+                main->output.to.stream
+              );
             }
 
             fss_extended_read_print_at(main, i, *delimits_object, *delimits_content, data);
 
             if ((data->option & fss_extended_read_data_option_original_d) && data->quotes_object.array[at]) {
-              f_print_character_safely(data->quotes_object.array[at] == f_fss_quote_type_single_e ? f_fss_quote_single_s.string[0] : f_fss_quote_double_s.string[0], main->output.to.stream);
+              f_print_character_safely(
+                data->quotes_object.array[at] == f_fss_quote_type_single_e
+                  ? f_fss_quote_single_s.string[0]
+                  : data->quotes_object.array[at] == f_fss_quote_type_double_e
+                    ? f_fss_quote_double_s.string[0]
+                    : f_fss_quote_backtick_s.string[0],
+                main->output.to.stream
+              );
             }
           }
         }
@@ -426,13 +440,27 @@ extern "C" {
         }
         else {
           if ((data->option & fss_extended_read_data_option_original_d) && data->quotes_content.array[at].array[i]) {
-            f_print_character_safely(data->quotes_content.array[at].array[i] == f_fss_quote_type_single_e ? f_fss_quote_single_s.string[0] : f_fss_quote_double_s.string[0], main->output.to.stream);
+            f_print_character_safely(
+              data->quotes_content.array[at].array[i] == f_fss_quote_type_single_e
+                ? f_fss_quote_single_s.string[0]
+                : data->quotes_content.array[at].array[i] == f_fss_quote_type_double_e
+                  ? f_fss_quote_double_s.string[0]
+                  : f_fss_quote_backtick_s.string[0],
+              main->output.to.stream
+            );
           }
 
           fss_extended_read_print_at(main, i, *delimits_object, *delimits_content, data);
 
           if ((data->option & fss_extended_read_data_option_original_d) && data->quotes_content.array[at].array[i]) {
-            f_print_character_safely(data->quotes_content.array[at].array[i] == f_fss_quote_type_single_e ? f_fss_quote_single_s.string[0] : f_fss_quote_double_s.string[0], main->output.to.stream);
+            f_print_character_safely(
+              data->quotes_content.array[at].array[i] == f_fss_quote_type_single_e
+                ? f_fss_quote_single_s.string[0]
+                : data->quotes_content.array[at].array[i] == f_fss_quote_type_double_e
+                  ? f_fss_quote_double_s.string[0]
+                  : f_fss_quote_backtick_s.string[0],
+              main->output.to.stream
+            );
           }
         }
 

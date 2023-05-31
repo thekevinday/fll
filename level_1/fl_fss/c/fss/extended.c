@@ -39,20 +39,18 @@ extern "C" {
 
       f_string_range_t content_partial = f_string_range_t_initialize;
 
-      quote = f_fss_quote_type_none_e;
-
       status = private_fl_fss_basic_read(buffer, F_false, state, range, &content_partial, &quote, delimits);
 
       if (status == F_fss_found_object || F_status_set_fine(status) == F_fss_found_object_content_not) {
         status_allocate = f_string_ranges_increase(state.step_small, found);
 
-        if (F_status_is_error_not(status_allocate) && quotes) {
-          status_allocate = f_uint8s_increase(state.step_small, quotes);
-        }
-
         // The private function sets the error bit on unterminated quoted Object.
         if (status == F_status_set_error(F_fss_found_object_content_not)) {
           status = F_fss_found_object_content_not;
+        }
+
+        if (F_status_is_error_not(status_allocate) && quotes) {
+          status_allocate = f_uint8s_increase(state.step_small, quotes);
         }
 
         if (F_status_is_error(status_allocate)) {
@@ -68,17 +66,7 @@ extern "C" {
         found->array[found->used++] = content_partial;
 
         if (quotes) {
-          if (quote == f_fss_quote_type_double_e) {
-            quotes->array[quotes->used] = f_string_ascii_quote_double_s.string[0];
-          }
-          else if (quote == f_fss_quote_type_single_e) {
-            quotes->array[quotes->used] = f_string_ascii_quote_single_s.string[0];
-          }
-          else {
-            quotes->array[quotes->used] = 0;
-          }
-
-          quotes->used = found->used;
+          quotes->array[quotes->used++] = quote;
         }
 
         content_found = 1;
@@ -115,6 +103,10 @@ extern "C" {
       }
       else if (F_status_is_error(status)) {
         delimits->used = delimits_used;
+
+        if (quotes) {
+          quotes->used = quotes_used;
+        }
 
         return status;
       }

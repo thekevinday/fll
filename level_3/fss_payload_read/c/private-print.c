@@ -68,24 +68,52 @@ extern "C" {
       if (data->option & fss_payload_read_data_option_object_d) {
         if (data->option & fss_payload_read_data_option_trim_d) {
           if ((data->option & fss_payload_read_data_option_original_d) && data->quotes_object_header.array[at]) {
-            f_print_dynamic_raw(data->quotes_object_header.array[at] == f_fss_quote_type_single_e ? f_fss_quote_single_s : f_fss_quote_double_s, main->output.to.stream);
+            f_print_dynamic_raw(
+              data->quotes_object_header.array[at] == f_fss_quote_type_single_e
+                ? f_fss_quote_single_s
+                : data->quotes_object_header.array[at] == f_fss_quote_type_double_e
+                  ? f_fss_quote_double_s
+                  : f_fss_quote_backtick_s,
+              main->output.to.stream
+            );
           }
 
           fl_print_trim_except_dynamic_partial(data->buffer, data->objects_header.array[at], delimits_object, main->output.to.stream);
 
           if ((data->option & fss_payload_read_data_option_original_d) && data->quotes_object_header.array[at]) {
-            f_print_dynamic_raw(data->quotes_object_header.array[at] == f_fss_quote_type_single_e ? f_fss_quote_single_s : f_fss_quote_double_s, main->output.to.stream);
+            f_print_dynamic_raw(
+              data->quotes_object_header.array[at] == f_fss_quote_type_single_e
+                ? f_fss_quote_single_s
+                : data->quotes_object_header.array[at] == f_fss_quote_type_double_e
+                  ? f_fss_quote_double_s
+                  : f_fss_quote_backtick_s,
+              main->output.to.stream
+            );
           }
         }
         else {
           if ((data->option & fss_payload_read_data_option_original_d) && data->quotes_object_header.array[at]) {
-            f_print_dynamic_raw(data->quotes_object_header.array[at] == f_fss_quote_type_single_e ? f_fss_quote_single_s : f_fss_quote_double_s, main->output.to.stream);
+            f_print_dynamic_raw(
+              data->quotes_object_header.array[at] == f_fss_quote_type_single_e
+                ? f_fss_quote_single_s
+                : data->quotes_object_header.array[at] == f_fss_quote_type_double_e
+                  ? f_fss_quote_double_s
+                  : f_fss_quote_backtick_s,
+              main->output.to.stream
+            );
           }
 
           f_print_except_dynamic_partial(data->buffer, data->objects_header.array[at], delimits_object, main->output.to.stream);
 
           if ((data->option & fss_payload_read_data_option_original_d) && data->quotes_object_header.array[at]) {
-            f_print_dynamic_raw(data->quotes_object_header.array[at] == f_fss_quote_type_single_e ? f_fss_quote_single_s : f_fss_quote_double_s, main->output.to.stream);
+            f_print_dynamic_raw(
+              data->quotes_object_header.array[at] == f_fss_quote_type_single_e
+                ? f_fss_quote_single_s
+                : data->quotes_object_header.array[at] == f_fss_quote_type_double_e
+                  ? f_fss_quote_double_s
+                  : f_fss_quote_backtick_s,
+              main->output.to.stream
+            );
           }
         }
 
@@ -102,13 +130,27 @@ extern "C" {
             content_printed = F_true;
 
             if ((data->option & fss_payload_read_data_option_original_d) && data->quotes_content_header.array[at].array[data->select]) {
-              f_print_dynamic_raw(data->quotes_content_header.array[at].array[data->select] == f_fss_quote_type_single_e ? f_fss_quote_single_s : f_fss_quote_double_s, main->output.to.stream);
+              f_print_dynamic_raw(
+                data->quotes_content_header.array[at].array[data->select] == f_fss_quote_type_single_e
+                  ? f_fss_quote_single_s
+                  : data->quotes_content_header.array[at].array[data->select] == f_fss_quote_type_double_e
+                    ? f_fss_quote_double_s
+                    : f_fss_quote_backtick_s,
+                main->output.to.stream
+              );
             }
 
             f_print_except_dynamic_partial(data->buffer, data->contents_header.array[at].array[data->select], delimits_content, main->output.to.stream);
 
             if ((data->option & fss_payload_read_data_option_original_d) && data->quotes_content_header.array[at].array[data->select]) {
-              f_print_dynamic_raw(data->quotes_content_header.array[at].array[data->select] == f_fss_quote_type_single_e ? f_fss_quote_single_s : f_fss_quote_double_s, main->output.to.stream);
+              f_print_dynamic_raw(
+                data->quotes_content_header.array[at].array[data->select] == f_fss_quote_type_single_e
+                  ? f_fss_quote_single_s
+                  : data->quotes_content_header.array[at].array[data->select] == f_fss_quote_type_double_e
+                    ? f_fss_quote_double_s
+                    : f_fss_quote_backtick_s,
+                main->output.to.stream
+              );
             }
           }
         }
@@ -122,13 +164,27 @@ extern "C" {
             content_printed = F_true;
 
             if ((data->option & fss_payload_read_data_option_original_d) && data->quotes_content_header.array[at].array[i]) {
-              f_print_dynamic_raw(data->quotes_content_header.array[at].array[i] == f_fss_quote_type_single_e ? f_fss_quote_single_s : f_fss_quote_double_s, main->output.to.stream);
+              f_print_dynamic_raw(
+                data->quotes_content_header.array[at].array[i] == f_fss_quote_type_single_e
+                  ? f_fss_quote_single_s
+                  : data->quotes_content_header.array[at].array[i] == f_fss_quote_type_double_e
+                    ? f_fss_quote_double_s
+                    : f_fss_quote_backtick_s,
+                main->output.to.stream
+              );
             }
 
             f_print_except_dynamic_partial(data->buffer, data->contents_header.array[at].array[i], delimits_content, main->output.to.stream);
 
             if ((data->option & fss_payload_read_data_option_original_d) && data->quotes_content_header.array[at].array[i]) {
-              f_print_dynamic_raw(data->quotes_content_header.array[at].array[i] == f_fss_quote_type_single_e ? f_fss_quote_single_s : f_fss_quote_double_s, main->output.to.stream);
+              f_print_dynamic_raw(
+                data->quotes_content_header.array[at].array[i] == f_fss_quote_type_single_e
+                  ? f_fss_quote_single_s
+                  : data->quotes_content_header.array[at].array[i] == f_fss_quote_type_double_e
+                    ? f_fss_quote_double_s
+                    : f_fss_quote_backtick_s,
+                main->output.to.stream
+              );
             }
 
             if (i + 1 < data->contents_header.array[at].used && data->contents_header.array[at].array[i + 1].start <= data->contents_header.array[at].array[i + 1].stop) {
