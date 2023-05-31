@@ -38,7 +38,7 @@ extern "C" {
  * @param contents
  *   This will be populated with all valid contents found.
  * @param objects_quoted
- *   (optional) An array mapped to each object in objects representing the quote discovered, if any.
+ *   (optional) An array mapped to each object in objects representing the quote type discovered (from the f_fss_quote_type_*_e), if any.
  *   Set the pointer address to 0 to disable.
  * @param objects_delimits
  *   An array of delimits for objects detected during processing.
