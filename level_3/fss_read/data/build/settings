@@ -46,7 +46,7 @@ build_sources_library extended_list/fss_read.c extended_list/common.c extended_l
 build_sources_library payload/fss_read.c payload/common.c payload/print.c
 
 build_sources_headers main/fss_read.h main/common.h main/common/define.h main/common/enumeration.h main/common/print.h main/common/static.h main/common/string.h main/common/type.h main/print/data.h main/print/error.h main/print/message.h main/process_normal.h main/signal.h main/thread.h
-build_sources_headers basic/fss_read.h basic/common.h basic/print.h basic/private-common.h
+build_sources_headers basic/fss_read.h basic/common.h basic/print.h
 build_sources_headers basic_list/fss_read.h basic_list/common.h basic_list/print.h
 build_sources_headers embedded_list/fss_read.h embedded_list/common.h embedded_list/print.h
 build_sources_headers extended/fss_read.h extended/common.h extended/print.h
@@ -74,7 +74,7 @@ defines -D_libcap_legacy_only_
 defines-threadless -D_di_thread_support_
 defines-thread -D_pthread_attr_unsupported_ -D_pthread_sigqueue_unsupported_
 
-flags -O2 -z now -g -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-parentheses -Wno-missing-braces
+flags -O2 -z now -g -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-parentheses -Wno-missing-braces -Wno-main
 flags-thread -pthread
 flags-clang -Wno-logical-op-parentheses
 flags-test -O0 -fstack-protector -Wall
