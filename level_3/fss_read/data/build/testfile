@@ -12,6 +12,9 @@ settings:
   environment PATH LD_LIBRARY_PATH
   environment LANG LC_ALL LC_COLLATE LC_CTYPE LC_FASTMSG LC_MESSAGES LC_MONETARY LC_NUMERIC LC_TIME LOCPATH NLSPATH
 
+  # Change this to a valid shell script, such as "bash" or "zsh".
+  parameter script bash
+
 main:
   build settings
   build settings.main
@@ -27,34 +30,34 @@ generate:
   print
 
   touch directory parameter:"build_path"test/fss_0000
-  run bash ./tests/runtime/script/generate.sh test-0000 tests/runtime/fss_0000/source/test-0000-quotes_and_escapes.fss parameter:"build_path"test/fss_0000
+  run parameter:"script" ./tests/runtime/script/generate.sh test-0000 tests/runtime/fss_0000/source/test-0000-quotes_and_escapes.fss parameter:"build_path"test/fss_0000
 
   print
   print Generating Test 0001 for Basic (FSS-0000).
   print
-  run bash ./tests/runtime/script/generate.sh test-0000 tests/runtime/fss_0000/source/test-0001-unicode.fss parameter:"build_path"test/fss_0000
+  run parameter:"script" ./tests/runtime/script/generate.sh test-0000 tests/runtime/fss_0000/source/test-0001-unicode.fss parameter:"build_path"test/fss_0000
 
   print
   print Generating Test 0000 for Extended (FSS-0001).
   print
   touch directory parameter:"build_path"test/fss_0001
-  run bash ./tests/runtime/script/generate.sh test-0001 tests/runtime/fss_0001/source/test-0000-quotes_and_escapes.fss parameter:"build_path"test/fss_0001
+  run parameter:"script" ./tests/runtime/script/generate.sh test-0001 tests/runtime/fss_0001/source/test-0000-quotes_and_escapes.fss parameter:"build_path"test/fss_0001
 
   print
   print Generating Test 0001 for Extended (FSS-0001).
   print
-  run bash ./tests/runtime/script/generate.sh test-0001 tests/runtime/fss_0001/source/test-0001-unicode.fss parameter:"build_path"test/fss_0001
+  run parameter:"script" ./tests/runtime/script/generate.sh test-0001 tests/runtime/fss_0001/source/test-0001-unicode.fss parameter:"build_path"test/fss_0001
 
 verify:
   print
   print Verifying Tests for Basic (FSS-0000).
   print
-  run bash ./tests/runtime/script/verify.sh build/test/fss_0000/ tests/runtime/fss_0000/expect/
+  run parameter:"script" ./tests/runtime/script/verify.sh build/test/fss_0000/ tests/runtime/fss_0000/expect/
 
   print
   print Verifying Tests for Extended (FSS-0001).
   print
-  run bash ./tests/runtime/script/verify.sh build/test/fss_0001/ tests/runtime/fss_0001/expect/
+  run parameter:"script" ./tests/runtime/script/verify.sh build/test/fss_0001/ tests/runtime/fss_0001/expect/
 
 build_path:
   parameter build_path build/
