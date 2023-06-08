@@ -52,15 +52,16 @@ test_main() {
   local path_scripts_package=${path_scripts}package.sh
   local path_test=${PWD}/test/
   local path_test_package=${path_test}package/
+  local path_test_package_individual=${path_test_package}individual/
+  local path_test_package_program=${path_test_package}program/
+  local path_test_package_stand_alone=${path_test_package}stand_alone/
   local path_test_project=${path_test}project/
   local path_test_work=${path_test}work/
-  local path_test_package_individual=${path_test_package}individual/
-  local path_test_package_stand_alone=${path_test_package}stand_alone/
   local print_line_first="yes"
   local print_line_last="yes"
   local test_system=
   local test_thread="thread"
-  local test_thread_individual="thread_individual"
+  local test_thread_individual="individual_thread"
 
   local context=
   local failure=0
@@ -72,6 +73,7 @@ test_main() {
 
   local projects="f_type f_status f_memory f_type_array f_string f_utf f_account f_capability f_color f_compare f_console f_control_group f_conversion f_directory f_environment f_execute f_file f_fss f_iki f_limit f_parse f_path f_pipe f_print f_rip f_serialize f_signal f_socket f_status_string f_thread fl_control_group fl_conversion fl_directory fl_environment fl_execute fl_fss fl_iki fl_path fl_print fl_signal fl_status_string fl_utf_file fll_control_group fll_error fll_execute fll_file fll_fss fll_fss_status_string fll_iki fll_print fll_program"
   local projects_no_tests="f_type"
+  local programs="fss_read"
 
   if [[ $# -gt 0 ]] ; then
     t=$#
@@ -139,10 +141,10 @@ test_main() {
           path_test=
         elif [[ ${p} == "-T" || ${p} == "--thread" ]] ; then
           test_thread="thread"
-          test_thread_individual="thread_individual"
+          test_thread_individual="individual_thread"
         elif [[ ${p} == "-L" || ${p} == "--threadless" ]] ; then
           test_thread="threadless"
-          test_thread_individual=""
+          test_thread_individual=
         elif [[ ${test_system} == "" ]] ; then
           test_system="${p}"
         else
@@ -159,6 +161,7 @@ test_main() {
           path_test=$(echo ${p} | sed -e 's|^//*|/|' -e 's|/*$|/|')
           path_test_package=${path_test}package/
           path_test_package_individual=${path_test_package}individual/
+          path_test_package_program=${path_test_package}program/
           path_test_package_stand_alone=${path_test_package}stand_alone/
           path_test_project=${path_test}project/
           path_test_work=${path_test}work/
@@ -418,45 +421,31 @@ test_operate() {
     ci_arguments="-d -I${includes_path} -d -L${libraries_path}"
 
     test_operate_ci_prebuild
-
-    if [[ ${?} -ne 0 ]] ; then
-      let failure=1
-
-      return 1
-    fi
   fi
 
-  if [[ ${build_project} == "yes" ]] ; then
+  if [[ ${failure} -eq 0 && ${build_project} == "yes" ]] ; then
     test_operate_build_tools
+  fi
 
-    if [[ ${?} -ne 0 ]] ; then
-      let failure=1
+  if [[ ${failure} -eq 0 ]] ; then
+    test_operate_build_individual
+  fi
 
-      return 1
+  if [[ ${failure} -eq 0 ]] ; then
+    test_operate_build_program
+  fi
+
+  if [[ ${failure} -eq 0 ]] ; then
+    if [[ ${test_system} == "github" || ${test_system} == "gitlab" ]] ; then
+      test_operate_ci_pretest
     fi
   fi
 
-  test_operate_build_individual
-
-  if [[ ${?} -ne 0 ]] ; then
-    let failure=1
-
-    return 1
+  if [[ ${failure} -eq 0 ]] ; then
+    test_operate_tests
   fi
 
-  if [[ ${test_system} == "github" || ${test_system} == "gitlab" ]] ; then
-    test_operate_ci_pretest
-
-    if [[ ${?} -ne 0 ]] ; then
-      let failure=1
-
-      return 1
-    fi
-  fi
-
-  test_operate_tests
-
-  return $?
+  return ${failure}
 }
 
 test_operate_build_individual() {
@@ -466,8 +455,8 @@ test_operate_build_individual() {
   if [[ ${verbosity} != "quiet" && ${verbosity} != "error" ]] ; then
     test_print_first_or_always
 
-    echo -e "${c_highlight}Cleaning and building package.${c_reset}"
-    echo -e "${c_title}------------------------------${c_reset}"
+    echo -e "${c_highlight}Cleaning and building individual package.${c_reset}"
+    echo -e "${c_title}-----------------------------------------${c_reset}"
     echo
   fi
 
@@ -486,6 +475,8 @@ test_operate_build_individual() {
       echo -e "${c_error}ERROR: Failed to clean and build the individual packages.${c_reset}"
     fi
 
+    let failure=1
+
     return 1
   fi
 
@@ -503,6 +494,45 @@ test_operate_build_individual() {
 
     cd ${path_original}
   done
+
+  if [[ ${failure} -eq 1 ]] ; then
+    return 1
+  fi
+
+  return 0
+}
+
+test_operate_build_program() {
+  local program=
+  local path_original="${PWD}/"
+
+  if [[ ${verbosity} != "quiet" && ${verbosity} != "error" ]] ; then
+    test_print_first_or_always
+
+    echo -e "${c_highlight}Cleaning and building program packages.${c_reset}"
+    echo -e "${c_title}---------------------------------------${c_reset}"
+    echo
+  fi
+
+  if [[ ${verbosity} == "debug" ]] ; then
+    test_print_first_or_always
+
+    echo "${shell_command} ${path_scripts_package} ${verbose} ${context} +F -d ${path_test_package} -p rebuild"
+  fi
+
+  ${shell_command} ${path_scripts_package} ${verbose} ${context} +F -d ${path_test_package} -p rebuild
+
+  if [[ ${?} -ne 0 ]] ; then
+    if [[ ${verbosity} != "quiet" ]] ; then
+      test_print_first
+
+      echo -e "${c_error}ERROR: Failed to clean and build the program packages.${c_reset}"
+    fi
+
+    let failure=1
+
+    return 1
+  fi
 
   if [[ ${failure} -eq 1 ]] ; then
     return 1
@@ -538,6 +568,8 @@ test_operate_build_project() {
 
       echo -e "${c_error}ERROR: Package directory '${c_notice}${path_}${project}-${version}${c_error}' is invalid or missing.${c_reset}"
     fi
+
+    let failure=1
 
     return 1
   fi
@@ -677,6 +709,8 @@ test_operate_build_tools() {
 
       echo -e "${c_error}ERROR: Failed to clean and build the stand_alone fake package.${c_reset}"
     fi
+
+    let failure=1
 
     return 1
   fi
@@ -1004,7 +1038,6 @@ test_operate_ci_prebuild_libcap() {
 }
 
 test_operate_tests() {
-  local project=
   local path_original="${PWD}/"
   local destination="${path_test_work}"
   local thread_individual_param=
@@ -1014,27 +1047,85 @@ test_operate_tests() {
     thread_individual_param="-m"
   fi
 
-  for project in ${projects} ; do
+  if [[ ${projects} != "" ]] ; then
+    test_operate_tests_projects
+  fi
 
-    if [[ ${verbosity} != "quiet" && ${verbosity} != "error" ]] ; then
+  if [[ ${failure} -eq 0 && ${programs} != "" ]] ; then
+    test_operate_tests_programs
+  fi
+
+  if [[ ${failure} -eq 1 ]] ; then
+    return 1
+  fi
+
+  return 0
+}
+
+test_operate_tests_change_to() {
+  local destination=${1}
+
+  if [[ ${failure} -eq 0 ]] ; then
+    if [[ ${verbosity} == "debug" ]] ; then
       test_print_first_or_always
 
-      echo -e "${c_highlight}Testing Project ${project}.${c_reset}"
-      echo -e "${c_title}--------------------------------------${c_reset}"
-      echo
+      echo -e "Running '${c_notice}cd ${destination}${c_reset}'."
     fi
 
-    if [[ ! -d ${path_test_package_individual}${project}-${version}/ ]] ; then
+    cd ${destination}
+
+    if [[ ${?} -ne 0 ]] ; then
       if [[ ${verbosity} != "quiet" ]] ; then
         test_print_first
 
-        echo -e "${c_error}ERROR: Package directory '${c_notice}${path_test_package_individual}${project}-${version}${c_error}' is invalid or missing.${c_reset}"
+        echo -e "${c_error}ERROR: Failed to change into directory '${c_notice}${destination}${c_error}'.${c_reset}"
 
         test_print_last
       fi
 
       let failure=1
     fi
+  fi
+}
+
+test_operate_tests_name() {
+  local what=${1}
+  local name=${2}
+
+  if [[ ${verbosity} != "quiet" && ${verbosity} != "error" ]] ; then
+    test_print_first_or_always
+
+    echo -e "${c_highlight}Testing ${what} ${name}.${c_reset}"
+    echo -e "${c_title}--------------------------------------${c_reset}"
+    echo
+  fi
+}
+
+test_operate_tests_path_exists() {
+  local what=${1}
+  local path_name=${2}
+
+  if [[ ! -d ${path_name}/ ]] ; then
+    if [[ ${verbosity} != "quiet" ]] ; then
+      test_print_first
+
+      echo -e "${c_error}ERROR: ${what} directory '${c_notice}${path_name}${c_error}' is invalid or missing.${c_reset}"
+
+      test_print_last
+    fi
+
+    let failure=1
+  fi
+}
+
+test_operate_tests_projects() {
+  local project=
+
+  for project in ${projects} ; do
+
+    test_operate_tests_name "Project" "${project}"
+
+    test_operate_tests_path_exists "Project" "${path_test_package_individual}${project}-${version}/"
 
     if [[ ${failure} -eq 0 ]] ; then
       if [[ ! -f ${path_test_package_individual}${project}-${version}/data/build/testfile ]] ; then
@@ -1054,57 +1145,9 @@ test_operate_tests() {
       fi
     fi
 
-    if [[ ${failure} -eq 0 ]] ; then
-      if [[ ${verbosity} == "debug" ]] ; then
-        test_print_first_or_always
+    test_operate_tests_change_to "${path_test_package_individual}${project}-${version}/"
 
-        echo -e "Running '${c_notice}cd ${path_test_package_individual}${project}-${version}/${c_reset}'."
-      fi
-
-      cd ${path_test_package_individual}${project}-${version}/
-
-      if [[ ${?} -ne 0 ]] ; then
-        if [[ ${verbosity} != "quiet" ]] ; then
-          test_print_first
-
-          echo -e "${c_error}ERROR: Failed to change into directory '${c_notice}${path_test_package_individual}${project}-${version}${c_error}'.${c_reset}"
-
-          test_print_last
-        fi
-
-        let failure=1
-      fi
-    fi
-
-    if [[ ${failure} -eq 0 ]] ; then
-      if [[ ${verbosity} == "debug" ]] ; then
-        test_print_first_or_always
-
-        if [[ ${build_compiler} == "gcc" ]] ; then
-          echo "PATH=\"${env_path}\" LD_LIBRARY_PATH=\"${env_libs}\" fake ${verbose} ${context} -w \"${destination}\" -m individual -m ${test_thread} ${thread_individual_param} ${thread_individual_value} -m test clean make -f testfile ${ci_arguments}"
-        else
-          echo "PATH=\"${env_path}\" LD_LIBRARY_PATH=\"${env_libs}\" fake ${verbose} ${context} -w \"${destination}\" -m individual -m ${test_thread} ${thread_individual_param} ${thread_individual_value} -m test -m ${build_compiler} clean make -f testfile ${ci_arguments}"
-        fi
-      fi
-
-      if [[ ${build_compiler} == "gcc" ]] ; then
-        PATH="${env_path}" LD_LIBRARY_PATH="${env_libs}" fake ${verbose} ${context} -w "${destination}" -m individual -m ${test_thread} ${thread_individual_param} ${thread_individual_value} -m test clean make -f testfile ${ci_arguments}
-      else
-        PATH="${env_path}" LD_LIBRARY_PATH="${env_libs}" fake ${verbose} ${context} -w "${destination}" -m individual -m ${test_thread} ${thread_individual_param} ${thread_individual_value} -m test -m ${build_compiler} clean make -f testfile ${ci_arguments}
-      fi
-
-      if [[ ${?} -ne 0 ]] ; then
-        if [[ ${verbosity} != "quiet" ]] ; then
-          test_print_first
-
-          echo -e "${c_error}ERROR: Failure while testing project '${c_notice}${project}${c_reset}${c_error}'.${c_reset}"
-
-          test_print_last
-        fi
-
-        let failure=1
-      fi
-    fi
+    test_operate_tests_run "project" "${project}"
 
     cd ${path_original}
 
@@ -1118,6 +1161,80 @@ test_operate_tests() {
   fi
 
   return 0
+}
+
+test_operate_tests_programs() {
+  local program=
+
+  for program in ${programs} ; do
+
+    test_operate_tests_name "Program" "${program}"
+
+    test_operate_tests_path_exists "Program" "${path_test_package_program}${program}-${version}/"
+
+    if [[ ${failure} -eq 0 ]] ; then
+      if [[ ! -f ${path_test_package_program}${program}-${version}/data/build/testfile ]] ; then
+        if [[ ${verbosity} == "verbose" || ${verbosity} == "debug" ]] ; then
+          test_print_first_or_always
+
+          echo -e "${c_warning}WARNING: Program '${c_notice}${program}${c_warning}' does not have a testfile.${c_reset}"
+        fi
+
+        continue
+      fi
+    fi
+
+    test_operate_tests_change_to "${path_test_package_program}${program}-${version}/"
+
+    test_operate_tests_run "program" "${program}"
+
+    cd ${path_original}
+
+    if [[ ${failure} -eq 1 ]] ; then
+      break;
+    fi
+  done
+
+  if [[ ${failure} -eq 1 ]] ; then
+    return 1
+  fi
+
+  return 0
+}
+
+test_operate_tests_run() {
+  local what=${1}
+  local name=${2}
+
+  if [[ ${failure} -eq 0 ]] ; then
+    if [[ ${verbosity} == "debug" ]] ; then
+      test_print_first_or_always
+
+      if [[ ${build_compiler} == "gcc" ]] ; then
+        echo "PATH=\"${env_path}\" LD_LIBRARY_PATH=\"${env_libs}\" fake ${verbose} ${context} -w \"${destination}\" -m individual -m ${test_thread} ${thread_individual_param} ${thread_individual_value} -m test clean make -f testfile ${ci_arguments}"
+      else
+        echo "PATH=\"${env_path}\" LD_LIBRARY_PATH=\"${env_libs}\" fake ${verbose} ${context} -w \"${destination}\" -m individual -m ${test_thread} ${thread_individual_param} ${thread_individual_value} -m test -m ${build_compiler} clean make -f testfile ${ci_arguments}"
+      fi
+    fi
+
+    if [[ ${build_compiler} == "gcc" ]] ; then
+      PATH="${env_path}" LD_LIBRARY_PATH="${env_libs}" fake ${verbose} ${context} -w "${destination}" -m individual -m ${test_thread} ${thread_individual_param} ${thread_individual_value} -m test clean make -f testfile ${ci_arguments}
+    else
+      PATH="${env_path}" LD_LIBRARY_PATH="${env_libs}" fake ${verbose} ${context} -w "${destination}" -m individual -m ${test_thread} ${thread_individual_param} ${thread_individual_value} -m test -m ${build_compiler} clean make -f testfile ${ci_arguments}
+    fi
+
+    if [[ ${?} -ne 0 ]] ; then
+      if [[ ${verbosity} != "quiet" ]] ; then
+        test_print_first
+
+        echo -e "${c_error}ERROR: Failure while testing ${what} '${c_notice}${name}${c_reset}${c_error}'.${c_reset}"
+
+        test_print_last
+      fi
+
+      let failure=1
+    fi
+  fi
 }
 
 test_print_first() {
@@ -1164,6 +1281,12 @@ test_cleanup() {
   unset test_operate_ci_pretest
   unset test_operate_ci_pretest_cmocka
   unset test_operate_tests
+  unset test_operate_tests_change_to
+  unset test_operate_tests_name
+  unset test_operate_tests_path_exists
+  unset test_operate_tests_projects
+  unset test_operate_tests_programs
+  unset test_operate_tests_run
   unset test_print_first
   unset test_print_first_or_always
   unset test_print_last
