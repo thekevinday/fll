@@ -841,6 +841,42 @@ const f_string_static_t fake_build_documentation_files_s = macro_f_string_static
 
     if (F_status_is_fine(status)) {
       if (data->main->output.verbosity != f_console_verbosity_quiet_e && data->main->output.verbosity != f_console_verbosity_error_e) {
+        f_string_statics_t modes_custom = f_string_statics_t_initialize;
+
+        if (build_arguments) {
+          if (build_arguments->used > 1) {
+            modes_custom.used = build_arguments->used - 1;
+          }
+          else if (data_build.setting.modes.used) {
+            modes_custom.used = data_build.setting.modes.used;
+          }
+        }
+
+        f_string_static_t modes_custom_array[modes_custom.used];
+        modes_custom.array = modes_custom_array;
+
+        if (build_arguments) {
+          f_array_length_t i = 0;
+
+          if (build_arguments->used > 1) {
+            for (; i < modes_custom.used; ++i) {
+              modes_custom.array[i] = build_arguments->array[i + 1];
+            } // for
+          }
+          else if (data_build.setting.modes.used) {
+            for (; i < data_build.setting.modes.used; ++i) {
+              modes_custom.array[i] = data_build.setting.modes.array[i];
+            } // for
+          }
+        }
+
+        // Custom modes are always used if provided, otherwise fallback to the passed modes or the default modes.
+        const f_string_statics_t * const modes = modes_custom.used
+          ? &modes_custom
+          : data->mode.used
+            ? &data->mode
+            : &data_build.setting.modes_default;
+
         flockfile(data->main->output.to.stream);
 
         fl_print_format("%r%[Building%] ", data->main->output.to.stream, f_string_eol_s, data->main->context.set.important, data->main->context.set.important);
@@ -849,24 +885,6 @@ const f_string_static_t fake_build_documentation_files_s = macro_f_string_static
         fl_print_format("%[%Q%]", data->main->output.to.stream, data->main->context.set.notable, build_arguments && build_arguments->used ? build_arguments->array[0] : data->settings, data->main->context.set.notable);
 
         fl_print_format("%[' with modes '%]", data->main->output.to.stream, data->main->context.set.important, data->main->context.set.important);
-
-        f_string_statics_t modes_custom = f_string_statics_t_initialize;
-        modes_custom.used = build_arguments && build_arguments->used > 1 ? build_arguments->used - 1 : 0;
-        modes_custom.size = 0;
-
-        f_string_static_t modes_custom_array[modes_custom.used];
-        modes_custom.array = modes_custom_array;
-
-        for (f_array_length_t i = 0; i < modes_custom.used; ++i) {
-          modes_custom.array[i] = build_arguments->array[i + 1];
-        } // for
-
-        // Custom modes are always used if provided, otherwise if any mode is specified, the entire defaults is replaced.
-        const f_string_statics_t * const modes = modes_custom.used
-          ? &modes_custom
-          : data->mode.used
-            ? &data->mode
-            : &data_build.setting.modes_default;
 
         for (f_array_length_t i = 0; i < modes->used; ) {
 

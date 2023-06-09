@@ -86,15 +86,33 @@ extern "C" {
 
     // Strip the build settings name from the build arguments to generate a list of modes.
     f_string_statics_t modes_custom = f_string_statics_t_initialize;
-    modes_custom.used = build_arguments && build_arguments->used > 1 ? build_arguments->used - 1 : 0;
-    modes_custom.size = 0;
+
+    if (build_arguments) {
+      if (build_arguments->used > 1) {
+        modes_custom.used = build_arguments->used - 1;
+      }
+      else if (setting->modes.used) {
+        modes_custom.used = setting->modes.used;
+      }
+    }
 
     f_string_static_t modes_custom_array[modes_custom.used];
     modes_custom.array = modes_custom_array;
 
-    for (f_array_length_t i = 0; i < modes_custom.used; ++i) {
-      modes_custom.array[i] = build_arguments->array[i + 1];
-    } // for
+    if (build_arguments) {
+      f_array_length_t i = 0;
+
+      if (build_arguments->used > 1) {
+        for (; i < modes_custom.used; ++i) {
+          modes_custom.array[i] = build_arguments->array[i + 1];
+        } // for
+      }
+      else if (setting->modes.used) {
+        for (; i < setting->modes.used; ++i) {
+          modes_custom.array[i] = setting->modes.array[i];
+        } // for
+      }
+    }
 
     f_string_static_t path_file = f_string_static_t_initialize;
 
