@@ -846,7 +846,7 @@ const f_string_static_t fake_build_documentation_files_s = macro_f_string_static
         fl_print_format("%r%[Building%] ", data->main->output.to.stream, f_string_eol_s, data->main->context.set.important, data->main->context.set.important);
         fl_print_format("%[%Q%]", data->main->output.to.stream, data->main->context.set.notable, data_build.setting.build_name, data->main->context.set.notable);
         fl_print_format("%[ using '%]", data->main->output.to.stream, data->main->context.set.important, data->main->context.set.important);
-        fl_print_format("%[%Q%]", data->main->output.to.stream, data->main->context.set.notable, data->settings, data->main->context.set.notable);
+        fl_print_format("%[%Q%]", data->main->output.to.stream, data->main->context.set.notable, build_arguments && build_arguments->used ? build_arguments->array[0] : data->settings, data->main->context.set.notable);
 
         fl_print_format("%[' with modes '%]", data->main->output.to.stream, data->main->context.set.important, data->main->context.set.important);
 
