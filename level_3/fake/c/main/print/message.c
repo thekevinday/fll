@@ -21,25 +21,14 @@ extern "C" {
 
     fl_print_format("%[' with modes '%]", print->to, print->set->important, print->set->important);
 
-    f_string_statics_t modes_custom = f_string_statics_t_initialize;
-    modes_custom.used = build_arguments && build_arguments->used > 1 ? build_arguments->used - 1 : 0;
-    modes_custom.size = 0;
-
-    f_string_static_t modes_custom_array[modes_custom.used];
-    modes_custom.array = modes_custom_array;
-
-    for (f_array_length_t i = 0; i < modes_custom.used; ++i) {
-      modes_custom.array[i] = build_arguments->array[i + 1];
-    } // for
-
-    // Custom modes are always used if provided, otherwise if any mode is specified, the entire defaults is replaced.
-    const f_string_statics_t * const modes = modes_custom.used
-      ? &modes_custom
+    // Custom modes are always used if provided, otherwise fallback to the passed modes or the default modes.
+    const f_string_statics_t * const modes = build_arguments && build_arguments->used > 1
+      ? build_arguments
       : main->setting.modes.used
         ? &main->setting.modes
         : &setting_build->modes_default;
 
-    for (f_array_length_t i = 0; i < modes->used; ) {
+    for (f_array_length_t i = build_arguments && build_arguments->used > 1 ? 1 : 0; i < modes->used; ) {
 
       fl_print_format("%[%Q%]", print->to, print->set->notable, modes->array[i], print->set->notable);
 
