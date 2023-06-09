@@ -17,7 +17,7 @@ extern "C" {
     fl_print_format("%[Building%] ", print->to, print->set->important, print->set->important);
     fl_print_format("%[%Q%]", print->to, print->set->notable, setting_build->build_name, print->set->notable);
     fl_print_format("%[ using '%]", print->to, print->set->important, print->set->important);
-    fl_print_format("%[%Q%]", print->to, print->set->notable, main->setting.settings, print->set->notable);
+    fl_print_format("%[%Q%]", print->to, print->set->notable, build_arguments && build_arguments->used ? build_arguments->array[0] : main->setting.settings, print->set->notable);
 
     fl_print_format("%[' with modes '%]", print->to, print->set->important, print->set->important);
 
