@@ -1,0 +1,37 @@
+empty{
+}
+d{
+  b c
+}
+a{
+  e f
+  g h
+}
+привет{
+  мир
+}
+y{
+  z
+}
+"мир"{
+  quoted, "yep".
+}
+привет has space{
+  \"and so does this" "have space"
+}
+"This is quoted"{
+  But still a valid list.
+}
+AlsoGood{
+}
+hi{
+  Check this.
+}
+привет has space{
+  ...
+}
+a{
+  a second "a".
+}
+also_empty{
+}

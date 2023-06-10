@@ -113,15 +113,27 @@ generate_operate_0000() {
   fss_basic_read +n -ca 100 ${file_source} > ${test_current}content-at-100.expect &&
   fss_basic_read +n -cn hi ${file_source} > ${test_current}content-name-hi.expect &&
   fss_basic_read +n -cn a ${file_source} > ${test_current}content-name-a.expect &&
+  fss_basic_read +n -cn "" ${file_source} > ${test_current}content-name-.expect &&
+  fss_basic_read +n -cn мир ${file_source} > ${test_current}content-name-мир.expect &&
+  fss_basic_read +n -cn "привет has space" ${file_source} > ${test_current}content-name-привет.expect &&
   fss_basic_read +n -cnt hi ${file_source} > ${test_current}content-name-hi-total.expect &&
   fss_basic_read +n -cnt a ${file_source} > ${test_current}content-name-a-total.expect &&
+  fss_basic_read +n -cnt "" ${file_source} > ${test_current}content-name--total.expect &&
+  fss_basic_read +n -cnt мир ${file_source} > ${test_current}content-name-мир-total.expect &&
+  fss_basic_read +n -cnt "привет has space" ${file_source} > ${test_current}content-name-привет-total.expect &&
   fss_basic_read +n -cns hi 0 ${file_source} > ${test_current}content-name-hi-select-0.expect &&
-  fss_basic_read +n -cns hi 0 ${file_source} > ${test_current}content-name-hi-select-1.expect &&
+  fss_basic_read +n -cns hi 1 ${file_source} > ${test_current}content-name-hi-select-1.expect &&
   fss_basic_read +n -cns a 0 ${file_source} > ${test_current}content-name-a-select-0.expect &&
   fss_basic_read +n -cns a 1 ${file_source} > ${test_current}content-name-a-select-1.expect &&
   fss_basic_read +n -cns a 2 ${file_source} > ${test_current}content-name-a-select-2.expect &&
   fss_basic_read +n -cns a 5 ${file_source} > ${test_current}content-name-a-select-5.expect &&
   fss_basic_read +n -cns a 100 ${file_source} > ${test_current}content-name-a-select-100.expect &&
+  fss_basic_read +n -cns "" 0 ${file_source} > ${test_current}content-name--select-0.expect &&
+  fss_basic_read +n -cns "" 1 ${file_source} > ${test_current}content-name--select-1.expect &&
+  fss_basic_read +n -cns мир 0 ${file_source} > ${test_current}content-name-мир-select-0.expect &&
+  fss_basic_read +n -cns мир 1 ${file_source} > ${test_current}content-name-мир-select-1.expect &&
+  fss_basic_read +n -cns "привет has space" 0 ${file_source} > ${test_current}content-name-привет-select-0.expect &&
+  fss_basic_read +n -cns "привет has space" 1 ${file_source} > ${test_current}content-name-привет-select-1.expect &&
   fss_basic_read +n -cnst hi 0 ${file_source} > ${test_current}content-name-hi-select-0-total.expect &&
   fss_basic_read +n -cnst hi 1 ${file_source} > ${test_current}content-name-hi-select-1-total.expect &&
   fss_basic_read +n -cnst a 0 ${file_source} > ${test_current}content-name-a-select-0-total.expect &&
@@ -129,6 +141,12 @@ generate_operate_0000() {
   fss_basic_read +n -cnst a 2 ${file_source} > ${test_current}content-name-a-select-2-total.expect &&
   fss_basic_read +n -cnst a 5 ${file_source} > ${test_current}content-name-a-select-5-total.expect &&
   fss_basic_read +n -cnst a 100 ${file_source} > ${test_current}content-name-a-select-100-total.expect &&
+  fss_basic_read +n -cnst "" 0 ${file_source} > ${test_current}content-name--select-0-total.expect &&
+  fss_basic_read +n -cnst "" 1 ${file_source} > ${test_current}content-name--select-1-total.expect &&
+  fss_basic_read +n -cnst мир 0 ${file_source} > ${test_current}content-name-мир-select-0-total.expect &&
+  fss_basic_read +n -cnst мир 1 ${file_source} > ${test_current}content-name-мир-select-1-total.expect &&
+  fss_basic_read +n -cnst "привет has space" 0 ${file_source} > ${test_current}content-name-привет-select-0-total.expect &&
+  fss_basic_read +n -cnst "привет has space" 1 ${file_source} > ${test_current}content-name-привет-select-1-total.expect &&
 
   fss_basic_read +n -o ${file_source} > ${test_current}object.expect &&
   fss_basic_read +n -oO ${file_source} > ${test_current}object-original.expect &&
@@ -148,16 +166,28 @@ generate_operate_0000() {
   fss_basic_read +n -oa 5 ${file_source} > ${test_current}object-at-5.expect &&
   fss_basic_read +n -oa 100 ${file_source} > ${test_current}object-at-100.expect &&
   fss_basic_read +n -cn hi ${file_source} > ${test_current}object-name-hi.expect &&
+  fss_basic_read +n -cn "" ${file_source} > ${test_current}object-name-.expect &&
+  fss_basic_read +n -cn мир ${file_source} > ${test_current}object-name-мир.expect &&
+  fss_basic_read +n -cn "привет has space" ${file_source} > ${test_current}object-name-привет.expect &&
   fss_basic_read +n -cn a ${file_source} > ${test_current}object-name-a.expect &&
   fss_basic_read +n -cnt hi ${file_source} > ${test_current}object-name-hi-total.expect &&
   fss_basic_read +n -cnt a ${file_source} > ${test_current}object-name-a-total.expect &&
+  fss_basic_read +n -cnt "" ${file_source} > ${test_current}object-name--total.expect &&
+  fss_basic_read +n -cnt мир ${file_source} > ${test_current}object-name-мир-total.expect &&
+  fss_basic_read +n -cnt "привет has space" ${file_source} > ${test_current}object-name-привет-total.expect &&
   fss_basic_read +n -cns hi 0 ${file_source} > ${test_current}object-name-hi-select-0.expect &&
-  fss_basic_read +n -cns hi 0 ${file_source} > ${test_current}object-name-hi-select-1.expect &&
+  fss_basic_read +n -cns hi 1 ${file_source} > ${test_current}object-name-hi-select-1.expect &&
   fss_basic_read +n -cns a 0 ${file_source} > ${test_current}object-name-a-select-0.expect &&
   fss_basic_read +n -cns a 1 ${file_source} > ${test_current}object-name-a-select-1.expect &&
   fss_basic_read +n -cns a 2 ${file_source} > ${test_current}object-name-a-select-2.expect &&
   fss_basic_read +n -cns a 5 ${file_source} > ${test_current}object-name-a-select-5.expect &&
   fss_basic_read +n -cns a 100 ${file_source} > ${test_current}object-name-a-select-100.expect &&
+  fss_basic_read +n -cns "" 0 ${file_source} > ${test_current}object-name--select-0.expect &&
+  fss_basic_read +n -cns "" 1 ${file_source} > ${test_current}object-name--select-1.expect &&
+  fss_basic_read +n -cns мир 0 ${file_source} > ${test_current}object-name-мир-select-0.expect &&
+  fss_basic_read +n -cns мир 1 ${file_source} > ${test_current}object-name-мир-select-1.expect &&
+  fss_basic_read +n -cns привет 0 ${file_source} > ${test_current}object-name-привет-select-0.expect &&
+  fss_basic_read +n -cns привет 1 ${file_source} > ${test_current}object-name-привет-select-1.expect &&
   fss_basic_read +n -cnst hi 0 ${file_source} > ${test_current}object-name-hi-select-0-total.expect &&
   fss_basic_read +n -cnst hi 1 ${file_source} > ${test_current}object-name-hi-select-1-total.expect &&
   fss_basic_read +n -cnst a 0 ${file_source} > ${test_current}object-name-a-select-0-total.expect &&
@@ -165,6 +195,12 @@ generate_operate_0000() {
   fss_basic_read +n -cnst a 2 ${file_source} > ${test_current}object-name-a-select-2-total.expect &&
   fss_basic_read +n -cnst a 5 ${file_source} > ${test_current}object-name-a-select-5-total.expect &&
   fss_basic_read +n -cnst a 100 ${file_source} > ${test_current}object-name-a-select-100-total.expect &&
+  fss_basic_read +n -cnst "" 0 ${file_source} > ${test_current}object-name--select-0-total.expect &&
+  fss_basic_read +n -cnst "" 1 ${file_source} > ${test_current}object-name--select-1-total.expect &&
+  fss_basic_read +n -cnst мир 0 ${file_source} > ${test_current}object-name-мир-select-0-total.expect &&
+  fss_basic_read +n -cnst мир 1 ${file_source} > ${test_current}object-name-мир-select-1-total.expect &&
+  fss_basic_read +n -cnst "привет has space" 0 ${file_source} > ${test_current}object-name-привет-select-0-total.expect &&
+  fss_basic_read +n -cnst "привет has space" 1 ${file_source} > ${test_current}object-name-привет-select-1-total.expect &&
 
   fss_basic_read +n -oc ${file_source} > ${test_current}object_and_content.expect &&
   fss_basic_read +n -ocO ${file_source} > ${test_current}object_and_content-original.expect &&
@@ -185,15 +221,27 @@ generate_operate_0000() {
   fss_basic_read +n -oca 100 ${file_source} > ${test_current}object_and_content-at-100.expect &&
   fss_basic_read +n -cn hi ${file_source} > ${test_current}object_and_content-name-hi.expect &&
   fss_basic_read +n -cn a ${file_source} > ${test_current}object_and_content-name-a.expect &&
+  fss_basic_read +n -cn "" ${file_source} > ${test_current}object_and_content-name-.expect &&
+  fss_basic_read +n -cn мир ${file_source} > ${test_current}object_and_content-name-мир.expect &&
+  fss_basic_read +n -cn привет ${file_source} > ${test_current}object_and_content-name-привет.expect &&
   fss_basic_read +n -cnt hi ${file_source} > ${test_current}object_and_content-name-hi-total.expect &&
   fss_basic_read +n -cnt a ${file_source} > ${test_current}object_and_content-name-a-total.expect &&
+  fss_basic_read +n -cnt "" ${file_source} > ${test_current}object_and_content-name--total.expect &&
+  fss_basic_read +n -cnt мир ${file_source} > ${test_current}object_and_content-name-мир-total.expect &&
+  fss_basic_read +n -cnt "привет has space" ${file_source} > ${test_current}object_and_content-name-привет-total.expect &&
   fss_basic_read +n -cns hi 0 ${file_source} > ${test_current}object_and_content-name-hi-select-0.expect &&
-  fss_basic_read +n -cns hi 0 ${file_source} > ${test_current}object_and_content-name-hi-select-1.expect &&
+  fss_basic_read +n -cns hi 1 ${file_source} > ${test_current}object_and_content-name-hi-select-1.expect &&
   fss_basic_read +n -cns a 0 ${file_source} > ${test_current}object_and_content-name-a-select-0.expect &&
   fss_basic_read +n -cns a 1 ${file_source} > ${test_current}object_and_content-name-a-select-1.expect &&
   fss_basic_read +n -cns a 2 ${file_source} > ${test_current}object_and_content-name-a-select-2.expect &&
   fss_basic_read +n -cns a 5 ${file_source} > ${test_current}object_and_content-name-a-select-5.expect &&
   fss_basic_read +n -cns a 100 ${file_source} > ${test_current}object_and_content-name-a-select-100.expect &&
+  fss_basic_read +n -cns "" 0 ${file_source} > ${test_current}object_and_content-name--select-0.expect &&
+  fss_basic_read +n -cns "" 1 ${file_source} > ${test_current}object_and_content-name--select-1.expect &&
+  fss_basic_read +n -cns мир 0 ${file_source} > ${test_current}object_and_content-name-мир-select-0.expect &&
+  fss_basic_read +n -cns мир 1 ${file_source} > ${test_current}object_and_content-name-мир-select-1.expect &&
+  fss_basic_read +n -cns "привет has space" 0 ${file_source} > ${test_current}object_and_content-name-привет-select-0.expect &&
+  fss_basic_read +n -cns "привет has space" 1 ${file_source} > ${test_current}object_and_content-name-привет-select-1.expect &&
   fss_basic_read +n -cnst hi 0 ${file_source} > ${test_current}object_and_content-name-hi-select-0-total.expect &&
   fss_basic_read +n -cnst hi 1 ${file_source} > ${test_current}object_and_content-name-hi-select-1-total.expect &&
   fss_basic_read +n -cnst a 0 ${file_source} > ${test_current}object_and_content-name-a-select-0-total.expect &&
@@ -201,6 +249,12 @@ generate_operate_0000() {
   fss_basic_read +n -cnst a 2 ${file_source} > ${test_current}object_and_content-name-a-select-2-total.expect &&
   fss_basic_read +n -cnst a 5 ${file_source} > ${test_current}object_and_content-name-a-select-5-total.expect &&
   fss_basic_read +n -cnst a 100 ${file_source} > ${test_current}object_and_content-name-a-select-100-total.expect &&
+  fss_basic_read +n -cnst "" 0 ${file_source} > ${test_current}object_and_content-name--select-0-total.expect &&
+  fss_basic_read +n -cnst "" 1 ${file_source} > ${test_current}object_and_content-name--select-1-total.expect &&
+  fss_basic_read +n -cnst мир 0 ${file_source} > ${test_current}object_and_content-name-мир-select-0-total.expect &&
+  fss_basic_read +n -cnst мир 1 ${file_source} > ${test_current}object_and_content-name-мир-select-1-total.expect &&
+  fss_basic_read +n -cnst "привет has space" 0 ${file_source} > ${test_current}object_and_content-name-привет-select-0-total.expect &&
+  fss_basic_read +n -cnst "привет has space" 1 ${file_source} > ${test_current}object_and_content-name-привет-select-1-total.expect &&
 
   echo "Generation Complete"
 
@@ -232,15 +286,27 @@ generate_operate_0001() {
   fss_extended_read +n -ca 100 ${file_source} > ${test_current}content-at-100.expect &&
   fss_extended_read +n -cn hi ${file_source} > ${test_current}content-name-hi.expect &&
   fss_extended_read +n -cn a ${file_source} > ${test_current}content-name-a.expect &&
+  fss_extended_read +n -cn "" ${file_source} > ${test_current}content-name-.expect &&
+  fss_extended_read +n -cn мир ${file_source} > ${test_current}content-name-мир.expect &&
+  fss_extended_read +n -cn "привет has space" ${file_source} > ${test_current}content-name-привет.expect &&
   fss_extended_read +n -cnt hi ${file_source} > ${test_current}content-name-hi-total.expect &&
   fss_extended_read +n -cnt a ${file_source} > ${test_current}content-name-a-total.expect &&
+  fss_extended_read +n -cnt "" ${file_source} > ${test_current}content-name--total.expect &&
+  fss_extended_read +n -cnt мир ${file_source} > ${test_current}content-name-мир-total.expect &&
+  fss_extended_read +n -cnt "привет has space" ${file_source} > ${test_current}content-name-привет-total.expect &&
   fss_extended_read +n -cns hi 0 ${file_source} > ${test_current}content-name-hi-select-0.expect &&
-  fss_extended_read +n -cns hi 0 ${file_source} > ${test_current}content-name-hi-select-1.expect &&
+  fss_extended_read +n -cns hi 1 ${file_source} > ${test_current}content-name-hi-select-1.expect &&
   fss_extended_read +n -cns a 0 ${file_source} > ${test_current}content-name-a-select-0.expect &&
   fss_extended_read +n -cns a 1 ${file_source} > ${test_current}content-name-a-select-1.expect &&
   fss_extended_read +n -cns a 2 ${file_source} > ${test_current}content-name-a-select-2.expect &&
   fss_extended_read +n -cns a 5 ${file_source} > ${test_current}content-name-a-select-5.expect &&
   fss_extended_read +n -cns a 100 ${file_source} > ${test_current}content-name-a-select-100.expect &&
+  fss_extended_read +n -cns "" 0 ${file_source} > ${test_current}content-name--select-0.expect &&
+  fss_extended_read +n -cns "" 1 ${file_source} > ${test_current}content-name--select-1.expect &&
+  fss_extended_read +n -cns мир 0 ${file_source} > ${test_current}content-name-мир-select-0.expect &&
+  fss_extended_read +n -cns мир 1 ${file_source} > ${test_current}content-name-мир-select-1.expect &&
+  fss_extended_read +n -cns "привет has space" 0 ${file_source} > ${test_current}content-name-привет-select-0.expect &&
+  fss_extended_read +n -cns "привет has space" 1 ${file_source} > ${test_current}content-name-привет-select-1.expect &&
   fss_extended_read +n -cnst hi 0 ${file_source} > ${test_current}content-name-hi-select-0-total.expect &&
   fss_extended_read +n -cnst hi 1 ${file_source} > ${test_current}content-name-hi-select-1-total.expect &&
   fss_extended_read +n -cnst a 0 ${file_source} > ${test_current}content-name-a-select-0-total.expect &&
@@ -248,6 +314,12 @@ generate_operate_0001() {
   fss_extended_read +n -cnst a 2 ${file_source} > ${test_current}content-name-a-select-2-total.expect &&
   fss_extended_read +n -cnst a 5 ${file_source} > ${test_current}content-name-a-select-5-total.expect &&
   fss_extended_read +n -cnst a 100 ${file_source} > ${test_current}content-name-a-select-100-total.expect &&
+  fss_extended_read +n -cnst "" 0 ${file_source} > ${test_current}content-name--select-0-total.expect &&
+  fss_extended_read +n -cnst "" 1 ${file_source} > ${test_current}content-name--select-1-total.expect &&
+  fss_extended_read +n -cnst мир 0 ${file_source} > ${test_current}content-name-мир-select-0-total.expect &&
+  fss_extended_read +n -cnst мир 1 ${file_source} > ${test_current}content-name-мир-select-1-total.expect &&
+  fss_extended_read +n -cnst "привет has space" 0 ${file_source} > ${test_current}content-name-привет-select-0-total.expect &&
+  fss_extended_read +n -cnst "привет has space" 1 ${file_source} > ${test_current}content-name-привет-select-1-total.expect &&
 
   fss_extended_read +n -o ${file_source} > ${test_current}object.expect &&
   fss_extended_read +n -oO ${file_source} > ${test_current}object-original.expect &&
@@ -267,23 +339,41 @@ generate_operate_0001() {
   fss_extended_read +n -oa 5 ${file_source} > ${test_current}object-at-5.expect &&
   fss_extended_read +n -oa 100 ${file_source} > ${test_current}object-at-100.expect &&
   fss_extended_read +n -cn hi ${file_source} > ${test_current}object-name-hi.expect &&
+  fss_extended_read +n -cn "" ${file_source} > ${test_current}object-name-.expect &&
+  fss_extended_read +n -cn мир ${file_source} > ${test_current}object-name-мир.expect &&
+  fss_extended_read +n -cn "привет has space" ${file_source} > ${test_current}object-name-привет.expect &&
   fss_extended_read +n -cn a ${file_source} > ${test_current}object-name-a.expect &&
   fss_extended_read +n -cnt hi ${file_source} > ${test_current}object-name-hi-total.expect &&
   fss_extended_read +n -cnt a ${file_source} > ${test_current}object-name-a-total.expect &&
+  fss_extended_read +n -cnt "" ${file_source} > ${test_current}object-name--total.expect &&
+  fss_extended_read +n -cnt мир ${file_source} > ${test_current}object-name-мир-total.expect &&
+  fss_extended_read +n -cnt "привет has space" ${file_source} > ${test_current}object-name-привет-total.expect &&
   fss_extended_read +n -cns hi 0 ${file_source} > ${test_current}object-name-hi-select-0.expect &&
-  fss_extended_read +n -cns hi 0 ${file_source} > ${test_current}object-name-hi-select-1.expect &&
+  fss_extended_read +n -cns hi 1 ${file_source} > ${test_current}object-name-hi-select-1.expect &&
   fss_extended_read +n -cns a 0 ${file_source} > ${test_current}object-name-a-select-0.expect &&
   fss_extended_read +n -cns a 1 ${file_source} > ${test_current}object-name-a-select-1.expect &&
   fss_extended_read +n -cns a 2 ${file_source} > ${test_current}object-name-a-select-2.expect &&
   fss_extended_read +n -cns a 5 ${file_source} > ${test_current}object-name-a-select-5.expect &&
   fss_extended_read +n -cns a 100 ${file_source} > ${test_current}object-name-a-select-100.expect &&
+  fss_extended_read +n -cns "" 0 ${file_source} > ${test_current}object-name--select-0.expect &&
+  fss_extended_read +n -cns "" 1 ${file_source} > ${test_current}object-name--select-1.expect &&
+  fss_extended_read +n -cns мир 0 ${file_source} > ${test_current}object-name-мир-select-0.expect &&
+  fss_extended_read +n -cns мир 1 ${file_source} > ${test_current}object-name-мир-select-1.expect &&
+  fss_extended_read +n -cns привет 0 ${file_source} > ${test_current}object-name-привет-select-0.expect &&
+  fss_extended_read +n -cns привет 1 ${file_source} > ${test_current}object-name-привет-select-1.expect &&
   fss_extended_read +n -cnst hi 0 ${file_source} > ${test_current}object-name-hi-select-0-total.expect &&
-  fss_extended_read +n -cnst hi 0 ${file_source} > ${test_current}object-name-hi-select-1-total.expect &&
+  fss_extended_read +n -cnst hi 1 ${file_source} > ${test_current}object-name-hi-select-1-total.expect &&
   fss_extended_read +n -cnst a 0 ${file_source} > ${test_current}object-name-a-select-0-total.expect &&
   fss_extended_read +n -cnst a 1 ${file_source} > ${test_current}object-name-a-select-1-total.expect &&
   fss_extended_read +n -cnst a 2 ${file_source} > ${test_current}object-name-a-select-2-total.expect &&
   fss_extended_read +n -cnst a 5 ${file_source} > ${test_current}object-name-a-select-5-total.expect &&
   fss_extended_read +n -cnst a 100 ${file_source} > ${test_current}object-name-a-select-100-total.expect &&
+  fss_extended_read +n -cnst "" 0 ${file_source} > ${test_current}object-name--select-0-total.expect &&
+  fss_extended_read +n -cnst "" 1 ${file_source} > ${test_current}object-name--select-1-total.expect &&
+  fss_extended_read +n -cnst мир 0 ${file_source} > ${test_current}object-name-мир-select-0-total.expect &&
+  fss_extended_read +n -cnst мир 1 ${file_source} > ${test_current}object-name-мир-select-1-total.expect &&
+  fss_extended_read +n -cnst "привет has space" 0 ${file_source} > ${test_current}object-name-привет-select-0-total.expect &&
+  fss_extended_read +n -cnst "привет has space" 1 ${file_source} > ${test_current}object-name-привет-select-1-total.expect &&
 
   fss_extended_read +n -oc ${file_source} > ${test_current}object_and_content.expect &&
   fss_extended_read +n -ocO ${file_source} > ${test_current}object_and_content-original.expect &&
@@ -304,22 +394,40 @@ generate_operate_0001() {
   fss_extended_read +n -oca 100 ${file_source} > ${test_current}object_and_content-at-100.expect &&
   fss_extended_read +n -cn hi ${file_source} > ${test_current}object_and_content-name-hi.expect &&
   fss_extended_read +n -cn a ${file_source} > ${test_current}object_and_content-name-a.expect &&
+  fss_extended_read +n -cn "" ${file_source} > ${test_current}object_and_content-name-.expect &&
+  fss_extended_read +n -cn мир ${file_source} > ${test_current}object_and_content-name-мир.expect &&
+  fss_extended_read +n -cn привет ${file_source} > ${test_current}object_and_content-name-привет.expect &&
   fss_extended_read +n -cnt hi ${file_source} > ${test_current}object_and_content-name-hi-total.expect &&
   fss_extended_read +n -cnt a ${file_source} > ${test_current}object_and_content-name-a-total.expect &&
+  fss_extended_read +n -cnt "" ${file_source} > ${test_current}object_and_content-name--total.expect &&
+  fss_extended_read +n -cnt мир ${file_source} > ${test_current}object_and_content-name-мир-total.expect &&
+  fss_extended_read +n -cnt "привет has space" ${file_source} > ${test_current}object_and_content-name-привет-total.expect &&
   fss_extended_read +n -cns hi 0 ${file_source} > ${test_current}object_and_content-name-hi-select-0.expect &&
-  fss_extended_read +n -cns hi 0 ${file_source} > ${test_current}object_and_content-name-hi-select-1.expect &&
+  fss_extended_read +n -cns hi 1 ${file_source} > ${test_current}object_and_content-name-hi-select-1.expect &&
   fss_extended_read +n -cns a 0 ${file_source} > ${test_current}object_and_content-name-a-select-0.expect &&
   fss_extended_read +n -cns a 1 ${file_source} > ${test_current}object_and_content-name-a-select-1.expect &&
   fss_extended_read +n -cns a 2 ${file_source} > ${test_current}object_and_content-name-a-select-2.expect &&
   fss_extended_read +n -cns a 5 ${file_source} > ${test_current}object_and_content-name-a-select-5.expect &&
   fss_extended_read +n -cns a 100 ${file_source} > ${test_current}object_and_content-name-a-select-100.expect &&
+  fss_extended_read +n -cns "" 0 ${file_source} > ${test_current}object_and_content-name--select-0.expect &&
+  fss_extended_read +n -cns "" 1 ${file_source} > ${test_current}object_and_content-name--select-1.expect &&
+  fss_extended_read +n -cns мир 0 ${file_source} > ${test_current}object_and_content-name-мир-select-0.expect &&
+  fss_extended_read +n -cns мир 1 ${file_source} > ${test_current}object_and_content-name-мир-select-1.expect &&
+  fss_extended_read +n -cns "привет has space" 0 ${file_source} > ${test_current}object_and_content-name-привет-select-0.expect &&
+  fss_extended_read +n -cns "привет has space" 1 ${file_source} > ${test_current}object_and_content-name-привет-select-1.expect &&
   fss_extended_read +n -cnst hi 0 ${file_source} > ${test_current}object_and_content-name-hi-select-0-total.expect &&
-  fss_extended_read +n -cnst hi 0 ${file_source} > ${test_current}object_and_content-name-hi-select-1-total.expect &&
+  fss_extended_read +n -cnst hi 1 ${file_source} > ${test_current}object_and_content-name-hi-select-1-total.expect &&
   fss_extended_read +n -cnst a 0 ${file_source} > ${test_current}object_and_content-name-a-select-0-total.expect &&
   fss_extended_read +n -cnst a 1 ${file_source} > ${test_current}object_and_content-name-a-select-1-total.expect &&
   fss_extended_read +n -cnst a 2 ${file_source} > ${test_current}object_and_content-name-a-select-2-total.expect &&
   fss_extended_read +n -cnst a 5 ${file_source} > ${test_current}object_and_content-name-a-select-5-total.expect &&
   fss_extended_read +n -cnst a 100 ${file_source} > ${test_current}object_and_content-name-a-select-100-total.expect &&
+  fss_extended_read +n -cnst "" 0 ${file_source} > ${test_current}object_and_content-name--select-0-total.expect &&
+  fss_extended_read +n -cnst "" 1 ${file_source} > ${test_current}object_and_content-name--select-1-total.expect &&
+  fss_extended_read +n -cnst мир 0 ${file_source} > ${test_current}object_and_content-name-мир-select-0-total.expect &&
+  fss_extended_read +n -cnst мир 1 ${file_source} > ${test_current}object_and_content-name-мир-select-1-total.expect &&
+  fss_extended_read +n -cnst "привет has space" 0 ${file_source} > ${test_current}object_and_content-name-привет-select-0-total.expect &&
+  fss_extended_read +n -cnst "привет has space" 1 ${file_source} > ${test_current}object_and_content-name-привет-select-1-total.expect &&
 
   echo "Generation Complete"
 
@@ -351,22 +459,40 @@ generate_operate_0002() {
   fss_basic_list_read +n -ca 100 ${file_source} > ${test_current}content-at-100.expect &&
   fss_basic_list_read +n -cn hi ${file_source} > ${test_current}content-name-hi.expect &&
   fss_basic_list_read +n -cn a ${file_source} > ${test_current}content-name-a.expect &&
+  fss_basic_list_read +n -cn "" ${file_source} > ${test_current}content-name-.expect &&
+  fss_basic_list_read +n -cn мир ${file_source} > ${test_current}content-name-мир.expect &&
+  fss_basic_list_read +n -cn "привет has space" ${file_source} > ${test_current}content-name-привет.expect &&
   fss_basic_list_read +n -cnt hi ${file_source} > ${test_current}content-name-hi-total.expect &&
   fss_basic_list_read +n -cnt a ${file_source} > ${test_current}content-name-a-total.expect &&
+  fss_basic_list_read +n -cnt "" ${file_source} > ${test_current}content-name--total.expect &&
+  fss_basic_list_read +n -cnt мир ${file_source} > ${test_current}content-name-мир-total.expect &&
+  fss_basic_list_read +n -cnt "привет has space" ${file_source} > ${test_current}content-name-привет-total.expect &&
   fss_basic_list_read +n -cns hi 0 ${file_source} > ${test_current}content-name-hi-select-0.expect &&
-  fss_basic_list_read +n -cns hi 0 ${file_source} > ${test_current}content-name-hi-select-1.expect &&
+  fss_basic_list_read +n -cns hi 1 ${file_source} > ${test_current}content-name-hi-select-1.expect &&
   fss_basic_list_read +n -cns a 0 ${file_source} > ${test_current}content-name-a-select-0.expect &&
   fss_basic_list_read +n -cns a 1 ${file_source} > ${test_current}content-name-a-select-1.expect &&
   fss_basic_list_read +n -cns a 2 ${file_source} > ${test_current}content-name-a-select-2.expect &&
   fss_basic_list_read +n -cns a 5 ${file_source} > ${test_current}content-name-a-select-5.expect &&
   fss_basic_list_read +n -cns a 100 ${file_source} > ${test_current}content-name-a-select-100.expect &&
+  fss_basic_list_read +n -cns "" 0 ${file_source} > ${test_current}content-name--select-0.expect &&
+  fss_basic_list_read +n -cns "" 1 ${file_source} > ${test_current}content-name--select-1.expect &&
+  fss_basic_list_read +n -cns мир 0 ${file_source} > ${test_current}content-name-мир-select-0.expect &&
+  fss_basic_list_read +n -cns мир 1 ${file_source} > ${test_current}content-name-мир-select-1.expect &&
+  fss_basic_list_read +n -cns "привет has space" 0 ${file_source} > ${test_current}content-name-привет-select-0.expect &&
+  fss_basic_list_read +n -cns "привет has space" 1 ${file_source} > ${test_current}content-name-привет-select-1.expect &&
   fss_basic_list_read +n -cnst hi 0 ${file_source} > ${test_current}content-name-hi-select-0-total.expect &&
-  fss_basic_list_read +n -cnst hi 0 ${file_source} > ${test_current}content-name-hi-select-1-total.expect &&
+  fss_basic_list_read +n -cnst hi 1 ${file_source} > ${test_current}content-name-hi-select-1-total.expect &&
   fss_basic_list_read +n -cnst a 0 ${file_source} > ${test_current}content-name-a-select-0-total.expect &&
   fss_basic_list_read +n -cnst a 1 ${file_source} > ${test_current}content-name-a-select-1-total.expect &&
   fss_basic_list_read +n -cnst a 2 ${file_source} > ${test_current}content-name-a-select-2-total.expect &&
   fss_basic_list_read +n -cnst a 5 ${file_source} > ${test_current}content-name-a-select-5-total.expect &&
   fss_basic_list_read +n -cnst a 100 ${file_source} > ${test_current}content-name-a-select-100-total.expect &&
+  fss_basic_list_read +n -cnst "" 0 ${file_source} > ${test_current}content-name--select-0-total.expect &&
+  fss_basic_list_read +n -cnst "" 1 ${file_source} > ${test_current}content-name--select-1-total.expect &&
+  fss_basic_list_read +n -cnst мир 0 ${file_source} > ${test_current}content-name-мир-select-0-total.expect &&
+  fss_basic_list_read +n -cnst мир 1 ${file_source} > ${test_current}content-name-мир-select-1-total.expect &&
+  fss_basic_list_read +n -cnst "привет has space" 0 ${file_source} > ${test_current}content-name-привет-select-0-total.expect &&
+  fss_basic_list_read +n -cnst "привет has space" 1 ${file_source} > ${test_current}content-name-привет-select-1-total.expect &&
 
   fss_basic_list_read +n -o ${file_source} > ${test_current}object.expect &&
   fss_basic_list_read +n -oO ${file_source} > ${test_current}object-original.expect &&
@@ -386,59 +512,95 @@ generate_operate_0002() {
   fss_basic_list_read +n -oa 5 ${file_source} > ${test_current}object-at-5.expect &&
   fss_basic_list_read +n -oa 100 ${file_source} > ${test_current}object-at-100.expect &&
   fss_basic_list_read +n -cn hi ${file_source} > ${test_current}object-name-hi.expect &&
+  fss_basic_list_read +n -cn "" ${file_source} > ${test_current}object-name-.expect &&
+  fss_basic_list_read +n -cn мир ${file_source} > ${test_current}object-name-мир.expect &&
+  fss_basic_list_read +n -cn "привет has space" ${file_source} > ${test_current}object-name-привет.expect &&
   fss_basic_list_read +n -cn a ${file_source} > ${test_current}object-name-a.expect &&
   fss_basic_list_read +n -cnt hi ${file_source} > ${test_current}object-name-hi-total.expect &&
   fss_basic_list_read +n -cnt a ${file_source} > ${test_current}object-name-a-total.expect &&
+  fss_basic_list_read +n -cnt "" ${file_source} > ${test_current}object-name--total.expect &&
+  fss_basic_list_read +n -cnt мир ${file_source} > ${test_current}object-name-мир-total.expect &&
+  fss_basic_list_read +n -cnt "привет has space" ${file_source} > ${test_current}object-name-привет-total.expect &&
   fss_basic_list_read +n -cns hi 0 ${file_source} > ${test_current}object-name-hi-select-0.expect &&
-  fss_basic_list_read +n -cns hi 0 ${file_source} > ${test_current}object-name-hi-select-1.expect &&
+  fss_basic_list_read +n -cns hi 1 ${file_source} > ${test_current}object-name-hi-select-1.expect &&
   fss_basic_list_read +n -cns a 0 ${file_source} > ${test_current}object-name-a-select-0.expect &&
   fss_basic_list_read +n -cns a 1 ${file_source} > ${test_current}object-name-a-select-1.expect &&
   fss_basic_list_read +n -cns a 2 ${file_source} > ${test_current}object-name-a-select-2.expect &&
   fss_basic_list_read +n -cns a 5 ${file_source} > ${test_current}object-name-a-select-5.expect &&
   fss_basic_list_read +n -cns a 100 ${file_source} > ${test_current}object-name-a-select-100.expect &&
+  fss_basic_list_read +n -cns "" 0 ${file_source} > ${test_current}object-name--select-0.expect &&
+  fss_basic_list_read +n -cns "" 1 ${file_source} > ${test_current}object-name--select-1.expect &&
+  fss_basic_list_read +n -cns мир 0 ${file_source} > ${test_current}object-name-мир-select-0.expect &&
+  fss_basic_list_read +n -cns мир 1 ${file_source} > ${test_current}object-name-мир-select-1.expect &&
+  fss_basic_list_read +n -cns привет 0 ${file_source} > ${test_current}object-name-привет-select-0.expect &&
+  fss_basic_list_read +n -cns привет 1 ${file_source} > ${test_current}object-name-привет-select-1.expect &&
   fss_basic_list_read +n -cnst hi 0 ${file_source} > ${test_current}object-name-hi-select-0-total.expect &&
-  fss_basic_list_read +n -cnst hi 0 ${file_source} > ${test_current}object-name-hi-select-1-total.expect &&
+  fss_basic_list_read +n -cnst hi 1 ${file_source} > ${test_current}object-name-hi-select-1-total.expect &&
   fss_basic_list_read +n -cnst a 0 ${file_source} > ${test_current}object-name-a-select-0-total.expect &&
   fss_basic_list_read +n -cnst a 1 ${file_source} > ${test_current}object-name-a-select-1-total.expect &&
   fss_basic_list_read +n -cnst a 2 ${file_source} > ${test_current}object-name-a-select-2-total.expect &&
   fss_basic_list_read +n -cnst a 5 ${file_source} > ${test_current}object-name-a-select-5-total.expect &&
   fss_basic_list_read +n -cnst a 100 ${file_source} > ${test_current}object-name-a-select-100-total.expect &&
+  fss_basic_list_read +n -cnst "" 0 ${file_source} > ${test_current}object-name--select-0-total.expect &&
+  fss_basic_list_read +n -cnst "" 1 ${file_source} > ${test_current}object-name--select-1-total.expect &&
+  fss_basic_list_read +n -cnst мир 0 ${file_source} > ${test_current}object-name-мир-select-0-total.expect &&
+  fss_basic_list_read +n -cnst мир 1 ${file_source} > ${test_current}object-name-мир-select-1-total.expect &&
+  fss_basic_list_read +n -cnst "привет has space" 0 ${file_source} > ${test_current}object-name-привет-select-0-total.expect &&
+  fss_basic_list_read +n -cnst "привет has space" 1 ${file_source} > ${test_current}object-name-привет-select-1-total.expect &&
 
-  fss_basic_list_read +n -c ${file_source} > ${test_current}object_and_content.expect &&
-  fss_basic_list_read +n -cO ${file_source} > ${test_current}object_and_content-original.expect &&
-  fss_basic_list_read +n -ct ${file_source} > ${test_current}object_and_content-total.expect &&
-  fss_basic_list_read +n -cT ${file_source} > ${test_current}object_and_content-trim.expect &&
-  fss_basic_list_read +n -cl 0 ${file_source} > ${test_current}object_and_content-line-0.expect &&
-  fss_basic_list_read +n -cl 1 ${file_source} > ${test_current}object_and_content-line-1.expect &&
-  fss_basic_list_read +n -cl 5 ${file_source} > ${test_current}object_and_content-line-5.expect &&
-  fss_basic_list_read +n -cl 100 ${file_source} > ${test_current}object_and_content-line-100.expect &&
-  fss_basic_list_read +n -cs 0 ${file_source} > ${test_current}object_and_content-select-0.expect &&
-  fss_basic_list_read +n -cs 1 ${file_source} > ${test_current}object_and_content-select-1.expect &&
-  fss_basic_list_read +n -cs 5 ${file_source} > ${test_current}object_and_content-select-5.expect &&
-  fss_basic_list_read +n -cs 100 ${file_source} > ${test_current}object_and_content-select-100.expect &&
-  fss_basic_list_read +n -cC ${file_source} > ${test_current}object_and_content-columns.expect &&
-  fss_basic_list_read +n -ca 0 ${file_source} > ${test_current}object_and_content-at-0.expect &&
-  fss_basic_list_read +n -ca 1 ${file_source} > ${test_current}object_and_content-at-1.expect &&
-  fss_basic_list_read +n -ca 5 ${file_source} > ${test_current}object_and_content-at-5.expect &&
-  fss_basic_list_read +n -ca 100 ${file_source} > ${test_current}object_and_content-at-100.expect &&
+  fss_basic_list_read +n -oc ${file_source} > ${test_current}object_and_content.expect &&
+  fss_basic_list_read +n -ocO ${file_source} > ${test_current}object_and_content-original.expect &&
+  fss_basic_list_read +n -oct ${file_source} > ${test_current}object_and_content-total.expect &&
+  fss_basic_list_read +n -ocT ${file_source} > ${test_current}object_and_content-trim.expect &&
+  fss_basic_list_read +n -ocl 0 ${file_source} > ${test_current}object_and_content-line-0.expect &&
+  fss_basic_list_read +n -ocl 1 ${file_source} > ${test_current}object_and_content-line-1.expect &&
+  fss_basic_list_read +n -ocl 5 ${file_source} > ${test_current}object_and_content-line-5.expect &&
+  fss_basic_list_read +n -ocl 100 ${file_source} > ${test_current}object_and_content-line-100.expect &&
+  fss_basic_list_read +n -ocs 0 ${file_source} > ${test_current}object_and_content-select-0.expect &&
+  fss_basic_list_read +n -ocs 1 ${file_source} > ${test_current}object_and_content-select-1.expect &&
+  fss_basic_list_read +n -ocs 5 ${file_source} > ${test_current}object_and_content-select-5.expect &&
+  fss_basic_list_read +n -ocs 100 ${file_source} > ${test_current}object_and_content-select-100.expect &&
+  fss_basic_list_read +n -ocC ${file_source} > ${test_current}object_and_content-columns.expect &&
+  fss_basic_list_read +n -oca 0 ${file_source} > ${test_current}object_and_content-at-0.expect &&
+  fss_basic_list_read +n -oca 1 ${file_source} > ${test_current}object_and_content-at-1.expect &&
+  fss_basic_list_read +n -oca 5 ${file_source} > ${test_current}object_and_content-at-5.expect &&
+  fss_basic_list_read +n -oca 100 ${file_source} > ${test_current}object_and_content-at-100.expect &&
   fss_basic_list_read +n -cn hi ${file_source} > ${test_current}object_and_content-name-hi.expect &&
   fss_basic_list_read +n -cn a ${file_source} > ${test_current}object_and_content-name-a.expect &&
+  fss_basic_list_read +n -cn "" ${file_source} > ${test_current}object_and_content-name-.expect &&
+  fss_basic_list_read +n -cn мир ${file_source} > ${test_current}object_and_content-name-мир.expect &&
+  fss_basic_list_read +n -cn привет ${file_source} > ${test_current}object_and_content-name-привет.expect &&
   fss_basic_list_read +n -cnt hi ${file_source} > ${test_current}object_and_content-name-hi-total.expect &&
   fss_basic_list_read +n -cnt a ${file_source} > ${test_current}object_and_content-name-a-total.expect &&
+  fss_basic_list_read +n -cnt "" ${file_source} > ${test_current}object_and_content-name--total.expect &&
+  fss_basic_list_read +n -cnt мир ${file_source} > ${test_current}object_and_content-name-мир-total.expect &&
+  fss_basic_list_read +n -cnt "привет has space" ${file_source} > ${test_current}object_and_content-name-привет-total.expect &&
   fss_basic_list_read +n -cns hi 0 ${file_source} > ${test_current}object_and_content-name-hi-select-0.expect &&
-  fss_basic_list_read +n -cns hi 0 ${file_source} > ${test_current}object_and_content-name-hi-select-1.expect &&
+  fss_basic_list_read +n -cns hi 1 ${file_source} > ${test_current}object_and_content-name-hi-select-1.expect &&
   fss_basic_list_read +n -cns a 0 ${file_source} > ${test_current}object_and_content-name-a-select-0.expect &&
   fss_basic_list_read +n -cns a 1 ${file_source} > ${test_current}object_and_content-name-a-select-1.expect &&
   fss_basic_list_read +n -cns a 2 ${file_source} > ${test_current}object_and_content-name-a-select-2.expect &&
   fss_basic_list_read +n -cns a 5 ${file_source} > ${test_current}object_and_content-name-a-select-5.expect &&
   fss_basic_list_read +n -cns a 100 ${file_source} > ${test_current}object_and_content-name-a-select-100.expect &&
+  fss_basic_list_read +n -cns "" 0 ${file_source} > ${test_current}object_and_content-name--select-0.expect &&
+  fss_basic_list_read +n -cns "" 1 ${file_source} > ${test_current}object_and_content-name--select-1.expect &&
+  fss_basic_list_read +n -cns мир 0 ${file_source} > ${test_current}object_and_content-name-мир-select-0.expect &&
+  fss_basic_list_read +n -cns мир 1 ${file_source} > ${test_current}object_and_content-name-мир-select-1.expect &&
+  fss_basic_list_read +n -cns "привет has space" 0 ${file_source} > ${test_current}object_and_content-name-привет-select-0.expect &&
+  fss_basic_list_read +n -cns "привет has space" 1 ${file_source} > ${test_current}object_and_content-name-привет-select-1.expect &&
   fss_basic_list_read +n -cnst hi 0 ${file_source} > ${test_current}object_and_content-name-hi-select-0-total.expect &&
-  fss_basic_list_read +n -cnst hi 0 ${file_source} > ${test_current}object_and_content-name-hi-select-1-total.expect &&
+  fss_basic_list_read +n -cnst hi 1 ${file_source} > ${test_current}object_and_content-name-hi-select-1-total.expect &&
   fss_basic_list_read +n -cnst a 0 ${file_source} > ${test_current}object_and_content-name-a-select-0-total.expect &&
   fss_basic_list_read +n -cnst a 1 ${file_source} > ${test_current}object_and_content-name-a-select-1-total.expect &&
   fss_basic_list_read +n -cnst a 2 ${file_source} > ${test_current}object_and_content-name-a-select-2-total.expect &&
   fss_basic_list_read +n -cnst a 5 ${file_source} > ${test_current}object_and_content-name-a-select-5-total.expect &&
   fss_basic_list_read +n -cnst a 100 ${file_source} > ${test_current}object_and_content-name-a-select-100-total.expect &&
+  fss_basic_list_read +n -cnst "" 0 ${file_source} > ${test_current}object_and_content-name--select-0-total.expect &&
+  fss_basic_list_read +n -cnst "" 1 ${file_source} > ${test_current}object_and_content-name--select-1-total.expect &&
+  fss_basic_list_read +n -cnst мир 0 ${file_source} > ${test_current}object_and_content-name-мир-select-0-total.expect &&
+  fss_basic_list_read +n -cnst мир 1 ${file_source} > ${test_current}object_and_content-name-мир-select-1-total.expect &&
+  fss_basic_list_read +n -cnst "привет has space" 0 ${file_source} > ${test_current}object_and_content-name-привет-select-0-total.expect &&
+  fss_basic_list_read +n -cnst "привет has space" 1 ${file_source} > ${test_current}object_and_content-name-привет-select-1-total.expect &&
 
   echo "Generation Complete"
 
@@ -470,22 +632,40 @@ generate_operate_0003() {
   fss_extended_list_read +n -ca 100 ${file_source} > ${test_current}content-at-100.expect &&
   fss_extended_list_read +n -cn hi ${file_source} > ${test_current}content-name-hi.expect &&
   fss_extended_list_read +n -cn a ${file_source} > ${test_current}content-name-a.expect &&
+  fss_extended_list_read +n -cn "" ${file_source} > ${test_current}content-name-.expect &&
+  fss_extended_list_read +n -cn мир ${file_source} > ${test_current}content-name-мир.expect &&
+  fss_extended_list_read +n -cn "привет has space" ${file_source} > ${test_current}content-name-привет.expect &&
   fss_extended_list_read +n -cnt hi ${file_source} > ${test_current}content-name-hi-total.expect &&
   fss_extended_list_read +n -cnt a ${file_source} > ${test_current}content-name-a-total.expect &&
+  fss_extended_list_read +n -cnt "" ${file_source} > ${test_current}content-name--total.expect &&
+  fss_extended_list_read +n -cnt мир ${file_source} > ${test_current}content-name-мир-total.expect &&
+  fss_extended_list_read +n -cnt "привет has space" ${file_source} > ${test_current}content-name-привет-total.expect &&
   fss_extended_list_read +n -cns hi 0 ${file_source} > ${test_current}content-name-hi-select-0.expect &&
-  fss_extended_list_read +n -cns hi 0 ${file_source} > ${test_current}content-name-hi-select-1.expect &&
+  fss_extended_list_read +n -cns hi 1 ${file_source} > ${test_current}content-name-hi-select-1.expect &&
   fss_extended_list_read +n -cns a 0 ${file_source} > ${test_current}content-name-a-select-0.expect &&
   fss_extended_list_read +n -cns a 1 ${file_source} > ${test_current}content-name-a-select-1.expect &&
   fss_extended_list_read +n -cns a 2 ${file_source} > ${test_current}content-name-a-select-2.expect &&
   fss_extended_list_read +n -cns a 5 ${file_source} > ${test_current}content-name-a-select-5.expect &&
   fss_extended_list_read +n -cns a 100 ${file_source} > ${test_current}content-name-a-select-100.expect &&
+  fss_extended_list_read +n -cns "" 0 ${file_source} > ${test_current}content-name--select-0.expect &&
+  fss_extended_list_read +n -cns "" 1 ${file_source} > ${test_current}content-name--select-1.expect &&
+  fss_extended_list_read +n -cns мир 0 ${file_source} > ${test_current}content-name-мир-select-0.expect &&
+  fss_extended_list_read +n -cns мир 1 ${file_source} > ${test_current}content-name-мир-select-1.expect &&
+  fss_extended_list_read +n -cns "привет has space" 0 ${file_source} > ${test_current}content-name-привет-select-0.expect &&
+  fss_extended_list_read +n -cns "привет has space" 1 ${file_source} > ${test_current}content-name-привет-select-1.expect &&
   fss_extended_list_read +n -cnst hi 0 ${file_source} > ${test_current}content-name-hi-select-0-total.expect &&
-  fss_extended_list_read +n -cnst hi 0 ${file_source} > ${test_current}content-name-hi-select-1-total.expect &&
+  fss_extended_list_read +n -cnst hi 1 ${file_source} > ${test_current}content-name-hi-select-1-total.expect &&
   fss_extended_list_read +n -cnst a 0 ${file_source} > ${test_current}content-name-a-select-0-total.expect &&
   fss_extended_list_read +n -cnst a 1 ${file_source} > ${test_current}content-name-a-select-1-total.expect &&
   fss_extended_list_read +n -cnst a 2 ${file_source} > ${test_current}content-name-a-select-2-total.expect &&
   fss_extended_list_read +n -cnst a 5 ${file_source} > ${test_current}content-name-a-select-5-total.expect &&
   fss_extended_list_read +n -cnst a 100 ${file_source} > ${test_current}content-name-a-select-100-total.expect &&
+  fss_extended_list_read +n -cnst "" 0 ${file_source} > ${test_current}content-name--select-0-total.expect &&
+  fss_extended_list_read +n -cnst "" 1 ${file_source} > ${test_current}content-name--select-1-total.expect &&
+  fss_extended_list_read +n -cnst мир 0 ${file_source} > ${test_current}content-name-мир-select-0-total.expect &&
+  fss_extended_list_read +n -cnst мир 1 ${file_source} > ${test_current}content-name-мир-select-1-total.expect &&
+  fss_extended_list_read +n -cnst "привет has space" 0 ${file_source} > ${test_current}content-name-привет-select-0-total.expect &&
+  fss_extended_list_read +n -cnst "привет has space" 1 ${file_source} > ${test_current}content-name-привет-select-1-total.expect &&
 
   fss_extended_list_read +n -o ${file_source} > ${test_current}object.expect &&
   fss_extended_list_read +n -oO ${file_source} > ${test_current}object-original.expect &&
@@ -505,23 +685,41 @@ generate_operate_0003() {
   fss_extended_list_read +n -oa 5 ${file_source} > ${test_current}object-at-5.expect &&
   fss_extended_list_read +n -oa 100 ${file_source} > ${test_current}object-at-100.expect &&
   fss_extended_list_read +n -cn hi ${file_source} > ${test_current}object-name-hi.expect &&
+  fss_extended_list_read +n -cn "" ${file_source} > ${test_current}object-name-.expect &&
+  fss_extended_list_read +n -cn мир ${file_source} > ${test_current}object-name-мир.expect &&
+  fss_extended_list_read +n -cn "привет has space" ${file_source} > ${test_current}object-name-привет.expect &&
   fss_extended_list_read +n -cn a ${file_source} > ${test_current}object-name-a.expect &&
   fss_extended_list_read +n -cnt hi ${file_source} > ${test_current}object-name-hi-total.expect &&
   fss_extended_list_read +n -cnt a ${file_source} > ${test_current}object-name-a-total.expect &&
+  fss_extended_list_read +n -cnt "" ${file_source} > ${test_current}object-name--total.expect &&
+  fss_extended_list_read +n -cnt мир ${file_source} > ${test_current}object-name-мир-total.expect &&
+  fss_extended_list_read +n -cnt "привет has space" ${file_source} > ${test_current}object-name-привет-total.expect &&
   fss_extended_list_read +n -cns hi 0 ${file_source} > ${test_current}object-name-hi-select-0.expect &&
-  fss_extended_list_read +n -cns hi 0 ${file_source} > ${test_current}object-name-hi-select-1.expect &&
+  fss_extended_list_read +n -cns hi 1 ${file_source} > ${test_current}object-name-hi-select-1.expect &&
   fss_extended_list_read +n -cns a 0 ${file_source} > ${test_current}object-name-a-select-0.expect &&
   fss_extended_list_read +n -cns a 1 ${file_source} > ${test_current}object-name-a-select-1.expect &&
   fss_extended_list_read +n -cns a 2 ${file_source} > ${test_current}object-name-a-select-2.expect &&
   fss_extended_list_read +n -cns a 5 ${file_source} > ${test_current}object-name-a-select-5.expect &&
   fss_extended_list_read +n -cns a 100 ${file_source} > ${test_current}object-name-a-select-100.expect &&
+  fss_extended_list_read +n -cns "" 0 ${file_source} > ${test_current}object-name--select-0.expect &&
+  fss_extended_list_read +n -cns "" 1 ${file_source} > ${test_current}object-name--select-1.expect &&
+  fss_extended_list_read +n -cns мир 0 ${file_source} > ${test_current}object-name-мир-select-0.expect &&
+  fss_extended_list_read +n -cns мир 1 ${file_source} > ${test_current}object-name-мир-select-1.expect &&
+  fss_extended_list_read +n -cns привет 0 ${file_source} > ${test_current}object-name-привет-select-0.expect &&
+  fss_extended_list_read +n -cns привет 1 ${file_source} > ${test_current}object-name-привет-select-1.expect &&
   fss_extended_list_read +n -cnst hi 0 ${file_source} > ${test_current}object-name-hi-select-0-total.expect &&
-  fss_extended_list_read +n -cnst hi 0 ${file_source} > ${test_current}object-name-hi-select-1-total.expect &&
+  fss_extended_list_read +n -cnst hi 1 ${file_source} > ${test_current}object-name-hi-select-1-total.expect &&
   fss_extended_list_read +n -cnst a 0 ${file_source} > ${test_current}object-name-a-select-0-total.expect &&
   fss_extended_list_read +n -cnst a 1 ${file_source} > ${test_current}object-name-a-select-1-total.expect &&
   fss_extended_list_read +n -cnst a 2 ${file_source} > ${test_current}object-name-a-select-2-total.expect &&
   fss_extended_list_read +n -cnst a 5 ${file_source} > ${test_current}object-name-a-select-5-total.expect &&
   fss_extended_list_read +n -cnst a 100 ${file_source} > ${test_current}object-name-a-select-100-total.expect &&
+  fss_extended_list_read +n -cnst "" 0 ${file_source} > ${test_current}object-name--select-0-total.expect &&
+  fss_extended_list_read +n -cnst "" 1 ${file_source} > ${test_current}object-name--select-1-total.expect &&
+  fss_extended_list_read +n -cnst мир 0 ${file_source} > ${test_current}object-name-мир-select-0-total.expect &&
+  fss_extended_list_read +n -cnst мир 1 ${file_source} > ${test_current}object-name-мир-select-1-total.expect &&
+  fss_extended_list_read +n -cnst "привет has space" 0 ${file_source} > ${test_current}object-name-привет-select-0-total.expect &&
+  fss_extended_list_read +n -cnst "привет has space" 1 ${file_source} > ${test_current}object-name-привет-select-1-total.expect &&
 
   fss_extended_list_read +n -oc ${file_source} > ${test_current}object_and_content.expect &&
   fss_extended_list_read +n -ocO ${file_source} > ${test_current}object_and_content-original.expect &&
@@ -542,22 +740,40 @@ generate_operate_0003() {
   fss_extended_list_read +n -oca 100 ${file_source} > ${test_current}object_and_content-at-100.expect &&
   fss_extended_list_read +n -cn hi ${file_source} > ${test_current}object_and_content-name-hi.expect &&
   fss_extended_list_read +n -cn a ${file_source} > ${test_current}object_and_content-name-a.expect &&
+  fss_extended_list_read +n -cn "" ${file_source} > ${test_current}object_and_content-name-.expect &&
+  fss_extended_list_read +n -cn мир ${file_source} > ${test_current}object_and_content-name-мир.expect &&
+  fss_extended_list_read +n -cn привет ${file_source} > ${test_current}object_and_content-name-привет.expect &&
   fss_extended_list_read +n -cnt hi ${file_source} > ${test_current}object_and_content-name-hi-total.expect &&
   fss_extended_list_read +n -cnt a ${file_source} > ${test_current}object_and_content-name-a-total.expect &&
+  fss_extended_list_read +n -cnt "" ${file_source} > ${test_current}object_and_content-name--total.expect &&
+  fss_extended_list_read +n -cnt мир ${file_source} > ${test_current}object_and_content-name-мир-total.expect &&
+  fss_extended_list_read +n -cnt "привет has space" ${file_source} > ${test_current}object_and_content-name-привет-total.expect &&
   fss_extended_list_read +n -cns hi 0 ${file_source} > ${test_current}object_and_content-name-hi-select-0.expect &&
-  fss_extended_list_read +n -cns hi 0 ${file_source} > ${test_current}object_and_content-name-hi-select-1.expect &&
+  fss_extended_list_read +n -cns hi 1 ${file_source} > ${test_current}object_and_content-name-hi-select-1.expect &&
   fss_extended_list_read +n -cns a 0 ${file_source} > ${test_current}object_and_content-name-a-select-0.expect &&
   fss_extended_list_read +n -cns a 1 ${file_source} > ${test_current}object_and_content-name-a-select-1.expect &&
   fss_extended_list_read +n -cns a 2 ${file_source} > ${test_current}object_and_content-name-a-select-2.expect &&
   fss_extended_list_read +n -cns a 5 ${file_source} > ${test_current}object_and_content-name-a-select-5.expect &&
   fss_extended_list_read +n -cns a 100 ${file_source} > ${test_current}object_and_content-name-a-select-100.expect &&
+  fss_extended_list_read +n -cns "" 0 ${file_source} > ${test_current}object_and_content-name--select-0.expect &&
+  fss_extended_list_read +n -cns "" 1 ${file_source} > ${test_current}object_and_content-name--select-1.expect &&
+  fss_extended_list_read +n -cns мир 0 ${file_source} > ${test_current}object_and_content-name-мир-select-0.expect &&
+  fss_extended_list_read +n -cns мир 1 ${file_source} > ${test_current}object_and_content-name-мир-select-1.expect &&
+  fss_extended_list_read +n -cns "привет has space" 0 ${file_source} > ${test_current}object_and_content-name-привет-select-0.expect &&
+  fss_extended_list_read +n -cns "привет has space" 1 ${file_source} > ${test_current}object_and_content-name-привет-select-1.expect &&
   fss_extended_list_read +n -cnst hi 0 ${file_source} > ${test_current}object_and_content-name-hi-select-0-total.expect &&
-  fss_extended_list_read +n -cnst hi 0 ${file_source} > ${test_current}object_and_content-name-hi-select-1-total.expect &&
+  fss_extended_list_read +n -cnst hi 1 ${file_source} > ${test_current}object_and_content-name-hi-select-1-total.expect &&
   fss_extended_list_read +n -cnst a 0 ${file_source} > ${test_current}object_and_content-name-a-select-0-total.expect &&
   fss_extended_list_read +n -cnst a 1 ${file_source} > ${test_current}object_and_content-name-a-select-1-total.expect &&
   fss_extended_list_read +n -cnst a 2 ${file_source} > ${test_current}object_and_content-name-a-select-2-total.expect &&
   fss_extended_list_read +n -cnst a 5 ${file_source} > ${test_current}object_and_content-name-a-select-5-total.expect &&
   fss_extended_list_read +n -cnst a 100 ${file_source} > ${test_current}object_and_content-name-a-select-100-total.expect &&
+  fss_extended_list_read +n -cnst "" 0 ${file_source} > ${test_current}object_and_content-name--select-0-total.expect &&
+  fss_extended_list_read +n -cnst "" 1 ${file_source} > ${test_current}object_and_content-name--select-1-total.expect &&
+  fss_extended_list_read +n -cnst мир 0 ${file_source} > ${test_current}object_and_content-name-мир-select-0-total.expect &&
+  fss_extended_list_read +n -cnst мир 1 ${file_source} > ${test_current}object_and_content-name-мир-select-1-total.expect &&
+  fss_extended_list_read +n -cnst "привет has space" 0 ${file_source} > ${test_current}object_and_content-name-привет-select-0-total.expect &&
+  fss_extended_list_read +n -cnst "привет has space" 1 ${file_source} > ${test_current}object_and_content-name-привет-select-1-total.expect &&
 
   echo "Generation Complete"
 
@@ -589,22 +805,40 @@ generate_operate_0008() {
   fss_embedded_list_read +n -ca 100 ${file_source} > ${test_current}content-at-100.expect &&
   fss_embedded_list_read +n -cn hi ${file_source} > ${test_current}content-name-hi.expect &&
   fss_embedded_list_read +n -cn a ${file_source} > ${test_current}content-name-a.expect &&
+  fss_embedded_list_read +n -cn "" ${file_source} > ${test_current}content-name-.expect &&
+  fss_embedded_list_read +n -cn мир ${file_source} > ${test_current}content-name-мир.expect &&
+  fss_embedded_list_read +n -cn "привет has space" ${file_source} > ${test_current}content-name-привет.expect &&
   fss_embedded_list_read +n -cnt hi ${file_source} > ${test_current}content-name-hi-total.expect &&
   fss_embedded_list_read +n -cnt a ${file_source} > ${test_current}content-name-a-total.expect &&
+  fss_embedded_list_read +n -cnt "" ${file_source} > ${test_current}content-name--total.expect &&
+  fss_embedded_list_read +n -cnt мир ${file_source} > ${test_current}content-name-мир-total.expect &&
+  fss_embedded_list_read +n -cnt "привет has space" ${file_source} > ${test_current}content-name-привет-total.expect &&
   fss_embedded_list_read +n -cns hi 0 ${file_source} > ${test_current}content-name-hi-select-0.expect &&
-  fss_embedded_list_read +n -cns hi 0 ${file_source} > ${test_current}content-name-hi-select-1.expect &&
+  fss_embedded_list_read +n -cns hi 1 ${file_source} > ${test_current}content-name-hi-select-1.expect &&
   fss_embedded_list_read +n -cns a 0 ${file_source} > ${test_current}content-name-a-select-0.expect &&
   fss_embedded_list_read +n -cns a 1 ${file_source} > ${test_current}content-name-a-select-1.expect &&
   fss_embedded_list_read +n -cns a 2 ${file_source} > ${test_current}content-name-a-select-2.expect &&
   fss_embedded_list_read +n -cns a 5 ${file_source} > ${test_current}content-name-a-select-5.expect &&
   fss_embedded_list_read +n -cns a 100 ${file_source} > ${test_current}content-name-a-select-100.expect &&
+  fss_embedded_list_read +n -cns "" 0 ${file_source} > ${test_current}content-name--select-0.expect &&
+  fss_embedded_list_read +n -cns "" 1 ${file_source} > ${test_current}content-name--select-1.expect &&
+  fss_embedded_list_read +n -cns мир 0 ${file_source} > ${test_current}content-name-мир-select-0.expect &&
+  fss_embedded_list_read +n -cns мир 1 ${file_source} > ${test_current}content-name-мир-select-1.expect &&
+  fss_embedded_list_read +n -cns "привет has space" 0 ${file_source} > ${test_current}content-name-привет-select-0.expect &&
+  fss_embedded_list_read +n -cns "привет has space" 1 ${file_source} > ${test_current}content-name-привет-select-1.expect &&
   fss_embedded_list_read +n -cnst hi 0 ${file_source} > ${test_current}content-name-hi-select-0-total.expect &&
-  fss_embedded_list_read +n -cnst hi 0 ${file_source} > ${test_current}content-name-hi-select-1-total.expect &&
+  fss_embedded_list_read +n -cnst hi 1 ${file_source} > ${test_current}content-name-hi-select-1-total.expect &&
   fss_embedded_list_read +n -cnst a 0 ${file_source} > ${test_current}content-name-a-select-0-total.expect &&
   fss_embedded_list_read +n -cnst a 1 ${file_source} > ${test_current}content-name-a-select-1-total.expect &&
   fss_embedded_list_read +n -cnst a 2 ${file_source} > ${test_current}content-name-a-select-2-total.expect &&
   fss_embedded_list_read +n -cnst a 5 ${file_source} > ${test_current}content-name-a-select-5-total.expect &&
   fss_embedded_list_read +n -cnst a 100 ${file_source} > ${test_current}content-name-a-select-100-total.expect &&
+  fss_embedded_list_read +n -cnst "" 0 ${file_source} > ${test_current}content-name--select-0-total.expect &&
+  fss_embedded_list_read +n -cnst "" 1 ${file_source} > ${test_current}content-name--select-1-total.expect &&
+  fss_embedded_list_read +n -cnst мир 0 ${file_source} > ${test_current}content-name-мир-select-0-total.expect &&
+  fss_embedded_list_read +n -cnst мир 1 ${file_source} > ${test_current}content-name-мир-select-1-total.expect &&
+  fss_embedded_list_read +n -cnst "привет has space" 0 ${file_source} > ${test_current}content-name-привет-select-0-total.expect &&
+  fss_embedded_list_read +n -cnst "привет has space" 1 ${file_source} > ${test_current}content-name-привет-select-1-total.expect &&
 
   fss_embedded_list_read +n -o ${file_source} > ${test_current}object.expect &&
   fss_embedded_list_read +n -oO ${file_source} > ${test_current}object-original.expect &&
@@ -624,23 +858,41 @@ generate_operate_0008() {
   fss_embedded_list_read +n -oa 5 ${file_source} > ${test_current}object-at-5.expect &&
   fss_embedded_list_read +n -oa 100 ${file_source} > ${test_current}object-at-100.expect &&
   fss_embedded_list_read +n -cn hi ${file_source} > ${test_current}object-name-hi.expect &&
+  fss_embedded_list_read +n -cn "" ${file_source} > ${test_current}object-name-.expect &&
+  fss_embedded_list_read +n -cn мир ${file_source} > ${test_current}object-name-мир.expect &&
+  fss_embedded_list_read +n -cn "привет has space" ${file_source} > ${test_current}object-name-привет.expect &&
   fss_embedded_list_read +n -cn a ${file_source} > ${test_current}object-name-a.expect &&
   fss_embedded_list_read +n -cnt hi ${file_source} > ${test_current}object-name-hi-total.expect &&
   fss_embedded_list_read +n -cnt a ${file_source} > ${test_current}object-name-a-total.expect &&
+  fss_embedded_list_read +n -cnt "" ${file_source} > ${test_current}object-name--total.expect &&
+  fss_embedded_list_read +n -cnt мир ${file_source} > ${test_current}object-name-мир-total.expect &&
+  fss_embedded_list_read +n -cnt "привет has space" ${file_source} > ${test_current}object-name-привет-total.expect &&
   fss_embedded_list_read +n -cns hi 0 ${file_source} > ${test_current}object-name-hi-select-0.expect &&
-  fss_embedded_list_read +n -cns hi 0 ${file_source} > ${test_current}object-name-hi-select-1.expect &&
+  fss_embedded_list_read +n -cns hi 1 ${file_source} > ${test_current}object-name-hi-select-1.expect &&
   fss_embedded_list_read +n -cns a 0 ${file_source} > ${test_current}object-name-a-select-0.expect &&
   fss_embedded_list_read +n -cns a 1 ${file_source} > ${test_current}object-name-a-select-1.expect &&
   fss_embedded_list_read +n -cns a 2 ${file_source} > ${test_current}object-name-a-select-2.expect &&
   fss_embedded_list_read +n -cns a 5 ${file_source} > ${test_current}object-name-a-select-5.expect &&
   fss_embedded_list_read +n -cns a 100 ${file_source} > ${test_current}object-name-a-select-100.expect &&
+  fss_embedded_list_read +n -cns "" 0 ${file_source} > ${test_current}object-name--select-0.expect &&
+  fss_embedded_list_read +n -cns "" 1 ${file_source} > ${test_current}object-name--select-1.expect &&
+  fss_embedded_list_read +n -cns мир 0 ${file_source} > ${test_current}object-name-мир-select-0.expect &&
+  fss_embedded_list_read +n -cns мир 1 ${file_source} > ${test_current}object-name-мир-select-1.expect &&
+  fss_embedded_list_read +n -cns привет 0 ${file_source} > ${test_current}object-name-привет-select-0.expect &&
+  fss_embedded_list_read +n -cns привет 1 ${file_source} > ${test_current}object-name-привет-select-1.expect &&
   fss_embedded_list_read +n -cnst hi 0 ${file_source} > ${test_current}object-name-hi-select-0-total.expect &&
-  fss_embedded_list_read +n -cnst hi 0 ${file_source} > ${test_current}object-name-hi-select-1-total.expect &&
+  fss_embedded_list_read +n -cnst hi 1 ${file_source} > ${test_current}object-name-hi-select-1-total.expect &&
   fss_embedded_list_read +n -cnst a 0 ${file_source} > ${test_current}object-name-a-select-0-total.expect &&
   fss_embedded_list_read +n -cnst a 1 ${file_source} > ${test_current}object-name-a-select-1-total.expect &&
   fss_embedded_list_read +n -cnst a 2 ${file_source} > ${test_current}object-name-a-select-2-total.expect &&
   fss_embedded_list_read +n -cnst a 5 ${file_source} > ${test_current}object-name-a-select-5-total.expect &&
   fss_embedded_list_read +n -cnst a 100 ${file_source} > ${test_current}object-name-a-select-100-total.expect &&
+  fss_embedded_list_read +n -cnst "" 0 ${file_source} > ${test_current}object-name--select-0-total.expect &&
+  fss_embedded_list_read +n -cnst "" 1 ${file_source} > ${test_current}object-name--select-1-total.expect &&
+  fss_embedded_list_read +n -cnst мир 0 ${file_source} > ${test_current}object-name-мир-select-0-total.expect &&
+  fss_embedded_list_read +n -cnst мир 1 ${file_source} > ${test_current}object-name-мир-select-1-total.expect &&
+  fss_embedded_list_read +n -cnst "привет has space" 0 ${file_source} > ${test_current}object-name-привет-select-0-total.expect &&
+  fss_embedded_list_read +n -cnst "привет has space" 1 ${file_source} > ${test_current}object-name-привет-select-1-total.expect &&
 
   fss_embedded_list_read +n -oc ${file_source} > ${test_current}object_and_content.expect &&
   fss_embedded_list_read +n -ocO ${file_source} > ${test_current}object_and_content-original.expect &&
@@ -661,22 +913,40 @@ generate_operate_0008() {
   fss_embedded_list_read +n -oca 100 ${file_source} > ${test_current}object_and_content-at-100.expect &&
   fss_embedded_list_read +n -cn hi ${file_source} > ${test_current}object_and_content-name-hi.expect &&
   fss_embedded_list_read +n -cn a ${file_source} > ${test_current}object_and_content-name-a.expect &&
+  fss_embedded_list_read +n -cn "" ${file_source} > ${test_current}object_and_content-name-.expect &&
+  fss_embedded_list_read +n -cn мир ${file_source} > ${test_current}object_and_content-name-мир.expect &&
+  fss_embedded_list_read +n -cn привет ${file_source} > ${test_current}object_and_content-name-привет.expect &&
   fss_embedded_list_read +n -cnt hi ${file_source} > ${test_current}object_and_content-name-hi-total.expect &&
   fss_embedded_list_read +n -cnt a ${file_source} > ${test_current}object_and_content-name-a-total.expect &&
+  fss_embedded_list_read +n -cnt "" ${file_source} > ${test_current}object_and_content-name--total.expect &&
+  fss_embedded_list_read +n -cnt мир ${file_source} > ${test_current}object_and_content-name-мир-total.expect &&
+  fss_embedded_list_read +n -cnt "привет has space" ${file_source} > ${test_current}object_and_content-name-привет-total.expect &&
   fss_embedded_list_read +n -cns hi 0 ${file_source} > ${test_current}object_and_content-name-hi-select-0.expect &&
-  fss_embedded_list_read +n -cns hi 0 ${file_source} > ${test_current}object_and_content-name-hi-select-1.expect &&
+  fss_embedded_list_read +n -cns hi 1 ${file_source} > ${test_current}object_and_content-name-hi-select-1.expect &&
   fss_embedded_list_read +n -cns a 0 ${file_source} > ${test_current}object_and_content-name-a-select-0.expect &&
   fss_embedded_list_read +n -cns a 1 ${file_source} > ${test_current}object_and_content-name-a-select-1.expect &&
   fss_embedded_list_read +n -cns a 2 ${file_source} > ${test_current}object_and_content-name-a-select-2.expect &&
   fss_embedded_list_read +n -cns a 5 ${file_source} > ${test_current}object_and_content-name-a-select-5.expect &&
   fss_embedded_list_read +n -cns a 100 ${file_source} > ${test_current}object_and_content-name-a-select-100.expect &&
+  fss_embedded_list_read +n -cns "" 0 ${file_source} > ${test_current}object_and_content-name--select-0.expect &&
+  fss_embedded_list_read +n -cns "" 1 ${file_source} > ${test_current}object_and_content-name--select-1.expect &&
+  fss_embedded_list_read +n -cns мир 0 ${file_source} > ${test_current}object_and_content-name-мир-select-0.expect &&
+  fss_embedded_list_read +n -cns мир 1 ${file_source} > ${test_current}object_and_content-name-мир-select-1.expect &&
+  fss_embedded_list_read +n -cns "привет has space" 0 ${file_source} > ${test_current}object_and_content-name-привет-select-0.expect &&
+  fss_embedded_list_read +n -cns "привет has space" 1 ${file_source} > ${test_current}object_and_content-name-привет-select-1.expect &&
   fss_embedded_list_read +n -cnst hi 0 ${file_source} > ${test_current}object_and_content-name-hi-select-0-total.expect &&
-  fss_embedded_list_read +n -cnst hi 0 ${file_source} > ${test_current}object_and_content-name-hi-select-1-total.expect &&
+  fss_embedded_list_read +n -cnst hi 1 ${file_source} > ${test_current}object_and_content-name-hi-select-1-total.expect &&
   fss_embedded_list_read +n -cnst a 0 ${file_source} > ${test_current}object_and_content-name-a-select-0-total.expect &&
   fss_embedded_list_read +n -cnst a 1 ${file_source} > ${test_current}object_and_content-name-a-select-1-total.expect &&
   fss_embedded_list_read +n -cnst a 2 ${file_source} > ${test_current}object_and_content-name-a-select-2-total.expect &&
   fss_embedded_list_read +n -cnst a 5 ${file_source} > ${test_current}object_and_content-name-a-select-5-total.expect &&
   fss_embedded_list_read +n -cnst a 100 ${file_source} > ${test_current}object_and_content-name-a-select-100-total.expect &&
+  fss_embedded_list_read +n -cnst "" 0 ${file_source} > ${test_current}object_and_content-name--select-0-total.expect &&
+  fss_embedded_list_read +n -cnst "" 1 ${file_source} > ${test_current}object_and_content-name--select-1-total.expect &&
+  fss_embedded_list_read +n -cnst мир 0 ${file_source} > ${test_current}object_and_content-name-мир-select-0-total.expect &&
+  fss_embedded_list_read +n -cnst мир 1 ${file_source} > ${test_current}object_and_content-name-мир-select-1-total.expect &&
+  fss_embedded_list_read +n -cnst "привет has space" 0 ${file_source} > ${test_current}object_and_content-name-привет-select-0-total.expect &&
+  fss_embedded_list_read +n -cnst "привет has space" 1 ${file_source} > ${test_current}object_and_content-name-привет-select-1-total.expect &&
 
   echo "Generation Complete"
 
@@ -708,22 +978,40 @@ generate_operate_000e() {
   fss_payload_read +n -ca 100 ${file_source} > ${test_current}content-at-100.expect &&
   fss_payload_read +n -cn hi ${file_source} > ${test_current}content-name-hi.expect &&
   fss_payload_read +n -cn a ${file_source} > ${test_current}content-name-a.expect &&
+  fss_payload_read +n -cn "" ${file_source} > ${test_current}content-name-.expect &&
+  fss_payload_read +n -cn мир ${file_source} > ${test_current}content-name-мир.expect &&
+  fss_payload_read +n -cn "привет has space" ${file_source} > ${test_current}content-name-привет.expect &&
   fss_payload_read +n -cnt hi ${file_source} > ${test_current}content-name-hi-total.expect &&
   fss_payload_read +n -cnt a ${file_source} > ${test_current}content-name-a-total.expect &&
+  fss_payload_read +n -cnt "" ${file_source} > ${test_current}content-name--total.expect &&
+  fss_payload_read +n -cnt мир ${file_source} > ${test_current}content-name-мир-total.expect &&
+  fss_payload_read +n -cnt "привет has space" ${file_source} > ${test_current}content-name-привет-total.expect &&
   fss_payload_read +n -cns hi 0 ${file_source} > ${test_current}content-name-hi-select-0.expect &&
-  fss_payload_read +n -cns hi 0 ${file_source} > ${test_current}content-name-hi-select-1.expect &&
+  fss_payload_read +n -cns hi 1 ${file_source} > ${test_current}content-name-hi-select-1.expect &&
   fss_payload_read +n -cns a 0 ${file_source} > ${test_current}content-name-a-select-0.expect &&
   fss_payload_read +n -cns a 1 ${file_source} > ${test_current}content-name-a-select-1.expect &&
   fss_payload_read +n -cns a 2 ${file_source} > ${test_current}content-name-a-select-2.expect &&
   fss_payload_read +n -cns a 5 ${file_source} > ${test_current}content-name-a-select-5.expect &&
   fss_payload_read +n -cns a 100 ${file_source} > ${test_current}content-name-a-select-100.expect &&
+  fss_payload_read +n -cns "" 0 ${file_source} > ${test_current}content-name--select-0.expect &&
+  fss_payload_read +n -cns "" 1 ${file_source} > ${test_current}content-name--select-1.expect &&
+  fss_payload_read +n -cns мир 0 ${file_source} > ${test_current}content-name-мир-select-0.expect &&
+  fss_payload_read +n -cns мир 1 ${file_source} > ${test_current}content-name-мир-select-1.expect &&
+  fss_payload_read +n -cns "привет has space" 0 ${file_source} > ${test_current}content-name-привет-select-0.expect &&
+  fss_payload_read +n -cns "привет has space" 1 ${file_source} > ${test_current}content-name-привет-select-1.expect &&
   fss_payload_read +n -cnst hi 0 ${file_source} > ${test_current}content-name-hi-select-0-total.expect &&
-  fss_payload_read +n -cnst hi 0 ${file_source} > ${test_current}content-name-hi-select-1-total.expect &&
+  fss_payload_read +n -cnst hi 1 ${file_source} > ${test_current}content-name-hi-select-1-total.expect &&
   fss_payload_read +n -cnst a 0 ${file_source} > ${test_current}content-name-a-select-0-total.expect &&
   fss_payload_read +n -cnst a 1 ${file_source} > ${test_current}content-name-a-select-1-total.expect &&
   fss_payload_read +n -cnst a 2 ${file_source} > ${test_current}content-name-a-select-2-total.expect &&
   fss_payload_read +n -cnst a 5 ${file_source} > ${test_current}content-name-a-select-5-total.expect &&
   fss_payload_read +n -cnst a 100 ${file_source} > ${test_current}content-name-a-select-100-total.expect &&
+  fss_payload_read +n -cnst "" 0 ${file_source} > ${test_current}content-name--select-0-total.expect &&
+  fss_payload_read +n -cnst "" 1 ${file_source} > ${test_current}content-name--select-1-total.expect &&
+  fss_payload_read +n -cnst мир 0 ${file_source} > ${test_current}content-name-мир-select-0-total.expect &&
+  fss_payload_read +n -cnst мир 1 ${file_source} > ${test_current}content-name-мир-select-1-total.expect &&
+  fss_payload_read +n -cnst "привет has space" 0 ${file_source} > ${test_current}content-name-привет-select-0-total.expect &&
+  fss_payload_read +n -cnst "привет has space" 1 ${file_source} > ${test_current}content-name-привет-select-1-total.expect &&
 
   fss_payload_read +n -o ${file_source} > ${test_current}object.expect &&
   fss_payload_read +n -oO ${file_source} > ${test_current}object-original.expect &&
@@ -743,23 +1031,41 @@ generate_operate_000e() {
   fss_payload_read +n -oa 5 ${file_source} > ${test_current}object-at-5.expect &&
   fss_payload_read +n -oa 100 ${file_source} > ${test_current}object-at-100.expect &&
   fss_payload_read +n -cn hi ${file_source} > ${test_current}object-name-hi.expect &&
+  fss_payload_read +n -cn "" ${file_source} > ${test_current}object-name-.expect &&
+  fss_payload_read +n -cn мир ${file_source} > ${test_current}object-name-мир.expect &&
+  fss_payload_read +n -cn "привет has space" ${file_source} > ${test_current}object-name-привет.expect &&
   fss_payload_read +n -cn a ${file_source} > ${test_current}object-name-a.expect &&
   fss_payload_read +n -cnt hi ${file_source} > ${test_current}object-name-hi-total.expect &&
   fss_payload_read +n -cnt a ${file_source} > ${test_current}object-name-a-total.expect &&
+  fss_payload_read +n -cnt "" ${file_source} > ${test_current}object-name--total.expect &&
+  fss_payload_read +n -cnt мир ${file_source} > ${test_current}object-name-мир-total.expect &&
+  fss_payload_read +n -cnt "привет has space" ${file_source} > ${test_current}object-name-привет-total.expect &&
   fss_payload_read +n -cns hi 0 ${file_source} > ${test_current}object-name-hi-select-0.expect &&
-  fss_payload_read +n -cns hi 0 ${file_source} > ${test_current}object-name-hi-select-1.expect &&
+  fss_payload_read +n -cns hi 1 ${file_source} > ${test_current}object-name-hi-select-1.expect &&
   fss_payload_read +n -cns a 0 ${file_source} > ${test_current}object-name-a-select-0.expect &&
   fss_payload_read +n -cns a 1 ${file_source} > ${test_current}object-name-a-select-1.expect &&
   fss_payload_read +n -cns a 2 ${file_source} > ${test_current}object-name-a-select-2.expect &&
   fss_payload_read +n -cns a 5 ${file_source} > ${test_current}object-name-a-select-5.expect &&
   fss_payload_read +n -cns a 100 ${file_source} > ${test_current}object-name-a-select-100.expect &&
+  fss_payload_read +n -cns "" 0 ${file_source} > ${test_current}object-name--select-0.expect &&
+  fss_payload_read +n -cns "" 1 ${file_source} > ${test_current}object-name--select-1.expect &&
+  fss_payload_read +n -cns мир 0 ${file_source} > ${test_current}object-name-мир-select-0.expect &&
+  fss_payload_read +n -cns мир 1 ${file_source} > ${test_current}object-name-мир-select-1.expect &&
+  fss_payload_read +n -cns привет 0 ${file_source} > ${test_current}object-name-привет-select-0.expect &&
+  fss_payload_read +n -cns привет 1 ${file_source} > ${test_current}object-name-привет-select-1.expect &&
   fss_payload_read +n -cnst hi 0 ${file_source} > ${test_current}object-name-hi-select-0-total.expect &&
-  fss_payload_read +n -cnst hi 0 ${file_source} > ${test_current}object-name-hi-select-1-total.expect &&
+  fss_payload_read +n -cnst hi 1 ${file_source} > ${test_current}object-name-hi-select-1-total.expect &&
   fss_payload_read +n -cnst a 0 ${file_source} > ${test_current}object-name-a-select-0-total.expect &&
   fss_payload_read +n -cnst a 1 ${file_source} > ${test_current}object-name-a-select-1-total.expect &&
   fss_payload_read +n -cnst a 2 ${file_source} > ${test_current}object-name-a-select-2-total.expect &&
   fss_payload_read +n -cnst a 5 ${file_source} > ${test_current}object-name-a-select-5-total.expect &&
   fss_payload_read +n -cnst a 100 ${file_source} > ${test_current}object-name-a-select-100-total.expect &&
+  fss_payload_read +n -cnst "" 0 ${file_source} > ${test_current}object-name--select-0-total.expect &&
+  fss_payload_read +n -cnst "" 1 ${file_source} > ${test_current}object-name--select-1-total.expect &&
+  fss_payload_read +n -cnst мир 0 ${file_source} > ${test_current}object-name-мир-select-0-total.expect &&
+  fss_payload_read +n -cnst мир 1 ${file_source} > ${test_current}object-name-мир-select-1-total.expect &&
+  fss_payload_read +n -cnst "привет has space" 0 ${file_source} > ${test_current}object-name-привет-select-0-total.expect &&
+  fss_payload_read +n -cnst "привет has space" 1 ${file_source} > ${test_current}object-name-привет-select-1-total.expect &&
 
   fss_payload_read +n -oc ${file_source} > ${test_current}object_and_content.expect &&
   fss_payload_read +n -ocO ${file_source} > ${test_current}object_and_content-original.expect &&
@@ -780,22 +1086,40 @@ generate_operate_000e() {
   fss_payload_read +n -oca 100 ${file_source} > ${test_current}object_and_content-at-100.expect &&
   fss_payload_read +n -cn hi ${file_source} > ${test_current}object_and_content-name-hi.expect &&
   fss_payload_read +n -cn a ${file_source} > ${test_current}object_and_content-name-a.expect &&
+  fss_payload_read +n -cn "" ${file_source} > ${test_current}object_and_content-name-.expect &&
+  fss_payload_read +n -cn мир ${file_source} > ${test_current}object_and_content-name-мир.expect &&
+  fss_payload_read +n -cn привет ${file_source} > ${test_current}object_and_content-name-привет.expect &&
   fss_payload_read +n -cnt hi ${file_source} > ${test_current}object_and_content-name-hi-total.expect &&
   fss_payload_read +n -cnt a ${file_source} > ${test_current}object_and_content-name-a-total.expect &&
+  fss_payload_read +n -cnt "" ${file_source} > ${test_current}object_and_content-name--total.expect &&
+  fss_payload_read +n -cnt мир ${file_source} > ${test_current}object_and_content-name-мир-total.expect &&
+  fss_payload_read +n -cnt "привет has space" ${file_source} > ${test_current}object_and_content-name-привет-total.expect &&
   fss_payload_read +n -cns hi 0 ${file_source} > ${test_current}object_and_content-name-hi-select-0.expect &&
-  fss_payload_read +n -cns hi 0 ${file_source} > ${test_current}object_and_content-name-hi-select-1.expect &&
+  fss_payload_read +n -cns hi 1 ${file_source} > ${test_current}object_and_content-name-hi-select-1.expect &&
   fss_payload_read +n -cns a 0 ${file_source} > ${test_current}object_and_content-name-a-select-0.expect &&
   fss_payload_read +n -cns a 1 ${file_source} > ${test_current}object_and_content-name-a-select-1.expect &&
   fss_payload_read +n -cns a 2 ${file_source} > ${test_current}object_and_content-name-a-select-2.expect &&
   fss_payload_read +n -cns a 5 ${file_source} > ${test_current}object_and_content-name-a-select-5.expect &&
   fss_payload_read +n -cns a 100 ${file_source} > ${test_current}object_and_content-name-a-select-100.expect &&
+  fss_payload_read +n -cns "" 0 ${file_source} > ${test_current}object_and_content-name--select-0.expect &&
+  fss_payload_read +n -cns "" 1 ${file_source} > ${test_current}object_and_content-name--select-1.expect &&
+  fss_payload_read +n -cns мир 0 ${file_source} > ${test_current}object_and_content-name-мир-select-0.expect &&
+  fss_payload_read +n -cns мир 1 ${file_source} > ${test_current}object_and_content-name-мир-select-1.expect &&
+  fss_payload_read +n -cns "привет has space" 0 ${file_source} > ${test_current}object_and_content-name-привет-select-0.expect &&
+  fss_payload_read +n -cns "привет has space" 1 ${file_source} > ${test_current}object_and_content-name-привет-select-1.expect &&
   fss_payload_read +n -cnst hi 0 ${file_source} > ${test_current}object_and_content-name-hi-select-0-total.expect &&
-  fss_payload_read +n -cnst hi 0 ${file_source} > ${test_current}object_and_content-name-hi-select-1-total.expect &&
+  fss_payload_read +n -cnst hi 1 ${file_source} > ${test_current}object_and_content-name-hi-select-1-total.expect &&
   fss_payload_read +n -cnst a 0 ${file_source} > ${test_current}object_and_content-name-a-select-0-total.expect &&
   fss_payload_read +n -cnst a 1 ${file_source} > ${test_current}object_and_content-name-a-select-1-total.expect &&
   fss_payload_read +n -cnst a 2 ${file_source} > ${test_current}object_and_content-name-a-select-2-total.expect &&
   fss_payload_read +n -cnst a 5 ${file_source} > ${test_current}object_and_content-name-a-select-5-total.expect &&
   fss_payload_read +n -cnst a 100 ${file_source} > ${test_current}object_and_content-name-a-select-100-total.expect &&
+  fss_payload_read +n -cnst "" 0 ${file_source} > ${test_current}object_and_content-name--select-0-total.expect &&
+  fss_payload_read +n -cnst "" 1 ${file_source} > ${test_current}object_and_content-name--select-1-total.expect &&
+  fss_payload_read +n -cnst мир 0 ${file_source} > ${test_current}object_and_content-name-мир-select-0-total.expect &&
+  fss_payload_read +n -cnst мир 1 ${file_source} > ${test_current}object_and_content-name-мир-select-1-total.expect &&
+  fss_payload_read +n -cnst "привет has space" 0 ${file_source} > ${test_current}object_and_content-name-привет-select-0-total.expect &&
+  fss_payload_read +n -cnst "привет has space" 1 ${file_source} > ${test_current}object_and_content-name-привет-select-1-total.expect &&
 
   echo "Generation Complete"
 
@@ -828,15 +1152,27 @@ generate_operate_test_standard() {
   fss_read +FLn -A ${standard} -ca 100 ${file_source} > ${test_current}content-at-100.expect &&
   fss_read +FLn -A ${standard} -cn hi ${file_source} > ${test_current}content-name-hi.expect &&
   fss_read +FLn -A ${standard} -cn a ${file_source} > ${test_current}content-name-a.expect &&
+  fss_read +FLn -A ${standard} -cn "" ${file_source} > ${test_current}content-name-.expect &&
+  fss_read +FLn -A ${standard} -cn мир ${file_source} > ${test_current}content-name-мир.expect &&
+  fss_read +FLn -A ${standard} -cn "привет has space" ${file_source} > ${test_current}content-name-привет.expect &&
   fss_read +FLn -A ${standard} -cnt hi ${file_source} > ${test_current}content-name-hi-total.expect &&
   fss_read +FLn -A ${standard} -cnt a ${file_source} > ${test_current}content-name-a-total.expect &&
+  fss_read +FLn -A ${standard} -cnt "" ${file_source} > ${test_current}content-name--total.expect &&
+  fss_read +FLn -A ${standard} -cnt мир ${file_source} > ${test_current}content-name-мир-total.expect &&
+  fss_read +FLn -A ${standard} -cnt "привет has space" ${file_source} > ${test_current}content-name-привет-total.expect &&
   fss_read +FLn -A ${standard} -cns hi 0 ${file_source} > ${test_current}content-name-hi-select-0.expect &&
-  fss_read +FLn -A ${standard} -cns hi 0 ${file_source} > ${test_current}content-name-hi-select-1.expect &&
+  fss_read +FLn -A ${standard} -cns hi 1 ${file_source} > ${test_current}content-name-hi-select-1.expect &&
   fss_read +FLn -A ${standard} -cns a 0 ${file_source} > ${test_current}content-name-a-select-0.expect &&
   fss_read +FLn -A ${standard} -cns a 1 ${file_source} > ${test_current}content-name-a-select-1.expect &&
   fss_read +FLn -A ${standard} -cns a 2 ${file_source} > ${test_current}content-name-a-select-2.expect &&
   fss_read +FLn -A ${standard} -cns a 5 ${file_source} > ${test_current}content-name-a-select-5.expect &&
   fss_read +FLn -A ${standard} -cns a 100 ${file_source} > ${test_current}content-name-a-select-100.expect &&
+  fss_read +FLn -A ${standard} -cns "" 0 ${file_source} > ${test_current}content-name--select-0.expect &&
+  fss_read +FLn -A ${standard} -cns "" 1 ${file_source} > ${test_current}content-name--select-1.expect &&
+  fss_read +FLn -A ${standard} -cns мир 0 ${file_source} > ${test_current}content-name-мир-select-0.expect &&
+  fss_read +FLn -A ${standard} -cns мир 1 ${file_source} > ${test_current}content-name-мир-select-1.expect &&
+  fss_read +FLn -A ${standard} -cns "привет has space" 0 ${file_source} > ${test_current}content-name-привет-select-0.expect &&
+  fss_read +FLn -A ${standard} -cns "привет has space" 1 ${file_source} > ${test_current}content-name-привет-select-1.expect &&
   fss_read +FLn -A ${standard} -cnst hi 0 ${file_source} > ${test_current}content-name-hi-select-0-total.expect &&
   fss_read +FLn -A ${standard} -cnst hi 1 ${file_source} > ${test_current}content-name-hi-select-1-total.expect &&
   fss_read +FLn -A ${standard} -cnst a 0 ${file_source} > ${test_current}content-name-a-select-0-total.expect &&
@@ -844,6 +1180,12 @@ generate_operate_test_standard() {
   fss_read +FLn -A ${standard} -cnst a 2 ${file_source} > ${test_current}content-name-a-select-2-total.expect &&
   fss_read +FLn -A ${standard} -cnst a 5 ${file_source} > ${test_current}content-name-a-select-5-total.expect &&
   fss_read +FLn -A ${standard} -cnst a 100 ${file_source} > ${test_current}content-name-a-select-100-total.expect &&
+  fss_read +FLn -A ${standard} -cnst "" 0 ${file_source} > ${test_current}content-name--select-0-total.expect &&
+  fss_read +FLn -A ${standard} -cnst "" 1 ${file_source} > ${test_current}content-name--select-1-total.expect &&
+  fss_read +FLn -A ${standard} -cnst мир 0 ${file_source} > ${test_current}content-name-мир-select-0-total.expect &&
+  fss_read +FLn -A ${standard} -cnst мир 1 ${file_source} > ${test_current}content-name-мир-select-1-total.expect &&
+  fss_read +FLn -A ${standard} -cnst "привет has space" 0 ${file_source} > ${test_current}content-name-привет-select-0-total.expect &&
+  fss_read +FLn -A ${standard} -cnst "привет has space" 1 ${file_source} > ${test_current}content-name-привет-select-1-total.expect &&
 
   fss_read +FLn -A ${standard} -o ${file_source} > ${test_current}object.expect &&
   fss_read +FLn -A ${standard} -oO ${file_source} > ${test_current}object-original.expect &&
@@ -863,16 +1205,28 @@ generate_operate_test_standard() {
   fss_read +FLn -A ${standard} -oa 5 ${file_source} > ${test_current}object-at-5.expect &&
   fss_read +FLn -A ${standard} -oa 100 ${file_source} > ${test_current}object-at-100.expect &&
   fss_read +FLn -A ${standard} -cn hi ${file_source} > ${test_current}object-name-hi.expect &&
+  fss_read +FLn -A ${standard} -cn "" ${file_source} > ${test_current}object-name-.expect &&
+  fss_read +FLn -A ${standard} -cn мир ${file_source} > ${test_current}object-name-мир.expect &&
+  fss_read +FLn -A ${standard} -cn "привет has space" ${file_source} > ${test_current}object-name-привет.expect &&
   fss_read +FLn -A ${standard} -cn a ${file_source} > ${test_current}object-name-a.expect &&
   fss_read +FLn -A ${standard} -cnt hi ${file_source} > ${test_current}object-name-hi-total.expect &&
   fss_read +FLn -A ${standard} -cnt a ${file_source} > ${test_current}object-name-a-total.expect &&
+  fss_read +FLn -A ${standard} -cnt "" ${file_source} > ${test_current}object-name--total.expect &&
+  fss_read +FLn -A ${standard} -cnt мир ${file_source} > ${test_current}object-name-мир-total.expect &&
+  fss_read +FLn -A ${standard} -cnt "привет has space" ${file_source} > ${test_current}object-name-привет-total.expect &&
   fss_read +FLn -A ${standard} -cns hi 0 ${file_source} > ${test_current}object-name-hi-select-0.expect &&
-  fss_read +FLn -A ${standard} -cns hi 0 ${file_source} > ${test_current}object-name-hi-select-1.expect &&
+  fss_read +FLn -A ${standard} -cns hi 1 ${file_source} > ${test_current}object-name-hi-select-1.expect &&
   fss_read +FLn -A ${standard} -cns a 0 ${file_source} > ${test_current}object-name-a-select-0.expect &&
   fss_read +FLn -A ${standard} -cns a 1 ${file_source} > ${test_current}object-name-a-select-1.expect &&
   fss_read +FLn -A ${standard} -cns a 2 ${file_source} > ${test_current}object-name-a-select-2.expect &&
   fss_read +FLn -A ${standard} -cns a 5 ${file_source} > ${test_current}object-name-a-select-5.expect &&
   fss_read +FLn -A ${standard} -cns a 100 ${file_source} > ${test_current}object-name-a-select-100.expect &&
+  fss_read +FLn -A ${standard} -cns "" 0 ${file_source} > ${test_current}object-name--select-0.expect &&
+  fss_read +FLn -A ${standard} -cns "" 1 ${file_source} > ${test_current}object-name--select-1.expect &&
+  fss_read +FLn -A ${standard} -cns мир 0 ${file_source} > ${test_current}object-name-мир-select-0.expect &&
+  fss_read +FLn -A ${standard} -cns мир 1 ${file_source} > ${test_current}object-name-мир-select-1.expect &&
+  fss_read +FLn -A ${standard} -cns привет 0 ${file_source} > ${test_current}object-name-привет-select-0.expect &&
+  fss_read +FLn -A ${standard} -cns привет 1 ${file_source} > ${test_current}object-name-привет-select-1.expect &&
   fss_read +FLn -A ${standard} -cnst hi 0 ${file_source} > ${test_current}object-name-hi-select-0-total.expect &&
   fss_read +FLn -A ${standard} -cnst hi 1 ${file_source} > ${test_current}object-name-hi-select-1-total.expect &&
   fss_read +FLn -A ${standard} -cnst a 0 ${file_source} > ${test_current}object-name-a-select-0-total.expect &&
@@ -880,6 +1234,12 @@ generate_operate_test_standard() {
   fss_read +FLn -A ${standard} -cnst a 2 ${file_source} > ${test_current}object-name-a-select-2-total.expect &&
   fss_read +FLn -A ${standard} -cnst a 5 ${file_source} > ${test_current}object-name-a-select-5-total.expect &&
   fss_read +FLn -A ${standard} -cnst a 100 ${file_source} > ${test_current}object-name-a-select-100-total.expect &&
+  fss_read +FLn -A ${standard} -cnst "" 0 ${file_source} > ${test_current}object-name--select-0-total.expect &&
+  fss_read +FLn -A ${standard} -cnst "" 1 ${file_source} > ${test_current}object-name--select-1-total.expect &&
+  fss_read +FLn -A ${standard} -cnst мир 0 ${file_source} > ${test_current}object-name-мир-select-0-total.expect &&
+  fss_read +FLn -A ${standard} -cnst мир 1 ${file_source} > ${test_current}object-name-мир-select-1-total.expect &&
+  fss_read +FLn -A ${standard} -cnst "привет has space" 0 ${file_source} > ${test_current}object-name-привет-select-0-total.expect &&
+  fss_read +FLn -A ${standard} -cnst "привет has space" 1 ${file_source} > ${test_current}object-name-привет-select-1-total.expect &&
 
   fss_read +FLn -A ${standard} -oc ${file_source} > ${test_current}object_and_content.expect &&
   fss_read +FLn -A ${standard} -ocO ${file_source} > ${test_current}object_and_content-original.expect &&
@@ -900,15 +1260,27 @@ generate_operate_test_standard() {
   fss_read +FLn -A ${standard} -oca 100 ${file_source} > ${test_current}object_and_content-at-100.expect &&
   fss_read +FLn -A ${standard} -cn hi ${file_source} > ${test_current}object_and_content-name-hi.expect &&
   fss_read +FLn -A ${standard} -cn a ${file_source} > ${test_current}object_and_content-name-a.expect &&
+  fss_read +FLn -A ${standard} -cn "" ${file_source} > ${test_current}object_and_content-name-.expect &&
+  fss_read +FLn -A ${standard} -cn мир ${file_source} > ${test_current}object_and_content-name-мир.expect &&
+  fss_read +FLn -A ${standard} -cn привет ${file_source} > ${test_current}object_and_content-name-привет.expect &&
   fss_read +FLn -A ${standard} -cnt hi ${file_source} > ${test_current}object_and_content-name-hi-total.expect &&
   fss_read +FLn -A ${standard} -cnt a ${file_source} > ${test_current}object_and_content-name-a-total.expect &&
+  fss_read +FLn -A ${standard} -cnt "" ${file_source} > ${test_current}object_and_content-name--total.expect &&
+  fss_read +FLn -A ${standard} -cnt мир ${file_source} > ${test_current}object_and_content-name-мир-total.expect &&
+  fss_read +FLn -A ${standard} -cnt "привет has space" ${file_source} > ${test_current}object_and_content-name-привет-total.expect &&
   fss_read +FLn -A ${standard} -cns hi 0 ${file_source} > ${test_current}object_and_content-name-hi-select-0.expect &&
-  fss_read +FLn -A ${standard} -cns hi 0 ${file_source} > ${test_current}object_and_content-name-hi-select-1.expect &&
+  fss_read +FLn -A ${standard} -cns hi 1 ${file_source} > ${test_current}object_and_content-name-hi-select-1.expect &&
   fss_read +FLn -A ${standard} -cns a 0 ${file_source} > ${test_current}object_and_content-name-a-select-0.expect &&
   fss_read +FLn -A ${standard} -cns a 1 ${file_source} > ${test_current}object_and_content-name-a-select-1.expect &&
   fss_read +FLn -A ${standard} -cns a 2 ${file_source} > ${test_current}object_and_content-name-a-select-2.expect &&
   fss_read +FLn -A ${standard} -cns a 5 ${file_source} > ${test_current}object_and_content-name-a-select-5.expect &&
   fss_read +FLn -A ${standard} -cns a 100 ${file_source} > ${test_current}object_and_content-name-a-select-100.expect &&
+  fss_read +FLn -A ${standard} -cns "" 0 ${file_source} > ${test_current}object_and_content-name--select-0.expect &&
+  fss_read +FLn -A ${standard} -cns "" 1 ${file_source} > ${test_current}object_and_content-name--select-1.expect &&
+  fss_read +FLn -A ${standard} -cns мир 0 ${file_source} > ${test_current}object_and_content-name-мир-select-0.expect &&
+  fss_read +FLn -A ${standard} -cns мир 1 ${file_source} > ${test_current}object_and_content-name-мир-select-1.expect &&
+  fss_read +FLn -A ${standard} -cns "привет has space" 0 ${file_source} > ${test_current}object_and_content-name-привет-select-0.expect &&
+  fss_read +FLn -A ${standard} -cns "привет has space" 1 ${file_source} > ${test_current}object_and_content-name-привет-select-1.expect &&
   fss_read +FLn -A ${standard} -cnst hi 0 ${file_source} > ${test_current}object_and_content-name-hi-select-0-total.expect &&
   fss_read +FLn -A ${standard} -cnst hi 1 ${file_source} > ${test_current}object_and_content-name-hi-select-1-total.expect &&
   fss_read +FLn -A ${standard} -cnst a 0 ${file_source} > ${test_current}object_and_content-name-a-select-0-total.expect &&
@@ -916,13 +1288,17 @@ generate_operate_test_standard() {
   fss_read +FLn -A ${standard} -cnst a 2 ${file_source} > ${test_current}object_and_content-name-a-select-2-total.expect &&
   fss_read +FLn -A ${standard} -cnst a 5 ${file_source} > ${test_current}object_and_content-name-a-select-5-total.expect &&
   fss_read +FLn -A ${standard} -cnst a 100 ${file_source} > ${test_current}object_and_content-name-a-select-100-total.expect &&
+  fss_read +FLn -A ${standard} -cnst "" 0 ${file_source} > ${test_current}object_and_content-name--select-0-total.expect &&
+  fss_read +FLn -A ${standard} -cnst "" 1 ${file_source} > ${test_current}object_and_content-name--select-1-total.expect &&
+  fss_read +FLn -A ${standard} -cnst мир 0 ${file_source} > ${test_current}object_and_content-name-мир-select-0-total.expect &&
+  fss_read +FLn -A ${standard} -cnst мир 1 ${file_source} > ${test_current}object_and_content-name-мир-select-1-total.expect &&
+  fss_read +FLn -A ${standard} -cnst "привет has space" 0 ${file_source} > ${test_current}object_and_content-name-привет-select-0-total.expect &&
+  fss_read +FLn -A ${standard} -cnst "привет has space" 1 ${file_source} > ${test_current}object_and_content-name-привет-select-1-total.expect &&
 
-  echo "Generation complete."
+  echo "Generation Complete"
 
   if [[ $? -ne 0 ]] ; then
-    let failure=1
-
-    echo "Generation failed."
+    let failure=0
   fi
 
   return $failure

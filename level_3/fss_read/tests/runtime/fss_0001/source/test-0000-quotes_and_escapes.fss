@@ -14,6 +14,7 @@ Hi there.
 
 "\\"\\\" xx" bb
 "\\"\\\"" bb
+"" another zero
 
 #comment
 \#not a "comment...should have" no slashes.
@@ -23,3 +24,6 @@ Hi there.
 a "line...with some" random text
 a nother line.
 a b 'c d' \'e f' \\'g
+
+"мир" quoted, "yep".
+"привет has space" \"and so does this" "have space"

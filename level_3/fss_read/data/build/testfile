@@ -48,6 +48,71 @@ generate:
   print
   run parameter:"script" ./tests/runtime/script/generate.sh test-0001 tests/runtime/fss_0001/source/test-0001-unicode.fss parameter:"build_path"test/fss_0001
 
+  print
+  print Generating Test 0000 for Basic List (FSS-0002).
+  print
+  touch directory parameter:"build_path"test/fss_0002
+  run parameter:"script" ./tests/runtime/script/generate.sh test-0002 tests/runtime/fss_0002/source/test-0000-basic.fss parameter:"build_path"test/fss_0002
+
+  print
+  print Generating Test 0001 for Basic List (FSS-0002).
+  print
+  run parameter:"script" ./tests/runtime/script/generate.sh test-0002 tests/runtime/fss_0002/source/test-0001-empty_name_list.fss parameter:"build_path"test/fss_0002
+
+  print
+  print Generating Test 0002 for Basic List (FSS-0002).
+  print
+  run parameter:"script" ./tests/runtime/script/generate.sh test-0002 tests/runtime/fss_0002/source/test-0002-mixed.fss parameter:"build_path"test/fss_0002
+
+  print
+  print Generating Test 0000 for Extended List (FSS-0003).
+  print
+  touch directory parameter:"build_path"test/fss_0003
+  run parameter:"script" ./tests/runtime/script/generate.sh test-0003 tests/runtime/fss_0003/source/test-0000-basic.fss parameter:"build_path"test/fss_0003
+
+  print
+  print Generating Test 0001 for Extended List (FSS-0003).
+  print
+  run parameter:"script" ./tests/runtime/script/generate.sh test-0003 tests/runtime/fss_0003/source/test-0001-empty_name_list.fss parameter:"build_path"test/fss_0003
+
+  print
+  print Generating Test 0002 for Extended List (FSS-0003).
+  print
+  run parameter:"script" ./tests/runtime/script/generate.sh test-0003 tests/runtime/fss_0003/source/test-0002-mixed.fss parameter:"build_path"test/fss_0003
+
+  # Disabled due to problems.
+  #print
+  #print Generating Test 0000 for Embedded List (FSS-0008).
+  #print
+  #touch directory parameter:"build_path"test/fss_0008
+  #run parameter:"script" ./tests/runtime/script/generate.sh test-0008 tests/runtime/fss_0008/source/test-0000-basic.fss parameter:"build_path"test/fss_0008
+  #
+  #print
+  #print Generating Test 0001 for Embedded List (FSS-0008).
+  #print
+  #run parameter:"script" ./tests/runtime/script/generate.sh test-0008 tests/runtime/fss_0008/source/test-0001-empty_name_list.fss parameter:"build_path"test/fss_0008
+  #
+  #print
+  #print Generating Test 0008 for Embedded List (FSS-0008).
+  #print
+  #run parameter:"script" ./tests/runtime/script/generate.sh test-0008 tests/runtime/fss_0008/source/test-0008-mixed.fss parameter:"build_path"test/fss_0008
+
+  print
+  print Generating Test 0000 for Payload (FSS-000E).
+  print
+  touch directory parameter:"build_path"test/fss_000e
+  run parameter:"script" ./tests/runtime/script/generate.sh test-000e tests/runtime/fss_000e/source/test-0000-basic.fss parameter:"build_path"test/fss_000e
+
+  print
+  print Generating Test 0001 for Payload (FSS-000E).
+  print
+  run parameter:"script" ./tests/runtime/script/generate.sh test-000e tests/runtime/fss_000e/source/test-0001-empty_name_list.fss parameter:"build_path"test/fss_000e
+
+  print
+  print Generating Test 0002 for Payload (FSS-000E).
+  print
+  run parameter:"script" ./tests/runtime/script/generate.sh test-000e tests/runtime/fss_000e/source/test-0002-mixed.fss parameter:"build_path"test/fss_000e
+
 verify:
   print
   print Verifying Tests for Basic (FSS-0000).
@@ -58,6 +123,27 @@ verify:
   print Verifying Tests for Extended (FSS-0001).
   print
   run parameter:"script" ./tests/runtime/script/verify.sh build/test/fss_0001/ tests/runtime/fss_0001/expect/
+
+  print
+  print Verifying Tests for Basic List (FSS-0002).
+  print
+  run parameter:"script" ./tests/runtime/script/verify.sh build/test/fss_0002/ tests/runtime/fss_0002/expect/
+
+  print
+  print Verifying Tests for Extended List (FSS-0003).
+  print
+  run parameter:"script" ./tests/runtime/script/verify.sh build/test/fss_0003/ tests/runtime/fss_0003/expect/
+
+  # Disabled due to problems.
+  #print
+  #print Verifying Tests for Embedded List (FSS-0008).
+  #print
+  #run parameter:"script" ./tests/runtime/script/verify.sh build/test/fss_0008/ tests/runtime/fss_0008/expect/
+
+  print
+  print Verifying Tests for Payload (FSS-000E).
+  print
+  run parameter:"script" ./tests/runtime/script/verify.sh build/test/fss_000e/ tests/runtime/fss_000e/expect/
 
 build_path:
   parameter build_path build/

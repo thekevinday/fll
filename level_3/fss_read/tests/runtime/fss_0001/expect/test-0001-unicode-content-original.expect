@@ -4,3 +4,7 @@ d zero​width
 e␠
 out
 space! <-- should have the word 'space!'
+line܀܀܀with some random text
+偐 ぐ
+b c d e f ሴ䌡
+"and so does this" "ሴ 䌡"

@@ -1,0 +1,26 @@
+a:
+a b привет
+c d
+ # not a comment
+ \\# nor is this.
+\# even this is not.
+привет мир a 
+  
+# a valid list:
+   with content.
+a:
+  another "A" list.
+"мир":
+  quoted, "yep".
+привет has space:
+   But this is not a comment.
+empty:
+hi:
+  not a list:
+  a b привет
+  c d
+  привет мир a 
+
+has spaces:
+  yep.
+  fin  

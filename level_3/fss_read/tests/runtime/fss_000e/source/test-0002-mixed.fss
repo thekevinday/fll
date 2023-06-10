@@ -1,0 +1,34 @@
+# comment 1
+a:
+a b привет
+# comment 2 
+c d
+ \# not a comment
+ \\\# nor is this.
+\\# even this is not.
+привет мир a 
+  
+ \# a valid list:
+   with content.
+a:
+  another "A" list.
+"мир":
+  quoted, "yep".
+привет has space:
+  # has a comment
+  But this is not a comment.
+hi\:
+empty:
+hi:
+  not a list\:
+  a b привет
+  c d
+  привет мир a 
+
+ has spaces :
+  yep.
+  fin  
+payload:
+  ...
+hi:
+  Not a list.
