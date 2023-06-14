@@ -35,6 +35,7 @@ extern "C" {
  *   - line_single:      Designate that only a single line for Content is allowed for an Object for this standard rather than allowing multiple lines per Content per Object.
  *   - name:             A specific Object name has been requested.
  *   - object:           The Object is to be printed.
+ *   - object_as_line:   The Object is counted as its own line for the purpose of -l/--line or any other similar behavior.
  *   - original:         Enable original printing, where the quotes are printed and no delimits are applied.
  *   - pipe:             Print using the special pipe format.
  *   - print_first:      When set, print new line to message output on program begin after loading settings.
@@ -64,17 +65,18 @@ extern "C" {
     fss_read_main_flag_line_single_e      = 0x800,
     fss_read_main_flag_name_e             = 0x1000,
     fss_read_main_flag_object_e           = 0x2000,
-    fss_read_main_flag_original_e         = 0x4000,
-    fss_read_main_flag_pipe_e             = 0x8000,
-    fss_read_main_flag_print_first_e      = 0x10000,
-    fss_read_main_flag_print_last_e       = 0x20000,
-    fss_read_main_flag_quote_content_e    = 0x40000,
-    fss_read_main_flag_quote_object_e     = 0x80000,
-    fss_read_main_flag_select_e           = 0x100000,
-    fss_read_main_flag_total_e            = 0x200000,
-    fss_read_main_flag_trim_e             = 0x400000,
-    fss_read_main_flag_trim_object_e      = 0x800000,
-    fss_read_main_flag_version_e          = 0x1000000,
+    fss_read_main_flag_object_as_line_e   = 0x4000,
+    fss_read_main_flag_original_e         = 0x8000,
+    fss_read_main_flag_pipe_e             = 0x10000,
+    fss_read_main_flag_print_first_e      = 0x20000,
+    fss_read_main_flag_print_last_e       = 0x40000,
+    fss_read_main_flag_quote_content_e    = 0x80000,
+    fss_read_main_flag_quote_object_e     = 0x100000,
+    fss_read_main_flag_select_e           = 0x200000,
+    fss_read_main_flag_total_e            = 0x400000,
+    fss_read_main_flag_trim_e             = 0x800000,
+    fss_read_main_flag_trim_object_e      = 0x1000000,
+    fss_read_main_flag_version_e          = 0x2000000,
   }; // enum
 #endif // _di_fss_read_main_flag_e_
 

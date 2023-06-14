@@ -28,8 +28,8 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
   data.callback.process_normal = &fss_read_process_normal;
 
   data.callback.process_at = &fss_read_process_normal_at;
+  data.callback.process_at_line = &fss_read_process_normal_at_line;
   data.callback.process_columns = &fss_read_process_normal_columns;
-  data.callback.process_line = &fss_read_process_normal_line;
   data.callback.process_load = &fss_read_extended_process_load;
   data.callback.process_name = &fss_read_process_normal_name;
   data.callback.process_total = &fss_read_process_normal_total;

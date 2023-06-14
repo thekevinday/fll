@@ -7,14 +7,33 @@ extern "C" {
 #ifndef _di_fss_read_ensure_quotes_length_
   void fss_read_ensure_quotes_length(fss_read_main_t * const main) {
 
-    if (main->setting.quotes_object.size < main->setting.objects.used) {
-      main->setting.state.status = f_uint8s_increase_by(main->setting.objects.used - main->setting.quotes_object.size, &main->setting.quotes_object);
+    f_array_length_t i = 0;
+    f_array_length_t j = 0;
+
+    if (main->setting.quotes_object.used < main->setting.objects.used) {
+      main->setting.state.status = f_uint8s_resize(main->setting.objects.used, &main->setting.quotes_object);
       if (F_status_is_error(main->setting.state.status)) return;
+
+      for (i = main->setting.quotes_object.used; i < main->setting.objects.used; ++i) {
+        main->setting.quotes_object.array[i] = 0;
+      } // for
     }
 
-    if (main->setting.quotes_content.size < main->setting.contents.used) {
-      main->setting.state.status = f_uint8ss_increase_by(main->setting.contents.used - main->setting.quotes_content.size, &main->setting.quotes_content);
+    if (main->setting.quotes_content.used < main->setting.contents.used) {
+      main->setting.state.status = f_uint8ss_resize(main->setting.contents.used, &main->setting.quotes_content);
       if (F_status_is_error(main->setting.state.status)) return;
+
+      for (i = main->setting.quotes_content.used; i < main->setting.contents.used; ++i) {
+
+        main->setting.state.status = f_uint8s_resize(main->setting.contents.array[i].used, &main->setting.quotes_content.array[i]);
+        if (F_status_is_error(main->setting.state.status)) return;
+
+        main->setting.quotes_content.array[i].used = 0;
+
+        for (j = 0; j < main->setting.contents.array[i].used; ++j) {
+          main->setting.quotes_content.array[i].array[j] = 0;
+        } // for
+      } // for
     }
 
     main->setting.state.status = F_none;

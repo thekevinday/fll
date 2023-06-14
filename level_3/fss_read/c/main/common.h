@@ -25,11 +25,11 @@ extern "C" {
  *   This alters main.setting.state.status:
  *     F_none on success.
  *
- *     Errors (with error bit) from: f_uint8s_increase_by().
- *     Errors (with error bit) from: f_uint8ss_increase_by().
+ *     Errors (with error bit) from: f_uint8s_resize().
+ *     Errors (with error bit) from: f_uint8ss_resize().
  *
- * @see f_uint8s_increase_by()
- * @see f_uint8ss_increase_by()
+ * @see f_uint8s_resize()
+ * @see f_uint8ss_resize()
  */
 #ifndef _di_fss_read_ensure_quotes_length_
   extern void fss_read_ensure_quotes_length(fss_read_main_t * const main);

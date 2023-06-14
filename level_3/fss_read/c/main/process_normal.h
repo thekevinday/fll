@@ -29,8 +29,8 @@ extern "C" {
  *     F_none on success.
  *
  *     Errors (with error bit) from: main.callback.process_at().
+ *     Errors (with error bit) from: main.callback.process_at_line().
  *     Errors (with error bit) from: main.callback.process_columns().
- *     Errors (with error bit) from: main.callback.process_line().
  *     Errors (with error bit) from: main.callback.process_load().
  *     Errors (with error bit) from: main.callback.process_name().
  *     Errors (with error bit) from: main.callback.print_at().
@@ -77,6 +77,44 @@ extern "C" {
 #endif // _di_fss_read_process_normal_at_
 
 /**
+ * Process for the given Object index position for processing and ultimately printing a specific line.
+ *
+ * @param main
+ *   The program and settings data.
+ *
+ *   Must not be NULL.
+ *   Must be of type fss_read_main_t.
+ *
+ *   This alters main.setting.range.
+ *
+ *   This alters main.setting.state.status:
+ *     F_none on success but line not yet found.
+ *     F_success on success and line is found and printed.
+ *
+ *     F_parameter (with error bit) if main is NULL or setting is NULL.
+ *
+ *     Errors (with error bit) from: f_string_dynamic_append_assure().
+ *
+ *     Errors (with error bit) from: fss_read_signal_check().
+ * @param at
+ *   The Object index position to be processed.
+ * @param delimits_object
+ *   The delimits array representing a delimited Object.
+ *   This represents the positions within the current Object at the "at" position.
+ * @param delimits_content
+ *   The delimits array representing a delimited Content.
+ *   This represents the positions within the current Content at the "at" position.
+ * @param line
+ *   The current line being processed.
+ *   This will be incremented as necessary.
+ *
+ *   Must not be NULL.
+ */
+#ifndef _di_fss_read_process_normal_at_line_
+  extern void fss_read_process_normal_at_line(void * const main, const f_array_length_t at, const f_array_lengths_t delimits_object, const f_array_lengths_t delimits_content, f_number_unsigned_t * const line);
+#endif // _di_fss_read_process_normal_at_line_
+
+/**
  * Process buffer according to "columns" parameter rules.
  *
  * @param main
@@ -98,30 +136,6 @@ extern "C" {
 #ifndef _di_fss_read_process_normal_columns_
   extern void fss_read_process_normal_columns(void * const main, const bool names[]);
 #endif // _di_fss_read_process_normal_columns_
-
-/**
- * Process buffer according to "line" parameter rules.
- *
- * @param main
- *   The program and settings data.
- *
- *   Must not be NULL.
- *   Must be of type fss_read_main_t.
- *
- *   This alters main.setting.state.status:
- *     F_none on success.
- *
- *     Errors (with error bit) from: fss_read_signal_check().
- * @param names
- *   An array of booleans representing if the name at a given index is enabled.
- *   (If TRUE, then the name is to be used and if FALSE, then the name is not to be used.)
- *
- * @see fss_read_signal_check()
- * @see main.callback.print_set_end()
- */
-#ifndef _di_fss_read_process_normal_line_
-  extern void fss_read_process_normal_line(void * const main, const bool names[]);
-#endif // _di_fss_read_process_normal_line_
 
 /**
  * Process buffer according to "name" parameter rules.

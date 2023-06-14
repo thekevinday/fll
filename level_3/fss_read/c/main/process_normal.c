@@ -69,43 +69,46 @@ extern "C" {
       if (main->callback.process_at) {
         main->callback.process_at(main, names, *delimits_object, *delimits_content);
       }
-
-      return;
     }
-
-    if (main->setting.flag & fss_read_main_flag_columns_e) {
+    else if (main->setting.flag & fss_read_main_flag_columns_e) {
       if (main->callback.process_columns) {
         main->callback.process_columns(main, names);
       }
-
-      return;
     }
-
-    if (main->setting.flag & fss_read_main_flag_total_e) {
+    else if (main->setting.flag & fss_read_main_flag_total_e) {
       if (main->callback.process_total) {
         main->callback.process_total(main, names);
       }
-
-      return;
     }
+    else {
+      f_array_length_t i = 0;
 
-    if (main->setting.flag & fss_read_main_flag_line_e) {
-      if (main->callback.process_line) {
-        main->callback.process_line(main, names);
+      if (main->setting.flag & fss_read_main_flag_line_e) {
+        if (main->callback.process_at_line) {
+          f_number_unsigned_t line = 0;
+
+          for (; i < main->setting.contents.used && main->setting.state.status != F_success; ++i) {
+
+            if (!names[i]) continue;
+            if (fss_read_signal_check(main)) return;
+
+            main->callback.process_at_line(void_main, i, *delimits_object, *delimits_content, &line);
+            if (F_status_is_error(main->setting.state.status)) return;
+          } // for
+        }
       }
+      else if (main->callback.print_at) {
+        for (; i < main->setting.contents.used; ++i) {
 
-      return;
+          if (!names[i]) continue;
+          if (fss_read_signal_check(main)) return;
+
+          main->callback.print_at(&main->program.output, i, *delimits_object, *delimits_content);
+        } // for
+      }
     }
 
-    if (main->callback.print_at) {
-      for (f_array_length_t i = 0; i < main->setting.contents.used; ++i) {
-
-        if (!names[i]) continue;
-        if (fss_read_signal_check(main)) return;
-
-        main->callback.print_at(&main->program.output, i, *delimits_object, *delimits_content);
-      } // for
-    }
+    if (F_status_is_error(main->setting.state.status)) return;
 
     main->setting.state.status = F_none;
   }
@@ -129,7 +132,7 @@ extern "C" {
     }
 
     // If the standard only has one line per Content, then any line value greater than 0 equates to no line to print.
-    if (main->setting.flag & (fss_read_main_flag_line_e | fss_read_main_flag_line_single_e) == (fss_read_main_flag_line_e | fss_read_main_flag_line_single_e)) {
+    if ((main->setting.flag & fss_read_main_flag_line_e) && (main->setting.flag & fss_read_main_flag_line_single_e)) {
       if (main->setting.line) {
         if (main->setting.flag & fss_read_main_flag_total_e) {
           fss_read_print_number(&main->program.output, 0);
@@ -142,13 +145,7 @@ extern "C" {
     }
 
     f_array_length_t i = 0;
-    f_array_length_t j = 0;
-    f_array_length_t k = 0;
-    f_array_length_t l = 0;
     f_array_length_t at = 0;
-    f_array_length_t line = 0;
-    f_array_length_t total = 0;
-    f_string_range_t range = f_string_range_t_initialize;
 
     for (; i < main->setting.objects.used; ++i) {
 
@@ -161,13 +158,13 @@ extern "C" {
           // If using "--at" for standards that only support one line per Object, then the only valid line is line 0.
           if ((main->setting.flag & fss_read_main_flag_line_single_e) && !at) break;
 
-          line = 0;
-
           if (main->setting.flag & fss_read_main_flag_total_e) {
-            total = 0;
-            l = 0;
+            f_array_length_t total = 0;
+            f_array_length_t j = 0;
+            f_array_length_t k = 0;
+            f_array_length_t l = 0;
 
-            for (j = 0; j < main->setting.contents.array[i].used; ++j) {
+            for (; j < main->setting.contents.array[i].used; ++j) {
 
               if (main->setting.contents.array[i].array[j].start > main->setting.contents.array[i].array[j].stop) continue;
 
@@ -188,8 +185,10 @@ extern "C" {
 
             fss_read_print_number(&main->program.output, total);
           }
-          else {
-            fss_read_process_at_line(main, i, delimits_object, delimits_content, &line);
+          else if (main->callback.process_at_line) {
+            f_array_length_t line = 0;
+
+            main->callback.process_at_line(void_main, i, delimits_object, delimits_content, &line);
           }
         }
         else if (main->setting.flag & fss_read_main_flag_columns_e) {
@@ -200,10 +199,13 @@ extern "C" {
             fss_read_print_number(&main->program.output, main->setting.contents.array[i].used ? 1 : 0);
           }
           else {
-            total = 0;
-            l = 0;
+            f_array_length_t total = 0;
+            f_string_range_t range = f_string_range_t_initialize;
+            f_array_length_t j = 0;
+            f_array_length_t k = 0;
+            f_array_length_t l = 0;
 
-            for (j = 0; j < main->setting.contents.array[i].used; ++j) {
+            for (; j < main->setting.contents.array[i].used; ++j) {
 
               range.start = main->setting.contents.array[i].array[j].start;
               range.stop = main->setting.contents.array[i].array[j].stop;
@@ -239,6 +241,8 @@ extern "C" {
           main->callback.print_at(&main->program.output, i, delimits_object, delimits_content);
         }
 
+        if (F_status_is_error(main->setting.state.status)) return;
+
         main->setting.state.status = F_none;
 
         return;
@@ -247,6 +251,8 @@ extern "C" {
       ++at;
     } // for
 
+    if (F_status_is_error(main->setting.state.status)) return;
+
     if (main->setting.flag & fss_read_main_flag_total_e) {
       fss_read_print_number(&main->program.output, 0);
     }
@@ -254,6 +260,152 @@ extern "C" {
     main->setting.state.status = F_none;
   }
 #endif // _di_fss_read_process_normal_at_
+
+#ifndef _di_fss_read_process_normal_at_line_
+  void fss_read_process_normal_at_line(void * const void_main, const f_array_length_t at, const f_array_lengths_t delimits_object, const f_array_lengths_t delimits_content, f_number_unsigned_t * const line) {
+
+    if (!void_main || !line) return;
+
+    fss_read_main_t * const main = (fss_read_main_t *) void_main;
+
+    if (main->setting.flag & fss_read_main_flag_object_e) {
+      if (*line == main->setting.line) {
+        if (main->callback.print_object) {
+          main->callback.print_object(&main->program.output, at, delimits_object);
+        }
+
+        if (main->callback.print_object_end) { // @todo need to handle object end only if content is not being printed or object end is not white space.
+          main->callback.print_object_end(&main->program.output);
+        }
+
+        if (!(main->setting.flag & fss_read_main_flag_content_e)) {
+          f_print_dynamic_raw(f_string_eol_s, main->program.output.to);
+
+          main->setting.state.status = F_success;
+
+          return;
+        }
+      }
+
+      if ((main->setting.flag & fss_read_main_flag_object_as_line_e) || !(main->setting.flag & fss_read_main_flag_content_e)) {
+        ++(*line);
+      }
+    }
+
+    if (main->setting.flag & fss_read_main_flag_content_e) {
+      if (!main->setting.contents.array[at].used) {
+
+        // Must process/count line when both Object and Content share the same line but Content is empty.
+        if ((main->setting.flag & fss_read_main_flag_object_e) && !(main->setting.flag & fss_read_main_flag_object_as_line_e) && (main->setting.flag & fss_read_main_flag_line_single_e)) {
+          if (*line == main->setting.line) {
+            f_print_dynamic_raw(f_string_eol_s, main->program.output.to);
+
+            main->setting.state.status = F_success;
+
+            return;
+          }
+
+          ++(*line);
+        }
+
+        main->setting.state.status = F_none;
+
+        return;
+      }
+
+      f_array_length_t i = 0;
+
+      if (main->setting.flag & fss_read_main_flag_line_single_e) {
+        if (*line == main->setting.line) {
+          while (main->setting.contents.array[at].used) {
+
+            fss_read_print_content(&main->program.output, main->setting.contents.array[at].array[i], main->setting.quotes_content.array[at].array[i], delimits_content);
+
+            if (++i >= main->setting.contents.array[at].used) break;
+
+            if (main->callback.print_content_next) {
+              main->callback.print_content_next(&main->program.output);
+            }
+          } // while
+
+          f_print_dynamic_raw(f_string_eol_s, main->program.output.to);
+
+          main->setting.state.status = F_success;
+
+          return;
+        }
+
+        ++(*line);
+      }
+      else {
+        f_array_length_t line_original = 0;
+        f_array_length_t j = 0;
+        f_array_length_t k = 0;
+
+        for (; i < main->setting.contents.array[at].used; ++i) {
+
+          if (fss_read_signal_check(main)) return;
+
+          line_original = *line;
+          main->setting.range = main->setting.contents.array[at].array[i];
+          k = 0;
+
+          for (j = main->setting.range.start; j <= main->setting.range.stop; ++j) {
+
+            if (fss_read_signal_check(main)) return;
+
+            if (k < main->setting.comments.used) {
+              while (main->setting.comments.array[k].stop < j) ++k;
+
+              if (j >= main->setting.comments.array[k].start && j <= main->setting.comments.array[k].stop) {
+                j = main->setting.comments.array[k++].stop;
+
+                if (j > main->setting.range.stop) break;
+              }
+            }
+
+            if (main->setting.buffer.string[j] == f_string_eol_s.string[0]) {
+              if (*line == main->setting.line) {
+                main->setting.range.stop = j;
+
+                fss_read_print_content(&main->program.output, main->setting.range, main->setting.quotes_content.array[at].array[i], delimits_content);
+
+                main->setting.state.status = F_success;
+
+                return;
+              }
+
+              main->setting.range.start = j + 1;
+
+              if (j <= main->setting.range.stop) {
+                ++(*line);
+              }
+            }
+          } // for
+
+          // If Content does not end with a newline, it still must be treated as the last line.
+          if (*line == line_original) {
+          //if (main->setting.buffer.string[main->setting.range.stop] != f_string_eol_s.string[0]) {
+            ++(*line);
+
+            if (*line == main->setting.line) {
+              main->setting.range.stop = main->setting.contents.array[at].array[i].stop;
+
+              fss_read_print_content(&main->program.output, main->setting.range, main->setting.quotes_content.array[at].array[i], delimits_content);
+              f_print_dynamic_raw(f_string_eol_s, main->program.output.to);
+
+              main->setting.state.status = F_success;
+
+              return;
+            }
+          }
+        } // for
+      }
+    }
+
+    main->setting.state.status = F_none;
+  }
+#endif // _di_fss_read_process_normal_at_line_
 
 #ifndef _di_fss_read_process_normal_columns_
   void fss_read_process_normal_columns(void * const void_main, const bool names[]) {
@@ -301,62 +453,6 @@ extern "C" {
     main->setting.state.status = F_none;
   }
 #endif // _di_fss_read_process_normal_columns_
-
-#ifndef _di_fss_read_process_normal_line_
-  void fss_read_process_normal_line(void * const void_main, const bool names[]) {
-
-    if (!void_main) return;
-
-    fss_read_main_t * const main = (fss_read_main_t *) void_main;
-
-    f_array_length_t line = 0;
-
-    for (f_array_length_t i = 0; i < main->setting.contents.used; ++i) {
-
-      if (!names[i]) continue;
-      if (fss_read_signal_check(main)) return;
-
-      if (!(main->setting.flag & fss_read_main_flag_object_e) && (main->setting.flag & fss_read_main_flag_content_e)) {
-        if (!main->setting.contents.array[i].used) {
-          if (main->setting.flag & fss_read_main_flag_empty_e) {
-            if (line == main->setting.line) {
-              if (main->callback.print_set_end) {
-                main->callback.print_set_end(&main->program.output);
-              }
-
-              break;
-            }
-
-            ++line;
-          }
-
-          continue;
-        }
-      }
-
-      if (line == main->setting.line) {
-        if (main->callback.print_at) {
-          main->callback.print_at(
-            &main->program.output,
-            i,
-            !(main->setting.flag & fss_read_main_flag_original_e) && fss_read_delimit_object_is(main, 0)
-              ? main->setting.delimits_object
-              : fss_read_except_none_c,
-            !(main->setting.flag & fss_read_main_flag_original_e) && fss_read_delimit_content_is(main, 0)
-              ? main->setting.delimits_content
-              : fss_read_except_none_c
-          );
-        }
-
-        break;
-      }
-
-      ++line;
-    } // for
-
-    main->setting.state.status = F_none;
-  }
-#endif // _di_fss_read_process_normal_line_
 
 #ifndef _di_fss_read_process_normal_name_
   void fss_read_process_normal_name(void * const void_main, bool names[]) {

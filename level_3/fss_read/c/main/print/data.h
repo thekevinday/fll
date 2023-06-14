@@ -17,7 +17,7 @@ extern "C" {
 #endif
 
 /**
- * Process printing the buffer according to "at" position and given delimits.
+ * Process printing the buffer according to an Object index position and given delimits.
  *
  * This locks, uses, and unlocks the file stream.
  *
@@ -30,7 +30,7 @@ extern "C" {
  *
  *   This does not alter print.custom.setting.state.status.
  * @param at
- *   The "at" position to be printed.
+ *   The Object index to be printed.
  * @param delimits_object
  *   The delimits array representing a delimited Object.
  *   This represents the positions within the current Object at the "at" position.
@@ -145,7 +145,7 @@ extern "C" {
 #endif // _di_fss_read_print_number_
 
 /**
- * Print the Object at the given position.
+ * Print the Object at the given Object index position.
  *
  * This locks, uses, and unlocks the file stream.
  *
@@ -158,7 +158,7 @@ extern "C" {
  *
  *   This does not alter print.custom.setting.state.status.
  * @param at
- *   The "at" position to be printed.
+ *   The Object index to be printed.
  * @param delimits
  *   The delimits array representing a delimited Object.
  *   This represents the positions within the current Object at the "at" position.
@@ -181,7 +181,7 @@ extern "C" {
 #endif // _di_fss_read_print_object_
 
 /**
- * Print the Object at the given position.
+ * Print the Object at the given Object index position.
  *
  * This locks, uses, and unlocks the file stream.
  *
@@ -192,7 +192,7 @@ extern "C" {
  *
  *   This does not alter print.custom.setting.state.status.
  * @param at
- *   The "at" position to be printed.
+ *   The Object index position to be printed.
  * @param delimits
  *   The delimits array representing a delimited Object.
  *   This represents the positions within the current Object at the "at" position.

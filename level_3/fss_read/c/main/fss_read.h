@@ -135,44 +135,6 @@ extern "C" {
 #endif // _di_fss_read_main_
 
 /**
- * Process based on at parameter for a specific line.
- *
- * @param main
- *   The program and settings data.
- *
- *   Must not be NULL.
- *   Must be of type fss_read_main_t.
- *
- *   This alters main.setting.state.status:
- *     F_none on success.
- *
- *     F_parameter (with error bit) if main is NULL or setting is NULL.
- *
- *     Errors (with error bit) from: f_string_dynamic_append_assure().
- *
- *     Errors (with error bit) from: fss_read_signal_check().
- * @param at
- *   The "at" position to be printed.
- * @param delimits_object
- *   The delimits array representing a delimited Object.
- *   This represents the positions within the current Object at the "at" position.
- * @param delimits_content
- *   The delimits array representing a delimited Content.
- *   This represents the positions within the current Content at the "at" position.
- * @param line
- *   The current line being processed.
- *   This will be incremented as necessary.
- *
- *   Must not be NULL.
- *
- * @return
- *   F_none on success.
- */
-#ifndef _di_fss_read_process_at_line_
-  extern void fss_read_process_at_line(fss_read_main_t * const main, const f_array_length_t at, const f_array_lengths_t delimits_object, const f_array_lengths_t delimits_content, f_array_length_t * const line);
-#endif // _di_fss_read_process_at_line_
-
-/**
  * Get the name of the file the given position represents within the buffer.
  *
  * @param at

@@ -124,8 +124,8 @@ extern "C" {
  * process_normal:    Process normally (data from parameters and files).
  *
  * process_at:      Process at parameter, usually called by the process_normal() callback.
+ * process_at_line: Process line parameter for some Object index position, usually called by the process_normal() callback.
  * process_columns: Process columns parameter, usually called by the process_normal() callback.
- * process_line:    Process line parameter, usually called by the process_normal() callback.
  * process_load:    Process loading of FSS data from buffer (not to be confused with loading settings), usually called by the process_normal() callback.
  * process_name:    Process name parameter, usually called by the process_normal() callback.
  * process_total:   Process total parameter, usually called by the process_normal() callback.
@@ -145,8 +145,8 @@ extern "C" {
     void (*process_normal)(void * const main);
 
     void (*process_at)(void * const main, const bool names[], const f_fss_delimits_t delimits_object, const f_fss_delimits_t delimits_content);
+    void (*process_at_line)(void * const void_main, const f_array_length_t at, const f_array_lengths_t delimits_object, const f_array_lengths_t delimits_content, f_number_unsigned_t * const line);
     void (*process_columns)(void * const main, const bool names[]);
-    void (*process_line)(void * const main, const bool names[]);
     void (*process_load)(void * const main);
     void (*process_name)(void * const main, bool names[]);
     void (*process_total)(void * const main, const bool names[]);

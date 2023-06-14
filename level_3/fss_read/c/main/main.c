@@ -103,8 +103,8 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
     main->callback.process_normal = &fss_read_process_normal;
 
     main->callback.process_at = &fss_read_process_normal_at;
+    main->callback.process_at_line = &fss_read_process_normal_at_line;
     main->callback.process_columns = &fss_read_process_normal_columns;
-    main->callback.process_line = &fss_read_process_normal_line;
     main->callback.process_load = 0;
     main->callback.process_name = &fss_read_process_normal_name;
     main->callback.process_total = 0;
@@ -136,6 +136,7 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
           // Remove flags not supported for this standard.
           main->setting.flag -= main->setting.flag & fss_read_main_flag_content_multiple_e;
           main->setting.flag -= main->setting.flag & fss_read_main_flag_depth_multiple_e;
+          main->setting.flag -= main->setting.flag & fss_read_main_flag_object_as_line_e;
           main->setting.flag -= main->setting.flag & fss_read_main_flag_trim_object_e;
 
           main->setting.flag |= fss_read_main_flag_line_single_e;
@@ -158,6 +159,7 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
           // Remove flags not supported for this standard.
           main->setting.flag -= main->setting.flag & fss_read_main_flag_depth_multiple_e;
+          main->setting.flag -= main->setting.flag & fss_read_main_flag_object_as_line_e;
           main->setting.flag -= main->setting.flag & fss_read_main_flag_trim_object_e;
 
           main->setting.flag |= fss_read_main_flag_line_single_e | fss_read_main_flag_content_multiple_e;
@@ -185,6 +187,8 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
           main->setting.flag -= main->setting.flag & fss_read_main_flag_quote_content_e;
           main->setting.flag -= main->setting.flag & fss_read_main_flag_quote_object_e;
 
+          main->setting.flag |= fss_read_main_flag_object_as_line_e;
+
           main->callback.process_help = &fss_read_basic_list_process_help;
           main->callback.process_load = &fss_read_basic_list_process_load;
           main->callback.process_total = &fss_read_process_normal_total_multiple;
@@ -207,6 +211,8 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
           main->setting.flag -= main->setting.flag & fss_read_main_flag_quote_content_e;
           main->setting.flag -= main->setting.flag & fss_read_main_flag_quote_object_e;
 
+          main->setting.flag |= fss_read_main_flag_object_as_line_e;
+
           main->callback.process_help = &fss_read_extended_list_process_help;
           main->callback.process_load = &fss_read_extended_list_process_load;
           main->callback.process_total = &fss_read_process_normal_total_multiple;
@@ -228,6 +234,7 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
           main->setting.flag -= main->setting.flag & fss_read_main_flag_quote_object_e;
 
           main->setting.flag |= fss_read_main_flag_content_multiple_e | fss_read_main_flag_depth_multiple_e;
+          main->setting.flag |= fss_read_main_flag_object_as_line_e;
 
           main->callback.process_help = &fss_read_embedded_list_process_help;
           main->callback.process_load = &fss_read_embedded_list_process_load;
@@ -250,6 +257,8 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
           main->setting.flag -= main->setting.flag & fss_read_main_flag_depth_multiple_e;
           main->setting.flag -= main->setting.flag & fss_read_main_flag_quote_content_e;
           main->setting.flag -= main->setting.flag & fss_read_main_flag_quote_object_e;
+
+          main->setting.flag |= fss_read_main_flag_object_as_line_e;
 
           main->callback.process_help = &fss_read_payload_process_help;
           main->callback.process_load = &fss_read_payload_process_load;
