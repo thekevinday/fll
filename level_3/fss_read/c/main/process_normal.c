@@ -65,7 +65,12 @@ extern "C" {
       memset(names, F_true, sizeof(bool) * main->setting.objects.used);
     }
 
-    if (main->setting.flag & fss_read_main_flag_at_e) {
+    if (main->setting.flag & fss_read_main_flag_total_e) {
+      if (main->callback.process_total) {
+        main->callback.process_total(main, names);
+      }
+    }
+    else if (main->setting.flag & fss_read_main_flag_at_e) {
       if (main->callback.process_at) {
         main->callback.process_at(main, names, *delimits_object, *delimits_content);
       }
@@ -73,11 +78,6 @@ extern "C" {
     else if (main->setting.flag & fss_read_main_flag_columns_e) {
       if (main->callback.process_columns) {
         main->callback.process_columns(main, names);
-      }
-    }
-    else if (main->setting.flag & fss_read_main_flag_total_e) {
-      if (main->callback.process_total) {
-        main->callback.process_total(main, names);
       }
     }
     else {
@@ -134,10 +134,6 @@ extern "C" {
     // If the standard only has one line per Content, then any line value greater than 0 equates to no line to print.
     if ((main->setting.flag & fss_read_main_flag_line_e) && (main->setting.flag & fss_read_main_flag_line_single_e)) {
       if (main->setting.line) {
-        if (main->setting.flag & fss_read_main_flag_total_e) {
-          fss_read_print_number(&main->program.output, 0);
-        }
-
         main->setting.state.status = F_none;
 
         return;
@@ -158,34 +154,7 @@ extern "C" {
           // If using "--at" for standards that only support one line per Object, then the only valid line is line 0.
           if ((main->setting.flag & fss_read_main_flag_line_single_e) && !at) break;
 
-          if (main->setting.flag & fss_read_main_flag_total_e) {
-            f_array_length_t total = 0;
-            f_array_length_t j = 0;
-            f_array_length_t k = 0;
-            f_array_length_t l = 0;
-
-            for (; j < main->setting.contents.array[i].used; ++j) {
-
-              if (main->setting.contents.array[i].array[j].start > main->setting.contents.array[i].array[j].stop) continue;
-
-              if (l < main->setting.comments.used) {
-                while (main->setting.comments.array[l].stop < k) ++l;
-
-                if (k >= main->setting.comments.array[l].start && k <= main->setting.comments.array[l].stop) {
-                  k = main->setting.comments.array[l++].stop;
-
-                  continue;
-                }
-              }
-
-              total = 1;
-
-              break;
-            } // for
-
-            fss_read_print_number(&main->program.output, total);
-          }
-          else if (main->callback.process_at_line) {
+          if (main->callback.process_at_line) {
             f_array_length_t line = 0;
 
             main->callback.process_at_line(void_main, i, delimits_object, delimits_content, &line);
@@ -193,49 +162,6 @@ extern "C" {
         }
         else if (main->setting.flag & fss_read_main_flag_columns_e) {
           fss_read_print_number(&main->program.output, main->setting.contents.array[i].used);
-        }
-        else if (main->setting.flag & fss_read_main_flag_total_e) {
-          if (main->setting.flag & fss_read_main_flag_line_single_e) {
-            fss_read_print_number(&main->program.output, main->setting.contents.array[i].used ? 1 : 0);
-          }
-          else {
-            f_array_length_t total = 0;
-            f_string_range_t range = f_string_range_t_initialize;
-            f_array_length_t j = 0;
-            f_array_length_t k = 0;
-            f_array_length_t l = 0;
-
-            for (; j < main->setting.contents.array[i].used; ++j) {
-
-              range.start = main->setting.contents.array[i].array[j].start;
-              range.stop = main->setting.contents.array[i].array[j].stop;
-
-              // This content has no data, do not even check "include empty" because it cannot be counted as a line.
-              if (range.start > range.stop) continue;
-
-              for (k = range.start; k <= range.stop; ++k) {
-
-                if (l < main->setting.comments.used) {
-                  while (main->setting.comments.array[l].stop < k) ++l;
-
-                  if (k >= main->setting.comments.array[l].start && k <= main->setting.comments.array[l].stop) {
-                    k = main->setting.comments.array[l++].stop;
-
-                    continue;
-                  }
-                }
-
-                if (main->setting.buffer.string[k] == f_string_eol_s.string[0]) ++total;
-              } // for
-            } // for
-
-            // If there are no newline characters but there is data, then this represents a single line.
-            if (main->setting.contents.array[i].used && !total) {
-              total = 1;
-            }
-
-            fss_read_print_number(&main->program.output, total);
-          }
         }
         else if (main->callback.print_at) {
           main->callback.print_at(&main->program.output, i, delimits_object, delimits_content);
@@ -274,12 +200,14 @@ extern "C" {
           main->callback.print_object(&main->program.output, at, delimits_object);
         }
 
-        if (main->callback.print_object_end) { // @todo need to handle object end only if content is not being printed or object end is not white space.
+        if (main->callback.print_object_end) {
           main->callback.print_object_end(&main->program.output);
         }
 
         if (!(main->setting.flag & fss_read_main_flag_content_e)) {
-          f_print_dynamic_raw(f_string_eol_s, main->program.output.to);
+          if (!(main->setting.flag & fss_read_main_flag_object_as_line_e)) {
+            f_print_dynamic_raw(f_string_eol_s, main->program.output.to);
+          }
 
           main->setting.state.status = F_success;
 
@@ -358,7 +286,7 @@ extern "C" {
               while (main->setting.comments.array[k].stop < j) ++k;
 
               if (j >= main->setting.comments.array[k].start && j <= main->setting.comments.array[k].stop) {
-                j = main->setting.comments.array[k++].stop;
+                j = main->setting.comments.array[k++].stop + 1;
 
                 if (j > main->setting.range.stop) break;
               }
@@ -384,8 +312,7 @@ extern "C" {
           } // for
 
           // If Content does not end with a newline, it still must be treated as the last line.
-          if (*line == line_original) {
-          //if (main->setting.buffer.string[main->setting.range.stop] != f_string_eol_s.string[0]) {
+          if ((main->setting.flag & fss_read_main_flag_line_single_e) && *line == line_original) {
             ++(*line);
 
             if (*line == main->setting.line) {
@@ -400,6 +327,22 @@ extern "C" {
             }
           }
         } // for
+      }
+
+      // @fixme The fll_fss_*_read functions do not have a store of the set closing ranges but should.
+      //        Simulate the ending by printing, but the original range should ideally be used (add new features to accomplish this).
+      if ((main->setting.flag & fss_read_main_flag_object_e) && (main->setting.flag & fss_read_main_flag_content_has_close_e)) {
+        if (*line == main->setting.line) {
+          if (main->callback.print_set_end) {
+            main->callback.print_set_end(&main->program.output);
+          }
+
+          main->setting.state.status = F_success;
+
+          return;
+        }
+
+        ++(*line);
       }
     }
 
@@ -466,7 +409,7 @@ extern "C" {
 
       memset(names, F_false, sizeof(bool) * main->setting.objects.used);
 
-      if (main->setting.flag & (fss_read_main_flag_trim_e | fss_read_main_flag_trim_object_e)) {
+      if (main->setting.flag & (fss_read_main_flag_trim_e | fss_read_main_flag_trim_object_e | fss_read_main_flag_object_trim_e)) {
         for (i = 0; i < main->setting.objects.used; ++i) {
 
           if (fss_read_signal_check(main)) return;
@@ -511,6 +454,10 @@ extern "C" {
         if (!names[i]) continue;
         if (fss_read_signal_check(main)) return;
 
+        if (main->setting.flag & fss_read_main_flag_at_e) {
+          if (main->setting.depths.array[0].value_at != i) continue;
+        }
+
         if (main->setting.select < main->setting.contents.array[i].used && main->setting.contents.array[i].array[main->setting.select].start <= main->setting.contents.array[i].array[main->setting.select].stop) {
           ++total;
         }
@@ -521,6 +468,10 @@ extern "C" {
 
         if (!names[i]) continue;
         if (fss_read_signal_check(main)) return;
+
+        if (main->setting.flag & fss_read_main_flag_at_e) {
+          if (main->setting.depths.array[0].value_at != i) continue;
+        }
 
         if (!(main->setting.flag & fss_read_main_flag_object_e) && (main->setting.flag & fss_read_main_flag_content_e)) {
           if (!(main->setting.contents.array[i].used || (main->setting.flag & fss_read_main_flag_empty_e))) continue;
@@ -559,6 +510,10 @@ extern "C" {
       if (!names[at]) continue;
       if (fss_read_signal_check(main)) return;
 
+      if (main->setting.flag & fss_read_main_flag_at_e) {
+        if (main->setting.depths.array[0].value_at != at) continue;
+      }
+
       if (main->setting.flag & fss_read_main_flag_object_e) {
         ++total;
       }
@@ -592,10 +547,14 @@ extern "C" {
         } // for
 
         // If Content does not end with a newline, it still must be treated as the last line.
-        if (i) {
+        if ((main->setting.flag & fss_read_main_flag_line_single_e) && i) {
           j = main->setting.contents.array[at].array[i - 1].stop;
 
           if (main->setting.buffer.string[j] != f_string_eol_s.string[0]) ++total;
+        }
+
+        if ((main->setting.flag & fss_read_main_flag_object_e) && (main->setting.flag & fss_read_main_flag_content_has_close_e)) {
+           ++total;
         }
       }
     } // for

@@ -69,8 +69,10 @@ extern "C" {
 
     fss_read_main_t * const main = (fss_read_main_t *) print->custom;
 
-    // @todo
-    //fll_print_dynamic_raw((main->setting.flag & fss_read_main_flag_pipe_e) ? fss_read_pipe_content_end_s : f_string_eol_s, print->to);
+    if ((main->setting.flag & fss_read_main_flag_object_e) && main->setting.flag & fss_read_main_flag_content_e) {
+      f_print_dynamic_raw(f_fss_extended_list_close_s, print->to);
+      f_print_dynamic_raw(f_fss_extended_list_close_end_s, print->to);
+    }
 
     return F_none;
   }

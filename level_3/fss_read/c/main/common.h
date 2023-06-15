@@ -64,7 +64,7 @@ extern "C" {
  *     Errors (with error bit) from: fll_program_parameter_process_context().
  *     Errors (with error bit) from: fll_program_parameter_process_verbosity().
  *
- *     Errors (with error bit) from: fss_read_setting_load_depth(). @todo fss_read_depths_resize() is to be relocated to "callback".
+ *     Errors (with error bit) from: fss_read_setting_load_depth().
  *     Errors (with error bit) from: fss_read_signal_check()
  * @param callback
  *   (optional) Designate a function to call after performing the initial processing, but before printing help.
@@ -77,7 +77,7 @@ extern "C" {
  * @see fll_program_parameter_process_context()
  * @see fll_program_parameter_process_verbosity()
  *
- * @see fss_read_setting_load_depth() @todo fss_read_depths_resize() is to be relocated to "callback".
+ * @see fss_read_setting_load_depth()
  * @see fss_read_signal_check()
  */
 #ifndef _di_fss_read_setting_load_

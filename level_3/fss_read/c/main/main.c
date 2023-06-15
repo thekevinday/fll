@@ -134,9 +134,11 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
           main->setting.standard = fss_read_basic_standard_s;
 
           // Remove flags not supported for this standard.
+          main->setting.flag -= main->setting.flag & fss_read_main_flag_content_has_close_e;
           main->setting.flag -= main->setting.flag & fss_read_main_flag_content_multiple_e;
           main->setting.flag -= main->setting.flag & fss_read_main_flag_depth_multiple_e;
           main->setting.flag -= main->setting.flag & fss_read_main_flag_object_as_line_e;
+          main->setting.flag -= main->setting.flag & fss_read_main_flag_object_trim_e;
           main->setting.flag -= main->setting.flag & fss_read_main_flag_trim_object_e;
 
           main->setting.flag |= fss_read_main_flag_line_single_e;
@@ -158,8 +160,10 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
           main->setting.standard = fss_read_extended_standard_s;
 
           // Remove flags not supported for this standard.
+          main->setting.flag -= main->setting.flag & fss_read_main_flag_content_has_close_e;
           main->setting.flag -= main->setting.flag & fss_read_main_flag_depth_multiple_e;
           main->setting.flag -= main->setting.flag & fss_read_main_flag_object_as_line_e;
+          main->setting.flag -= main->setting.flag & fss_read_main_flag_object_trim_e;
           main->setting.flag -= main->setting.flag & fss_read_main_flag_trim_object_e;
 
           main->setting.flag |= fss_read_main_flag_line_single_e | fss_read_main_flag_content_multiple_e;
@@ -181,13 +185,14 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
           main->setting.standard = fss_read_basic_list_standard_s;
 
           // Remove flags not supported for this standard.
-          main->setting.flag -= main->setting.flag & fss_read_main_flag_line_single_e;
+          main->setting.flag -= main->setting.flag & fss_read_main_flag_content_has_close_e;
           main->setting.flag -= main->setting.flag & fss_read_main_flag_content_multiple_e;
           main->setting.flag -= main->setting.flag & fss_read_main_flag_depth_multiple_e;
+          main->setting.flag -= main->setting.flag & fss_read_main_flag_line_single_e;
           main->setting.flag -= main->setting.flag & fss_read_main_flag_quote_content_e;
           main->setting.flag -= main->setting.flag & fss_read_main_flag_quote_object_e;
 
-          main->setting.flag |= fss_read_main_flag_object_as_line_e;
+          main->setting.flag |= fss_read_main_flag_object_as_line_e | fss_read_main_flag_object_trim_e;
 
           main->callback.process_help = &fss_read_basic_list_process_help;
           main->callback.process_load = &fss_read_basic_list_process_load;
@@ -211,7 +216,8 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
           main->setting.flag -= main->setting.flag & fss_read_main_flag_quote_content_e;
           main->setting.flag -= main->setting.flag & fss_read_main_flag_quote_object_e;
 
-          main->setting.flag |= fss_read_main_flag_object_as_line_e;
+          main->setting.flag |= fss_read_main_flag_content_has_close_e;
+          main->setting.flag |= fss_read_main_flag_object_as_line_e | fss_read_main_flag_object_trim_e;
 
           main->callback.process_help = &fss_read_extended_list_process_help;
           main->callback.process_load = &fss_read_extended_list_process_load;
@@ -219,7 +225,7 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
           main->callback.print_content_next = 0;
           main->callback.print_object_end = &fss_read_extended_list_print_object_end;
-          main->callback.print_set_end = &fss_read_print_set_end;
+          main->callback.print_set_end = &fss_read_extended_list_print_set_end;
         }
         else if (f_compare_dynamic(argv[index], fss_read_format_code_short_0008_s) == F_equal_to ||
                  f_compare_dynamic(argv[index], fss_read_format_code_long_0008_s) == F_equal_to ||
@@ -229,12 +235,14 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
           main->setting.standard = fss_read_embedded_list_standard_s;
 
           // Remove flags not supported for this standard.
+          main->setting.flag -= main->setting.flag & fss_read_main_flag_content_has_close_e;
           main->setting.flag -= main->setting.flag & fss_read_main_flag_line_single_e;
           main->setting.flag -= main->setting.flag & fss_read_main_flag_quote_content_e;
           main->setting.flag -= main->setting.flag & fss_read_main_flag_quote_object_e;
 
-          main->setting.flag |= fss_read_main_flag_content_multiple_e | fss_read_main_flag_depth_multiple_e;
-          main->setting.flag |= fss_read_main_flag_object_as_line_e;
+          main->setting.flag |= fss_read_main_flag_content_has_close_e | fss_read_main_flag_content_multiple_e;
+          main->setting.flag |= fss_read_main_flag_depth_multiple_e;
+          main->setting.flag |= fss_read_main_flag_object_as_line_e | fss_read_main_flag_object_trim_e;
 
           main->callback.process_help = &fss_read_embedded_list_process_help;
           main->callback.process_load = &fss_read_embedded_list_process_load;
@@ -242,7 +250,7 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
           main->callback.print_content_next = 0;
           main->callback.print_object_end = &fss_read_embedded_list_print_object_end;
-          main->callback.print_set_end = &fss_read_print_set_end;
+          main->callback.print_set_end = &fss_read_embedded_list_print_set_end;
         }
         else if (f_compare_dynamic(argv[index], fss_read_format_code_short_000e_s) == F_equal_to ||
                  f_compare_dynamic(argv[index], fss_read_format_code_long_000e_s) == F_equal_to ||
@@ -252,13 +260,14 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
           main->setting.standard = fss_read_payload_standard_s;
 
           // Remove flags not supported for this standard.
-          main->setting.flag -= main->setting.flag & fss_read_main_flag_line_single_e;
+          main->setting.flag -= main->setting.flag & fss_read_main_flag_content_has_close_e;
           main->setting.flag -= main->setting.flag & fss_read_main_flag_content_multiple_e;
           main->setting.flag -= main->setting.flag & fss_read_main_flag_depth_multiple_e;
+          main->setting.flag -= main->setting.flag & fss_read_main_flag_line_single_e;
           main->setting.flag -= main->setting.flag & fss_read_main_flag_quote_content_e;
           main->setting.flag -= main->setting.flag & fss_read_main_flag_quote_object_e;
 
-          main->setting.flag |= fss_read_main_flag_object_as_line_e;
+          main->setting.flag |= fss_read_main_flag_object_as_line_e | fss_read_main_flag_object_trim_e;
 
           main->callback.process_help = &fss_read_payload_process_help;
           main->callback.process_load = &fss_read_payload_process_load;
@@ -266,7 +275,7 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
           main->callback.print_content_next = 0;
           main->callback.print_object_end = &fss_read_payload_print_object_end;
-          main->callback.print_set_end = &fss_read_print_set_end;
+          main->callback.print_set_end = &fss_read_print_set_end_no_eol;
         }
         else {
           if (main->setting.flag & fss_read_main_flag_help_e) {

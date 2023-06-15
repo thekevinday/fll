@@ -17,7 +17,7 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
   data.program.output.custom = (void *) &data;
   data.program.warning.custom = (void *) &data;
 
-  data.setting.flag |= fss_read_main_flag_object_as_line_e;
+  data.setting.flag |= fss_read_main_flag_object_as_line_e | fss_read_main_flag_object_trim_e;
 
   data.setting.state.custom = (void *) &data;
   data.setting.standard = fss_read_payload_standard_s;
@@ -36,9 +36,10 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
   data.callback.print_at = &fss_read_print_at;
   data.callback.print_content = &fss_read_print_content;
   data.callback.print_content_ignore = &fss_read_print_content_ignore;
+  data.callback.print_content_next = 0;
   data.callback.print_object = &fss_read_print_object;
   data.callback.print_object_end = &fss_read_payload_print_object_end;
-  data.callback.print_set_end = &fss_read_print_set_end;
+  data.callback.print_set_end = &fss_read_print_set_end_no_eol;
 
   f_console_parameter_t parameters[] = fss_read_console_parameter_t_initialize;
   data.program.parameters.array = parameters;
