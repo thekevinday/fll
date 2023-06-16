@@ -709,9 +709,7 @@ extern "C" {
 
     // There is only a single Content column for this standard.
     if (data->option & fss_payload_read_data_option_content_d) {
-      if (!data->contents.array[at].used) {
-        return F_none;
-      }
+      if (!data->contents.array[at].used) return F_none;
 
       f_string_range_t range = f_string_range_t_initialize;
       f_array_length_t i = 0;
@@ -721,9 +719,7 @@ extern "C" {
       range.stop = data->contents.array[at].array[0].stop;
 
       // This content has no data, do not even check "include empty" because it cannot be counted as a line.
-      if (range.start > range.stop) {
-        return F_none;
-      }
+      if (range.start > range.stop) return F_none;
 
       for (i = range.start; i <= range.stop; ++i) {
 
@@ -1112,16 +1108,13 @@ extern "C" {
 
       // There is only a single Content column for this standard.
       if (data->option & fss_payload_read_data_option_content_d) {
-
         if (!data->contents.array[at].used) continue;
 
         range.start = data->contents.array[at].array[0].start;
         range.stop = data->contents.array[at].array[0].stop;
 
         // This content has no data, do not even check "include empty" because it cannot be counted as a line.
-        if (range.start > range.stop) {
-          continue;
-        }
+        if (range.start > range.stop) continue;
 
         for (i = range.start; i <= range.stop; ++i) {
 

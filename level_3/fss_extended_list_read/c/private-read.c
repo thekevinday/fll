@@ -474,7 +474,6 @@ extern "C" {
   f_status_t fss_extended_list_read_process_at_line(fll_program_data_t * const main, fss_extended_list_read_data_t * const data, const f_array_length_t at, const f_array_lengths_t delimits_object, const f_array_lengths_t delimits_content, f_array_length_t *line) {
 
     if (data->option & fss_extended_list_read_data_option_object_d) {
-
       if (*line == data->line) {
         flockfile(main->output.to.stream);
 
@@ -495,9 +494,7 @@ extern "C" {
 
     // There is only a single Content column for this standard.
     if (data->option & fss_extended_list_read_data_option_content_d) {
-      if (!data->contents.array[at].used) {
-        return F_none;
-      }
+      if (!data->contents.array[at].used) return F_none;
 
       f_string_range_t range = f_string_range_t_initialize;
       f_array_length_t i = 0;
@@ -507,52 +504,72 @@ extern "C" {
       range.stop = data->contents.array[at].array[0].stop;
 
       // This content has no data, do not even check "include empty" because it cannot be counted as a line.
-      if (range.start > range.stop) {
-        return F_none;
-      }
+      if (range.start <= range.stop) {
+        for (i = range.start; i <= range.stop; ++i) {
 
-      for (i = range.start; i <= range.stop; ++i) {
+          if (j < data->comments.used) {
+            while (data->comments.array[j].stop < i) ++j;
 
-        if (j < data->comments.used) {
-          while (data->comments.array[j].stop < i) ++j;
+            if (i >= data->comments.array[j].start && i <= data->comments.array[j].stop) {
+              i = data->comments.array[j++].stop;
 
-          if (i >= data->comments.array[j].start && i <= data->comments.array[j].stop) {
-            i = data->comments.array[j++].stop;
-
-            continue;
+              continue;
+            }
           }
-        }
 
-        if (data->buffer.string[i] == f_string_eol_s.string[0]) {
+          if (data->buffer.string[i] == f_string_eol_s.string[0]) {
+            if (*line == data->line) {
+              range.stop = i;
+
+              flockfile(main->output.to.stream);
+
+              if (data->option & fss_extended_list_read_data_option_total_d) {
+                fss_extended_list_read_print_one(main);
+              }
+              else {
+                f_print_except_in_dynamic_partial(data->buffer, range, delimits_content, data->comments, main->output.to.stream);
+              }
+
+              funlockfile(main->output.to.stream);
+
+              return F_success;
+            }
+
+            range.start = i + 1;
+
+            if (i <= range.stop) {
+              ++(*line);
+            }
+          }
+        } // for
+
+        // If Content does not end with a newline, it still must be treated as the last line.
+        if (data->buffer.string[range.stop] != f_string_eol_s.string[0]) {
+          ++(*line);
+
           if (*line == data->line) {
-            range.stop = i;
-
             flockfile(main->output.to.stream);
 
             if (data->option & fss_extended_list_read_data_option_total_d) {
               fss_extended_list_read_print_one(main);
             }
             else {
+              range.stop = data->contents.array[at].array[0].stop;
+
               f_print_except_in_dynamic_partial(data->buffer, range, delimits_content, data->comments, main->output.to.stream);
+              f_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
             }
 
             funlockfile(main->output.to.stream);
 
             return F_success;
           }
-
-          range.start = i + 1;
-
-          if (i <= range.stop) {
-            ++(*line);
-          }
         }
-      } // for
+      }
 
-      // If Content does not end with a newline, it still must be treated as the last line.
-      if (data->buffer.string[range.stop] != f_string_eol_s.string[0]) {
-        ++(*line);
-
+      // @fixme The fll_fss_*_read functions do not have a store of the set closing ranges but should.
+      //        Simulate the ending by printing, but the original range should ideally be used.
+      if (data->option & fss_extended_list_read_data_option_object_d) {
         if (*line == data->line) {
           flockfile(main->output.to.stream);
 
@@ -560,16 +577,15 @@ extern "C" {
             fss_extended_list_read_print_one(main);
           }
           else {
-            range.stop = data->contents.array[at].array[0].stop;
-
-            f_print_except_in_dynamic_partial(data->buffer, range, delimits_content, data->comments, main->output.to.stream);
-            f_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
+            fss_extended_list_read_print_set_end(main, data);
           }
 
           funlockfile(main->output.to.stream);
 
           return F_success;
         }
+
+        ++(*line);
       }
     }
 
