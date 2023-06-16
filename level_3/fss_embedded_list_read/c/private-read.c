@@ -310,9 +310,7 @@ extern "C" {
         }
 
         // This standard does not support multiple content groups.
-        if (select) {
-          return F_none;
-        }
+        if (select) return F_none;
       }
     }
 
