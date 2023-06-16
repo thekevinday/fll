@@ -482,6 +482,10 @@ extern "C" {
         }
         else {
           fss_extended_list_read_print_at_object(main, data, at, delimits_object);
+
+          if (!(data->option & fss_extended_list_read_data_option_content_d)) {
+            f_print_dynamic_raw(f_fss_eol_s, main->output.to.stream);
+          }
         }
 
         funlockfile(main->output.to.stream);
