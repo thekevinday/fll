@@ -101,15 +101,18 @@ generate_operate_0000() {
   fss_basic_read +n -cl 0 ${file_source} > ${test_current}content-line-0.expect &&
   fss_basic_read +n -cl 1 ${file_source} > ${test_current}content-line-1.expect &&
   fss_basic_read +n -cl 5 ${file_source} > ${test_current}content-line-5.expect &&
+  fss_basic_read +n -cl 6 ${file_source} > ${test_current}content-line-6.expect &&
   fss_basic_read +n -cl 100 ${file_source} > ${test_current}content-line-100.expect &&
   fss_basic_read +n -cs 0 ${file_source} > ${test_current}content-select-0.expect &&
   fss_basic_read +n -cs 1 ${file_source} > ${test_current}content-select-1.expect &&
   fss_basic_read +n -cs 5 ${file_source} > ${test_current}content-select-5.expect &&
+  fss_basic_read +n -cs 6 ${file_source} > ${test_current}content-select-6.expect &&
   fss_basic_read +n -cs 100 ${file_source} > ${test_current}content-select-100.expect &&
   fss_basic_read +n -cC ${file_source} > ${test_current}content-columns.expect &&
   fss_basic_read +n -ca 0 ${file_source} > ${test_current}content-at-0.expect &&
   fss_basic_read +n -ca 1 ${file_source} > ${test_current}content-at-1.expect &&
   fss_basic_read +n -ca 5 ${file_source} > ${test_current}content-at-5.expect &&
+  fss_basic_read +n -ca 6 ${file_source} > ${test_current}content-at-6.expect &&
   fss_basic_read +n -ca 100 ${file_source} > ${test_current}content-at-100.expect &&
   fss_basic_read +n -cn hi ${file_source} > ${test_current}content-name-hi.expect &&
   fss_basic_read +n -cn a ${file_source} > ${test_current}content-name-a.expect &&
@@ -127,6 +130,7 @@ generate_operate_0000() {
   fss_basic_read +n -cns a 1 ${file_source} > ${test_current}content-name-a-select-1.expect &&
   fss_basic_read +n -cns a 2 ${file_source} > ${test_current}content-name-a-select-2.expect &&
   fss_basic_read +n -cns a 5 ${file_source} > ${test_current}content-name-a-select-5.expect &&
+  fss_basic_read +n -cns a 6 ${file_source} > ${test_current}content-name-a-select-6.expect &&
   fss_basic_read +n -cns a 100 ${file_source} > ${test_current}content-name-a-select-100.expect &&
   fss_basic_read +n -cns "" 0 ${file_source} > ${test_current}content-name--select-0.expect &&
   fss_basic_read +n -cns "" 1 ${file_source} > ${test_current}content-name--select-1.expect &&
@@ -140,6 +144,7 @@ generate_operate_0000() {
   fss_basic_read +n -cnst a 1 ${file_source} > ${test_current}content-name-a-select-1-total.expect &&
   fss_basic_read +n -cnst a 2 ${file_source} > ${test_current}content-name-a-select-2-total.expect &&
   fss_basic_read +n -cnst a 5 ${file_source} > ${test_current}content-name-a-select-5-total.expect &&
+  fss_basic_read +n -cnst a 6 ${file_source} > ${test_current}content-name-a-select-6-total.expect &&
   fss_basic_read +n -cnst a 100 ${file_source} > ${test_current}content-name-a-select-100-total.expect &&
   fss_basic_read +n -cnst "" 0 ${file_source} > ${test_current}content-name--select-0-total.expect &&
   fss_basic_read +n -cnst "" 1 ${file_source} > ${test_current}content-name--select-1-total.expect &&
@@ -155,15 +160,18 @@ generate_operate_0000() {
   fss_basic_read +n -ol 0 ${file_source} > ${test_current}object-line-0.expect &&
   fss_basic_read +n -ol 1 ${file_source} > ${test_current}object-line-1.expect &&
   fss_basic_read +n -ol 5 ${file_source} > ${test_current}object-line-5.expect &&
+  fss_basic_read +n -ol 6 ${file_source} > ${test_current}object-line-6.expect &&
   fss_basic_read +n -ol 100 ${file_source} > ${test_current}object-line-100.expect &&
   fss_basic_read +n -os 0 ${file_source} > ${test_current}object-select-0.expect &&
   fss_basic_read +n -os 1 ${file_source} > ${test_current}object-select-1.expect &&
   fss_basic_read +n -os 5 ${file_source} > ${test_current}object-select-5.expect &&
+  fss_basic_read +n -os 6 ${file_source} > ${test_current}object-select-6.expect &&
   fss_basic_read +n -os 100 ${file_source} > ${test_current}object-select-100.expect &&
   fss_basic_read +n -oC ${file_source} > ${test_current}object-columns.expect &&
   fss_basic_read +n -oa 0 ${file_source} > ${test_current}object-at-0.expect &&
   fss_basic_read +n -oa 1 ${file_source} > ${test_current}object-at-1.expect &&
   fss_basic_read +n -oa 5 ${file_source} > ${test_current}object-at-5.expect &&
+  fss_basic_read +n -oa 6 ${file_source} > ${test_current}object-at-6.expect &&
   fss_basic_read +n -oa 100 ${file_source} > ${test_current}object-at-100.expect &&
   fss_basic_read +n -cn hi ${file_source} > ${test_current}object-name-hi.expect &&
   fss_basic_read +n -cn "" ${file_source} > ${test_current}object-name-.expect &&
@@ -181,6 +189,7 @@ generate_operate_0000() {
   fss_basic_read +n -cns a 1 ${file_source} > ${test_current}object-name-a-select-1.expect &&
   fss_basic_read +n -cns a 2 ${file_source} > ${test_current}object-name-a-select-2.expect &&
   fss_basic_read +n -cns a 5 ${file_source} > ${test_current}object-name-a-select-5.expect &&
+  fss_basic_read +n -cns a 6 ${file_source} > ${test_current}object-name-a-select-6.expect &&
   fss_basic_read +n -cns a 100 ${file_source} > ${test_current}object-name-a-select-100.expect &&
   fss_basic_read +n -cns "" 0 ${file_source} > ${test_current}object-name--select-0.expect &&
   fss_basic_read +n -cns "" 1 ${file_source} > ${test_current}object-name--select-1.expect &&
@@ -194,6 +203,7 @@ generate_operate_0000() {
   fss_basic_read +n -cnst a 1 ${file_source} > ${test_current}object-name-a-select-1-total.expect &&
   fss_basic_read +n -cnst a 2 ${file_source} > ${test_current}object-name-a-select-2-total.expect &&
   fss_basic_read +n -cnst a 5 ${file_source} > ${test_current}object-name-a-select-5-total.expect &&
+  fss_basic_read +n -cnst a 6 ${file_source} > ${test_current}object-name-a-select-6-total.expect &&
   fss_basic_read +n -cnst a 100 ${file_source} > ${test_current}object-name-a-select-100-total.expect &&
   fss_basic_read +n -cnst "" 0 ${file_source} > ${test_current}object-name--select-0-total.expect &&
   fss_basic_read +n -cnst "" 1 ${file_source} > ${test_current}object-name--select-1-total.expect &&
@@ -209,15 +219,18 @@ generate_operate_0000() {
   fss_basic_read +n -ocl 0 ${file_source} > ${test_current}object_and_content-line-0.expect &&
   fss_basic_read +n -ocl 1 ${file_source} > ${test_current}object_and_content-line-1.expect &&
   fss_basic_read +n -ocl 5 ${file_source} > ${test_current}object_and_content-line-5.expect &&
+  fss_basic_read +n -ocl 6 ${file_source} > ${test_current}object_and_content-line-6.expect &&
   fss_basic_read +n -ocl 100 ${file_source} > ${test_current}object_and_content-line-100.expect &&
   fss_basic_read +n -ocs 0 ${file_source} > ${test_current}object_and_content-select-0.expect &&
   fss_basic_read +n -ocs 1 ${file_source} > ${test_current}object_and_content-select-1.expect &&
   fss_basic_read +n -ocs 5 ${file_source} > ${test_current}object_and_content-select-5.expect &&
+  fss_basic_read +n -ocs 6 ${file_source} > ${test_current}object_and_content-select-6.expect &&
   fss_basic_read +n -ocs 100 ${file_source} > ${test_current}object_and_content-select-100.expect &&
   fss_basic_read +n -ocC ${file_source} > ${test_current}object_and_content-columns.expect &&
   fss_basic_read +n -oca 0 ${file_source} > ${test_current}object_and_content-at-0.expect &&
   fss_basic_read +n -oca 1 ${file_source} > ${test_current}object_and_content-at-1.expect &&
   fss_basic_read +n -oca 5 ${file_source} > ${test_current}object_and_content-at-5.expect &&
+  fss_basic_read +n -oca 6 ${file_source} > ${test_current}object_and_content-at-6.expect &&
   fss_basic_read +n -oca 100 ${file_source} > ${test_current}object_and_content-at-100.expect &&
   fss_basic_read +n -cn hi ${file_source} > ${test_current}object_and_content-name-hi.expect &&
   fss_basic_read +n -cn a ${file_source} > ${test_current}object_and_content-name-a.expect &&
@@ -235,6 +248,7 @@ generate_operate_0000() {
   fss_basic_read +n -cns a 1 ${file_source} > ${test_current}object_and_content-name-a-select-1.expect &&
   fss_basic_read +n -cns a 2 ${file_source} > ${test_current}object_and_content-name-a-select-2.expect &&
   fss_basic_read +n -cns a 5 ${file_source} > ${test_current}object_and_content-name-a-select-5.expect &&
+  fss_basic_read +n -cns a 6 ${file_source} > ${test_current}object_and_content-name-a-select-6.expect &&
   fss_basic_read +n -cns a 100 ${file_source} > ${test_current}object_and_content-name-a-select-100.expect &&
   fss_basic_read +n -cns "" 0 ${file_source} > ${test_current}object_and_content-name--select-0.expect &&
   fss_basic_read +n -cns "" 1 ${file_source} > ${test_current}object_and_content-name--select-1.expect &&
@@ -248,6 +262,7 @@ generate_operate_0000() {
   fss_basic_read +n -cnst a 1 ${file_source} > ${test_current}object_and_content-name-a-select-1-total.expect &&
   fss_basic_read +n -cnst a 2 ${file_source} > ${test_current}object_and_content-name-a-select-2-total.expect &&
   fss_basic_read +n -cnst a 5 ${file_source} > ${test_current}object_and_content-name-a-select-5-total.expect &&
+  fss_basic_read +n -cnst a 6 ${file_source} > ${test_current}object_and_content-name-a-select-6-total.expect &&
   fss_basic_read +n -cnst a 100 ${file_source} > ${test_current}object_and_content-name-a-select-100-total.expect &&
   fss_basic_read +n -cnst "" 0 ${file_source} > ${test_current}object_and_content-name--select-0-total.expect &&
   fss_basic_read +n -cnst "" 1 ${file_source} > ${test_current}object_and_content-name--select-1-total.expect &&
@@ -274,15 +289,18 @@ generate_operate_0001() {
   fss_extended_read +n -cl 0 ${file_source} > ${test_current}content-line-0.expect &&
   fss_extended_read +n -cl 1 ${file_source} > ${test_current}content-line-1.expect &&
   fss_extended_read +n -cl 5 ${file_source} > ${test_current}content-line-5.expect &&
+  fss_extended_read +n -cl 6 ${file_source} > ${test_current}content-line-6.expect &&
   fss_extended_read +n -cl 100 ${file_source} > ${test_current}content-line-100.expect &&
   fss_extended_read +n -cs 0 ${file_source} > ${test_current}content-select-0.expect &&
   fss_extended_read +n -cs 1 ${file_source} > ${test_current}content-select-1.expect &&
   fss_extended_read +n -cs 5 ${file_source} > ${test_current}content-select-5.expect &&
+  fss_extended_read +n -cs 6 ${file_source} > ${test_current}content-select-6.expect &&
   fss_extended_read +n -cs 100 ${file_source} > ${test_current}content-select-100.expect &&
   fss_extended_read +n -cC ${file_source} > ${test_current}content-columns.expect &&
   fss_extended_read +n -ca 0 ${file_source} > ${test_current}content-at-0.expect &&
   fss_extended_read +n -ca 1 ${file_source} > ${test_current}content-at-1.expect &&
   fss_extended_read +n -ca 5 ${file_source} > ${test_current}content-at-5.expect &&
+  fss_extended_read +n -ca 6 ${file_source} > ${test_current}content-at-6.expect &&
   fss_extended_read +n -ca 100 ${file_source} > ${test_current}content-at-100.expect &&
   fss_extended_read +n -cn hi ${file_source} > ${test_current}content-name-hi.expect &&
   fss_extended_read +n -cn a ${file_source} > ${test_current}content-name-a.expect &&
@@ -300,6 +318,7 @@ generate_operate_0001() {
   fss_extended_read +n -cns a 1 ${file_source} > ${test_current}content-name-a-select-1.expect &&
   fss_extended_read +n -cns a 2 ${file_source} > ${test_current}content-name-a-select-2.expect &&
   fss_extended_read +n -cns a 5 ${file_source} > ${test_current}content-name-a-select-5.expect &&
+  fss_extended_read +n -cns a 6 ${file_source} > ${test_current}content-name-a-select-6.expect &&
   fss_extended_read +n -cns a 100 ${file_source} > ${test_current}content-name-a-select-100.expect &&
   fss_extended_read +n -cns "" 0 ${file_source} > ${test_current}content-name--select-0.expect &&
   fss_extended_read +n -cns "" 1 ${file_source} > ${test_current}content-name--select-1.expect &&
@@ -313,6 +332,7 @@ generate_operate_0001() {
   fss_extended_read +n -cnst a 1 ${file_source} > ${test_current}content-name-a-select-1-total.expect &&
   fss_extended_read +n -cnst a 2 ${file_source} > ${test_current}content-name-a-select-2-total.expect &&
   fss_extended_read +n -cnst a 5 ${file_source} > ${test_current}content-name-a-select-5-total.expect &&
+  fss_extended_read +n -cnst a 6 ${file_source} > ${test_current}content-name-a-select-6-total.expect &&
   fss_extended_read +n -cnst a 100 ${file_source} > ${test_current}content-name-a-select-100-total.expect &&
   fss_extended_read +n -cnst "" 0 ${file_source} > ${test_current}content-name--select-0-total.expect &&
   fss_extended_read +n -cnst "" 1 ${file_source} > ${test_current}content-name--select-1-total.expect &&
@@ -328,15 +348,18 @@ generate_operate_0001() {
   fss_extended_read +n -ol 0 ${file_source} > ${test_current}object-line-0.expect &&
   fss_extended_read +n -ol 1 ${file_source} > ${test_current}object-line-1.expect &&
   fss_extended_read +n -ol 5 ${file_source} > ${test_current}object-line-5.expect &&
+  fss_extended_read +n -ol 6 ${file_source} > ${test_current}object-line-6.expect &&
   fss_extended_read +n -ol 100 ${file_source} > ${test_current}object-line-100.expect &&
   fss_extended_read +n -os 0 ${file_source} > ${test_current}object-select-0.expect &&
   fss_extended_read +n -os 1 ${file_source} > ${test_current}object-select-1.expect &&
   fss_extended_read +n -os 5 ${file_source} > ${test_current}object-select-5.expect &&
+  fss_extended_read +n -os 6 ${file_source} > ${test_current}object-select-6.expect &&
   fss_extended_read +n -os 100 ${file_source} > ${test_current}object-select-100.expect &&
   fss_extended_read +n -oC ${file_source} > ${test_current}object-columns.expect &&
   fss_extended_read +n -oa 0 ${file_source} > ${test_current}object-at-0.expect &&
   fss_extended_read +n -oa 1 ${file_source} > ${test_current}object-at-1.expect &&
   fss_extended_read +n -oa 5 ${file_source} > ${test_current}object-at-5.expect &&
+  fss_extended_read +n -oa 6 ${file_source} > ${test_current}object-at-6.expect &&
   fss_extended_read +n -oa 100 ${file_source} > ${test_current}object-at-100.expect &&
   fss_extended_read +n -cn hi ${file_source} > ${test_current}object-name-hi.expect &&
   fss_extended_read +n -cn "" ${file_source} > ${test_current}object-name-.expect &&
@@ -354,6 +377,7 @@ generate_operate_0001() {
   fss_extended_read +n -cns a 1 ${file_source} > ${test_current}object-name-a-select-1.expect &&
   fss_extended_read +n -cns a 2 ${file_source} > ${test_current}object-name-a-select-2.expect &&
   fss_extended_read +n -cns a 5 ${file_source} > ${test_current}object-name-a-select-5.expect &&
+  fss_extended_read +n -cns a 6 ${file_source} > ${test_current}object-name-a-select-6.expect &&
   fss_extended_read +n -cns a 100 ${file_source} > ${test_current}object-name-a-select-100.expect &&
   fss_extended_read +n -cns "" 0 ${file_source} > ${test_current}object-name--select-0.expect &&
   fss_extended_read +n -cns "" 1 ${file_source} > ${test_current}object-name--select-1.expect &&
@@ -367,6 +391,7 @@ generate_operate_0001() {
   fss_extended_read +n -cnst a 1 ${file_source} > ${test_current}object-name-a-select-1-total.expect &&
   fss_extended_read +n -cnst a 2 ${file_source} > ${test_current}object-name-a-select-2-total.expect &&
   fss_extended_read +n -cnst a 5 ${file_source} > ${test_current}object-name-a-select-5-total.expect &&
+  fss_extended_read +n -cnst a 6 ${file_source} > ${test_current}object-name-a-select-6-total.expect &&
   fss_extended_read +n -cnst a 100 ${file_source} > ${test_current}object-name-a-select-100-total.expect &&
   fss_extended_read +n -cnst "" 0 ${file_source} > ${test_current}object-name--select-0-total.expect &&
   fss_extended_read +n -cnst "" 1 ${file_source} > ${test_current}object-name--select-1-total.expect &&
@@ -382,15 +407,18 @@ generate_operate_0001() {
   fss_extended_read +n -ocl 0 ${file_source} > ${test_current}object_and_content-line-0.expect &&
   fss_extended_read +n -ocl 1 ${file_source} > ${test_current}object_and_content-line-1.expect &&
   fss_extended_read +n -ocl 5 ${file_source} > ${test_current}object_and_content-line-5.expect &&
+  fss_extended_read +n -ocl 6 ${file_source} > ${test_current}object_and_content-line-6.expect &&
   fss_extended_read +n -ocl 100 ${file_source} > ${test_current}object_and_content-line-100.expect &&
   fss_extended_read +n -ocs 0 ${file_source} > ${test_current}object_and_content-select-0.expect &&
   fss_extended_read +n -ocs 1 ${file_source} > ${test_current}object_and_content-select-1.expect &&
   fss_extended_read +n -ocs 5 ${file_source} > ${test_current}object_and_content-select-5.expect &&
+  fss_extended_read +n -ocs 6 ${file_source} > ${test_current}object_and_content-select-6.expect &&
   fss_extended_read +n -ocs 100 ${file_source} > ${test_current}object_and_content-select-100.expect &&
   fss_extended_read +n -ocC ${file_source} > ${test_current}object_and_content-columns.expect &&
   fss_extended_read +n -oca 0 ${file_source} > ${test_current}object_and_content-at-0.expect &&
   fss_extended_read +n -oca 1 ${file_source} > ${test_current}object_and_content-at-1.expect &&
   fss_extended_read +n -oca 5 ${file_source} > ${test_current}object_and_content-at-5.expect &&
+  fss_extended_read +n -oca 6 ${file_source} > ${test_current}object_and_content-at-6.expect &&
   fss_extended_read +n -oca 100 ${file_source} > ${test_current}object_and_content-at-100.expect &&
   fss_extended_read +n -cn hi ${file_source} > ${test_current}object_and_content-name-hi.expect &&
   fss_extended_read +n -cn a ${file_source} > ${test_current}object_and_content-name-a.expect &&
@@ -408,6 +436,7 @@ generate_operate_0001() {
   fss_extended_read +n -cns a 1 ${file_source} > ${test_current}object_and_content-name-a-select-1.expect &&
   fss_extended_read +n -cns a 2 ${file_source} > ${test_current}object_and_content-name-a-select-2.expect &&
   fss_extended_read +n -cns a 5 ${file_source} > ${test_current}object_and_content-name-a-select-5.expect &&
+  fss_extended_read +n -cns a 6 ${file_source} > ${test_current}object_and_content-name-a-select-6.expect &&
   fss_extended_read +n -cns a 100 ${file_source} > ${test_current}object_and_content-name-a-select-100.expect &&
   fss_extended_read +n -cns "" 0 ${file_source} > ${test_current}object_and_content-name--select-0.expect &&
   fss_extended_read +n -cns "" 1 ${file_source} > ${test_current}object_and_content-name--select-1.expect &&
@@ -421,6 +450,7 @@ generate_operate_0001() {
   fss_extended_read +n -cnst a 1 ${file_source} > ${test_current}object_and_content-name-a-select-1-total.expect &&
   fss_extended_read +n -cnst a 2 ${file_source} > ${test_current}object_and_content-name-a-select-2-total.expect &&
   fss_extended_read +n -cnst a 5 ${file_source} > ${test_current}object_and_content-name-a-select-5-total.expect &&
+  fss_extended_read +n -cnst a 6 ${file_source} > ${test_current}object_and_content-name-a-select-6-total.expect &&
   fss_extended_read +n -cnst a 100 ${file_source} > ${test_current}object_and_content-name-a-select-100-total.expect &&
   fss_extended_read +n -cnst "" 0 ${file_source} > ${test_current}object_and_content-name--select-0-total.expect &&
   fss_extended_read +n -cnst "" 1 ${file_source} > ${test_current}object_and_content-name--select-1-total.expect &&
@@ -447,15 +477,18 @@ generate_operate_0002() {
   fss_basic_list_read +n -cl 0 ${file_source} > ${test_current}content-line-0.expect &&
   fss_basic_list_read +n -cl 1 ${file_source} > ${test_current}content-line-1.expect &&
   fss_basic_list_read +n -cl 5 ${file_source} > ${test_current}content-line-5.expect &&
+  fss_basic_list_read +n -cl 6 ${file_source} > ${test_current}content-line-6.expect &&
   fss_basic_list_read +n -cl 100 ${file_source} > ${test_current}content-line-100.expect &&
   fss_basic_list_read +n -cs 0 ${file_source} > ${test_current}content-select-0.expect &&
   fss_basic_list_read +n -cs 1 ${file_source} > ${test_current}content-select-1.expect &&
   fss_basic_list_read +n -cs 5 ${file_source} > ${test_current}content-select-5.expect &&
+  fss_basic_list_read +n -cs 6 ${file_source} > ${test_current}content-select-6.expect &&
   fss_basic_list_read +n -cs 100 ${file_source} > ${test_current}content-select-100.expect &&
   fss_basic_list_read +n -cC ${file_source} > ${test_current}content-columns.expect &&
   fss_basic_list_read +n -ca 0 ${file_source} > ${test_current}content-at-0.expect &&
   fss_basic_list_read +n -ca 1 ${file_source} > ${test_current}content-at-1.expect &&
   fss_basic_list_read +n -ca 5 ${file_source} > ${test_current}content-at-5.expect &&
+  fss_basic_list_read +n -ca 6 ${file_source} > ${test_current}content-at-6.expect &&
   fss_basic_list_read +n -ca 100 ${file_source} > ${test_current}content-at-100.expect &&
   fss_basic_list_read +n -cn hi ${file_source} > ${test_current}content-name-hi.expect &&
   fss_basic_list_read +n -cn a ${file_source} > ${test_current}content-name-a.expect &&
@@ -473,6 +506,7 @@ generate_operate_0002() {
   fss_basic_list_read +n -cns a 1 ${file_source} > ${test_current}content-name-a-select-1.expect &&
   fss_basic_list_read +n -cns a 2 ${file_source} > ${test_current}content-name-a-select-2.expect &&
   fss_basic_list_read +n -cns a 5 ${file_source} > ${test_current}content-name-a-select-5.expect &&
+  fss_basic_list_read +n -cns a 6 ${file_source} > ${test_current}content-name-a-select-6.expect &&
   fss_basic_list_read +n -cns a 100 ${file_source} > ${test_current}content-name-a-select-100.expect &&
   fss_basic_list_read +n -cns "" 0 ${file_source} > ${test_current}content-name--select-0.expect &&
   fss_basic_list_read +n -cns "" 1 ${file_source} > ${test_current}content-name--select-1.expect &&
@@ -486,6 +520,7 @@ generate_operate_0002() {
   fss_basic_list_read +n -cnst a 1 ${file_source} > ${test_current}content-name-a-select-1-total.expect &&
   fss_basic_list_read +n -cnst a 2 ${file_source} > ${test_current}content-name-a-select-2-total.expect &&
   fss_basic_list_read +n -cnst a 5 ${file_source} > ${test_current}content-name-a-select-5-total.expect &&
+  fss_basic_list_read +n -cnst a 6 ${file_source} > ${test_current}content-name-a-select-6-total.expect &&
   fss_basic_list_read +n -cnst a 100 ${file_source} > ${test_current}content-name-a-select-100-total.expect &&
   fss_basic_list_read +n -cnst "" 0 ${file_source} > ${test_current}content-name--select-0-total.expect &&
   fss_basic_list_read +n -cnst "" 1 ${file_source} > ${test_current}content-name--select-1-total.expect &&
@@ -501,15 +536,18 @@ generate_operate_0002() {
   fss_basic_list_read +n -ol 0 ${file_source} > ${test_current}object-line-0.expect &&
   fss_basic_list_read +n -ol 1 ${file_source} > ${test_current}object-line-1.expect &&
   fss_basic_list_read +n -ol 5 ${file_source} > ${test_current}object-line-5.expect &&
+  fss_basic_list_read +n -ol 6 ${file_source} > ${test_current}object-line-6.expect &&
   fss_basic_list_read +n -ol 100 ${file_source} > ${test_current}object-line-100.expect &&
   fss_basic_list_read +n -os 0 ${file_source} > ${test_current}object-select-0.expect &&
   fss_basic_list_read +n -os 1 ${file_source} > ${test_current}object-select-1.expect &&
   fss_basic_list_read +n -os 5 ${file_source} > ${test_current}object-select-5.expect &&
+  fss_basic_list_read +n -os 6 ${file_source} > ${test_current}object-select-6.expect &&
   fss_basic_list_read +n -os 100 ${file_source} > ${test_current}object-select-100.expect &&
   fss_basic_list_read +n -oC ${file_source} > ${test_current}object-columns.expect &&
   fss_basic_list_read +n -oa 0 ${file_source} > ${test_current}object-at-0.expect &&
   fss_basic_list_read +n -oa 1 ${file_source} > ${test_current}object-at-1.expect &&
   fss_basic_list_read +n -oa 5 ${file_source} > ${test_current}object-at-5.expect &&
+  fss_basic_list_read +n -oa 6 ${file_source} > ${test_current}object-at-6.expect &&
   fss_basic_list_read +n -oa 100 ${file_source} > ${test_current}object-at-100.expect &&
   fss_basic_list_read +n -cn hi ${file_source} > ${test_current}object-name-hi.expect &&
   fss_basic_list_read +n -cn "" ${file_source} > ${test_current}object-name-.expect &&
@@ -527,6 +565,7 @@ generate_operate_0002() {
   fss_basic_list_read +n -cns a 1 ${file_source} > ${test_current}object-name-a-select-1.expect &&
   fss_basic_list_read +n -cns a 2 ${file_source} > ${test_current}object-name-a-select-2.expect &&
   fss_basic_list_read +n -cns a 5 ${file_source} > ${test_current}object-name-a-select-5.expect &&
+  fss_basic_list_read +n -cns a 6 ${file_source} > ${test_current}object-name-a-select-6.expect &&
   fss_basic_list_read +n -cns a 100 ${file_source} > ${test_current}object-name-a-select-100.expect &&
   fss_basic_list_read +n -cns "" 0 ${file_source} > ${test_current}object-name--select-0.expect &&
   fss_basic_list_read +n -cns "" 1 ${file_source} > ${test_current}object-name--select-1.expect &&
@@ -540,6 +579,7 @@ generate_operate_0002() {
   fss_basic_list_read +n -cnst a 1 ${file_source} > ${test_current}object-name-a-select-1-total.expect &&
   fss_basic_list_read +n -cnst a 2 ${file_source} > ${test_current}object-name-a-select-2-total.expect &&
   fss_basic_list_read +n -cnst a 5 ${file_source} > ${test_current}object-name-a-select-5-total.expect &&
+  fss_basic_list_read +n -cnst a 6 ${file_source} > ${test_current}object-name-a-select-6-total.expect &&
   fss_basic_list_read +n -cnst a 100 ${file_source} > ${test_current}object-name-a-select-100-total.expect &&
   fss_basic_list_read +n -cnst "" 0 ${file_source} > ${test_current}object-name--select-0-total.expect &&
   fss_basic_list_read +n -cnst "" 1 ${file_source} > ${test_current}object-name--select-1-total.expect &&
@@ -555,15 +595,18 @@ generate_operate_0002() {
   fss_basic_list_read +n -ocl 0 ${file_source} > ${test_current}object_and_content-line-0.expect &&
   fss_basic_list_read +n -ocl 1 ${file_source} > ${test_current}object_and_content-line-1.expect &&
   fss_basic_list_read +n -ocl 5 ${file_source} > ${test_current}object_and_content-line-5.expect &&
+  fss_basic_list_read +n -ocl 6 ${file_source} > ${test_current}object_and_content-line-6.expect &&
   fss_basic_list_read +n -ocl 100 ${file_source} > ${test_current}object_and_content-line-100.expect &&
   fss_basic_list_read +n -ocs 0 ${file_source} > ${test_current}object_and_content-select-0.expect &&
   fss_basic_list_read +n -ocs 1 ${file_source} > ${test_current}object_and_content-select-1.expect &&
   fss_basic_list_read +n -ocs 5 ${file_source} > ${test_current}object_and_content-select-5.expect &&
+  fss_basic_list_read +n -ocs 6 ${file_source} > ${test_current}object_and_content-select-6.expect &&
   fss_basic_list_read +n -ocs 100 ${file_source} > ${test_current}object_and_content-select-100.expect &&
   fss_basic_list_read +n -ocC ${file_source} > ${test_current}object_and_content-columns.expect &&
   fss_basic_list_read +n -oca 0 ${file_source} > ${test_current}object_and_content-at-0.expect &&
   fss_basic_list_read +n -oca 1 ${file_source} > ${test_current}object_and_content-at-1.expect &&
   fss_basic_list_read +n -oca 5 ${file_source} > ${test_current}object_and_content-at-5.expect &&
+  fss_basic_list_read +n -oca 6 ${file_source} > ${test_current}object_and_content-at-6.expect &&
   fss_basic_list_read +n -oca 100 ${file_source} > ${test_current}object_and_content-at-100.expect &&
   fss_basic_list_read +n -cn hi ${file_source} > ${test_current}object_and_content-name-hi.expect &&
   fss_basic_list_read +n -cn a ${file_source} > ${test_current}object_and_content-name-a.expect &&
@@ -581,6 +624,7 @@ generate_operate_0002() {
   fss_basic_list_read +n -cns a 1 ${file_source} > ${test_current}object_and_content-name-a-select-1.expect &&
   fss_basic_list_read +n -cns a 2 ${file_source} > ${test_current}object_and_content-name-a-select-2.expect &&
   fss_basic_list_read +n -cns a 5 ${file_source} > ${test_current}object_and_content-name-a-select-5.expect &&
+  fss_basic_list_read +n -cns a 6 ${file_source} > ${test_current}object_and_content-name-a-select-6.expect &&
   fss_basic_list_read +n -cns a 100 ${file_source} > ${test_current}object_and_content-name-a-select-100.expect &&
   fss_basic_list_read +n -cns "" 0 ${file_source} > ${test_current}object_and_content-name--select-0.expect &&
   fss_basic_list_read +n -cns "" 1 ${file_source} > ${test_current}object_and_content-name--select-1.expect &&
@@ -594,6 +638,7 @@ generate_operate_0002() {
   fss_basic_list_read +n -cnst a 1 ${file_source} > ${test_current}object_and_content-name-a-select-1-total.expect &&
   fss_basic_list_read +n -cnst a 2 ${file_source} > ${test_current}object_and_content-name-a-select-2-total.expect &&
   fss_basic_list_read +n -cnst a 5 ${file_source} > ${test_current}object_and_content-name-a-select-5-total.expect &&
+  fss_basic_list_read +n -cnst a 6 ${file_source} > ${test_current}object_and_content-name-a-select-6-total.expect &&
   fss_basic_list_read +n -cnst a 100 ${file_source} > ${test_current}object_and_content-name-a-select-100-total.expect &&
   fss_basic_list_read +n -cnst "" 0 ${file_source} > ${test_current}object_and_content-name--select-0-total.expect &&
   fss_basic_list_read +n -cnst "" 1 ${file_source} > ${test_current}object_and_content-name--select-1-total.expect &&
@@ -620,15 +665,18 @@ generate_operate_0003() {
   fss_extended_list_read +n -cl 0 ${file_source} > ${test_current}content-line-0.expect &&
   fss_extended_list_read +n -cl 1 ${file_source} > ${test_current}content-line-1.expect &&
   fss_extended_list_read +n -cl 5 ${file_source} > ${test_current}content-line-5.expect &&
+  fss_extended_list_read +n -cl 6 ${file_source} > ${test_current}content-line-6.expect &&
   fss_extended_list_read +n -cl 100 ${file_source} > ${test_current}content-line-100.expect &&
   fss_extended_list_read +n -cs 0 ${file_source} > ${test_current}content-select-0.expect &&
   fss_extended_list_read +n -cs 1 ${file_source} > ${test_current}content-select-1.expect &&
   fss_extended_list_read +n -cs 5 ${file_source} > ${test_current}content-select-5.expect &&
+  fss_extended_list_read +n -cs 6 ${file_source} > ${test_current}content-select-6.expect &&
   fss_extended_list_read +n -cs 100 ${file_source} > ${test_current}content-select-100.expect &&
   fss_extended_list_read +n -cC ${file_source} > ${test_current}content-columns.expect &&
   fss_extended_list_read +n -ca 0 ${file_source} > ${test_current}content-at-0.expect &&
   fss_extended_list_read +n -ca 1 ${file_source} > ${test_current}content-at-1.expect &&
   fss_extended_list_read +n -ca 5 ${file_source} > ${test_current}content-at-5.expect &&
+  fss_extended_list_read +n -ca 6 ${file_source} > ${test_current}content-at-6.expect &&
   fss_extended_list_read +n -ca 100 ${file_source} > ${test_current}content-at-100.expect &&
   fss_extended_list_read +n -cn hi ${file_source} > ${test_current}content-name-hi.expect &&
   fss_extended_list_read +n -cn a ${file_source} > ${test_current}content-name-a.expect &&
@@ -646,6 +694,7 @@ generate_operate_0003() {
   fss_extended_list_read +n -cns a 1 ${file_source} > ${test_current}content-name-a-select-1.expect &&
   fss_extended_list_read +n -cns a 2 ${file_source} > ${test_current}content-name-a-select-2.expect &&
   fss_extended_list_read +n -cns a 5 ${file_source} > ${test_current}content-name-a-select-5.expect &&
+  fss_extended_list_read +n -cns a 6 ${file_source} > ${test_current}content-name-a-select-6.expect &&
   fss_extended_list_read +n -cns a 100 ${file_source} > ${test_current}content-name-a-select-100.expect &&
   fss_extended_list_read +n -cns "" 0 ${file_source} > ${test_current}content-name--select-0.expect &&
   fss_extended_list_read +n -cns "" 1 ${file_source} > ${test_current}content-name--select-1.expect &&
@@ -659,6 +708,7 @@ generate_operate_0003() {
   fss_extended_list_read +n -cnst a 1 ${file_source} > ${test_current}content-name-a-select-1-total.expect &&
   fss_extended_list_read +n -cnst a 2 ${file_source} > ${test_current}content-name-a-select-2-total.expect &&
   fss_extended_list_read +n -cnst a 5 ${file_source} > ${test_current}content-name-a-select-5-total.expect &&
+  fss_extended_list_read +n -cnst a 6 ${file_source} > ${test_current}content-name-a-select-6-total.expect &&
   fss_extended_list_read +n -cnst a 100 ${file_source} > ${test_current}content-name-a-select-100-total.expect &&
   fss_extended_list_read +n -cnst "" 0 ${file_source} > ${test_current}content-name--select-0-total.expect &&
   fss_extended_list_read +n -cnst "" 1 ${file_source} > ${test_current}content-name--select-1-total.expect &&
@@ -674,15 +724,18 @@ generate_operate_0003() {
   fss_extended_list_read +n -ol 0 ${file_source} > ${test_current}object-line-0.expect &&
   fss_extended_list_read +n -ol 1 ${file_source} > ${test_current}object-line-1.expect &&
   fss_extended_list_read +n -ol 5 ${file_source} > ${test_current}object-line-5.expect &&
+  fss_extended_list_read +n -ol 6 ${file_source} > ${test_current}object-line-6.expect &&
   fss_extended_list_read +n -ol 100 ${file_source} > ${test_current}object-line-100.expect &&
   fss_extended_list_read +n -os 0 ${file_source} > ${test_current}object-select-0.expect &&
   fss_extended_list_read +n -os 1 ${file_source} > ${test_current}object-select-1.expect &&
   fss_extended_list_read +n -os 5 ${file_source} > ${test_current}object-select-5.expect &&
+  fss_extended_list_read +n -os 6 ${file_source} > ${test_current}object-select-6.expect &&
   fss_extended_list_read +n -os 100 ${file_source} > ${test_current}object-select-100.expect &&
   fss_extended_list_read +n -oC ${file_source} > ${test_current}object-columns.expect &&
   fss_extended_list_read +n -oa 0 ${file_source} > ${test_current}object-at-0.expect &&
   fss_extended_list_read +n -oa 1 ${file_source} > ${test_current}object-at-1.expect &&
   fss_extended_list_read +n -oa 5 ${file_source} > ${test_current}object-at-5.expect &&
+  fss_extended_list_read +n -oa 6 ${file_source} > ${test_current}object-at-6.expect &&
   fss_extended_list_read +n -oa 100 ${file_source} > ${test_current}object-at-100.expect &&
   fss_extended_list_read +n -cn hi ${file_source} > ${test_current}object-name-hi.expect &&
   fss_extended_list_read +n -cn "" ${file_source} > ${test_current}object-name-.expect &&
@@ -700,6 +753,7 @@ generate_operate_0003() {
   fss_extended_list_read +n -cns a 1 ${file_source} > ${test_current}object-name-a-select-1.expect &&
   fss_extended_list_read +n -cns a 2 ${file_source} > ${test_current}object-name-a-select-2.expect &&
   fss_extended_list_read +n -cns a 5 ${file_source} > ${test_current}object-name-a-select-5.expect &&
+  fss_extended_list_read +n -cns a 6 ${file_source} > ${test_current}object-name-a-select-6.expect &&
   fss_extended_list_read +n -cns a 100 ${file_source} > ${test_current}object-name-a-select-100.expect &&
   fss_extended_list_read +n -cns "" 0 ${file_source} > ${test_current}object-name--select-0.expect &&
   fss_extended_list_read +n -cns "" 1 ${file_source} > ${test_current}object-name--select-1.expect &&
@@ -713,6 +767,7 @@ generate_operate_0003() {
   fss_extended_list_read +n -cnst a 1 ${file_source} > ${test_current}object-name-a-select-1-total.expect &&
   fss_extended_list_read +n -cnst a 2 ${file_source} > ${test_current}object-name-a-select-2-total.expect &&
   fss_extended_list_read +n -cnst a 5 ${file_source} > ${test_current}object-name-a-select-5-total.expect &&
+  fss_extended_list_read +n -cnst a 6 ${file_source} > ${test_current}object-name-a-select-6-total.expect &&
   fss_extended_list_read +n -cnst a 100 ${file_source} > ${test_current}object-name-a-select-100-total.expect &&
   fss_extended_list_read +n -cnst "" 0 ${file_source} > ${test_current}object-name--select-0-total.expect &&
   fss_extended_list_read +n -cnst "" 1 ${file_source} > ${test_current}object-name--select-1-total.expect &&
@@ -728,15 +783,18 @@ generate_operate_0003() {
   fss_extended_list_read +n -ocl 0 ${file_source} > ${test_current}object_and_content-line-0.expect &&
   fss_extended_list_read +n -ocl 1 ${file_source} > ${test_current}object_and_content-line-1.expect &&
   fss_extended_list_read +n -ocl 5 ${file_source} > ${test_current}object_and_content-line-5.expect &&
+  fss_extended_list_read +n -ocl 6 ${file_source} > ${test_current}object_and_content-line-6.expect &&
   fss_extended_list_read +n -ocl 100 ${file_source} > ${test_current}object_and_content-line-100.expect &&
   fss_extended_list_read +n -ocs 0 ${file_source} > ${test_current}object_and_content-select-0.expect &&
   fss_extended_list_read +n -ocs 1 ${file_source} > ${test_current}object_and_content-select-1.expect &&
   fss_extended_list_read +n -ocs 5 ${file_source} > ${test_current}object_and_content-select-5.expect &&
+  fss_extended_list_read +n -ocs 6 ${file_source} > ${test_current}object_and_content-select-6.expect &&
   fss_extended_list_read +n -ocs 100 ${file_source} > ${test_current}object_and_content-select-100.expect &&
   fss_extended_list_read +n -ocC ${file_source} > ${test_current}object_and_content-columns.expect &&
   fss_extended_list_read +n -oca 0 ${file_source} > ${test_current}object_and_content-at-0.expect &&
   fss_extended_list_read +n -oca 1 ${file_source} > ${test_current}object_and_content-at-1.expect &&
   fss_extended_list_read +n -oca 5 ${file_source} > ${test_current}object_and_content-at-5.expect &&
+  fss_extended_list_read +n -oca 6 ${file_source} > ${test_current}object_and_content-at-6.expect &&
   fss_extended_list_read +n -oca 100 ${file_source} > ${test_current}object_and_content-at-100.expect &&
   fss_extended_list_read +n -cn hi ${file_source} > ${test_current}object_and_content-name-hi.expect &&
   fss_extended_list_read +n -cn a ${file_source} > ${test_current}object_and_content-name-a.expect &&
@@ -754,6 +812,7 @@ generate_operate_0003() {
   fss_extended_list_read +n -cns a 1 ${file_source} > ${test_current}object_and_content-name-a-select-1.expect &&
   fss_extended_list_read +n -cns a 2 ${file_source} > ${test_current}object_and_content-name-a-select-2.expect &&
   fss_extended_list_read +n -cns a 5 ${file_source} > ${test_current}object_and_content-name-a-select-5.expect &&
+  fss_extended_list_read +n -cns a 6 ${file_source} > ${test_current}object_and_content-name-a-select-6.expect &&
   fss_extended_list_read +n -cns a 100 ${file_source} > ${test_current}object_and_content-name-a-select-100.expect &&
   fss_extended_list_read +n -cns "" 0 ${file_source} > ${test_current}object_and_content-name--select-0.expect &&
   fss_extended_list_read +n -cns "" 1 ${file_source} > ${test_current}object_and_content-name--select-1.expect &&
@@ -767,6 +826,7 @@ generate_operate_0003() {
   fss_extended_list_read +n -cnst a 1 ${file_source} > ${test_current}object_and_content-name-a-select-1-total.expect &&
   fss_extended_list_read +n -cnst a 2 ${file_source} > ${test_current}object_and_content-name-a-select-2-total.expect &&
   fss_extended_list_read +n -cnst a 5 ${file_source} > ${test_current}object_and_content-name-a-select-5-total.expect &&
+  fss_extended_list_read +n -cnst a 6 ${file_source} > ${test_current}object_and_content-name-a-select-6-total.expect &&
   fss_extended_list_read +n -cnst a 100 ${file_source} > ${test_current}object_and_content-name-a-select-100-total.expect &&
   fss_extended_list_read +n -cnst "" 0 ${file_source} > ${test_current}object_and_content-name--select-0-total.expect &&
   fss_extended_list_read +n -cnst "" 1 ${file_source} > ${test_current}object_and_content-name--select-1-total.expect &&
@@ -793,15 +853,18 @@ generate_operate_0008() {
   fss_embedded_list_read +n -cl 0 ${file_source} > ${test_current}content-line-0.expect &&
   fss_embedded_list_read +n -cl 1 ${file_source} > ${test_current}content-line-1.expect &&
   fss_embedded_list_read +n -cl 5 ${file_source} > ${test_current}content-line-5.expect &&
+  fss_embedded_list_read +n -cl 6 ${file_source} > ${test_current}content-line-6.expect &&
   fss_embedded_list_read +n -cl 100 ${file_source} > ${test_current}content-line-100.expect &&
   fss_embedded_list_read +n -cs 0 ${file_source} > ${test_current}content-select-0.expect &&
   fss_embedded_list_read +n -cs 1 ${file_source} > ${test_current}content-select-1.expect &&
   fss_embedded_list_read +n -cs 5 ${file_source} > ${test_current}content-select-5.expect &&
+  fss_embedded_list_read +n -cs 6 ${file_source} > ${test_current}content-select-6.expect &&
   fss_embedded_list_read +n -cs 100 ${file_source} > ${test_current}content-select-100.expect &&
   fss_embedded_list_read +n -cC ${file_source} > ${test_current}content-columns.expect &&
   fss_embedded_list_read +n -ca 0 ${file_source} > ${test_current}content-at-0.expect &&
   fss_embedded_list_read +n -ca 1 ${file_source} > ${test_current}content-at-1.expect &&
   fss_embedded_list_read +n -ca 5 ${file_source} > ${test_current}content-at-5.expect &&
+  fss_embedded_list_read +n -ca 6 ${file_source} > ${test_current}content-at-6.expect &&
   fss_embedded_list_read +n -ca 100 ${file_source} > ${test_current}content-at-100.expect &&
   fss_embedded_list_read +n -cn hi ${file_source} > ${test_current}content-name-hi.expect &&
   fss_embedded_list_read +n -cn a ${file_source} > ${test_current}content-name-a.expect &&
@@ -819,6 +882,7 @@ generate_operate_0008() {
   fss_embedded_list_read +n -cns a 1 ${file_source} > ${test_current}content-name-a-select-1.expect &&
   fss_embedded_list_read +n -cns a 2 ${file_source} > ${test_current}content-name-a-select-2.expect &&
   fss_embedded_list_read +n -cns a 5 ${file_source} > ${test_current}content-name-a-select-5.expect &&
+  fss_embedded_list_read +n -cns a 6 ${file_source} > ${test_current}content-name-a-select-6.expect &&
   fss_embedded_list_read +n -cns a 100 ${file_source} > ${test_current}content-name-a-select-100.expect &&
   fss_embedded_list_read +n -cns "" 0 ${file_source} > ${test_current}content-name--select-0.expect &&
   fss_embedded_list_read +n -cns "" 1 ${file_source} > ${test_current}content-name--select-1.expect &&
@@ -832,6 +896,7 @@ generate_operate_0008() {
   fss_embedded_list_read +n -cnst a 1 ${file_source} > ${test_current}content-name-a-select-1-total.expect &&
   fss_embedded_list_read +n -cnst a 2 ${file_source} > ${test_current}content-name-a-select-2-total.expect &&
   fss_embedded_list_read +n -cnst a 5 ${file_source} > ${test_current}content-name-a-select-5-total.expect &&
+  fss_embedded_list_read +n -cnst a 6 ${file_source} > ${test_current}content-name-a-select-6-total.expect &&
   fss_embedded_list_read +n -cnst a 100 ${file_source} > ${test_current}content-name-a-select-100-total.expect &&
   fss_embedded_list_read +n -cnst "" 0 ${file_source} > ${test_current}content-name--select-0-total.expect &&
   fss_embedded_list_read +n -cnst "" 1 ${file_source} > ${test_current}content-name--select-1-total.expect &&
@@ -847,15 +912,18 @@ generate_operate_0008() {
   fss_embedded_list_read +n -ol 0 ${file_source} > ${test_current}object-line-0.expect &&
   fss_embedded_list_read +n -ol 1 ${file_source} > ${test_current}object-line-1.expect &&
   fss_embedded_list_read +n -ol 5 ${file_source} > ${test_current}object-line-5.expect &&
+  fss_embedded_list_read +n -ol 6 ${file_source} > ${test_current}object-line-6.expect &&
   fss_embedded_list_read +n -ol 100 ${file_source} > ${test_current}object-line-100.expect &&
   fss_embedded_list_read +n -os 0 ${file_source} > ${test_current}object-select-0.expect &&
   fss_embedded_list_read +n -os 1 ${file_source} > ${test_current}object-select-1.expect &&
   fss_embedded_list_read +n -os 5 ${file_source} > ${test_current}object-select-5.expect &&
+  fss_embedded_list_read +n -os 6 ${file_source} > ${test_current}object-select-6.expect &&
   fss_embedded_list_read +n -os 100 ${file_source} > ${test_current}object-select-100.expect &&
   fss_embedded_list_read +n -oC ${file_source} > ${test_current}object-columns.expect &&
   fss_embedded_list_read +n -oa 0 ${file_source} > ${test_current}object-at-0.expect &&
   fss_embedded_list_read +n -oa 1 ${file_source} > ${test_current}object-at-1.expect &&
   fss_embedded_list_read +n -oa 5 ${file_source} > ${test_current}object-at-5.expect &&
+  fss_embedded_list_read +n -oa 6 ${file_source} > ${test_current}object-at-6.expect &&
   fss_embedded_list_read +n -oa 100 ${file_source} > ${test_current}object-at-100.expect &&
   fss_embedded_list_read +n -cn hi ${file_source} > ${test_current}object-name-hi.expect &&
   fss_embedded_list_read +n -cn "" ${file_source} > ${test_current}object-name-.expect &&
@@ -873,6 +941,7 @@ generate_operate_0008() {
   fss_embedded_list_read +n -cns a 1 ${file_source} > ${test_current}object-name-a-select-1.expect &&
   fss_embedded_list_read +n -cns a 2 ${file_source} > ${test_current}object-name-a-select-2.expect &&
   fss_embedded_list_read +n -cns a 5 ${file_source} > ${test_current}object-name-a-select-5.expect &&
+  fss_embedded_list_read +n -cns a 6 ${file_source} > ${test_current}object-name-a-select-6.expect &&
   fss_embedded_list_read +n -cns a 100 ${file_source} > ${test_current}object-name-a-select-100.expect &&
   fss_embedded_list_read +n -cns "" 0 ${file_source} > ${test_current}object-name--select-0.expect &&
   fss_embedded_list_read +n -cns "" 1 ${file_source} > ${test_current}object-name--select-1.expect &&
@@ -886,6 +955,7 @@ generate_operate_0008() {
   fss_embedded_list_read +n -cnst a 1 ${file_source} > ${test_current}object-name-a-select-1-total.expect &&
   fss_embedded_list_read +n -cnst a 2 ${file_source} > ${test_current}object-name-a-select-2-total.expect &&
   fss_embedded_list_read +n -cnst a 5 ${file_source} > ${test_current}object-name-a-select-5-total.expect &&
+  fss_embedded_list_read +n -cnst a 6 ${file_source} > ${test_current}object-name-a-select-6-total.expect &&
   fss_embedded_list_read +n -cnst a 100 ${file_source} > ${test_current}object-name-a-select-100-total.expect &&
   fss_embedded_list_read +n -cnst "" 0 ${file_source} > ${test_current}object-name--select-0-total.expect &&
   fss_embedded_list_read +n -cnst "" 1 ${file_source} > ${test_current}object-name--select-1-total.expect &&
@@ -901,15 +971,18 @@ generate_operate_0008() {
   fss_embedded_list_read +n -ocl 0 ${file_source} > ${test_current}object_and_content-line-0.expect &&
   fss_embedded_list_read +n -ocl 1 ${file_source} > ${test_current}object_and_content-line-1.expect &&
   fss_embedded_list_read +n -ocl 5 ${file_source} > ${test_current}object_and_content-line-5.expect &&
+  fss_embedded_list_read +n -ocl 6 ${file_source} > ${test_current}object_and_content-line-6.expect &&
   fss_embedded_list_read +n -ocl 100 ${file_source} > ${test_current}object_and_content-line-100.expect &&
   fss_embedded_list_read +n -ocs 0 ${file_source} > ${test_current}object_and_content-select-0.expect &&
   fss_embedded_list_read +n -ocs 1 ${file_source} > ${test_current}object_and_content-select-1.expect &&
   fss_embedded_list_read +n -ocs 5 ${file_source} > ${test_current}object_and_content-select-5.expect &&
+  fss_embedded_list_read +n -ocs 6 ${file_source} > ${test_current}object_and_content-select-6.expect &&
   fss_embedded_list_read +n -ocs 100 ${file_source} > ${test_current}object_and_content-select-100.expect &&
   fss_embedded_list_read +n -ocC ${file_source} > ${test_current}object_and_content-columns.expect &&
   fss_embedded_list_read +n -oca 0 ${file_source} > ${test_current}object_and_content-at-0.expect &&
   fss_embedded_list_read +n -oca 1 ${file_source} > ${test_current}object_and_content-at-1.expect &&
   fss_embedded_list_read +n -oca 5 ${file_source} > ${test_current}object_and_content-at-5.expect &&
+  fss_embedded_list_read +n -oca 6 ${file_source} > ${test_current}object_and_content-at-6.expect &&
   fss_embedded_list_read +n -oca 100 ${file_source} > ${test_current}object_and_content-at-100.expect &&
   fss_embedded_list_read +n -cn hi ${file_source} > ${test_current}object_and_content-name-hi.expect &&
   fss_embedded_list_read +n -cn a ${file_source} > ${test_current}object_and_content-name-a.expect &&
@@ -927,6 +1000,7 @@ generate_operate_0008() {
   fss_embedded_list_read +n -cns a 1 ${file_source} > ${test_current}object_and_content-name-a-select-1.expect &&
   fss_embedded_list_read +n -cns a 2 ${file_source} > ${test_current}object_and_content-name-a-select-2.expect &&
   fss_embedded_list_read +n -cns a 5 ${file_source} > ${test_current}object_and_content-name-a-select-5.expect &&
+  fss_embedded_list_read +n -cns a 6 ${file_source} > ${test_current}object_and_content-name-a-select-6.expect &&
   fss_embedded_list_read +n -cns a 100 ${file_source} > ${test_current}object_and_content-name-a-select-100.expect &&
   fss_embedded_list_read +n -cns "" 0 ${file_source} > ${test_current}object_and_content-name--select-0.expect &&
   fss_embedded_list_read +n -cns "" 1 ${file_source} > ${test_current}object_and_content-name--select-1.expect &&
@@ -940,6 +1014,7 @@ generate_operate_0008() {
   fss_embedded_list_read +n -cnst a 1 ${file_source} > ${test_current}object_and_content-name-a-select-1-total.expect &&
   fss_embedded_list_read +n -cnst a 2 ${file_source} > ${test_current}object_and_content-name-a-select-2-total.expect &&
   fss_embedded_list_read +n -cnst a 5 ${file_source} > ${test_current}object_and_content-name-a-select-5-total.expect &&
+  fss_embedded_list_read +n -cnst a 6 ${file_source} > ${test_current}object_and_content-name-a-select-6-total.expect &&
   fss_embedded_list_read +n -cnst a 100 ${file_source} > ${test_current}object_and_content-name-a-select-100-total.expect &&
   fss_embedded_list_read +n -cnst "" 0 ${file_source} > ${test_current}object_and_content-name--select-0-total.expect &&
   fss_embedded_list_read +n -cnst "" 1 ${file_source} > ${test_current}object_and_content-name--select-1-total.expect &&
@@ -966,15 +1041,18 @@ generate_operate_000e() {
   fss_payload_read +n -cl 0 ${file_source} > ${test_current}content-line-0.expect &&
   fss_payload_read +n -cl 1 ${file_source} > ${test_current}content-line-1.expect &&
   fss_payload_read +n -cl 5 ${file_source} > ${test_current}content-line-5.expect &&
+  fss_payload_read +n -cl 6 ${file_source} > ${test_current}content-line-6.expect &&
   fss_payload_read +n -cl 100 ${file_source} > ${test_current}content-line-100.expect &&
   fss_payload_read +n -cs 0 ${file_source} > ${test_current}content-select-0.expect &&
   fss_payload_read +n -cs 1 ${file_source} > ${test_current}content-select-1.expect &&
   fss_payload_read +n -cs 5 ${file_source} > ${test_current}content-select-5.expect &&
+  fss_payload_read +n -cs 6 ${file_source} > ${test_current}content-select-6.expect &&
   fss_payload_read +n -cs 100 ${file_source} > ${test_current}content-select-100.expect &&
   fss_payload_read +n -cC ${file_source} > ${test_current}content-columns.expect &&
   fss_payload_read +n -ca 0 ${file_source} > ${test_current}content-at-0.expect &&
   fss_payload_read +n -ca 1 ${file_source} > ${test_current}content-at-1.expect &&
   fss_payload_read +n -ca 5 ${file_source} > ${test_current}content-at-5.expect &&
+  fss_payload_read +n -ca 6 ${file_source} > ${test_current}content-at-6.expect &&
   fss_payload_read +n -ca 100 ${file_source} > ${test_current}content-at-100.expect &&
   fss_payload_read +n -cn hi ${file_source} > ${test_current}content-name-hi.expect &&
   fss_payload_read +n -cn a ${file_source} > ${test_current}content-name-a.expect &&
@@ -992,6 +1070,7 @@ generate_operate_000e() {
   fss_payload_read +n -cns a 1 ${file_source} > ${test_current}content-name-a-select-1.expect &&
   fss_payload_read +n -cns a 2 ${file_source} > ${test_current}content-name-a-select-2.expect &&
   fss_payload_read +n -cns a 5 ${file_source} > ${test_current}content-name-a-select-5.expect &&
+  fss_payload_read +n -cns a 6 ${file_source} > ${test_current}content-name-a-select-6.expect &&
   fss_payload_read +n -cns a 100 ${file_source} > ${test_current}content-name-a-select-100.expect &&
   fss_payload_read +n -cns "" 0 ${file_source} > ${test_current}content-name--select-0.expect &&
   fss_payload_read +n -cns "" 1 ${file_source} > ${test_current}content-name--select-1.expect &&
@@ -1005,6 +1084,7 @@ generate_operate_000e() {
   fss_payload_read +n -cnst a 1 ${file_source} > ${test_current}content-name-a-select-1-total.expect &&
   fss_payload_read +n -cnst a 2 ${file_source} > ${test_current}content-name-a-select-2-total.expect &&
   fss_payload_read +n -cnst a 5 ${file_source} > ${test_current}content-name-a-select-5-total.expect &&
+  fss_payload_read +n -cnst a 6 ${file_source} > ${test_current}content-name-a-select-6-total.expect &&
   fss_payload_read +n -cnst a 100 ${file_source} > ${test_current}content-name-a-select-100-total.expect &&
   fss_payload_read +n -cnst "" 0 ${file_source} > ${test_current}content-name--select-0-total.expect &&
   fss_payload_read +n -cnst "" 1 ${file_source} > ${test_current}content-name--select-1-total.expect &&
@@ -1020,15 +1100,18 @@ generate_operate_000e() {
   fss_payload_read +n -ol 0 ${file_source} > ${test_current}object-line-0.expect &&
   fss_payload_read +n -ol 1 ${file_source} > ${test_current}object-line-1.expect &&
   fss_payload_read +n -ol 5 ${file_source} > ${test_current}object-line-5.expect &&
+  fss_payload_read +n -ol 6 ${file_source} > ${test_current}object-line-6.expect &&
   fss_payload_read +n -ol 100 ${file_source} > ${test_current}object-line-100.expect &&
   fss_payload_read +n -os 0 ${file_source} > ${test_current}object-select-0.expect &&
   fss_payload_read +n -os 1 ${file_source} > ${test_current}object-select-1.expect &&
   fss_payload_read +n -os 5 ${file_source} > ${test_current}object-select-5.expect &&
+  fss_payload_read +n -os 6 ${file_source} > ${test_current}object-select-6.expect &&
   fss_payload_read +n -os 100 ${file_source} > ${test_current}object-select-100.expect &&
   fss_payload_read +n -oC ${file_source} > ${test_current}object-columns.expect &&
   fss_payload_read +n -oa 0 ${file_source} > ${test_current}object-at-0.expect &&
   fss_payload_read +n -oa 1 ${file_source} > ${test_current}object-at-1.expect &&
   fss_payload_read +n -oa 5 ${file_source} > ${test_current}object-at-5.expect &&
+  fss_payload_read +n -oa 6 ${file_source} > ${test_current}object-at-6.expect &&
   fss_payload_read +n -oa 100 ${file_source} > ${test_current}object-at-100.expect &&
   fss_payload_read +n -cn hi ${file_source} > ${test_current}object-name-hi.expect &&
   fss_payload_read +n -cn "" ${file_source} > ${test_current}object-name-.expect &&
@@ -1046,6 +1129,7 @@ generate_operate_000e() {
   fss_payload_read +n -cns a 1 ${file_source} > ${test_current}object-name-a-select-1.expect &&
   fss_payload_read +n -cns a 2 ${file_source} > ${test_current}object-name-a-select-2.expect &&
   fss_payload_read +n -cns a 5 ${file_source} > ${test_current}object-name-a-select-5.expect &&
+  fss_payload_read +n -cns a 6 ${file_source} > ${test_current}object-name-a-select-6.expect &&
   fss_payload_read +n -cns a 100 ${file_source} > ${test_current}object-name-a-select-100.expect &&
   fss_payload_read +n -cns "" 0 ${file_source} > ${test_current}object-name--select-0.expect &&
   fss_payload_read +n -cns "" 1 ${file_source} > ${test_current}object-name--select-1.expect &&
@@ -1059,6 +1143,7 @@ generate_operate_000e() {
   fss_payload_read +n -cnst a 1 ${file_source} > ${test_current}object-name-a-select-1-total.expect &&
   fss_payload_read +n -cnst a 2 ${file_source} > ${test_current}object-name-a-select-2-total.expect &&
   fss_payload_read +n -cnst a 5 ${file_source} > ${test_current}object-name-a-select-5-total.expect &&
+  fss_payload_read +n -cnst a 6 ${file_source} > ${test_current}object-name-a-select-6-total.expect &&
   fss_payload_read +n -cnst a 100 ${file_source} > ${test_current}object-name-a-select-100-total.expect &&
   fss_payload_read +n -cnst "" 0 ${file_source} > ${test_current}object-name--select-0-total.expect &&
   fss_payload_read +n -cnst "" 1 ${file_source} > ${test_current}object-name--select-1-total.expect &&
@@ -1074,15 +1159,18 @@ generate_operate_000e() {
   fss_payload_read +n -ocl 0 ${file_source} > ${test_current}object_and_content-line-0.expect &&
   fss_payload_read +n -ocl 1 ${file_source} > ${test_current}object_and_content-line-1.expect &&
   fss_payload_read +n -ocl 5 ${file_source} > ${test_current}object_and_content-line-5.expect &&
+  fss_payload_read +n -ocl 6 ${file_source} > ${test_current}object_and_content-line-6.expect &&
   fss_payload_read +n -ocl 100 ${file_source} > ${test_current}object_and_content-line-100.expect &&
   fss_payload_read +n -ocs 0 ${file_source} > ${test_current}object_and_content-select-0.expect &&
   fss_payload_read +n -ocs 1 ${file_source} > ${test_current}object_and_content-select-1.expect &&
   fss_payload_read +n -ocs 5 ${file_source} > ${test_current}object_and_content-select-5.expect &&
+  fss_payload_read +n -ocs 6 ${file_source} > ${test_current}object_and_content-select-6.expect &&
   fss_payload_read +n -ocs 100 ${file_source} > ${test_current}object_and_content-select-100.expect &&
   fss_payload_read +n -ocC ${file_source} > ${test_current}object_and_content-columns.expect &&
   fss_payload_read +n -oca 0 ${file_source} > ${test_current}object_and_content-at-0.expect &&
   fss_payload_read +n -oca 1 ${file_source} > ${test_current}object_and_content-at-1.expect &&
   fss_payload_read +n -oca 5 ${file_source} > ${test_current}object_and_content-at-5.expect &&
+  fss_payload_read +n -oca 6 ${file_source} > ${test_current}object_and_content-at-6.expect &&
   fss_payload_read +n -oca 100 ${file_source} > ${test_current}object_and_content-at-100.expect &&
   fss_payload_read +n -cn hi ${file_source} > ${test_current}object_and_content-name-hi.expect &&
   fss_payload_read +n -cn a ${file_source} > ${test_current}object_and_content-name-a.expect &&
@@ -1100,6 +1188,7 @@ generate_operate_000e() {
   fss_payload_read +n -cns a 1 ${file_source} > ${test_current}object_and_content-name-a-select-1.expect &&
   fss_payload_read +n -cns a 2 ${file_source} > ${test_current}object_and_content-name-a-select-2.expect &&
   fss_payload_read +n -cns a 5 ${file_source} > ${test_current}object_and_content-name-a-select-5.expect &&
+  fss_payload_read +n -cns a 6 ${file_source} > ${test_current}object_and_content-name-a-select-6.expect &&
   fss_payload_read +n -cns a 100 ${file_source} > ${test_current}object_and_content-name-a-select-100.expect &&
   fss_payload_read +n -cns "" 0 ${file_source} > ${test_current}object_and_content-name--select-0.expect &&
   fss_payload_read +n -cns "" 1 ${file_source} > ${test_current}object_and_content-name--select-1.expect &&
@@ -1113,6 +1202,7 @@ generate_operate_000e() {
   fss_payload_read +n -cnst a 1 ${file_source} > ${test_current}object_and_content-name-a-select-1-total.expect &&
   fss_payload_read +n -cnst a 2 ${file_source} > ${test_current}object_and_content-name-a-select-2-total.expect &&
   fss_payload_read +n -cnst a 5 ${file_source} > ${test_current}object_and_content-name-a-select-5-total.expect &&
+  fss_payload_read +n -cnst a 6 ${file_source} > ${test_current}object_and_content-name-a-select-6-total.expect &&
   fss_payload_read +n -cnst a 100 ${file_source} > ${test_current}object_and_content-name-a-select-100-total.expect &&
   fss_payload_read +n -cnst "" 0 ${file_source} > ${test_current}object_and_content-name--select-0-total.expect &&
   fss_payload_read +n -cnst "" 1 ${file_source} > ${test_current}object_and_content-name--select-1-total.expect &&
@@ -1140,15 +1230,18 @@ generate_operate_test_standard() {
   fss_read +FLn -A ${standard} -cl 0 ${file_source} > ${test_current}content-line-0.expect &&
   fss_read +FLn -A ${standard} -cl 1 ${file_source} > ${test_current}content-line-1.expect &&
   fss_read +FLn -A ${standard} -cl 5 ${file_source} > ${test_current}content-line-5.expect &&
+  fss_read +FLn -A ${standard} -cl 6 ${file_source} > ${test_current}content-line-6.expect &&
   fss_read +FLn -A ${standard} -cl 100 ${file_source} > ${test_current}content-line-100.expect &&
   fss_read +FLn -A ${standard} -cs 0 ${file_source} > ${test_current}content-select-0.expect &&
   fss_read +FLn -A ${standard} -cs 1 ${file_source} > ${test_current}content-select-1.expect &&
   fss_read +FLn -A ${standard} -cs 5 ${file_source} > ${test_current}content-select-5.expect &&
+  fss_read +FLn -A ${standard} -cs 6 ${file_source} > ${test_current}content-select-6.expect &&
   fss_read +FLn -A ${standard} -cs 100 ${file_source} > ${test_current}content-select-100.expect &&
   fss_read +FLn -A ${standard} -cC ${file_source} > ${test_current}content-columns.expect &&
   fss_read +FLn -A ${standard} -ca 0 ${file_source} > ${test_current}content-at-0.expect &&
   fss_read +FLn -A ${standard} -ca 1 ${file_source} > ${test_current}content-at-1.expect &&
   fss_read +FLn -A ${standard} -ca 5 ${file_source} > ${test_current}content-at-5.expect &&
+  fss_read +FLn -A ${standard} -ca 6 ${file_source} > ${test_current}content-at-6.expect &&
   fss_read +FLn -A ${standard} -ca 100 ${file_source} > ${test_current}content-at-100.expect &&
   fss_read +FLn -A ${standard} -cn hi ${file_source} > ${test_current}content-name-hi.expect &&
   fss_read +FLn -A ${standard} -cn a ${file_source} > ${test_current}content-name-a.expect &&
@@ -1166,6 +1259,7 @@ generate_operate_test_standard() {
   fss_read +FLn -A ${standard} -cns a 1 ${file_source} > ${test_current}content-name-a-select-1.expect &&
   fss_read +FLn -A ${standard} -cns a 2 ${file_source} > ${test_current}content-name-a-select-2.expect &&
   fss_read +FLn -A ${standard} -cns a 5 ${file_source} > ${test_current}content-name-a-select-5.expect &&
+  fss_read +FLn -A ${standard} -cns a 6 ${file_source} > ${test_current}content-name-a-select-6.expect &&
   fss_read +FLn -A ${standard} -cns a 100 ${file_source} > ${test_current}content-name-a-select-100.expect &&
   fss_read +FLn -A ${standard} -cns "" 0 ${file_source} > ${test_current}content-name--select-0.expect &&
   fss_read +FLn -A ${standard} -cns "" 1 ${file_source} > ${test_current}content-name--select-1.expect &&
@@ -1179,6 +1273,7 @@ generate_operate_test_standard() {
   fss_read +FLn -A ${standard} -cnst a 1 ${file_source} > ${test_current}content-name-a-select-1-total.expect &&
   fss_read +FLn -A ${standard} -cnst a 2 ${file_source} > ${test_current}content-name-a-select-2-total.expect &&
   fss_read +FLn -A ${standard} -cnst a 5 ${file_source} > ${test_current}content-name-a-select-5-total.expect &&
+  fss_read +FLn -A ${standard} -cnst a 6 ${file_source} > ${test_current}content-name-a-select-6-total.expect &&
   fss_read +FLn -A ${standard} -cnst a 100 ${file_source} > ${test_current}content-name-a-select-100-total.expect &&
   fss_read +FLn -A ${standard} -cnst "" 0 ${file_source} > ${test_current}content-name--select-0-total.expect &&
   fss_read +FLn -A ${standard} -cnst "" 1 ${file_source} > ${test_current}content-name--select-1-total.expect &&
@@ -1194,15 +1289,18 @@ generate_operate_test_standard() {
   fss_read +FLn -A ${standard} -ol 0 ${file_source} > ${test_current}object-line-0.expect &&
   fss_read +FLn -A ${standard} -ol 1 ${file_source} > ${test_current}object-line-1.expect &&
   fss_read +FLn -A ${standard} -ol 5 ${file_source} > ${test_current}object-line-5.expect &&
+  fss_read +FLn -A ${standard} -ol 6 ${file_source} > ${test_current}object-line-6.expect &&
   fss_read +FLn -A ${standard} -ol 100 ${file_source} > ${test_current}object-line-100.expect &&
   fss_read +FLn -A ${standard} -os 0 ${file_source} > ${test_current}object-select-0.expect &&
   fss_read +FLn -A ${standard} -os 1 ${file_source} > ${test_current}object-select-1.expect &&
   fss_read +FLn -A ${standard} -os 5 ${file_source} > ${test_current}object-select-5.expect &&
+  fss_read +FLn -A ${standard} -os 6 ${file_source} > ${test_current}object-select-6.expect &&
   fss_read +FLn -A ${standard} -os 100 ${file_source} > ${test_current}object-select-100.expect &&
   fss_read +FLn -A ${standard} -oC ${file_source} > ${test_current}object-columns.expect &&
   fss_read +FLn -A ${standard} -oa 0 ${file_source} > ${test_current}object-at-0.expect &&
   fss_read +FLn -A ${standard} -oa 1 ${file_source} > ${test_current}object-at-1.expect &&
   fss_read +FLn -A ${standard} -oa 5 ${file_source} > ${test_current}object-at-5.expect &&
+  fss_read +FLn -A ${standard} -oa 6 ${file_source} > ${test_current}object-at-6.expect &&
   fss_read +FLn -A ${standard} -oa 100 ${file_source} > ${test_current}object-at-100.expect &&
   fss_read +FLn -A ${standard} -cn hi ${file_source} > ${test_current}object-name-hi.expect &&
   fss_read +FLn -A ${standard} -cn "" ${file_source} > ${test_current}object-name-.expect &&
@@ -1220,6 +1318,7 @@ generate_operate_test_standard() {
   fss_read +FLn -A ${standard} -cns a 1 ${file_source} > ${test_current}object-name-a-select-1.expect &&
   fss_read +FLn -A ${standard} -cns a 2 ${file_source} > ${test_current}object-name-a-select-2.expect &&
   fss_read +FLn -A ${standard} -cns a 5 ${file_source} > ${test_current}object-name-a-select-5.expect &&
+  fss_read +FLn -A ${standard} -cns a 6 ${file_source} > ${test_current}object-name-a-select-6.expect &&
   fss_read +FLn -A ${standard} -cns a 100 ${file_source} > ${test_current}object-name-a-select-100.expect &&
   fss_read +FLn -A ${standard} -cns "" 0 ${file_source} > ${test_current}object-name--select-0.expect &&
   fss_read +FLn -A ${standard} -cns "" 1 ${file_source} > ${test_current}object-name--select-1.expect &&
@@ -1233,6 +1332,7 @@ generate_operate_test_standard() {
   fss_read +FLn -A ${standard} -cnst a 1 ${file_source} > ${test_current}object-name-a-select-1-total.expect &&
   fss_read +FLn -A ${standard} -cnst a 2 ${file_source} > ${test_current}object-name-a-select-2-total.expect &&
   fss_read +FLn -A ${standard} -cnst a 5 ${file_source} > ${test_current}object-name-a-select-5-total.expect &&
+  fss_read +FLn -A ${standard} -cnst a 6 ${file_source} > ${test_current}object-name-a-select-6-total.expect &&
   fss_read +FLn -A ${standard} -cnst a 100 ${file_source} > ${test_current}object-name-a-select-100-total.expect &&
   fss_read +FLn -A ${standard} -cnst "" 0 ${file_source} > ${test_current}object-name--select-0-total.expect &&
   fss_read +FLn -A ${standard} -cnst "" 1 ${file_source} > ${test_current}object-name--select-1-total.expect &&
@@ -1248,15 +1348,18 @@ generate_operate_test_standard() {
   fss_read +FLn -A ${standard} -ocl 0 ${file_source} > ${test_current}object_and_content-line-0.expect &&
   fss_read +FLn -A ${standard} -ocl 1 ${file_source} > ${test_current}object_and_content-line-1.expect &&
   fss_read +FLn -A ${standard} -ocl 5 ${file_source} > ${test_current}object_and_content-line-5.expect &&
+  fss_read +FLn -A ${standard} -ocl 6 ${file_source} > ${test_current}object_and_content-line-6.expect &&
   fss_read +FLn -A ${standard} -ocl 100 ${file_source} > ${test_current}object_and_content-line-100.expect &&
   fss_read +FLn -A ${standard} -ocs 0 ${file_source} > ${test_current}object_and_content-select-0.expect &&
   fss_read +FLn -A ${standard} -ocs 1 ${file_source} > ${test_current}object_and_content-select-1.expect &&
   fss_read +FLn -A ${standard} -ocs 5 ${file_source} > ${test_current}object_and_content-select-5.expect &&
+  fss_read +FLn -A ${standard} -ocs 6 ${file_source} > ${test_current}object_and_content-select-6.expect &&
   fss_read +FLn -A ${standard} -ocs 100 ${file_source} > ${test_current}object_and_content-select-100.expect &&
   fss_read +FLn -A ${standard} -ocC ${file_source} > ${test_current}object_and_content-columns.expect &&
   fss_read +FLn -A ${standard} -oca 0 ${file_source} > ${test_current}object_and_content-at-0.expect &&
   fss_read +FLn -A ${standard} -oca 1 ${file_source} > ${test_current}object_and_content-at-1.expect &&
   fss_read +FLn -A ${standard} -oca 5 ${file_source} > ${test_current}object_and_content-at-5.expect &&
+  fss_read +FLn -A ${standard} -oca 6 ${file_source} > ${test_current}object_and_content-at-6.expect &&
   fss_read +FLn -A ${standard} -oca 100 ${file_source} > ${test_current}object_and_content-at-100.expect &&
   fss_read +FLn -A ${standard} -cn hi ${file_source} > ${test_current}object_and_content-name-hi.expect &&
   fss_read +FLn -A ${standard} -cn a ${file_source} > ${test_current}object_and_content-name-a.expect &&
@@ -1274,6 +1377,7 @@ generate_operate_test_standard() {
   fss_read +FLn -A ${standard} -cns a 1 ${file_source} > ${test_current}object_and_content-name-a-select-1.expect &&
   fss_read +FLn -A ${standard} -cns a 2 ${file_source} > ${test_current}object_and_content-name-a-select-2.expect &&
   fss_read +FLn -A ${standard} -cns a 5 ${file_source} > ${test_current}object_and_content-name-a-select-5.expect &&
+  fss_read +FLn -A ${standard} -cns a 6 ${file_source} > ${test_current}object_and_content-name-a-select-6.expect &&
   fss_read +FLn -A ${standard} -cns a 100 ${file_source} > ${test_current}object_and_content-name-a-select-100.expect &&
   fss_read +FLn -A ${standard} -cns "" 0 ${file_source} > ${test_current}object_and_content-name--select-0.expect &&
   fss_read +FLn -A ${standard} -cns "" 1 ${file_source} > ${test_current}object_and_content-name--select-1.expect &&
@@ -1287,6 +1391,7 @@ generate_operate_test_standard() {
   fss_read +FLn -A ${standard} -cnst a 1 ${file_source} > ${test_current}object_and_content-name-a-select-1-total.expect &&
   fss_read +FLn -A ${standard} -cnst a 2 ${file_source} > ${test_current}object_and_content-name-a-select-2-total.expect &&
   fss_read +FLn -A ${standard} -cnst a 5 ${file_source} > ${test_current}object_and_content-name-a-select-5-total.expect &&
+  fss_read +FLn -A ${standard} -cnst a 6 ${file_source} > ${test_current}object_and_content-name-a-select-6-total.expect &&
   fss_read +FLn -A ${standard} -cnst a 100 ${file_source} > ${test_current}object_and_content-name-a-select-100-total.expect &&
   fss_read +FLn -A ${standard} -cnst "" 0 ${file_source} > ${test_current}object_and_content-name--select-0-total.expect &&
   fss_read +FLn -A ${standard} -cnst "" 1 ${file_source} > ${test_current}object_and_content-name--select-1-total.expect &&
