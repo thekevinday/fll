@@ -111,7 +111,7 @@ extern "C" {
  *   Must not be NULL.
  */
 #ifndef _di_fss_read_process_normal_at_line_
-  extern void fss_read_process_normal_at_line(void * const main, const f_array_length_t at, const f_array_lengths_t delimits_object, const f_array_lengths_t delimits_content, f_number_unsigned_t * const line);
+  extern void fss_read_process_normal_at_line(void * const main, const f_number_unsigned_t at, const f_number_unsigneds_t delimits_object, const f_number_unsigneds_t delimits_content, f_number_unsigned_t * const line);
 #endif // _di_fss_read_process_normal_at_line_
 
 /**

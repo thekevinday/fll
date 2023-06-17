@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #if !defined(_di_f_fll_ids_adjust_) || !defined(_di_f_fll_ids_decimate_by_)
-  f_status_t private_f_fll_ids_adjust(const f_array_length_t length, f_fll_ids_t *ids) {
+  f_status_t private_f_fll_ids_adjust(const f_number_unsigned_t length, f_fll_ids_t *ids) {
 
     const f_status_t status = f_memory_adjust(ids->size, length, sizeof(f_fll_id_t), (void **) & ids->array);
     if (F_status_is_error(status)) return status;
@@ -46,7 +46,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     }
 
-    for (f_array_length_t i = 0; i < source.used; ++i) {
+    for (f_number_unsigned_t i = 0; i < source.used; ++i) {
 
       memcpy(destination->array[destination->used].name, source.array[i].name, sizeof(char) * f_fll_id_name_length_d);
 
@@ -59,7 +59,7 @@ extern "C" {
 #endif // !defined(_di_f_fll_ids_append_) || !defined(_di_f_fll_ids_append_all_) || !defined(_di_f_fll_idss_append_all_)
 
 #if !defined(_di_f_fll_ids_resize_) || !defined(_di_f_fll_ids_append_) || !defined(_di_f_fll_ids_decrease_by_) || !defined(_di_f_fll_idss_append_)
-  f_status_t private_f_fll_ids_resize(const f_array_length_t length, f_fll_ids_t *ids) {
+  f_status_t private_f_fll_ids_resize(const f_number_unsigned_t length, f_fll_ids_t *ids) {
 
     const f_status_t status = f_memory_resize(ids->size, length, sizeof(f_fll_id_t), (void **) & ids->array);
     if (F_status_is_error(status)) return status;
@@ -75,11 +75,11 @@ extern "C" {
 #endif // !defined(_di_f_fll_ids_resize_) || !defined(_di_f_fll_ids_append_) || !defined(_di_f_fll_ids_decrease_by_) || !defined(_di_f_fll_idss_append_)
 
 #if !defined(_di_f_fll_idss_adjust_) || !defined(_di_f_fll_idss_decimate_by_)
-  f_status_t private_f_fll_idss_adjust(const f_array_length_t length, f_fll_idss_t *idss) {
+  f_status_t private_f_fll_idss_adjust(const f_number_unsigned_t length, f_fll_idss_t *idss) {
 
     f_status_t status = F_none;
 
-    for (f_array_length_t i = length; i < idss->size; ++i) {
+    for (f_number_unsigned_t i = length; i < idss->size; ++i) {
 
       status = f_memory_destroy(idss->array[i].size, sizeof(f_fll_ids_t), (void **) & idss->array[i].array);
       if (F_status_is_error(status)) return status;
@@ -102,11 +102,11 @@ extern "C" {
 #endif // !defined(_di_f_fll_idss_adjust_) || !defined(_di_f_fll_idss_decimate_by_)
 
 #if !defined(_di_f_fll_idss_decrease_by_) || !defined(_di_f_fll_idss_increase_) || !defined(_di_f_fll_idss_increase_by_) || !defined(_di_f_fll_idss_resize_)
-  f_status_t private_f_fll_idss_resize(const f_array_length_t length, f_fll_idss_t *idss) {
+  f_status_t private_f_fll_idss_resize(const f_number_unsigned_t length, f_fll_idss_t *idss) {
 
     f_status_t status = F_none;
 
-    for (f_array_length_t i = length; i < idss->size; ++i) {
+    for (f_number_unsigned_t i = length; i < idss->size; ++i) {
 
       status = f_memory_delete(idss->array[i].size, sizeof(f_fll_ids_t), (void **) & idss->array[i].array);
       if (F_status_is_error(status)) return status;

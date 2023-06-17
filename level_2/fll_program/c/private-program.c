@@ -57,7 +57,7 @@ extern "C" {
     context->set.warning = f_color_set_empty_s;
 
     if (sets) {
-      for (f_array_length_t i = 0; sets[i]; ++i) {
+      for (f_number_unsigned_t i = 0; sets[i]; ++i) {
         *sets[i] = f_color_set_empty_s;
       } // for
     }

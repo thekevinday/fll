@@ -17,7 +17,7 @@ extern "C" {
 #ifndef _di_controller_entry_action_parameters_print_
   void controller_entry_action_parameters_print(FILE * const stream, const controller_entry_action_t action) {
 
-    for (f_array_length_t index = 0; ;) {
+    for (f_number_unsigned_t index = 0; ;) {
 
       f_print_dynamic_safely(action.parameters.array[index], stream);
 
@@ -144,7 +144,7 @@ extern "C" {
 #endif // _di_controller_entry_setting_read_print_error_with_range_
 
 #ifndef _di_controller_entry_settings_read_print_setting_ignored_
-  void controller_entry_settings_read_print_setting_ignored(const controller_global_t global, const bool is_entry, const controller_cache_t cache, const f_array_length_t index) {
+  void controller_entry_settings_read_print_setting_ignored(const controller_global_t global, const bool is_entry, const controller_cache_t cache, const f_number_unsigned_t index) {
 
     if (global.main->warning.verbosity != f_console_verbosity_debug_e) return;
 
@@ -218,7 +218,7 @@ extern "C" {
 #endif // _di_controller_entry_settings_read_print_setting_unknown_action_
 
 #ifndef _di_controller_entry_settings_read_print_setting_unknown_action_value_
-  void controller_entry_settings_read_print_setting_unknown_action_value(const controller_global_t global, const bool is_entry, const controller_cache_t cache, const f_array_length_t index) {
+  void controller_entry_settings_read_print_setting_unknown_action_value(const controller_global_t global, const bool is_entry, const controller_cache_t cache, const f_number_unsigned_t index) {
 
     if (global.main->warning.verbosity != f_console_verbosity_debug_e) return;
 

@@ -40,8 +40,8 @@ extern "C" {
       return;
     }
 
-    const f_array_length_t delimits_used = delimits->used;
-    const f_array_length_t quotes_used = quotes ? quotes->used : 0;
+    const f_number_unsigned_t delimits_used = delimits->used;
+    const f_number_unsigned_t quotes_used = quotes ? quotes->used : 0;
 
     uint8_t content_found = 0;
     uint8_t quote = 0;
@@ -149,7 +149,7 @@ extern "C" {
       }
     #endif // _di_level_1_parameter_checking_
 
-    const f_array_length_t destination_used = destination->used;
+    const f_number_unsigned_t destination_used = destination->used;
 
     // This operates exactly like an object, syntax-wise.
     private_fl_fss_basic_write(F_false, content, quote ? quote : f_fss_quote_double_s.string[0], range, destination, state);
@@ -219,7 +219,7 @@ extern "C" {
       }
     #endif // _di_level_1_parameter_checking_
 
-    const f_array_length_t delimits_used = delimits->used;
+    const f_number_unsigned_t delimits_used = delimits->used;
 
     private_fl_fss_basic_read(buffer, F_true, range, found, quote, delimits, state);
 
@@ -248,7 +248,7 @@ void fl_fss_extended_object_write(const f_string_static_t object, const uint8_t 
       }
     #endif // _di_level_1_parameter_checking_
 
-    const f_array_length_t destination_used = destination->used;
+    const f_number_unsigned_t destination_used = destination->used;
 
     private_fl_fss_basic_write(F_true, object, quote ? quote : f_fss_quote_double_s.string[0], range, destination, state);
 

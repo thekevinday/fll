@@ -51,8 +51,8 @@ extern "C" {
     f_status_t status_thread;
     f_state_t state;
 
-    f_array_length_t at;
-    f_array_length_t line;
+    f_number_unsigned_t at;
+    f_number_unsigned_t line;
 
     f_string_dynamic_t buffer;
     f_string_dynamics_t names;
@@ -63,8 +63,8 @@ extern "C" {
     f_string_triples_t substitute;
     f_string_triples_t wrap;
 
-    f_array_length_t *map_replaces;
-    f_array_length_t *map_wraps;
+    f_number_unsigned_t *map_replaces;
+    f_number_unsigned_t *map_wraps;
 
     f_iki_data_t data;
   } iki_read_setting_t;

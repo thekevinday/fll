@@ -73,7 +73,7 @@ extern "C" {
  * @see f_thread_attributes_decimate_by()
  */
 #if !defined(_di_f_thread_attributes_adjust_) || !defined(_di_f_thread_attributes_decimate_by_)
-  extern f_status_t private_f_thread_attributes_adjust(const f_array_length_t length, f_thread_attributes_t * const attributes) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_thread_attributes_adjust(const f_number_unsigned_t length, f_thread_attributes_t * const attributes) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_thread_attributes_adjust_) || !defined(_di_f_thread_attributes_decimate_by_)
 
 /**
@@ -97,7 +97,7 @@ extern "C" {
  * @see f_thread_attributes_increase_by()
  */
 #if !defined(_di_f_thread_attributes_decrease_by_) || !defined(_di_f_thread_attributes_increase_) || !defined(_di_f_thread_attributes_increase_by_)
-  extern f_status_t private_f_thread_attributes_resize(const f_array_length_t length, f_thread_attributes_t * const attributes) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_thread_attributes_resize(const f_number_unsigned_t length, f_thread_attributes_t * const attributes) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_thread_attributes_decrease_by_) || !defined(_di_f_thread_attributes_increase_) || !defined(_di_f_thread_attributes_increase_by_)
 
 /**
@@ -151,7 +151,7 @@ extern "C" {
  * @see f_thread_barriers_decimate_by()
  */
 #if !defined(_di_f_thread_barriers_adjust_) || !defined(_di_f_thread_barriers_decimate_by_)
-  extern f_status_t private_f_thread_barriers_adjust(const f_array_length_t length, f_thread_barriers_t * const barriers) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_thread_barriers_adjust(const f_number_unsigned_t length, f_thread_barriers_t * const barriers) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_thread_barriers_adjust_) || !defined(_di_f_thread_barriers_decimate_by_)
 
 /**
@@ -175,7 +175,7 @@ extern "C" {
  * @see f_thread_barriers_increase_by()
  */
 #if !defined(_di_f_thread_barriers_decrease_by_) || !defined(_di_f_thread_barriers_increase_) || !defined(_di_f_thread_barriers_increase_by_)
-  extern f_status_t private_f_thread_barriers_resize(const f_array_length_t length, f_thread_barriers_t * const barriers) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_thread_barriers_resize(const f_number_unsigned_t length, f_thread_barriers_t * const barriers) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_thread_barriers_decrease_by_) || !defined(_di_f_thread_barriers_increase_) || !defined(_di_f_thread_barriers_increase_by_)
 
 /**
@@ -229,7 +229,7 @@ extern "C" {
  * @see f_thread_barrier_attributes_decimate_by()
  */
 #if !defined(_di_f_thread_barrier_attributes_adjust_) || !defined(_di_f_thread_barrier_attributes_decimate_by_)
-  extern f_status_t private_f_thread_barrier_attributes_adjust(const f_array_length_t length, f_thread_barrier_attributes_t * const attributes) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_thread_barrier_attributes_adjust(const f_number_unsigned_t length, f_thread_barrier_attributes_t * const attributes) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_thread_barrier_attributes_adjust_) || !defined(_di_f_thread_barrier_attributes_decimate_by_)
 
 /**
@@ -253,7 +253,7 @@ extern "C" {
  * @see f_thread_barrier_attributes_increase_by()
  */
 #if !defined(_di_f_thread_barrier_attributes_decrease_by_) || !defined(_di_f_thread_barrier_attributes_increase_) || !defined(_di_f_thread_barrier_attributes_increase_by_)
-  extern f_status_t private_f_thread_barrier_attributes_resize(const f_array_length_t length, f_thread_barrier_attributes_t * const attributes) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_thread_barrier_attributes_resize(const f_number_unsigned_t length, f_thread_barrier_attributes_t * const attributes) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_thread_barrier_attributes_decrease_by_) || !defined(_di_f_thread_barrier_attributes_increase_) || !defined(_di_f_thread_barrier_attributes_increase_by_)
 
 /**
@@ -307,7 +307,7 @@ extern "C" {
  * @see f_thread_condition_attributes_decimate_by()
  */
 #if !defined(_di_f_thread_condition_attributes_adjust_) || !defined(_di_f_thread_condition_attributes_decimate_by_)
-  extern f_status_t private_f_thread_condition_attributes_adjust(const f_array_length_t length, f_thread_condition_attributes_t * const attributes) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_thread_condition_attributes_adjust(const f_number_unsigned_t length, f_thread_condition_attributes_t * const attributes) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_thread_condition_attributes_adjust_) || !defined(_di_f_thread_condition_attributes_decimate_by_)
 
 /**
@@ -331,7 +331,7 @@ extern "C" {
  * @see f_thread_condition_attributes_increase_by()
  */
 #if !defined(_di_f_thread_condition_attributes_decrease_by_) || !defined(_di_f_thread_condition_attributes_increase_) || !defined(_di_f_thread_condition_attributes_increase_by_)
-  extern f_status_t private_f_thread_condition_attributes_resize(const f_array_length_t length, f_thread_condition_attributes_t * const attributes) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_thread_condition_attributes_resize(const f_number_unsigned_t length, f_thread_condition_attributes_t * const attributes) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_thread_condition_attributes_decrease_by_) || !defined(_di_f_thread_condition_attributes_increase_) || !defined(_di_f_thread_condition_attributes_increase_by_)
 
 /**
@@ -386,7 +386,7 @@ extern "C" {
  * @see f_thread_conditions_decimate_by()
  */
 #if !defined(_di_f_thread_conditions_adjust_) || !defined(_di_f_thread_conditions_decimate_by_)
-  extern f_status_t private_f_thread_conditions_adjust(const f_array_length_t length, f_thread_conditions_t * const conditions) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_thread_conditions_adjust(const f_number_unsigned_t length, f_thread_conditions_t * const conditions) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_thread_conditions_adjust_) || !defined(_di_f_thread_conditions_decimate_by_)
 
 /**
@@ -410,7 +410,7 @@ extern "C" {
  * @see f_thread_conditions_increase_by()
  */
 #if !defined(_di_f_thread_conditions_decrease_by_) || !defined(_di_f_thread_conditions_increase_) || !defined(_di_f_thread_conditions_increase_by_)
-  extern f_status_t private_f_thread_conditions_resize(const f_array_length_t length, f_thread_conditions_t * const conditions) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_thread_conditions_resize(const f_number_unsigned_t length, f_thread_conditions_t * const conditions) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_thread_conditions_decrease_by_) || !defined(_di_f_thread_conditions_increase_) || !defined(_di_f_thread_conditions_increase_by_)
 
 /**
@@ -433,7 +433,7 @@ extern "C" {
  * @see f_thread_ids_decimate_by()
  */
 #if !defined(_di_f_thread_ids_adjust_) || !defined(_di_f_thread_ids_decimate_by_)
-  extern f_status_t private_f_thread_ids_adjust(const f_array_length_t length, f_thread_ids_t * const ids) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_thread_ids_adjust(const f_number_unsigned_t length, f_thread_ids_t * const ids) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_thread_ids_adjust_) || !defined(_di_f_thread_ids_decimate_by_)
 
 /**
@@ -457,7 +457,7 @@ extern "C" {
  * @see f_thread_ids_increase_by()
  */
 #if !defined(_di_f_thread_ids_decrease_by_) || !defined(_di_f_thread_ids_increase_) || !defined(_di_f_thread_ids_increase_by_)
-  extern f_status_t private_f_thread_ids_resize(const f_array_length_t length, f_thread_ids_t * const ids) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_thread_ids_resize(const f_number_unsigned_t length, f_thread_ids_t * const ids) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_thread_ids_decrease_by_) || !defined(_di_f_thread_ids_increase_) || !defined(_di_f_thread_ids_increase_by_)
 
 /**
@@ -509,7 +509,7 @@ extern "C" {
  * @see f_thread_keys_decimate_by()
  */
 #if !defined(_di_f_thread_keys_adjust_) || !defined(_di_f_thread_keys_decimate_by_)
-  extern f_status_t private_f_thread_keys_adjust(const f_array_length_t length, f_thread_keys_t * const keys) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_thread_keys_adjust(const f_number_unsigned_t length, f_thread_keys_t * const keys) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_thread_keys_adjust_) || !defined(_di_f_thread_keys_decimate_by_)
 
 /**
@@ -533,7 +533,7 @@ extern "C" {
  * @see f_thread_keys_increase_by()
  */
 #if !defined(_di_f_thread_keys_decrease_by_) || !defined(_di_f_thread_keys_increase_) || !defined(_di_f_thread_keys_increase_by_)
-  extern f_status_t private_f_thread_keys_resize(const f_array_length_t length, f_thread_keys_t * const keys) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_thread_keys_resize(const f_number_unsigned_t length, f_thread_keys_t * const keys) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_thread_keys_decrease_by_) || !defined(_di_f_thread_keys_increase_) || !defined(_di_f_thread_keys_increase_by_)
 
 /**
@@ -585,7 +585,7 @@ extern "C" {
  * @see f_thread_lock_attributes_decimate_by()
  */
 #if !defined(_di_f_thread_lock_attributes_adjust_) || !defined(_di_f_thread_lock_attributes_decimate_by_)
-  extern f_status_t private_f_thread_lock_attributes_adjust(const f_array_length_t length, f_thread_lock_attributes_t * const attributes) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_thread_lock_attributes_adjust(const f_number_unsigned_t length, f_thread_lock_attributes_t * const attributes) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_thread_lock_attributes_adjust_) || !defined(_di_f_thread_lock_attributes_decimate_by_)
 
 /**
@@ -609,7 +609,7 @@ extern "C" {
  * @see f_thread_lock_attributes_increase_by()
  */
 #if !defined(_di_f_thread_lock_attributes_decrease_by_) || !defined(_di_f_thread_lock_attributes_increase_) || !defined(_di_f_thread_lock_attributes_increase_by_)
-  extern f_status_t private_f_thread_lock_attributes_resize(const f_array_length_t length, f_thread_lock_attributes_t * const attributes) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_thread_lock_attributes_resize(const f_number_unsigned_t length, f_thread_lock_attributes_t * const attributes) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_thread_lock_attributes_decrease_by_) || !defined(_di_f_thread_lock_attributes_increase_) || !defined(_di_f_thread_lock_attributes_increase_by_)
 
 /**
@@ -662,7 +662,7 @@ extern "C" {
  * @see f_thread_locks_decimate_by()
  */
 #if !defined(_di_f_thread_locks_adjust_) || !defined(_di_f_thread_locks_decimate_by_)
-  extern f_status_t private_f_thread_locks_adjust(const f_array_length_t length, f_thread_locks_t * const locks) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_thread_locks_adjust(const f_number_unsigned_t length, f_thread_locks_t * const locks) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_thread_locks_adjust_) || !defined(_di_f_thread_locks_decimate_by_)
 
 /**
@@ -686,7 +686,7 @@ extern "C" {
  * @see f_thread_locks_increase_by()
  */
 #if !defined(_di_f_thread_locks_decrease_by_) || !defined(_di_f_thread_locks_increase_) || !defined(_di_f_thread_locks_increase_by_)
-  extern f_status_t private_f_thread_locks_resize(const f_array_length_t length, f_thread_locks_t * const locks) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_thread_locks_resize(const f_number_unsigned_t length, f_thread_locks_t * const locks) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_thread_locks_decrease_by_) || !defined(_di_f_thread_locks_increase_) || !defined(_di_f_thread_locks_increase_by_)
 /**
  * Private implementation for deleting (and destroying).
@@ -737,7 +737,7 @@ extern "C" {
  * @see f_thread_mutex_attributes_decimate_by()
  */
 #if !defined(_di_f_thread_mutex_attributes_adjust_) || !defined(_di_f_thread_mutex_attributes_decimate_by_)
-  extern f_status_t private_f_thread_mutex_attributes_adjust(const f_array_length_t length, f_thread_mutex_attributes_t * const attributes) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_thread_mutex_attributes_adjust(const f_number_unsigned_t length, f_thread_mutex_attributes_t * const attributes) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_thread_mutex_attributes_adjust_) || !defined(_di_f_thread_mutex_attributes_decimate_by_)
 
 /**
@@ -761,7 +761,7 @@ extern "C" {
  * @see f_thread_mutex_attributes_increase_by()
  */
 #if !defined(_di_f_thread_mutex_attributes_decrease_by_) || !defined(_di_f_thread_mutex_attributes_increase_) || !defined(_di_f_thread_mutex_attributes_increase_by_)
-  extern f_status_t private_f_thread_mutex_attributes_resize(const f_array_length_t length, f_thread_mutex_attributes_t * const attributes) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_thread_mutex_attributes_resize(const f_number_unsigned_t length, f_thread_mutex_attributes_t * const attributes) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_thread_mutex_attributes_decrease_by_) || !defined(_di_f_thread_mutex_attributes_increase_) || !defined(_di_f_thread_mutex_attributes_increase_by_)
 
 /**
@@ -814,7 +814,7 @@ extern "C" {
  * @see f_thread_mutexs_decimate_by()
  */
 #if !defined(_di_f_thread_mutexs_adjust_) || !defined(_di_f_thread_mutexs_decimate_by_)
-  extern f_status_t private_f_thread_mutexs_adjust(const f_array_length_t length, f_thread_mutexs_t * const mutexs) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_thread_mutexs_adjust(const f_number_unsigned_t length, f_thread_mutexs_t * const mutexs) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_thread_mutexs_adjust_) || !defined(_di_f_thread_mutexs_decimate_by_)
 
 /**
@@ -838,7 +838,7 @@ extern "C" {
  * @see f_thread_mutexs_increase_by()
  */
 #if !defined(_di_f_thread_mutexs_decrease_by_) || !defined(_di_f_thread_mutexs_increase_) || !defined(_di_f_thread_mutexs_increase_by_)
-  extern f_status_t private_f_thread_mutexs_resize(const f_array_length_t length, f_thread_mutexs_t * const mutexs) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_thread_mutexs_resize(const f_number_unsigned_t length, f_thread_mutexs_t * const mutexs) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_thread_mutexs_decrease_by_) || !defined(_di_f_thread_mutexs_increase_) || !defined(_di_f_thread_mutexs_increase_by_)
 
 /**
@@ -861,7 +861,7 @@ extern "C" {
  * @see f_thread_onces_decimate_by()
  */
 #if !defined(_di_f_thread_onces_adjust_) || !defined(_di_f_thread_onces_decimate_by_)
-  extern f_status_t private_f_thread_onces_adjust(const f_array_length_t length, f_thread_onces_t * const onces) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_thread_onces_adjust(const f_number_unsigned_t length, f_thread_onces_t * const onces) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_thread_onces_adjust_) || !defined(_di_f_thread_onces_decimate_by_)
 
 /**
@@ -885,7 +885,7 @@ extern "C" {
  * @see f_thread_onces_increase_by()
  */
 #if !defined(_di_f_thread_onces_decrease_by_) || !defined(_di_f_thread_onces_increase_) || !defined(_di_f_thread_onces_increase_by_)
-  extern f_status_t private_f_thread_onces_resize(const f_array_length_t length, f_thread_onces_t * const onces) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_thread_onces_resize(const f_number_unsigned_t length, f_thread_onces_t * const onces) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_thread_onces_decrease_by_) || !defined(_di_f_thread_onces_increase_) || !defined(_di_f_thread_onces_increase_by_)
 
 /**
@@ -937,7 +937,7 @@ extern "C" {
  * @see f_thread_semaphores_decimate_by()
  */
 #if !defined(_di_f_thread_semaphores_adjust_) || !defined(_di_f_thread_semaphores_decimate_by_)
-  extern f_status_t private_f_thread_semaphores_adjust(const f_array_length_t length, f_thread_semaphores_t * const semaphores) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_thread_semaphores_adjust(const f_number_unsigned_t length, f_thread_semaphores_t * const semaphores) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_thread_semaphores_adjust_) || !defined(_di_f_thread_semaphores_decimate_by_)
 
 /**
@@ -961,7 +961,7 @@ extern "C" {
  * @see f_thread_semaphores_increase_by()
  */
 #if !defined(_di_f_thread_semaphores_decrease_by_) || !defined(_di_f_thread_semaphores_increase_) || !defined(_di_f_thread_semaphores_increase_by_)
-  extern f_status_t private_f_thread_semaphores_resize(const f_array_length_t length, f_thread_semaphores_t * const semaphores) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_thread_semaphores_resize(const f_number_unsigned_t length, f_thread_semaphores_t * const semaphores) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_thread_semaphores_decrease_by_) || !defined(_di_f_thread_semaphores_increase_) || !defined(_di_f_thread_semaphores_increase_by_)
 
 /**
@@ -984,7 +984,7 @@ extern "C" {
  * @see f_thread_sets_decimate_by()
  */
 #if !defined(_di_f_thread_sets_adjust_) || !defined(_di_f_thread_sets_decimate_by_)
-  extern f_status_t private_f_thread_sets_adjust(const f_array_length_t length, f_thread_sets_t * const sets) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_thread_sets_adjust(const f_number_unsigned_t length, f_thread_sets_t * const sets) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_thread_sets_adjust_) || !defined(_di_f_thread_sets_decimate_by_)
 
 /**
@@ -1008,7 +1008,7 @@ extern "C" {
  * @see f_thread_sets_increase_by()
  */
 #if !defined(_di_f_thread_sets_decrease_by_) || !defined(_di_f_thread_sets_increase_) || !defined(_di_f_thread_sets_increase_by_)
-  extern f_status_t private_f_thread_sets_resize(const f_array_length_t length, f_thread_sets_t * const sets) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_thread_sets_resize(const f_number_unsigned_t length, f_thread_sets_t * const sets) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_thread_sets_decrease_by_) || !defined(_di_f_thread_sets_increase_) || !defined(_di_f_thread_sets_increase_by_)
 
 /**
@@ -1060,7 +1060,7 @@ extern "C" {
  * @see f_thread_spins_decimate_by()
  */
 #if !defined(_di_f_thread_spins_adjust_) || !defined(_di_f_thread_spins_decimate_by_)
-  extern f_status_t private_f_thread_spins_adjust(const f_array_length_t length, f_thread_spins_t * const spins) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_thread_spins_adjust(const f_number_unsigned_t length, f_thread_spins_t * const spins) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_thread_spins_adjust_) || !defined(_di_f_thread_spins_decimate_by_)
 
 /**
@@ -1084,7 +1084,7 @@ extern "C" {
  * @see f_thread_spins_increase_by()
  */
 #if !defined(_di_f_thread_spins_decrease_by_) || !defined(_di_f_thread_spins_increase_) || !defined(_di_f_thread_spins_increase_by_)
-  extern f_status_t private_f_thread_spins_resize(const f_array_length_t length, f_thread_spins_t * const spins) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_thread_spins_resize(const f_number_unsigned_t length, f_thread_spins_t * const spins) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_thread_spins_decrease_by_) || !defined(_di_f_thread_spins_increase_) || !defined(_di_f_thread_spins_increase_by_)
 
 #ifdef __cplusplus

@@ -81,7 +81,7 @@ void test__f_fss_seek_to_eol__works(void **state) {
     macro_f_string_range_t_initialize_1(1, tests[11].used - 2),
   };
 
-  f_array_length_t expects[] = {
+  f_number_unsigned_t expects[] = {
     2,
     2,
     0,

@@ -1,7 +1,4 @@
 #define _di_compiler_attributes_d_
-#define _di_f_array_lengthss_t_
-#define _di_f_array_lengths_t_
-#define _di_f_array_length_t_
 #define _di_f_cellss_t_
 #define _di_f_cells_t_
 #define _di_f_cell_t_

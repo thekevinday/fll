@@ -28,7 +28,7 @@ extern "C" {
         ? &main->setting.modes
         : &setting_build->modes_default;
 
-    for (f_array_length_t i = build_arguments && build_arguments->used > 1 ? 1 : 0; i < modes->used; ) {
+    for (f_number_unsigned_t i = build_arguments && build_arguments->used > 1 ? 1 : 0; i < modes->used; ) {
 
       fl_print_format("%[%Q%]", print->to, print->set->notable, modes->array[i], print->set->notable);
 

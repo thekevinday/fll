@@ -24,7 +24,7 @@ void test__f_utf_dynamicss_append_all__works(void **state) {
     assert_int_equal(source.used, 0);
     assert_int_equal(source.size, length_outer);
 
-    f_array_length_t i = 0;
+    f_number_unsigned_t i = 0;
 
     for (; source.used < length_outer; ++source.used) {
 
@@ -41,7 +41,7 @@ void test__f_utf_dynamicss_append_all__works(void **state) {
         assert_int_equal(status, F_none);
         assert_int_equal(source.array[source.used].array[i].used, test_names[i].used);
 
-        for (f_array_length_t j = 0; j < source.array[source.used].array[i].used; ++j) {
+        for (f_number_unsigned_t j = 0; j < source.array[source.used].array[i].used; ++j) {
           assert_int_equal(source.array[source.used].array[i].string[j], test_names[i].string[j]);
         } // for
       } // for
@@ -56,31 +56,31 @@ void test__f_utf_dynamicss_append_all__works(void **state) {
     assert_int_equal(status, F_none);
     assert_int_equal(destination.used, source.used);
 
-    for (f_array_length_t j = 0; j < length_outer; ++j) {
+    for (f_number_unsigned_t j = 0; j < length_outer; ++j) {
 
-      for (f_array_length_t i = 0; i < length_inner; ++i) {
+      for (f_number_unsigned_t i = 0; i < length_inner; ++i) {
 
         assert_int_equal(destination.array[j].array[i].used, test_names[i].used);
 
-        for (f_array_length_t k = 0; k < destination.array[j].array[i].used; ++k) {
+        for (f_number_unsigned_t k = 0; k < destination.array[j].array[i].used; ++k) {
           assert_int_equal(destination.array[j].array[i].string[k], test_names[i].string[k]);
         } // for
       } // for
     } // for
   }
 
-  for (f_array_length_t j = 0; j < source.used; ++j) {
+  for (f_number_unsigned_t j = 0; j < source.used; ++j) {
 
-    for (f_array_length_t i = 0; i < source.array[j].used; ++i) {
+    for (f_number_unsigned_t i = 0; i < source.array[j].used; ++i) {
       free((void *) source.array[j].array[i].string);
     } // for
 
     free((void *) source.array[j].array);
   } // for
 
-  for (f_array_length_t j = 0; j < destination.used; ++j) {
+  for (f_number_unsigned_t j = 0; j < destination.used; ++j) {
 
-    for (f_array_length_t i = 0; i < destination.array[j].used; ++i) {
+    for (f_number_unsigned_t i = 0; i < destination.array[j].used; ++i) {
       free((void *) destination.array[j].array[i].string);
     } // for
 

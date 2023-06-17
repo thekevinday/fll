@@ -75,7 +75,7 @@ extern "C" {
     if (F_status_is_error_not(main->setting.state.status) && (main->setting.flag & utf8_main_flag_file_from_e)) {
       f_file_t file = macro_f_file_t_initialize_1(0, -1, F_file_flag_read_only_d, 32768, F_file_default_size_write_d);
 
-      for (f_array_length_t i = 0; i < main->setting.path_files_from.used && F_status_is_error_not(main->setting.state.status); ++i) {
+      for (f_number_unsigned_t i = 0; i < main->setting.path_files_from.used && F_status_is_error_not(main->setting.state.status); ++i) {
 
         if (!((++main->program.signal_check) % utf8_signal_check_d)) {
           if (fll_program_standard_signal_received(&main->program)) {
@@ -147,7 +147,7 @@ extern "C" {
 
     // Process remaining parameters.
     if (F_status_is_error_not(main->setting.state.status) && main->setting.remaining.used) {
-      for (f_array_length_t i = 0; F_status_is_error_not(main->setting.state.status) && i < main->setting.remaining.used; ++i) {
+      for (f_number_unsigned_t i = 0; F_status_is_error_not(main->setting.state.status) && i < main->setting.remaining.used; ++i) {
 
         if (!((++main->program.signal_check) % utf8_signal_check_d)) {
           if (fll_program_standard_signal_received(&main->program)) {

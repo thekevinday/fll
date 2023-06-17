@@ -83,16 +83,16 @@ extern "C" {
       return;
     }
 
-    f_array_length_t width_max = 0;
+    f_number_unsigned_t width_max = 0;
 
     if (width_max > buffer->used - range->start) {
       width_max = buffer->used - range->start;
     }
 
     f_string_range_t found_vocabulary = f_string_range_t_initialize;
-    f_array_length_t found_content = 0;
-    f_array_length_t vocabulary_slash_first = 0;
-    const f_array_length_t delimits_used = data->delimits.used;
+    f_number_unsigned_t found_content = 0;
+    f_number_unsigned_t vocabulary_slash_first = 0;
+    const f_number_unsigned_t delimits_used = data->delimits.used;
 
     uint8_t quote = 0;
     uint8_t wrapped = F_false; // 0x0 (false) = not wapped, 0x1 (true) = wrapped, 0x2 = valid wrapped.
@@ -215,7 +215,7 @@ extern "C" {
 
               // Save delimit for a would-be valid IKI that is now delimited.
               if (buffer->string[range->start] == f_iki_syntax_quote_single_s.string[0] || buffer->string[range->start] == f_iki_syntax_quote_double_s.string[0] || buffer->string[range->start] == f_iki_syntax_quote_backtick_s.string[0]) {
-                state->status = f_array_lengths_increase(state->step_small, &data->delimits);
+                state->status = f_number_unsigneds_increase(state->step_small, &data->delimits);
                 if (F_status_is_error(state->status)) break;
 
                 data->delimits.array[data->delimits.used++] = vocabulary_slash_first;
@@ -354,8 +354,8 @@ extern "C" {
           }
 
           if (buffer->string[range->start] == f_iki_syntax_slash_s.string[0]) {
-            f_array_length_t content_slash_first = range->start;
-            f_array_length_t content_slash_total = 0;
+            f_number_unsigned_t content_slash_first = range->start;
+            f_number_unsigned_t content_slash_total = 0;
 
             while (range->start <= range->stop && range->start < buffer->used) {
 
@@ -366,15 +366,15 @@ extern "C" {
               }
 
               if (buffer->string[range->start] == quote) {
-                f_array_length_t content_slash_delimits = content_slash_total / 2;
+                f_number_unsigned_t content_slash_delimits = content_slash_total / 2;
                 f_string_range_t content_range = f_string_range_t_initialize;
-                f_array_length_t i = 0;
+                f_number_unsigned_t i = 0;
 
                 if (content_slash_total % 2) {
                   ++content_slash_delimits;
                 }
 
-                state->status = f_array_lengths_increase_by(content_slash_delimits, &data->delimits);
+                state->status = f_number_unsigneds_increase_by(content_slash_delimits, &data->delimits);
                 if (F_status_is_error(state->status)) break;
 
                 content_range.start = content_slash_first;

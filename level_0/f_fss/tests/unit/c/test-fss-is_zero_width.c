@@ -61,7 +61,7 @@ void test__f_fss_is_zero_width__works(void **state) {
     { .start = 1, .stop = 1 },
   };
 
-  for (f_array_length_t i = 0; i < 14; ++i) {
+  for (f_number_unsigned_t i = 0; i < 14; ++i) {
 
     const f_status_t status = f_fss_is_zero_width(tests[i], ranges[i], &state_data);
 

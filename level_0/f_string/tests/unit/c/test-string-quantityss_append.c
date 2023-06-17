@@ -23,7 +23,7 @@ void test__f_string_quantityss_append__works(void **state) {
     assert_int_equal(status, F_none);
     assert_int_equal(destination.array[0].used, length_sources);
 
-    for (f_array_length_t i = 0; i < length_sources; ++i) {
+    for (f_number_unsigned_t i = 0; i < length_sources; ++i) {
 
       assert_int_equal(destination.array[0].array[i].start, sources_array[i].start);
       assert_int_equal(destination.array[0].array[i].total, sources_array[i].total);

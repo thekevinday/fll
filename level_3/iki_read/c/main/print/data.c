@@ -5,13 +5,13 @@ extern "C" {
 #endif
 
 #ifndef _di_iki_read_print_data_
-  void iki_read_print_data(fl_print_t * const print, const f_array_length_t index) {
+  void iki_read_print_data(fl_print_t * const print, const f_number_unsigned_t index) {
 
     if (!print || !print->custom) return;
 
     iki_read_main_t * const main = (iki_read_main_t *) print->custom;
 
-    f_array_length_t at = main->setting.reassign.used;
+    f_number_unsigned_t at = main->setting.reassign.used;
 
     if (main->setting.reassign.used && (main->setting.flag & (iki_read_main_flag_content_e | iki_read_main_flag_literal_e))) {
       at = iki_read_identify_substitution(main, main->setting.data.vocabulary.array[index], main->setting.data.content.array[index], &main->setting.reassign);
@@ -126,7 +126,7 @@ extern "C" {
 #endif // _di_iki_read_print_data_
 
 #ifndef _di_iki_read_print_data_wrap_append_
-  void iki_read_print_data_wrap_append(fl_print_t * const print, const f_array_length_t index) {
+  void iki_read_print_data_wrap_append(fl_print_t * const print, const f_number_unsigned_t index) {
 
     if (!print || !print->custom) return;
 
@@ -144,7 +144,7 @@ extern "C" {
 #endif // _di_iki_read_print_data_wrap_append_
 
 #ifndef _di_iki_read_print_data_wrap_prepend_
-  void iki_read_print_data_wrap_prepend(fl_print_t * const print, const f_array_length_t index) {
+  void iki_read_print_data_wrap_prepend(fl_print_t * const print, const f_number_unsigned_t index) {
 
     if (!print || !print->custom) return;
 

@@ -8,7 +8,7 @@ extern "C" {
 #endif
 
 #ifndef _di_f_string_quantityss_adjust_
-  f_status_t f_string_quantityss_adjust(const f_array_length_t length, f_string_quantityss_t * const quantityss) {
+  f_status_t f_string_quantityss_adjust(const f_number_unsigned_t length, f_string_quantityss_t * const quantityss) {
     #ifndef _di_level_0_parameter_checking_
       if (!quantityss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -60,7 +60,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     }
 
-    for (f_array_length_t i = 0; i < source.used; ++i, ++destination->used) {
+    for (f_number_unsigned_t i = 0; i < source.used; ++i, ++destination->used) {
 
       destination->array[destination->used].used = 0;
 
@@ -75,7 +75,7 @@ extern "C" {
 #endif // _di_f_string_quantityss_append_all_
 
 #ifndef _di_f_string_quantityss_decimate_by_
-  f_status_t f_string_quantityss_decimate_by(const f_array_length_t amount, f_string_quantityss_t * const quantityss) {
+  f_status_t f_string_quantityss_decimate_by(const f_number_unsigned_t amount, f_string_quantityss_t * const quantityss) {
     #ifndef _di_level_0_parameter_checking_
       if (!quantityss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -91,7 +91,7 @@ extern "C" {
 #endif // _di_f_string_quantityss_decimate_by_
 
 #ifndef _di_f_string_quantityss_decrease_by_
-  f_status_t f_string_quantityss_decrease_by(const f_array_length_t amount, f_string_quantityss_t * const quantityss) {
+  f_status_t f_string_quantityss_decrease_by(const f_number_unsigned_t amount, f_string_quantityss_t * const quantityss) {
     #ifndef _di_level_0_parameter_checking_
       if (!quantityss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -107,20 +107,20 @@ extern "C" {
 #endif // _di_f_string_quantityss_decrease_by_
 
 #ifndef _di_f_string_quantityss_increase_
-  f_status_t f_string_quantityss_increase(const f_array_length_t step, f_string_quantityss_t * const quantityss) {
+  f_status_t f_string_quantityss_increase(const f_number_unsigned_t step, f_string_quantityss_t * const quantityss) {
     #ifndef _di_level_0_parameter_checking_
       if (!quantityss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (step && quantityss->used + 1 > quantityss->size) {
-      f_array_length_t size = quantityss->used + step;
+      f_number_unsigned_t size = quantityss->used + step;
 
-      if (size > F_array_length_t_size_d) {
-        if (quantityss->used + 1 > F_array_length_t_size_d) {
+      if (size > F_number_t_size_unsigned_d) {
+        if (quantityss->used + 1 > F_number_t_size_unsigned_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = F_array_length_t_size_d;
+        size = F_number_t_size_unsigned_d;
       }
 
       return private_f_string_quantityss_resize(size, quantityss);
@@ -131,7 +131,7 @@ extern "C" {
 #endif // _di_f_string_quantityss_increase_
 
 #ifndef _di_f_string_quantityss_increase_by_
-  f_status_t f_string_quantityss_increase_by(const f_array_length_t amount, f_string_quantityss_t * const quantityss) {
+  f_status_t f_string_quantityss_increase_by(const f_number_unsigned_t amount, f_string_quantityss_t * const quantityss) {
     #ifndef _di_level_0_parameter_checking_
       if (!quantityss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -139,7 +139,7 @@ extern "C" {
     if (!amount) return F_data_not;
 
     if (quantityss->used + amount > quantityss->size) {
-      if (quantityss->used + amount > F_array_length_t_size_d) {
+      if (quantityss->used + amount > F_number_t_size_unsigned_d) {
         return F_status_set_error(F_array_too_large);
       }
 
@@ -151,7 +151,7 @@ extern "C" {
 #endif // _di_f_string_quantityss_increase_by_
 
 #ifndef _di_f_string_quantityss_resize_
-  f_status_t f_string_quantityss_resize(const f_array_length_t length, f_string_quantityss_t * const quantityss) {
+  f_status_t f_string_quantityss_resize(const f_number_unsigned_t length, f_string_quantityss_t * const quantityss) {
     #ifndef _di_level_0_parameter_checking_
       if (!quantityss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_

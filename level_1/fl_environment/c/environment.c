@@ -52,7 +52,7 @@ extern "C" {
     f_status_t status = f_string_maps_increase_by(names.used, environment);
     if (F_status_is_error(status)) return status;
 
-    for (f_array_length_t i = 0; i < names.used; ++i) {
+    for (f_number_unsigned_t i = 0; i < names.used; ++i) {
 
       environment->array[environment->used].name.used = 0;
       environment->array[environment->used].value.used = 0;
@@ -98,11 +98,11 @@ extern "C" {
       return F_none;
     }
 
-    f_array_length_t i = 0;
-    f_array_length_t j = 0;
-    f_array_length_t k = 0;
-    f_array_length_t first = 0;
-    f_array_length_t total = 0;
+    f_number_unsigned_t i = 0;
+    f_number_unsigned_t j = 0;
+    f_number_unsigned_t k = 0;
+    f_number_unsigned_t first = 0;
+    f_number_unsigned_t total = 0;
 
     // Do a quick pre-process of PATH to approximate the amount of parts needed, reducing the number of allocations.
     for (; i <= path.used; ++i) {
@@ -274,12 +274,12 @@ extern "C" {
       return F_none;
     }
 
-    f_array_length_t i = 0;
-    f_array_length_t j = 0;
-    f_array_length_t k = 0;
-    f_array_length_t r = path.used;
-    f_array_length_t last = path.used;
-    f_array_length_t total = 0;
+    f_number_unsigned_t i = 0;
+    f_number_unsigned_t j = 0;
+    f_number_unsigned_t k = 0;
+    f_number_unsigned_t r = path.used;
+    f_number_unsigned_t last = path.used;
+    f_number_unsigned_t total = 0;
 
     // Do a quick pre-process of PATH to approximate the amount of parts needed, reducing the number of allocations.
     for (; i <= path.used; ++i) {

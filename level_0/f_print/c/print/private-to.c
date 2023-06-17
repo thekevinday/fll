@@ -33,11 +33,11 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 }
 
 #if !defined(_di_f_print_to_) || !defined(_di_f_print_dynamic_to_) || !defined(_di_f_print_dynamic_partial_to_)
-  f_status_t private_f_print_to(const f_string_t string, const f_array_length_t length, const int id) {
+  f_status_t private_f_print_to(const f_string_t string, const f_number_unsigned_t length, const int id) {
 
-    f_array_length_t total = 0;
+    f_number_unsigned_t total = 0;
 
-    for (register f_array_length_t i = 0; i < length; ) {
+    for (register f_number_unsigned_t i = 0; i < length; ) {
 
       total = strnlen((string + i), length - i);
 
@@ -97,12 +97,12 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 #endif // !defined(_di_f_print_to_character_safely_) || !defined(_di_f_print_to_safely_) || !defined(_di_f_print_to_safely_dynamic_) || !defined(_di_f_print_to_safely_dynamic_partial_) || !defined(_di_f_print_to_safely_terminated_) || !defined(_di_f_print_to_except_safely_) || !defined(_di_f_print_to_except_dynamic_safely_) || !defined(_di_f_print_to_except_dynamic_partial_safely_) || !defined(_di_f_print_to_except_in_safely_) || !defined(_di_f_print_to_except_in_dynamic_safely_) || !defined(_di_f_print_to_except_in_dynamic_partial_safely_)
 
 #if !defined(_di_f_print_to_except_) || !defined(_di_f_print_to_except_dynamic_) || !defined(_di_f_print_to_except_dynamic_partial_)
-  f_status_t private_f_print_to_except(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except, const int id) {
+  f_status_t private_f_print_to_except(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t stop, const f_number_unsigneds_t except, const int id) {
 
-    f_array_length_t i = offset;
-    f_array_length_t j = 0;
-    f_array_length_t start = offset;
-    f_array_length_t total = 0;
+    f_number_unsigned_t i = offset;
+    f_number_unsigned_t j = 0;
+    f_number_unsigned_t start = offset;
+    f_number_unsigned_t total = 0;
 
     while (i < stop) {
 
@@ -146,12 +146,12 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 #endif // !defined(_di_f_print_to_except_) || !defined(_di_f_print_to_except_dynamic_) || !defined(_di_f_print_to_except_dynamic_partial_)
 
 #if !defined(_di_f_print_to_except_raw_) || !defined(_di_f_print_to_except_dynamic_raw_) || !defined(_di_f_print_to_except_dynamic_partial_raw_)
-  f_status_t private_f_print_to_except_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except, const int id) {
+  f_status_t private_f_print_to_except_raw(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t stop, const f_number_unsigneds_t except, const int id) {
 
-    f_array_length_t i = offset;
-    f_array_length_t j = 0;
-    f_array_length_t start = offset;
-    f_array_length_t total = 0;
+    f_number_unsigned_t i = offset;
+    f_number_unsigned_t j = 0;
+    f_number_unsigned_t start = offset;
+    f_number_unsigned_t total = 0;
 
     while (i < stop) {
 
@@ -195,12 +195,12 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 #endif // !defined(_di_f_print_to_except_raw_) || !defined(_di_f_print_to_except_dynamic_raw_) || !defined(_di_f_print_to_except_dynamic_partial_raw_)
 
 #if !defined(_di_f_print_to_except_dynamic_raw_safely_) || !defined(_di_f_print_to_except_dynamic_partial_raw_safely_) || !defined(_di_f_print_to_except_raw_safely_)
-  f_status_t private_f_print_to_except_raw_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except, const int id) {
+  f_status_t private_f_print_to_except_raw_safely(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t stop, const f_number_unsigneds_t except, const int id) {
 
-    f_array_length_t i = offset;
-    f_array_length_t j = 0;
-    f_array_length_t start = offset;
-    f_array_length_t total = 0;
+    f_number_unsigned_t i = offset;
+    f_number_unsigned_t j = 0;
+    f_number_unsigned_t start = offset;
+    f_number_unsigned_t total = 0;
 
     f_string_static_t safe = f_string_empty_s;
 
@@ -270,12 +270,12 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 #endif // !defined(_di_f_print_to_except_dynamic_raw_safely_) || !defined(_di_f_print_to_except_dynamic_partial_raw_safely_) || !defined(_di_f_print_to_except_raw_safely_)
 
 #if !defined(_di_f_print_to_except_dynamic_safely_) || !defined(_di_f_print_to_except_dynamic_partial_safely_) || !defined(_di_f_print_to_except_safely_)
-  f_status_t private_f_print_to_except_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except, const int id) {
+  f_status_t private_f_print_to_except_safely(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t stop, const f_number_unsigneds_t except, const int id) {
 
-    f_array_length_t i = offset;
-    f_array_length_t j = 0;
-    f_array_length_t start = offset;
-    f_array_length_t total = 0;
+    f_number_unsigned_t i = offset;
+    f_number_unsigned_t j = 0;
+    f_number_unsigned_t start = offset;
+    f_number_unsigned_t total = 0;
 
     f_string_static_t safe = f_string_empty_s;
 
@@ -354,13 +354,13 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 #endif // !defined(_di_f_print_to_except_dynamic_safely_) || !defined(_di_f_print_to_except_dynamic_partial_safely_) || !defined(_di_f_print_to_except_safely_)
 
 #if !defined(_di_f_print_to_except_in_) || !defined(_di_f_print_to_except_in_dynamic_) || !defined(_di_f_print_to_except_in_dynamic_partial_)
-  f_status_t private_f_print_to_except_in(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const int id) {
+  f_status_t private_f_print_to_except_in(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t stop, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, const int id) {
 
-    f_array_length_t i = offset;
-    f_array_length_t at = 0;
-    f_array_length_t in = 0;
-    f_array_length_t start = i;
-    f_array_length_t total = 0;
+    f_number_unsigned_t i = offset;
+    f_number_unsigned_t at = 0;
+    f_number_unsigned_t in = 0;
+    f_number_unsigned_t start = i;
+    f_number_unsigned_t total = 0;
 
     while (i < stop) {
 
@@ -434,13 +434,13 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 #endif // !defined(_di_f_print_to_except_in_) || !defined(_di_f_print_to_except_in_dynamic_) || !defined(_di_f_print_to_except_in_dynamic_partial_)
 
 #if !defined(_di_f_print_to_except_in_raw_) || !defined(_di_f_print_to_except_in_dynamic_raw_) || !defined(_di_f_print_to_except_in_dynamic_partial_raw_)
-  f_status_t private_f_print_to_except_in_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const int id) {
+  f_status_t private_f_print_to_except_in_raw(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t stop, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, const int id) {
 
-    f_array_length_t i = offset;
-    f_array_length_t at = 0;
-    f_array_length_t in = 0;
-    f_array_length_t start = i;
-    f_array_length_t total = 0;
+    f_number_unsigned_t i = offset;
+    f_number_unsigned_t at = 0;
+    f_number_unsigned_t in = 0;
+    f_number_unsigned_t start = i;
+    f_number_unsigned_t total = 0;
 
     while (i < stop) {
 
@@ -512,13 +512,13 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 #endif // !defined(_di_f_print_to_except_in_raw_) || !defined(_di_f_print_to_except_in_dynamic_raw_) || !defined(_di_f_print_to_except_in_dynamic_partial_raw_)
 
 #if !defined(_di_f_print_to_except_in_raw_safely_) || !defined(_di_f_print_to_except_in_dynamic_raw_safely_) || !defined(_di_f_print_to_except_in_dynamic_partial_raw_safely_)
-  f_status_t private_f_print_to_except_in_raw_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const int id) {
+  f_status_t private_f_print_to_except_in_raw_safely(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t stop, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, const int id) {
 
-    f_array_length_t i = offset;
-    f_array_length_t at = 0;
-    f_array_length_t in = 0;
-    f_array_length_t start = i;
-    f_array_length_t total = 0;
+    f_number_unsigned_t i = offset;
+    f_number_unsigned_t at = 0;
+    f_number_unsigned_t in = 0;
+    f_number_unsigned_t start = i;
+    f_number_unsigned_t total = 0;
 
     f_string_static_t safe = f_string_empty_s;
 
@@ -617,13 +617,13 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 #endif // !defined(_di_f_print_to_except_in_raw_safely_) || !defined(_di_f_print_to_except_in_dynamic_raw_safely_) || !defined(_di_f_print_to_except_in_dynamic_partial_raw_safely_)
 
 #if !defined(_di_f_print_to_except_in_safely_) || !defined(_di_f_print_to_except_in_dynamic_safely_) || !defined(_di_f_print_to_except_in_dynamic_partial_safely_)
-  f_status_t private_f_print_to_except_in_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const int id) {
+  f_status_t private_f_print_to_except_in_safely(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t stop, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, const int id) {
 
-    f_array_length_t i = offset;
-    f_array_length_t at = 0;
-    f_array_length_t in = 0;
-    f_array_length_t start = i;
-    f_array_length_t total = 0;
+    f_number_unsigned_t i = offset;
+    f_number_unsigned_t at = 0;
+    f_number_unsigned_t in = 0;
+    f_number_unsigned_t start = i;
+    f_number_unsigned_t total = 0;
 
     f_string_static_t safe = f_string_empty_s;
 
@@ -731,12 +731,12 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 #endif // !defined(_di_f_print_to_except_in_safely_) || !defined(_di_f_print_to_except_in_dynamic_safely_) || !defined(_di_f_print_to_except_in_dynamic_partial_safely_)
 
 #if !defined(_di_f_print_to_raw_) || !defined(_di_f_print_dynamic_to_raw_) || !defined(_di_f_print_dynamic_partial_to_raw_)
-  f_status_t private_f_print_to_raw(const f_string_t string, const f_array_length_t length, const int id) {
+  f_status_t private_f_print_to_raw(const f_string_t string, const f_number_unsigned_t length, const int id) {
 
-    f_array_length_t start = 0;
-    f_array_length_t total = 0;
+    f_number_unsigned_t start = 0;
+    f_number_unsigned_t total = 0;
 
-    for (register f_array_length_t i = 0; i < length; ) {
+    for (register f_number_unsigned_t i = 0; i < length; ) {
 
       total = strnlen((string + i), length - i);
 
@@ -774,11 +774,11 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 #endif // !defined(_di_f_print_to_raw_) || !defined(_di_f_print_dynamic_to_raw_) || !defined(_di_f_print_dynamic_partial_to_raw_)
 
 #if !defined(_di_f_print_to_dynamic_raw_safely_) || !defined(_di_f_print_to_dynamic_partial_raw_safely_) || !defined(_di_f_print_to_raw_safely_)
-  f_status_t private_f_print_to_raw_safely(const f_string_t string, const f_array_length_t length, const int id) {
+  f_status_t private_f_print_to_raw_safely(const f_string_t string, const f_number_unsigned_t length, const int id) {
 
-    register f_array_length_t i = 0;
-    f_array_length_t start = 0;
-    f_array_length_t total = 0;
+    register f_number_unsigned_t i = 0;
+    f_number_unsigned_t start = 0;
+    f_number_unsigned_t total = 0;
 
     f_string_static_t safe = f_string_empty_s;
 
@@ -839,11 +839,11 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 #endif // !defined(_di_f_print_to_dynamic_raw_safely_) || !defined(_di_f_print_dynamic_partial_to_raw_safely_) || !defined(_di_f_print_to_raw_safely_)
 
 #if !defined(_di_f_print_to_dynamic_safely_) || !defined(_di_f_print_to_dynamic_partial_safely_) || !defined(_di_f_print_to_safely_)
-  f_status_t private_f_print_to_safely(const f_string_t string, const f_array_length_t length, const int id) {
+  f_status_t private_f_print_to_safely(const f_string_t string, const f_number_unsigned_t length, const int id) {
 
-    register f_array_length_t i = 0;
-    f_array_length_t start = 0;
-    f_array_length_t total = 0;
+    register f_number_unsigned_t i = 0;
+    f_number_unsigned_t start = 0;
+    f_number_unsigned_t total = 0;
 
     f_string_static_t safe = f_string_empty_s;
 

@@ -99,8 +99,8 @@ extern "C" {
 #ifndef _di_f_directory_statuss_t_
   typedef struct {
     f_directory_status_t *array;
-    f_array_length_t size;
-    f_array_length_t used;
+    f_number_unsigned_t size;
+    f_number_unsigned_t used;
   } f_directory_statuss_t;
 
   #define f_directory_statuss_t_initialize { 0, 0, 0 }
@@ -152,7 +152,7 @@ extern "C" {
  */
 #ifndef _di_f_directory_recurse_do_t_
   typedef struct {
-    f_array_length_t depth;
+    f_number_unsigned_t depth;
     f_number_unsigned_t depth_max;
     uint16_t flag;
     f_mode_t mode;
@@ -309,7 +309,7 @@ extern "C" {
  *   @see f_string_dynamic_resize()
  */
 #ifndef _di_f_directory_statuss_adjust_
-  extern f_status_t f_directory_statuss_adjust(const f_array_length_t length, f_directory_statuss_t * const statuss);
+  extern f_status_t f_directory_statuss_adjust(const f_number_unsigned_t length, f_directory_statuss_t * const statuss);
 #endif // _di_f_directory_statuss_adjust_
 
 /**
@@ -335,7 +335,7 @@ extern "C" {
  *   @see f_string_dynamic_resize()
  */
 #ifndef _di_f_directory_statuss_decimate_by_
-  extern f_status_t f_directory_statuss_decimate_by(const f_array_length_t amount, f_directory_statuss_t * const statuss);
+  extern f_status_t f_directory_statuss_decimate_by(const f_number_unsigned_t amount, f_directory_statuss_t * const statuss);
 #endif // _di_f_directory_statuss_decimate_by_
 
 /**
@@ -361,13 +361,13 @@ extern "C" {
  *   @see f_string_dynamic_resize()
  */
 #ifndef _di_f_directory_statuss_decrease_by_
-  extern f_status_t f_directory_statuss_decrease_by(const f_array_length_t amount, f_directory_statuss_t * const statuss);
+  extern f_status_t f_directory_statuss_decrease_by(const f_number_unsigned_t amount, f_directory_statuss_t * const statuss);
 #endif // _di_f_directory_statuss_decrease_by_
 
 /**
  * Increase the size of all parts of the directory statuss structure, but only if necessary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -387,14 +387,14 @@ extern "C" {
  *   @see f_string_dynamic_resize()
  */
 #ifndef _di_f_directory_statuss_increase_
-  extern f_status_t f_directory_statuss_increase(const f_array_length_t step, f_directory_statuss_t * const statuss);
+  extern f_status_t f_directory_statuss_increase(const f_number_unsigned_t step, f_directory_statuss_t * const statuss);
 #endif // _di_f_directory_statuss_increase_
 
 /**
  * Resize all parts of the directory statuss structure to a larger size.
  *
  * This will resize making the array larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -413,7 +413,7 @@ extern "C" {
  *   @see f_string_dynamic_resize()
  */
 #ifndef _di_f_directory_statuss_increase_by_
-  extern f_status_t f_directory_statuss_increase_by(const f_array_length_t amount, f_directory_statuss_t * const statuss);
+  extern f_status_t f_directory_statuss_increase_by(const f_number_unsigned_t amount, f_directory_statuss_t * const statuss);
 #endif // _di_f_directory_statuss_increase_by_
 
 /**
@@ -434,7 +434,7 @@ extern "C" {
  *   @see f_string_dynamic_resize()
  */
 #ifndef _di_f_directory_statuss_resize_
-  extern f_status_t f_directory_statuss_resize(const f_array_length_t length, f_directory_statuss_t * const statuss);
+  extern f_status_t f_directory_statuss_resize(const f_number_unsigned_t length, f_directory_statuss_t * const statuss);
 #endif // _di_f_directory_statuss_resize_
 
 #ifdef __cplusplus

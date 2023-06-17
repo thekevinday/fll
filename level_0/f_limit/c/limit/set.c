@@ -7,7 +7,7 @@ extern "C" {
 #endif
 
 #ifndef _di_f_limit_sets_adjust_
-  f_status_t f_limit_sets_adjust(const f_array_length_t length, f_limit_sets_t *sets) {
+  f_status_t f_limit_sets_adjust(const f_number_unsigned_t length, f_limit_sets_t *sets) {
     #ifndef _di_level_0_parameter_checking_
       if (!sets) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -39,7 +39,7 @@ extern "C" {
 #endif // _di_f_limit_sets_append_all_
 
 #ifndef _di_f_limit_sets_decimate_by_
-  f_status_t f_limit_sets_decimate_by(const f_array_length_t amount, f_limit_sets_t *sets) {
+  f_status_t f_limit_sets_decimate_by(const f_number_unsigned_t amount, f_limit_sets_t *sets) {
     #ifndef _di_level_0_parameter_checking_
       if (!sets) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -55,7 +55,7 @@ extern "C" {
 #endif // _di_f_limit_sets_decimate_by_
 
 #ifndef _di_f_limit_sets_decrease_by_
-  f_status_t f_limit_sets_decrease_by(const f_array_length_t amount, f_limit_sets_t *sets) {
+  f_status_t f_limit_sets_decrease_by(const f_number_unsigned_t amount, f_limit_sets_t *sets) {
     #ifndef _di_level_0_parameter_checking_
       if (!sets) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -71,20 +71,20 @@ extern "C" {
 #endif // _di_f_limit_sets_decrease_by_
 
 #ifndef _di_f_limit_sets_increase_
-  f_status_t f_limit_sets_increase(const f_array_length_t step, f_limit_sets_t *sets) {
+  f_status_t f_limit_sets_increase(const f_number_unsigned_t step, f_limit_sets_t *sets) {
     #ifndef _di_level_0_parameter_checking_
       if (!sets) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (step && sets->used + 1 > sets->size) {
-      f_array_length_t size = sets->used + step;
+      f_number_unsigned_t size = sets->used + step;
 
-      if (size > F_array_length_t_size_d) {
-        if (sets->used + 1 > F_array_length_t_size_d) {
+      if (size > F_number_t_size_unsigned_d) {
+        if (sets->used + 1 > F_number_t_size_unsigned_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = F_array_length_t_size_d;
+        size = F_number_t_size_unsigned_d;
       }
 
       return private_f_limit_sets_resize(size, sets);
@@ -95,7 +95,7 @@ extern "C" {
 #endif // _di_f_limit_sets_increase_
 
 #ifndef _di_f_limit_sets_increase_by_
-  f_status_t f_limit_sets_increase_by(const f_array_length_t amount, f_limit_sets_t *sets) {
+  f_status_t f_limit_sets_increase_by(const f_number_unsigned_t amount, f_limit_sets_t *sets) {
     #ifndef _di_level_0_parameter_checking_
       if (!sets) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -103,7 +103,7 @@ extern "C" {
     if (!amount) return F_data_not;
 
     if (sets->used + amount > sets->size) {
-      if (sets->used + amount > F_array_length_t_size_d) {
+      if (sets->used + amount > F_number_t_size_unsigned_d) {
         return F_status_set_error(F_array_too_large);
       }
 
@@ -115,7 +115,7 @@ extern "C" {
 #endif // _di_f_limit_sets_increase_by_
 
 #ifndef _di_f_limit_sets_resize_
-  f_status_t f_limit_sets_resize(const f_array_length_t length, f_limit_sets_t *sets) {
+  f_status_t f_limit_sets_resize(const f_number_unsigned_t length, f_limit_sets_t *sets) {
     #ifndef _di_level_0_parameter_checking_
       if (!sets) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -125,7 +125,7 @@ extern "C" {
 #endif // _di_f_limit_sets_resize_
 
 #ifndef _di_f_limit_setss_adjust_
-  f_status_t f_limit_setss_adjust(const f_array_length_t length, f_limit_setss_t *setss) {
+  f_status_t f_limit_setss_adjust(const f_number_unsigned_t length, f_limit_setss_t *setss) {
     #ifndef _di_level_0_parameter_checking_
       if (!setss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -173,7 +173,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     }
 
-    for (f_array_length_t i = 0; i < source.used; ++i, ++destination->used) {
+    for (f_number_unsigned_t i = 0; i < source.used; ++i, ++destination->used) {
 
       destination->array[destination->used].used = 0;
 
@@ -188,7 +188,7 @@ extern "C" {
 #endif // _di_f_limit_setss_append_all_
 
 #ifndef _di_f_limit_setss_decimate_by_
-  f_status_t f_limit_setss_decimate_by(const f_array_length_t amount, f_limit_setss_t *setss) {
+  f_status_t f_limit_setss_decimate_by(const f_number_unsigned_t amount, f_limit_setss_t *setss) {
     #ifndef _di_level_0_parameter_checking_
       if (!setss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -204,7 +204,7 @@ extern "C" {
 #endif // _di_f_limit_setss_decimate_by_
 
 #ifndef _di_f_limit_setss_decrease_by_
-  f_status_t f_limit_setss_decrease_by(const f_array_length_t amount, f_limit_setss_t *setss) {
+  f_status_t f_limit_setss_decrease_by(const f_number_unsigned_t amount, f_limit_setss_t *setss) {
     #ifndef _di_level_0_parameter_checking_
       if (!setss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -220,20 +220,20 @@ extern "C" {
 #endif // _di_f_limit_setss_decrease_by_
 
 #ifndef _di_f_limit_setss_increase_
-  f_status_t f_limit_setss_increase(const f_array_length_t step, f_limit_setss_t *setss) {
+  f_status_t f_limit_setss_increase(const f_number_unsigned_t step, f_limit_setss_t *setss) {
     #ifndef _di_level_0_parameter_checking_
       if (!setss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (step && setss->used + 1 > setss->size) {
-      f_array_length_t size = setss->used + step;
+      f_number_unsigned_t size = setss->used + step;
 
-      if (size > F_array_length_t_size_d) {
-        if (setss->used + 1 > F_array_length_t_size_d) {
+      if (size > F_number_t_size_unsigned_d) {
+        if (setss->used + 1 > F_number_t_size_unsigned_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = F_array_length_t_size_d;
+        size = F_number_t_size_unsigned_d;
       }
 
       return private_f_limit_setss_resize(size, setss);
@@ -244,7 +244,7 @@ extern "C" {
 #endif // _di_f_limit_setss_increase_
 
 #ifndef _di_f_limit_setss_increase_by_
-  f_status_t f_limit_setss_increase_by(const f_array_length_t amount, f_limit_setss_t *setss) {
+  f_status_t f_limit_setss_increase_by(const f_number_unsigned_t amount, f_limit_setss_t *setss) {
     #ifndef _di_level_0_parameter_checking_
       if (!setss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -252,7 +252,7 @@ extern "C" {
     if (!amount) return F_data_not;
 
     if (setss->used + amount > setss->size) {
-      if (setss->used + amount > F_array_length_t_size_d) {
+      if (setss->used + amount > F_number_t_size_unsigned_d) {
         return F_status_set_error(F_array_too_large);
       }
 
@@ -264,7 +264,7 @@ extern "C" {
 #endif // _di_f_limit_setss_increase_by_
 
 #ifndef _di_f_limit_setss_resize_
-  f_status_t f_limit_setss_resize(const f_array_length_t length, f_limit_setss_t *setss) {
+  f_status_t f_limit_setss_resize(const f_number_unsigned_t length, f_limit_setss_t *setss) {
     #ifndef _di_level_0_parameter_checking_
       if (!setss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_

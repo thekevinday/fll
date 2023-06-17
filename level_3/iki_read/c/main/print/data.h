@@ -42,7 +42,7 @@ extern "C" {
  * @see iki_read_print_data_wrap_append()
  */
 #ifndef _di_iki_read_print_data_
-  extern void iki_read_print_data(fl_print_t * const print, const f_array_length_t index) F_attribute_visibility_internal_d;
+  extern void iki_read_print_data(fl_print_t * const print, const f_number_unsigned_t index) F_attribute_visibility_internal_d;
 #endif // _di_iki_read_print_data_
 
 /**
@@ -60,7 +60,7 @@ extern "C" {
  * @see f_print_dynamic()
  */
 #ifndef _di_iki_read_print_data_wrap_append_
-  extern void iki_read_print_data_wrap_append(fl_print_t * const print, const f_array_length_t index) F_attribute_visibility_internal_d;
+  extern void iki_read_print_data_wrap_append(fl_print_t * const print, const f_number_unsigned_t index) F_attribute_visibility_internal_d;
 #endif // _di_iki_read_print_data_wrap_append_
 
 /**
@@ -78,7 +78,7 @@ extern "C" {
  * @see f_print_dynamic()
  */
 #ifndef _di_iki_read_print_data_wrap_prepend_
-  extern void iki_read_print_data_wrap_prepend(fl_print_t * const print, const f_array_length_t index) F_attribute_visibility_internal_d;
+  extern void iki_read_print_data_wrap_prepend(fl_print_t * const print, const f_number_unsigned_t index) F_attribute_visibility_internal_d;
 #endif // _di_iki_read_print_data_wrap_prepend_
 
 #ifdef __cplusplus

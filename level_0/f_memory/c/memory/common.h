@@ -377,8 +377,8 @@ extern "C" {
  * Provide a macro for calling other macros for incrementing a buffer.
  *
  * If the used + step is greater than size, then increase by step_default.
- * If step_default exceeds F_array_length_t_size_d, then attempt to increment by step.
- * If step exceeds F_array_length_t_size_d, set status to error_too_large.
+ * If step_default exceeds F_number_t_size_unsigned_d, then attempt to increment by step.
+ * If step exceeds F_number_t_size_unsigned_d, set status to error_too_large.
  *
  * Be sure to check size for error after calling this.
  *
@@ -387,13 +387,13 @@ extern "C" {
  * step:            The step to increase by, must be less than or equal to step_default.
  * step_default:    The default step to increase by if memory allows.
  * macro_resize:    The resize structure macro to call that excepts the exact arguments: (status, structure, length).
- * error_too_large: The error status to return when F_array_length_t_size_d would be exceeded.
+ * error_too_large: The error status to return when F_number_t_size_unsigned_d would be exceeded.
  */
 #ifndef _di_macro_f_memory_structure_increment_
   #define macro_f_memory_structure_increment(status, structure, step, step_default, macro_resize, error_too_large) \
     if (structure.used + step > structure.size) { \
-      if (structure.used + step_default > F_array_length_t_size_d) { \
-        if (structure.used + step > F_array_length_t_size_d) { \
+      if (structure.used + step_default > F_number_t_size_unsigned_d) { \
+        if (structure.used + step > F_number_t_size_unsigned_d) { \
           status = F_status_set_error(error_too_large); \
         } \
         else { \

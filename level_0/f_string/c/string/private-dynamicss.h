@@ -41,7 +41,7 @@ extern "C" {
  * @see f_string_map_multis_append()
  */
 #if !defined(_di_f_string_dynamicss_adjust_) || !defined(_di_f_string_dynamicss_append_) || !defined(_di_f_string_dynamicss_decimate_by_) || !defined(_di_f_string_map_multis_adjust_) || !defined(_di_f_string_map_multis_append_)
-  extern f_status_t private_f_string_dynamicss_adjust(const f_array_length_t length, f_string_dynamicss_t * const dynamicss) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_string_dynamicss_adjust(const f_number_unsigned_t length, f_string_dynamicss_t * const dynamicss) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_string_dynamicss_adjust_) || !defined(_di_f_string_dynamicss_append_) || !defined(_di_f_string_dynamicss_decimate_by_) || !defined(_di_f_string_map_multis_adjust_) || !defined(_di_f_string_map_multis_append_)
 
 /**
@@ -70,7 +70,7 @@ extern "C" {
  * @see f_string_map_multis_append_all()
  */
 #if !defined(_di_f_string_dynamicss_decrease_by_) || !defined(_di_f_string_dynamicss_increase_) || !defined(_di_f_string_dynamicss_increase_by_) || !defined(_di_f_string_dynamicss_append_all_) || !defined(_di_f_string_map_multis_append_all_)
-  extern f_status_t private_f_string_dynamicss_resize(const f_array_length_t length, f_string_dynamicss_t * const dynamicss) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_string_dynamicss_resize(const f_number_unsigned_t length, f_string_dynamicss_t * const dynamicss) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_string_dynamicss_decrease_by_) || !defined(_di_f_string_dynamicss_increase_) || !defined(_di_f_string_dynamicss_increase_by_) || !defined(_di_f_string_dynamicss_append_all_) || !defined(_di_f_string_map_multis_append_all_)
 
 #ifdef __cplusplus

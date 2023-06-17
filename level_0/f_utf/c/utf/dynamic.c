@@ -9,7 +9,7 @@ extern "C" {
 #endif
 
 #ifndef _di_f_utf_string_dynamic_adjust_
-  f_status_t f_utf_string_dynamic_adjust(const f_array_length_t length, f_utf_string_dynamic_t * const dynamic) {
+  f_status_t f_utf_string_dynamic_adjust(const f_number_unsigned_t length, f_utf_string_dynamic_t * const dynamic) {
     #ifndef _di_level_0_parameter_checking_
       if (!dynamic) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -42,8 +42,8 @@ extern "C" {
       return private_f_utf_string_append(source.string, source.used, destination);
     }
 
-    f_array_length_t i = 1;
-    f_array_length_t j = 1;
+    f_number_unsigned_t i = 1;
+    f_number_unsigned_t j = 1;
 
     while (i <= source.used && j <= destination->used) {
 
@@ -71,8 +71,8 @@ extern "C" {
       return private_f_utf_string_append_nulless(source.string, source.used, destination);
     }
 
-    f_array_length_t i = 1;
-    f_array_length_t j = 1;
+    f_number_unsigned_t i = 1;
+    f_number_unsigned_t j = 1;
 
     while (i <= source.used && j <= destination->used) {
 
@@ -113,7 +113,7 @@ extern "C" {
 #endif // _di_f_utf_string_dynamic_append_nulless_
 
 #ifndef _di_f_utf_string_dynamic_decimate_by_
-  f_status_t f_utf_string_dynamic_decimate_by(const f_array_length_t amount, f_utf_string_dynamic_t * const dynamic) {
+  f_status_t f_utf_string_dynamic_decimate_by(const f_number_unsigned_t amount, f_utf_string_dynamic_t * const dynamic) {
     #ifndef _di_level_0_parameter_checking_
       if (!dynamic) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -129,7 +129,7 @@ extern "C" {
 #endif // _di_f_utf_string_dynamic_decimate_by_
 
 #ifndef _di_f_utf_string_dynamic_decrease_by_
-  f_status_t f_utf_string_dynamic_decrease_by(const f_array_length_t amount, f_utf_string_dynamic_t * const dynamic) {
+  f_status_t f_utf_string_dynamic_decrease_by(const f_number_unsigned_t amount, f_utf_string_dynamic_t * const dynamic) {
     #ifndef _di_level_0_parameter_checking_
       if (!dynamic) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -145,13 +145,13 @@ extern "C" {
 #endif // _di_f_utf_string_dynamic_decrease_by_
 
 #ifndef _di_f_utf_string_dynamic_increase_
-  f_status_t f_utf_string_dynamic_increase(const f_array_length_t step, f_utf_string_dynamic_t * const dynamic) {
+  f_status_t f_utf_string_dynamic_increase(const f_number_unsigned_t step, f_utf_string_dynamic_t * const dynamic) {
     #ifndef _di_level_0_parameter_checking_
       if (!dynamic) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (step && dynamic->used + 1 > dynamic->size) {
-      f_array_length_t size = dynamic->used + step;
+      f_number_unsigned_t size = dynamic->used + step;
 
       if (size > F_string_t_size_d) {
         if (dynamic->used + 1 > F_string_t_size_d) {
@@ -169,7 +169,7 @@ extern "C" {
 #endif // _di_f_utf_string_dynamic_increase_
 
 #ifndef _di_f_utf_string_dynamic_increase_by_
-  f_status_t f_utf_string_dynamic_increase_by(const f_array_length_t amount, f_utf_string_dynamic_t * const dynamic) {
+  f_status_t f_utf_string_dynamic_increase_by(const f_number_unsigned_t amount, f_utf_string_dynamic_t * const dynamic) {
     #ifndef _di_level_0_parameter_checking_
       if (!dynamic) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -276,15 +276,15 @@ extern "C" {
     if (range.start > range.stop) return F_data_not_stop;
     if (range.start >= source.used) return F_data_not_eos;
 
-    const f_array_length_t length = range.stop >= source.used ? source.used - range.start : (range.stop - range.start) + 1;
+    const f_number_unsigned_t length = range.stop >= source.used ? source.used - range.start : (range.stop - range.start) + 1;
 
     if (destination->used < length) {
       return private_f_utf_string_append(source.string + range.start, length, destination);
     }
 
-    const f_array_length_t stop = range.stop >= source.used ? source.used : range.stop + 1;
-    f_array_length_t i = 1;
-    f_array_length_t j = 1;
+    const f_number_unsigned_t stop = range.stop >= source.used ? source.used : range.stop + 1;
+    f_number_unsigned_t i = 1;
+    f_number_unsigned_t j = 1;
 
     while (i <= length && j <= destination->used) {
 
@@ -310,15 +310,15 @@ extern "C" {
     if (range.start > range.stop) return F_data_not_stop;
     if (range.start >= source.used) return F_data_not_eos;
 
-    const f_array_length_t length = range.stop >= source.used ? source.used - range.start : (range.stop - range.start) + 1;
+    const f_number_unsigned_t length = range.stop >= source.used ? source.used - range.start : (range.stop - range.start) + 1;
 
     if (!destination->used) {
       return private_f_utf_string_append_nulless(source.string + range.start, length, destination);
     }
 
-    const f_array_length_t stop = range.stop >= source.used ? source.used : range.stop + 1;
-    f_array_length_t i = 1;
-    f_array_length_t j = 1;
+    const f_number_unsigned_t stop = range.stop >= source.used ? source.used : range.stop + 1;
+    f_number_unsigned_t i = 1;
+    f_number_unsigned_t j = 1;
 
     while (i <= length && j <= destination->used) {
 
@@ -484,14 +484,14 @@ extern "C" {
     if (range.start > range.stop) return F_data_not_stop;
     if (range.start >= source.used) return F_data_not_eos;
 
-    const f_array_length_t length = range.stop >= source.used ? source.used - range.start : (range.stop - range.start) + 1;
+    const f_number_unsigned_t length = range.stop >= source.used ? source.used - range.start : (range.stop - range.start) + 1;
 
     if (destination->used < length) {
       return private_f_utf_string_prepend(source.string + range.start, length, destination);
     }
 
-    f_array_length_t i = 0;
-    f_array_length_t j = 0;
+    f_number_unsigned_t i = 0;
+    f_number_unsigned_t j = 0;
 
     while (i < length && j < destination->used) {
 
@@ -517,14 +517,14 @@ extern "C" {
     if (range.start > range.stop) return F_data_not_stop;
     if (range.start >= source.used) return F_data_not_eos;
 
-    const f_array_length_t length = range.stop >= source.used ? source.used - range.start : (range.stop - range.start) + 1;
+    const f_number_unsigned_t length = range.stop >= source.used ? source.used - range.start : (range.stop - range.start) + 1;
 
     if (!destination->used) {
       return private_f_utf_string_prepend_nulless(source.string + range.start, length, destination);
     }
 
-    f_array_length_t i = 0;
-    f_array_length_t j = 0;
+    f_number_unsigned_t i = 0;
+    f_number_unsigned_t j = 0;
 
     while (i < length && j < destination->used) {
 
@@ -590,8 +590,8 @@ extern "C" {
       return private_f_utf_string_prepend(source.string, source.used, destination);
     }
 
-    f_array_length_t i = 0;
-    f_array_length_t j = 0;
+    f_number_unsigned_t i = 0;
+    f_number_unsigned_t j = 0;
 
     while (i < source.used && j < destination->used) {
 
@@ -619,8 +619,8 @@ extern "C" {
       return private_f_utf_string_prepend_nulless(source.string, source.used, destination);
     }
 
-    f_array_length_t i = 0;
-    f_array_length_t j = 0;
+    f_number_unsigned_t i = 0;
+    f_number_unsigned_t j = 0;
 
     while (i < source.used && j < destination->used) {
 
@@ -661,7 +661,7 @@ extern "C" {
 #endif // _di_f_utf_string_dynamic_prepend_nulless_
 
 #ifndef _di_f_utf_string_dynamic_resize_
-  f_status_t f_utf_string_dynamic_resize(const f_array_length_t length, f_utf_string_dynamic_t * const buffer) {
+  f_status_t f_utf_string_dynamic_resize(const f_number_unsigned_t length, f_utf_string_dynamic_t * const buffer) {
     #ifndef _di_level_0_parameter_checking_
       if (!buffer) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_

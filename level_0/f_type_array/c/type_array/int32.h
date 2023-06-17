@@ -32,7 +32,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_adjust().
  */
 #ifndef _di_f_int32s_adjust_
-  extern f_status_t f_int32s_adjust(const f_array_length_t length, f_int32s_t *int32s);
+  extern f_status_t f_int32s_adjust(const f_number_unsigned_t length, f_int32s_t *int32s);
 #endif // _di_f_int32s_adjust_
 
 /**
@@ -96,7 +96,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_adjust().
  */
 #ifndef _di_f_int32s_decimate_by_
-  extern f_status_t f_int32s_decimate_by(const f_array_length_t amount, f_int32s_t *int32s);
+  extern f_status_t f_int32s_decimate_by(const f_number_unsigned_t amount, f_int32s_t *int32s);
 #endif // _di_f_int32s_decimate_by_
 
 /**
@@ -119,13 +119,13 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_int32s_decrease_by_
-  extern f_status_t f_int32s_decrease_by(const f_array_length_t amount, f_int32s_t *int32s);
+  extern f_status_t f_int32s_decrease_by(const f_number_unsigned_t amount, f_int32s_t *int32s);
 #endif // _di_f_int32s_decrease_by_
 
 /**
  * Increase the size of the int32s array, but only if necesary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -144,14 +144,14 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_int32s_increase_
-  extern f_status_t f_int32s_increase(const f_array_length_t step, f_int32s_t *int32s);
+  extern f_status_t f_int32s_increase(const f_number_unsigned_t step, f_int32s_t *int32s);
 #endif // _di_f_int32s_increase_
 
 /**
  * Resize the int32s array to a larger size.
  *
  * This will resize making the array larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -169,7 +169,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_int32s_increase_by_
-  extern f_status_t f_int32s_increase_by(const f_array_length_t amount, f_int32s_t *int32s);
+  extern f_status_t f_int32s_increase_by(const f_number_unsigned_t amount, f_int32s_t *int32s);
 #endif // _di_f_int32s_increase_by_
 
 /**
@@ -188,7 +188,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_int32s_resize_
-  extern f_status_t f_int32s_resize(const f_array_length_t length, f_int32s_t *int32s);
+  extern f_status_t f_int32s_resize(const f_number_unsigned_t length, f_int32s_t *int32s);
 #endif // _di_f_int32s_resize_
 
 /**
@@ -208,7 +208,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_destroy().
  */
 #ifndef _di_f_int32ss_adjust_
-  extern f_status_t f_int32ss_adjust(const f_array_length_t length, f_int32ss_t *int32ss);
+  extern f_status_t f_int32ss_adjust(const f_number_unsigned_t length, f_int32ss_t *int32ss);
 #endif // _di_f_int32ss_adjust_
 
 /**
@@ -273,7 +273,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_destroy().
  */
 #ifndef _di_f_int32ss_decimate_by_
-  extern f_status_t f_int32ss_decimate_by(const f_array_length_t amount, f_int32ss_t *int32ss);
+  extern f_status_t f_int32ss_decimate_by(const f_number_unsigned_t amount, f_int32ss_t *int32ss);
 #endif // _di_f_int32ss_decimate_by_
 
 /**
@@ -297,13 +297,13 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_int32ss_decrease_by_
-  extern f_status_t f_int32ss_decrease_by(const f_array_length_t amount, f_int32ss_t *int32ss);
+  extern f_status_t f_int32ss_decrease_by(const f_number_unsigned_t amount, f_int32ss_t *int32ss);
 #endif // _di_f_int32ss_decrease_by_
 
 /**
  * Increase the size of the int32ss array, but only if necessary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -322,14 +322,14 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_int32ss_increase_
-  extern f_status_t f_int32ss_increase(const f_array_length_t step, f_int32ss_t *int32ss);
+  extern f_status_t f_int32ss_increase(const f_number_unsigned_t step, f_int32ss_t *int32ss);
 #endif // _di_f_int32ss_increase_
 
 /**
  * Resize the int32ss array to a larger size.
  *
  * This will resize making the array larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -347,7 +347,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_int32ss_increase_by_
-  extern f_status_t f_int32ss_increase_by(const f_array_length_t amount, f_int32ss_t *int32ss);
+  extern f_status_t f_int32ss_increase_by(const f_number_unsigned_t amount, f_int32ss_t *int32ss);
 #endif // _di_f_int32ss_increase_by_
 
 /**
@@ -367,7 +367,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_int32ss_resize_
-  extern f_status_t f_int32ss_resize(const f_array_length_t length, f_int32ss_t *int32ss);
+  extern f_status_t f_int32ss_resize(const f_number_unsigned_t length, f_int32ss_t *int32ss);
 #endif // _di_f_int32ss_resize_
 
 #ifdef __cplusplus

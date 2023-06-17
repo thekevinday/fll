@@ -20,7 +20,7 @@ extern "C" {
     if (F_status_is_error(status)) return;
 
     {
-      f_array_length_t choice = 0;
+      f_number_unsigned_t choice = 0;
       f_uint16s_t choices = f_uint16s_t_initialize;
 
       // Identify and prioritize "color context" parameters.
@@ -73,7 +73,7 @@ extern "C" {
     // Identify priority of mode parameters.
     {
       uint16_t choices_array[5] = { byte_dump_parameter_hexidecimal_e, byte_dump_parameter_duodecimal_e, byte_dump_parameter_octal_e, byte_dump_parameter_binary_e, byte_dump_parameter_decimal_e };
-      f_array_length_t choice = 0;
+      f_number_unsigned_t choice = 0;
       const f_uint16s_t choices = macro_f_uint16s_t_initialize_1(choices_array, 0, 5);
 
       status = f_console_parameter_prioritize_right(main->parameters, choices, &choice);
@@ -104,7 +104,7 @@ extern "C" {
     // Identify priority of presentation parameters.
     {
       uint16_t choices_array[3] = { byte_dump_parameter_normal_e, byte_dump_parameter_simple_e, byte_dump_parameter_classic_e };
-      f_array_length_t choice = 0;
+      f_number_unsigned_t choice = 0;
       const f_uint16s_t choices = macro_f_uint16s_t_initialize_1(choices_array, 0, 3);
 
       status = f_console_parameter_prioritize_right(main->parameters, choices, &choice);
@@ -129,7 +129,7 @@ extern "C" {
     // Identify priority of narrow and wide parameters.
     {
       uint16_t choices_array[2] = { byte_dump_parameter_narrow_e, byte_dump_parameter_wide_e };
-      f_array_length_t choice = byte_dump_parameter_wide_e;
+      f_number_unsigned_t choice = byte_dump_parameter_wide_e;
       const f_uint16s_t choices = macro_f_uint16s_t_initialize_1(choices_array, 0, 2);
 
       status = f_console_parameter_prioritize_right(main->parameters, choices, &choice);
@@ -184,7 +184,7 @@ extern "C" {
       }
 
       if (main->parameters.array[byte_dump_parameter_width_e].result & f_console_result_value_e) {
-        const f_array_length_t index = main->parameters.array[byte_dump_parameter_width_e].values.array[main->parameters.array[byte_dump_parameter_width_e].values.used - 1];
+        const f_number_unsigned_t index = main->parameters.array[byte_dump_parameter_width_e].values.array[main->parameters.array[byte_dump_parameter_width_e].values.used - 1];
         f_number_unsigned_t number = 0;
 
         status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, data.argv[index], &number);
@@ -223,7 +223,7 @@ extern "C" {
       }
 
       if (main->parameters.array[byte_dump_parameter_first_e].result & f_console_result_value_e) {
-        const f_array_length_t index = main->parameters.array[byte_dump_parameter_first_e].values.array[main->parameters.array[byte_dump_parameter_first_e].values.used - 1];
+        const f_number_unsigned_t index = main->parameters.array[byte_dump_parameter_first_e].values.array[main->parameters.array[byte_dump_parameter_first_e].values.used - 1];
         f_number_unsigned_t number = 0;
 
         status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, data.argv[index], &number);
@@ -262,7 +262,7 @@ extern "C" {
       }
 
       if (main->parameters.array[byte_dump_parameter_last_e].result & f_console_result_value_e) {
-        const f_array_length_t index = main->parameters.array[byte_dump_parameter_last_e].values.array[main->parameters.array[byte_dump_parameter_last_e].values.used - 1];
+        const f_number_unsigned_t index = main->parameters.array[byte_dump_parameter_last_e].values.array[main->parameters.array[byte_dump_parameter_last_e].values.used - 1];
         f_number_unsigned_t number = 0;
 
         status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, data.argv[index], &number);
@@ -353,7 +353,7 @@ extern "C" {
         {
           f_status_t missing_files = F_none;
 
-          for (f_array_length_t counter = 0; counter < main->parameters.remaining.used; ++counter) {
+          for (f_number_unsigned_t counter = 0; counter < main->parameters.remaining.used; ++counter) {
 
             status = f_file_exists(data.argv[main->parameters.remaining.array[counter]], F_true);
 
@@ -379,7 +379,7 @@ extern "C" {
 
         f_file_t file = f_file_t_initialize;
 
-        for (f_array_length_t counter = 0; counter < main->parameters.remaining.used; ++counter) {
+        for (f_number_unsigned_t counter = 0; counter < main->parameters.remaining.used; ++counter) {
 
           status = f_file_stream_open(data.argv[main->parameters.remaining.array[counter]], f_string_empty_s, &file);
 

@@ -121,7 +121,7 @@ extern "C" {
         return;
       }
 
-      const f_array_length_t index = main->program.parameters.array[iki_write_parameter_file_e].values.array[0];
+      const f_number_unsigned_t index = main->program.parameters.array[iki_write_parameter_file_e].values.array[0];
 
       main->program.output.to.id = -1;
       main->program.output.to.stream = 0;
@@ -153,7 +153,7 @@ extern "C" {
     }
 
     if (main->program.parameters.array[iki_write_parameter_object_e].result & f_console_result_value_e) {
-      f_array_lengths_t * const values = &main->program.parameters.array[iki_write_parameter_object_e].values;
+      f_number_unsigneds_t * const values = &main->program.parameters.array[iki_write_parameter_object_e].values;
 
       main->setting.objects.used = 0;
 
@@ -170,7 +170,7 @@ extern "C" {
       }
 
       // Construct the array without allocating any more memory by setting this as a static string (used > 0, size = 0).
-      for (f_array_length_t index = 0; main->setting.objects.used < values->used; ) {
+      for (f_number_unsigned_t index = 0; main->setting.objects.used < values->used; ) {
 
         index = values->array[main->setting.objects.used];
 
@@ -194,7 +194,7 @@ extern "C" {
     }
 
     if (main->program.parameters.array[iki_write_parameter_content_e].result & f_console_result_value_e) {
-      f_array_lengths_t * const values = &main->program.parameters.array[iki_write_parameter_content_e].values;
+      f_number_unsigneds_t * const values = &main->program.parameters.array[iki_write_parameter_content_e].values;
 
       main->setting.contents.used = 0;
 
@@ -211,7 +211,7 @@ extern "C" {
       }
 
       // Construct the array without allocating any more memory by setting this as a static string (used > 0, size = 0).
-      for (f_array_length_t index = 0; main->setting.contents.used < values->used; ) {
+      for (f_number_unsigned_t index = 0; main->setting.contents.used < values->used; ) {
 
         index = values->array[main->setting.contents.used];
 

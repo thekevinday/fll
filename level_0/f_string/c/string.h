@@ -7,8 +7,8 @@
  *
  * Provides string capabilities.
  *
- * It is highly recommended that all string arrays are set to a max size of F_array_length_t_size_d.
- * Any calculations against the length (aka: string.used) can always perform (A < B) operators such that the B is F_array_length_t_size_d + 1 without integer overflow.
+ * It is highly recommended that all string arrays are set to a max size of F_number_t_size_unsigned_d.
+ * Any calculations against the length (aka: string.used) can always perform (A < B) operators such that the B is F_number_t_size_unsigned_d + 1 without integer overflow.
  */
 #ifndef _F_string_h
 #define _F_string_h
@@ -71,7 +71,7 @@ extern "C" {
  * @see f_memory_resize()
  */
 #ifndef _di_f_string_append_
-  extern f_status_t f_string_append(const f_string_t source, const f_array_length_t length, f_string_dynamic_t * const destination);
+  extern f_status_t f_string_append(const f_string_t source, const f_number_unsigned_t length, f_string_dynamic_t * const destination);
 #endif // _di_f_string_append_
 
 /**
@@ -98,7 +98,7 @@ extern "C" {
  * @see f_memory_resize()
  */
 #ifndef _di_f_string_append_assure_
-  extern f_status_t f_string_append_assure(const f_string_t source, const f_array_length_t length, f_string_dynamic_t * const destination);
+  extern f_status_t f_string_append_assure(const f_string_t source, const f_number_unsigned_t length, f_string_dynamic_t * const destination);
 #endif // _di_f_string_append_assure_
 
 /**
@@ -126,7 +126,7 @@ extern "C" {
  * @see f_memory_resize()
  */
 #ifndef _di_f_string_append_assure_nulless_
-  extern f_status_t f_string_append_assure_nulless(const f_string_t source, const f_array_length_t length, f_string_dynamic_t * const destination);
+  extern f_status_t f_string_append_assure_nulless(const f_string_t source, const f_number_unsigned_t length, f_string_dynamic_t * const destination);
 #endif // _di_f_string_append_assure_nulless_
 
 /**
@@ -153,7 +153,7 @@ extern "C" {
  * @see f_memory_resize()
  */
 #ifndef _di_f_string_append_nulless_
-  extern f_status_t f_string_append_nulless(const f_string_t source, const f_array_length_t length, f_string_dynamic_t * const destination);
+  extern f_status_t f_string_append_nulless(const f_string_t source, const f_number_unsigned_t length, f_string_dynamic_t * const destination);
 #endif // _di_f_string_append_nulless_
 
 /**
@@ -184,7 +184,7 @@ extern "C" {
  * @see f_memory_resize()
  */
 #ifndef _di_f_string_mash_
-  extern f_status_t f_string_mash(const f_string_t glue, const f_array_length_t glue_length, const f_string_t source, const f_array_length_t length, f_string_dynamic_t * const destination);
+  extern f_status_t f_string_mash(const f_string_t glue, const f_number_unsigned_t glue_length, const f_string_t source, const f_number_unsigned_t length, f_string_dynamic_t * const destination);
 #endif // _di_f_string_mash_
 
 /**
@@ -217,7 +217,7 @@ extern "C" {
  * @see f_memory_resize()
  */
 #ifndef _di_f_string_mash_nulless_
-  extern f_status_t f_string_mash_nulless(const f_string_t glue, const f_array_length_t glue_length, const f_string_t source, const f_array_length_t length, f_string_dynamic_t * const destination);
+  extern f_status_t f_string_mash_nulless(const f_string_t glue, const f_number_unsigned_t glue_length, const f_string_t source, const f_number_unsigned_t length, f_string_dynamic_t * const destination);
 #endif // _di_f_string_mash_nulless_
 
 /**
@@ -248,7 +248,7 @@ extern "C" {
  * @see f_memory_resize()
  */
 #ifndef _di_f_string_mish_
-  extern f_status_t f_string_mish(const f_string_t glue, const f_array_length_t glue_length, const f_string_t source, const f_array_length_t length, f_string_dynamic_t * const destination);
+  extern f_status_t f_string_mish(const f_string_t glue, const f_number_unsigned_t glue_length, const f_string_t source, const f_number_unsigned_t length, f_string_dynamic_t * const destination);
 #endif // _di_f_string_mish_
 
 /**
@@ -281,7 +281,7 @@ extern "C" {
  * @see f_memory_resize()
  */
 #ifndef _di_f_string_mish_nulless_
-  extern f_status_t f_string_mish_nulless(const f_string_t glue, const f_array_length_t glue_length, const f_string_t source, const f_array_length_t length, f_string_dynamic_t * const destination);
+  extern f_status_t f_string_mish_nulless(const f_string_t glue, const f_number_unsigned_t glue_length, const f_string_t source, const f_number_unsigned_t length, f_string_dynamic_t * const destination);
 #endif // _di_f_string_mish_nulless_
 
 /**
@@ -308,7 +308,7 @@ extern "C" {
  * @see f_memory_resize()
  */
 #ifndef _di_f_string_prepend_
-  extern f_status_t f_string_prepend(const f_string_t source, const f_array_length_t length, f_string_dynamic_t * const destination);
+  extern f_status_t f_string_prepend(const f_string_t source, const f_number_unsigned_t length, f_string_dynamic_t * const destination);
 #endif // _di_f_string_prepend_
 
 /**
@@ -337,7 +337,7 @@ extern "C" {
  * @see f_memory_resize()
  */
 #ifndef _di_f_string_prepend_assure_
-  extern f_status_t f_string_prepend_assure(const f_string_t source, const f_array_length_t length, f_string_dynamic_t * const destination);
+  extern f_status_t f_string_prepend_assure(const f_string_t source, const f_number_unsigned_t length, f_string_dynamic_t * const destination);
 #endif // _di_f_string_prepend_assure_
 
 /**
@@ -367,7 +367,7 @@ extern "C" {
  * @see f_memory_resize()
  */
 #ifndef _di_f_string_prepend_assure_nulless_
-  extern f_status_t f_string_prepend_assure_nulless(const f_string_t source, const f_array_length_t length, f_string_dynamic_t * const destination);
+  extern f_status_t f_string_prepend_assure_nulless(const f_string_t source, const f_number_unsigned_t length, f_string_dynamic_t * const destination);
 #endif // _di_f_string_prepend_assure_nulless_
 
 /**
@@ -397,7 +397,7 @@ extern "C" {
  * @see f_memory_resize()
  */
 #ifndef _di_f_string_prepend_nulless_
-  extern f_status_t f_string_prepend_nulless(const f_string_t source, const f_array_length_t length, f_string_dynamic_t * const destination);
+  extern f_status_t f_string_prepend_nulless(const f_string_t source, const f_number_unsigned_t length, f_string_dynamic_t * const destination);
 #endif // _di_f_string_prepend_nulless_
 
 /**

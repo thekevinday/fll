@@ -19,7 +19,7 @@ extern "C" {
 /**
  * The maximum size for a single parameter (the length of the string representing the parameter).
  *
- * The ideal parameter value is F_array_length_t_size_d, which generally defaults to 2^64 (unsigned).
+ * The ideal parameter value is F_number_t_size_unsigned_d, which generally defaults to 2^64 (unsigned).
  * However, the libc/POSIX appears to limit this to 2^63 (signed).
  */
 #ifndef _di_f_console_length_size_d_
@@ -320,10 +320,10 @@ extern "C" {
     f_console_result_t result;
     f_state_t *state;
 
-    f_array_length_t at;
-    f_array_length_t location;
-    f_array_length_t location_sub;
-    f_array_lengths_t needs;
+    f_number_unsigned_t at;
+    f_number_unsigned_t location;
+    f_number_unsigned_t location_sub;
+    f_number_unsigneds_t needs;
   } f_console_parameter_state_t;
 
   #define f_console_parameter_state_t_initialize { \
@@ -333,10 +333,10 @@ extern "C" {
     F_false, \
     f_console_result_t_initialize, \
     0, \
-    f_array_length_t_initialize, \
-    f_array_length_t_initialize, \
-    f_array_length_t_initialize, \
-    f_array_lengths_t_initialize, \
+    f_number_unsigned_t_initialize, \
+    f_number_unsigned_t_initialize, \
+    f_number_unsigned_t_initialize, \
+    f_number_unsigneds_t_initialize, \
   }
 #endif // _di_f_console_parameter_state_t_
 
@@ -377,18 +377,18 @@ extern "C" {
     f_string_static_t match_long;
     f_string_static_t match_simple;
 
-    f_array_length_t values_total;
+    f_number_unsigned_t values_total;
 
     f_console_flag_t flag;
     f_console_result_t result;
 
-    f_array_length_t location;
-    f_array_length_t location_sub;
+    f_number_unsigned_t location;
+    f_number_unsigned_t location_sub;
 
-    f_array_lengths_t locations;
-    f_array_lengths_t locations_sub;
+    f_number_unsigneds_t locations;
+    f_number_unsigneds_t locations_sub;
 
-    f_array_lengths_t values;
+    f_number_unsigneds_t values;
   } f_console_parameter_t;
 
   #define f_console_parameter_t_initialize { \
@@ -397,12 +397,12 @@ extern "C" {
     f_string_static_t_initialize, \
     f_console_flag_t_initialize, \
     f_console_result_t_initialize, \
-    f_array_length_t_initialize, \
-    f_array_length_t_initialize, \
-    f_array_length_t_initialize, \
-    f_array_lengths_t_initialize, \
-    f_array_lengths_t_initialize, \
-    f_array_lengths_t_initialize, \
+    f_number_unsigned_t_initialize, \
+    f_number_unsigned_t_initialize, \
+    f_number_unsigned_t_initialize, \
+    f_number_unsigneds_t_initialize, \
+    f_number_unsigneds_t_initialize, \
+    f_number_unsigneds_t_initialize, \
   }
 
   #define macro_f_console_parameter_t_initialize_1(match_short, match_long, match_simple, values_total, flag, result, location, location_sub, locations, locations_sub, values) { \
@@ -429,9 +429,9 @@ extern "C" {
     f_console_result_none_e, \
     0, \
     0, \
-    f_array_lengths_t_initialize, \
-    f_array_lengths_t_initialize, \
-    f_array_lengths_t_initialize, \
+    f_number_unsigneds_t_initialize, \
+    f_number_unsigneds_t_initialize, \
+    f_number_unsigneds_t_initialize, \
   }
 
   #define macro_f_console_parameter_t_initialize_3(match_short, match_long, values_total, flag) { \
@@ -443,9 +443,9 @@ extern "C" {
     f_console_result_none_e, \
     0, \
     0, \
-    f_array_lengths_t_initialize, \
-    f_array_lengths_t_initialize, \
-    f_array_lengths_t_initialize, \
+    f_number_unsigneds_t_initialize, \
+    f_number_unsigneds_t_initialize, \
+    f_number_unsigneds_t_initialize, \
   }
 
   #define macro_f_console_parameter_t_initialize_4(match_short, values_total, flag) { \
@@ -457,9 +457,9 @@ extern "C" {
     f_console_result_none_e, \
     0, \
     0, \
-    f_array_lengths_t_initialize, \
-    f_array_lengths_t_initialize, \
-    f_array_lengths_t_initialize, \
+    f_number_unsigneds_t_initialize, \
+    f_number_unsigneds_t_initialize, \
+    f_number_unsigneds_t_initialize, \
   }
 
   #define macro_f_console_parameter_t_initialize_5(match_long, values_total, flag) { \
@@ -471,9 +471,9 @@ extern "C" {
     f_console_result_none_e, \
     0, \
     0, \
-    f_array_lengths_t_initialize, \
-    f_array_lengths_t_initialize, \
-    f_array_lengths_t_initialize, \
+    f_number_unsigneds_t_initialize, \
+    f_number_unsigneds_t_initialize, \
+    f_number_unsigneds_t_initialize, \
   }
 
   #define macro_f_console_parameter_t_initialize_6(match_simple, values_total, flag) { \
@@ -485,9 +485,9 @@ extern "C" {
     f_console_result_none_e, \
     0, \
     0, \
-    f_array_lengths_t_initialize, \
-    f_array_lengths_t_initialize, \
-    f_array_lengths_t_initialize, \
+    f_number_unsigneds_t_initialize, \
+    f_number_unsigneds_t_initialize, \
+    f_number_unsigneds_t_initialize, \
   }
 #endif // _di_f_console_parameter_t_
 
@@ -525,8 +525,8 @@ extern "C" {
   typedef struct {
     f_console_parameter_t *array;
     f_string_dynamics_t arguments;
-    f_array_lengths_t remaining;
-    f_array_length_t used;
+    f_number_unsigneds_t remaining;
+    f_number_unsigned_t used;
 
     void (*callback)(const f_console_arguments_t arguments, void * const parameters, f_console_parameter_state_t * const state, void * const data);
   } f_console_parameters_t;
@@ -534,7 +534,7 @@ extern "C" {
   #define f_console_parameters_t_initialize { \
     0, \
     f_string_dynamics_t_initialize, \
-    f_array_lengths_t_initialize, \
+    f_number_unsigneds_t_initialize, \
     0, \
     0 \
   }
@@ -542,7 +542,7 @@ extern "C" {
   #define macro_f_console_parameters_t_initialize_1(parameters, used, callback) { \
     parameters, \
     f_string_dynamics_t_initialize, \
-    f_array_lengths_t_initialize, \
+    f_number_unsigneds_t_initialize, \
     used, \
     callback \
   }
@@ -784,10 +784,10 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_string_dynamics_resize().
- *   Errors (with error bit) from: f_array_lengths_resize().
+ *   Errors (with error bit) from: f_number_unsigneds_resize().
  *
  * @see f_string_dynamics_resize()
- * @see f_array_lengths_resize()
+ * @see f_number_unsigneds_resize()
  */
 #ifndef _di_f_console_parameter_state_delete_
   extern f_status_t f_console_parameter_state_delete(f_console_parameter_state_t * const state);
@@ -805,10 +805,10 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_string_dynamics_adjust().
- *   Errors (with error bit) from: f_array_lengths_adjust().
+ *   Errors (with error bit) from: f_number_unsigneds_adjust().
  *
  * @see f_string_dynamics_adjust()
- * @see f_array_lengths_adjust()
+ * @see f_number_unsigneds_adjust()
  */
 #ifndef _di_f_console_parameter_state_destroy_
   extern f_status_t f_console_parameter_state_destroy(f_console_parameter_state_t * const state);
@@ -826,10 +826,10 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_string_dynamics_resize().
- *   Errors (with error bit) from: f_array_lengths_resize().
+ *   Errors (with error bit) from: f_number_unsigneds_resize().
  *
  * @see f_string_dynamics_resize()
- * @see f_array_lengths_resize()
+ * @see f_number_unsigneds_resize()
  */
 #ifndef _di_f_console_parameters_delete_
   extern f_status_t f_console_parameters_delete(f_console_parameters_t * const parameters);
@@ -847,10 +847,10 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_string_dynamics_adjust().
- *   Errors (with error bit) from: f_array_lengths_adjust().
+ *   Errors (with error bit) from: f_number_unsigneds_adjust().
  *
  * @see f_string_dynamics_adjust()
- * @see f_array_lengths_adjust()
+ * @see f_number_unsigneds_adjust()
  */
 #ifndef _di_f_console_parameters_destroy_
   extern f_status_t f_console_parameters_destroy(f_console_parameters_t * const parameters);

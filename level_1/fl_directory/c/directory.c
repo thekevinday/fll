@@ -15,8 +15,8 @@ extern "C" {
     if (status == F_true) return F_directory_found;
 
     {
-      f_array_length_t at_tree = 0;
-      f_array_length_t at_path = 0;
+      f_number_unsigned_t at_tree = 0;
+      f_number_unsigned_t at_path = 0;
       f_string_static_t tree = f_string_static_t_initialize;
 
       f_char_t tree_string[path.used + 1];
@@ -201,8 +201,8 @@ extern "C" {
     const bool null_terminated = path->string[path->used] == 0;
     bool first_nulless = F_false;
 
-    f_array_length_t i = path->used - 1;
-    f_array_length_t j = 0;
+    f_number_unsigned_t i = path->used - 1;
+    f_number_unsigned_t j = 0;
 
     f_status_t status = F_none;
 

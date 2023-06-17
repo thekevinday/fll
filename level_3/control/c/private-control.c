@@ -137,11 +137,11 @@ extern "C" {
     data->cache.large.used = 0;
     data->cache.small.used = 0;
 
-    f_array_length_t i = 0;
+    f_number_unsigned_t i = 0;
     f_status_t status = F_none;
 
     {
-      f_array_length_t length = 5 + f_fss_header_s.used + f_fss_payload_s.used;
+      f_number_unsigned_t length = 5 + f_fss_header_s.used + f_fss_payload_s.used;
       length += control_action_s.used + control_length_s.used + control_type_s.used;
       length += (f_fss_payload_list_open_s.used + f_fss_payload_list_close_s.used) * 2;
       length += (f_fss_payload_header_open_s.used + f_fss_payload_header_close_s.used) * 3;
@@ -283,12 +283,12 @@ extern "C" {
     header->length = 0;
 
     f_status_t status = F_none;
-    f_array_length_t i = 0;
+    f_number_unsigned_t i = 0;
     f_string_range_t range_header = f_string_range_t_initialize;
     f_string_range_t range_payload = f_string_range_t_initialize;
 
     {
-      f_array_length_t length = 5;
+      f_number_unsigned_t length = 5;
       uint8_t head[length];
 
       memset(head, 0, sizeof(uint8_t) * length);
@@ -431,7 +431,7 @@ extern "C" {
 
           if (f_compare_dynamic_partial_string(control_action_s.string, data->cache.large, control_action_s.used, data->cache.header_objects.array[i]) == F_equal_to) {
             if (!(found & 0x1)) {
-              const f_array_length_t action_length = (data->cache.header_contents.array[i].array[0].stop - data->cache.header_contents.array[i].array[0].start) + 1;
+              const f_number_unsigned_t action_length = (data->cache.header_contents.array[i].array[0].stop - data->cache.header_contents.array[i].array[0].start) + 1;
               char action_string[action_length + 1];
               const f_string_static_t action = macro_f_string_static_t_initialize_1(action_string, 0, action_length);
 
@@ -494,7 +494,7 @@ extern "C" {
               if (F_status_set_fine(status) == F_number) {
 
                 // Not a number, so attempt get by status string name.
-                const f_array_length_t name_length = (data->cache.header_contents.array[i].array[0].stop - data->cache.header_contents.array[i].array[0].start) + 1;
+                const f_number_unsigned_t name_length = (data->cache.header_contents.array[i].array[0].stop - data->cache.header_contents.array[i].array[0].start) + 1;
                 char name_string[name_length + 1];
                 const f_string_static_t name = macro_f_string_static_t_initialize_1(name_string, 0, name_length);
 
@@ -615,7 +615,7 @@ extern "C" {
     data->cache.small.used = 0;
 
     if (main->parameters.array[control_parameter_settings_e].result & f_console_result_value_e) {
-      const f_array_length_t index = main->parameters.array[control_parameter_settings_e].values.array[main->parameters.array[control_parameter_settings_e].values.used - 1];
+      const f_number_unsigned_t index = main->parameters.array[control_parameter_settings_e].values.array[main->parameters.array[control_parameter_settings_e].values.used - 1];
 
       status = f_string_dynamic_append(data->argv[index], &data->cache.small);
     }
@@ -674,7 +674,7 @@ extern "C" {
     if (F_status_is_error_not(status)) {
       uint8_t parameter_hass[] = { 0, 0, 0, 0 };
 
-      f_array_length_t parameter_ats[] = { 0, 0, 0, 0 };
+      f_number_unsigned_t parameter_ats[] = { 0, 0, 0, 0 };
 
       {
         const f_string_static_t parameter_names[] = {
@@ -684,7 +684,7 @@ extern "C" {
           control_path_socket_suffix_s,
         };
 
-        f_array_length_t i = 0;
+        f_number_unsigned_t i = 0;
         uint8_t j = 0;
         f_string_range_t range = f_string_range_t_initialize;
 
@@ -707,7 +707,7 @@ extern "C" {
       data->cache.small.used = 0;
 
       if (main->parameters.array[control_parameter_socket_e].result & f_console_result_value_e) {
-        const f_array_length_t index = main->parameters.array[control_parameter_socket_e].values.array[main->parameters.array[control_parameter_socket_e].values.used - 1];
+        const f_number_unsigned_t index = main->parameters.array[control_parameter_socket_e].values.array[main->parameters.array[control_parameter_socket_e].values.used - 1];
 
         status = f_string_dynamic_append(data->argv[index], &data->cache.small);
       }
@@ -772,7 +772,7 @@ extern "C" {
           for (uint8_t i = 0; i < 3; ++i) {
 
             if (append_ids[i] && main->parameters.array[append_ids[i]].result & f_console_result_value_e) {
-              const f_array_length_t index = main->parameters.array[append_ids[i]].values.array[main->parameters.array[append_ids[i]].values.used - 1];
+              const f_number_unsigned_t index = main->parameters.array[append_ids[i]].values.array[main->parameters.array[append_ids[i]].values.used - 1];
 
               status = f_string_dynamic_append(data->argv[index], &data->cache.small);
             }
@@ -846,7 +846,7 @@ extern "C" {
 
     f_string_ranges_resize(0, &objects);
     f_string_rangess_resize(0, &contents);
-    f_array_lengths_resize(0, &delimits);
+    f_number_unsigneds_resize(0, &delimits);
 
     data->cache.large.used = 0;
     data->cache.small.used = 0;

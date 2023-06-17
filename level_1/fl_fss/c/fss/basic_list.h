@@ -74,16 +74,16 @@ extern "C" {
  *     F_interrupt (with error bit) if stopping due to an interrupt.
  *     F_parameter (with error bit) if a parameter is invalid.
  *
- *     Errors (with error bit) from: f_array_lengths_increase().
- *     Errors (with error bit) from: f_array_lengths_increase_by().
+ *     Errors (with error bit) from: f_number_unsigneds_increase().
+ *     Errors (with error bit) from: f_number_unsigneds_increase_by().
  *     Errors (with error bit) from: f_fss_is_space().
  *     Errors (with error bit) from: f_fss_seek_to_eol().
  *     Errors (with error bit) from: f_fss_skip_past_delimit().
  *     Errors (with error bit) from: f_string_ranges_increase().
  *     Errors (with error bit) from: f_utf_buffer_increment().
  *
- * @see f_array_lengths_increase()
- * @see f_array_lengths_increase_by()
+ * @see f_number_unsigneds_increase()
+ * @see f_number_unsigneds_increase_by()
  * @see f_fss_is_space()
  * @see f_fss_seek_to_eol()
  * @see f_fss_skip_past_delimit()
@@ -200,7 +200,7 @@ extern "C" {
  *     F_interrupt (with error bit) if stopping due to an interrupt.
  *     F_parameter (with error bit) if a parameter is invalid.
  *
- *     Errors (with error bit) from: f_array_lengths_increase_by().
+ *     Errors (with error bit) from: f_number_unsigneds_increase_by().
  *     Errors (with error bit) from: f_fss_is_graph().
  *     Errors (with error bit) from: f_fss_is_space().
  *     Errors (with error bit) from: f_fss_is_zero_width().
@@ -209,7 +209,7 @@ extern "C" {
  *     Errors (with error bit) from: f_fss_skip_past_space().
  *     Errors (with error bit) from: f_utf_buffer_increment().
  *
- * @see f_array_lengths_increase_by()
+ * @see f_number_unsigneds_increase_by()
  * @see f_fss_is_graph()
  * @see f_fss_is_space()
  * @see f_fss_is_zero_width()

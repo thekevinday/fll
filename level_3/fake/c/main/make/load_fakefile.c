@@ -64,7 +64,7 @@ extern "C" {
       if (F_status_is_error(data_make->main->setting.state.status)) {
         f_string_ranges_resize(0, &list_objects);
         f_string_rangess_resize(0, &list_contents);
-        f_array_lengths_resize(0, &delimits);
+        f_number_unsigneds_resize(0, &delimits);
 
         return;
       }
@@ -86,7 +86,7 @@ extern "C" {
         f_fss_set_resize(0, &settings);
         f_string_ranges_resize(0, &list_objects);
         f_string_rangess_resize(0, &list_contents);
-        f_array_lengths_resize(0, &delimits);
+        f_number_unsigneds_resize(0, &delimits);
 
         return;
       }
@@ -94,7 +94,7 @@ extern "C" {
       {
         f_string_range_t content_range = f_string_range_t_initialize;
 
-        for (f_array_length_t i = 0; i < list_objects.used; ++i) {
+        for (f_number_unsigned_t i = 0; i < list_objects.used; ++i) {
 
           if (fake_signal_check(data_make->main)) break;
 
@@ -172,7 +172,7 @@ extern "C" {
 
       f_string_ranges_resize(0, &list_objects);
       f_string_rangess_resize(0, &list_contents);
-      f_array_lengths_resize(0, &delimits);
+      f_number_unsigneds_resize(0, &delimits);
 
       if (F_status_is_error(data_make->main->setting.state.status)) {
         f_fss_set_resize(0, &settings);
@@ -220,7 +220,7 @@ extern "C" {
       data_make->setting_make.fail = fake_make_operation_fail_exit_e;
 
       if (settings.objects.used) {
-        for (f_array_length_t i = 0; i < settings.objects.used; ++i) {
+        for (f_number_unsigned_t i = 0; i < settings.objects.used; ++i) {
 
           if (f_compare_dynamic_partial_string(fake_make_setting_load_build_s.string, data_make->main->buffer, fake_make_setting_load_build_s.used, settings.objects.array[i]) == F_equal_to) {
             fake_make_load_fakefile_setting_build(data_make, &settings.objects.array[i], &settings.contents.array[i]);
@@ -376,8 +376,8 @@ extern "C" {
     if (define.used) {
       f_string_dynamic_t combined = f_string_dynamic_t_initialize;
 
-      f_array_length_t i = 0;
-      f_array_length_t j = 0;
+      f_number_unsigned_t i = 0;
+      f_number_unsigned_t j = 0;
 
       for (; i < define.used; ++i) {
 
@@ -432,8 +432,8 @@ extern "C" {
 
     f_string_dynamic_t name_define = f_string_dynamic_t_initialize;
 
-    f_array_length_t i = 0;
-    f_array_length_t j = 0;
+    f_number_unsigned_t i = 0;
+    f_number_unsigned_t j = 0;
 
     data_make->setting_build.flag |= data_build_setting_flag_has_environment_e;
 
@@ -570,7 +570,7 @@ extern "C" {
           // Each "return" define replaces the previous "return" define.
           data_make->setting_make.parameter.array[0].value.array[0].used = 0;
 
-          for (f_array_length_t i = 1; i < content->used; ++i) {
+          for (f_number_unsigned_t i = 1; i < content->used; ++i) {
 
             data_make->main->setting.state.status = f_string_dynamic_partial_append_nulless(data_make->main->buffer, content->array[i], &data_make->setting_make.parameter.array[0].value.array[0]);
 

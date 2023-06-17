@@ -12,20 +12,20 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    const f_array_length_t values_total = data->main->parameters.array[fss_embedded_list_read_parameter_depth_e].values.used + data->main->parameters.array[fss_embedded_list_read_parameter_at_e].values.used + data->main->parameters.array[fss_embedded_list_read_parameter_name_e].values.used;
+    const f_number_unsigned_t values_total = data->main->parameters.array[fss_embedded_list_read_parameter_depth_e].values.used + data->main->parameters.array[fss_embedded_list_read_parameter_at_e].values.used + data->main->parameters.array[fss_embedded_list_read_parameter_name_e].values.used;
 
-    f_array_length_t values_order[values_total];
-    f_array_length_t values_type[values_total];
+    f_number_unsigned_t values_order[values_total];
+    f_number_unsigned_t values_type[values_total];
 
-    f_array_length_t i = 0;
-    f_array_length_t j = 0;
+    f_number_unsigned_t i = 0;
+    f_number_unsigned_t j = 0;
 
     // Determine the linear order in which all of the three parameter values are to be applied.
     if (values_total) {
       memset(values_order, 0, sizeof(f_char_t) * values_total);
 
-      f_array_length_t k = 0;
-      f_array_length_t l = 0;
+      f_number_unsigned_t k = 0;
+      f_number_unsigned_t l = 0;
 
       for (; j < data->main->parameters.array[fss_embedded_list_read_parameter_depth_e].values.used; ++j) {
 
@@ -272,8 +272,8 @@ extern "C" {
         return status;
       }
 
-      f_array_length_t i = 0;
-      f_array_length_t j = 0;
+      f_number_unsigned_t i = 0;
+      f_number_unsigned_t j = 0;
 
       // Comments are not to be part of the file, so remove them.
       for (; i < comments->used; ++i) {
@@ -299,7 +299,7 @@ extern "C" {
       f_number_unsigned_t select = 0;
 
       if (data->main->parameters.array[fss_embedded_list_read_parameter_select_e].result & f_console_result_value_e) {
-        const f_array_length_t index = data->main->parameters.array[fss_embedded_list_read_parameter_select_e].values.array[data->main->parameters.array[fss_embedded_list_read_parameter_select_e].values.used - 1];
+        const f_number_unsigned_t index = data->main->parameters.array[fss_embedded_list_read_parameter_select_e].values.array[data->main->parameters.array[fss_embedded_list_read_parameter_select_e].values.used - 1];
 
         status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, data->main->parameters.arguments.array[index], &select);
 
@@ -316,10 +316,10 @@ extern "C" {
       }
     }
 
-    f_array_length_t line = 0;
+    f_number_unsigned_t line = 0;
 
     if (data->main->parameters.array[fss_embedded_list_read_parameter_line_e].result & f_console_result_value_e) {
-      const f_array_length_t index = data->main->parameters.array[fss_embedded_list_read_parameter_line_e].values.array[data->main->parameters.array[fss_embedded_list_read_parameter_line_e].values.used - 1];
+      const f_number_unsigned_t index = data->main->parameters.array[fss_embedded_list_read_parameter_line_e].values.array[data->main->parameters.array[fss_embedded_list_read_parameter_line_e].values.used - 1];
 
       status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, data->main->parameters.arguments.array[index], &line);
 
@@ -346,7 +346,7 @@ extern "C" {
 #endif // _di_fss_embedded_list_read_main_process_file_
 
 #ifndef _di_fss_embedded_list_read_main_process_for_depth_
-  f_status_t fss_embedded_list_read_main_process_for_depth(fss_embedded_list_read_data_t * const data, const f_string_static_t filename, const fss_embedded_list_read_depths_t depths, const f_array_length_t depths_index, const f_array_length_t line, const fss_embedded_list_read_skip_t parents, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits) {
+  f_status_t fss_embedded_list_read_main_process_for_depth(fss_embedded_list_read_data_t * const data, const f_string_static_t filename, const fss_embedded_list_read_depths_t depths, const f_number_unsigned_t depths_index, const f_number_unsigned_t line, const fss_embedded_list_read_skip_t parents, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits) {
 
     f_fss_items_t *items = &data->nest.depth[depths.array[depths_index].depth];
 
@@ -356,7 +356,7 @@ extern "C" {
     memset(skip, F_false, sizeof(skip) * items->used);
 
     if (parents.used) {
-      for (f_array_length_t i = 0; i < items->used; ++i) {
+      for (f_number_unsigned_t i = 0; i < items->used; ++i) {
 
         if (items->array[i].parent >= parents.used || parents.skip[items->array[i].parent]) {
           skip[i] = F_true;
@@ -365,10 +365,10 @@ extern "C" {
     }
 
     if (depths.array[depths_index].index_name || depths.array[depths_index].index_at) {
-      const f_array_lengths_t except_none = f_array_lengths_t_initialize;
+      const f_number_unsigneds_t except_none = f_number_unsigneds_t_initialize;
 
-      f_array_length_t i = 0;
-      f_array_length_t j = 0;
+      f_number_unsigned_t i = 0;
+      f_number_unsigned_t j = 0;
 
       if (!depths.array[depths_index].index_name || (depths.array[depths_index].index_at && depths.array[depths_index].index_at < depths.array[depths_index].index_name)) {
 
@@ -451,8 +451,8 @@ extern "C" {
         parents_next.used = items->used;
       }
       else {
-        const f_array_length_t parents_depth = depths.array[depths_index + 1].depth - 1;
-        const f_array_length_t depth_next = depths.array[depths_index + 1].depth;
+        const f_number_unsigned_t parents_depth = depths.array[depths_index + 1].depth - 1;
+        const f_number_unsigned_t depth_next = depths.array[depths_index + 1].depth;
 
         parents_next.skip = skip_next;
         parents_next.used = data->nest.depth[parents_depth].used;
@@ -463,8 +463,8 @@ extern "C" {
         f_fss_items_t *items_previous = 0;
         f_fss_item_t *item_previous = 0;
 
-        f_array_length_t i = 0;
-        f_array_length_t j = 0;
+        f_number_unsigned_t i = 0;
+        f_number_unsigned_t j = 0;
 
         for (; i < items_next->used; ++i) {
 
@@ -492,12 +492,12 @@ extern "C" {
     }
 
     // Process objects.
-    f_array_length_t i = 0;
-    f_array_length_t j = 0;
+    f_number_unsigned_t i = 0;
+    f_number_unsigned_t j = 0;
 
     if (data->main->parameters.array[fss_embedded_list_read_parameter_object_e].result & f_console_result_found_e) {
       if (data->main->parameters.array[fss_embedded_list_read_parameter_total_e].result & f_console_result_found_e) {
-        f_array_length_t total = 0;
+        f_number_unsigned_t total = 0;
 
         for (i = 0; i < items->used; ++i) {
           if (skip[i]) continue;
@@ -510,7 +510,7 @@ extern "C" {
         return F_none;
       }
 
-      f_status_t (*print_object)(const f_string_static_t, const f_string_range_t, const f_array_lengths_t, FILE *) = &f_print_except_dynamic_partial;
+      f_status_t (*print_object)(const f_string_static_t, const f_string_range_t, const f_number_unsigneds_t, FILE *) = &f_print_except_dynamic_partial;
 
       if (data->main->parameters.array[fss_embedded_list_read_parameter_trim_e].result & f_console_result_found_e) {
         print_object = &fl_print_trim_except_dynamic_partial;
@@ -548,7 +548,7 @@ extern "C" {
     }
 
     if (data->main->parameters.array[fss_embedded_list_read_parameter_total_e].result & f_console_result_found_e) {
-      f_array_length_t total = 0;
+      f_number_unsigned_t total = 0;
 
       for (i = 0; i < items->used; ++i) {
 
@@ -588,7 +588,7 @@ extern "C" {
     }
 
     if (data->main->parameters.array[fss_embedded_list_read_parameter_line_e].result & f_console_result_value_e) {
-      f_array_length_t line_current = 0;
+      f_number_unsigned_t line_current = 0;
 
       f_file_stream_lock(data->main->output);
 
@@ -705,14 +705,14 @@ extern "C" {
       }
     }
 
-    const f_array_length_t original_objects_used = objects_delimits->used;
-    const f_array_length_t original_contents_used = contents_delimits->used;
+    const f_number_unsigned_t original_objects_used = objects_delimits->used;
+    const f_number_unsigned_t original_contents_used = contents_delimits->used;
 
-    f_array_length_t original_objects_delimits[original_objects_used];
-    f_array_length_t original_contents_delimits[original_contents_used];
+    f_number_unsigned_t original_objects_delimits[original_objects_used];
+    f_number_unsigned_t original_contents_delimits[original_contents_used];
 
-    memcpy(&original_objects_delimits, objects_delimits->array, original_objects_used * sizeof(f_array_length_t));
-    memcpy(&original_contents_delimits, contents_delimits->array, original_contents_used * sizeof(f_array_length_t));
+    memcpy(&original_objects_delimits, objects_delimits->array, original_objects_used * sizeof(f_number_unsigned_t));
+    memcpy(&original_contents_delimits, contents_delimits->array, original_contents_used * sizeof(f_number_unsigned_t));
 
     objects_delimits->used = 0;
     contents_delimits->used = 0;
@@ -736,14 +736,14 @@ extern "C" {
         fss_embedded_list_read_process_delimits_objects(data, 0, original_objects_delimits, original_objects_used, objects_delimits);
         fss_embedded_list_read_process_delimits_contents(data, 0, original_contents_delimits, original_contents_used, contents_delimits);
 
-        for (f_array_length_t i = 1; i <= data->delimit_depth && i < data->nest.used; ++i) {
+        for (f_number_unsigned_t i = 1; i <= data->delimit_depth && i < data->nest.used; ++i) {
 
           fss_embedded_list_read_process_delimits_objects(data, i, original_contents_delimits, original_contents_used, contents_delimits);
           fss_embedded_list_read_process_delimits_contents(data, i, original_contents_delimits, original_contents_used, contents_delimits);
         } // for
       }
       else if (data->delimit_mode == fss_embedded_list_read_delimit_mode_depth_greater_e) {
-        for (f_array_length_t i = data->delimit_depth; i < data->nest.used; ++i) {
+        for (f_number_unsigned_t i = data->delimit_depth; i < data->nest.used; ++i) {
 
           fss_embedded_list_read_process_delimits_objects(data, i, original_contents_delimits, original_contents_used, contents_delimits);
           fss_embedded_list_read_process_delimits_contents(data, i, original_contents_delimits, original_contents_used, contents_delimits);
@@ -754,7 +754,7 @@ extern "C" {
 #endif // _di_fss_embedded_list_read_process_delimits_
 
 #ifndef _di_fss_embedded_list_read_process_delimits_contents_
-  void fss_embedded_list_read_process_delimits_contents(fss_embedded_list_read_data_t * const data, const f_array_length_t depth, const f_array_length_t original_delimits[], const f_array_length_t original_used, f_fss_delimits_t *delimits) {
+  void fss_embedded_list_read_process_delimits_contents(fss_embedded_list_read_data_t * const data, const f_number_unsigned_t depth, const f_number_unsigned_t original_delimits[], const f_number_unsigned_t original_used, f_fss_delimits_t *delimits) {
 
     if (!original_used) return;
 
@@ -762,11 +762,11 @@ extern "C" {
 
     if (!items->used) return;
 
-    f_array_length_t i = 0;
-    f_array_length_t j = 0;
-    f_array_length_t k = 0;
-    f_array_length_t l = 0;
-    f_array_length_t m = 0;
+    f_number_unsigned_t i = 0;
+    f_number_unsigned_t j = 0;
+    f_number_unsigned_t k = 0;
+    f_number_unsigned_t l = 0;
+    f_number_unsigned_t m = 0;
 
     for (i = 0; i < items->used; ++i) {
 
@@ -807,7 +807,7 @@ extern "C" {
 #endif // _di_fss_embedded_list_read_process_delimits_contents_
 
 #ifndef _di_fss_embedded_list_read_process_delimits_objects_
-  void fss_embedded_list_read_process_delimits_objects(fss_embedded_list_read_data_t * const data, const f_array_length_t depth, const f_array_length_t original_delimits[], const f_array_length_t original_used, f_fss_delimits_t *delimits) {
+  void fss_embedded_list_read_process_delimits_objects(fss_embedded_list_read_data_t * const data, const f_number_unsigned_t depth, const f_number_unsigned_t original_delimits[], const f_number_unsigned_t original_used, f_fss_delimits_t *delimits) {
 
     if (!original_used) return;
 
@@ -815,10 +815,10 @@ extern "C" {
 
     if (!items->used) return;
 
-    f_array_length_t i = 0;
-    f_array_length_t j = 0;
-    f_array_length_t k = 0;
-    f_array_length_t l = 0;
+    f_number_unsigned_t i = 0;
+    f_number_unsigned_t j = 0;
+    f_number_unsigned_t k = 0;
+    f_number_unsigned_t l = 0;
 
     for (i = 0; i < items->used; ++i) {
 
@@ -856,16 +856,16 @@ extern "C" {
 #endif // _di_fss_embedded_list_read_process_delimits_objects_
 
 #ifndef _di_fss_embedded_list_read_process_delimits_within_greater_
-  f_status_t fss_embedded_list_read_process_delimits_within_greater(fss_embedded_list_read_data_t * const data, const f_array_length_t depth, const f_array_length_t location) {
+  f_status_t fss_embedded_list_read_process_delimits_within_greater(fss_embedded_list_read_data_t * const data, const f_number_unsigned_t depth, const f_number_unsigned_t location) {
 
     if (depth + 1 >= data->nest.used) return F_false;
 
     f_fss_items_t *items = 0;
 
-    f_array_length_t i = 0;
-    f_array_length_t j = 0;
+    f_number_unsigned_t i = 0;
+    f_number_unsigned_t j = 0;
 
-    for (f_array_length_t d = depth + 1; d < data->nest.used; ++d) {
+    for (f_number_unsigned_t d = depth + 1; d < data->nest.used; ++d) {
       items = &data->nest.depth[d];
 
       for (i = 0; i < items->used; ++i) {

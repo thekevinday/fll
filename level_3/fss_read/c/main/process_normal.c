@@ -50,8 +50,8 @@ extern "C" {
     main->callback.process_load(main);
     if (F_status_is_error(main->setting.state.status)) return;
 
-    const f_array_lengths_t * const delimits_object = !(main->setting.flag & fss_read_main_flag_original_e) && fss_read_delimit_object_is(main, 0) ? &main->setting.delimits_object : &fss_read_except_none_c;
-    const f_array_lengths_t * const delimits_content = !(main->setting.flag & fss_read_main_flag_original_e) && fss_read_delimit_content_is(main, 0) ? &main->setting.delimits_content : &fss_read_except_none_c;
+    const f_number_unsigneds_t * const delimits_object = !(main->setting.flag & fss_read_main_flag_original_e) && fss_read_delimit_object_is(main, 0) ? &main->setting.delimits_object : &fss_read_except_none_c;
+    const f_number_unsigneds_t * const delimits_content = !(main->setting.flag & fss_read_main_flag_original_e) && fss_read_delimit_content_is(main, 0) ? &main->setting.delimits_content : &fss_read_except_none_c;
 
     bool names[main->setting.objects.used];
 
@@ -81,7 +81,7 @@ extern "C" {
       }
     }
     else {
-      f_array_length_t i = 0;
+      f_number_unsigned_t i = 0;
 
       if (main->setting.flag & fss_read_main_flag_line_e) {
         if (main->callback.process_at_line) {
@@ -115,7 +115,7 @@ extern "C" {
 #endif // _di_fss_read_process_normal_
 
 #ifndef _di_fss_read_process_normal_at_
-  void fss_read_process_normal_at(void * const void_main, const bool names[], const f_array_lengths_t delimits_object, f_array_lengths_t delimits_content) {
+  void fss_read_process_normal_at(void * const void_main, const bool names[], const f_number_unsigneds_t delimits_object, f_number_unsigneds_t delimits_content) {
 
     if (!void_main) return;
 
@@ -140,8 +140,8 @@ extern "C" {
       }
     }
 
-    f_array_length_t i = 0;
-    f_array_length_t at = 0;
+    f_number_unsigned_t i = 0;
+    f_number_unsigned_t at = 0;
 
     for (; i < main->setting.objects.used; ++i) {
 
@@ -155,7 +155,7 @@ extern "C" {
           if ((main->setting.flag & fss_read_main_flag_line_single_e) && !at) break;
 
           if (main->callback.process_at_line) {
-            f_array_length_t line = 0;
+            f_number_unsigned_t line = 0;
 
             main->callback.process_at_line(void_main, i, delimits_object, delimits_content, &line);
           }
@@ -188,7 +188,7 @@ extern "C" {
 #endif // _di_fss_read_process_normal_at_
 
 #ifndef _di_fss_read_process_normal_at_line_
-  void fss_read_process_normal_at_line(void * const void_main, const f_array_length_t at, const f_array_lengths_t delimits_object, const f_array_lengths_t delimits_content, f_number_unsigned_t * const line) {
+  void fss_read_process_normal_at_line(void * const void_main, const f_number_unsigned_t at, const f_number_unsigneds_t delimits_object, const f_number_unsigneds_t delimits_content, f_number_unsigned_t * const line) {
 
     if (!void_main || !line) return;
 
@@ -241,7 +241,7 @@ extern "C" {
         return;
       }
 
-      f_array_length_t i = 0;
+      f_number_unsigned_t i = 0;
 
       if (main->setting.flag & fss_read_main_flag_line_single_e) {
         if (*line == main->setting.line) {
@@ -266,9 +266,9 @@ extern "C" {
         ++(*line);
       }
       else {
-        f_array_length_t line_original = 0;
-        f_array_length_t j = 0;
-        f_array_length_t k = 0;
+        f_number_unsigned_t line_original = 0;
+        f_number_unsigned_t j = 0;
+        f_number_unsigned_t k = 0;
 
         for (; i < main->setting.contents.array[at].used; ++i) {
 
@@ -365,10 +365,10 @@ extern "C" {
       return;
     }
 
-    f_array_length_t max = 0;
+    f_number_unsigned_t max = 0;
 
     if (main->setting.flag & fss_read_main_flag_content_multiple_e) {
-      for (f_array_length_t at = 0; at < main->setting.contents.used; ++at) {
+      for (f_number_unsigned_t at = 0; at < main->setting.contents.used; ++at) {
 
         if (!names[at]) continue;
         if (fss_read_signal_check(main)) return;
@@ -379,7 +379,7 @@ extern "C" {
       } // for
     }
     else {
-      for (f_array_length_t at = 0; at < main->setting.contents.used; ++at) {
+      for (f_number_unsigned_t at = 0; at < main->setting.contents.used; ++at) {
 
         if (names[at]) {
           max = 1;
@@ -405,7 +405,7 @@ extern "C" {
     fss_read_main_t * const main = (fss_read_main_t *) void_main;
 
     if (main->setting.depths.array[0].index_name) {
-      f_array_length_t i = 0;
+      f_number_unsigned_t i = 0;
 
       memset(names, F_false, sizeof(bool) * main->setting.objects.used);
 
@@ -445,8 +445,8 @@ extern "C" {
 
     fss_read_main_t * const main = (fss_read_main_t *) void_main;
 
-    f_array_length_t total = 0;
-    f_array_length_t i = 0;
+    f_number_unsigned_t total = 0;
+    f_number_unsigned_t i = 0;
 
     if (main->setting.flag & fss_read_main_flag_select_e) {
       for (; i < main->setting.contents.used; ++i) {
@@ -499,13 +499,13 @@ extern "C" {
 
     fss_read_main_t * const main = (fss_read_main_t *) void_main;
 
-    f_array_length_t total = 0;
+    f_number_unsigned_t total = 0;
     f_string_range_t range = f_string_range_t_initialize;
-    f_array_length_t i = 0;
-    f_array_length_t j = 0;
-    f_array_length_t k = 0;
+    f_number_unsigned_t i = 0;
+    f_number_unsigned_t j = 0;
+    f_number_unsigned_t k = 0;
 
-    for (f_array_length_t at = 0; at < main->setting.contents.used; ++at) {
+    for (f_number_unsigned_t at = 0; at < main->setting.contents.used; ++at) {
 
       if (!names[at]) continue;
       if (fss_read_signal_check(main)) return;

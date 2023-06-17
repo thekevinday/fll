@@ -17,7 +17,7 @@ extern "C" {
     #endif // _di_level_2_parameter_checking_
 
     f_status_t status = F_none;
-    f_array_length_t initial_used = objects->used;
+    f_number_unsigned_t initial_used = objects->used;
 
     bool found_data = F_false;
 
@@ -217,7 +217,7 @@ extern "C" {
     if (state->status == F_none || state->status == F_none_stop || state->status == F_none_eos || state->status == F_none_eol) {
       uint8_t complete = f_fss_complete_next_e;
 
-      for (f_array_length_t i = 0; i < contents.used; ++i) {
+      for (f_number_unsigned_t i = 0; i < contents.used; ++i) {
 
         if (i + 1 == contents.used) {
           complete = f_fss_complete_end_e;

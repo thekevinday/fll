@@ -6,11 +6,11 @@ extern "C" {
 #endif
 
 #if !defined(_di_f_fss_items_adjust_) || !defined(_di_f_fss_items_decimate_by_)
-  f_status_t private_f_fss_items_adjust(const f_array_length_t length, f_fss_items_t * const items) {
+  f_status_t private_f_fss_items_adjust(const f_number_unsigned_t length, f_fss_items_t * const items) {
 
     f_status_t status = F_none;
 
-    for (f_array_length_t i = length; i < items->size; ++i) {
+    for (f_number_unsigned_t i = length; i < items->size; ++i) {
 
       status = f_string_ranges_adjust(0, &items->array[i].content);
       if (F_status_is_error(status)) return status;
@@ -33,11 +33,11 @@ extern "C" {
 #endif // !defined(_di_f_fss_items_adjust_) || !defined(_di_f_fss_items_decimate_by_)
 
 #if !defined(_di_f_fss_items_decrease_by_) || !defined(_di_f_fss_items_increase_) || !defined(_di_f_fss_items_increase_by_) || !defined(_di_f_fss_items_resize_)
-  f_status_t private_f_fss_items_resize(const f_array_length_t length, f_fss_items_t * const items) {
+  f_status_t private_f_fss_items_resize(const f_number_unsigned_t length, f_fss_items_t * const items) {
 
     f_status_t status = F_none;
 
-    for (f_array_length_t i = length; i < items->size; ++i) {
+    for (f_number_unsigned_t i = length; i < items->size; ++i) {
 
       status = f_string_ranges_resize(0, &items->array[i].content);
       if (F_status_is_error(status)) return status;
@@ -57,7 +57,7 @@ extern "C" {
 #endif // !defined(_di_f_fss_items_decrease_by_) || !defined(_di_f_fss_items_increase_) || !defined(_di_f_fss_items_increase_by_) || !defined(_di_f_fss_items_resize_)
 
 #if !defined(_di_f_fss_nameds_adjust_) || !defined(_di_f_fss_nameds_decimate_by_)
-  f_status_t private_f_fss_named_adjust(const f_array_length_t length, f_fss_named_t * const named) {
+  f_status_t private_f_fss_named_adjust(const f_number_unsigned_t length, f_fss_named_t * const named) {
 
     f_status_t status = F_none;
 
@@ -75,7 +75,7 @@ extern "C" {
 #endif // !defined(_di_f_fss_nameds_adjust_) || !defined(_di_f_fss_nameds_decimate_by_)
 
 #if !defined(_di_f_fss_nameds_decrease_by_) || !defined(_di_f_fss_nameds_increase_) || !defined(_di_f_fss_nameds_increase_by_) || !defined(_di_f_fss_nameds_resize_)
-  f_status_t private_f_fss_named_resize(const f_array_length_t length, f_fss_named_t * const named) {
+  f_status_t private_f_fss_named_resize(const f_number_unsigned_t length, f_fss_named_t * const named) {
 
     f_status_t status = F_none;
 
@@ -93,11 +93,11 @@ extern "C" {
 #endif // !defined(_di_f_fss_nameds_decrease_by_) || !defined(_di_f_fss_nameds_increase_) || !defined(_di_f_fss_nameds_increase_by_) || !defined(_di_f_fss_nameds_resize_)
 
 #if !defined(_di_f_fss_nameds_adjust_) || !defined(_di_f_fss_nameds_decimate_by_)
-  f_status_t private_f_fss_nameds_adjust(const f_array_length_t length, f_fss_nameds_t * const nameds) {
+  f_status_t private_f_fss_nameds_adjust(const f_number_unsigned_t length, f_fss_nameds_t * const nameds) {
 
     f_status_t status = F_none;
 
-    for (f_array_length_t i = length; i < nameds->size; ++i) {
+    for (f_number_unsigned_t i = length; i < nameds->size; ++i) {
 
       status = private_f_fss_named_adjust(0, &nameds->array[i]);
       if (F_status_is_error(status)) return status;
@@ -120,11 +120,11 @@ extern "C" {
 #endif // !defined(_di_f_fss_nameds_adjust_) || !defined(_di_f_fss_nameds_decimate_by_)
 
 #if !defined(_di_f_fss_nameds_decrease_by_) || !defined(_di_f_fss_nameds_increase_) || !defined(_di_f_fss_nameds_increase_by_) || !defined(_di_f_fss_nameds_resize_)
-  f_status_t private_f_fss_nameds_resize(const f_array_length_t length, f_fss_nameds_t * const nameds) {
+  f_status_t private_f_fss_nameds_resize(const f_number_unsigned_t length, f_fss_nameds_t * const nameds) {
 
     f_status_t status = F_none;
 
-    for (f_array_length_t i = length; i < nameds->size; ++i) {
+    for (f_number_unsigned_t i = length; i < nameds->size; ++i) {
 
       status = private_f_fss_named_resize(0, &nameds->array[i]);
       if (F_status_is_error(status)) return status;
@@ -144,11 +144,11 @@ extern "C" {
 #endif // !defined(_di_f_fss_nameds_decrease_by_) || !defined(_di_f_fss_nameds_increase_) || !defined(_di_f_fss_nameds_increase_by_) || !defined(_di_f_fss_nameds_resize_)
 
 #if !defined(_di_f_fss_nest_adjust_) || !defined(_di_f_fss_nest_decimate_by_)
-  f_status_t private_f_fss_nest_adjust(const f_array_length_t length, f_fss_nest_t * const nest) {
+  f_status_t private_f_fss_nest_adjust(const f_number_unsigned_t length, f_fss_nest_t * const nest) {
 
     f_status_t status = F_none;
 
-    for (f_array_length_t i = length; i < nest->size; ++i) {
+    for (f_number_unsigned_t i = length; i < nest->size; ++i) {
 
       status = private_f_fss_items_adjust(0, &nest->depth[i]);
       if (F_status_is_error(status)) return status;
@@ -171,11 +171,11 @@ extern "C" {
 #endif // !defined(_di_f_fss_nest_adjust_) || !defined(_di_f_fss_nest_decimate_by_)
 
 #if !defined(_di_f_fss_nest_decrease_by_) || !defined(_di_f_fss_nest_increase_) || !defined(_di_f_fss_nest_increase_by_) || !defined(_di_f_fss_nest_resize_)
-  f_status_t private_f_fss_nest_resize(const f_array_length_t length, f_fss_nest_t * const nest) {
+  f_status_t private_f_fss_nest_resize(const f_number_unsigned_t length, f_fss_nest_t * const nest) {
 
     f_status_t status = F_none;
 
-    for (f_array_length_t i = length; i < nest->size; ++i) {
+    for (f_number_unsigned_t i = length; i < nest->size; ++i) {
 
       status = private_f_fss_items_resize(0, &nest->depth[i]);
       if (F_status_is_error(status)) return status;
@@ -195,11 +195,11 @@ extern "C" {
 #endif // !defined(_di_f_fss_nest_decrease_by_) || !defined(_di_f_fss_nest_increase_) || !defined(_di_f_fss_nest_increase_by_) || !defined(_di_f_fss_nest_resize_)
 
 #if !defined(_di_f_fss_nests_adjust_) || !defined(_di_f_fss_nests_decimate_by_)
-  f_status_t private_f_fss_nests_adjust(const f_array_length_t length, f_fss_nests_t *nests) {
+  f_status_t private_f_fss_nests_adjust(const f_number_unsigned_t length, f_fss_nests_t *nests) {
 
     f_status_t status = F_none;
 
-    for (f_array_length_t i = length; i < nests->size; ++i) {
+    for (f_number_unsigned_t i = length; i < nests->size; ++i) {
 
       status = private_f_fss_nest_adjust(0, &nests->array[i]);
       if (F_status_is_error(status)) return status;
@@ -222,11 +222,11 @@ extern "C" {
 #endif // !defined(_di_f_fss_nests_adjust_) || !defined(_di_f_fss_nests_decimate_by_)
 
 #if !defined(_di_f_fss_nests_decrease_by_) || !defined(_di_f_fss_nests_increase_) || !defined(_di_f_fss_nests_increase_by_) || !defined(_di_f_fss_nests_resize_)
-  f_status_t private_f_fss_nests_resize(const f_array_length_t length, f_fss_nests_t * const nests) {
+  f_status_t private_f_fss_nests_resize(const f_number_unsigned_t length, f_fss_nests_t * const nests) {
 
     f_status_t status = F_none;
 
-    for (f_array_length_t i = length; i < nests->size; ++i) {
+    for (f_number_unsigned_t i = length; i < nests->size; ++i) {
 
       status = private_f_fss_nest_resize(0, &nests->array[i]);
       if (F_status_is_error(status)) return status;
@@ -246,7 +246,7 @@ extern "C" {
 #endif // !defined(_di_f_fss_nests_decrease_by_) || !defined(_di_f_fss_nests_increase_) || !defined(_di_f_fss_nests_increase_by_) || !defined(_di_f_fss_nests_resize_)
 
 #if !defined(_di_f_fss_set_adjust_) || !defined(_di_f_fss_set_decimate_by_)
-  f_status_t private_f_fss_set_adjust(const f_array_length_t length, f_fss_set_t * const set) {
+  f_status_t private_f_fss_set_adjust(const f_number_unsigned_t length, f_fss_set_t * const set) {
 
     f_status_t status = F_none;
 
@@ -261,7 +261,7 @@ extern "C" {
 #endif // !defined(_di_f_fss_set_adjust_) || !defined(_di_f_fss_set_decimate_by_)
 
 #if !defined(_di_f_fss_set_decrease_by_) || !defined(_di_f_fss_set_increase_) || !defined(_di_f_fss_set_increase_by_) || !defined(_di_f_fss_set_resize_)
-  f_status_t private_f_fss_set_resize(const f_array_length_t length, f_fss_set_t *set) {
+  f_status_t private_f_fss_set_resize(const f_number_unsigned_t length, f_fss_set_t *set) {
 
     f_status_t status = F_none;
 
@@ -276,7 +276,7 @@ extern "C" {
 #endif // !defined(_di_f_fss_set_decrease_by_) || !defined(_di_f_fss_set_increase_) || !defined(_di_f_fss_set_increase_by_) || !defined(_di_f_fss_set_resize_)
 
 #if !defined(_di_f_fss_set_quote_adjust_) || !defined(_di_f_fss_set_quote_decimate_by_)
-  f_status_t private_f_fss_set_quote_adjust(const f_array_length_t length, f_fss_set_quote_t * const set_quote) {
+  f_status_t private_f_fss_set_quote_adjust(const f_number_unsigned_t length, f_fss_set_quote_t * const set_quote) {
 
     f_status_t status = F_none;
 
@@ -297,7 +297,7 @@ extern "C" {
 #endif // !defined(_di_f_fss_set_quote_adjust_) || !defined(_di_f_fss_set_quote_decimate_by_)
 
 #if !defined(_di_f_fss_set_quote_decrease_by_) || !defined(_di_f_fss_set_quote_increase_) || !defined(_di_f_fss_set_quote_increase_by_) || !defined(_di_f_fss_set_quote_resize_)
-  f_status_t private_f_fss_set_quote_resize(const f_array_length_t length, f_fss_set_quote_t * const set_quote) {
+  f_status_t private_f_fss_set_quote_resize(const f_number_unsigned_t length, f_fss_set_quote_t * const set_quote) {
 
     f_status_t status = F_none;
 
@@ -318,11 +318,11 @@ extern "C" {
 #endif // !defined(_di_f_fss_set_quote_decrease_by_) || !defined(_di_f_fss_set_quote_increase_) || !defined(_di_f_fss_set_quote_increase_by_) || !defined(_di_f_fss_set_quote_resize_)
 
 #if !defined(_di_f_fss_set_quotes_adjust_) || !defined(_di_f_fss_set_quotes_decimate_by_)
-  f_status_t private_f_fss_set_quotes_adjust(const f_array_length_t length, f_fss_set_quotes_t * const set_quotes) {
+  f_status_t private_f_fss_set_quotes_adjust(const f_number_unsigned_t length, f_fss_set_quotes_t * const set_quotes) {
 
     f_status_t status = F_none;
 
-    for (f_array_length_t i = length; i < set_quotes->size; ++i) {
+    for (f_number_unsigned_t i = length; i < set_quotes->size; ++i) {
 
       status = f_string_ranges_adjust(0, &set_quotes->array[i].objects);
       if (F_status_is_error(status)) return status;
@@ -354,11 +354,11 @@ extern "C" {
 #endif // !defined(_di_f_fss_set_quotes_adjust_) || !defined(_di_f_fss_set_quotes_decimate_by_)
 
 #if !defined(_di_f_fss_set_quotes_decrease_by_) || !defined(_di_f_fss_set_quotes_increase_) || !defined(_di_f_fss_set_quotes_increase_by_) || !defined(_di_f_fss_set_quotes_resize_)
-  f_status_t private_f_fss_set_quotes_resize(const f_array_length_t length, f_fss_set_quotes_t * const set_quotes) {
+  f_status_t private_f_fss_set_quotes_resize(const f_number_unsigned_t length, f_fss_set_quotes_t * const set_quotes) {
 
     f_status_t status = F_none;
 
-    for (f_array_length_t i = length; i < set_quotes->size; ++i) {
+    for (f_number_unsigned_t i = length; i < set_quotes->size; ++i) {
 
       status = f_string_ranges_resize(0, &set_quotes->array[i].objects);
       if (F_status_is_error(status)) return status;
@@ -387,11 +387,11 @@ extern "C" {
 #endif // !defined(_di_f_fss_set_quotes_decrease_by_) || !defined(_di_f_fss_set_quotes_increase_) || !defined(_di_f_fss_set_quotes_increase_by_) || !defined(_di_f_fss_set_quotes_resize_)
 
 #if !defined(_di_f_fss_sets_adjust_) || !defined(_di_f_fss_sets_decimate_by_)
-  f_status_t private_f_fss_sets_adjust(const f_array_length_t length, f_fss_sets_t * const sets) {
+  f_status_t private_f_fss_sets_adjust(const f_number_unsigned_t length, f_fss_sets_t * const sets) {
 
     f_status_t status = F_none;
 
-    for (f_array_length_t i = length; i < sets->size; ++i) {
+    for (f_number_unsigned_t i = length; i < sets->size; ++i) {
 
       status = f_string_ranges_adjust(0, &sets->array[i].objects);
       if (F_status_is_error(status)) return status;
@@ -417,11 +417,11 @@ extern "C" {
 #endif // !defined(_di_f_fss_sets_adjust_) || !defined(_di_f_fss_sets_decimate_by_)
 
 #if !defined(_di_f_fss_sets_decrease_by_) || !defined(_di_f_fss_sets_increase_) || !defined(_di_f_fss_sets_increase_by_) || !defined(_di_f_fss_sets_resize_)
-  f_status_t private_f_fss_sets_resize(const f_array_length_t length, f_fss_sets_t * const sets) {
+  f_status_t private_f_fss_sets_resize(const f_number_unsigned_t length, f_fss_sets_t * const sets) {
 
     f_status_t status = F_none;
 
-    for (f_array_length_t i = length; i < sets->size; ++i) {
+    for (f_number_unsigned_t i = length; i < sets->size; ++i) {
 
       status = f_string_ranges_resize(0, &sets->array[i].objects);
       if (F_status_is_error(status)) return status;

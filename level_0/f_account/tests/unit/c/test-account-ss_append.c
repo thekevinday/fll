@@ -76,7 +76,7 @@ void test__f_accountss_append__works(void **state) {
     assert_int_equal(destination.array[0].used, sources.used);
     assert_int_equal(destination.array[0].size, sources.used);
 
-    for (f_array_length_t i = 0; i < destination.array[0].used; ++i) {
+    for (f_number_unsigned_t i = 0; i < destination.array[0].used; ++i) {
 
       assert_string_equal(destination.array[0].array[i].home.string, source.home.string);
       assert_string_equal(destination.array[0].array[i].label.string, source.label.string);
@@ -92,7 +92,7 @@ void test__f_accountss_append__works(void **state) {
     } // for
   }
 
-  for (f_array_length_t i = 0; i < destination.used; ++i) {
+  for (f_number_unsigned_t i = 0; i < destination.used; ++i) {
     free((void *) destination.array[i].array);
   } // for
 

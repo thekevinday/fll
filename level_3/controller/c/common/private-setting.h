@@ -72,7 +72,7 @@ extern "C" {
     uint8_t ready;
     uint8_t mode;
 
-    f_array_length_t failsafe_item_id;
+    f_number_unsigned_t failsafe_item_id;
 
     controller_control_t control;
 

@@ -17,7 +17,7 @@ void test__f_utf_prepend_assure_nulless__works(void **state) {
     assert_int_equal(status, F_none);
     assert_int_equal(destination.used, expected.used);
 
-    for (f_array_length_t i = 0; i < expected.used; ++i) {
+    for (f_number_unsigned_t i = 0; i < expected.used; ++i) {
       assert_int_equal(destination.string[i], expected.string[i]);
     } // for
   }
@@ -29,7 +29,7 @@ void test__f_utf_prepend_assure_nulless__works(void **state) {
     assert_int_equal(status, F_none);
     assert_int_equal(destination.used, expected.used);
 
-    for (f_array_length_t i = 0; i < expected.used; ++i) {
+    for (f_number_unsigned_t i = 0; i < expected.used; ++i) {
       assert_int_equal(destination.string[i], expected.string[i]);
     } // for
   }

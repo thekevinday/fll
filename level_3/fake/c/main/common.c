@@ -114,8 +114,8 @@ extern "C" {
       return;
     }
 
-    f_array_length_t j = 0;
-    f_array_length_t index = 0;
+    f_number_unsigned_t j = 0;
+    f_number_unsigned_t index = 0;
 
     {
       uint8_t i = 0;
@@ -161,7 +161,7 @@ extern "C" {
       }
 
       {
-        static const f_array_length_t parameters[] = {
+        static const f_number_unsigned_t parameters[] = {
           fake_parameter_build_e,
           fake_parameter_data_e,
           fake_parameter_documents_e,
@@ -363,7 +363,7 @@ extern "C" {
       }
 
       {
-        static const f_array_length_t parameters[] = {
+        static const f_number_unsigned_t parameters[] = {
           fake_parameter_define_e,
           fake_parameter_mode_e,
         };
@@ -378,7 +378,7 @@ extern "C" {
           &main->setting.modes,
         };
 
-        f_array_length_t width_max = 0;
+        f_number_unsigned_t width_max = 0;
 
         for (i = 0; i < 2; ++i) {
 
@@ -574,7 +574,7 @@ extern "C" {
     }
 
     if (iki_data->delimits.used > fake_max_over_array_d) {
-      f_array_lengths_resize(fake_allocation_large_d, &iki_data->delimits);
+      f_number_unsigneds_resize(fake_allocation_large_d, &iki_data->delimits);
     }
 
     if (iki_data->variable.used > fake_max_over_array_d) {

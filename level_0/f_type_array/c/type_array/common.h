@@ -161,40 +161,40 @@ extern "C" {
 #endif // _di_f_fll_idss_t_
 
 /**
- * Macros for f_array_lengths_t, see type.h for typedefs.
+ * Macros for f_number_unsigneds_t, see type.h for typedefs.
  */
-#ifndef _di_f_array_lengths_t_
-  #define macro_f_array_lengths_t_clear(lengths) macro_f_memory_structures_clear(lengths)
+#ifndef _di_f_number_unsigneds_t_
+  #define macro_f_number_unsigneds_t_clear(lengths) macro_f_memory_structures_clear(lengths)
 
-  #define macro_f_array_lengths_t_resize(status, lengths, length) status = f_array_lengths_resize(length, &lengths);
-  #define macro_f_array_lengths_t_adjust(status, lengths, length) status = f_array_lengths_adjust(length, &lengths);
+  #define macro_f_number_unsigneds_t_resize(status, lengths, length) status = f_number_unsigneds_resize(length, &lengths);
+  #define macro_f_number_unsigneds_t_adjust(status, lengths, length) status = f_number_unsigneds_adjust(length, &lengths);
 
-  #define macro_f_array_lengths_t_delete_simple(lengths)  f_array_lengths_resize(0, &lengths);
-  #define macro_f_array_lengths_t_destroy_simple(lengths) f_array_lengths_adjust(0, &lengths);
+  #define macro_f_number_unsigneds_t_delete_simple(lengths)  f_number_unsigneds_resize(0, &lengths);
+  #define macro_f_number_unsigneds_t_destroy_simple(lengths) f_number_unsigneds_adjust(0, &lengths);
 
-  #define macro_f_array_lengths_t_increase(status, step, lengths)      status = f_array_lengths_increase(step, &lengths);
-  #define macro_f_array_lengths_t_increase_by(status, lengths, amount) status = f_array_lengths_increase_by(amount, &lengths);
-  #define macro_f_array_lengths_t_decrease_by(status, lengths, amount) status = f_array_lengths_decrease_by(amount, &lengths);
-  #define macro_f_array_lengths_t_decimate_by(status, lengths, amount) status = f_array_lengths_decimate_by(amount, &lengths);
-#endif // _di_f_array_lengths_t_
+  #define macro_f_number_unsigneds_t_increase(status, step, lengths)      status = f_number_unsigneds_increase(step, &lengths);
+  #define macro_f_number_unsigneds_t_increase_by(status, lengths, amount) status = f_number_unsigneds_increase_by(amount, &lengths);
+  #define macro_f_number_unsigneds_t_decrease_by(status, lengths, amount) status = f_number_unsigneds_decrease_by(amount, &lengths);
+  #define macro_f_number_unsigneds_t_decimate_by(status, lengths, amount) status = f_number_unsigneds_decimate_by(amount, &lengths);
+#endif // _di_f_number_unsigneds_t_
 
 /**
- * Macros for f_array_lengths_t, see type.h for typedefs.
+ * Macros for f_number_unsigneds_t, see type.h for typedefs.
  */
-#ifndef _di_f_array_lengthss_t_
-  #define macro_f_array_lengthss_t_clear(lengthss) macro_f_memory_structures_clear(lengthss)
+#ifndef _di_f_number_unsignedss_t_
+  #define macro_f_number_unsignedss_t_clear(lengthss) macro_f_memory_structures_clear(lengthss)
 
-  #define macro_f_array_lengthss_t_resize(status, lengths, length) status = f_array_lengthss_resize(length, &lengths);
-  #define macro_f_array_lengthss_t_adjust(status, lengths, length) status = f_array_lengthss_adjust(length, &lengths);
+  #define macro_f_number_unsignedss_t_resize(status, lengths, length) status = f_number_unsignedss_resize(length, &lengths);
+  #define macro_f_number_unsignedss_t_adjust(status, lengths, length) status = f_number_unsignedss_adjust(length, &lengths);
 
-  #define macro_f_array_lengthss_t_delete_simple(lengths)  f_array_lengthss_resize(0, &lengths);
-  #define macro_f_array_lengthss_t_destroy_simple(lengths) f_array_lengthss_adjust(0, &lengths);
+  #define macro_f_number_unsignedss_t_delete_simple(lengths)  f_number_unsignedss_resize(0, &lengths);
+  #define macro_f_number_unsignedss_t_destroy_simple(lengths) f_number_unsignedss_adjust(0, &lengths);
 
-  #define macro_f_array_lengthss_t_increase(status, step, lengths)      status = f_array_lengthss_increase(step, &lengths);
-  #define macro_f_array_lengthss_t_increase_by(status, lengths, amount) status = f_array_lengthss_increase_by(amount, &lengths);
-  #define macro_f_array_lengthss_t_decrease_by(status, lengths, amount) status = f_array_lengthss_decrease_by(amount, &lengths);
-  #define macro_f_array_lengthss_t_decimate_by(status, lengths, amount) status = f_array_lengthss_decimate_by(amount, &lengths);
-#endif // _di_f_array_lengthss_t_
+  #define macro_f_number_unsignedss_t_increase(status, step, lengths)      status = f_number_unsignedss_increase(step, &lengths);
+  #define macro_f_number_unsignedss_t_increase_by(status, lengths, amount) status = f_number_unsignedss_increase_by(amount, &lengths);
+  #define macro_f_number_unsignedss_t_decrease_by(status, lengths, amount) status = f_number_unsignedss_decrease_by(amount, &lengths);
+  #define macro_f_number_unsignedss_t_decimate_by(status, lengths, amount) status = f_number_unsignedss_decimate_by(amount, &lengths);
+#endif // _di_f_number_unsignedss_t_
 
 /**
  * Macros for int8_t, see type.h for typedefs.
@@ -359,7 +359,7 @@ extern "C" {
 #endif // _di_f_int32s_t_
 
 /**
- * Macros for f_array_lengths_t, see type.h for typedefs.
+ * Macros for f_number_unsigneds_t, see type.h for typedefs.
  */
 #ifndef _di_f_int32ss_t_
   #define macro_f_int32ss_t_clear(int32ss) macro_f_memory_structures_clear(int32ss)

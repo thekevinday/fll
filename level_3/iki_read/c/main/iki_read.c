@@ -64,7 +64,7 @@ extern "C" {
       off_t size_file = 0;
       off_t size_read = 0;
 
-      for (f_array_length_t i = 0; i < main->setting.files.used; ++i) {
+      for (f_number_unsigned_t i = 0; i < main->setting.files.used; ++i) {
 
         if (!((++main->program.signal_check) % iki_read_signal_check_d)) {
           if (fll_program_standard_signal_received(&main->program)) {

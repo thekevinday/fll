@@ -95,7 +95,7 @@ void test__f_file_write_range__returns_data_not(void **state) {
   {
     const f_string_range_t range = f_string_range_t_initialize;
 
-    f_array_length_t written = 1;
+    f_number_unsigned_t written = 1;
 
     const f_status_t status = f_file_write_range(file, f_string_empty_s, range, &written);
 
@@ -107,7 +107,7 @@ void test__f_file_write_range__returns_data_not(void **state) {
     const f_string_range_t range = f_string_range_t_initialize;
     const f_string_static_t path = macro_f_string_static_t_initialize_1("test", 0, 4);
 
-    f_array_length_t written = 1;
+    f_number_unsigned_t written = 1;
 
     const f_status_t status = f_file_write_range(file, path, range, &written);
 
@@ -118,7 +118,7 @@ void test__f_file_write_range__returns_data_not(void **state) {
   {
     const f_string_range_t range = macro_f_string_range_t_initialize_1(0, 0);
 
-    f_array_length_t written = 1;
+    f_number_unsigned_t written = 1;
 
     const f_status_t status = f_file_write_range(file, f_string_empty_s, range, &written);
 

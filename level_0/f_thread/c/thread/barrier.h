@@ -42,8 +42,8 @@ extern "C" {
   typedef struct {
     f_thread_barrier_t *array;
 
-    f_array_length_t size;
-    f_array_length_t used;
+    f_number_unsigned_t size;
+    f_number_unsigned_t used;
   } f_thread_barriers_t;
 
   #define f_thread_barriers_t_initialize { 0, 0, 0 }
@@ -80,7 +80,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_barriers_adjust_
-  extern f_status_t f_thread_barriers_adjust(const f_array_length_t length, f_thread_barriers_t * const barriers);
+  extern f_status_t f_thread_barriers_adjust(const f_number_unsigned_t length, f_thread_barriers_t * const barriers);
 #endif // _di_f_thread_barriers_adjust_
 
 /**
@@ -103,7 +103,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_barriers_decimate_by_
-  extern f_status_t f_thread_barriers_decimate_by(const f_array_length_t amount, f_thread_barriers_t * const barriers);
+  extern f_status_t f_thread_barriers_decimate_by(const f_number_unsigned_t amount, f_thread_barriers_t * const barriers);
 #endif // _di_f_thread_barriers_decimate_by_
 
 /**
@@ -126,13 +126,13 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_barriers_decrease_by_
-  extern f_status_t f_thread_barriers_decrease_by(const f_array_length_t amount, f_thread_barriers_t * const barriers);
+  extern f_status_t f_thread_barriers_decrease_by(const f_number_unsigned_t amount, f_thread_barriers_t * const barriers);
 #endif // _di_f_thread_barriers_decrease_by_
 
 /**
  * Increase the size of the thread barriers array, but only if necessary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -150,14 +150,14 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_barriers_increase_
-  extern f_status_t f_thread_barriers_increase(const f_array_length_t step, f_thread_barriers_t * const barriers);
+  extern f_status_t f_thread_barriers_increase(const f_number_unsigned_t step, f_thread_barriers_t * const barriers);
 #endif // _di_f_thread_barriers_increase_
 
 /**
  * Resize the thread barriers array to a larger size.
  *
  * This will resize making the array larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -174,7 +174,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_barriers_increase_by_
-  extern f_status_t f_thread_barriers_increase_by(const f_array_length_t amount, f_thread_barriers_t * const barriers);
+  extern f_status_t f_thread_barriers_increase_by(const f_number_unsigned_t amount, f_thread_barriers_t * const barriers);
 #endif // _di_f_thread_barriers_increase_by_
 
 /**
@@ -192,7 +192,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_barriers_resize_
-  extern f_status_t f_thread_barriers_resize(const f_array_length_t length, f_thread_barriers_t * const barriers);
+  extern f_status_t f_thread_barriers_resize(const f_number_unsigned_t length, f_thread_barriers_t * const barriers);
 #endif // _di_f_thread_barriers_resize_
 
 #ifdef __cplusplus

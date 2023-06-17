@@ -25,9 +25,9 @@ extern "C" {
     state->status = f_fss_nest_increase(state->step_small, found);
     if (F_status_is_error(state->status)) return;
 
-    f_array_lengths_t positions_start = f_array_lengths_t_initialize;
+    f_number_unsigneds_t positions_start = f_number_unsigneds_t_initialize;
 
-    state->status = f_array_lengths_increase(state->step_small, &positions_start);
+    state->status = f_number_unsigneds_increase(state->step_small, &positions_start);
     if (F_status_is_error(state->status)) return;
 
     f_fss_objects_t objects = f_fss_objects_t_initialize;
@@ -35,37 +35,37 @@ extern "C" {
     state->status = f_string_ranges_increase(state->step_small, &objects);
 
     if (F_status_is_error(state->status)) {
-      f_array_lengths_resize(0, &positions_start);
+      f_number_unsigneds_resize(0, &positions_start);
 
       return;
     }
 
-    f_array_lengths_t slashes = f_array_lengths_t_initialize;
+    f_number_unsigneds_t slashes = f_number_unsigneds_t_initialize;
 
-    state->status = f_array_lengths_increase(state->step_small, &slashes);
+    state->status = f_number_unsigneds_increase(state->step_small, &slashes);
 
     if (F_status_is_error(state->status)) {
-      f_array_lengths_resize(0, &positions_start);
+      f_number_unsigneds_resize(0, &positions_start);
       f_string_ranges_resize(0, &objects);
 
       return;
     }
 
-    const f_array_length_t delimits_used = delimits->used;
-    const f_array_length_t comments_used = comments->used;
+    const f_number_unsigned_t delimits_used = delimits->used;
+    const f_number_unsigned_t comments_used = comments->used;
 
-    f_array_length_t depth = 0;
-    f_array_length_t position = 0;
+    f_number_unsigned_t depth = 0;
+    f_number_unsigned_t position = 0;
 
-    f_array_length_t position_previous = range->start;
-    f_array_length_t line_start = range->start;
-    f_array_length_t newline_last = range->start;
-    f_array_length_t comment_delimit = 0;
+    f_number_unsigned_t position_previous = range->start;
+    f_number_unsigned_t line_start = range->start;
+    f_number_unsigned_t newline_last = range->start;
+    f_number_unsigned_t comment_delimit = 0;
 
-    f_array_length_t slash_first = 0;
-    f_array_length_t slash_last = 0;
+    f_number_unsigned_t slash_first = 0;
+    f_number_unsigned_t slash_last = 0;
 
-    f_array_length_t before_list_open = position_previous;
+    f_number_unsigned_t before_list_open = position_previous;
 
     bool is_open = F_false;
 
@@ -89,7 +89,7 @@ extern "C" {
 
       if (buffer.string[range->start] == f_fss_eol_s.string[0]) {
         if (graph_first == 0x2) {
-          state->status = f_array_lengths_increase(state->step_small, delimits);
+          state->status = f_number_unsigneds_increase(state->step_small, delimits);
           if (F_status_is_error(state->status)) break;
 
           delimits->array[delimits->used++] = comment_delimit;
@@ -104,9 +104,9 @@ extern "C" {
             delimits->used = delimits_used;
             comments->used = comments_used;
 
-            f_array_lengths_resize(0, &positions_start);
+            f_number_unsigneds_resize(0, &positions_start);
             f_string_ranges_resize(0, &objects);
-            f_array_lengths_resize(0, &slashes);
+            f_number_unsigneds_resize(0, &slashes);
 
             state->status = (range->start >= buffer.used) ? F_end_not_nest_eos : F_end_not_nest_stop;
 
@@ -115,9 +115,9 @@ extern "C" {
         }
         else {
           if (range->start >= buffer.used || range->start > range->stop) {
-            f_array_lengths_resize(0, &positions_start);
+            f_number_unsigneds_resize(0, &positions_start);
             f_string_ranges_resize(0, &objects);
-            f_array_lengths_resize(0, &slashes);
+            f_number_unsigneds_resize(0, &slashes);
 
             state->status = (range->start >= buffer.used) ? F_none_eos : F_none_stop;
 
@@ -163,9 +163,9 @@ extern "C" {
             delimits->used = delimits_used;
             comments->used = comments_used;
 
-            f_array_lengths_resize(0, &positions_start);
+            f_number_unsigneds_resize(0, &positions_start);
             f_string_ranges_resize(0, &objects);
-            f_array_lengths_resize(0, &slashes);
+            f_number_unsigneds_resize(0, &slashes);
 
             state->status = (range->start >= buffer.used) ? F_end_not_nest_eos : F_end_not_nest_stop;
 
@@ -177,9 +177,9 @@ extern "C" {
             delimits->used = delimits_used;
             comments->used = comments_used;
 
-            f_array_lengths_resize(0, &positions_start);
+            f_number_unsigneds_resize(0, &positions_start);
             f_string_ranges_resize(0, &objects);
-            f_array_lengths_resize(0, &slashes);
+            f_number_unsigneds_resize(0, &slashes);
 
             state->status = (range->start >= buffer.used) ? F_data_not_eos : F_data_not_stop;
 
@@ -194,7 +194,7 @@ extern "C" {
         // When slash is odd and a (delimited) valid open/close is found, then save delimited positions and continue.
         if (buffer.string[range->start] == f_fss_eol_s.string[0]) {
           if (graph_first == 0x2) {
-            state->status = f_array_lengths_increase(state->step_small, delimits);
+            state->status = f_number_unsigneds_increase(state->step_small, delimits);
             if (F_status_is_error(state->status)) break;
 
             delimits->array[delimits->used++] = comment_delimit;
@@ -225,7 +225,7 @@ extern "C" {
 
             if (buffer.string[range->start] == f_fss_eol_s.string[0]) {
               if (graph_first == 0x2) {
-                state->status = f_array_lengths_increase(state->step_small, delimits);
+                state->status = f_number_unsigneds_increase(state->step_small, delimits);
                 if (F_status_is_error(state->status)) break;
 
                 delimits->array[delimits->used++] = comment_delimit;
@@ -259,9 +259,9 @@ extern "C" {
               delimits->used = delimits_used;
               comments->used = comments_used;
 
-              f_array_lengths_resize(0, &positions_start);
+              f_number_unsigneds_resize(0, &positions_start);
               f_string_ranges_resize(0, &objects);
-              f_array_lengths_resize(0, &slashes);
+              f_number_unsigneds_resize(0, &slashes);
 
               state->status = (range->start >= buffer.used) ? F_end_not_nest_eos : F_end_not_nest_stop;
 
@@ -273,9 +273,9 @@ extern "C" {
               delimits->used = delimits_used;
               comments->used = comments_used;
 
-              f_array_lengths_resize(0, &positions_start);
+              f_number_unsigneds_resize(0, &positions_start);
               f_string_ranges_resize(0, &objects);
-              f_array_lengths_resize(0, &slashes);
+              f_number_unsigneds_resize(0, &slashes);
 
               state->status = (range->start >= buffer.used) ? F_data_not_eos : F_data_not_stop;
 
@@ -298,7 +298,7 @@ extern "C" {
 
               range->start = slash_first;
 
-              state->status = f_array_lengths_increase_by((slashes.array[depth] / 2) + 1, delimits);
+              state->status = f_number_unsigneds_increase_by((slashes.array[depth] / 2) + 1, delimits);
               if (F_status_is_error(state->status)) break;
 
               // Apply slash delimits, only slashes and placeholders should be present.
@@ -321,13 +321,13 @@ extern "C" {
               // When slashes are even, the object is valid and needs to be processed.
               if (is_object) {
                 if (++depth > positions_start.size) {
-                  state->status = f_array_lengths_increase(state->step_small, &positions_start);
+                  state->status = f_number_unsigneds_increase(state->step_small, &positions_start);
                   if (F_status_is_error(state->status)) break;
 
                   state->status = f_string_ranges_increase(state->step_small, &objects);
                   if (F_status_is_error(state->status)) break;
 
-                  state->status = f_array_lengths_increase(state->step_small, &slashes);
+                  state->status = f_number_unsigneds_increase(state->step_small, &slashes);
                   if (F_status_is_error(state->status)) break;
                 }
 
@@ -345,7 +345,7 @@ extern "C" {
               }
             }
             else {
-              state->status = f_array_lengths_increase(state->step_small, delimits);
+              state->status = f_number_unsigneds_increase(state->step_small, delimits);
               if (F_status_is_error(state->status)) break;
 
               delimits->array[delimits->used++] = slash_last;
@@ -400,9 +400,9 @@ extern "C" {
             delimits->used = delimits_used;
             comments->used = comments_used;
 
-            f_array_lengths_resize(0, &positions_start);
+            f_number_unsigneds_resize(0, &positions_start);
             f_string_ranges_resize(0, &objects);
-            f_array_lengths_resize(0, &slashes);
+            f_number_unsigneds_resize(0, &slashes);
 
             state->status = (range->start >= buffer.used) ? F_end_not_nest_eos : F_end_not_nest_stop;
 
@@ -414,9 +414,9 @@ extern "C" {
             delimits->used = delimits_used;
             comments->used = comments_used;
 
-            f_array_lengths_resize(0, &positions_start);
+            f_number_unsigneds_resize(0, &positions_start);
             f_string_ranges_resize(0, &objects);
-            f_array_lengths_resize(0, &slashes);
+            f_number_unsigneds_resize(0, &slashes);
 
             state->status = (range->start >= buffer.used) ? F_data_not_eos : F_data_not_stop;
 
@@ -428,13 +428,13 @@ extern "C" {
           ++depth;
 
           if (depth >= positions_start.size) {
-            state->status = f_array_lengths_increase(state->step_small, &positions_start);
+            state->status = f_number_unsigneds_increase(state->step_small, &positions_start);
             if (F_status_is_error(state->status)) break;
 
             state->status = f_string_ranges_increase(state->step_small, &objects);
             if (F_status_is_error(state->status)) break;
 
-            state->status = f_array_lengths_increase(state->step_small, &slashes);
+            state->status = f_number_unsigneds_increase(state->step_small, &slashes);
             if (F_status_is_error(state->status)) break;
           }
 
@@ -451,7 +451,7 @@ extern "C" {
           slashes.array[depth] = 0;
 
           if (graph_first == 0x2) {
-            state->status = f_array_lengths_increase(state->step_small, delimits);
+            state->status = f_number_unsigneds_increase(state->step_small, delimits);
             if (F_status_is_error(state->status)) break;
 
             delimits->array[delimits->used++] = comment_delimit;
@@ -468,7 +468,7 @@ extern "C" {
           if (F_status_is_error(state->status)) break;
 
           if (graph_first == 0x2) {
-            state->status = f_array_lengths_increase(state->step_small, delimits);
+            state->status = f_number_unsigneds_increase(state->step_small, delimits);
             if (F_status_is_error(state->status)) break;
 
             delimits->array[delimits->used++] = comment_delimit;
@@ -505,9 +505,9 @@ extern "C" {
               delimits->used = delimits_used;
               comments->used = comments_used;
 
-              f_array_lengths_resize(0, &positions_start);
+              f_number_unsigneds_resize(0, &positions_start);
               f_string_ranges_resize(0, &objects);
-              f_array_lengths_resize(0, &slashes);
+              f_number_unsigneds_resize(0, &slashes);
 
               state->status = (range->start >= buffer.used) ? F_end_not_nest_eos : F_end_not_nest_stop;
 
@@ -519,9 +519,9 @@ extern "C" {
               delimits->used = delimits_used;
               comments->used = comments_used;
 
-              f_array_lengths_resize(0, &positions_start);
+              f_number_unsigneds_resize(0, &positions_start);
               f_string_ranges_resize(0, &objects);
-              f_array_lengths_resize(0, &slashes);
+              f_number_unsigneds_resize(0, &slashes);
 
               state->status = (range->start >= buffer.used) ? F_data_not_eos : F_data_not_stop;
 
@@ -563,9 +563,9 @@ extern "C" {
             delimits->used = delimits_used;
             comments->used = comments_used;
 
-            f_array_lengths_resize(0, &positions_start);
+            f_number_unsigneds_resize(0, &positions_start);
             f_string_ranges_resize(0, &objects);
-            f_array_lengths_resize(0, &slashes);
+            f_number_unsigneds_resize(0, &slashes);
 
             state->status = (range->start >= buffer.used) ? F_end_not_nest_eos : F_end_not_nest_stop;
 
@@ -577,9 +577,9 @@ extern "C" {
             delimits->used = delimits_used;
             comments->used = comments_used;
 
-            f_array_lengths_resize(0, &positions_start);
+            f_number_unsigneds_resize(0, &positions_start);
             f_string_ranges_resize(0, &objects);
-            f_array_lengths_resize(0, &slashes);
+            f_number_unsigneds_resize(0, &slashes);
 
             state->status = (range->start >= buffer.used) ? F_data_not_eos : F_data_not_stop;
 
@@ -624,7 +624,7 @@ extern "C" {
           }
 
           if (graph_first == 0x2) {
-            state->status = f_array_lengths_increase(state->step_small, delimits);
+            state->status = f_number_unsigneds_increase(state->step_small, delimits);
             if (F_status_is_error(state->status)) break;
 
             delimits->array[delimits->used++] = comment_delimit;
@@ -638,9 +638,9 @@ extern "C" {
             state->status = f_utf_buffer_increment(buffer, range, 1);
             if (F_status_is_error(state->status)) break;
 
-            f_array_lengths_resize(0, &positions_start);
+            f_number_unsigneds_resize(0, &positions_start);
             f_string_ranges_resize(0, &objects);
-            f_array_lengths_resize(0, &slashes);
+            f_number_unsigneds_resize(0, &slashes);
 
             if (range->start >= buffer.used) {
               state->status = F_none_eos;
@@ -668,7 +668,7 @@ extern "C" {
 
             if (buffer.string[range->start] == f_fss_eol_s.string[0]) {
               if (graph_first == 0x2) {
-                state->status = f_array_lengths_increase(state->step_small, delimits);
+                state->status = f_number_unsigneds_increase(state->step_small, delimits);
                 if (F_status_is_error(state->status)) break;
 
                 delimits->array[delimits->used++] = comment_delimit;
@@ -694,9 +694,9 @@ extern "C" {
               delimits->used = delimits_used;
               comments->used = comments_used;
 
-              f_array_lengths_resize(0, &positions_start);
+              f_number_unsigneds_resize(0, &positions_start);
               f_string_ranges_resize(0, &objects);
-              f_array_lengths_resize(0, &slashes);
+              f_number_unsigneds_resize(0, &slashes);
 
               state->status = (range->start >= buffer.used) ? F_end_not_nest_eos : F_end_not_nest_stop;
 
@@ -708,9 +708,9 @@ extern "C" {
               delimits->used = delimits_used;
               comments->used = comments_used;
 
-              f_array_lengths_resize(0, &positions_start);
+              f_number_unsigneds_resize(0, &positions_start);
               f_string_ranges_resize(0, &objects);
-              f_array_lengths_resize(0, &slashes);
+              f_number_unsigneds_resize(0, &slashes);
 
               state->status = (range->start >= buffer.used) ? F_data_not_eos : F_data_not_stop;
 
@@ -733,7 +733,7 @@ extern "C" {
         }
         else {
           if (graph_first == 0x2) {
-            state->status = f_array_lengths_increase(state->step_small, delimits);
+            state->status = f_number_unsigneds_increase(state->step_small, delimits);
             if (F_status_is_error(state->status)) break;
 
             delimits->array[delimits->used++] = comment_delimit;
@@ -773,9 +773,9 @@ extern "C" {
       if (F_status_is_error(state->status)) break;
     } // while
 
-    f_array_lengths_resize(0, &positions_start);
+    f_number_unsigneds_resize(0, &positions_start);
     f_string_ranges_resize(0, &objects);
-    f_array_lengths_resize(0, &slashes);
+    f_number_unsigneds_resize(0, &slashes);
 
     delimits->used = delimits_used;
     comments->used = comments_used;
@@ -832,18 +832,18 @@ extern "C" {
       return;
     }
 
-    const f_array_length_t destination_used = destination->used;
+    const f_number_unsigned_t destination_used = destination->used;
 
     bool is_comment = F_false;
     bool ends_on_eol = F_false;
     bool has_graph = F_false;
     bool do_prepend = prepend ? F_true : F_false;
 
-    f_array_length_t i = 0;
-    f_array_length_t slash_count = 0;
-    f_array_length_t start = 0;
+    f_number_unsigned_t i = 0;
+    f_number_unsigned_t slash_count = 0;
+    f_number_unsigned_t start = 0;
 
-    f_array_length_t r = 0;
+    f_number_unsigned_t r = 0;
 
     uint8_t width = 0;
 
@@ -1098,7 +1098,7 @@ extern "C" {
       }
     #endif // _di_level_1_parameter_checking_
 
-    const f_array_length_t delimits_used = delimits->used;
+    const f_number_unsigned_t delimits_used = delimits->used;
 
     f_fss_skip_past_space(buffer, range, state);
     if (F_status_is_error(state->status)) return;
@@ -1167,10 +1167,10 @@ extern "C" {
       return;
     }
 
-    f_array_length_t start = 0;
-    f_array_length_t stop = 0;
-    f_array_length_t slash_first = 0;
-    f_array_length_t slash_count = 0;
+    f_number_unsigned_t start = 0;
+    f_number_unsigned_t stop = 0;
+    f_number_unsigned_t slash_first = 0;
+    f_number_unsigned_t slash_count = 0;
 
     bool graph_first = F_true;
 
@@ -1263,7 +1263,7 @@ extern "C" {
 
             range->start = slash_first;
 
-            state->status = f_array_lengths_increase_by((slash_count / 2) + 1, delimits);
+            state->status = f_number_unsigneds_increase_by((slash_count / 2) + 1, delimits);
             if (F_status_is_error(state->status)) break;
 
             if (slash_count % 2 == 0) {
@@ -1300,7 +1300,7 @@ extern "C" {
           graph_first = F_false;
 
           // Comments may only have white space before the '#', therefore only the first slash needs to be delimited.
-          state->status = f_array_lengths_increase(state->step_small, delimits);
+          state->status = f_number_unsigneds_increase(state->step_small, delimits);
           if (F_status_is_error(state->status)) break;
 
           delimits->array[delimits->used++] = slash_first;
@@ -1476,10 +1476,10 @@ extern "C" {
     state->status = f_string_dynamic_increase_by(state->step_small + 4, destination);
     if (F_status_is_error(state->status)) return;
 
-    const f_array_length_t destination_used = destination->used;
+    const f_number_unsigned_t destination_used = destination->used;
 
-    f_array_length_t i = 0;
-    f_array_length_t slash_count = 0;
+    f_number_unsigned_t i = 0;
+    f_number_unsigned_t slash_count = 0;
 
     bool ends_on_space = F_false;
 

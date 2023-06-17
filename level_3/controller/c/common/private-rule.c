@@ -33,10 +33,10 @@ extern "C" {
 #endif // _di_controller_rule_actions_delete_simple_
 
 #ifndef _di_controller_rule_actions_increase_by_
-  f_status_t controller_rule_actions_increase_by(const f_array_length_t amount, controller_rule_actions_t * const actions) {
+  f_status_t controller_rule_actions_increase_by(const f_number_unsigned_t amount, controller_rule_actions_t * const actions) {
 
     if (actions->used + amount > actions->size) {
-      if (actions->used + amount > F_array_length_t_size_d) {
+      if (actions->used + amount > F_number_t_size_unsigned_d) {
         return F_status_set_error(F_array_too_large);
       }
 
@@ -131,14 +131,14 @@ extern "C" {
   f_status_t controller_rule_ons_increase(controller_rule_ons_t * const ons) {
 
     if (ons->used + 1 > ons->size) {
-      f_array_length_t size = ons->used + controller_common_allocation_small_d;
+      f_number_unsigned_t size = ons->used + controller_common_allocation_small_d;
 
-      if (size > F_array_length_t_size_d) {
-        if (ons->used + 1 > F_array_length_t_size_d) {
+      if (size > F_number_t_size_unsigned_d) {
+        if (ons->used + 1 > F_number_t_size_unsigned_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = F_array_length_t_size_d;
+        size = F_number_t_size_unsigned_d;
       }
 
       return controller_rule_ons_resize(size, ons);
@@ -149,9 +149,9 @@ extern "C" {
 #endif // _di_controller_rule_ons_increase_
 
 #ifndef _di_controller_rule_ons_resize_
-  f_status_t controller_rule_ons_resize(const f_array_length_t length, controller_rule_ons_t * const ons) {
+  f_status_t controller_rule_ons_resize(const f_number_unsigned_t length, controller_rule_ons_t * const ons) {
 
-    for (f_array_length_t i = length; i < ons->size; ++i) {
+    for (f_number_unsigned_t i = length; i < ons->size; ++i) {
       controller_rule_on_delete_simple(&ons->array[i]);
     } // for
 
@@ -179,14 +179,14 @@ extern "C" {
   f_status_t controller_rules_increase(controller_rules_t * const rules) {
 
     if (rules->used + 1 > rules->size) {
-      f_array_length_t size = rules->used + controller_common_allocation_small_d;
+      f_number_unsigned_t size = rules->used + controller_common_allocation_small_d;
 
-      if (size > F_array_length_t_size_d) {
-        if (rules->used + 1 > F_array_length_t_size_d) {
+      if (size > F_number_t_size_unsigned_d) {
+        if (rules->used + 1 > F_number_t_size_unsigned_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = F_array_length_t_size_d;
+        size = F_number_t_size_unsigned_d;
       }
 
       return controller_rules_resize(size, rules);
@@ -197,9 +197,9 @@ extern "C" {
 #endif // _di_controller_rules_increase_
 
 #ifndef _di_controller_rules_resize_
-  f_status_t controller_rules_resize(const f_array_length_t length, controller_rules_t * const rules) {
+  f_status_t controller_rules_resize(const f_number_unsigned_t length, controller_rules_t * const rules) {
 
-    for (f_array_length_t i = length; i < rules->size; ++i) {
+    for (f_number_unsigned_t i = length; i < rules->size; ++i) {
       controller_rule_delete_simple(&rules->array[i]);
     } // for
 

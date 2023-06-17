@@ -9,7 +9,7 @@ extern "C" {
 #endif
 
 #ifndef _di_f_utf_string_mapss_adjust_
-  f_status_t f_utf_string_mapss_adjust(const f_array_length_t length, f_utf_string_mapss_t * const mapss) {
+  f_status_t f_utf_string_mapss_adjust(const f_number_unsigned_t length, f_utf_string_mapss_t * const mapss) {
     #ifndef _di_level_0_parameter_checking_
       if (!mapss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -61,7 +61,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     }
 
-    for (f_array_length_t i = 0; i < source.used; ++i, ++destination->used) {
+    for (f_number_unsigned_t i = 0; i < source.used; ++i, ++destination->used) {
 
       destination->array[destination->used].used = 0;
 
@@ -76,7 +76,7 @@ extern "C" {
 #endif // _di_f_utf_string_mapss_append_all_
 
 #ifndef _di_f_utf_string_mapss_decimate_by_
-  f_status_t f_utf_string_mapss_decimate_by(const f_array_length_t amount, f_utf_string_mapss_t * const mapss) {
+  f_status_t f_utf_string_mapss_decimate_by(const f_number_unsigned_t amount, f_utf_string_mapss_t * const mapss) {
     #ifndef _di_level_0_parameter_checking_
       if (!mapss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -92,7 +92,7 @@ extern "C" {
 #endif // _di_f_utf_string_mapss_decimate_by_
 
 #ifndef _di_f_utf_string_mapss_decrease_by_
-  f_status_t f_utf_string_mapss_decrease_by(const f_array_length_t amount, f_utf_string_mapss_t * const mapss) {
+  f_status_t f_utf_string_mapss_decrease_by(const f_number_unsigned_t amount, f_utf_string_mapss_t * const mapss) {
     #ifndef _di_level_0_parameter_checking_
       if (!mapss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -108,20 +108,20 @@ extern "C" {
 #endif // _di_f_utf_string_mapss_decrease_by_
 
 #ifndef _di_f_utf_string_mapss_increase_
-  f_status_t f_utf_string_mapss_increase(const f_array_length_t step, f_utf_string_mapss_t * const mapss) {
+  f_status_t f_utf_string_mapss_increase(const f_number_unsigned_t step, f_utf_string_mapss_t * const mapss) {
     #ifndef _di_level_0_parameter_checking_
       if (!mapss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (step && mapss->used + 1 > mapss->size) {
-      f_array_length_t size = mapss->used + step;
+      f_number_unsigned_t size = mapss->used + step;
 
-      if (size > F_array_length_t_size_d) {
-        if (mapss->used + 1 > F_array_length_t_size_d) {
+      if (size > F_number_t_size_unsigned_d) {
+        if (mapss->used + 1 > F_number_t_size_unsigned_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = F_array_length_t_size_d;
+        size = F_number_t_size_unsigned_d;
       }
 
       return private_f_utf_string_mapss_resize(size, mapss);
@@ -132,7 +132,7 @@ extern "C" {
 #endif // _di_f_utf_string_mapss_increase_
 
 #ifndef _di_f_utf_string_mapss_increase_by_
-  f_status_t f_utf_string_mapss_increase_by(const f_array_length_t amount, f_utf_string_mapss_t * const mapss) {
+  f_status_t f_utf_string_mapss_increase_by(const f_number_unsigned_t amount, f_utf_string_mapss_t * const mapss) {
     #ifndef _di_level_0_parameter_checking_
       if (!mapss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -140,7 +140,7 @@ extern "C" {
     if (!amount) return F_data_not;
 
     if (mapss->used + amount > mapss->size) {
-      if (mapss->used + amount > F_array_length_t_size_d) {
+      if (mapss->used + amount > F_number_t_size_unsigned_d) {
         return F_status_set_error(F_array_too_large);
       }
 
@@ -152,7 +152,7 @@ extern "C" {
 #endif // _di_f_utf_string_mapss_increase_by_
 
 #ifndef _di_f_utf_string_mapss_resize_
-  f_status_t f_utf_string_mapss_resize(const f_array_length_t length, f_utf_string_mapss_t * const mapss) {
+  f_status_t f_utf_string_mapss_resize(const f_number_unsigned_t length, f_utf_string_mapss_t * const mapss) {
     #ifndef _di_level_0_parameter_checking_
       if (!mapss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_

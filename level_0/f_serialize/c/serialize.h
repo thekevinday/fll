@@ -95,7 +95,7 @@ extern "C" {
  * @see f_string_append()
  */
 #ifndef _di_f_serialize_from_simple_get_
-  extern f_status_t f_serialize_from_simple_get(const f_string_static_t source, const f_array_length_t index, f_string_dynamic_t * const destination);
+  extern f_status_t f_serialize_from_simple_get(const f_string_static_t source, const f_number_unsigned_t index, f_string_dynamic_t * const destination);
 #endif // _di_f_serialize_from_simple_get_
 
 /**
@@ -156,7 +156,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_serialize_from_simple_select_
-  extern f_status_t f_serialize_from_simple_select(const f_string_static_t source, const f_array_length_t index, f_string_range_t * const range);
+  extern f_status_t f_serialize_from_simple_select(const f_string_static_t source, const f_number_unsigned_t index, f_string_range_t * const range);
 #endif // _di_f_serialize_from_simple_select_
 
 /**

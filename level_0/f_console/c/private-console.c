@@ -13,7 +13,7 @@ extern "C" {
     if (!input) return F_data_not;
 
     // Only the first three characters need to be scanned.
-    const f_array_length_t length = strnlen(input, 3);
+    const f_number_unsigned_t length = strnlen(input, 3);
     if (!length) return F_data_not;
 
     if (input[0] == f_console_symbol_short_normal_s.string[0]) {

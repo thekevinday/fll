@@ -1049,7 +1049,7 @@ extern "C" {
       char *result = cap_to_name(code);
 
       if (result) {
-        const f_array_length_t length = strlen(result);
+        const f_number_unsigned_t length = strlen(result);
 
         if (name->used + length + 1 > name->size) {
           if (name->used + length + 1 > F_string_t_size_d) {

@@ -100,7 +100,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_utf_buffer_decrement_
-  extern f_status_t f_utf_buffer_decrement(const f_string_static_t buffer, f_string_range_t *range, const f_array_length_t step);
+  extern f_status_t f_utf_buffer_decrement(const f_string_static_t buffer, f_string_range_t *range, const f_number_unsigned_t step);
 #endif // _di_f_utf_buffer_decrement_
 
 /**
@@ -133,7 +133,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_utf_buffer_increment_
-  extern f_status_t f_utf_buffer_increment(const f_string_static_t buffer, f_string_range_t *range, const f_array_length_t step);
+  extern f_status_t f_utf_buffer_increment(const f_string_static_t buffer, f_string_range_t *range, const f_number_unsigned_t step);
 #endif // _di_f_utf_buffer_increment_
 
 #ifdef __cplusplus

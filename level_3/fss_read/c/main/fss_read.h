@@ -82,7 +82,7 @@ extern "C" {
  *   F_false if to not apply delimits (fallback when main is NULL).
  */
 #ifndef _di_fss_read_delimit_content_is_
-  extern f_status_t fss_read_delimit_content_is(fss_read_main_t * const main, const f_array_length_t depth);
+  extern f_status_t fss_read_delimit_content_is(fss_read_main_t * const main, const f_number_unsigned_t depth);
 #endif // _di_fss_read_delimit_content_is_
 
 /**
@@ -102,7 +102,7 @@ extern "C" {
  *   F_false if to not apply delimits (fallback when main is NULL).
  */
 #ifndef _di_fss_read_delimit_object_is_
-  extern f_status_t fss_read_delimit_object_is(fss_read_main_t * const main, const f_array_length_t depth);
+  extern f_status_t fss_read_delimit_object_is(fss_read_main_t * const main, const f_number_unsigned_t depth);
 #endif // _di_fss_read_delimit_object_is_
 
 /**
@@ -149,7 +149,7 @@ extern "C" {
  *   On failure to identify, an empty string is returned.
  */
 #ifndef _di_fss_read_file_identify_
-  extern f_string_static_t fss_read_file_identify(const f_array_length_t at, const fss_read_files_t files);
+  extern f_string_static_t fss_read_file_identify(const f_number_unsigned_t at, const fss_read_files_t files);
 #endif // _di_fss_read_file_identify_
 
 /**

@@ -46,7 +46,7 @@ void test__f_file_stream_write__returns_data_not(void **state) {
   }
 
   {
-    f_array_length_t written = 1;
+    f_number_unsigned_t written = 1;
 
     const f_status_t status = f_file_stream_write(file, f_string_empty_s, &written);
 

@@ -53,7 +53,7 @@ extern "C" {
     f_string_static_t parameter_file_name_micro = f_string_static_t_initialize;
     f_string_static_t parameter_file_name_nano = f_string_static_t_initialize;
 
-    f_array_length_t strings_length = 1;
+    f_number_unsigned_t strings_length = 1;
 
     parameter_file_name.used = fake_build_parameter_library_name_prefix_s.used + data_build->setting.build_name.used + fake_build_parameter_library_name_suffix_shared_s.used;
 
@@ -371,7 +371,7 @@ extern "C" {
     fake_string_dynamic_reset(&main->cache_2);
     fake_string_dynamics_reset(&main->cache_arguments);
 
-    f_array_length_t i = 0;
+    f_number_unsigned_t i = 0;
 
     for (; i < data_build->setting.build_indexer_arguments.used; ++i) {
 
@@ -416,7 +416,7 @@ extern "C" {
     }
 
     if (F_status_is_error_not(main->setting.state.status)) {
-      f_array_length_t j = 0;
+      f_number_unsigned_t j = 0;
 
       const f_string_dynamics_t *sources[2] = {
         &data_build->setting.build_sources_library,

@@ -17,8 +17,8 @@ void test__f_iki_datas_append_all__works(void **state) {
     assert_int_equal(status, F_none);
     assert_int_equal(source.size, 2);
 
-    f_array_length_t i = 1;
-    f_array_length_t j = 0;
+    f_number_unsigned_t i = 1;
+    f_number_unsigned_t j = 0;
 
     for (; j < 2; ++j) {
 
@@ -27,7 +27,7 @@ void test__f_iki_datas_append_all__works(void **state) {
       assert_int_equal(status, F_none);
       assert_int_equal(source.array[j].content.size, length);
 
-      status = f_array_lengths_resize(length, &source.array[j].delimits);
+      status = f_number_unsigneds_resize(length, &source.array[j].delimits);
 
       assert_int_equal(status, F_none);
       assert_int_equal(source.array[j].delimits.size, length);
@@ -76,14 +76,14 @@ void test__f_iki_datas_append_all__works(void **state) {
     assert_int_equal(destination.used, source.used);
     assert_int_equal(destination.size, source.used);
 
-    for (f_array_length_t j = 0; j < 2; ++j) {
+    for (f_number_unsigned_t j = 0; j < 2; ++j) {
 
       assert_int_equal(destination.array[j].content.used, source.array[j].content.used);
       assert_int_equal(destination.array[j].delimits.used, source.array[j].delimits.used);
       assert_int_equal(destination.array[j].variable.used, source.array[j].variable.used);
       assert_int_equal(destination.array[j].vocabulary.used, source.array[j].vocabulary.used);
 
-      for (f_array_length_t i = 0; i < length; ++i) {
+      for (f_number_unsigned_t i = 0; i < length; ++i) {
 
         assert_int_equal(destination.array[j].content.array[i].start, source.array[j].content.array[i].start);
         assert_int_equal(destination.array[j].content.array[i].stop, source.array[j].content.array[i].stop);
@@ -99,7 +99,7 @@ void test__f_iki_datas_append_all__works(void **state) {
     } // for
   }
 
-  for (f_array_length_t i = 0; i < source.used; ++i) {
+  for (f_number_unsigned_t i = 0; i < source.used; ++i) {
 
     free((void *) source.array[i].content.array);
     free((void *) source.array[i].delimits.array);
@@ -107,7 +107,7 @@ void test__f_iki_datas_append_all__works(void **state) {
     free((void *) source.array[i].vocabulary.array);
   } // for
 
-  for (f_array_length_t i = 0; i < destination.used; ++i) {
+  for (f_number_unsigned_t i = 0; i < destination.used; ++i) {
 
     free((void *) destination.array[i].content.array);
     free((void *) destination.array[i].delimits.array);

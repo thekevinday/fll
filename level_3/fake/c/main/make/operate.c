@@ -14,7 +14,7 @@ extern "C" {
 
     fake_make_print_message_now_making(&main->program.message, main->setting.fakefile);
 
-    f_array_lengths_t section_stack = f_array_lengths_t_initialize;
+    f_number_unsigneds_t section_stack = f_number_unsigneds_t_initialize;
     fake_make_data_t data_make = fake_make_data_t_initialize;
 
     data_make.data = data;
@@ -98,10 +98,10 @@ extern "C" {
     data_make.error.custom = main;
 
     if (main->program.parameters.remaining.used) {
-      f_array_length_t i = 0;
-      f_array_length_t j = 0;
+      f_number_unsigned_t i = 0;
+      f_number_unsigned_t j = 0;
       f_string_range_t range = f_string_range_t_initialize;
-      f_array_length_t index = 0;
+      f_number_unsigned_t index = 0;
 
       main->setting.state.status = F_none;
 
@@ -207,7 +207,7 @@ extern "C" {
     f_file_stream_flush(data_make.path.top);
     f_file_stream_close(&data_make.path.top);
 
-    f_array_lengths_resize(0, &section_stack);
+    f_number_unsigneds_resize(0, &section_stack);
     fake_make_data_delete(&data_make);
 
     if (F_status_is_error_not(main->setting.state.status)) {
@@ -252,12 +252,12 @@ extern "C" {
     bool unmatched = F_true;
     bool separate = F_false;
 
-    f_array_length_t i = 0;
-    f_array_length_t j = 0;
-    f_array_length_t k = 0;
-    f_array_length_t l = 0;
-    f_array_length_t m = 0;
-    f_array_length_t n = 0;
+    f_number_unsigned_t i = 0;
+    f_number_unsigned_t j = 0;
+    f_number_unsigned_t k = 0;
+    f_number_unsigned_t l = 0;
+    f_number_unsigned_t m = 0;
+    f_number_unsigned_t n = 0;
 
     const f_string_static_t reserved_name[] = {
       fake_make_parameter_variable_build_s,
@@ -1082,7 +1082,7 @@ extern "C" {
         0,                                         // modes_default
       };
 
-      f_array_length_t j = 0;
+      f_number_unsigned_t j = 0;
 
       for (i = 0; i < 36; ++i) {
 
@@ -1167,7 +1167,7 @@ extern "C" {
       main->program.context.set.warning,
     };
 
-    for (f_array_length_t i = 0; i < 9; ++i) {
+    for (f_number_unsigned_t i = 0; i < 9; ++i) {
 
       if (f_compare_dynamic_partial_string(context_name[i].string, main->buffer, context_name[i].used, range_name) == F_equal_to) {
         context = context_value[i].before;
@@ -1232,7 +1232,7 @@ extern "C" {
 #endif // _di_fake_make_operate_expand_environment_
 
 #ifndef _di_fake_make_operate_section_
-  int fake_make_operate_section(fake_make_data_t * const data_make, const f_array_length_t id_section, f_array_lengths_t * const section_stack) {
+  int fake_make_operate_section(fake_make_data_t * const data_make, const f_number_unsigned_t id_section, f_number_unsigneds_t * const section_stack) {
 
     if (!data_make || !data_make->main || !section_stack) return 0;
     if (F_status_is_error(data_make->main->setting.state.status) || data_make->main->setting.state.status == F_child) return data_make->main->program.child;
@@ -1248,10 +1248,10 @@ extern "C" {
     }
 
     // Add the operation id to the operation stack.
-    main->setting.state.status = f_array_lengths_increase(main->setting.state.step_small, section_stack);
+    main->setting.state.status = f_number_unsigneds_increase(main->setting.state.step_small, section_stack);
 
     if (F_status_is_error(main->setting.state.status)) {
-      fake_print_error(&data_make->error, macro_fake_f(f_array_lengths_increase));
+      fake_print_error(&data_make->error, macro_fake_f(f_number_unsigneds_increase));
 
       return 0;
     }
@@ -1346,8 +1346,8 @@ extern "C" {
 
     fake_state_process_t state_process = fake_state_process_t_initialize;
     int result;
-    f_array_length_t i = 0;
-    f_array_length_t j = 0;
+    f_number_unsigned_t i = 0;
+    f_number_unsigned_t j = 0;
 
     for (i = 0; i < section->objects.used; ++i, main->setting.state.status = F_none) {
 

@@ -105,7 +105,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_count_lines_
-  extern void f_fss_count_lines(const f_string_static_t buffer, const f_array_length_t before, f_array_length_t * const line, f_state_t * const state);
+  extern void f_fss_count_lines(const f_string_static_t buffer, const f_number_unsigned_t before, f_number_unsigned_t * const line, f_state_t * const state);
 #endif // _di_f_fss_count_lines_
 
 /**
@@ -133,7 +133,7 @@ extern "C" {
  *     F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_count_lines_range_
-  extern void f_fss_count_lines_range(const f_string_static_t buffer, const f_string_range_t range, f_array_length_t * const line, f_state_t * const state);
+  extern void f_fss_count_lines_range(const f_string_static_t buffer, const f_string_range_t range, f_number_unsigned_t * const line, f_state_t * const state);
 #endif // _di_f_fss_count_lines_range_
 
 /**

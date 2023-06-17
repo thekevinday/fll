@@ -51,7 +51,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     }
 
-    for (f_array_length_t i = 0; i < source.used; ++i, ++destination->used) {
+    for (f_number_unsigned_t i = 0; i < source.used; ++i, ++destination->used) {
 
       destination->array[destination->used].used = 0;
 
@@ -66,7 +66,7 @@ extern "C" {
 #endif // _di_f_utf_string_tripless_append_all_
 
 #ifndef _di_f_utf_string_tripless_adjust_
-  f_status_t f_utf_string_tripless_adjust(const f_array_length_t length, f_utf_string_tripless_t * const tripless) {
+  f_status_t f_utf_string_tripless_adjust(const f_number_unsigned_t length, f_utf_string_tripless_t * const tripless) {
     #ifndef _di_level_0_parameter_checking_
       if (!tripless) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -76,7 +76,7 @@ extern "C" {
 #endif // _di_f_utf_string_tripless_adjust_
 
 #ifndef _di_f_utf_string_tripless_decimate_by_
-  f_status_t f_utf_string_tripless_decimate_by(const f_array_length_t amount, f_utf_string_tripless_t * const tripless) {
+  f_status_t f_utf_string_tripless_decimate_by(const f_number_unsigned_t amount, f_utf_string_tripless_t * const tripless) {
     #ifndef _di_level_0_parameter_checking_
       if (!tripless) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -92,7 +92,7 @@ extern "C" {
 #endif // _di_f_utf_string_tripless_decimate_by_
 
 #ifndef _di_f_utf_string_tripless_decrease_by_
-  f_status_t f_utf_string_tripless_decrease_by(const f_array_length_t amount, f_utf_string_tripless_t * const tripless) {
+  f_status_t f_utf_string_tripless_decrease_by(const f_number_unsigned_t amount, f_utf_string_tripless_t * const tripless) {
     #ifndef _di_level_0_parameter_checking_
       if (!tripless) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -108,20 +108,20 @@ extern "C" {
 #endif // _di_f_utf_string_tripless_decrease_by_
 
 #ifndef _di_f_utf_string_tripless_increase_
-  f_status_t f_utf_string_tripless_increase(const f_array_length_t step, f_utf_string_tripless_t * const tripless) {
+  f_status_t f_utf_string_tripless_increase(const f_number_unsigned_t step, f_utf_string_tripless_t * const tripless) {
     #ifndef _di_level_0_parameter_checking_
       if (!tripless) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (step && tripless->used + 1 > tripless->size) {
-      f_array_length_t size = tripless->used + step;
+      f_number_unsigned_t size = tripless->used + step;
 
-      if (size > F_array_length_t_size_d) {
-        if (tripless->used + 1 > F_array_length_t_size_d) {
+      if (size > F_number_t_size_unsigned_d) {
+        if (tripless->used + 1 > F_number_t_size_unsigned_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = F_array_length_t_size_d;
+        size = F_number_t_size_unsigned_d;
       }
 
       return private_f_utf_string_tripless_resize(size, tripless);
@@ -132,7 +132,7 @@ extern "C" {
 #endif // _di_f_utf_string_tripless_increase_
 
 #ifndef _di_f_utf_string_tripless_increase_by_
-  f_status_t f_utf_string_tripless_increase_by(const f_array_length_t amount, f_utf_string_tripless_t * const tripless) {
+  f_status_t f_utf_string_tripless_increase_by(const f_number_unsigned_t amount, f_utf_string_tripless_t * const tripless) {
     #ifndef _di_level_0_parameter_checking_
       if (!tripless) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -140,7 +140,7 @@ extern "C" {
     if (!amount) return F_data_not;
 
     if (tripless->used + amount > tripless->size) {
-      if (tripless->used + amount > F_array_length_t_size_d) {
+      if (tripless->used + amount > F_number_t_size_unsigned_d) {
         return F_status_set_error(F_array_too_large);
       }
 
@@ -152,7 +152,7 @@ extern "C" {
 #endif // _di_f_utf_string_tripless_increase_by_
 
 #ifndef _di_f_utf_string_tripless_resize_
-  f_status_t f_utf_string_tripless_resize(const f_array_length_t length, f_utf_string_tripless_t * const tripless) {
+  f_status_t f_utf_string_tripless_resize(const f_number_unsigned_t length, f_utf_string_tripless_t * const tripless) {
     #ifndef _di_level_0_parameter_checking_
       if (!tripless) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_

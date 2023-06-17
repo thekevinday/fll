@@ -21,7 +21,7 @@ extern "C" {
     if (F_status_is_error(status)) return;
 
     {
-      f_array_length_t choice = 0;
+      f_number_unsigned_t choice = 0;
       f_uint16s_t choices = f_uint16s_t_initialize;
 
       // Identify and prioritize "color context" parameters.
@@ -195,8 +195,8 @@ extern "C" {
           status = F_status_set_error(F_parameter);
         }
         else if (main->parameters.array[fss_embedded_list_read_parameter_delimit_e].result & f_console_result_value_e) {
-          const f_array_length_t index = main->parameters.array[fss_embedded_list_read_parameter_delimit_e].values.array[0];
-          f_array_length_t length = data.argv[index].used;
+          const f_number_unsigned_t index = main->parameters.array[fss_embedded_list_read_parameter_delimit_e].values.array[0];
+          f_number_unsigned_t length = data.argv[index].used;
 
           if (!length) {
             f_file_stream_lock(main->error.to);
@@ -302,7 +302,7 @@ extern "C" {
         off_t size_file = 0;
         off_t size_read = 0;
 
-        for (f_array_length_t i = 0; i < main->parameters.remaining.used; ++i) {
+        for (f_number_unsigned_t i = 0; i < main->parameters.remaining.used; ++i) {
 
           if (!((++main->signal_check) % fss_embedded_list_read_signal_check_d)) {
             if (fll_program_standard_signal_received(&main->program)) {
@@ -420,8 +420,8 @@ extern "C" {
       f_fss_nest_resize(0, &data.nest);
       f_string_dynamic_resize(0, &data.buffer);
       fss_embedded_list_read_depths_resize(0, &depths);
-      f_array_lengths_resize(0, &objects_delimits);
-      f_array_lengths_resize(0, &contents_delimits);
+      f_number_unsigneds_resize(0, &objects_delimits);
+      f_number_unsigneds_resize(0, &contents_delimits);
       f_string_ranges_resize(0, &comments);
     }
     else {

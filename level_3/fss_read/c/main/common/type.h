@@ -29,10 +29,10 @@ extern "C" {
  */
 #ifndef _di_fss_read_depth_t_
   typedef struct {
-    f_array_length_t depth;
+    f_number_unsigned_t depth;
 
-    f_array_length_t index_at;
-    f_array_length_t index_name;
+    f_number_unsigned_t index_at;
+    f_number_unsigned_t index_name;
 
     f_number_unsigned_t value_at;
     f_string_dynamic_t value_name;
@@ -66,8 +66,8 @@ extern "C" {
   typedef struct {
     fss_read_depth_t *array;
 
-    f_array_length_t size;
-    f_array_length_t used;
+    f_number_unsigned_t size;
+    f_number_unsigned_t used;
   } fss_read_depths_t;
 
   #define fss_read_depths_t_initialize { 0, 0, 0 }
@@ -109,8 +109,8 @@ extern "C" {
   typedef struct {
     fss_read_file_t *array;
 
-    f_array_length_t size;
-    f_array_length_t used;
+    f_number_unsigned_t size;
+    f_number_unsigned_t used;
   } fss_read_files_t;
 
   #define fss_read_files_t_initialize { 0, 0, 0 }
@@ -145,14 +145,14 @@ extern "C" {
     void (*process_normal)(void * const main);
 
     void (*process_at)(void * const main, const bool names[], const f_fss_delimits_t delimits_object, const f_fss_delimits_t delimits_content);
-    void (*process_at_line)(void * const void_main, const f_array_length_t at, const f_array_lengths_t delimits_object, const f_array_lengths_t delimits_content, f_number_unsigned_t * const line);
+    void (*process_at_line)(void * const void_main, const f_number_unsigned_t at, const f_number_unsigneds_t delimits_object, const f_number_unsigneds_t delimits_content, f_number_unsigned_t * const line);
     void (*process_columns)(void * const main, const bool names[]);
     void (*process_load)(void * const main);
     void (*process_name)(void * const main, bool names[]);
     void (*process_total)(void * const main, const bool names[]);
 
-    f_status_t (*print_at)(fl_print_t * const print, const f_array_length_t at, const f_fss_delimits_t delimits_object, const f_fss_delimits_t delimits_content);
-    f_status_t (*print_object)(fl_print_t * const print, const f_array_length_t at, const f_fss_delimits_t delimits);
+    f_status_t (*print_at)(fl_print_t * const print, const f_number_unsigned_t at, const f_fss_delimits_t delimits_object, const f_fss_delimits_t delimits_content);
+    f_status_t (*print_object)(fl_print_t * const print, const f_number_unsigned_t at, const f_fss_delimits_t delimits);
     f_status_t (*print_content)(fl_print_t * const print, const f_string_range_t range, const uint8_t quote, const f_fss_delimits_t delimits);
     f_status_t (*print_content_ignore)(fl_print_t * const print);
     f_status_t (*print_content_next)(fl_print_t * const print);
@@ -224,7 +224,7 @@ extern "C" {
     f_status_t status_thread;
     f_state_t state;
 
-    f_array_length_t delimit_depth;
+    f_number_unsigned_t delimit_depth;
     f_number_unsigned_t select;
     f_number_unsigned_t line;
 
@@ -326,7 +326,7 @@ extern "C" {
  * @see f_memory_resize()
  */
 #ifndef _di_fss_read_depths_resize_
-  extern f_status_t fss_read_depths_resize(const f_array_length_t length, fss_read_depths_t * const depths);
+  extern f_status_t fss_read_depths_resize(const f_number_unsigned_t length, fss_read_depths_t * const depths);
 #endif // _di_fss_read_depths_resize_
 
 /**
@@ -351,7 +351,7 @@ extern "C" {
  * @see f_string_ranges_resize()
  */
 #ifndef _di_fss_read_files_resize_
-  extern f_status_t fss_read_files_resize(const f_array_length_t length, fss_read_files_t * const files);
+  extern f_status_t fss_read_files_resize(const f_number_unsigned_t length, fss_read_files_t * const files);
 #endif // _di_fss_read_files_resize_
 
 /**

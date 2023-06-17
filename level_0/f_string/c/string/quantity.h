@@ -30,8 +30,8 @@ extern "C" {
  */
 #ifndef _di_f_string_quantity_t_
   typedef struct {
-    f_array_length_t start;
-    f_array_length_t total;
+    f_number_unsigned_t start;
+    f_number_unsigned_t total;
   } f_string_quantity_t;
 
   #define f_string_quantity_t_initialize { 0, 0 }

@@ -27,7 +27,7 @@ extern "C" {
 #endif // _di_f_account_destroy_
 
 #ifndef _di_f_accounts_adjust_
-  f_status_t f_accounts_adjust(const f_array_length_t length, f_accounts_t *accounts) {
+  f_status_t f_accounts_adjust(const f_number_unsigned_t length, f_accounts_t *accounts) {
     #ifndef _di_level_0_parameter_checking_
       if (!accounts) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -59,7 +59,7 @@ extern "C" {
 #endif // _di_f_accounts_append_all_
 
 #ifndef _di_f_accounts_decimate_by_
-  f_status_t f_accounts_decimate_by(const f_array_length_t amount, f_accounts_t *accounts) {
+  f_status_t f_accounts_decimate_by(const f_number_unsigned_t amount, f_accounts_t *accounts) {
     #ifndef _di_level_0_parameter_checking_
       if (!accounts) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -75,7 +75,7 @@ extern "C" {
 #endif // _di_f_accounts_decimate_by_
 
 #ifndef _di_f_accounts_decrease_by_
-  f_status_t f_accounts_decrease_by(const f_array_length_t amount, f_accounts_t *accounts) {
+  f_status_t f_accounts_decrease_by(const f_number_unsigned_t amount, f_accounts_t *accounts) {
     #ifndef _di_level_0_parameter_checking_
       if (!accounts) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -91,20 +91,20 @@ extern "C" {
 #endif // _di_f_accounts_decrease_by_
 
 #ifndef _di_f_accounts_increase_
-  f_status_t f_accounts_increase(const f_array_length_t step, f_accounts_t *accounts) {
+  f_status_t f_accounts_increase(const f_number_unsigned_t step, f_accounts_t *accounts) {
     #ifndef _di_level_0_parameter_checking_
       if (!accounts) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (step && accounts->used + 1 > accounts->size) {
-      f_array_length_t size = accounts->used + step;
+      f_number_unsigned_t size = accounts->used + step;
 
-      if (size > F_array_length_t_size_d) {
-        if (accounts->used + 1 > F_array_length_t_size_d) {
+      if (size > F_number_t_size_unsigned_d) {
+        if (accounts->used + 1 > F_number_t_size_unsigned_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = F_array_length_t_size_d;
+        size = F_number_t_size_unsigned_d;
       }
 
       return private_f_accounts_resize(size, accounts);
@@ -115,7 +115,7 @@ extern "C" {
 #endif // _di_f_accounts_increase_
 
 #ifndef _di_f_accounts_increase_by_
-  f_status_t f_accounts_increase_by(const f_array_length_t amount, f_accounts_t *accounts) {
+  f_status_t f_accounts_increase_by(const f_number_unsigned_t amount, f_accounts_t *accounts) {
     #ifndef _di_level_0_parameter_checking_
       if (!accounts) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -123,7 +123,7 @@ extern "C" {
     if (!amount) return F_data_not;
 
     if (accounts->used + amount > accounts->size) {
-      if (accounts->used + amount > F_array_length_t_size_d) {
+      if (accounts->used + amount > F_number_t_size_unsigned_d) {
         return F_status_set_error(F_array_too_large);
       }
 
@@ -135,7 +135,7 @@ extern "C" {
 #endif // _di_f_accounts_increase_by_
 
 #ifndef _di_f_accounts_resize_
-  f_status_t f_accounts_resize(const f_array_length_t length, f_accounts_t *accounts) {
+  f_status_t f_accounts_resize(const f_number_unsigned_t length, f_accounts_t *accounts) {
     #ifndef _di_level_0_parameter_checking_
       if (!accounts) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -145,7 +145,7 @@ extern "C" {
 #endif // _di_f_accounts_resize_
 
 #ifndef _di_f_accountss_adjust_
-  f_status_t f_accountss_adjust(const f_array_length_t length, f_accountss_t *accountss) {
+  f_status_t f_accountss_adjust(const f_number_unsigned_t length, f_accountss_t *accountss) {
     #ifndef _di_level_0_parameter_checking_
       if (!accountss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -193,7 +193,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     }
 
-    for (f_array_length_t i = 0; i < source.used; ++i, ++destination->used) {
+    for (f_number_unsigned_t i = 0; i < source.used; ++i, ++destination->used) {
 
       destination->array[destination->used].used = 0;
 
@@ -208,7 +208,7 @@ extern "C" {
 #endif // _di_f_accountss_append_all_
 
 #ifndef _di_f_accountss_decimate_by_
-  f_status_t f_accountss_decimate_by(const f_array_length_t amount, f_accountss_t *accountss) {
+  f_status_t f_accountss_decimate_by(const f_number_unsigned_t amount, f_accountss_t *accountss) {
     #ifndef _di_level_0_parameter_checking_
       if (!accountss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -224,7 +224,7 @@ extern "C" {
 #endif // _di_f_accountss_decimate_by_
 
 #ifndef _di_f_accountss_decrease_by_
-  f_status_t f_accountss_decrease_by(const f_array_length_t amount, f_accountss_t *accountss) {
+  f_status_t f_accountss_decrease_by(const f_number_unsigned_t amount, f_accountss_t *accountss) {
     #ifndef _di_level_0_parameter_checking_
       if (!accountss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -240,20 +240,20 @@ extern "C" {
 #endif // _di_f_accountss_decrease_by_
 
 #ifndef _di_f_accountss_increase_
-  f_status_t f_accountss_increase(const f_array_length_t step, f_accountss_t *accountss) {
+  f_status_t f_accountss_increase(const f_number_unsigned_t step, f_accountss_t *accountss) {
     #ifndef _di_level_0_parameter_checking_
       if (!accountss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (step && accountss->used + 1 > accountss->size) {
-      f_array_length_t size = accountss->used + step;
+      f_number_unsigned_t size = accountss->used + step;
 
-      if (size > F_array_length_t_size_d) {
-        if (accountss->used + 1 > F_array_length_t_size_d) {
+      if (size > F_number_t_size_unsigned_d) {
+        if (accountss->used + 1 > F_number_t_size_unsigned_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = F_array_length_t_size_d;
+        size = F_number_t_size_unsigned_d;
       }
 
       return private_f_accountss_resize(size, accountss);
@@ -264,7 +264,7 @@ extern "C" {
 #endif // _di_f_accountss_increase_
 
 #ifndef _di_f_accountss_increase_by_
-  f_status_t f_accountss_increase_by(const f_array_length_t amount, f_accountss_t *accountss) {
+  f_status_t f_accountss_increase_by(const f_number_unsigned_t amount, f_accountss_t *accountss) {
     #ifndef _di_level_0_parameter_checking_
       if (!accountss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -272,7 +272,7 @@ extern "C" {
     if (!amount) return F_data_not;
 
     if (accountss->used + amount > accountss->size) {
-      if (accountss->used + amount > F_array_length_t_size_d) {
+      if (accountss->used + amount > F_number_t_size_unsigned_d) {
         return F_status_set_error(F_array_too_large);
       }
 
@@ -284,7 +284,7 @@ extern "C" {
 #endif // _di_f_accountss_increase_by_
 
 #ifndef _di_f_accountss_resize_
-  f_status_t f_accountss_resize(const f_array_length_t length, f_accountss_t *accountss) {
+  f_status_t f_accountss_resize(const f_number_unsigned_t length, f_accountss_t *accountss) {
     #ifndef _di_level_0_parameter_checking_
       if (!accountss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_

@@ -113,7 +113,7 @@ extern "C" {
     if (main->cache_arguments.used > 1) {
       f_status_t status = F_none;
 
-      for (f_array_length_t i = 0; i < main->cache_arguments.used; ++i) {
+      for (f_number_unsigned_t i = 0; i < main->cache_arguments.used; ++i) {
 
         fake_make_assure_inside_project(data_make, main->cache_arguments.array[i]);
 
@@ -124,7 +124,7 @@ extern "C" {
         }
       } // for
 
-      for (f_array_length_t i = 0; i < main->cache_arguments.used - 1; ++i) {
+      for (f_number_unsigned_t i = 0; i < main->cache_arguments.used - 1; ++i) {
 
         if (f_file_exists(main->cache_arguments.array[i], F_true) != F_true) {
           fake_print_error_file_simple(&main->program.error, macro_fake_f(f_file_is), main->cache_arguments.array[i], f_file_operation_find_s, fll_error_file_type_file_e);
@@ -299,9 +299,9 @@ extern "C" {
         fake_make_operation_if_type_if_not_parameter_e,
       };
 
-      f_array_length_t i = 0;
-      f_array_length_t j = 0;
-      f_array_length_t k = 0;
+      f_number_unsigned_t i = 0;
+      f_number_unsigned_t j = 0;
+      f_number_unsigned_t k = 0;
       f_string_static_t if_and_or;
       bool dereference = F_true;
 
@@ -671,7 +671,7 @@ extern "C" {
 
     if (main->cache_arguments.used > 1) {
       f_status_t status = F_none;
-      f_array_length_t i = 0;
+      f_number_unsigned_t i = 0;
 
       for (; i < main->cache_arguments.used; ++i) {
 
@@ -777,7 +777,7 @@ extern "C" {
     if (main->cache_arguments.used) {
       f_status_t status = F_none;
 
-      for (f_array_length_t i = 0; i < main->cache_arguments.used; ++i) {
+      for (f_number_unsigned_t i = 0; i < main->cache_arguments.used; ++i) {
 
         fake_make_assure_inside_project(data_make, main->cache_arguments.array[i]);
 
@@ -1101,7 +1101,7 @@ extern "C" {
       {
         f_status_t status = F_none;
 
-        for (f_array_length_t i = 0; i < main->cache_arguments.used; ++i) {
+        for (f_number_unsigned_t i = 0; i < main->cache_arguments.used; ++i) {
 
           fake_make_assure_inside_project(data_make, main->cache_arguments.array[i]);
 
@@ -1113,7 +1113,7 @@ extern "C" {
         } // for
 
         if (F_status_is_error_not(status)) {
-          for (f_array_length_t i = 0; i < main->cache_arguments.used - 1; ++i) {
+          for (f_number_unsigned_t i = 0; i < main->cache_arguments.used - 1; ++i) {
 
             if (f_file_exists(main->cache_arguments.array[i], F_true) != F_true) {
               fake_print_error_file_simple(&main->program.error, macro_fake_f(f_file_is), main->cache_arguments.array[i], f_file_operation_find_s, fll_error_file_type_file_e);
@@ -1178,7 +1178,7 @@ extern "C" {
 #endif // _di_fake_make_operate_validate_type_move_
 
 #ifndef _di_fake_make_operate_validate_type_operate_
-  void fake_make_operate_validate_type_operate(fake_make_data_t * const data_make, f_array_lengths_t * const section_stack) {
+  void fake_make_operate_validate_type_operate(fake_make_data_t * const data_make, f_number_unsigneds_t * const section_stack) {
 
     if (!data_make || !data_make->main || !section_stack) return;
 
@@ -1193,7 +1193,7 @@ extern "C" {
     }
 
     if (main->cache_arguments.used == 1) {
-      f_array_length_t id_section = 0;
+      f_number_unsigned_t id_section = 0;
 
       for (; id_section < data_make->fakefile.used; ++id_section) {
 
@@ -1210,7 +1210,7 @@ extern "C" {
         return;
       }
 
-      for (f_array_length_t i = 0; i < section_stack->used; ++i) {
+      for (f_number_unsigned_t i = 0; i < section_stack->used; ++i) {
 
         if (section_stack->array[i] == id_section) {
           fake_make_print_error_operation_recursion(&main->program.error, main->buffer, data_make->fakefile.array[id_section].name);
@@ -1277,7 +1277,7 @@ extern "C" {
 
       f_status_t status = F_none;
 
-      for (f_array_length_t i = 0; i < 33; ++i) {
+      for (f_number_unsigned_t i = 0; i < 33; ++i) {
 
         if (f_compare_dynamic(reserved_name[i], main->cache_arguments.array[0]) == F_equal_to) {
           fake_make_print_error_reserved_parameter_name(&main->program.error, reserved_name[i]);
@@ -1304,7 +1304,7 @@ extern "C" {
     fake_main_t * const main = data_make->main;
 
     if (main->cache_arguments.used) {
-      f_array_length_t i = 1;
+      f_number_unsigned_t i = 1;
 
       if (state_process->operation == fake_make_operation_type_group_e || state_process->operation == fake_make_operation_type_groups_e || state_process->operation == fake_make_operation_type_owner_e || state_process->operation == fake_make_operation_type_owners_e) {
         if (f_compare_dynamic(fake_make_operation_argument_no_dereference_s, main->cache_arguments.array[i]) == F_equal_to) {
@@ -1467,7 +1467,7 @@ extern "C" {
 
       f_status_t status = F_none;
 
-      for (f_array_length_t i = 1; i < main->cache_arguments.used; ++i) {
+      for (f_number_unsigned_t i = 1; i < main->cache_arguments.used; ++i) {
 
         fake_make_assure_inside_project(data_make, main->cache_arguments.array[i]);
 

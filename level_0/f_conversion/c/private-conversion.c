@@ -267,7 +267,7 @@ extern "C" {
       }
 
       if (character) {
-        f_array_length_t count = 0;
+        f_number_unsigned_t count = 0;
 
         while (count < character->used) {
 

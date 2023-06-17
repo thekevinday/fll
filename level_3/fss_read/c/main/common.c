@@ -7,8 +7,8 @@ extern "C" {
 #ifndef _di_fss_read_ensure_quotes_length_
   void fss_read_ensure_quotes_length(fss_read_main_t * const main) {
 
-    f_array_length_t i = 0;
-    f_array_length_t j = 0;
+    f_number_unsigned_t i = 0;
+    f_number_unsigned_t j = 0;
 
     if (main->setting.quotes_object.used < main->setting.objects.used) {
       main->setting.state.status = f_uint8s_resize(main->setting.objects.used, &main->setting.quotes_object);
@@ -154,11 +154,11 @@ extern "C" {
     if (parameters->array[fss_read_parameter_help_e].result & f_console_result_found_e) return;
     if (parameters->array[fss_read_parameter_version_e].result & f_console_result_found_e) return;
 
-    f_array_length_t i = 0;
-    f_array_length_t index = 0;
+    f_number_unsigned_t i = 0;
+    f_number_unsigned_t index = 0;
 
     {
-      static const f_array_length_t parameter_code[] = {
+      static const f_number_unsigned_t parameter_code[] = {
         fss_read_parameter_at_e,
         fss_read_parameter_depth_e,
         fss_read_parameter_line_e,
@@ -239,7 +239,7 @@ extern "C" {
     }
 
     if (parameters->array[fss_read_parameter_columns_e].result & f_console_result_found_e) {
-      static const f_array_length_t parameter_code[] = {
+      static const f_number_unsigned_t parameter_code[] = {
         fss_read_parameter_depth_e,
         fss_read_parameter_line_e,
         fss_read_parameter_pipe_e,
@@ -307,7 +307,7 @@ extern "C" {
     }
 
     if (parameters->array[fss_read_parameter_delimit_e].result & f_console_result_value_e) {
-      f_array_length_t length = 0;
+      f_number_unsigned_t length = 0;
 
       // Set the value to 0 to allow for detecting mode based on what is provided.
       main->setting.delimit_mode = 0;
@@ -664,7 +664,7 @@ extern "C" {
 
     fss_read_main_t * const main = (fss_read_main_t *) void_main;
 
-    f_array_length_t i = 1;
+    f_number_unsigned_t i = 1;
 
     if (parameters->array[fss_read_parameter_depth_e].result & f_console_result_value_e) {
       i = parameters->array[fss_read_parameter_depth_e].values.used;
@@ -686,9 +686,9 @@ extern "C" {
 
     main->setting.depths.used = i;
 
-    f_array_length_t position_depth = 0;
-    f_array_length_t position_at = 0;
-    f_array_length_t position_name = 0;
+    f_number_unsigned_t position_depth = 0;
+    f_number_unsigned_t position_at = 0;
+    f_number_unsigned_t position_name = 0;
     fss_read_depth_t *current = 0;
 
     for (i = 0; i < main->setting.depths.used; ++i) {
@@ -781,7 +781,7 @@ extern "C" {
       }
     } // for
 
-    f_array_length_t j = 0;
+    f_number_unsigned_t j = 0;
 
     for (i = 0; i < main->setting.depths.used; ++i) {
 

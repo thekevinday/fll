@@ -46,7 +46,7 @@ extern "C" {
  * @see fl_conversion_dynamic_to_signed_detect()
  */
 #if !defined(_di_fl_conversion_dynamic_partial_to_binary_signed_) || !defined(_di_fl_conversion_dynamic_partial_to_signed_detect_) || !defined(_di_fl_conversion_dynamic_to_binary_signed_) || !defined(_di_fl_conversion_dynamic_to_signed_detect_)
-  extern f_status_t private_fl_conversion_dynamic_to_binary_signed(const uint16_t flag, const f_string_t string, const f_array_length_t length, f_number_signed_t * const number) F_attribute_visibility_internal_d;
+  extern f_status_t private_fl_conversion_dynamic_to_binary_signed(const uint16_t flag, const f_string_t string, const f_number_unsigned_t length, f_number_signed_t * const number) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fl_conversion_dynamic_partial_to_binary_signed_) || !defined(_di_fl_conversion_dynamic_partial_to_signed_detect_) || !defined(_di_fl_conversion_dynamic_to_binary_signed_) || !defined(_di_fl_conversion_dynamic_to_signed_detect_)
 
 /**
@@ -79,7 +79,7 @@ extern "C" {
  * @see fl_conversion_dynamic_to_unsigned_detect()
  */
 #if !defined(_di_fl_conversion_dynamic_partial_to_binary_unsigned_) || !defined(_di_fl_conversion_dynamic_partial_to_unsigned_detect_) || !defined(_di_fl_conversion_dynamic_to_binary_unsigned_) || !defined(_di_fl_conversion_dynamic_to_unsigned_detect_)
-  extern f_status_t private_fl_conversion_dynamic_to_binary_unsigned(const uint16_t flag, const f_string_t string, const f_array_length_t length, f_number_unsigned_t * const number) F_attribute_visibility_internal_d;
+  extern f_status_t private_fl_conversion_dynamic_to_binary_unsigned(const uint16_t flag, const f_string_t string, const f_number_unsigned_t length, f_number_unsigned_t * const number) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fl_conversion_dynamic_partial_to_binary_unsigned_) || !defined(_di_fl_conversion_dynamic_partial_to_unsigned_detect_) || !defined(_di_fl_conversion_dynamic_to_binary_unsigned_) || !defined(_di_fl_conversion_dynamic_to_unsigned_detect_)
 
 /**
@@ -113,7 +113,7 @@ extern "C" {
  * @see fl_conversion_dynamic_to_unsigned_detect()
  */
 #if !defined(_di_fl_conversion_dynamic_partial_to_decimal_signed_) || !defined(_di_fl_conversion_dynamic_partial_to_signed_detect_) || !defined(_di_fl_conversion_dynamic_to_decimal_signed_) || !defined(_di_fl_conversion_dynamic_to_signed_detect_)
-  extern f_status_t private_fl_conversion_dynamic_to_base_signed(const fl_conversion_data_t data, const f_string_t string, const f_array_length_t length, f_number_signed_t * const number) F_attribute_visibility_internal_d;
+  extern f_status_t private_fl_conversion_dynamic_to_base_signed(const fl_conversion_data_t data, const f_string_t string, const f_number_unsigned_t length, f_number_signed_t * const number) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fl_conversion_dynamic_partial_to_decimal_signed_) || !defined(_di_fl_conversion_dynamic_partial_to_signed_detect_) || !defined(_di_fl_conversion_dynamic_to_decimal_signed_) || !defined(_di_fl_conversion_dynamic_to_signed_detect_)
 
 /**
@@ -146,7 +146,7 @@ extern "C" {
  * @see fl_conversion_dynamic_to_unsigned_detect()
  */
 #if !defined(_di_fl_conversion_dynamic_partial_to_decimal_unsigned_) || !defined(_di_fl_conversion_dynamic_partial_to_unsigned_detect_) || !defined(_di_fl_conversion_dynamic_to_decimal_unsigned_) || !defined(_di_fl_conversion_dynamic_to_unsigned_detect_)
-  extern f_status_t private_fl_conversion_dynamic_to_base_unsigned(const fl_conversion_data_t data, const f_string_t string, const f_array_length_t length, f_number_unsigned_t * const number) F_attribute_visibility_internal_d;
+  extern f_status_t private_fl_conversion_dynamic_to_base_unsigned(const fl_conversion_data_t data, const f_string_t string, const f_number_unsigned_t length, f_number_unsigned_t * const number) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fl_conversion_dynamic_partial_to_decimal_unsigned_) || !defined(_di_fl_conversion_dynamic_partial_to_unsigned_detect_) || !defined(_di_fl_conversion_dynamic_to_decimal_unsigned_) || !defined(_di_fl_conversion_dynamic_to_unsigned_detect_)
 
 /**
@@ -176,7 +176,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #if !defined(_di_fl_conversion_dynamic_to_signed_detect_) || !defined(_di_fl_conversion_dynamic_partial_to_signed_detect_)
-  extern f_status_t private_fl_conversion_dynamic_to_signed_detect(const uint16_t flag, const f_string_t string, const f_array_length_t length, f_number_signed_t * const number) F_attribute_visibility_internal_d;
+  extern f_status_t private_fl_conversion_dynamic_to_signed_detect(const uint16_t flag, const f_string_t string, const f_number_unsigned_t length, f_number_signed_t * const number) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fl_conversion_dynamic_to_signed_detect_) || !defined(_di_fl_conversion_dynamic_partial_to_signed_detect_)
 
 /**
@@ -210,7 +210,7 @@ extern "C" {
  * @see strtoull()
  */
 #if !defined(_di_fl_conversion_dynamic_to_unsigned_detect_) || !defined(_di_fl_conversion_dynamic_partial_to_unsigned_detect_)
-  extern f_status_t private_fl_conversion_dynamic_to_unsigned_detect(const uint16_t flag, const f_string_t string, const f_array_length_t length, f_number_unsigned_t * const number) F_attribute_visibility_internal_d;
+  extern f_status_t private_fl_conversion_dynamic_to_unsigned_detect(const uint16_t flag, const f_string_t string, const f_number_unsigned_t length, f_number_unsigned_t * const number) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fl_conversion_dynamic_to_unsigned_detect_) || !defined(_di_fl_conversion_dynamic_partial_to_unsigned_detect_)
 
 #ifdef __cplusplus

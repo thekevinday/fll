@@ -13,7 +13,7 @@ extern "C" {
     fake_main_t * const main = data->main;
 
     // Reset the environment.
-    for (f_array_length_t i = 0; i < environment->used; ++i) {
+    for (f_number_unsigned_t i = 0; i < environment->used; ++i) {
 
       environment->array[i].name.used = 0;
       environment->array[i].value.used = 0;
@@ -86,7 +86,7 @@ extern "C" {
     modes_custom.array = modes_custom_array;
 
     if (build_arguments) {
-      f_array_length_t i = 0;
+      f_number_unsigned_t i = 0;
 
       if (build_arguments->used > 1) {
         for (; i < modes_custom.used; ++i) {
@@ -560,8 +560,8 @@ extern "C" {
 
       bool found = F_false;
 
-      f_array_length_t i = 0;
-      f_array_length_t j = 0;
+      f_number_unsigned_t i = 0;
+      f_number_unsigned_t j = 0;
 
       for (; i < modes->used; ++i) {
 
@@ -1096,7 +1096,7 @@ extern "C" {
         5,                                           // version_target
       };
 
-      for (f_array_length_t i = 0; i < 40; ++i) {
+      for (f_number_unsigned_t i = 0; i < 40; ++i) {
 
         // Assign the default for literal and path types.
         if (!settings_single_matches[i] && settings_single_destination[i]) {

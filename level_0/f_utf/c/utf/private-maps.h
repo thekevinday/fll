@@ -37,7 +37,7 @@ extern "C" {
  * @see f_utf_string_maps_adjust()
  */
 #if !defined(_di_f_utf_string_maps_adjust_) || !defined(_di_f_utf_string_maps_decimate_by_)
-  extern f_status_t private_f_utf_string_maps_adjust(const f_array_length_t length, f_utf_string_maps_t * const maps) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_utf_string_maps_adjust(const f_number_unsigned_t length, f_utf_string_maps_t * const maps) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_utf_string_maps_adjust_) || !defined(_di_f_utf_string_maps_decimate_by_)
 
 /**
@@ -99,7 +99,7 @@ extern "C" {
  * @see f_utf_string_mapss_increase_by()
  */
 #if !defined(_di_f_utf_string_maps_append_) || !defined(_di_f_utf_string_maps_append_all_) || !defined(_di_f_utf_string_maps_decrease_by_) || !defined(_di_f_utf_string_maps_increase_) || !defined(_di_f_utf_string_maps_increase_by_) || !defined(_di_f_utf_string_maps_resize_) || !defined(_di_f_utf_string_mapss_append_) || !defined(_di_f_utf_string_mapss_append_all_) || !defined(_di_f_utf_string_mapss_decrease_by_) || !defined(_di_f_utf_string_mapss_increase_) || !defined(_di_f_utf_string_mapss_increase_by_)
-  extern f_status_t private_f_utf_string_maps_resize(const f_array_length_t length, f_utf_string_maps_t * const maps) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_utf_string_maps_resize(const f_number_unsigned_t length, f_utf_string_maps_t * const maps) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_utf_string_maps_append_) || !defined(_di_f_utf_string_maps_append_all_) || !defined(_di_f_utf_string_maps_decrease_by_) || !defined(_di_f_utf_string_maps_increase_) || !defined(_di_f_utf_string_maps_increase_by_) || !defined(_di_f_utf_string_maps_resize_) || !defined(_di_f_utf_string_mapss_append_) || !defined(_di_f_utf_string_mapss_append_all_) || !defined(_di_f_utf_string_mapss_decrease_by_) || !defined(_di_f_utf_string_mapss_increase_) || !defined(_di_f_utf_string_mapss_increase_by_)
 
 #ifdef __cplusplus

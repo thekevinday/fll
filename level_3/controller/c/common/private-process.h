@@ -23,8 +23,8 @@ extern "C" {
   typedef struct {
     pid_t *array;
 
-    f_array_length_t size;
-    f_array_length_t used;
+    f_number_unsigned_t size;
+    f_number_unsigned_t used;
   } controller_pids_t;
 
   #define controller_pids_t_initialize { \
@@ -95,7 +95,7 @@ extern "C" {
   };
 
   typedef struct {
-    f_array_length_t id;
+    f_number_unsigned_t id;
 
     uint8_t state;
     uint8_t action;
@@ -111,7 +111,7 @@ extern "C" {
     f_thread_mutex_t wait_lock;
 
     controller_cache_t cache;
-    f_array_lengths_t stack;
+    f_number_unsigneds_t stack;
 
     f_string_dynamics_t path_pids;
 
@@ -135,7 +135,7 @@ extern "C" {
     f_thread_lock_t_initialize, \
     f_thread_condition_t_initialize, \
     controller_cache_t_initialize, \
-    f_array_lengths_t_initialize, \
+    f_number_unsigneds_t_initialize, \
     f_string_dynamics_t_initialize, \
     controller_pids_t_initialize, \
     controller_rule_t_initialize, \
@@ -158,8 +158,8 @@ extern "C" {
   typedef struct {
     controller_process_t **array;
 
-    f_array_length_t size;
-    f_array_length_t used;
+    f_number_unsigned_t size;
+    f_number_unsigned_t used;
   } controller_processs_t;
 
   #define controller_processs_t_initialize { \
@@ -172,7 +172,7 @@ extern "C" {
 /**
  * Increase the size of the pid array, but only if necessary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param pids
@@ -209,7 +209,7 @@ extern "C" {
  * @see f_memory_resize()
  */
 #ifndef _di_controller_pids_resize_
-  extern f_status_t controller_pids_resize(const f_array_length_t length, controller_pids_t * const pids) F_attribute_visibility_internal_d;
+  extern f_status_t controller_pids_resize(const f_number_unsigned_t length, controller_pids_t * const pids) F_attribute_visibility_internal_d;
 #endif // _di_controller_pids_resize_
 
 /**
@@ -241,7 +241,7 @@ extern "C" {
 /**
  * Increase the size of the rule array, but only if necessary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param processs
@@ -283,7 +283,7 @@ extern "C" {
  * @see f_thread_lock_create()
  */
 #ifndef _di_controller_processs_resize_
-  extern f_status_t controller_processs_resize(const f_array_length_t length, controller_processs_t * const processs) F_attribute_visibility_internal_d;
+  extern f_status_t controller_processs_resize(const f_number_unsigned_t length, controller_processs_t * const processs) F_attribute_visibility_internal_d;
 #endif // _di_controller_processs_resize_
 
 #ifdef __cplusplus

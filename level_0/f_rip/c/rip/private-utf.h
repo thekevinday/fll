@@ -42,7 +42,7 @@ extern "C" {
  * @see f_rip_utf()
  */
 #if !defined(_di_f_rip_utf_) || !defined(_di_f_rip_utf_dynamic_) || !defined(_di_f_rip_utf_nulless_) || !defined(_di_f_rip_utf_dynamic_nulless_)
-  extern f_status_t private_f_rip_utf_find_range(const f_utf_string_t source, f_array_length_t *start, f_array_length_t *stop) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_rip_utf_find_range(const f_utf_string_t source, f_number_unsigned_t *start, f_number_unsigned_t *stop) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_rip_utf_) || !defined(_di_f_rip_utf_dynamic_) || !defined(_di_f_rip_utf_nulless_) || !defined(_di_f_rip_utf_dynamic_nulless_)
 
 #ifdef __cplusplus

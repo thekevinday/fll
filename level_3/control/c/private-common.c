@@ -60,7 +60,7 @@ extern "C" {
     f_string_ranges_resize(0, &data->cache.header_objects);
     f_string_rangess_resize(0, &data->cache.header_contents);
 
-    f_array_lengths_resize(0, &data->cache.delimits);
+    f_number_unsigneds_resize(0, &data->cache.delimits);
   }
 #endif // _di_control_data_delete_
 

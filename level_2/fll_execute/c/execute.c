@@ -38,14 +38,14 @@ extern "C" {
 #endif // _di_fll_execute_arguments_add_parameter_
 
 #ifndef _di_fll_execute_arguments_add_parameter_set_
-  f_status_t fll_execute_arguments_add_parameter_set(const f_string_static_t prefix[], const f_string_static_t name[], const f_string_static_t value[], const f_array_length_t size, f_string_dynamics_t * const arguments) {
+  f_status_t fll_execute_arguments_add_parameter_set(const f_string_static_t prefix[], const f_string_static_t name[], const f_string_static_t value[], const f_number_unsigned_t size, f_string_dynamics_t * const arguments) {
     #ifndef _di_level_2_parameter_checking_
       if (!arguments) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
     f_status_t status = f_string_dynamics_increase_by(size, arguments);
 
-    for (f_array_length_t i = 0; F_status_is_error_not(status) && i < size; ++i) {
+    for (f_number_unsigned_t i = 0; F_status_is_error_not(status) && i < size; ++i) {
 
       status = private_fll_execute_arguments_add_parameter(prefix[i], name[i], value[i], arguments);
     } // for
@@ -55,14 +55,14 @@ extern "C" {
 #endif // _di_fll_execute_arguments_add_parameter_set_
 
 #ifndef _di_fll_execute_arguments_add_set_
-  f_status_t fll_execute_arguments_add_set(const f_string_static_t source[], const f_array_length_t size, f_string_dynamics_t * const arguments) {
+  f_status_t fll_execute_arguments_add_set(const f_string_static_t source[], const f_number_unsigned_t size, f_string_dynamics_t * const arguments) {
     #ifndef _di_level_2_parameter_checking_
       if (!arguments) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
     f_status_t status = f_string_dynamics_increase_by(size, arguments);
 
-    for (f_array_length_t i = 0; F_status_is_error_not(status) && i < size; ++i) {
+    for (f_number_unsigned_t i = 0; F_status_is_error_not(status) && i < size; ++i) {
 
       status = private_fll_execute_arguments_add(source[i], arguments);
     } // for
@@ -144,7 +144,7 @@ extern "C" {
         }
 
         // Search each individual path in PATH until a match is found.
-        for (f_array_length_t i = 0; i < paths.used; ++i) {
+        for (f_number_unsigned_t i = 0; i < paths.used; ++i) {
 
           status = f_string_dynamic_append(program_name, &paths.array[i]);
 
@@ -199,7 +199,7 @@ extern "C" {
       if (environment) {
         clearenv();
 
-        for (f_array_length_t i = 0; i < environment->used; ++i) {
+        for (f_number_unsigned_t i = 0; i < environment->used; ++i) {
           f_environment_set(environment->array[i].name, environment->array[i].value, F_true);
         } // for
       }
@@ -210,7 +210,7 @@ extern "C" {
       if (environment) {
         clearenv();
 
-        for (f_array_length_t i = 0; i < environment->used; ++i) {
+        for (f_number_unsigned_t i = 0; i < environment->used; ++i) {
           f_environment_set(environment->array[i].name, environment->array[i].value, F_true);
         } // for
       }
@@ -336,7 +336,7 @@ extern "C" {
         }
 
         // Search each individual path in PATH until a match is found.
-        for (f_array_length_t i = 0; i < paths.used; ++i) {
+        for (f_number_unsigned_t i = 0; i < paths.used; ++i) {
 
           status = f_string_dynamic_append(program_name, &paths.array[i]);
 

@@ -42,9 +42,9 @@ extern "C" {
  *
  * Dynamic allocation macros are provided, but it is recommended to utilize the f_string_dynamic_t for dynamic allocation.
  *
- *  is provided as a way t have a string max for systems that do not support max string length in 64-bits (when f_array_length_t is set to uint64_t).
+ *  is provided as a way t have a string max for systems that do not support max string length in 64-bits (when f_number_unsigned_t is set to uint64_t).
  *
- * The ideal length for a string is F_array_length_t_size_d, which generally defaults to 2^64 (unsigned).
+ * The ideal length for a string is F_number_t_size_unsigned_d, which generally defaults to 2^64 (unsigned).
  * However, the libc/POSIX appears to limit this to 2^63 (signed).
  *
  * F_string_t_size_d is provided to help safely navigate this.

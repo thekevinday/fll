@@ -5,7 +5,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fss_read_print_at_
-  f_status_t fss_read_print_at(fl_print_t * const print, const f_array_length_t at, const f_fss_delimits_t delimits_object, const f_fss_delimits_t delimits_content) {
+  f_status_t fss_read_print_at(fl_print_t * const print, const f_number_unsigned_t at, const f_fss_delimits_t delimits_object, const f_fss_delimits_t delimits_content) {
 
     if (!print || !print->custom) return F_status_set_error(F_output_not);
 
@@ -42,7 +42,7 @@ extern "C" {
           print_set_end = F_true;
 
           if (main->callback.print_content) {
-            for (f_array_length_t i = 0; i < main->setting.contents.array[at].used; ++i) {
+            for (f_number_unsigned_t i = 0; i < main->setting.contents.array[at].used; ++i) {
 
               main->callback.print_content(&main->program.output, main->setting.contents.array[at].array[i], main->setting.quotes_content.array[at].used ? main->setting.quotes_content.array[at].array[i] : 0, delimits_content);
 
@@ -123,7 +123,7 @@ extern "C" {
 #endif // _di_fss_read_print_number_
 
 #ifndef _di_fss_read_print_object_
-  f_status_t fss_read_print_object(fl_print_t * const print, const f_array_length_t at, const f_fss_delimits_t delimits) {
+  f_status_t fss_read_print_object(fl_print_t * const print, const f_number_unsigned_t at, const f_fss_delimits_t delimits) {
 
     if (!print || !print->custom) return F_status_set_error(F_output_not);
 

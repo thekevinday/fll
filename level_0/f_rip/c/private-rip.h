@@ -48,7 +48,7 @@ extern "C" {
  * @see f_rip_nulless()
  */
 #if !defined(_di_f_rip_dynamic_partial_) || !defined(_di_f_rip_dynamic_partial_nulless_) || !defined(_di_f_rip_dynamic_)  || !defined(_di_f_rip_) || !defined(_di_f_rip_nulless_)
-  extern f_status_t private_f_rip_find_range(const f_string_t string, f_array_length_t * const start, f_array_length_t * const stop) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_rip_find_range(const f_string_t string, f_number_unsigned_t * const start, f_number_unsigned_t * const stop) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_rip_dynamic_partial_) || !defined(_di_f_rip_dynamic_partial_nulless_) || !defined(_di_f_rip_dynamic_)  || !defined(_di_f_rip_) || !defined(_di_f_rip_nulless_)
 
 #ifdef __cplusplus

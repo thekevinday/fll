@@ -38,7 +38,7 @@ void test__f_fss_is_combining__works(void **state) {
   };
 
   // Apply an offset so that the combining character is combining into something inside the quotes rather than the quotes for convenience and code safety.
-  f_array_length_t offset[] = {
+  f_number_unsigned_t offset[] = {
     0,
     0,
     0,
@@ -52,7 +52,7 @@ void test__f_fss_is_combining__works(void **state) {
     1,
   };
 
-  for (f_array_length_t i = 0; i < 11; ++i) {
+  for (f_number_unsigned_t i = 0; i < 11; ++i) {
 
     const f_string_range_t range = macro_f_string_range_t_initialize_1(offset[i], tests[i].used - 1);
 

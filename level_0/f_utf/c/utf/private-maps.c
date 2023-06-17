@@ -9,15 +9,15 @@ extern "C" {
 #endif
 
 #if !defined(_di_f_utf_string_maps_adjust_) || !defined(_di_f_utf_string_maps_decimate_by_)
-  f_status_t private_f_utf_string_maps_adjust(const f_array_length_t length, f_utf_string_maps_t * const maps) {
+  f_status_t private_f_utf_string_maps_adjust(const f_number_unsigned_t length, f_utf_string_maps_t * const maps) {
 
-    if (maps->used + length > F_array_length_t_size_d) {
+    if (maps->used + length > F_number_t_size_unsigned_d) {
       return F_status_set_error(F_array_too_large);
     }
 
     f_status_t status = F_none;
 
-    for (f_array_length_t i = length; i < maps->size; ++i) {
+    for (f_number_unsigned_t i = length; i < maps->size; ++i) {
 
       status = private_f_utf_string_dynamic_adjust(0, &maps->array[i].name);
       if (F_status_is_error(status)) return status;
@@ -49,7 +49,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     }
 
-    for (f_array_length_t i = 0; i < source.used; ++i, ++destination->used) {
+    for (f_number_unsigned_t i = 0; i < source.used; ++i, ++destination->used) {
 
       destination->array[destination->used].name.used = 0;
       destination->array[destination->used].value.used = 0;
@@ -70,15 +70,15 @@ extern "C" {
 #endif // !defined(_di_f_utf_string_maps_append_all_) || !defined(_di_f_utf_string_mapss_append_) || !defined(_di_f_utf_string_mapss_append_all_)
 
 #if !defined(_di_f_utf_string_maps_append_) || !defined(_di_f_utf_string_maps_append_all_) || !defined(_di_f_utf_string_maps_decrease_by_) || !defined(_di_f_utf_string_maps_increase_) || !defined(_di_f_utf_string_maps_increase_by_) || !defined(_di_f_utf_string_maps_resize_) || !defined(_di_f_utf_string_mapss_append_) || !defined(_di_f_utf_string_mapss_append_all_) || !defined(_di_f_utf_string_mapss_decrease_by_) || !defined(_di_f_utf_string_mapss_increase_) || !defined(_di_f_utf_string_mapss_increase_by_)
-  f_status_t private_f_utf_string_maps_resize(const f_array_length_t length, f_utf_string_maps_t * const maps) {
+  f_status_t private_f_utf_string_maps_resize(const f_number_unsigned_t length, f_utf_string_maps_t * const maps) {
 
-    if (maps->used + length > F_array_length_t_size_d) {
+    if (maps->used + length > F_number_t_size_unsigned_d) {
       return F_status_set_error(F_array_too_large);
     }
 
     f_status_t status = F_none;
 
-    for (f_array_length_t i = length; i < maps->size; ++i) {
+    for (f_number_unsigned_t i = length; i < maps->size; ++i) {
 
       status = private_f_utf_string_dynamic_resize(0, &maps->array[i].name);
       if (F_status_is_error(status)) return status;

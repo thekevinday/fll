@@ -649,13 +649,13 @@ extern "C" {
 #endif // !defined(_di_f_file_stream_open_descriptor_) || !defined(_di_f_file_stream_open_) || !defined(_di_f_file_stream_reopen_)
 
 #if !defined(_di_f_file_stream_write_) || !defined(_di_f_file_stream_write_block_) || !defined(_di_f_file_stream_write_until) || !defined(_di_f_file_stream_write_range)
-  f_status_t private_f_file_stream_write_until(const f_file_t file, const f_string_static_t buffer, const f_array_length_t total, f_array_length_t * const written) {
+  f_status_t private_f_file_stream_write_until(const f_file_t file, const f_string_static_t buffer, const f_number_unsigned_t total, f_number_unsigned_t * const written) {
 
     *written = 0;
 
-    f_array_length_t write_amount = 1;
-    f_array_length_t write_size = file.size_write;
-    f_array_length_t write_max = total;
+    f_number_unsigned_t write_amount = 1;
+    f_number_unsigned_t write_size = file.size_write;
+    f_number_unsigned_t write_max = total;
 
     ssize_t size_write = 0;
 
@@ -699,12 +699,12 @@ extern "C" {
 #endif // !defined(_di_f_file_stream_write_) || !defined(_di_f_file_stream_write_block_) || !defined(_di_f_file_stream_write_until) || !defined(_di_f_file_stream_write_range)
 
 #if !defined(_di_f_file_write_) || !defined(_di_f_file_write_block_) || !defined(_di_f_file_write_until) || !defined(_di_f_file_write_range)
-  f_status_t private_f_file_write_until(const f_file_t file, const f_string_static_t buffer, const f_array_length_t total, f_array_length_t * const written) {
+  f_status_t private_f_file_write_until(const f_file_t file, const f_string_static_t buffer, const f_number_unsigned_t total, f_number_unsigned_t * const written) {
 
     *written = 0;
 
-    f_array_length_t write_size = file.size_write;
-    f_array_length_t write_max = total;
+    f_number_unsigned_t write_size = file.size_write;
+    f_number_unsigned_t write_max = total;
 
     ssize_t size_write = 0;
 

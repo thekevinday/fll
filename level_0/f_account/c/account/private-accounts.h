@@ -95,7 +95,7 @@ extern "C" {
  * @see f_accountss_decimate_by()
  */
 #if !defined(_di_f_accounts_adjust_) || !defined(_di_f_accounts_decimate_by_) || !defined(_di_f_accountss_adjust_) || !defined(_di_f_accountss_decimate_by_)
-  extern f_status_t private_f_accounts_adjust(const f_array_length_t length, f_accounts_t *accounts) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_accounts_adjust(const f_number_unsigned_t length, f_accounts_t *accounts) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_accounts_adjust_) || !defined(_di_f_accounts_decimate_by_) || !defined(_di_f_accountss_adjust_) || !defined(_di_f_accountss_decimate_by_)
 
 /**
@@ -181,7 +181,7 @@ extern "C" {
  * @see f_accountss_resize()
  */
 #if !defined(_di_f_accounts_resize_) || !defined(_di_f_accounts_append_) || !defined(_di_f_accounts_decimate_by_) || !defined(_di_f_accountss_append_) || !defined(_di_f_accountss_decrease_by_) || !defined(_di_f_accountss_increase_) || !defined(_di_f_accountss_increase_by_) || !defined(_di_f_accountss_resize_)
-  extern f_status_t private_f_accounts_resize(const f_array_length_t length, f_accounts_t *accounts) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_accounts_resize(const f_number_unsigned_t length, f_accounts_t *accounts) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_accounts_resize_) || !defined(_di_f_accounts_append_) || !defined(_di_f_accounts_decimate_by_) || !defined(_di_f_accountss_append_) || !defined(_di_f_accountss_decrease_by_) || !defined(_di_f_accountss_increase_) || !defined(_di_f_accountss_increase_by_) || !defined(_di_f_accountss_resize_)
 
 /**
@@ -212,7 +212,7 @@ extern "C" {
  * @see f_accountss_decimate_by()
  */
 #if !defined(_di_f_accountss_adjust_) || !defined(_di_f_accountss_decimate_by_)
-  extern f_status_t private_f_accountss_adjust(const f_array_length_t length, f_accountss_t *accountss) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_accountss_adjust(const f_number_unsigned_t length, f_accountss_t *accountss) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_accountss_adjust_) || !defined(_di_f_accountss_decimate_by_)
 
 /**
@@ -242,7 +242,7 @@ extern "C" {
  * @see f_accountss_resize()
  */
 #if !defined(_di_f_accountss_decrease_by_) || !defined(_di_f_accountss_increase_) || !defined(_di_f_accountss_increase_by_) || !defined(_di_f_accountss_resize_)
-  extern f_status_t private_f_accountss_resize(const f_array_length_t length, f_accountss_t *accountss) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_accountss_resize(const f_number_unsigned_t length, f_accountss_t *accountss) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_accountss_decrease_by_) || !defined(_di_f_accountss_increase_) || !defined(_di_f_accountss_increase_by_) || !defined(_di_f_accountss_resize_)
 
 #ifdef __cplusplus

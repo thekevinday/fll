@@ -47,7 +47,7 @@ extern "C" {
 #endif // _di_fss_read_print_error_parameter_requires_message_
 
 #ifndef _di_fss_read_print_error_parameter_value_before_value_number_
-  f_status_t fss_read_print_error_parameter_value_before_value_number(fl_print_t * const print, const f_string_static_t symbol, const f_string_static_t name, const f_array_length_t value, const f_array_length_t before) {
+  f_status_t fss_read_print_error_parameter_value_before_value_number(fl_print_t * const print, const f_string_static_t symbol, const f_string_static_t name, const f_number_unsigned_t value, const f_number_unsigned_t before) {
 
     if (!print) return F_status_set_error(F_output_not);
     if (print->verbosity == f_console_verbosity_quiet_e) return F_output_not;
@@ -69,7 +69,7 @@ extern "C" {
 #endif // _di_fss_read_print_error_parameter_value_before_value_number_
 
 #ifndef _di_fss_read_print_error_parameter_value_once_only_number_
-  f_status_t fss_read_print_error_parameter_value_once_only_number(fl_print_t * const print, const f_string_static_t symbol, const f_string_static_t name, const f_array_length_t value) {
+  f_status_t fss_read_print_error_parameter_value_once_only_number(fl_print_t * const print, const f_string_static_t symbol, const f_string_static_t name, const f_number_unsigned_t value) {
 
     if (!print) return F_status_set_error(F_output_not);
     if (print->verbosity == f_console_verbosity_quiet_e) return F_output_not;

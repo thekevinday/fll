@@ -806,7 +806,7 @@ extern "C" {
 
     f_fss_nameds_t fakefile;
 
-    f_array_length_t id_main;
+    f_number_unsigned_t id_main;
 
     fake_main_t *main;
     fake_data_t *data;

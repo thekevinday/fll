@@ -85,7 +85,7 @@ extern "C" {
     }
 
     if (F_status_is_error_not(main->setting.state.status)) {
-      f_array_length_t i = 0;
+      f_number_unsigned_t i = 0;
 
       // Pre-process and perform validation when "clean" is before a "build" or "make" command as a safety check.
       {
@@ -227,7 +227,7 @@ extern "C" {
 
       f_print_dynamic(program, main->program.message.to);
 
-      for (f_array_length_t i = 0; i < main->cache_arguments.used; ++i) {
+      for (f_number_unsigned_t i = 0; i < main->cache_arguments.used; ++i) {
 
         if (!main->cache_arguments.array[i].used) continue;
 
@@ -454,7 +454,7 @@ extern "C" {
         ];
 
       if (parameter->result & f_console_result_value_e) {
-        const f_array_length_t index = parameter->values.array[parameter->location];
+        const f_number_unsigned_t index = parameter->values.array[parameter->location];
 
         if (f_path_is_absolute(main->program.parameters.arguments.array[index]) == F_true || f_path_is_relative_current(main->program.parameters.arguments.array[index]) == F_true) {
           requireds[1] = F_none; // fake_long_data_s

@@ -16,7 +16,7 @@ extern "C" {
       }
     #endif // _di_level_2_parameter_checking_
 
-    f_array_length_t initial_used = 0;
+    f_number_unsigned_t initial_used = 0;
 
     bool found_data = F_false;
 

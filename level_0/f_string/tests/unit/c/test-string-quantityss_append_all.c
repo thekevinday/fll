@@ -34,9 +34,9 @@ void test__f_string_quantityss_append_all__works(void **state) {
     assert_int_equal(status, F_none);
     assert_int_equal(destination.used, source.used);
 
-    for (f_array_length_t j = 0; j < length_sources_set; ++j) {
+    for (f_number_unsigned_t j = 0; j < length_sources_set; ++j) {
 
-      for (f_array_length_t i = 0; i < length_sources; ++i) {
+      for (f_number_unsigned_t i = 0; i < length_sources; ++i) {
 
         assert_int_equal(destination.array[j].array[i].start, sources_set_array[j].array[i].start);
         assert_int_equal(destination.array[j].array[i].total, sources_set_array[j].array[i].total);
@@ -44,7 +44,7 @@ void test__f_string_quantityss_append_all__works(void **state) {
     } // for
   }
 
-  for (f_array_length_t i = 0; i < destination.used; ++i) {
+  for (f_number_unsigned_t i = 0; i < destination.used; ++i) {
     free((void *) destination.array[i].array);
   } // for
 

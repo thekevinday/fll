@@ -121,7 +121,7 @@ extern "C" {
         &main->setting.defines,
       };
 
-      f_array_length_t i = 0;
+      f_number_unsigned_t i = 0;
 
       for (uint8_t s = 0; s < 12; ++s) {
 
@@ -140,7 +140,7 @@ extern "C" {
 #endif // _di_fake_build_arguments_standard_add_
 
 #ifndef _di_fake_build_copy_
-  void fake_build_copy(fake_data_t * const data, const f_mode_t mode, const f_string_static_t label, const f_string_static_t source, const f_string_static_t destination, const f_string_statics_t files, const f_string_static_t file_stage, const f_array_length_t perserve_offset) {
+  void fake_build_copy(fake_data_t * const data, const f_mode_t mode, const f_string_static_t label, const f_string_static_t source, const f_string_static_t destination, const f_string_statics_t files, const f_string_static_t file_stage, const f_number_unsigned_t perserve_offset) {
 
     if (!data || !data->main) return;
     if (data->main->setting.state.status == F_child) return;
@@ -180,7 +180,7 @@ extern "C" {
       return;
     }
 
-    for (f_array_length_t i = 0; i < files.used; ++i) {
+    for (f_number_unsigned_t i = 0; i < files.used; ++i) {
 
       if (fake_signal_check(main)) break;
       if (!files.array[i].used) continue;
@@ -403,7 +403,7 @@ extern "C" {
       f_string_dynamic_t defines = f_string_dynamic_t_initialize;
 
       if (main->setting.defines.used) {
-        for (f_array_length_t i = 0; i < main->setting.defines.used; ++i) {
+        for (f_number_unsigned_t i = 0; i < main->setting.defines.used; ++i) {
 
           main->setting.state.status = f_string_dynamic_mash(f_string_space_s, main->setting.defines.array[i], &defines);
           if (F_status_is_error(main->setting.state.status)) break;
@@ -533,7 +533,7 @@ extern "C" {
       return;
     }
 
-    for (f_array_length_t i = name->used; i > 0; --i) {
+    for (f_number_unsigned_t i = name->used; i > 0; --i) {
 
       if (name->string[i] == f_path_extension_separator_s.string[0]) {
         name->used = i;
@@ -553,8 +553,8 @@ extern "C" {
 
     fake_main_t * const main = data->main;
 
-    f_array_length_t i = 0;
-    f_array_length_t j = 0;
+    f_number_unsigned_t i = 0;
+    f_number_unsigned_t j = 0;
 
     f_string_static_t source = f_string_static_t_initialize;
 
@@ -758,8 +758,8 @@ extern "C" {
 
     fake_main_t * const main = data->main;
 
-    f_array_length_t i = 0;
-    f_array_length_t j = 0;
+    f_number_unsigned_t i = 0;
+    f_number_unsigned_t j = 0;
 
     const f_string_statics_t *sources[2] = {
       generic,

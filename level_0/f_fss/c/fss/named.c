@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #ifndef _di_f_fss_named_adjust_
-  f_status_t f_fss_named_adjust(const f_array_length_t length, f_fss_named_t * const named) {
+  f_status_t f_fss_named_adjust(const f_number_unsigned_t length, f_fss_named_t * const named) {
     #ifndef _di_level_0_parameter_checking_
       if (!named) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -16,7 +16,7 @@ extern "C" {
 #endif // _di_f_fss_named_adjust_
 
 #ifndef _di_f_fss_named_decimate_by_
-  f_status_t f_fss_named_decimate_by(const f_array_length_t amount, f_fss_named_t * const named) {
+  f_status_t f_fss_named_decimate_by(const f_number_unsigned_t amount, f_fss_named_t * const named) {
     #ifndef _di_level_0_parameter_checking_
       if (!named) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -32,7 +32,7 @@ extern "C" {
 #endif // _di_f_fss_named_decimate_by_
 
 #ifndef _di_f_fss_named_decrease_by_
-  f_status_t f_fss_named_decrease_by(const f_array_length_t amount, f_fss_named_t * const named) {
+  f_status_t f_fss_named_decrease_by(const f_number_unsigned_t amount, f_fss_named_t * const named) {
     #ifndef _di_level_0_parameter_checking_
       if (!named) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -48,20 +48,20 @@ extern "C" {
 #endif // _di_f_fss_named_decrease_by_
 
 #ifndef _di_f_fss_named_increase_
-  f_status_t f_fss_named_increase(const f_array_length_t step, f_fss_named_t * const named) {
+  f_status_t f_fss_named_increase(const f_number_unsigned_t step, f_fss_named_t * const named) {
     #ifndef _di_level_0_parameter_checking_
       if (!named) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (step && named->objects.used + 1 > named->objects.size) {
-      f_array_length_t size = named->objects.used + step;
+      f_number_unsigned_t size = named->objects.used + step;
 
-      if (size > F_array_length_t_size_d) {
-        if (named->objects.used + 1 > F_array_length_t_size_d) {
+      if (size > F_number_t_size_unsigned_d) {
+        if (named->objects.used + 1 > F_number_t_size_unsigned_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = F_array_length_t_size_d;
+        size = F_number_t_size_unsigned_d;
       }
 
       return private_f_fss_named_resize(size, named);
@@ -72,7 +72,7 @@ extern "C" {
 #endif // _di_f_fss_named_increase_
 
 #ifndef _di_f_fss_named_increase_by_
-  f_status_t f_fss_named_increase_by(const f_array_length_t amount, f_fss_named_t * const named) {
+  f_status_t f_fss_named_increase_by(const f_number_unsigned_t amount, f_fss_named_t * const named) {
     #ifndef _di_level_0_parameter_checking_
       if (!named) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -80,7 +80,7 @@ extern "C" {
     if (!amount) return F_data_not;
 
     if (named->objects.used + amount > named->objects.size) {
-      if (named->objects.used + amount > F_array_length_t_size_d) {
+      if (named->objects.used + amount > F_number_t_size_unsigned_d) {
         return F_status_set_error(F_array_too_large);
       }
 
@@ -92,7 +92,7 @@ extern "C" {
 #endif // _di_f_fss_named_increase_by_
 
 #ifndef _di_f_fss_named_resize_
-  f_status_t f_fss_named_resize(const f_array_length_t length, f_fss_named_t * const named) {
+  f_status_t f_fss_named_resize(const f_number_unsigned_t length, f_fss_named_t * const named) {
     #ifndef _di_level_0_parameter_checking_
       if (!named) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -102,7 +102,7 @@ extern "C" {
 #endif // _di_f_fss_named_resize_
 
 #ifndef _di_f_fss_nameds_adjust_
-  f_status_t f_fss_nameds_adjust(const f_array_length_t length, f_fss_nameds_t * const nameds) {
+  f_status_t f_fss_nameds_adjust(const f_number_unsigned_t length, f_fss_nameds_t * const nameds) {
     #ifndef _di_level_0_parameter_checking_
       if (!nameds) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -112,7 +112,7 @@ extern "C" {
 #endif // _di_f_fss_nameds_adjust_
 
 #ifndef _di_f_fss_nameds_decimate_by_
-  f_status_t f_fss_nameds_decimate_by(const f_array_length_t amount, f_fss_nameds_t * const nameds) {
+  f_status_t f_fss_nameds_decimate_by(const f_number_unsigned_t amount, f_fss_nameds_t * const nameds) {
     #ifndef _di_level_0_parameter_checking_
       if (!nameds) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -128,7 +128,7 @@ extern "C" {
 #endif // _di_f_fss_nameds_decimate_by_
 
 #ifndef _di_f_fss_nameds_decrease_by_
-  f_status_t f_fss_nameds_decrease_by(const f_array_length_t amount, f_fss_nameds_t * const nameds) {
+  f_status_t f_fss_nameds_decrease_by(const f_number_unsigned_t amount, f_fss_nameds_t * const nameds) {
     #ifndef _di_level_0_parameter_checking_
       if (!nameds) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -144,20 +144,20 @@ extern "C" {
 #endif // _di_f_fss_nameds_decrease_by_
 
 #ifndef _di_f_fss_nameds_increase_
-  f_status_t f_fss_nameds_increase(const f_array_length_t step, f_fss_nameds_t * const nameds) {
+  f_status_t f_fss_nameds_increase(const f_number_unsigned_t step, f_fss_nameds_t * const nameds) {
     #ifndef _di_level_0_parameter_checking_
       if (!nameds) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (step && nameds->used + 1 > nameds->size) {
-      f_array_length_t size = nameds->used + step;
+      f_number_unsigned_t size = nameds->used + step;
 
-      if (size > F_array_length_t_size_d) {
-        if (nameds->used + 1 > F_array_length_t_size_d) {
+      if (size > F_number_t_size_unsigned_d) {
+        if (nameds->used + 1 > F_number_t_size_unsigned_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = F_array_length_t_size_d;
+        size = F_number_t_size_unsigned_d;
       }
 
       return private_f_fss_nameds_resize(size, nameds);
@@ -168,7 +168,7 @@ extern "C" {
 #endif // _di_f_fss_nameds_increase_
 
 #ifndef _di_f_fss_nameds_increase_by_
-  f_status_t f_fss_nameds_increase_by(const f_array_length_t amount, f_fss_nameds_t * const nameds) {
+  f_status_t f_fss_nameds_increase_by(const f_number_unsigned_t amount, f_fss_nameds_t * const nameds) {
     #ifndef _di_level_0_parameter_checking_
       if (!nameds) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -176,7 +176,7 @@ extern "C" {
     if (!amount) return F_data_not;
 
     if (nameds->used + amount > nameds->size) {
-      if (nameds->used + amount > F_array_length_t_size_d) {
+      if (nameds->used + amount > F_number_t_size_unsigned_d) {
         return F_status_set_error(F_array_too_large);
       }
 
@@ -188,7 +188,7 @@ extern "C" {
 #endif // _di_f_fss_nameds_increase_by_
 
 #ifndef _di_f_fss_nameds_resize_
-  f_status_t f_fss_nameds_resize(const f_array_length_t length, f_fss_nameds_t * const nameds) {
+  f_status_t f_fss_nameds_resize(const f_number_unsigned_t length, f_fss_nameds_t * const nameds) {
     #ifndef _di_level_0_parameter_checking_
       if (!nameds) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_

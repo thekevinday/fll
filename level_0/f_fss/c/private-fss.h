@@ -38,7 +38,7 @@ extern "C" {
  * @see f_memory_adjust()
  */
 #if !defined(_di_f_fss_items_adjust_) || !defined(_di_f_fss_items_decimate_by_)
-  extern f_status_t private_f_fss_items_adjust(const f_array_length_t length, f_fss_items_t * const items) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_fss_items_adjust(const f_number_unsigned_t length, f_fss_items_t * const items) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_fss_items_adjust_) || !defined(_di_f_fss_items_decimate_by_)
 
 /**
@@ -66,7 +66,7 @@ extern "C" {
  * @see f_memory_resize()
  */
 #if !defined(_di_f_fss_items_decrease_by_) || !defined(_di_f_fss_items_increase_) || !defined(_di_f_fss_items_increase_by_) || !defined(_di_f_fss_items_resize_)
-  extern f_status_t private_f_fss_items_resize(const f_array_length_t length, f_fss_items_t * const items) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_fss_items_resize(const f_number_unsigned_t length, f_fss_items_t * const items) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_fss_items_decrease_by_) || !defined(_di_f_fss_items_increase_) || !defined(_di_f_fss_items_increase_by_) || !defined(_di_f_fss_items_resize_)
 
 /**
@@ -94,7 +94,7 @@ extern "C" {
  * @see f_fss_nameds_decimate_by()
  */
 #if !defined(_di_f_fss_nameds_adjust_) || !defined(_di_f_fss_nameds_decimate_by_)
-  extern f_status_t private_f_fss_named_adjust(const f_array_length_t length, f_fss_named_t * const named) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_fss_named_adjust(const f_number_unsigned_t length, f_fss_named_t * const named) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_fss_nameds_adjust_) || !defined(_di_f_fss_nameds_decimate_by_)
 
 /**
@@ -124,7 +124,7 @@ extern "C" {
  * @see f_fss_nameds_resize()
  */
 #if !defined(_di_f_fss_nameds_decrease_by_) || !defined(_di_f_fss_nameds_increase_) || !defined(_di_f_fss_nameds_increase_by_) || !defined(_di_f_fss_nameds_resize_)
-  extern f_status_t private_f_fss_named_resize(const f_array_length_t length, f_fss_named_t * const named) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_fss_named_resize(const f_number_unsigned_t length, f_fss_named_t * const named) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_fss_nameds_decrease_by_) || !defined(_di_f_fss_nameds_increase_) || !defined(_di_f_fss_nameds_increase_by_) || !defined(_di_f_fss_nameds_resize_)
 
 /**
@@ -150,7 +150,7 @@ extern "C" {
  * @see f_memory_adjust()
  */
 #if !defined(_di_f_fss_nameds_adjust_) || !defined(_di_f_fss_nameds_decimate_by_)
-  extern f_status_t private_f_fss_nameds_adjust(const f_array_length_t length, f_fss_nameds_t * const nameds) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_fss_nameds_adjust(const f_number_unsigned_t length, f_fss_nameds_t * const nameds) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_fss_nameds_adjust_) || !defined(_di_f_fss_nameds_decimate_by_)
 
 /**
@@ -178,7 +178,7 @@ extern "C" {
  * @see f_memory_resize()
  */
 #if !defined(_di_f_fss_nameds_decrease_by_) || !defined(_di_f_fss_nameds_increase_) || !defined(_di_f_fss_nameds_increase_by_) || !defined(_di_f_fss_nameds_resize_)
-  extern f_status_t private_f_fss_nameds_resize(const f_array_length_t length, f_fss_nameds_t * const nameds) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_fss_nameds_resize(const f_number_unsigned_t length, f_fss_nameds_t * const nameds) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_fss_nameds_decrease_by_) || !defined(_di_f_fss_nameds_increase_) || !defined(_di_f_fss_nameds_increase_by_) || !defined(_di_f_fss_nameds_resize_)
 
 /**
@@ -204,7 +204,7 @@ extern "C" {
  * @see f_memory_adjust()
  */
 #if !defined(_di_f_fss_nest_adjust_) || !defined(_di_f_fss_nest_decimate_by_)
-  extern f_status_t private_f_fss_nest_adjust(const f_array_length_t length, f_fss_nest_t * const nest) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_fss_nest_adjust(const f_number_unsigned_t length, f_fss_nest_t * const nest) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_fss_nest_adjust_) || !defined(_di_f_fss_nest_decimate_by_)
 
 /**
@@ -232,7 +232,7 @@ extern "C" {
  * @see f_memory_resize()
  */
 #if !defined(_di_f_fss_nest_decrease_by_) || !defined(_di_f_fss_nest_increase_) || !defined(_di_f_fss_nest_increase_by_) || !defined(_di_f_fss_nest_resize_)
-  extern f_status_t private_f_fss_nest_resize(const f_array_length_t length, f_fss_nest_t * const nest) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_fss_nest_resize(const f_number_unsigned_t length, f_fss_nest_t * const nest) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_fss_nest_decrease_by_) || !defined(_di_f_fss_nest_increase_) || !defined(_di_f_fss_nest_increase_by_) || !defined(_di_f_fss_nest_resize_)
 
 /**
@@ -258,7 +258,7 @@ extern "C" {
  * @see f_memory_adjust()
  */
 #if !defined(_di_f_fss_nests_adjust_) || !defined(_di_f_fss_nests_decimate_by_)
-  extern f_status_t private_f_fss_nests_adjust(const f_array_length_t length, f_fss_nests_t * const nests) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_fss_nests_adjust(const f_number_unsigned_t length, f_fss_nests_t * const nests) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_fss_nests_adjust_) || !defined(_di_f_fss_nests_decimate_by_)
 
 /**
@@ -286,7 +286,7 @@ extern "C" {
  * @see f_memory_resize()
  */
 #if !defined(_di_f_fss_nests_decrease_by_) || !defined(_di_f_fss_nests_increase_) || !defined(_di_f_fss_nests_increase_by_) || !defined(_di_f_fss_nests_resize_)
-  extern f_status_t private_f_fss_nests_resize(const f_array_length_t length, f_fss_nests_t * const nests) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_fss_nests_resize(const f_number_unsigned_t length, f_fss_nests_t * const nests) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_fss_nests_decrease_by_) || !defined(_di_f_fss_nests_increase_) || !defined(_di_f_fss_nests_increase_by_) || !defined(_di_f_fss_nests_resize_)
 
 /**
@@ -312,7 +312,7 @@ extern "C" {
  * @see f_fss_set_decimate_by()
  */
 #if !defined(_di_f_fss_set_adjust_) || !defined(_di_f_fss_set_decimate_by_)
-  extern f_status_t private_f_fss_set_adjust(const f_array_length_t length, f_fss_set_t * const set) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_fss_set_adjust(const f_number_unsigned_t length, f_fss_set_t * const set) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_fss_set_adjust_) || !defined(_di_f_fss_set_decimate_by_)
 
 /**
@@ -340,7 +340,7 @@ extern "C" {
  * @see f_fss_set_resize()
  */
 #if !defined(_di_f_fss_set_decrease_by_) || !defined(_di_f_fss_set_increase_) || !defined(_di_f_fss_set_increase_by_) || !defined(_di_f_fss_set_resize_)
-  extern f_status_t private_f_fss_set_resize(const f_array_length_t length, f_fss_set_t * const set) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_fss_set_resize(const f_number_unsigned_t length, f_fss_set_t * const set) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_fss_set_decrease_by_) || !defined(_di_f_fss_set_increase_) || !defined(_di_f_fss_set_increase_by_) || !defined(_di_f_fss_set_resize_)
 
 /**
@@ -370,7 +370,7 @@ extern "C" {
  * @see f_fss_set_quote_decimate_by()
  */
 #if !defined(_di_f_fss_set_quote_adjust_) || !defined(_di_f_fss_set_quote_decimate_by_)
-  extern f_status_t private_f_fss_set_quote_adjust(const f_array_length_t length, f_fss_set_quote_t * const set_quote) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_fss_set_quote_adjust(const f_number_unsigned_t length, f_fss_set_quote_t * const set_quote) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_fss_set_quote_adjust_) || !defined(_di_f_fss_set_quote_decimate_by_)
 
 /**
@@ -402,7 +402,7 @@ extern "C" {
  * @see f_fss_set_quote_resize()
  */
 #if !defined(_di_f_fss_set_quote_decrease_by_) || !defined(_di_f_fss_set_quote_increase_) || !defined(_di_f_fss_set_quote_increase_by_) || !defined(_di_f_fss_set_quote_resize_)
-  extern f_status_t private_f_fss_set_quote_resize(const f_array_length_t length, f_fss_set_quote_t * const set_quote) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_fss_set_quote_resize(const f_number_unsigned_t length, f_fss_set_quote_t * const set_quote) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_fss_set_quote_decrease_by_) || !defined(_di_f_fss_set_quote_increase_) || !defined(_di_f_fss_set_quote_increase_by_) || !defined(_di_f_fss_set_quote_resize_)
 
 /**
@@ -434,7 +434,7 @@ extern "C" {
  * @see f_memory_adjust()
  */
 #if !defined(_di_f_fss_set_quotes_adjust_) || !defined(_di_f_fss_set_quotes_decimate_by_)
-  extern f_status_t private_f_fss_set_quotes_adjust(const f_array_length_t length, f_fss_set_quotes_t * const set_quotes) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_fss_set_quotes_adjust(const f_number_unsigned_t length, f_fss_set_quotes_t * const set_quotes) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_fss_set_quotes_adjust_) || !defined(_di_f_fss_set_quotes_decimate_by_)
 
 /**
@@ -468,7 +468,7 @@ extern "C" {
  * @see f_memory_resize()
  */
 #if !defined(_di_f_fss_set_quotes_decrease_by_) || !defined(_di_f_fss_set_quotes_increase_) || !defined(_di_f_fss_set_quotes_increase_by_) || !defined(_di_f_fss_set_quotes_resize_)
-  extern f_status_t private_f_fss_set_quotes_resize(const f_array_length_t length, f_fss_set_quotes_t * const set_quotes) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_fss_set_quotes_resize(const f_number_unsigned_t length, f_fss_set_quotes_t * const set_quotes) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_fss_set_quotes_decrease_by_) || !defined(_di_f_fss_set_quotes_increase_) || !defined(_di_f_fss_set_quotes_increase_by_) || !defined(_di_f_fss_set_quotes_resize_)
 
 /**
@@ -496,7 +496,7 @@ extern "C" {
  * @see f_memory_adjust()
  */
 #if !defined(_di_f_fss_sets_adjust_) || !defined(_di_f_fss_sets_decimate_by_)
-  extern f_status_t private_f_fss_sets_adjust(const f_array_length_t length, f_fss_sets_t * const sets) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_fss_sets_adjust(const f_number_unsigned_t length, f_fss_sets_t * const sets) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_fss_sets_adjust_) || !defined(_di_f_fss_sets_decimate_by_)
 
 /**
@@ -526,7 +526,7 @@ extern "C" {
  * @see f_memory_resize()
  */
 #if !defined(_di_f_fss_sets_decrease_by_) || !defined(_di_f_fss_sets_increase_) || !defined(_di_f_fss_sets_increase_by_) || !defined(_di_f_fss_sets_resize_)
-  extern f_status_t private_f_fss_sets_resize(const f_array_length_t length, f_fss_sets_t * const sets) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_fss_sets_resize(const f_number_unsigned_t length, f_fss_sets_t * const sets) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_fss_sets_decrease_by_) || !defined(_di_f_fss_sets_increase_) || !defined(_di_f_fss_sets_increase_by_) || !defined(_di_f_fss_sets_resize_)
 
 #ifdef __cplusplus

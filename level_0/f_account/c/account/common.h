@@ -85,8 +85,8 @@ extern "C" {
   typedef struct {
     f_account_t *array;
 
-    f_array_length_t size;
-    f_array_length_t used;
+    f_number_unsigned_t size;
+    f_number_unsigned_t used;
   } f_accounts_t;
 
   #define f_accounts_t_initialize { 0, 0, 0 }
@@ -119,8 +119,8 @@ extern "C" {
   typedef struct {
     f_accounts_t *array;
 
-    f_array_length_t size;
-    f_array_length_t used;
+    f_number_unsigned_t size;
+    f_number_unsigned_t used;
   } f_accountss_t;
 
   #define f_accountss_t_initialize { 0, 0, 0 }

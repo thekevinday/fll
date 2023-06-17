@@ -39,7 +39,7 @@ extern "C" {
       };
 
       uint8_t i = 0;
-      f_array_length_t j = 0;
+      f_number_unsigned_t j = 0;
       f_string_static_t path_sub = f_string_static_t_initialize;
 
       for (; i < 7; ++i) {
@@ -68,7 +68,7 @@ extern "C" {
 
     f_string_static_t path_sub = f_string_static_t_initialize;
 
-    for (f_array_length_t i = 0; F_status_is_fine(status) && i < listing.directory.used; ++i) {
+    for (f_number_unsigned_t i = 0; F_status_is_fine(status) && i < listing.directory.used; ++i) {
 
       path_sub.used = path.used + listing.directory.array[i].used + 1;
 
@@ -138,7 +138,7 @@ extern "C" {
       };
 
       uint8_t i = 0;
-      f_array_length_t j = 0;
+      f_number_unsigned_t j = 0;
       f_string_static_t path_sub = f_string_static_t_initialize;
 
       for (; i < 7; ++i) {
@@ -166,7 +166,7 @@ extern "C" {
     {
       f_string_static_t path_sub = f_string_static_t_initialize;
 
-      for (f_array_length_t i = 0; F_status_is_fine(status) && i < listing.directory.used; ++i) {
+      for (f_number_unsigned_t i = 0; F_status_is_fine(status) && i < listing.directory.used; ++i) {
 
         path_sub.used = path.used + listing.directory.array[i].used + 1;
 

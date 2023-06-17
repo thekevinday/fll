@@ -89,7 +89,7 @@ extern "C" {
 
     f_file_stream_lock(print->to);
 
-    f_array_length_t i = 0;
+    f_number_unsigned_t i = 0;
 
     if (program.used) {
       f_print_dynamic_safely(program, print->to);

@@ -183,7 +183,7 @@ extern "C" {
         &data_make->parameter_value.mode,
       };
 
-      f_array_length_t j = 0;
+      f_number_unsigned_t j = 0;
 
       for (uint8_t i = 0; i < 2; ++i) {
 

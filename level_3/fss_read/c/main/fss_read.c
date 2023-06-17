@@ -5,7 +5,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fss_read_delimit_content_is_
-  f_status_t fss_read_delimit_content_is(fss_read_main_t * const main, const f_array_length_t depth) {
+  f_status_t fss_read_delimit_content_is(fss_read_main_t * const main, const f_number_unsigned_t depth) {
 
     if (!main) return F_false;
 
@@ -19,7 +19,7 @@ extern "C" {
 #endif // _di_fss_read_delimit_content_is_
 
 #ifndef _di_fss_read_delimit_object_is_
-  f_status_t fss_read_delimit_object_is(fss_read_main_t * const main, const f_array_length_t depth) {
+  f_status_t fss_read_delimit_object_is(fss_read_main_t * const main, const f_number_unsigned_t depth) {
 
     if (!main) return F_false;
 
@@ -102,9 +102,9 @@ extern "C" {
 #endif // _di_fss_read_main_
 
 #ifndef _di_fss_read_file_identify_
-  f_string_static_t fss_read_file_identify(const f_array_length_t at, const fss_read_files_t files) {
+  f_string_static_t fss_read_file_identify(const f_number_unsigned_t at, const fss_read_files_t files) {
 
-    for (f_array_length_t i = 0; i < files.used; ++i) {
+    for (f_number_unsigned_t i = 0; i < files.used; ++i) {
       if (at >= files.array[i].range.start && at <= files.array[i].range.stop) return files.array[i].name;
     } // for
 

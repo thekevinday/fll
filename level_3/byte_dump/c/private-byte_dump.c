@@ -28,7 +28,7 @@ extern "C" {
     // Store the current character main until it can be printed.
     f_utf_string_dynamic_t sequence = f_utf_string_dynamic_t_initialize;
     f_utf_char_t block[data->width];
-    f_array_length_t current = 0;
+    f_number_unsigned_t current = 0;
 
     // The row starts based on the first byte starting point and how many columns of bytes are displayed per row.
     if (data->first) {
@@ -360,7 +360,7 @@ extern "C" {
 
     bool reset = F_false;
 
-    f_array_length_t current = sequence.used - 1;
+    f_number_unsigned_t current = sequence.used - 1;
 
     if (byte_current == 1) {
       byte = macro_f_utf_char_t_to_char_1(sequence.string[current]);

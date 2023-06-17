@@ -9,14 +9,14 @@ extern "C" {
   f_status_t controller_pids_increase(controller_pids_t * const pids) {
 
     if (pids->used + 1 > pids->size) {
-      f_array_length_t size = pids->used + controller_common_allocation_small_d;
+      f_number_unsigned_t size = pids->used + controller_common_allocation_small_d;
 
-      if (size > F_array_length_t_size_d) {
-        if (pids->used + 1 > F_array_length_t_size_d) {
+      if (size > F_number_t_size_unsigned_d) {
+        if (pids->used + 1 > F_number_t_size_unsigned_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = F_array_length_t_size_d;
+        size = F_number_t_size_unsigned_d;
       }
 
       return controller_pids_resize(size, pids);
@@ -27,7 +27,7 @@ extern "C" {
 #endif // _di_controller_pids_increase_
 
 #ifndef _di_controller_pids_resize_
-  f_status_t controller_pids_resize(const f_array_length_t length, controller_pids_t * const pids) {
+  f_status_t controller_pids_resize(const f_number_unsigned_t length, controller_pids_t * const pids) {
 
     const f_status_t status = f_memory_resize(pids->size, length, sizeof(controller_rule_t), (void **) & pids->array);
     if (F_status_is_error(status)) return status;
@@ -64,7 +64,7 @@ extern "C" {
 
     f_string_dynamics_resize(0, &process->path_pids);
 
-    f_array_lengths_resize(0, &process->stack);
+    f_number_unsigneds_resize(0, &process->stack);
   }
 #endif // _di_controller_process_delete_simple_
 
@@ -79,14 +79,14 @@ extern "C" {
   f_status_t controller_processs_increase(controller_processs_t * const processs) {
 
     if (processs->used + 1 > processs->size) {
-      f_array_length_t size = processs->used + controller_common_allocation_small_d;
+      f_number_unsigned_t size = processs->used + controller_common_allocation_small_d;
 
-      if (size > F_array_length_t_size_d) {
-        if (processs->used + 1 > F_array_length_t_size_d) {
+      if (size > F_number_t_size_unsigned_d) {
+        if (processs->used + 1 > F_number_t_size_unsigned_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = F_array_length_t_size_d;
+        size = F_number_t_size_unsigned_d;
       }
 
       return controller_processs_resize(size, processs);
@@ -97,16 +97,16 @@ extern "C" {
 #endif // _di_controller_processs_increase_
 
 #ifndef _di_controller_processs_resize_
-  f_status_t controller_processs_resize(const f_array_length_t length, controller_processs_t * const processs) {
+  f_status_t controller_processs_resize(const f_number_unsigned_t length, controller_processs_t * const processs) {
 
     f_status_t status = F_none;
 
-    for (f_array_length_t i = length; i < processs->size; ++i) {
+    for (f_number_unsigned_t i = length; i < processs->size; ++i) {
 
       if (processs->array[i]) {
         controller_process_delete_simple(processs->array[i]);
 
-        f_memory_delete(1, sizeof(f_array_length_t *), (void **) & processs->array[i]);
+        f_memory_delete(1, sizeof(f_number_unsigned_t *), (void **) & processs->array[i]);
       }
     } // for
 
@@ -145,7 +145,7 @@ extern "C" {
           return status;
         }
 
-        for (f_array_length_t i = 0; i < controller_rule_action_type__enum_size_e; ++i) {
+        for (f_number_unsigned_t i = 0; i < controller_rule_action_type__enum_size_e; ++i) {
           process->rule.status[i] = F_known_not;
         } // for
       } // for

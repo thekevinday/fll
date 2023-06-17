@@ -8,15 +8,15 @@ extern "C" {
 #endif
 
 #if !defined(_di_f_string_rangess_adjust_) || !defined(_di_f_string_rangess_decimate_by_)
-  f_status_t private_f_string_rangess_adjust(const f_array_length_t length, f_string_rangess_t * const rangess) {
+  f_status_t private_f_string_rangess_adjust(const f_number_unsigned_t length, f_string_rangess_t * const rangess) {
 
-    if (rangess->used + length > F_array_length_t_size_d) {
+    if (rangess->used + length > F_number_t_size_unsigned_d) {
       return F_status_set_error(F_array_too_large);
     }
 
     f_status_t status = F_none;
 
-    for (f_array_length_t i = length; i < rangess->size; ++i) {
+    for (f_number_unsigned_t i = length; i < rangess->size; ++i) {
 
       status = private_f_string_ranges_adjust(0, &rangess->array[i]);
       if (F_status_is_error(status)) return status;
@@ -36,15 +36,15 @@ extern "C" {
 #endif // !defined(_di_f_string_rangess_adjust_) || !defined(_di_f_string_rangess_decimate_by_)
 
 #if !defined(_di_f_string_ranges_append_) || !defined(_di_f_string_ranges_append_all_) || !defined(_di_f_string_ranges_decrease_by_) || !defined(_di_f_string_ranges_increase_) || !defined(_di_f_string_ranges_increase_by_) || !defined(_di_f_string_ranges_resize_) || !defined(_di_f_string_rangess_append_) || !defined(_di_f_string_rangess_append_all_) || !defined(_di_f_string_rangess_decrease_by_) || !defined(_di_f_string_rangess_increase_) || !defined(_di_f_string_rangess_increase_by_)
-  f_status_t private_f_string_rangess_resize(const f_array_length_t length, f_string_rangess_t * const rangess) {
+  f_status_t private_f_string_rangess_resize(const f_number_unsigned_t length, f_string_rangess_t * const rangess) {
 
-    if (rangess->used + length > F_array_length_t_size_d) {
+    if (rangess->used + length > F_number_t_size_unsigned_d) {
       return F_status_set_error(F_array_too_large);
     }
 
     f_status_t status = F_none;
 
-    for (f_array_length_t i = length; i < rangess->size; ++i) {
+    for (f_number_unsigned_t i = length; i < rangess->size; ++i) {
 
       status = private_f_string_ranges_resize(0, &rangess->array[i]);
       if (F_status_is_error(status)) return status;

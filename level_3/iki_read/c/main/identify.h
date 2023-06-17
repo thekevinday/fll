@@ -57,7 +57,7 @@ extern "C" {
  *   The value of the triple.used is returned on no match.
  */
 #ifndef _di_iki_read_identify_substitution_
-  extern f_array_length_t iki_read_identify_substitution(iki_read_main_t * const main, const f_string_range_t name, const f_string_range_t value, f_string_triples_t *triple);
+  extern f_number_unsigned_t iki_read_identify_substitution(iki_read_main_t * const main, const f_string_range_t name, const f_string_range_t value, f_string_triples_t *triple);
 #endif // _di_iki_read_identify_substitution_
 
 #ifdef __cplusplus

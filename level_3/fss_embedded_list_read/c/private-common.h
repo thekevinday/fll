@@ -46,10 +46,10 @@ extern "C" {
  */
 #ifndef _di_fss_embedded_list_read_depth_t_
   typedef struct {
-    f_array_length_t depth;
+    f_number_unsigned_t depth;
 
-    f_array_length_t index_at;
-    f_array_length_t index_name;
+    f_number_unsigned_t index_at;
+    f_number_unsigned_t index_name;
 
     f_number_unsigned_t value_at;
     f_string_dynamic_t  value_name;
@@ -83,7 +83,7 @@ extern "C" {
 #ifndef _di_fss_embedded_list_read_skip_t_
   typedef struct {
     bool *skip;
-    f_array_length_t used;
+    f_number_unsigned_t used;
   } fss_embedded_list_read_skip_t;
 
   #define fss_embedded_list_read_skip_t_initialize \
@@ -110,8 +110,8 @@ extern "C" {
   typedef struct {
     fss_embedded_list_read_depth_t *array;
 
-    f_array_length_t size;
-    f_array_length_t used;
+    f_number_unsigned_t size;
+    f_number_unsigned_t used;
   } fss_embedded_list_read_depths_t;
 
   #define fss_embedded_list_read_depths_t_initialize { 0, 0, 0 }
@@ -137,7 +137,7 @@ extern "C" {
     f_fss_nest_t nest;
 
     uint8_t delimit_mode;
-    f_array_length_t delimit_depth;
+    f_number_unsigned_t delimit_depth;
   } fss_embedded_list_read_data_t;
 
   #define fss_embedded_list_read_data_t_initialize \
@@ -206,7 +206,7 @@ extern "C" {
  * @see fss_embedded_list_read_depths_increase()
  */
 #ifndef _di_fss_embedded_list_read_depths_resize_
-  extern f_status_t fss_embedded_list_read_depths_resize(const f_array_length_t length, fss_embedded_list_read_depths_t *depths) F_attribute_visibility_internal_d;
+  extern f_status_t fss_embedded_list_read_depths_resize(const f_number_unsigned_t length, fss_embedded_list_read_depths_t *depths) F_attribute_visibility_internal_d;
 #endif // _di_fss_embedded_list_read_depths_resize_
 
 #ifdef __cplusplus

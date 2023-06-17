@@ -74,7 +74,7 @@ extern "C" {
  * @see f_string_dynamic_adjust()
  */
 #ifndef _di_f_accounts_adjust_
-  extern f_status_t f_accounts_adjust(const f_array_length_t length, f_accounts_t *accounts);
+  extern f_status_t f_accounts_adjust(const f_number_unsigned_t length, f_accounts_t *accounts);
 #endif // _di_f_accounts_adjust_
 
 /**
@@ -150,7 +150,7 @@ extern "C" {
  * @see f_string_dynamic_adjust()
  */
 #ifndef _di_f_accounts_decimate_by_
-  extern f_status_t f_accounts_decimate_by(const f_array_length_t amount, f_accounts_t *accounts);
+  extern f_status_t f_accounts_decimate_by(const f_number_unsigned_t amount, f_accounts_t *accounts);
 #endif // _di_f_accounts_decimate_by_
 
 /**
@@ -178,13 +178,13 @@ extern "C" {
  * @see f_string_dynamic_resize()
  */
 #ifndef _di_f_accounts_decrease_by_
-  extern f_status_t f_accounts_decrease_by(const f_array_length_t amount, f_accounts_t *accounts);
+  extern f_status_t f_accounts_decrease_by(const f_number_unsigned_t amount, f_accounts_t *accounts);
 #endif // _di_f_accounts_decrease_by_
 
 /**
  * Increase the size of the accounts array, but only if necesary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -207,14 +207,14 @@ extern "C" {
  * @see f_string_dynamic_resize()
  */
 #ifndef _di_f_accounts_increase_
-  extern f_status_t f_accounts_increase(const f_array_length_t step, f_accounts_t *accounts);
+  extern f_status_t f_accounts_increase(const f_number_unsigned_t step, f_accounts_t *accounts);
 #endif // _di_f_accounts_increase_
 
 /**
  * Resize the accounts array to a larger size.
  *
  * This will resize making the array larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -236,7 +236,7 @@ extern "C" {
  * @see f_string_dynamic_resize()
  */
 #ifndef _di_f_accounts_increase_by_
-  extern f_status_t f_accounts_increase_by(const f_array_length_t amount, f_accounts_t *accounts);
+  extern f_status_t f_accounts_increase_by(const f_number_unsigned_t amount, f_accounts_t *accounts);
 #endif // _di_f_accounts_increase_by_
 
 /**
@@ -259,7 +259,7 @@ extern "C" {
  * @see f_string_dynamic_resize()
  */
 #ifndef _di_f_accounts_resize_
-  extern f_status_t f_accounts_resize(const f_array_length_t length, f_accounts_t *accounts);
+  extern f_status_t f_accounts_resize(const f_number_unsigned_t length, f_accounts_t *accounts);
 #endif // _di_f_accounts_resize_
 
 /**
@@ -282,7 +282,7 @@ extern "C" {
  * @see f_string_dynamic_adjust()
  */
 #ifndef _di_f_accountss_adjust_
-  extern f_status_t f_accountss_adjust(const f_array_length_t length, f_accountss_t *accountss);
+  extern f_status_t f_accountss_adjust(const f_number_unsigned_t length, f_accountss_t *accountss);
 #endif // _di_f_accountss_adjust_
 
 /**
@@ -357,7 +357,7 @@ extern "C" {
  * @see f_string_dynamic_adjust()
  */
 #ifndef _di_f_accountss_decimate_by_
-  extern f_status_t f_accountss_decimate_by(const f_array_length_t amount, f_accountss_t *accountss);
+  extern f_status_t f_accountss_decimate_by(const f_number_unsigned_t amount, f_accountss_t *accountss);
 #endif // _di_f_accountss_decimate_by_
 
 /**
@@ -384,13 +384,13 @@ extern "C" {
  * @see f_string_dynamic_resize()
  */
 #ifndef _di_f_accountss_decrease_by_
-  extern f_status_t f_accountss_decrease_by(const f_array_length_t amount, f_accountss_t *accountss);
+  extern f_status_t f_accountss_decrease_by(const f_number_unsigned_t amount, f_accountss_t *accountss);
 #endif // _di_f_accountss_decrease_by_
 
 /**
  * Increase the size of the string accountss array, but only if necessary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -413,14 +413,14 @@ extern "C" {
  * @see f_string_dynamic_resize()
  */
 #ifndef _di_f_accountss_increase_
-  extern f_status_t f_accountss_increase(const f_array_length_t step, f_accountss_t *accountss);
+  extern f_status_t f_accountss_increase(const f_number_unsigned_t step, f_accountss_t *accountss);
 #endif // _di_f_accountss_increase_
 
 /**
  * Resize the string accountss array to a larger size.
  *
  * This will resize making the array larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -442,7 +442,7 @@ extern "C" {
  * @see f_string_dynamic_resize()
  */
 #ifndef _di_f_accountss_increase_by_
-  extern f_status_t f_accountss_increase_by(const f_array_length_t amount, f_accountss_t *accountss);
+  extern f_status_t f_accountss_increase_by(const f_number_unsigned_t amount, f_accountss_t *accountss);
 #endif // _di_f_accountss_increase_by_
 
 /**
@@ -465,7 +465,7 @@ extern "C" {
  * @see f_string_dynamic_resize()
  */
 #ifndef _di_f_accountss_resize_
-  extern f_status_t f_accountss_resize(const f_array_length_t length, f_accountss_t *accountss);
+  extern f_status_t f_accountss_resize(const f_number_unsigned_t length, f_accountss_t *accountss);
 #endif // _di_f_accountss_resize_
 
 #ifdef __cplusplus

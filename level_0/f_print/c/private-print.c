@@ -6,14 +6,14 @@ extern "C" {
 #endif
 
 #if !defined(_di_f_print_) || !defined(_di_f_print_dynamic_) || !defined(_di_f_print_dynamic_partial_)
-  f_status_t private_f_print(const f_string_t string, const f_array_length_t length, const f_file_t file) {
+  f_status_t private_f_print(const f_string_t string, const f_number_unsigned_t length, const f_file_t file) {
 
-    f_array_length_t total = 0;
-    f_array_length_t count = 0;
+    f_number_unsigned_t total = 0;
+    f_number_unsigned_t count = 0;
 
     clearerr_unlocked(file.stream);
 
-    for (register f_array_length_t i = 0; i < length; ) {
+    for (register f_number_unsigned_t i = 0; i < length; ) {
 
       total = strnlen((string + i), length - i);
 
@@ -65,13 +65,13 @@ extern "C" {
 #endif // !defined(_di_f_print_character_safely_get_) || !defined(_di_f_print_dynamic_partial_safely_) || !defined(_di_f_print_dynamic_safely_) || !defined(_di_f_print_except_dynamic_partial_safely_) || !defined(_di_f_print_except_dynamic_safely_) || !defined(_di_f_print_except_in_dynamic_safely_) || !defined(_di_f_print_except_in_dynamic_partial_safely_) || !defined(_di_f_print_except_in_safely_) || !defined(_di_f_print_except_safely_) || !defined(_di_f_print_safely_) || !defined(_di_f_print_safely_terminated_) || !defined(_di_f_print_to_dynamic_partial_safely_) || !defined(_di_f_print_to_dynamic_safely_) || !defined(_di_f_print_to_except_dynamic_partial_safely_) || !defined(_di_f_print_to_except_dynamic_safely_) || !defined(_di_f_print_to_except_in_dynamic_safely_) || !defined(_di_f_print_to_except_in_dynamic_partial_safely_) || !defined(_di_f_print_to_except_in_safely_) || !defined(_di_f_print_to_except_safely_) || !defined(_di_f_print_to_safely_)
 
 #if !defined(_di_f_print_except_) || !defined(_di_f_print_except_dynamic_) || !defined(_di_f_print_except_dynamic_partial_)
-  f_status_t private_f_print_except(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except, const f_file_t file) {
+  f_status_t private_f_print_except(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t stop, const f_number_unsigneds_t except, const f_file_t file) {
 
-    register f_array_length_t i = offset;
-    f_array_length_t j = 0;
-    f_array_length_t start = i;
-    f_array_length_t total = 0;
-    f_array_length_t count = 0;
+    register f_number_unsigned_t i = offset;
+    f_number_unsigned_t j = 0;
+    f_number_unsigned_t start = i;
+    f_number_unsigned_t total = 0;
+    f_number_unsigned_t count = 0;
 
     clearerr_unlocked(file.stream);
 
@@ -128,14 +128,14 @@ extern "C" {
 #endif // !defined(_di_f_print_except_) || !defined(_di_f_print_except_dynamic_) || !defined(_di_f_print_except_dynamic_partial_)
 
 #if !defined(_di_f_print_except_in_) || !defined(_di_f_print_except_in_dynamic_) || !defined(_di_f_print_except_in_dynamic_partial_)
-  f_status_t private_f_print_except_in(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
+  f_status_t private_f_print_except_in(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t stop, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
 
-    f_array_length_t i = offset;
-    f_array_length_t at = 0;
-    f_array_length_t in = 0;
-    f_array_length_t start = i;
-    f_array_length_t total = 0;
-    f_array_length_t count = 0;
+    f_number_unsigned_t i = offset;
+    f_number_unsigned_t at = 0;
+    f_number_unsigned_t in = 0;
+    f_number_unsigned_t start = i;
+    f_number_unsigned_t total = 0;
+    f_number_unsigned_t count = 0;
 
     clearerr_unlocked(file.stream);
 
@@ -217,14 +217,14 @@ extern "C" {
 #endif // !defined(_di_f_print_except_in_) || !defined(_di_f_print_except_in_dynamic_) || !defined(_di_f_print_except_in_dynamic_partial_)
 
 #if !defined(_di_f_print_except_in_raw_) || !defined(_di_f_print_except_in_dynamic_raw_) || !defined(_di_f_print_except_in_dynamic_partial_raw_)
-  f_status_t private_f_print_except_in_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
+  f_status_t private_f_print_except_in_raw(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t stop, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
 
-    f_array_length_t i = offset;
-    f_array_length_t at = 0;
-    f_array_length_t in = 0;
-    f_array_length_t start = i;
-    f_array_length_t total = 0;
-    f_array_length_t count = 0;
+    f_number_unsigned_t i = offset;
+    f_number_unsigned_t at = 0;
+    f_number_unsigned_t in = 0;
+    f_number_unsigned_t start = i;
+    f_number_unsigned_t total = 0;
+    f_number_unsigned_t count = 0;
 
     clearerr_unlocked(file.stream);
 
@@ -304,14 +304,14 @@ extern "C" {
 #endif // !defined(_di_f_print_except_in_raw_) || !defined(_di_f_print_except_in_dynamic_raw_) || !defined(_di_f_print_except_in_dynamic_partial_raw_)
 
 #if !defined(_di_f_print_except_in_raw_safely_) || !defined(_di_f_print_except_in_dynamic_raw_safely_) || !defined(_di_f_print_except_in_dynamic_partial_raw_safely_)
-  f_status_t private_f_print_except_in_raw_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
+  f_status_t private_f_print_except_in_raw_safely(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t stop, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
 
-    f_array_length_t i = offset;
-    f_array_length_t at = 0;
-    f_array_length_t in = 0;
-    f_array_length_t start = i;
-    f_array_length_t total = 0;
-    f_array_length_t count = 0;
+    f_number_unsigned_t i = offset;
+    f_number_unsigned_t at = 0;
+    f_number_unsigned_t in = 0;
+    f_number_unsigned_t start = i;
+    f_number_unsigned_t total = 0;
+    f_number_unsigned_t count = 0;
 
     f_string_static_t safe = f_string_static_t_initialize;
 
@@ -436,14 +436,14 @@ extern "C" {
 #endif // !defined(_di_f_print_except_in_raw_safely_) || !defined(_di_f_print_except_in_dynamic_raw_safely_) || !defined(_di_f_print_except_in_dynamic_partial_raw_safely_)
 
 #if !defined(_di_f_print_except_in_safely_) || !defined(_di_f_print_except_in_dynamic_safely_) || !defined(_di_f_print_except_in_dynamic_partial_safely_)
-  f_status_t private_f_print_except_in_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
+  f_status_t private_f_print_except_in_safely(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t stop, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
 
-    f_array_length_t i = offset;
-    f_array_length_t at = 0;
-    f_array_length_t in = 0;
-    f_array_length_t start = i;
-    f_array_length_t total = 0;
-    f_array_length_t count = 0;
+    f_number_unsigned_t i = offset;
+    f_number_unsigned_t at = 0;
+    f_number_unsigned_t in = 0;
+    f_number_unsigned_t start = i;
+    f_number_unsigned_t total = 0;
+    f_number_unsigned_t count = 0;
 
     f_string_static_t safe = f_string_static_t_initialize;
 
@@ -581,13 +581,13 @@ extern "C" {
 #endif // !defined(_di_f_print_except_in_safely_) || !defined(_di_f_print_except_in_dynamic_safely_) || !defined(_di_f_print_except_in_dynamic_partial_safely_)
 
 #if !defined(_di_f_print_except_raw_) || !defined(_di_f_print_except_dynamic_raw_) || !defined(_di_f_print_except_dynamic_partial_raw_)
-  f_status_t private_f_print_except_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except, const f_file_t file) {
+  f_status_t private_f_print_except_raw(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t stop, const f_number_unsigneds_t except, const f_file_t file) {
 
-    register f_array_length_t i = offset;
-    f_array_length_t j = 0;
-    f_array_length_t start = i;
-    f_array_length_t total = 0;
-    f_array_length_t count = 0;
+    register f_number_unsigned_t i = offset;
+    f_number_unsigned_t j = 0;
+    f_number_unsigned_t start = i;
+    f_number_unsigned_t total = 0;
+    f_number_unsigned_t count = 0;
 
     clearerr_unlocked(file.stream);
 
@@ -652,13 +652,13 @@ extern "C" {
 #endif // !defined(_di_f_print_except_raw_) || !defined(_di_f_print_except_dynamic_raw_) || !defined(_di_f_print_except_dynamic_partial_raw_)
 
 #if !defined(_di_f_print_except_raw_safely_) || !defined(_di_f_print_except_dynamic_raw_) || !defined(_di_f_print_except_dynamic_partial_raw_)
-  f_status_t private_f_print_except_raw_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except, const f_file_t file) {
+  f_status_t private_f_print_except_raw_safely(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t stop, const f_number_unsigneds_t except, const f_file_t file) {
 
-    f_array_length_t i = offset;
-    f_array_length_t j = 0;
-    f_array_length_t start = i;
-    f_array_length_t total = 0;
-    f_array_length_t count = 0;
+    f_number_unsigned_t i = offset;
+    f_number_unsigned_t j = 0;
+    f_number_unsigned_t start = i;
+    f_number_unsigned_t total = 0;
+    f_number_unsigned_t count = 0;
 
     f_string_static_t safe = f_string_static_t_initialize;
 
@@ -758,13 +758,13 @@ extern "C" {
 #endif // !defined(_di_f_print_except_raw_safely_) || !defined(_di_f_print_except_dynamic_raw_) || !defined(_di_f_print_except_dynamic_partial_raw_)
 
 #if !defined(_di_f_print_except_safely_) || !defined(_di_f_print_except_dynamic_safely_) || !defined(_di_f_print_except_dynamic_partial_safely_)
-  f_status_t private_f_print_except_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except, const f_file_t file) {
+  f_status_t private_f_print_except_safely(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t stop, const f_number_unsigneds_t except, const f_file_t file) {
 
-    f_array_length_t i = offset;
-    f_array_length_t j = 0;
-    f_array_length_t start = i;
-    f_array_length_t total = 0;
-    f_array_length_t count = 0;
+    f_number_unsigned_t i = offset;
+    f_number_unsigned_t j = 0;
+    f_number_unsigned_t start = i;
+    f_number_unsigned_t total = 0;
+    f_number_unsigned_t count = 0;
 
     f_string_static_t safe = f_string_static_t_initialize;
 
@@ -877,9 +877,9 @@ extern "C" {
 #endif // !defined(_di_f_print_except_safely_) || !defined(_di_f_print_except_dynamic_safely_) || !defined(_di_f_print_except_dynamic_partial_safely_)
 
 #if !defined(_di_f_print_dynamic_partial_raw_) || !defined(_di_f_print_dynamic_partial_raw_safely_) || !defined(_di_f_print_dynamic_raw_) || !defined(_di_f_print_dynamic_raw_safely_) || !defined(_di_f_print_raw_) || !defined(_di_f_print_raw_safely_)
-  f_status_t private_f_print_raw(const f_string_t string, const f_array_length_t length, const f_file_t file) {
+  f_status_t private_f_print_raw(const f_string_t string, const f_number_unsigned_t length, const f_file_t file) {
 
-    f_array_length_t count = 0;
+    f_number_unsigned_t count = 0;
 
     clearerr_unlocked(file.stream);
 
@@ -893,7 +893,7 @@ extern "C" {
       } while (count < length);
     }
     else {
-      for (f_array_length_t total = 0; ; total += F_print_write_max_d) {
+      for (f_number_unsigned_t total = 0; ; total += F_print_write_max_d) {
 
         if (length - total > F_print_write_max_d) {
           count = 0;
@@ -923,12 +923,12 @@ extern "C" {
 #endif // !defined(_di_f_print_dynamic_partial_raw_) || !defined(_di_f_print_dynamic_partial_raw_safely_) || !defined(_di_f_print_dynamic_raw_) || !defined(_di_f_print_dynamic_raw_safely_) || !defined(_di_f_print_raw_) || !defined(_di_f_print_raw_safely_)
 
 #if !defined(_di_f_print_dynamic_partial_raw_safely_) || !defined(_di_f_print_dynamic_raw_safely_) || !defined(_di_f_print_raw_safely_)
-  f_status_t private_f_print_raw_safely(const f_string_t string, const f_array_length_t length, const f_file_t file) {
+  f_status_t private_f_print_raw_safely(const f_string_t string, const f_number_unsigned_t length, const f_file_t file) {
 
-    register f_array_length_t i = 0;
-    f_array_length_t start = 0;
-    f_array_length_t total = 0;
-    f_array_length_t count = 0;
+    register f_number_unsigned_t i = 0;
+    f_number_unsigned_t start = 0;
+    f_number_unsigned_t total = 0;
+    f_number_unsigned_t count = 0;
 
     f_string_static_t safe = f_string_static_t_initialize;
 
@@ -1006,12 +1006,12 @@ extern "C" {
 #endif // !defined(_di_f_print_dynamic_partial_raw_safely_) || !defined(_di_f_print_dynamic_raw_safely_) || !defined(_di_f_print_raw_safely_)
 
 #if !defined(_di_f_print_dynamic_partial_safely_) || !defined(_di_f_print_dynamic_safely_) || !defined(_di_f_print_safely_)
-  f_status_t private_f_print_safely(const f_string_t string, const f_array_length_t length, const f_file_t file) {
+  f_status_t private_f_print_safely(const f_string_t string, const f_number_unsigned_t length, const f_file_t file) {
 
-    register f_array_length_t i = 0;
-    f_array_length_t start = 0;
-    f_array_length_t total = 0;
-    f_array_length_t count = 0;
+    register f_number_unsigned_t i = 0;
+    f_number_unsigned_t start = 0;
+    f_number_unsigned_t total = 0;
+    f_number_unsigned_t count = 0;
 
     f_string_static_t safe = f_string_static_t_initialize;
 
@@ -1102,7 +1102,7 @@ extern "C" {
 #endif // !defined(_di_f_print_dynamic_partial_safely_) || !defined(_di_f_print_dynamic_safely_) || !defined(_di_f_print_safely_)
 
 #if !defined(_di_f_print_character_safely_get_) || !defined(_di_f_print_dynamic_partial_safely_) || !defined(_di_f_print_dynamic_safely_) || !defined(_di_f_print_except_dynamic_partial_safely_) || !defined(_di_f_print_except_dynamic_safely_) || !defined(_di_f_print_except_in_dynamic_safely_) || !defined(_di_f_print_except_in_dynamic_partial_safely_) || !defined(_di_f_print_except_in_safely_) || !defined(_di_f_print_except_safely_) || !defined(_di_f_print_raw_safely_) || !defined(_di_f_print_safely_) || !defined(_di_f_print_safely_terminated_) || !defined(_di_f_print_to_dynamic_partial_safely_) || !defined(_di_f_print_to_dynamic_safely_) || !defined(_di_f_print_to_except_dynamic_partial_safely_) || !defined(_di_f_print_to_except_dynamic_safely_) || !defined(_di_f_print_to_except_in_dynamic_safely_) || !defined(_di_f_print_to_except_in_dynamic_partial_safely_) || !defined(_di_f_print_to_except_in_safely_) || !defined(_di_f_print_to_except_safely_) || !defined(_di_f_print_to_safely_)
-  const f_string_static_t private_f_print_safely_get(const f_string_t character, const f_array_length_t width_max) {
+  const f_string_static_t private_f_print_safely_get(const f_string_t character, const f_number_unsigned_t width_max) {
 
     if (character[0] == 0x7f) return f_print_sequence_delete_s;
 
@@ -1124,7 +1124,7 @@ extern "C" {
   f_status_t private_f_print_terminated(const f_string_t string, const f_file_t file) {
 
     const size_t length = strlen(string);
-    f_array_length_t count = 0;
+    f_number_unsigned_t count = 0;
 
     clearerr_unlocked(file.stream);
 
@@ -1139,7 +1139,7 @@ extern "C" {
 #endif // !defined(_di_f_print_terminated_) || !defined(_di_f_print_raw_terminated_)
 
 #if !defined(_di_f_print_dynamic_partial_raw_safely_) || !defined(_di_f_print_dynamic_partial_safely_) || !defined(_di_f_print_dynamic_raw_safely_) || !defined(_di_f_print_dynamic_safely_) || !defined(_di_f_print_except_dynamic_partial_raw_) || !defined(_di_f_print_except_dynamic_partial_safely_) || !defined(_di_f_print_except_dynamic_raw_) || !defined(_di_f_print_except_dynamic_safely_) || !defined(_di_f_print_except_in_dynamic_partial_raw_safely_) || !defined(_di_f_print_except_in_dynamic_partial_safely_) || !defined(_di_f_print_except_in_dynamic_raw_safely_) || !defined(_di_f_print_except_in_dynamic_safely_) || !defined(_di_f_print_except_in_raw_safely_) || !defined(_di_f_print_except_in_safely_) || !defined(_di_f_print_except_raw_safely_) || !defined(_di_f_print_except_safely_) || !defined(_di_f_print_raw_safely_) || !defined(_di_f_print_safely_)
-  uint8_t private_f_print_width_max(const f_string_t string, const f_array_length_t at) {
+  uint8_t private_f_print_width_max(const f_string_t string, const f_number_unsigned_t at) {
 
     const uint8_t width = macro_f_utf_byte_width(string[at]);
 

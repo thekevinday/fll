@@ -23,9 +23,9 @@ extern "C" {
  */
 #ifndef _di_fss_identify_data_t_
   typedef struct {
-    f_array_length_t current;
-    f_array_length_t line;
-    f_array_length_t total;
+    f_number_unsigned_t current;
+    f_number_unsigned_t line;
+    f_number_unsigned_t total;
 
     f_string_static_t *argv;
 

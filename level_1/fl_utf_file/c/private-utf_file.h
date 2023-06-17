@@ -79,7 +79,7 @@ extern "C" {
  * @see fl_utf_file_write_until()
  */
 #if !defined(_di_fl_utf_file_write_) || !defined(_di_fl_utf_file_write_until_) || !defined(_di_fl_utf_file_write_range_)
-  extern f_status_t private_fl_utf_file_write_until(const f_file_t file, const f_utf_string_t string, const f_array_length_t total, f_array_length_t * const written) F_attribute_visibility_internal_d;
+  extern f_status_t private_fl_utf_file_write_until(const f_file_t file, const f_utf_string_t string, const f_number_unsigned_t total, f_number_unsigned_t * const written) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fl_utf_file_write_) || !defined(_di_fl_utf_file_write_until_) || !defined(_di_fl_utf_file_write_range_)
 
 #ifdef __cplusplus

@@ -202,14 +202,14 @@ extern "C" {
 #ifndef _di_f_iki_data_t_
   typedef struct {
     f_string_ranges_t content;
-    f_array_lengths_t delimits;
+    f_number_unsigneds_t delimits;
     f_string_ranges_t variable;
     f_string_ranges_t vocabulary;
   } f_iki_data_t;
 
   #define f_iki_data_t_initialize { \
     f_string_ranges_t_initialize, \
-    f_array_lengths_t_initialize, \
+    f_number_unsigneds_t_initialize, \
     f_string_ranges_t_initialize, \
     f_string_ranges_t_initialize, \
   }
@@ -218,7 +218,7 @@ extern "C" {
 
   #define macro_f_iki_data_t_clear(data) \
     f_string_ranges_t_clear(data.content) \
-    f_array_lengths_t_clear(data.delimits) \
+    f_number_unsigneds_t_clear(data.delimits) \
     f_string_ranges_t_clear(data.variable) \
     f_string_ranges_t_clear(data.vocabulary)
 
@@ -237,8 +237,8 @@ extern "C" {
   typedef struct {
     f_iki_data_t *array;
 
-    f_array_length_t size;
-    f_array_length_t used;
+    f_number_unsigned_t size;
+    f_number_unsigned_t used;
   } f_iki_datas_t;
 
   #define f_iki_datas_t_initialize { 0, 0, 0 }
@@ -271,8 +271,8 @@ extern "C" {
   typedef struct {
     f_iki_datas_t *array;
 
-    f_array_length_t size;
-    f_array_length_t used;
+    f_number_unsigned_t size;
+    f_number_unsigned_t used;
   } f_iki_datass_t;
 
   #define f_iki_datass_t_initialize { 0, 0, 0 }

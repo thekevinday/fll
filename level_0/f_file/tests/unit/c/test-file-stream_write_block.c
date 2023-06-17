@@ -47,7 +47,7 @@ void test__f_file_stream_write_block__returns_data_not(void **state) {
   }
 
   {
-    f_array_length_t written = 1;
+    f_number_unsigned_t written = 1;
 
     const f_status_t status = f_file_stream_write_block(file, f_string_empty_s, &written);
 
@@ -61,7 +61,7 @@ void test__f_file_stream_write_block__works(void **state) {
   const f_string_static_t test = macro_f_string_static_t_initialize_1("test", 0, 4);
 
   {
-    f_array_length_t written = 0;
+    f_number_unsigned_t written = 0;
 
     f_file_t file = macro_f_file_t_initialize_2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
     file.size_write = 1;

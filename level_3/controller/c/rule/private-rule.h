@@ -60,7 +60,7 @@ extern "C" {
  *   F_false on success and rule was not found.
  */
 #ifndef _di_controller_rule_find_
-  extern f_status_t controller_rule_find(const f_string_static_t alias, const controller_rules_t rules, f_array_length_t *at) F_attribute_visibility_internal_d;
+  extern f_status_t controller_rule_find(const f_string_static_t alias, const controller_rules_t rules, f_number_unsigned_t *at) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_find_
 
 /**
@@ -492,7 +492,7 @@ extern "C" {
  * @see f_memory_resize()
  */
 #ifndef _di_controller_rule_items_increase_by_
-  extern f_status_t controller_rule_items_increase_by(const f_array_length_t amount, controller_rule_items_t * const items) F_attribute_visibility_internal_d;
+  extern f_status_t controller_rule_items_increase_by(const f_number_unsigned_t amount, controller_rule_items_t * const items) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_items_increase_by_
 
 /**
@@ -503,7 +503,7 @@ extern "C" {
  *
  * This requires that a read lock be set on process->lock before being called.
  *
- * This function is recursively called for each "need", "want", and "wish", and has a max recursion length of the max size of the f_array_lengths_t array.
+ * This function is recursively called for each "need", "want", and "wish", and has a max recursion length of the max size of the f_number_unsigneds_t array.
  *
  * The rule status will be updated by this function.
  *
@@ -570,7 +570,7 @@ extern "C" {
  * @see f_thread_create()
  */
 #ifndef _di_controller_rule_process_begin_
-  extern f_status_t controller_rule_process_begin(const controller_global_t global, const uint8_t options_force, const f_string_static_t alias_rule, const uint8_t action, const uint8_t options, const uint8_t type, const f_array_lengths_t stack, const controller_cache_t cache) F_attribute_visibility_internal_d;
+  extern f_status_t controller_rule_process_begin(const controller_global_t global, const uint8_t options_force, const f_string_static_t alias_rule, const uint8_t action, const uint8_t options, const uint8_t type, const f_number_unsigneds_t stack, const controller_cache_t cache) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_process_begin_
 
 /**
@@ -674,7 +674,7 @@ extern "C" {
  * @see fl_conversion_dynamic_partial_to_signed_detect()
  */
 #ifndef _di_controller_rule_action_read_rerun_number_
-  extern f_status_t controller_rule_action_read_rerun_number(const controller_global_t global, const f_string_t name, controller_cache_t * const cache, f_array_length_t * const index, f_number_unsigned_t * const number) F_attribute_visibility_internal_d;
+  extern f_status_t controller_rule_action_read_rerun_number(const controller_global_t global, const f_string_t name, controller_cache_t * const cache, f_number_unsigned_t * const index, f_number_unsigned_t * const number) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_action_read_rerun_number_
 
 /**

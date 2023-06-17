@@ -25,7 +25,7 @@ void test__f_utf_map_multis_append__works(void **state) {
     assert_int_equal(status, F_none);
     assert_int_equal(source.name.used, test_name.used);
 
-    for (f_array_length_t i = 0; i < source.name.used; ++i) {
+    for (f_number_unsigned_t i = 0; i < source.name.used; ++i) {
       assert_int_equal(source.name.string[i], test_name.string[i]);
     } // for
 
@@ -36,11 +36,11 @@ void test__f_utf_map_multis_append__works(void **state) {
     assert_int_equal(source.value.array[0].used, test_value.array[0].used);
     assert_int_equal(source.value.array[1].used, test_value.array[1].used);
 
-    for (f_array_length_t i = 0; i < source.value.array[0].used; ++i) {
+    for (f_number_unsigned_t i = 0; i < source.value.array[0].used; ++i) {
       assert_int_equal(source.value.array[0].string[i], test_value.array[0].string[i]);
     } // for
 
-    for (f_array_length_t i = 0; i < source.value.array[1].used; ++i) {
+    for (f_number_unsigned_t i = 0; i < source.value.array[1].used; ++i) {
       assert_int_equal(source.value.array[1].string[i], test_value.array[1].string[i]);
     } // for
   }
@@ -59,15 +59,15 @@ void test__f_utf_map_multis_append__works(void **state) {
     assert_string_equal(destination.array[0].value.array[0].string, source.value.array[0].string);
     assert_string_equal(destination.array[0].value.array[1].string, source.value.array[1].string);
 
-    for (f_array_length_t j = 0; j < destination.array[0].name.used; ++j) {
+    for (f_number_unsigned_t j = 0; j < destination.array[0].name.used; ++j) {
       assert_int_equal(destination.array[0].name.string[j], source.name.string[j]);
     } // for
 
-    for (f_array_length_t j = 0; j < destination.array[0].value.array[0].used; ++j) {
+    for (f_number_unsigned_t j = 0; j < destination.array[0].value.array[0].used; ++j) {
       assert_int_equal(destination.array[0].value.array[0].string[j], source.value.array[0].string[j]);
     } // for
 
-    for (f_array_length_t j = 0; j < destination.array[0].value.array[1].used; ++j) {
+    for (f_number_unsigned_t j = 0; j < destination.array[0].value.array[1].used; ++j) {
       assert_int_equal(destination.array[0].value.array[1].string[j], source.value.array[1].string[j]);
     } // for
   }

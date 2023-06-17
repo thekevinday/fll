@@ -122,7 +122,7 @@ extern "C" {
  *   F_output_not (with error bit) if a parameter is NULL.
  */
 #ifndef _di_fss_read_print_error_parameter_value_before_value_number_
-  extern f_status_t fss_read_print_error_parameter_value_before_value_number(fl_print_t * const print, const f_string_static_t symbol, const f_string_static_t name, const f_array_length_t value, const f_array_length_t before);
+  extern f_status_t fss_read_print_error_parameter_value_before_value_number(fl_print_t * const print, const f_string_static_t symbol, const f_string_static_t name, const f_number_unsigned_t value, const f_number_unsigned_t before);
 #endif // _di_fss_read_print_error_parameter_value_before_value_number_
 
 /**
@@ -149,7 +149,7 @@ extern "C" {
  *   F_output_not (with error bit) if a parameter is NULL.
  */
 #ifndef _di_fss_read_print_error_parameter_value_once_only_number_
-  extern f_status_t fss_read_print_error_parameter_value_once_only_number(fl_print_t * const print, const f_string_static_t symbol, const f_string_static_t name, const f_array_length_t value);
+  extern f_status_t fss_read_print_error_parameter_value_once_only_number(fl_print_t * const print, const f_string_static_t symbol, const f_string_static_t name, const f_number_unsigned_t value);
 #endif // _di_fss_read_print_error_parameter_value_once_only_number_
 
 /**

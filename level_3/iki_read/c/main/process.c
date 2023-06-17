@@ -13,7 +13,7 @@ extern "C" {
       return;
     }
 
-    f_array_length_t line = 0;
+    f_number_unsigned_t line = 0;
 
     range->start = 0;
     if (main->setting.line) {
@@ -91,12 +91,12 @@ extern "C" {
       return;
     }
 
-    f_array_length_t i = 0;
-    f_array_length_t replaces[main->setting.data.vocabulary.used];
-    f_array_length_t wraps[main->setting.data.vocabulary.used];
+    f_number_unsigned_t i = 0;
+    f_number_unsigned_t replaces[main->setting.data.vocabulary.used];
+    f_number_unsigned_t wraps[main->setting.data.vocabulary.used];
 
-    memset(replaces, 0, sizeof(f_array_length_t) * main->setting.data.vocabulary.used);
-    memset(wraps, 0, sizeof(f_array_length_t) * main->setting.data.vocabulary.used);
+    memset(replaces, 0, sizeof(f_number_unsigned_t) * main->setting.data.vocabulary.used);
+    memset(wraps, 0, sizeof(f_number_unsigned_t) * main->setting.data.vocabulary.used);
 
     main->setting.map_replaces = replaces;
     main->setting.map_wraps = wraps;
@@ -108,8 +108,8 @@ extern "C" {
     iki_read_identify_alteration(main);
 
     if (main->setting.flag & iki_read_main_flag_name_e) {
-      f_array_length_t j = 0;
-      f_array_length_t matches = 0;
+      f_number_unsigned_t j = 0;
+      f_number_unsigned_t matches = 0;
       bool unmatched = F_true;
 
       f_file_stream_lock(main->program.output.to);
@@ -200,7 +200,7 @@ extern "C" {
       return;
     }
 
-    f_array_length_t i = 0;
+    f_number_unsigned_t i = 0;
 
     for (; i < main->setting.data.delimits.used; ++i) {
       main->setting.buffer.string[main->setting.data.delimits.array[i]] = f_iki_syntax_placeholder_s.string[0];
@@ -214,11 +214,11 @@ extern "C" {
       return;
     }
 
-    f_array_length_t replaces[main->setting.data.vocabulary.used];
-    f_array_length_t wraps[main->setting.data.vocabulary.used];
+    f_number_unsigned_t replaces[main->setting.data.vocabulary.used];
+    f_number_unsigned_t wraps[main->setting.data.vocabulary.used];
 
-    memset(replaces, 0, sizeof(f_array_length_t) * main->setting.data.vocabulary.used);
-    memset(wraps, 0, sizeof(f_array_length_t) * main->setting.data.vocabulary.used);
+    memset(replaces, 0, sizeof(f_number_unsigned_t) * main->setting.data.vocabulary.used);
+    memset(wraps, 0, sizeof(f_number_unsigned_t) * main->setting.data.vocabulary.used);
 
     main->setting.map_replaces = replaces;
     main->setting.map_wraps = wraps;
@@ -226,9 +226,9 @@ extern "C" {
     iki_read_identify_alteration(main);
 
     {
-      f_array_length_t j = 0;
-      f_array_length_t k = 0;
-      f_array_length_t stop = main->setting.data.variable.used;
+      f_number_unsigned_t j = 0;
+      f_number_unsigned_t k = 0;
+      f_number_unsigned_t stop = main->setting.data.variable.used;
 
       i = buffer_range.start;
       range = buffer_range;
@@ -310,8 +310,8 @@ extern "C" {
       return;
     }
 
-    f_array_length_t i = 0;
-    f_array_length_t total = 0;
+    f_number_unsigned_t i = 0;
+    f_number_unsigned_t total = 0;
 
     for (; i < main->setting.data.delimits.used; ++i) {
       main->setting.buffer.string[main->setting.data.delimits.array[i]] = f_iki_syntax_placeholder_s.string[0];
@@ -320,8 +320,8 @@ extern "C" {
     if (main->program.parameters.array[iki_read_parameter_name_e].result & f_console_result_value_e) {
       f_string_dynamic_t name = f_string_dynamic_t_initialize;
 
-      f_array_length_t index = 0;
-      f_array_length_t j = 0;
+      f_number_unsigned_t index = 0;
+      f_number_unsigned_t j = 0;
 
       range.start = 0;
 

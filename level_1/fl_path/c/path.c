@@ -19,13 +19,13 @@ extern "C" {
       return F_none;
     }
 
-    f_array_length_t at = 0;
+    f_number_unsigned_t at = 0;
 
     uint8_t previous_1 = f_path_separator_s.string[0];
     uint8_t previous_2 = 0;
 
-    f_array_length_t size_chunk = 0;
-    f_array_length_t position = 0;
+    f_number_unsigned_t size_chunk = 0;
+    f_number_unsigned_t position = 0;
 
     canonical->used = 0;
 

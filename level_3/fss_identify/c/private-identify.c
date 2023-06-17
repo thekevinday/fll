@@ -83,7 +83,7 @@ extern "C" {
 
     // 0 = is name, 1 = is type, 2 = is full.
     uint8_t mode = 1;
-    f_array_length_t i = 0;
+    f_number_unsigned_t i = 0;
 
     if (data->name.used) {
       for (; i < data->name.used; ++i) {
@@ -156,10 +156,10 @@ extern "C" {
   f_status_t fss_identify_process_name_compare(fss_identify_data_t * const data, const f_fll_id_t id, const uint8_t mode) {
 
     if (mode) {
-      f_array_length_t number = 0;
+      f_number_unsigned_t number = 0;
       f_string_range_t range = macro_f_string_range_t_initialize_2(data->name.used);
 
-      for (f_array_length_t i = 0; i < data->name.used; ++i) {
+      for (f_number_unsigned_t i = 0; i < data->name.used; ++i) {
 
         if (data->name.string[i] == f_string_ascii_minus_s.string[0] && i + 1 < data->name.used) {
           range.start = i + 1;

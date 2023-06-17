@@ -32,7 +32,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_adjust().
  */
 #ifndef _di_f_cells_adjust_
-  extern f_status_t f_cells_adjust(const f_array_length_t length, f_cells_t *cells);
+  extern f_status_t f_cells_adjust(const f_number_unsigned_t length, f_cells_t *cells);
 #endif // _di_f_cells_adjust_
 
 /**
@@ -96,7 +96,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_adjust().
  */
 #ifndef _di_f_cells_decimate_by_
-  extern f_status_t f_cells_decimate_by(const f_array_length_t amount, f_cells_t *cells);
+  extern f_status_t f_cells_decimate_by(const f_number_unsigned_t amount, f_cells_t *cells);
 #endif // _di_f_cells_decimate_by_
 
 /**
@@ -120,13 +120,13 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_cells_decrease_by_
-  extern f_status_t f_cells_decrease_by(const f_array_length_t amount, f_cells_t *cells);
+  extern f_status_t f_cells_decrease_by(const f_number_unsigned_t amount, f_cells_t *cells);
 #endif // _di_f_cells_decrease_by_
 
 /**
  * Increase the size of the string cells array, but only if necesary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -145,14 +145,14 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_cells_increase_
-  extern f_status_t f_cells_increase(const f_array_length_t step, f_cells_t *cells);
+  extern f_status_t f_cells_increase(const f_number_unsigned_t step, f_cells_t *cells);
 #endif // _di_f_cells_increase_
 
 /**
  * Resize the string cells array to a larger size.
  *
  * This will resize making the array larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -170,7 +170,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_cells_increase_by_
-  extern f_status_t f_cells_increase_by(const f_array_length_t amount, f_cells_t *cells);
+  extern f_status_t f_cells_increase_by(const f_number_unsigned_t amount, f_cells_t *cells);
 #endif // _di_f_cells_increase_by_
 
 /**
@@ -189,7 +189,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_cells_resize_
-  extern f_status_t f_cells_resize(const f_array_length_t length, f_cells_t *cells);
+  extern f_status_t f_cells_resize(const f_number_unsigned_t length, f_cells_t *cells);
 #endif // _di_f_cells_resize_
 
 /**
@@ -209,7 +209,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_destroy().
  */
 #ifndef _di_f_cellss_adjust_
-  extern f_status_t f_cellss_adjust(const f_array_length_t length, f_cellss_t *cellss);
+  extern f_status_t f_cellss_adjust(const f_number_unsigned_t length, f_cellss_t *cellss);
 #endif // _di_f_cellss_adjust_
 
 /**
@@ -273,7 +273,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_destroy().
  */
 #ifndef _di_f_cellss_decimate_by_
-  extern f_status_t f_cellss_decimate_by(const f_array_length_t amount, f_cellss_t *cellss);
+  extern f_status_t f_cellss_decimate_by(const f_number_unsigned_t amount, f_cellss_t *cellss);
 #endif // _di_f_cellss_decimate_by_
 
 /**
@@ -297,13 +297,13 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_cellss_decrease_by_
-  extern f_status_t f_cellss_decrease_by(const f_array_length_t amount, f_cellss_t *cellss);
+  extern f_status_t f_cellss_decrease_by(const f_number_unsigned_t amount, f_cellss_t *cellss);
 #endif // _di_f_cellss_decrease_by_
 
 /**
  * Increase the size of the string cellss array, but only if necessary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -322,14 +322,14 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_cellss_increase_
-  extern f_status_t f_cellss_increase(const f_array_length_t step, f_cellss_t *cellss);
+  extern f_status_t f_cellss_increase(const f_number_unsigned_t step, f_cellss_t *cellss);
 #endif // _di_f_cellss_increase_
 
 /**
  * Resize the string cellss array to a larger size.
  *
  * This will resize making the array larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -347,7 +347,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_cellss_increase_by_
-  extern f_status_t f_cellss_increase_by(const f_array_length_t amount, f_cellss_t *cellss);
+  extern f_status_t f_cellss_increase_by(const f_number_unsigned_t amount, f_cellss_t *cellss);
 #endif // _di_f_cellss_increase_by_
 
 /**
@@ -367,7 +367,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_cellss_resize_
-  extern f_status_t f_cellss_resize(const f_array_length_t length, f_cellss_t *cellss);
+  extern f_status_t f_cellss_resize(const f_number_unsigned_t length, f_cellss_t *cellss);
 #endif // _di_f_cellss_resize_
 
 #ifdef __cplusplus

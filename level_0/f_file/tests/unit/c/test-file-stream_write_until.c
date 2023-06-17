@@ -60,7 +60,7 @@ void test__f_file_stream_write_until__returns_data_not(void **state) {
   }
 
   {
-    f_array_length_t written = 1;
+    f_number_unsigned_t written = 1;
 
     const f_status_t status = f_file_stream_write_until(file, f_string_empty_s, 0, &written);
 
@@ -69,7 +69,7 @@ void test__f_file_stream_write_until__returns_data_not(void **state) {
   }
 
   {
-    f_array_length_t written = 1;
+    f_number_unsigned_t written = 1;
 
     const f_status_t status = f_file_stream_write_until(file, test, 0, &written);
 
@@ -78,7 +78,7 @@ void test__f_file_stream_write_until__returns_data_not(void **state) {
   }
 
   {
-    f_array_length_t written = 1;
+    f_number_unsigned_t written = 1;
 
     const f_status_t status = f_file_stream_write_until(file, f_string_empty_s, 1, &written);
 

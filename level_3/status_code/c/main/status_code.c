@@ -69,7 +69,7 @@ extern "C" {
       if (main->program.parameters.remaining.used) {
         f_file_stream_lock(main->program.output.to);
 
-        for (f_array_length_t i = 0; i < main->program.parameters.remaining.used; ++i) {
+        for (f_number_unsigned_t i = 0; i < main->program.parameters.remaining.used; ++i) {
 
           if (!((++main->program.signal_check) % status_code_signal_check_d)) {
             if (fll_program_standard_signal_received(&main->program)) {
@@ -101,7 +101,7 @@ extern "C" {
       if (main->program.parameters.remaining.used) {
         f_file_stream_lock(main->program.output.to);
 
-        for (f_array_length_t i = 0; i < main->program.parameters.remaining.used; ++i) {
+        for (f_number_unsigned_t i = 0; i < main->program.parameters.remaining.used; ++i) {
 
           if (!((++main->program.signal_check) % status_code_signal_check_d)) {
             if (fll_program_standard_signal_received(&main->program)) {
@@ -133,7 +133,7 @@ extern "C" {
       if (main->program.parameters.remaining.used) {
         f_file_stream_lock(main->program.output.to);
 
-        for (f_array_length_t i = 0; i < main->program.parameters.remaining.used; ++i) {
+        for (f_number_unsigned_t i = 0; i < main->program.parameters.remaining.used; ++i) {
 
           if (!((++main->program.signal_check) % status_code_signal_check_d)) {
             if (fll_program_standard_signal_received(&main->program)) {

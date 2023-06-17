@@ -49,7 +49,7 @@ extern char **environ;
       return F_exist_not;
     }
 
-    const f_array_length_t size = strnlen(result, f_environment_max_length_d);
+    const f_number_unsigned_t size = strnlen(result, f_environment_max_length_d);
 
     if (size) {
       const f_status_t status = f_string_dynamic_increase_by(size + 1, value);

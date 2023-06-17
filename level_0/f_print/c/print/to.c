@@ -33,7 +33,7 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 }
 
 #ifndef _di_f_print_to_
-  f_status_t f_print_to(const f_string_t string, const f_array_length_t length, const f_file_t file) {
+  f_status_t f_print_to(const f_string_t string, const f_number_unsigned_t length, const f_file_t file) {
 
     if (file.id == -1) return F_file_descriptor_not;
     if (!length || !string) return F_data_not;
@@ -80,7 +80,7 @@ static inline f_status_t private_inline_f_print_to_error(void) {
     if (file.id == -1) return F_file_descriptor_not;
     if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) return F_data_not;
 
-    f_array_length_t length = (range.stop - range.start) + 1;
+    f_number_unsigned_t length = (range.stop - range.start) + 1;
 
     if (length + range.start > buffer.used) {
       length = buffer.used - range.start;
@@ -96,7 +96,7 @@ static inline f_status_t private_inline_f_print_to_error(void) {
     if (file.id == -1) return F_file_descriptor_not;
     if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) return F_data_not;
 
-    f_array_length_t length = (range.stop - range.start) + 1;
+    f_number_unsigned_t length = (range.stop - range.start) + 1;
 
     if (length + range.start > buffer.used) {
       length = buffer.used - range.start;
@@ -112,7 +112,7 @@ static inline f_status_t private_inline_f_print_to_error(void) {
     if (file.id == -1) return F_file_descriptor_not;
     if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) return F_data_not;
 
-    f_array_length_t length = (range.stop - range.start) + 1;
+    f_number_unsigned_t length = (range.stop - range.start) + 1;
 
     if (length + range.start > buffer.used) {
       length = buffer.used - range.start;
@@ -128,7 +128,7 @@ static inline f_status_t private_inline_f_print_to_error(void) {
     if (file.id == -1) return F_file_descriptor_not;
     if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) return F_data_not;
 
-    f_array_length_t length = (range.stop - range.start) + 1;
+    f_number_unsigned_t length = (range.stop - range.start) + 1;
 
     if (length + range.start > buffer.used) {
       length = buffer.used - range.start;
@@ -169,7 +169,7 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 #endif // _di_f_print_to_dynamic_safely_
 
 #ifndef _di_f_print_to_except_
-  f_status_t f_print_to_except(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, const f_file_t file) {
+  f_status_t f_print_to_except(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t length, const f_number_unsigneds_t except, const f_file_t file) {
 
     if (file.id == -1) return F_file_descriptor_not;
     if (!length || !string) return F_data_not;
@@ -179,7 +179,7 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 #endif // _di_f_print_to_except_
 
 #ifndef _di_f_print_to_except_dynamic_
-  f_status_t f_print_to_except_dynamic(const f_string_static_t buffer, const f_array_lengths_t except, const f_file_t file) {
+  f_status_t f_print_to_except_dynamic(const f_string_static_t buffer, const f_number_unsigneds_t except, const f_file_t file) {
 
     if (file.id == -1) return F_file_descriptor_not;
     if (!buffer.used || !buffer.string) return F_data_not;
@@ -189,14 +189,14 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 #endif // _di_f_print_to_except_dynamic_
 
 #ifndef _di_f_print_to_except_dynamic_partial_
-  f_status_t f_print_to_except_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, const f_file_t file) {
+  f_status_t f_print_to_except_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, const f_number_unsigneds_t except, const f_file_t file) {
 
     if (file.id == -1) return F_file_descriptor_not;
     if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) {
       return F_data_not;
     }
 
-    f_array_length_t length = (range.stop - range.start) + 1;
+    f_number_unsigned_t length = (range.stop - range.start) + 1;
 
     if (length + range.start > buffer.used) {
       length = buffer.used - range.start;
@@ -207,14 +207,14 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 #endif // _di_f_print_to_except_dynamic_partial_
 
 #ifndef _di_f_print_to_except_dynamic_partial_raw_
-  f_status_t f_print_to_except_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, const f_file_t file) {
+  f_status_t f_print_to_except_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, const f_number_unsigneds_t except, const f_file_t file) {
 
     if (file.id == -1) return F_file_descriptor_not;
     if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) {
       return F_data_not;
     }
 
-    f_array_length_t length = (range.stop - range.start) + 1;
+    f_number_unsigned_t length = (range.stop - range.start) + 1;
 
     if (length + range.start > buffer.used) {
       length = buffer.used - range.start;
@@ -225,14 +225,14 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 #endif // _di_f_print_to_except_dynamic_partial_raw_
 
 #ifndef _di_f_print_to_except_dynamic_partial_raw_safely_
-  f_status_t f_print_to_except_dynamic_partial_raw_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, const f_file_t file) {
+  f_status_t f_print_to_except_dynamic_partial_raw_safely(const f_string_static_t buffer, const f_string_range_t range, const f_number_unsigneds_t except, const f_file_t file) {
 
     if (file.id == -1) return F_file_descriptor_not;
     if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) {
       return F_data_not;
     }
 
-    f_array_length_t length = (range.stop - range.start) + 1;
+    f_number_unsigned_t length = (range.stop - range.start) + 1;
 
     if (length + range.start > buffer.used) {
       length = buffer.used - range.start;
@@ -243,14 +243,14 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 #endif // _di_f_print_to_except_dynamic_partial_raw_safely_
 
 #ifndef _di_f_print_to_except_dynamic_partial_safely_
-  f_status_t f_print_to_except_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, const f_file_t file) {
+  f_status_t f_print_to_except_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, const f_number_unsigneds_t except, const f_file_t file) {
 
     if (file.id == -1) return F_file_descriptor_not;
     if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) {
       return F_data_not;
     }
 
-    f_array_length_t length = (range.stop - range.start) + 1;
+    f_number_unsigned_t length = (range.stop - range.start) + 1;
 
     if (length + range.start > buffer.used) {
       length = buffer.used - range.start;
@@ -261,7 +261,7 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 #endif // _di_f_print_to_except_dynamic_partial_safely_
 
 #ifndef _di_f_print_to_except_dynamic_raw_
-  f_status_t f_print_to_except_dynamic_raw(const f_string_static_t buffer, const f_array_lengths_t except, const f_file_t file) {
+  f_status_t f_print_to_except_dynamic_raw(const f_string_static_t buffer, const f_number_unsigneds_t except, const f_file_t file) {
 
     if (file.id == -1) return F_file_descriptor_not;
     if (!buffer.used || !buffer.string) return F_data_not;
@@ -271,7 +271,7 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 #endif // _di_f_print_to_except_dynamic_raw_
 
 #ifndef _di_f_print_to_except_dynamic_raw_safely_
-  f_status_t f_print_to_except_dynamic_raw_safely(const f_string_static_t buffer, const f_array_lengths_t except, const f_file_t file) {
+  f_status_t f_print_to_except_dynamic_raw_safely(const f_string_static_t buffer, const f_number_unsigneds_t except, const f_file_t file) {
 
     if (file.id == -1) return F_file_descriptor_not;
     if (!buffer.used || !buffer.string) return F_data_not;
@@ -281,7 +281,7 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 #endif // _di_f_print_to_except_dynamic_raw_safely_
 
 #ifndef _di_f_print_to_except_dynamic_safely_
-  f_status_t f_print_to_except_dynamic_safely(const f_string_static_t buffer, const f_array_lengths_t except, const f_file_t file) {
+  f_status_t f_print_to_except_dynamic_safely(const f_string_static_t buffer, const f_number_unsigneds_t except, const f_file_t file) {
 
     if (file.id == -1) return F_file_descriptor_not;
     if (!buffer.used || !buffer.string) return F_data_not;
@@ -291,7 +291,7 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 #endif // _di_f_print_to_except_dynamic_safely_
 
 #ifndef _di_f_print_to_except_in_
-  f_status_t f_print_to_except_in(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
+  f_status_t f_print_to_except_in(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t length, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
 
     if (file.id == -1) return F_file_descriptor_not;
     if (!length || !string) return F_data_not;
@@ -301,7 +301,7 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 #endif // _di_f_print_to_except_in_
 
 #ifndef _di_f_print_to_except_in_dynamic_
-  f_status_t f_print_to_except_in_dynamic(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
+  f_status_t f_print_to_except_in_dynamic(const f_string_static_t buffer, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
 
     if (file.id == -1) return F_file_descriptor_not;
     if (!buffer.string || !buffer.used) return F_data_not;
@@ -311,14 +311,14 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 #endif // _di_f_print_to_except_in_dynamic_
 
 #ifndef _di_f_print_to_except_in_dynamic_partial_
-  f_status_t f_print_to_except_in_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
+  f_status_t f_print_to_except_in_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
 
     if (file.id == -1) return F_file_descriptor_not;
     if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) {
       return F_data_not;
     }
 
-    f_array_length_t length = (range.stop - range.start) + 1;
+    f_number_unsigned_t length = (range.stop - range.start) + 1;
 
     if (length + range.start > buffer.used) {
       length = buffer.used - range.start;
@@ -329,14 +329,14 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 #endif // _di_f_print_to_except_in_dynamic_partial_
 
 #ifndef _di_f_print_to_except_in_dynamic_partial_raw_
-  f_status_t f_print_to_except_in_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
+  f_status_t f_print_to_except_in_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
 
     if (file.id == -1) return F_file_descriptor_not;
     if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) {
       return F_data_not;
     }
 
-    f_array_length_t length = (range.stop - range.start) + 1;
+    f_number_unsigned_t length = (range.stop - range.start) + 1;
 
     if (length + range.start > buffer.used) {
       length = buffer.used - range.start;
@@ -347,12 +347,12 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 #endif // _di_f_print_to_except_in_dynamic_partial_raw_
 
 #ifndef _di_f_print_to_except_in_dynamic_partial_raw_safely_
-  f_status_t f_print_to_except_in_dynamic_partial_raw_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
+  f_status_t f_print_to_except_in_dynamic_partial_raw_safely(const f_string_static_t buffer, const f_string_range_t range, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
 
     if (file.id == -1) return F_file_descriptor_not;
     if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) return F_data_not;
 
-    f_array_length_t length = (range.stop - range.start) + 1;
+    f_number_unsigned_t length = (range.stop - range.start) + 1;
 
     if (length + range.start > buffer.used) {
       length = buffer.used - range.start;
@@ -363,12 +363,12 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 #endif // _di_f_print_to_except_in_dynamic_partial_raw_safely_
 
 #ifndef _di_f_print_to_except_in_dynamic_partial_safely_
-  f_status_t f_print_to_except_in_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
+  f_status_t f_print_to_except_in_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
 
     if (file.id == -1) return F_file_descriptor_not;
     if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) return F_data_not;
 
-    f_array_length_t length = (range.stop - range.start) + 1;
+    f_number_unsigned_t length = (range.stop - range.start) + 1;
 
     if (length + range.start > buffer.used) {
       length = buffer.used - range.start;
@@ -379,7 +379,7 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 #endif // _di_f_print_to_except_in_dynamic_partial_safely_
 
 #ifndef _di_f_print_to_except_in_dynamic_raw_
-  f_status_t f_print_to_except_in_dynamic_raw(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
+  f_status_t f_print_to_except_in_dynamic_raw(const f_string_static_t buffer, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
 
     if (file.id == -1) return F_file_descriptor_not;
     if (!buffer.used || !buffer.string) return F_data_not;
@@ -389,7 +389,7 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 #endif // _di_f_print_to_except_in_dynamic_raw_
 
 #ifndef _di_f_print_to_except_in_dynamic_raw_safely_
-  f_status_t f_print_to_except_in_dynamic_raw_safely(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
+  f_status_t f_print_to_except_in_dynamic_raw_safely(const f_string_static_t buffer, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
 
     if (file.id == -1) return F_file_descriptor_not;
     if (!buffer.used || !buffer.string) return F_data_not;
@@ -399,7 +399,7 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 #endif // _di_f_print_to_except_in_dynamic_raw_safely_
 
 #ifndef _di_f_print_to_except_in_dynamic_safely_
-  f_status_t f_print_to_except_in_dynamic_safely(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
+  f_status_t f_print_to_except_in_dynamic_safely(const f_string_static_t buffer, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
 
     if (file.id == -1) return F_file_descriptor_not;
     if (!buffer.used || !buffer.string) return F_data_not;
@@ -409,7 +409,7 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 #endif // _di_f_print_to_except_in_dynamic_safely_
 
 #ifndef _di_f_print_to_except_in_raw_
-  f_status_t f_print_to_except_in_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
+  f_status_t f_print_to_except_in_raw(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t length, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
 
     if (file.id == -1) return F_file_descriptor_not;
     if (!length || !string) return F_data_not;
@@ -419,7 +419,7 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 #endif // _di_f_print_to_except_in_raw_
 
 #ifndef _di_f_print_to_except_in_raw_safely_
-  f_status_t f_print_to_except_in_raw_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
+  f_status_t f_print_to_except_in_raw_safely(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t length, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
 
     if (file.id == -1) return F_file_descriptor_not;
     if (!length || !string) return F_data_not;
@@ -429,7 +429,7 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 #endif // _di_f_print_to_except_in_raw_safely_
 
 #ifndef _di_f_print_to_except_in_safely_
-  f_status_t f_print_to_except_in_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
+  f_status_t f_print_to_except_in_safely(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t length, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
 
     if (file.id == -1) return F_file_descriptor_not;
     if (!length || !string) return F_data_not;
@@ -439,7 +439,7 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 #endif // _di_f_print_to_except_in_safely_
 
 #ifndef _di_f_print_to_except_raw_
-  f_status_t f_print_to_except_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, const f_file_t file) {
+  f_status_t f_print_to_except_raw(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t length, const f_number_unsigneds_t except, const f_file_t file) {
 
     if (file.id == -1) return F_file_descriptor_not;
     if (!length || !string) return F_data_not;
@@ -449,7 +449,7 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 #endif // _di_f_print_to_except_raw_
 
 #ifndef _di_f_print_to_except_raw_safely_
-  f_status_t f_print_to_except_raw_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, const f_file_t file) {
+  f_status_t f_print_to_except_raw_safely(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t length, const f_number_unsigneds_t except, const f_file_t file) {
 
     if (file.id == -1) return F_file_descriptor_not;
     if (!length || !string) return F_data_not;
@@ -459,7 +459,7 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 #endif // _di_f_print_to_except_raw_safely_
 
 #ifndef _di_f_print_to_except_safely_
-  f_status_t f_print_to_except_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, const f_file_t file) {
+  f_status_t f_print_to_except_safely(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t length, const f_number_unsigneds_t except, const f_file_t file) {
 
     if (file.id == -1) return F_file_descriptor_not;
     if (!length || !string) return F_data_not;
@@ -469,7 +469,7 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 #endif // _di_f_print_to_except_safely_
 
 #ifndef _di_f_print_to_raw_
-  f_status_t f_print_to_raw(const f_string_t string, const f_array_length_t length, const f_file_t file) {
+  f_status_t f_print_to_raw(const f_string_t string, const f_number_unsigned_t length, const f_file_t file) {
 
     if (file.id == -1) return F_file_descriptor_not;
     if (!length || !string) return F_data_not;
@@ -479,7 +479,7 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 #endif // _di_f_print_to_raw_
 
 #ifndef _di_f_print_to_raw_safely_
-  f_status_t f_print_to_raw_safely(const f_string_t string, const f_array_length_t length, const f_file_t file) {
+  f_status_t f_print_to_raw_safely(const f_string_t string, const f_number_unsigned_t length, const f_file_t file) {
 
     if (file.id == -1) return F_file_descriptor_not;
     if (!length || !string) return F_data_not;
@@ -500,7 +500,7 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 #endif // _di_f_print_raw_terminated_
 
 #ifndef _di_f_print_to_safely_
-  f_status_t f_print_to_safely(const f_string_t string, const f_array_length_t length, const f_file_t file) {
+  f_status_t f_print_to_safely(const f_string_t string, const f_number_unsigned_t length, const f_file_t file) {
 
     if (file.id == -1) return F_file_descriptor_not;
     if (!length || !string) return F_data_not;
@@ -515,14 +515,14 @@ static inline f_status_t private_inline_f_print_to_error(void) {
     if (file.id == -1) return F_file_descriptor_not;
     if (!string) return F_data_not;
 
-    f_array_length_t start = 0;
-    f_array_length_t total = 0;
+    f_number_unsigned_t start = 0;
+    f_number_unsigned_t total = 0;
 
     f_string_static_t safe = f_string_empty_s;
 
     uint8_t width = 0;
 
-    for (register f_array_length_t i = 0; string[i]; ) {
+    for (register f_number_unsigned_t i = 0; string[i]; ) {
 
       safe = f_string_empty_s;
       width = macro_f_utf_byte_width(string[i]);

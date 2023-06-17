@@ -1028,7 +1028,7 @@ extern "C" {
         mode_umask |= F_file_mode_t_block_world_d & F_file_mode_t_mask_bit_execute_d;
       }
 
-      for (f_array_length_t i = 0; syntax && i < code.used; ++i) {
+      for (f_number_unsigned_t i = 0; syntax && i < code.used; ++i) {
 
         if (code.string[i] == f_string_ascii_u_s.string[0]) {
           on |= 1;
@@ -1214,7 +1214,7 @@ extern "C" {
       // 1 = add, 2 = replace, 3 = subtract.
       uint8_t how = 0;
 
-      f_array_length_t i = 0;
+      f_number_unsigned_t i = 0;
 
       if (code.string[0] == f_string_ascii_plus_s.string[0]) {
         how = 1;
@@ -1242,7 +1242,7 @@ extern "C" {
       } // while
 
       if (i < code.used) {
-        f_array_length_t j = 0;
+        f_number_unsigned_t j = 0;
 
         // Do not tolerate overly large numbers.
         if (code.used - i > 4) return F_status_set_error(F_syntax);
@@ -1455,7 +1455,7 @@ extern "C" {
 
     char *path_to_name = basename(path_argument);
 
-    const f_array_length_t size = strnlen(path_to_name, path.used);
+    const f_number_unsigned_t size = strnlen(path_to_name, path.used);
 
     const f_status_t status = f_string_dynamic_increase_by(size + 1, name_base);
     if (F_status_is_error(status)) return status;
@@ -1484,7 +1484,7 @@ extern "C" {
 
     char *path_to_name = dirname(path_argument);
 
-    const f_array_length_t size = strnlen(path_to_name, path.used);
+    const f_number_unsigned_t size = strnlen(path_to_name, path.used);
 
     {
       const f_status_t status = f_string_dynamic_increase_by(size + 1, name_directory);
@@ -1631,7 +1631,7 @@ extern "C" {
 #endif // _di_f_file_read_block_
 
 #ifndef _di_f_file_read_until_
-  f_status_t f_file_read_until(const f_file_t file, const f_array_length_t total, f_string_dynamic_t * const buffer) {
+  f_status_t f_file_read_until(const f_file_t file, const f_number_unsigned_t total, f_string_dynamic_t * const buffer) {
     #ifndef _di_level_0_parameter_checking_
       if (!file.size_read) return F_status_set_error(F_parameter);
       if (!buffer) return F_status_set_error(F_parameter);
@@ -1640,8 +1640,8 @@ extern "C" {
     if (file.id == -1) return F_file_descriptor_not;
     if (!total) return F_data_not;
 
-    f_array_length_t buffer_size = file.size_read;
-    f_array_length_t buffer_count = 0;
+    f_number_unsigned_t buffer_size = file.size_read;
+    f_number_unsigned_t buffer_count = 0;
 
     f_status_t status = F_none;
     ssize_t size_read = 0;
@@ -2109,7 +2109,7 @@ extern "C" {
 #endif // _di_f_file_umask_set_
 
 #ifndef _di_f_file_write_
-  f_status_t f_file_write(const f_file_t file, const f_string_static_t buffer, f_array_length_t * const written) {
+  f_status_t f_file_write(const f_file_t file, const f_string_static_t buffer, f_number_unsigned_t * const written) {
 
     if (file.id == -1 || !buffer.used || !file.size_write) {
       if (written) *written = 0;
@@ -2124,7 +2124,7 @@ extern "C" {
       if (status == F_none && *written == buffer.used) return F_none_eos;
     }
     else {
-      f_array_length_t written_local = 0;
+      f_number_unsigned_t written_local = 0;
 
       const f_status_t status = private_f_file_write_until(file, buffer, buffer.used, &written_local);
       if (F_status_is_error(status)) return status;
@@ -2137,7 +2137,7 @@ extern "C" {
 #endif // _di_f_file_write_
 
 #ifndef _di_f_file_write_block_
-  f_status_t f_file_write_block(const f_file_t file, const f_string_static_t buffer, f_array_length_t * const written) {
+  f_status_t f_file_write_block(const f_file_t file, const f_string_static_t buffer, f_number_unsigned_t * const written) {
 
     if (file.id == -1 || !buffer.used || !file.size_write) {
       if (written) *written = 0;
@@ -2145,7 +2145,7 @@ extern "C" {
       return file.id == -1 ? F_file_descriptor_not : F_data_not;
     }
 
-    const f_array_length_t write_max = file.size_write > buffer.used ? buffer.used : file.size_write;
+    const f_number_unsigned_t write_max = file.size_write > buffer.used ? buffer.used : file.size_write;
 
     if (written) {
       const f_status_t status = private_f_file_write_until(file, buffer, write_max, written);
@@ -2157,7 +2157,7 @@ extern "C" {
       }
     }
     else {
-      f_array_length_t written_local = 0;
+      f_number_unsigned_t written_local = 0;
 
       const f_status_t status = private_f_file_write_until(file, buffer, write_max, &written_local);
       if (F_status_is_error(status)) return status;
@@ -2173,7 +2173,7 @@ extern "C" {
 #endif // _di_f_file_write_block_
 
 #ifndef _di_f_file_write_until_
-  f_status_t f_file_write_until(const f_file_t file, const f_string_static_t buffer, const f_array_length_t total, f_array_length_t * const written) {
+  f_status_t f_file_write_until(const f_file_t file, const f_string_static_t buffer, const f_number_unsigned_t total, f_number_unsigned_t * const written) {
 
     if (file.id == -1 || !buffer.used || !total || !file.size_write) {
       if (written) *written = 0;
@@ -2181,7 +2181,7 @@ extern "C" {
       return file.id == -1 ? F_file_descriptor_not : F_data_not;
     }
 
-    const f_array_length_t write_max = total > buffer.used ? buffer.used : total;
+    const f_number_unsigned_t write_max = total > buffer.used ? buffer.used : total;
 
     if (written) {
       const f_status_t status = private_f_file_write_until(file, buffer, write_max, written);
@@ -2193,7 +2193,7 @@ extern "C" {
       }
     }
     else {
-      f_array_length_t written_local = 0;
+      f_number_unsigned_t written_local = 0;
 
       const f_status_t status = private_f_file_write_until(file, buffer, buffer.used, &written_local);
       if (F_status_is_error(status)) return status;
@@ -2209,7 +2209,7 @@ extern "C" {
 #endif // _di_f_file_write_until_
 
 #ifndef _di_f_file_write_range_
-  f_status_t f_file_write_range(const f_file_t file, const f_string_static_t buffer, const f_string_range_t range, f_array_length_t * const written) {
+  f_status_t f_file_write_range(const f_file_t file, const f_string_static_t buffer, const f_string_range_t range, f_number_unsigned_t * const written) {
 
     if (file.id == -1 || !buffer.used || range.start > range.stop || range.start >= buffer.used || !file.size_write) {
       if (written) {
@@ -2219,7 +2219,7 @@ extern "C" {
       return file.id == -1 ? F_file_descriptor_not : F_data_not;
     }
 
-    const f_array_length_t write_max = (range.stop - range.start) + 1 > buffer.used ? buffer.used : (range.stop - range.start) + 1;
+    const f_number_unsigned_t write_max = (range.stop - range.start) + 1 > buffer.used ? buffer.used : (range.stop - range.start) + 1;
 
     if (written) {
       const f_string_static_t buffer_adjusted = macro_f_string_static_t_initialize_1(buffer.string + range.start, 0, buffer.used - range.start);
@@ -2234,7 +2234,7 @@ extern "C" {
     }
     else {
       const f_string_static_t buffer_adjusted = macro_f_string_static_t_initialize_1(buffer.string + range.start, 0, buffer.used - range.start);
-      f_array_length_t written_local = 0;
+      f_number_unsigned_t written_local = 0;
 
       const f_status_t status = private_f_file_write_until(file, buffer_adjusted, write_max, &written_local);
       if (F_status_is_error(status)) return status;

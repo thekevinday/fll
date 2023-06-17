@@ -23,10 +23,10 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
 
   int return_code = 0;
 
-  f_array_length_t i = 0;
-  f_array_length_t r = 0;
-  f_array_length_t repeat = 2;
-  f_array_length_t length = 0;
+  f_number_unsigned_t i = 0;
+  f_number_unsigned_t r = 0;
+  f_number_unsigned_t repeat = 2;
+  f_number_unsigned_t length = 0;
 
   f_string_static_t current_tool = firewall_tool_iptables_s;
 
@@ -472,7 +472,7 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
 
       // Last up is the "rule".
       if ((!is_ip_list && local->rule_contents.array[i].used > 0) || (is_ip_list && local->rule_contents.array[i].used > 1)) {
-        f_array_length_t subcounter = 0;
+        f_number_unsigned_t subcounter = 0;
 
         if (is_ip_list) {
 
@@ -662,7 +662,7 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
                 }
 
                 if (F_status_is_error(status)) {
-                  f_array_lengths_resize(0, &delimits);
+                  f_number_unsigneds_resize(0, &delimits);
 
                   break;
                 }
@@ -670,7 +670,7 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
                 ++arguments.used;
 
                 // The ip_list file contains objects and no content, all objects are what matter an nothing else.
-                for (f_array_length_t at = 0; at < basic_objects.used; ++at) {
+                for (f_number_unsigned_t at = 0; at < basic_objects.used; ++at) {
 
                   arguments.array[arguments.used].used = 0;
 
@@ -684,7 +684,7 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
                   status = fll_execute_program(current_tool, arguments, 0, 0, (void *) &return_code);
 
                   if (status == F_child) {
-                    f_array_lengths_resize(0, &delimits);
+                    f_number_unsigneds_resize(0, &delimits);
 
                     f_string_dynamic_resize(0, &ip_list);
                     f_string_dynamics_resize(0, &arguments);
@@ -718,7 +718,7 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
                 --arguments.used;
               }
 
-              f_array_lengths_resize(0, &delimits);
+              f_number_unsigneds_resize(0, &delimits);
             }
           }
 
@@ -789,10 +789,10 @@ f_status_t firewall_create_custom_chains(firewall_data_t * const data, firewall_
   bool create_chain = F_false;
   int return_code = 0;
 
-  f_array_length_t i = 0;
-  f_array_length_t j = 0;
+  f_number_unsigned_t i = 0;
+  f_number_unsigned_t j = 0;
 
-  f_array_length_t length = 0;
+  f_number_unsigned_t length = 0;
   f_string_dynamics_t arguments = f_string_dynamics_t_initialize;
 
   local->chain_ids.used = local->chain_objects.used;
@@ -800,10 +800,10 @@ f_status_t firewall_create_custom_chains(firewall_data_t * const data, firewall_
   status = f_string_dynamics_resize(2, &arguments);
   if (F_status_is_error(status)) return status;
 
-  status = f_array_lengths_increase_by(local->chain_objects.used, &local->chain_ids);
+  status = f_number_unsigneds_increase_by(local->chain_objects.used, &local->chain_ids);
   if (F_status_is_error(status)) return status;
 
-  memset(local->chain_ids.array, 0, sizeof(f_array_length_t) * local->chain_ids.used);
+  memset(local->chain_ids.array, 0, sizeof(f_number_unsigned_t) * local->chain_ids.used);
 
   status = f_string_dynamic_append(firewall_chain_create_command_s, &arguments.array[0]);
 
@@ -977,7 +977,7 @@ f_status_t firewall_delete_chains(firewall_data_t * const data) {
   const f_string_static_t tools[2] = { firewall_tool_iptables_s, firewall_tool_ip6tables_s };
   f_status_t status = F_none;
 
-  for (f_array_length_t i = 0; i < 2; ++i) {
+  for (f_number_unsigned_t i = 0; i < 2; ++i) {
 
     if (firewall_signal_received(data)) {
       return F_status_set_error(F_interrupt);
@@ -1026,7 +1026,7 @@ f_status_t firewall_delete_chains(firewall_data_t * const data) {
   arguments.array = argument_array;
   argument_array[0] = firewall_chain_delete_command_s;
 
-  for (f_array_length_t i = 0; i < 2; ++i) {
+  for (f_number_unsigned_t i = 0; i < 2; ++i) {
 
     firewall_print_debug_tool(data->main->warning, tools[i], arguments);
 
@@ -1083,8 +1083,8 @@ f_status_t firewall_default_lock(firewall_data_t * const data) {
   arguments.array[0] = firewall_action_policy_command_s;
   arguments.array[2] = firewall_chain_drop_s;
 
-  f_array_length_t i = 0;
-  f_array_length_t j = 0;
+  f_number_unsigned_t i = 0;
+  f_number_unsigned_t j = 0;
 
   for (; i < 3; ++i) {
 
@@ -1298,7 +1298,7 @@ f_status_t firewall_delete_local_data(firewall_local_data_t * const local) {
   local->chain = 0;
 
   f_string_dynamic_resize(0, &local->buffer);
-  f_array_lengths_resize(0, &local->chain_ids);
+  f_number_unsigneds_resize(0, &local->chain_ids);
 
   f_string_ranges_resize(0, &local->chain_objects);
   f_string_rangess_resize(0, &local->chain_contents);

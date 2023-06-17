@@ -38,7 +38,7 @@ extern "C" {
  * @see f_memory_adjust()
  */
 #if !defined(_di_f_directory_statuss_adjust_) || !defined(_di_f_directory_statuss_decimate_by_)
-  extern f_status_t private_f_directory_statuss_adjust(const f_array_length_t length, f_directory_statuss_t * const statuss) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_directory_statuss_adjust(const f_number_unsigned_t length, f_directory_statuss_t * const statuss) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_directory_statuss_adjust_) || !defined(_di_f_directory_statuss_decimate_by_)
 
 /**
@@ -65,7 +65,7 @@ extern "C" {
  * @see f_memory_resize()
  */
 #if !defined(_di_f_directory_statuss_decrease_by_) || !defined(_di_f_directory_statuss_increase_) || !defined(_di_f_directory_statuss_increase_by_) || !defined(_di_f_directory_statuss_resize_)
-  extern f_status_t private_f_directory_statuss_resize(const f_array_length_t length, f_directory_statuss_t * const statuss) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_directory_statuss_resize(const f_number_unsigned_t length, f_directory_statuss_t * const statuss) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_directory_statuss_decrease_by_) || !defined(_di_f_directory_statuss_increase_) || !defined(_di_f_directory_statuss_increase_by_) || !defined(_di_f_directory_statuss_resize_)
 
 #ifdef __cplusplus

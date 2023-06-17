@@ -287,7 +287,7 @@ extern "C" {
 #endif // _di_f_file_stream_read_block_
 
 #ifndef _di_f_file_stream_read_until_
-  f_status_t f_file_stream_read_until(const f_file_t file, const f_array_length_t total, f_string_dynamic_t * const buffer) {
+  f_status_t f_file_stream_read_until(const f_file_t file, const f_number_unsigned_t total, f_string_dynamic_t * const buffer) {
     #ifndef _di_level_0_parameter_checking_
       if (!file.size_read) return F_status_set_error(F_parameter);
       if (!buffer) return F_status_set_error(F_parameter);
@@ -320,8 +320,8 @@ extern "C" {
       }
     }
 
-    f_array_length_t buffer_size = file.size_read;
-    f_array_length_t buffer_count = 0;
+    f_number_unsigned_t buffer_size = file.size_read;
+    f_number_unsigned_t buffer_count = 0;
 
     size_t size_read = 0;
 
@@ -415,7 +415,7 @@ extern "C" {
 #endif // _di_f_file_stream_unlock_
 
 #ifndef _di_f_file_stream_write_
-  f_status_t f_file_stream_write(const f_file_t file, const f_string_static_t buffer, f_array_length_t * const written) {
+  f_status_t f_file_stream_write(const f_file_t file, const f_string_static_t buffer, f_number_unsigned_t * const written) {
 
     if (!file.stream || !buffer.used || !file.size_write) {
       if (written) {
@@ -433,7 +433,7 @@ extern "C" {
       if (status == F_none && *written == buffer.used) return F_none_eos;
     }
     else {
-      f_array_length_t written_local = 0;
+      f_number_unsigned_t written_local = 0;
 
       status = private_f_file_stream_write_until(file, buffer, buffer.used, &written_local);
 
@@ -447,7 +447,7 @@ extern "C" {
 #endif // _di_f_file_stream_write_
 
 #ifndef _di_f_file_stream_write_block_
-  f_status_t f_file_stream_write_block(const f_file_t file, const f_string_static_t buffer, f_array_length_t * const written) {
+  f_status_t f_file_stream_write_block(const f_file_t file, const f_string_static_t buffer, f_number_unsigned_t * const written) {
 
     if (!file.stream || !buffer.used || !file.size_write) {
       if (written) {
@@ -457,7 +457,7 @@ extern "C" {
       return file.stream ? F_data_not : F_stream_not;
     }
 
-    const f_array_length_t write_max = file.size_write > buffer.used ? buffer.used : file.size_write;
+    const f_number_unsigned_t write_max = file.size_write > buffer.used ? buffer.used : file.size_write;
 
     f_status_t status = F_none;
 
@@ -470,7 +470,7 @@ extern "C" {
       }
     }
     else {
-      f_array_length_t written_local = 0;
+      f_number_unsigned_t written_local = 0;
 
       status = private_f_file_stream_write_until(file, buffer, write_max, &written_local);
 
@@ -487,7 +487,7 @@ extern "C" {
 #endif // _di_f_file_stream_write_block_
 
 #ifndef _di_f_file_stream_write_until_
-  f_status_t f_file_stream_write_until(const f_file_t file, const f_string_static_t buffer, const f_array_length_t total, f_array_length_t * const written) {
+  f_status_t f_file_stream_write_until(const f_file_t file, const f_string_static_t buffer, const f_number_unsigned_t total, f_number_unsigned_t * const written) {
 
     if (!file.stream || !buffer.used || !total || !file.size_write) {
       if (written) {
@@ -497,7 +497,7 @@ extern "C" {
       return file.stream ? F_data_not : F_stream_not;
     }
 
-    const f_array_length_t write_max = total > buffer.used ? buffer.used : total;
+    const f_number_unsigned_t write_max = total > buffer.used ? buffer.used : total;
 
     f_status_t status = F_none;
 
@@ -510,7 +510,7 @@ extern "C" {
       }
     }
     else {
-      f_array_length_t written_local = 0;
+      f_number_unsigned_t written_local = 0;
 
       status = private_f_file_stream_write_until(file, buffer, buffer.used, &written_local);
 
@@ -527,7 +527,7 @@ extern "C" {
 #endif // _di_f_file_stream_write_until_
 
 #ifndef _di_f_file_stream_write_range_
-  f_status_t f_file_stream_write_range(const f_file_t file, const f_string_static_t buffer, const f_string_range_t range, f_array_length_t * const written) {
+  f_status_t f_file_stream_write_range(const f_file_t file, const f_string_static_t buffer, const f_string_range_t range, f_number_unsigned_t * const written) {
 
     if (!file.stream || !buffer.used || range.start > range.stop || range.start >= buffer.used || !file.size_write) {
       if (written) {
@@ -537,7 +537,7 @@ extern "C" {
       return file.stream ? F_data_not : F_stream_not;
     }
 
-    const f_array_length_t write_max = (range.stop - range.start) + 1 > buffer.used ? buffer.used : (range.stop - range.start) + 1;
+    const f_number_unsigned_t write_max = (range.stop - range.start) + 1 > buffer.used ? buffer.used : (range.stop - range.start) + 1;
     const f_string_static_t buffer_adjusted = macro_f_string_static_t_initialize_1(buffer.string + range.start, 0, buffer.used - range.start);
 
     f_status_t status = F_none;
@@ -551,7 +551,7 @@ extern "C" {
       }
     }
     else {
-      f_array_length_t written_local = 0;
+      f_number_unsigned_t written_local = 0;
 
       status = private_f_file_stream_write_until(file, buffer_adjusted, write_max, &written_local);
 

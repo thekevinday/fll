@@ -51,7 +51,7 @@ void test__f_utf_map_multis_append_all__works(void **state) {
     assert_int_equal(destination.used, source.used);
     assert_int_equal(destination.size, source.used);
 
-    for (f_array_length_t i = 0; i < length_inner; ++i) {
+    for (f_number_unsigned_t i = 0; i < length_inner; ++i) {
 
       assert_int_equal(destination.array[i].name.used, source.array[i].name.used);
       assert_int_equal(destination.array[i].value.used, source.array[i].value.used);
@@ -64,7 +64,7 @@ void test__f_utf_map_multis_append_all__works(void **state) {
     } // for
   }
 
-  for (f_array_length_t i = 0; i < source.used; ++i) {
+  for (f_number_unsigned_t i = 0; i < source.used; ++i) {
 
     free((void *) source.array[i].name.string);
     free((void *) source.array[i].value.array[0].string);
@@ -72,7 +72,7 @@ void test__f_utf_map_multis_append_all__works(void **state) {
     free((void *) source.array[i].value.array);
   } // for
 
-  for (f_array_length_t i = 0; i < destination.used; ++i) {
+  for (f_number_unsigned_t i = 0; i < destination.used; ++i) {
 
     free((void *) destination.array[i].name.string);
     free((void *) destination.array[i].value.array[0].string);

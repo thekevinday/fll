@@ -139,7 +139,7 @@ extern "C" {
 
       CPU_ZERO_S(size, set);
 
-      for (f_array_length_t i = 0; i < as.affinity->used; ++i) {
+      for (f_number_unsigned_t i = 0; i < as.affinity->used; ++i) {
         CPU_SET_S(as.affinity->array[i], size, set);
       } // for
 
@@ -176,7 +176,7 @@ extern "C" {
     }
 
     if (as.limits) {
-      for (f_array_length_t i = 0; i < as.limits->used; ++i) {
+      for (f_number_unsigned_t i = 0; i < as.limits->used; ++i) {
 
         if (F_status_is_error(f_limit_process(id_child, as.limits->array[i].type, &as.limits->array[i].value, 0))) {
           result = &f_string_ascii_1_s;
@@ -311,7 +311,7 @@ extern "C" {
     if (parameter && parameter->environment) {
       clearenv();
 
-      for (f_array_length_t i = 0; i < parameter->environment->used; ++i) {
+      for (f_number_unsigned_t i = 0; i < parameter->environment->used; ++i) {
         f_environment_set(parameter->environment->array[i].name, parameter->environment->array[i].value, F_true);
       } // for
     }
@@ -493,7 +493,7 @@ extern "C" {
     if (parameter && parameter->environment) {
       clearenv();
 
-      for (f_array_length_t i = 0; i < parameter->environment->used; ++i) {
+      for (f_number_unsigned_t i = 0; i < parameter->environment->used; ++i) {
         f_environment_set(parameter->environment->array[i].name, parameter->environment->array[i].value, F_true);
       } // for
     }
@@ -562,12 +562,12 @@ extern "C" {
     }
 
     if (fixated_is) {
-      for (f_array_length_t i = 1; i < arguments.used; ++i) {
+      for (f_number_unsigned_t i = 1; i < arguments.used; ++i) {
         fixed_arguments[i] = arguments.array[i].string;
       } // for
     }
     else {
-      for (f_array_length_t i = 0; i < arguments.used; ++i) {
+      for (f_number_unsigned_t i = 0; i < arguments.used; ++i) {
         fixed_arguments[i + 1] = arguments.array[i].string;
       } // for
     }

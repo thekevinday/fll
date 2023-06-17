@@ -91,7 +91,7 @@ void test__f_accountss_append_all__works(void **state) {
     assert_int_equal(destination.used, source.used);
     assert_int_equal(destination.size, source.used);
 
-    for (f_array_length_t i = 0; i < destination.used; ++i) {
+    for (f_number_unsigned_t i = 0; i < destination.used; ++i) {
 
       assert_int_equal(destination.array[i].used, length_inner);
         assert_int_equal(destination.array[i].size, length_inner);
@@ -110,11 +110,11 @@ void test__f_accountss_append_all__works(void **state) {
     } // for
   }
 
-  for (f_array_length_t i = 0; i < source.used; ++i) {
+  for (f_number_unsigned_t i = 0; i < source.used; ++i) {
     free((void *) source.array[i].array);
   } // for
 
-  for (f_array_length_t i = 0; i < destination.used; ++i) {
+  for (f_number_unsigned_t i = 0; i < destination.used; ++i) {
     free((void *) destination.array[i].array);
   } // for
 

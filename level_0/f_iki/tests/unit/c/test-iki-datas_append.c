@@ -7,19 +7,19 @@ extern "C" {
 
 void test__f_iki_datas_append__works(void **state) {
 
-  const f_array_length_t length = 5;
+  const f_number_unsigned_t length = 5;
   f_iki_data_t source = f_iki_data_t_initialize;
   f_iki_datas_t destination = f_iki_datas_t_initialize;
 
   {
-    f_array_length_t i = 1;
+    f_number_unsigned_t i = 1;
 
     f_status_t status = f_string_ranges_resize(length, &source.content);
 
     assert_int_equal(status, F_none);
     assert_int_equal(source.content.size, length);
 
-    status = f_array_lengths_resize(length, &source.delimits);
+    status = f_number_unsigneds_resize(length, &source.delimits);
 
     assert_int_equal(status, F_none);
     assert_int_equal(source.delimits.size, length);
@@ -67,7 +67,7 @@ void test__f_iki_datas_append__works(void **state) {
     assert_int_equal(destination.array[0].variable.used, source.variable.used);
     assert_int_equal(destination.array[0].vocabulary.used, source.vocabulary.used);
 
-    for (f_array_length_t i = 0; i < length; ++i) {
+    for (f_number_unsigned_t i = 0; i < length; ++i) {
 
       assert_int_equal(destination.array[0].content.array[i].start, source.content.array[i].start);
       assert_int_equal(destination.array[0].content.array[i].stop, source.content.array[i].stop);

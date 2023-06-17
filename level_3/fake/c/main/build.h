@@ -104,7 +104,7 @@ extern "C" {
  * @see fll_program_print_signal_received()
  */
 #ifndef _di_fake_build_copy_
-  extern void fake_build_copy(fake_data_t * const data, const f_mode_t mode, const f_string_static_t label, const f_string_static_t source, const f_string_static_t destination, const f_string_statics_t files, const f_string_static_t file_stage, const f_array_length_t perserve_offset);
+  extern void fake_build_copy(fake_data_t * const data, const f_mode_t mode, const f_string_static_t label, const f_string_static_t source, const f_string_static_t destination, const f_string_statics_t files, const f_string_static_t file_stage, const f_number_unsigned_t perserve_offset);
 #endif // _di_fake_build_copy_
 
 /**

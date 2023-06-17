@@ -35,7 +35,7 @@ extern "C" {
  * @see f_uint64s_decimate_by()
  */
 #if !defined(_di_f_uint64s_adjust_) || !defined(_di_f_uint64s_decimate_by_)
-  extern f_status_t private_f_uint64s_adjust(const f_array_length_t length, f_uint64s_t *uint64s) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_uint64s_adjust(const f_number_unsigned_t length, f_uint64s_t *uint64s) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_uint64s_adjust_) || !defined(_di_f_uint64s_decimate_by_)
 
 /**
@@ -107,7 +107,7 @@ extern "C" {
  * @see f_uint64ss_append()
  */
 #if !defined(_di_f_uint64s_resize_) || !defined(_di_f_uint64s_append_) || !defined(_di_f_uint64s_decrease_by_) || !defined(_di_f_uint64ss_append_)
-  extern f_status_t private_f_uint64s_resize(const f_array_length_t length, f_uint64s_t *uint64s) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_uint64s_resize(const f_number_unsigned_t length, f_uint64s_t *uint64s) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_uint64s_resize_) || !defined(_di_f_uint64s_append_) || !defined(_di_f_uint64s_decrease_by_) || !defined(_di_f_uint64ss_append_)
 
 /**
@@ -135,7 +135,7 @@ extern "C" {
  * @see f_uint64ss_decimate_by()
  */
 #if !defined(_di_f_uint64ss_adjust_) || !defined(_di_f_uint64ss_decimate_by_)
-  extern f_status_t private_f_uint64ss_adjust(const f_array_length_t length, f_uint64ss_t *uint64ss) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_uint64ss_adjust(const f_number_unsigned_t length, f_uint64ss_t *uint64ss) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_uint64ss_adjust_) || !defined(_di_f_uint64ss_decimate_by_)
 
 /**
@@ -165,7 +165,7 @@ extern "C" {
  * @see f_uint64ss_resize()
  */
 #if !defined(_di_f_uint64ss_decrease_by_) || !defined(_di_f_uint64ss_increase_) || !defined(_di_f_uint64ss_increase_by_) || !defined(_di_f_uint64ss_resize_)
-  extern f_status_t private_f_uint64ss_resize(const f_array_length_t length, f_uint64ss_t *uint64ss) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_uint64ss_resize(const f_number_unsigned_t length, f_uint64ss_t *uint64ss) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_uint64ss_decrease_by_) || !defined(_di_f_uint64ss_increase_) || !defined(_di_f_uint64ss_increase_by_) || !defined(_di_f_uint64ss_resize_)
 
 #ifdef __cplusplus

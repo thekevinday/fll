@@ -153,7 +153,7 @@ extern "C" {
  * @see f_string_dynamics_increase()
  */
 #ifndef _di_fll_execute_arguments_add_parameter_set_
-  extern f_status_t fll_execute_arguments_add_parameter_set(const f_string_static_t prefix[], const f_string_static_t name[], const f_string_static_t value[], const f_array_length_t size, f_string_dynamics_t * const arguments);
+  extern f_status_t fll_execute_arguments_add_parameter_set(const f_string_static_t prefix[], const f_string_static_t name[], const f_string_static_t value[], const f_number_unsigned_t size, f_string_dynamics_t * const arguments);
 #endif // _di_fll_execute_arguments_add_parameter_set_
 
 /**
@@ -181,7 +181,7 @@ extern "C" {
  * @see f_string_dynamics_increase()
  */
 #ifndef _di_fll_execute_arguments_add_set_
-  extern f_status_t fll_execute_arguments_add_set(const f_string_static_t source[], const f_array_length_t size, f_string_dynamics_t *arguments);
+  extern f_status_t fll_execute_arguments_add_set(const f_string_static_t source[], const f_number_unsigned_t size, f_string_dynamics_t *arguments);
 #endif // _di_fll_execute_arguments_add_set_
 
 /**

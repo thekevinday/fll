@@ -5,7 +5,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fake_make_operate_validate_
-  void fake_make_operate_validate(fake_make_data_t * const data_make, const f_string_range_t section_name, fake_state_process_t * const state_process, f_array_lengths_t * const section_stack) {
+  void fake_make_operate_validate(fake_make_data_t * const data_make, const f_string_range_t section_name, fake_state_process_t * const state_process, f_number_unsigneds_t * const section_stack) {
 
     if (!data_make || !data_make->main) return;
     if (F_status_is_error(data_make->main->setting.state.status)) return;
@@ -98,7 +98,7 @@ extern "C" {
     if (!name.used) return F_data_not;
     if (!isalpha(name.string[0]) && name.string[0] != '_') return F_false;
 
-    for (f_array_length_t i = 1; i < name.used; ++i) {
+    for (f_number_unsigned_t i = 1; i < name.used; ++i) {
       if (!isalnum(name.string[i]) && name.string[i] != '_') return F_false;
     } // for
 

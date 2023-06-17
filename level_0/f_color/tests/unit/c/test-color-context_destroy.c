@@ -7,7 +7,7 @@ extern "C" {
 
 void test__f_color_context_destroy__frees_memory(void **state) {
 
-  const f_array_length_t size = 3;
+  const f_number_unsigned_t size = 3;
 
   f_color_context_t context = f_color_context_t_initialize;
 

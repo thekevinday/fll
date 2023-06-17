@@ -40,7 +40,7 @@ extern "C" {
  *   F_utf_not (with error bit) if unicode is an invalid Unicode character.
  */
 #ifndef _di_f_utf_char_to_char_
-  extern f_status_t f_utf_char_to_char(const f_utf_char_t utf_character, f_string_t *character, f_array_length_t *width_max);
+  extern f_status_t f_utf_char_to_char(const f_utf_char_t utf_character, f_string_t *character, f_number_unsigned_t *width_max);
 #endif // _di_f_utf_char_to_char_
 
 /**
@@ -115,7 +115,7 @@ extern "C" {
  *   F_valid_not (with error bit) if string is not a valid Unicode string.
  */
 #ifndef _di_f_utf_character_unicode_string_to_
-  extern f_status_t f_utf_character_unicode_string_to(const f_utf_string_t string, const f_array_length_t length, f_utf_char_t *codepoint);
+  extern f_status_t f_utf_character_unicode_string_to(const f_utf_string_t string, const f_number_unsigned_t length, f_utf_char_t *codepoint);
 #endif // _di_f_utf_character_unicode_string_to_
 
 /**
@@ -140,7 +140,7 @@ extern "C" {
  *   F_utf_not (with error bit) if unicode is an invalid Unicode character.
  */
 #ifndef _di_f_utf_char_to_character_
-  extern f_status_t f_utf_char_to_character(const f_string_t character, const f_array_length_t width_max, f_utf_char_t *character_utf);
+  extern f_status_t f_utf_char_to_character(const f_string_t character, const f_number_unsigned_t width_max, f_utf_char_t *character_utf);
 #endif // _di_f_utf_char_to_character_
 
 /**
@@ -167,7 +167,7 @@ extern "C" {
  *   F_utf_not (with error bit) if unicode is an invalid Unicode character.
  */
 #ifndef _di_f_utf_unicode_from_
-  extern f_status_t f_utf_unicode_from(const uint32_t unicode, const f_array_length_t width_max, f_string_t *character);
+  extern f_status_t f_utf_unicode_from(const uint32_t unicode, const f_number_unsigned_t width_max, f_string_t *character);
 #endif // _di_f_utf_unicode_from_
 
 /**
@@ -195,7 +195,7 @@ extern "C" {
  * @see f_utf_character_is_valid()
  */
 #ifndef _di_f_utf_unicode_to_
-  extern f_status_t f_utf_unicode_to(const f_string_t character, const f_array_length_t width_max, uint32_t *unicode);
+  extern f_status_t f_utf_unicode_to(const f_string_t character, const f_number_unsigned_t width_max, uint32_t *unicode);
 #endif // _di_f_utf_unicode_to_
 
 /**
@@ -222,7 +222,7 @@ extern "C" {
  *   F_valid_not (with error bit) if string is not a valid Unicode string.
  */
 #ifndef _di_f_utf_unicode_string_to_
-  extern f_status_t f_utf_unicode_string_to(const f_string_t string, const f_array_length_t length, uint32_t *unicode);
+  extern f_status_t f_utf_unicode_string_to(const f_string_t string, const f_number_unsigned_t length, uint32_t *unicode);
 #endif // _di_f_utf_unicode_string_to_
 
 #ifdef __cplusplus

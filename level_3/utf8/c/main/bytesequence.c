@@ -66,8 +66,8 @@ extern "C" {
     bool next = F_true;
     uint8_t mode_codepoint = utf8_codepoint_mode_ready_e;
 
-    f_array_length_t i = 0;
-    f_array_length_t j = 0;
+    f_number_unsigned_t i = 0;
+    f_number_unsigned_t j = 0;
 
     f_char_t block[4] = { 0, 0, 0, 0 };
     f_string_static_t sequence = macro_f_string_static_t_initialize_1(block, 0, 4);

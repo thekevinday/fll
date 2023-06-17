@@ -54,7 +54,7 @@ void test__f_path_directory_cleanup__works(void **state) {
 
   f_string_dynamic_t destination = f_string_dynamic_t_initialize;
 
-  for (f_array_length_t i = 0; i < 14; ++i, destination.used = 0) {
+  for (f_number_unsigned_t i = 0; i < 14; ++i, destination.used = 0) {
 
     const f_status_t status = f_path_directory_cleanup(paths[i], &destination);
 

@@ -50,9 +50,9 @@ void test__f_utf_tripless_append_all__works(void **state) {
     assert_int_equal(status, F_none);
     assert_int_equal(destination.used, source.used);
 
-    for (f_array_length_t j = 0; j < length_sources_set; ++j) {
+    for (f_number_unsigned_t j = 0; j < length_sources_set; ++j) {
 
-      for (f_array_length_t i = 0; i < length_sources; ++i) {
+      for (f_number_unsigned_t i = 0; i < length_sources; ++i) {
 
         assert_int_equal(destination.array[j].array[i].a.used, sources_set_array[j].array[i].a.used);
         assert_int_equal(destination.array[j].array[i].b.used, sources_set_array[j].array[i].b.used);
@@ -65,9 +65,9 @@ void test__f_utf_tripless_append_all__works(void **state) {
     } // for
   }
 
-  for (f_array_length_t j = 0; j < destination.used; ++j) {
+  for (f_number_unsigned_t j = 0; j < destination.used; ++j) {
 
-    for (f_array_length_t i = 0; i < destination.array[j].used; ++i) {
+    for (f_number_unsigned_t i = 0; i < destination.array[j].used; ++i) {
 
       free((void *) destination.array[j].array[i].a.string);
       free((void *) destination.array[j].array[i].b.string);

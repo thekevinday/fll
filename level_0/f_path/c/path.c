@@ -73,7 +73,7 @@ extern "C" {
       return private_f_path_real(buffer, path);
     }
 
-    const f_array_length_t length = strnlen(buffer, F_path_length_max_d);
+    const f_number_unsigned_t length = strnlen(buffer, F_path_length_max_d);
 
     {
       path->used = 0;
@@ -113,8 +113,8 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     }
 
-    f_array_length_t i = 0;
-    f_array_length_t j = 0;
+    f_number_unsigned_t i = 0;
+    f_number_unsigned_t j = 0;
 
     while (i < argument.used) {
 
@@ -157,7 +157,7 @@ extern "C" {
       return F_data_not;
     }
 
-    for (f_array_length_t i = 0; i < path.used; ++i) {
+    for (f_number_unsigned_t i = 0; i < path.used; ++i) {
       if (path.string[i] == f_path_separator_s.string[0]) return true;
     } // for
 
@@ -172,7 +172,7 @@ extern "C" {
       return F_data_not;
     }
 
-    f_array_length_t i = 0;
+    f_number_unsigned_t i = 0;
 
     for (; i < path.used; ++i) {
       if (path.string[i]) break;
@@ -192,7 +192,7 @@ extern "C" {
       return F_data_not;
     }
 
-    f_array_length_t i = 0;
+    f_number_unsigned_t i = 0;
 
     for (; i < path.used; ++i) {
       if (path.string[i]) break;
@@ -212,7 +212,7 @@ extern "C" {
       return F_data_not;
     }
 
-    f_array_length_t i = 0;
+    f_number_unsigned_t i = 0;
 
     for (; i < path.used; ++i) {
       if (path.string[i]) break;

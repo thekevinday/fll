@@ -15,7 +15,7 @@ void test__f_utf_is_subscript__works(void **state) {
     f_utf_char_t sequence = 0;
     ssize_t bytes = 0;
 
-    f_array_length_t line = 0;
+    f_number_unsigned_t line = 0;
 
     do {
       bytes = data__bytesequence_get_line(file, &sequence);

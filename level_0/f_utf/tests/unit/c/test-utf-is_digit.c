@@ -18,7 +18,7 @@ void test__f_utf_is_digit__works(void **state) {
     ssize_t bytes = 0;
     ssize_t bytes_number = 0;
     uint64_t number = 0;
-    f_array_length_t line = 0;
+    f_number_unsigned_t line = 0;
 
     do {
       bytes = data__bytesequence_get_line(file, &sequence);

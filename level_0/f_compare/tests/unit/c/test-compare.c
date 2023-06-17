@@ -141,7 +141,7 @@ f_status_t test_convert_dynamic_to_utf(const f_string_static_t dynamic, f_utf_st
 
   utf->used = 0;
 
-  for (f_array_length_t i = 0; i < dynamic.used; ++i, ++utf->used) {
+  for (f_number_unsigned_t i = 0; i < dynamic.used; ++i, ++utf->used) {
 
     status = f_utf_char_to_character(dynamic.string + i, dynamic.used - i, &utf->string[i]);
     if (F_status_is_error(status)) return status;

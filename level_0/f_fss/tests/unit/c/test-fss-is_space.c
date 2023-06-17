@@ -39,7 +39,7 @@ void test__f_fss_is_space__works(void **state) {
     F_false,
   };
 
-  for (f_array_length_t i = 0; i < 12; ++i) {
+  for (f_number_unsigned_t i = 0; i < 12; ++i) {
 
     const f_string_range_t range = macro_f_string_range_t_initialize_1(0, tests[i].used - 1);
 

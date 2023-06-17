@@ -66,7 +66,7 @@ void test__f_fss_skip_past_delimit__works(void **state) {
     macro_f_string_static_t_initialize_1("\0\0\0test\0\0", 0, 9),
   };
 
-  f_array_length_t expects[] = {
+  f_number_unsigned_t expects[] = {
     0,
     1,
     3,

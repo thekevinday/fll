@@ -20,7 +20,7 @@ extern "C" {
     if (F_status_is_error(status)) return;
 
     {
-      f_array_length_t choice = 0;
+      f_number_unsigned_t choice = 0;
       f_uint16s_t choices = f_uint16s_t_initialize;
 
       // Identify and prioritize "color context" parameters.
@@ -103,7 +103,7 @@ extern "C" {
         status = F_status_set_error(F_parameter);
       }
       else if (main->parameters.array[fss_identify_parameter_line_e].result & f_console_result_value_e) {
-        const f_array_length_t index = main->parameters.array[fss_identify_parameter_line_e].values.array[main->parameters.array[fss_identify_parameter_line_e].values.used - 1];
+        const f_number_unsigned_t index = main->parameters.array[fss_identify_parameter_line_e].values.array[main->parameters.array[fss_identify_parameter_line_e].values.used - 1];
 
         status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, data.argv[index], &data.line);
 
@@ -143,8 +143,8 @@ extern "C" {
         status = F_status_set_error(F_parameter);
       }
       else if (main->parameters.array[fss_identify_parameter_name_e].result & f_console_result_value_e) {
-        const f_array_length_t index = main->parameters.array[fss_identify_parameter_name_e].values.array[main->parameters.array[fss_identify_parameter_name_e].values.used - 1];
-        const f_array_length_t length = data.argv[index].used;
+        const f_number_unsigned_t index = main->parameters.array[fss_identify_parameter_name_e].values.array[main->parameters.array[fss_identify_parameter_name_e].values.used - 1];
+        const f_number_unsigned_t length = data.argv[index].used;
         const f_string_range_t range = macro_f_string_range_t_initialize_2(length);
 
         if (length == 0) {
@@ -168,7 +168,7 @@ extern "C" {
 
         if (F_status_is_error_not(status)) {
 
-          for (f_array_length_t i = range.start; i <= range.stop; ++i) {
+          for (f_number_unsigned_t i = range.start; i <= range.stop; ++i) {
 
             status = f_utf_is_word_dash(data.argv[index].string + i, length, F_true);
 
@@ -216,7 +216,7 @@ extern "C" {
     }
 
     if (F_status_is_error_not(status)) {
-      for (f_array_length_t i = 0; i < main->parameters.remaining.used; ++i) {
+      for (f_number_unsigned_t i = 0; i < main->parameters.remaining.used; ++i) {
 
         if (!((++main->signal_check) % fss_identify_signal_check_d)) {
           if (fll_program_standard_signal_received(&main->program)) {

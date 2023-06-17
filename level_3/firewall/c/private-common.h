@@ -18,11 +18,11 @@ typedef struct {
   bool is_stop;
   bool is_lock;
 
-  f_array_length_t device;
+  f_number_unsigned_t device;
 
   f_string_dynamic_t buffer;
-  f_array_length_t chain;
-  f_array_lengths_t chain_ids;
+  f_number_unsigned_t chain;
+  f_number_unsigneds_t chain_ids;
   f_fss_objects_t chain_objects;
   f_fss_contents_t chain_contents;
   f_fss_objects_t rule_objects;
@@ -38,7 +38,7 @@ typedef struct {
     0, \
     f_string_dynamic_t_initialize, \
     0, \
-    f_array_lengths_t_initialize, \
+    f_number_unsigneds_t_initialize, \
     f_fss_objects_t_initialize, \
     f_fss_contents_t_initialize, \
     f_fss_objects_t_initialize, \
@@ -50,9 +50,9 @@ typedef struct {
   bool has_stop;
   bool has_lock;
 
-  f_array_length_t main_at;
-  f_array_length_t stop_at;
-  f_array_length_t lock_at;
+  f_number_unsigned_t main_at;
+  f_number_unsigned_t stop_at;
+  f_number_unsigned_t lock_at;
 } firewall_reserved_chains_t;
 
 #define firewall_reserved_chains_t_initialize \

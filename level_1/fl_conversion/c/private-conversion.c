@@ -6,13 +6,13 @@ extern "C" {
 #endif
 
 #if !defined(_di_fl_conversion_dynamic_partial_to_binary_signed_) || !defined(_di_fl_conversion_dynamic_partial_to_signed_detect_) || !defined(_di_fl_conversion_dynamic_to_binary_signed_) || !defined(_di_fl_conversion_dynamic_to_signed_detect_)
-  f_status_t private_fl_conversion_dynamic_to_binary_signed(const uint16_t flag, const f_string_t string, const f_array_length_t length, f_number_signed_t * const number) {
+  f_status_t private_fl_conversion_dynamic_to_binary_signed(const uint16_t flag, const f_string_t string, const f_number_unsigned_t length, f_number_signed_t * const number) {
 
     uint8_t digits = 0;
     uint8_t digit = 0;
     f_number_unsigned_t converted = 0;
 
-    for (f_array_length_t i = 0; i < length; ++i) {
+    for (f_number_unsigned_t i = 0; i < length; ++i) {
 
       if (string[i] == f_string_ascii_period_s.string[0]) {
         return F_status_set_error(F_number_decimal);
@@ -88,13 +88,13 @@ extern "C" {
 #endif // !defined(_di_fl_conversion_dynamic_partial_to_binary_signed_) || !defined(_di_fl_conversion_dynamic_partial_to_signed_detect_) || !defined(_di_fl_conversion_dynamic_to_binary_signed_) || !defined(_di_fl_conversion_dynamic_to_signed_detect_)
 
 #if !defined(_di_fl_conversion_dynamic_partial_to_binary_unsigned_) || !defined(_di_fl_conversion_dynamic_partial_to_unsigned_detect_) || !defined(_di_fl_conversion_dynamic_to_binary_unsigned_) || !defined(_di_fl_conversion_dynamic_to_unsigned_detect_)
-  f_status_t private_fl_conversion_dynamic_to_binary_unsigned(const uint16_t flag, const f_string_t string, const f_array_length_t length, f_number_unsigned_t * const number) {
+  f_status_t private_fl_conversion_dynamic_to_binary_unsigned(const uint16_t flag, const f_string_t string, const f_number_unsigned_t length, f_number_unsigned_t * const number) {
 
     uint8_t digits = 0;
     uint8_t digit = 0;
     f_number_unsigned_t converted = 0;
 
-    for (f_array_length_t i = 0; i < length; ++i) {
+    for (f_number_unsigned_t i = 0; i < length; ++i) {
 
       if (string[i] == f_string_ascii_period_s.string[0]) {
         return F_status_set_error(F_number_decimal);
@@ -141,7 +141,7 @@ extern "C" {
 #endif // !defined(_di_fl_conversion_dynamic_partial_to_binary_unsigned_) || !defined(_di_fl_conversion_dynamic_partial_to_unsigned_detect_) || !defined(_di_fl_conversion_dynamic_to_binary_unsigned_) || !defined(_di_fl_conversion_dynamic_to_unsigned_detect_)
 
 #if !defined(_di_fl_conversion_dynamic_partial_to_decimal_signed_) || !defined(_di_fl_conversion_dynamic_partial_to_signed_detect_) || !defined(_di_fl_conversion_dynamic_to_decimal_signed_) || !defined(_di_fl_conversion_dynamic_to_signed_detect_)
-  f_status_t private_fl_conversion_dynamic_to_base_signed(const fl_conversion_data_t data, const f_string_t string, const f_array_length_t length, f_number_signed_t * const number) {
+  f_status_t private_fl_conversion_dynamic_to_base_signed(const fl_conversion_data_t data, const f_string_t string, const f_number_unsigned_t length, f_number_signed_t * const number) {
 
     uint8_t digits = 0;
     uint8_t digit = 0;
@@ -162,7 +162,7 @@ extern "C" {
       character_to_digit = f_conversion_character_to_octal;
     }
 
-    for (f_array_length_t i = 0; i < length; ++i) {
+    for (f_number_unsigned_t i = 0; i < length; ++i) {
 
       if (string[i] == f_string_ascii_period_s.string[0]) {
         return F_status_set_error(F_number_decimal);
@@ -237,7 +237,7 @@ extern "C" {
 #endif // !defined(_di_fl_conversion_dynamic_partial_to_decimal_signed_) || !defined(_di_fl_conversion_dynamic_partial_to_signed_detect_) || !defined(_di_fl_conversion_dynamic_to_decimal_signed_) || !defined(_di_fl_conversion_dynamic_to_signed_detect_)
 
 #if !defined(_di_fl_conversion_dynamic_partial_to_decimal_unsigned_) || !defined(_di_fl_conversion_dynamic_partial_to_unsigned_detect_) || !defined(_di_fl_conversion_dynamic_to_decimal_unsigned_) || !defined(_di_fl_conversion_dynamic_to_unsigned_detect_)
-  f_status_t private_fl_conversion_dynamic_to_base_unsigned(const fl_conversion_data_t data, const f_string_t string, const f_array_length_t length, f_number_unsigned_t * const number) {
+  f_status_t private_fl_conversion_dynamic_to_base_unsigned(const fl_conversion_data_t data, const f_string_t string, const f_number_unsigned_t length, f_number_unsigned_t * const number) {
 
     uint8_t digits = 0;
     uint8_t digit = 0;
@@ -258,7 +258,7 @@ extern "C" {
       character_to_digit = f_conversion_character_to_octal;
     }
 
-    for (f_array_length_t i = 0; i < length; ++i) {
+    for (f_number_unsigned_t i = 0; i < length; ++i) {
 
       if (string[i] == f_string_ascii_period_s.string[0]) {
         return F_status_set_error(F_number_decimal);
@@ -315,17 +315,17 @@ extern "C" {
 #endif // !defined(_di_fl_conversion_dynamic_partial_to_decimal_unsigned_) || !defined(_di_fl_conversion_dynamic_partial_to_unsigned_detect_) || !defined(_di_fl_conversion_dynamic_to_decimal_unsigned_) || !defined(_di_fl_conversion_dynamic_to_unsigned_detect_)
 
 #if !defined(_di_fl_conversion_dynamic_to_signed_detect_) || !defined(_di_fl_conversion_dynamic_partial_to_signed_detect_)
-  f_status_t private_fl_conversion_dynamic_to_signed_detect(const uint16_t flag, const f_string_t string, const f_array_length_t length, f_number_signed_t * const number) {
+  f_status_t private_fl_conversion_dynamic_to_signed_detect(const uint16_t flag, const f_string_t string, const f_number_unsigned_t length, f_number_signed_t * const number) {
 
     uint8_t width = 0;
-    f_array_length_t width_max = 0;
+    f_number_unsigned_t width_max = 0;
     uint8_t mode = 0;
     int8_t vector = 0; // 0 for assumed positive, 1 for explicit positive, -1 for negative.
-    f_array_length_t j = 0;
-    f_array_length_t offset = 0;
+    f_number_unsigned_t j = 0;
+    f_number_unsigned_t offset = 0;
     f_status_t status = F_none;
 
-    for (f_array_length_t i = 0; i < length; ++i) {
+    for (f_number_unsigned_t i = 0; i < length; ++i) {
 
       width = macro_f_utf_byte_width_is(string[i]);
 
@@ -472,17 +472,17 @@ extern "C" {
 #endif // !defined(_di_fl_conversion_dynamic_to_signed_detect_) || !defined(_di_fl_conversion_dynamic_partial_to_signed_detect_)
 
 #if !defined(_di_fl_conversion_dynamic_to_unsigned_detect_) || !defined(_di_fl_conversion_dynamic_partial_to_unsigned_detect_)
-  f_status_t private_fl_conversion_dynamic_to_unsigned_detect(const uint16_t flag, const f_string_t string, const f_array_length_t length, f_number_unsigned_t * const number) {
+  f_status_t private_fl_conversion_dynamic_to_unsigned_detect(const uint16_t flag, const f_string_t string, const f_number_unsigned_t length, f_number_unsigned_t * const number) {
 
     uint8_t width = 0;
-    f_array_length_t width_max = 0;
+    f_number_unsigned_t width_max = 0;
     uint8_t mode = 0;
-    f_array_length_t j = 0;
-    f_array_length_t offset = 0;
+    f_number_unsigned_t j = 0;
+    f_number_unsigned_t offset = 0;
     f_status_t status = F_none;
     int8_t sign_found = 0;
 
-    for (f_array_length_t i = 0; i < length; ++i) {
+    for (f_number_unsigned_t i = 0; i < length; ++i) {
 
       width = macro_f_utf_byte_width_is(string[i]);
 

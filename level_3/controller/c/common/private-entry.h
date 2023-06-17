@@ -74,7 +74,7 @@ extern "C" {
     uint8_t code;
     uint8_t flag;
 
-    f_array_length_t line;
+    f_number_unsigned_t line;
     f_number_unsigned_t number;
 
     f_status_t status;
@@ -104,8 +104,8 @@ extern "C" {
   typedef struct {
     controller_entry_action_t *array;
 
-    f_array_length_t size;
-    f_array_length_t used;
+    f_number_unsigned_t size;
+    f_number_unsigned_t used;
   } controller_entry_actions_t;
 
   #define controller_entry_actions_t_initialize { \
@@ -124,7 +124,7 @@ extern "C" {
  */
 #ifndef _di_controller_entry_item_t_
   typedef struct {
-    f_array_length_t line;
+    f_number_unsigned_t line;
     f_string_dynamic_t name;
 
     controller_entry_actions_t actions;
@@ -149,8 +149,8 @@ extern "C" {
   typedef struct {
     controller_entry_item_t *array;
 
-    f_array_length_t size;
-    f_array_length_t used;
+    f_number_unsigned_t size;
+    f_number_unsigned_t used;
   } controller_entry_items_t;
 
   #define controller_entry_items_t_initialize { \
@@ -310,7 +310,7 @@ extern "C" {
  * @see f_memory_resize()
  */
 #ifndef _di_controller_entry_actions_increase_by_
-  extern f_status_t controller_entry_actions_increase_by(const f_array_length_t amount, controller_entry_actions_t * const actions) F_attribute_visibility_internal_d;
+  extern f_status_t controller_entry_actions_increase_by(const f_number_unsigned_t amount, controller_entry_actions_t * const actions) F_attribute_visibility_internal_d;
 #endif // _di_controller_entry_actions_increase_by_
 
 /**
@@ -357,7 +357,7 @@ extern "C" {
  * @see f_memory_resize()
  */
 #ifndef _di_controller_entry_items_increase_by_
-  extern f_status_t controller_entry_items_increase_by(const f_array_length_t amount, controller_entry_items_t * const items) F_attribute_visibility_internal_d;
+  extern f_status_t controller_entry_items_increase_by(const f_number_unsigned_t amount, controller_entry_items_t * const items) F_attribute_visibility_internal_d;
 #endif // _di_controller_entry_items_increase_by_
 
 #ifdef __cplusplus

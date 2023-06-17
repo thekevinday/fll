@@ -108,7 +108,7 @@ extern "C" {
 
   typedef struct {
     uint8_t type;
-    f_array_length_t line;
+    f_number_unsigned_t line;
     f_status_t status;
 
     f_string_dynamics_t parameters;
@@ -135,8 +135,8 @@ extern "C" {
   typedef struct {
     controller_rule_action_t *array;
 
-    f_array_length_t size;
-    f_array_length_t used;
+    f_number_unsigned_t size;
+    f_number_unsigned_t used;
   } controller_rule_actions_t;
 
   #define controller_rule_actions_t_initialize { \
@@ -166,7 +166,7 @@ extern "C" {
   typedef struct {
     uint8_t type;
     uint8_t with;
-    f_array_length_t line;
+    f_number_unsigned_t line;
 
     f_string_dynamic_t pid_file;
     controller_rule_rerun_t reruns[controller_rule_action_execute_type__enum_size_e];
@@ -205,8 +205,8 @@ extern "C" {
   typedef struct {
     controller_rule_item_t *array;
 
-    f_array_length_t size;
-    f_array_length_t used;
+    f_number_unsigned_t size;
+    f_number_unsigned_t used;
   } controller_rule_items_t;
 
   #define controller_rule_items_initialize { \
@@ -252,8 +252,8 @@ extern "C" {
   typedef struct {
     controller_rule_on_t *array;
 
-    f_array_length_t size;
-    f_array_length_t used;
+    f_number_unsigned_t size;
+    f_number_unsigned_t used;
   } controller_rule_ons_t;
 
   #define controller_rule_ons_t_initialize { \
@@ -443,8 +443,8 @@ extern "C" {
   typedef struct {
     controller_rule_t *array;
 
-    f_array_length_t size;
-    f_array_length_t used;
+    f_number_unsigned_t size;
+    f_number_unsigned_t used;
   } controller_rules_t;
 
   #define controller_rules_t_initialize { \
@@ -496,7 +496,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_controller_rule_actions_increase_by_
-  extern f_status_t controller_rule_actions_increase_by(const f_array_length_t amount, controller_rule_actions_t * const actions) F_attribute_visibility_internal_d;
+  extern f_status_t controller_rule_actions_increase_by(const f_number_unsigned_t amount, controller_rule_actions_t * const actions) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_actions_increase_by_
 
 /**
@@ -574,7 +574,7 @@ extern "C" {
 /**
  * Increase the size of the Rule array, but only if necessary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param ons
@@ -611,7 +611,7 @@ extern "C" {
  * @see f_memory_resize()
  */
 #ifndef _di_controller_rule_ons_resize_
-  extern f_status_t controller_rule_ons_resize(const f_array_length_t length, controller_rule_ons_t * const ons) F_attribute_visibility_internal_d;
+  extern f_status_t controller_rule_ons_resize(const f_number_unsigned_t length, controller_rule_ons_t * const ons) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_ons_resize_
 
 /**
@@ -629,7 +629,7 @@ extern "C" {
 /**
  * Increase the size of the Rule array, but only if necessary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param rules
@@ -666,7 +666,7 @@ extern "C" {
  * @see f_memory_resize()
  */
 #ifndef _di_controller_rules_resize_
-  extern f_status_t controller_rules_resize(const f_array_length_t length, controller_rules_t * const rules) F_attribute_visibility_internal_d;
+  extern f_status_t controller_rules_resize(const f_number_unsigned_t length, controller_rules_t * const rules) F_attribute_visibility_internal_d;
 #endif // _di_controller_rules_resize_
 
 #ifdef __cplusplus

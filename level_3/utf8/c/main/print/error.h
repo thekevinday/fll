@@ -150,7 +150,7 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_utf8_print_error_parameter_file_name_empty_
-  extern f_status_t utf8_print_error_parameter_file_name_empty(fl_print_t * const print, const f_array_length_t index);
+  extern f_status_t utf8_print_error_parameter_file_name_empty(fl_print_t * const print, const f_number_unsigned_t index);
 #endif // _di_utf8_print_error_parameter_file_name_empty_
 
 /**

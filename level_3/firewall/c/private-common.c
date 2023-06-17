@@ -23,7 +23,7 @@ void firewall_print_debug_tool(const fl_print_t output, const f_string_static_t 
 
   fl_print_format("%[%r", output.to, output.context, tool);
 
-  for (f_array_length_t i = 0; i < arguments.used; ++i) {
+  for (f_number_unsigned_t i = 0; i < arguments.used; ++i) {
     fl_print_format(" %Q", output.to, arguments.array[i]);
   } // for
 
@@ -62,7 +62,7 @@ void firewall_print_error_on_operation(const fl_print_t output, const f_string_s
   fl_print_format("%r%[%QFailed to perform requested %r operation:%]", output.to, f_string_eol_s, output.context, output.prefix, tool, output.context);
   fl_print_format("%r  %[%r", output.to, f_string_eol_s, output.context, tool);
 
-  for (f_array_length_t i = 0; i < arguments.used; ++i) {
+  for (f_number_unsigned_t i = 0; i < arguments.used; ++i) {
     fl_print_format(" %Q", output.to, arguments.array[i]);
   } // for
 

@@ -19,7 +19,7 @@ extern "C" {
     f_status_t status = F_none;
 
     unsigned short width = 0;
-    f_array_length_t width_max = 0;
+    f_number_unsigned_t width_max = 0;
 
     while (range->start <= range->stop && range->start < buffer.used) {
 
@@ -72,7 +72,7 @@ extern "C" {
     f_status_t status = F_none;
     unsigned short width = 0;
 
-    f_array_length_t width_max = (range->stop - range->start) + 1;
+    f_number_unsigned_t width_max = (range->stop - range->start) + 1;
 
     while (buffer.string[range->start] == placeholder || (status = f_utf_is_graph(buffer.string + range->start, width_max)) == F_false) {
 
@@ -121,7 +121,7 @@ extern "C" {
     f_status_t status = F_none;
     unsigned short width = 0;
 
-    f_array_length_t width_max = (range->stop - range->start) + 1;
+    f_number_unsigned_t width_max = (range->stop - range->start) + 1;
 
     while (buffer.string[range->start] == placeholder || (status = f_utf_is_whitespace(buffer.string + range->start, width_max, F_false)) == F_false) {
 
@@ -174,7 +174,7 @@ extern "C" {
 
     unsigned short width = 0;
 
-    f_array_length_t width_max = 0;
+    f_number_unsigned_t width_max = 0;
 
     while (range->start <= range->stop && range->start < buffer.used) {
 
@@ -302,7 +302,7 @@ extern "C" {
       return F_found_not;
     }
 
-    f_array_length_t i = range->start;
+    f_number_unsigned_t i = range->start;
 
     for (; range->start <= range->stop && range->start < buffer.used; ) {
 
@@ -340,7 +340,7 @@ extern "C" {
     }
 
     {
-      f_array_length_t j = 0;
+      f_number_unsigned_t j = 0;
       f_char_t number[5] = { 0, 0, 0, 0, 0 };
 
       for (++range->start; range->start <= range->stop && range->start < buffer.used && j < 4; ++range->start, ++j) {
@@ -448,7 +448,7 @@ extern "C" {
     }
 
     if (id) {
-      for (f_array_length_t j = i, i = 0; j <= range->stop && j < buffer.used; ++j) {
+      for (f_number_unsigned_t j = i, i = 0; j <= range->stop && j < buffer.used; ++j) {
 
         if (!buffer.string[j]) continue;
         if (buffer.string[j] == f_string_ascii_minus_s.string[0]) break;
@@ -480,7 +480,7 @@ extern "C" {
     f_status_t status = F_none;
 
     unsigned short width = 0;
-    f_array_length_t width_max = (range->stop - range->start) + 1;
+    f_number_unsigned_t width_max = (range->stop - range->start) + 1;
 
     for (; range->start <= range->stop; range->start += width) {
 
@@ -526,7 +526,7 @@ extern "C" {
     f_status_t status = F_none;
     unsigned short width = 0;
 
-    f_array_length_t width_max = (range->stop - range->start) + 1;
+    f_number_unsigned_t width_max = (range->stop - range->start) + 1;
 
     while (string[range->start] == placeholder || (status = f_utf_is_graph(string + range->start, width_max)) == F_false) {
 
@@ -571,7 +571,7 @@ extern "C" {
     f_status_t status = F_none;
     unsigned short width = 0;
 
-    f_array_length_t width_max = (range->stop - range->start) + 1;
+    f_number_unsigned_t width_max = (range->stop - range->start) + 1;
 
     while (string[range->start] == placeholder || (status = f_utf_is_whitespace(string + range->start, width_max, F_false)) == F_false) {
 
@@ -619,7 +619,7 @@ extern "C" {
     f_status_t status = F_none;
 
     unsigned short width = 0;
-    f_array_length_t width_max = 0;
+    f_number_unsigned_t width_max = 0;
 
     for (; range->start <= range->stop; range->start += width) {
 

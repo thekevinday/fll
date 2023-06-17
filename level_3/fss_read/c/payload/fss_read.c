@@ -93,11 +93,11 @@ extern "C" {
 
     if (!main) return;
 
-    f_array_lengths_t * const values = &main->program.parameters.array[fss_read_parameter_object_e].values;
+    f_number_unsigneds_t * const values = &main->program.parameters.array[fss_read_parameter_object_e].values;
     f_string_static_t * const argv = main->program.parameters.arguments.array;
 
     if ((main->program.parameters.array[fss_read_parameter_object_e].result & f_console_result_value_e) && values->used) {
-      for (f_array_length_t i = 0; i < values->used; ++i) {
+      for (f_number_unsigned_t i = 0; i < values->used; ++i) {
 
         if (fss_read_signal_check(main)) return;
 

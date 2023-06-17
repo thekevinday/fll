@@ -7,7 +7,7 @@ extern "C" {
 #endif
 
 #if !defined(_di_f_account_by_name_) || !defined(_di_f_account_by_id_)
-  f_status_t private_f_account_from_passwd(const struct passwd password, const f_array_length_t password_length, f_account_t * const account) {
+  f_status_t private_f_account_from_passwd(const struct passwd password, const f_number_unsigned_t password_length, f_account_t * const account) {
 
     f_status_t status = F_none;
 
@@ -16,7 +16,7 @@ extern "C" {
     account->id_group = password.pw_gid;
 
     // Account home directory.
-    f_array_length_t string_length = strnlen(password.pw_dir, password_length);
+    f_number_unsigned_t string_length = strnlen(password.pw_dir, password_length);
 
     account->home.used = 0;
 

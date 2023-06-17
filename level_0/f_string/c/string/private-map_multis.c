@@ -9,15 +9,15 @@ extern "C" {
 #endif
 
 #if !defined(_di_f_string_map_multis_adjust_) || !defined(_di_f_string_map_multis_decimate_by_)
-  f_status_t private_f_string_map_multis_adjust(const f_array_length_t length, f_string_map_multis_t * const map_multis) {
+  f_status_t private_f_string_map_multis_adjust(const f_number_unsigned_t length, f_string_map_multis_t * const map_multis) {
 
-    if (map_multis->used + length > F_array_length_t_size_d) {
+    if (map_multis->used + length > F_number_t_size_unsigned_d) {
       return F_status_set_error(F_array_too_large);
     }
 
     f_status_t status = F_none;
 
-    for (f_array_length_t i = length; i < map_multis->size; ++i) {
+    for (f_number_unsigned_t i = length; i < map_multis->size; ++i) {
 
       status = private_f_string_dynamic_adjust(0, &map_multis->array[i].name);
       if (F_status_is_error(status)) return status;
@@ -49,7 +49,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     }
 
-    for (f_array_length_t i = 0; i < source.used; ++i, ++destination->used) {
+    for (f_number_unsigned_t i = 0; i < source.used; ++i, ++destination->used) {
 
       destination->array[destination->used].name.used = 0;
       destination->array[destination->used].value.used = 0;
@@ -70,15 +70,15 @@ extern "C" {
 #endif // !defined(_di_f_string_map_multis_append_all_) || !defined(_di_f_string_map_multiss_append_) || !defined(_di_f_string_map_multiss_append_all_)
 
 #if !defined(_di_f_string_map_multis_append_) || !defined(_di_f_string_map_multis_append_all_) || !defined(_di_f_string_map_multis_decrease_by_) || !defined(_di_f_string_map_multis_increase_) || !defined(_di_f_string_map_multis_increase_by_) || !defined(_di_f_string_map_multis_resize_) || !defined(_di_f_string_map_multiss_append_) || !defined(_di_f_string_map_multiss_append_all_) || !defined(_di_f_string_map_multiss_decrease_by_) || !defined(_di_f_string_map_multiss_increase_) || !defined(_di_f_string_map_multiss_increase_by_)
-  f_status_t private_f_string_map_multis_resize(const f_array_length_t length, f_string_map_multis_t * const map_multis) {
+  f_status_t private_f_string_map_multis_resize(const f_number_unsigned_t length, f_string_map_multis_t * const map_multis) {
 
-    if (map_multis->used + length > F_array_length_t_size_d) {
+    if (map_multis->used + length > F_number_t_size_unsigned_d) {
       return F_status_set_error(F_array_too_large);
     }
 
     f_status_t status = F_none;
 
-    for (f_array_length_t i = length; i < map_multis->size; ++i) {
+    for (f_number_unsigned_t i = length; i < map_multis->size; ++i) {
 
       status = private_f_string_dynamic_resize(0, &map_multis->array[i].name);
       if (F_status_is_error(status)) return status;

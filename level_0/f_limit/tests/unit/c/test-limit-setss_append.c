@@ -71,7 +71,7 @@ void test__f_limit_setss_append__works(void **state) {
     assert_int_equal(destination.array[0].used, source.used);
     assert_int_equal(destination.array[0].size, source.used);
 
-    for (f_array_length_t i = 0; i < destination.array[0].used; ++i) {
+    for (f_number_unsigned_t i = 0; i < destination.array[0].used; ++i) {
 
       assert_int_equal(destination.array[0].array[i].type, i + 1);
       assert_int_equal(destination.array[0].array[i].value.rlim_cur, i + 2);
@@ -79,7 +79,7 @@ void test__f_limit_setss_append__works(void **state) {
     } // for
   }
 
-  for (f_array_length_t i = 0; i < destination.used; ++i) {
+  for (f_number_unsigned_t i = 0; i < destination.used; ++i) {
     free((void *) destination.array[i].array);
   } // for
 

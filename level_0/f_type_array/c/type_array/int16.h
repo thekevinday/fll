@@ -32,7 +32,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_adjust().
  */
 #ifndef _di_f_int16s_adjust_
-  extern f_status_t f_int16s_adjust(const f_array_length_t length, f_int16s_t *int16s);
+  extern f_status_t f_int16s_adjust(const f_number_unsigned_t length, f_int16s_t *int16s);
 #endif // _di_f_int16s_adjust_
 
 /**
@@ -96,7 +96,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_adjust().
  */
 #ifndef _di_f_int16s_decimate_by_
-  extern f_status_t f_int16s_decimate_by(const f_array_length_t amount, f_int16s_t *int16s);
+  extern f_status_t f_int16s_decimate_by(const f_number_unsigned_t amount, f_int16s_t *int16s);
 #endif // _di_f_int16s_decimate_by_
 
 /**
@@ -120,13 +120,13 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_int16s_decrease_by_
-  extern f_status_t f_int16s_decrease_by(const f_array_length_t amount, f_int16s_t *int16s);
+  extern f_status_t f_int16s_decrease_by(const f_number_unsigned_t amount, f_int16s_t *int16s);
 #endif // _di_f_int16s_decrease_by_
 
 /**
  * Increase the size of the int16s array, but only if necesary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -145,14 +145,14 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_int16s_increase_
-  extern f_status_t f_int16s_increase(const f_array_length_t step, f_int16s_t *int16s);
+  extern f_status_t f_int16s_increase(const f_number_unsigned_t step, f_int16s_t *int16s);
 #endif // _di_f_int16s_increase_
 
 /**
  * Resize the int16s array to a larger size.
  *
  * This will resize making the array larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -170,7 +170,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_int16s_increase_by_
-  extern f_status_t f_int16s_increase_by(const f_array_length_t amount, f_int16s_t *int16s);
+  extern f_status_t f_int16s_increase_by(const f_number_unsigned_t amount, f_int16s_t *int16s);
 #endif // _di_f_int16s_increase_by_
 
 /**
@@ -189,7 +189,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_int16s_resize_
-  extern f_status_t f_int16s_resize(const f_array_length_t length, f_int16s_t *int16s);
+  extern f_status_t f_int16s_resize(const f_number_unsigned_t length, f_int16s_t *int16s);
 #endif // _di_f_int16s_resize_
 
 /**
@@ -209,7 +209,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_destroy().
  */
 #ifndef _di_f_int16ss_adjust_
-  extern f_status_t f_int16ss_adjust(const f_array_length_t length, f_int16ss_t *int16ss);
+  extern f_status_t f_int16ss_adjust(const f_number_unsigned_t length, f_int16ss_t *int16ss);
 #endif // _di_f_int16ss_adjust_
 
 /**
@@ -274,7 +274,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_destroy().
  */
 #ifndef _di_f_int16ss_decimate_by_
-  extern f_status_t f_int16ss_decimate_by(const f_array_length_t amount, f_int16ss_t *int16ss);
+  extern f_status_t f_int16ss_decimate_by(const f_number_unsigned_t amount, f_int16ss_t *int16ss);
 #endif // _di_f_int16ss_decimate_by_
 
 /**
@@ -299,13 +299,13 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_int16ss_decrease_by_
-  extern f_status_t f_int16ss_decrease_by(const f_array_length_t amount, f_int16ss_t *int16ss);
+  extern f_status_t f_int16ss_decrease_by(const f_number_unsigned_t amount, f_int16ss_t *int16ss);
 #endif // _di_f_int16ss_decrease_by_
 
 /**
  * Increase the size of the int16ss array, but only if necessary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -324,14 +324,14 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_int16ss_increase_
-  extern f_status_t f_int16ss_increase(const f_array_length_t step, f_int16ss_t *int16ss);
+  extern f_status_t f_int16ss_increase(const f_number_unsigned_t step, f_int16ss_t *int16ss);
 #endif // _di_f_int16ss_increase_
 
 /**
  * Resize the int16ss array to a larger size.
  *
  * This will resize making the array larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -349,7 +349,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_int16ss_increase_by_
-  extern f_status_t f_int16ss_increase_by(const f_array_length_t amount, f_int16ss_t *int16ss);
+  extern f_status_t f_int16ss_increase_by(const f_number_unsigned_t amount, f_int16ss_t *int16ss);
 #endif // _di_f_int16ss_increase_by_
 
 /**
@@ -369,7 +369,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_int16ss_resize_
-  extern f_status_t f_int16ss_resize(const f_array_length_t length, f_int16ss_t *int16ss);
+  extern f_status_t f_int16ss_resize(const f_number_unsigned_t length, f_int16ss_t *int16ss);
 #endif // _di_f_int16ss_resize_
 
 #ifdef __cplusplus

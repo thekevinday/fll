@@ -129,12 +129,12 @@ extern "C" {
 
     controller_entry_action_t *action = 0;
 
-    f_array_length_t allocate = 0;
-    f_array_length_t at_least = 0;
-    f_array_length_t at_most = 0;
+    f_number_unsigned_t allocate = 0;
+    f_number_unsigned_t at_least = 0;
+    f_number_unsigned_t at_most = 0;
 
-    f_array_length_t i = 0;
-    f_array_length_t j = 0;
+    f_number_unsigned_t i = 0;
+    f_number_unsigned_t j = 0;
 
     for (; i < cache->object_actions.used; ++i) {
 
@@ -608,11 +608,11 @@ extern "C" {
     f_status_t status = F_none;
     f_status_t status2 = F_none;
 
-    f_array_length_t i = 0;
-    f_array_length_t j = 0;
+    f_number_unsigned_t i = 0;
+    f_number_unsigned_t j = 0;
 
-    f_array_length_t at_i = 0;
-    f_array_length_t at_j = 1;
+    f_number_unsigned_t at_i = 0;
+    f_number_unsigned_t at_j = 1;
 
     controller_entry_t *entry = is_entry ? &global.setting->entry : &global.setting->exit;
     controller_entry_actions_t *actions = 0;
@@ -629,10 +629,10 @@ extern "C" {
     cache->action.name_action.used = 0;
     cache->action.name_item.used = 0;
 
-    macro_f_array_lengths_t_increase_by(status, cache->ats, controller_common_allocation_small_d)
+    macro_f_number_unsigneds_t_increase_by(status, cache->ats, controller_common_allocation_small_d)
 
     if (F_status_is_error(status)) {
-      controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status), "macro_f_array_lengths_t_increase_by", F_true, global.thread);
+      controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status), "macro_f_number_unsigneds_t_increase_by", F_true, global.thread);
 
       return status;
     }
@@ -732,10 +732,10 @@ extern "C" {
 
               if (error_has) break;
 
-              macro_f_array_lengths_t_increase_by(status2, cache->ats, controller_common_allocation_small_d)
+              macro_f_number_unsigneds_t_increase_by(status2, cache->ats, controller_common_allocation_small_d)
 
               if (F_status_is_error(status2)) {
-                controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status2), "macro_f_array_lengths_t_increase_by", F_true, global.thread);
+                controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status2), "macro_f_number_unsigneds_t_increase_by", F_true, global.thread);
 
                 return status2;
               }
@@ -841,8 +841,8 @@ extern "C" {
     f_status_t status = F_none;
     f_status_t status_lock = F_none;
 
-    f_array_length_t at_i = 0;
-    f_array_length_t at_j = 1;
+    f_number_unsigned_t at_i = 0;
+    f_number_unsigned_t at_j = 1;
 
     uint8_t options_force = 0;
     uint8_t options_process = 0;
@@ -852,7 +852,7 @@ extern "C" {
     controller_entry_actions_t *entry_actions = 0;
 
     // An empty stack is used here because each rule here is the first rule run in the rule's scope.
-    const f_array_lengths_t stack = f_array_lengths_t_initialize;
+    const f_number_unsigneds_t stack = f_number_unsigneds_t_initialize;
 
     cache->ats.used = 0;
     cache->stack.used = 0;
@@ -862,10 +862,10 @@ extern "C" {
     cache->action.name_action.used = 0;
     cache->action.name_item.used = 0;
 
-    macro_f_array_lengths_t_increase_by(status, cache->ats, controller_common_allocation_small_d)
+    macro_f_number_unsigneds_t_increase_by(status, cache->ats, controller_common_allocation_small_d)
 
     if (F_status_is_error(status)) {
-      controller_entry_print_error(is_entry, global->main->error, cache->action, F_status_set_fine(status), "macro_f_array_lengths_t_increase_by", F_true, global->thread);
+      controller_entry_print_error(is_entry, global->main->error, cache->action, F_status_set_fine(status), "macro_f_number_unsigneds_t_increase_by", F_true, global->thread);
 
       return status;
     }
@@ -1064,10 +1064,10 @@ extern "C" {
             return F_status_is_error(F_critical);
           }
 
-          macro_f_array_lengths_t_increase_by(status, cache->ats, controller_common_allocation_small_d)
+          macro_f_number_unsigneds_t_increase_by(status, cache->ats, controller_common_allocation_small_d)
 
           if (F_status_is_error(status)) {
-            controller_entry_print_error(is_entry, global->main->error, cache->action, F_status_set_fine(status), "macro_f_array_lengths_t_increase_by", F_true, global->thread);
+            controller_entry_print_error(is_entry, global->main->error, cache->action, F_status_set_fine(status), "macro_f_number_unsigneds_t_increase_by", F_true, global->thread);
 
             return status;
           }
@@ -1129,7 +1129,7 @@ extern "C" {
             return status;
           }
 
-          const f_array_length_t id_rule_length = entry_action->parameters.array[0].used + entry_action->parameters.array[1].used + 1;
+          const f_number_unsigned_t id_rule_length = entry_action->parameters.array[0].used + entry_action->parameters.array[1].used + 1;
           f_char_t id_rule_name[id_rule_length + 1];
           const f_string_static_t alias_rule = macro_f_string_static_t_initialize_1(id_rule_name, 0, id_rule_length);
 
@@ -1182,12 +1182,12 @@ extern "C" {
           if (status != F_true) {
 
             // Rule execution will re-use the existing cache, so save the current cache.
-            const f_array_length_t cache_line_action = cache->action.line_action;
-            const f_array_length_t cache_line_item = cache->action.line_item;
+            const f_number_unsigned_t cache_line_action = cache->action.line_action;
+            const f_number_unsigned_t cache_line_item = cache->action.line_item;
 
-            const f_array_length_t cache_name_action_used = cache->action.name_action.used;
-            const f_array_length_t cache_name_item_used = cache->action.name_item.used;
-            const f_array_length_t cache_name_file_used = cache->action.name_file.used;
+            const f_number_unsigned_t cache_name_action_used = cache->action.name_action.used;
+            const f_number_unsigned_t cache_name_item_used = cache->action.name_item.used;
+            const f_number_unsigned_t cache_name_file_used = cache->action.name_file.used;
 
             f_char_t cache_name_action[cache_name_action_used];
             f_char_t cache_name_item[cache_name_item_used];
@@ -1308,7 +1308,7 @@ extern "C" {
 
               fl_print_format("%r%Q is executing '", global->main->output.to, f_string_eol_s, is_entry ? controller_entry_s : controller_exit_s);
 
-              for (f_array_length_t k = 0; k < entry_action->parameters.used; ++k) {
+              for (f_number_unsigned_t k = 0; k < entry_action->parameters.used; ++k) {
 
                 fl_print_format("%[%Q%]", global->main->output.to, global->main->context.set.title, entry_action->parameters.array[k], global->main->context.set.title);
 
@@ -1539,7 +1539,7 @@ extern "C" {
     cache->content_action.used = 0;
 
     {
-      f_array_length_t i = 0;
+      f_number_unsigned_t i = 0;
 
       for (; i < cache->content_actions.used; ++i) {
         cache->content_actions.array[i].used = 0;
@@ -1619,9 +1619,9 @@ extern "C" {
 
         f_string_range_t *range = 0;
 
-        f_array_length_t at = 0;
-        f_array_length_t i = 0;
-        f_array_length_t j = 0;
+        f_number_unsigned_t at = 0;
+        f_number_unsigned_t i = 0;
+        f_number_unsigned_t j = 0;
 
         f_state_t state = f_state_t_initialize;
 
@@ -1779,7 +1779,7 @@ extern "C" {
           if (F_status_is_error_not(status)) {
             controller_entry_action_t *action = 0;
 
-            f_array_length_t k = 0;
+            f_number_unsigned_t k = 0;
 
             // 0x1 = missing or not, 0x2 = one or more missing.
             uint8_t missing = 0;
@@ -1902,7 +1902,7 @@ extern "C" {
 
     cache->delimits.used = 0;
 
-    f_array_length_t i = 0;
+    f_number_unsigned_t i = 0;
 
     controller_entry_t *entry = is_entry ? &global.setting->entry : &global.setting->exit;
     f_state_t state = f_state_t_initialize;
@@ -2355,8 +2355,8 @@ extern "C" {
     const f_string_static_t *string = 0;
 
     f_status_t status = F_none;
-    f_array_length_t i = 0;
-    f_array_length_t j = 0;
+    f_number_unsigned_t i = 0;
+    f_number_unsigned_t j = 0;
 
     fl_print_format("%r%Q %[%Q%] {%r", global.main->output.to.stream, f_string_eol_s, is_entry ? controller_Entry_s : controller_Exit_s, global.main->context.set.title, controller_settings_s, global.main->context.set.title, f_string_eol_s);
 
@@ -2575,7 +2575,7 @@ extern "C" {
     if (entry->items.used) {
       controller_entry_action_t *action = 0;
       bool raw = F_false;
-      f_array_length_t k = 0;
+      f_number_unsigned_t k = 0;
 
       for (i = 0; i < entry->items.used; ++i) {
 

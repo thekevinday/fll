@@ -28,7 +28,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    const f_array_length_t length = strnlen(buffer, F_path_length_max_d);
+    const f_number_unsigned_t length = strnlen(buffer, F_path_length_max_d);
 
     {
       real->used = 0;

@@ -47,9 +47,9 @@ extern "C" {
 
     recurse->state.status = F_none;
 
-    f_array_length_t i = 0;
+    f_number_unsigned_t i = 0;
     uint8_t j = 0;
-    const f_array_length_t used_original = recurse->path.used;
+    const f_number_unsigned_t used_original = recurse->path.used;
 
     static const uint8_t flag_actions[] = {
       f_directory_recurse_do_flag_before_e,
@@ -364,14 +364,14 @@ extern "C" {
     bool separator_prepend = F_false;
     bool separator_append = F_false;
 
-    f_array_length_t total = 0;
-    f_array_length_t start = 0;
-    f_array_length_t length_truncated = source.used;
+    f_number_unsigned_t total = 0;
+    f_number_unsigned_t start = 0;
+    f_number_unsigned_t length_truncated = source.used;
     f_status_t status = F_none;
 
     {
-      f_array_length_t i = 0;
-      f_array_length_t j = 0;
+      f_number_unsigned_t i = 0;
+      f_number_unsigned_t j = 0;
 
       if (destination->used > 0) {
         if (!destination->string[destination->used - 1]) {

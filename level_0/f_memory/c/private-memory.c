@@ -107,7 +107,7 @@ extern "C" {
 #endif // !defined(_di_f_memory_resize_) || !defined(_di_memory_structure_decrease_by_) || !defined(_di_memory_structure_increase_) || !defined(_di_memory_structure_increase_by_) || !defined(_di_f_memory_structure_resize_)
 
 #if !defined(_di_f_memory_structure_adjust_) || !defined(_di_f_memory_structure_decimate_by_)
-  f_status_t private_f_memory_structure_adjust(const size_t length_new, const size_t type_size, void ** const structure, f_array_length_t * const used, f_array_length_t * const size) {
+  f_status_t private_f_memory_structure_adjust(const size_t length_new, const size_t type_size, void ** const structure, f_number_unsigned_t * const used, f_number_unsigned_t * const size) {
 
     const f_status_t status = private_f_memory_adjust(*size, length_new, type_size, structure);
 
@@ -124,7 +124,7 @@ extern "C" {
 #endif // !defined(_di_f_memory_structure_adjust_) || !defined(_di_f_memory_structure_decimate_by_)
 
 #if !defined(_di_memory_structure_decrease_by_) || !defined(_di_memory_structure_increase_) || !defined(_di_memory_structure_increase_by_) || !defined(_di_f_memory_structure_resize_)
-  f_status_t private_f_memory_structure_resize(const size_t length_new, const size_t type_size, void ** const structure, f_array_length_t * const used, f_array_length_t * const size) {
+  f_status_t private_f_memory_structure_resize(const size_t length_new, const size_t type_size, void ** const structure, f_number_unsigned_t * const used, f_number_unsigned_t * const size) {
 
     const f_status_t status = private_f_memory_resize(*size, length_new, type_size, structure);
 

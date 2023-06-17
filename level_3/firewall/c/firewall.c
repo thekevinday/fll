@@ -26,7 +26,7 @@ extern "C" {
     if (F_status_is_error(status)) return;
 
     {
-      f_array_length_t choice = 0;
+      f_number_unsigned_t choice = 0;
       f_uint16s_t choices = f_uint16s_t_initialize;
 
       // Identify and prioritize "color context" parameters.
@@ -172,9 +172,9 @@ extern "C" {
           show_mangle = F_false;
           show_ports = F_false;
 
-          f_array_length_t index = 0;
+          f_number_unsigned_t index = 0;
 
-          for (f_array_length_t i = 0; i < main->parameters.remaining.used; ++i) {
+          for (f_number_unsigned_t i = 0; i < main->parameters.remaining.used; ++i) {
 
             index = main->parameters.remaining.array[i];
 
@@ -327,7 +327,7 @@ extern "C" {
 
       // Remove "lo" (loopback) from the device listing.
       {
-        f_array_length_t i = 0;
+        f_number_unsigned_t i = 0;
 
         for (; i < data.devices.used; ++i) {
 
@@ -365,7 +365,7 @@ extern "C" {
           return status;
         }
 
-        for (f_array_length_t i = 0; i < local.chain_objects.used; ++i) {
+        for (f_number_unsigned_t i = 0; i < local.chain_objects.used; ++i) {
 
           if (!reserved.has_stop && f_compare_dynamic_partial_string(firewall_group_stop_s.string, local.buffer, firewall_group_stop_s.used, local.chain_objects.array[i]) == F_equal_to) {
             reserved.stop_at = i;
@@ -508,7 +508,7 @@ extern "C" {
           return status;
         }
 
-        f_array_length_t i = 0;
+        f_number_unsigned_t i = 0;
 
         local.is_global = F_true;
         local.is_stop = F_false;
@@ -538,7 +538,7 @@ extern "C" {
 
         {
           f_string_dynamic_t path_file = f_string_dynamic_t_initialize;
-          f_array_length_t j = 0;
+          f_number_unsigned_t j = 0;
 
           for (i = 0; i < data.devices.used; ++i) {
 

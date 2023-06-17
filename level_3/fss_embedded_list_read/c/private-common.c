@@ -25,13 +25,13 @@ extern "C" {
 #endif // _di_fss_embedded_list_read_data_delete_
 
 #ifndef _di_fss_embedded_list_read_depths_resize_
-  f_status_t fss_embedded_list_read_depths_resize(const f_array_length_t length, fss_embedded_list_read_depths_t *depths) {
+  f_status_t fss_embedded_list_read_depths_resize(const f_number_unsigned_t length, fss_embedded_list_read_depths_t *depths) {
 
     if (!depths) {
       return F_status_set_error(F_parameter);
     }
 
-    for (f_array_length_t i = length; i < depths->size; ++i) {
+    for (f_number_unsigned_t i = length; i < depths->size; ++i) {
       fss_embedded_list_read_depth_delete(&depths->array[i]);
     } // for
 

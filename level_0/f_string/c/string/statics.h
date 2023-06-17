@@ -27,8 +27,8 @@ extern "C" {
   typedef struct {
     f_string_static_t *array;
 
-    f_array_length_t size;
-    f_array_length_t used;
+    f_number_unsigned_t size;
+    f_number_unsigned_t used;
   } f_string_statics_t;
 
   #define f_string_statics_t_initialize { 0, 0, 0 }

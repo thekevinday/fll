@@ -35,7 +35,7 @@ extern "C" {
  * @see f_limit_values_decimate_by()
  */
 #if !defined(_di_f_limit_values_adjust_) || !defined(_di_f_limit_values_decimate_by_)
-  extern f_status_t private_f_limit_values_adjust(const f_array_length_t length, f_limit_values_t *values) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_limit_values_adjust(const f_number_unsigned_t length, f_limit_values_t *values) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_limit_values_adjust_) || !defined(_di_f_limit_values_decimate_by_)
 
 /**
@@ -107,7 +107,7 @@ extern "C" {
  * @see f_limit_valuess_append()
  */
 #if !defined(_di_f_limit_values_resize_) || !defined(_di_f_limit_values_append_) || !defined(_di_f_limit_values_decimate_by_) || !defined(_di_f_limit_valuess_append_)
-  extern f_status_t private_f_limit_values_resize(const f_array_length_t length, f_limit_values_t *values) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_limit_values_resize(const f_number_unsigned_t length, f_limit_values_t *values) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_limit_values_resize_) || !defined(_di_f_limit_values_append_) || !defined(_di_f_limit_values_decimate_by_) || !defined(_di_f_limit_valuess_append_)
 
 /**
@@ -135,7 +135,7 @@ extern "C" {
  * @see f_limit_valuess_decimate_by()
  */
 #if !defined(_di_f_limit_valuess_adjust_) || !defined(_di_f_limit_valuess_decimate_by_)
-  extern f_status_t private_f_limit_valuess_adjust(const f_array_length_t length, f_limit_valuess_t *valuess) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_limit_valuess_adjust(const f_number_unsigned_t length, f_limit_valuess_t *valuess) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_limit_valuess_adjust_) || !defined(_di_f_limit_valuess_decimate_by_)
 
 /**
@@ -165,7 +165,7 @@ extern "C" {
  * @see f_limit_valuess_resize()
  */
 #if !defined(_di_f_limit_valuess_decrease_by_) || !defined(_di_f_limit_valuess_increase_) || !defined(_di_f_limit_valuess_increase_by_) || !defined(_di_f_limit_valuess_resize_)
-  extern f_status_t private_f_limit_valuess_resize(const f_array_length_t length, f_limit_valuess_t *valuess) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_limit_valuess_resize(const f_number_unsigned_t length, f_limit_valuess_t *valuess) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_limit_valuess_decrease_by_) || !defined(_di_f_limit_valuess_increase_) || !defined(_di_f_limit_valuess_increase_by_) || !defined(_di_f_limit_valuess_resize_)
 
 #ifdef __cplusplus

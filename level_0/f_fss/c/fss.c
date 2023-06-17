@@ -23,7 +23,7 @@ extern "C" {
       return;
     }
 
-    for (f_array_length_t i = 0; i < delimits.used; ++i) {
+    for (f_number_unsigned_t i = 0; i < delimits.used; ++i) {
 
       if (delimits.array[i] < buffer->used) {
         buffer->string[delimits.array[i]] = f_fss_placeholder_s.string[0];
@@ -52,7 +52,7 @@ extern "C" {
       return;
     }
 
-    for (f_array_length_t i = 0; i < delimits.used; ++i) {
+    for (f_number_unsigned_t i = 0; i < delimits.used; ++i) {
 
       if (delimits.array[i] < buffer->used && delimits.array[i] >= range.start && delimits.array[i] <= range.stop) {
         buffer->string[delimits.array[i]] = f_fss_placeholder_s.string[0];
@@ -64,7 +64,7 @@ extern "C" {
 #endif // _di_f_fss_apply_delimit_range_
 
 #ifndef _di_f_fss_count_lines_
-  void f_fss_count_lines(const f_string_static_t buffer, const f_array_length_t before, f_array_length_t * const line, f_state_t * const state) {
+  void f_fss_count_lines(const f_string_static_t buffer, const f_number_unsigned_t before, f_number_unsigned_t * const line, f_state_t * const state) {
     #ifndef _di_level_0_parameter_checking_
       if (!state) return;
 
@@ -81,7 +81,7 @@ extern "C" {
       return;
     }
 
-    for (f_array_length_t i = 0; i < before && i < buffer.used; i += macro_f_utf_byte_width(buffer.string[i])) {
+    for (f_number_unsigned_t i = 0; i < before && i < buffer.used; i += macro_f_utf_byte_width(buffer.string[i])) {
 
       if (buffer.string[i] == f_fss_eol_s.string[0]) {
         ++(*line);
@@ -93,7 +93,7 @@ extern "C" {
 #endif // _di_f_fss_count_lines_
 
 #ifndef _di_f_fss_count_lines_range_
-  void f_fss_count_lines_range(const f_string_static_t buffer, const f_string_range_t range, f_array_length_t * const line, f_state_t * const state) {
+  void f_fss_count_lines_range(const f_string_static_t buffer, const f_string_range_t range, f_number_unsigned_t * const line, f_state_t * const state) {
     #ifndef _di_level_0_parameter_checking_
       if (!state) return;
 
@@ -110,7 +110,7 @@ extern "C" {
       return;
     }
 
-    for (f_array_length_t i = range.start; i <= range.stop && i < buffer.used; i += macro_f_utf_byte_width(buffer.string[i])) {
+    for (f_number_unsigned_t i = range.start; i <= range.stop && i < buffer.used; i += macro_f_utf_byte_width(buffer.string[i])) {
 
       if (buffer.string[i] == f_fss_eol_s.string[0]) {
         ++(*line);
@@ -165,7 +165,7 @@ extern "C" {
       return F_false;
     }
 
-    f_array_length_t width_max = (range.stop - range.start) + 1;
+    f_number_unsigned_t width_max = (range.stop - range.start) + 1;
 
     if (width_max > buffer.used - range.start) {
       width_max = buffer.used - range.start;
@@ -192,7 +192,7 @@ extern "C" {
       return F_false;
     }
 
-    f_array_length_t width_max = (range.stop - range.start) + 1;
+    f_number_unsigned_t width_max = (range.stop - range.start) + 1;
 
     if (width_max > buffer.used - range.start) {
       width_max = buffer.used - range.start;
@@ -219,7 +219,7 @@ extern "C" {
       return F_false;
     }
 
-    f_array_length_t width_max = (range.stop - range.start) + 1;
+    f_number_unsigned_t width_max = (range.stop - range.start) + 1;
 
     if (width_max > buffer.used - range.start) {
       width_max = buffer.used - range.start;
@@ -258,7 +258,7 @@ extern "C" {
       return F_false;
     }
 
-    f_array_length_t width_max = (range.stop - range.start) + 1;
+    f_number_unsigned_t width_max = (range.stop - range.start) + 1;
 
     if (width_max > buffer.used - range.start) {
       width_max = buffer.used - range.start;
@@ -370,7 +370,7 @@ extern "C" {
     }
 
     uint8_t width = 0;
-    f_array_length_t width_max = (range->stop - range->start) + 1;
+    f_number_unsigned_t width_max = (range->stop - range->start) + 1;
 
     if (width_max > buffer.used - range->start) {
       width_max = buffer.used - range->start;

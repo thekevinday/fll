@@ -282,7 +282,7 @@ extern "C" {
       else {
         if (!pointer) return F_exist_not;
 
-        const f_array_length_t name_length = strnlen(group_data.gr_name, length);
+        const f_number_unsigned_t name_length = strnlen(group_data.gr_name, length);
 
         name->used = 0;
 
@@ -317,7 +317,7 @@ extern "C" {
 
     if (!pointer) return F_exist_not;
 
-    const f_array_length_t name_length = strnlen(group_data.gr_name, length);
+    const f_number_unsigned_t name_length = strnlen(group_data.gr_name, length);
 
     name->used = 0;
 
@@ -454,7 +454,7 @@ extern "C" {
       else {
         if (!pointer) return F_exist_not;
 
-        const f_array_length_t name_length = strnlen(password.pw_name, length);
+        const f_number_unsigned_t name_length = strnlen(password.pw_name, length);
 
         name->used = 0;
 
@@ -489,7 +489,7 @@ extern "C" {
 
     if (!pointer) return F_exist_not;
 
-    const f_array_length_t name_length = strnlen(password.pw_name, length);
+    const f_number_unsigned_t name_length = strnlen(password.pw_name, length);
 
     name->used = 0;
 

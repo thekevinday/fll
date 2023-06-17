@@ -6,10 +6,10 @@ extern "C" {
 #endif
 
 #if !defined(_di_f_rip_dynamic_partial_) || !defined(_di_f_rip_dynamic_partial_nulless_) || !defined(_di_f_rip_dynamic_)  || !defined(_di_f_rip_) || !defined(_di_f_rip_nulless_)
-  f_status_t private_f_rip_find_range(const f_string_t string, f_array_length_t * const start, f_array_length_t * const stop) {
+  f_status_t private_f_rip_find_range(const f_string_t string, f_number_unsigned_t * const start, f_number_unsigned_t * const stop) {
 
-    const f_array_length_t stop_original = *stop;
-    f_array_length_t previous = 0;
+    const f_number_unsigned_t stop_original = *stop;
+    f_number_unsigned_t previous = 0;
     f_status_t status = F_none;
 
     // Skip past leading whitespace.

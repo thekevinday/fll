@@ -24,9 +24,9 @@ extern "C" {
 
     f_string_dynamics_resize(0, &cache->expanded);
 
-    f_array_lengths_resize(0, &cache->ats);
-    f_array_lengths_resize(0, &cache->stack);
-    f_array_lengths_resize(0, &cache->delimits);
+    f_number_unsigneds_resize(0, &cache->ats);
+    f_number_unsigneds_resize(0, &cache->stack);
+    f_number_unsigneds_resize(0, &cache->delimits);
 
     f_string_ranges_resize(0, &cache->comments);
     f_string_ranges_resize(0, &cache->content_action);

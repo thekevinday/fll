@@ -41,7 +41,7 @@ extern "C" {
   enum {
     fake_f_f_account_group_id_by_name_e,
     fake_f_f_account_id_by_name_e,
-    fake_f_f_array_lengths_increase_e,
+    fake_f_f_number_unsigneds_increase_e,
     fake_f_f_compare_dynamic_partial_e,
     fake_f_f_console_parameter_prioritize_right_e,
     fake_f_f_console_parameter_process_e,

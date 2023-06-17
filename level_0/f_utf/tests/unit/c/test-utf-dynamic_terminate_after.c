@@ -6,7 +6,7 @@ extern "C" {
 #endif
 void test__f_utf_dynamic_terminate_after__appends_null(void **state) {
 
-  const f_array_length_t length = 2;
+  const f_number_unsigned_t length = 2;
   f_utf_string_dynamic_t data = f_utf_string_dynamic_t_initialize;
 
   // Put some value in the unused section at the end so that it gets overridden.
@@ -33,7 +33,7 @@ void test__f_utf_dynamic_terminate_after__appends_null(void **state) {
 
 void test__f_utf_dynamic_terminate_after__doesnt_append_null(void **state) {
 
-  const f_array_length_t length = 2;
+  const f_number_unsigned_t length = 2;
   f_utf_string_dynamic_t data = f_utf_string_dynamic_t_initialize;
 
   // Ensure a NULL already exists so that the test can confirm that another NULL is not appended.

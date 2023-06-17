@@ -1599,7 +1599,7 @@ extern "C" {
  * @see read()
  */
 #ifndef _di_f_file_read_until_
-  extern f_status_t f_file_read_until(const f_file_t file, const f_array_length_t total, f_string_dynamic_t * const buffer);
+  extern f_status_t f_file_read_until(const f_file_t file, const f_number_unsigned_t total, f_string_dynamic_t * const buffer);
 #endif // _di_f_file_read_until_
 
 /**
@@ -2283,7 +2283,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_f_file_write_
-  extern f_status_t f_file_write(const f_file_t file, const f_string_static_t buffer, f_array_length_t * const written);
+  extern f_status_t f_file_write(const f_file_t file, const f_string_static_t buffer, f_number_unsigned_t * const written);
 #endif // _di_f_file_write_
 
 /**
@@ -2318,7 +2318,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_f_file_write_block_
-  extern f_status_t f_file_write_block(const f_file_t file, const f_string_static_t buffer, f_array_length_t * const written);
+  extern f_status_t f_file_write_block(const f_file_t file, const f_string_static_t buffer, f_number_unsigned_t * const written);
 #endif // _di_f_file_write_block_
 
 /**
@@ -2353,7 +2353,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_f_file_write_until_
-  extern f_status_t f_file_write_until(const f_file_t file, const f_string_static_t buffer, const f_array_length_t total, f_array_length_t * const written);
+  extern f_status_t f_file_write_until(const f_file_t file, const f_string_static_t buffer, const f_number_unsigned_t total, f_number_unsigned_t * const written);
 #endif // _di_f_file_write_until_
 
 /**
@@ -2387,7 +2387,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_f_file_write_range_
-  extern f_status_t f_file_write_range(const f_file_t file, const f_string_static_t buffer, const f_string_range_t range, f_array_length_t * const written);
+  extern f_status_t f_file_write_range(const f_file_t file, const f_string_static_t buffer, const f_string_range_t range, f_number_unsigned_t * const written);
 #endif // _di_f_file_write_range_
 
 #ifdef __cplusplus

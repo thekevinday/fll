@@ -192,7 +192,7 @@ extern "C" {
  *   The expected number of arguments.
  */
 #ifndef _di_controller_entry_settings_read_print_setting_ignored_
-  extern void controller_entry_settings_read_print_setting_ignored(const controller_global_t global, const bool is_entry, const controller_cache_t cache, const f_array_length_t index) F_attribute_visibility_internal_d;
+  extern void controller_entry_settings_read_print_setting_ignored(const controller_global_t global, const bool is_entry, const controller_cache_t cache, const f_number_unsigned_t index) F_attribute_visibility_internal_d;
 #endif // _di_controller_entry_settings_read_print_setting_ignored_
 
 /**
@@ -262,7 +262,7 @@ extern "C" {
  *   The location in the content actions array representing the action value.
  */
 #ifndef _di_controller_entry_settings_read_print_setting_unknown_action_value_
-  extern void controller_entry_settings_read_print_setting_unknown_action_value(const controller_global_t global, const bool is_entry, const controller_cache_t cache, const f_array_length_t index) F_attribute_visibility_internal_d;
+  extern void controller_entry_settings_read_print_setting_unknown_action_value(const controller_global_t global, const bool is_entry, const controller_cache_t cache, const f_number_unsigned_t index) F_attribute_visibility_internal_d;
 #endif // _di_controller_entry_settings_read_print_setting_unknown_action_value_
 
 #ifdef __cplusplus

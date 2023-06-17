@@ -62,8 +62,8 @@ extern "C" {
   typedef struct {
     f_fss_set_t *array;
 
-    f_array_length_t size;
-    f_array_length_t used;
+    f_number_unsigned_t size;
+    f_number_unsigned_t used;
   } f_fss_sets_t;
 
   #define f_fss_sets_t_initialize { 0, 0, 0 }
@@ -138,8 +138,8 @@ extern "C" {
   typedef struct {
     f_fss_set_quote_t *array;
 
-    f_array_length_t size;
-    f_array_length_t used;
+    f_number_unsigned_t size;
+    f_number_unsigned_t used;
   } f_fss_set_quotes_t;
 
   #define f_fss_set_quotes_t_initialize { 0, 0, 0 }
@@ -176,7 +176,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_set_adjust_
-  extern f_status_t f_fss_set_adjust(const f_array_length_t length, f_fss_set_t * const set);
+  extern f_status_t f_fss_set_adjust(const f_number_unsigned_t length, f_fss_set_t * const set);
 #endif // _di_f_fss_set_adjust_
 
 /**
@@ -199,7 +199,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_set_decimate_by_
-  extern f_status_t f_fss_set_decimate_by(const f_array_length_t amount, f_fss_set_t * const set);
+  extern f_status_t f_fss_set_decimate_by(const f_number_unsigned_t amount, f_fss_set_t * const set);
 #endif // _di_f_fss_set_decimate_by_
 
 /**
@@ -221,13 +221,13 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_set_decrease_by_
-  extern f_status_t f_fss_set_decrease_by(const f_array_length_t amount, f_fss_set_t * const set);
+  extern f_status_t f_fss_set_decrease_by(const f_number_unsigned_t amount, f_fss_set_t * const set);
 #endif // _di_f_fss_set_decrease_by_
 
 /**
  * Increase the size of the set array, but only if necessary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -245,14 +245,14 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_set_increase_
-  extern f_status_t f_fss_set_increase(const f_array_length_t step, f_fss_set_t * const set);
+  extern f_status_t f_fss_set_increase(const f_number_unsigned_t step, f_fss_set_t * const set);
 #endif // _di_f_fss_set_increase_
 
 /**
  * Resize the set array to a larger size.
  *
  * This will resize making the array larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -269,7 +269,7 @@ extern "C" {
  *   F_array_too_large (with error bit) if the new array length is too large.
  */
 #ifndef _di_f_fss_set_increase_by_
-  extern f_status_t f_fss_set_increase_by(const f_array_length_t amount, f_fss_set_t * const set);
+  extern f_status_t f_fss_set_increase_by(const f_number_unsigned_t amount, f_fss_set_t * const set);
 #endif // _di_f_fss_set_increase_by_
 
 /**
@@ -287,7 +287,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_set_resize_
-  extern f_status_t f_fss_set_resize(const f_array_length_t length, f_fss_set_t * const set);
+  extern f_status_t f_fss_set_resize(const f_number_unsigned_t length, f_fss_set_t * const set);
 #endif // _di_f_fss_set_resize_
 
 /**
@@ -305,7 +305,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_set_quote_adjust_
-  extern f_status_t f_fss_set_quote_adjust(const f_array_length_t length, f_fss_set_quote_t * const set_quote);
+  extern f_status_t f_fss_set_quote_adjust(const f_number_unsigned_t length, f_fss_set_quote_t * const set_quote);
 #endif // _di_f_fss_set_quote_adjust_
 
 /**
@@ -328,7 +328,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_set_quote_decimate_by_
-  extern f_status_t f_fss_set_quote_decimate_by(const f_array_length_t amount, f_fss_set_quote_t * const set_quote);
+  extern f_status_t f_fss_set_quote_decimate_by(const f_number_unsigned_t amount, f_fss_set_quote_t * const set_quote);
 #endif // _di_f_fss_set_quote_decimate_by_
 
 /**
@@ -350,13 +350,13 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_set_quote_decrease_by_
-  extern f_status_t f_fss_set_quote_decrease_by(const f_array_length_t amount, f_fss_set_quote_t * const set_quote);
+  extern f_status_t f_fss_set_quote_decrease_by(const f_number_unsigned_t amount, f_fss_set_quote_t * const set_quote);
 #endif // _di_f_fss_set_quote_decrease_by_
 
 /**
  * Increase the size of the set_quote array, but only if necessary.
  *
- * If the given length is too large for the buffer, then attempt to set_quote max buffer size (F_array_length_t_size_d).
+ * If the given length is too large for the buffer, then attempt to set_quote max buffer size (F_number_t_size_unsigned_d).
  * If already set_quote to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -374,14 +374,14 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_set_quote_increase_
-  extern f_status_t f_fss_set_quote_increase(const f_array_length_t step, f_fss_set_quote_t * const set_quote);
+  extern f_status_t f_fss_set_quote_increase(const f_number_unsigned_t step, f_fss_set_quote_t * const set_quote);
 #endif // _di_f_fss_set_quote_increase_
 
 /**
  * Resize the set_quote array to a larger size.
  *
  * This will resize making the array larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set_quote max buffer size (F_array_length_t_size_d).
+ * If the given length is too large for the buffer, then attempt to set_quote max buffer size (F_number_t_size_unsigned_d).
  * If already set_quote to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -398,7 +398,7 @@ extern "C" {
  *   F_array_too_large (with error bit) if the new array length is too large.
  */
 #ifndef _di_f_fss_set_quote_increase_by_
-  extern f_status_t f_fss_set_quote_increase_by(const f_array_length_t amount, f_fss_set_quote_t * const set_quote);
+  extern f_status_t f_fss_set_quote_increase_by(const f_number_unsigned_t amount, f_fss_set_quote_t * const set_quote);
 #endif // _di_f_fss_set_quote_increase_by_
 
 /**
@@ -416,7 +416,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_set_quote_resize_
-  extern f_status_t f_fss_set_quote_resize(const f_array_length_t length, f_fss_set_quote_t * const set_quote);
+  extern f_status_t f_fss_set_quote_resize(const f_number_unsigned_t length, f_fss_set_quote_t * const set_quote);
 #endif // _di_f_fss_set_quote_resize_
 
 /**
@@ -434,7 +434,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_set_quotes_adjust_
-  extern f_status_t f_fss_set_quotes_adjust(const f_array_length_t length, f_fss_set_quotes_t * const set_quotes);
+  extern f_status_t f_fss_set_quotes_adjust(const f_number_unsigned_t length, f_fss_set_quotes_t * const set_quotes);
 #endif // _di_f_fss_set_quotes_adjust_
 
 /**
@@ -457,7 +457,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_set_quotes_decimate_by_
-  extern f_status_t f_fss_set_quotes_decimate_by(const f_array_length_t amount, f_fss_set_quotes_t * const set_quotes);
+  extern f_status_t f_fss_set_quotes_decimate_by(const f_number_unsigned_t amount, f_fss_set_quotes_t * const set_quotes);
 #endif // _di_f_fss_set_quotes_decimate_by_
 
 /**
@@ -479,13 +479,13 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_set_quotes_decrease_by_
-  extern f_status_t f_fss_set_quotes_decrease_by(const f_array_length_t amount, f_fss_set_quotes_t * const set_quotes);
+  extern f_status_t f_fss_set_quotes_decrease_by(const f_number_unsigned_t amount, f_fss_set_quotes_t * const set_quotes);
 #endif // _di_f_fss_set_quotes_decrease_by_
 
 /**
  * Increase the size of the set_quotes array, but only if necessary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -503,14 +503,14 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_set_quotes_increase_
-  extern f_status_t f_fss_set_quotes_increase(const f_array_length_t step, f_fss_set_quotes_t * const set_quotes);
+  extern f_status_t f_fss_set_quotes_increase(const f_number_unsigned_t step, f_fss_set_quotes_t * const set_quotes);
 #endif // _di_f_fss_set_quotes_increase_
 
 /**
  * Resize the set_quotes array to a larger size.
  *
  * This will resize making the array larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -527,7 +527,7 @@ extern "C" {
  *   F_array_too_large (with error bit) if the new array length is too large.
  */
 #ifndef _di_f_fss_set_quotes_increase_by_
-  extern f_status_t f_fss_set_quotes_increase_by(const f_array_length_t amount, f_fss_set_quotes_t * const set_quotes);
+  extern f_status_t f_fss_set_quotes_increase_by(const f_number_unsigned_t amount, f_fss_set_quotes_t * const set_quotes);
 #endif // _di_f_fss_set_quotes_increase_by_
 
 /**
@@ -545,7 +545,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_set_quotes_resize_
-  extern f_status_t f_fss_set_quotes_resize(const f_array_length_t length, f_fss_set_quotes_t * const set_quotes);
+  extern f_status_t f_fss_set_quotes_resize(const f_number_unsigned_t length, f_fss_set_quotes_t * const set_quotes);
 #endif // _di_f_fss_set_quotes_resize_
 
 /**
@@ -563,7 +563,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_sets_adjust_
-  extern f_status_t f_fss_sets_adjust(const f_array_length_t length, f_fss_sets_t * const sets);
+  extern f_status_t f_fss_sets_adjust(const f_number_unsigned_t length, f_fss_sets_t * const sets);
 #endif // _di_f_fss_sets_adjust_
 
 /**
@@ -586,7 +586,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_sets_decimate_by_
-  extern f_status_t f_fss_sets_decimate_by(const f_array_length_t amount, f_fss_sets_t * const sets);
+  extern f_status_t f_fss_sets_decimate_by(const f_number_unsigned_t amount, f_fss_sets_t * const sets);
 #endif // _di_f_fss_sets_decimate_by_
 
 /**
@@ -608,13 +608,13 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_sets_decrease_by_
-  extern f_status_t f_fss_sets_decrease_by(const f_array_length_t amount, f_fss_sets_t * const sets);
+  extern f_status_t f_fss_sets_decrease_by(const f_number_unsigned_t amount, f_fss_sets_t * const sets);
 #endif // _di_f_fss_sets_decrease_by_
 
 /**
  * Increase the size of the sets array, but only if necessary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -632,14 +632,14 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_sets_increase_
-  extern f_status_t f_fss_sets_increase(const f_array_length_t step, f_fss_sets_t * const sets);
+  extern f_status_t f_fss_sets_increase(const f_number_unsigned_t step, f_fss_sets_t * const sets);
 #endif // _di_f_fss_sets_increase_
 
 /**
  * Resize the sets array to a larger size.
  *
  * This will resize making the array larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -656,7 +656,7 @@ extern "C" {
  *   F_array_too_large (with error bit) if the new array length is too large.
  */
 #ifndef _di_f_fss_sets_increase_by_
-  extern f_status_t f_fss_sets_increase_by(const f_array_length_t amount, f_fss_sets_t * const sets);
+  extern f_status_t f_fss_sets_increase_by(const f_number_unsigned_t amount, f_fss_sets_t * const sets);
 #endif // _di_f_fss_sets_increase_by_
 
 /**
@@ -674,7 +674,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_sets_resize_
-  extern f_status_t f_fss_sets_resize(const f_array_length_t length, f_fss_sets_t * const sets);
+  extern f_status_t f_fss_sets_resize(const f_number_unsigned_t length, f_fss_sets_t * const sets);
 #endif // _di_f_fss_sets_resize_
 
 #ifdef __cplusplus

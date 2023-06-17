@@ -22,7 +22,7 @@ extern "C" {
  * This is intended to represent an empty array lengths structure.
  */
 #ifndef _di_fss_read_except_none_c_
-  extern const f_array_lengths_t fss_read_except_none_c;
+  extern const f_number_unsigneds_t fss_read_except_none_c;
 #endif // _di_fss_read_except_none_c_
 
 #ifdef __cplusplus

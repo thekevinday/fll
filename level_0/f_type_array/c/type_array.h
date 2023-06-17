@@ -19,7 +19,6 @@
 
 // FLL-0 type_array includes.
 #include <fll/level_0/type_array/common.h>
-#include <fll/level_0/type_array/array_length.h>
 #include <fll/level_0/type_array/cell.h>
 #include <fll/level_0/type_array/fll_id.h>
 #include <fll/level_0/type_array/int8.h>
@@ -27,6 +26,7 @@
 #include <fll/level_0/type_array/int32.h>
 #include <fll/level_0/type_array/int64.h>
 #include <fll/level_0/type_array/int128.h>
+#include <fll/level_0/type_array/number_unsigned.h>
 #include <fll/level_0/type_array/state.h>
 #include <fll/level_0/type_array/status.h>
 #include <fll/level_0/type_array/uint8.h>

@@ -6,20 +6,20 @@ extern "C" {
 #endif
 
 #if !defined(_di_f_iki_datas_adjust_) || !defined(_di_f_iki_datas_decimate_by_)
-  f_status_t private_f_iki_datas_adjust(const f_array_length_t length, f_iki_datas_t *datas) {
+  f_status_t private_f_iki_datas_adjust(const f_number_unsigned_t length, f_iki_datas_t *datas) {
 
-    if (datas->used + length > F_array_length_t_size_d) {
+    if (datas->used + length > F_number_t_size_unsigned_d) {
       return F_status_set_error(F_array_too_large);
     }
 
     f_status_t status = F_none;
 
-    for (f_array_length_t i = length; i < datas->size; ++i) {
+    for (f_number_unsigned_t i = length; i < datas->size; ++i) {
 
       status = f_string_ranges_adjust(0, &datas->array[i].content);
       if (F_status_is_error(status)) return status;
 
-      status = f_array_lengths_adjust(0, &datas->array[i].delimits);
+      status = f_number_unsigneds_adjust(0, &datas->array[i].delimits);
       if (F_status_is_error(status)) return status;
 
       status = f_string_ranges_adjust(0, &datas->array[i].variable);
@@ -63,7 +63,7 @@ extern "C" {
     }
 
     if (source.delimits.used) {
-      status = f_array_lengths_append_all(source.delimits, &destination->array[destination->used].delimits);
+      status = f_number_unsigneds_append_all(source.delimits, &destination->array[destination->used].delimits);
       if (F_status_is_error(status)) return status;
     }
 
@@ -93,7 +93,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     }
 
-    for (f_array_length_t i = 0; i < source.used; ++i, ++destination->used) {
+    for (f_number_unsigned_t i = 0; i < source.used; ++i, ++destination->used) {
 
       destination->array[destination->used].content.used = 0;
       destination->array[destination->used].delimits.used = 0;
@@ -106,7 +106,7 @@ extern "C" {
       }
 
       if (source.array[i].delimits.used) {
-        status = f_array_lengths_append_all(source.array[i].delimits, &destination->array[destination->used].delimits);
+        status = f_number_unsigneds_append_all(source.array[i].delimits, &destination->array[destination->used].delimits);
         if (F_status_is_error(status)) return status;
       }
 
@@ -126,20 +126,20 @@ extern "C" {
 #endif // !defined(_di_f_iki_datas_append_) || !defined(_di_f_iki_datas_append_all_) || !defined(_di_f_iki_datass_append_all_)
 
 #if !defined(_di_f_iki_datas_append_) || !defined(_di_f_iki_datas_decrease_by_) || !defined(_di_f_iki_datas_increase_) || !defined(_di_f_iki_datas_increase_by_) || !defined(_di_f_iki_datas_resize_)
-  f_status_t private_f_iki_datas_resize(const f_array_length_t length, f_iki_datas_t *datas) {
+  f_status_t private_f_iki_datas_resize(const f_number_unsigned_t length, f_iki_datas_t *datas) {
 
-    if (datas->used + length > F_array_length_t_size_d) {
+    if (datas->used + length > F_number_t_size_unsigned_d) {
       return F_status_set_error(F_array_too_large);
     }
 
     f_status_t status = F_none;
 
-    for (f_array_length_t i = length; i < datas->size; ++i) {
+    for (f_number_unsigned_t i = length; i < datas->size; ++i) {
 
       status = f_string_ranges_resize(0, &datas->array[i].content);
       if (F_status_is_error(status)) return status;
 
-      status = f_array_lengths_resize(0, &datas->array[i].delimits);
+      status = f_number_unsigneds_resize(0, &datas->array[i].delimits);
       if (F_status_is_error(status)) return status;
 
       status = f_string_ranges_resize(0, &datas->array[i].variable);
@@ -163,11 +163,11 @@ extern "C" {
 #endif // !defined(_di_f_iki_datas_append_) || !defined(_di_f_iki_datas_decrease_by_) || !defined(_di_f_iki_datas_increase_) || !defined(_di_f_iki_datas_increase_by_) || !defined(_di_f_iki_datas_resize_)
 
 #if !defined(_di_f_iki_datass_adjust_) || !defined(_di_f_iki_datass_decimate_by_)
-  f_status_t private_f_iki_datass_adjust(const f_array_length_t length, f_iki_datass_t *datass) {
+  f_status_t private_f_iki_datass_adjust(const f_number_unsigned_t length, f_iki_datass_t *datass) {
 
     f_status_t status = F_none;
 
-    for (f_array_length_t i = length; i < datass->size; ++i) {
+    for (f_number_unsigned_t i = length; i < datass->size; ++i) {
 
       status = f_memory_destroy(datass->array[i].size, sizeof(f_iki_datas_t), (void **) & datass->array[i].array);
       if (F_status_is_error(status)) return status;
@@ -190,11 +190,11 @@ extern "C" {
 #endif // !defined(_di_f_iki_datass_adjust_) || !defined(_di_f_iki_datass_decimate_by_)
 
 #if !defined(_di_f_iki_datass_decrease_by_) || !defined(_di_f_iki_datass_increase_) || !defined(_di_f_iki_datass_increase_by_) || !defined(_di_f_iki_datass_resize_)
-  f_status_t private_f_iki_datass_resize(const f_array_length_t length, f_iki_datass_t *datass) {
+  f_status_t private_f_iki_datass_resize(const f_number_unsigned_t length, f_iki_datass_t *datass) {
 
     f_status_t status = F_none;
 
-    for (f_array_length_t i = length; i < datass->size; ++i) {
+    for (f_number_unsigned_t i = length; i < datass->size; ++i) {
 
       status = f_memory_delete(datass->array[i].size, sizeof(f_iki_datas_t), (void **) & datass->array[i].array);
       if (F_status_is_error(status)) return status;

@@ -37,26 +37,6 @@
 #define _di_f_accounts_t_
 //#define _di_f_account_t_
 
-#define _di_f_array_lengths_adjust_
-#define _di_f_array_lengths_append_
-#define _di_f_array_lengths_append_all_
-#define _di_f_array_lengths_decimate_by_
-#define _di_f_array_lengths_decrease_by_
-//#define _di_f_array_lengths_increase_
-//#define _di_f_array_lengths_increase_by_
-//#define _di_f_array_lengths_resize_
-#define _di_f_array_lengthss_adjust_
-#define _di_f_array_lengthss_append_
-#define _di_f_array_lengthss_append_all_
-#define _di_f_array_lengthss_decimate_by_
-#define _di_f_array_lengthss_decrease_by_
-#define _di_f_array_lengthss_increase_
-#define _di_f_array_lengthss_increase_by_
-#define _di_f_array_lengthss_resize_
-#define _di_f_array_lengthss_t_
-//#define _di_f_array_lengths_t_
-//#define _di_f_array_length_t_
-
 #define _di_f_capability_ambient_get_
 #define _di_f_capability_ambient_reset_
 #define _di_f_capability_ambient_set_
@@ -1174,6 +1154,26 @@
 #define _di_f_memory_structure_resize_
 
 //#define _di_f_mode_t_
+
+#define _di_f_number_unsigneds_adjust_
+#define _di_f_number_unsigneds_append_
+#define _di_f_number_unsigneds_append_all_
+#define _di_f_number_unsigneds_decimate_by_
+#define _di_f_number_unsigneds_decrease_by_
+//#define _di_f_number_unsigneds_increase_
+//#define _di_f_number_unsigneds_increase_by_
+//#define _di_f_number_unsigneds_resize_
+#define _di_f_number_unsignedss_adjust_
+#define _di_f_number_unsignedss_append_
+#define _di_f_number_unsignedss_append_all_
+#define _di_f_number_unsignedss_decimate_by_
+#define _di_f_number_unsignedss_decrease_by_
+#define _di_f_number_unsignedss_increase_
+#define _di_f_number_unsignedss_increase_by_
+#define _di_f_number_unsignedss_resize_
+#define _di_f_number_unsignedss_t_
+//#define _di_f_number_unsigneds_t_
+//#define _di_f_number_unsigned_t_
 
 #define _di_f_parse_dynamic_partial_fll_identify_
 #define _di_f_parse_dynamic_seek_line_to_utf_character_

@@ -33,8 +33,8 @@ extern "C" {
       &data_build->setting.build_sources_library_static,
     };
 
-    f_array_length_t i = 0;
-    f_array_length_t j = 0;
+    f_number_unsigned_t i = 0;
+    f_number_unsigned_t j = 0;
     uint8_t k = 0;
 
     for (i = 0; i < 2; ++i) {

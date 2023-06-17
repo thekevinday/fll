@@ -7,7 +7,7 @@ extern "C" {
 #endif
 
 #ifndef _di_f_statuss_adjust_
-  f_status_t f_statuss_adjust(const f_array_length_t length, f_statuss_t *statuss) {
+  f_status_t f_statuss_adjust(const f_number_unsigned_t length, f_statuss_t *statuss) {
     #ifndef _di_level_0_parameter_checking_
       if (!statuss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -39,7 +39,7 @@ extern "C" {
 #endif // _di_f_statuss_append_all_
 
 #ifndef _di_f_statuss_decimate_by_
-  f_status_t f_statuss_decimate_by(const f_array_length_t amount, f_statuss_t *statuss) {
+  f_status_t f_statuss_decimate_by(const f_number_unsigned_t amount, f_statuss_t *statuss) {
     #ifndef _di_level_0_parameter_checking_
       if (!statuss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -55,7 +55,7 @@ extern "C" {
 #endif // _di_f_statuss_decimate_by_
 
 #ifndef _di_f_statuss_decrease_by_
-  f_status_t f_statuss_decrease_by(const f_array_length_t amount, f_statuss_t *statuss) {
+  f_status_t f_statuss_decrease_by(const f_number_unsigned_t amount, f_statuss_t *statuss) {
     #ifndef _di_level_0_parameter_checking_
       if (!statuss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -71,20 +71,20 @@ extern "C" {
 #endif // _di_f_statuss_decrease_by_
 
 #ifndef _di_f_statuss_increase_
-  f_status_t f_statuss_increase(const f_array_length_t step, f_statuss_t *statuss) {
+  f_status_t f_statuss_increase(const f_number_unsigned_t step, f_statuss_t *statuss) {
     #ifndef _di_level_0_parameter_checking_
       if (!statuss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (step && statuss->used + 1 > statuss->size) {
-      f_array_length_t size = statuss->used + step;
+      f_number_unsigned_t size = statuss->used + step;
 
-      if (size > F_array_length_t_size_d) {
-        if (statuss->used + 1 > F_array_length_t_size_d) {
+      if (size > F_number_t_size_unsigned_d) {
+        if (statuss->used + 1 > F_number_t_size_unsigned_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = F_array_length_t_size_d;
+        size = F_number_t_size_unsigned_d;
       }
 
       return private_f_statuss_resize(size, statuss);
@@ -95,7 +95,7 @@ extern "C" {
 #endif // _di_f_statuss_increase_
 
 #ifndef _di_f_statuss_increase_by_
-  f_status_t f_statuss_increase_by(const f_array_length_t amount, f_statuss_t *statuss) {
+  f_status_t f_statuss_increase_by(const f_number_unsigned_t amount, f_statuss_t *statuss) {
     #ifndef _di_level_0_parameter_checking_
       if (!statuss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -103,7 +103,7 @@ extern "C" {
     if (!amount) return F_data_not;
 
     if (statuss->used + amount > statuss->size) {
-      if (statuss->used + amount > F_array_length_t_size_d) {
+      if (statuss->used + amount > F_number_t_size_unsigned_d) {
         return F_status_set_error(F_array_too_large);
       }
 
@@ -115,7 +115,7 @@ extern "C" {
 #endif // _di_f_statuss_increase_by_
 
 #ifndef _di_f_statuss_resize_
-  f_status_t f_statuss_resize(const f_array_length_t length, f_statuss_t *statuss) {
+  f_status_t f_statuss_resize(const f_number_unsigned_t length, f_statuss_t *statuss) {
     #ifndef _di_level_0_parameter_checking_
       if (!statuss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -125,7 +125,7 @@ extern "C" {
 #endif // _di_f_statuss_resize_
 
 #ifndef _di_f_statusss_adjust_
-  f_status_t f_statusss_adjust(const f_array_length_t length, f_statusss_t *statusss) {
+  f_status_t f_statusss_adjust(const f_number_unsigned_t length, f_statusss_t *statusss) {
     #ifndef _di_level_0_parameter_checking_
       if (!statusss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -173,7 +173,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     }
 
-    for (f_array_length_t i = 0; i < source.used; ++i, ++destination->used) {
+    for (f_number_unsigned_t i = 0; i < source.used; ++i, ++destination->used) {
 
       destination->array[destination->used].used = 0;
 
@@ -188,7 +188,7 @@ extern "C" {
 #endif // _di_f_statusss_append_all_
 
 #ifndef _di_f_statusss_decimate_by_
-  f_status_t f_statusss_decimate_by(const f_array_length_t amount, f_statusss_t *statusss) {
+  f_status_t f_statusss_decimate_by(const f_number_unsigned_t amount, f_statusss_t *statusss) {
     #ifndef _di_level_0_parameter_checking_
       if (!statusss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -204,7 +204,7 @@ extern "C" {
 #endif // _di_f_statusss_decimate_by_
 
 #ifndef _di_f_statusss_decrease_by_
-  f_status_t f_statusss_decrease_by(const f_array_length_t amount, f_statusss_t *statusss) {
+  f_status_t f_statusss_decrease_by(const f_number_unsigned_t amount, f_statusss_t *statusss) {
     #ifndef _di_level_0_parameter_checking_
       if (!statusss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -220,20 +220,20 @@ extern "C" {
 #endif // _di_f_statusss_decrease_by_
 
 #ifndef _di_f_statusss_increase_
-  f_status_t f_statusss_increase(const f_array_length_t step, f_statusss_t *statusss) {
+  f_status_t f_statusss_increase(const f_number_unsigned_t step, f_statusss_t *statusss) {
     #ifndef _di_level_0_parameter_checking_
       if (!statusss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (step && statusss->used + 1 > statusss->size) {
-      f_array_length_t size = statusss->used + step;
+      f_number_unsigned_t size = statusss->used + step;
 
-      if (size > F_array_length_t_size_d) {
-        if (statusss->used + 1 > F_array_length_t_size_d) {
+      if (size > F_number_t_size_unsigned_d) {
+        if (statusss->used + 1 > F_number_t_size_unsigned_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = F_array_length_t_size_d;
+        size = F_number_t_size_unsigned_d;
       }
 
       return private_f_statusss_resize(size, statusss);
@@ -244,7 +244,7 @@ extern "C" {
 #endif // _di_f_statusss_increase_
 
 #ifndef _di_f_statusss_increase_by_
-  f_status_t f_statusss_increase_by(const f_array_length_t amount, f_statusss_t *statusss) {
+  f_status_t f_statusss_increase_by(const f_number_unsigned_t amount, f_statusss_t *statusss) {
     #ifndef _di_level_0_parameter_checking_
       if (!statusss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -252,7 +252,7 @@ extern "C" {
     if (!amount) return F_data_not;
 
     if (statusss->used + amount > statusss->size) {
-      if (statusss->used + amount > F_array_length_t_size_d) {
+      if (statusss->used + amount > F_number_t_size_unsigned_d) {
         return F_status_set_error(F_array_too_large);
       }
 
@@ -264,7 +264,7 @@ extern "C" {
 #endif // _di_f_statusss_increase_by_
 
 #ifndef _di_f_statusss_resize_
-  f_status_t f_statusss_resize(const f_array_length_t length, f_statusss_t *statusss) {
+  f_status_t f_statusss_resize(const f_number_unsigned_t length, f_statusss_t *statusss) {
     #ifndef _di_level_0_parameter_checking_
       if (!statusss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_

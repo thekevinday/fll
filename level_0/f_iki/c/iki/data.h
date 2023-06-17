@@ -27,10 +27,10 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_array_lengths_resize().
+ *   Errors (with error bit) from: f_number_unsigneds_resize().
  *   Errors (with error bit) from: f_string_ranges_resize().
  *
- * @see f_array_lengths_resize()
+ * @see f_number_unsigneds_resize()
  * @see f_string_ranges_resize()
  */
 #ifndef _di_f_iki_data_delete_
@@ -48,10 +48,10 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_array_lengths_adjust().
+ *   Errors (with error bit) from: f_number_unsigneds_adjust().
  *   Errors (with error bit) from: f_string_ranges_adjust().
  *
- * @see f_array_lengths_adjust()
+ * @see f_number_unsigneds_adjust()
  * @see f_string_ranges_adjust()
  */
 #ifndef _di_f_iki_data_destroy_
@@ -74,7 +74,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_adjust().
  */
 #ifndef _di_f_iki_datas_adjust_
-  extern f_status_t f_iki_datas_adjust(const f_array_length_t length, f_iki_datas_t *datas);
+  extern f_status_t f_iki_datas_adjust(const f_number_unsigned_t length, f_iki_datas_t *datas);
 #endif // _di_f_iki_datas_adjust_
 
 /**
@@ -138,7 +138,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_adjust().
  */
 #ifndef _di_f_iki_datas_decimate_by_
-  extern f_status_t f_iki_datas_decimate_by(const f_array_length_t amount, f_iki_datas_t *datas);
+  extern f_status_t f_iki_datas_decimate_by(const f_number_unsigned_t amount, f_iki_datas_t *datas);
 #endif // _di_f_iki_datas_decimate_by_
 
 /**
@@ -162,13 +162,13 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_iki_datas_decrease_by_
-  extern f_status_t f_iki_datas_decrease_by(const f_array_length_t amount, f_iki_datas_t *datas);
+  extern f_status_t f_iki_datas_decrease_by(const f_number_unsigned_t amount, f_iki_datas_t *datas);
 #endif // _di_f_iki_datas_decrease_by_
 
 /**
  * Increase the size of the iki_datas array, but only if necesary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -187,14 +187,14 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_iki_datas_increase_
-  extern f_status_t f_iki_datas_increase(const f_array_length_t step, f_iki_datas_t *datas);
+  extern f_status_t f_iki_datas_increase(const f_number_unsigned_t step, f_iki_datas_t *datas);
 #endif // _di_f_iki_datas_increase_
 
 /**
  * Resize the iki_datas array to a larger size.
  *
  * This will resize making the array larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -212,7 +212,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_iki_datas_increase_by_
-  extern f_status_t f_iki_datas_increase_by(const f_array_length_t amount, f_iki_datas_t *datas);
+  extern f_status_t f_iki_datas_increase_by(const f_number_unsigned_t amount, f_iki_datas_t *datas);
 #endif // _di_f_iki_datas_increase_by_
 
 /**
@@ -231,7 +231,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_iki_datas_resize_
-  extern f_status_t f_iki_datas_resize(const f_array_length_t length, f_iki_datas_t *datas);
+  extern f_status_t f_iki_datas_resize(const f_number_unsigned_t length, f_iki_datas_t *datas);
 #endif // _di_f_iki_datas_resize_
 
 /**
@@ -251,7 +251,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_destroy().
  */
 #ifndef _di_f_iki_datass_adjust_
-  extern f_status_t f_iki_datass_adjust(const f_array_length_t length, f_iki_datass_t *datass);
+  extern f_status_t f_iki_datass_adjust(const f_number_unsigned_t length, f_iki_datass_t *datass);
 #endif // _di_f_iki_datass_adjust_
 
 /**
@@ -316,7 +316,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_destroy().
  */
 #ifndef _di_f_iki_datass_decimate_by_
-  extern f_status_t f_iki_datass_decimate_by(const f_array_length_t amount, f_iki_datass_t *datass);
+  extern f_status_t f_iki_datass_decimate_by(const f_number_unsigned_t amount, f_iki_datass_t *datass);
 #endif // _di_f_iki_datass_decimate_by_
 
 /**
@@ -341,13 +341,13 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_iki_datass_decrease_by_
-  extern f_status_t f_iki_datass_decrease_by(const f_array_length_t amount, f_iki_datass_t *datass);
+  extern f_status_t f_iki_datass_decrease_by(const f_number_unsigned_t amount, f_iki_datass_t *datass);
 #endif // _di_f_iki_datass_decrease_by_
 
 /**
  * Increase the size of the iki_datass array, but only if necessary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -366,14 +366,14 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_iki_datass_increase_
-  extern f_status_t f_iki_datass_increase(const f_array_length_t step, f_iki_datass_t *datass);
+  extern f_status_t f_iki_datass_increase(const f_number_unsigned_t step, f_iki_datass_t *datass);
 #endif // _di_f_iki_datass_increase_
 
 /**
  * Resize the iki_datass array to a larger size.
  *
  * This will resize making the array larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -391,7 +391,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_iki_datass_increase_by_
-  extern f_status_t f_iki_datass_increase_by(const f_array_length_t amount, f_iki_datass_t *datass);
+  extern f_status_t f_iki_datass_increase_by(const f_number_unsigned_t amount, f_iki_datass_t *datass);
 #endif // _di_f_iki_datass_increase_by_
 
 /**
@@ -411,7 +411,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_iki_datass_resize_
-  extern f_status_t f_iki_datass_resize(const f_array_length_t length, f_iki_datass_t *datass);
+  extern f_status_t f_iki_datass_resize(const f_number_unsigned_t length, f_iki_datass_t *datass);
 #endif // _di_f_iki_datass_resize_
 
 #ifdef __cplusplus

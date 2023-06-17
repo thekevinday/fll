@@ -7,9 +7,9 @@ extern "C" {
 #endif
 
 #if !defined(_di_f_string_ranges_adjust_) || !defined(_di_f_string_ranges_decimate_by_)
-  f_status_t private_f_string_ranges_adjust(const f_array_length_t length, f_string_ranges_t * const ranges) {
+  f_status_t private_f_string_ranges_adjust(const f_number_unsigned_t length, f_string_ranges_t * const ranges) {
 
-    if (ranges->used + length > F_array_length_t_size_d) {
+    if (ranges->used + length > F_number_t_size_unsigned_d) {
       return F_status_set_error(F_array_too_large);
     }
 
@@ -34,7 +34,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     }
 
-    for (f_array_length_t i = 0; i < source.used; ++i) {
+    for (f_number_unsigned_t i = 0; i < source.used; ++i) {
 
       destination->array[destination->used].start = source.array[i].start;
       destination->array[destination->used++].stop = source.array[i].stop;
@@ -45,9 +45,9 @@ extern "C" {
 #endif // !defined(_di_f_string_ranges_append_all_) || !defined(_di_f_string_rangess_append_) || !defined(_di_f_string_rangess_append_all_)
 
 #if !defined(_di_f_string_ranges_append_) || !defined(_di_f_string_ranges_append_all_) || !defined(_di_f_string_ranges_decrease_by_) || !defined(_di_f_string_ranges_increase_) || !defined(_di_f_string_ranges_increase_by_) || !defined(_di_f_string_ranges_resize_) || !defined(_di_f_string_rangess_append_) || !defined(_di_f_string_rangess_append_all_) || !defined(_di_f_string_rangess_decrease_by_) || !defined(_di_f_string_rangess_increase_) || !defined(_di_f_string_rangess_increase_by_)
-  f_status_t private_f_string_ranges_resize(const f_array_length_t length, f_string_ranges_t * const ranges) {
+  f_status_t private_f_string_ranges_resize(const f_number_unsigned_t length, f_string_ranges_t * const ranges) {
 
-    if (ranges->used + length > F_array_length_t_size_d) {
+    if (ranges->used + length > F_number_t_size_unsigned_d) {
       return F_status_set_error(F_array_too_large);
     }
 

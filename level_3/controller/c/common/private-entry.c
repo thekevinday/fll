@@ -27,10 +27,10 @@ extern "C" {
 #endif // _di_controller_entry_actions_delete_simple_
 
 #ifndef _di_controller_entry_actions_increase_by_
-  f_status_t controller_entry_actions_increase_by(const f_array_length_t amount, controller_entry_actions_t * const actions) {
+  f_status_t controller_entry_actions_increase_by(const f_number_unsigned_t amount, controller_entry_actions_t * const actions) {
 
     if (actions->used + amount > actions->size) {
-      if (actions->used + amount > F_array_length_t_size_d) {
+      if (actions->used + amount > F_number_t_size_unsigned_d) {
         return F_status_set_error(F_array_too_large);
       }
 
@@ -71,10 +71,10 @@ extern "C" {
 #endif // _di_controller_entry_items_delete_simple_
 
 #ifndef _di_controller_entry_items_increase_by_
-  f_status_t controller_entry_items_increase_by(const f_array_length_t amount, controller_entry_items_t * const items) {
+  f_status_t controller_entry_items_increase_by(const f_number_unsigned_t amount, controller_entry_items_t * const items) {
 
     if (items->used + amount > items->size) {
-      if (items->used + amount > F_array_length_t_size_d) {
+      if (items->used + amount > F_number_t_size_unsigned_d) {
         return F_status_set_error(F_array_too_large);
       }
 

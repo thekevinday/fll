@@ -9,7 +9,7 @@ void test__f_console_parameter_prioritize_left__fails(void **state) {
 
   f_console_parameters_t parameters = f_console_parameters_t_initialize;
   f_uint16s_t choices = f_uint16s_t_initialize;
-  f_array_length_t decision = f_array_length_t_initialize;
+  f_number_unsigned_t decision = f_number_unsigned_t_initialize;
 
   {
     uint16_t choices_array[1] = { 20 };
@@ -41,7 +41,7 @@ void test__f_console_parameter_prioritize_left__parameter_checking(void **state)
   }
 
   {
-    uint16_t choices_array[1] = { f_array_length_t_initialize };
+    uint16_t choices_array[1] = { f_number_unsigned_t_initialize };
     choices.array = choices_array;
 
     const f_status_t status = f_console_parameter_prioritize_left(parameters, choices, 0);
@@ -56,7 +56,7 @@ void test__f_console_parameter_prioritize_left__works(void **state) {
 
   f_console_parameters_t parameters = f_console_parameters_t_initialize;
   f_uint16s_t choices = f_uint16s_t_initialize;
-  f_array_length_t decision = f_array_length_t_initialize;
+  f_number_unsigned_t decision = f_number_unsigned_t_initialize;
 
   {
     uint16_t choices_array[1] = { 0 };

@@ -583,7 +583,7 @@ extern "C" {
  * @see fake_make_operate_section()
  */
 #ifndef _di_fake_make_operate_process_type_operate_
-  extern int fake_make_operate_process_type_operate(fake_make_data_t * const data_make, f_array_lengths_t * const section_stack);
+  extern int fake_make_operate_process_type_operate(fake_make_data_t * const data_make, f_number_unsigneds_t * const section_stack);
 #endif // _di_fake_make_operate_process_type_operate_
 
 /**

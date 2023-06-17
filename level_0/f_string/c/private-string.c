@@ -7,7 +7,7 @@ extern "C" {
 #endif
 
 #if !defined(_di_f_string_append_) || !defined(_di_f_string_append_assure_) || !defined(_di_f_string_dynamic_append_) || !defined(_di_f_string_dynamic_append_assure_) || !defined(_di_f_string_dynamic_mash_) || !defined(_di_f_string_dynamic_partial_append_) || !defined(_di_f_string_dynamic_partial_append_assure_) || !defined(_di_f_string_dynamic_partial_mash_) || !defined(_di_f_string_dynamic_partial_mash_nulless_) || !defined(_di_f_string_dynamic_partial_mish_) || !defined(_di_f_string_dynamic_partial_mish_nulless_) || !defined(_di_f_string_dynamic_partial_prepend_) || !defined(_di_f_string_dynamics_append_) || !defined(_di_f_string_map_multis_append_) || !defined(_di_f_string_mash_) || !defined(_di_f_string_maps_append_) || !defined(_di_f_string_triples_append_)
-  f_status_t private_f_string_append(const f_string_t source, const f_array_length_t length, f_string_dynamic_t * const destination) {
+  f_status_t private_f_string_append(const f_string_t source, const f_number_unsigned_t length, f_string_dynamic_t * const destination) {
 
     if (destination->used + length + 1 > destination->size) {
       const f_status_t status = private_f_string_dynamic_increase_by(length + 1, destination);
@@ -23,12 +23,12 @@ extern "C" {
 #endif // !defined(_di_f_string_append_) || !defined(_di_f_string_append_assure_) || !defined(_di_f_string_dynamic_append_) || !defined(_di_f_string_dynamic_append_assure_) || !defined(_di_f_string_dynamic_mash_) || !defined(_di_f_string_dynamic_partial_append_) || !defined(_di_f_string_dynamic_partial_append_assure_) || !defined(_di_f_string_dynamic_partial_mash_) || !defined(_di_f_string_dynamic_partial_mash_nulless_) || !defined(_di_f_string_dynamic_partial_mish_) || !defined(_di_f_string_dynamic_partial_mish_nulless_) || !defined(_di_f_string_dynamic_partial_prepend_) || !defined(_di_f_string_dynamics_append_) || !defined(_di_f_string_map_multis_append_) || !defined(_di_f_string_mash_) || !defined(_di_f_string_maps_append_) || !defined(_di_f_string_triples_append_)
 
 #if !defined(_di_f_string_append_assure_nulless_) || !defined(_di_f_string_append_nulless_) || !defined(_di_f_string_dynamic_append_assure_nulless_) || !defined(_di_f_string_dynamic_append_nulless_) || !defined(_di_f_string_dynamic_mash_nulless_) || !defined(_di_f_string_dynamic_partial_append_assure_nulless_) || !defined(_di_f_string_dynamic_partial_append_nulless_) || !defined(_di_f_string_dynamic_partial_mash_nulless_) || !defined(_di_f_string_mash_nulless_)
-  f_status_t private_f_string_append_nulless(const f_string_t source, const f_array_length_t length, f_string_dynamic_t * const destination) {
+  f_status_t private_f_string_append_nulless(const f_string_t source, const f_number_unsigned_t length, f_string_dynamic_t * const destination) {
 
     f_status_t status = F_none;
 
-    f_array_length_t i = 0;
-    f_array_length_t size = 0;
+    f_number_unsigned_t i = 0;
+    f_number_unsigned_t size = 0;
 
     // Count all of the NULLs and subtract them from the total size.
     for (; i < length; ++i) {
@@ -40,7 +40,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     }
 
-    f_array_length_t first = 0;
+    f_number_unsigned_t first = 0;
 
     for (i = 0, size = 0; i < length; ++i) {
 
@@ -74,7 +74,7 @@ extern "C" {
 #endif // !defined(_di_f_string_append_assure_nulless_) || !defined(_di_f_string_append_nulless_) || !defined(_di_f_string_dynamic_append_assure_nulless_) || !defined(_di_f_string_dynamic_append_nulless_) || !defined(_di_f_string_dynamic_mash_nulless_) || !defined(_di_f_string_dynamic_partial_append_assure_nulless_) || !defined(_di_f_string_dynamic_partial_append_nulless_) || !defined(_di_f_string_dynamic_partial_mash_nulless_) || !defined(_di_f_string_mash_nulless_)
 
 #if !defined(_di_f_string_dynamic_mish_) || !defined(_di_f_string_dynamic_partial_mish_) || !defined(_di_f_string_dynamic_partial_prepend_assure_) || !defined(_di_f_string_dynamic_partial_prepend_) || !defined(_di_f_string_dynamic_prepend_assure_) || !defined(_di_f_string_dynamic_prepend_) || !defined(_di_f_string_mish_) || !defined(_di_f_string_prepend_assure_) || !defined(_di_f_string_prepend_)
-  f_status_t private_f_string_prepend(const f_string_t source, const f_array_length_t length, f_string_dynamic_t * const destination) {
+  f_status_t private_f_string_prepend(const f_string_t source, const f_number_unsigned_t length, f_string_dynamic_t * const destination) {
 
     if (destination->used + length > F_string_t_size_d) {
       return F_status_set_error(F_string_too_large);
@@ -100,7 +100,7 @@ extern "C" {
 #endif // !defined(_di_f_string_dynamic_mish_) || !defined(_di_f_string_dynamic_partial_mish_) || !defined(_di_f_string_dynamic_partial_prepend_assure_) || !defined(_di_f_string_dynamic_partial_prepend_) || !defined(_di_f_string_dynamic_prepend_assure_) || !defined(_di_f_string_dynamic_prepend_) || !defined(_di_f_string_mish_) || !defined(_di_f_string_prepend_assure_) || !defined(_di_f_string_prepend_)
 
 #if !defined(_di_f_string_dynamic_mish_nulless_) || !defined(_di_f_string_dynamic_partial_mish_nulless_) || !defined(_di_f_string_dynamic_partial_prepend_assure_nulless_) || !defined(_di_f_string_dynamic_partial_prepend_nulless_) || !defined(_di_f_string_dynamic_prepend_assure_nulless_) || !defined(_di_f_string_dynamic_prepend_nulless_) || !defined(_di_f_string_mish_nulless_) || !defined(_di_f_string_prepend_assure_nulless_) || !defined(_di_f_string_prepend_nulless_)
-  f_status_t private_f_string_prepend_nulless(const f_string_t source, const f_array_length_t length, f_string_dynamic_t * const destination) {
+  f_status_t private_f_string_prepend_nulless(const f_string_t source, const f_number_unsigned_t length, f_string_dynamic_t * const destination) {
 
     if (destination->used + length > F_string_t_size_d) {
       return F_status_set_error(F_string_too_large);
@@ -108,12 +108,12 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    f_array_length_t first = 0;
-    f_array_length_t offset = 0;
+    f_number_unsigned_t first = 0;
+    f_number_unsigned_t offset = 0;
 
-    f_array_length_t size = 0;
+    f_number_unsigned_t size = 0;
 
-    for (f_array_length_t i = 0; i <= length; ++i) {
+    for (f_number_unsigned_t i = 0; i <= length; ++i) {
 
       if (i == length) {
         if (i > first) {

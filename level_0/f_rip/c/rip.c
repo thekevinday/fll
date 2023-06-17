@@ -6,15 +6,15 @@ extern "C" {
 #endif
 
 #ifndef _di_f_rip_
-  f_status_t f_rip(const f_string_t source, const f_array_length_t length, f_string_dynamic_t * const destination) {
+  f_status_t f_rip(const f_string_t source, const f_number_unsigned_t length, f_string_dynamic_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (!length) return F_data_not_eos;
 
-    f_array_length_t begin = 0;
-    f_array_length_t end = length - 1;
+    f_number_unsigned_t begin = 0;
+    f_number_unsigned_t end = length - 1;
 
     {
       const f_status_t status = private_f_rip_find_range(source, &begin, &end);
@@ -34,8 +34,8 @@ extern "C" {
 
     if (!source.used) return F_data_not_eos;
 
-    f_array_length_t begin = 0;
-    f_array_length_t end = source.used - 1;
+    f_number_unsigned_t begin = 0;
+    f_number_unsigned_t end = source.used - 1;
 
     {
       const f_status_t status = private_f_rip_find_range(source.string, &begin, &end);
@@ -57,8 +57,8 @@ extern "C" {
 
     if (!source.used) return F_data_not_eos;
 
-    f_array_length_t begin = 0;
-    f_array_length_t end = source.used - 1;
+    f_number_unsigned_t begin = 0;
+    f_number_unsigned_t end = source.used - 1;
 
     {
       const f_status_t status = private_f_rip_find_range(source.string, &begin, &end);
@@ -73,15 +73,15 @@ extern "C" {
 #endif // _di_f_rip_dynamic_nulless_
 
 #ifndef _di_f_rip_nulless_
-  f_status_t f_rip_nulless(const f_string_t source, const f_array_length_t length, f_string_dynamic_t * const destination) {
+  f_status_t f_rip_nulless(const f_string_t source, const f_number_unsigned_t length, f_string_dynamic_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (!length) return F_data_not_eos;
 
-    f_array_length_t begin = 0;
-    f_array_length_t end = length - 1;
+    f_number_unsigned_t begin = 0;
+    f_number_unsigned_t end = length - 1;
 
     {
       const f_status_t status = private_f_rip_find_range(source, &begin, &end);
@@ -102,8 +102,8 @@ extern "C" {
     if (!source.used) return F_data_not_eos;
     if (range.start > range.stop) return F_data_not_stop;
 
-    f_array_length_t begin = range.start;
-    f_array_length_t end = range.stop;
+    f_number_unsigned_t begin = range.start;
+    f_number_unsigned_t end = range.stop;
 
     {
       const f_status_t status = private_f_rip_find_range(source.string, &begin, &end);
@@ -126,8 +126,8 @@ extern "C" {
     if (!source.used) return F_data_not_eos;
     if (range.start > range.stop) return F_data_not_stop;
 
-    f_array_length_t begin = range.start;
-    f_array_length_t end = range.stop;
+    f_number_unsigned_t begin = range.start;
+    f_number_unsigned_t end = range.stop;
 
     {
       const f_status_t status = private_f_rip_find_range(source.string, &begin, &end);

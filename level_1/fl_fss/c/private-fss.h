@@ -79,7 +79,7 @@ extern "C" {
  * @see fl_fss_extended_list_object_write()
  */
 #if !defined(_di_fl_fss_basic_list_object_write_) || !defined(_di_fl_fss_extended_list_object_write_)
-  extern void private_fl_fss_basic_list_write_object_trim(const f_array_length_t used_start, f_string_dynamic_t * const destination, f_state_t * const state) F_attribute_visibility_internal_d;
+  extern void private_fl_fss_basic_list_write_object_trim(const f_number_unsigned_t used_start, f_string_dynamic_t * const destination, f_state_t * const state) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fl_fss_basic_list_object_write_) || !defined(_di_fl_fss_extended_list_object_write_)
 
 /**
@@ -134,8 +134,8 @@ extern "C" {
  *     F_none_eol (with error bit) after reaching an EOL, which is not supported by the standard.
  *     F_parameter (with error bit) if a parameter is invalid.
  *
- *     Errors (with error bit) from: f_array_lengths_increase().
- *     Errors (with error bit) from: f_array_lengths_increase_by().
+ *     Errors (with error bit) from: f_number_unsigneds_increase().
+ *     Errors (with error bit) from: f_number_unsigneds_increase_by().
  *     Errors (with error bit) from: f_fss_is_graph().
  *     Errors (with error bit) from: f_fss_is_space().
  *     Errors (with error bit) from: f_fss_is_zero_width().
@@ -143,8 +143,8 @@ extern "C" {
  *     Errors (with error bit) from: f_fss_skip_past_space().
  *     Errors (with error bit) from: f_utf_buffer_increment().
  *
- * @see f_array_lengths_increase()
- * @see f_array_lengths_increase_by()
+ * @see f_number_unsigneds_increase()
+ * @see f_number_unsigneds_increase_by()
  * @see f_fss_is_graph()
  * @see f_fss_is_space()
  * @see f_fss_is_zero_width()
@@ -256,7 +256,7 @@ extern "C" {
  * @see fl_fss_extended_object_write()
  */
 #if !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_extended_object_write_)
-  extern void private_fl_fss_basic_write_object_trim(const uint8_t quote, const f_array_length_t used_start, f_string_dynamic_t * const destination, f_state_t * const state) F_attribute_visibility_internal_d;
+  extern void private_fl_fss_basic_write_object_trim(const uint8_t quote, const f_number_unsigned_t used_start, f_string_dynamic_t * const destination, f_state_t * const state) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_extended_object_write_)
 
 #ifdef __cplusplus

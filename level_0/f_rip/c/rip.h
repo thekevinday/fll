@@ -57,7 +57,7 @@ extern "C" {
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_f_rip_
-  extern f_status_t f_rip(const f_string_t source, const f_array_length_t length, f_string_dynamic_t * const destination);
+  extern f_status_t f_rip(const f_string_t source, const f_number_unsigned_t length, f_string_dynamic_t * const destination);
 #endif // _di_f_rip_
 
 /**
@@ -159,7 +159,7 @@ extern "C" {
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_f_rip_nulless_
-  extern f_status_t f_rip_nulless(const f_string_t source, const f_array_length_t length, f_string_dynamic_t * const destination);
+  extern f_status_t f_rip_nulless(const f_string_t source, const f_number_unsigned_t length, f_string_dynamic_t * const destination);
 #endif // _di_f_rip_nulless_
 
 /**

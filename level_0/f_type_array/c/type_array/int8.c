@@ -7,7 +7,7 @@ extern "C" {
 #endif
 
 #ifndef _di_f_int8s_adjust_
-  f_status_t f_int8s_adjust(const f_array_length_t length, f_int8s_t *int8s) {
+  f_status_t f_int8s_adjust(const f_number_unsigned_t length, f_int8s_t *int8s) {
     #ifndef _di_level_0_parameter_checking_
       if (!int8s) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -39,7 +39,7 @@ extern "C" {
 #endif // _di_f_int8s_append_all_
 
 #ifndef _di_f_int8s_decimate_by_
-  f_status_t f_int8s_decimate_by(const f_array_length_t amount, f_int8s_t *int8s) {
+  f_status_t f_int8s_decimate_by(const f_number_unsigned_t amount, f_int8s_t *int8s) {
     #ifndef _di_level_0_parameter_checking_
       if (!int8s) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -55,7 +55,7 @@ extern "C" {
 #endif // _di_f_int8s_decimate_by_
 
 #ifndef _di_f_int8s_decrease_by_
-  f_status_t f_int8s_decrease_by(const f_array_length_t amount, f_int8s_t *int8s) {
+  f_status_t f_int8s_decrease_by(const f_number_unsigned_t amount, f_int8s_t *int8s) {
     #ifndef _di_level_0_parameter_checking_
       if (!int8s) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -71,20 +71,20 @@ extern "C" {
 #endif // _di_f_int8s_decrease_by_
 
 #ifndef _di_f_int8s_increase_
-  f_status_t f_int8s_increase(const f_array_length_t step, f_int8s_t *int8s) {
+  f_status_t f_int8s_increase(const f_number_unsigned_t step, f_int8s_t *int8s) {
     #ifndef _di_level_0_parameter_checking_
       if (!int8s) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (step && int8s->used + 1 > int8s->size) {
-      f_array_length_t size = int8s->used + step;
+      f_number_unsigned_t size = int8s->used + step;
 
-      if (size > F_array_length_t_size_d) {
-        if (int8s->used + 1 > F_array_length_t_size_d) {
+      if (size > F_number_t_size_unsigned_d) {
+        if (int8s->used + 1 > F_number_t_size_unsigned_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = F_array_length_t_size_d;
+        size = F_number_t_size_unsigned_d;
       }
 
       return private_f_int8s_resize(size, int8s);
@@ -95,7 +95,7 @@ extern "C" {
 #endif // _di_f_int8s_increase_
 
 #ifndef _di_f_int8s_increase_by_
-  f_status_t f_int8s_increase_by(const f_array_length_t amount, f_int8s_t *int8s) {
+  f_status_t f_int8s_increase_by(const f_number_unsigned_t amount, f_int8s_t *int8s) {
     #ifndef _di_level_0_parameter_checking_
       if (!int8s) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -103,7 +103,7 @@ extern "C" {
     if (!amount) return F_data_not;
 
     if (int8s->used + amount > int8s->size) {
-      if (int8s->used + amount > F_array_length_t_size_d) {
+      if (int8s->used + amount > F_number_t_size_unsigned_d) {
         return F_status_set_error(F_array_too_large);
       }
 
@@ -115,7 +115,7 @@ extern "C" {
 #endif // _di_f_int8s_increase_by_
 
 #ifndef _di_f_int8s_resize_
-  f_status_t f_int8s_resize(const f_array_length_t length, f_int8s_t *int8s) {
+  f_status_t f_int8s_resize(const f_number_unsigned_t length, f_int8s_t *int8s) {
     #ifndef _di_level_0_parameter_checking_
       if (!int8s) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -125,7 +125,7 @@ extern "C" {
 #endif // _di_f_int8s_resize_
 
 #ifndef _di_f_int8ss_adjust_
-  f_status_t f_int8ss_adjust(const f_array_length_t length, f_int8ss_t *int8ss) {
+  f_status_t f_int8ss_adjust(const f_number_unsigned_t length, f_int8ss_t *int8ss) {
     #ifndef _di_level_0_parameter_checking_
       if (!int8ss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -173,7 +173,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     }
 
-    for (f_array_length_t i = 0; i < source.used; ++i, ++destination->used) {
+    for (f_number_unsigned_t i = 0; i < source.used; ++i, ++destination->used) {
 
       destination->array[destination->used].used = 0;
 
@@ -188,7 +188,7 @@ extern "C" {
 #endif // _di_f_int8ss_append_all_
 
 #ifndef _di_f_int8ss_decimate_by_
-  f_status_t f_int8ss_decimate_by(const f_array_length_t amount, f_int8ss_t *int8ss) {
+  f_status_t f_int8ss_decimate_by(const f_number_unsigned_t amount, f_int8ss_t *int8ss) {
     #ifndef _di_level_0_parameter_checking_
       if (!int8ss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -204,7 +204,7 @@ extern "C" {
 #endif // _di_f_int8ss_decimate_by_
 
 #ifndef _di_f_int8ss_decrease_by_
-  f_status_t f_int8ss_decrease_by(const f_array_length_t amount, f_int8ss_t *int8ss) {
+  f_status_t f_int8ss_decrease_by(const f_number_unsigned_t amount, f_int8ss_t *int8ss) {
     #ifndef _di_level_0_parameter_checking_
       if (!int8ss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -220,20 +220,20 @@ extern "C" {
 #endif // _di_f_int8ss_decrease_by_
 
 #ifndef _di_f_int8ss_increase_
-  f_status_t f_int8ss_increase(const f_array_length_t step, f_int8ss_t *int8ss) {
+  f_status_t f_int8ss_increase(const f_number_unsigned_t step, f_int8ss_t *int8ss) {
     #ifndef _di_level_0_parameter_checking_
       if (!int8ss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (step && int8ss->used + 1 > int8ss->size) {
-      f_array_length_t size = int8ss->used + step;
+      f_number_unsigned_t size = int8ss->used + step;
 
-      if (size > F_array_length_t_size_d) {
-        if (int8ss->used + 1 > F_array_length_t_size_d) {
+      if (size > F_number_t_size_unsigned_d) {
+        if (int8ss->used + 1 > F_number_t_size_unsigned_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = F_array_length_t_size_d;
+        size = F_number_t_size_unsigned_d;
       }
 
       return private_f_int8ss_resize(size, int8ss);
@@ -244,7 +244,7 @@ extern "C" {
 #endif // _di_f_int8ss_increase_
 
 #ifndef _di_f_int8ss_increase_by_
-  f_status_t f_int8ss_increase_by(const f_array_length_t amount, f_int8ss_t *int8ss) {
+  f_status_t f_int8ss_increase_by(const f_number_unsigned_t amount, f_int8ss_t *int8ss) {
     #ifndef _di_level_0_parameter_checking_
       if (!int8ss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -252,7 +252,7 @@ extern "C" {
     if (!amount) return F_data_not;
 
     if (int8ss->used + amount > int8ss->size) {
-      if (int8ss->used + amount > F_array_length_t_size_d) {
+      if (int8ss->used + amount > F_number_t_size_unsigned_d) {
         return F_status_set_error(F_array_too_large);
       }
 
@@ -264,7 +264,7 @@ extern "C" {
 #endif // _di_f_int8ss_increase_by_
 
 #ifndef _di_f_int8ss_resize_
-  f_status_t f_int8ss_resize(const f_array_length_t length, f_int8ss_t *int8ss) {
+  f_status_t f_int8ss_resize(const f_number_unsigned_t length, f_int8ss_t *int8ss) {
     #ifndef _di_level_0_parameter_checking_
       if (!int8ss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_

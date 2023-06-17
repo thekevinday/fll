@@ -45,7 +45,7 @@ extern "C" {
  * @see f_compare_utf_dynamic_partial_string()
  */
 #if !defined(_di_f_compare_utf_) || !defined(_di_f_compare_utf_dynamic_) || !defined(_di_f_compare_utf_dynamic_string_) || !defined(_di_f_compare_utf_dynamic_partial_) || !defined(_di_f_compare_utf_dynamic_partial_dynamic_) || !defined(_di_f_compare_utf_dynamic_partial_string_)
-  extern f_status_t private_f_compare_utf(const f_utf_string_t string1, const f_utf_string_t string2, const f_array_length_t offset1, const f_array_length_t offset2, const f_array_length_t stop1, const f_array_length_t stop2) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_compare_utf(const f_utf_string_t string1, const f_utf_string_t string2, const f_number_unsigned_t offset1, const f_number_unsigned_t offset2, const f_number_unsigned_t stop1, const f_number_unsigned_t stop2) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_compare_utf_) || !defined(_di_f_compare_utf_dynamic_) || !defined(_di_f_compare_utf_dynamic_string_) || !defined(_di_f_compare_utf_dynamic_partial_) || !defined(_di_f_compare_utf_dynamic_partial_dynamic_) || !defined(_di_f_compare_utf_dynamic_partial_string_)
 
 /**
@@ -84,7 +84,7 @@ extern "C" {
  * @see f_compare_utf_except_
  */
 #if !defined(_di_f_compare_utf_dynamic_except_) || !defined(_di_f_compare_utf_dynamic_except_string_) || !defined(_di_f_compare_utf_dynamic_partial_except_) || !defined(_di_f_compare_utf_dynamic_partial_except_dynamic_) || !defined(_di_f_compare_utf_dynamic_partial_except_string_) || !defined(_di_f_compare_utf_except_)
-  extern f_status_t private_f_compare_utf_except(const f_utf_string_t string1, const f_utf_string_t string2, const f_array_length_t offset1, const f_array_length_t offset2, const f_array_length_t stop1, const f_array_length_t stop2, const f_array_lengths_t except1, const f_array_lengths_t except2) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_compare_utf_except(const f_utf_string_t string1, const f_utf_string_t string2, const f_number_unsigned_t offset1, const f_number_unsigned_t offset2, const f_number_unsigned_t stop1, const f_number_unsigned_t stop2, const f_number_unsigneds_t except1, const f_number_unsigneds_t except2) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_compare_utf_dynamic_except_) || !defined(_di_f_compare_utf_dynamic_except_string_) || !defined(_di_f_compare_utf_dynamic_partial_except_) || !defined(_di_f_compare_utf_dynamic_partial_except_dynamic_) || !defined(_di_f_compare_utf_dynamic_partial_except_string_) || !defined(_di_f_compare_utf_except_)
 
 /**
@@ -131,7 +131,7 @@ extern "C" {
  * @see f_compare_utf_except_trim()
  */
 #if !defined(_di_f_compare_utf_dynamic_except_trim_) || !defined(_di_f_compare_utf_dynamic_except_trim_string_) || !defined(_di_f_compare_utf_dynamic_partial_except_trim_) || !defined(_di_f_compare_utf_dynamic_partial_except_trim_dynamic_) || !defined(_di_f_compare_utf_dynamic_partial_except_trim_string_) || !defined(_di_f_compare_utf_except_trim_)
-  extern f_status_t private_f_compare_utf_except_trim(const f_utf_string_t string1, const f_utf_string_t string2, const f_array_length_t offset1, const f_array_length_t offset2, const f_array_length_t stop1, const f_array_length_t stop2, const f_array_lengths_t except1, const f_array_lengths_t except2) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_compare_utf_except_trim(const f_utf_string_t string1, const f_utf_string_t string2, const f_number_unsigned_t offset1, const f_number_unsigned_t offset2, const f_number_unsigned_t stop1, const f_number_unsigned_t stop2, const f_number_unsigneds_t except1, const f_number_unsigneds_t except2) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_compare_utf_dynamic_except_trim_) || !defined(_di_f_compare_utf_dynamic_except_trim_string_) || !defined(_di_f_compare_utf_dynamic_partial_except_trim_) || !defined(_di_f_compare_utf_dynamic_partial_except_trim_dynamic_) || !defined(_di_f_compare_utf_dynamic_partial_except_trim_string_) || !defined(_di_f_compare_utf_except_trim_)
 
 /**
@@ -172,7 +172,7 @@ extern "C" {
  * @see f_compare_utf_trim()
  */
 #if !defined(_di_f_compare_utf_dynamic_trim_) || !defined(_di_f_compare_utf_dynamic_trim_string_) || !defined(_di_f_compare_utf_dynamic_partial_trim_) || !defined(_di_f_compare_utf_dynamic_partial_trim_dynamic_) || !defined(_di_f_compare_utf_dynamic_partial_trim_string_) || !defined(_di_f_compare_utf_trim_)
-  extern f_status_t private_f_compare_utf_trim(const f_utf_string_t string1, const f_utf_string_t string2, const f_array_length_t offset1, const f_array_length_t offset2, const f_array_length_t stop1, const f_array_length_t stop2) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_compare_utf_trim(const f_utf_string_t string1, const f_utf_string_t string2, const f_number_unsigned_t offset1, const f_number_unsigned_t offset2, const f_number_unsigned_t stop1, const f_number_unsigned_t stop2) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_compare_utf_dynamic_trim_) || !defined(_di_f_compare_utf_dynamic_trim_string_) || !defined(_di_f_compare_utf_dynamic_partial_trim_) || !defined(_di_f_compare_utf_dynamic_partial_trim_dynamic_) || !defined(_di_f_compare_utf_dynamic_partial_trim_string_) || !defined(_di_f_compare_utf_trim_)
 
 #ifdef __cplusplus

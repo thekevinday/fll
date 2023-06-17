@@ -130,7 +130,7 @@ extern "C" {
 #endif // _di_fl_utf_file_read_block_
 
 #ifndef _di_fl_utf_file_read_until_
-  f_status_t fl_utf_file_read_until(const f_file_t file, const f_array_length_t total, f_utf_string_dynamic_t * const destination) {
+  f_status_t fl_utf_file_read_until(const f_file_t file, const f_number_unsigned_t total, f_utf_string_dynamic_t * const destination) {
     #ifndef _di_level_1_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -149,8 +149,8 @@ extern "C" {
     uint8_t width = 0;
     int8_t width_last = -1;
 
-    f_array_length_t buffer_size = file.size_read;
-    f_array_length_t buffer_count = 0;
+    f_number_unsigned_t buffer_size = file.size_read;
+    f_number_unsigned_t buffer_count = 0;
 
     if (total < buffer_size) {
       buffer_size = total;
@@ -202,7 +202,7 @@ extern "C" {
 #endif // _di_fl_utf_file_read_until_
 
 #ifndef _di_fl_utf_file_write_
-  f_status_t fl_utf_file_write(const f_file_t file, const f_utf_string_static_t destination, f_array_length_t * const written) {
+  f_status_t fl_utf_file_write(const f_file_t file, const f_utf_string_static_t destination, f_number_unsigned_t * const written) {
     #ifndef _di_level_0_parameter_checking_
       if (!file.size_write) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -233,7 +233,7 @@ extern "C" {
 #endif // _di_fl_utf_file_write_
 
 #ifndef _di_fl_utf_file_write_block_
-  f_status_t fl_utf_file_write_block(const f_file_t file, const f_utf_string_static_t destination, f_array_length_t * const written) {
+  f_status_t fl_utf_file_write_block(const f_file_t file, const f_utf_string_static_t destination, f_number_unsigned_t * const written) {
     #ifndef _di_level_0_parameter_checking_
       if (!file.size_write) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -252,7 +252,7 @@ extern "C" {
       return F_data_not;
     }
 
-    f_array_length_t write_max = file.size_write;
+    f_number_unsigned_t write_max = file.size_write;
 
     if (write_max > destination.used) {
       write_max = destination.used;
@@ -270,7 +270,7 @@ extern "C" {
 #endif // _di_fl_utf_file_write_block_
 
 #ifndef _di_fl_utf_file_write_until_
-  f_status_t fl_utf_file_write_until(const f_file_t file, const f_utf_string_static_t destination, const f_array_length_t total, f_array_length_t * const written) {
+  f_status_t fl_utf_file_write_until(const f_file_t file, const f_utf_string_static_t destination, const f_number_unsigned_t total, f_number_unsigned_t * const written) {
     #ifndef _di_level_0_parameter_checking_
       if (!file.size_write) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -289,7 +289,7 @@ extern "C" {
       return F_data_not;
     }
 
-    f_array_length_t write_max = file.size_write;
+    f_number_unsigned_t write_max = file.size_write;
 
     if (write_max > destination.used) {
       write_max = destination.used;
@@ -307,7 +307,7 @@ extern "C" {
 #endif // _di_fl_utf_file_write_until_
 
 #ifndef _di_fl_utf_file_write_range_
-  f_status_t fl_utf_file_write_range(const f_file_t file, const f_utf_string_static_t destination, const f_string_range_t range, f_array_length_t * const written) {
+  f_status_t fl_utf_file_write_range(const f_file_t file, const f_utf_string_static_t destination, const f_string_range_t range, f_number_unsigned_t * const written) {
     #ifndef _di_level_0_parameter_checking_
       if (!file.size_write) return F_status_set_error(F_parameter);
       if (range.start >= destination.used) return F_status_set_error(F_parameter);
@@ -327,8 +327,8 @@ extern "C" {
       return F_data_not;
     }
 
-    const f_array_length_t total = (range.stop - range.start) + 1;
-    f_array_length_t write_max = total;
+    const f_number_unsigned_t total = (range.stop - range.start) + 1;
+    f_number_unsigned_t write_max = total;
 
     if (write_max > destination.used) {
       write_max = destination.used;

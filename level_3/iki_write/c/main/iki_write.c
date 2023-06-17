@@ -46,7 +46,7 @@ extern "C" {
     if (main->program.pipe & fll_program_data_pipe_input_e) {
       bool object_ended = F_false;
 
-      f_array_length_t previous = 0;
+      f_number_unsigned_t previous = 0;
       f_string_range_t range = f_string_range_t_initialize;
       f_status_t status = F_none;
       f_file_t pipe = f_file_t_initialize;
@@ -190,7 +190,7 @@ extern "C" {
     }
 
     if (F_status_is_error_not(main->setting.state.status) && F_status_set_fine(main->setting.state.status) != F_interrupt) {
-      for (f_array_length_t i = 0; i < main->setting.objects.used; ++i) {
+      for (f_number_unsigned_t i = 0; i < main->setting.objects.used; ++i) {
 
         if (!((++main->program.signal_check) % iki_write_signal_check_d)) {
           if (fll_program_standard_signal_received(&main->program)) {

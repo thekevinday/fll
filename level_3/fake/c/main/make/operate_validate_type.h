@@ -286,7 +286,7 @@ extern "C" {
  *     F_failure (with error bit) on any error.
  */
 #ifndef _di_fake_make_operate_validate_type_operate_
-  extern void fake_make_operate_validate_type_operate(fake_make_data_t * const data_make, f_array_lengths_t * const section_stack);
+  extern void fake_make_operate_validate_type_operate(fake_make_data_t * const data_make, f_number_unsigneds_t * const section_stack);
 #endif // _di_fake_make_operate_validate_type_operate_
 
 /**

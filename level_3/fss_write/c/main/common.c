@@ -129,7 +129,7 @@ extern "C" {
         return;
       }
 
-      const f_array_length_t index = main->program.parameters.array[fss_write_parameter_file_e].values.array[0];
+      const f_number_unsigned_t index = main->program.parameters.array[fss_write_parameter_file_e].values.array[0];
 
       main->program.output.to.id = -1;
       main->program.output.to.stream = 0;
@@ -161,7 +161,7 @@ extern "C" {
     }
 
     if ((main->program.parameters.array[fss_write_parameter_object_e].result & f_console_result_value_e) && main->program.parameters.array[fss_write_parameter_object_e].values.used) {
-      f_array_lengths_t * const values = &main->program.parameters.array[fss_write_parameter_object_e].values;
+      f_number_unsigneds_t * const values = &main->program.parameters.array[fss_write_parameter_object_e].values;
 
       main->setting.objects.used = 0;
 
@@ -178,7 +178,7 @@ extern "C" {
       }
 
       // Construct the array without allocating any more memory for the string data by setting this as a static string (used > 0, size = 0).
-      for (f_array_length_t index = 0; main->setting.objects.used < values->used; ) {
+      for (f_number_unsigned_t index = 0; main->setting.objects.used < values->used; ) {
 
         index = values->array[main->setting.objects.used];
 
@@ -219,11 +219,11 @@ extern "C" {
         }
       }
 
-      f_array_length_t stub_object_array[1] = { 0 };
-      f_array_lengths_t stub_object = macro_f_array_lengths_t_initialize_1(stub_object_array, 0, 1);
+      f_number_unsigned_t stub_object_array[1] = { 0 };
+      f_number_unsigneds_t stub_object = macro_f_number_unsigneds_t_initialize_1(stub_object_array, 0, 1);
 
-      f_array_lengths_t * const values_content = &main->program.parameters.array[fss_write_parameter_content_e].values;
-      f_array_lengths_t * const values_object = main->program.parameters.array[fss_write_parameter_object_e].values.used
+      f_number_unsigneds_t * const values_content = &main->program.parameters.array[fss_write_parameter_content_e].values;
+      f_number_unsigneds_t * const values_object = main->program.parameters.array[fss_write_parameter_object_e].values.used
         ? &main->program.parameters.array[fss_write_parameter_object_e].values
         : &stub_object;
 
@@ -241,11 +241,11 @@ extern "C" {
         return;
       }
 
-      f_array_length_t i = 0; // For Contents.
-      f_array_length_t j = 0; // For Objects.
-      f_array_length_t k = 0;
-      f_array_length_t total = 0;
-      f_array_length_t index = 0;
+      f_number_unsigned_t i = 0; // For Contents.
+      f_number_unsigned_t j = 0; // For Objects.
+      f_number_unsigned_t k = 0;
+      f_number_unsigned_t total = 0;
+      f_number_unsigned_t index = 0;
 
       // Construct the array without allocating any more memory for the string data by setting this as a static string (used > 0, size = 0).
       while (i < values_content->used) {
@@ -305,7 +305,7 @@ extern "C" {
     }
 
     if ((main->program.parameters.array[fss_write_parameter_prepend_e].result & f_console_result_value_e) && main->program.parameters.array[fss_write_parameter_prepend_e].values.used) {
-      const f_array_length_t index = main->program.parameters.array[fss_write_parameter_prepend_e].values.array[main->program.parameters.array[fss_write_parameter_prepend_e].location];
+      const f_number_unsigned_t index = main->program.parameters.array[fss_write_parameter_prepend_e].values.array[main->program.parameters.array[fss_write_parameter_prepend_e].location];
 
       main->setting.prepend.used = 0;
 
@@ -374,11 +374,11 @@ extern "C" {
 
       // Only process if the standard designates that the ingore is supported.
       if (main->setting.flag & fss_write_main_flag_ignore_e) {
-        f_array_length_t stub_data_array[1] = { 0 };
-        f_array_lengths_t stub_data = macro_f_array_lengths_t_initialize_1(stub_data_array, 0, 1);
+        f_number_unsigned_t stub_data_array[1] = { 0 };
+        f_number_unsigneds_t stub_data = macro_f_number_unsigneds_t_initialize_1(stub_data_array, 0, 1);
 
-        f_array_lengths_t * const values_ignore = &main->program.parameters.array[fss_write_parameter_ignore_e].values;
-        f_array_lengths_t * const values_data = main->program.parameters.array[fss_write_parameter_object_e].values.used
+        f_number_unsigneds_t * const values_ignore = &main->program.parameters.array[fss_write_parameter_ignore_e].values;
+        f_number_unsigneds_t * const values_data = main->program.parameters.array[fss_write_parameter_object_e].values.used
           ? &main->program.parameters.array[fss_write_parameter_object_e].values
           : main->program.parameters.array[fss_write_parameter_content_e].values.used
             ? &main->program.parameters.array[fss_write_parameter_content_e].values
@@ -398,11 +398,11 @@ extern "C" {
           return;
         }
 
-        f_array_length_t i = 0; // For Ignores.
-        f_array_length_t j = 0; // For Objects/Contents.
-        f_array_length_t k = 0;
-        f_array_length_t total = 0;
-        f_array_length_t index = 0;
+        f_number_unsigned_t i = 0; // For Ignores.
+        f_number_unsigned_t j = 0; // For Objects/Contents.
+        f_number_unsigned_t k = 0;
+        f_number_unsigned_t total = 0;
+        f_number_unsigned_t index = 0;
 
         // Construct the array without allocating any more memory for the string data by setting this as a static string (used > 0, size = 0).
         while (i < values_ignore->used) {
@@ -491,8 +491,8 @@ extern "C" {
       else {
 
         // Still validate the parameters, even if not being used.
-        f_array_length_t i = 0;
-        f_array_length_t index = 0;
+        f_number_unsigned_t i = 0;
+        f_number_unsigned_t index = 0;
         f_string_range_t number = f_string_range_t_initialize;
 
         while (i < main->program.parameters.array[fss_write_parameter_ignore_e].values.used) {

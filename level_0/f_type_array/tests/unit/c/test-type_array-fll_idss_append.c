@@ -70,7 +70,7 @@ void test__f_type_array_fll_idss_append__works(void **state) {
     assert_int_equal(destination.array[0].used, source.used);
     assert_int_equal(destination.array[0].size, source.used);
 
-    for (f_array_length_t i = 0; i < destination.array[0].used; ++i) {
+    for (f_number_unsigned_t i = 0; i < destination.array[0].used; ++i) {
 
       assert_string_equal(destination.array[0].array[i].name, fll_id.name);
       assert_int_equal(destination.array[0].array[i].type, fll_id.type);
@@ -78,7 +78,7 @@ void test__f_type_array_fll_idss_append__works(void **state) {
     } // for
   }
 
-  for (f_array_length_t i = 0; i < destination.used; ++i) {
+  for (f_number_unsigned_t i = 0; i < destination.used; ++i) {
     free((void *) destination.array[i].array);
   } // for
 

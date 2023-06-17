@@ -36,7 +36,7 @@ extern "C" {
  * @see f_string_triples_adjust()
  */
 #if !defined(_di_f_string_triples_adjust_) || !defined(_di_f_string_triples_decimate_by_)
-  extern f_status_t private_f_string_triples_adjust(const f_array_length_t length, f_string_triples_t * const triples) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_string_triples_adjust(const f_number_unsigned_t length, f_string_triples_t * const triples) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_string_triples_adjust_) || !defined(_di_f_string_triples_decimate_by_)
 
 /**
@@ -88,7 +88,7 @@ extern "C" {
  * @see f_string_triples_increase_by()
  */
 #if !defined(_di_f_string_triples_decrease_by_) || !defined(_di_f_string_triples_increase_) || !defined(_di_f_string_triples_increase_by_)
-  extern f_status_t private_f_string_triples_resize(const f_array_length_t length, f_string_triples_t * const triples) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_string_triples_resize(const f_number_unsigned_t length, f_string_triples_t * const triples) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_string_triples_decrease_by_) || !defined(_di_f_string_triples_increase_) || !defined(_di_f_string_triples_increase_by_)
 
 /**
@@ -112,7 +112,7 @@ extern "C" {
  * @see f_string_tripless_adjust()
  */
 #if !defined(_di_f_string_tripless_adjust_) || !defined(_di_f_string_tripless_decimate_by_)
-  extern f_status_t private_f_string_tripless_adjust(const f_array_length_t length, f_string_tripless_t * const tripless) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_string_tripless_adjust(const f_number_unsigned_t length, f_string_tripless_t * const tripless) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_string_tripless_adjust_) || !defined(_di_f_string_tripless_decimate_by_)
 
 /**
@@ -138,7 +138,7 @@ extern "C" {
  * @see f_string_tripless_increase_by()
  */
 #if !defined(_di_f_string_tripless_decrease_by_) || !defined(_di_f_string_tripless_increase_) || !defined(_di_f_string_tripless_increase_by_)
-  extern f_status_t private_f_string_tripless_resize(const f_array_length_t length, f_string_tripless_t * const tripless) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_string_tripless_resize(const f_number_unsigned_t length, f_string_tripless_t * const tripless) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_string_tripless_decrease_by_) || !defined(_di_f_string_tripless_increase_) || !defined(_di_f_string_tripless_increase_by_)
 
 #ifdef __cplusplus

@@ -41,7 +41,7 @@ extern "C" {
     }
 
     {
-      f_array_length_t choice = 0;
+      f_number_unsigned_t choice = 0;
       f_uint16s_t choices = f_uint16s_t_initialize;
 
       // Identify and prioritize "color context" parameters.
@@ -293,8 +293,8 @@ extern "C" {
 
       main->setting.path_files_from.used = main->program.parameters.array[utf8_parameter_from_file_e].values.used;
 
-      f_array_length_t i = 0;
-      f_array_length_t index = 0;
+      f_number_unsigned_t i = 0;
+      f_number_unsigned_t index = 0;
 
       for (; i < main->setting.path_files_from.used; ++i) {
 
@@ -372,7 +372,7 @@ extern "C" {
       }
 
       // Construct the array without allocating any more memory by setting this as a static string (used > 0, size = 0).
-      for (f_array_length_t index = 0; main->setting.remaining.used < main->program.parameters.remaining.used; ) {
+      for (f_number_unsigned_t index = 0; main->setting.remaining.used < main->program.parameters.remaining.used; ) {
 
         index = main->program.parameters.remaining.array[main->setting.remaining.used];
 

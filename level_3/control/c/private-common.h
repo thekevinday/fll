@@ -314,7 +314,7 @@ extern "C" {
       0, \
       0, \
       f_status_t_initialize, \
-      f_array_length_t_initialize, \
+      f_number_unsigned_t_initialize, \
     }
 #endif // _di_control_payload_header_t_
 

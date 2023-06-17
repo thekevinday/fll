@@ -45,8 +45,8 @@ extern "C" {
   typedef struct {
     f_limit_value_t *array;
 
-    f_array_length_t size;
-    f_array_length_t used;
+    f_number_unsigned_t size;
+    f_number_unsigned_t used;
   } f_limit_values_t;
 
   #define f_limit_values_t_initialize { 0, 0, 0 }
@@ -79,8 +79,8 @@ extern "C" {
   typedef struct {
     f_limit_values_t *array;
 
-    f_array_length_t size;
-    f_array_length_t used;
+    f_number_unsigned_t size;
+    f_number_unsigned_t used;
   } f_limit_valuess_t;
 
   #define f_limit_valuess_t_initialize { 0, 0, 0 }
@@ -118,7 +118,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_adjust().
  */
 #ifndef _di_f_limit_values_adjust_
-  extern f_status_t f_limit_values_adjust(const f_array_length_t length, f_limit_values_t *values);
+  extern f_status_t f_limit_values_adjust(const f_number_unsigned_t length, f_limit_values_t *values);
 #endif // _di_f_limit_values_adjust_
 
 /**
@@ -182,7 +182,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_adjust().
  */
 #ifndef _di_f_limit_values_decimate_by_
-  extern f_status_t f_limit_values_decimate_by(const f_array_length_t amount, f_limit_values_t *values);
+  extern f_status_t f_limit_values_decimate_by(const f_number_unsigned_t amount, f_limit_values_t *values);
 #endif // _di_f_limit_values_decimate_by_
 
 /**
@@ -205,13 +205,13 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_limit_values_decrease_by_
-  extern f_status_t f_limit_values_decrease_by(const f_array_length_t amount, f_limit_values_t *values);
+  extern f_status_t f_limit_values_decrease_by(const f_number_unsigned_t amount, f_limit_values_t *values);
 #endif // _di_f_limit_values_decrease_by_
 
 /**
  * Increase the size of the values array, but only if necesary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -230,14 +230,14 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_limit_values_increase_
-  extern f_status_t f_limit_values_increase(const f_array_length_t step, f_limit_values_t *values);
+  extern f_status_t f_limit_values_increase(const f_number_unsigned_t step, f_limit_values_t *values);
 #endif // _di_f_limit_values_increase_
 
 /**
  * Resize the values array to a larger size.
  *
  * This will resize making the array larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -255,7 +255,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_limit_values_increase_by_
-  extern f_status_t f_limit_values_increase_by(const f_array_length_t amount, f_limit_values_t *values);
+  extern f_status_t f_limit_values_increase_by(const f_number_unsigned_t amount, f_limit_values_t *values);
 #endif // _di_f_limit_values_increase_by_
 
 /**
@@ -274,7 +274,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_limit_values_resize_
-  extern f_status_t f_limit_values_resize(const f_array_length_t length, f_limit_values_t *values);
+  extern f_status_t f_limit_values_resize(const f_number_unsigned_t length, f_limit_values_t *values);
 #endif // _di_f_limit_values_resize_
 
 /**
@@ -294,7 +294,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_destroy().
  */
 #ifndef _di_f_limit_valuess_adjust_
-  extern f_status_t f_limit_valuess_adjust(const f_array_length_t length, f_limit_valuess_t *valuess);
+  extern f_status_t f_limit_valuess_adjust(const f_number_unsigned_t length, f_limit_valuess_t *valuess);
 #endif // _di_f_limit_valuess_adjust_
 
 /**
@@ -359,7 +359,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_destroy().
  */
 #ifndef _di_f_limit_valuess_decimate_by_
-  extern f_status_t f_limit_valuess_decimate_by(const f_array_length_t amount, f_limit_valuess_t *valuess);
+  extern f_status_t f_limit_valuess_decimate_by(const f_number_unsigned_t amount, f_limit_valuess_t *valuess);
 #endif // _di_f_limit_valuess_decimate_by_
 
 /**
@@ -383,13 +383,13 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_limit_valuess_decrease_by_
-  extern f_status_t f_limit_valuess_decrease_by(const f_array_length_t amount, f_limit_valuess_t *valuess);
+  extern f_status_t f_limit_valuess_decrease_by(const f_number_unsigned_t amount, f_limit_valuess_t *valuess);
 #endif // _di_f_limit_valuess_decrease_by_
 
 /**
  * Increase the size of the valuess array, but only if necessary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -408,14 +408,14 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_limit_valuess_increase_
-  extern f_status_t f_limit_valuess_increase(const f_array_length_t step, f_limit_valuess_t *valuess);
+  extern f_status_t f_limit_valuess_increase(const f_number_unsigned_t step, f_limit_valuess_t *valuess);
 #endif // _di_f_limit_valuess_increase_
 
 /**
  * Resize the valuess array to a larger size.
  *
  * This will resize making the array larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -433,7 +433,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_limit_valuess_increase_by_
-  extern f_status_t f_limit_valuess_increase_by(const f_array_length_t amount, f_limit_valuess_t *valuess);
+  extern f_status_t f_limit_valuess_increase_by(const f_number_unsigned_t amount, f_limit_valuess_t *valuess);
 #endif // _di_f_limit_valuess_increase_by_
 
 /**
@@ -453,7 +453,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_limit_valuess_resize_
-  extern f_status_t f_limit_valuess_resize(const f_array_length_t length, f_limit_valuess_t *valuess);
+  extern f_status_t f_limit_valuess_resize(const f_number_unsigned_t length, f_limit_valuess_t *valuess);
 #endif // _di_f_limit_valuess_resize_
 
 #ifdef __cplusplus

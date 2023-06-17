@@ -86,7 +86,7 @@ extern "C" {
  * @see fake_make_operate_validate_type_write()
  */
 #ifndef _di_fake_make_operate_validate_
-  extern void fake_make_operate_validate(fake_make_data_t * const data_make, const f_string_range_t section_name, fake_state_process_t * const state_process, f_array_lengths_t * const section_stack);
+  extern void fake_make_operate_validate(fake_make_data_t * const data_make, const f_string_range_t section_name, fake_state_process_t * const state_process, f_number_unsigneds_t * const section_stack);
 #endif // _di_fake_make_operate_validate_
 
 /**

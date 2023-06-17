@@ -15,7 +15,7 @@ extern "C" {
     f_status_t status = f_string_ranges_resize(0, &data->content);
     if (F_status_is_error(status)) return status;
 
-    status = f_array_lengths_resize(0, &data->delimits);
+    status = f_number_unsigneds_resize(0, &data->delimits);
     if (F_status_is_error(status)) return status;
 
     status = f_string_ranges_resize(0, &data->variable);
@@ -37,7 +37,7 @@ extern "C" {
     f_status_t status = f_string_ranges_adjust(0, &data->content);
     if (F_status_is_error(status)) return status;
 
-    status = f_array_lengths_adjust(0, &data->delimits);
+    status = f_number_unsigneds_adjust(0, &data->delimits);
     if (F_status_is_error(status)) return status;
 
     status = f_string_ranges_adjust(0, &data->variable);
@@ -51,7 +51,7 @@ extern "C" {
 #endif // _di_f_iki_data_destroy_
 
 #ifndef _di_f_iki_datas_adjust_
-  f_status_t f_iki_datas_adjust(const f_array_length_t length, f_iki_datas_t *datas) {
+  f_status_t f_iki_datas_adjust(const f_number_unsigned_t length, f_iki_datas_t *datas) {
     #ifndef _di_level_0_parameter_checking_
       if (!datas) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -83,7 +83,7 @@ extern "C" {
 #endif // _di_f_iki_datas_append_all_
 
 #ifndef _di_f_iki_datas_decimate_by_
-  f_status_t f_iki_datas_decimate_by(const f_array_length_t amount, f_iki_datas_t *datas) {
+  f_status_t f_iki_datas_decimate_by(const f_number_unsigned_t amount, f_iki_datas_t *datas) {
     #ifndef _di_level_0_parameter_checking_
       if (!datas) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -99,7 +99,7 @@ extern "C" {
 #endif // _di_f_iki_datas_decimate_by_
 
 #ifndef _di_f_iki_datas_decrease_by_
-  f_status_t f_iki_datas_decrease_by(const f_array_length_t amount, f_iki_datas_t *datas) {
+  f_status_t f_iki_datas_decrease_by(const f_number_unsigned_t amount, f_iki_datas_t *datas) {
     #ifndef _di_level_0_parameter_checking_
       if (!datas) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -115,20 +115,20 @@ extern "C" {
 #endif // _di_f_iki_datas_decrease_by_
 
 #ifndef _di_f_iki_datas_increase_
-  f_status_t f_iki_datas_increase(const f_array_length_t step, f_iki_datas_t *datas) {
+  f_status_t f_iki_datas_increase(const f_number_unsigned_t step, f_iki_datas_t *datas) {
     #ifndef _di_level_0_parameter_checking_
       if (!datas) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (step && datas->used + 1 > datas->size) {
-      f_array_length_t size = datas->used + step;
+      f_number_unsigned_t size = datas->used + step;
 
-      if (size > F_array_length_t_size_d) {
-        if (datas->used + 1 > F_array_length_t_size_d) {
+      if (size > F_number_t_size_unsigned_d) {
+        if (datas->used + 1 > F_number_t_size_unsigned_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = F_array_length_t_size_d;
+        size = F_number_t_size_unsigned_d;
       }
 
       return private_f_iki_datas_resize(size, datas);
@@ -139,7 +139,7 @@ extern "C" {
 #endif // _di_f_iki_datas_increase_
 
 #ifndef _di_f_iki_datas_increase_by_
-  f_status_t f_iki_datas_increase_by(const f_array_length_t amount, f_iki_datas_t *datas) {
+  f_status_t f_iki_datas_increase_by(const f_number_unsigned_t amount, f_iki_datas_t *datas) {
     #ifndef _di_level_0_parameter_checking_
       if (!datas) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -147,7 +147,7 @@ extern "C" {
     if (!amount) return F_data_not;
 
     if (datas->used + amount > datas->size) {
-      if (datas->used + amount > F_array_length_t_size_d) {
+      if (datas->used + amount > F_number_t_size_unsigned_d) {
         return F_status_set_error(F_array_too_large);
       }
 
@@ -159,7 +159,7 @@ extern "C" {
 #endif // _di_f_iki_datas_increase_by_
 
 #ifndef _di_f_iki_datas_resize_
-  f_status_t f_iki_datas_resize(const f_array_length_t length, f_iki_datas_t *datas) {
+  f_status_t f_iki_datas_resize(const f_number_unsigned_t length, f_iki_datas_t *datas) {
     #ifndef _di_level_0_parameter_checking_
       if (!datas) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -169,7 +169,7 @@ extern "C" {
 #endif // _di_f_iki_datas_resize_
 
 #ifndef _di_f_iki_datass_adjust_
-  f_status_t f_iki_datass_adjust(const f_array_length_t length, f_iki_datass_t *datass) {
+  f_status_t f_iki_datass_adjust(const f_number_unsigned_t length, f_iki_datass_t *datass) {
     #ifndef _di_level_0_parameter_checking_
       if (!datass) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -217,7 +217,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     }
 
-    for (f_array_length_t i = 0; i < source.used; ++i, ++destination->used) {
+    for (f_number_unsigned_t i = 0; i < source.used; ++i, ++destination->used) {
 
       destination->array[destination->used].used = 0;
 
@@ -232,7 +232,7 @@ extern "C" {
 #endif // _di_f_iki_datass_append_all_
 
 #ifndef _di_f_iki_datass_decimate_by_
-  f_status_t f_iki_datass_decimate_by(const f_array_length_t amount, f_iki_datass_t *datass) {
+  f_status_t f_iki_datass_decimate_by(const f_number_unsigned_t amount, f_iki_datass_t *datass) {
     #ifndef _di_level_0_parameter_checking_
       if (!datass) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -248,7 +248,7 @@ extern "C" {
 #endif // _di_f_iki_datass_decimate_by_
 
 #ifndef _di_f_iki_datass_decrease_by_
-  f_status_t f_iki_datass_decrease_by(const f_array_length_t amount, f_iki_datass_t *datass) {
+  f_status_t f_iki_datass_decrease_by(const f_number_unsigned_t amount, f_iki_datass_t *datass) {
     #ifndef _di_level_0_parameter_checking_
       if (!datass) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -264,20 +264,20 @@ extern "C" {
 #endif // _di_f_iki_datass_decrease_by_
 
 #ifndef _di_f_iki_datass_increase_
-  f_status_t f_iki_datass_increase(const f_array_length_t step, f_iki_datass_t *datass) {
+  f_status_t f_iki_datass_increase(const f_number_unsigned_t step, f_iki_datass_t *datass) {
     #ifndef _di_level_0_parameter_checking_
       if (!datass) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (step && datass->used + 1 > datass->size) {
-      f_array_length_t size = datass->used + step;
+      f_number_unsigned_t size = datass->used + step;
 
-      if (size > F_array_length_t_size_d) {
-        if (datass->used + 1 > F_array_length_t_size_d) {
+      if (size > F_number_t_size_unsigned_d) {
+        if (datass->used + 1 > F_number_t_size_unsigned_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = F_array_length_t_size_d;
+        size = F_number_t_size_unsigned_d;
       }
 
       return private_f_iki_datass_resize(size, datass);
@@ -288,7 +288,7 @@ extern "C" {
 #endif // _di_f_iki_datass_increase_
 
 #ifndef _di_f_iki_datass_increase_by_
-  f_status_t f_iki_datass_increase_by(const f_array_length_t amount, f_iki_datass_t *datass) {
+  f_status_t f_iki_datass_increase_by(const f_number_unsigned_t amount, f_iki_datass_t *datass) {
     #ifndef _di_level_0_parameter_checking_
       if (!datass) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -296,7 +296,7 @@ extern "C" {
     if (!amount) return F_data_not;
 
     if (datass->used + amount > datass->size) {
-      if (datass->used + amount > F_array_length_t_size_d) {
+      if (datass->used + amount > F_number_t_size_unsigned_d) {
         return F_status_set_error(F_array_too_large);
       }
 
@@ -308,7 +308,7 @@ extern "C" {
 #endif // _di_f_iki_datass_increase_by_
 
 #ifndef _di_f_iki_datass_resize_
-  f_status_t f_iki_datass_resize(const f_array_length_t length, f_iki_datass_t *datass) {
+  f_status_t f_iki_datass_resize(const f_number_unsigned_t length, f_iki_datass_t *datass) {
     #ifndef _di_level_0_parameter_checking_
       if (!datass) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_

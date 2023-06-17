@@ -150,7 +150,7 @@ extern "C" {
       if (!state) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return f_array_lengths_resize(0, &state->needs);
+    return f_number_unsigneds_resize(0, &state->needs);
   }
 #endif // _di_f_console_parameter_state_delete_
 
@@ -160,7 +160,7 @@ extern "C" {
       if (!state) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return f_array_lengths_adjust(0, &state->needs);
+    return f_number_unsigneds_adjust(0, &state->needs);
   }
 #endif // _di_f_console_parameter_state_destroy_
 
@@ -172,22 +172,22 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    for (f_array_length_t i = 0; i < parameters->used; ++i) {
+    for (f_number_unsigned_t i = 0; i < parameters->used; ++i) {
 
-      status = f_array_lengths_resize(0, &parameters->array[i].locations);
+      status = f_number_unsigneds_resize(0, &parameters->array[i].locations);
       if (F_status_is_error(status)) return status;
 
-      status = f_array_lengths_resize(0, &parameters->array[i].locations_sub);
+      status = f_number_unsigneds_resize(0, &parameters->array[i].locations_sub);
       if (F_status_is_error(status)) return status;
 
-      status = f_array_lengths_resize(0, &parameters->array[i].values);
+      status = f_number_unsigneds_resize(0, &parameters->array[i].values);
       if (F_status_is_error(status)) return status;
     } // for
 
     status = f_string_dynamics_resize(0, &parameters->arguments);
     if (F_status_is_error(status)) return status;
 
-    status = f_array_lengths_resize(0, &parameters->remaining);
+    status = f_number_unsigneds_resize(0, &parameters->remaining);
     if (F_status_is_error(status)) return status;
 
     return F_none;
@@ -202,22 +202,22 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    for (f_array_length_t i = 0; i < parameters->used; ++i) {
+    for (f_number_unsigned_t i = 0; i < parameters->used; ++i) {
 
-      status = f_array_lengths_adjust(0, &parameters->array[i].locations);
+      status = f_number_unsigneds_adjust(0, &parameters->array[i].locations);
       if (F_status_is_error(status)) return status;
 
-      status = f_array_lengths_adjust(0, &parameters->array[i].locations_sub);
+      status = f_number_unsigneds_adjust(0, &parameters->array[i].locations_sub);
       if (F_status_is_error(status)) return status;
 
-      status = f_array_lengths_adjust(0, &parameters->array[i].values);
+      status = f_number_unsigneds_adjust(0, &parameters->array[i].values);
       if (F_status_is_error(status)) return status;
     } // for
 
     status = f_string_dynamics_adjust(0, &parameters->arguments);
     if (F_status_is_error(status)) return status;
 
-    status = f_array_lengths_adjust(0, &parameters->remaining);
+    status = f_number_unsigneds_adjust(0, &parameters->remaining);
     if (F_status_is_error(status)) return status;
 
     return F_none;

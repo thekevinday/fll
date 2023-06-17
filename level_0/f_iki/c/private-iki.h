@@ -40,7 +40,7 @@ extern "C" {
  * @see f_iki_content_partial_is()
  */
 #if !defined(_di_f_iki_content_is_) || !defined(_di_f_iki_content_partial_is_)
-  extern f_status_t private_f_iki_content_partial_is(const f_string_t buffer, const f_array_length_t length, const f_char_t quote) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_iki_content_partial_is(const f_string_t buffer, const f_number_unsigned_t length, const f_char_t quote) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_iki_content_is_) || !defined(_di_f_iki_content_partial_is_)
 
 /**
@@ -57,16 +57,16 @@ extern "C" {
  *   F_none on success.
  *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
  *
- *   Errors (with error bit) from: f_array_lengths_adjust().
+ *   Errors (with error bit) from: f_number_unsigneds_adjust().
  *   Errors (with error bit) from: f_memory_adjust().
  *   Errors (with error bit) from: f_string_ranges_adjust().
  *
- * @see f_array_lengths_adjust()
+ * @see f_number_unsigneds_adjust()
  * @see f_memory_adjust()
  * @see f_string_ranges_adjust()
  */
 #if !defined(_di_f_iki_datas_adjust_) || !defined(_di_f_iki_datas_decimate_by_)
-  extern f_status_t private_f_iki_datas_adjust(const f_array_length_t length, f_iki_datas_t *datas) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_iki_datas_adjust(const f_number_unsigned_t length, f_iki_datas_t *datas) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_iki_datas_adjust_) || !defined(_di_f_iki_datas_decimate_by_)
 
 /**
@@ -107,16 +107,16 @@ extern "C" {
  *   F_none on success.
  *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
  *
- *   Errors (with error bit) from: f_array_lengths_resize().
+ *   Errors (with error bit) from: f_number_unsigneds_resize().
  *   Errors (with error bit) from: f_memory_resize().
  *   Errors (with error bit) from: f_string_ranges_resize().
  *
- * @see f_array_lengths_resize()
+ * @see f_number_unsigneds_resize()
  * @see f_memory_resize()
  * @see f_string_ranges_resize()
  */
 #if !defined(_di_f_iki_datas_append_) || !defined(_di_f_iki_datas_decrease_by_) || !defined(_di_f_iki_datas_increase_) || !defined(_di_f_iki_datas_increase_by_) || !defined(_di_f_iki_datas_resize_)
-  extern f_status_t private_f_iki_datas_resize(const f_array_length_t length, f_iki_datas_t *datas) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_iki_datas_resize(const f_number_unsigned_t length, f_iki_datas_t *datas) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_iki_datas_append_) || !defined(_di_f_iki_datas_decrease_by_) || !defined(_di_f_iki_datas_increase_) || !defined(_di_f_iki_datas_increase_by_) || !defined(_di_f_iki_datas_resize_)
 
 /**
@@ -144,7 +144,7 @@ extern "C" {
  * @see f_iki_datass_decimate_by()
  */
 #if !defined(_di_f_iki_datass_adjust_) || !defined(_di_f_iki_datass_decimate_by_)
-  extern f_status_t private_f_iki_datass_adjust(const f_array_length_t length, f_iki_datass_t *datass) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_iki_datass_adjust(const f_number_unsigned_t length, f_iki_datass_t *datass) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_iki_datass_adjust_) || !defined(_di_f_iki_datass_decimate_by_)
 
 /**
@@ -174,7 +174,7 @@ extern "C" {
  * @see f_iki_datass_resize()
  */
 #if !defined(_di_f_iki_datass_decrease_by_) || !defined(_di_f_iki_datass_increase_) || !defined(_di_f_iki_datass_increase_by_) || !defined(_di_f_iki_datass_resize_)
-  extern f_status_t private_f_iki_datass_resize(const f_array_length_t length, f_iki_datass_t *datass) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_iki_datass_resize(const f_number_unsigned_t length, f_iki_datass_t *datass) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_iki_datass_decrease_by_) || !defined(_di_f_iki_datass_increase_) || !defined(_di_f_iki_datass_increase_by_) || !defined(_di_f_iki_datass_resize_)
 
 /**
@@ -197,7 +197,7 @@ extern "C" {
  * @see f_iki_object_partial_is()
  */
 #if !defined(_di_f_iki_object_is_) || !defined(_di_f_iki_object_partial_is_)
-  extern f_status_t private_f_iki_object_partial_is(const f_string_t buffer, const f_array_length_t length) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_iki_object_partial_is(const f_string_t buffer, const f_number_unsigned_t length) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_iki_object_is_) || !defined(_di_f_iki_object_partial_is_)
 
 #ifdef __cplusplus

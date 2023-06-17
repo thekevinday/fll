@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #ifndef _di_f_utf_char_to_character_
-  f_status_t f_utf_char_to_character(const f_string_t character, const f_array_length_t width_max, f_utf_char_t *character_utf) {
+  f_status_t f_utf_char_to_character(const f_string_t character, const f_number_unsigned_t width_max, f_utf_char_t *character_utf) {
     #ifndef _di_level_0_parameter_checking_
       if (width_max < 1) return F_status_set_error(F_parameter);
       if (!character_utf) return F_status_set_error(F_parameter);
@@ -20,7 +20,7 @@ extern "C" {
 #endif // _di_f_utf_char_to_character_
 
 #ifndef _di_f_utf_char_to_char_
-  f_status_t f_utf_char_to_char(const f_utf_char_t unicode, f_string_t *character, f_array_length_t *width_max) {
+  f_status_t f_utf_char_to_char(const f_utf_char_t unicode, f_string_t *character, f_number_unsigned_t *width_max) {
     #ifndef _di_level_0_parameter_checking_
       if (!character) return F_status_set_error(F_parameter);
       if (!width_max) return F_status_set_error(F_parameter);
@@ -129,12 +129,12 @@ extern "C" {
 #endif // _di_f_utf_character_unicode_from_
 
 #ifndef _di_f_utf_character_unicode_string_to_
-  f_status_t f_utf_character_unicode_string_to(const f_utf_string_t string, const f_array_length_t length, f_utf_char_t *codepoint) {
+  f_status_t f_utf_character_unicode_string_to(const f_utf_string_t string, const f_number_unsigned_t length, f_utf_char_t *codepoint) {
     #ifndef _di_level_0_parameter_checking_
       if (!codepoint) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    f_array_length_t i = 0;
+    f_number_unsigned_t i = 0;
 
     while (i < length && !string[i]) {
       ++i;
@@ -201,7 +201,7 @@ extern "C" {
 #endif // _di_f_utf_character_unicode_string_to_
 
 #ifndef _di_f_utf_unicode_from_
-  f_status_t f_utf_unicode_from(const f_utf_char_t codepoint, const f_array_length_t width_max, f_string_t *character) {
+  f_status_t f_utf_unicode_from(const f_utf_char_t codepoint, const f_number_unsigned_t width_max, f_string_t *character) {
     #ifndef _di_level_0_parameter_checking_
       if (width_max < 1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -267,7 +267,7 @@ extern "C" {
 #endif // _di_f_utf_unicode_from_
 
 #ifndef _di_f_utf_unicode_to_
-  f_status_t f_utf_unicode_to(const f_string_t character, const f_array_length_t width_max, uint32_t *unicode) {
+  f_status_t f_utf_unicode_to(const f_string_t character, const f_number_unsigned_t width_max, uint32_t *unicode) {
     #ifndef _di_level_0_parameter_checking_
       if (width_max < 1) return F_status_set_error(F_parameter);
       if (!unicode) return F_status_set_error(F_parameter);
@@ -285,12 +285,12 @@ extern "C" {
 #endif // _di_f_utf_unicode_to_
 
 #ifndef _di_f_utf_unicode_string_to_
-  f_status_t f_utf_unicode_string_to(const f_string_t string, const f_array_length_t length, uint32_t *unicode) {
+  f_status_t f_utf_unicode_string_to(const f_string_t string, const f_number_unsigned_t length, uint32_t *unicode) {
     #ifndef _di_level_0_parameter_checking_
       if (!unicode) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    f_array_length_t i = 0;
+    f_number_unsigned_t i = 0;
 
     while (i < length && !string[i]) {
       ++i;

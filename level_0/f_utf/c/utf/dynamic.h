@@ -65,7 +65,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_utf_string_dynamic_adjust_
-  extern f_status_t f_utf_string_dynamic_adjust(const f_array_length_t length, f_utf_string_dynamic_t * const dynamic);
+  extern f_status_t f_utf_string_dynamic_adjust(const f_number_unsigned_t length, f_utf_string_dynamic_t * const dynamic);
 #endif // _di_f_utf_string_dynamic_adjust_
 
 /**
@@ -178,7 +178,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_dynamic_decimate_by_
-  extern f_status_t f_utf_string_dynamic_decimate_by(const f_array_length_t amount, f_utf_string_dynamic_t * const dynamic);
+  extern f_status_t f_utf_string_dynamic_decimate_by(const f_number_unsigned_t amount, f_utf_string_dynamic_t * const dynamic);
 #endif // _di_f_utf_string_dynamic_decimate_by_
 
 /**
@@ -203,14 +203,14 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_dynamic_decrease_by_
-  extern f_status_t f_utf_string_dynamic_decrease_by(const f_array_length_t amount, f_utf_string_dynamic_t * const dynamic);
+  extern f_status_t f_utf_string_dynamic_decrease_by(const f_number_unsigned_t amount, f_utf_string_dynamic_t * const dynamic);
 #endif // _di_f_utf_string_dynamic_decrease_by_
 
 /**
  * Resize the dynamic string to a larger size.
  *
  * This will resize making the array larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -229,14 +229,14 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_dynamic_increase_
-  extern f_status_t f_utf_string_dynamic_increase(const f_array_length_t step, f_utf_string_dynamic_t * const dynamic);
+  extern f_status_t f_utf_string_dynamic_increase(const f_number_unsigned_t step, f_utf_string_dynamic_t * const dynamic);
 #endif // _di_f_utf_string_dynamic_increase_
 
 /**
  * Resize the dynamic string to a larger size.
  *
  * This will resize making the array larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -254,7 +254,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_dynamic_increase_by_
-  extern f_status_t f_utf_string_dynamic_increase_by(const f_array_length_t amount, f_utf_string_dynamic_t * const dynamic);
+  extern f_status_t f_utf_string_dynamic_increase_by(const f_number_unsigned_t amount, f_utf_string_dynamic_t * const dynamic);
 #endif // _di_f_utf_string_dynamic_increase_by_
 
 /**
@@ -809,7 +809,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_dynamic_resize_
-  extern f_status_t f_utf_string_dynamic_resize(const f_array_length_t length, f_utf_string_dynamic_t * const buffer);
+  extern f_status_t f_utf_string_dynamic_resize(const f_number_unsigned_t length, f_utf_string_dynamic_t * const buffer);
 #endif // _di_f_utf_string_dynamic_resize_
 
 /**

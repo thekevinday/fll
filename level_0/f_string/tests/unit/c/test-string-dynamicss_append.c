@@ -38,19 +38,19 @@ void test__f_string_dynamicss_append__works(void **state) {
     assert_int_equal(status, F_none);
     assert_int_equal(destination.array[0].used, length_inner);
 
-    for (f_array_length_t i = 0; i < length_inner; ++i) {
+    for (f_number_unsigned_t i = 0; i < length_inner; ++i) {
 
       assert_int_equal(destination.array[0].array[i].used, test_names[i].used);
       assert_string_equal(destination.array[0].array[i].string, test_names[i].string);
     } // for
   }
 
-  for (f_array_length_t i = 0; i < source.used; ++i) {
+  for (f_number_unsigned_t i = 0; i < source.used; ++i) {
     free((void *) source.array[i].string);
   } // for
 
 
-  for (f_array_length_t i = 0; i < destination.array[0].used; ++i) {
+  for (f_number_unsigned_t i = 0; i < destination.array[0].used; ++i) {
     free((void *) destination.array[0].array[i].string);
   } // for
 

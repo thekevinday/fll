@@ -36,7 +36,7 @@ extern "C" {
  * @see f_string_mapss_adjust()
  */
 #if !defined(_di_f_string_mapss_adjust_) || !defined(_di_f_string_mapss_decimate_by_)
-  extern f_status_t private_f_string_mapss_adjust(const f_array_length_t length, f_string_mapss_t * const mapss) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_string_mapss_adjust(const f_number_unsigned_t length, f_string_mapss_t * const mapss) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_string_mapss_adjust_) || !defined(_di_f_string_mapss_decimate_by_)
 
 /**
@@ -62,7 +62,7 @@ extern "C" {
  * @see f_string_mapss_increase_by()
  */
 #if !defined(_di_f_string_mapss_decrease_by_) || !defined(_di_f_string_mapss_increase_) || !defined(_di_f_string_mapss_increase_by_)
-  extern f_status_t private_f_string_mapss_resize(const f_array_length_t length, f_string_mapss_t * const mapss) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_string_mapss_resize(const f_number_unsigned_t length, f_string_mapss_t * const mapss) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_string_mapss_decrease_by_) || !defined(_di_f_string_mapss_increase_) || !defined(_di_f_string_mapss_increase_by_)
 
 #ifdef __cplusplus

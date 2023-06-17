@@ -15,7 +15,7 @@ void test__f_utf_character_is_word__strict_is_false(void **state) {
     f_utf_char_t sequence = 0;
     ssize_t bytes = 0;
 
-    f_array_length_t line = 0;
+    f_number_unsigned_t line = 0;
 
     do {
       bytes = data__bytesequence_get_line(file, &sequence);
@@ -44,7 +44,7 @@ void test__f_utf_character_is_word__strict_is_true(void **state) {
     f_utf_char_t sequence = 0;
     ssize_t bytes = 0;
 
-    f_array_length_t line = 0;
+    f_number_unsigned_t line = 0;
 
     do {
       bytes = data__bytesequence_get_line(file, &sequence);

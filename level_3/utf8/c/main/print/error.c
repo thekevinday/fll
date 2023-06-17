@@ -109,7 +109,7 @@ extern "C" {
 #endif // _di_utf8_print_error_no_from_
 
 #ifndef _di_utf8_print_error_parameter_file_name_empty_
-  f_status_t utf8_print_error_parameter_file_name_empty(fl_print_t * const print, const f_array_length_t index) {
+  f_status_t utf8_print_error_parameter_file_name_empty(fl_print_t * const print, const f_number_unsigned_t index) {
 
     if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
 

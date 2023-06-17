@@ -103,7 +103,7 @@ extern "C" {
       return;
     }
 
-    const f_array_length_t destination_used = destination->used;
+    const f_number_unsigned_t destination_used = destination->used;
 
     for (; range->start <= range->stop && range->start < content.used; ++range->start) {
 
@@ -161,7 +161,7 @@ extern "C" {
       }
     #endif // _di_level_1_parameter_checking_
 
-    const f_array_length_t delimits_used = delimits->used;
+    const f_number_unsigned_t delimits_used = delimits->used;
 
     private_fl_fss_basic_read(buffer, F_true, range, found, quote, delimits, state);
 
@@ -188,7 +188,7 @@ extern "C" {
       }
     #endif // _di_level_1_parameter_checking_
 
-    const f_array_length_t destination_used = destination->used;
+    const f_number_unsigned_t destination_used = destination->used;
 
     private_fl_fss_basic_write(F_true, object, quote ? quote : f_fss_quote_double_s.string[0], range, destination, state);
 

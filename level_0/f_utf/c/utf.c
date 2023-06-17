@@ -7,7 +7,7 @@ extern "C" {
 #endif
 
 #ifndef _di_f_utf_buffer_decrement_
-  f_status_t f_utf_buffer_decrement(const f_string_static_t buffer, f_string_range_t *range, const f_array_length_t step) {
+  f_status_t f_utf_buffer_decrement(const f_string_static_t buffer, f_string_range_t *range, const f_number_unsigned_t step) {
     #ifndef _di_level_0_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
       if (step < 1) return F_status_set_error(F_parameter);
@@ -17,7 +17,7 @@ extern "C" {
       return F_data_not;
     }
 
-    f_array_length_t i = 0;
+    f_number_unsigned_t i = 0;
     uint8_t width = 0;
 
     do {
@@ -41,7 +41,7 @@ extern "C" {
 #endif // _di_f_utf_buffer_decrement_
 
 #ifndef _di_f_utf_buffer_increment_
-  f_status_t f_utf_buffer_increment(const f_string_static_t buffer, f_string_range_t *range, const f_array_length_t step) {
+  f_status_t f_utf_buffer_increment(const f_string_static_t buffer, f_string_range_t *range, const f_number_unsigned_t step) {
     #ifndef _di_level_0_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
       if (step < 1) return F_status_set_error(F_parameter);
@@ -51,7 +51,7 @@ extern "C" {
       return F_data_not;
     }
 
-    f_array_length_t i = 0;
+    f_number_unsigned_t i = 0;
     uint8_t width = 0;
 
     do {

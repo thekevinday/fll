@@ -6,15 +6,15 @@ extern "C" {
 #endif
 
 #ifndef _di_f_rip_utf_
-  f_status_t f_rip_utf(const f_utf_string_t source, const f_array_length_t length, f_utf_string_dynamic_t * const destination) {
+  f_status_t f_rip_utf(const f_utf_string_t source, const f_number_unsigned_t length, f_utf_string_dynamic_t * const destination) {
     #ifndef _di_level_1_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
     if (!length) return F_data_not;
 
-    f_array_length_t begin = 0;
-    f_array_length_t end = length - 1;
+    f_number_unsigned_t begin = 0;
+    f_number_unsigned_t end = length - 1;
 
     f_status_t status = private_f_rip_utf_find_range(source, &begin, &end);
 
@@ -61,15 +61,15 @@ extern "C" {
 #endif // _di_f_rip_utf_dynamic_nulless_
 
 #ifndef _di_f_rip_utf_nulless_
-  f_status_t f_rip_utf_nulless(const f_utf_string_t source, const f_array_length_t length, f_utf_string_dynamic_t * const destination) {
+  f_status_t f_rip_utf_nulless(const f_utf_string_t source, const f_number_unsigned_t length, f_utf_string_dynamic_t * const destination) {
     #ifndef _di_level_1_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
     if (!length) return F_data_not;
 
-    f_array_length_t begin = 0;
-    f_array_length_t end = length - 1;
+    f_number_unsigned_t begin = 0;
+    f_number_unsigned_t end = length - 1;
 
     f_status_t status = private_f_rip_utf_find_range(source, &begin, &end);
 

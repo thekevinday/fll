@@ -36,12 +36,12 @@ extern "C" {
     f_fss_object_t object;
     f_fss_content_t content;
 
-    f_array_length_t parent;
+    f_number_unsigned_t parent;
   } f_fss_item_t;
 
   #define f_fss_item_t_initialize { f_fss_object_t_initialize, f_fss_content_t_initialize, 0 }
 
-  #define macro_f_fss_item_t_initialize_1(object, content, parent) macro_f_array_lengths_t_initialize_1(object, content, parent)
+  #define macro_f_fss_item_t_initialize_1(object, content, parent) macro_f_number_unsigneds_t_initialize_1(object, content, parent)
 
   #define macro_f_fss_item_t_clear(item) \
     macro_f_fss_object_t_clear(item.object); \
@@ -92,8 +92,8 @@ extern "C" {
   typedef struct {
     f_fss_item_t *array;
 
-    f_array_length_t size;
-    f_array_length_t used;
+    f_number_unsigned_t size;
+    f_number_unsigned_t used;
   } f_fss_items_t;
 
   #define f_fss_items_t_initialize { 0, 0, 0 }
@@ -130,8 +130,8 @@ extern "C" {
   typedef struct {
     f_fss_items_t *depth;
 
-    f_array_length_t size;
-    f_array_length_t used;
+    f_number_unsigned_t size;
+    f_number_unsigned_t used;
   } f_fss_nest_t;
 
   #define f_fss_nest_t_initialize { 0, 0, 0 }
@@ -164,8 +164,8 @@ extern "C" {
   typedef struct {
     f_fss_nest_t *array;
 
-    f_array_length_t size;
-    f_array_length_t used;
+    f_number_unsigned_t size;
+    f_number_unsigned_t used;
   } f_fss_nests_t;
 
   #define f_fss_nests_t_initialize { 0, 0, 0 }
@@ -202,7 +202,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_items_adjust_
-  extern f_status_t f_fss_items_adjust(const f_array_length_t length, f_fss_items_t * const items);
+  extern f_status_t f_fss_items_adjust(const f_number_unsigned_t length, f_fss_items_t * const items);
 #endif // _di_f_fss_items_adjust_
 
 /**
@@ -225,7 +225,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_items_decimate_by_
-  extern f_status_t f_fss_items_decimate_by(const f_array_length_t amount, f_fss_items_t * const items);
+  extern f_status_t f_fss_items_decimate_by(const f_number_unsigned_t amount, f_fss_items_t * const items);
 #endif // _di_f_fss_items_decimate_by_
 
 /**
@@ -247,13 +247,13 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_items_decrease_by_
-  extern f_status_t f_fss_items_decrease_by(const f_array_length_t amount, f_fss_items_t * const items);
+  extern f_status_t f_fss_items_decrease_by(const f_number_unsigned_t amount, f_fss_items_t * const items);
 #endif // _di_f_fss_items_decrease_by_
 
 /**
  * Increase the size of the items array, but only if necessary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -271,14 +271,14 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_items_increase_
-  extern f_status_t f_fss_items_increase(const f_array_length_t step, f_fss_items_t * const items);
+  extern f_status_t f_fss_items_increase(const f_number_unsigned_t step, f_fss_items_t * const items);
 #endif // _di_f_fss_items_increase_
 
 /**
  * Resize the items array to a larger size.
  *
  * This will resize making the array larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -295,7 +295,7 @@ extern "C" {
  *   F_array_too_large (with error bit) if the new array length is too large.
  */
 #ifndef _di_f_fss_items_increase_by_
-  extern f_status_t f_fss_items_increase_by(const f_array_length_t amount, f_fss_items_t * const items);
+  extern f_status_t f_fss_items_increase_by(const f_number_unsigned_t amount, f_fss_items_t * const items);
 #endif // _di_f_fss_items_increase_by_
 
 /**
@@ -313,7 +313,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_items_resize_
-  extern f_status_t f_fss_items_resize(const f_array_length_t length, f_fss_items_t * const items);
+  extern f_status_t f_fss_items_resize(const f_number_unsigned_t length, f_fss_items_t * const items);
 #endif // _di_f_fss_items_resize_
 
 /**
@@ -331,7 +331,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_nest_adjust_
-  extern f_status_t f_fss_nest_adjust(const f_array_length_t length, f_fss_nest_t * const nest);
+  extern f_status_t f_fss_nest_adjust(const f_number_unsigned_t length, f_fss_nest_t * const nest);
 #endif // _di_f_fss_nest_adjust_
 
 /**
@@ -354,7 +354,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_nest_decimate_by_
-  extern f_status_t f_fss_nest_decimate_by(const f_array_length_t amount, f_fss_nest_t * const nest);
+  extern f_status_t f_fss_nest_decimate_by(const f_number_unsigned_t amount, f_fss_nest_t * const nest);
 #endif // _di_f_fss_nest_decimate_by_
 
 /**
@@ -376,13 +376,13 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_nest_decrease_by_
-  extern f_status_t f_fss_nest_decrease_by(const f_array_length_t amount, f_fss_nest_t * const nest);
+  extern f_status_t f_fss_nest_decrease_by(const f_number_unsigned_t amount, f_fss_nest_t * const nest);
 #endif // _di_f_fss_nest_decrease_by_
 
 /**
  * Increase the size of the nest array, but only if necessary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -400,14 +400,14 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_nest_increase_
-  extern f_status_t f_fss_nest_increase(const f_array_length_t step, f_fss_nest_t * const nest);
+  extern f_status_t f_fss_nest_increase(const f_number_unsigned_t step, f_fss_nest_t * const nest);
 #endif // _di_f_fss_nest_increase_
 
 /**
  * Resize the nest array to a larger size.
  *
  * This will resize making the array larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -424,7 +424,7 @@ extern "C" {
  *   F_array_too_large (with error bit) if the new array length is too large.
  */
 #ifndef _di_f_fss_nest_increase_by_
-  extern f_status_t f_fss_nest_increase_by(const f_array_length_t amount, f_fss_nest_t * const nest);
+  extern f_status_t f_fss_nest_increase_by(const f_number_unsigned_t amount, f_fss_nest_t * const nest);
 #endif // _di_f_fss_nest_increase_by_
 
 /**
@@ -442,7 +442,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_nest_resize_
-  extern f_status_t f_fss_nest_resize(const f_array_length_t length, f_fss_nest_t * const nest);
+  extern f_status_t f_fss_nest_resize(const f_number_unsigned_t length, f_fss_nest_t * const nest);
 #endif // _di_f_fss_nest_resize_
 
 /**
@@ -460,7 +460,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_nests_adjust_
-  extern f_status_t f_fss_nests_adjust(const f_array_length_t length, f_fss_nests_t * const nests);
+  extern f_status_t f_fss_nests_adjust(const f_number_unsigned_t length, f_fss_nests_t * const nests);
 #endif // _di_f_fss_nests_adjust_
 
 /**
@@ -482,7 +482,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_nests_decimate_by_
-  extern f_status_t f_fss_nests_decimate_by(const f_array_length_t amount, f_fss_nests_t * const nests);
+  extern f_status_t f_fss_nests_decimate_by(const f_number_unsigned_t amount, f_fss_nests_t * const nests);
 #endif // _di_f_fss_nests_decimate_by_
 
 /**
@@ -504,13 +504,13 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_nests_decrease_by_
-  extern f_status_t f_fss_nests_decrease_by(const f_array_length_t amount, f_fss_nests_t * const nests);
+  extern f_status_t f_fss_nests_decrease_by(const f_number_unsigned_t amount, f_fss_nests_t * const nests);
 #endif // _di_f_fss_nests_decrease_by_
 
 /**
  * Increase the size of the nests array, but only if necessary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -528,14 +528,14 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_nests_increase_
-  extern f_status_t f_fss_nests_increase(const f_array_length_t step, f_fss_nests_t * const nests);
+  extern f_status_t f_fss_nests_increase(const f_number_unsigned_t step, f_fss_nests_t * const nests);
 #endif // _di_f_fss_nests_increase_
 
 /**
  * Resize the nests array to a larger size.
  *
  * This will resize making the array larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -552,7 +552,7 @@ extern "C" {
  *   F_array_too_large (with error bit) if the new array length is too large.
  */
 #ifndef _di_f_fss_nests_increase_by_
-  extern f_status_t f_fss_nests_increase_by(const f_array_length_t amount, f_fss_nests_t * const nests);
+  extern f_status_t f_fss_nests_increase_by(const f_number_unsigned_t amount, f_fss_nests_t * const nests);
 #endif // _di_f_fss_nests_increase_by_
 
 /**
@@ -570,7 +570,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_nests_resize_
-  extern f_status_t f_fss_nests_resize(const f_array_length_t length, f_fss_nests_t * const nests);
+  extern f_status_t f_fss_nests_resize(const f_number_unsigned_t length, f_fss_nests_t * const nests);
 #endif // _di_f_fss_nests_resize_
 
 #ifdef __cplusplus

@@ -125,7 +125,7 @@ extern "C" {
  * @see read()
  */
 #ifndef _di_fl_utf_file_read_until_
-  extern f_status_t fl_utf_file_read_until(const f_file_t file, const f_array_length_t total, f_utf_string_dynamic_t * const destination);
+  extern f_status_t fl_utf_file_read_until(const f_file_t file, const f_number_unsigned_t total, f_utf_string_dynamic_t * const destination);
 #endif // _di_fl_utf_file_read_until_
 
 /**
@@ -158,7 +158,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_fl_utf_file_write_
-  extern f_status_t fl_utf_file_write(const f_file_t file, const f_utf_string_static_t destination, f_array_length_t * const written);
+  extern f_status_t fl_utf_file_write(const f_file_t file, const f_utf_string_static_t destination, f_number_unsigned_t * const written);
 #endif // _di_fl_utf_file_write_
 
 /**
@@ -193,7 +193,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_fl_utf_file_write_block_
-  extern f_status_t fl_utf_file_write_block(const f_file_t file, const f_utf_string_static_t destination, f_array_length_t * const written);
+  extern f_status_t fl_utf_file_write_block(const f_file_t file, const f_utf_string_static_t destination, f_number_unsigned_t * const written);
 #endif // _di_fl_utf_file_write_block_
 
 /**
@@ -228,7 +228,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_fl_utf_file_write_until_
-  extern f_status_t fl_utf_file_write_until(const f_file_t file, const f_utf_string_static_t destination, const f_array_length_t total, f_array_length_t * const written);
+  extern f_status_t fl_utf_file_write_until(const f_file_t file, const f_utf_string_static_t destination, const f_number_unsigned_t total, f_number_unsigned_t * const written);
 #endif // _di_fl_utf_file_write_until_
 
 /**
@@ -263,7 +263,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_fl_utf_file_write_range_
-  extern f_status_t fl_utf_file_write_range(const f_file_t file, const f_utf_string_static_t buffer, const f_string_range_t range, f_array_length_t * const written);
+  extern f_status_t fl_utf_file_write_range(const f_file_t file, const f_utf_string_static_t buffer, const f_string_range_t range, f_number_unsigned_t * const written);
 #endif // _di_fl_utf_file_write_range_
 
 #ifdef __cplusplus

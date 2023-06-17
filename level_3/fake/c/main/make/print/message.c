@@ -20,7 +20,7 @@ extern "C" {
     if (main->setting.modes.used) {
       fl_print_format("%[' with modes '%]", print->to, print->set->important, print->set->important);
 
-      for (f_array_length_t i = 0; i < main->setting.modes.used; ) {
+      for (f_number_unsigned_t i = 0; i < main->setting.modes.used; ) {
 
         fl_print_format("%[%Q%]", print->to, print->set->notable, main->setting.modes.array[i], print->set->notable);
 

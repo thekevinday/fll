@@ -259,11 +259,11 @@ void test__f_compare_dynamic_partial_except_string__works(void **state) {
     F_equal_to,
   };
 
-  f_array_length_t except_1[] = {
+  f_number_unsigned_t except_1[] = {
     0, 1, 2, 3,
   };
-  const f_array_lengths_t excepts_1 = macro_f_array_lengths_t_initialize_1(except_1, 0, 4);
-  const f_array_lengths_t excepts_2 = f_array_lengths_t_initialize;
+  const f_number_unsigneds_t excepts_1 = macro_f_number_unsigneds_t_initialize_1(except_1, 0, 4);
+  const f_number_unsigneds_t excepts_2 = f_number_unsigneds_t_initialize;
   uint8_t i = 0;
   f_status_t status = F_none;
 

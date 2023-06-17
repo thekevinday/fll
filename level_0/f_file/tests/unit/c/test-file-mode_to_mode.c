@@ -80,7 +80,7 @@ void test__f_file_mode_to_mode__works(void **state) {
     F_file_mode_all_wx_d,
   };
 
-  for (f_array_length_t i = 0; i < 28; ++i) {
+  for (f_number_unsigned_t i = 0; i < 28; ++i) {
 
     mode_t mode = 0;
 

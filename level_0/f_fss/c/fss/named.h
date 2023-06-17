@@ -38,7 +38,7 @@ extern "C" {
 
   #define f_fss_named_t_initialize { f_fss_object_t_initialize, f_fss_objects_t_initialize, f_fss_contents_t_initialize, f_uint8ss_t_initialize }
 
-  #define macro_f_fss_named_t_initialize_1(name, objects, contents, quotess) macro_f_array_lengths_t_initialize_1(name, objects, contents, quotess)
+  #define macro_f_fss_named_t_initialize_1(name, objects, contents, quotess) macro_f_number_unsigneds_t_initialize_1(name, objects, contents, quotess)
 
   #define macro_f_fss_named_t_clear(named) \
     macro_f_fss_object_t_clear(named.name) \
@@ -69,8 +69,8 @@ extern "C" {
   typedef struct {
     f_fss_named_t *array;
 
-    f_array_length_t size;
-    f_array_length_t used;
+    f_number_unsigned_t size;
+    f_number_unsigned_t used;
   } f_fss_nameds_t;
 
   #define f_fss_nameds_t_initialize { 0, 0, 0 }
@@ -107,7 +107,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_named_adjust_
-  extern f_status_t f_fss_named_adjust(const f_array_length_t length, f_fss_named_t * const named);
+  extern f_status_t f_fss_named_adjust(const f_number_unsigned_t length, f_fss_named_t * const named);
 #endif // _di_f_fss_named_adjust_
 
 /**
@@ -130,7 +130,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_named_decimate_by_
-  extern f_status_t f_fss_named_decimate_by(const f_array_length_t amount, f_fss_named_t * const named);
+  extern f_status_t f_fss_named_decimate_by(const f_number_unsigned_t amount, f_fss_named_t * const named);
 #endif // _di_f_fss_named_decimate_by_
 
 /**
@@ -153,13 +153,13 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_named_decrease_by_
-  extern f_status_t f_fss_named_decrease_by(const f_array_length_t amount, f_fss_named_t * const named);
+  extern f_status_t f_fss_named_decrease_by(const f_number_unsigned_t amount, f_fss_named_t * const named);
 #endif // _di_f_fss_named_decrease_by_
 
 /**
  * Increase the size of all parts of the named structure, but only if necessary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -177,14 +177,14 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_named_increase_
-  extern f_status_t f_fss_named_increase(const f_array_length_t step, f_fss_named_t * const named);
+  extern f_status_t f_fss_named_increase(const f_number_unsigned_t step, f_fss_named_t * const named);
 #endif // _di_f_fss_named_increase_
 
 /**
  * Resize all parts of the named structure to a larger size.
  *
  * This will resize making the array larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -201,7 +201,7 @@ extern "C" {
  *   F_array_too_large (with error bit) if the new array length is too large.
  */
 #ifndef _di_f_fss_named_increase_by_
-  extern f_status_t f_fss_named_increase_by(const f_array_length_t amount, f_fss_named_t * const named);
+  extern f_status_t f_fss_named_increase_by(const f_number_unsigned_t amount, f_fss_named_t * const named);
 #endif // _di_f_fss_named_increase_by_
 
 /**
@@ -219,7 +219,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_named_resize_
-  extern f_status_t f_fss_named_resize(const f_array_length_t length, f_fss_named_t * const named);
+  extern f_status_t f_fss_named_resize(const f_number_unsigned_t length, f_fss_named_t * const named);
 #endif // _di_f_fss_named_resize_
 
 /**
@@ -237,7 +237,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_nameds_adjust_
-  extern f_status_t f_fss_nameds_adjust(const f_array_length_t length, f_fss_nameds_t * const nameds);
+  extern f_status_t f_fss_nameds_adjust(const f_number_unsigned_t length, f_fss_nameds_t * const nameds);
 #endif // _di_f_fss_nameds_adjust_
 
 /**
@@ -259,7 +259,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_nameds_decimate_by_
-  extern f_status_t f_fss_nameds_decimate_by(const f_array_length_t amount, f_fss_nameds_t * const nameds);
+  extern f_status_t f_fss_nameds_decimate_by(const f_number_unsigned_t amount, f_fss_nameds_t * const nameds);
 #endif // _di_f_fss_nameds_decimate_by_
 
 /**
@@ -281,13 +281,13 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_nameds_decrease_by_
-  extern f_status_t f_fss_nameds_decrease_by(const f_array_length_t amount, f_fss_nameds_t * const nameds);
+  extern f_status_t f_fss_nameds_decrease_by(const f_number_unsigned_t amount, f_fss_nameds_t * const nameds);
 #endif // _di_f_fss_nameds_decrease_by_
 
 /**
  * Increase the size of the nameds array, but only if necessary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -305,14 +305,14 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_nameds_increase_
-  extern f_status_t f_fss_nameds_increase(const f_array_length_t step, f_fss_nameds_t * const nameds);
+  extern f_status_t f_fss_nameds_increase(const f_number_unsigned_t step, f_fss_nameds_t * const nameds);
 #endif // _di_f_fss_nameds_increase_
 
 /**
  * Resize the nameds array to a larger size.
  *
  * This will resize making the array larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -329,7 +329,7 @@ extern "C" {
  *   F_array_too_large (with error bit) if the new array length is too large.
  */
 #ifndef _di_f_fss_nameds_increase_by_
-  extern f_status_t f_fss_nameds_increase_by(const f_array_length_t amount, f_fss_nameds_t * const nameds);
+  extern f_status_t f_fss_nameds_increase_by(const f_number_unsigned_t amount, f_fss_nameds_t * const nameds);
 #endif // _di_f_fss_nameds_increase_by_
 
 /**
@@ -347,7 +347,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_nameds_resize_
-  extern f_status_t f_fss_nameds_resize(const f_array_length_t length, f_fss_nameds_t * const nameds);
+  extern f_status_t f_fss_nameds_resize(const f_number_unsigned_t length, f_fss_nameds_t * const nameds);
 #endif // _di_f_fss_nameds_resize_
 
 #ifdef __cplusplus

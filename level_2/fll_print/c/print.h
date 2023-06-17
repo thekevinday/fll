@@ -52,7 +52,7 @@ extern "C" {
  * @see f_print()
  */
 #ifndef _di_fll_print_
-  extern f_status_t fll_print(const f_string_t string, const f_array_length_t length, f_file_t file);
+  extern f_status_t fll_print(const f_string_t string, const f_number_unsigned_t length, f_file_t file);
 #endif // _di_fll_print_
 
 /**
@@ -331,7 +331,7 @@ extern "C" {
  * @see f_print_except()
  */
 #ifndef _di_fll_print_except_
-  extern f_status_t fll_print_except(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, f_file_t file);
+  extern f_status_t fll_print_except(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t length, const f_number_unsigneds_t except, f_file_t file);
 #endif // _di_fll_print_except_
 
 /**
@@ -358,7 +358,7 @@ extern "C" {
  * @see f_print_except_dynamic()
  */
 #ifndef _di_fll_print_except_dynamic_
-  extern f_status_t fll_print_except_dynamic(const f_string_static_t buffer, const f_array_lengths_t except, f_file_t file);
+  extern f_status_t fll_print_except_dynamic(const f_string_static_t buffer, const f_number_unsigneds_t except, f_file_t file);
 #endif // _di_fll_print_except_dynamic_
 
 /**
@@ -387,7 +387,7 @@ extern "C" {
  * @see f_print_except_dynamic_partial()
  */
 #ifndef _di_fll_print_except_dynamic_partial_
-  extern f_status_t fll_print_except_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, f_file_t file);
+  extern f_status_t fll_print_except_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, const f_number_unsigneds_t except, f_file_t file);
 #endif // _di_fll_print_except_dynamic_partial_
 
 /**
@@ -416,7 +416,7 @@ extern "C" {
  * @see f_print_except_dynamic_partial_raw()
  */
 #ifndef _di_fll_print_except_dynamic_partial_raw_
-  extern f_status_t fll_print_except_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, f_file_t file);
+  extern f_status_t fll_print_except_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, const f_number_unsigneds_t except, f_file_t file);
 #endif // _di_fll_print_except_dynamic_partial_raw_
 
 /**
@@ -445,7 +445,7 @@ extern "C" {
  * @see f_print_except_dynamic_partial_raw_safely()
  */
 #ifndef _di_fll_print_except_dynamic_partial_raw_safely_
-  extern f_status_t fll_print_except_dynamic_partial_raw_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, f_file_t file);
+  extern f_status_t fll_print_except_dynamic_partial_raw_safely(const f_string_static_t buffer, const f_string_range_t range, const f_number_unsigneds_t except, f_file_t file);
 #endif // _di_fll_print_except_dynamic_partial_raw_safely_
 
 /**
@@ -474,7 +474,7 @@ extern "C" {
  * @see f_print_except_dynamic_partial_safely()
  */
 #ifndef _di_fll_print_except_dynamic_partial_safely_
-  extern f_status_t fll_print_except_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, f_file_t file);
+  extern f_status_t fll_print_except_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, const f_number_unsigneds_t except, f_file_t file);
 #endif // _di_fll_print_except_dynamic_partial_safely_
 
 /**
@@ -501,7 +501,7 @@ extern "C" {
  * @see f_print_except_dynamic_raw()
  */
 #ifndef _di_fll_print_except_dynamic_raw_
-  extern f_status_t fll_print_except_dynamic_raw(const f_string_static_t buffer, const f_array_lengths_t except, f_file_t file);
+  extern f_status_t fll_print_except_dynamic_raw(const f_string_static_t buffer, const f_number_unsigneds_t except, f_file_t file);
 #endif // _di_fll_print_except_dynamic_raw_
 
 /**
@@ -528,7 +528,7 @@ extern "C" {
  * @see f_print_except_dynamic_raw_safely()
  */
 #ifndef _di_fll_print_except_dynamic_raw_safely_
-  extern f_status_t fll_print_except_dynamic_raw_safely(const f_string_static_t buffer, const f_array_lengths_t except, f_file_t file);
+  extern f_status_t fll_print_except_dynamic_raw_safely(const f_string_static_t buffer, const f_number_unsigneds_t except, f_file_t file);
 #endif // _di_fll_print_except_dynamic_raw_safely_
 
 /**
@@ -555,7 +555,7 @@ extern "C" {
  * @see f_print_except_dynamic_safely()
  */
 #ifndef _di_fll_print_except_dynamic_safely_
-  extern f_status_t fll_print_except_dynamic_safely(const f_string_static_t buffer, const f_array_lengths_t except, f_file_t file);
+  extern f_status_t fll_print_except_dynamic_safely(const f_string_static_t buffer, const f_number_unsigneds_t except, f_file_t file);
 #endif // _di_fll_print_except_dynamic_safely_
 
 /**
@@ -589,7 +589,7 @@ extern "C" {
  * @see f_print_except_in()
  */
 #ifndef _di_fll_print_except_in_
-  extern f_status_t fll_print_except_in(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, f_file_t file);
+  extern f_status_t fll_print_except_in(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t length, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, f_file_t file);
 #endif // _di_fll_print_except_in_
 
 /**
@@ -623,7 +623,7 @@ extern "C" {
  * @see f_print_except_in_raw()
  */
 #ifndef _di_fll_print_except_in_raw_
-  extern f_status_t fll_print_except_in_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, f_file_t file);
+  extern f_status_t fll_print_except_in_raw(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t length, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, f_file_t file);
 #endif // _di_fll_print_except_in_raw_
 
 /**
@@ -657,7 +657,7 @@ extern "C" {
  * @see f_print_except_in_raw_safely()
  */
 #ifndef _di_fll_print_except_in_raw_safely_
-  extern f_status_t fll_print_except_in_raw_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, f_file_t file);
+  extern f_status_t fll_print_except_in_raw_safely(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t length, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, f_file_t file);
 #endif // _di_fll_print_except_in_raw_safely_
 
 /**
@@ -691,7 +691,7 @@ extern "C" {
  * @see f_print_except_in_safely()
  */
 #ifndef _di_fll_print_except_in_safely_
-  extern f_status_t fll_print_except_in_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, f_file_t file);
+  extern f_status_t fll_print_except_in_safely(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t length, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, f_file_t file);
 #endif // _di_fll_print_except_in_safely_
 
 /**
@@ -721,7 +721,7 @@ extern "C" {
  * @see f_print_except_in_dynamic()
  */
 #ifndef _di_fll_print_except_in_dynamic_
-  extern f_status_t fll_print_except_in_dynamic(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, f_file_t file);
+  extern f_status_t fll_print_except_in_dynamic(const f_string_static_t buffer, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, f_file_t file);
 #endif // _di_fll_print_except_in_dynamic_
 
 /**
@@ -753,7 +753,7 @@ extern "C" {
  * @see f_print_except_in_dynamic_partial()
  */
 #ifndef _di_fll_print_except_in_dynamic_partial_
-  extern f_status_t fll_print_except_in_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, f_file_t file);
+  extern f_status_t fll_print_except_in_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, f_file_t file);
 #endif // _di_fll_print_except_in_dynamic_partial_
 
 /**
@@ -785,7 +785,7 @@ extern "C" {
  * @see f_print_except_in_dynamic_partial_raw()
  */
 #ifndef _di_fll_print_except_in_dynamic_partial_raw_
-  extern f_status_t fll_print_except_in_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, f_file_t file);
+  extern f_status_t fll_print_except_in_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, f_file_t file);
 #endif // _di_fll_print_except_in_dynamic_partial_raw_
 
 /**
@@ -817,7 +817,7 @@ extern "C" {
  * @see f_print_except_in_dynamic_partial_raw_safely()
  */
 #ifndef _di_fll_print_except_in_dynamic_partial_raw_safely_
-  extern f_status_t fll_print_except_in_dynamic_partial_raw_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, f_file_t file);
+  extern f_status_t fll_print_except_in_dynamic_partial_raw_safely(const f_string_static_t buffer, const f_string_range_t range, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, f_file_t file);
 #endif // _di_fll_print_except_in_dynamic_partial_raw_safely_
 
 /**
@@ -849,7 +849,7 @@ extern "C" {
  * @see f_print_except_in_dynamic_partial_safely()
  */
 #ifndef _di_fll_print_except_in_dynamic_partial_safely_
-  extern f_status_t fll_print_except_in_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, f_file_t file);
+  extern f_status_t fll_print_except_in_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, f_file_t file);
 #endif // _di_fll_print_except_in_dynamic_partial_safely_
 
 /**
@@ -879,7 +879,7 @@ extern "C" {
  * @see f_print_except_in_dynamic_raw()
  */
 #ifndef _di_fll_print_except_in_dynamic_raw_
-  extern f_status_t fll_print_except_in_dynamic_raw(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, f_file_t file);
+  extern f_status_t fll_print_except_in_dynamic_raw(const f_string_static_t buffer, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, f_file_t file);
 #endif // _di_fll_print_except_in_dynamic_raw_
 
 /**
@@ -909,7 +909,7 @@ extern "C" {
  * @see f_print_except_in_dynamic_raw_safely()
  */
 #ifndef _di_fll_print_except_in_dynamic_raw_safely_
-  extern f_status_t fll_print_except_in_dynamic_raw_safely(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, f_file_t file);
+  extern f_status_t fll_print_except_in_dynamic_raw_safely(const f_string_static_t buffer, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, f_file_t file);
 #endif // _di_fll_print_except_in_dynamic_raw_safely_
 
 /**
@@ -939,7 +939,7 @@ extern "C" {
  * @see f_print_except_in_dynamic_safely()
  */
 #ifndef _di_fll_print_except_in_dynamic_safely_
-  extern f_status_t fll_print_except_in_dynamic_safely(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, f_file_t file);
+  extern f_status_t fll_print_except_in_dynamic_safely(const f_string_static_t buffer, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, f_file_t file);
 #endif // _di_fll_print_except_in_dynamic_safely_
 
 /**
@@ -970,7 +970,7 @@ extern "C" {
  * @see f_print_except_raw()
  */
 #ifndef _di_fll_print_except_raw_
-  extern f_status_t fll_print_except_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, f_file_t file);
+  extern f_status_t fll_print_except_raw(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t length, const f_number_unsigneds_t except, f_file_t file);
 #endif // _di_fll_print_except_raw_
 
 /**
@@ -1001,7 +1001,7 @@ extern "C" {
  * @see f_print_except_raw_safely()
  */
 #ifndef _di_fll_print_except_raw_safely_
-  extern f_status_t fll_print_except_raw_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, f_file_t file);
+  extern f_status_t fll_print_except_raw_safely(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t length, const f_number_unsigneds_t except, f_file_t file);
 #endif // _di_fll_print_except_raw_safely_
 
 /**
@@ -1032,7 +1032,7 @@ extern "C" {
  * @see f_print_except_safely()
  */
 #ifndef _di_fll_print_except_safely_
-  extern f_status_t fll_print_except_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, f_file_t file);
+  extern f_status_t fll_print_except_safely(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t length, const f_number_unsigneds_t except, f_file_t file);
 #endif // _di_fll_print_except_safely_
 
 /**
@@ -1121,7 +1121,7 @@ extern "C" {
  * @see f_print_raw()
  */
 #ifndef _di_fll_print_raw_
-  extern f_status_t fll_print_raw(const f_string_t string, const f_array_length_t length, f_file_t file);
+  extern f_status_t fll_print_raw(const f_string_t string, const f_number_unsigned_t length, f_file_t file);
 #endif // _di_fll_print_raw_
 
 /**
@@ -1147,7 +1147,7 @@ extern "C" {
  * @see f_print_raw_safely()
  */
 #ifndef _di_fll_print_raw_safely_
-  extern f_status_t fll_print_raw_safely(const f_string_t string, const f_array_length_t length, f_file_t file);
+  extern f_status_t fll_print_raw_safely(const f_string_t string, const f_number_unsigned_t length, f_file_t file);
 #endif // _di_fll_print_raw_safely_
 
 /**
@@ -1197,7 +1197,7 @@ extern "C" {
  * @see f_print_safely()
  */
 #ifndef _di_fll_print_safely_
-  extern f_status_t fll_print_safely(const f_string_t string, const f_array_length_t length, f_file_t file);
+  extern f_status_t fll_print_safely(const f_string_t string, const f_number_unsigned_t length, f_file_t file);
 #endif // _di_fll_print_safely_
 
 /**
@@ -1300,7 +1300,7 @@ extern "C" {
  * @see f_print_except_dynamic_partial()
  */
 #ifndef _di_fll_print_trim_
-  extern f_status_t fll_print_trim(const f_string_t string, const f_array_length_t length, f_file_t file);
+  extern f_status_t fll_print_trim(const f_string_t string, const f_number_unsigned_t length, f_file_t file);
 #endif // _di_fll_print_trim_
 
 /**
@@ -1326,7 +1326,7 @@ extern "C" {
  * @see fl_print_trim_raw()
  */
 #ifndef _di_fll_print_trim_raw_
-  extern f_status_t fll_print_trim_raw(const f_string_t string, const f_array_length_t length, f_file_t file);
+  extern f_status_t fll_print_trim_raw(const f_string_t string, const f_number_unsigned_t length, f_file_t file);
 #endif // _di_fll_print_trim_raw_
 
 /**
@@ -1352,7 +1352,7 @@ extern "C" {
  * @see fl_print_trim_raw_safely()
  */
 #ifndef _di_fll_print_trim_raw_safely_
-  extern f_status_t fll_print_trim_raw_safely(const f_string_t string, const f_array_length_t length, f_file_t file);
+  extern f_status_t fll_print_trim_raw_safely(const f_string_t string, const f_number_unsigned_t length, f_file_t file);
 #endif // _di_fll_print_trim_raw_safely_
 
 /**
@@ -1378,7 +1378,7 @@ extern "C" {
  * @see fl_print_trim_safely()
  */
 #ifndef _di_fll_print_trim_safely_
-  extern f_status_t fll_print_trim_safely(const f_string_t string, const f_array_length_t length, f_file_t file);
+  extern f_status_t fll_print_trim_safely(const f_string_t string, const f_number_unsigned_t length, f_file_t file);
 #endif // _di_fll_print_trim_safely_
 
 /**
@@ -1609,7 +1609,7 @@ extern "C" {
  * @see fl_print_trim_except()
  */
 #ifndef _di_fll_print_trim_except_
-  extern f_status_t fll_print_trim_except(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, f_file_t file);
+  extern f_status_t fll_print_trim_except(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t length, const f_number_unsigneds_t except, f_file_t file);
 #endif // _di_fll_print_trim_except_
 
 /**
@@ -1640,7 +1640,7 @@ extern "C" {
  * @see fl_print_trim_except_raw()
  */
 #ifndef _di_fll_print_trim_except_raw_
-  extern f_status_t fll_print_trim_except_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, f_file_t file);
+  extern f_status_t fll_print_trim_except_raw(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t length, const f_number_unsigneds_t except, f_file_t file);
 #endif // _di_fll_print_trim_except_raw_
 
 /**
@@ -1671,7 +1671,7 @@ extern "C" {
  * @see fl_print_trim_except_raw_safely()
  */
 #ifndef _di_fll_print_trim_except_raw_safely_
-  extern f_status_t fll_print_trim_except_raw_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, f_file_t file);
+  extern f_status_t fll_print_trim_except_raw_safely(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t length, const f_number_unsigneds_t except, f_file_t file);
 #endif // _di_fll_print_trim_except_raw_safely_
 
 /**
@@ -1702,7 +1702,7 @@ extern "C" {
  * @see fl_print_trim_except_safely()
  */
 #ifndef _di_fll_print_trim_except_safely_
-  extern f_status_t fll_print_trim_except_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, f_file_t file);
+  extern f_status_t fll_print_trim_except_safely(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t length, const f_number_unsigneds_t except, f_file_t file);
 #endif // _di_fll_print_trim_except_safely_
 
 /**
@@ -1729,7 +1729,7 @@ extern "C" {
  * @see fl_print_trim_except_dynamic()
  */
 #ifndef _di_fll_print_trim_except_dynamic_
-  extern f_status_t fll_print_trim_except_dynamic(const f_string_static_t buffer, const f_array_lengths_t except, f_file_t file);
+  extern f_status_t fll_print_trim_except_dynamic(const f_string_static_t buffer, const f_number_unsigneds_t except, f_file_t file);
 #endif // _di_fll_print_trim_except_dynamic_
 
 /**
@@ -1756,7 +1756,7 @@ extern "C" {
  * @see fl_print_trim_except_dynamic_raw()
  */
 #ifndef _di_fll_print_trim_except_dynamic_raw_
-  extern f_status_t fll_print_trim_except_dynamic_raw(const f_string_static_t buffer, const f_array_lengths_t except, f_file_t file);
+  extern f_status_t fll_print_trim_except_dynamic_raw(const f_string_static_t buffer, const f_number_unsigneds_t except, f_file_t file);
 #endif // _di_fll_print_trim_except_dynamic_raw_
 
 /**
@@ -1783,7 +1783,7 @@ extern "C" {
  * @see fl_print_trim_except_dynamic_raw_safely()
  */
 #ifndef _di_fll_print_trim_except_dynamic_raw_safely_
-  extern f_status_t fll_print_trim_except_dynamic_raw_safely(const f_string_static_t buffer, const f_array_lengths_t except, f_file_t file);
+  extern f_status_t fll_print_trim_except_dynamic_raw_safely(const f_string_static_t buffer, const f_number_unsigneds_t except, f_file_t file);
 #endif // _di_fll_print_trim_except_dynamic_raw_safely_
 
 /**
@@ -1810,7 +1810,7 @@ extern "C" {
  * @see fl_print_trim_except_dynamic_safely()
  */
 #ifndef _di_fll_print_trim_except_dynamic_safely_
-  extern f_status_t fll_print_trim_except_dynamic_safely(const f_string_static_t buffer, const f_array_lengths_t except, f_file_t file);
+  extern f_status_t fll_print_trim_except_dynamic_safely(const f_string_static_t buffer, const f_number_unsigneds_t except, f_file_t file);
 #endif // _di_fll_print_trim_except_dynamic_safely_
 
 /**
@@ -1844,7 +1844,7 @@ extern "C" {
  * @see fl_print_trim_except_in()
  */
 #ifndef _di_fll_print_trim_except_in_
-  extern f_status_t fll_print_trim_except_in(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, f_file_t file);
+  extern f_status_t fll_print_trim_except_in(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t length, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, f_file_t file);
 #endif // _di_fll_print_trim_except_in_
 
 /**
@@ -1878,7 +1878,7 @@ extern "C" {
  * @see fl_print_trim_except_in_raw()
  */
 #ifndef _di_fll_print_trim_except_in_raw_
-  extern f_status_t fll_print_trim_except_in_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, f_file_t file);
+  extern f_status_t fll_print_trim_except_in_raw(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t length, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, f_file_t file);
 #endif // _di_fll_print_trim_except_in_raw_
 
 /**
@@ -1912,7 +1912,7 @@ extern "C" {
  * @see fl_print_trim_except_in_raw_safely()
  */
 #ifndef _di_fll_print_trim_except_in_raw_safely_
-  extern f_status_t fll_print_trim_except_in_raw_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, f_file_t file);
+  extern f_status_t fll_print_trim_except_in_raw_safely(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t length, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, f_file_t file);
 #endif // _di_fll_print_trim_except_in_raw_safely_
 
 /**
@@ -1946,7 +1946,7 @@ extern "C" {
  * @see fl_print_trim_except_in_safely()
  */
 #ifndef _di_fll_print_trim_except_in_safely_
-  extern f_status_t fll_print_trim_except_in_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, f_file_t file);
+  extern f_status_t fll_print_trim_except_in_safely(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t length, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, f_file_t file);
 #endif // _di_fll_print_trim_except_in_safely_
 
 /**
@@ -1976,7 +1976,7 @@ extern "C" {
  * @see fl_print_trim_except_in_dynamic()
  */
 #ifndef _di_fll_print_trim_except_in_dynamic_
-  extern f_status_t fll_print_trim_except_in_dynamic(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, f_file_t file);
+  extern f_status_t fll_print_trim_except_in_dynamic(const f_string_static_t buffer, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, f_file_t file);
 #endif // _di_fll_print_trim_except_in_dynamic_
 
 /**
@@ -2006,7 +2006,7 @@ extern "C" {
  * @see fl_print_trim_except_in_dynamic_raw()
  */
 #ifndef _di_fll_print_trim_except_in_dynamic_raw_
-  extern f_status_t fll_print_trim_except_in_dynamic_raw(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, f_file_t file);
+  extern f_status_t fll_print_trim_except_in_dynamic_raw(const f_string_static_t buffer, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, f_file_t file);
 #endif // _di_fll_print_trim_except_in_dynamic_raw_
 
 /**
@@ -2036,7 +2036,7 @@ extern "C" {
  * @see fl_print_trim_except_in_dynamic_raw_safely()
  */
 #ifndef _di_fll_print_trim_except_in_dynamic_raw_safely_
-  extern f_status_t fll_print_trim_except_in_dynamic_raw_safely(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, f_file_t file);
+  extern f_status_t fll_print_trim_except_in_dynamic_raw_safely(const f_string_static_t buffer, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, f_file_t file);
 #endif // _di_fll_print_trim_except_in_dynamic_raw_safely_
 
 /**
@@ -2066,7 +2066,7 @@ extern "C" {
  * @see fl_print_trim_except_in_dynamic_safely()
  */
 #ifndef _di_fll_print_trim_except_in_dynamic_safely_
-  extern f_status_t fll_print_trim_except_in_dynamic_safely(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, f_file_t file);
+  extern f_status_t fll_print_trim_except_in_dynamic_safely(const f_string_static_t buffer, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, f_file_t file);
 #endif // _di_fll_print_trim_except_in_dynamic_safely_
 
 /**
@@ -2098,7 +2098,7 @@ extern "C" {
  * @see fl_print_trim_except_in_dynamic_partial()
  */
 #ifndef _di_fll_print_trim_except_in_dynamic_partial_
-  extern f_status_t fll_print_trim_except_in_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, f_file_t file);
+  extern f_status_t fll_print_trim_except_in_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, f_file_t file);
 #endif // _di_fll_print_trim_except_in_dynamic_partial_
 
 /**
@@ -2130,7 +2130,7 @@ extern "C" {
  * @see f_print_except_dynamic_partial()
  */
 #ifndef _di_fll_print_trim_except_in_dynamic_partial_raw_
-  extern f_status_t fll_print_trim_except_in_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, f_file_t file);
+  extern f_status_t fll_print_trim_except_in_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, f_file_t file);
 #endif // _di_fll_print_trim_except_in_dynamic_partial_raw_
 
 /**
@@ -2162,7 +2162,7 @@ extern "C" {
  * @see f_print_except_dynamic_partial()
  */
 #ifndef _di_fll_print_trim_except_in_dynamic_partial_raw_safely_
-  extern f_status_t fll_print_trim_except_in_dynamic_partial_raw_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, f_file_t file);
+  extern f_status_t fll_print_trim_except_in_dynamic_partial_raw_safely(const f_string_static_t buffer, const f_string_range_t range, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, f_file_t file);
 #endif // _di_fll_print_trim_except_in_dynamic_partial_raw_safely_
 
 /**
@@ -2194,7 +2194,7 @@ extern "C" {
  * @see f_print_except_dynamic_partial()
  */
 #ifndef _di_fll_print_trim_except_in_dynamic_partial_safely_
-  extern f_status_t fll_print_trim_except_in_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, f_file_t file);
+  extern f_status_t fll_print_trim_except_in_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, f_file_t file);
 #endif // _di_fll_print_trim_except_in_dynamic_partial_safely_
 
 /**
@@ -2223,7 +2223,7 @@ extern "C" {
  * @see fl_print_trim_except_dynamic_partial()
  */
 #ifndef _di_fll_print_trim_except_dynamic_partial_
-  extern f_status_t fll_print_trim_except_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, f_file_t file);
+  extern f_status_t fll_print_trim_except_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, const f_number_unsigneds_t except, f_file_t file);
 #endif // _di_fll_print_trim_except_dynamic_partial_
 
 /**
@@ -2252,7 +2252,7 @@ extern "C" {
  * @see fl_print_trim_except_dynamic_partial_raw()
  */
 #ifndef _di_fll_print_trim_except_dynamic_partial_raw_
-  extern f_status_t fll_print_trim_except_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, f_file_t file);
+  extern f_status_t fll_print_trim_except_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, const f_number_unsigneds_t except, f_file_t file);
 #endif // _di_fll_print_trim_except_dynamic_partial_raw_
 
 /**
@@ -2281,7 +2281,7 @@ extern "C" {
  * @see fl_print_trim_except_dynamic_partial_raw_safely()
  */
 #ifndef _di_fll_print_trim_except_dynamic_partial_raw_safely_
-  extern f_status_t fll_print_trim_except_dynamic_partial_raw_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, f_file_t file);
+  extern f_status_t fll_print_trim_except_dynamic_partial_raw_safely(const f_string_static_t buffer, const f_string_range_t range, const f_number_unsigneds_t except, f_file_t file);
 #endif // _di_fll_print_trim_except_dynamic_partial_raw_safely_
 
 /**
@@ -2310,7 +2310,7 @@ extern "C" {
  * @see fl_print_trim_except_dynamic_partial_safely()
  */
 #ifndef _di_fll_print_trim_except_dynamic_partial_safely_
-  extern f_status_t fll_print_trim_except_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, f_file_t file);
+  extern f_status_t fll_print_trim_except_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, const f_number_unsigneds_t except, f_file_t file);
 #endif // _di_fll_print_trim_except_dynamic_partial_safely_
 
 #ifdef __cplusplus

@@ -55,7 +55,7 @@ extern "C" {
  * @see main.callback.print_set_end()
  */
 #ifndef _di_fss_read_print_at_
-  extern f_status_t fss_read_print_at(fl_print_t * const print, const f_array_length_t at, const f_fss_delimits_t delimits_object, const f_fss_delimits_t delimits_content);
+  extern f_status_t fss_read_print_at(fl_print_t * const print, const f_number_unsigned_t at, const f_fss_delimits_t delimits_object, const f_fss_delimits_t delimits_content);
 #endif // _di_fss_read_print_at_
 
 /**
@@ -177,7 +177,7 @@ extern "C" {
  * @see fss_read_print_quote()
  */
 #ifndef _di_fss_read_print_object_
-  extern f_status_t fss_read_print_object(fl_print_t * const print, const f_array_length_t at, const f_fss_delimits_t delimits);
+  extern f_status_t fss_read_print_object(fl_print_t * const print, const f_number_unsigned_t at, const f_fss_delimits_t delimits);
 #endif // _di_fss_read_print_object_
 
 /**

@@ -33,7 +33,7 @@ extern "C" {
     const f_status_t status = f_signal_read(signal_interrupt->signal, 0, &information);
 
     if (F_status_set_fine(status) == F_interrupt) {
-      for (f_array_length_t i = 0; i < signal_interrupt->interrupts.used; ++i) {
+      for (f_number_unsigned_t i = 0; i < signal_interrupt->interrupts.used; ++i) {
 
         if (information.ssi_signo == signal_interrupt->interrupts.array[i]) {
           signal_interrupt->trigger = information.ssi_signo;

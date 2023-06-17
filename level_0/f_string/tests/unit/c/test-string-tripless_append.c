@@ -31,7 +31,7 @@ void test__f_string_tripless_append__works(void **state) {
     assert_int_equal(status, F_none);
     assert_int_equal(destination.array[0].used, length_sources);
 
-    for (f_array_length_t i = 0; i < length_sources; ++i) {
+    for (f_number_unsigned_t i = 0; i < length_sources; ++i) {
 
       assert_int_equal(destination.array[0].array[i].a.used, sources_array[i].a.used);
       assert_int_equal(destination.array[0].array[i].b.used, sources_array[i].b.used);
@@ -43,7 +43,7 @@ void test__f_string_tripless_append__works(void **state) {
     } // for
   }
 
-  for (f_array_length_t i = 0; i < destination.array[0].used; ++i) {
+  for (f_number_unsigned_t i = 0; i < destination.array[0].used; ++i) {
 
     free((void *) destination.array[0].array[i].a.string);
     free((void *) destination.array[0].array[i].b.string);

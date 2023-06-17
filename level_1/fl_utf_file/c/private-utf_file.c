@@ -10,7 +10,7 @@ extern "C" {
 
     uint8_t increment_by = 0;
 
-    for (f_array_length_t i = 0; i < size_read; i += increment_by) {
+    for (f_number_unsigned_t i = 0; i < size_read; i += increment_by) {
 
       increment_by = 0;
 
@@ -70,20 +70,20 @@ extern "C" {
 #endif // !defined(_di_fl_utf_file_read_) || !defined(_di_fl_utf_file_read_until_) || !defined(_di_fl_utf_file_read_range_)
 
 #if !defined(_di_fl_utf_file_write_) || !defined(_di_fl_utf_file_write_until_) || !defined(fl_utf_file_write_range)
-  f_status_t private_fl_utf_file_write_until(const f_file_t file, const f_utf_string_t string, const f_array_length_t total, f_array_length_t * const written) {
+  f_status_t private_fl_utf_file_write_until(const f_file_t file, const f_utf_string_t string, const f_number_unsigned_t total, f_number_unsigned_t * const written) {
 
     *written = 0;
 
-    f_array_length_t write_size = file.size_write > 4 ? file.size_write : 4;
-    f_array_length_t write_max = total;
-    f_array_length_t i = 0;
+    f_number_unsigned_t write_size = file.size_write > 4 ? file.size_write : 4;
+    f_number_unsigned_t write_max = total;
+    f_number_unsigned_t i = 0;
 
     if (write_size > write_max) {
       write_size = write_max;
     }
 
-    f_array_length_t last = 0;
-    f_array_length_t used = 0;
+    f_number_unsigned_t last = 0;
+    f_number_unsigned_t used = 0;
 
     ssize_t size_write = 0;
     uint8_t buffer_write[write_size];

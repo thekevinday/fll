@@ -32,7 +32,7 @@ void test__f_utf_triples_append_all__works(void **state) {
     assert_int_equal(destination.used, source.used);
     assert_int_equal(destination.size, source.used);
 
-    for (f_array_length_t i = 0; i < length_sources; ++i) {
+    for (f_number_unsigned_t i = 0; i < length_sources; ++i) {
 
       assert_int_equal(destination.array[i].a.used, source.array[i].a.used);
       assert_int_equal(destination.array[i].b.used, source.array[i].b.used);
@@ -44,7 +44,7 @@ void test__f_utf_triples_append_all__works(void **state) {
     } // for
   }
 
-  for (f_array_length_t i = 0; i < destination.used; ++i) {
+  for (f_number_unsigned_t i = 0; i < destination.used; ++i) {
 
     free((void *) destination.array[i].a.string);
     free((void *) destination.array[i].b.string);

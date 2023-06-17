@@ -83,7 +83,7 @@ extern "C" {
 #endif // _di_fss_write_process_normal_
 
 #ifndef _di_fss_write_process_normal_data_
-  void fss_write_process_normal_data(void * const void_main, const f_array_length_t length) {
+  void fss_write_process_normal_data(void * const void_main, const f_number_unsigned_t length) {
 
     if (!void_main) return;
 
@@ -95,7 +95,7 @@ extern "C" {
     main->setting.contents = 0;
 
     if (length) {
-      for (f_array_length_t i = 0; i < length; ++i) {
+      for (f_number_unsigned_t i = 0; i < length; ++i) {
 
         // @todo replace all signal checks with forked main process that independently checks and assigns main->program.signal_received.
         if (!((++main->program.signal_check) % fss_write_signal_check_d)) {
@@ -149,9 +149,9 @@ extern "C" {
       fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
     }
 
-    const f_array_length_t used_objects = main->setting.objects.used;
-    const f_array_length_t used_contentss = main->setting.contentss.used;
-    const f_array_length_t used_ignoress = main->setting.ignoress.used;
+    const f_number_unsigned_t used_objects = main->setting.objects.used;
+    const f_number_unsigned_t used_contentss = main->setting.contentss.used;
+    const f_number_unsigned_t used_ignoress = main->setting.ignoress.used;
 
     main->setting.object = &main->setting.objects.array[used_objects];
     main->setting.contents = &main->setting.contentss.array[used_contentss];
@@ -204,8 +204,8 @@ extern "C" {
     input.id = F_type_descriptor_input_d;
     input.size_read = main->setting.state.step_large;
 
-    f_array_length_t total = 0;
-    f_array_length_t ignore = 0;
+    f_number_unsigned_t total = 0;
+    f_number_unsigned_t ignore = 0;
     f_string_range_t range = f_string_range_t_initialize;
 
     // Reset all of the used data before starting the loop.
@@ -483,7 +483,7 @@ extern "C" {
 
       if (main->callback.process_content) {
         if (main->setting.contents && main->setting.contents->used) {
-          for (f_array_length_t i = 0; i < main->setting.contents->used; ++i) {
+          for (f_number_unsigned_t i = 0; i < main->setting.contents->used; ++i) {
 
             if (main->setting.contents->array[i].used) {
               main->setting.range.start = 0;

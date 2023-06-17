@@ -19,8 +19,8 @@ void test__f_iki_datass_append_all__works(void **state) {
     assert_int_equal(status, F_none);
     assert_int_equal(source.size, length_outer);
 
-    f_array_length_t i = 1;
-    f_array_length_t j = 0;
+    f_number_unsigned_t i = 1;
+    f_number_unsigned_t j = 0;
 
     for (; source.used < length_outer; ++source.used) {
 
@@ -36,7 +36,7 @@ void test__f_iki_datass_append_all__works(void **state) {
         assert_int_equal(status, F_none);
         assert_int_equal(source.array[source.used].array[j].content.size, length);
 
-        status = f_array_lengths_resize(length, &source.array[source.used].array[j].delimits);
+        status = f_number_unsigneds_resize(length, &source.array[source.used].array[j].delimits);
 
         assert_int_equal(status, F_none);
         assert_int_equal(source.array[source.used].array[j].delimits.size, length);
@@ -84,16 +84,16 @@ void test__f_iki_datass_append_all__works(void **state) {
     assert_int_equal(status, F_none);
     assert_int_equal(destination.used, source.used);
 
-    for (f_array_length_t k = 0; k < length_outer; ++k) {
+    for (f_number_unsigned_t k = 0; k < length_outer; ++k) {
 
-      for (f_array_length_t j = 0; j < length_inner; ++j) {
+      for (f_number_unsigned_t j = 0; j < length_inner; ++j) {
 
         assert_int_equal(destination.array[k].array[j].content.used, source.array[k].array[j].content.used);
         assert_int_equal(destination.array[k].array[j].delimits.used, source.array[k].array[j].delimits.used);
         assert_int_equal(destination.array[k].array[j].variable.used, source.array[k].array[j].variable.used);
         assert_int_equal(destination.array[k].array[j].vocabulary.used, source.array[k].array[j].vocabulary.used);
 
-        for (f_array_length_t i = 0; i < length; ++i) {
+        for (f_number_unsigned_t i = 0; i < length; ++i) {
 
           assert_int_equal(destination.array[k].array[j].content.array[i].start, source.array[k].array[j].content.array[i].start);
           assert_int_equal(destination.array[k].array[j].content.array[i].stop, source.array[k].array[j].content.array[i].stop);
@@ -110,9 +110,9 @@ void test__f_iki_datass_append_all__works(void **state) {
     } // for
   }
 
-  for (f_array_length_t j = 0; j < source.used; ++j) {
+  for (f_number_unsigned_t j = 0; j < source.used; ++j) {
 
-    for (f_array_length_t i = 0; i < source.array[j].used; ++i) {
+    for (f_number_unsigned_t i = 0; i < source.array[j].used; ++i) {
 
       free((void *) source.array[j].array[i].content.array);
       free((void *) source.array[j].array[i].delimits.array);
@@ -123,9 +123,9 @@ void test__f_iki_datass_append_all__works(void **state) {
     free((void *) source.array[j].array);
   } // for
 
-  for (f_array_length_t j = 0; j < destination.used; ++j) {
+  for (f_number_unsigned_t j = 0; j < destination.used; ++j) {
 
-    for (f_array_length_t i = 0; i < destination.array[j].used; ++i) {
+    for (f_number_unsigned_t i = 0; i < destination.array[j].used; ++i) {
 
       free((void *) destination.array[j].array[i].content.array);
       free((void *) destination.array[j].array[i].delimits.array);

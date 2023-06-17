@@ -35,8 +35,8 @@ extern "C" {
   typedef struct {
     f_string_t string;
 
-    f_array_length_t size;
-    f_array_length_t used;
+    f_number_unsigned_t size;
+    f_number_unsigned_t used;
   } f_string_static_t;
 
   #define f_string_static_t_initialize { 0, 0, 0 }

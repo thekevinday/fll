@@ -127,7 +127,7 @@ extern "C" {
  *     F_parameter (with error bit) if main is NULL or setting is NULL.
  */
 #ifndef _di_fss_write_process_normal_data_
-  void fss_write_process_normal_data(void * const main, const f_array_length_t length);
+  void fss_write_process_normal_data(void * const main, const f_number_unsigned_t length);
 #endif // _di_fss_write_process_normal_data_
 
 /**

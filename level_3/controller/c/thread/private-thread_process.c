@@ -60,8 +60,8 @@ extern "C" {
     controller_process_t *process = 0;
 
     f_status_t status = F_none;
-    f_array_length_t i = 0;
-    f_array_length_t j = 0;
+    f_number_unsigned_t i = 0;
+    f_number_unsigned_t j = 0;
     pid_t pid = 0;
 
     if (is_normal) {

@@ -119,10 +119,10 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
     if (main->program.parameters.array[fss_read_parameter_as_e].result & f_console_result_value_e && main->program.parameters.array[fss_read_parameter_as_e].values.used) {
 
-      f_array_length_t index = 0;
+      f_number_unsigned_t index = 0;
       f_string_static_t *argv = main->program.parameters.arguments.array;
 
-      for (f_array_length_t i = 0; i < main->program.parameters.array[fss_read_parameter_as_e].values.used; ++i) {
+      for (f_number_unsigned_t i = 0; i < main->program.parameters.array[fss_read_parameter_as_e].values.used; ++i) {
 
         index = main->program.parameters.array[fss_read_parameter_as_e].values.array[i];
 

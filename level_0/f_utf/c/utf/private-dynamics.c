@@ -9,15 +9,15 @@ extern "C" {
 #endif
 
 #if !defined(_di_f_utf_string_dynamics_adjust_) || !defined(_di_f_utf_string_dynamics_append_) || !defined(_di_f_utf_string_dynamics_decimate_by_) || !defined(_di_f_utf_string_map_multis_adjust_) || !defined(_di_f_utf_string_map_multis_append_)
-  f_status_t private_f_utf_string_dynamics_adjust(const f_array_length_t length, f_utf_string_dynamics_t * const dynamics) {
+  f_status_t private_f_utf_string_dynamics_adjust(const f_number_unsigned_t length, f_utf_string_dynamics_t * const dynamics) {
 
-    if (dynamics->used + length > F_array_length_t_size_d) {
+    if (dynamics->used + length > F_number_t_size_unsigned_d) {
       return F_status_set_error(F_array_too_large);
     }
 
     f_status_t status = F_none;
 
-    for (f_array_length_t i = length; i < dynamics->size; ++i) {
+    for (f_number_unsigned_t i = length; i < dynamics->size; ++i) {
 
       status = private_f_utf_string_dynamic_adjust(0, &dynamics->array[i]);
       if (F_status_is_error(status)) return status;
@@ -70,7 +70,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     }
 
-    for (f_array_length_t i = 0; i < source.used; ++i, ++destination->used) {
+    for (f_number_unsigned_t i = 0; i < source.used; ++i, ++destination->used) {
 
       destination->array[destination->used].used = 0;
 
@@ -85,15 +85,15 @@ extern "C" {
 #endif // !defined(_di_f_utf_string_dynamics_append_all_) || !defined(_di_f_utf_string_map_multis_append_) || !defined(_di_f_utf_string_map_multis_append_all_)
 
 #if !defined(_di_f_utf_string_dynamics_decrease_by_) || !defined(_di_f_utf_string_dynamics_increase_) || !defined(_di_f_utf_string_dynamics_increase_by_) || !defined(_di_f_utf_string_map_multis_append_) || !defined(_di_f_utf_string_map_multis_decrease_by_) || !defined(_di_f_utf_string_map_multis_increase_) || !defined(_di_f_utf_string_map_multis_increase_by_) || !defined(_di_f_utf_string_map_multis_terminate_) || !defined(_di_f_utf_string_map_multis_terminate_after_)
-  f_status_t private_f_utf_string_dynamics_resize(const f_array_length_t length, f_utf_string_dynamics_t * const dynamics) {
+  f_status_t private_f_utf_string_dynamics_resize(const f_number_unsigned_t length, f_utf_string_dynamics_t * const dynamics) {
 
-    if (dynamics->used + length > F_array_length_t_size_d) {
+    if (dynamics->used + length > F_number_t_size_unsigned_d) {
       return F_status_set_error(F_array_too_large);
     }
 
     f_status_t status = F_none;
 
-    for (f_array_length_t i = length; i < dynamics->size; ++i) {
+    for (f_number_unsigned_t i = length; i < dynamics->size; ++i) {
 
       status = private_f_utf_string_dynamic_resize(0, &dynamics->array[i]);
       if (F_status_is_error(status)) return status;

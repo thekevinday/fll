@@ -23,7 +23,7 @@ void test__f_fss_count_lines_range__returns_data_not(void **state) {
   f_state_t state_data = f_state_t_initialize;
 
   {
-    f_array_length_t line = 0;
+    f_number_unsigned_t line = 0;
     f_string_range_t range = f_string_range_t_initialize;
 
     f_fss_count_lines_range(f_string_empty_s, range, &line, &state_data);
@@ -32,7 +32,7 @@ void test__f_fss_count_lines_range__returns_data_not(void **state) {
   }
 
   {
-    f_array_length_t line = 0;
+    f_number_unsigned_t line = 0;
     f_string_range_t range = f_string_range_t_initialize;
 
     f_fss_count_lines_range(test, range, &line, &state_data);
@@ -41,7 +41,7 @@ void test__f_fss_count_lines_range__returns_data_not(void **state) {
   }
 
   {
-    f_array_length_t line = 0;
+    f_number_unsigned_t line = 0;
     f_string_range_t range = macro_f_string_range_t_initialize_1(0, test.used - 1);
 
     f_fss_count_lines_range(f_string_empty_s, range, &line, &state_data);
@@ -62,8 +62,8 @@ void test__f_fss_count_lines_range__works(void **state) {
     macro_f_string_static_t_initialize_1("\n⸙\nfour\n全\n", 0, 14),
   };
 
-  f_array_length_t line = 0;
-  f_array_length_t expect = 0;
+  f_number_unsigned_t line = 0;
+  f_number_unsigned_t expect = 0;
 
   for (uint8_t i = 0; i < 5; expect += ++i) {
 

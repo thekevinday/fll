@@ -10,8 +10,8 @@ f_account_t:
 
 f_accounts_t:
   f_account_t
-  f_array_length_t
+  f_number_unsigned_t
 
 f_accountss_t:
   f_accounts_t
-  f_array_length_t
+  f_number_unsigned_t

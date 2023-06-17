@@ -17,7 +17,7 @@ extern "C" {
     #endif // _di_level_2_parameter_checking_
 
     f_status_t status = F_none;
-    f_array_length_t initial_used = objects->used;
+    f_number_unsigned_t initial_used = objects->used;
 
     bool found_data = F_false;
 
@@ -237,7 +237,7 @@ extern "C" {
         state->status = f_string_dynamic_increase_by(content.used, destination);
         if (F_status_is_error(state->status)) return;
 
-        f_array_length_t i = 0;
+        f_number_unsigned_t i = 0;
 
         // Copy in blocks to allow for interruptability of potentially large data sets.
         for (; i < content.used && i + F_fss_default_block_size_normal_d < content.used; i += F_fss_default_block_size_normal_d) {

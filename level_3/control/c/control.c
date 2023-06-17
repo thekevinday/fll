@@ -21,7 +21,7 @@ extern "C" {
     if (F_status_is_error(status)) return;
 
     {
-      f_array_length_t choice = 0;
+      f_number_unsigned_t choice = 0;
       f_uint16s_t choices = f_uint16s_t_initialize;
 
       // Identify and prioritize "color context" parameters.
@@ -100,7 +100,7 @@ extern "C" {
         control_long_socket_s
       };
 
-      f_array_length_t index = f_array_length_t_initialize;
+      f_number_unsigned_t index = f_number_unsigned_t_initialize;
 
       for (uint8_t i = 0; i < 3; ++i) {
 

@@ -7,7 +7,7 @@ extern "C" {
 #endif
 
 #ifndef _di_f_utf_string_append_
-  f_status_t f_utf_string_append(const f_utf_string_t source, const f_array_length_t length, f_utf_string_dynamic_t * const destination) {
+  f_status_t f_utf_string_append(const f_utf_string_t source, const f_number_unsigned_t length, f_utf_string_dynamic_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -19,7 +19,7 @@ extern "C" {
 #endif // _di_f_utf_string_append_
 
 #ifndef _di_f_utf_string_append_assure_
-  f_status_t f_utf_string_append_assure(const f_utf_string_t source, const f_array_length_t length, f_utf_string_dynamic_t * const destination) {
+  f_status_t f_utf_string_append_assure(const f_utf_string_t source, const f_number_unsigned_t length, f_utf_string_dynamic_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -30,8 +30,8 @@ extern "C" {
       return private_f_utf_string_append(source, length, destination);
     }
 
-    f_array_length_t i = 1;
-    f_array_length_t j = 1;
+    f_number_unsigned_t i = 1;
+    f_number_unsigned_t j = 1;
 
     while (i <= length && j <= destination->used) {
 
@@ -60,7 +60,7 @@ extern "C" {
 #endif // _di_f_utf_string_append_assure_
 
 #ifndef _di_f_utf_string_append_assure_nulless_
-  f_status_t f_utf_string_append_assure_nulless(const f_utf_string_t source, const f_array_length_t length, f_utf_string_dynamic_t * const destination) {
+  f_status_t f_utf_string_append_assure_nulless(const f_utf_string_t source, const f_number_unsigned_t length, f_utf_string_dynamic_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -71,8 +71,8 @@ extern "C" {
       return private_f_utf_string_append_nulless(source, length, destination);
     }
 
-    f_array_length_t i = 1;
-    f_array_length_t j = 1;
+    f_number_unsigned_t i = 1;
+    f_number_unsigned_t j = 1;
 
     while (i <= length && j <= destination->used) {
 
@@ -101,7 +101,7 @@ extern "C" {
 #endif // _di_f_utf_string_append_assure_nulless_
 
 #ifndef _di_f_utf_string_append_nulless_
-  f_status_t f_utf_string_append_nulless(const f_utf_string_t source, const f_array_length_t length, f_utf_string_dynamic_t * const destination) {
+  f_status_t f_utf_string_append_nulless(const f_utf_string_t source, const f_number_unsigned_t length, f_utf_string_dynamic_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -113,7 +113,7 @@ extern "C" {
 #endif // _di_f_utf_string_append_nulless_
 
 #ifndef _di_f_utf_string_mash_
-  f_status_t f_utf_string_mash(const f_utf_string_t glue, const f_array_length_t glue_length, const f_utf_string_t source, const f_array_length_t length, f_utf_string_dynamic_t * const destination) {
+  f_status_t f_utf_string_mash(const f_utf_string_t glue, const f_number_unsigned_t glue_length, const f_utf_string_t source, const f_number_unsigned_t length, f_utf_string_dynamic_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -132,7 +132,7 @@ extern "C" {
 #endif // _di_f_utf_string_mash_
 
 #ifndef _di_f_utf_string_mash_nulless_
-  f_status_t f_utf_string_mash_nulless(const f_utf_string_t glue, const f_array_length_t glue_length, const f_utf_string_t source, const f_array_length_t length, f_utf_string_dynamic_t * const destination) {
+  f_status_t f_utf_string_mash_nulless(const f_utf_string_t glue, const f_number_unsigned_t glue_length, const f_utf_string_t source, const f_number_unsigned_t length, f_utf_string_dynamic_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -149,7 +149,7 @@ extern "C" {
 #endif // _di_f_utf_string_mash_nulless_
 
 #ifndef _di_f_utf_string_mish_
-  f_status_t f_utf_string_mish(const f_utf_string_t glue, const f_array_length_t glue_length, const f_utf_string_t source, const f_array_length_t length, f_utf_string_dynamic_t * const destination) {
+  f_status_t f_utf_string_mish(const f_utf_string_t glue, const f_number_unsigned_t glue_length, const f_utf_string_t source, const f_number_unsigned_t length, f_utf_string_dynamic_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -166,7 +166,7 @@ extern "C" {
 #endif // _di_f_utf_string_mish_
 
 #ifndef _di_f_utf_string_mish_nulless_
-  f_status_t f_utf_string_mish_nulless(const f_utf_string_t glue, const f_array_length_t glue_length, const f_utf_string_t source, const f_array_length_t length, f_utf_string_dynamic_t * const destination) {
+  f_status_t f_utf_string_mish_nulless(const f_utf_string_t glue, const f_number_unsigned_t glue_length, const f_utf_string_t source, const f_number_unsigned_t length, f_utf_string_dynamic_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -183,7 +183,7 @@ extern "C" {
 #endif // _di_f_utf_string_mish_nulless_
 
 #ifndef _di_f_utf_string_prepend_
-  f_status_t f_utf_string_prepend(const f_utf_string_t source, const f_array_length_t length, f_utf_string_dynamic_t * const destination) {
+  f_status_t f_utf_string_prepend(const f_utf_string_t source, const f_number_unsigned_t length, f_utf_string_dynamic_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -195,7 +195,7 @@ extern "C" {
 #endif // _di_f_utf_string_prepend_
 
 #ifndef _di_f_utf_string_prepend_assure_
-  f_status_t f_utf_string_prepend_assure(const f_utf_string_t source, const f_array_length_t length, f_utf_string_dynamic_t * const destination) {
+  f_status_t f_utf_string_prepend_assure(const f_utf_string_t source, const f_number_unsigned_t length, f_utf_string_dynamic_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -206,8 +206,8 @@ extern "C" {
       return private_f_utf_string_prepend(source, length, destination);
     }
 
-    f_array_length_t i = 0;
-    f_array_length_t j = 0;
+    f_number_unsigned_t i = 0;
+    f_number_unsigned_t j = 0;
 
     while (i < length && j < destination->used) {
 
@@ -236,7 +236,7 @@ extern "C" {
 #endif // _di_f_utf_string_prepend_assure_
 
 #ifndef _di_f_utf_string_prepend_assure_nulless_
-  f_status_t f_utf_string_prepend_assure_nulless(const f_utf_string_t source, const f_array_length_t length, f_utf_string_dynamic_t * const destination) {
+  f_status_t f_utf_string_prepend_assure_nulless(const f_utf_string_t source, const f_number_unsigned_t length, f_utf_string_dynamic_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -247,8 +247,8 @@ extern "C" {
       return private_f_utf_string_prepend_nulless(source, length, destination);
     }
 
-    f_array_length_t i = 0;
-    f_array_length_t j = 0;
+    f_number_unsigned_t i = 0;
+    f_number_unsigned_t j = 0;
 
     while (i < length && j < destination->used) {
 
@@ -277,7 +277,7 @@ extern "C" {
 #endif // _di_f_utf_string_prepend_assure_nulless_
 
 #ifndef _di_f_utf_string_prepend_nulless_
-  f_status_t f_utf_string_prepend_nulless(const f_utf_string_t source, const f_array_length_t length, f_utf_string_dynamic_t * const destination) {
+  f_status_t f_utf_string_prepend_nulless(const f_utf_string_t source, const f_number_unsigned_t length, f_utf_string_dynamic_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_

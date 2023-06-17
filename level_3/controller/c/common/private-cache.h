@@ -24,8 +24,8 @@ extern "C" {
  */
 #ifndef _di_controller_cache_action_t_
   typedef struct {
-    f_array_length_t line_action;
-    f_array_length_t line_item;
+    f_number_unsigned_t line_action;
+    f_number_unsigned_t line_item;
 
     f_string_dynamic_t name_action;
     f_string_dynamic_t name_file;
@@ -78,8 +78,8 @@ extern "C" {
 
     f_string_range_t range_action;
 
-    f_array_lengths_t ats;
-    f_array_lengths_t stack;
+    f_number_unsigneds_t ats;
+    f_number_unsigneds_t stack;
 
     f_fss_comments_t comments;
     f_fss_delimits_t delimits;
@@ -102,8 +102,8 @@ extern "C" {
   #define controller_cache_t_initialize { \
     f_time_spec_t_initialize, \
     f_string_range_t_initialize, \
-    f_array_lengths_t_initialize, \
-    f_array_lengths_t_initialize, \
+    f_number_unsigneds_t_initialize, \
+    f_number_unsigneds_t_initialize, \
     f_fss_comments_t_initialize, \
     f_fss_delimits_t_initialize, \
     f_fss_content_t_initialize, \
@@ -137,7 +137,7 @@ extern "C" {
  * @param cache
  *   The cache to deallocate.
  *
- * @see macro_f_array_lengths_t_delete_simple()
+ * @see macro_f_number_unsigneds_t_delete_simple()
  * @see macro_f_fss_delimits_t_delete_simple()
  *
  * @see controller_cache_action_delete_simple()

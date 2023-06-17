@@ -228,7 +228,7 @@ extern "C" {
 #endif // _di_utf8_print_data_raw_combining_or_width_
 
 #ifndef _di_utf8_print_data_section_header_file_
-  f_status_t utf8_print_data_section_header_file(fl_print_t * const print, const f_string_static_t name, const f_array_length_t index) {
+  f_status_t utf8_print_data_section_header_file(fl_print_t * const print, const f_string_static_t name, const f_number_unsigned_t index) {
 
     if (!print->custom) return F_status_set_error(F_output_not);
 
@@ -261,7 +261,7 @@ extern "C" {
 #endif // _di_utf8_print_data_section_header_file_
 
 #ifndef _di_utf8_print_data_section_header_parameter_
-  f_status_t utf8_print_data_section_header_parameter(fl_print_t * const print, const f_array_length_t index) {
+  f_status_t utf8_print_data_section_header_parameter(fl_print_t * const print, const f_number_unsigned_t index) {
 
     if (!print->custom) return F_status_set_error(F_output_not);
 

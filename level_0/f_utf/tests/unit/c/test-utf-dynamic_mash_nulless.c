@@ -19,7 +19,7 @@ void test__f_utf_dynamic_mash_nulless__works(void **state) {
     assert_int_equal(status, F_none);
     assert_int_equal(destination.used, expected1.used);
 
-    for (f_array_length_t i = 0; i < expected1.used; ++i) {
+    for (f_number_unsigned_t i = 0; i < expected1.used; ++i) {
       assert_int_equal(destination.string[i], expected1.string[i]);
     } // for
   }
@@ -31,7 +31,7 @@ void test__f_utf_dynamic_mash_nulless__works(void **state) {
     assert_int_equal(status, F_none);
     assert_int_equal(destination.used, expected2.used);
 
-    for (f_array_length_t i = 0; i < expected2.used; ++i) {
+    for (f_number_unsigned_t i = 0; i < expected2.used; ++i) {
       assert_int_equal(destination.string[i], expected2.string[i]);
     } // for
   }

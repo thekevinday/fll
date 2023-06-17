@@ -13,7 +13,7 @@ extern "C" {
 
     if (!arguments.envp) return F_data_not;
 
-    f_array_length_t total = 0;
+    f_number_unsigned_t total = 0;
 
     while (arguments.envp[total]) {
       ++total;
@@ -26,7 +26,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     }
 
-    for (f_array_length_t i = 0; arguments.envp[i]; ++i) {
+    for (f_number_unsigned_t i = 0; arguments.envp[i]; ++i) {
 
       for (total = 0; arguments.envp[i][total]; ++total) {
         if (arguments.envp[i][total] == f_string_ascii_equal_s.string[0]) break;
@@ -71,7 +71,7 @@ extern "C" {
 #endif // _di_f_console_identify_
 
 #ifndef _di_f_console_parameter_prioritize_left_
-  f_status_t f_console_parameter_prioritize_left(const f_console_parameters_t parameters, const f_uint16s_t choices, f_array_length_t * const decision) {
+  f_status_t f_console_parameter_prioritize_left(const f_console_parameters_t parameters, const f_uint16s_t choices, f_number_unsigned_t * const decision) {
     #ifndef _di_level_0_parameter_checking_
       if (!decision) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -79,11 +79,11 @@ extern "C" {
     if (!choices.used) return F_data_not;
     if (!parameters.used) return F_data_not;
 
-    f_array_length_t location = 0;
-    f_array_length_t location_sub = 0;
-    f_array_length_t priority = 0;
+    f_number_unsigned_t location = 0;
+    f_number_unsigned_t location_sub = 0;
+    f_number_unsigned_t priority = 0;
 
-    for (f_array_length_t i = 0; i < choices.used; ++i) {
+    for (f_number_unsigned_t i = 0; i < choices.used; ++i) {
 
       if (choices.array[i] > parameters.used) return F_status_set_error(F_parameter);
 
@@ -110,7 +110,7 @@ extern "C" {
 #endif // _di_f_console_parameter_prioritize_left_
 
 #ifndef _di_f_console_parameter_prioritize_right_
-  f_status_t f_console_parameter_prioritize_right(const f_console_parameters_t parameters, const f_uint16s_t choices, f_array_length_t * const decision) {
+  f_status_t f_console_parameter_prioritize_right(const f_console_parameters_t parameters, const f_uint16s_t choices, f_number_unsigned_t * const decision) {
     #ifndef _di_level_0_parameter_checking_
       if (!decision) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -118,11 +118,11 @@ extern "C" {
     if (!choices.used) return F_data_not;
     if (!parameters.used) return F_data_not;
 
-    f_array_length_t location = 0;
-    f_array_length_t location_sub = 0;
-    f_array_length_t priority = 0;
+    f_number_unsigned_t location = 0;
+    f_number_unsigned_t location_sub = 0;
+    f_number_unsigned_t priority = 0;
 
-    for (f_array_length_t i = 0; i < choices.used; ++i) {
+    for (f_number_unsigned_t i = 0; i < choices.used; ++i) {
 
       if (choices.array[i] > parameters.used) return F_status_set_error(F_parameter);
 
@@ -174,7 +174,7 @@ extern "C" {
     state->status = f_string_dynamics_increase_by(arguments.argc, &parameters->arguments);
     if (F_status_is_error(state->status)) return;
 
-    state->status = f_array_lengths_increase(state->step_small, &process.needs);
+    state->status = f_number_unsigneds_increase(state->step_small, &process.needs);
     if (F_status_is_error(state->status)) return;
 
     // Append the program name parameter as a static string.
@@ -185,8 +185,8 @@ extern "C" {
     // Parameter 0 represents the program name so skip it.
     process.location = 1;
 
-    f_array_length_t i = 0;
-    f_array_length_t j = 0;
+    f_number_unsigned_t i = 0;
+    f_number_unsigned_t j = 0;
 
     f_utf_char_t utf_argument = 0;
     f_utf_char_t utf_console = 0;
@@ -359,7 +359,7 @@ extern "C" {
           process.location_sub = 1;
           process.needs.used = 0;
 
-          state->status = f_array_lengths_increase_by(parameters->arguments.array[process.location].used, &process.needs);
+          state->status = f_number_unsigneds_increase_by(parameters->arguments.array[process.location].used, &process.needs);
           if (F_status_is_error(state->status)) break;
 
           // The process.location_sub is used on a per-increment basis (such as 'tar -xcf', the '-' would have an increment of 1, therefore x, c, and f would all be three separate parameters).
@@ -423,10 +423,10 @@ extern "C" {
               }
 
               if (state->status == F_process) {
-                state->status = f_array_lengths_increase(state->step_small, &parameters->array[i].locations);
+                state->status = f_number_unsigneds_increase(state->step_small, &parameters->array[i].locations);
                 if (F_status_is_error(state->status)) break;
 
-                state->status = f_array_lengths_increase(state->step_small, &parameters->array[i].locations_sub);
+                state->status = f_number_unsigneds_increase(state->step_small, &parameters->array[i].locations_sub);
                 if (F_status_is_error(state->status)) break;
 
                 if (parameters->array[i].location != process.location) {
@@ -442,7 +442,7 @@ extern "C" {
                   process.needs.array[process.needs.used++] = i;
                 } // for
 
-                state->status = f_array_lengths_increase_by(process.needs.used, &parameters->array[i].values);
+                state->status = f_number_unsigneds_increase_by(process.needs.used, &parameters->array[i].values);
                 if (F_status_is_error(state->status)) break;
               }
 
@@ -585,10 +585,10 @@ extern "C" {
         }
 
         if (state->status == F_process && process.found && i < parameters->used) {
-          state->status = f_array_lengths_increase(state->step_small, &parameters->array[i].locations);
+          state->status = f_number_unsigneds_increase(state->step_small, &parameters->array[i].locations);
           if (F_status_is_error(state->status)) break;
 
-          state->status = f_array_lengths_increase(state->step_small, &parameters->array[i].locations_sub);
+          state->status = f_number_unsigneds_increase(state->step_small, &parameters->array[i].locations_sub);
           if (F_status_is_error(state->status)) break;
 
           parameters->array[i].result |= process.result | f_console_result_found_e;
@@ -601,7 +601,7 @@ extern "C" {
             process.needs.array[process.needs.used++] = i;
           } // for
 
-          state->status = f_array_lengths_increase_by(process.needs.used, &parameters->array[i].values);
+          state->status = f_number_unsigneds_increase_by(process.needs.used, &parameters->array[i].values);
           if (F_status_is_error(state->status)) break;
         }
 
@@ -626,7 +626,7 @@ extern "C" {
         }
 
         if (state->status == F_process) {
-          state->status = f_array_lengths_increase(state->step_small, &parameters->remaining);
+          state->status = f_number_unsigneds_increase(state->step_small, &parameters->remaining);
           if (F_status_is_error(state->status)) break;
 
           parameters->remaining.array[parameters->remaining.used++] = process.location;
@@ -669,7 +669,7 @@ extern "C" {
       }
     }
 
-    f_array_lengths_resize(0, &process.needs);
+    f_number_unsigneds_resize(0, &process.needs);
   }
 #endif // _di_f_console_parameter_process_
 

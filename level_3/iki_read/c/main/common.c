@@ -129,7 +129,7 @@ extern "C" {
         return;
       }
 
-      const f_array_length_t index = main->program.parameters.array[iki_read_parameter_at_e].values.array[main->program.parameters.array[iki_read_parameter_at_e].values.used - 1];
+      const f_number_unsigned_t index = main->program.parameters.array[iki_read_parameter_at_e].values.array[main->program.parameters.array[iki_read_parameter_at_e].values.used - 1];
 
       main->setting.at = 0;
 
@@ -162,7 +162,7 @@ extern "C" {
     }
 
     if (main->program.parameters.array[iki_read_parameter_line_e].result & f_console_result_value_e) {
-      const f_array_length_t index = main->program.parameters.array[iki_read_parameter_line_e].values.array[main->program.parameters.array[iki_read_parameter_line_e].values.used - 1];
+      const f_number_unsigned_t index = main->program.parameters.array[iki_read_parameter_line_e].values.array[main->program.parameters.array[iki_read_parameter_line_e].values.used - 1];
 
       main->setting.line = 0;
 
@@ -210,9 +210,9 @@ extern "C" {
       }
 
       // Distinctly append all names.
-      f_array_length_t i = 0;
-      f_array_length_t j = 0;
-      f_array_lengths_t *values = &main->program.parameters.array[iki_read_parameter_name_e].values;
+      f_number_unsigned_t i = 0;
+      f_number_unsigned_t j = 0;
+      f_number_unsigneds_t *values = &main->program.parameters.array[iki_read_parameter_name_e].values;
 
       for (; i < values->used; ++i) {
 
@@ -285,10 +285,10 @@ extern "C" {
         return;
       }
 
-      f_array_length_t at = 0;
-      f_array_length_t index = 0;
-      f_array_length_t i = 0;
-      f_array_length_t j = 0;
+      f_number_unsigned_t at = 0;
+      f_number_unsigned_t index = 0;
+      f_number_unsigned_t i = 0;
+      f_number_unsigned_t j = 0;
 
       for (; i < main->program.parameters.array[iki_read_parameter_replace_e].values.used; ++i) {
 
@@ -380,10 +380,10 @@ extern "C" {
         return;
       }
 
-      f_array_length_t at = 0;
-      f_array_length_t index = 0;
-      f_array_length_t i = 0;
-      f_array_length_t j = 0;
+      f_number_unsigned_t at = 0;
+      f_number_unsigned_t index = 0;
+      f_number_unsigned_t i = 0;
+      f_number_unsigned_t j = 0;
 
       for (; i < main->program.parameters.array[iki_read_parameter_wrap_e].values.used; ++i) {
 
@@ -559,9 +559,9 @@ extern "C" {
         return;
       }
 
-      f_array_length_t index = 0;
+      f_number_unsigned_t index = 0;
 
-      for (f_array_length_t i = 0; i < main->program.parameters.remaining.used; ++i, ++main->setting.files.used) {
+      for (f_number_unsigned_t i = 0; i < main->program.parameters.remaining.used; ++i, ++main->setting.files.used) {
 
         // Static strings are being used, so if a dynamic string exists (size > 0), then de-allocate it.
         if (main->setting.files.array[main->setting.files.used].size) {
@@ -631,10 +631,10 @@ extern "C" {
       return F_false;
     }
 
-    f_array_length_t at = 0;
-    f_array_length_t index = 0;
-    f_array_length_t i = 0;
-    f_array_length_t j = 0;
+    f_number_unsigned_t at = 0;
+    f_number_unsigned_t index = 0;
+    f_number_unsigned_t i = 0;
+    f_number_unsigned_t j = 0;
 
     for (; i < parameter.values.used; ++i) {
 

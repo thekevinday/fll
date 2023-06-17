@@ -36,7 +36,7 @@ extern "C" {
  * @see f_string_quantitys_adjust()
  */
 #if !defined(_di_f_string_quantitys_adjust_) || !defined(_di_f_string_quantitys_decimate_by_)
-  extern f_status_t private_f_string_quantitys_adjust(const f_array_length_t length, f_string_quantitys_t * const quantitys) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_string_quantitys_adjust(const f_number_unsigned_t length, f_string_quantitys_t * const quantitys) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_string_quantitys_adjust_) || !defined(_di_f_string_quantitys_decimate_by_)
 
 /**
@@ -88,7 +88,7 @@ extern "C" {
  * @see f_string_quantitys_increase_by()
  */
 #if !defined(_di_f_string_quantitys_decrease_by_) || !defined(_di_f_string_quantitys_increase_) || !defined(_di_f_string_quantitys_increase_by_)
-  extern f_status_t private_f_string_quantitys_resize(const f_array_length_t length, f_string_quantitys_t * const quantitys) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_string_quantitys_resize(const f_number_unsigned_t length, f_string_quantitys_t * const quantitys) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_string_quantitys_decrease_by_) || !defined(_di_f_string_quantitys_increase_) || !defined(_di_f_string_quantitys_increase_by_)
 
 #ifdef __cplusplus

@@ -38,7 +38,7 @@ extern "C" {
       if (f_thread_lock_write_try(&global->thread->lock.process) == F_none) {
         controller_process_t *process = 0;
 
-        f_array_length_t i = 0;
+        f_number_unsigned_t i = 0;
 
         for (; i < global->thread->processs.size && global->thread->enabled == controller_thread_enabled_e; ++i) {
 
@@ -68,7 +68,7 @@ extern "C" {
 
           // If process has a PID file, then it is running in the background, only cleanup if the PID file no longer exists.
           if (process->path_pids.used) {
-            f_array_length_t j = 0;
+            f_number_unsigned_t j = 0;
 
             for (; j < process->path_pids.used; ++j) {
 
@@ -119,7 +119,7 @@ extern "C" {
 
           // Deallocate dynamic portions of the structure that are only ever needed while the process is running.
           controller_cache_delete_simple(&process->cache);
-          f_array_lengths_resize(0, &process->stack);
+          f_number_unsigneds_resize(0, &process->stack);
 
           // Shrink the childs array.
           if (process->childs.used) {

@@ -283,7 +283,7 @@ extern "C" {
  *   - exponent:             Use exponent rather than decimal for printing double values.
  *   - exponent_either:      Use either exponent or decimila for printing double values.
  *   - exponent_upper:       When using exponent, display the exponent 'e' as uppercase 'E'.
- *   - ignore_index:   ";",  Ignore characters in the given positions from a f_array_length_t (only applies to static/dynamic string arguments but not character arguments).
+ *   - ignore_index:   ";",  Ignore characters in the given positions from a f_number_unsigned_t (only applies to static/dynamic string arguments but not character arguments).
  *   - ignore_range:   ":",  Ignore characters in the given ranges from a f_string_range_t (only applies to static/dynamic string arguments but not character arguments).
  *   - precision:      ".*", Designates that a precision is in use.
  *   - precision_value:      Designates that a precision is specified in the function value (parameter).
@@ -346,7 +346,7 @@ extern "C" {
  *   - unsigned_32:              "u", "U",     Type is a uint32_t digit.
  *   - unsigned_64:              "ul", "UL",   Type is a uint64_t digit.
  *   - unsigned_128:             "ull", "ULL", Type is a f_uint128_t digit.
- *   - unsigned_number:          "un", "UN",   Type is a f_number_unsigned_t digit (which by default is what f_array_length_t is a type of).
+ *   - unsigned_number:          "un", "UN",   Type is a f_number_unsigned_t digit (which by default is what f_number_unsigned_t is a type of).
  *
  * @see fprintf()
  */

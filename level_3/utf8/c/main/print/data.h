@@ -204,7 +204,7 @@ extern "C" {
  *   F_output_not (with error bit) if setting is NULL.
  */
 #ifndef _di_utf8_print_data_section_header_file_
-  extern f_status_t utf8_print_data_section_header_file(fl_print_t * const print, const f_string_static_t name, const f_array_length_t index);
+  extern f_status_t utf8_print_data_section_header_file(fl_print_t * const print, const f_string_static_t name, const f_number_unsigned_t index);
 #endif // _di_utf8_print_data_section_header_file_
 
 /**
@@ -224,7 +224,7 @@ extern "C" {
  *   F_output_not (with error bit) if setting is NULL.
  */
 #ifndef _di_utf8_print_data_section_header_parameter_
-  extern f_status_t utf8_print_data_section_header_parameter(fl_print_t * const print, const f_array_length_t index);
+  extern f_status_t utf8_print_data_section_header_parameter(fl_print_t * const print, const f_number_unsigned_t index);
 #endif // _di_utf8_print_data_section_header_parameter_
 
 /**

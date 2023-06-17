@@ -112,7 +112,7 @@ void test__f_iki_read__works(void **state) {
     macro_f_string_static_t_initialize_1("url:\"https://localhost/fake-0.7.0.tar.gz?query=xx&parameter=yyy%20\" end.", 0, 72),
   };
 
-  const f_array_length_t matches[] = {
+  const f_number_unsigned_t matches[] = {
     0,
     0,
     1,

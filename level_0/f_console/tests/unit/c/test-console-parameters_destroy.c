@@ -7,7 +7,7 @@ extern "C" {
 
 void test__f_console_parameters_destroy__frees_memory(void **state) {
 
-  const f_array_length_t size = 3;
+  const f_number_unsigned_t size = 3;
 
   f_console_parameters_t parameters = f_console_parameters_t_initialize;
   f_console_parameter_t parameter = f_console_parameter_t_initialize;
@@ -25,7 +25,7 @@ void test__f_console_parameters_destroy__frees_memory(void **state) {
   }
 
   {
-    const f_status_t status = f_array_lengths_resize(size, &parameters.array[0].locations);
+    const f_status_t status = f_number_unsigneds_resize(size, &parameters.array[0].locations);
 
     assert_int_equal(status, F_none);
     assert_int_not_equal(parameters.array[0].locations.size, 0);
@@ -33,7 +33,7 @@ void test__f_console_parameters_destroy__frees_memory(void **state) {
   }
 
   {
-    const f_status_t status = f_array_lengths_resize(size, &parameters.array[0].locations_sub);
+    const f_status_t status = f_number_unsigneds_resize(size, &parameters.array[0].locations_sub);
 
     assert_int_equal(status, F_none);
     assert_int_not_equal(parameters.array[0].locations_sub.size, 0);

@@ -362,7 +362,7 @@ extern "C" {
 #endif // _di_controller_rule_item_print_error_rule_not_loaded_
 
 #ifndef _di_controller_rule_setting_read_print_error_
-  void controller_rule_setting_read_print_error(const fl_print_t print, const f_string_t message, const f_array_length_t index, const f_array_length_t line_item, controller_thread_t * const thread, controller_cache_t * const cache) {
+  void controller_rule_setting_read_print_error(const fl_print_t print, const f_string_t message, const f_number_unsigned_t index, const f_number_unsigned_t line_item, controller_thread_t * const thread, controller_cache_t * const cache) {
 
     if (print.verbosity == f_console_verbosity_quiet_e) return;
 
@@ -385,7 +385,7 @@ extern "C" {
 #endif // _di_controller_rule_setting_read_print_error_
 
 #ifndef _di_controller_rule_setting_read_print_error_with_range_
-  void controller_rule_setting_read_print_error_with_range(const fl_print_t print, const f_string_t before, const f_string_range_t range, const f_string_t after, const f_array_length_t index, const f_array_length_t line_item, controller_thread_t * const thread, controller_cache_t * const cache) {
+  void controller_rule_setting_read_print_error_with_range(const fl_print_t print, const f_string_t before, const f_string_range_t range, const f_string_t after, const f_number_unsigned_t index, const f_number_unsigned_t line_item, controller_thread_t * const thread, controller_cache_t * const cache) {
 
     if (print.verbosity == f_console_verbosity_quiet_e) return;
 
@@ -456,7 +456,7 @@ extern "C" {
 #endif // _di_controller_rule_setting_read_print_value_
 
 #ifndef _di_controller_rule_setting_read_print_values_
-  void controller_rule_setting_read_print_values(const controller_global_t global, const f_string_static_t name, const f_array_length_t index, controller_cache_t * const cache) {
+  void controller_rule_setting_read_print_values(const controller_global_t global, const f_string_static_t name, const f_number_unsigned_t index, controller_cache_t * const cache) {
 
     if (global.main->error.verbosity != f_console_verbosity_debug_e) {
       if (!(global.main->error.verbosity == f_console_verbosity_verbose_e && (global.main->parameters.array[controller_parameter_simulate_e].result & f_console_result_found_e))) {
@@ -468,7 +468,7 @@ extern "C" {
 
     fl_print_format("%rProcessing rule item action '%[%Q%]' setting value to", global.main->output.to, f_string_eol_s, global.main->context.set.title, name, global.main->context.set.title);
 
-    for (f_array_length_t j = 0; j < cache->content_actions.array[index].used; ++j) {
+    for (f_number_unsigned_t j = 0; j < cache->content_actions.array[index].used; ++j) {
 
       fl_print_format(" '%[%/Q%]'", global.main->output.to, global.main->context.set.important, cache->buffer_item, cache->content_actions.array[index].array[j], global.main->context.set.important);
 

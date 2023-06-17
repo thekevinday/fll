@@ -165,7 +165,7 @@ extern "C" {
 #endif // _di_fll_fss_identify_
 
 #ifndef _di_fll_fss_snatch_
-  f_status_t fll_fss_snatch(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_static_t names[], const f_array_length_t size, f_string_dynamic_t * const values[], bool matches[], f_array_length_t * const indexs[]) {
+  f_status_t fll_fss_snatch(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_static_t names[], const f_number_unsigned_t size, f_string_dynamic_t * const values[], bool matches[], f_number_unsigned_t * const indexs[]) {
     #ifndef _di_level_2_parameter_checking_
       if (!size) return F_status_set_error(F_parameter);
       if (objects.used != contents.used) return F_status_set_error(F_parameter);
@@ -178,8 +178,8 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    f_array_length_t i = 0;
-    f_array_length_t j = 0;
+    f_number_unsigned_t i = 0;
+    f_number_unsigned_t j = 0;
 
     bool matched[size];
 
@@ -218,7 +218,7 @@ extern "C" {
 #endif // _di_fll_fss_snatch_
 
 #ifndef _di_fll_fss_snatch_apart_
-  f_status_t fll_fss_snatch_apart(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_static_t names[], const f_array_length_t size, f_string_dynamics_t * const values[], bool matches[], f_array_lengths_t * const indexs[]) {
+  f_status_t fll_fss_snatch_apart(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_static_t names[], const f_number_unsigned_t size, f_string_dynamics_t * const values[], bool matches[], f_number_unsigneds_t * const indexs[]) {
     #ifndef _di_level_2_parameter_checking_
       if (!size) return F_status_set_error(F_parameter);
       if (objects.used != contents.used) return F_status_set_error(F_parameter);
@@ -232,9 +232,9 @@ extern "C" {
     f_status_t status = F_none;
     f_fss_content_t *content = 0;
 
-    f_array_length_t i = 0;
-    f_array_length_t j = 0;
-    f_array_length_t k = 0;
+    f_number_unsigned_t i = 0;
+    f_number_unsigned_t j = 0;
+    f_number_unsigned_t k = 0;
 
     for (; i < objects.used; ++i) {
 
@@ -252,7 +252,7 @@ extern "C" {
         }
 
         if (values[j]->used + contents.array[i].used > values[j]->size) {
-          if (values[j]->used + contents.array[i].used > F_array_length_t_size_d) {
+          if (values[j]->used + contents.array[i].used > F_number_t_size_unsigned_d) {
             return F_status_set_error(F_array_too_large);
           }
 
@@ -260,7 +260,7 @@ extern "C" {
           if (F_status_is_error(status)) return status;
 
           if (indexs) {
-            status = f_array_lengths_increase_by(content->used, indexs[j]);
+            status = f_number_unsigneds_increase_by(content->used, indexs[j]);
             if (F_status_is_error(status)) return status;
           }
         }
@@ -284,7 +284,7 @@ extern "C" {
 #endif // _di_fll_fss_snatch_apart_
 
 #ifndef _di_fll_fss_snatch_map_
-  f_status_t fll_fss_snatch_map(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_static_t names[], const f_array_length_t size, f_string_maps_t * const values[], bool matches[], f_array_lengths_t * const indexs[]) {
+  f_status_t fll_fss_snatch_map(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_static_t names[], const f_number_unsigned_t size, f_string_maps_t * const values[], bool matches[], f_number_unsigneds_t * const indexs[]) {
     #ifndef _di_level_2_parameter_checking_
       if (!size) return F_status_set_error(F_parameter);
       if (objects.used != contents.used) return F_status_set_error(F_parameter);
@@ -298,9 +298,9 @@ extern "C" {
     f_status_t status = F_none;
     f_string_dynamic_t name = f_string_dynamic_t_initialize;
 
-    f_array_length_t i = 0;
-    f_array_length_t j = 0;
-    f_array_length_t k = 0;
+    f_number_unsigned_t i = 0;
+    f_number_unsigned_t j = 0;
+    f_number_unsigned_t k = 0;
 
     bool matched = F_false;
 
@@ -357,8 +357,8 @@ extern "C" {
         }
 
         if (values[j]->used == values[j]->size) {
-          if (values[j]->used + F_fss_default_allocation_step_d > F_array_length_t_size_d) {
-            if (values[j]->used == F_array_length_t_size_d) {
+          if (values[j]->used + F_fss_default_allocation_step_d > F_number_t_size_unsigned_d) {
+            if (values[j]->used == F_number_t_size_unsigned_d) {
               f_string_dynamic_resize(0, &name);
 
               return F_status_set_error(F_array_too_large);
@@ -373,7 +373,7 @@ extern "C" {
             }
 
             if (indexs) {
-              macro_f_array_lengths_t_resize(status, (*indexs[j]), indexs[j]->used + 1);
+              macro_f_number_unsigneds_t_resize(status, (*indexs[j]), indexs[j]->used + 1);
               if (F_status_is_error(status)) return status;
             }
           }
@@ -387,7 +387,7 @@ extern "C" {
             }
 
             if (indexs) {
-              macro_f_array_lengths_t_resize(status, (*indexs[j]), indexs[j]->used + F_fss_default_allocation_step_d);
+              macro_f_number_unsigneds_t_resize(status, (*indexs[j]), indexs[j]->used + F_fss_default_allocation_step_d);
               if (F_status_is_error(status)) return status;
             }
           }
@@ -427,7 +427,7 @@ extern "C" {
 #endif // _di_fll_fss_snatch_map_
 
 #ifndef _di_fll_fss_snatch_map_apart_
-  f_status_t fll_fss_snatch_map_apart(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_static_t names[], const f_array_length_t size, f_string_map_multis_t * const values[], bool matches[], f_array_lengths_t * const indexs[]) {
+  f_status_t fll_fss_snatch_map_apart(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_static_t names[], const f_number_unsigned_t size, f_string_map_multis_t * const values[], bool matches[], f_number_unsigneds_t * const indexs[]) {
     #ifndef _di_level_2_parameter_checking_
       if (!size) return F_status_set_error(F_parameter);
       if (objects.used != contents.used) return F_status_set_error(F_parameter);
@@ -440,9 +440,9 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    f_array_length_t i = 0;
-    f_array_length_t j = 0;
-    f_array_length_t k = 0;
+    f_number_unsigned_t i = 0;
+    f_number_unsigned_t j = 0;
+    f_number_unsigned_t k = 0;
 
     f_string_map_multi_t *map_multi = 0;
 
@@ -465,7 +465,7 @@ extern "C" {
         if (F_status_is_error(status)) return status;
 
         if (indexs) {
-          macro_f_array_lengths_t_increase(status, F_fss_default_allocation_step_small_d, (*indexs[j]));
+          macro_f_number_unsigneds_t_increase(status, F_fss_default_allocation_step_small_d, (*indexs[j]));
           if (F_status_is_error(status)) return status;
         }
 
@@ -501,7 +501,7 @@ extern "C" {
 #endif // _di_fll_fss_snatch_map_apart_
 
 #ifndef _di_fll_fss_snatch_map_mash_
-  f_status_t fll_fss_snatch_map_mash(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_static_t names[], const f_array_length_t size, const f_string_static_t glue, f_string_maps_t * const values[], bool matches[], f_array_lengths_t * const indexs[]) {
+  f_status_t fll_fss_snatch_map_mash(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_static_t names[], const f_number_unsigned_t size, const f_string_static_t glue, f_string_maps_t * const values[], bool matches[], f_number_unsigneds_t * const indexs[]) {
     #ifndef _di_level_2_parameter_checking_
       if (!size) return F_status_set_error(F_parameter);
       if (objects.used != contents.used) return F_status_set_error(F_parameter);
@@ -514,9 +514,9 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    f_array_length_t i = 0;
-    f_array_length_t j = 0;
-    f_array_length_t k = 0;
+    f_number_unsigned_t i = 0;
+    f_number_unsigned_t j = 0;
+    f_number_unsigned_t k = 0;
 
     f_string_map_t *map = 0;
 
@@ -539,7 +539,7 @@ extern "C" {
         if (F_status_is_error(status)) return status;
 
         if (indexs) {
-          macro_f_array_lengths_t_increase(status, F_fss_default_allocation_step_small_d, (*indexs[j]));
+          macro_f_number_unsigneds_t_increase(status, F_fss_default_allocation_step_small_d, (*indexs[j]));
           if (F_status_is_error(status)) return status;
         }
 
@@ -570,7 +570,7 @@ extern "C" {
 #endif // _di_fll_fss_snatch_map_mash_
 
 #ifndef _di_fll_fss_snatch_map_mash_apart_
-  f_status_t fll_fss_snatch_map_mash_apart(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_static_t names[], const f_array_length_t size, const f_string_static_t glue, f_string_map_multis_t * const values[], bool matches[], f_array_lengths_t * const indexs[]) {
+  f_status_t fll_fss_snatch_map_mash_apart(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_static_t names[], const f_number_unsigned_t size, const f_string_static_t glue, f_string_map_multis_t * const values[], bool matches[], f_number_unsigneds_t * const indexs[]) {
     #ifndef _di_level_2_parameter_checking_
       if (!size) return F_status_set_error(F_parameter);
       if (objects.used != contents.used) return F_status_set_error(F_parameter);
@@ -584,9 +584,9 @@ extern "C" {
     f_status_t status = F_none;
     f_string_dynamic_t name = f_string_dynamic_t_initialize;
 
-    f_array_length_t i = 0;
-    f_array_length_t j = 0;
-    f_array_length_t k = 0;
+    f_number_unsigned_t i = 0;
+    f_number_unsigned_t j = 0;
+    f_number_unsigned_t k = 0;
 
     bool matched = F_false;
 
@@ -646,7 +646,7 @@ extern "C" {
           if (F_status_is_error(status)) return status;
 
           if (indexs) {
-            macro_f_array_lengths_t_increase(status, F_fss_default_allocation_step_small_d, (*indexs[j]));
+            macro_f_number_unsigneds_t_increase(status, F_fss_default_allocation_step_small_d, (*indexs[j]));
             if (F_status_is_error(status)) return status;
           }
 
@@ -687,7 +687,7 @@ extern "C" {
 #endif // _di_fll_fss_snatch_map_mash_apart_
 
 #ifndef _di_fll_fss_snatch_map_together_
-  f_status_t fll_fss_snatch_map_together(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_static_t names[], const f_array_length_t size, const f_string_static_t glue, f_string_maps_t * const values[], bool matches[], f_array_lengths_t * const indexs[]) {
+  f_status_t fll_fss_snatch_map_together(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_static_t names[], const f_number_unsigned_t size, const f_string_static_t glue, f_string_maps_t * const values[], bool matches[], f_number_unsigneds_t * const indexs[]) {
     #ifndef _di_level_2_parameter_checking_
       if (!size) return F_status_set_error(F_parameter);
       if (objects.used != contents.used) return F_status_set_error(F_parameter);
@@ -701,9 +701,9 @@ extern "C" {
     f_status_t status = F_none;
     f_string_dynamic_t name = f_string_dynamic_t_initialize;
 
-    f_array_length_t i = 0;
-    f_array_length_t j = 0;
-    f_array_length_t k = 0;
+    f_number_unsigned_t i = 0;
+    f_number_unsigned_t j = 0;
+    f_number_unsigned_t k = 0;
 
     bool matched = F_false;
 
@@ -762,7 +762,7 @@ extern "C" {
           if (F_status_is_error(status)) return status;
 
           if (indexs) {
-            macro_f_array_lengths_t_increase(status, F_fss_default_allocation_step_small_d, (*indexs[j]));
+            macro_f_number_unsigneds_t_increase(status, F_fss_default_allocation_step_small_d, (*indexs[j]));
             if (F_status_is_error(status)) return status;
           }
 
@@ -801,7 +801,7 @@ extern "C" {
 #endif // _di_fll_fss_snatch_map_together_
 
 #ifndef _di_fll_fss_snatch_mash_
-  f_status_t fll_fss_snatch_mash(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_static_t names[], const f_array_length_t size, const f_string_static_t glue, f_string_dynamic_t * const values[], bool matches[], f_array_length_t * const indexs[]) {
+  f_status_t fll_fss_snatch_mash(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_static_t names[], const f_number_unsigned_t size, const f_string_static_t glue, f_string_dynamic_t * const values[], bool matches[], f_number_unsigned_t * const indexs[]) {
     #ifndef _di_level_2_parameter_checking_
       if (!size) return F_status_set_error(F_parameter);
       if (objects.used != contents.used) return F_status_set_error(F_parameter);
@@ -814,9 +814,9 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    f_array_length_t i = 0;
-    f_array_length_t j = 0;
-    f_array_length_t k = 0;
+    f_number_unsigned_t i = 0;
+    f_number_unsigned_t j = 0;
+    f_number_unsigned_t k = 0;
 
     bool matched[size];
 
@@ -856,7 +856,7 @@ extern "C" {
 #endif // _di_fll_fss_snatch_mash_
 
 #ifndef _di_fll_fss_snatch_mash_apart_
-  f_status_t fll_fss_snatch_mash_apart(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_static_t names[], const f_array_length_t size, const f_string_static_t glue, f_string_dynamics_t * const values[], bool matches[], f_array_lengths_t * const indexs[]) {
+  f_status_t fll_fss_snatch_mash_apart(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_static_t names[], const f_number_unsigned_t size, const f_string_static_t glue, f_string_dynamics_t * const values[], bool matches[], f_number_unsigneds_t * const indexs[]) {
     #ifndef _di_level_2_parameter_checking_
       if (!size) return F_status_set_error(F_parameter);
       if (objects.used != contents.used) return F_status_set_error(F_parameter);
@@ -869,9 +869,9 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    f_array_length_t i = 0;
-    f_array_length_t j = 0;
-    f_array_length_t k = 0;
+    f_number_unsigned_t i = 0;
+    f_number_unsigned_t j = 0;
+    f_number_unsigned_t k = 0;
 
     for (; i < objects.used; ++i) {
 
@@ -890,7 +890,7 @@ extern "C" {
         if (F_status_is_error(status)) return status;
 
         if (indexs) {
-          macro_f_array_lengths_t_increase(status, F_fss_default_allocation_step_small_d, (*indexs[j]));
+          macro_f_number_unsigneds_t_increase(status, F_fss_default_allocation_step_small_d, (*indexs[j]));
           if (F_status_is_error(status)) return status;
         }
 
@@ -914,7 +914,7 @@ extern "C" {
 #endif // _di_fll_fss_snatch_mash_apart_
 
 #ifndef _di_fll_fss_snatch_together_
-  f_status_t fll_fss_snatch_together(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_static_t names[], const f_array_length_t size, const f_string_static_t glue, f_string_dynamic_t * const values[], bool matches[], f_array_length_t * const indexs[]) {
+  f_status_t fll_fss_snatch_together(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_static_t names[], const f_number_unsigned_t size, const f_string_static_t glue, f_string_dynamic_t * const values[], bool matches[], f_number_unsigned_t * const indexs[]) {
     #ifndef _di_level_2_parameter_checking_
       if (!size) return F_status_set_error(F_parameter);
       if (objects.used != contents.used) return F_status_set_error(F_parameter);
@@ -927,9 +927,9 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    f_array_length_t i = 0;
-    f_array_length_t j = 0;
-    f_array_length_t k = 0;
+    f_number_unsigned_t i = 0;
+    f_number_unsigned_t j = 0;
+    f_number_unsigned_t k = 0;
 
     for (; i < objects.used; ++i) {
 

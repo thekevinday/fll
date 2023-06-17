@@ -14,9 +14,9 @@ extern "C" {
     if (!source.used) return F_data_not;
 
     f_status_t status = F_none;
-    f_array_length_t i = 0;
-    f_array_length_t start = 0;
-    f_array_length_t total = 0;
+    f_number_unsigned_t i = 0;
+    f_number_unsigned_t start = 0;
+    f_number_unsigned_t total = 0;
     uint8_t width = 0;
 
     do {
@@ -84,7 +84,7 @@ extern "C" {
 #endif // _di_f_serialize_from_simple_
 
 #ifndef _di_f_serialize_from_simple_get_
-  f_status_t f_serialize_from_simple_get(const f_string_static_t source, const f_array_length_t index, f_string_dynamic_t * const destination) {
+  f_status_t f_serialize_from_simple_get(const f_string_static_t source, const f_number_unsigned_t index, f_string_dynamic_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -100,7 +100,7 @@ extern "C" {
       return status;
     }
 
-    const f_array_length_t total = (range.stop - range.start) + 1;
+    const f_number_unsigned_t total = (range.stop - range.start) + 1;
 
     if (range.start <= range.stop) {
       const f_status_t status_allocation = f_string_append(source.string + range.start, total, destination);
@@ -120,9 +120,9 @@ extern "C" {
     if (!source.used) return F_data_not;
 
     f_status_t status = F_none;
-    f_array_length_t i = 0;
-    f_array_length_t start = 0;
-    f_array_length_t total = 0;
+    f_number_unsigned_t i = 0;
+    f_number_unsigned_t start = 0;
+    f_number_unsigned_t total = 0;
     uint8_t width = 0;
 
     do {
@@ -198,7 +198,7 @@ extern "C" {
 #endif // _di_f_serialize_from_simple_range_
 
 #ifndef _di_f_serialize_from_simple_select_
-  f_status_t f_serialize_from_simple_select(const f_string_static_t source, const f_array_length_t index, f_string_range_t * const range) {
+  f_status_t f_serialize_from_simple_select(const f_string_static_t source, const f_number_unsigned_t index, f_string_range_t * const range) {
     #ifndef _di_level_0_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_

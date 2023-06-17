@@ -65,7 +65,7 @@ extern "C" {
  * @see fake_print_context_wrapped_number()
  */
 #ifndef _di_fake_print_error_argument_empty_
-  extern f_status_t fake_print_error_argument_empty(fl_print_t * const print, const f_array_length_t index);
+  extern f_status_t fake_print_error_argument_empty(fl_print_t * const print, const f_number_unsigned_t index);
 #endif // _di_fake_print_error_argument_empty_
 
 /**
@@ -709,7 +709,7 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_fake_print_error_operation_stack_max_
-  extern f_status_t fake_print_error_operation_stack_max(fl_print_t * const print, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name, const f_array_length_t stack_max);
+  extern f_status_t fake_print_error_operation_stack_max(fl_print_t * const print, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name, const f_number_unsigned_t stack_max);
 #endif // _di_fake_print_error_operation_stack_max_
 
 /**

@@ -25,7 +25,7 @@ extern "C" {
     f_status_t status = F_none;
     f_string_static_t path = f_string_static_t_initialize;
 
-    for (f_array_length_t i = 0; i < control_group.groups.used; ++i) {
+    for (f_number_unsigned_t i = 0; i < control_group.groups.used; ++i) {
 
       if (!control_group.groups.array[i].used) continue;
 

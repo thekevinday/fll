@@ -13,12 +13,12 @@ extern "C" {
 #endif
 
 #ifndef _di_controller_process_find_
-  f_status_t controller_process_find(const f_array_length_t action, const f_string_static_t alias, const controller_processs_t processs, f_array_length_t *at) {
+  f_status_t controller_process_find(const f_number_unsigned_t action, const f_string_static_t alias, const controller_processs_t processs, f_number_unsigned_t *at) {
 
     if (!alias.used) return F_none;
     if (!processs.used) return F_false;
 
-    for (f_array_length_t i = 0; i < processs.used; ++i) {
+    for (f_number_unsigned_t i = 0; i < processs.used; ++i) {
 
       if (processs.array[i] && processs.array[i]->action == action && f_compare_dynamic(alias, processs.array[i]->rule.alias) == F_equal_to) {
         if (at) *at = i;
@@ -32,7 +32,7 @@ extern "C" {
 #endif // _di_controller_process_find_
 
 #ifndef _di_controller_process_prepare_
-  f_status_t controller_process_prepare(const controller_global_t global, const bool is_normal, const uint8_t action, const f_string_static_t alias, f_array_length_t *id) {
+  f_status_t controller_process_prepare(const controller_global_t global, const bool is_normal, const uint8_t action, const f_string_static_t alias, f_number_unsigned_t *id) {
 
     f_status_t status = F_none;
 
@@ -94,7 +94,7 @@ extern "C" {
 #endif // _di_controller_process_prepare_
 
 #ifndef _di_controller_process_prepare_process_type_
-  f_status_t controller_process_prepare_process_type(const controller_global_t global, const uint8_t type, const uint8_t action, const f_string_static_t alias, f_array_length_t *id) {
+  f_status_t controller_process_prepare_process_type(const controller_global_t global, const uint8_t type, const uint8_t action, const f_string_static_t alias, f_number_unsigned_t *id) {
 
     return controller_process_prepare(global, type != controller_process_type_exit_e, action, alias, id);
   }

@@ -35,7 +35,7 @@ extern "C" {
  * @see f_limit_sets_decimate_by()
  */
 #if !defined(_di_f_limit_sets_adjust_) || !defined(_di_f_limit_sets_decimate_by_)
-  extern f_status_t private_f_limit_sets_adjust(const f_array_length_t length, f_limit_sets_t *sets) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_limit_sets_adjust(const f_number_unsigned_t length, f_limit_sets_t *sets) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_limit_sets_adjust_) || !defined(_di_f_limit_sets_decimate_by_)
 
 /**
@@ -107,7 +107,7 @@ extern "C" {
  * @see f_limit_setss_append()
  */
 #if !defined(_di_f_limit_sets_resize_) || !defined(_di_f_limit_sets_append_) || !defined(_di_f_limit_sets_decimate_by_) || !defined(_di_f_limit_setss_append_)
-  extern f_status_t private_f_limit_sets_resize(const f_array_length_t length, f_limit_sets_t *sets) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_limit_sets_resize(const f_number_unsigned_t length, f_limit_sets_t *sets) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_limit_sets_resize_) || !defined(_di_f_limit_sets_append_) || !defined(_di_f_limit_sets_decimate_by_) || !defined(_di_f_limit_setss_append_)
 
 /**
@@ -135,7 +135,7 @@ extern "C" {
  * @see f_limit_setss_decimate_by()
  */
 #if !defined(_di_f_limit_setss_adjust_) || !defined(_di_f_limit_setss_decimate_by_)
-  extern f_status_t private_f_limit_setss_adjust(const f_array_length_t length, f_limit_setss_t *setss) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_limit_setss_adjust(const f_number_unsigned_t length, f_limit_setss_t *setss) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_limit_setss_adjust_) || !defined(_di_f_limit_setss_decimate_by_)
 
 /**
@@ -165,7 +165,7 @@ extern "C" {
  * @see f_limit_setss_resize()
  */
 #if !defined(_di_f_limit_setss_decrease_by_) || !defined(_di_f_limit_setss_increase_) || !defined(_di_f_limit_setss_increase_by_) || !defined(_di_f_limit_setss_resize_)
-  extern f_status_t private_f_limit_setss_resize(const f_array_length_t length, f_limit_setss_t *setss) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_limit_setss_resize(const f_number_unsigned_t length, f_limit_setss_t *setss) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_limit_setss_decrease_by_) || !defined(_di_f_limit_setss_increase_) || !defined(_di_f_limit_setss_increase_by_) || !defined(_di_f_limit_setss_resize_)
 
 #ifdef __cplusplus

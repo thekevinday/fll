@@ -6,14 +6,14 @@ extern "C" {
 #endif
 
 #if !defined(_di_f_serialize_from_simple_get_) || !defined(_di_f_serialize_from_simple_select_)
-  f_status_t private_f_serialize_from_simple_select(const f_string_static_t source, const f_array_length_t index, f_string_range_t * const range) {
+  f_status_t private_f_serialize_from_simple_select(const f_string_static_t source, const f_number_unsigned_t index, f_string_range_t * const range) {
 
-    f_array_length_t start = 0;
-    f_array_length_t current = 0;
+    f_number_unsigned_t start = 0;
+    f_number_unsigned_t current = 0;
 
     unsigned short width = 0;
 
-    for (f_array_length_t i = 0; i < source.used; i += width) {
+    for (f_number_unsigned_t i = 0; i < source.used; i += width) {
 
       width = macro_f_utf_byte_width(source.string[i]);
 

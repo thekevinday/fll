@@ -29,7 +29,7 @@ void test__f_utf_dynamics_append_all__works(void **state) {
       assert_int_equal(status, F_none);
       assert_int_equal(source.array[source.used].used, test_sources[source.used].used);
 
-      for (f_array_length_t i = 0; i < source.array[source.used].used; ++i) {
+      for (f_number_unsigned_t i = 0; i < source.array[source.used].used; ++i) {
         assert_int_equal(source.array[source.used].string[i], test_sources[source.used].string[i]);
       } // for
     } // for
@@ -42,21 +42,21 @@ void test__f_utf_dynamics_append_all__works(void **state) {
     assert_int_equal(destination.used, source.used);
     assert_int_equal(destination.size, source.used);
 
-    for (f_array_length_t i = 0; i < source.used; ++i) {
+    for (f_number_unsigned_t i = 0; i < source.used; ++i) {
 
       assert_int_equal(destination.array[i].used, source.array[i].used);
 
-      for (f_array_length_t j = 0; j < destination.array[i].used; ++j) {
+      for (f_number_unsigned_t j = 0; j < destination.array[i].used; ++j) {
         assert_int_equal(destination.array[i].string[j], source.array[i].string[j]);
       } // for
     } // for
   }
 
-  for (f_array_length_t i = 0; i < source.used; ++i) {
+  for (f_number_unsigned_t i = 0; i < source.used; ++i) {
     free((void *) source.array[i].string);
   } // for
 
-  for (f_array_length_t i = 0; i < destination.used; ++i) {
+  for (f_number_unsigned_t i = 0; i < destination.used; ++i) {
     free((void *) destination.array[i].string);
   } // for
 

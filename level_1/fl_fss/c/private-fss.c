@@ -29,10 +29,10 @@ extern "C" {
 #endif // !defined(_di_fl_fss_basic_list_content_write_) || !defined(_di_fl_fss_extended_list_content_write_) || !defined(_di_fl_fss_embedded_list_content_write_)
 
 #if !defined(_di_fl_fss_basic_list_object_write_) || !defined(_di_fl_fss_extended_list_object_write_)
-  void private_fl_fss_basic_list_write_object_trim(const f_array_length_t used_start, f_string_dynamic_t * const destination, f_state_t * const state) {
+  void private_fl_fss_basic_list_write_object_trim(const f_number_unsigned_t used_start, f_string_dynamic_t * const destination, f_state_t * const state) {
 
     f_string_range_t destination_range = macro_f_string_range_t_initialize_2(destination->used);
-    f_array_length_t i = 0;
+    f_number_unsigned_t i = 0;
     uint8_t width = 0;
 
     state->status = F_none;
@@ -139,7 +139,7 @@ extern "C" {
     }
 
     // Save the delimits used position in case of unterminated quote.
-    const f_array_length_t delimits_used = delimits->used;
+    const f_number_unsigned_t delimits_used = delimits->used;
 
     // Begin the search.
     found->start = range->start;
@@ -185,7 +185,7 @@ extern "C" {
 
     // Identify where the object begins.
     if (buffer.string[range->start] == f_fss_slash_s.string[0]) {
-      f_array_length_t first_slash = range->start;
+      f_number_unsigned_t first_slash = range->start;
 
       found->start = range->start;
 
@@ -259,7 +259,7 @@ extern "C" {
 
         // Only the first slash before a quote needs to be escaped (or not) as once there is a slash before a quote, this cannot ever be a quote object.
         // This simplifies the number of slashes needed.
-        state->status = f_array_lengths_increase(state->step_small, delimits);
+        state->status = f_number_unsigneds_increase(state->step_small, delimits);
         if (F_status_is_error(state->status)) return;
 
         delimits->array[delimits->used++] = first_slash;
@@ -279,9 +279,9 @@ extern "C" {
 
     // Identify where the object ends.
     if (quote_found) {
-      f_array_length_t first_slash = 0;
-      f_array_length_t slash_count = 0;
-      f_array_length_t location = 0;
+      f_number_unsigned_t first_slash = 0;
+      f_number_unsigned_t slash_count = 0;
+      f_number_unsigned_t location = 0;
 
       while (range->start <= range->stop && range->start < buffer.used) {
 
@@ -382,7 +382,7 @@ extern "C" {
               range->start = first_slash;
 
               if (slash_count % 2 == 0) {
-                state->status = f_array_lengths_increase_by(slash_count / 2, delimits);
+                state->status = f_number_unsigneds_increase_by(slash_count / 2, delimits);
                 if (F_status_is_error(state->status)) return;
 
                 while (slash_count > 0) {
@@ -480,7 +480,7 @@ extern "C" {
                 return;
               }
 
-              state->status = f_array_lengths_increase_by((slash_count / 2) + 1, delimits);
+              state->status = f_number_unsigneds_increase_by((slash_count / 2) + 1, delimits);
               if (F_status_is_error(state->status)) return;
 
               while (slash_count > 0) {
@@ -756,15 +756,15 @@ extern "C" {
     state->status = f_string_dynamic_increase_by(state->step_small + 5, destination);
     if (F_status_is_error(state->status)) return;
 
-    const f_array_length_t input_start = range->start;
-    const f_array_length_t used_start = destination->used;
+    const f_number_unsigned_t input_start = range->start;
+    const f_number_unsigned_t used_start = destination->used;
 
     bool quoted_is = F_false;
     bool commented = F_false;
 
-    f_array_length_t item_first = 0;
-    f_array_length_t item_total = 0;
-    f_array_length_t i = 0;
+    f_number_unsigned_t item_first = 0;
+    f_number_unsigned_t item_total = 0;
+    f_number_unsigned_t i = 0;
 
     uint8_t width = 0;
 
@@ -1125,10 +1125,10 @@ extern "C" {
 #endif // !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_extended_object_write_) || !defined(_di_fl_fss_extended_content_write_)
 
 #if !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_extended_object_write_)
-  void private_fl_fss_basic_write_object_trim(const uint8_t quote, const f_array_length_t used_start, f_string_dynamic_t * const destination, f_state_t * const state) {
+  void private_fl_fss_basic_write_object_trim(const uint8_t quote, const f_number_unsigned_t used_start, f_string_dynamic_t * const destination, f_state_t * const state) {
 
     f_string_range_t destination_range = macro_f_string_range_t_initialize_2(destination->used);
-    f_array_length_t i = 0;
+    f_number_unsigned_t i = 0;
 
     uint8_t width = 0;
     const f_char_t quote_char = quote ? quote : f_string_ascii_quote_double_s.string[0];
@@ -1150,7 +1150,7 @@ extern "C" {
     } // for
 
     if (destination->string[destination_range.start] == quote_char) {
-      const f_array_length_t front = destination_range.start;
+      const f_number_unsigned_t front = destination_range.start;
 
       for (++destination_range.start; destination_range.start < destination->used; ++destination_range.start) {
 
@@ -1203,7 +1203,7 @@ extern "C" {
         }
       } // for
 
-      const f_array_length_t rear = destination_range.start + 1;
+      const f_number_unsigned_t rear = destination_range.start + 1;
 
       for (; destination_range.start > front; --destination_range.start) {
 

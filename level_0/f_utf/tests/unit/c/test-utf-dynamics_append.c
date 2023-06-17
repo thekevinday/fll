@@ -17,7 +17,7 @@ void test__f_utf_dynamics_append__works(void **state) {
     assert_int_equal(destination.used, 1);
     assert_int_equal(destination.array[0].used, source.used);
 
-    for (f_array_length_t i = 0; i < source.used; ++i) {
+    for (f_number_unsigned_t i = 0; i < source.used; ++i) {
       assert_int_equal(destination.array[0].string[i], source.string[i]);
     } // for
   }

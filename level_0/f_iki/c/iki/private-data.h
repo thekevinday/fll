@@ -35,7 +35,7 @@ extern "C" {
  * @see f_iki_datas_decimate_by()
  */
 #if !defined(_di_f_iki_datas_adjust_) || !defined(_di_f_iki_datas_decimate_by_)
-  extern f_status_t private_f_iki_datas_adjust(const f_array_length_t length, f_iki_datas_t *datas) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_iki_datas_adjust(const f_number_unsigned_t length, f_iki_datas_t *datas) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_iki_datas_adjust_) || !defined(_di_f_iki_datas_decimate_by_)
 
 /**
@@ -107,7 +107,7 @@ extern "C" {
  * @see f_iki_datass_append()
  */
 #if !defined(_di_f_iki_datas_resize_) || !defined(_di_f_iki_datas_append_) || !defined(_di_f_iki_datas_decimate_by_) || !defined(_di_f_iki_datass_append_)
-  extern f_status_t private_f_iki_datas_resize(const f_array_length_t length, f_iki_datas_t *datas) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_iki_datas_resize(const f_number_unsigned_t length, f_iki_datas_t *datas) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_iki_datas_resize_) || !defined(_di_f_iki_datas_append_) || !defined(_di_f_iki_datas_decimate_by_) || !defined(_di_f_iki_datass_append_)
 
 /**
@@ -135,7 +135,7 @@ extern "C" {
  * @see f_iki_datass_decimate_by()
  */
 #if !defined(_di_f_iki_datass_adjust_) || !defined(_di_f_iki_datass_decimate_by_)
-  extern f_status_t private_f_iki_datass_adjust(const f_array_length_t length, f_iki_datass_t *datass) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_iki_datass_adjust(const f_number_unsigned_t length, f_iki_datass_t *datass) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_iki_datass_adjust_) || !defined(_di_f_iki_datass_decimate_by_)
 
 /**
@@ -165,7 +165,7 @@ extern "C" {
  * @see f_iki_datass_resize()
  */
 #if !defined(_di_f_iki_datass_decrease_by_) || !defined(_di_f_iki_datass_increase_) || !defined(_di_f_iki_datass_increase_by_) || !defined(_di_f_iki_datass_resize_)
-  extern f_status_t private_f_iki_datass_resize(const f_array_length_t length, f_iki_datass_t *datass) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_iki_datass_resize(const f_number_unsigned_t length, f_iki_datass_t *datass) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_iki_datass_decrease_by_) || !defined(_di_f_iki_datass_increase_) || !defined(_di_f_iki_datass_increase_by_) || !defined(_di_f_iki_datass_resize_)
 
 #ifdef __cplusplus

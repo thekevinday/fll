@@ -8,15 +8,15 @@ extern "C" {
 #endif
 
 #if !defined(_di_f_string_quantityss_adjust_) || !defined(_di_f_string_quantityss_decimate_by_)
-  f_status_t private_f_string_quantityss_adjust(const f_array_length_t length, f_string_quantityss_t * const quantityss) {
+  f_status_t private_f_string_quantityss_adjust(const f_number_unsigned_t length, f_string_quantityss_t * const quantityss) {
 
-    if (quantityss->used + length > F_array_length_t_size_d) {
+    if (quantityss->used + length > F_number_t_size_unsigned_d) {
       return F_status_set_error(F_array_too_large);
     }
 
     f_status_t status = F_none;
 
-    for (f_array_length_t i = length; i < quantityss->size; ++i) {
+    for (f_number_unsigned_t i = length; i < quantityss->size; ++i) {
 
       status = private_f_string_quantitys_adjust(0, &quantityss->array[i]);
       if (F_status_is_error(status)) return status;
@@ -36,15 +36,15 @@ extern "C" {
 #endif // !defined(_di_f_string_quantityss_adjust_) || !defined(_di_f_string_quantityss_decimate_by_)
 
 #if !defined(_di_f_string_quantityss_decrease_by_) || !defined(_di_f_string_quantityss_increase_) || !defined(_di_f_string_quantityss_increase_by_)
-  f_status_t private_f_string_quantityss_resize(const f_array_length_t length, f_string_quantityss_t * const quantityss) {
+  f_status_t private_f_string_quantityss_resize(const f_number_unsigned_t length, f_string_quantityss_t * const quantityss) {
 
-    if (quantityss->used + length > F_array_length_t_size_d) {
+    if (quantityss->used + length > F_number_t_size_unsigned_d) {
       return F_status_set_error(F_array_too_large);
     }
 
     f_status_t status = F_none;
 
-    for (f_array_length_t i = length; i < quantityss->size; ++i) {
+    for (f_number_unsigned_t i = length; i < quantityss->size; ++i) {
 
       status = private_f_string_quantitys_resize(0, &quantityss->array[i]);
       if (F_status_is_error(status)) return status;

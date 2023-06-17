@@ -26,13 +26,13 @@ extern "C" {
     input.id = F_type_descriptor_input_d;
     input.size_read = fss_write_allocation_large_d;
 
-    f_array_length_t total = 0;
-    f_array_length_t length = 0;
+    f_number_unsigned_t total = 0;
+    f_number_unsigned_t length = 0;
     f_string_range_t range = f_string_range_t_initialize;
 
-    const f_array_length_t used_objects = main->setting.objects.used;
-    const f_array_length_t used_contentss = main->setting.contentss.used;
-    const f_array_length_t used_ignoress = main->setting.ignoress.used;
+    const f_number_unsigned_t used_objects = main->setting.objects.used;
+    const f_number_unsigned_t used_contentss = main->setting.contentss.used;
+    const f_number_unsigned_t used_ignoress = main->setting.ignoress.used;
 
     main->setting.object = &main->setting.objects.array[used_objects];
     main->setting.contents = &main->setting.contentss.array[used_contentss];
@@ -486,7 +486,7 @@ extern "C" {
         const f_string_static_t *prepend = 0;
 
         if (main->setting.flag & fss_write_main_flag_prepend_e) {
-          const f_array_length_t index = main->program.parameters.array[fss_write_parameter_prepend_e].values.array[main->program.parameters.array[fss_write_parameter_prepend_e].values.used - 1];
+          const f_number_unsigned_t index = main->program.parameters.array[fss_write_parameter_prepend_e].values.array[main->program.parameters.array[fss_write_parameter_prepend_e].values.used - 1];
 
           prepend = &main->program.parameters.arguments.array[index];
         }
@@ -544,11 +544,11 @@ extern "C" {
 
     if (!main) return;
 
-    f_array_lengths_t * const values = &main->program.parameters.array[fss_write_parameter_object_e].values;
+    f_number_unsigneds_t * const values = &main->program.parameters.array[fss_write_parameter_object_e].values;
     f_string_static_t * const argv = main->program.parameters.arguments.array;
 
     if ((main->program.parameters.array[fss_write_parameter_object_e].result & f_console_result_value_e) && values->used) {
-      for (f_array_length_t i = 0; i < values->used; ++i) {
+      for (f_number_unsigned_t i = 0; i < values->used; ++i) {
 
         if (f_compare_dynamic(argv[values->array[i]], fss_write_payload_s) == F_equal_to && i + 1 < values->used) {
           main->setting.state.status = F_status_set_error(F_parameter);

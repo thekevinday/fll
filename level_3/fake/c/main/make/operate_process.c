@@ -5,7 +5,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fake_make_operate_process_
-  int fake_make_operate_process(fake_make_data_t * const data_make, const f_string_range_t section_name, fake_state_process_t * const state_process, f_array_lengths_t * const section_stack) {
+  int fake_make_operate_process(fake_make_data_t * const data_make, const f_string_range_t section_name, fake_state_process_t * const state_process, f_number_unsigneds_t * const section_stack) {
 
     if (!data_make || !data_make->main || !state_process || !section_stack) return 0;
     if (data_make->main->setting.state.status == F_child) return data_make->main->program.child;
@@ -130,7 +130,7 @@ extern "C" {
     main->setting.state.status = f_string_dynamic_increase_by(source.used, destination);
     if (F_status_is_error(main->setting.state.status)) return;
 
-    for (f_array_length_t i = 0; i < source.used; ++i) {
+    for (f_number_unsigned_t i = 0; i < source.used; ++i) {
 
       // NULL characters are from delimited characters and must be skipped.
       if (!source.string[i]) continue;
@@ -299,7 +299,7 @@ extern "C" {
     }
 
     // Reset the environment.
-    for (f_array_length_t i = 0; i < data_make->environment.used; ++i) {
+    for (f_number_unsigned_t i = 0; i < data_make->environment.used; ++i) {
 
       data_make->environment.array[i].name.used = 0;
       data_make->environment.array[i].value.used = 0;

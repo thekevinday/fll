@@ -96,7 +96,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_console_parameter_prioritize_left_
-  extern f_status_t f_console_parameter_prioritize_left(const f_console_parameters_t parameters, const f_uint16s_t choices, f_array_length_t * const decision);
+  extern f_status_t f_console_parameter_prioritize_left(const f_console_parameters_t parameters, const f_uint16s_t choices, f_number_unsigned_t * const decision);
 #endif // _di_f_console_parameter_prioritize_left_
 
 /**
@@ -127,7 +127,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_console_parameter_prioritize_right_
-  extern f_status_t f_console_parameter_prioritize_right(const f_console_parameters_t parameters, const f_uint16s_t choices, f_array_length_t * const decision);
+  extern f_status_t f_console_parameter_prioritize_right(const f_console_parameters_t parameters, const f_uint16s_t choices, f_number_unsigned_t * const decision);
 #endif // _di_f_console_parameter_prioritize_right_
 
 /**
@@ -175,13 +175,13 @@ extern "C" {
  *   (optional) A variable passed to the callback, if provided.
  *   Set to NULL to not use.
  *
- *   Errors (with error bit) from: f_array_lengths_increase().
- *   Errors (with error bit) from: f_array_lengths_increase_by().
+ *   Errors (with error bit) from: f_number_unsigneds_increase().
+ *   Errors (with error bit) from: f_number_unsigneds_increase_by().
  *   Errors (with error bit) from: f_string_dynamics_increase_by().
  *   Errors (with error bit) from: f_utf_char_to_character().
  *
- * @see f_array_lengths_increase()
- * @see f_array_lengths_increase_by()
+ * @see f_number_unsigneds_increase()
+ * @see f_number_unsigneds_increase_by()
  * @see f_string_dynamics_increase_by()
  * @see f_utf_char_to_character()
  */

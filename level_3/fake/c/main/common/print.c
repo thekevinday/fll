@@ -8,7 +8,7 @@ extern "C" {
   const f_string_t fake_f_a[] = {
     "f_account_group_id_by_name",
     "f_account_id_by_name",
-    "f_array_lengths_increase",
+    "f_number_unsigneds_increase",
     "f_compare_dynamic_partial",
     "f_console_parameter_prioritize_right",
     "f_console_parameter_process",

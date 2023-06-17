@@ -376,7 +376,7 @@ extern "C" {
       const f_string_range_t range = macro_f_string_range_t_initialize_2(setting->path_current.used);
 
       if (f_compare_dynamic_partial_string(destination->string, setting->path_current, destination->used, range) == F_equal_to) {
-        f_array_length_t length = destination->used - setting->path_current.used;
+        f_number_unsigned_t length = destination->used - setting->path_current.used;
 
         if (length) {
           f_char_t temporary[--length];
@@ -793,7 +793,7 @@ extern "C" {
       if (status == F_false) return F_false;
     }
 
-    for (f_array_length_t i = macro_f_utf_byte_width(name.string[0]); i < name.used; i += macro_f_utf_byte_width(name.string[i])) {
+    for (f_number_unsigned_t i = macro_f_utf_byte_width(name.string[0]); i < name.used; i += macro_f_utf_byte_width(name.string[i])) {
 
       if (name.string[i] == '_') continue;
 
@@ -814,7 +814,7 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    for (f_array_length_t i = 0; i < name.used; i += macro_f_utf_byte_width(name.string[i])) {
+    for (f_number_unsigned_t i = 0; i < name.used; i += macro_f_utf_byte_width(name.string[i])) {
 
       status = f_utf_is_graph(name.string, name.used);
 

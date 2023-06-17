@@ -64,7 +64,7 @@ void test__f_limit_valuess_append_all__works(void **state) {
 
       assert_int_equal(status, F_none);
 
-      for (f_array_length_t i = 0; i < length_inner; ++i) {
+      for (f_number_unsigned_t i = 0; i < length_inner; ++i) {
 
         source.array[source.used].array[i].rlim_cur = i + 1;
         source.array[source.used].array[i].rlim_max = i + 2;
@@ -81,12 +81,12 @@ void test__f_limit_valuess_append_all__works(void **state) {
     assert_int_equal(destination.used, source.used);
     assert_int_equal(destination.size, source.used);
 
-    for (f_array_length_t i = 0; i < destination.used; ++i) {
+    for (f_number_unsigned_t i = 0; i < destination.used; ++i) {
 
       assert_int_equal(destination.array[i].used, length_inner);
       assert_int_equal(destination.array[i].size, length_inner);
 
-      for (f_array_length_t j = 0; j < length_inner; ++j) {
+      for (f_number_unsigned_t j = 0; j < length_inner; ++j) {
 
         assert_int_equal(destination.array[i].array[j].rlim_cur, j + 1);
         assert_int_equal(destination.array[i].array[j].rlim_max, j + 2);
@@ -94,11 +94,11 @@ void test__f_limit_valuess_append_all__works(void **state) {
     } // for
   }
 
-  for (f_array_length_t i = 0; i < source.used; ++i) {
+  for (f_number_unsigned_t i = 0; i < source.used; ++i) {
     free((void *) source.array[i].array);
   } // for
 
-  for (f_array_length_t i = 0; i < destination.used; ++i) {
+  for (f_number_unsigned_t i = 0; i < destination.used; ++i) {
     free((void *) destination.array[i].array);
   } // for
 

@@ -51,12 +51,12 @@ extern "C" {
 #endif // !defined(_di_f_account_destroy_) || !defined(_di_f_accounts_adjust_) || !defined(_di_f_accounts_decimate_by_) || !defined(_di_f_accountss_adjust_) || !defined(_di_f_accountss_decimate_by_)
 
 #if !defined(_di_f_accounts_adjust_) || !defined(_di_f_accounts_decimate_by_) || !defined(_di_f_accountss_adjust_) || !defined(_di_f_accountss_decimate_by_)
-  f_status_t private_f_accounts_adjust(const f_array_length_t length, f_accounts_t *accounts) {
+  f_status_t private_f_accounts_adjust(const f_number_unsigned_t length, f_accounts_t *accounts) {
 
     f_status_t status = F_none;
 
     if (length < accounts->size) {
-      for (f_array_length_t i = length; i < accounts->size; ++i) {
+      for (f_number_unsigned_t i = length; i < accounts->size; ++i) {
 
         status = private_f_account_destroy(&accounts->array[i]);
         if (F_status_is_error(status)) return status;
@@ -123,7 +123,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     }
 
-    for (f_array_length_t i = 0; i < source.used; ++i, ++destination->used) {
+    for (f_number_unsigned_t i = 0; i < source.used; ++i, ++destination->used) {
 
       destination->array[destination->used].home.used = 0;
       destination->array[destination->used].label.used = 0;
@@ -152,12 +152,12 @@ extern "C" {
 #endif // !defined(_di_f_accounts_append_) || !defined(_di_f_accounts_append_all_) || !defined(_di_f_accountss_append_all_)
 
 #if !defined(_di_f_accounts_resize_) || !defined(_di_f_accounts_append_) || !defined(_di_f_accounts_decimate_by_) || !defined(_di_f_accountss_append_) || !defined(_di_f_accountss_decrease_by_) || !defined(_di_f_accountss_increase_) || !defined(_di_f_accountss_increase_by_) || !defined(_di_f_accountss_resize_)
-  f_status_t private_f_accounts_resize(const f_array_length_t length, f_accounts_t *accounts) {
+  f_status_t private_f_accounts_resize(const f_number_unsigned_t length, f_accounts_t *accounts) {
 
     f_status_t status = F_none;
 
     if (length < accounts->size) {
-      for (f_array_length_t i = length; i < accounts->size; ++i) {
+      for (f_number_unsigned_t i = length; i < accounts->size; ++i) {
 
         status = f_string_dynamic_resize(0, &accounts->array[i].home);
         if (F_status_is_error(status)) return status;
@@ -190,11 +190,11 @@ extern "C" {
 #endif // !defined(_di_f_accounts_resize_) || !defined(_di_f_accounts_append_) || !defined(_di_f_accounts_decimate_by_) || !defined(_di_f_accountss_append_) || !defined(_di_f_accountss_decrease_by_) || !defined(_di_f_accountss_increase_) || !defined(_di_f_accountss_increase_by_) || !defined(_di_f_accountss_resize_)
 
 #if !defined(_di_f_accountss_adjust_) || !defined(_di_f_accountss_decimate_by_)
-  f_status_t private_f_accountss_adjust(const f_array_length_t length, f_accountss_t *accountss) {
+  f_status_t private_f_accountss_adjust(const f_number_unsigned_t length, f_accountss_t *accountss) {
 
     f_status_t status = F_none;
 
-    for (f_array_length_t i = length; i < accountss->size; ++i) {
+    for (f_number_unsigned_t i = length; i < accountss->size; ++i) {
 
       status = private_f_accounts_adjust(0, &accountss->array[i]);
       if (F_status_is_error(status)) return status;
@@ -217,11 +217,11 @@ extern "C" {
 #endif // !defined(_di_f_accountss_adjust_) || !defined(_di_f_accountss_decimate_by_)
 
 #if !defined(_di_f_accountss_decrease_by_) || !defined(_di_f_accountss_increase_) || !defined(_di_f_accountss_increase_by_) || !defined(_di_f_accountss_resize_)
-  f_status_t private_f_accountss_resize(const f_array_length_t length, f_accountss_t *accountss) {
+  f_status_t private_f_accountss_resize(const f_number_unsigned_t length, f_accountss_t *accountss) {
 
     f_status_t status = F_none;
 
-    for (f_array_length_t i = length; i < accountss->size; ++i) {
+    for (f_number_unsigned_t i = length; i < accountss->size; ++i) {
 
       status = private_f_accounts_resize(0, &accountss->array[i]);
       if (F_status_is_error(status)) return status;

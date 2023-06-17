@@ -68,7 +68,7 @@ extern "C" {
 #endif // _di_fl_print_string_va_
 
 #ifndef _di_fl_print_trim_
-  f_status_t fl_print_trim(const f_string_t string, const f_array_length_t length, const f_file_t file) {
+  f_status_t fl_print_trim(const f_string_t string, const f_number_unsigned_t length, const f_file_t file) {
 
     if (!file.stream) return F_stream_not;
     if (!string || !length) return F_data_not;
@@ -78,7 +78,7 @@ extern "C" {
 #endif // _di_fl_print_trim_
 
 #ifndef _di_fl_print_trim_raw_
-  f_status_t fl_print_trim_raw(const f_string_t string, const f_array_length_t length, const f_file_t file) {
+  f_status_t fl_print_trim_raw(const f_string_t string, const f_number_unsigned_t length, const f_file_t file) {
 
     if (!file.stream) return F_stream_not;
     if (!string || !length) return F_data_not;
@@ -88,7 +88,7 @@ extern "C" {
 #endif // _di_fl_print_trim_raw_
 
 #ifndef _di_fl_print_trim_raw_safely_
-  f_status_t fl_print_trim_raw_safely(const f_string_t string, const f_array_length_t length, const f_file_t file) {
+  f_status_t fl_print_trim_raw_safely(const f_string_t string, const f_number_unsigned_t length, const f_file_t file) {
 
     if (!file.stream) return F_stream_not;
     if (!string || !length) return F_data_not;
@@ -98,7 +98,7 @@ extern "C" {
 #endif // _di_fl_print_trim_raw_safely_
 
 #ifndef _di_fl_print_trim_safely_
-  f_status_t fl_print_trim_safely(const f_string_t string, const f_array_length_t length, const f_file_t file) {
+  f_status_t fl_print_trim_safely(const f_string_t string, const f_number_unsigned_t length, const f_file_t file) {
 
     if (!file.stream) return F_stream_not;
     if (!string || !length) return F_data_not;
@@ -153,7 +153,7 @@ extern "C" {
     if (!file.stream) return F_stream_not;
     if (!buffer.used || range.start > range.stop || range.start >= buffer.used) return F_data_not;
 
-    f_array_length_t length = (range.stop - range.start) + 1;
+    f_number_unsigned_t length = (range.stop - range.start) + 1;
 
     if (length + range.start > buffer.used) {
       length = buffer.used - range.start;
@@ -169,7 +169,7 @@ extern "C" {
     if (!file.stream) return F_stream_not;
     if (!buffer.used || range.start > range.stop || range.start >= buffer.used) return F_data_not;
 
-    f_array_length_t length = (range.stop - range.start) + 1;
+    f_number_unsigned_t length = (range.stop - range.start) + 1;
 
     if (length + range.start > buffer.used) {
       length = buffer.used - range.start;
@@ -185,7 +185,7 @@ extern "C" {
     if (!file.stream) return F_stream_not;
     if (!buffer.used || range.start > range.stop || range.start >= buffer.used) return F_data_not;
 
-    f_array_length_t length = (range.stop - range.start) + 1;
+    f_number_unsigned_t length = (range.stop - range.start) + 1;
 
     if (length + range.start > buffer.used) {
       length = buffer.used - range.start;
@@ -201,7 +201,7 @@ extern "C" {
     if (!file.stream) return F_stream_not;
     if (!buffer.used || range.start > range.stop || range.start >= buffer.used) return F_data_not;
 
-    f_array_length_t length = (range.stop - range.start) + 1;
+    f_number_unsigned_t length = (range.stop - range.start) + 1;
 
     if (length + range.start > buffer.used) {
       length = buffer.used - range.start;
@@ -212,7 +212,7 @@ extern "C" {
 #endif // _di_fl_print_trim_dynamic_partial_safely_
 
 #ifndef _di_fl_print_trim_except_
-  f_status_t fl_print_trim_except(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_file_t file) {
+  f_status_t fl_print_trim_except(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t length, const f_number_unsigneds_t except_at, const f_file_t file) {
 
     if (!file.stream) return F_stream_not;
     if (!string || !length) return F_data_not;
@@ -224,7 +224,7 @@ extern "C" {
 #endif // _di_fl_print_trim_except_
 
 #ifndef _di_fl_print_trim_except_raw_
-  f_status_t fl_print_trim_except_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_file_t file) {
+  f_status_t fl_print_trim_except_raw(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t length, const f_number_unsigneds_t except_at, const f_file_t file) {
 
     if (!file.stream) return F_stream_not;
     if (!string || !length) return F_data_not;
@@ -236,7 +236,7 @@ extern "C" {
 #endif // _di_fl_print_trim_except_raw_
 
 #ifndef _di_fl_print_trim_except_raw_safely_
-  f_status_t fl_print_trim_except_raw_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_file_t file) {
+  f_status_t fl_print_trim_except_raw_safely(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t length, const f_number_unsigneds_t except_at, const f_file_t file) {
 
     if (!file.stream) return F_stream_not;
     if (!string || !length) return F_data_not;
@@ -248,7 +248,7 @@ extern "C" {
 #endif // _di_fl_print_trim_except_raw_safely_
 
 #ifndef _di_fl_print_trim_except_safely_
-  f_status_t fl_print_trim_except_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_file_t file) {
+  f_status_t fl_print_trim_except_safely(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t length, const f_number_unsigneds_t except_at, const f_file_t file) {
 
     if (!file.stream) return F_stream_not;
     if (!string || !length) return F_data_not;
@@ -260,7 +260,7 @@ extern "C" {
 #endif // _di_fl_print_trim_except_safely_
 
 #ifndef _di_fl_print_trim_except_dynamic_
-  f_status_t fl_print_trim_except_dynamic(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_file_t file) {
+  f_status_t fl_print_trim_except_dynamic(const f_string_static_t buffer, const f_number_unsigneds_t except_at, const f_file_t file) {
 
     if (!file.stream) return F_stream_not;
     if (!buffer.used) return F_data_not;
@@ -272,7 +272,7 @@ extern "C" {
 #endif // _di_fl_print_trim_except_dynamic_
 
 #ifndef _di_fl_print_trim_except_dynamic_raw_
-  f_status_t fl_print_trim_except_dynamic_raw(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_file_t file) {
+  f_status_t fl_print_trim_except_dynamic_raw(const f_string_static_t buffer, const f_number_unsigneds_t except_at, const f_file_t file) {
 
     if (!file.stream) return F_stream_not;
     if (!buffer.used) return F_data_not;
@@ -284,7 +284,7 @@ extern "C" {
 #endif // _di_fl_print_trim_except_dynamic_raw_
 
 #ifndef _di_fl_print_trim_except_dynamic_raw_safely_
-  f_status_t fl_print_trim_except_dynamic_raw_safely(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_file_t file) {
+  f_status_t fl_print_trim_except_dynamic_raw_safely(const f_string_static_t buffer, const f_number_unsigneds_t except_at, const f_file_t file) {
 
     if (!file.stream) return F_stream_not;
     if (!buffer.used) return F_data_not;
@@ -296,7 +296,7 @@ extern "C" {
 #endif // _di_fl_print_trim_except_dynamic_raw_safely_
 
 #ifndef _di_fl_print_trim_except_dynamic_safely_
-  f_status_t fl_print_trim_except_dynamic_safely(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_file_t file) {
+  f_status_t fl_print_trim_except_dynamic_safely(const f_string_static_t buffer, const f_number_unsigneds_t except_at, const f_file_t file) {
 
     if (!file.stream) return F_stream_not;
     if (!buffer.used) return F_data_not;
@@ -308,7 +308,7 @@ extern "C" {
 #endif // _di_fl_print_trim_except_dynamic_safely_
 
 #ifndef _di_fl_print_trim_except_in_
-  f_status_t fl_print_trim_except_in(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
+  f_status_t fl_print_trim_except_in(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t length, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
 
     if (!file.stream) return F_stream_not;
     if (!string || !length) return F_data_not;
@@ -318,7 +318,7 @@ extern "C" {
 #endif // _di_fl_print_trim_except_in_
 
 #ifndef _di_fl_print_trim_except_in_raw_
-  f_status_t fl_print_trim_except_in_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
+  f_status_t fl_print_trim_except_in_raw(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t length, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
 
     if (!file.stream) return F_stream_not;
     if (!string || !length) return F_data_not;
@@ -328,7 +328,7 @@ extern "C" {
 #endif // _di_fl_print_trim_except_in_raw_
 
 #ifndef _di_fl_print_trim_except_in_raw_safely_
-  f_status_t fl_print_trim_except_in_raw_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
+  f_status_t fl_print_trim_except_in_raw_safely(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t length, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
 
     if (!file.stream) return F_stream_not;
     if (!string || !length) return F_data_not;
@@ -338,7 +338,7 @@ extern "C" {
 #endif // _di_fl_print_trim_except_in_raw_safely_
 
 #ifndef _di_fl_print_trim_except_in_safely_
-  f_status_t fl_print_trim_except_in_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
+  f_status_t fl_print_trim_except_in_safely(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t length, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
 
     if (!file.stream) return F_stream_not;
     if (!string || !length) return F_data_not;
@@ -348,7 +348,7 @@ extern "C" {
 #endif // _di_fl_print_trim_except_in_safely_
 
 #ifndef _di_fl_print_trim_except_in_dynamic_
-  f_status_t fl_print_trim_except_in_dynamic(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
+  f_status_t fl_print_trim_except_in_dynamic(const f_string_static_t buffer, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
 
     if (!file.stream) return F_stream_not;
     if (!buffer.used) return F_data_not;
@@ -358,7 +358,7 @@ extern "C" {
 #endif // _di_fl_print_trim_except_in_dynamic_
 
 #ifndef _di_fl_print_trim_except_in_dynamic_raw_
-  f_status_t fl_print_trim_except_in_dynamic_raw(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
+  f_status_t fl_print_trim_except_in_dynamic_raw(const f_string_static_t buffer, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
 
     if (!file.stream) return F_stream_not;
     if (!buffer.used) return F_data_not;
@@ -368,7 +368,7 @@ extern "C" {
 #endif // _di_fl_print_trim_except_in_dynamic_raw_
 
 #ifndef _di_fl_print_trim_except_in_dynamic_raw_safely_
-  f_status_t fl_print_trim_except_in_dynamic_raw_safely(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
+  f_status_t fl_print_trim_except_in_dynamic_raw_safely(const f_string_static_t buffer, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
 
     if (!file.stream) return F_stream_not;
     if (!buffer.used) return F_data_not;
@@ -378,7 +378,7 @@ extern "C" {
 #endif // _di_fl_print_trim_except_in_dynamic_raw_safely_
 
 #ifndef _di_fl_print_trim_except_in_dynamic_safely_
-  f_status_t fl_print_trim_except_in_dynamic_safely(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
+  f_status_t fl_print_trim_except_in_dynamic_safely(const f_string_static_t buffer, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
 
     if (!file.stream) return F_stream_not;
     if (!buffer.used) return F_data_not;
@@ -388,12 +388,12 @@ extern "C" {
 #endif // _di_fl_print_trim_except_in_dynamic_safely_
 
 #ifndef _di_fl_print_trim_except_in_dynamic_partial_
-  f_status_t fl_print_trim_except_in_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
+  f_status_t fl_print_trim_except_in_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
 
     if (!file.stream) return F_stream_not;
     if (!buffer.used || range.start > range.stop || range.start >= buffer.used) return F_data_not;
 
-    f_array_length_t length = (range.stop - range.start) + 1;
+    f_number_unsigned_t length = (range.stop - range.start) + 1;
 
     if (length + range.start > buffer.used) {
       length = buffer.used - range.start;
@@ -404,12 +404,12 @@ extern "C" {
 #endif // _di_fl_print_trim_except_in_dynamic_partial_
 
 #ifndef _di_fl_print_trim_except_in_dynamic_partial_raw_
-  f_status_t fl_print_trim_except_in_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
+  f_status_t fl_print_trim_except_in_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
 
     if (!file.stream) return F_stream_not;
     if (!buffer.used || range.start > range.stop || range.start >= buffer.used) return F_data_not;
 
-    f_array_length_t length = (range.stop - range.start) + 1;
+    f_number_unsigned_t length = (range.stop - range.start) + 1;
 
     if (length + range.start > buffer.used) {
       length = buffer.used - range.start;
@@ -420,12 +420,12 @@ extern "C" {
 #endif // _di_fl_print_trim_except_in_dynamic_partial_raw_
 
 #ifndef _di_fl_print_trim_except_in_dynamic_partial_raw_safely_
-  f_status_t fl_print_trim_except_in_dynamic_partial_raw_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
+  f_status_t fl_print_trim_except_in_dynamic_partial_raw_safely(const f_string_static_t buffer, const f_string_range_t range, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
 
     if (!file.stream) return F_stream_not;
     if (!buffer.used || range.start > range.stop || range.start >= buffer.used) return F_data_not;
 
-    f_array_length_t length = (range.stop - range.start) + 1;
+    f_number_unsigned_t length = (range.stop - range.start) + 1;
 
     if (length + range.start > buffer.used) {
       length = buffer.used - range.start;
@@ -436,12 +436,12 @@ extern "C" {
 #endif // _di_fl_print_trim_except_in_dynamic_partial_raw_safely_
 
 #ifndef _di_fl_print_trim_except_in_dynamic_partial_safely_
-  f_status_t fl_print_trim_except_in_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
+  f_status_t fl_print_trim_except_in_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
 
     if (!file.stream) return F_stream_not;
     if (!buffer.used || range.start > range.stop || range.start >= buffer.used) return F_data_not;
 
-    f_array_length_t length = (range.stop - range.start) + 1;
+    f_number_unsigned_t length = (range.stop - range.start) + 1;
 
     if (length + range.start > buffer.used) {
       length = buffer.used - range.start;
@@ -452,12 +452,12 @@ extern "C" {
 #endif // _di_fl_print_trim_except_in_dynamic_partial_safely_
 
 #ifndef _di_fl_print_trim_except_dynamic_partial_
-  f_status_t fl_print_trim_except_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, const f_file_t file) {
+  f_status_t fl_print_trim_except_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, const f_number_unsigneds_t except, const f_file_t file) {
 
     if (!file.stream) return F_stream_not;
     if (!buffer.used || range.start > range.stop || range.start >= buffer.used) return F_data_not;
 
-    f_array_length_t length = (range.stop - range.start) + 1;
+    f_number_unsigned_t length = (range.stop - range.start) + 1;
 
     if (length + range.start > buffer.used) {
       length = buffer.used - range.start;
@@ -470,12 +470,12 @@ extern "C" {
 #endif // _di_fl_print_trim_except_dynamic_partial_
 
 #ifndef _di_fl_print_trim_except_dynamic_partial_raw_
-  f_status_t fl_print_trim_except_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, const f_file_t file) {
+  f_status_t fl_print_trim_except_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, const f_number_unsigneds_t except, const f_file_t file) {
 
     if (!file.stream) return F_stream_not;
     if (!buffer.used || range.start > range.stop || range.start >= buffer.used) return F_data_not;
 
-    f_array_length_t length = (range.stop - range.start) + 1;
+    f_number_unsigned_t length = (range.stop - range.start) + 1;
 
     if (length + range.start > buffer.used) {
       length = buffer.used - range.start;
@@ -488,12 +488,12 @@ extern "C" {
 #endif // _di_fl_print_trim_except_dynamic_partial_raw_
 
 #ifndef _di_fl_print_trim_except_dynamic_partial_raw_safely_
-  f_status_t fl_print_trim_except_dynamic_partial_raw_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, const f_file_t file) {
+  f_status_t fl_print_trim_except_dynamic_partial_raw_safely(const f_string_static_t buffer, const f_string_range_t range, const f_number_unsigneds_t except, const f_file_t file) {
 
     if (!file.stream) return F_stream_not;
     if (!buffer.used || range.start > range.stop || range.start >= buffer.used) return F_data_not;
 
-    f_array_length_t length = (range.stop - range.start) + 1;
+    f_number_unsigned_t length = (range.stop - range.start) + 1;
 
     if (length + range.start > buffer.used) {
       length = buffer.used - range.start;
@@ -506,12 +506,12 @@ extern "C" {
 #endif // _di_fl_print_trim_except_dynamic_partial_raw_safely_
 
 #ifndef _di_fl_print_trim_except_dynamic_partial_safely_
-  f_status_t fl_print_trim_except_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, const f_file_t file) {
+  f_status_t fl_print_trim_except_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, const f_number_unsigneds_t except, const f_file_t file) {
 
     if (!file.stream) return F_stream_not;
     if (!buffer.used || range.start > range.stop || range.start >= buffer.used) return F_data_not;
 
-    f_array_length_t length = (range.stop - range.start) + 1;
+    f_number_unsigned_t length = (range.stop - range.start) + 1;
 
     if (length + range.start > buffer.used) {
       length = buffer.used - range.start;

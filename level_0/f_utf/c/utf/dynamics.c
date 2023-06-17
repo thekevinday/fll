@@ -10,7 +10,7 @@ extern "C" {
 #endif
 
 #ifndef _di_f_utf_string_dynamics_adjust_
-  f_status_t f_utf_string_dynamics_adjust(const f_array_length_t length, f_utf_string_dynamics_t * const dynamics) {
+  f_status_t f_utf_string_dynamics_adjust(const f_number_unsigned_t length, f_utf_string_dynamics_t * const dynamics) {
     #ifndef _di_level_0_parameter_checking_
       if (!dynamics) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -44,7 +44,7 @@ extern "C" {
 #endif // _di_f_utf_string_dynamics_append_all_
 
 #ifndef _di_f_utf_string_dynamics_decimate_by_
-  f_status_t f_utf_string_dynamics_decimate_by(const f_array_length_t amount, f_utf_string_dynamics_t * const dynamics) {
+  f_status_t f_utf_string_dynamics_decimate_by(const f_number_unsigned_t amount, f_utf_string_dynamics_t * const dynamics) {
     #ifndef _di_level_0_parameter_checking_
       if (!dynamics) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -60,7 +60,7 @@ extern "C" {
 #endif // _di_f_utf_string_dynamics_decimate_by_
 
 #ifndef _di_f_utf_string_dynamics_decrease_by_
-  f_status_t f_utf_string_dynamics_decrease_by(const f_array_length_t amount, f_utf_string_dynamics_t * const dynamics) {
+  f_status_t f_utf_string_dynamics_decrease_by(const f_number_unsigned_t amount, f_utf_string_dynamics_t * const dynamics) {
     #ifndef _di_level_0_parameter_checking_
       if (!dynamics) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -76,7 +76,7 @@ extern "C" {
 #endif // _di_f_utf_string_dynamics_decrease_by_
 
 #ifndef _di_f_utf_string_dynamics_increase_
-  f_status_t f_utf_string_dynamics_increase(const f_array_length_t step, f_utf_string_dynamics_t * const dynamics) {
+  f_status_t f_utf_string_dynamics_increase(const f_number_unsigned_t step, f_utf_string_dynamics_t * const dynamics) {
     #ifndef _di_level_0_parameter_checking_
       if (!dynamics) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -84,14 +84,14 @@ extern "C" {
     if (!step) return F_data_not;
 
     if (dynamics->used + 1 > dynamics->size) {
-      f_array_length_t size = dynamics->used + step;
+      f_number_unsigned_t size = dynamics->used + step;
 
-      if (size > F_array_length_t_size_d) {
-        if (dynamics->used + 1 > F_array_length_t_size_d) {
+      if (size > F_number_t_size_unsigned_d) {
+        if (dynamics->used + 1 > F_number_t_size_unsigned_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = F_array_length_t_size_d;
+        size = F_number_t_size_unsigned_d;
       }
 
       return private_f_utf_string_dynamics_resize(size, dynamics);
@@ -102,13 +102,13 @@ extern "C" {
 #endif // _di_f_utf_string_dynamics_increase_
 
 #ifndef _di_f_utf_string_dynamics_increase_by_
-  f_status_t f_utf_string_dynamics_increase_by(const f_array_length_t amount, f_utf_string_dynamics_t * const dynamics) {
+  f_status_t f_utf_string_dynamics_increase_by(const f_number_unsigned_t amount, f_utf_string_dynamics_t * const dynamics) {
     #ifndef _di_level_0_parameter_checking_
       if (!dynamics) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (dynamics->used + amount > dynamics->size) {
-      if (dynamics->used + amount > F_array_length_t_size_d) {
+      if (dynamics->used + amount > F_number_t_size_unsigned_d) {
         return F_status_set_error(F_array_too_large);
       }
 
@@ -120,7 +120,7 @@ extern "C" {
 #endif // _di_f_utf_string_dynamics_increase_by_
 
 #ifndef _di_f_utf_string_dynamics_resize_
-  f_status_t f_utf_string_dynamics_resize(const f_array_length_t length, f_utf_string_dynamics_t * const dynamics) {
+  f_status_t f_utf_string_dynamics_resize(const f_number_unsigned_t length, f_utf_string_dynamics_t * const dynamics) {
     #ifndef _di_level_0_parameter_checking_
       if (!dynamics) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_

@@ -94,7 +94,7 @@ extern "C" {
     else if (state_process->condition == fake_make_operation_if_type_if_equal_e) {
       state_process->condition_result = fake_condition_result_true_e;
 
-      for (f_array_length_t i = 2; i < main->cache_arguments.used; ++i) {
+      for (f_number_unsigned_t i = 2; i < main->cache_arguments.used; ++i) {
 
         if (f_compare_dynamic(main->cache_arguments.array[1], main->cache_arguments.array[i]) == F_equal_to_not) {
           state_process->condition_result = fake_condition_result_false_e;
@@ -106,8 +106,8 @@ extern "C" {
     else if (state_process->condition == fake_make_operation_if_type_if_equal_not_e) {
       state_process->condition_result = fake_condition_result_true_e;
 
-      f_array_length_t i = 1;
-      f_array_length_t j = 0;
+      f_number_unsigned_t i = 1;
+      f_number_unsigned_t j = 0;
 
       for (; i < main->cache_arguments.used; ++i) {
 
@@ -209,7 +209,7 @@ extern "C" {
 
     fake_main_t * const main = data_make->main;
 
-    const f_array_length_t total = main->cache_arguments.used - 1;
+    const f_number_unsigned_t total = main->cache_arguments.used - 1;
     f_status_t failed = F_none;
     fake_local_t local = macro_fake_local_t_initialize_1(main, &main->cache_map, &failed);
 
@@ -230,7 +230,7 @@ extern "C" {
     fake_string_dynamic_reset(&main->cache_recurse_do.path_cache);
 
     bool existing = F_true;
-    f_array_length_t i = 0;
+    f_number_unsigned_t i = 0;
     const f_string_t *function = 0;
     const f_string_static_t *operation = 0;
     uint8_t type = fll_error_file_type_path_e;
@@ -379,7 +379,7 @@ extern "C" {
 
     main->setting.state.status = F_none;
 
-    for (f_array_length_t i = 0; i < main->cache_arguments.used; ++i) {
+    for (f_number_unsigned_t i = 0; i < main->cache_arguments.used; ++i) {
 
       memset(&file_stat, 0, sizeof(struct stat));
 
@@ -529,7 +529,7 @@ extern "C" {
 
     gid_t id = 0;
     bool dereference = F_true;
-    f_array_length_t i = 0;
+    f_number_unsigned_t i = 0;
 
     main->setting.state.status = F_none;
 
@@ -587,7 +587,7 @@ extern "C" {
 
     // Multiple properties may pass and so if any of them fail, then they all fail.
     if (if_not) {
-      for (f_array_length_t i = 2; i < main->cache_arguments.used; ++i) {
+      for (f_number_unsigned_t i = 2; i < main->cache_arguments.used; ++i) {
 
         if (f_environment_exists(main->cache_arguments.array[i]) == F_true) {
           state_process->condition_result = fake_condition_result_false_e;
@@ -597,7 +597,7 @@ extern "C" {
       } // for
     }
     else {
-      for (f_array_length_t i = 1; i < main->cache_arguments.used; ++i) {
+      for (f_number_unsigned_t i = 1; i < main->cache_arguments.used; ++i) {
 
         if (f_environment_exists(main->cache_arguments.array[i]) != F_true) {
           state_process->condition_result = fake_condition_result_false_e;
@@ -616,7 +616,7 @@ extern "C" {
 
     fake_main_t * const main = data_make->main;
 
-    f_array_length_t i = if_not ? 2 : 1;
+    f_number_unsigned_t i = if_not ? 2 : 1;
     bool dereference = F_true;
 
     main->setting.state.status = F_none;
@@ -688,7 +688,7 @@ extern "C" {
     // fifo      = 0x8 (0000 1000) invalid = 0x80 (1000 0000)
     uint8_t type = 0;
 
-    f_array_length_t i = if_not ? 2 : 1;
+    f_number_unsigned_t i = if_not ? 2 : 1;
     bool dereference = F_true;
 
     main->setting.state.status = F_none;
@@ -817,7 +817,7 @@ extern "C" {
     bool is_negative_left = F_false;
     bool is_negative_right = F_false;
 
-    f_array_length_t i = 1;
+    f_number_unsigned_t i = 1;
 
     main->setting.state.status = F_none;
     state_process->condition_result = fake_condition_result_true_e;
@@ -959,7 +959,7 @@ extern "C" {
     fake_main_t * const main = data_make->main;
 
     uid_t id = 0;
-    f_array_length_t i = if_not ? 2 : 1;
+    f_number_unsigned_t i = if_not ? 2 : 1;
     bool dereference = F_true;
 
     main->setting.state.status = F_none;
@@ -1064,7 +1064,7 @@ extern "C" {
 
     state_process->condition_result = fake_condition_result_true_e;
 
-    for (f_array_length_t i = if_not ? 4 : 3; i < main->cache_arguments.used; ++i, mode_file = 0) {
+    for (f_number_unsigned_t i = if_not ? 4 : 3; i < main->cache_arguments.used; ++i, mode_file = 0) {
 
       main->setting.state.status = f_file_mode_read(main->cache_arguments.array[i], F_true, &mode_file);
 
@@ -1124,7 +1124,7 @@ extern "C" {
     fake_main_t * const main = data_make->main;
 
     uid_t id = 0;
-    f_array_length_t i = if_not ? 2 : 1;
+    f_number_unsigned_t i = if_not ? 2 : 1;
     bool dereference = F_true;
 
     main->setting.state.status = F_none;
@@ -1261,8 +1261,8 @@ extern "C" {
       data_make->parameter_value.work.used,
     };
 
-    f_array_length_t i = if_not ? 2 : 1;
-    f_array_length_t j = 0;
+    f_number_unsigned_t i = if_not ? 2 : 1;
+    f_number_unsigned_t j = 0;
 
     // 0 = unknown, 1 = fail, 2 = pass.
     uint8_t result = 0;
@@ -1433,7 +1433,7 @@ extern "C" {
     mode_t mode = 0;
     mode_t mode_file = 0;
 
-    for (f_array_length_t i = 1; i < main->cache_arguments.used; ++i, mode = 0) {
+    for (f_number_unsigned_t i = 1; i < main->cache_arguments.used; ++i, mode = 0) {
 
       main->setting.state.status = f_file_mode_read(main->cache_arguments.array[i], F_true, &mode_file);
 
@@ -1484,7 +1484,7 @@ extern "C" {
 
     fake_main_t * const main = data_make->main;
 
-    const f_array_length_t total = main->cache_arguments.used - 1;
+    const f_number_unsigned_t total = main->cache_arguments.used - 1;
 
     bool existing = F_true;
 
@@ -1509,7 +1509,7 @@ extern "C" {
     const f_string_static_t *operation = 0;
     f_string_static_t *file = 0;
 
-    for (f_array_length_t i = 0; i < total; ++i) {
+    for (f_number_unsigned_t i = 0; i < total; ++i) {
 
       fake_string_dynamic_reset(&main->cache_argument);
 
@@ -1570,13 +1570,13 @@ extern "C" {
 #endif // _di_fake_make_operate_process_type_move_
 
 #ifndef _di_fake_make_operate_process_type_operate_
-  int fake_make_operate_process_type_operate(fake_make_data_t * const data_make, f_array_lengths_t * const section_stack) {
+  int fake_make_operate_process_type_operate(fake_make_data_t * const data_make, f_number_unsigneds_t * const section_stack) {
 
     if (!data_make || !data_make->main) return 0;
 
     fake_main_t * const main = data_make->main;
 
-    f_array_length_t id_section = 0;
+    f_number_unsigned_t id_section = 0;
 
     for (; id_section < data_make->fakefile.used; ++id_section) {
 
@@ -1610,7 +1610,7 @@ extern "C" {
 
     uid_t id = 0;
     bool dereference = F_true;
-    f_array_length_t i = 0;
+    f_number_unsigned_t i = 0;
 
     if (f_compare_dynamic(fake_make_operation_argument_no_dereference_s, main->cache_arguments.array[i]) == F_equal_to) {
       ++i;
@@ -1667,7 +1667,7 @@ extern "C" {
     fake_main_t * const main = data_make->main;
 
     bool found = F_false;
-    f_array_length_t i = 0;
+    f_number_unsigned_t i = 0;
 
     for (; i < data_make->setting_make.parameter.used; ++i) {
 
@@ -1679,7 +1679,7 @@ extern "C" {
     } // for
 
     if (found) {
-      for (f_array_length_t j = 0; j < data_make->setting_make.parameter.array[i].value.size; ++j) {
+      for (f_number_unsigned_t j = 0; j < data_make->setting_make.parameter.array[i].value.size; ++j) {
 
         main->setting.state.status = f_string_dynamic_resize(0, &data_make->setting_make.parameter.array[i].value.array[j]);
 
@@ -1739,7 +1739,7 @@ extern "C" {
         return;
       }
 
-      for (f_array_length_t j = 0; j < data_make->setting_make.parameter.array[i].value.size; ++j) {
+      for (f_number_unsigned_t j = 0; j < data_make->setting_make.parameter.array[i].value.size; ++j) {
 
         main->setting.state.status = f_string_dynamic_append_nulless(main->cache_arguments.array[j + 1], &data_make->setting_make.parameter.array[i].value.array[j]);
 
@@ -1811,11 +1811,11 @@ extern "C" {
     fake_string_dynamic_reset(&main->cache_1);
 
     {
-      f_array_length_t i = 0;
+      f_number_unsigned_t i = 0;
 
       // Pre-allocate the cache to reduce allocations.
       {
-        f_array_length_t total = main->cache_arguments.used;
+        f_number_unsigned_t total = main->cache_arguments.used;
 
         for (; i < main->cache_arguments.used; ++i) {
           total += main->cache_arguments.array[i].used;
@@ -1984,7 +1984,7 @@ extern "C" {
     fake_make_print_verbose_operate_set_path(&main->program.message, f_string_empty_s);
 
     // Clear stack, except for the project root.
-    for (f_array_length_t i = 1; i < data_make->path.stack.used; ++i) {
+    for (f_number_unsigned_t i = 1; i < data_make->path.stack.used; ++i) {
       f_string_dynamic_resize(0, &data_make->path.stack.array[i]);
     } // for
 
@@ -2005,7 +2005,7 @@ extern "C" {
 
     macro_f_mode_t_set_default_umask(mode, main->program.umask);
 
-    for (f_array_length_t i = 1; i < main->cache_arguments.used; ++i) {
+    for (f_number_unsigned_t i = 1; i < main->cache_arguments.used; ++i) {
 
       if (f_compare_dynamic(fake_make_operation_argument_file_s, main->cache_arguments.array[0]) == F_equal_to) {
         main->setting.state.status = f_file_touch(main->cache_arguments.array[i], mode.regular, F_false);
@@ -2101,7 +2101,7 @@ extern "C" {
       }
 
       if (F_status_is_error_not(main->setting.state.status)) {
-        for (f_array_length_t i = 1; i < main->cache_arguments.used; ++i) {
+        for (f_number_unsigned_t i = 1; i < main->cache_arguments.used; ++i) {
 
           fake_string_dynamic_reset(&main->cache_1);
 

@@ -41,12 +41,12 @@ extern "C" {
 #endif // _di_controller_rule_action_method_name_
 
 #ifndef _di_controller_rule_find_
-  f_status_t controller_rule_find(const f_string_static_t alias, const controller_rules_t rules, f_array_length_t *at) {
+  f_status_t controller_rule_find(const f_string_static_t alias, const controller_rules_t rules, f_number_unsigned_t *at) {
 
     if (!alias.used) return F_none;
     if (!rules.used) return F_false;
 
-    for (f_array_length_t i = 0; i < rules.used; ++i) {
+    for (f_number_unsigned_t i = 0; i < rules.used; ++i) {
 
       if (f_compare_dynamic(alias, rules.array[i].alias) == F_equal_to) {
         if (at) *at = i;
@@ -131,7 +131,7 @@ extern "C" {
 
       f_string_range_t range = f_string_range_t_initialize;
 
-      for (f_array_length_t i = 0; i < content->used; ++i) {
+      for (f_number_unsigned_t i = 0; i < content->used; ++i) {
 
         if (content->array[i].start > content->array[i].stop) continue;
 
@@ -224,7 +224,7 @@ extern "C" {
     controller_state_interrupt_t custom = macro_controller_state_interrupt_t_initialize_1(is_normal, global.thread);
     f_state_t state = macro_f_state_t_initialize_1(controller_common_allocation_large_d, controller_common_allocation_small_d, F_none, 0, 0, 0, &controller_thread_signal_state_fss, 0, (void *) &custom, 0);
 
-    f_array_length_t i = 0;
+    f_number_unsigned_t i = 0;
 
     for (; i < cache->comments.size; ++i) {
 
@@ -670,7 +670,7 @@ extern "C" {
 #endif // _di_controller_rule_action_read_
 
 #ifndef _di_controller_rule_action_read_rerun_number_
-  f_status_t controller_rule_action_read_rerun_number(const controller_global_t global, const f_string_t name, controller_cache_t * const cache, f_array_length_t * const index, f_number_unsigned_t * const number) {
+  f_status_t controller_rule_action_read_rerun_number(const controller_global_t global, const f_string_t name, controller_cache_t * const cache, f_number_unsigned_t * const index, f_number_unsigned_t * const number) {
 
     f_status_t status = F_none;
     f_number_signed_t parsed = 0;
@@ -745,7 +745,7 @@ extern "C" {
     macro_f_control_group_t_delete_simple(destination->cgroup)
     f_capability_delete(&destination->capability);
 
-    f_array_length_t i = 0;
+    f_number_unsigned_t i = 0;
 
     for (; i < controller_rule_action_type__enum_size_e; ++i) {
       destination->status[i] = source.status[i];
@@ -885,7 +885,7 @@ extern "C" {
         if (F_status_is_error(status)) return status;
       }
 
-      f_array_length_t j = 0;
+      f_number_unsigned_t j = 0;
 
       for (i = 0; i < source.items.used; ++i) {
 
@@ -951,9 +951,9 @@ extern "C" {
     f_status_t status = F_none;
     f_status_t success = F_false;
 
-    f_array_length_t i = 0;
-    f_array_length_t j = 0;
-    f_array_length_t k = 0;
+    f_number_unsigned_t i = 0;
+    f_number_unsigned_t j = 0;
+    f_number_unsigned_t k = 0;
 
     // Child processes should receive all signals and handle the signals as they see fit.
     f_signal_how_t signals = f_signal_how_t_initialize;
@@ -1416,7 +1416,7 @@ extern "C" {
     pid_t *child = 0;
 
     {
-      f_array_length_t i = 0;
+      f_number_unsigned_t i = 0;
 
       while (i < process->childs.used && process->childs.array[i]) {
         ++i;
@@ -1444,7 +1444,7 @@ extern "C" {
 
         fl_print_format("%]' with the arguments: '%[", main->output.to, main->context.set.title, main->context.set.important);
 
-        for (f_array_length_t i = program.used ? 0 : 1; i < arguments.used; ++i) {
+        for (f_number_unsigned_t i = program.used ? 0 : 1; i < arguments.used; ++i) {
 
           if (program.used && i || !program.used && i > 1) {
             f_print_dynamic_raw(f_string_space_s, main->output.to);
@@ -1638,7 +1638,7 @@ extern "C" {
     f_string_dynamic_t *child_pid_file = 0;
 
     {
-      f_array_length_t i = 0;
+      f_number_unsigned_t i = 0;
 
       while (i < process->childs.used && process->childs.array[i]) {
         ++i;
@@ -1700,7 +1700,7 @@ extern "C" {
 
         fl_print_format("%]' with the arguments: '%[", main->error.to, main->context.set.title, main->context.set.important);
 
-        for (f_array_length_t i = program.used ? 0 : 1; i < arguments.used; ++i) {
+        for (f_number_unsigned_t i = program.used ? 0 : 1; i < arguments.used; ++i) {
 
           if (program.used && i || !program.used && i > 1) {
             f_print_dynamic_raw(f_string_space_s, main->error.to);
@@ -1942,8 +1942,8 @@ extern "C" {
     f_status_t status = f_string_dynamics_increase_by(action.parameters.used, &process->cache.expanded);
     if (F_status_is_error(status)) return status;
 
-    f_array_length_t i = 0;
-    f_array_length_t first = 0;
+    f_number_unsigned_t i = 0;
+    f_number_unsigned_t first = 0;
     f_string_range_t range = f_string_range_t_initialize;
 
     f_iki_data_t *iki_data = 0;
@@ -2022,7 +2022,7 @@ extern "C" {
     f_status_t status = F_none;
 
     if (f_compare_dynamic_partial_string(controller_define_s.string, source, controller_define_s.used, vocabulary) == F_equal_to) {
-      f_array_length_t i = 0;
+      f_number_unsigned_t i = 0;
 
       // First check to see if the environment variable is overwritten by a "define".
       for (; i < process->rule.define.used; ++i) {
@@ -2072,7 +2072,7 @@ extern "C" {
       }
     }
     else if (f_compare_dynamic_partial_string(controller_parameter_s.string, source, controller_parameter_s.used, vocabulary) == F_equal_to) {
-      f_array_length_t i = 0;
+      f_number_unsigned_t i = 0;
 
       for (; i < process->rule.parameter.used; ++i) {
 
@@ -2213,12 +2213,12 @@ extern "C" {
         F_true, // socket.
       };
 
-      for (f_array_length_t i = 0; i < 17; ++i) {
+      for (f_number_unsigned_t i = 0; i < 17; ++i) {
 
         if (f_compare_dynamic_partial_string(options[i].string, source, options[i].used, content) == F_equal_to) {
           if (values[i]) {
             if (parameters->array[codes[i]].result & f_console_result_value_e) {
-              const f_array_length_t index = parameters->array[codes[i]].values.array[parameters->array[codes[i]].values.used - 1];
+              const f_number_unsigned_t index = parameters->array[codes[i]].values.array[parameters->array[codes[i]].values.used - 1];
 
               status = f_string_dynamic_increase_by(symbols[i].used + expands[i].used + f_string_ascii_space_s.used + argv[index].used + 1, destination);
               if (F_status_is_error(status)) return status;
@@ -2290,7 +2290,7 @@ extern "C" {
 
           if (f_compare_dynamic_partial_string(buffer.string, source, buffer.used, content) == F_equal_to) {
             if (parameters->array[codes[i]].result & f_console_result_value_e) {
-              const f_array_length_t index = parameters->array[codes[i]].values.array[parameters->array[codes[i]].values.used - 1];
+              const f_number_unsigned_t index = parameters->array[codes[i]].values.array[parameters->array[codes[i]].values.used - 1];
 
               status = f_string_dynamic_append(argv[index], destination);
               if (F_status_is_error(status)) return status;
@@ -2362,7 +2362,7 @@ extern "C" {
     controller_state_interrupt_t custom = macro_controller_state_interrupt_t_initialize_1(is_normal, global.thread);
     f_state_t state = macro_f_state_t_initialize_1(controller_common_allocation_large_d, controller_common_allocation_small_d, F_none, 0, 0, 0, &controller_thread_signal_state_fss, 0, (void *) &custom, 0);
     f_string_range_t range = macro_f_string_range_t_initialize_2(cache->buffer_item.used);
-    f_array_length_t last = 0;
+    f_number_unsigned_t last = 0;
 
     uint8_t type = 0;
     uint8_t method = 0;
@@ -2526,10 +2526,10 @@ extern "C" {
 #endif // _di_controller_rule_item_read_
 
 #ifndef _di_controller_rule_items_increase_by_
-  f_status_t controller_rule_items_increase_by(const f_array_length_t amount, controller_rule_items_t * const items) {
+  f_status_t controller_rule_items_increase_by(const f_number_unsigned_t amount, controller_rule_items_t * const items) {
 
     if (items->used + amount > items->size) {
-      if (items->used + amount > F_array_length_t_size_d) {
+      if (items->used + amount > F_number_t_size_unsigned_d) {
         return F_status_set_error(F_array_too_large);
       }
 
@@ -2620,12 +2620,12 @@ extern "C" {
       controller_rule_validate(global, process->rule, process->action, process->options, &process->cache);
     }
 
-    f_array_length_t i = 0;
+    f_number_unsigned_t i = 0;
 
     {
-      f_array_length_t j = 0;
-      f_array_length_t id_rule = 0;
-      f_array_length_t id_dependency = 0;
+      f_number_unsigned_t j = 0;
+      f_number_unsigned_t id_rule = 0;
+      f_number_unsigned_t id_dependency = 0;
 
       bool found = F_false;
 
@@ -2967,7 +2967,7 @@ extern "C" {
       if (process->options & controller_process_option_require_d) {
         bool missing = F_true;
 
-        f_array_length_t j = 0;
+        f_number_unsigned_t j = 0;
 
         for (i = 0; i < process->rule.items.used; ++i) {
 
@@ -3030,7 +3030,7 @@ extern "C" {
       }
     }
 
-    f_array_length_t id_rule = 0;
+    f_number_unsigned_t id_rule = 0;
 
     f_thread_unlock(&process->lock);
 
@@ -3073,7 +3073,7 @@ extern "C" {
 
       rule->status[process->action] = process->rule.status[process->action];
 
-      f_array_length_t j = 0;
+      f_number_unsigned_t j = 0;
 
       controller_rule_item_t *rule_item = 0;
 
@@ -3104,7 +3104,7 @@ extern "C" {
 #endif // _di_controller_rule_process_
 
 #ifndef _di_controller_rule_process_begin_
-  f_status_t controller_rule_process_begin(const controller_global_t global, const uint8_t options_force, const f_string_static_t alias_rule, const uint8_t action, const uint8_t options, const uint8_t type, const f_array_lengths_t stack, const controller_cache_t cache) {
+  f_status_t controller_rule_process_begin(const controller_global_t global, const uint8_t options_force, const f_string_static_t alias_rule, const uint8_t action, const uint8_t options, const uint8_t type, const f_number_unsigneds_t stack, const controller_cache_t cache) {
 
     if (!controller_thread_is_enabled_process_type(type, global.thread)) {
       return F_status_set_error(F_interrupt);
@@ -3124,7 +3124,7 @@ extern "C" {
     }
 
     {
-      f_array_length_t at = 0;
+      f_number_unsigned_t at = 0;
 
       status = controller_process_prepare(global, type != controller_process_type_exit_e, action, alias_rule, &at);
 
@@ -3238,14 +3238,14 @@ extern "C" {
 
     if (F_status_is_error_not(status) && stack.used) {
       if (process->stack.size < stack.used) {
-        status = f_array_lengths_resize(stack.used, &process->stack);
+        status = f_number_unsigneds_resize(stack.used, &process->stack);
       }
 
       if (F_status_is_error(status)) {
-        controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_array_lengths_resize", F_true);
+        controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_number_unsigneds_resize", F_true);
       }
       else {
-        for (f_array_length_t i = 0; i < stack.used; ++i) {
+        for (f_number_unsigned_t i = 0; i < stack.used; ++i) {
           process->stack.array[i] = stack.array[i];
         } // for
 
@@ -3363,9 +3363,9 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    f_array_length_t id_rule = 0;
+    f_number_unsigned_t id_rule = 0;
 
-    const f_array_length_t used_original_stack = process->stack.used;
+    const f_number_unsigned_t used_original_stack = process->stack.used;
 
     status_lock = controller_lock_read_process(process, global.thread, &global.thread->lock.rule);
 
@@ -3435,7 +3435,7 @@ extern "C" {
         return F_process_not;
       }
       else {
-        for (f_array_length_t i = 0; i < process->stack.used && controller_thread_is_enabled_process(process, global.thread); ++i) {
+        for (f_number_unsigned_t i = 0; i < process->stack.used && controller_thread_is_enabled_process(process, global.thread); ++i) {
 
           if (process->stack.array[i] == id_rule) {
             if (global.main->error.verbosity > f_console_verbosity_quiet_e) {
@@ -3468,10 +3468,10 @@ extern "C" {
         }
 
         if (F_status_is_error_not(status)) {
-          status = f_array_lengths_increase(controller_common_allocation_small_d, &process->stack);
+          status = f_number_unsigneds_increase(controller_common_allocation_small_d, &process->stack);
 
           if (F_status_is_error(status)) {
-            controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_array_lengths_increase", F_true);
+            controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_number_unsigneds_increase", F_true);
           }
           else {
             f_thread_unlock(&process->lock);
@@ -3683,10 +3683,10 @@ extern "C" {
     cache->action.name_item.used = 0;
 
     {
-      f_array_length_t i = 0;
-      f_array_length_t j = 0;
-      f_array_length_t k = 0;
-      f_array_length_t l = 0;
+      f_number_unsigned_t i = 0;
+      f_number_unsigned_t j = 0;
+      f_number_unsigned_t k = 0;
+      f_number_unsigned_t l = 0;
 
       for (i = 0; i < rule->cgroup.groups.size; ++i) {
         rule->cgroup.groups.array[i].used = 0;
@@ -3810,8 +3810,8 @@ extern "C" {
         controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "controller_rule_items_increase_by", F_true);
       }
       else {
-        f_array_length_t i = 0;
-        f_array_length_t j = 0;
+        f_number_unsigned_t i = 0;
+        f_number_unsigned_t j = 0;
         f_state_t state = f_state_t_initialize;
 
         for (; i < cache->object_items.used; ++i) {
@@ -3965,15 +3965,15 @@ extern "C" {
     f_string_dynamics_t *setting_values = 0;
     f_string_maps_t *setting_maps = 0;
 
-    f_array_length_t i = 0;
-    f_array_length_t j = 0;
+    f_number_unsigned_t i = 0;
+    f_number_unsigned_t j = 0;
     uint8_t type = 0;
     uint8_t action = 0;
     bool empty_disallow = F_true;
 
     // Save the current name item and line number to restore on return.
-    const f_array_length_t line_item = cache->action.line_item;
-    const f_array_length_t length_name_item = cache->action.name_item.used;
+    const f_number_unsigned_t line_item = cache->action.line_item;
+    const f_number_unsigned_t length_name_item = cache->action.name_item.used;
 
     f_char_t name_item[length_name_item];
     name_item[length_name_item] = 0;
@@ -5262,7 +5262,7 @@ extern "C" {
           macro_f_int32s_t_increase_by(status, rule->groups, controller_common_allocation_small_d)
 
           if (F_status_is_error(status)) {
-            controller_rule_print_error(global.thread, global.main->error, cache->action, F_status_set_fine(status), "macro_f_array_lengths_t_increase_by", F_true, F_false);
+            controller_rule_print_error(global.thread, global.main->error, cache->action, F_status_set_fine(status), "macro_f_number_unsigneds_t_increase_by", F_true, F_false);
 
             if (F_status_set_fine(status) == F_memory_not) {
               status_return = status;
@@ -5715,8 +5715,8 @@ extern "C" {
         return;
     }
 
-    f_array_length_t i = 0;
-    f_array_length_t j = 0;
+    f_number_unsigned_t i = 0;
+    f_number_unsigned_t j = 0;
 
     // Find at least one of the requested action.
     {
@@ -6006,9 +6006,9 @@ extern "C" {
       controller_rule_item_t *item = 0;
       controller_rule_rerun_item_t *rerun_item = 0;
 
-      f_array_length_t j = 0;
-      f_array_length_t k = 0;
-      f_array_length_t l = 0;
+      f_number_unsigned_t j = 0;
+      f_number_unsigned_t k = 0;
+      f_number_unsigned_t l = 0;
 
       for (i = 0; i < rule.items.used; ++i) {
 
@@ -6198,11 +6198,11 @@ extern "C" {
     bool required_not_run = F_false;
     bool skip = F_false;
 
-    f_array_length_t i = 0;
-    f_array_length_t j = 0;
+    f_number_unsigned_t i = 0;
+    f_number_unsigned_t j = 0;
 
     // Vuild a list of what to wait for so that anything new after this point will not be waited for.
-    const f_array_length_t process_total = global.thread->processs.used;
+    const f_number_unsigned_t process_total = global.thread->processs.used;
     controller_process_t *process_list[process_total];
 
     for (; i < process_total; ++i) {

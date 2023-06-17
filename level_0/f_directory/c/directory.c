@@ -161,7 +161,7 @@ extern "C" {
     }
 
     size_t i = 0;
-    f_array_length_t size = 0;
+    f_number_unsigned_t size = 0;
 
     for (; i < length; ++i) {
 

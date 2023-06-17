@@ -40,7 +40,7 @@ void test__f_string_map_multiss_append_all__works(void **state) {
     assert_int_equal(source.used, 0);
     assert_int_equal(source.size, length_outer);
 
-    f_array_length_t i = 0;
+    f_number_unsigned_t i = 0;
 
     for (; source.used < length_outer; ++source.used) {
 
@@ -79,9 +79,9 @@ void test__f_string_map_multiss_append_all__works(void **state) {
     assert_int_equal(status, F_none);
     assert_int_equal(destination.used, source.used);
 
-    for (f_array_length_t j = 0; j < length_outer; ++j) {
+    for (f_number_unsigned_t j = 0; j < length_outer; ++j) {
 
-      for (f_array_length_t i = 0; i < length_inner; ++i) {
+      for (f_number_unsigned_t i = 0; i < length_inner; ++i) {
 
         assert_int_equal(destination.array[j].array[i].name.used, test_names[i].used);
         assert_int_equal(destination.array[j].array[i].value.used, test_values[i].used);
@@ -95,9 +95,9 @@ void test__f_string_map_multiss_append_all__works(void **state) {
     } // for
   }
 
-  for (f_array_length_t j = 0; j < source.used; ++j) {
+  for (f_number_unsigned_t j = 0; j < source.used; ++j) {
 
-    for (f_array_length_t i = 0; i < source.array[j].used; ++i) {
+    for (f_number_unsigned_t i = 0; i < source.array[j].used; ++i) {
 
       free((void *) source.array[j].array[i].name.string);
       free((void *) source.array[j].array[i].value.array[0].string);
@@ -108,9 +108,9 @@ void test__f_string_map_multiss_append_all__works(void **state) {
     free((void *) source.array[j].array);
   } // for
 
-  for (f_array_length_t j = 0; j < destination.used; ++j) {
+  for (f_number_unsigned_t j = 0; j < destination.used; ++j) {
 
-    for (f_array_length_t i = 0; i < destination.array[j].used; ++i) {
+    for (f_number_unsigned_t i = 0; i < destination.array[j].used; ++i) {
 
       free((void *) destination.array[j].array[i].name.string);
       free((void *) destination.array[j].array[i].value.array[0].string);

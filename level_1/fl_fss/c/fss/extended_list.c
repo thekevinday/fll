@@ -17,8 +17,8 @@ extern "C" {
       }
     #endif // _di_level_1_parameter_checking_
 
-    const f_array_length_t delimits_used = delimits->used;
-    const f_array_length_t comments_used = comments->used;
+    const f_number_unsigned_t delimits_used = delimits->used;
+    const f_number_unsigned_t comments_used = comments->used;
 
     f_fss_skip_past_delimit(buffer, range, state);
     if (F_status_is_error(state->status)) return;
@@ -45,10 +45,10 @@ extern "C" {
 
     found->array[found->used].start = range->start;
 
-    f_array_length_t newline_last = range->start;
-    f_array_length_t slash_first = 0;
-    f_array_length_t slash_count = 0;
-    f_array_length_t start = 0;
+    f_number_unsigned_t newline_last = range->start;
+    f_number_unsigned_t slash_first = 0;
+    f_number_unsigned_t slash_count = 0;
+    f_number_unsigned_t start = 0;
 
     // Identify where the content ends.
     while (range->start <= range->stop && range->start < buffer.used) {
@@ -116,7 +116,7 @@ extern "C" {
           if (range->start > range->stop || range->start >= buffer.used) break;
 
           if (buffer.string[range->start] == f_fss_eol_s.string[0]) {
-            state->status = f_array_lengths_increase(state->step_small, delimits);
+            state->status = f_number_unsigneds_increase(state->step_small, delimits);
             if (F_status_is_error(state->status)) break;
 
             delimits->array[delimits->used++] = slash_first;
@@ -125,7 +125,7 @@ extern "C" {
           }
         }
         else if (buffer.string[range->start] == f_fss_comment_s.string[0]) {
-          state->status = f_array_lengths_increase(state->step_small, delimits);
+          state->status = f_number_unsigneds_increase(state->step_small, delimits);
           if (F_status_is_error(state->status)) break;
 
           delimits->array[delimits->used++] = slash_first;
@@ -270,17 +270,17 @@ extern "C" {
     state->status = f_string_dynamic_increase_by(state->step_small + 4, destination);
     if (F_status_is_error(state->status)) return;
 
-    const f_array_length_t destination_used = destination->used;
+    const f_number_unsigned_t destination_used = destination->used;
 
     bool is_comment = F_false;
     bool ends_on_eol = F_false;
     bool has_graph = F_false;
     bool do_prepend = prepend ? F_true : F_false;
 
-    f_array_length_t i = 0;
-    f_array_length_t r = 0;
-    f_array_length_t slash_count = 0;
-    f_array_length_t start = 0;
+    f_number_unsigned_t i = 0;
+    f_number_unsigned_t r = 0;
+    f_number_unsigned_t slash_count = 0;
+    f_number_unsigned_t start = 0;
 
     uint8_t width = 0;
 
@@ -538,7 +538,7 @@ extern "C" {
       }
     #endif // _di_level_1_parameter_checking_
 
-    const f_array_length_t delimits_used = delimits->used;
+    const f_number_unsigned_t delimits_used = delimits->used;
 
     f_fss_skip_past_space(buffer, range, state);
     if (F_status_is_error(state->status)) return;
@@ -607,10 +607,10 @@ extern "C" {
       return;
     }
 
-    f_array_length_t start = 0;
-    f_array_length_t stop = 0;
-    f_array_length_t slash_first = 0;
-    f_array_length_t slash_count = 0;
+    f_number_unsigned_t start = 0;
+    f_number_unsigned_t stop = 0;
+    f_number_unsigned_t slash_first = 0;
+    f_number_unsigned_t slash_count = 0;
 
     bool graph_first = F_true;
 
@@ -702,7 +702,7 @@ extern "C" {
             start = range->start;
             range->start = slash_first;
 
-            state->status = f_array_lengths_increase_by((slash_count / 2) + 1, delimits);
+            state->status = f_number_unsigneds_increase_by((slash_count / 2) + 1, delimits);
             if (F_status_is_error(state->status)) break;
 
             if (slash_count % 2 == 0) {
@@ -739,7 +739,7 @@ extern "C" {
           graph_first = F_false;
 
           // Comments may only have white space before the '#', therefore only the first slash needs to be delimited.
-          state->status = f_array_lengths_increase(state->step_small, delimits);
+          state->status = f_number_unsigneds_increase(state->step_small, delimits);
           if (F_status_is_error(state->status)) break;
 
           delimits->array[delimits->used++] = slash_first;
@@ -916,10 +916,10 @@ extern "C" {
     state->status = f_string_dynamic_increase_by(state->step_small + 4, destination);
     if (F_status_is_error(state->status)) return;
 
-    const f_array_length_t destination_used = destination->used;
+    const f_number_unsigned_t destination_used = destination->used;
 
-    f_array_length_t i = 0;
-    f_array_length_t slash_count = 0;
+    f_number_unsigned_t i = 0;
+    f_number_unsigned_t slash_count = 0;
 
     bool ends_on_space = F_false;
 
