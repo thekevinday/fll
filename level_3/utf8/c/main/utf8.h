@@ -52,7 +52,6 @@
 // FLL-1 includes.
 #include <fll/level_1/conversion.h>
 #include <fll/level_1/print.h>
-#include <fll/level_1/utf.h>
 
 // FLL-2 includes.
 #include <fll/level_2/error.h>
