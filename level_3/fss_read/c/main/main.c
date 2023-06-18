@@ -96,8 +96,6 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
     if (!main || F_status_is_error(main->setting.state.status) || (main->setting.flag & fss_read_main_flag_version_e)) return;
 
-    main->setting.standard = fss_read_basic_standard_s;
-
     main->callback.process_help = &fss_read_main_process_help;
     main->callback.process_last_line = &fss_read_process_last_line;
     main->callback.process_normal = &fss_read_process_normal;
@@ -105,17 +103,35 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
     main->callback.process_at = &fss_read_process_normal_at;
     main->callback.process_at_line = &fss_read_process_normal_at_line;
     main->callback.process_columns = &fss_read_process_normal_columns;
-    main->callback.process_load = 0;
     main->callback.process_name = &fss_read_process_normal_name;
-    main->callback.process_total = 0;
 
     main->callback.print_at = &fss_read_print_at;
     main->callback.print_content = &fss_read_print_content;
-    main->callback.print_content_next = 0;
     main->callback.print_content_ignore = &fss_read_print_content_ignore;
     main->callback.print_object = &fss_read_print_object;
-    main->callback.print_object_end = 0;
-    main->callback.print_set_end = 0;
+
+    // Setup default standard (except for process_help): FSS-0000 (Basic).
+    main->setting.standard = fss_read_basic_standard_s;
+
+    main->setting.flag -= main->setting.flag & fss_read_main_flag_content_has_close_e;
+    main->setting.flag -= main->setting.flag & fss_read_main_flag_content_multiple_e;
+    main->setting.flag -= main->setting.flag & fss_read_main_flag_depth_multiple_e;
+    main->setting.flag -= main->setting.flag & fss_read_main_flag_object_as_line_e;
+    main->setting.flag -= main->setting.flag & fss_read_main_flag_object_trim_e;
+    main->setting.flag -= main->setting.flag & fss_read_main_flag_trim_object_e;
+
+    main->setting.flag |= fss_read_main_flag_line_single_e;
+    main->setting.flag |= fss_read_main_flag_quote_content_e | fss_read_main_flag_quote_object_e;
+
+    main->setting.flag |= fss_read_main_flag_line_single_e;
+    main->setting.flag |= fss_read_main_flag_quote_content_e | fss_read_main_flag_quote_object_e;
+
+    main->callback.process_load = &fss_read_basic_process_load;
+    main->callback.process_total = &fss_read_process_normal_total;
+
+    main->callback.print_content_next = 0;
+    main->callback.print_object_end = &fss_read_basic_print_object_end;
+    main->callback.print_set_end = &fss_read_print_set_end;
 
     if (main->program.parameters.array[fss_read_parameter_as_e].result & f_console_result_value_e && main->program.parameters.array[fss_read_parameter_as_e].values.used) {
 
