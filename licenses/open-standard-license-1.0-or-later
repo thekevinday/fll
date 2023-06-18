@@ -1,7 +1,9 @@
-Open Standard License 1.0 (Informal Draft version 0.5).
-  March 2022.
+Open Standard License 1.0 (Informal Draft version 0.5.1).
+  June 2023.
 
 This is an informal document representing the not yet formalized Open Standard License 1.0.
+This license is intended to, does act as, and must act as the license described here until such time the official version of this license is formalized.
+The official version will maintain the same intent and purpose of this license but should ideally contain more precise descriptions, more clear terms, and any misunderstandings clarified.
 This license applies to the Standards and their Specifications and designates legal requirements on Implementations of the Standard and their respective Specifications.
 
 Terminology:
@@ -11,27 +13,33 @@ Terminology:
   - API: Application Programming Interface*.
   - ABI: Application Binary Interface**.
   - Service: Any action or labor performed by one party for another party (such as one person helping another person).
-  - Protocol: In the context of computers and software, this is a Standard focused on communication between two parties (often referring to Internet communication).
+  - Protocol: In the context of computers and software, this is a Standard focused on communication between at least two parties (often referring to Internet communication) and is at the most basic level an agreement of rules between two (or more) parties.
+  - Provider: A party who provides a Service of any kind (or equivalent functionality) that utilizes a Protocol or provides a Service that Implements or follows a Standard or Specification to another party.
 
-* The API term is commonly mis-represented as Services or Protocols (such as "Web API").
-  An API instructs a programmer how to use a dependency when programming some software that utilizes said dependency.
-  An API is a Specification of some Implementation of a Standard be it a formally defined standard or an informally defined standard.
+* The API term is commonly mis-represented as Services or Protocols (such as "Web API" which in actuality should be called "Web Service" or "Web Protocol").
+  An API instructs a party, usually a programmer, on how to use a dependency when programming some software that utilizes said dependency.
+  An API is a Specification of some Implementation of a Standard be it a formally defined Standard or an informally defined Standard.
   An API may be an Implementation of a Standard or a part of an Implementation of a Standard.
   An API is, in effect, documentation.
 
-** The ABI term refers to an Application Binary Interface and represents the compiled implementation of some API.
+** The ABI term refers to an Application Binary Interface and represents the compiled Implementation of some API.
   An ABI may not always exist for some API, such as for pure scripting languages.
   An ABI is neither a Specification nor a Standard.
   An ABI is an Implementation of an API making it an Implementation of a Standard or Specification.
 
-Principles of the license:
-  - The Standard or Specification must be freely and publicly available to use and implement.
-  - All patents associated must be royalty-free for unrestricted use and must not impose any restrictions on any third party's implementation of this Standard beyond those described in the license.
-  - There must be no agreements or requirements for the execution of the license grant, including: NDA, grant, click-through, or any form of paperwork (including all non-paper forms of paperwork, such as digital forms).
-  - There must be no restrictions on the form of an Implementation of a Standard or Specification.
-  - The license shall prohibit any form of restricting any parties access to use, implement, extend, or deviate from this standard unless:
-    - Restricted by this license.
-    - Unless there is a breach of license conditions.
-  - The license is irrevocable unless there is a breach of the license conditions.
-  - The license does not grant any kind of warranty or liability under any circumstances to any party for any reason, be it direct, indirect, consequential, incidental, or in any other form.
-  - The license does not restrict any party from optionally providing their own warranty or liability on some Implementation but such warranties or liabilities are completely separate and independent of this license.
+01) Principles of this license:
+  01) The Standard or Specification is and must be freely and publicly available to use and implement irrespective of any license, patent, or other restriction of any kind for any reason of some Implementation or Provider.
+  02) All patents associated are and must be royalty-free for unrestricted use and must not impose any restrictions on any third party's Implementation of this Standard in any way for any reason beyond those described in this license.
+  03) There are not and there must not be any agreements or requirements for the execution of this license grant, including: NDA, grant, click-through, or any form of paperwork (including all non-paper forms of paperwork, such as digital forms).
+  04) There are not and must not be any restrictions on the form of an Implementation of a Standard or Specification.
+  05) Implementations of the Standard or Specification may be under any license so long as that license
+  06) This license shall prohibit any form of restricting any parties access to use, implement, extend, or deviate from this Standard unless:
+    a) Restricted by this license.
+    b) Unless there is a breach of license conditions.
+  07) This license is irrevocable unless there is a breach of the license conditions.
+  08) This license does not grant any kind of warranty or liability under any circumstances to any party for any reason, be it direct, indirect, consequential, incidental, or in any other form.
+  09) This license does not restrict any party from optionally providing their own warranty or liability on any Implementation but such warranties or liabilities are completely separate and independent of this license in all circumstances for any reason, be it direct, indirect, consequential, incidental, or for any other reason.
+  10) The final and absolute determination of any terminology and intent of this license is by the original author of this license, Kevin Day, and is not in any way subject to re-interpretation or re-definition in any way for any reason by any party including but not limited to judges, juries, lawyers, attorneys, technicians, "experts", or governments.
+  11) Any restriction, alteration, removal, invalidation, making illegal, or making unlawful of or against any part of this license by any party, such as but not limited to a government or judge, shall not permanently alter this license in any way for any reason. That is for example, if some court seems deems some part of this illegal then later makes it legal the now re-legalized parts do and must immediately apply once more as if it were never made illegal.
+  12) When at any point in time under any government any parts of this license is restricted, altered, removed, invalidated or otherwise made illegal (or unlawful) is reversed, restored, or otherwise made legal, lawful, and enforceable again, these parts are immediately in affect again.
+  13) If at any point in time some party, such as but not limited to a government, makes any such change to this license like those described in [01.11] and the licensee for any reason at any time is no longer subject to said jurisdiction, then those parts of the original license are immediately in effect again as if they were never altered or restricted in the first place. For example, if a licensee leaves the jurisdiction of some government that restricted some part of this license then that restricted part is immediately in affect again now that the licensee is out of the said jurisdiction.
