@@ -26,6 +26,9 @@ extern "C" {
     if (type == fll_error_file_type_directory_e) {
       type_name = fll_error_file_type_directory_s;
     }
+    else if (type == fll_error_file_type_link_e) {
+      type_name = fll_error_file_type_link_s;
+    }
     else if (type == fll_error_file_type_path_e) {
       type_name = fll_error_file_type_path_s;
     }

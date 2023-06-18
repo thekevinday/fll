@@ -21,6 +21,7 @@ extern "C" {
  *
  * fll_error_file_type_*:
  *   - file:      File error.
+ *   - link:      Link error.
  *   - directory: Directory error.
  *   - path:      Path error.
  *   - pipe:      Pipe error.
@@ -29,6 +30,7 @@ extern "C" {
 #ifndef _di_fll_error_file_type_e_
   enum {
     fll_error_file_type_file_e = 1,
+    fll_error_file_type_link_e,
     fll_error_file_type_directory_e,
     fll_error_file_type_path_e,
     fll_error_file_type_pipe_e,
@@ -65,12 +67,14 @@ extern "C" {
 #ifndef _di_fll_error_file_type_s_
   #define FLL_error_file_type_directory_s "directory"
   #define FLL_error_file_type_file_s      "file"
+  #define FLL_error_file_type_link_s      "link"
   #define FLL_error_file_type_path_s      "path"
   #define FLL_error_file_type_pipe_s      "pipe"
   #define FLL_error_file_type_socket_s    "socket"
 
   #define FLL_error_file_type_directory_s_length 9
   #define FLL_error_file_type_file_s_length      4
+  #define FLL_error_file_type_link_s_length      4
   #define FLL_error_file_type_path_s_length      4
   #define FLL_error_file_type_pipe_s_length      4
   #define FLL_error_file_type_socket_s_length    6
@@ -82,6 +86,10 @@ extern "C" {
   #ifndef _di_fll_error_file_type_file_s_
     extern const f_string_static_t fll_error_file_type_file_s;
   #endif // _di_fll_error_file_type_file_s_
+
+  #ifndef _di_fll_error_file_type_link_s_
+    extern const f_string_static_t fll_error_file_type_link_s;
+  #endif // _di_fll_error_file_type_link_s_
 
   #ifndef _di_fll_error_file_type_path_s_
     extern const f_string_static_t fll_error_file_type_path_s;
