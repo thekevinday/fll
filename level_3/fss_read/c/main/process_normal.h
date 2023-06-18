@@ -91,8 +91,6 @@ extern "C" {
  *     F_none on success but line not yet found.
  *     F_success on success and line is found and printed.
  *
- *     F_parameter (with error bit) if main is NULL or setting is NULL.
- *
  *     Errors (with error bit) from: f_string_dynamic_append_assure().
  *
  *     Errors (with error bit) from: fss_read_signal_check().

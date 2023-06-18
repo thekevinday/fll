@@ -127,8 +127,6 @@ extern "C" {
  *   This alters main.setting.state.status:
  *     F_none on success.
  *     F_interrupt on (exit) signal received.
- *
- *     F_parameter (with error bit) if main is NULL or setting is NULL.
  */
 #ifndef _di_fss_read_payload_process_set_
   extern void fss_read_payload_process_set(void * const main);
@@ -151,7 +149,6 @@ extern "C" {
  *   This alters setting.state.status:
  *     F_none on success.
  *
- *     F_parameter (with error bit) if main is NULL or setting is NULL.
  *     F_parameter (with error bit) on parameter error.
  *
  *   This alters setting.state.status:
