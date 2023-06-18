@@ -12,19 +12,19 @@ extern "C" {
         if (!ambient) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
 
-      return F_status_set_error(F_implemented_not);
+      return F_status_set_error(F_implement_not);
     }
   #endif // _di_f_capability_ambient_get_
 
   #ifndef _di_f_capability_ambient_reset_
     f_status_t f_capability_ambient_reset(void) {
-      return F_status_set_error(F_implemented_not);
+      return F_status_set_error(F_implement_not);
     }
   #endif // _di_f_capability_ambient_reset_
 
   #ifndef _di_f_capability_ambient_set_
     f_status_t f_capability_ambient_set(const f_capability_value_t value, const f_capability_flag_value_t value_flag) {
-      return F_status_set_error(F_implemented_not);
+      return F_status_set_error(F_implement_not);
     }
   #endif // _di_f_capability_ambient_set_
 
@@ -38,7 +38,7 @@ extern "C" {
         if (!capability) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
 
-      return F_status_set_error(F_implemented_not);
+      return F_status_set_error(F_implement_not);
     }
   #endif // _di_f_capability_clear_
 
@@ -48,13 +48,13 @@ extern "C" {
         if (!capability) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
 
-      return F_status_set_error(F_implemented_not);
+      return F_status_set_error(F_implement_not);
     }
   #endif // _di_f_capability_clear_flag_
 
   #ifndef _di_f_capability_compare_
     f_status_t f_capability_compare(const f_capability_t capability1, const f_capability_t capability2, int * const flags) {
-      return F_status_set_error(F_implemented_not);
+      return F_status_set_error(F_implement_not);
     }
   #endif // _di_f_capability_compare_
 
@@ -64,7 +64,7 @@ extern "C" {
         if (!destination) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
 
-      return F_status_set_error(F_implemented_not);
+      return F_status_set_error(F_implement_not);
     }
   #endif // _di_f_capability_copy_
 
@@ -74,7 +74,7 @@ extern "C" {
         if (!external) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
 
-      return F_status_set_error(F_implemented_not);
+      return F_status_set_error(F_implement_not);
     }
   #endif // _di_f_capability_copy_external_
 
@@ -85,7 +85,7 @@ extern "C" {
         if (!capability) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
 
-      return F_status_set_error(F_implemented_not);
+      return F_status_set_error(F_implement_not);
     }
   #endif // _di_f_capability_copy_internal_
 
@@ -95,7 +95,7 @@ extern "C" {
         if (!capability) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
 
-      return F_status_set_error(F_implemented_not);
+      return F_status_set_error(F_implement_not);
     }
   #endif // _di_f_capability_delete_
 
@@ -105,13 +105,13 @@ extern "C" {
         if (!capability) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
 
-      return F_status_set_error(F_implemented_not);
+      return F_status_set_error(F_implement_not);
     }
   #endif // _di_f_capability_file_descriptor_get_
 
   #ifndef _di_f_capability_file_descriptor_set_
     f_status_t f_capability_file_descriptor_set(const int descriptor, const f_capability_t capability) {
-      return F_status_set_error(F_implemented_not);
+      return F_status_set_error(F_implement_not);
     }
   #endif // _di_f_capability_file_descriptor_set_
 
@@ -121,13 +121,13 @@ extern "C" {
         if (!capability) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
 
-      return F_status_set_error(F_implemented_not);
+      return F_status_set_error(F_implement_not);
     }
   #endif // _di_f_capability_file_get_
 
   #ifndef _di_f_capability_file_set_
     f_status_t f_capability_file_set(const f_string_static_t path, const f_capability_t capability) {
-      return F_status_set_error(F_implemented_not);
+      return F_status_set_error(F_implement_not);
     }
   #endif // _di_f_capability_file_set_
 
@@ -137,7 +137,7 @@ extern "C" {
         if (!enabled) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
 
-      return F_status_set_error(F_implemented_not);
+      return F_status_set_error(F_implement_not);
     }
   #endif // _di_f_capability_flag_get_
 
@@ -147,7 +147,7 @@ extern "C" {
         if (!capability) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
 
-      return F_status_set_error(F_implemented_not);
+      return F_status_set_error(F_implement_not);
     }
   #endif // _di_f_capability_flag_set_
 
@@ -157,7 +157,7 @@ extern "C" {
         if (!code) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
 
-      return F_status_set_error(F_implemented_not);
+      return F_status_set_error(F_implement_not);
     }
   #endif // _di_f_capability_from_name_
 
@@ -167,7 +167,7 @@ extern "C" {
         if (!capability) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
 
-      return F_status_set_error(F_implemented_not);
+      return F_status_set_error(F_implement_not);
     }
   #endif // _di_f_capability_from_text_
 
@@ -177,7 +177,7 @@ extern "C" {
 
   #ifndef _di_f_capability_groups_set_
     f_status_t f_capability_groups_set(const gid_t id_group, const size_t total, const gid_t id_groups[]) {
-      return F_status_set_error(F_implemented_not);
+      return F_status_set_error(F_implement_not);
     }
   #endif // _di_f_capability_groups_set_
 
@@ -191,7 +191,7 @@ extern "C" {
         if (!capability) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
 
-      return F_status_set_error(F_implemented_not);
+      return F_status_set_error(F_implement_not);
     }
   #endif // _di_f_capability_initialize_
 
@@ -205,7 +205,7 @@ extern "C" {
         if (!mode) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
 
-      return F_status_set_error(F_implemented_not);
+      return F_status_set_error(F_implement_not);
     }
   #endif // _di_f_capability_mode_get_
 
@@ -215,13 +215,13 @@ extern "C" {
         if (!name) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
 
-      return F_status_set_error(F_implemented_not);
+      return F_status_set_error(F_implement_not);
     }
   #endif // _di_f_capability_mode_get_name_
 
   #ifndef _di_f_capability_mode_set_
     f_status_t f_capability_mode_set(const f_capability_mode_t mode) {
-      return F_status_set_error(F_implemented_not);
+      return F_status_set_error(F_implement_not);
     }
   #endif // _di_f_capability_mode_set_
 
@@ -231,13 +231,13 @@ extern "C" {
         if (!id_user) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
 
-      return F_status_set_error(F_implemented_not);
+      return F_status_set_error(F_implement_not);
     }
   #endif // _di_f_capability_owner_get_
 
   #ifndef _di_f_capability_owner_set_
     f_status_t f_capability_owner_set(const f_capability_t capability, const uid_t id_user) {
-      return F_status_set_error(F_implemented_not);
+      return F_status_set_error(F_implement_not);
     }
   #endif // _di_f_capability_owner_set_
 
@@ -251,7 +251,7 @@ extern "C" {
         if (!bound) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
 
-      return F_status_set_error(F_implemented_not);
+      return F_status_set_error(F_implement_not);
     }
   #endif // _di_f_capability_process_bound_drop_
 
@@ -261,7 +261,7 @@ extern "C" {
         if (!bound) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
 
-      return F_status_set_error(F_implemented_not);
+      return F_status_set_error(F_implement_not);
     }
   #endif // _di_f_capability_process_bound_get_
 
@@ -271,7 +271,7 @@ extern "C" {
         if (!capability) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
 
-      return F_status_set_error(F_implemented_not);
+      return F_status_set_error(F_implement_not);
     }
   #endif // _di_f_capability_process_get_
 
@@ -281,13 +281,13 @@ extern "C" {
         if (!capability) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
 
-      return F_status_set_error(F_implemented_not);
+      return F_status_set_error(F_implement_not);
     }
   #endif // _di_f_capability_process_get_by_id_
 
   #ifndef _di_f_capability_process_set_
     f_status_t f_capability_process_set(const f_capability_t capability) {
-      return F_status_set_error(F_implemented_not);
+      return F_status_set_error(F_implement_not);
     }
   #endif // _di_f_capability_process_set_
 
@@ -301,13 +301,13 @@ extern "C" {
         if (!bits) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
 
-      return F_status_set_error(F_implemented_not);
+      return F_status_set_error(F_implement_not);
     }
   #endif // _di_f_capability_security_bits_get_
 
   #ifndef _di_f_capability_security_bits_set_
     f_status_t f_capability_security_bits_set(const f_capability_bits_t bits) {
-      return F_status_set_error(F_implemented_not);
+      return F_status_set_error(F_implement_not);
     }
   #endif // _di_f_capability_security_bits_set_
 
@@ -321,7 +321,7 @@ extern "C" {
         if (!size) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
 
-      return F_status_set_error(F_implemented_not);
+      return F_status_set_error(F_implement_not);
     }
   #endif // _di_f_capability_size_
 
@@ -357,7 +357,7 @@ extern "C" {
         if (!name) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
 
-      return F_status_set_error(F_implemented_not);
+      return F_status_set_error(F_implement_not);
     }
   #endif // _di_f_capability_to_name_
 
@@ -367,7 +367,7 @@ extern "C" {
         if (!text) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
 
-      return F_status_set_error(F_implemented_not);
+      return F_status_set_error(F_implement_not);
     }
   #endif // _di_f_capability_to_text_
 
@@ -377,7 +377,7 @@ extern "C" {
 
   #ifndef f_capability_user_set
     f_status_t f_capability_user_set(const uid_t id_user) {
-      return F_status_set_error(F_implemented_not);
+      return F_status_set_error(F_implement_not);
     }
   #endif // f_capability_user_set
 

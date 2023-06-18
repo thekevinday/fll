@@ -15,7 +15,7 @@ void test__f_thread_attribute_affinity_get__fails(void **state) {
   #if defined(_pthread_attr_unsupported_)
     const f_status_t status = f_thread_attribute_affinity_get(attribute, 0, &cpu_set);
 
-    assert_int_equal(status, F_status_set_error(F_implemented_not));
+    assert_int_equal(status, F_status_set_error(F_implement_not));
   #else
     int errnos[] = {
       EINVAL,
@@ -61,7 +61,7 @@ void test__f_thread_attribute_affinity_get__works(void **state) {
     {
       const f_status_t status = f_thread_attribute_affinity_get(attribute, 0, &cpu_set);
 
-      assert_int_equal(status, F_status_set_error(F_implemented_not));
+      assert_int_equal(status, F_status_set_error(F_implement_not));
     }
   #else
     {

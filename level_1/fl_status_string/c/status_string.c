@@ -1169,14 +1169,14 @@ extern "C" {
         return F_none;
       }
 
-      if (f_compare_dynamic(name, f_status_implemented_s) == F_equal_to) {
-        *code = F_implemented;
+      if (f_compare_dynamic(name, f_status_implement_s) == F_equal_to) {
+        *code = F_implement;
 
         return F_none;
       }
 
-      if (f_compare_dynamic(name, f_status_implemented_not_s) == F_equal_to) {
-        *code = F_implemented_not;
+      if (f_compare_dynamic(name, f_status_implement_not_s) == F_equal_to) {
+        *code = F_implement_not;
 
         return F_none;
       }

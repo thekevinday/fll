@@ -16,7 +16,7 @@ void test__f_thread_signal_queue__fails(void **state) {
   #ifdef _pthread_sigqueue_unsupported_
     const f_status_t status = f_thread_signal_queue(id, signal, value);
 
-    assert_int_equal(status, F_status_set_error(F_implemented_not));
+    assert_int_equal(status, F_status_set_error(F_implement_not));
   #else
     {
       int errnos[] = {
@@ -59,7 +59,7 @@ void test__f_thread_signal_queue__works(void **state) {
   #ifdef _pthread_sigqueue_unsupported_
     const f_status_t status = f_thread_signal_queue(id, signal, value);
 
-    assert_int_equal(status, F_status_set_error(F_implemented_not));
+    assert_int_equal(status, F_status_set_error(F_implement_not));
   #else
     {
       will_return(__wrap_pthread_sigqueue, false);

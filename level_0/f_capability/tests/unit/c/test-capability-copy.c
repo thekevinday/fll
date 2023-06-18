@@ -49,7 +49,7 @@ void test__f_capability_copy__works(void **state) {
     const f_status_t status = f_capability_copy(capability_1, &capability_2);
 
     #if defined(_di_libcap_)
-      assert_int_equal(F_status_set_fine(status), F_implemented_not);
+      assert_int_equal(F_status_set_fine(status), F_implement_not);
     #else
       assert_int_equal(status, F_none);
       assert_int_equal(capability_2, 1);

@@ -57,7 +57,7 @@ void test__f_capability_process_bound_get__works(void **state) {
     const f_status_t status = f_capability_process_bound_get(value, &bound);
 
     #if defined(_di_libcap_)
-      assert_int_equal(F_status_set_fine(status), F_implemented_not);
+      assert_int_equal(F_status_set_fine(status), F_implement_not);
     #else
       assert_int_equal(status, F_none);
       assert_int_equal(bound, 1);

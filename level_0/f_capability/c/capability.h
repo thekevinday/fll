@@ -59,7 +59,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_implemented_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_support_not (with error bit) if the system does not support ambient capabilities.
  *
@@ -77,7 +77,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_implemented_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_memory_not (with error bit) if a out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_prohibited (with error bit) if the file system does not permit this operation.
@@ -101,7 +101,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_implemented_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_memory_not (with error bit) if a out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_prohibited (with error bit) if the file system does not permit this operation.
@@ -123,7 +123,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_implemented_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   F_failure (with error bit) on any other failure.
@@ -145,7 +145,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_implemented_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_memory_not (with error bit) if a out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -172,7 +172,7 @@ extern "C" {
  *   F_equal_to on match.
  *   F_equal_to_not on miss.
  *
- *   F_implemented_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   F_failure (with error bit) on any other failure.
@@ -195,7 +195,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_implemented_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_memory_not (with error bit) if a out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -224,7 +224,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_implemented_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_range_not (with error bit) on out of range when processing (external) capability.
  *
@@ -249,7 +249,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_implemented_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_range_not (with error bit) on out of range when processing (external) capability.
  *
@@ -271,7 +271,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_implemented_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_memory_not (with error bit) if a out of memory (which doesn't make sense here but man page includes this).
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -299,7 +299,7 @@ extern "C" {
  *   F_descriptor_not (with error bit) if the file descriptor is invalid.
  *   F_directory_not (with error bit) if a directory containing the file does not exist.
  *   F_file_found_not (with error bit) if file was not found.
- *   F_implemented_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_memory_not (with error bit) if a out of memory.
  *   F_name_not (with error bit) if the file name is too long.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -329,7 +329,7 @@ extern "C" {
  *   F_descriptor_not (with error bit) if the file descriptor is invalid.
  *   F_directory_not (with error bit) if a directory containing the file does not exist.
  *   F_file_found_not (with error bit) if file was not found.
- *   F_implemented_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_memory_not (with error bit) if a out of memory.
  *   F_name_not (with error bit) if the file name is too long.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -360,7 +360,7 @@ extern "C" {
  *   F_descriptor_not (with error bit) if the file descriptor is invalid.
  *   F_directory_not (with error bit) if a directory containing the file does not exist.
  *   F_file_found_not (with error bit) if file was not found.
- *   F_implemented_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_memory_not (with error bit) if a out of memory.
  *   F_name_not (with error bit) if the file name is too long.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -390,7 +390,7 @@ extern "C" {
  *   F_descriptor_not (with error bit) if the file descriptor is invalid.
  *   F_directory_not (with error bit) if a directory containing the file does not exist.
  *   F_file_found_not (with error bit) if file was not found.
- *   F_implemented_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_memory_not (with error bit) if a out of memory.
  *   F_name_not (with error bit) if the file name is too long.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -421,7 +421,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_implemented_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   F_failure (with error bit) on any other failure.
@@ -448,7 +448,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_implemented_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   F_failure (with error bit) on any other failure.
@@ -471,7 +471,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_implemented_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_memory_not (with error bit) if a out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -496,7 +496,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_implemented_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_memory_not (with error bit) if a out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -525,7 +525,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_implemented_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_memory_not (with error bit) if a out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_prohibited (with error bit) if the file system does not permit this operation.
@@ -550,7 +550,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_implemented_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_memory_not (with error bit) if a out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -571,7 +571,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_implemented_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *
  *   F_failure (with error bit) on any other error.
  *
@@ -593,7 +593,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_implemented_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *
  *   F_failure (with error bit) on any other error.
  *
@@ -612,7 +612,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_implemented_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_memory_not (with error bit) if a out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_prohibited (with error bit) if the file system does not permit this operation.
@@ -636,7 +636,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_implemented_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *
  *   F_failure (with error bit) on any other error.
  *
@@ -661,7 +661,7 @@ extern "C" {
  *   F_descriptor_not (with error bit) if the file descriptor is invalid.
  *   F_directory_not (with error bit) if a directory containing the file does not exist.
  *   F_file_found_not (with error bit) if file was not found.
- *   F_implemented_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_memory_not (with error bit) if a out of memory.
  *   F_name_not (with error bit) if the file name is too long.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -694,7 +694,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_implemented_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_memory_not (with error bit) if a out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_prohibited (with error bit) if the file system does not permit this operation.
@@ -718,7 +718,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_implemented_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_known_not (with error bit) if the code is unknown to the current system.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -740,7 +740,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_implemented_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   F_failure (with error bit) on any other error.
@@ -764,7 +764,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_implemented_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   F_failure (with error bit) on any other error.
@@ -784,7 +784,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_implemented_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_memory_not (with error bit) if a out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_prohibited (with error bit) if the file system does not permit this operation.
@@ -806,7 +806,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_implemented_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *
  *   F_failure (with error bit) on any other error.
  *
@@ -825,7 +825,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_implemented_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_memory_not (with error bit) if a out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_prohibited (with error bit) if the file system does not permit this operation.
@@ -850,7 +850,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_implemented_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_range_not (with error bit) on out of range when processing size.
  *
@@ -918,7 +918,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_implemented_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_memory_not (with error bit) if a out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if appended string length is too large to store in the buffer.
@@ -950,7 +950,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_implemented_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_memory_not (with error bit) if a out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if appended string length is too large to store in the buffer.
@@ -982,7 +982,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_implemented_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_memory_not (with error bit) if a out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_prohibited (with error bit) if the file system does not permit this operation.

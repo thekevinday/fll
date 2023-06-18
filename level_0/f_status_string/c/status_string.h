@@ -356,8 +356,8 @@ extern "C" {
     #define F_status_help_not_s          "F_help_not"
     #define F_status_ignore_s            "F_ignore"
     #define F_status_ignore_not_s        "F_ignore_not"
-    #define F_status_implemented_s       "F_implemented"
-    #define F_status_implemented_not_s   "F_implemented_not"
+    #define F_status_implement_s         "F_implement"
+    #define F_status_implement_not_s     "F_implement_not"
     #define F_status_input_s             "F_input"
     #define F_status_input_not_s         "F_input_not"
     #define F_status_input_output_s      "F_input_output"
@@ -666,8 +666,8 @@ extern "C" {
     #define F_status_help_not_s_length          10
     #define F_status_ignore_s_length            8
     #define F_status_ignore_not_s_length        12
-    #define F_status_implemented_s_length       13
-    #define F_status_implemented_not_s_length   17
+    #define F_status_implement_s_length         11
+    #define F_status_implement_not_s_length     15
     #define F_status_input_s_length             7
     #define F_status_input_not_s_length         11
     #define F_status_input_output_s_length      14
@@ -978,8 +978,8 @@ extern "C" {
     extern const f_string_static_t f_status_help_not_s;
     extern const f_string_static_t f_status_ignore_s;
     extern const f_string_static_t f_status_ignore_not_s;
-    extern const f_string_static_t f_status_implemented_s;
-    extern const f_string_static_t f_status_implemented_not_s;
+    extern const f_string_static_t f_status_implement_s;
+    extern const f_string_static_t f_status_implement_not_s;
     extern const f_string_static_t f_status_input_s;
     extern const f_string_static_t f_status_input_not_s;
     extern const f_string_static_t f_status_input_output_s;

@@ -62,7 +62,7 @@ void test__f_capability_file_descriptor_set__works(void **state) {
     const f_status_t status = f_capability_file_descriptor_set(descriptor, capability);
 
     #if defined(_di_libcap_)
-      assert_int_equal(F_status_set_fine(status), F_implemented_not);
+      assert_int_equal(F_status_set_fine(status), F_implement_not);
     #else
       assert_int_equal(status, F_none);
     #endif // defined(_di_libcap_)

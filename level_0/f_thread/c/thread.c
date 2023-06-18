@@ -31,7 +31,7 @@ extern "C" {
       if (!affinity_set) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return F_status_set_error(F_implemented_not);
+    return F_status_set_error(F_implement_not);
   }
 #elif !defined(_di_f_thread_attribute_affinity_get_)
   f_status_t f_thread_attribute_affinity_get(const f_thread_attribute_t attribute, const size_t affinity_size, cpu_set_t * const affinity_set) {
@@ -57,7 +57,7 @@ extern "C" {
       if (!attribute) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return F_status_set_error(F_implemented_not);
+    return F_status_set_error(F_implement_not);
   }
 #elif !defined(_di_f_thread_attribute_affinity_set_)
   f_status_t f_thread_attribute_affinity_set(const size_t affinity_size, const cpu_set_t *affinity_set, f_thread_attribute_t * const attribute) {
@@ -1887,7 +1887,7 @@ extern "C" {
 #if defined(_pthread_sigqueue_unsupported_) && !defined(_di_f_thread_signal_queue_)
   f_status_t f_thread_signal_queue(const f_thread_id_t id, const int signal, const union sigval value) {
 
-    return F_status_set_error(F_implemented_not);
+    return F_status_set_error(F_implement_not);
   }
 #elif !defined(_di_f_thread_signal_queue_)
   f_status_t f_thread_signal_queue(const f_thread_id_t id, const int signal, const union sigval value) {

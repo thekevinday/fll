@@ -203,8 +203,8 @@ extern "C" {
     const f_string_static_t f_status_help_not_s = macro_f_string_static_t_initialize_1(F_status_help_not_s, 0, F_status_help_not_s_length);
     const f_string_static_t f_status_ignore_s = macro_f_string_static_t_initialize_1(F_status_ignore_s, 0, F_status_ignore_s_length);
     const f_string_static_t f_status_ignore_not_s = macro_f_string_static_t_initialize_1(F_status_ignore_not_s, 0, F_status_ignore_not_s_length);
-    const f_string_static_t f_status_implemented_s = macro_f_string_static_t_initialize_1(F_status_implemented_s, 0, F_status_implemented_s_length);
-    const f_string_static_t f_status_implemented_not_s = macro_f_string_static_t_initialize_1(F_status_implemented_not_s, 0, F_status_implemented_not_s_length);
+    const f_string_static_t f_status_implement_s = macro_f_string_static_t_initialize_1(F_status_implement_s, 0, F_status_implement_s_length);
+    const f_string_static_t f_status_implement_not_s = macro_f_string_static_t_initialize_1(F_status_implement_not_s, 0, F_status_implement_not_s_length);
     const f_string_static_t f_status_input_s = macro_f_string_static_t_initialize_1(F_status_input_s, 0, F_status_input_s_length);
     const f_string_static_t f_status_input_not_s = macro_f_string_static_t_initialize_1(F_status_input_not_s, 0, F_status_input_not_s_length);
     const f_string_static_t f_status_input_output_s = macro_f_string_static_t_initialize_1(F_status_input_output_s, 0, F_status_input_output_s_length);
@@ -1640,13 +1640,13 @@ extern "C" {
 
           break;
 
-        case F_implemented:
-          *name = f_status_implemented_s;
+        case F_implement:
+          *name = f_status_implement_s;
 
           break;
 
-        case F_implemented_not:
-          *name = f_status_implemented_not_s;
+        case F_implement_not:
+          *name = f_status_implement_not_s;
 
           break;
 

@@ -46,7 +46,7 @@ void test__f_capability_compare__works(void **state) {
     {
       const f_status_t status = f_capability_compare(capability_1, capability_2, &flags);
 
-      assert_int_equal(F_status_set_fine(status), F_implemented_not);
+      assert_int_equal(F_status_set_fine(status), F_implement_not);
     }
   #else
     {
