@@ -67,7 +67,8 @@ extern int main(const int argc, const f_string_t *argv, const f_string_t *envp);
  *   This alters main.setting.state.status:
  *     F_none on success.
  *     F_data_not on success but nothing was provided to operate with.
- *     F_interrupt on (exit) signal received.
+
+ *     F_parameter (with error bit) on parameter related error.
  *
  *     Errors (with error bit) from: f_console_parameter_process().
  *     Errors (with error bit) from: f_file_stream_open().

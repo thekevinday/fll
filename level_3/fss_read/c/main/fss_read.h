@@ -126,7 +126,8 @@ extern "C" {
  *     F_none on success.
  *     F_true on success when performing verification and verify passed.
  *     F_false on success when performing verification and verify failed.
- *     F_interrupt on (exit) signal received.
+ *
+ *     Errors (with error bit) from: main.callback.process_normal().
  */
 #ifndef _di_fss_read_main_
   extern void fss_read_main(void * const main);

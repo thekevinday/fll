@@ -126,7 +126,6 @@ extern "C" {
  *
  *   This alters main.setting.state.status:
  *     F_none on success.
- *     F_interrupt on (exit) signal received.
  */
 #ifndef _di_fss_read_payload_process_set_
   extern void fss_read_payload_process_set(void * const main);
