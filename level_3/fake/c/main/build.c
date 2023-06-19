@@ -556,8 +556,6 @@ extern "C" {
     f_number_unsigned_t i = 0;
     f_number_unsigned_t j = 0;
 
-    f_string_static_t source = f_string_static_t_initialize;
-
     const f_string_statics_t *sources[2] = {
       generic,
       specific,
@@ -577,7 +575,7 @@ extern "C" {
         main->setting.state.status = f_string_dynamic_append_nulless(sources[i]->array[j], &main->cache_argument);
         if (F_status_is_error(main->setting.state.status)) return;
 
-        main->setting.state.status = fll_execute_arguments_add(source, &main->cache_arguments);
+        main->setting.state.status = fll_execute_arguments_add(main->cache_argument, &main->cache_arguments);
         if (F_status_is_error(main->setting.state.status)) return;
       } // for
     } // for
