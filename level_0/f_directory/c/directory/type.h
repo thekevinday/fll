@@ -122,7 +122,7 @@ extern "C" {
  *   - F_done:                          Immedately return as success but do nothing else in this recursion.
  *
  * The action parameters are:
- *   - recurse: Must be of type f_directory_recurse_do_t and represents this data.
+ *   - recurse: Must be of type f_directory_recurse_do_t and represents this data. Must not be NULL.
  *   - name:    The name of the file or directory the action is being performed on (does not have the parent directory path) (may be empty at the top level).
  *   - flag:    A flag representing the particular action being performed.
  *

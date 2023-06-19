@@ -31,7 +31,7 @@ extern "C" {
     recurse->state.status = private_fl_directory_list(recurse->path, 0, 0, recurse->flag & f_directory_recurse_do_flag_dereference_e, &recurse->listing);
 
     if (F_status_is_error(recurse->state.status)) {
-      private_inline_fl_directory_do_handle(recurse, f_string_empty_s, f_directory_recurse_do_flag_path_e);
+      private_inline_fl_directory_do_handle(recurse, f_string_empty_s, f_directory_recurse_do_flag_list_e | f_directory_recurse_do_flag_path_e);
 
       // Only the directory is to be freed because all others are preserved between recursions.
       if (F_status_is_error(recurse->state.status)) {
@@ -46,6 +46,19 @@ extern "C" {
     }
 
     recurse->state.status = F_none;
+
+    if (recurse->flag & f_directory_recurse_do_flag_list_e) {
+      recurse->action((void *) recurse, recurse->path, f_directory_recurse_do_flag_list_e);
+
+      if (F_status_is_error(recurse->state.status)) {
+        private_inline_fl_directory_do_handle(recurse, recurse->path, f_directory_recurse_do_flag_list_e);
+        if (F_status_is_error(recurse->state.status)) return;
+      }
+
+      if (recurse->state.status != F_done && F_status_is_error_not(recurse->state.status)) {
+        recurse->state.status = F_none;
+      }
+    }
 
     f_number_unsigned_t i = 0;
     uint8_t j = 0;
@@ -67,7 +80,7 @@ extern "C" {
       f_directory_recurse_do_flag_unknown_e,
     };
 
-    {
+    if (recurse->state.status != F_done && F_status_is_error_not(recurse->state.status)) {
       f_string_dynamics_t * const list[] = {
         &recurse->listing.block,
         &recurse->listing.character,

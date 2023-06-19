@@ -111,6 +111,7 @@ extern "C" {
  *   - after:       Perform this action after recursion befo a single directory path.
  *   - before:      Perform this action before recursion on a single directory path.
  *   - dereference: Dereference symbolic links rather than operating on the link itself.
+ *   - list:        Perform this action after directory listing is loaded.
  *   - top:         Operate on top-most directory, or for the callback parameter, designate that this is the top path.
  *
  *   For the actiona and handle callback parameter:
@@ -132,18 +133,19 @@ extern "C" {
     f_directory_recurse_do_flag_after_e       = 0x1,
     f_directory_recurse_do_flag_before_e      = 0x2,
     f_directory_recurse_do_flag_dereference_e = 0x4,
-    f_directory_recurse_do_flag_top_e         = 0x8,
+    f_directory_recurse_do_flag_list_e        = 0x8,
+    f_directory_recurse_do_flag_top_e         = 0x10,
 
     // For the action callback parameter.
-    f_directory_recurse_do_flag_block_e     = 0x10,
-    f_directory_recurse_do_flag_character_e = 0x20,
-    f_directory_recurse_do_flag_directory_e = 0x40,
-    f_directory_recurse_do_flag_fifo_e      = 0x80,
-    f_directory_recurse_do_flag_link_e      = 0x100,
-    f_directory_recurse_do_flag_path_e      = 0x200,
-    f_directory_recurse_do_flag_regular_e   = 0x400,
-    f_directory_recurse_do_flag_socket_e    = 0x800,
-    f_directory_recurse_do_flag_unknown_e   = 0x1000,
+    f_directory_recurse_do_flag_block_e     = 0x20,
+    f_directory_recurse_do_flag_character_e = 0x40,
+    f_directory_recurse_do_flag_directory_e = 0x80,
+    f_directory_recurse_do_flag_fifo_e      = 0x100,
+    f_directory_recurse_do_flag_link_e      = 0x200,
+    f_directory_recurse_do_flag_path_e      = 0x400,
+    f_directory_recurse_do_flag_regular_e   = 0x800,
+    f_directory_recurse_do_flag_socket_e    = 0x1000,
+    f_directory_recurse_do_flag_unknown_e   = 0x2000,
   }; // enum
 #endif // _di_f_directory_recurse_do_flag_e_
 
