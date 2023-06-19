@@ -40,6 +40,8 @@ extern "C" {
       return 0;
     }
 
+    fake_string_dynamic_reset(&main->cache_argument);
+
     {
       main->setting.state.status = f_string_dynamic_append_nulless(data->path_build_objects_shared, &main->cache_argument);
 
@@ -113,6 +115,8 @@ extern "C" {
 
       return 0;
     }
+
+    fake_string_dynamic_reset(&main->cache_argument);
 
     {
       main->setting.state.status = f_string_dynamic_append_nulless(data->path_build_objects_static, &main->cache_argument);
