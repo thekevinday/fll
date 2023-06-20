@@ -17,7 +17,7 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
   f_console_parameter_t parameters[] = fss_embedded_list_read_console_parameter_t_initialize;
   data.program.parameters.array = parameters;
-  data.program.parameters.used = fss_embedded_list_read_total_parameters_d;
+  data.program.parameters.used = fss_embedded_list_read_parameter_total_d;
   data.program.environment = envp;
 
   if (f_pipe_input_exists()) {

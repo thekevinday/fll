@@ -83,7 +83,7 @@ extern "C" {
       macro_f_console_parameter_t_initialize_3(status_code_short_number_s,  status_code_long_number_s,  0, f_console_flag_normal_e), \
     }
 
-  #define status_code_total_parameters_d 17
+  #define status_code_parameter_total_d 17
 #endif // _di_status_code_parameter_e_
 
 /**

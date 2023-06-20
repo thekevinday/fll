@@ -114,7 +114,7 @@ extern "C" {
       macro_f_console_parameter_t_initialize_3(fss_write_short_trim_s,         fss_write_long_trim_s,         0, f_console_flag_normal_e), \
     }
 
-  #define fss_write_total_parameters_d 27
+  #define fss_write_parameter_total_d 27
 #endif // _di_fss_write_parameter_e_
 
 /**

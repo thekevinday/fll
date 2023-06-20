@@ -30,7 +30,7 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
   f_console_parameter_t parameters[] = fss_write_console_parameter_t_initialize;
   data.program.parameters.array = parameters;
   data.program.parameters.array[fss_write_parameter_as_e].flag |= f_console_flag_disable_e;
-  data.program.parameters.used = fss_write_total_parameters_d;
+  data.program.parameters.used = fss_write_parameter_total_d;
   data.program.environment = envp;
 
   if (f_pipe_input_exists()) {

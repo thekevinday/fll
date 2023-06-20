@@ -141,7 +141,7 @@ extern "C" {
       macro_f_console_parameter_t_initialize_3(fss_read_short_trim_s,     fss_read_long_trim_s,     0, f_console_flag_normal_e), \
     }
 
-  #define fss_read_total_parameters_d 28
+  #define fss_read_parameter_total_d 28
 #endif // _di_fss_read_parameter_e_
 
 /**

@@ -249,7 +249,7 @@ extern "C" {
       macro_f_console_parameter_t_initialize_3(fss_embedded_list_read_short_trim_s.string, fss_embedded_list_read_long_trim_s.string, 0, 0, f_console_flag_normal_e), \
     }
 
-  #define fss_embedded_list_read_total_parameters_d 27
+  #define fss_embedded_list_read_parameter_total_d 27
 #endif // _di_fss_embedded_list_read_parameter_d_
 
 /**

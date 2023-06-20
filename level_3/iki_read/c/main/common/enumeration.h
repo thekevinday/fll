@@ -113,7 +113,7 @@ extern "C" {
       macro_f_console_parameter_t_initialize_3(iki_read_short_wrap_s,       iki_read_long_wrap_s,       3, f_console_flag_normal_e), \
     }
 
-  #define iki_read_total_parameters_d 25
+  #define iki_read_parameter_total_d 25
 #endif // _di_iki_read_parameter_e_
 
 /**

@@ -167,7 +167,7 @@ extern "C" {
       macro_f_console_parameter_t_initialize_3(utf8_short_verify_s,            utf8_long_verify_s,            0, f_console_flag_normal_e), \
     }
 
-  #define utf8_total_parameters_d 25
+  #define utf8_parameter_total_d 25
 #endif // _di_utf8_parameter_e_
 
 /**

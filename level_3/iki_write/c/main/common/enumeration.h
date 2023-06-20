@@ -88,7 +88,7 @@ extern "C" {
       macro_f_console_parameter_t_initialize_3(iki_write_short_wrap_s,     iki_write_long_wrap_s,     0, f_console_flag_normal_e), \
     }
 
-  #define iki_write_total_parameters_d 20
+  #define iki_write_parameter_total_d 20
 #endif // _di_iki_write_parameter_e_
 
 /**

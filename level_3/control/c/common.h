@@ -140,7 +140,7 @@ extern "C" {
       macro_f_console_parameter_t_initialize_3(control_short_socket_s,   control_long_socket_s,   1, f_console_flag_normal_e), \
     }
 
-  #define control_total_parameters_d 17
+  #define control_parameter_total_d 17
 #endif // _di_control_parameter_d_
 
 /**

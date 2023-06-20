@@ -404,7 +404,7 @@ extern "C" {
       macro_f_console_parameter_t_initialize_6(firewall_command_show_s,    0, f_console_flag_simple_e), \
     }
 
-  #define firewall_total_parameters_d 15
+  #define firewall_parameter_total_d 15
 #endif // _di_firewall_parameter_d_
 
 /**

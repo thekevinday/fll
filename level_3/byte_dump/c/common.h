@@ -357,7 +357,7 @@ extern "C" {
       macro_f_console_parameter_t_initialize_5(byte_dump_long_classic_s, 0, f_console_flag_normal_e), \
     }
 
-  #define byte_dump_total_parameters_d 29
+  #define byte_dump_parameter_total_d 29
 #endif // _di_byte_dump_parameter_d_
 
 /**

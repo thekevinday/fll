@@ -148,7 +148,7 @@ extern "C" {
       macro_f_console_parameter_t_initialize_3(fss_identify_short_total_s, fss_identify_long_total_s, 0, 0, f_console_flag_normal_e), \
     }
 
-  #define fss_identify_total_parameters_d 18
+  #define fss_identify_parameter_total_d 18
 #endif // _di_fss_identify_parameter_d_
 
 /**

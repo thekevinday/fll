@@ -89,7 +89,7 @@ extern "C" {
       macro_f_console_parameter_t_initialize_6(fake_other_operation_skeleton_s, 0, f_console_flag_simple_e), \
     }
 
-  #define fake_total_parameters_d 34
+  #define fake_parameter_total_d 34
 #endif // _di_fake_parameter_e_
 
 /**

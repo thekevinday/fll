@@ -26,7 +26,7 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
   f_console_parameter_t parameters[] = fake_console_parameter_t_initialize;
   data.program.parameters.array = parameters;
-  data.program.parameters.used = fake_total_parameters_d;
+  data.program.parameters.used = fake_parameter_total_d;
   data.program.parameters.callback = &fake_setting_load_parameter_callback;
   data.program.environment = envp;
 
