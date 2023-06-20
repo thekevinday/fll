@@ -19,6 +19,7 @@ f_rip
 f_signal
 f_socket
 f_status_string
+f_thread
 
 fl_fss
 fl_print

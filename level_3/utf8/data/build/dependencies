@@ -15,6 +15,7 @@ f_pipe
 f_print
 f_rip
 f_signal
+f_thread
 
 fl_conversion
 fl_print
