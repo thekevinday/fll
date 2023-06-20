@@ -48,6 +48,13 @@ int main(void) {
     cmocka_unit_test(test__f_socket_listen__fails),
     cmocka_unit_test(test__f_socket_listen__works),
 
+    cmocka_unit_test(test__f_socket_name_host__allocates_default),
+    cmocka_unit_test(test__f_socket_name_host__fails),
+    cmocka_unit_test(test__f_socket_name_host__works),
+
+    cmocka_unit_test(test__f_socket_name_peer__fails),
+    cmocka_unit_test(test__f_socket_name_peer__works),
+
     cmocka_unit_test(test__f_socket_option_get__fails),
     cmocka_unit_test(test__f_socket_option_get__works),
 
@@ -74,6 +81,8 @@ int main(void) {
       cmocka_unit_test(test__f_socket_create_pair__parameter_checking),
       cmocka_unit_test(test__f_socket_disconnect__parameter_checking),
       cmocka_unit_test(test__f_socket_listen__parameter_checking),
+      cmocka_unit_test(test__f_socket_name_host__parameter_checking),
+      cmocka_unit_test(test__f_socket_name_peer__parameter_checking),
       cmocka_unit_test(test__f_socket_option_get__parameter_checking),
       cmocka_unit_test(test__f_socket_option_set__parameter_checking),
       cmocka_unit_test(test__f_socket_read__parameter_checking),

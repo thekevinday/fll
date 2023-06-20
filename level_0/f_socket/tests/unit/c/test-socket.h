@@ -34,6 +34,8 @@
 #include "test-socket-create_pair.h"
 #include "test-socket-disconnect.h"
 #include "test-socket-listen.h"
+#include "test-socket-name_host.h"
+#include "test-socket-name_peer.h"
 #include "test-socket-option_get.h"
 #include "test-socket-option_set.h"
 #include "test-socket-read.h"

@@ -396,6 +396,70 @@ extern "C" {
 #endif // _di_f_socket_option_set_
 
 /**
+ * Get the host name from a socket.
+ *
+ * The host is the name of the local connection on the socket.
+ *
+ * @param socket
+ *   The socket structure.
+ *   The socket.id must represent a valid socket file descriptor.
+ *   The socket.size_read is used to represent the buffer size in buffer and must not be larger than the actual size of the buffer.
+ * @param name
+ *   The retrieved host name.
+ *   The name.size is used to determine as the max size.
+ *   If name.size is 0, then a default max (F_socket_default_name_max_d) is used.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_prohibited (with error bit) if the system does not permit this operation (could be missing CAP_SYS_ADMIN in the appropraite user namespace).
+ *   F_string_too_large (with error bit) if the name is to large for the max size (name.size).
+ *
+ *   F_failure (with error bit) for any other error.
+ *
+ *   Errors (with error bit) from: f_string_dynamic_resize()
+ *
+ * @see gethostname()
+ *
+ * @see f_string_dynamic_resize()
+ */
+#ifndef _di_f_socket_name_host_
+  extern f_status_t f_socket_name_host(f_socket_t * const socket, f_string_dynamic_t * const name);
+#endif // _di_f_socket_host_name_
+
+/**
+ * Get the peer name from a socket.
+ *
+ * The peer is the name of the remote connection on the socket.
+ * The name of the remote connection refers to the connection itself such as the socket file name or the ip address and the port numbers.
+ *
+ * @param socket
+ *   The socket structure.
+ *   The socket.id must represent a valid socket file descriptor.
+ *   The socket.size_read is used to represent the buffer size in buffer and must not be larger than the actual size of the buffer.
+ *   The socket.address is used to store the name of the remote connection.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_file_descriptor (with error bit) if id is an invalid descriptor.
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_buffer_not (with error bit) due to resource restrictions (maps to ENOBUFS).
+ *   F_connect_not (with error bit) if the socket is not connected.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_socket_not (with error bit) if the id is not a socket descriptor.
+ *
+ *   F_failure (with error bit) for any other error.
+ *
+ * @see getpeername()
+ */
+#ifndef _di_f_socket_name_peer_
+  extern f_status_t f_socket_name_peer(f_socket_t * const socket);
+#endif // _di_f_socket_name_peer_
+
+/**
  * Read from a socket.
  *
  * @param socket

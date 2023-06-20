@@ -32,6 +32,8 @@ int __wrap_accept(int sockfd, struct sockaddr *addr, socklen_t *addrlen);
 int __wrap_bind(int sockfd, const struct sockaddr *addr, socklen_t addrlen);
 int __wrap_close(int fd);
 int __wrap_connect(int sockfd, const struct sockaddr *addr, socklen_t addrlen);
+int __wrap_gethostname(char *name, size_t len);
+int __wrap_getpeername(int sockfd, struct sockaddr *addr, socklen_t *addrlen);
 int __wrap_getsockopt(int sockfd, int level, int optname, void *optval, socklen_t *optlen);
 int __wrap_listen(int sockfd, int backlog);
 ssize_t __wrap_recvfrom(int sockfd, void *buf, size_t len, int flags, struct sockaddr *src_addr, socklen_t *addrlen);

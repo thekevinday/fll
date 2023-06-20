@@ -316,6 +316,62 @@ extern "C" {
   }
 #endif // _di_f_socket_option_set_
 
+#ifndef _di_f_socket_name_host_
+  f_status_t f_socket_name_host(f_socket_t * const socket, f_string_dynamic_t * const name) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!socket) return F_status_set_error(F_parameter);
+      if (!name) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (!name->size) {
+      const f_status_t status = f_string_dynamic_resize(F_socket_default_name_max_d, name);
+      if (F_status_is_error(status)) return status;
+    }
+
+    {
+      const int result = gethostname(name->string, (size_t) (name->used ? (name->size - name->used) : name->size));
+
+      if (result < 0) {
+        if (errno == EFAULT) return F_status_set_error(F_buffer);
+        if (errno == EINVAL) return F_status_set_error(F_parameter);
+        if (errno == ENAMETOOLONG) return F_status_set_error(F_string_too_large);
+        if (errno == EPERM) return F_status_set_error(F_prohibited);
+
+        return F_status_set_error(F_failure);
+      }
+    }
+
+    for (; name->used < name->size; ++name->used) {
+      if (!name->string[name->used]) break;
+    } // while
+
+    return F_none;
+  }
+#endif // _di_f_socket_host_name_
+
+#ifndef _di_f_socket_name_peer_
+  f_status_t f_socket_name_peer(f_socket_t * const socket) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!socket) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    const int result = getpeername(socket->id, socket->address, &socket->length);
+
+    if (result < 0) {
+      if (errno == EBADF) return F_status_set_error(F_file_descriptor);
+      if (errno == EFAULT) return F_status_set_error(F_buffer);
+      if (errno == EINVAL) return F_status_set_error(F_parameter);
+      if (errno == ENOBUFS) return F_status_set_error(F_buffer_not);
+      if (errno == ENOTCONN) return F_status_set_error(F_connect_not);
+      if (errno == ENOTSOCK) return F_status_set_error(F_socket_not);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_socket_name_peer_
+
 #ifndef _di_f_socket_read_
   f_status_t f_socket_read(f_socket_t * const socket, const int flags, void * const buffer, size_t * const length) {
     #ifndef _di_level_0_parameter_checking_

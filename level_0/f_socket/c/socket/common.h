@@ -20,10 +20,12 @@ extern "C" {
  * Provide socket defaults.
  *
  * F_file_default_*:
+ *   - name_max:   Default buffer size for names.
  *   - read_size:  Default read size in bytes.
  *   - write_size: Default write size in bytes.
  */
 #ifndef _di_f_socket_default_d_
+  #define F_socket_default_name_max_d   256
   #define F_socket_default_read_size_d  8192
   #define F_socket_default_write_size_d 8192
 #endif // _di_f_socket_default_d_

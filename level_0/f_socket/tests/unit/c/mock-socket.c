@@ -56,6 +56,32 @@ int __wrap_connect(int sockfd, const struct sockaddr *addr, socklen_t addrlen) {
   return 0;
 }
 
+int __wrap_gethostname(char *name, size_t len) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    errno = mock_type(int);
+
+    return -1;
+  }
+
+  return 0;
+}
+
+int __wrap_getpeername(int sockfd, struct sockaddr *addr, socklen_t *addrlen) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    errno = mock_type(int);
+
+    return -1;
+  }
+
+  return 0;
+}
+
 int __wrap_getsockopt(int sockfd, int level, int optname, void *optval, socklen_t *optlen) {
 
   const bool failure = mock_type(bool);
