@@ -24,7 +24,7 @@
 #include <fll/level_0/status.h>
 #include <fll/level_0/memory.h>
 
-// FLL-0 control includes.
+// FLL-0 limit includes.
 #include <fll/level_0/limit/value.h>
 #include <fll/level_0/limit/set.h>
 
