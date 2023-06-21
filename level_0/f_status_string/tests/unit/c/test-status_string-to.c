@@ -103,6 +103,8 @@ void test__f_status_string_to__works(void **state) {
     F_absolute_not,
     F_address,
     F_address_not,
+    F_again,
+    F_again_not,
     F_ascii,
     F_ascii_not,
     F_atomic,
@@ -717,6 +719,8 @@ void test__f_status_string_to__works(void **state) {
     f_status_absolute_not_s,
     f_status_address_s,
     f_status_address_not_s,
+    f_status_again_s,
+    f_status_again_not_s,
     f_status_ascii_s,
     f_status_ascii_not_s,
     f_status_atomic_s,
@@ -1257,7 +1261,7 @@ void test__f_status_string_to__works(void **state) {
     f_status_status_code_last_s,
   };
 
-  for (uint16_t i = 0; i < 611; ++i) {
+  for (uint16_t i = 0; i < 613; ++i) {
 
     f_string_static_t result = f_string_static_t_initialize;
 

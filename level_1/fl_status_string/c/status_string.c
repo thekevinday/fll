@@ -461,6 +461,18 @@ extern "C" {
         return F_none;
       }
 
+      if (f_compare_dynamic(name, f_status_again_s) == F_equal_to) {
+        *code = F_again;
+
+        return F_none;
+      }
+
+      if (f_compare_dynamic(name, f_status_again_not_s) == F_equal_to) {
+        *code = F_again_not;
+
+        return F_none;
+      }
+
       if (f_compare_dynamic(name, f_status_ascii_s) == F_equal_to) {
         *code = F_ascii;
 

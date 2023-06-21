@@ -211,6 +211,8 @@ extern "C" {
       F_absolute_not,
       F_address,
       F_address_not,
+      F_again,
+      F_again_not,
       F_ascii,
       F_ascii_not,
       F_atomic,

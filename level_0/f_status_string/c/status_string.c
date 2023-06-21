@@ -85,6 +85,8 @@ extern "C" {
     const f_string_static_t f_status_absolute_not_s = macro_f_string_static_t_initialize_1(F_status_absolute_not_s, 0, F_status_absolute_not_s_length);
     const f_string_static_t f_status_address_s = macro_f_string_static_t_initialize_1(F_status_address_s, 0, F_status_address_s_length);
     const f_string_static_t f_status_address_not_s = macro_f_string_static_t_initialize_1(F_status_address_not_s, 0, F_status_address_not_s_length);
+    const f_string_static_t f_status_again_s = macro_f_string_static_t_initialize_1(F_status_again_s, 0, F_status_again_s_length);
+    const f_string_static_t f_status_again_not_s = macro_f_string_static_t_initialize_1(F_status_again_not_s, 0, F_status_again_not_s_length);
     const f_string_static_t f_status_ascii_s = macro_f_string_static_t_initialize_1(F_status_ascii_s, 0, F_status_ascii_s_length);
     const f_string_static_t f_status_ascii_not_s = macro_f_string_static_t_initialize_1(F_status_ascii_not_s, 0, F_status_ascii_not_s_length);
     const f_string_static_t f_status_atomic_s = macro_f_string_static_t_initialize_1(F_status_atomic_s, 0, F_status_atomic_s_length);
@@ -1047,6 +1049,16 @@ extern "C" {
 
         case F_address_not:
           *name = f_status_address_not_s;
+
+          break;
+
+        case F_again:
+          *name = f_status_again_s;
+
+          break;
+
+        case F_again_not:
+          *name = f_status_again_not_s;
 
           break;
 

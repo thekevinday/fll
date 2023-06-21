@@ -238,6 +238,8 @@ extern "C" {
     #define F_status_absolute_not_s      "F_absolute_not"
     #define F_status_address_s           "F_address"
     #define F_status_address_not_s       "F_address_not"
+    #define F_status_again_s             "F_again"
+    #define F_status_again_not_s         "F_again_not"
     #define F_status_ascii_s             "F_ascii"
     #define F_status_ascii_not_s         "F_ascii_not"
     #define F_status_atomic_s            "F_atomic"
@@ -548,6 +550,8 @@ extern "C" {
     #define F_status_absolute_not_s_length      14
     #define F_status_address_s_length           9
     #define F_status_address_not_s_length       13
+    #define F_status_again_s_length             7
+    #define F_status_again_not_s_length         11
     #define F_status_ascii_s_length             7
     #define F_status_ascii_not_s_length         11
     #define F_status_atomic_s_length            8
@@ -858,6 +862,8 @@ extern "C" {
     extern const f_string_static_t f_status_absolute_not_s;
     extern const f_string_static_t f_status_address_s;
     extern const f_string_static_t f_status_address_not_s;
+    extern const f_string_static_t f_status_again_s;
+    extern const f_string_static_t f_status_again_not_s;
     extern const f_string_static_t f_status_ascii_s;
     extern const f_string_static_t f_status_ascii_not_s;
     extern const f_string_static_t f_status_atomic_s;
