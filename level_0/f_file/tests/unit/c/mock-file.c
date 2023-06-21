@@ -205,6 +205,19 @@ void __wrap_flockfile(FILE *filehandle) {
 
 }
 
+int __wrap_fcntl(int fd, int cmd, ...) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    errno = mock_type(int);
+
+    return -1;
+  }
+
+  return 0;
+}
+
 size_t __wrap_fread_unlocked(void *ptr, size_t size, size_t nmemb, FILE *stream) {
 
   return mock_type(int);

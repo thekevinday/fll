@@ -1046,6 +1046,42 @@ extern "C" {
 #endif // _di_f_file_link_read_at_
 
 /**
+ * Manipulate the file by the file descriptor.
+ *
+ * @param file
+ *   The data related to the file containing the file descriptor.
+ *   The file descriptor is required to be valid.
+ * @param command
+ *   The command to perform.
+ *   See fcntl() for details.
+ * @param argument
+ *   An argument associated with the command.
+ *   See fcntl() for details.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_access_denied (with error bit) on access denied (due to locks being held by other processes).
+ *   F_again (with error bit) on operation on file is prohibited (often due to file being memory mapped by another process).
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_busy (with error bit) if system is too busy to perform operation.
+ *   F_deadlock (with error bit) if operation would cause a deadlock.
+ *   F_directory_not (with error bit) on invalid directory.
+ *   F_file_descriptor (with error bit) if file descriptor is invalid.
+ *   F_file_descriptor_max (with error bit) if max file descriptors is reached.
+ *   F_interrupt (with error bit) when program received an interrupt signal, halting operation.
+ *   F_lock (with error bit) if failed to lock, such as lock table is full or too many open segments.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_prohibited (with error bit) if operation is prohibited (maps to EPERM).
+ *   F_failure (with error bit) for any other error.
+ *
+ * @see fcntl()
+ */
+#ifndef _di_f_file_manipulate_
+  extern f_status_t f_file_manipulate(const f_file_t file, const int command, const long argument);
+#endif // _di_f_file_manipulate_
+
+/**
  * Determine how the mode should be applied based on different file properties and the given mode properties.
  *
  * This does not set mode based on umask(), which is already applied if f_file_mode_from_string() was used to create mode_change.

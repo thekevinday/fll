@@ -628,6 +628,32 @@ extern "C" {
   }
 #endif // _di_f_file_link_read_at_
 
+#ifndef _di_f_file_manipulate_
+  f_status_t f_file_manipulate(const f_file_t file, const int command, const long argument) {
+
+    if (file.id == -1) return F_file_descriptor_not;
+
+    if (fcntl(file.id, command, argument) == -1) {
+      if (errno == EACCES) return F_status_set_error(F_access_denied);
+      if (errno == EAGAIN) return F_status_set_error(F_again);
+      if (errno == EBADF) return F_status_set_error(F_file_descriptor);
+      if (errno == EBUSY) return F_status_set_error(F_busy);
+      if (errno == EDEADLK) return F_status_set_error(F_deadlock);
+      if (errno == EFAULT) return F_status_set_error(F_buffer);
+      if (errno == EINTR) return F_status_set_error(F_interrupt);
+      if (errno == EINVAL) return F_status_set_error(F_parameter);
+      if (errno == EMFILE) return F_status_set_error(F_file_descriptor_max);
+      if (errno == ENOLCK) return F_status_set_error(F_lock);
+      if (errno == ENOTDIR) return F_status_set_error(F_directory_not);
+      if (errno == EPERM) return F_status_set_error(F_prohibited);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_file_manipulate_
+
 #ifndef _di_f_file_mode_determine_
   f_status_t f_file_mode_determine(const mode_t mode_file, const f_file_mode_t mode_change, const uint8_t mode_replace, const bool directory_is, mode_t *mode) {
     #ifndef _di_level_0_parameter_checking_

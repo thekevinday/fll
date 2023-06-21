@@ -159,6 +159,10 @@ int main(void) {
     cmocka_unit_test(test__f_file_link_read_at__returns_file_descriptor_not),
     cmocka_unit_test(test__f_file_link_read_at__works),
 
+    cmocka_unit_test(test__f_file_manipulate__fails),
+    cmocka_unit_test(test__f_file_manipulate__returns_file_descriptor_not),
+    cmocka_unit_test(test__f_file_manipulate__works),
+
     cmocka_unit_test(test__f_file_mode_determine__works_basic),
     cmocka_unit_test(test__f_file_mode_determine__works_basic_replace),
 
@@ -397,6 +401,7 @@ int main(void) {
       // f_file_link_hard_at() doesn't use parameter checking.
       cmocka_unit_test(test__f_file_link_read__parameter_checking),
       cmocka_unit_test(test__f_file_link_read_at__parameter_checking),
+      // f_file_manipulate() doesn't use parameter checking.
       cmocka_unit_test(test__f_file_mode_determine__parameter_checking),
       cmocka_unit_test(test__f_file_mode_from_string__parameter_checking),
       cmocka_unit_test(test__f_file_mode_read__parameter_checking),

@@ -46,6 +46,7 @@ extern int __wrap_ferror_unlocked(FILE *stream);
 extern int __wrap_fflush(FILE *stream);
 extern int __wrap_fileno(FILE *stream);
 extern void __wrap_flockfile(FILE *filehandle);
+extern int __wrap_fcntl(int fd, int cmd, ...);
 extern size_t __wrap_fread_unlocked(void *ptr, size_t size, size_t nmemb, FILE *stream);
 extern int __wrap_fstat(int fd, struct stat *statbuf);
 extern int __wrap_fstatat(int dirfd, const char *pathname, struct stat *statbuf, int flags);

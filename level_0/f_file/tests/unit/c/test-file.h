@@ -53,6 +53,7 @@
 #include "test-file-link_hard_at.h"
 #include "test-file-link_read.h"
 #include "test-file-link_read_at.h"
+#include "test-file-manipulate.h"
 #include "test-file-mode_determine.h"
 #include "test-file-mode_from_string.h"
 #include "test-file-mode_read.h"
