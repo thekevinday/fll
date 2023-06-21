@@ -33,6 +33,8 @@
 #define _di_f_iki_syntax_s_
 #define _di_f_iki_syntax_separator_s_
 #define _di_f_iki_syntax_slash_s_
+#define _di_f_iki_syntax_wrap_close_s_
+#define _di_f_iki_syntax_wrap_open_s_
 #define _di_f_iki_vocabulary_0001_address_s_
 #define _di_f_iki_vocabulary_0001_code_s_
 #define _di_f_iki_vocabulary_0001_email_s_

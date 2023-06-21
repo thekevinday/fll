@@ -19,6 +19,8 @@
 #define _di_f_int8ss_t_
 #define _di_f_int8s_t_
 #define _di_f_mode_t_
+#define _di_f_number_unsignedss_t_
+#define _di_f_number_unsigneds_t_
 #define _di_f_statess_t_
 #define _di_f_states_t_
 #define _di_f_state_t_
@@ -27,8 +29,9 @@
 #define _di_f_status_t_
 #define _di_f_time_spec_t_
 #define _di_f_time_t_
+#define _di_f_type_d_
 #define _di_f_type_file_defaults_d_
-#define _di_f_type_input_output_d_
+#define _di_f_type_file_flag_d_
 #define _di_f_type_number_64_t_
 #define _di_f_type_sizes_d_
 #define _di_f_uint128ss_t_

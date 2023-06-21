@@ -16,7 +16,6 @@
 #define _di_f_file_descriptor_
 #define _di_f_file_exists_
 #define _di_f_file_exists_at_
-#define _di_f_file_flag_d_
 #define _di_f_file_flush_
 #define _di_f_file_group_read_
 #define _di_f_file_is_
@@ -28,6 +27,7 @@
 #define _di_f_file_link_hard_at_
 #define _di_f_file_link_read_
 #define _di_f_file_link_read_at_
+#define _di_f_file_manipulate_
 #define _di_f_file_mode_determine_
 #define _di_f_file_mode_from_string_
 #define _di_f_file_mode_read_
@@ -65,6 +65,7 @@
 #define _di_f_file_operation_disconnect_s_
 #define _di_f_file_operation_encrypt_s_
 #define _di_f_file_operation_find_s_
+#define _di_f_file_operation_flush_s_
 #define _di_f_file_operation_from_s_
 #define _di_f_file_operation_get_group_s_
 #define _di_f_file_operation_get_mode_s_
@@ -80,7 +81,6 @@
 #define _di_f_file_operation_read_s_
 #define _di_f_file_operation_receive_s_
 #define _di_f_file_operation_rename_s_
-#define _di_f_file_operation__s_
 #define _di_f_file_operation_s_
 #define _di_f_file_operation_send_s_
 #define _di_f_file_operation_shred_s_
@@ -135,6 +135,7 @@
 #define _di_f_file_type_name_character_s_
 #define _di_f_file_type_name_directory_s_
 #define _di_f_file_type_name_fifo_s_
+#define _di_f_file_type_name_file_s_
 #define _di_f_file_type_name_link_s_
 #define _di_f_file_type_name_regular_s_
 #define _di_f_file_type_name_socket_s_

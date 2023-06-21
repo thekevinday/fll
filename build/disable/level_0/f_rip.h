@@ -1,0 +1,10 @@
+#define _di_f_rip_
+#define _di_f_rip_dynamic_
+#define _di_f_rip_dynamic_nulless_
+#define _di_f_rip_dynamic_partial_
+#define _di_f_rip_dynamic_partial_nulless_
+#define _di_f_rip_nulless_
+#define _di_f_rip_utf_
+#define _di_f_rip_utf_dynamic_
+#define _di_f_rip_utf_dynamic_nulless_
+#define _di_f_rip_utf_nulless_

@@ -3,16 +3,21 @@
 #define _di_f_console_flag_e_
 #define _di_f_console_flag_t_
 #define _di_f_console_identify_
-#define _di_f_console_length_size_
+#define _di_f_console_length_size_d_
 #define _di_f_console_parameter_prioritize_left_
 #define _di_f_console_parameter_prioritize_right_
 #define _di_f_console_parameter_process_
 #define _di_f_console_parameters_delete_
 #define _di_f_console_parameters_destroy_
 #define _di_f_console_parameters_t_
+#define _di_f_console_parameter_state_delete_
+#define _di_f_console_parameter_state_destroy_
+#define _di_f_console_parameter_state_t_
+#define _di_f_console_parameter_state_type_e_
 #define _di_f_console_parameter_t_
 #define _di_f_console_result_e_
 #define _di_f_console_result_t_
+#define _di_f_console_standard_long_copyright_s_
 #define _di_f_console_standard_long_dark_s_
 #define _di_f_console_standard_long_debug_s_
 #define _di_f_console_standard_long_error_s_
@@ -28,6 +33,7 @@
 #define _di_f_console_standard_long_verbose_s_
 #define _di_f_console_standard_long_version_s_
 #define _di_f_console_standard_s_
+#define _di_f_console_standard_short_copyright_s_
 #define _di_f_console_standard_short_dark_s_
 #define _di_f_console_standard_short_debug_s_
 #define _di_f_console_standard_short_error_s_
@@ -47,4 +53,4 @@
 #define _di_f_console_symbol_s_
 #define _di_f_console_symbol_short_inverse_s_
 #define _di_f_console_symbol_short_normal_s_
-#define _di_f_console_verbosity_
+#define _di_f_console_verbosity_e_

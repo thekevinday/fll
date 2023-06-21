@@ -60,7 +60,7 @@
 #define _di_f_fss_object_t_
 #define _di_f_fss_payload_s_
 #define _di_f_fss_placeholder_s_
-#define _di_f_fss_quote_type_
+#define _di_f_fss_quote_type_e_
 #define _di_f_fss_s_
 #define _di_f_fss_seek_to_eol_
 #define _di_f_fss_set_adjust_

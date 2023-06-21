@@ -11,6 +11,8 @@
 #define _di_f_socket_flag_d_
 #define _di_f_socket_listen_
 #define _di_f_socket_message_flag_d_
+#define _di_f_socket_name_host_
+#define _di_f_socket_name_peer_
 #define _di_f_socket_option_d_
 #define _di_f_socket_option_get_
 #define _di_f_socket_option_set_

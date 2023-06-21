@@ -4,6 +4,7 @@
 #define _di_f_path_d_
 #define _di_f_path_environment_s_
 #define _di_f_path_extension_separator_s_
+#define _di_f_path_home_s_
 #define _di_f_path_home_wildcard_s_
 #define _di_f_path_is_
 #define _di_f_path_is_absolute_

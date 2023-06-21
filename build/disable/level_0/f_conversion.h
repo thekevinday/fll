@@ -9,6 +9,11 @@
 #define _di_f_conversion_character_to_hexidecimal_
 #define _di_f_conversion_character_to_octal_
 #define _di_f_conversion_d_
+#define _di_f_conversion_data_base_10_c_
+#define _di_f_conversion_data_base_12_c_
+#define _di_f_conversion_data_base_16_c_
+#define _di_f_conversion_data_base_2_c_
+#define _di_f_conversion_data_base_8_c_
 #define _di_f_conversion_data_c_
 #define _di_f_conversion_data_flag_d_
 #define _di_f_conversion_data_t_
