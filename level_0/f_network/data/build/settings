@@ -30,11 +30,11 @@ build_indexer_arguments rcs
 build_language c
 
 build_libraries -lc
-build_libraries-individual
+build_libraries-individual -lf_memory -lf_string
 
 build_sources_library network.c
 
-build_sources_headers network.h
+build_sources_headers network.h network/common.h
 
 build_script yes
 build_shared yes

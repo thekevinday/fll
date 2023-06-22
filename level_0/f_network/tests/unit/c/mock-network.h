@@ -15,6 +15,7 @@
 #include <stddef.h>
 #include <setjmp.h>
 #include <stdint.h>
+#include <string.h>
 
 // cmocka includes.
 #include <cmocka.h>
@@ -30,8 +31,10 @@ const static int mock_errno_generic = 32767;
 
 extern uint32_t __wrap_htonl(uint32_t hostlong);
 extern uint16_t __wrap_htons(uint16_t hostshort);
+const char *__wrap_inet_ntop(int af, const void *src, char *dst, socklen_t size);
 extern uint32_t __wrap_ntohl(uint32_t netlong);
 extern uint16_t __wrap_ntohs(uint16_t netshort);
+extern int __wrap_inet_pton(int af, const char *src, void *dst);
 
 #ifdef __cplusplus
 } // extern "C"

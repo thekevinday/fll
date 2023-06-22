@@ -21,6 +21,7 @@
 #include <cmocka.h>
 
 // FLL-0 includes.
+#include <fll/level_0/string.h>
 #include <fll/level_0/network.h>
 
 // Mock includes.
@@ -29,8 +30,10 @@
 // Test includes.
 #include "test-network-from_host_long.h"
 #include "test-network-from_host_short.h"
+#include "test-network-from_ip_string.h"
 #include "test-network-to_host_long.h"
 #include "test-network-to_host_short.h"
+#include "test-network-to_ip_string.h"
 
 #ifdef __cplusplus
 extern "C" {

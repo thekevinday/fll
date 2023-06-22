@@ -22,7 +22,7 @@ build_libraries-individual
 
 build_sources_library network.c ../../tests/unit/c/mock-network.c
 
-build_sources_headers network.h
+build_sources_headers network.h network/common.h
 
 build_script yes
 build_shared yes
@@ -50,5 +50,7 @@ flags_library -fPIC
 # Inject mocks.
 flags -Wl,--wrap=htonl
 flags -Wl,--wrap=htons
+flags -Wl,--wrap=inet_ntop
+flags -Wl,--wrap=inet_pton
 flags -Wl,--wrap=ntohl
 flags -Wl,--wrap=ntohs

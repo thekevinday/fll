@@ -106,7 +106,7 @@ build_sources_headers fss.h fss/comment.h fss/common.h fss/delimit.h fss/named.h
 build_sources_headers iki.h iki/common.h iki/data.h
 build_sources_headers limit.h limit/set.h limit/value.h
 build_sources_headers memory.h memory/structure.h memory/common.h
-build_sources_headers network.h
+build_sources_headers network.h network/common.h
 build_sources_headers parse.h parse/utf.h
 build_sources_headers path.h path/common.h
 build_sources_headers pipe.h
