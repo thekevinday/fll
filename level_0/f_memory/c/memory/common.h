@@ -5,7 +5,7 @@
  * API Version: 0.7
  * Licenses: lgpl-2.1-or-later
  *
- * Defines iki common data.
+ * Defines memory common data.
  *
  * This is auto-included by memory.h and should not need to be explicitly included.
  */
