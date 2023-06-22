@@ -78,9 +78,7 @@ extern "C" {
       if (!socket) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (socket->domain != f_socket_domain_file_d) {
-      return F_status_set_error(F_local_not);
-    }
+    if (socket->domain != f_socket_domain_file_d) return F_status_set_error(F_local_not);
 
     memset(socket->address, 0, sizeof(struct sockaddr_un));
 
@@ -329,9 +327,7 @@ extern "C" {
     }
 
     {
-      const int result = gethostname(name->string, (size_t) (name->used ? (name->size - name->used) : name->size));
-
-      if (result < 0) {
+      if (gethostname(name->string, (size_t) (name->used ? (name->size - name->used) : name->size)) == -1) {
         if (errno == EFAULT) return F_status_set_error(F_buffer);
         if (errno == EINVAL) return F_status_set_error(F_parameter);
         if (errno == ENAMETOOLONG) return F_status_set_error(F_string_too_large);
@@ -355,9 +351,7 @@ extern "C" {
       if (!socket) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    const int result = getpeername(socket->id, socket->address, &socket->length);
-
-    if (result < 0) {
+    if (getpeername(socket->id, socket->address, &socket->length) == -1) {
       if (errno == EBADF) return F_status_set_error(F_file_descriptor);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
       if (errno == EINVAL) return F_status_set_error(F_parameter);
