@@ -32,7 +32,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from f_string_dynamic_increase_by().
+ *   Errors (with error bit) from: f_string_dynamic_increase_by().
  *
  * @see f_string_dynamic_increase_by()
  */

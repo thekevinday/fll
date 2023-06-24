@@ -382,7 +382,14 @@ extern "C" {
       } // for
     }
 
-    if (!(main->program.parameters.array[utf8_parameter_from_file_e].result & f_console_result_found_e) && !((main->program.pipe & fll_program_data_pipe_input_e) || main->program.parameters.remaining.used)) {
+    if (main->program.pipe & fll_program_data_pipe_input_e) {
+      main->setting.flag |= utf8_main_flag_pipe_e;
+    }
+    else {
+      main->setting.flag -= main->setting.flag & utf8_main_flag_pipe_e;
+    }
+
+    if (!((main->setting.flag & (fss_identify_main_flag_pipe_e | utf8_main_flag_file_from_e)) || main->program.parameters.remaining.used)) {
       main->setting.state.status = F_status_set_error(F_parameter);
 
       if ((main->setting.flag & utf8_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
@@ -434,10 +441,6 @@ extern "C" {
     }
 
     main->setting.valid_not = main->program.message.set->error;
-
-    if (main->program.pipe & fll_program_data_pipe_input_e) {
-      main->setting.flag |= utf8_main_flag_pipe_e;
-    }
   }
 #endif // _di_utf8_setting_load_
 

@@ -53,8 +53,8 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from f_string_append();
- *   Errors (with error bit) from f_string_dynamics_increase_by();
+ *   Errors (with error bit) from: f_string_append();
+ *   Errors (with error bit) from: f_string_dynamics_increase_by();
  *
  * @see f_string_append()
  * @see f_string_dynamics_increase_by()
@@ -121,7 +121,7 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from f_string_ranges_increase()
+ *   Errors (with error bit) from: f_string_ranges_increase()
  *
  * @see f_string_ranges_increase()
  */
@@ -182,8 +182,8 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from f_string_dynamic_append();
- *   Errors (with error bit) from f_string_dynamic_append_assure();
+ *   Errors (with error bit) from: f_string_dynamic_append();
+ *   Errors (with error bit) from: f_string_dynamic_append_assure();
  *
  * @see f_string_dynamic_append()
  * @see f_string_dynamic_append_assure()

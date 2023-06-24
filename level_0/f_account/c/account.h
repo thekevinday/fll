@@ -54,7 +54,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_failure (with error bit) on any other error.
  *
- *   Errors (with error bit) from f_string_dynamic_increase_by().
+ *   Errors (with error bit) from: f_string_dynamic_increase_by().
  *
  * @see getpwuid_r()
  * @see sysconf()
@@ -87,7 +87,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_failure (with error bit) on any other error.
  *
- *   Errors (with error bit) from f_string_dynamic_increase_by().
+ *   Errors (with error bit) from: f_string_dynamic_increase_by().
  *
  * @see getpwnam_r()
  *
@@ -145,7 +145,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_failure (with error bit) on any other error.
  *
- *   Errors (with error bit) from f_string_dynamic_increase_by().
+ *   Errors (with error bit) from: f_string_dynamic_increase_by().
  *
  * @see getgrgid_r()
  *
@@ -203,7 +203,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_failure (with error bit) on any other error.
  *
- *   Errors (with error bit) from f_string_dynamic_increase_by().
+ *   Errors (with error bit) from: f_string_dynamic_increase_by().
  *
  * @see getpwuid_r()
  *

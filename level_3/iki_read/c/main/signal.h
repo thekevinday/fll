@@ -68,8 +68,8 @@ extern "C" {
  *   This alters main.program.signal_received, setting it to a received signal.
  *
  *   This alters setting.status:
- *     Errors with (error bit set) from: f_signal_open()
- *     Errors with (error bit set) from: f_signal_wait()
+ *     Errors (with error bit) from: f_signal_open()
+ *     Errors (with error bit) from: f_signal_wait()
  *
  * @see f_signal_close()
  * @see f_signal_open()

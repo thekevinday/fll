@@ -103,7 +103,7 @@ extern "C" {
  *   This alters main.custom.setting.state.status:
  *     status from fss_write_process_normal_data().
  *
- *     Errors (with error bit) from fss_write_process_normal_data().
+ *     Errors (with error bit) from: fss_write_process_normal_data().
  *
  * @see fss_write_process_normal_data()
  */
