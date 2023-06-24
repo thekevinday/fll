@@ -17,6 +17,7 @@
 #include <fcntl.h>
 #include <libgen.h>
 #include <limits.h>
+#include <poll.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -1534,6 +1535,47 @@ extern "C" {
 #ifndef _di_f_file_owner_read_
   extern f_status_t f_file_owner_read(const f_string_static_t path, const bool dereference, uid_t * const owner);
 #endif // _di_f_file_owner_read_
+
+/**
+ * Perform poll on the one of more file descriptors.
+ *
+ * This is a general wrapper around poll.
+ * For more specialized use cases look at f_signal_read().
+ *
+ * This does not check the revent codes in the polls array.
+ *
+ * @todo There also needs to be a ppoll function like this, f_file_poll_lock() perhaps.
+ *
+ * @param polls
+ *   An array of polls representing all file descriptors to poll at once.
+ *
+ *   Warning: The max array length for used is limited to nfds_t which might be different from f_number_unsigned_t.
+ *   The nfds_t is often either uint32_t or an uint64_t.
+ *   The f_number_unsigned_t is often an uint64_t.
+ *
+ *   When a file descriptor (polls.array[].fd) is set to -1, then the file descriptor is ignored and the return events (polls.array[].revents) is set to 0.
+ * @param timeout
+ *   The number of milliseconds that the poll will block, waiting for a file descriptor.
+ *   Once time out is reach, then this will unblock and return.
+ *
+ *   A value of 0 results in immediate return.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not if polls.used is 0.
+ *   F_time_out if time out is reached befoe a signal is received.
+ *
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_interrupt (with error bit) if interrupt was received.
+ *   F_memory_not (with error bit) if out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_failure (with error bit) for any other error.
+ *
+ * @see poll()
+ */
+#ifndef _di_f_file_poll_
+  extern f_status_t f_file_poll(const f_polls_t polls, const int timeout);
+#endif // _di_f_file_poll_
 
 /**
  * Read until EOF is reached.

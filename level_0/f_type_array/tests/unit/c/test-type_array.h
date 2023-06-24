@@ -21,8 +21,10 @@
 
 // fll-0 includes.
 #include <fll/level_0/type.h>
+#include <fll/level_0/type_file.h>
 #include <fll/level_0/memory.h>
 #include <fll/level_0/type_array.h>
+#include <fll/level_0/type_array_file.h>
 
 // Test includes.
 #include "test-type_array-cells_adjust.h"
@@ -153,6 +155,22 @@
 #include "test-type_array-number_unsignedss_increase.h"
 #include "test-type_array-number_unsignedss_increase_by.h"
 #include "test-type_array-number_unsignedss_resize.h"
+#include "test-type_array-polls_adjust.h"
+#include "test-type_array-polls_append.h"
+#include "test-type_array-polls_append_all.h"
+#include "test-type_array-polls_decimate_by.h"
+#include "test-type_array-polls_decrease_by.h"
+#include "test-type_array-polls_increase.h"
+#include "test-type_array-polls_increase_by.h"
+#include "test-type_array-polls_resize.h"
+#include "test-type_array-pollss_adjust.h"
+#include "test-type_array-pollss_append.h"
+#include "test-type_array-pollss_append_all.h"
+#include "test-type_array-pollss_decimate_by.h"
+#include "test-type_array-pollss_decrease_by.h"
+#include "test-type_array-pollss_increase.h"
+#include "test-type_array-pollss_increase_by.h"
+#include "test-type_array-pollss_resize.h"
 #include "test-type_array-states_adjust.h"
 #include "test-type_array-states_append.h"
 #include "test-type_array-states_append_all.h"

@@ -210,6 +210,10 @@ int main(void) {
     cmocka_unit_test(test__f_file_owner_read__returns_data_not),
     cmocka_unit_test(test__f_file_owner_read__works),
 
+    cmocka_unit_test(test__f_file_poll__fails),
+    cmocka_unit_test(test__f_file_poll__returns_data_not),
+    cmocka_unit_test(test__f_file_poll__works),
+
     cmocka_unit_test(test__f_file_read__fails),
     cmocka_unit_test(test__f_file_read__returns_file_descriptor_not),
     cmocka_unit_test(test__f_file_read__works),
@@ -414,6 +418,7 @@ int main(void) {
       cmocka_unit_test(test__f_file_open__parameter_checking),
       cmocka_unit_test(test__f_file_open_at__parameter_checking),
       cmocka_unit_test(test__f_file_owner_read__parameter_checking),
+      // f_file_poll() doesn't use parameter checking.
       cmocka_unit_test(test__f_file_read__parameter_checking),
       cmocka_unit_test(test__f_file_read_block__parameter_checking),
       cmocka_unit_test(test__f_file_read_until__parameter_checking),

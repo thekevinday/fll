@@ -67,11 +67,17 @@ int main(void) {
     cmocka_unit_test(test__f_socket_read_message__fails),
     cmocka_unit_test(test__f_socket_read_message__works),
 
+    cmocka_unit_test(test__f_socket_read_stream__fails),
+    cmocka_unit_test(test__f_socket_read_stream__works),
+
     cmocka_unit_test(test__f_socket_write__fails),
     cmocka_unit_test(test__f_socket_write__works),
 
     cmocka_unit_test(test__f_socket_write_message__fails),
     cmocka_unit_test(test__f_socket_write_message__works),
+
+    cmocka_unit_test(test__f_socket_write_stream__fails),
+    cmocka_unit_test(test__f_socket_write_stream__works),
 
     #ifndef _di_level_0_parameter_checking_
       cmocka_unit_test(test__f_socket_accept__parameter_checking),
@@ -87,8 +93,10 @@ int main(void) {
       cmocka_unit_test(test__f_socket_option_set__parameter_checking),
       cmocka_unit_test(test__f_socket_read__parameter_checking),
       cmocka_unit_test(test__f_socket_read_message__parameter_checking),
+      cmocka_unit_test(test__f_socket_read_stream__parameter_checking),
       cmocka_unit_test(test__f_socket_write__parameter_checking),
       cmocka_unit_test(test__f_socket_write_message__parameter_checking),
+      cmocka_unit_test(test__f_socket_write_stream__parameter_checking),
     #endif // _di_level_0_parameter_checking_
   };
 

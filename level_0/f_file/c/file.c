@@ -1578,6 +1578,26 @@ extern "C" {
   }
 #endif // _di_f_file_owner_read_
 
+#ifndef _di_f_file_poll_
+  f_status_t f_file_poll(const f_polls_t polls, const int timeout) {
+
+    if (!polls.used) return F_data_not;
+
+    const int result = poll(polls.array, (nfds_t) polls.used, timeout);
+
+    if (result == -1) {
+      if (errno == EFAULT) return F_status_set_error(F_buffer);
+      if (errno == EINTR) return F_status_set_error(F_interrupt);
+      if (errno == EINVAL) return F_status_set_error(F_parameter);
+      if (errno == ENOMEM) return F_status_set_error(F_memory_not);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return result ? F_none : F_time_out;
+  }
+#endif // _di_f_file_poll_
+
 #ifndef _di_f_file_read_
   f_status_t f_file_read(const f_file_t file, f_string_dynamic_t * const buffer) {
     #ifndef _di_level_0_parameter_checking_

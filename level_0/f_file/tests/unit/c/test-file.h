@@ -66,6 +66,7 @@
 #include "test-file-open.h"
 #include "test-file-open_at.h"
 #include "test-file-owner_read.h"
+#include "test-file-poll.h"
 #include "test-file-read.h"
 #include "test-file-read_block.h"
 #include "test-file-read_until.h"

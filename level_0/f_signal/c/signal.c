@@ -119,11 +119,7 @@ extern "C" {
       if (!information) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    struct pollfd data_poll;
-    memset(&data_poll, 0, sizeof(struct pollfd));
-
-    data_poll.fd = signal.id;
-    data_poll.events = POLLIN;
+    f_poll_t data_poll = macro_f_poll_t_initialize_2(signal.id, POLLIN);
 
     const int result = poll(&data_poll, 1, timeout);
 
@@ -137,17 +133,9 @@ extern "C" {
     }
 
     if (result) {
-      if (data_poll.revents & POLLNVAL) {
-        return F_status_set_error(F_parameter);
-      }
-
-      if (data_poll.revents & POLLHUP) {
-        return F_status_set_error(F_file_closed);
-      }
-
-      if (data_poll.revents & POLLERR) {
-        return F_status_set_error(F_stream);
-      }
+      if (data_poll.revents & POLLNVAL) return F_status_set_error(F_parameter);
+      if (data_poll.revents & POLLHUP) return F_status_set_error(F_file_closed);
+      if (data_poll.revents & POLLERR) return F_status_set_error(F_stream);
 
       if (data_poll.revents & POLLIN) {
         const ssize_t total = read(signal.id, information, sizeof(struct signalfd_siginfo));

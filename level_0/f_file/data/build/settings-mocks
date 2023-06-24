@@ -97,6 +97,7 @@ flags -Wl,--wrap=mkfifo
 flags -Wl,--wrap=mkfifoat
 flags -Wl,--wrap=mknod
 flags -Wl,--wrap=mknodat
+flags -Wl,--wrap=poll
 flags -Wl,--wrap=open
 flags -Wl,--wrap=openat
 flags -Wl,--wrap=read

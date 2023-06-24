@@ -18,6 +18,7 @@
 // Libc includes.
 #include <stdio.h>
 #include <fcntl.h>
+#include <poll.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -184,6 +185,70 @@ extern "C" {
     file.size_read = F_file_default_size_read_d; \
     file.size_write = F_file_default_size_write_d;
 #endif // _di_f_file_t_
+
+/**
+ * A typdef for representing struct pollfd.
+ */
+#ifndef _di_f_poll_t_
+  typedef struct pollfd f_poll_t;
+
+  #define f_poll_t_initialize { 0 }
+
+  #define macro_f_poll_t_initialize_1(fd, events, revents) { fd, events, revents }
+  #define macro_f_poll_t_initialize_2(fd, events) { fd, events, 0 }
+  #define macro_f_poll_t_initialize_3(fd) { fd, 0, 0 }
+  #define macro_f_poll_t_initialize_4(events) { 0, events, 0 }
+#endif // _di_f_poll_t_
+
+/**
+ * An array of pollfd structures.
+ *
+ * The macros are defined in type_array.h or type_array-common.h.
+ *
+ * If used for functions like poll() (a common use) then the max array length for used is limited to nfds_t which might be different from f_number_unsigned_t.
+ * The nfds_t is often either uint32_t or an uint64_t.
+ * The f_number_unsigned_t is often an uint64_t.
+ *
+ * array: An array of f_poll_t.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
+ */
+#ifndef _di_f_polls_t_
+  typedef struct {
+    f_poll_t *array;
+
+    f_number_unsigned_t size;
+    f_number_unsigned_t used;
+  } f_polls_t;
+
+  #define f_polls_t_initialize { 0, 0, 0 }
+
+  #define macro_f_polls_t_initialize_1(array, size, used) { array, size, used }
+  #define macro_f_polls_t_initialize_2(array, length) { array, length, length }
+#endif // _di_f_polls_t_
+
+/**
+ * An array of f_polls_t.
+ *
+ * The macros are defined in type_array.h or type_array-common.h.
+ *
+ * array: The array of f_polls_t.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
+ */
+#ifndef _di_f_pollss_t_
+  typedef struct {
+    f_polls_t *array;
+
+    f_number_unsigned_t size;
+    f_number_unsigned_t used;
+  } f_pollss_t;
+
+  #define f_pollss_t_initialize { 0, 0, 0 }
+
+  #define macro_f_pollss_t_initialize_1(array, size, used) { array, size, used }
+  #define macro_f_pollss_t_initialize_2(array, length) { array, length, length }
+#endif // _di_f_pollss_t_
 
 #ifdef __cplusplus
 } // extern "C"

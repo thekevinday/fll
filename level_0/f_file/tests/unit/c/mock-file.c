@@ -494,6 +494,21 @@ int __wrap_openat(int dirfd, const char *pathname, int flags, mode_t mode) {
   return mock_type(int);
 }
 
+int __wrap_poll(struct pollfd *fds, nfds_t nfds, int timeout) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    errno = mock_type(int);
+
+    return -1;
+  }
+
+  fds->revents = mock_type(short);
+
+  return mock_type(int);
+}
+
 ssize_t __wrap_read(int fd, void *buf, size_t count) {
 
   const bool failure = mock_type(bool);

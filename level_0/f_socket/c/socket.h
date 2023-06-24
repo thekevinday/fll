@@ -462,6 +462,8 @@ extern "C" {
 /**
  * Read from a socket.
  *
+ * This is the recommneded way to read UDP streams.
+ *
  * @param socket
  *   The socket structure.
  *   The socket.id must represent a valid socket file descriptor.
@@ -548,7 +550,56 @@ extern "C" {
 #endif // _di_f_socket_read_message_
 
 /**
+ * Read from a socket stream.
+ *
+ * This is the recommneded way to read TCP streams.
+ *
+ * @param socket
+ *   The socket structure.
+ *   The socket.id must represent a valid socket file descriptor.
+ *   The socket.size_read is used to represent the buffer size in buffer and must not be larger than the actual size of the buffer.
+ * @param flags
+ *   Read flags.
+ * @param buffer
+ *   The buffer to populate.
+ * @param length
+ *   (optional) The length of the buffer.
+ *   This gets replaced with the value of a positive ssize_t representing the length read.
+ *   Data may be lost if the amount of data read is larger than given buffer length.
+ *   Set to NULL to not use.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_access_denied (with error bit) on access denied.
+ *   F_complete_not (with error bit) if an existing connection is not yet complete.
+ *   F_connect_not (with error bit) if the socket is not connected.
+ *   F_connect_refuse (with error bit) if connection is refused.
+ *   F_connect_reset (with error bit) if connection is reset.
+ *   F_block (with error bit) if socket is blocked.
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_file_descriptor (with error bit) if id is an invalid descriptor.
+ *   F_interrupt (with error bit) if interrupt is received.
+ *   F_memory_not (with error bit) if out of memory.
+ *   F_option_not (with error bit) if a flag is not supported.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_pipe (with error bit) if the local end of a connection oriented socket is closed or SIGPIPE is received.
+ *   F_prohibited (with error bit) if the insufficient privileges to perform read.
+ *   F_socket_not (with error bit) if the id is not a socket descriptor.
+ *   F_time_out (with error bit) if a timeout occurred.
+ *
+ *   F_failure (with error bit) for any other error.
+ *
+ * @see recv()
+ */
+#ifndef _di_f_socket_read_stream_
+  extern f_status_t f_socket_read_stream(f_socket_t * const socket, const int flags, void * const buffer, size_t * const length);
+#endif // _di_f_socket_read_stream_
+
+/**
  * Send to a socket.
+ *
+ * This is the recommneded way to write UDP streams.
  *
  * @param socket
  *   The socket structure.
@@ -642,6 +693,57 @@ extern "C" {
 #ifndef _di_f_socket_write_message_
   extern f_status_t f_socket_write_message(f_socket_t * const socket, const int flags, struct msghdr * const header, size_t * const length);
 #endif // _di_f_socket_write_message_
+
+/**
+ * Send to a socket.
+ *
+ * This is the recommneded way to write TCP streams.
+ *
+ * @param socket
+ *   The socket structure.
+ *   The socket.id must represent a valid socket file descriptor.
+ *   The socket.size_write is used to represent the buffer size in buffer and must not be larger than the actual size of the buffer.
+ * @param flags
+ *   Read flags.
+ * @param buffer
+ *   The buffer to populate.
+ * @param length
+ *   (optional) The length of the buffer.
+ *   This gets replaced with the value of a positive ssize_t representing the length send.
+ *   Data may be lost if the amount of data send is larger than given buffer length.
+ *   Set to NULL to not use.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_access_denied (with error bit) on access denied.
+ *   F_address_not (with error bit) if no address is provided and the connection is not "connection-mode".
+ *   F_buffer_not (with error bit) if unable to send message because output buffer is full.
+ *   F_complete_not (with error bit) if an existing connection is not yet complete.
+ *   F_connect (with error bit) if an address is provided and the connection is "connection-mode".
+ *   F_connect_not (with error bit) if the socket is not connected.
+ *   F_connect_refuse (with error bit) if connection is refused.
+ *   F_connect_reset (with error bit) if connection is reset.
+ *   F_block (with error bit) if socket is blocked.
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_file_descriptor (with error bit) if id is an invalid descriptor.
+ *   F_interrupt (with error bit) if interrupt is received.
+ *   F_memory_not (with error bit) if out of memory.
+ *   F_option_not (with error bit) if a flag is not supported.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_pipe (with error bit) if the local end of a connection oriented socket is closed or SIGPIPE is received.
+ *   F_prohibited (with error bit) if the insufficient privileges to perform send.
+ *   F_size (with error bit) if size of message makes atomically sending message impossible on a socket type that requires this to be atomic.
+ *   F_socket_not (with error bit) if the id is not a socket descriptor.
+ *   F_time_out (with error bit) if a timeout occurred.
+ *
+ *   F_failure (with error bit) for any other error.
+ *
+ * @see send()
+ */
+#ifndef _di_f_socket_write_stream_
+  extern f_status_t f_socket_write_stream(f_socket_t * const socket, const int flags, void * const buffer, size_t * const length);
+#endif // _di_f_socket_write_stream_
 
 #ifdef __cplusplus
 } // extern "C"

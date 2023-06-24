@@ -108,6 +108,19 @@ int __wrap_listen(int sockfd, int backlog) {
   return 0;
 }
 
+ssize_t __wrap_recv(int sockfd, void *buf, size_t len, int flags) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    errno = mock_type(int);
+
+    return -1;
+  }
+
+  return mock_type(int);
+}
+
 ssize_t __wrap_recvfrom(int sockfd, void *buf, size_t len, int flags, struct sockaddr *src_addr, socklen_t *addrlen) {
 
   const bool failure = mock_type(bool);
@@ -122,6 +135,19 @@ ssize_t __wrap_recvfrom(int sockfd, void *buf, size_t len, int flags, struct soc
 }
 
 ssize_t __wrap_recvmsg(int sockfd, struct msghdr *msg, int flags) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    errno = mock_type(int);
+
+    return -1;
+  }
+
+  return mock_type(int);
+}
+
+ssize_t __wrap_send(int sockfd, const void *buf, size_t len, int flags) {
 
   const bool failure = mock_type(bool);
 

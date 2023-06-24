@@ -19,6 +19,7 @@
 
 // FLL-0 includes.
 #include <fll/level_0/type.h>
+#include <fll/level_0/type_file.h>
 #include <fll/level_0/status.h>
 
 // FLL-0 signal includes.
@@ -176,6 +177,10 @@ extern "C" {
 
 /**
  * Read a current process signal, if one exists.
+ *
+ * For a more generalized call to poll() look at f_file_poll().
+ *
+ * @todo This may be better suited for calling ppoll() instead of poll().
  *
  * @param signal
  *   The signal settings.

@@ -40,8 +40,10 @@
 #include "test-socket-option_set.h"
 #include "test-socket-read.h"
 #include "test-socket-read_message.h"
+#include "test-socket-read_stream.h"
 #include "test-socket-write.h"
 #include "test-socket-write_message.h"
+#include "test-socket-write_stream.h"
 
 #ifdef __cplusplus
 extern "C" {

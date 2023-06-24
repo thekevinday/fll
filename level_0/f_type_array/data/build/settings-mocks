@@ -1,0 +1,66 @@
+# fss-0001
+#
+# Build the project with appropriate mocks linked in via the dynamic linker's "--wrap" functionality.
+#
+# The -Wl,--wrap does not work across shared files.
+# Therefore, this file is a work-around to inject the mocks into the library for testing purposes.
+# This should exactly match the "settings" file, except for the additional "-Wl,--wrap" parts and the additional mock source file.
+#
+# The flags -o0 must be passed to prevent the compiler from optimizing away any functions being mocked (which results in the mock not happening and a real function being called).
+# Alternatively, figure out which optimization that is disabled by -o0 and have that specific optimization disabled.
+#
+
+build_name f_type_array
+
+version_major 0
+version_minor 7
+version_micro 0
+version_file micro
+version_target minor
+
+modes individual clang test coverage
+modes_default individual test
+
+build_compiler gcc
+build_compiler-clang clang
+build_indexer ar
+build_indexer_arguments rcs
+build_language c
+
+build_libraries -lc
+build_libraries-individual -lf_memory
+
+build_sources_library type_array/cell.c type_array/fll_id.c type_array/int8.c type_array/int16.c type_array/int32.c type_array/int64.c type_array/int128.c type_array/number_unsigned.c type_array/poll.c type_array/state.c type_array/status.c type_array/uint8.c type_array/uint16.c type_array/uint32.c type_array/uint64.c type_array/uint128.c
+build_sources_library type_array/private-cell.c type_array/private-fll_id.c type_array/private-int8.c type_array/private-int16.c type_array/private-int32.c type_array/private-int64.c type_array/private-int128.c type_array/private-number_unsigned.c type_array/private-poll.c type_array/private-state.c type_array/private-status.c type_array/private-uint8.c type_array/private-uint16.c type_array/private-uint32.c type_array/private-uint64.c type_array/private-uint128.c
+build_sources_library ../../tests/unit/c/mock-type_array.c
+
+build_sources_headers type_array.h type_array_file.h type_array/common.h type_array/cell.h type_array/fll_id.h type_array/int8.h type_array/int16.h type_array/int32.h type_array/int64.h type_array/int128.h type_array/number_unsigned.h type_array/poll.h type_array/state.h type_array/status.h type_array/uint8.h type_array/uint16.h type_array/uint32.h type_array/uint64.h type_array/uint128.h
+
+build_script yes
+build_shared yes
+build_static no
+
+path_headers fll/level_0
+path_library_script script
+path_library_shared shared
+path_library_static static
+
+has_path_standard yes
+preserve_path_headers yes
+
+search_exclusive yes
+search_shared yes
+search_static yes
+
+environment PATH LD_LIBRARY_PATH
+environment LANG LC_ALL LC_COLLATE LC_CTYPE LC_FASTMSG LC_MESSAGES LC_MONETARY LC_NUMERIC LC_TIME LOCPATH NLSPATH
+
+flags -O0 -z now -g -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-parentheses
+flags-clang -Wno-logical-op-parentheses
+flags-test -fstack-protector -Wall -Wno-missing-braces
+flags-coverage --coverage -fprofile-abs-path -fprofile-dir=build/coverage/
+
+flags_library -fPIC
+
+# Inject mocks.
+flags -Wl,--wrap=poll

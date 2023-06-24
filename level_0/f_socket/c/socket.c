@@ -444,6 +444,45 @@ extern "C" {
   }
 #endif // _di_f_socket_read_message_
 
+#ifndef _di_f_socket_read_stream_
+  f_status_t f_socket_read_stream(f_socket_t * const socket, const int flags, void * const buffer, size_t * const length) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!socket) return F_status_set_error(F_parameter);
+      if (!buffer) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    const ssize_t result = recv(socket->id, buffer, socket->size_read, flags);
+
+    if (result < 0) {
+      if (errno == EACCES) return F_status_set_error(F_access_denied);
+      if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
+      if (errno == EALREADY) return F_status_set_error(F_complete_not);
+      if (errno == EBADF) return F_status_set_error(F_file_descriptor);
+      if (errno == ECONNREFUSED) return F_status_set_error(F_connect_refuse);
+      if (errno == ECONNRESET) return F_status_set_error(F_connect_reset);
+      if (errno == EDESTADDRREQ) return F_status_set_error(F_address_not);
+      if (errno == EFAULT) return F_status_set_error(F_buffer);
+      if (errno == EINTR) return F_status_set_error(F_interrupt);
+      if (errno == EINVAL) return F_status_set_error(F_parameter);
+      if (errno == ENOMEM) return F_status_set_error(F_memory_not);
+      if (errno == ENOTCONN) return F_status_set_error(F_connect_not);
+      if (errno == ENOTSOCK) return F_status_set_error(F_socket_not);
+      if (errno == EOPNOTSUPP) return F_status_set_error(F_option_not);
+      if (errno == EPERM) return F_status_set_error(F_prohibited);
+      if (errno == EPIPE) return F_status_set_error(F_pipe);
+      if (errno == ETIMEDOUT) return F_status_set_error(F_time_out);
+
+      return F_status_set_error(F_failure);
+    }
+
+    if (length) {
+      *length = (size_t) result;
+    }
+
+    return F_none;
+  }
+#endif // _di_f_socket_read_stream_
+
 #ifndef _di_f_socket_write_
   f_status_t f_socket_write(f_socket_t * const socket, const int flags, void * const buffer, size_t * const length) {
     #ifndef _di_level_0_parameter_checking_
@@ -527,6 +566,48 @@ extern "C" {
     return F_none;
   }
 #endif // _di_f_socket_write_message_
+
+#ifndef _di_f_socket_write_stream_
+  f_status_t f_socket_write_stream(f_socket_t * const socket, const int flags, void * const buffer, size_t * const length) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!socket) return F_status_set_error(F_parameter);
+      if (!buffer) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    const ssize_t result = send(socket->id, buffer, socket->size_write, flags);
+
+    if (result < 0) {
+      if (errno == EACCES) return F_status_set_error(F_access_denied);
+      if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
+      if (errno == EALREADY) return F_status_set_error(F_complete_not);
+      if (errno == EBADF) return F_status_set_error(F_file_descriptor);
+      if (errno == ECONNREFUSED) return F_status_set_error(F_connect_refuse);
+      if (errno == ECONNRESET) return F_status_set_error(F_connect_reset);
+      if (errno == EDESTADDRREQ) return F_status_set_error(F_address_not);
+      if (errno == EFAULT) return F_status_set_error(F_buffer);
+      if (errno == EINTR) return F_status_set_error(F_interrupt);
+      if (errno == EINVAL) return F_status_set_error(F_parameter);
+      if (errno == EISCONN) return F_status_set_error(F_connect);
+      if (errno == EMSGSIZE) return F_status_set_error(F_size);
+      if (errno == ENOBUFS) return F_status_set_error(F_buffer_not);
+      if (errno == ENOMEM) return F_status_set_error(F_memory_not);
+      if (errno == ENOTCONN) return F_status_set_error(F_connect_not);
+      if (errno == ENOTSOCK) return F_status_set_error(F_socket_not);
+      if (errno == EOPNOTSUPP) return F_status_set_error(F_option_not);
+      if (errno == EPERM) return F_status_set_error(F_prohibited);
+      if (errno == EPIPE) return F_status_set_error(F_pipe);
+      if (errno == ETIMEDOUT) return F_status_set_error(F_time_out);
+
+      return F_status_set_error(F_failure);
+    }
+
+    if (length) {
+      *length = (size_t) result;
+    }
+
+    return F_none;
+  }
+#endif // _di_f_socket_write_stream_
 
 #ifdef __cplusplus
 } // extern "C"
