@@ -60,4 +60,4 @@ ld_library_path:
     define LD_LIBRARY_PATH 'parameter:"build_path"libraries/shared:parameter:"work:value"libraries/shared'
 
   else
-    define LD_LIBRARY_PATH parameter:"build_path"libraries/shared
+    define LD_LIBRARY_PATH 'parameter:"build_path"libraries/shared'
