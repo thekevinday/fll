@@ -77,6 +77,7 @@
 #include "test-file-role_change.h"
 #include "test-file-role_change_at.h"
 #include "test-file-seek.h"
+#include "test-file-select.h"
 #include "test-file-size.h"
 #include "test-file-size_at.h"
 #include "test-file-size_by_id.h"

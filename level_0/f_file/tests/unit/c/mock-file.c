@@ -602,6 +602,19 @@ int __wrap_renameat2(int olddirfd, const char *oldpath, int newdirfd, const char
   return mock_type(int);
 }
 
+int __wrap_select(int nfds, fd_set *readfds, fd_set *writefds, fd_set *exceptfds, struct timeval *timeout) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    errno = mock_type(int);
+
+    return -1;
+  }
+
+  return mock_type(int);
+}
+
 int __wrap_stat(const char *pathname, struct stat *statbuf) {
 
   const bool failure = mock_type(bool);

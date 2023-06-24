@@ -106,6 +106,7 @@ flags -Wl,--wrap=readlinkat
 flags -Wl,--wrap=rename
 flags -Wl,--wrap=renameat
 flags -Wl,--wrap=renameat2
+flags -Wl,--wrap=select
 flags -Wl,--wrap=stat
 flags -Wl,--wrap=symlink
 flags -Wl,--wrap=symlinkat

@@ -73,6 +73,7 @@ extern ssize_t __wrap_readlinkat(int dirfd, const char *pathname, char *buf, siz
 extern int __wrap_rename(const char *oldpath, const char *newpath);
 extern int __wrap_renameat(int olddirfd, const char *oldpath, int newdirfd, const char *newpath);
 extern int __wrap_renameat2(int olddirfd, const char *oldpath, int newdirfd, const char *newpath, unsigned int flags);
+extern int __wrap_select(int nfds, fd_set *readfds, fd_set *writefds, fd_set *exceptfds, struct timeval *timeout);
 extern int __wrap_stat(const char *pathname, struct stat *statbuf);
 extern int __wrap_symlink(const char *target, const char *linkpath);
 extern int __wrap_symlinkat(const char *target, int newdirfd, const char *linkpath);
