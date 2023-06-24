@@ -1858,7 +1858,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_failure (with error bit) on any other error.
  *
- * @see lseek
+ * @see lseek()
  */
 #ifndef _di_f_file_seek_
   extern f_status_t f_file_seek(const int id, const int whence, const off_t offset, off_t * const seeked);
