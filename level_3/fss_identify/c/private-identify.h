@@ -90,7 +90,7 @@ extern "C" {
  * @see fl_string_dynamic_compare_string()
  */
 #ifndef _di_fss_identify_process_name_compare_
-  f_status_t fss_identify_process_name_compare(fss_identify_data_t * const data, const f_fll_id_t id, const uint8_t mode) F_attribute_visibility_internal_d;
+  extern f_status_t fss_identify_process_name_compare(fss_identify_data_t * const data, const f_fll_id_t id, const uint8_t mode) F_attribute_visibility_internal_d;
 #endif // _di_fss_identify_process_name_compare_
 
 #ifdef __cplusplus
