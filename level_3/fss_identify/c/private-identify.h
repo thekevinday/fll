@@ -80,14 +80,16 @@ extern "C" {
  *   2 = Compare against the full name (such as "fss-0001" in "fss-0001").
  *
  * @return
- *   F_true on match.
- *   F_false on no match.
+ *   F_equal_to on match.
+ *   F_equal_to_not on no match.
  *
  *   Errors (with error bit) from: fl_conversion_dynamic_partial_to_hexidecimal_unsigned().
  *   Errors (with error bit) from: fl_string_dynamic_compare_string().
+ *   Errors (with error bit) from: fl_string_dynamic_partial_compare_string().
  *
  * @see fl_conversion_dynamic_partial_to_hexidecimal_unsigned()
  * @see fl_string_dynamic_compare_string()
+ * @see fl_string_dynamic_partial_compare_string()
  */
 #ifndef _di_fss_identify_process_name_compare_
   extern f_status_t fss_identify_process_name_compare(fss_identify_data_t * const data, const f_fll_id_t id, const uint8_t mode) F_attribute_visibility_internal_d;
