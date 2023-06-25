@@ -35,11 +35,11 @@ build_libraries-individual_thread -lf_thread
 build_libraries-level -lfll_2 -lfll_1 -lfll_0
 build_libraries-monolithic -lfll
 
-build_sources_library fss_identify.c common.c print.c private-common.c private-identify.c private-print.c
+build_sources_library main/common.c main/common/define.c main/common/enumeration.c main/common/print.c main/common/string.c main/common/type.c main/load.c main/print/data.c main/print/error.c main/print/message.c main/process.c main/signal.c main/thread.c main/fss_identify.c
 
-build_sources_program main.c
+build_sources_program main/main.c
 
-build_sources_headers fss_identify.h common.h print.h
+build_sources_headers main/common.h main/common/define.h main/common/enumeration.h main/common/print.h main/common/string.h main/common/type.h main/load.h main/print.h main/print/data.h main/print/error.h main/print/message.h main/process.h main/signal.h main/thread.h main/fss_identify.h
 
 build_sources_documentation man
 
