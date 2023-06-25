@@ -310,7 +310,7 @@ extern "C" {
       status = fss_identify_load_line(main, file, f_string_empty_s, &buffer, &range);
 
       if (F_status_is_error_not(status)) {
-        status = fss_identify_process(main, &data, f_string_ascii_minus_s, buffer, &range);
+        status = fss_identify_process(main, &data, f_string_empty_s, buffer, &range);
       }
     }
 
