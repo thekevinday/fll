@@ -283,7 +283,7 @@ extern "C" {
               fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, data.argv[index], main->error.notable);
               fl_print_format("%[' for the parameter '%]", main->error.to.stream, main->error.context, main->error.context);
               fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_identify_long_name_s, main->error.notable);
-              fl_print_format("%[' may only contain word characters or the dash (minus)y character.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
+              fl_print_format("%[' may only contain word characters or the dash (minus) character.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
               funlockfile(main->error.to.stream);
 
