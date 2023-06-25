@@ -242,48 +242,70 @@ extern "C" {
         status = F_status_set_error(F_parameter);
       }
       else if (main->parameters.array[fss_identify_parameter_name_e].result == f_console_result_additional_e) {
-        const f_array_length_t index = main->parameters.array[fss_identify_parameter_name_e].values.array[main->parameters.array[fss_identify_parameter_name_e].values.used - 1];
-        const f_array_length_t length = data.argv[index].used;
-        const f_string_range_t range = macro_f_string_range_t_initialize2(length);
+        data.names.used = 0;
 
-        if (length == 0) {
-          flockfile(main->error.to.stream);
+        status = f_string_dynamics_increase_by(main->parameters.array[fss_identify_parameter_name_e].values.used, &data.names);
 
-          fl_print_format("%r%[%QThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-          fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_identify_long_name_s, main->error.notable);
-          fl_print_format("%[' does not allow zero length strings.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
-
-          funlockfile(main->error.to.stream);
-
-          status = F_status_set_error(F_parameter);
+        if (F_status_is_error(status)) {
+          fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamics_increase_by", F_true);
         }
         else {
-          status = f_string_dynamic_resize(length, &data.name);
+          f_array_length_t index = 0;
+          f_array_length_t i = 0;
+          f_array_length_t j = 0;
 
-          if (F_status_is_error(status)) {
-            fll_error_print(main->error, F_status_set_fine(status), "f_utf_is_word", F_true);
-          }
-        }
+          for (; i < main->parameters.array[fss_identify_parameter_name_e].values.used; ++i) {
 
-        if (F_status_is_error_not(status)) {
+            index = main->parameters.array[fss_identify_parameter_name_e].values.array[i];
 
-          for (f_array_length_t i = range.start; i <= range.stop; ++i) {
+            if (data.argv[index].used) {
+              data.names.array[data.names.used].used = 0;
 
-            status = f_utf_is_word_dash(data.argv[index].string + i, length, F_true);
+              status = f_string_dynamic_append_nulless(data.argv[index], &data.names.array[data.names.used]);
 
-            if (F_status_is_error(status)) {
-              fll_error_print(main->error, F_status_set_fine(status), "f_utf_is_word_dash", F_true);
+              if (F_status_is_error(status)) {
+                fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_append_nulless", F_true);
 
-              break;
+                break;
+              }
+
+              for (j = 0; j < data.names.array[data.names.used].used; ++j) {
+
+                status = f_utf_is_word_dash(data.argv[index].string + j, data.argv[index].used, F_true);
+
+                if (F_status_is_error(status)) {
+                  fll_error_print(main->error, F_status_set_fine(status), "f_utf_is_word_dash", F_true);
+
+                  break;
+                }
+
+                if (status == F_false) {
+                  flockfile(main->error.to.stream);
+
+                  fl_print_format("%r%[%QThe value '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+                  fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, data.argv[index], main->error.notable);
+                  fl_print_format("%[' for the parameter '%]", main->error.to.stream, main->error.context, main->error.context);
+                  fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_identify_long_name_s, main->error.notable);
+                  fl_print_format("%[' may only contain word characters or the dash (minus) character.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
+
+                  funlockfile(main->error.to.stream);
+
+                  status = F_status_set_error(F_parameter);
+
+                  break;
+                }
+              } // for
+
+              if (F_status_is_error(status)) break;
+
+              ++data.names.used;
             }
-            else if (status == F_false) {
+            else {
               flockfile(main->error.to.stream);
 
-              fl_print_format("%r%[%QThe value '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-              fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, data.argv[index], main->error.notable);
-              fl_print_format("%[' for the parameter '%]", main->error.to.stream, main->error.context, main->error.context);
+              fl_print_format("%r%[%QThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
               fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_identify_long_name_s, main->error.notable);
-              fl_print_format("%[' may only contain word characters or the dash (minus) character.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
+              fl_print_format("%[' does not allow zero length strings.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
               funlockfile(main->error.to.stream);
 
@@ -291,8 +313,6 @@ extern "C" {
 
               break;
             }
-
-            data.name.string[data.name.used++] = data.argv[index].string[i];
           } // for
         }
       }

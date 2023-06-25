@@ -10,7 +10,7 @@ extern "C" {
 
     if (!data) return;
 
-    f_string_dynamic_resize(0, &data->name);
+    f_string_dynamics_resize(0, &data->names);
   }
 #endif // _di_fss_identify_data_delete_
 

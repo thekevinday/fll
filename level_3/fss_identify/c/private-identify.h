@@ -74,10 +74,12 @@ extern "C" {
  * @param id
  *   The FLL ID to compare against.
  * @param mode
- *   A mode specifying how to compare.
+ *   An array of modes specifying how to compare.
  *   0 = Compare against just the ID Name (such as "fss" in "fss-0001").
  *   1 = Compare against just the ID Type (such as "0001" in "fss-0001").
  *   2 = Compare against the full name (such as "fss-0001" in "fss-0001").
+ *
+ *   The length of the array must exactly match data.names.used.
  *
  * @return
  *   F_equal_to on match.
@@ -92,7 +94,7 @@ extern "C" {
  * @see fl_string_dynamic_partial_compare_string()
  */
 #ifndef _di_fss_identify_process_name_compare_
-  extern f_status_t fss_identify_process_name_compare(fss_identify_data_t * const data, const f_fll_id_t id, const uint8_t mode) F_attribute_visibility_internal_d;
+  extern f_status_t fss_identify_process_name_compare(fss_identify_data_t * const data, const f_fll_id_t id, const uint8_t modes[]) F_attribute_visibility_internal_d;
 #endif // _di_fss_identify_process_name_compare_
 
 #ifdef __cplusplus

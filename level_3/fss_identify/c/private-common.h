@@ -18,7 +18,7 @@ extern "C" {
  * argv:    The argument structure in the progam data parameters for simplifying syntax.
  * current: The current position within the ids, used to determine when the line is matched.
  * line:    The line number to select.
- * name:    The name to select.
+ * names:   The names to select.
  * total:   The total ids across all files.
  */
 #ifndef _di_fss_identify_data_t_
@@ -29,7 +29,7 @@ extern "C" {
 
     f_string_static_t *argv;
 
-    f_string_dynamic_t name;
+    f_string_dynamics_t names;
   } fss_identify_data_t;
 
   #define fss_identify_data_t_initialize \
@@ -38,7 +38,7 @@ extern "C" {
       0, \
       0, \
       0, \
-      f_string_dynamic_t_initialize, \
+      f_string_dynamics_t_initialize, \
     }
 #endif // _di_fss_identify_data_t_
 

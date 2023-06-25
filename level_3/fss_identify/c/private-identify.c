@@ -82,21 +82,26 @@ extern "C" {
     }
 
     // 0 = is name, 1 = is type, 2 = is full.
-    uint8_t mode = 1;
+    uint8_t modes[data->names.used];
     f_array_length_t i = 0;
 
-    if (data->name.used) {
-      for (; i < data->name.used; ++i) {
+    if (data->names.used) {
+      for (f_array_length_t j = 0; i < data->names.used; ++i) {
 
-        if (data->name.string[i] == f_string_ascii_minus_s.string[0]) {
-          mode = 2;
+        modes[i] = 1;
 
-          break;
-        }
+        for (j = 0; j < data->names.array[i].used; ++j) {
 
-        if (f_utf_is_digit(data->name.string + i, data->name.used - i, 0) != F_true) {
-          mode = 0;
-        }
+          if (data->names.array[i].string[j] == f_string_ascii_minus_s.string[0]) {
+            modes[i] = 2;
+
+            break;
+          }
+
+          if (f_utf_is_digit(data->names.array[i].string + j, data->names.array[i].used - j, 0) != F_true) {
+            modes[i] = 0;
+          }
+        } // for
       } // for
     }
 
@@ -104,8 +109,8 @@ extern "C" {
       for (i = 0; i < ids.used; ++i, ++data->current) {
 
         if (data->current == data->line) {
-          if (data->name.used) {
-            if (fss_identify_process_name_compare(data, ids.array[i], mode) != F_equal_to) continue;
+          if (data->names.used) {
+            if (fss_identify_process_name_compare(data, ids.array[i], modes) != F_equal_to) continue;
           }
 
           if (main->parameters.array[fss_identify_parameter_total_e].result == f_console_result_found_e) {
@@ -122,11 +127,11 @@ extern "C" {
       } // for
     }
     else if (main->parameters.array[fss_identify_parameter_total_e].result == f_console_result_found_e) {
-      if (data->name.used) {
+      if (data->names.used) {
 
         for (i = 0; i < ids.used; ++i, ++data->current) {
 
-          if (fss_identify_process_name_compare(data, ids.array[i], mode) == F_equal_to) {
+          if (fss_identify_process_name_compare(data, ids.array[i], modes) == F_equal_to) {
             ++data->total;
           }
         } // for
@@ -138,8 +143,8 @@ extern "C" {
     else if (status == F_found || status == F_maybe) {
       for (i = 0; i < ids.used; ++i) {
 
-        if (data->name.used) {
-          if (fss_identify_process_name_compare(data, ids.array[i], mode) != F_equal_to) continue;
+        if (data->names.used) {
+          if (fss_identify_process_name_compare(data, ids.array[i], modes) != F_equal_to) continue;
         }
 
         fss_identify_print(main, ids.array[i]);
@@ -153,43 +158,61 @@ extern "C" {
 #endif // _di_fss_identify_process_
 
 #ifndef _di_fss_identify_process_name_compare_
-  f_status_t fss_identify_process_name_compare(fss_identify_data_t * const data, const f_fll_id_t id, const uint8_t mode) {
+  f_status_t fss_identify_process_name_compare(fss_identify_data_t * const data, const f_fll_id_t id, const uint8_t modes[]) {
 
-    if (mode) {
-      f_array_length_t number = 0;
-      f_string_range_t range = macro_f_string_range_t_initialize2(data->name.used);
+    f_status_t status = F_none;
+    f_array_length_t i = 0;
+    f_array_length_t j = 0;
+    f_array_length_t number = 0;
+    f_string_range_t range = f_string_range_t_initialize;
 
-      for (f_array_length_t i = 0; i < data->name.used; ++i) {
+    for (status = F_equal_to_not; i < data->names.used && status == F_equal_to_not; ++i) {
 
-        if (data->name.string[i] == f_string_ascii_minus_s.string[0] && i + 1 < data->name.used) {
-          range.start = i + 1;
-
-          break;
+      if (modes[i]) {
+        if (data->names.array[i].used) {
+          range.start = 0;
+          range.stop = data->names.array[i].used - 1;
         }
-      } // for
+        else {
+          range.start = 1;
+          range.stop = 0;
+        }
 
-      {
-        const f_status_t status = fl_conversion_dynamic_partial_to_unsigned(fl_conversion_data_base_16_c, data->name, range, &number);
-        if (F_status_is_error(status)) return status;
+        for (j = 0; j < data->names.array[i].used; ++j) {
+
+          if (data->names.array[i].string[j] == f_string_ascii_minus_s.string[0] && j + 1 < data->names.array[i].used) {
+            range.start = j + 1;
+
+            break;
+          }
+        } // for
+
+        {
+          status = fl_conversion_dynamic_partial_to_unsigned(fl_conversion_data_base_16_c, data->names.array[i], range, &number);
+          if (F_status_is_error(status)) return F_equal_to_not;
+        }
+
+        if (id.type != number) {
+          status = F_equal_to_not;
+
+          continue;
+        }
+
+        if (modes[i] == 1) return F_equal_to;
+
+        if (range.start) {
+          range.stop = range.start - 2;
+          range.start = 0;
+        }
+
+        status = fl_string_dynamic_partial_compare_string((const f_string_t) id.name, data->names.array[i], id.used, range);
       }
-
-      if (id.type != number) {
-        return F_equal_to_not;
+      else {
+        status = fl_string_dynamic_compare_string((const f_string_t) id.name, data->names.array[i], id.used);
       }
+    } // for
 
-      if (mode == 1) {
-        return F_equal_to;
-      }
-
-      if (range.start) {
-        range.stop = range.start - 2;
-        range.start = 0;
-      }
-
-      return fl_string_dynamic_partial_compare_string((const f_string_t) id.name, data->name, id.used, range);
-    }
-
-    return fl_string_dynamic_compare_string((const f_string_t) id.name, data->name, id.used);
+    return status == F_equal_to ? F_equal_to : F_equal_to_not;
   }
 #endif // _di_fss_identify_process_name_compare_
 
