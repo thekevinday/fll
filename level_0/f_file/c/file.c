@@ -1900,7 +1900,7 @@ extern "C" {
   f_status_t f_file_select(const int highest_plus_one, fd_set * const read, fd_set * const write, fd_set * const except, struct timeval * const timeout) {
 
     if (!highest_plus_one) return F_data_not;
-    if (!read && !write && !except) return F_data_not;
+    if (!read && !write && !except && !timeout) return F_data_not;
 
     if (select(highest_plus_one, read, write, except, timeout) == -1) {
       if (errno == EBADF) return F_status_set_error(F_file_descriptor);

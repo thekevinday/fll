@@ -1985,7 +1985,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if all three read, write, and except are NULL (having at least one is required) or when highest_plus_one is 0.
+ *   F_data_not if all of read, write, except, and timeout are NULL (having at least one is required) or when highest_plus_one is 0.
  *
  *   F_file_descriptor (with error bit) if the file descriptor is invalid.
  *   F_interrupt (with error bit) when program received an interrupt signal, halting operation.

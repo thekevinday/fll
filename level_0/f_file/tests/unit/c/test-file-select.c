@@ -137,7 +137,7 @@ void test__f_file_select__returns_data_not(void **state) {
   }
 
   {
-    const f_status_t status = f_file_select(1, 0, 0, 0, &timeout);
+    const f_status_t status = f_file_select(0, 0, 0, 0, &timeout);
 
     assert_int_equal(status, F_data_not);
   }
