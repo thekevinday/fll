@@ -19,6 +19,7 @@
 #include <fll/level_0/memory.h>
 
 // FLL-0 type_array includes.
+#include <fll/level_0/type_array/file.h>
 #include <fll/level_0/type_array/poll.h>
 
 #ifdef __cplusplus

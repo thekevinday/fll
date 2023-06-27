@@ -187,6 +187,52 @@ extern "C" {
 #endif // _di_f_file_t_
 
 /**
+ * An array of f_file_t.
+ *
+ * The macros are defined in type_array.h or type_array_file.h.
+ *
+ * array: The array of f_file_t.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
+ */
+#ifndef _di_f_files_t_
+  typedef struct {
+    f_file_t *array;
+
+    f_number_unsigned_t size;
+    f_number_unsigned_t used;
+  } f_files_t;
+
+  #define f_files_t_initialize { 0, 0, 0 }
+
+  #define macro_f_files_t_initialize_1(array, size, used) { array, size, used }
+  #define macro_f_files_t_initialize_2(array, length) { array, length, length }
+#endif // _di_f_files_t_
+
+/**
+ * This holds an array of f_files_t.
+ *
+ * The macros are defined in type_array.h or type_array_file.h.
+ *
+ * array: The array of f_file_t arrays.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
+ */
+#ifndef _di_f_filess_t_
+  typedef struct {
+    f_files_t *array;
+
+    f_number_unsigned_t size;
+    f_number_unsigned_t used;
+  } f_filess_t;
+
+  #define f_filess_t_initialize { 0, 0, 0 }
+
+  #define macro_f_filess_t_initialize_1(array, size, used) { array, size, used }
+  #define macro_f_filess_t_initialize_2(array, length) { array, length, length }
+#endif // _di_f_filess_t_
+
+/**
  * A typdef for representing struct pollfd.
  */
 #ifndef _di_f_poll_t_
@@ -203,7 +249,7 @@ extern "C" {
 /**
  * An array of pollfd structures.
  *
- * The macros are defined in type_array.h or type_array-common.h.
+ * The macros are defined in type_array.h or type_array_file.h.
  *
  * If used for functions like poll() (a common use) then the max array length for used is limited to nfds_t which might be different from f_number_unsigned_t.
  * The nfds_t is often either uint32_t or an uint64_t.
@@ -230,7 +276,7 @@ extern "C" {
 /**
  * An array of f_polls_t.
  *
- * The macros are defined in type_array.h or type_array-common.h.
+ * The macros are defined in type_array.h or type_array_file.h.
  *
  * array: The array of f_polls_t.
  * size:  Total amount of allocated space.
