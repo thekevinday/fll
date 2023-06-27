@@ -106,7 +106,7 @@ extern "C" {
  * @param setting_make
  *   The make setting data.
  *
- *   This does not alter data_make.main.setting.state.status.
+ *   This does not alter main.setting.state.status.
  */
 #ifndef _di_utf8_main_delete_
   extern void utf8_main_delete(utf8_main_t * const main);

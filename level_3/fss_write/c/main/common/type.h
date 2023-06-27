@@ -153,7 +153,7 @@ extern "C" {
  * @param setting_make
  *   The make setting data.
  *
- *   This does not alter data_make.main.setting.state.status.
+ *   This does not alter main.setting.state.status.
  */
 #ifndef _di_fss_write_main_delete_
   extern void fss_write_main_delete(fss_write_main_t * const main);
