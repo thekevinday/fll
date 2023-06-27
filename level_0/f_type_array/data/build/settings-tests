@@ -23,6 +23,8 @@ build_language c
 build_libraries -lc -lcmocka
 build_libraries-individual -lf_memory -lf_type_array
 
+build_sources_program test-type_array-files_adjust.c test-type_array-files_append.c test-type_array-files_append_all.c test-type_array-files_decimate_by.c test-type_array-files_decrease_by.c test-type_array-files_increase.c test-type_array-files_increase_by.c test-type_array-files_resize.c
+build_sources_program test-type_array-filess_adjust.c test-type_array-filess_append.c test-type_array-filess_append_all.c test-type_array-filess_decimate_by.c test-type_array-filess_decrease_by.c test-type_array-filess_increase.c test-type_array-filess_increase_by.c test-type_array-filess_resize.c
 build_sources_program test-type_array-fll_ids_adjust.c test-type_array-fll_ids_append.c test-type_array-fll_ids_append_all.c test-type_array-fll_ids_decimate_by.c test-type_array-fll_ids_decrease_by.c test-type_array-fll_ids_increase.c test-type_array-fll_ids_increase_by.c test-type_array-fll_ids_resize.c
 build_sources_program test-type_array-fll_idss_adjust.c test-type_array-fll_idss_append.c test-type_array-fll_idss_append_all.c test-type_array-fll_idss_decimate_by.c test-type_array-fll_idss_decrease_by.c test-type_array-fll_idss_increase.c test-type_array-fll_idss_increase_by.c test-type_array-fll_idss_resize.c
 build_sources_program test-type_array-cells_adjust.c test-type_array-cells_append.c test-type_array-cells_append_all.c test-type_array-cells_decimate_by.c test-type_array-cells_decrease_by.c test-type_array-cells_increase.c test-type_array-cells_increase_by.c test-type_array-cells_resize.c

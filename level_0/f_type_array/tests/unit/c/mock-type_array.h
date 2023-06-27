@@ -22,6 +22,7 @@
 // FLL-0 includes.
 #include <fll/level_0/type.h>
 #include <fll/level_0/type_array.h>
+#include <fll/level_0/type_array_file.h>
 
 #ifdef __cplusplus
 extern "C" {
