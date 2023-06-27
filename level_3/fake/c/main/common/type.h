@@ -896,9 +896,9 @@ extern "C" {
  *
  *   This does not alter data_make.main.setting.state.status.
  */
-#ifndef _di_fake_main_data_delete_
+#ifndef _di_fake_main_delete_
   extern void fake_main_delete(fake_main_t * const main);
-#endif // _di_fake_main_data_delete_
+#endif // _di_fake_main_delete_
 
 /**
  * Deallocate make setting data.

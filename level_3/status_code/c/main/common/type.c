@@ -4,7 +4,7 @@
 extern "C" {
 #endif
 
-#ifndef _di_status_code_main_data_delete_
+#ifndef _di_status_code_main_delete_
   void status_code_main_delete(status_code_main_t * const main) {
 
     if (!main) return;
@@ -12,7 +12,7 @@ extern "C" {
     fll_program_data_delete(&main->program);
     status_code_setting_delete(&main->setting);
   }
-#endif // _di_status_code_main_data_delete_
+#endif // _di_status_code_main_delete_
 
 #ifndef _di_status_code_setting_delete_
   f_status_t status_code_setting_delete(status_code_setting_t * const setting) {

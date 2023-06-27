@@ -365,9 +365,9 @@ extern "C" {
  *
  *   This does not alter main.setting.state.status.
  */
-#ifndef _di_fss_read_main_data_delete_
+#ifndef _di_fss_read_main_delete_
   extern void fss_read_main_delete(fss_read_main_t * const main);
-#endif // _di_fss_read_main_data_delete_
+#endif // _di_fss_read_main_delete_
 
 /**
  * Delete the program main setting data.

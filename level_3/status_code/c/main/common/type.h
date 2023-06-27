@@ -86,9 +86,9 @@ extern "C" {
  *
  *   This does not alter data_make.main.setting.state.status.
  */
-#ifndef _di_status_code_main_data_delete_
+#ifndef _di_status_code_main_delete_
   extern void status_code_main_delete(status_code_main_t * const main);
-#endif // _di_status_code_main_data_delete_
+#endif // _di_status_code_main_delete_
 
 /**
  * Delete the program main setting data.

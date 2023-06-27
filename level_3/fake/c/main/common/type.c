@@ -179,7 +179,7 @@ extern "C" {
   }
 #endif // _di_fake_data_delete_
 
-#ifndef _di_fake_main_data_delete_
+#ifndef _di_fake_main_delete_
   void fake_main_delete(fake_main_t * const main) {
 
     if (!main) return;
@@ -200,7 +200,7 @@ extern "C" {
 
     f_directory_recurse_do_delete(&main->cache_recurse_do);
   }
-#endif // _di_fake_main_data_delete_
+#endif // _di_fake_main_delete_
 
 #ifndef _di_fake_make_data_delete_
   void fake_make_data_delete(fake_make_data_t * const data_make) {

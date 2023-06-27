@@ -4,7 +4,7 @@
 extern "C" {
 #endif
 
-#ifndef _di_fss_write_main_data_delete_
+#ifndef _di_fss_write_main_delete_
   void fss_write_main_delete(fss_write_main_t * const main) {
 
     if (!main) return;
@@ -12,7 +12,7 @@ extern "C" {
     fll_program_data_delete(&main->program);
     fss_write_setting_delete(&main->setting);
   }
-#endif // _di_fss_write_main_data_delete_
+#endif // _di_fss_write_main_delete_
 
 #ifndef _di_fss_write_setting_delete_
   f_status_t fss_write_setting_delete(fss_write_setting_t * const setting) {

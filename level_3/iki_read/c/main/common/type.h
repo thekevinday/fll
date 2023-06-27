@@ -116,9 +116,9 @@ extern "C" {
  *
  *   This does not alter data_make.main.setting.state.status.
  */
-#ifndef _di_iki_read_main_data_delete_
+#ifndef _di_iki_read_main_delete_
   extern void iki_read_main_delete(iki_read_main_t * const main);
-#endif // _di_iki_read_main_data_delete_
+#endif // _di_iki_read_main_delete_
 
 /**
  * Delete the program main setting data.

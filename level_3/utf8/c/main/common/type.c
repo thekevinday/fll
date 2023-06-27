@@ -4,7 +4,7 @@
 extern "C" {
 #endif
 
-#ifndef _di_utf8_main_data_delete_
+#ifndef _di_utf8_main_delete_
   void utf8_main_delete(utf8_main_t * const main) {
 
     if (!main) return;
@@ -12,7 +12,7 @@ extern "C" {
     fll_program_data_delete(&main->program);
     utf8_setting_delete(&main->setting);
   }
-#endif // _di_utf8_main_data_delete_
+#endif // _di_utf8_main_delete_
 
 #ifndef _di_utf8_setting_delete_
   f_status_t utf8_setting_delete(utf8_setting_t * const setting) {
