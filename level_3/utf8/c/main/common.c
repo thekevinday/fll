@@ -389,7 +389,7 @@ extern "C" {
       main->setting.flag -= main->setting.flag & utf8_main_flag_pipe_e;
     }
 
-    if (!((main->setting.flag & (fss_identify_main_flag_pipe_e | utf8_main_flag_file_from_e)) || main->program.parameters.remaining.used)) {
+    if (!((main->setting.flag & (utf8_main_flag_pipe_e | utf8_main_flag_file_from_e)) || main->program.parameters.remaining.used)) {
       main->setting.state.status = F_status_set_error(F_parameter);
 
       if ((main->setting.flag & utf8_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
