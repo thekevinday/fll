@@ -12,6 +12,9 @@
 
 // Libc includes.
 #include <arpa/inet.h>
+#include <netdb.h>
+#include <string.h>
+#include <sys/socket.h>
 
 // FLL-0 includes.
 #include <fll/level_0/type.h>
@@ -64,12 +67,64 @@ extern "C" {
 #endif // _di_f_network_from_host_short_
 
 /**
- * Convert from a human-friendly string into a network IP address digit.
+ * Convert from a IP version 4 or version 6 family integer into a network IP address host entity.
  *
- * This is for the ip address and is not for the domain name.
+ * This is for the Domain Name and is not for the IP address digit itself.
  *
  * @param from
- *   The human-friendly ip address string.
+ *   The IP version 4 or version 6 family integer.
+ * @param to
+ *   The converted IP host entity.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success but there is nothing to convert (to.type is f_network_family_none_e).
+ *
+ *   F_again (with error bit) Resolver temporarily failed, try again.
+ *   F_data_not (with error bit) The requested name is valid, but does not have an IP address.
+ *   F_found_not (with error bit) Resolver did not know host.
+ *   F_recover_not (with error bit) Resolver failed and cannot recover from the failure, do not try again.
+ *   F_failure (with error bit) on any other error.
+ *
+ * @see gethostbyaddr()
+ */
+#ifndef _di_f_network_from_ip_address_
+  extern f_status_t f_network_from_ip_address(const f_network_family_ip_t from, struct hostent * const to);
+#endif // _di_f_network_from_ip_address_
+
+/**
+ * Convert from a Domain Name into a network IP address host entity.
+ *
+ * This is for the Domain Name and is not for the IP address digit itself.
+ *
+ * @param from
+ *   The human-friendly IP Domain Name.
+ * @param to
+ *   The converted IP host entity.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success but there is nothing to convert (from.used is 0).
+ *
+ *   F_again (with error bit) Resolver temporarily failed, try again.
+ *   F_data_not (with error bit) The requested name is valid, but does not have an IP address.
+ *   F_found_not (with error bit) Resolver did not know host.
+ *   F_recover_not (with error bit) Resolver failed and cannot recover from the failure, do not try again.
+ *   F_failure (with error bit) on any other error.
+ *
+ * @see gethostbyname()
+ */
+#ifndef _di_f_network_from_ip_name_
+  extern f_status_t f_network_from_ip_name(const f_string_static_t from, struct hostent * const to);
+#endif // _di_f_network_from_ip_name_
+
+/**
+ * Convert from a human-friendly string representing the IP address digit into a network IP address digit.
+ *
+ * This is for the IP address and is not for the Domain Name.
+ *
+ * @param from
+ *   The human-friendly IP address string.
  * @param to
  *   The converted IP version 4 or version 6 family integer.
  *
@@ -127,14 +182,14 @@ extern "C" {
 #endif // _di_f_network_to_host_short_
 
 /**
- * Convert from a network IP address digit into a human-friendly string.
+ * Convert from a network IP address digit into a human-friendly string representing the IP address digit.
  *
- * This is for the ip address and is not for the domain name.
+ * This is for the IP address and is not for the Domain Name.
  *
  * @param from
  *   The IP version 4 or version 6 family integer.
  * @param to
- *   The converted human-friendly ip address string.
+ *   The converted human-friendly IP address string.
  *
  * @return
  *   F_none on success.

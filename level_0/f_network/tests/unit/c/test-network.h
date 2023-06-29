@@ -30,6 +30,8 @@
 // Test includes.
 #include "test-network-from_host_long.h"
 #include "test-network-from_host_short.h"
+#include "test-network-from_ip_address.h"
+#include "test-network-from_ip_name.h"
 #include "test-network-from_ip_string.h"
 #include "test-network-to_host_long.h"
 #include "test-network-to_host_short.h"

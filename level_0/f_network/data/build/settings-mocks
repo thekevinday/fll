@@ -51,6 +51,8 @@ flags-coverage --coverage -fprofile-abs-path -fprofile-dir=build/coverage/
 flags_library -fPIC
 
 # Inject mocks.
+flags -Wl,--wrap=gethostbyaddr
+flags -Wl,--wrap=gethostbyname
 flags -Wl,--wrap=htonl
 flags -Wl,--wrap=htons
 flags -Wl,--wrap=inet_ntop

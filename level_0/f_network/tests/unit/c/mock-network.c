@@ -4,6 +4,32 @@
 extern "C" {
 #endif
 
+struct hostent *__wrap_gethostbyaddr(const void *addr, socklen_t len, int type) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    errno = mock_type(int);
+
+    return 0;
+  }
+
+  return mock_type(struct hostent *);
+}
+
+struct hostent *__wrap_gethostbyname(const char *name) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    errno = mock_type(int);
+
+    return 0;
+  }
+
+  return mock_type(struct hostent *);
+}
+
 uint32_t __wrap_htonl(uint32_t hostlong) {
 
   return mock_type(uint32_t);

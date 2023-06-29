@@ -29,6 +29,8 @@ extern "C" {
 
 const static int mock_errno_generic = 32767;
 
+extern struct hostent *__wrap_gethostbyaddr(const void *addr, socklen_t len, int type);
+extern struct hostent *__wrap_gethostbyname(const char *name);
 extern uint32_t __wrap_htonl(uint32_t hostlong);
 extern uint16_t __wrap_htons(uint16_t hostshort);
 const char *__wrap_inet_ntop(int af, const void *src, char *dst, socklen_t size);

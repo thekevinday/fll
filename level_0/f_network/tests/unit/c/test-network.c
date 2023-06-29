@@ -19,12 +19,18 @@ int setdown(void **state) {
 int main(void) {
 
   const struct CMUnitTest tests[] = {
+    cmocka_unit_test(test__f_network_from_ip_address__returns_data_not),
+    cmocka_unit_test(test__f_network_from_ip_name__returns_data_not),
     cmocka_unit_test(test__f_network_from_ip_string__returns_data_not),
+
     cmocka_unit_test(test__f_network_to_ip_string__returns_data_not),
 
     cmocka_unit_test(test__f_network_from_host_long__works),
     cmocka_unit_test(test__f_network_from_host_short__works),
+    cmocka_unit_test(test__f_network_from_ip_address__works),
+    cmocka_unit_test(test__f_network_from_ip_name__works),
     cmocka_unit_test(test__f_network_from_ip_string__works),
+
     cmocka_unit_test(test__f_network_to_host_long__works),
     cmocka_unit_test(test__f_network_to_host_short__works),
     cmocka_unit_test(test__f_network_to_ip_string__works),
@@ -32,6 +38,8 @@ int main(void) {
     #ifndef _di_level_0_parameter_checking_
       cmocka_unit_test(test__f_network_from_host_long__parameter_checking),
       cmocka_unit_test(test__f_network_from_host_short__parameter_checking),
+      cmocka_unit_test(test__f_network_from_ip_address__parameter_checking),
+      cmocka_unit_test(test__f_network_from_ip_name__parameter_checking),
       cmocka_unit_test(test__f_network_from_ip_string__parameter_checking),
       cmocka_unit_test(test__f_network_to_host_long__parameter_checking),
       cmocka_unit_test(test__f_network_to_host_short__parameter_checking),

@@ -58,14 +58,33 @@ void test__f_network_from_ip_string__returns_data_not(void **state) {
 
     assert_int_equal(status, F_data_not);
   }
+
+  family.type = f_network_family_ip_6_e;
+
+  {
+    const f_status_t status = f_network_from_ip_string(f_string_empty_s, &family);
+
+    assert_int_equal(status, F_data_not);
+  }
 }
 
 void test__f_network_from_ip_string__works(void **state) {
 
   f_network_family_ip_t family = f_network_family_ip_t_initialize;
-  family.type = f_network_family_ip_4_e;
 
   const f_string_static_t ip = macro_f_string_static_t_initialize_1("127.0.0.1", 0, 9);
+
+  family.type = f_network_family_ip_4_e;
+
+  {
+    will_return(__wrap_inet_pton, false);
+
+    const f_status_t status = f_network_from_ip_string(ip, &family);
+
+    assert_int_equal(status, F_none);
+  }
+
+  family.type = f_network_family_ip_6_e;
 
   {
     will_return(__wrap_inet_pton, false);

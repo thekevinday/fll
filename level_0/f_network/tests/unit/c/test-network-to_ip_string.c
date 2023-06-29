@@ -63,11 +63,29 @@ void test__f_network_to_ip_string__returns_data_not(void **state) {
 void test__f_network_to_ip_string__works(void **state) {
 
   f_network_family_ip_t family = f_network_family_ip_t_initialize;
-  family.type = f_network_family_ip_4_e;
 
   f_string_dynamic_t ip = f_string_dynamic_t_initialize;
 
   const f_string_static_t expect = macro_f_string_static_t_initialize_1("127.0.0.1", 0, 9);
+
+  family.type = f_network_family_ip_4_e;
+
+  {
+    will_return(__wrap_inet_ntop, false);
+    will_return(__wrap_inet_ntop, expect.string);
+    will_return(__wrap_inet_ntop, expect.used);
+
+    const f_status_t status = f_network_to_ip_string(family, &ip);
+
+    assert_int_equal(status, F_none);
+    assert_int_equal(ip.used, expect.used);
+    assert_string_equal(ip.string, expect.string);
+  }
+
+  free(ip.string);
+
+  family.type = f_network_family_ip_6_e;
+  ip.used = 0;
 
   {
     will_return(__wrap_inet_ntop, false);
