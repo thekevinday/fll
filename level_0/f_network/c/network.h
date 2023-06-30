@@ -71,6 +71,10 @@ extern "C" {
  *
  * This is for the Domain Name and is not for the IP address digit itself.
  *
+ * Some libc implementation may not properly clean up after calling gethostbyaddr() under certain cases, like on error or DNS entry not found.
+ * This can result in still reachable memory when the program exists.
+ * This is the fault of the particular libc in use, but testing to rule this out should still be considered.
+ *
  * @param from
  *   The IP version 4 or version 6 family integer.
  * @param to
@@ -96,6 +100,10 @@ extern "C" {
  * Convert from a Domain Name into a network IP address host entity.
  *
  * This is for the Domain Name and is not for the IP address digit itself.
+ *
+ * Some libc implementation may not properly clean up after calling gethostbyname() under certain cases, like on error or DNS entry not found.
+ * This can result in still reachable memory when the program exists.
+ * This is the fault of the particular libc in use, but testing to rule this out should still be considered.
  *
  * @param from
  *   The human-friendly IP Domain Name.
