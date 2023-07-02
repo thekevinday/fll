@@ -33,7 +33,7 @@ build_libraries -lc
 
 build_sources_headers type.h
 
-build_sources_documentation man
+build_sources_documentation
 
 build_script yes
 build_shared yes

@@ -36,7 +36,7 @@ build_sources_library status_string.c
 
 build_sources_headers status_string.h
 
-build_sources_documentation man
+build_sources_documentation
 
 build_script yes
 build_shared yes
