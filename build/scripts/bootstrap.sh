@@ -1400,6 +1400,15 @@ bootstrap_operation_build() {
     for i in ${sources_documentation} ; do
       directory=$(dirname ${i})
 
+      if [[ ! -e ${path_documentation}${i} ]] ; then
+        if [[ ${verbosity} != "quiet" && ${verbosity} != "error" ]] ; then
+          echo
+          echo -e "${c_warning}WARNING: Documentation path '${c_notice}${path_documentation}${i}${c_warning}' is not found.${c_reset}"
+        fi
+
+        continue;
+      fi
+
       if [[ ${directory} == "." ]] ; then
         cp ${verbose_common} -R ${path_documentation}${i} ${path_build}documentation/ || failure=1
       else
