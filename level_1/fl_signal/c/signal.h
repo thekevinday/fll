@@ -34,7 +34,7 @@ extern "C" {
  *
  * This is intended to be explicitly use for the interrupt() callback defined in f_state_t.
  *
- * This check all interrupts provided in state->data.interrupts and if a signal is found, store that signal in state->data.trigger and returns F_interrupt (with error bit set).
+ * This checks all interrupts provided in state->data.interrupts and if a signal is found, store that signal in state->data.trigger and returns F_interrupt (with error bit set).
  * If state->data.signal.id is NULL, then F_enable_not is returned.
  *
  * @param state
