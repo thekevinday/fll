@@ -250,7 +250,7 @@ bootstrap_main() {
     done
   fi
 
-  if [[ $? -ne 0 ]] ; then
+  if [[ ${?} -ne 0 ]] ; then
     bootstrap_cleanup
 
     return 1
@@ -258,7 +258,7 @@ bootstrap_main() {
 
   bootstrap_load_settings_mode
 
-  if [[ $? -ne 0 ]] ; then
+  if [[ ${?} -ne 0 ]] ; then
     bootstrap_cleanup
 
     return 1
@@ -460,7 +460,7 @@ bootstrap_main() {
     if [[ ! -f ${project_built}.prepared ]] ; then
       bootstrap_prepare_build
 
-      if [[ $? -ne 0 ]] ; then
+      if [[ ${?} -ne 0 ]] ; then
         bootstrap_cleanup
 
         return 1
@@ -469,7 +469,7 @@ bootstrap_main() {
 
     bootstrap_operation_build
 
-    if [[ $? -ne 0 ]] ; then
+    if [[ ${?} -ne 0 ]] ; then
       bootstrap_cleanup
 
       return 1
@@ -1057,7 +1057,7 @@ bootstrap_prepare_build() {
   local alt=${1}
   local i=
 
-  mkdir ${verbose_common} -p ${path_build}{documents,includes,libraries/{script,shared,static},objects/{script,shared,static},programs/{script,shared,static},settings,stage} || failure=1
+  mkdir ${verbose_common} -p ${path_build}{documents,documentation,includes,libraries/{script,shared,static},objects/{script,shared,static},programs/{script,shared,static},settings,stage} || failure=1
 
   if [[ ${failure} -eq 1 ]] ; then
     if [[ ${verbosity} != "quiet" && ${verbosity} != "error" ]] ; then
@@ -1637,7 +1637,7 @@ bootstrap_operation_build() {
         if [[ ${directory} != "." && ! -d ${path_build}objects/${directory} ]] ; then
           mkdir ${verbose_common} -p ${path_build}objects/${directory}
 
-          if [[ $? -ne 0 ]] ; then
+          if [[ ${?} -ne 0 ]] ; then
             let failure=1
 
             break;
@@ -3023,7 +3023,7 @@ bootstrap_operation_clean() {
 
   local i=
 
-  for i in ${path_build}{documents,includes,libraries,objects,programs,settings,stage} ; do
+  for i in ${path_build}{documents,documentation,includes,libraries,objects,programs,settings,stage} ; do
     if [[ -e ${i} ]] ; then
       rm ${verbose_common} -Rf ${i}
     fi

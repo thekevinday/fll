@@ -580,7 +580,7 @@ install_perform_install() {
   if [[ ! -d ${destination_prefix} ]] ; then
     mkdir ${verbose_common} ${destination_prefix}
 
-    if [[ $? -ne 0 ]] ; then
+    if [[ ${?} -ne 0 ]] ; then
       if [[ ${verbosity} != "quiet" ]] ; then
         install_print_first
 
@@ -595,7 +595,7 @@ install_perform_install() {
     if [[ -d ${path_build}${path_programs} && ! -d ${destination_programs} ]] ; then
       mkdir ${verbose_common} ${destination_programs}
 
-      if [[ $? -ne 0 ]] ; then
+      if [[ ${?} -ne 0 ]] ; then
         if [[ ${verbosity} != "quiet" ]] ; then
           install_print_first
 
@@ -609,7 +609,7 @@ install_perform_install() {
     if [[ ${enable_shared_programs} == "yes" && -d ${path_build}${path_programs}${path_shared} && ! -d ${destination_programs_shared} ]] ; then
       mkdir ${verbose_common} ${destination_programs_shared}
 
-      if [[ $? -ne 0 ]] ; then
+      if [[ ${?} -ne 0 ]] ; then
         if [[ ${verbosity} != "quiet" ]] ; then
           install_print_first
 
@@ -623,7 +623,7 @@ install_perform_install() {
     if [[ ${enable_static_programs} == "yes" && -d ${path_build}${path_programs}${path_static} && ! -d ${destination_programs_static} ]] ; then
       mkdir ${verbose_common} ${destination_programs_static}
 
-      if [[ $? -ne 0 ]] ; then
+      if [[ ${?} -ne 0 ]] ; then
         if [[ ${verbosity} != "quiet" ]] ; then
           install_print_first
 
@@ -639,7 +639,7 @@ install_perform_install() {
     if [[ -d ${path_build}${path_libraries} && ! -d ${destination_libraries} ]] ; then
       mkdir ${verbose_common} ${destination_libraries}
 
-      if [[ $? -ne 0 ]] ; then
+      if [[ ${?} -ne 0 ]] ; then
         if [[ ${verbosity} != "quiet" ]] ; then
           install_print_first
 
@@ -653,7 +653,7 @@ install_perform_install() {
     if [[ ${enable_shared_libraries} == "yes" && -d ${path_build}${path_libraries}${path_shared} && ! -d ${destination_libraries_shared} ]] ; then
       mkdir ${verbose_common} ${destination_libraries_shared}
 
-      if [[ $? -ne 0 ]] ; then
+      if [[ ${?} -ne 0 ]] ; then
         if [[ ${verbosity} != "quiet" ]] ; then
           install_print_first
 
@@ -667,7 +667,7 @@ install_perform_install() {
     if [[ ${enable_static_libraries} == "yes" && -d ${path_build}${path_libraries}${path_static} && ! -d ${destination_libraries_static} ]] ; then
       mkdir ${verbose_common} ${destination_libraries_static}
 
-      if [[ $? -ne 0 ]] ; then
+      if [[ ${?} -ne 0 ]] ; then
         if [[ ${verbosity} != "quiet" ]] ; then
           install_print_first
 
@@ -683,7 +683,7 @@ install_perform_install() {
     if [[ -d ${path_build}${path_includes} && ! -d ${destination_includes} ]] ; then
       mkdir ${verbose_common} ${destination_includes}
 
-      if [[ $? -ne 0 ]] ; then
+      if [[ ${?} -ne 0 ]] ; then
         if [[ ${verbosity} != "quiet" ]] ; then
           install_print_first
 
@@ -699,7 +699,7 @@ install_perform_install() {
     if [[ -d ${path_build}${path_documentation} && ! -d ${destination_documentation} ]] ; then
       mkdir ${verbose_common} ${destination_documentation}
 
-      if [[ $? -ne 0 ]] ; then
+      if [[ ${?} -ne 0 ]] ; then
         if [[ ${verbosity} != "quiet" ]] ; then
           install_print_first
 
@@ -715,7 +715,7 @@ install_perform_install() {
     if [[ -d ${path_build}${path_settings} && ! -d ${destination_settings} ]] ; then
       mkdir ${verbose_common} ${destination_settings}
 
-      if [[ $? -ne 0 ]] ; then
+      if [[ ${?} -ne 0 ]] ; then
         if [[ ${verbosity} != "quiet" ]] ; then
           install_print_first
 
@@ -748,7 +748,7 @@ install_perform_install() {
 
       cp ${verbose_common} -R ${path_build}${path_includes}* ${destination_includes}
 
-      if [[ $? -ne 0 ]] ; then
+      if [[ ${?} -ne 0 ]] ; then
         if [[ ${verbosity} != "quiet" ]] ; then
           install_print_first
 
@@ -782,7 +782,7 @@ install_perform_install() {
 
         cp ${verbose_common} -R ${path_build}${path_libraries}${path_static}* ${destination_libraries_static}
 
-        if [[ $? -ne 0 ]] ; then
+        if [[ ${?} -ne 0 ]] ; then
           if [[ ${verbosity} != "quiet" ]] ; then
             install_print_first
 
@@ -815,7 +815,7 @@ install_perform_install() {
 
         cp ${verbose_common} -R ${path_build}${path_libraries}${path_shared}* ${destination_libraries_shared}
 
-        if [[ $? -ne 0 ]] ; then
+        if [[ ${?} -ne 0 ]] ; then
           if [[ ${verbosity} != "quiet" ]] ; then
             install_print_first
 
@@ -850,7 +850,7 @@ install_perform_install() {
 
         cp ${verbose_common} -R ${path_build}${path_programs}${path_static}* ${destination_programs_static}
 
-        if [[ $? -ne 0 ]] ; then
+        if [[ ${?} -ne 0 ]] ; then
           if [[ ${verbosity} != "quiet" ]] ; then
             install_print_first
 
@@ -883,7 +883,7 @@ install_perform_install() {
 
         cp ${verbose_common} -R ${path_build}${path_programs}${path_shared}* ${destination_programs_shared}
 
-        if [[ $? -ne 0 ]] ; then
+        if [[ ${?} -ne 0 ]] ; then
           if [[ ${verbosity} != "quiet" ]] ; then
             install_print_first
 
@@ -917,7 +917,7 @@ install_perform_install() {
 
       cp ${verbose_common} -R ${path_build}${path_settings}* ${destination_settings}
 
-      if [[ $? -ne 0 ]] ; then
+      if [[ ${?} -ne 0 ]] ; then
         if [[ ${verbosity} != "quiet" ]] ; then
           install_print_first
 
@@ -950,7 +950,7 @@ install_perform_install() {
 
       cp ${verbose_common} -R ${path_build}${path_documentation}* ${destination_documentation}
 
-      if [[ $? -ne 0 ]] ; then
+      if [[ ${?} -ne 0 ]] ; then
         if [[ ${verbosity} != "quiet" ]] ; then
           install_print_first
 
