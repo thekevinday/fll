@@ -1063,7 +1063,7 @@ bootstrap_prepare_build() {
   local alt=${1}
   local i=
 
-  mkdir ${verbose_common} -p ${path_build}{documents,includes,libraries/{script,shared,static},objects/{script,shared,static},programs/{script,shared,static},settings,stage} || failure=1
+  mkdir ${verbose_common} -p ${path_build}{documents,documentation,includes,libraries/{script,shared,static},objects/{script,shared,static},programs/{script,shared,static},settings,stage} || failure=1
 
   if [[ ${failure} -eq 1 ]] ; then
     if [[ ${verbosity} != "quiet" && ${verbosity} != "error" ]] ; then
@@ -3029,7 +3029,7 @@ bootstrap_operation_clean() {
 
   local i=
 
-  for i in ${path_build}{documents,includes,libraries,objects,programs,settings,stage} ; do
+  for i in ${path_build}{documents,documentation,includes,libraries,objects,programs,settings,stage} ; do
     if [[ -e ${i} ]] ; then
       rm ${verbose_common} -Rf ${i}
     fi
