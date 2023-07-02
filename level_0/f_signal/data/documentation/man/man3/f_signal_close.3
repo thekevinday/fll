@@ -1,0 +1,43 @@
+.TH f_signal_close "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_signal_close
+.SH SYNOPSIS
+.nf
+.B #include <signal.h>
+.sp
+\fBf_status_t f_signal_close\fP(
+    \fBf_signal_t *const \fP\fIsignal\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Close an open signal descriptor.
+.PP
+The signal.id is set to 0 on success.
+.SH PARAMETERS
+.TP
+.B signal
+The signal settings.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_data_not\fP on success, but no descriptor was provided to close.
+.br
+\fBF_descriptor\fP (with error bit) if id is an invalid descriptor.
+.br
+\fBF_filesystem_quota_block\fP (with error bit) if file system's disk blocks or inodes are exhausted.
+.br
+\fBF_input_output\fP (with error bit) if an I/O error occurred.
+.br
+\fBF_interrupt\fP (with error bit) when program received an interrupt signal, halting operation.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+\fBF_failure\fP (with error bit) for any other error.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

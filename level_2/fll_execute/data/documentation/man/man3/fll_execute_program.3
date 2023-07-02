@@ -1,0 +1,117 @@
+.TH fll_execute_program "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+fll_execute_program
+.SH SYNOPSIS
+.nf
+.B #include <execute.h>
+.sp
+\fBf_status_t fll_execute_program\fP(
+    \fBconst f_string_static_t       \fP\fIprogram\fP,
+    \fBconst f_string_statics_t      \fP\fIarguments\fP,
+    \fBfl_execute_parameter_t *const \fP\fIparameter\fP,
+    \fBfl_execute_as_t *const        \fP\fIas\fP,
+    \fBvoid *const                   \fP\fIresult\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Execute a program given by program name found in the PATH environment (such as "bash") or program path (such as "/bin/bash").
+.PP
+The program will be executed via a forked child process.
+.PP
+When the path has a slash "/" or the environment is to be cleared, then this does validate the path to the program. Otherwise, this does not validate the path to the program.
+.PP
+When the parameter.option has the FL_execute_parameter_option_exit_d bit set, then this calls exit() when the child process returns. Otherwise, this returns
+.SH PARAMETERS
+.TP
+.B program
+The name or path of the program. Set to NULL, to designate that arguments[0] is the program name or path.
+
+.TP
+.B arguments
+An array of strings representing the arguments.
+
+.TP
+.B parameter
+(optional) This and most of its fields are optional and are disabled when set to 0. option: A bitwise set of options, such as: FL_execute_parameter_option_exit_d and FL_execute_parameter_option_path_d. environment: An map of strings representing the environment variable names and their respective values. Completely clears the environment and then creates environment variables for each name and value pair in this map. Set to an empty map (set map used length to 0). Set to NULL to not make any changes to the environment. values: An array of strings representing the environment variable names. The values.used must be of at least names.used. Set individual strings.used to 0 for empty/null values. signals: A pointer to the set of signals to have the child process block or not block. When not specified, the child process uses the signal blocking behavior of the parent process. data: A pointer to a string to pipe as standard input to the child process. The parent will block until the standard input is fully read or the child process exits.
+
+.TP
+.B as
+(optional) This and most of its fields are optional and are disabled when set to NULL.
+
+.TP
+.B result
+(optional) The execute status code returned after finishing or attempting to finish execution of program. When FL_execute_parameter_option_return_d is passed via parameter.option, then this instead stores the child process id (PID). This is should be of (int *) except when FL_execute_parameter_option_return_d this should instead be (pid_t *). Set to NULL to not use.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_child\fP on success and this is the child thread.
+.br
+\fBF_parent\fP on success and this is the parent thread (only happens when FL_execute_parameter_option_return_d is passed).
+.br
+\fBF_child\fP and assigns the child's return code to result for the child process. The caller is expected to handle the appropriate exit procedures and memory deallocation for the child process when
+.br
+\fBF_child\fP is returned.
+.PP
+This returns F_capability, F_group, and
+.br
+\fBF_user\fP only by the child process and must be treated the same as
+.br
+\fBF_child\fP for the purposes of understanding what the current process is. These are essentialy
+.br
+\fBF_child\fP with explicit error codes that are returned instead of performing the desired execution.
+.PP
+This returns F_control_group, F_limit, F_processor, and
+.br
+\fBF_schedule\fP only by the parent process and represents that the child process could not be executed.
+.br
+\fBF_capability\fP (with error bit) on failure to set capabilities in the child (only the child process returns this).
+.br
+\fBF_control_group\fP (with error bit) on failure to set control group in the child (only the parent process returns this).
+.br
+\fBF_child\fP (with error bit) on any failure without an explicit failure code (like F_group) before calling execute but this is the child thread.
+.br
+\fBF_failure\fP (with error bit) on execution failure.
+.br
+\fBF_fork\fP (with error bit) on fork failure.
+.br
+\fBF_group\fP (with error bit) on failure to set GID in the child (only the child process returns this).
+.br
+\fBF_limit\fP (with error bit) on failure to set a resource limit in the child (only the parent process returns this).
+.br
+\fBF_nice\fP (with error bit) on failure to set process niceness in the child (only the child process returns this).
+.br
+\fBF_pipe\fP (with error bit) on pipe failure.
+.br
+\fBF_processor\fP (with error bit) on failure to set a processor (cpu) affinity in the child (only the parent process returns this).
+.br
+\fBF_schedule\fP (with error bit) on failure to set scheduler in the child (only the parent process returns this).
+.br
+\fBF_user\fP (with error bit) on failure to set UID in the child (only the child process returns this).
+.br
+Errors (with error bit) from: f_capability_process_set().
+.br
+Errors (with error bit) from: f_environment_get().
+.br
+Errors (with error bit) from: f_file_exists().
+.br
+Errors (with error bit) from: f_limit_process().
+.br
+Errors (with error bit) from: f_signal_mask().
+.br
+Errors (with error bit) from: f_string_append().
+.br
+Errors (with error bit) from: f_string_dynamic_resize().
+.br
+Errors (with error bit) from: f_string_dynamics_resize().
+.br
+Errors (with error bit) from: f_thread_signal_mask().
+.br
+Errors (with error bit) from: fl_environment_path_explode().
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

@@ -1,0 +1,79 @@
+.TH f_file_open "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_file_open
+.SH SYNOPSIS
+.nf
+.B #include <file.h>
+.sp
+\fBf_status_t f_file_open\fP(
+    \fBconst f_string_static_t \fP\fIpath\fP,
+    \fBconst mode_t            \fP\fImode\fP,
+    \fBf_file_t *const         \fP\fIfile\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Open a particular file and save its stream.
+.PP
+This will open the file as a file descriptor. This does not open a file stream.
+.SH PARAMETERS
+.TP
+.B path
+The path file name.
+
+.TP
+.B mode
+The file mode to open in.
+
+.TP
+.B file
+The data related to the file being opened. This will be updated with the file descriptor.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP is returned on success.
+.br
+\fBF_data_not\fP if path.used is 0.
+.br
+\fBF_access_denied\fP (with error bit) on access denied.
+.br
+\fBF_buffer\fP (with error bit) if the buffer is invalid.
+.br
+\fBF_busy\fP (with error bit) if file system is too busy to perform write.
+.br
+\fBF_directory\fP (with error bit) if path is a directory and is unable to access a directory (read, write, already exists, etc.. depending on requested open action).
+.br
+\fBF_file_found_not\fP (with error bit) if the file was not found.
+.br
+\fBF_file_open_max\fP (with error bit) when system-wide max open files is reached.
+.br
+\fBF_file_type_not_directory\fP (with error bit) if
+.br
+\fBF_NOTIFY\fP was specified and file.id is not a directory.
+.br
+\fBF_filesystem_quota_block\fP (with error bit) if file system's disk blocks or inodes are exhausted.
+.br
+\fBF_interrupt\fP (with error bit) when program received an interrupt signal, halting operation.
+.br
+\fBF_loop\fP (with error bit) on loop error.
+.br
+\fBF_memory_not\fP (with error bit) if out of memory.
+.br
+\fBF_name\fP (with error bit) on path name is too long.
+.br
+\fBF_number_overflow\fP (with error bit) on overflow error.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+\fBF_prohibited\fP (with error bit) if file system does not allow for making changes.
+.br
+\fBF_read_only\fP (with error bit) if file is read-only.
+.br
+\fBF_supported_not\fP (with error bit) fo unsupported file types.
+.br
+\fBF_failure\fP (with error bit) for any other error.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

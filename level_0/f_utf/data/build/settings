@@ -39,6 +39,8 @@ build_sources_library utf/private-dynamic.c utf/private-map.c utf/private-map_mu
 build_sources_headers utf.h
 build_sources_headers utf/common.h utf/convert.h utf/dynamic.h utf/is.h utf/is_character.h utf/map.h utf/map_multi.h utf/static.h utf/string.h utf/triple.h
 
+build_sources_documentation man
+
 build_script yes
 build_shared yes
 build_static no

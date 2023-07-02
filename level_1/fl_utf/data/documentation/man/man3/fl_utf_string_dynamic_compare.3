@@ -1,0 +1,40 @@
+.TH fl_utf_string_dynamic_compare "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+fl_utf_string_dynamic_compare
+.SH SYNOPSIS
+.nf
+.B #include <utf.h>
+.sp
+\fBf_status_t fl_utf_string_dynamic_compare\fP(
+    \fBconst f_utf_string_static_t \fP\fIstring1\fP,
+    \fBconst f_utf_string_static_t \fP\fIstring2\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Compare two UTF-8 strings, similar to strncmp().
+.PP
+This does not stop on NULL. NULL characters are ignored.
+.SH PARAMETERS
+.TP
+.B string1
+String to compare.
+
+.TP
+.B string2
+String to compare.
+
+.SH RETURN VALUE
+.PP
+\fBF_equal_to\fP when both strings equal.
+.br
+\fBF_equal_to_not\fP when both strings do not equal.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+\fBF_utf_fragment\fP (with error bit) if character is a UTF-8 fragment.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

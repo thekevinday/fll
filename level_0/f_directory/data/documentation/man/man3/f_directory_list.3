@@ -1,0 +1,56 @@
+.TH f_directory_list "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_directory_list
+.SH SYNOPSIS
+.nf
+.B #include <directory.h>
+.sp
+\fBf_status_t f_directory_list\fP(
+    \fBconst f_string_static_t                                \fP\fIpath\fP,
+    \fBint(*)(const struct dirent *)                          \fP\fIfilter\fP,
+    \fBint(*)(const struct dirent **, const struct dirent **) \fP\fIsort\fP,
+    \fBf_string_dynamics_t                                   *\fP\fInames\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+For some given path, print the names of each file and/or directory inside the directory.
+.PP
+Allows specifying a custom filter and custom sort.
+.SH PARAMETERS
+.TP
+.B path
+The file path to the directory.
+
+.TP
+.B filter
+A filter function of the form: int xxx(const struct direct *). Set to 0 to not use (NULL).
+
+.TP
+.B sort
+A sort function of the form: int xxx(const struct direct *, const struct direct *). Set to 0 to not use (NULL). There are two pre-made libc functions available for this: alphasort() and versionsort().
+
+.TP
+.B names
+Will be populated with the names of each file and/or directory inside path.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_data_not\fP if path.used is 0.
+.br
+\fBF_directory_empty\fP if directory is empty.
+.br
+\fBF_array_too_large\fP (with error bit) if the directory buffer max length would be exceeded.
+.br
+\fBF_failure\fP (with error bit) if failed to read directory information.
+.br
+\fBF_memory_not\fP (with error bit) on out of memory.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

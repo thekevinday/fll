@@ -35,6 +35,8 @@ build_libraries-individual_thread -lf_thread
 
 build_sources_headers execute.h execute/common.h
 
+build_sources_documentation man
+
 build_script yes
 build_shared yes
 build_static no

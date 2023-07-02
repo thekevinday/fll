@@ -1,0 +1,40 @@
+.TH f_utf_character_unicode_from "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_utf_character_unicode_from
+.SH SYNOPSIS
+.nf
+.B #include <convert.h>
+.sp
+\fBf_status_t f_utf_character_unicode_from\fP(
+    \fBconst uint32_t \fP\fIunicode\fP,
+    \fBf_utf_char_t  *\fP\fIcharacter\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Convert a given Unicode into (UTF-8) character.
+.PP
+The f_utf_char_t is a 32-bit integer containing UTF-8 sequences, unchanged. The Unicode is a 32-bit integer representing the Unicode (such as U+0001). The Unciode does not need to be interpretted like UTF-8, it simple is a sequence of number from 0 onto max supported Unicode integer value (U+10FFFF).
+.SH PARAMETERS
+.TP
+.B unicode
+The Unicode number.
+
+.TP
+.B character
+The (UTF-8) character.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+\fBF_utf_fragment\fP (with error bit) if character is a UTF-8 fragment.
+.br
+\fBF_utf_not\fP (with error bit) if unicode is an invalid Unicode character.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

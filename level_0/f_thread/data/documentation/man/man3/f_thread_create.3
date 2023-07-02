@@ -1,0 +1,50 @@
+.TH f_thread_create "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_thread_create
+.SH SYNOPSIS
+.nf
+.B #include <thread.h>
+.sp
+\fBf_status_t f_thread_create\fP(
+    \fBconst f_thread_attribute_t *const \fP\fIattribute\fP,
+    \fBf_thread_id_t *const              \fP\fIid\fP,
+    \fBvoid *(*)(void *)                 \fP\fIroutine\fP,
+    \fBvoid                             *\fP\fIargument\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Create a thread.
+.SH PARAMETERS
+.TP
+.B attribute
+(optional) The thread attributes. Set to NULL to use default attributes.
+
+.TP
+.B id
+The thread ID. This gets populated with the created thread ID (aka: the "child" thread).
+
+.TP
+.B routine
+The function to execute.
+
+.TP
+.B argument
+(optional) The structure containing all arguments to pass to the routine. Set to NULL to not pass an argument.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+\fBF_prohibited\fP (with error bit) if not allowed to set the scheduling policy and parameters specified in attribute.
+.br
+\fBF_resource_not\fP (with error bit) if there are not enough resources to create another thread.
+.br
+\fBF_failure\fP (with error bit) on any other error.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

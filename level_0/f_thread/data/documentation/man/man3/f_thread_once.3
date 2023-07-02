@@ -1,0 +1,37 @@
+.TH f_thread_once "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_thread_once
+.SH SYNOPSIS
+.nf
+.B #include <thread.h>
+.sp
+\fBf_status_t f_thread_once\fP(
+    \fBvoid(*)(void)          \fP\fIroutine\fP,
+    \fBf_thread_once_t *const \fP\fIonce\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Call the given routine only one time and never again.
+.PP
+Subsequent calls will not call the given routine.
+.SH PARAMETERS
+.TP
+.B routine
+
+.TP
+.B once
+The once variable designating that the given routine will be called only once.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+\fBF_failure\fP (with error bit) on any other error.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

@@ -1,0 +1,30 @@
+.TH fll_control_group_prepare "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+fll_control_group_prepare
+.SH SYNOPSIS
+.nf
+.B #include <control_group.h>
+.sp
+\fBf_status_t fll_control_group_prepare\fP(
+    \fBconst f_control_group_t \fP\fIcontrol_group\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Provides control group (cgroup) related functionality. Make sure all directories specified in groups exist, creating all directories in the path.
+.PP
+This does not, however, create the control_group.path and will error out if that directory does not exist.
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_directory_not\fP (with error bit) if control_group.path does not exist.
+.br
+Errors (with error bit) from: f_directory_exists().
+.br
+Errors (with error bit) from: fl_directory_create().
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

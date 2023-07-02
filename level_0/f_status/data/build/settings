@@ -33,6 +33,8 @@ build_libraries -lc
 
 build_sources_headers status.h
 
+build_sources_documentation man
+
 build_script yes
 build_shared yes
 build_static no

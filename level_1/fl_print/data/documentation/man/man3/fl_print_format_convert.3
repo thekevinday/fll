@@ -1,0 +1,74 @@
+.TH fl_print_format_convert "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+fl_print_format_convert
+.SH SYNOPSIS
+.nf
+.B #include <print.h>
+.sp
+\fBf_string_t fl_print_format_convert\fP(
+    \fBconst f_string_t  \fP\fIstring\fP,
+    \fBFILE *const       \fP\fIstream\fP,
+    \fBva_list           \fP\fIap\fP,
+    \fBf_status_t *const \fP\fIstatus\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Convert and print a single part of a formatted string represented by the ''.
+.PP
+This should be called after each first '' is encountered. This should return only after a single '' group is fully processed, end of current is reached, or an error occurs.
+.PP
+This print function does not use locking, be sure something like flockfile() and funlockfile() are appropriately called.
+.PP
+The status parameter will be set as follows:
+.SH PARAMETERS
+.TP
+.B string
+The current character position within the string. This pointer might be updated by this function.
+
+.TP
+.B stream
+The file stream to stream to, including standard streams such as stdout and stderr.
+
+.TP
+.B ap
+The variable arguments list.
+
+.TP
+.B status
+The status is stored here rather then via the return.
+
+.SH RETURN VALUE
+.PP
+This returns a string at either the start position (if nothing done or an error occurred) or at the character last processed. The caller is expected to increment past this if they wish to continue processing the string.
+.br
+\fBF_none\fP on success.
+.br
+\fBF_output\fP (with error bit) on failure to print to the output file.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+\fBF_utf_not\fP (with error bit) if character is an invalid UTF-8 character.
+.br
+\fBF_valid_not\fP (with error bit) on invalid syntax (such as terminating the string on a single '').
+.PP
+Success from: f_print_dynamic(). Success from: f_print_dynamic_raw(). Success from: f_print_dynamic_safely(). Success from: f_print_safely(). Success from: f_print_terminated().
+.br
+Errors (with error bit) from: f_conversion_number_signed_print().
+.br
+Errors (with error bit) from: f_conversion_number_unsigned_print().
+.br
+Errors (with error bit) from: f_print_dynamic().
+.br
+Errors (with error bit) from: f_print_dynamic_raw().
+.br
+Errors (with error bit) from: f_print_dynamic_safely().
+.br
+Errors (with error bit) from: f_print_safely().
+.br
+Errors (with error bit) from: f_print_terminated().
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

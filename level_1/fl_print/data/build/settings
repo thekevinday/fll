@@ -36,6 +36,8 @@ build_sources_library print.c private-print.c print/common.c
 
 build_sources_headers print.h print/common.h
 
+build_sources_documentation man
+
 build_script yes
 build_shared yes
 build_static no

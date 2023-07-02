@@ -1,0 +1,52 @@
+.TH f_limit_process "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_limit_process
+.SH SYNOPSIS
+.nf
+.B #include <limit.h>
+.sp
+\fBf_status_t f_limit_process\fP(
+    \fBconst pid_t                  \fP\fIid\fP,
+    \fBconst int                    \fP\fItype\fP,
+    \fBconst f_limit_value_t *const \fP\fIvalue_next\fP,
+    \fBf_limit_value_t *const       \fP\fIvalue_current\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Get or set the resource limits for some process.
+.PP
+Either value_next or value_current must be non-zero.
+.SH PARAMETERS
+.TP
+.B id
+The PID to set the resources of.
+
+.TP
+.B type
+The resource type to set limit of or get limit of.
+
+.TP
+.B value_next
+The resource value to assign. If 0 is used instead of a valid value, then value_current must be non-zero and will be populated with the current resource value.
+
+.TP
+.B value_current
+The resource value currently assigned. If 0, then value_next is assigning the value but the previous value will not be returned. If both value_next and value_current are non-zero, then this represents the value prior to the assignment of value_next.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_address_not\fP (with error bit) if a pointer is outside of valid address space.
+.br
+\fBF_found_not\fP (with error bit) if no process by the given PID was found.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+\fBF_prohibited\fP (with error bit) if not allowed to perform this action.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

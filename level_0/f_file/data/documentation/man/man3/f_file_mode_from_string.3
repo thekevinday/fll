@@ -1,0 +1,72 @@
+.TH f_file_mode_from_string "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_file_mode_from_string
+.SH SYNOPSIS
+.nf
+.B #include <file.h>
+.sp
+\fBf_status_t f_file_mode_from_string\fP(
+    \fBconst f_string_static_t \fP\fIcode\fP,
+    \fBconst mode_t            \fP\fIumask\fP,
+    \fBf_file_mode_t *const    \fP\fImode\fP,
+    \fBuint8_t *const          \fP\fIreplace\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Get the file mode id from a string syntax.
+.PP
+The string syntax is defined as follows: '([ugoa]*[-+=]{0,1}([rwxXst]|[ugo])+([,][ugoa]*[-+=]{0,1}([rwxXst]|[ugo])+)*)|([-+=]{0,1}0*[0-7]{1,4})'.
+.PP
+Such that: 'u' = apply to user. 'g' = apply to group. 'o' = apply to other/world. 'a' = apply to all (user, group, and other/world). '-' = remove the specified modes. '+' = add the specified modes. '=' = overwrite all existing modes with this set. 'r' = read mode. 'w' = write mode. 'x' = execute mode. 'X' = execute mode, only if already executable directory or is file with owner already has executable bit. 's' = set-gid/set-uid mode. 't' = sticky-bit mode. '0' = no mode. '1' = execute mode. '2' = write mode. '3' = execute and write mode. '4' = read mode. '5' = execute and read mode. '6' = read and write mode. '7' = execute, read, and write mode.
+.PP
+When there are 4 digits with a non-zero leading digit (such as 2000 or 002000): '1' = sticky-bit mode. '2' = set-gid mode. '3' = sticky-bit and set-gid mode. '4' = set-uid mode. '5' = sticky-bit and set-uid mode. '6' = set-uid and set-gid mode. '7' = sticky-bit, set-uid, and set-gid mode.
+.PP
+When using digits, each set of 0-7 represents the following: [0]+ = set all bits to 0. [0-7] = apply to other/world. [0-7][0-7] = first ([1-7]) to group and second ([0-7]) to other/world. [0-7][0-7][0-7] = first ([1-7]) to owner, second ([0-7]) to group, and third ([0-7]) to other/world. [0-7][0-7][0-7][0-7] = first ([1-7]) to stick/set-uid/set-gid, second ([0-7]) to owner, third ([0-7]) to owner, and fourth ([0-7]) to other/world.
+.PP
+When using digits, the umask is always ignored. When there is a leading '0' or '=' when using digits, then the special bits should be replaced. Otherwise, the current special bits are intended to be respected (designated by F_file_mode_t_replace_directory_d).
+.PP
+When using non-digits and '+', '-', or '=' are specified without a leading 'a', 'u', 'g', or 'o', then the mode operations should be performed against the current umask. These are designated with the umask hows, such as f_file_mode_how_umask_replace.
+.PP
+This means that "chmod 1 some_directory" would not change the setuid/setgid/sticky bits, however, in practice it does change it!
+.PP
+Considering the behavior, assume that when "=" or a leading "0" is provided, this will change the setuid/setgid/sticky bits, otherwise it preserves those bits for directories.
+.PP
+the possibilities are a bit extensive and this needs additional review; remove this fixme when this review is completed.
+.PP
+apparently "u+g" is valid such that the mode from the group (g) is applied to the user (u) mode.
+.PP
+The flags F_file_mode_t_replace_* are used to designate which mask bits are to be replaced. For example F_file_mode_t_replace_owner_d would designate that the owner bits are to be replaced. A value of 0 means that there are no replacements being made.
+.PP
+Replacements replace the entire existing mode values where as "add" and "subtract" add or subtract modes, respectively, to the existing mode values.
+.SH PARAMETERS
+.TP
+.B code
+A NULL terminated string designating the desired mode, following the above string syntax.
+
+.TP
+.B umask
+The umask to be applied to the file mode, when applicable.
+
+.TP
+.B mode
+The determined mode. This uses bitwise data.
+
+.TP
+.B replace
+The determined modes that are to be replaced, such as: F_file_mode_t_replace_owner_d. This uses bitwise data.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+\fBF_syntax\fP (with error bit) if the string fails to follow the syntax rules.
+.br
+The parameters how, mode_normal, and mode_executable are all set to 0 on error.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

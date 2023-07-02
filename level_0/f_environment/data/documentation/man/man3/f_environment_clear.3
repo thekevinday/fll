@@ -1,0 +1,24 @@
+.TH f_environment_clear "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_environment_clear
+.SH SYNOPSIS
+.nf
+.B #include <environment.h>
+.sp
+\fBf_status_t f_environment_clear\fP(
+    \fBvoid     \fP\fI\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Provides environment processing functionality, such as environment variable handling. Delete all environment variables.
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_failure\fP (with error bit) on failure.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

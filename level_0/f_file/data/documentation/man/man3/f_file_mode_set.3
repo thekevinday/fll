@@ -1,0 +1,58 @@
+.TH f_file_mode_set "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_file_mode_set
+.SH SYNOPSIS
+.nf
+.B #include <file.h>
+.sp
+\fBf_status_t f_file_mode_set\fP(
+    \fBconst f_string_static_t \fP\fIpath\fP,
+    \fBconst mode_t            \fP\fImode\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Change mode of a given file at the specified path.
+.PP
+This does not set mode based on umask(), be sure to apply umask if so desired. (such as: mode & ~mask).
+.SH PARAMETERS
+.TP
+.B path
+The path file name.
+
+.TP
+.B mode
+The new mode to use.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_data_not\fP if path.used is 0.
+.br
+\fBF_access_denied\fP (with error bit) on access denied.
+.br
+\fBF_access_mode\fP (with error bit) if the current user does not have access to assign the file mode.
+.br
+\fBF_directory_not\fP (with error bit) on invalid directory.
+.br
+\fBF_file_found_not\fP (with error bit) if file at path was not found.
+.br
+\fBF_input_output\fP (with error bit) on I/O error.
+.br
+\fBF_loop\fP (with error bit) on loop error.
+.br
+\fBF_memory_not\fP (with error bit) if out of memory.
+.br
+\fBF_name\fP (with error bit) on path name error.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+\fBF_read_only\fP (with error bit) if file is read-only.
+.br
+\fBF_failure\fP (with error bit) for any other error.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

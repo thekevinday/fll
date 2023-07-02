@@ -1,0 +1,70 @@
+.TH f_file_stream_close "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_file_stream_close
+.SH SYNOPSIS
+.nf
+.B #include <file.h>
+.sp
+\fBf_status_t f_file_stream_close\fP(
+    \fBconst bool      \fP\fIflush\fP,
+    \fBf_file_t *const \fP\fIfile\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Close an open file stream.
+.SH PARAMETERS
+.TP
+.B flush
+If TRUE, will explicitly flush all unwritten data in any buffers to the file. If FALSE, will not explicitly flush unwritten data.
+
+.TP
+.B file
+The file information. The file.stream is set to 0, on success or on failure. The file.id is set to 0, on success or on failure.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP is returned on success.
+.br
+\fBF_access_denied\fP (with error bit) on access denied.
+.br
+\fBF_block\fP (with error bit) if the action would block and non-blocking is set on the stream.
+.br
+\fBF_buffer\fP (with error bit) if the buffer is invalid.
+.br
+\fBF_deadlock\fP (with error bit) if operation would cause a deadlock.
+.br
+\fBF_file_close\fP (with error bit) if fclose() failed for any other reason.
+.br
+\fBF_file_descriptor\fP (with error bit) if file descriptor is invalid.
+.br
+\fBF_file_descriptor_max\fP (with error bit) if max file descriptors is reached.
+.br
+\fBF_file_overflow\fP (with error bit) if the write exceeds some implementation defined maximum file size.
+.br
+\fBF_file_synchronize\fP (with error bit) on flush failure.
+.br
+\fBF_file_type_not_directory\fP (with error bit) if
+.br
+\fBF_NOTIFY\fP was specified and file.id is not a directory.
+.br
+\fBF_filesystem_quota_block\fP (with error bit) if file system's disk blocks or inodes are exhausted.
+.br
+\fBF_input_output\fP (with error bit) on I/O error.
+.br
+\fBF_interrupt\fP (with error bit) when program received an interrupt signal, halting operation.
+.br
+\fBF_lock\fP (with error bit) if failed to lock, such as lock table is full or too many open segments.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+\fBF_pipe_not\fP (with error bit) if the stream is a pipe or a socket but the pipe or socket is already closed.
+.br
+\fBF_space_not\fP (with error bit) if file system is out of space (or file system quota is reached).
+.br
+\fBF_socket_not\fP (with error bit) if the datagram socket in which a peer has not been set (for socket related streams).
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

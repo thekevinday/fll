@@ -1,0 +1,76 @@
+.TH f_print_to_except_dynamic_partial_safely "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_print_to_except_dynamic_partial_safely
+.SH SYNOPSIS
+.nf
+.B #include <to.h>
+.sp
+\fBf_status_t f_print_to_except_dynamic_partial_safely\fP(
+    \fBconst f_string_static_t \fP\fIbuffer\fP,
+    \fBconst f_string_range_t  \fP\fIrange\fP,
+    \fBconst f_array_lengths_t \fP\fIexcept\fP,
+    \fBconst int               \fP\fIid\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Similar to a c-library dprintf, except that this will only print a specific range in a given dynamic string.
+.PP
+Control characters are converted to the Unicode control character symbols, excluding NULL. UTF-8 sequences with invalid widths are converted to the unknown character '�'.
+.PP
+Will not stop at NULL. Will not print NULL. Will not print any 1-byte character at a location specified in except array. Will print up to the specified range within the buffer.
+.SH PARAMETERS
+.TP
+.B buffer
+The string to output.
+
+.TP
+.B range
+The range within the provided string to print.
+
+.TP
+.B except
+An array of locations within the given string to not print. The array of locations is required/assumed to be in linear order.
+
+.TP
+.B id
+The file descriptor to output to.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_data_not\fP if there is nothing to print.
+.br
+\fBF_block\fP (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
+.br
+\fBF_buffer\fP (with error bit) if the buffer is invalid.
+.br
+\fBF_file_closed\fP (with error bit) if file is not open.
+.br
+\fBF_file_descriptor\fP (with error bit) if the file descriptor is invalid.
+.br
+\fBF_file_type_directory\fP (with error bit) if file descriptor represents a directory.
+.br
+\fBF_filesystem_quota_block\fP (with error bit) if quota is reached or exceeded.
+.br
+\fBF_input_output\fP (with error bit) on I/O error.
+.br
+\fBF_interrupt\fP (with error bit) if interrupt was received.
+.br
+\fBF_number_overflow\fP (with error bit) if maximum size reached while writing or attempting to write beyond maximum allowed offset.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+\fBF_pipe\fP (with error bit) if a connected pipe or socket is closed.
+.br
+\fBF_space_not\fP (with error bit) cannot write, out of space.
+.br
+\fBF_socket_not\fP (with error bit) if socket is not connected.
+.br
+\fBF_output\fP (with error bit) on any other failure.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

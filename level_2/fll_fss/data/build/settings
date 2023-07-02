@@ -36,6 +36,8 @@ build_sources_library fss.c fss/basic.c fss/basic_list.c fss/embedded_list.c fss
 
 build_sources_headers fss.h fss/basic.h fss/basic_list.h fss/embedded_list.h fss/extended.h fss/extended_list.h fss/payload.h
 
+build_sources_documentation man
+
 build_script yes
 build_shared yes
 build_static no

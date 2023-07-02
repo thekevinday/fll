@@ -1,0 +1,38 @@
+.TH f_limit_sets_append "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_limit_sets_append
+.SH SYNOPSIS
+.nf
+.B #include <set.h>
+.sp
+\fBf_status_t f_limit_sets_append\fP(
+    \fBconst f_limit_set_t \fP\fIsource\fP,
+    \fBf_limit_sets_t     *\fP\fIdestination\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Append the single source set onto the destination.
+.SH PARAMETERS
+.TP
+.B source
+The source set to append.
+
+.TP
+.B destination
+The destination sets the source is appended onto.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_data_not\fP on success, but there is nothing to append (size == 0).
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+Errors (with error bit) from: f_memory_resize().
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

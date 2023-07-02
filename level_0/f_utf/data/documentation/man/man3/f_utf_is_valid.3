@@ -1,0 +1,48 @@
+.TH f_utf_is_valid "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_utf_is_valid
+.SH SYNOPSIS
+.nf
+.B #include <is.h>
+.sp
+\fBf_status_t f_utf_is_valid\fP(
+    \fBconst f_string_t       \fP\fIsequence\fP,
+    \fBconst f_array_length_t \fP\fIwidth_max\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Check to see if the entire byte block of the character is a valid (well-formed) UTF-8 character.
+.PP
+This does validate if the UTF-8 character is a valid UTF-8 character. To not do this, use f_utf_is().
+.PP
+Valid ASCII character codes are considered valid by this function.
+.PP
+Codes U+FDD0 to U+FDEF and any character ending in FFFE or FFFF are non-characters, and are therefore invalid.
+.SH PARAMETERS
+.TP
+.B sequence
+The byte sequence to validate as a character. There must be enough space allocated to compare against, as limited by width_max.
+
+.TP
+.B width_max
+The maximum width available for checking. Can be anything greater than 0.
+
+.SH RETURN VALUE
+.PP
+\fBF_true\fP if a valid UTF-8 character or is an ASCII character.
+.br
+\fBF_false\fP if not a valid UTF-8 character.
+.br
+\fBF_complete_not_utf\fP (with error bit set) if character is an incomplete UTF-8 sequence.
+.br
+\fBF_failure\fP (with error bit) if width_max is not long enough to convert.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+\fBF_utf_fragment\fP (with error bit) if character is a UTF-8 fragment.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

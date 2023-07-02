@@ -1,0 +1,59 @@
+.TH fl_string_dynamic_compare_except_string "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+fl_string_dynamic_compare_except_string
+.SH SYNOPSIS
+.nf
+.B #include <string.h>
+.sp
+\fBf_status_t fl_string_dynamic_compare_except_string\fP(
+    \fBconst f_string_t        \fP\fIstring1\fP,
+    \fBconst f_string_static_t \fP\fIstring2\fP,
+    \fBconst f_array_length_t  \fP\fIlength1\fP,
+    \fBconst f_array_lengths_t \fP\fIexcept1\fP,
+    \fBconst f_array_lengths_t \fP\fIexcept2\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Compare two strings, similar to strncmp().
+.PP
+This operates with the first string being a traditional string.
+.PP
+This does not stop on NULL. NULL characters are ignored. All 1-byte characters in except1 and except2 are ignored.
+.SH PARAMETERS
+.TP
+.B string1
+String to compare.
+
+.TP
+.B string2
+String to compare.
+
+.TP
+.B length1
+The length of string1.
+
+.TP
+.B except1
+A set of locations within string1 to ignore. This assumes/requires that the locations be in linear order.
+
+.TP
+.B except2
+A set of locations within string2 to ignore. This assumes/requires that the locations be in linear order.
+
+.SH RETURN VALUE
+.PP
+\fBF_equal_to\fP when both strings equal.
+.br
+\fBF_equal_to_not\fP when both strings do not equal.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+\fBF_parameter\fP (with error bit) from: f_utf_is_combining().
+.br
+\fBF_parameter\fP (with error bit) from: f_utf_is_whitespace().
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

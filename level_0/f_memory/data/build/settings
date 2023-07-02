@@ -35,6 +35,8 @@ build_sources_library memory.c private-memory.c memory/structure.c
 
 build_sources_headers memory.h memory/common.h memory/structure.h
 
+build_sources_documentation man
+
 build_script yes
 build_shared yes
 build_static no

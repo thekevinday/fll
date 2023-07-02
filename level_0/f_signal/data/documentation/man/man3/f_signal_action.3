@@ -1,0 +1,38 @@
+.TH f_signal_action "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_signal_action
+.SH SYNOPSIS
+.nf
+.B #include <signal.h>
+.sp
+\fBf_status_t f_signal_action\fP(
+    \fBconst f_signal_t              \fP\fIsignal\fP,
+    \fBconst struct sigaction *const \fP\fIaction\fP,
+    \fBstruct sigaction             *\fP\fIprevious\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+This holds a signal type.
+.PP
+flags: The signal flags associated with this. id: The signal descriptor. set: The signal set.
+.sp
+.RS
+.nf
+\fB
+struct f_signal_t {
+  int      \fIflags\fP;
+  int      \fIid\fP;
+  sigset_t \fIset\fP;
+};
+\fP
+.fi
+.RE
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success but no signal found.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

@@ -1,0 +1,45 @@
+.TH f_utf_buffer_decrement "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_utf_buffer_decrement
+.SH SYNOPSIS
+.nf
+.B #include <utf.h>
+.sp
+\fBf_status_t f_utf_buffer_decrement\fP(
+    \fBconst f_string_static_t \fP\fIbuffer\fP,
+    \fBf_string_range_t       *\fP\fIrange\fP,
+    \fBconst f_array_length_t  \fP\fIstep\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+A structure designating a start and stop range for some string.
+.PP
+In general, this project uses the start and stop position inclusively, meaning that a range of 0 to 1 would include positions 0 and position 1. Therefore, a range from 0 to 0 would be include position 0. Set start to some value larger than stop to designate that there is no range (such as start = 1, stop = 0).
+.PP
+start: the start position. stop: the stop position.
+.sp
+.RS
+.nf
+\fB
+struct f_string_range_t {
+  f_array_length_t \fIstart\fP;
+  f_array_length_t \fIstop\fP;
+};
+\fP
+.fi
+.RE
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_none_stop\fP if the stop range is reached before all steps are completed.
+.br
+\fBF_none_eos\fP if the end of buffer is reached before all steps are completed.
+.br
+\fBF_data_not\fP if buffer is empty or out of range.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

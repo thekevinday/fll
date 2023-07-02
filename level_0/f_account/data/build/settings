@@ -36,6 +36,8 @@ build_sources_library account.c private-account.c
 
 build_sources_headers account.h account/common.h
 
+build_sources_documentation man
+
 build_script yes
 build_shared yes
 build_static no

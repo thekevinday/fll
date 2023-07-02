@@ -36,6 +36,8 @@ build_sources_library pipe.c
 
 build_sources_headers pipe.h
 
+build_sources_documentation man
+
 build_script yes
 build_shared yes
 build_static no

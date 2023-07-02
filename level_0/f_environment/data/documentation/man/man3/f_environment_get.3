@@ -1,0 +1,42 @@
+.TH f_environment_get "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_environment_get
+.SH SYNOPSIS
+.nf
+.B #include <environment.h>
+.sp
+\fBf_status_t f_environment_get\fP(
+    \fBconst f_string_static_t   \fP\fIname\fP,
+    \fBf_string_dynamic_t *const \fP\fIvalue\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Get a single environment variable.
+.PP
+The variable is copied into a new dynamically allocated string and is safe to alter.
+.SH PARAMETERS
+.TP
+.B name
+The name of the environment variable to get. The name string must not contain the '=' character. The name must be NULL terminated.
+
+.TP
+.B value
+The value associated with name. The value is be null terminated. The value is be appended (set value->used to 0 before calling this to fully replace).
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_data_not\fP if name.used is 0.
+.br
+\fBF_exist_not\fP if name does not exist.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+Errors (with error bit) from: f_string_dynamic_increase_by().
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

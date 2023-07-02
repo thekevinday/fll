@@ -1,0 +1,43 @@
+.TH f_signal_mask "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_signal_mask
+.SH SYNOPSIS
+.nf
+.B #include <signal.h>
+.sp
+\fBf_status_t f_signal_mask\fP(
+    \fBconst int             \fP\fIhow\fP,
+    \fBconst sigset_t *const \fP\fInext\fP,
+    \fBsigset_t *const       \fP\fIcurrent\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Get or assign the current signal set in use.
+.PP
+Either set or previous may be NULL but not both (at least one is required).
+.SH PARAMETERS
+.TP
+.B how
+How to handle the signal. Set this to 0 when only trying to get the current signal set.
+
+.TP
+.B next
+(optional) The new set of signals to handle. Set to NULL to not use.
+
+.TP
+.B current
+(optional) The current set of signals being handled. Set to NULL to not use.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success but no signal found.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+\fBF_failure\fP (with error bit) for any other error.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

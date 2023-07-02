@@ -1,0 +1,57 @@
+.TH f_conversion_number_signed_print "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_conversion_number_signed_print
+.SH SYNOPSIS
+.nf
+.B #include <conversion.h>
+.sp
+\fBf_status_t f_conversion_number_signed_print\fP(
+    \fBconst f_number_signed_t   \fP\fInumber\fP,
+    \fBconst f_conversion_data_t \fP\fIdata\fP,
+    \fBFILE *const               \fP\fIstream\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Convert a signed number into the decimal digit string that it represents.
+.PP
+The generated number is printed to the file stream.
+.PP
+This only supports the following base units: 2 through 16. This only supports base prefixes for: 2, 8, 10, 12, and 16.
+.PP
+This print function does not use locking, be sure something like flockfile() and funlockfile() are appropriately called.
+.SH PARAMETERS
+.TP
+.B number
+The number to convert.
+
+.TP
+.B data
+The settings designating how to perform the conversion.
+
+.TP
+.B stream
+The file stream to output to, including standard streams such as stdout and stderr.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP if the number was converted to a string.
+.br
+\fBF_block\fP (with error bit) if file stream is set to non-block and the write would result in a blocking operation.
+.br
+\fBF_buffer\fP (with error bit) if the buffer is invalid.
+.br
+\fBF_file_type_directory\fP (with error bit) if file descriptor represents a directory.
+.br
+\fBF_input_output\fP (with error bit) on I/O error.
+.br
+\fBF_interrupt\fP (with error bit) if interrupt was received.
+.br
+\fBF_output\fP (with error bit) on any other file output error.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

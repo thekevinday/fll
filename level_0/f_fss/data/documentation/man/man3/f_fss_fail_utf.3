@@ -1,0 +1,35 @@
+.TH f_fss_fail_utf "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_fss_fail_utf
+.SH SYNOPSIS
+.nf
+.B #include <fss.h>
+.sp
+\fBf_status_t f_fss_fail_utf\fP(
+    \fBf_state_t        \fP\fIstate\fP,
+    \fBconst f_status_t \fP\fIstatus\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Using the state, check that the status should return an error or not on invalid UTF-8.
+.PP
+When f_fss_state_flag_utf_fail_on_valid_not_e is set, UTF-8 failures are returned as is. When f_fss_state_flag_utf_fail_on_valid_not_e is unset, UTF-8 failures are returned with the error bit removed.
+.SH PARAMETERS
+.TP
+.B state
+A state for providing flags and handling interrupts during long running operations.
+
+.TP
+.B status
+F_utf_not
+
+
+.SH RETURN VALUE
+.PP
+Status is either directly passed through or the error bit is removed depending on state.flag.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

@@ -1,0 +1,43 @@
+.TH fl_control_group_apply "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+fl_control_group_apply
+.SH SYNOPSIS
+.nf
+.B #include <control_group.h>
+.sp
+\fBf_status_t fl_control_group_apply\fP(
+    \fBconst f_control_group_t \fP\fIcontrol_group\fP,
+    \fBconst pid_t             \fP\fIid\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Apply the given control groups to the process represented by the PID.
+.PP
+Errors (with error bit) from: f_file_stream_open().
+.SH PARAMETERS
+.TP
+.B control_group
+
+.TP
+.B id
+The PID of the process to apply the control group(s) to.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_memory_not\fP (with error bit) if a out of memory.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+\fBF_prohibited\fP (with error bit) if the current user/process has insufficient privileges to set certain cgroup settings.
+.br
+\fBF_space_not\fP (with error bit) if a maximum resource limit is reached and there is not enough space.
+.br
+\fBF_failure\fP (with error bit) on any other error.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

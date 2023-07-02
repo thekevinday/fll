@@ -1,0 +1,44 @@
+.TH f_path_directory_cleanup "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_path_directory_cleanup
+.SH SYNOPSIS
+.nf
+.B #include <path.h>
+.sp
+\fBf_status_t f_path_directory_cleanup\fP(
+    \fBconst f_string_static_t   \fP\fIsource\fP,
+    \fBf_string_dynamic_t *const \fP\fIdirectory\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Ensure that the given directory path string doesn't have redundant path separators.
+.PP
+The directory path is not validated to exist.
+.PP
+Ensures that multiple consecutive '/' following '../' is reduced to only '../' ('..////' would become '../').
+.PP
+The directory string will be NULL terminated after directory.used.
+.SH PARAMETERS
+.TP
+.B source
+The south path to cleanup.
+
+.TP
+.B directory
+The cleaned up directory string. The directory string is replaced by this function.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_memory_not\fP (with error bit) on out of memory.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+Errors (with error bit) from: f_string_dynamic_increase_by()
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

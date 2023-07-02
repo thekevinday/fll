@@ -1,0 +1,40 @@
+.TH f_utf_string_dynamics_append "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_utf_string_dynamics_append
+.SH SYNOPSIS
+.nf
+.B #include <dynamic.h>
+.sp
+\fBf_status_t f_utf_string_dynamics_append\fP(
+    \fBconst f_utf_string_dynamic_t   \fP\fIsource\fP,
+    \fBf_utf_string_dynamics_t *const \fP\fIdestination\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Append the single source string onto the destination.
+.SH PARAMETERS
+.TP
+.B source
+The source string to append.
+
+.TP
+.B destination
+The destination strings the source is appended onto.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_data_not\fP on success, but there is nothing to append (size == 0).
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+\fBF_string_too_large\fP (with error bit) if the combined string is too large.
+.br
+Errors (with error bit) from: f_memory_resize().
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

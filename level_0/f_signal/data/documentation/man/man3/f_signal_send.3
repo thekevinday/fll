@@ -1,0 +1,40 @@
+.TH f_signal_send "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_signal_send
+.SH SYNOPSIS
+.nf
+.B #include <signal.h>
+.sp
+\fBf_status_t f_signal_send\fP(
+    \fBconst int   \fP\fIsignal\fP,
+    \fBconst pid_t \fP\fIprocess_id\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Send a signal to a process.
+.SH PARAMETERS
+.TP
+.B signal
+The signal to send
+
+.TP
+.B process_id
+The process id (PID) that will receive the signal. This may also be a process group id.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success but no signal found.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+\fBF_prohibited\fP (with error bit) if not allowed to send signals to the given process.
+.br
+\fBF_found_not\fP (with error bit) if the given process was not found.
+.br
+\fBF_failure\fP (with error bit) for any other error.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

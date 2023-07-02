@@ -1,0 +1,42 @@
+.TH f_socket_listen "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_socket_listen
+.SH SYNOPSIS
+.nf
+.B #include <socket.h>
+.sp
+\fBf_status_t f_socket_listen\fP(
+    \fBf_socket_t *const  \fP\fIsocket\fP,
+    \fBconst unsigned int \fP\fImax_backlog\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Set the socket to listen mode (passive socket).
+.SH PARAMETERS
+.TP
+.B socket
+The socket structure. The socket.id must represent a valid socket file descriptor.
+
+.TP
+.B max_backlog
+The max length of the pending connections queue. Suggested default setting: 8.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_busy_address\fP (with error bit) if address is already in use (therefore unavailable).
+.br
+\fBF_file_descriptor\fP (with error bit) if id is an invalid descriptor.
+.br
+\fBF_socket_not\fP (with error bit) if the id is not a socket descriptor.
+.br
+\fBF_supported_not\fP (with error bit) if this socket does not support the listen() operation.
+.br
+\fBF_failure\fP (with error bit) for any other error.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

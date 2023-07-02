@@ -1,0 +1,54 @@
+.TH fll_execute_arguments_add_parameter "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+fll_execute_arguments_add_parameter
+.SH SYNOPSIS
+.nf
+.B #include <execute.h>
+.sp
+\fBf_status_t fll_execute_arguments_add_parameter\fP(
+    \fBconst f_string_static_t    \fP\fIprefix\fP,
+    \fBconst f_string_static_t    \fP\fIname\fP,
+    \fBconst f_string_static_t    \fP\fIvalue\fP,
+    \fBf_string_dynamics_t *const \fP\fIarguments\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Add parameters as arguments to the execution arguments array.
+.PP
+This is intended to simplify adding arguments that have prefixes and values such as those common in console parameters. For example, a pefix of '', a name of 'do', and a value of 'something' would result in two arguments added: 'do' and 'something'.
+.PP
+The arguments are only appended if the length of name and value are not 0.
+.PP
+This guarantees that NULL exists at the end of each argument (after the argumunets[..].used length). This does not check for NULL characters anywhere else in the string.
+.SH PARAMETERS
+.TP
+.B prefix
+The string prepend to the name.
+
+.TP
+.B name
+The string to add to the arguments array.
+
+.TP
+.B value
+The string to add to the arguments array.
+
+.TP
+.B arguments
+The array of string arguments intended to pass to the execute functions.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+Errors (with error bit) from: f_string_append().
+.br
+Errors (with error bit) from: f_string_dynamic_resize().
+.br
+Errors (with error bit) from: f_string_dynamics_increase().
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

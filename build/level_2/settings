@@ -58,6 +58,8 @@ build_sources_headers print.h
 build_sources_headers program.h program/common.h
 build_sources_headers status_string.h
 
+build_sources_documentation man
+
 build_script yes
 build_shared yes
 build_static no

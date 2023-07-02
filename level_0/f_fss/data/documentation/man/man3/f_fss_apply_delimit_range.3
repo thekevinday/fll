@@ -1,0 +1,48 @@
+.TH f_fss_apply_delimit_range "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_fss_apply_delimit_range
+.SH SYNOPSIS
+.nf
+.B #include <fss.h>
+.sp
+\fBf_status_t f_fss_apply_delimit_range\fP(
+    \fBf_state_t                \fP\fIstate\fP,
+    \fBconst f_fss_delimits_t   \fP\fIdelimits\fP,
+    \fBconst f_string_range_t   \fP\fIrange\fP,
+    \fBf_string_static_t *const \fP\fIbuffer\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Replace all 1-byte character locations specified by the delimits within the given buffer by a delimit placeholder if within the given range.
+.PP
+If the delimits are found to be (inclusively) within the range specified by range, then those delimits are applied.
+.SH PARAMETERS
+.TP
+.B state
+A state for providing flags and handling interrupts during long running operations.
+
+.TP
+.B delimits
+An array of locations containing the delimits to apply within the buffer.
+
+.TP
+.B range
+The range in which to restrict which delimits to apply.
+
+.TP
+.B buffer
+The string to process.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_data_not\fP on success but buffer.used is 0.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

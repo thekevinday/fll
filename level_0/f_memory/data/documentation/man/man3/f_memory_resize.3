@@ -1,0 +1,52 @@
+.TH f_memory_resize "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_memory_resize
+.SH SYNOPSIS
+.nf
+.B #include <memory.h>
+.sp
+\fBf_status_t f_memory_resize\fP(
+    \fBconst size_t \fP\fIold_length\fP,
+    \fBconst size_t \fP\fInew_length\fP,
+    \fBconst size_t \fP\fIsize\fP,
+    \fBvoid **const \fP\fIpointer\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Resize dynamically allocated data.
+.PP
+Will not change any of the data prior to deallocation.
+.PP
+The pointer address might be changed by realloc().
+.SH PARAMETERS
+.TP
+.B old_length
+The total number of blocks representing the length to be resized from.
+
+.TP
+.B new_length
+The total number of blocks representing the length to be resized to.
+
+.TP
+.B size
+The block size, in bytes (size * length = allocated size).
+
+.TP
+.B pointer
+A pointer to the address that will be resized.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_data_not\fP on success, but there was nothing to do.
+.br
+\fBF_memory_not\fP (with error bit) on out of memory.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

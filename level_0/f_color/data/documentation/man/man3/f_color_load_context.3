@@ -1,0 +1,42 @@
+.TH f_color_load_context "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_color_load_context
+.SH SYNOPSIS
+.nf
+.B #include <color.h>
+.sp
+\fBf_status_t f_color_load_context\fP(
+    \fBconst bool               \fP\fIuse_light_colors\fP,
+    \fBf_color_context_t *const \fP\fIcontext\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Provide basic color output support (linux & xterm). This is the Featureless LINUX Library, so there is no support for non-linux colors at this time.
+.PP
+For simplicity purposes, all color code strings are required and assumed to be NULL terminated. Load the appropriate colors into the color context.
+.PP
+This will handle the difference betweem xorg terminals and linux consoles. If you wish to use non-standard colors either redefine this function or don't use it.
+.PP
+The default/fallback behavior is f_color_xterminal.
+.SH PARAMETERS
+.TP
+.B use_light_colors
+Set to F_true to use colors for light backgrounds. Set to F_false to use colors for dark backgrounds.
+
+.TP
+.B context
+The color context the load the color codes into.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+Errors (with error bit) from: f_string_dynamic_increase_by()
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

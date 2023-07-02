@@ -36,6 +36,8 @@ build_sources_library program.c program/common.c private-program.c
 
 build_sources_headers program.h program/common.h
 
+build_sources_documentation man
+
 build_script yes
 build_shared yes
 build_static no

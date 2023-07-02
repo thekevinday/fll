@@ -92,6 +92,8 @@ build_sources_headers utf.h utf/common.h utf/convert.h utf/dynamic.h utf/is.h ut
 
 build_sources_headers-thread thread.h thread/attribute.h thread/barrier.h thread/barrier_attribute.h thread/condition.h thread/condition_attribute.h thread/id.h thread/key.h thread/lock.h thread/lock_attribute.h thread/mutex.h thread/mutex_attribute.h thread/once.h thread/semaphore.h thread/set.h thread/spin.h
 
+build_sources_documentation man
+
 build_script yes
 build_shared yes
 build_static no

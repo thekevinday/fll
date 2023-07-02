@@ -1,0 +1,46 @@
+.TH fl_environment_path_explode_reverse "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+fl_environment_path_explode_reverse
+.SH SYNOPSIS
+.nf
+.B #include <environment.h>
+.sp
+\fBf_status_t fl_environment_path_explode_reverse\fP(
+    \fBconst f_string_static_t    \fP\fIpath\fP,
+    \fBf_string_dynamics_t *const \fP\fIpaths\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Separate a given PATH-style string into multiple separate paths.
+.PP
+The paths are created in reverse order.
+.SH PARAMETERS
+.TP
+.B path
+The string to process that is expected to follow the traditional Linux standard PATH environment variable. Each seperate path is separated by a single ':'. Need not be NULL terminated. NULLs are ignored and are not copied into the exploded paths.
+
+.TP
+.B paths
+All of the strings exploded from PATH. Each exploded path, when not empty, is guaranteed to have a trailing '/'. Each exploded path is not NULL terminated.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_array_too_large\fP (with error bit) if paths array is too large for further addressing.
+.br
+\fBF_memory_not\fP (with error bit) on out of memory.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+Errors (with error bit) from: f_environment_get() (only when en_kevux_path_architecture_bits is defined).
+.br
+Errors (with error bit) from: f_string_dynamics_increase().
+.br
+Errors (with error bit) from: f_string_dynamics_increase_by().
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

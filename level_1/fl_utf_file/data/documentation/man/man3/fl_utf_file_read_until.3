@@ -1,0 +1,63 @@
+.TH fl_utf_file_read_until "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+fl_utf_file_read_until
+.SH SYNOPSIS
+.nf
+.B #include <utf_file.h>
+.sp
+\fBf_status_t fl_utf_file_read_until\fP(
+    \fBconst f_file_t                \fP\fIfile\fP,
+    \fBconst f_array_length_t        \fP\fItotal\fP,
+    \fBf_utf_string_dynamic_t *const \fP\fIdestination\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Read until a given number or EOF is reached, storing it in the destination.
+.PP
+To check how much was read into the destination, record destination->used before execution and compare to destination->used after execution.
+.SH PARAMETERS
+.TP
+.B file
+The file to read. The file must already be open.
+
+.TP
+.B total
+The total bytes to read, unless EOF is reached first.
+
+.TP
+.B destination
+The destination the file is being read into.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_none_eof\fP on success and EOF was reached.
+.br
+\fBF_block\fP (with error bit) if file descriptor is set to non-block and the read would result in a blocking operation.
+.br
+\fBF_buffer\fP (with error bit) if the buffer is invalid.
+.br
+\fBF_file\fP (with error bit) if file descriptor is in an error state.
+.br
+\fBF_file_closed\fP (with error bit) if file is not open.
+.br
+\fBF_file_descriptor\fP (with error bit) if the file descriptor is invalid.
+.br
+\fBF_file_type_directory\fP (with error bit) if file descriptor represents a directory.
+.br
+\fBF_complete_not_utf_eof\fP (with error bit) if UTF-8 character was incomplete at the end of the file.
+.br
+\fBF_complete_not_utf_stop\fP (with error bit) if UTF-8 character was incomplete at a stop point (file.size_read).
+.br
+\fBF_input_output\fP (with error bit) on I/O error.
+.br
+\fBF_interrupt\fP (with error bit) if interrupt was received.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

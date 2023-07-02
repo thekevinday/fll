@@ -1,0 +1,40 @@
+.TH f_control_group_copy "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_control_group_copy
+.SH SYNOPSIS
+.nf
+.B #include <control_group.h>
+.sp
+\fBf_status_t f_control_group_copy\fP(
+    \fBconst f_control_group_t  \fP\fIsource\fP,
+    \fBf_control_group_t *const \fP\fIdestination\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Provides control group (cgroup) related functionality.
+.PP
+It appears that the control group, as documented in the Linux kernel, is changed via the sysfs instead of system calls. If there are system calls to set the control group for a given process then this will need to be updated to utilize that. Until then, this is an implementation that helps facilitate writing to the sysfs file system for adding a process to a particular control group.
+.PP
+This is intended to be used with Control Groups (cgroups) Version 2. Copy the source control group onto the destination control group.
+.SH PARAMETERS
+.TP
+.B source
+The source to append.
+
+.TP
+.B destination
+The destination the source is appended onto.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+Errors (with error bit) from: f_string_dynamic_append(). Errors (with error bit) from: f_string_dynamics_append_all().
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

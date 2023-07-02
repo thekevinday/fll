@@ -1,0 +1,27 @@
+.TH f_file_umask_set "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_file_umask_set
+.SH SYNOPSIS
+.nf
+.B #include <file.h>
+.sp
+\fBf_status_t f_file_umask_set\fP(
+    \fBconst mode_t \fP\fImask\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Set the umask.
+.SH PARAMETERS
+.TP
+.B mask
+The umask value to assigned. (The name "mask" is used avoid a naming conflict with the umask() function.)
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

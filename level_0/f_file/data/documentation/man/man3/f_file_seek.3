@@ -1,0 +1,54 @@
+.TH f_file_seek "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_file_seek
+.SH SYNOPSIS
+.nf
+.B #include <file.h>
+.sp
+\fBf_status_t f_file_seek\fP(
+    \fBconst int    \fP\fIid\fP,
+    \fBconst int    \fP\fIwhence\fP,
+    \fBconst off_t  \fP\fIoffset\fP,
+    \fBoff_t *const \fP\fIseeked\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Given an open file descriptor, seek to a given location.
+.SH PARAMETERS
+.TP
+.B id
+The file descriptor.
+
+.TP
+.B whence
+One of: SEEK_SET, SEEK_CUR, SEEK_END, SEEK_DATA, SEEK_HOLE.
+
+.TP
+.B offset
+The offset to use, based off of whence.
+
+.TP
+.B seeked
+This gets update to represent the total amount seeked. To be compared against offset.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_bound_not\fP (with error bit) if SEEK_DATA or SEEK_HOLE is specified as whence and offset is beyond the end of file.
+.br
+\fBF_file_descriptor\fP (with error bit) if the file descriptor is invalid.
+.br
+\fBF_file_type_pipe\fP (with error bit) if file descriptor represents a pipe, socket, or FIFO.
+.br
+\fBF_number_overflow\fP (with error bit) on overflow for offset.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+\fBF_failure\fP (with error bit) on any other error.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

@@ -1,0 +1,56 @@
+.TH f_path_real "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_path_real
+.SH SYNOPSIS
+.nf
+.B #include <path.h>
+.sp
+\fBf_status_t f_path_real\fP(
+    \fBconst f_string_static_t   \fP\fIpath\fP,
+    \fBf_string_dynamic_t *const \fP\fIreal\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Get the real path for the given path.
+.PP
+This does check to see if the path exists or not (path must exist). This processes all relative parts. This processes all symbolic links. This has a max size of F_path_length_max_d + 1.
+.SH PARAMETERS
+.TP
+.B path
+The source path to determine what the real path is. This is a NULL terminated string.
+
+.TP
+.B real
+The (allocated) real file path. This will have a max size of F_path_length_max_d + 1. This will be NULL terminated at real->used + 1.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_access_denied\fP (with error bit) on access denied.
+.br
+\fBF_buffer\fP (with error bit) if the buffer is invalid.
+.br
+\fBF_buffer_too_small\fP (with error bit) if the buffer is too small to store the path.
+.br
+\fBF_directory\fP (with error bit) if a supposed directory in path is not actually a directory.
+.br
+\fBF_input_output\fP (with error bit) on I/O error.
+.br
+\fBF_loop\fP (with error bit) on loop error.
+.br
+\fBF_memory_not\fP (with error bit) if out of memory.
+.br
+\fBF_name\fP (with error bit) on path name error.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+\fBF_file_found_not\fP if the path was not found.
+.br
+\fBF_failure\fP (with error bit) for any other error.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

@@ -1,0 +1,42 @@
+.TH fl_conversion_dynamic_partial_to_signed "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+fl_conversion_dynamic_partial_to_signed
+.SH SYNOPSIS
+.nf
+.B #include <conversion.h>
+.sp
+\fBf_status_t fl_conversion_dynamic_partial_to_signed\fP(
+    \fBconst fl_conversion_data_t \fP\fIdata\fP,
+    \fBconst f_string_static_t    \fP\fIbuffer\fP,
+    \fBconst f_string_range_t     \fP\fIrange\fP,
+    \fBf_number_signed_t *const   \fP\fInumber\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+A structure designating a start and stop range for some string.
+.PP
+In general, this project uses the start and stop position inclusively, meaning that a range of 0 to 1 would include positions 0 and position 1. Therefore, a range from 0 to 0 would be include position 0. Set start to some value larger than stop to designate that there is no range (such as start = 1, stop = 0).
+.PP
+start: the start position. stop: the stop position.
+.sp
+.RS
+.nf
+\fB
+struct f_string_range_t {
+  f_array_length_t \fIstart\fP;
+  f_array_length_t \fIstop\fP;
+};
+\fP
+.fi
+.RE
+.SH RETURN VALUE
+.PP
+\fBF_none\fP if the binary string was converted to an signed long.
+.br
+\fBF_data_not\fP if string starts with a null (length is 0).
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

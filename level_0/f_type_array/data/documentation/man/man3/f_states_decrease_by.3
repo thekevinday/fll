@@ -1,0 +1,40 @@
+.TH f_states_decrease_by "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_states_decrease_by
+.SH SYNOPSIS
+.nf
+.B #include <state.h>
+.sp
+\fBf_status_t f_states_decrease_by\fP(
+    \fBconst f_array_length_t \fP\fIamount\fP,
+    \fBf_states_t            *\fP\fIstates\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Resize the string states array to a smaller size.
+.PP
+This will resize making the array smaller based on (size - given length). If the given length is too small, then the resize will fail. This will not shrink the size to les than 0.
+.SH PARAMETERS
+.TP
+.B amount
+A positive number representing how much to decrease the size by.
+
+.TP
+.B states
+The string states array to resize.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_data_not\fP if amount is 0.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+Errors (with error bit) from: f_memory_resize().
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

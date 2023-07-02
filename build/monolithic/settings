@@ -141,6 +141,8 @@ build_sources_headers level_2/status_string.h
 
 build_sources_headers-thread level_0/thread.h level_0/thread/attribute.h level_0/thread/barrier.h level_0/thread/barrier_attribute.h level_0/thread/condition.h level_0/thread/condition_attribute.h level_0/thread/id.h level_0/thread/key.h level_0/thread/lock.h level_0/thread/lock_attribute.h level_0/thread/mutex.h level_0/thread/mutex_attribute.h level_0/thread/once.h level_0/thread/semaphore.h level_0/thread/set.h level_0/thread/spin.h
 
+build_sources_documentation man
+
 build_script yes
 build_shared yes
 build_static no

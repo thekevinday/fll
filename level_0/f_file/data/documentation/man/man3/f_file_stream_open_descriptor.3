@@ -1,0 +1,64 @@
+.TH f_file_stream_open_descriptor "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_file_stream_open_descriptor
+.SH SYNOPSIS
+.nf
+.B #include <file.h>
+.sp
+\fBf_status_t f_file_stream_open_descriptor\fP(
+    \fBconst f_string_static_t \fP\fImode\fP,
+    \fBf_file_t *const         \fP\fIfile\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Open a file stream from a file descriptor.
+.SH PARAMETERS
+.TP
+.B mode
+The file modes do use when opening. Set mode.used to 0 to determine mode from file.flags (falling back to read only as a failsafe). If neither truncate nor append are not specified in write only mode, then the failsafe is to append. This should match the modes used to open the file descriptor as it relates to the stream modes.
+
+.TP
+.B file
+The file with a valid file descriptor (file.id). THe file stream (file.stream) is updated on success, but may be set to NULL on error.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP is returned on success.
+.br
+\fBF_access_denied\fP (with error bit) on access denied.
+.br
+\fBF_block\fP (with error bit) if the action would block and non-blocking is set on the stream.
+.br
+\fBF_buffer\fP (with error bit) if the buffer is invalid.
+.br
+\fBF_deadlock\fP (with error bit) if operation would cause a deadlock.
+.br
+\fBF_file_descriptor\fP (with error bit) if file descriptor is invalid.
+.br
+\fBF_file_descriptor_max\fP (with error bit) if max file descriptors is reached.
+.br
+\fBF_file_overflow\fP (with error bit) if the write exceeds some implementation defined maximum file size.
+.br
+\fBF_file_type_not_directory\fP (with error bit) if
+.br
+\fBF_NOTIFY\fP was specified and file.id is not a directory.
+.br
+\fBF_interrupt\fP (with error bit) when program received an interrupt signal, halting operation.
+.br
+\fBF_lock\fP (with error bit) if failed to lock, such as lock table is full or too many open segments.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+\fBF_pipe_not\fP (with error bit) if the stream is a pipe or a socket but the pipe or socket is already closed.
+.br
+\fBF_prohibited\fP (with error bit) if file system does not allow for making changes.
+.br
+\fBF_socket_not\fP (with error bit) if socket is not connected.
+.br
+\fBF_space_not\fP (with error bit) if the file system is out of space (or file system quota is reached).
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

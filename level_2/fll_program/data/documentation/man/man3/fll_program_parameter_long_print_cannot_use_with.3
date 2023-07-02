@@ -1,0 +1,39 @@
+.TH fll_program_parameter_long_print_cannot_use_with "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+fll_program_parameter_long_print_cannot_use_with
+.SH SYNOPSIS
+.nf
+.B #include <program.h>
+.sp
+\fBf_status_t fll_program_parameter_long_print_cannot_use_with\fP(
+    \fBconst fl_print_t        \fP\fIprint\fP,
+    \fBconst f_string_static_t \fP\fIfirst\fP,
+    \fBconst f_string_static_t \fP\fIsecond\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Print message about two long parameters not being allowed to be used together.
+.PP
+This assumes both of the long parameters use f_console_symbol_long_enable_s.
+.SH PARAMETERS
+.TP
+.B print
+The output structure.
+
+.TP
+.B first
+The first string.
+
+.TP
+.B second
+The second string.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

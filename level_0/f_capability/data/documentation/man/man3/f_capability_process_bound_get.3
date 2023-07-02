@@ -1,0 +1,40 @@
+.TH f_capability_process_bound_get "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_capability_process_bound_get
+.SH SYNOPSIS
+.nf
+.B #include <capability.h>
+.sp
+\fBf_status_t f_capability_process_bound_get\fP(
+    \fBf_capability_value_t \fP\fIvalue\fP,
+    \fBint *const           \fP\fIbound\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Get the bound for the process.
+.SH PARAMETERS
+.TP
+.B value
+The capability code to get the bound for.
+
+.TP
+.B bound
+The determined bound value.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_implemented_not\fP (with error bit) if this function is not available (due to not having libcap support compiled in).
+.br
+\fBF_known_not\fP (with error bit) if the code is unknown to the current system.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+\fBF_failure\fP (with error bit) on any other error.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

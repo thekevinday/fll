@@ -1,0 +1,48 @@
+.TH f_account_group_name_by_id "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_account_group_name_by_id
+.SH SYNOPSIS
+.nf
+.B #include <account.h>
+.sp
+\fBf_status_t f_account_group_name_by_id\fP(
+    \fBconst gid_t               \fP\fIid\fP,
+    \fBf_string_dynamic_t *const \fP\fIname\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Get the account group name by the group id.
+.SH PARAMETERS
+.TP
+.B id
+The id of the group.
+
+.TP
+.B name
+This is replaced with by the group name. The name will be NULL terminated after the name.used.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_buffer_too_small\fP (with error bit) if the buffer is too small to store the account data.
+.br
+\fBF_file_descriptor_max\fP (with error bit) if max file descriptors is reached.
+.br
+\fBF_file_open_max\fP (with error bit) too many open files.
+.br
+\fBF_input_output\fP (with error bit) if an I/O error occurred.
+.br
+\fBF_interrupt\fP (with error bit) when program received an interrupt signal, halting operation.
+.br
+\fBF_memory_not\fP (with error bit) if out of memory.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+\fBF_failure\fP (with error bit) on any other error.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

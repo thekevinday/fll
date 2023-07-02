@@ -1,0 +1,42 @@
+.TH f_thread_at_fork "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_thread_at_fork
+.SH SYNOPSIS
+.nf
+.B #include <thread.h>
+.sp
+\fBf_status_t f_thread_at_fork\fP(
+    \fBvoid(*)(void) \fP\fIbefore\fP,
+    \fBvoid(*)(void) \fP\fIafter_parent\fP,
+    \fBvoid(*)(void) \fP\fIafter_child\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Perform a fork operation.
+.SH PARAMETERS
+.TP
+.B before
+The function to call before forking.
+
+.TP
+.B after_parent
+The function called after forking, for the parent process.
+
+.TP
+.B after_child
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+\fBF_memory_not\fP (with error bit) if out of memory.
+.br
+\fBF_failure\fP (with error bit) on any other error.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

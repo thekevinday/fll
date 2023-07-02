@@ -1,0 +1,44 @@
+.TH fll_path_canonical "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+fll_path_canonical
+.SH SYNOPSIS
+.nf
+.B #include <path.h>
+.sp
+\fBf_status_t fll_path_canonical\fP(
+    \fBconst f_string_static_t   \fP\fIpath\fP,
+    \fBf_string_dynamic_t *const \fP\fIcanonical\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Provides path-related functionality. Get the canonical (real) path for some path.
+.PP
+This does not check if the path exists or not. This processes the relative parts: './', '../', and extra '/'. This does not process symbolic links. This has a max size of F_string_t_size_d. This removes trailing slashes, but leaves the leading slash ('/' remains as-is, but '/a/' becomes '/a').
+.PP
+An empty path (first character is NULL or path.used is 0) appends only the current path to canonical.
+.SH PARAMETERS
+.TP
+.B path
+The source path to determine what the canonical path is. This need not be NULL terminated.
+
+.TP
+.B canonical
+The (allocated) canonical file path. The canonical->used is reset to 0 before processing. This will be NULL terminated at canonical->used + 1.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+Errors (with error bit) from: f_path_current().
+.br
+Errors (with error bit) from: f_string_append().
+.br
+Errors (with error bit) from: f_string_append_assure().
+.br
+Errors (with error bit) from: f_string_dynamic_append_assure().
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

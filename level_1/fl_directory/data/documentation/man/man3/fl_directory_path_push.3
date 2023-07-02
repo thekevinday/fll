@@ -1,0 +1,42 @@
+.TH fl_directory_path_push "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+fl_directory_path_push
+.SH SYNOPSIS
+.nf
+.B #include <directory.h>
+.sp
+\fBf_status_t fl_directory_path_push\fP(
+    \fBconst f_string_static_t   \fP\fIsource\fP,
+    \fBf_string_dynamic_t *const \fP\fIdestination\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Append a path string onto the destination path.
+.PP
+This ensures that there is a leading and trailing '/' from source. This ignores control characters.
+.SH PARAMETERS
+.TP
+.B source
+The path to append onto the destination. This need not be NULL terminated.
+
+.TP
+.B destination
+The destination path to push the path part onto. Any terminating NULLs at the end of the destination string are removed before appending. This will only be NULL terminated if destination string is already NULL terminated.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_data_not\fP if source.used is 0.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+\fBF_string_too_large\fP (with error bit) if appended string length is too large to store in the buffer.
+.br
+Errors (with error bit) from: f_utf_is_control().
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

@@ -1,0 +1,36 @@
+.TH f_string_quantitys_resize "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_string_quantitys_resize
+.SH SYNOPSIS
+.nf
+.B #include <quantity.h>
+.sp
+\fBf_status_t f_string_quantitys_resize\fP(
+    \fBconst f_array_length_t      \fP\fIlength\fP,
+    \fBf_string_quantitys_t *const \fP\fIquantitys\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Resize the string quantitys array.
+.SH PARAMETERS
+.TP
+.B length
+The new size to use.
+
+.TP
+.B quantitys
+The string quantitys array to adjust.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+Errors (with error bit) from: f_memory_resize().
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

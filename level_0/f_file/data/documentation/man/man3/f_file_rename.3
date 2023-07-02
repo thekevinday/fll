@@ -1,0 +1,74 @@
+.TH f_file_rename "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_file_rename
+.SH SYNOPSIS
+.nf
+.B #include <file.h>
+.sp
+\fBf_status_t f_file_rename\fP(
+    \fBconst f_string_static_t \fP\fIsource\fP,
+    \fBconst f_string_static_t \fP\fIdestination\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Rename a file.
+.PP
+The paths must not contain NULL except for the terminating NULL. The paths must be NULL terminated.
+.PP
+This essentially renames a file but can also change the file's path, which is identical to a move. However, renames only work within a file system and cannot be moved to another file system.
+.PP
+If destination already exists, then according to rename(), destination will be atomically replaced. Which, if destination is a directory, then that directory must either not exist or be empty.
+.SH PARAMETERS
+.TP
+.B source
+The path to the file to copy from.
+
+.TP
+.B destination
+The path to copy to.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.SH AUTHOR
+Written by Kevin Day.
+.br
+\fBF_access_denied\fP (with error bit) on access denied.
+.br
+\fBF_buffer\fP (with error bit) if the buffer is invalid.
+.br
+\fBF_busy\fP (with error bit) if file system is too busy to perform write.
+.br
+\fBF_directory_not\fP (with error bit) if a supposed directory in path is not actually a directory.
+.br
+\fBF_directory_empty_not\fP (with error bit) if the destination is a non-empty directory.
+.br
+\fBF_file_found_not\fP (with error bit) if file at path was not found.
+.br
+\fBF_file_type_directory\fP (with error bit) if destination is a directory but source is not.
+.br
+\fBF_filesystem_quota_block\fP (with error bit) if file system's disk blocks or inodes are exhausted.
+.br
+\fBF_link\fP (with error bit) if source or destination has the maxiumum associated links.
+.br
+\fBF_loop\fP (with error bit) on loop error.
+.br
+\fBF_memory_not\fP (with error bit) if out of memory.
+.br
+\fBF_mount\fP (with error bit) if source and destination are not within the same mounted filesystems.
+.br
+\fBF_name\fP (with error bit) on path name error.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+\fBF_prohibited\fP (with error bit) if file system does not allow for making changes.
+.br
+\fBF_read_only\fP (with error bit) if file is read-only.
+.br
+\fBF_space_not\fP (with error bit) if file system is out of space (or file system quota is reached).
+.br
+\fBF_failure\fP (with error bit) for any other error.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

@@ -1,0 +1,45 @@
+.TH f_serialize_from_simple "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_serialize_from_simple
+.SH SYNOPSIS
+.nf
+.B #include <serialize.h>
+.sp
+\fBf_status_t f_serialize_from_simple\fP(
+    \fBconst f_string_static_t    \fP\fIsource\fP,
+    \fBf_string_dynamics_t *const \fP\fIdestination\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+A string that is analogous to f_string_dynamic_t but intended for static-only uses.
+.PP
+The f_string_static_t type should never be directly allocated or deallocated.
+.PP
+A special macro_f_string_static_t_initialize() is provided for the special purpose of easily initialize a static string. A special macro_f_string_static_t_initialize2() is provided for the special purpose of easily initialize a static string with an identical used and size.
+.PP
+string: The string. size: Total amount of space available. used: Total number of space used.
+.sp
+.RS
+.nf
+\fB
+struct f_string_static_t {
+  f_string_t       \fIstring\fP;
+  f_array_length_t \fIsize\fP;
+  f_array_length_t \fIused\fP;
+};
+\fP
+.fi
+.RE
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_complete_not_utf_eos\fP if an incomplete UTF-8 character is found at the end of the source.
+.br
+\fBF_data_not\fP on success and source.used is 0.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

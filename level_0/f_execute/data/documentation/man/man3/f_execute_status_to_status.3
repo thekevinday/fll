@@ -1,0 +1,29 @@
+.TH f_execute_status_to_status "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_execute_status_to_status
+.SH SYNOPSIS
+.nf
+.B #include <execute.h>
+.sp
+\fBf_status_t f_execute_status_to_status\fP(
+    \fBuint8_t  \fP\fIstatus\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Convert execute status to F_status_t.
+.SH PARAMETERS
+.TP
+.B status
+An execute status number to convert. The execute status has no flags and is only 8-bits wide.
+
+.SH RETURN VALUE
+.PP
+The appropriate status code is returned on match (no bits, error or otherwise are set for the status code if there is no error).
+.br
+\fBF_known_not\fP (with error bit) if the given number has no known execute state to convert.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

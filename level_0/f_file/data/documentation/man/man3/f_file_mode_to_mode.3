@@ -1,0 +1,36 @@
+.TH f_file_mode_to_mode "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_file_mode_to_mode
+.SH SYNOPSIS
+.nf
+.B #include <file.h>
+.sp
+\fBf_status_t f_file_mode_to_mode\fP(
+    \fBconst f_file_mode_t \fP\fIfrom\fP,
+    \fBmode_t *const       \fP\fIto\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Convert an f_file_mode_t type to a mode_t type.
+.PP
+This essentially converts all "add" codes from an f_file_mode_t to a mode_t, ignoring the "subtract" codes.
+.SH PARAMETERS
+.TP
+.B from
+The file mode to convert from.
+
+.TP
+.B to
+The determined mode.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

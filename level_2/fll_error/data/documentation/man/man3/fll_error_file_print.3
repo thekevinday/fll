@@ -1,0 +1,59 @@
+.TH fll_error_file_print "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+fll_error_file_print
+.SH SYNOPSIS
+.nf
+.B #include <error.h>
+.sp
+\fBf_status_t fll_error_file_print\fP(
+    \fBconst fl_print_t        \fP\fIprint\fP,
+    \fBconst f_status_t        \fP\fIstatus\fP,
+    \fBconst char             *\fP\fIfunction\fP,
+    \fBconst bool              \fP\fIfallback\fP,
+    \fBconst f_string_static_t \fP\fIname\fP,
+    \fBconst f_string_static_t \fP\fIoperation\fP,
+    \fBconst uint8_t           \fP\fItype\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Print file related error or warning messages.
+.SH PARAMETERS
+.TP
+.B print
+Designates how printing is to be performed.
+
+.TP
+.B status
+The status code to process. Make sure this has F_status_set_fine() called if the status code has any error or warning bits.
+
+.TP
+.B function
+The name of the function where the error happened. Set to 0 to disable.
+
+.TP
+.B fallback
+Set to F_true to print the fallback error message for unknown errors.
+
+.TP
+.B name
+The name of the file or directory.
+
+.TP
+.B operation
+The operation that fails, such as 'create' or 'access'.
+
+.TP
+.B type
+A valid file type code from the fll_error_file_type enum.
+
+.SH RETURN VALUE
+.PP
+\fBF_true\fP is returned if the status code has no print message.
+.br
+\fBF_false\fP is returned on successful print of known errors.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

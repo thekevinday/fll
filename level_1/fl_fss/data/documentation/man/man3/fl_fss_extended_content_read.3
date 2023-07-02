@@ -1,0 +1,88 @@
+.TH fl_fss_extended_content_read "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+fl_fss_extended_content_read
+.SH SYNOPSIS
+.nf
+.B #include <extended.h>
+.sp
+\fBf_status_t fl_fss_extended_content_read\fP(
+    \fBconst f_string_static_t \fP\fIbuffer\fP,
+    \fBf_state_t               \fP\fIstate\fP,
+    \fBf_string_range_t *const \fP\fIrange\fP,
+    \fBf_fss_content_t *const  \fP\fIfound\fP,
+    \fBf_fss_quotes_t *const   \fP\fIquotes\fP,
+    \fBf_fss_delimits_t *const \fP\fIdelimits\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+This is the fss-0001 implementation. Read an fss-0001 content.
+.PP
+This will record where delimit placeholders exist but will not apply the delimits.
+.SH PARAMETERS
+.TP
+.B buffer
+The buffer to read from.
+
+.TP
+.B state
+A state for providing flags and handling interrupts during long running operations. There is no state.handle(). There is no "callbacks" structure. There is no data structure passed to these functions.
+
+.TP
+.B range
+The start/stop location within the buffer to be processed. The start location will be updated as the buffer is being processed. The start location will represent where the read stopped on return. A start location past the stop location or buffer used means that the entire range was processed.
+
+.TP
+.B found
+A set of all locations where a valid content was found.
+
+.TP
+.B quotes
+This will store the quote types representing the character to use (from the f_fss_quote_type_*_e). Set pointer address to 0 to not use.
+
+.TP
+.B delimits
+A delimits array representing where delimits exist within the buffer.
+
+.SH RETURN VALUE
+.PP
+\fBF_fss_found_content\fP on success and content was found (start location is at end of content).
+.br
+\fBF_fss_found_content_not\fP on success and no content was found (start location is after character designating this is not a content).
+.br
+\fBF_none_eos\fP on success after reaching the end of the buffer (a valid object is not yet confirmed).
+.br
+\fBF_none_stop\fP on success after reaching stopping point (a valid object is not yet confirmed).
+.br
+\fBF_data_not_eos\fP no objects found after reaching the end of the buffer (essentially only comments are found).
+.br
+\fBF_data_not_stop\fP no data found after reaching stopping point (essentially only comments are found).
+.br
+\fBF_end_not_group_eos\fP if EOS was reached before the a group termination was reached.
+.br
+\fBF_end_not_group_stop\fP if stop point was reached before the a group termination was reached.
+.br
+\fBF_interrupt\fP (with error bit) if stopping due to an interrupt.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+Errors (with error bit) from: f_array_lengths_increase().
+.br
+Errors (with error bit) from: f_array_lengths_increase_by().
+.br
+Errors (with error bit) from: f_fss_is_graph().
+.br
+Errors (with error bit) from: f_fss_is_space().
+.br
+Errors (with error bit) from: f_fss_is_zero_width().
+.br
+Errors (with error bit) from: f_fss_skip_past_delimit().
+.br
+Errors (with error bit) from: f_fss_skip_past_space().
+.br
+Errors (with error bit) from: f_utf_buffer_increment().
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

@@ -1,0 +1,39 @@
+.TH f_thread_semaphore_file_delete "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_thread_semaphore_file_delete
+.SH SYNOPSIS
+.nf
+.B #include <thread.h>
+.sp
+\fBf_status_t f_thread_semaphore_file_delete\fP(
+    \fBconst f_string_static_t \fP\fIname\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Delete a thread (named) semaphore.
+.PP
+This deletes the semaphore file and all processes holding this semaphore will be forcibly closed.
+.SH PARAMETERS
+.TP
+.B name
+The semaphore name to delete.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_file_found_not\fP the named file was not found.
+.br
+\fBF_access_denied\fP (with error bit) on access denied.
+.br
+\fBF_name_not\fP (with error bit) if file name is too long.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+\fBF_failure\fP (with error bit) on any other error.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

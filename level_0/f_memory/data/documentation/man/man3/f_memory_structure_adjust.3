@@ -1,0 +1,51 @@
+.TH f_memory_structure_adjust "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_memory_structure_adjust
+.SH SYNOPSIS
+.nf
+.B #include <structure.h>
+.sp
+\fBf_status_t f_memory_structure_adjust\fP(
+    \fBconst size_t            \fP\fIlength_new\fP,
+    \fBconst size_t            \fP\fItype_size\fP,
+    \fBvoid **const            \fP\fIstructure\fP,
+    \fBf_array_length_t *const \fP\fIused\fP,
+    \fBf_array_length_t *const \fP\fIsize\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Resize the structure.
+.PP
+Memory being deleted will be wiped.
+.SH PARAMETERS
+.TP
+.B length_new
+The new size of the structure array. Setting a length of 0 will result in the deletion (freeing) of the structure.
+
+.TP
+.B type_size
+The size of the structure type (such as: sizeof(structure_size)). Must be greater than 0.
+
+.TP
+.B structure
+The structure to delete.
+
+.TP
+.B used
+The amount of data used by the structure.
+
+.TP
+.B size
+The amount of data allocated to the structure.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_memory_not\fP (with error bit) on allocation error.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

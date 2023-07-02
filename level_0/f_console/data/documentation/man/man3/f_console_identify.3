@@ -1,0 +1,34 @@
+.TH f_console_identify "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_console_identify
+.SH SYNOPSIS
+.nf
+.B #include <console.h>
+.sp
+\fBf_status_t f_console_identify\fP(
+    \fBconst f_string_t      \fP\fIinput\fP,
+    \fBf_console_id_t *const \fP\fIresult\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Determine the type code represented by the given input parameter.
+.SH PARAMETERS
+.TP
+.B input
+The input parameter to process.
+
+.TP
+.B result
+The resulting console type code determined by this function.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_data_not\fP the input string is empty.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

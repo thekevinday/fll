@@ -442,7 +442,7 @@ extern "C" {
  *   F_utf_not (with error bit) if character is an invalid UTF-8 character.
  *
  *   Errors (with error bit) from: f_utf_is_combining().
- *   Errors (with error bit) from: f_utf_is_valid()
+ *   Errors (with error bit) from: f_utf_is_valid().
  *   Errors (with error bit) from: f_utf_is_whitespace().
  *
  * @see fputc_unlocked()
@@ -482,7 +482,7 @@ extern "C" {
  *   F_utf_not (with error bit) if character is an invalid UTF-8 character.
  *
  *   Errors (with error bit) from: f_utf_is_combining().
- *   Errors (with error bit) from: f_utf_is_valid()
+ *   Errors (with error bit) from: f_utf_is_valid().
  *   Errors (with error bit) from: f_utf_is_whitespace().
  *
  * @see fputc_unlocked()
@@ -523,7 +523,7 @@ extern "C" {
  *   F_utf_not (with error bit) if character is an invalid UTF-8 character.
  *
  *   Errors (with error bit) from: f_utf_is_combining().
- *   Errors (with error bit) from: f_utf_is_valid()
+ *   Errors (with error bit) from: f_utf_is_valid().
  *   Errors (with error bit) from: f_utf_is_whitespace().
  *
  * @see fputc_unlocked()
@@ -608,7 +608,7 @@ extern "C" {
  *   F_utf_not (with error bit) if character is an invalid UTF-8 character.
  *
  *   Errors (with error bit) from: f_utf_is_combining().
- *   Errors (with error bit) from: f_utf_is_valid()
+ *   Errors (with error bit) from: f_utf_is_valid().
  *   Errors (with error bit) from: f_utf_is_whitespace().
  *
  * @see fputc_unlocked()
@@ -649,7 +649,7 @@ extern "C" {
  *   F_utf_not (with error bit) if character is an invalid UTF-8 character.
  *
  *   Errors (with error bit) from: f_utf_is_combining().
- *   Errors (with error bit) from: f_utf_is_valid()
+ *   Errors (with error bit) from: f_utf_is_valid().
  *   Errors (with error bit) from: f_utf_is_whitespace().
  *
  * @see fputc_unlocked()
@@ -692,7 +692,7 @@ extern "C" {
  *   F_utf_not (with error bit) if character is an invalid UTF-8 character.
  *
  *   Errors (with error bit) from: f_utf_is_combining().
- *   Errors (with error bit) from: f_utf_is_valid()
+ *   Errors (with error bit) from: f_utf_is_valid().
  *   Errors (with error bit) from: f_utf_is_whitespace().
  *
  * @see fputc_unlocked()
@@ -781,7 +781,7 @@ extern "C" {
  *   F_utf_not (with error bit) if character is an invalid UTF-8 character.
  *
  *   Errors (with error bit) from: f_utf_is_combining().
- *   Errors (with error bit) from: f_utf_is_valid()
+ *   Errors (with error bit) from: f_utf_is_valid().
  *   Errors (with error bit) from: f_utf_is_whitespace().
  *
  * @see fputc_unlocked()
@@ -824,7 +824,7 @@ extern "C" {
  *   F_utf_not (with error bit) if character is an invalid UTF-8 character.
  *
  *   Errors (with error bit) from: f_utf_is_combining().
- *   Errors (with error bit) from: f_utf_is_valid()
+ *   Errors (with error bit) from: f_utf_is_valid().
  *   Errors (with error bit) from: f_utf_is_whitespace().
  *
  * @see fputc_unlocked()
@@ -872,7 +872,7 @@ extern "C" {
  *   F_utf_not (with error bit) if character is an invalid UTF-8 character.
  *
  *   Errors (with error bit) from: f_utf_is_combining().
- *   Errors (with error bit) from: f_utf_is_valid()
+ *   Errors (with error bit) from: f_utf_is_valid().
  *   Errors (with error bit) from: f_utf_is_whitespace().
  *
  * @see fputc_unlocked()
@@ -971,7 +971,7 @@ extern "C" {
  *   F_utf_not (with error bit) if character is an invalid UTF-8 character.
  *
  *   Errors (with error bit) from: f_utf_is_combining().
- *   Errors (with error bit) from: f_utf_is_valid()
+ *   Errors (with error bit) from: f_utf_is_valid().
  *   Errors (with error bit) from: f_utf_is_whitespace().
  *
  * @see fputc_unlocked()
@@ -1019,7 +1019,7 @@ extern "C" {
  *   F_utf_not (with error bit) if character is an invalid UTF-8 character.
  *
  *   Errors (with error bit) from: f_utf_is_combining().
- *   Errors (with error bit) from: f_utf_is_valid()
+ *   Errors (with error bit) from: f_utf_is_valid().
  *   Errors (with error bit) from: f_utf_is_whitespace().
  *
  * @see fputc_unlocked()
@@ -1064,7 +1064,7 @@ extern "C" {
  *   F_utf_not (with error bit) if character is an invalid UTF-8 character.
  *
  *   Errors (with error bit) from: f_utf_is_combining().
- *   Errors (with error bit) from: f_utf_is_valid()
+ *   Errors (with error bit) from: f_utf_is_valid().
  *   Errors (with error bit) from: f_utf_is_whitespace().
  *
  * @see fputc_unlocked()
@@ -1157,7 +1157,7 @@ extern "C" {
  *   F_utf_not (with error bit) if character is an invalid UTF-8 character.
  *
  *   Errors (with error bit) from: f_utf_is_combining().
- *   Errors (with error bit) from: f_utf_is_valid()
+ *   Errors (with error bit) from: f_utf_is_valid().
  *   Errors (with error bit) from: f_utf_is_whitespace().
  *
  * @see fputc_unlocked()
@@ -1202,7 +1202,7 @@ extern "C" {
  *   F_utf_not (with error bit) if character is an invalid UTF-8 character.
  *
  *   Errors (with error bit) from: f_utf_is_combining().
- *   Errors (with error bit) from: f_utf_is_valid()
+ *   Errors (with error bit) from: f_utf_is_valid().
  *   Errors (with error bit) from: f_utf_is_whitespace().
  *
  * @see fputc_unlocked()
@@ -1254,7 +1254,7 @@ extern "C" {
  *   F_utf_not (with error bit) if character is an invalid UTF-8 character.
  *
  *   Errors (with error bit) from: f_utf_is_combining().
- *   Errors (with error bit) from: f_utf_is_valid()
+ *   Errors (with error bit) from: f_utf_is_valid().
  *   Errors (with error bit) from: f_utf_is_whitespace().
  *
  * @see fputc_unlocked()
@@ -1361,7 +1361,7 @@ extern "C" {
  *   F_utf_not (with error bit) if character is an invalid UTF-8 character.
  *
  *   Errors (with error bit) from: f_utf_is_combining().
- *   Errors (with error bit) from: f_utf_is_valid()
+ *   Errors (with error bit) from: f_utf_is_valid().
  *   Errors (with error bit) from: f_utf_is_whitespace().
  *
  * @see fputc_unlocked()
@@ -1413,7 +1413,7 @@ extern "C" {
  *   F_utf_not (with error bit) if character is an invalid UTF-8 character.
  *
  *   Errors (with error bit) from: f_utf_is_combining().
- *   Errors (with error bit) from: f_utf_is_valid()
+ *   Errors (with error bit) from: f_utf_is_valid().
  *   Errors (with error bit) from: f_utf_is_whitespace().
  *
  * @see fputc_unlocked()
@@ -1464,7 +1464,7 @@ extern "C" {
  *   F_utf_not (with error bit) if character is an invalid UTF-8 character.
  *
  *   Errors (with error bit) from: f_utf_is_combining().
- *   Errors (with error bit) from: f_utf_is_valid()
+ *   Errors (with error bit) from: f_utf_is_valid().
  *   Errors (with error bit) from: f_utf_is_whitespace().
  *
  * @see fputc_unlocked()
@@ -1565,7 +1565,7 @@ extern "C" {
  *   F_utf_not (with error bit) if character is an invalid UTF-8 character.
  *
  *   Errors (with error bit) from: f_utf_is_combining().
- *   Errors (with error bit) from: f_utf_is_valid()
+ *   Errors (with error bit) from: f_utf_is_valid().
  *   Errors (with error bit) from: f_utf_is_whitespace().
  *
  * @see fputc_unlocked()
@@ -1614,7 +1614,7 @@ extern "C" {
  *   F_utf_not (with error bit) if character is an invalid UTF-8 character.
  *
  *   Errors (with error bit) from: f_utf_is_combining().
- *   Errors (with error bit) from: f_utf_is_valid()
+ *   Errors (with error bit) from: f_utf_is_valid().
  *   Errors (with error bit) from: f_utf_is_whitespace().
  *
  * @see fputc_unlocked()
@@ -1665,7 +1665,7 @@ extern "C" {
  *   F_utf_not (with error bit) if character is an invalid UTF-8 character.
  *
  *   Errors (with error bit) from: f_utf_is_combining().
- *   Errors (with error bit) from: f_utf_is_valid()
+ *   Errors (with error bit) from: f_utf_is_valid().
  *   Errors (with error bit) from: f_utf_is_whitespace().
  *
  * @see fputc_unlocked()
@@ -1769,7 +1769,7 @@ extern "C" {
  *   F_utf_not (with error bit) if character is an invalid UTF-8 character.
  *
  *   Errors (with error bit) from: f_utf_is_combining().
- *   Errors (with error bit) from: f_utf_is_valid()
+ *   Errors (with error bit) from: f_utf_is_valid().
  *   Errors (with error bit) from: f_utf_is_whitespace().
  *
  * @see fputc_unlocked()
@@ -1820,7 +1820,7 @@ extern "C" {
  *   F_utf_not (with error bit) if character is an invalid UTF-8 character.
  *
  *   Errors (with error bit) from: f_utf_is_combining().
- *   Errors (with error bit) from: f_utf_is_valid()
+ *   Errors (with error bit) from: f_utf_is_valid().
  *   Errors (with error bit) from: f_utf_is_whitespace().
  *
  * @see fputc_unlocked()
@@ -1867,7 +1867,7 @@ extern "C" {
  *   F_utf_not (with error bit) if character is an invalid UTF-8 character.
  *
  *   Errors (with error bit) from: f_utf_is_combining().
- *   Errors (with error bit) from: f_utf_is_valid()
+ *   Errors (with error bit) from: f_utf_is_valid().
  *   Errors (with error bit) from: f_utf_is_whitespace().
  *
  * @see fputc_unlocked()
@@ -1963,7 +1963,7 @@ extern "C" {
  *   F_utf_not (with error bit) if character is an invalid UTF-8 character.
  *
  *   Errors (with error bit) from: f_utf_is_combining().
- *   Errors (with error bit) from: f_utf_is_valid()
+ *   Errors (with error bit) from: f_utf_is_valid().
  *   Errors (with error bit) from: f_utf_is_whitespace().
  *
  * @see fputc_unlocked()
@@ -2010,7 +2010,7 @@ extern "C" {
  *   F_utf_not (with error bit) if character is an invalid UTF-8 character.
  *
  *   Errors (with error bit) from: f_utf_is_combining().
- *   Errors (with error bit) from: f_utf_is_valid()
+ *   Errors (with error bit) from: f_utf_is_valid().
  *   Errors (with error bit) from: f_utf_is_whitespace().
  *
  * @see fputc_unlocked()

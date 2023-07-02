@@ -1,0 +1,42 @@
+.TH fll_print_format_convert "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+fll_print_format_convert
+.SH SYNOPSIS
+.nf
+.B #include <print.h>
+.sp
+\fBf_string_t fll_print_format_convert\fP(
+    \fBconst f_string_t \fP\fIcurrent\fP,
+    \fBFILE *const      \fP\fIoutput\fP,
+    \fBva_list          \fP\fIap\fP,
+    \fBf_status_t      *\fP\fIstatus\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+This is a variation of fl_print_format_convert() that uses locking.
+.SH PARAMETERS
+.TP
+.B current
+The current character position within the string.
+
+.TP
+.B output
+The file stream to output to, including standard streams such as stdout and stderr.
+
+.TP
+.B ap
+The variable arguments list.
+
+.TP
+.B status
+The status is stored here rather then via the return.
+
+.SH RETURN VALUE
+.PP
+Result from: fl_print_format_convert().
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

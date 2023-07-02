@@ -1,0 +1,46 @@
+.TH f_thread_lock_read_timed "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_thread_lock_read_timed
+.SH SYNOPSIS
+.nf
+.B #include <thread.h>
+.sp
+\fBf_status_t f_thread_lock_read_timed\fP(
+    \fBconst struct timespec *const \fP\fItimeout\fP,
+    \fBf_thread_lock_t *const       \fP\fIlock\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Lock the read part of a read/write lock, waiting for a set period of time to get the lock if already locked.
+.PP
+If the read part of the read/write lock is already locked and the timeout expires, then the lock attempt fails.
+.PP
+This is a blocking function (until timeout expires).
+.SH PARAMETERS
+.TP
+.B timeout
+The timeout.
+
+.TP
+.B lock
+The read/write lock.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_time\fP if the timeout was reached before obtaining the lock.
+.br
+\fBF_deadlock\fP (with error bit) if operation would cause a deadlock.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+\fBF_resource_not\fP (with error bit) if max number of read locks allowed is reached.
+.br
+\fBF_failure\fP (with error bit) on any other error.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

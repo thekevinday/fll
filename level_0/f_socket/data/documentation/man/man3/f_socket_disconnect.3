@@ -1,0 +1,60 @@
+.TH f_socket_disconnect "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_socket_disconnect
+.SH SYNOPSIS
+.nf
+.B #include <socket.h>
+.sp
+\fBf_status_t f_socket_disconnect\fP(
+    \fBf_socket_t *const \fP\fIsocket\fP,
+    \fBconst uint8_t     \fP\fIaction\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Terminate a socket connection.
+.PP
+The shutdown() call is used for all actions, except f_socket_close_fast_e. When shutdown() is called, a proper network disconnection process is initiated. The network connection will properly send the FIN packets. The shutdown() also allows current buffers to be properly flushed. The file descriptor is not closed. The remaining buffer can still be processed. Be sure to call either this function again with f_socket_close_fast_e or call f_file_close() directly.
+.PP
+When action is f_socket_close_fast_e, then close() is called. What happens then is that rather than waiting for FIN a RST is immediately sent (RST is sent only if connection is still active). All buffers are discarded. The connection is immediately removed. Thus, f_socket_close_fast_e (calling close()) on a socket results in bad network practice.
+.PP
+In the above cases, whether or not a RST or FIN are sent is also dependent on whether the f_socket_option_linger_d is used (SO_LINGER).
+.SH PARAMETERS
+.TP
+.B socket
+The socket structure. The socket.id must represent a valid socket file descriptor.
+
+.TP
+.B action
+The action to perform on close. f_socket_close_fast_e calls close().
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_connect_not\fP if the socket is not connected.
+.br
+\fBF_busy_address\fP (with error bit) if address is already in use (therefore unavailable).
+.br
+\fBF_file_descriptor\fP (with error bit) if id is an invalid descriptor.
+.br
+\fBF_filesystem_quota_block\fP (with error bit) if file system's disk blocks or inodes are exhausted.
+.br
+\fBF_input_output\fP (with error bit) if an I/O error occurred.
+.br
+\fBF_interrupt\fP (with error bit) when program received an interrupt signal, halting operation.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+\fBF_socket_not\fP (with error bit) if the id is not a socket descriptor.
+.br
+\fBF_space_not\fP (with error bit) if file system is out of space (or file system quota is reached).
+.br
+\fBF_supported_not\fP (with error bit) if this socket does not support the listen() operation.
+.br
+\fBF_failure\fP (with error bit) for any other error.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

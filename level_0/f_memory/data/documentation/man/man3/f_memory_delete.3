@@ -1,0 +1,45 @@
+.TH f_memory_delete "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_memory_delete
+.SH SYNOPSIS
+.nf
+.B #include <memory.h>
+.sp
+\fBf_status_t f_memory_delete\fP(
+    \fBconst size_t \fP\fIlength\fP,
+    \fBconst size_t \fP\fIsize\fP,
+    \fBvoid **const \fP\fIpointer\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Delete dynamically allocated data.
+.PP
+Will not change any of the data to 0 prior to deallocation.
+.PP
+Type and length are not normally used by this function but must be provided for the cases when f_memory_delete is swapped with f_memory_destroy (or vice-versa).
+.SH PARAMETERS
+.TP
+.B length
+The total number of blocks to be allocated. If length is 0 then no delete is performed.
+
+.TP
+.B size
+The block size, in bytes (size * length = allocated size). If size is 0 then no delete is performed.
+
+.TP
+.B pointer
+A pointer to the address that will be freed.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_data_not\fP on success, but there was nothing to do.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

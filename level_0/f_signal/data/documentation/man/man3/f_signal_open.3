@@ -1,0 +1,41 @@
+.TH f_signal_open "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_signal_open
+.SH SYNOPSIS
+.nf
+.B #include <signal.h>
+.sp
+\fBf_status_t f_signal_open\fP(
+    \fBf_signal_t *const \fP\fIsignal\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Open a signal descriptor, listening for the given set of signals.
+.PP
+The signal.id is assigned with the signal descriptor on success.
+.PP
+If signal.id is -1, then a new file descriptor is created. Otherwise, signal.id is used as the file descriptor.
+.SH PARAMETERS
+.TP
+.B signal
+The signal settings.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success but no signal found.
+.br
+\fBF_device\fP (with error bit) if could not mount the internal inode device.
+.br
+\fBF_file_descriptor_max\fP (with error bit) if max file descriptors is reached.
+.br
+\fBF_memory_not\fP (with error bit) if out of memory.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+\fBF_failure\fP (with error bit) for any other error.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

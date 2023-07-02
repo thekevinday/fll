@@ -1,0 +1,53 @@
+.TH fl_conversion_dynamic_to_signed "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+fl_conversion_dynamic_to_signed
+.SH SYNOPSIS
+.nf
+.B #include <conversion.h>
+.sp
+\fBf_status_t fl_conversion_dynamic_to_signed\fP(
+    \fBconst fl_conversion_data_t \fP\fIdata\fP,
+    \fBconst f_string_static_t    \fP\fIbuffer\fP,
+    \fBf_number_signed_t *const   \fP\fInumber\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Convert a series of number characters into a f_number_signed_t.
+.PP
+This will stop at one of the following: a non-digit. This will ignore NULL values. This will not process signed statuses (+/-).
+.SH PARAMETERS
+.TP
+.B data
+Conversion data for specifying things such as treating this as a negative number.
+
+.TP
+.B buffer
+The string to convert.
+
+.TP
+.B number
+This will store the value of the converted string. This value is only changed on success.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP if the binary string was converted to an signed long.
+.br
+\fBF_data_not\fP if string starts with a null (length is 0).
+.br
+\fBF_base_not\fP (with error bit) if no supported or valid base unit is provided.
+.br
+\fBF_number\fP (with error bit) if no conversion was made due to non-binary values being found.
+.br
+\fBF_number_decimal\fP (with error bit) if number has a decimal digit.
+.br
+\fBF_number_overflow\fP (with error bit) on integer overflow.
+.br
+\fBF_number_underflow\fP (with error bit) on integer underflow.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

@@ -1,0 +1,68 @@
+.TH f_file_access_at "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_file_access_at
+.SH SYNOPSIS
+.nf
+.B #include <file.h>
+.sp
+\fBf_status_t f_file_access_at\fP(
+    \fBconst int               \fP\fIat_id\fP,
+    \fBconst f_string_static_t \fP\fIpath\fP,
+    \fBconst int               \fP\fImode\fP,
+    \fBconst int               \fP\fIflag\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Check if a file can be accessed.
+.PP
+Do not use this to check file access before immediately attempting to open a file due to the possibility that the permissions change between this call and the open call. Instead, use the f_file_open() directly.
+.SH PARAMETERS
+.TP
+.B at_id
+The parent directory, as an open directory file descriptor, in which path is relative to.
+
+.TP
+.B path
+The path file name.
+
+.TP
+.B mode
+The file mode to check access of.
+
+.TP
+.B flag
+Options to control how this operates.
+
+.SH RETURN VALUE
+.PP
+\fBF_true\fP if requested access is allowed.
+.br
+\fBF_false\fP if requested access is denied.
+.br
+\fBF_data_not\fP if path.used is 0.
+.br
+\fBF_access_denied\fP (with error bit) on access denied.
+.br
+\fBF_directory_descriptor\fP (with error bit) when at_id is not a valid file descriptor (at_id must point to a directory).
+.br
+\fBF_directory_not\fP (with error bit) on invalid directory.
+.br
+\fBF_file_not\fP (with error bit) the file does not exist.
+.br
+\fBF_loop\fP (with error bit) on loop error.
+.br
+\fBF_memory_not\fP (with error bit) if out of memory.
+.br
+\fBF_name\fP (with error bit) on path name error.
+.br
+\fBF_number_overflow\fP (with error bit) on overflow error.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+\fBF_failure\fP (with error bit) for any other failure.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

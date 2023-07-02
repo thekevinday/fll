@@ -1,0 +1,59 @@
+.TH fl_directory_clone "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+fl_directory_clone
+.SH SYNOPSIS
+.nf
+.B #include <directory.h>
+.sp
+\fBf_status_t fl_directory_clone\fP(
+    \fBconst f_string_static_t      \fP\fIsource\fP,
+    \fBconst f_string_static_t      \fP\fIdestination\fP,
+    \fBconst fl_directory_recurse_t \fP\fIrecurse\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Copy a directory and its contents, as well as its file mode and possibly the owner and group.
+.PP
+The paths must not contain NULL except for the terminating NULL. The paths must be NULL terminated.
+.PP
+Symbolic links are not followed, they are copied as the symbolic link itself.
+.PP
+This does not copy unknown file types.
+.SH PARAMETERS
+.TP
+.B source
+The source file path. Must be NULL terminated.
+
+.TP
+.B destination
+The destination file path. Must be NULL terminated.
+
+.TP
+.B recurse
+The directory recurse data.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_data_not\fP if source.used or destination.used is 0.
+.br
+\fBF_directory_not\fP (with error bit) if the source directory does not exist.
+.br
+\fBF_failure\fP (with error bit) for any other failure, failures might be populated with individual status codes.
+.br
+Errors (with error bit) from: f_directory_create().
+.br
+Errors (with error bit) from: f_directory_exists().
+.br
+Errors (with error bit) from: f_file_mode_set().
+.br
+Errors (with error bit) from: f_file_role_change().
+.br
+Errors (with error bit) from: f_file_stat().
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

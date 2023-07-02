@@ -1,0 +1,81 @@
+.TH fll_fss_snatch_together "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+fll_fss_snatch_together
+.SH SYNOPSIS
+.nf
+.B #include <fss.h>
+.sp
+\fBf_status_t fll_fss_snatch_together\fP(
+    \fBconst f_string_static_t   \fP\fIbuffer\fP,
+    \fBconst f_fss_objects_t     \fP\fIobjects\fP,
+    \fBconst f_fss_contents_t    \fP\fIcontents\fP,
+    \fBconst f_string_static_t   \fP\fInames\fP,
+    \fBconst f_array_length_t    \fP\fIsize\fP,
+    \fBconst f_string_static_t   \fP\fIglue\fP,
+    \fBf_string_dynamic_t *const \fP\fIvalues\fP,
+    \fBbool                      \fP\fImatches\fP,
+    \fBf_array_length_t *const   \fP\fIindexs\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Perform simple search through all objects against the given set, saving all values when matched.
+.PP
+All matches for each object is snatched. Multiple contents for all objects are appended using the provided glue.
+.PP
+This will trim the object names when comparing (removing leading/trailing whitespace). This will strip NULL characters when copying.
+.PP
+This performs only a simple search algorithm that should be acceptable for small sets where performance is generally not a concern.
+.SH PARAMETERS
+.TP
+.B buffer
+The buffer to read from.
+
+.TP
+.B objects
+This object mappings to process.
+
+.TP
+.B contents
+This content mappings to process.
+
+.TP
+.B names
+An array of strings to "snatch" from the buffer.
+
+.TP
+.B size
+The total size of the names and values arrays.
+
+.TP
+.B glue
+A string to append between each duplicate name found when "snatching".
+
+.TP
+.B values
+An array of values where "snatched" content is stored.
+
+.TP
+.B matches
+An array representing the if an Object was matched. Set the pointer address to 0 to disable.
+
+.TP
+.B indexs
+An array representing the index within the Objects where the Content match was made. Set the pointer address to 0 to disable.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_data_not\fP when there is no buffer, objects or contents to process.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+Errors (with error bit) from: f_string_dynamic_partial_mash_nulless().
+.br
+Errors (with error bit) from: fl_string_dynamic_partial_compare_trim_string().
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

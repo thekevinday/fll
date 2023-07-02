@@ -1,0 +1,91 @@
+.TH fll_fss_extended_read "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+fll_fss_extended_read
+.SH SYNOPSIS
+.nf
+.B #include <extended.h>
+.sp
+\fBf_status_t fll_fss_extended_read\fP(
+    \fBconst f_string_static_t \fP\fIbuffer\fP,
+    \fBf_state_t               \fP\fIstate\fP,
+    \fBf_string_range_t *const \fP\fIrange\fP,
+    \fBf_fss_objects_t *const  \fP\fIobjects\fP,
+    \fBf_fss_contents_t *const \fP\fIcontents\fP,
+    \fBf_fss_quotes_t *const   \fP\fIobjects_quoted\fP,
+    \fBf_fss_quotess_t *const  \fP\fIcontents_quoted\fP,
+    \fBf_fss_delimits_t *const \fP\fIobjects_delimits\fP,
+    \fBf_fss_delimits_t *const \fP\fIcontents_delimits\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+This is the fss-0001 implementation. Read a buffer expected to be in fss-0001 format, getting all objects and their respective content.
+.SH PARAMETERS
+.TP
+.B buffer
+The buffer to read from.
+
+.TP
+.B state
+A state for providing flags and handling interrupts during long running operations. There is no state.handle(). There is no "callbacks" structure. There is no data structure passed to these functions.
+
+.TP
+.B range
+The range within the buffer that is currently being read.
+
+.TP
+.B objects
+This will be populated with all valid objects found.
+
+.TP
+.B contents
+This will be populated with all valid contents found.
+
+.TP
+.B objects_quoted
+(optional) An array mapped to each object in objects representing the quote type discovered (from the f_fss_quote_type_*_e), if any. Set the pointer address to 0 to disable.
+
+.TP
+.B contents_quoted
+(optional) An array mapped to each content in objects representing the quote type discovered (from the f_fss_quote_type_*_e), if any. Set the pointer address to 0 to disable.
+
+.TP
+.B objects_delimits
+An array of delimits for objects detected during processing. The caller is expected to decide if and when to process them.
+
+.TP
+.B contents_delimits
+(optional) An array of delimits for contents detected during processing. The caller is expected to decide if and when to process them. Set pointer address to 0 and all delimits will instead utilize objects_delimits.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_none_stop\fP on success after reaching stopping point.
+.br
+\fBF_none_eos\fP on success after reaching the end of the buffer.
+.br
+\fBF_data_not_stop\fP no data to write due start location being greater than stop location.
+.br
+\fBF_data_not_eos\fP no data to write due start location being greater than or equal to buffer size.
+.br
+\fBF_data_not_eol\fP if there is no data to write and EOL was reached.
+.br
+\fBF_number_overflow\fP (with error bit) if the maximum buffer size is reached.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+Errors (with error bit) from: f_string_ranges_increase().
+.br
+Errors (with error bit) from: f_string_rangess_increase().
+.br
+Errors (with error bit) from: f_uint8s_increase().
+.br
+Errors (with error bit) from: fl_fss_extended_content_read().
+.br
+Errors (with error bit) from: fl_fss_extended_object_read().
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

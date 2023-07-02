@@ -1,0 +1,77 @@
+.TH f_file_touch "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_file_touch
+.SH SYNOPSIS
+.nf
+.B #include <file.h>
+.sp
+\fBf_status_t f_file_touch\fP(
+    \fBconst f_string_static_t \fP\fIpath\fP,
+    \fBconst mode_t            \fP\fImode\fP,
+    \fBconst bool              \fP\fIdereference\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Update the files access and modification timestamp, creating the file if it does not already exist.
+.PP
+When the file is created, it is created as a regular file.
+.SH PARAMETERS
+.TP
+.B path
+The path file name.
+
+.TP
+.B mode
+The file mode to use when (regular) file is created.
+
+.TP
+.B dereference
+Set to TRUE to dereference symlinks (often is what is desired). Set to FALSE to operate on the symlink itself.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_access_denied\fP (with error bit) on access denied.
+.br
+\fBF_buffer\fP (with error bit) if the buffer is invalid.
+.br
+\fBF_busy\fP (with error bit) if file system is too busy to perform write.
+.br
+\fBF_directory_not\fP (with error bit) if a supposed directory in path is not actually a directory.
+.br
+\fBF_directory_descriptor\fP (with error bit) for bad directory descriptor for at_id.
+.br
+\fBF_file_found\fP (with error bit) if a file aleady exists at the path.
+.br
+\fBF_file_open_max\fP (with error bit) when system-wide max open files is reached.
+.br
+\fBF_filesystem_quota_block\fP (with error bit) if file system's disk blocks or inodes are exhausted.
+.br
+\fBF_filesystem_quota_reached\fP (with error bit) quota reached of file system is out of space.
+.br
+\fBF_interrupt\fP (with error bit) when program received an interrupt signal, halting operation.
+.br
+\fBF_loop\fP (with error bit) on loop error.
+.br
+\fBF_memory_not\fP (with error bit) if out of memory.
+.br
+\fBF_name\fP (with error bit) on path name error.
+.br
+\fBF_number_overflow\fP (with error bit) on overflow error.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+\fBF_prohibited\fP (with error bit) if file system does not allow for creating or linking.
+.br
+\fBF_read_only\fP (with error bit) if file system is read-only.
+.br
+\fBF_search\fP (with error bit) if search permission is denied for one of the paths to the file.
+.br
+\fBF_failure\fP (with error bit) for any other error.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

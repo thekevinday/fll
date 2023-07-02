@@ -1,0 +1,31 @@
+.TH fll_program_standard_signal_received "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+fll_program_standard_signal_received
+.SH SYNOPSIS
+.nf
+.B #include <program.h>
+.sp
+\fBf_status_t fll_program_standard_signal_received\fP(
+    \fBfll_program_data_t *const \fP\fImain\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Check to see if a process signal is received.
+.PP
+Only signals that are blocked via main.signal will be received.
+.PP
+If no signals are blocked, then this always returns F_false.
+.SH PARAMETERS
+.TP
+.B main
+The main program data. The main->signal must be used to designate blocked signals.
+
+.SH RETURN VALUE
+.PP
+A positive number representing a valid signal on signal received. 0 on no signal received or when main is NULL.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

@@ -1,0 +1,36 @@
+.TH f_thread_condition_attributes_adjust "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_thread_condition_attributes_adjust
+.SH SYNOPSIS
+.nf
+.B #include <condition_attribute.h>
+.sp
+\fBf_status_t f_thread_condition_attributes_adjust\fP(
+    \fBconst f_array_length_t                 \fP\fIlength\fP,
+    \fBf_thread_condition_attributes_t *const \fP\fIattributes\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Resize the thread attributes array.
+.SH PARAMETERS
+.TP
+.B length
+The new size to use.
+
+.TP
+.B attributes
+The string attributes array to resize.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_memory_not\fP (with error bit) on out of memory.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

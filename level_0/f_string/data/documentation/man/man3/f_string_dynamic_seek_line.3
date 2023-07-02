@@ -1,0 +1,44 @@
+.TH f_string_dynamic_seek_line "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_string_dynamic_seek_line
+.SH SYNOPSIS
+.nf
+.B #include <dynamic.h>
+.sp
+\fBf_status_t f_string_dynamic_seek_line\fP(
+    \fBconst f_string_static_t \fP\fIbuffer\fP,
+    \fBf_string_range_t *const \fP\fIrange\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Seek the buffer location forward until EOL is reached.
+.SH PARAMETERS
+.TP
+.B buffer
+The buffer to traverse.
+
+.TP
+.B range
+A range within the buffer representing the start and stop locations. The start location will be incremented by seek.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_none_eos\fP on success, but stopped at end of string.
+.br
+\fBF_none_stop\fP on success, but stopped at end of range.
+.br
+\fBF_data_not on success, but there was no string data to seek.
+.br
+\fBF_data_not_stop\fP on success, but the range.start > range.stop.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+Errors (with error bit) from: f_memory_resize().
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

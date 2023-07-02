@@ -1,0 +1,28 @@
+.TH f_pipe_debug_exists "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_pipe_debug_exists
+.SH SYNOPSIS
+.nf
+.B #include <pipe.h>
+.sp
+\fBf_status_t f_pipe_debug_exists\fP(
+    \fBvoid     \fP\fI\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Identify whether or not the standard debug pipe source contains piped data.
+.PP
+For most systems, standard debug does not exist and instead maps to standard output.
+.SH RETURN VALUE
+.PP
+\fBF_false\fP if there is no piped data.
+.br
+\fBF_true\fP if there is piped data.
+.br
+\fBF_file_stat\fP (with error bit) on stat() error.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

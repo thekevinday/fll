@@ -37,7 +37,7 @@ extern "C" {
  *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
  *   F_utf_not (with error bit) if unicode is an invalid Unicode character.
  *
- * @see f_utf_character_is_alphabetic() 
+ * @see f_utf_character_is_alphabetic()
  * @see f_utf_character_is_alphabetic_digit()
  * @see f_utf_character_is_alphabetic_numeric()
  * @see f_utf_character_is_graph()

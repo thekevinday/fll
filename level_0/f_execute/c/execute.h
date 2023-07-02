@@ -56,7 +56,7 @@ extern "C" {
  *   The execute status has no flags and is only 8-bits wide.
  *
  * @return
- *   The appropriate status code is returned on match (no bits, error or otherwise are set).
+ *   The appropriate status code is returned on match (no bits, error or otherwise are set for the status code if there is no error).
  *
  *   F_known_not (with error bit) if the given number has no known execute state to convert.
  */

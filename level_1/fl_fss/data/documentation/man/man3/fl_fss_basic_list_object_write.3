@@ -1,0 +1,77 @@
+.TH fl_fss_basic_list_object_write "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+fl_fss_basic_list_object_write
+.SH SYNOPSIS
+.nf
+.B #include <basic_list.h>
+.sp
+\fBf_status_t fl_fss_basic_list_object_write\fP(
+    \fBconst f_string_static_t   \fP\fIobject\fP,
+    \fBconst uint8_t             \fP\fIcomplete\fP,
+    \fBf_state_t                 \fP\fIstate\fP,
+    \fBf_string_range_t *const   \fP\fIrange\fP,
+    \fBf_string_dynamic_t *const \fP\fIdestination\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Write an fss-0002 object.
+.PP
+This will write the given string range as a valid object. Anything within this range will be escaped as necessary. This will stop if EOL is reached.
+.PP
+The destination string may have NULLs.
+.SH PARAMETERS
+.TP
+.B object
+The string to write as (does not stop at NULLS, they are ignored and not written).
+
+.TP
+.B complete
+If f_fss_complete_none_e, then only the object name is written. If f_fss_complete_full_e, this will write any appropriate open and close aspects of this object. If f_fss_complete_full_trim_e, this will write any appropriate open and close aspects of this object, but will omit whitespace before and after the object. If f_fss_complete_partial_e, this will write any appropriate open and close aspects of this object. If f_fss_complete_partial_tim, this will write any appropriate open and close aspects of this object, but will omit whitespace before and after the object.
+
+.TP
+.B state
+A state for providing flags and handling interrupts during long running operations. There is no state.handle(). There is no "callbacks" structure. There is no data structure passed to these functions.
+
+.TP
+.B range
+The start/stop location within the object string to write as an object.
+
+.TP
+.B destination
+The buffer where the object is written to.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_none_eos\fP on success after reaching the end of the buffer.
+.br
+\fBF_data_not_stop\fP no data to write due start location being greater than stop location.
+.br
+\fBF_data_not_eos\fP no data to write due start location being greater than or equal to buffer size.
+.br
+\fBF_none_stop\fP on success after reaching stopping point.
+.br
+\fBF_interrupt\fP (with error bit) if stopping due to an interrupt.
+.br
+\fBF_none_eol\fP (with error bit) after reaching an EOL, which is not supported by the standard.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+Errors (with error bit) from: f_fss_is_graph().
+.br
+Errors (with error bit) from: f_fss_is_space().
+.br
+Errors (with error bit) from: f_fss_skip_past_delimit().
+.br
+Errors (with error bit) from: f_string_dynamic_increase().
+.br
+Errors (with error bit) from: f_string_dynamic_increase_by().
+.br
+Errors (with error bit) from: f_utf_buffer_increment().
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

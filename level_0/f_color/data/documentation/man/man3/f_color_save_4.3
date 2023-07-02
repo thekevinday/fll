@@ -1,0 +1,58 @@
+.TH f_color_save_4 "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_color_save_4
+.SH SYNOPSIS
+.nf
+.B #include <color.h>
+.sp
+\fBf_status_t f_color_save_4\fP(
+    \fBconst f_color_format_t    \fP\fIformat\fP,
+    \fBconst f_string_static_t   \fP\fIcolor1\fP,
+    \fBconst f_string_static_t   \fP\fIcolor2\fP,
+    \fBconst f_string_static_t   \fP\fIcolor3\fP,
+    \fBconst f_string_static_t   \fP\fIcolor4\fP,
+    \fBf_string_dynamic_t *const \fP\fIbuffer\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Save color information to some string using four color codes.
+.PP
+This is environment sensitive. If TERM is not defined or set to "linux", then macro_f_color_t_set_linux() is used. Otherwise macro_f_color_t_set_xterminal() is used.
+.SH PARAMETERS
+.TP
+.B format
+The color format parts.
+
+.TP
+.B color1
+A color to assign.
+
+.TP
+.B color2
+A second color to assign. Ignored if color1.used is 0.
+
+.TP
+.B color3
+A third color to assign. Ignored if color1.used or color2.used is 0.
+
+.TP
+.B color4
+A fourth color to assign. Ignored if color1.used, color2.used, or color3.used is 0.
+
+.TP
+.B buffer
+The string to save the colors to. The buffer will become NULL terminated after the appended string length.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+Errors (with error bit) from: f_string_dynamic_increase_by()
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

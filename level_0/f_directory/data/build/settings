@@ -36,6 +36,8 @@ build_sources_library directory.c directory/common.c private-directory.c
 
 build_sources_headers directory.h directory/common.h directory/type.h
 
+build_sources_documentation man
+
 build_script yes
 build_shared yes
 build_static no

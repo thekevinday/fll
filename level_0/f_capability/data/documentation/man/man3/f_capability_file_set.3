@@ -1,0 +1,54 @@
+.TH f_capability_file_set "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_capability_file_set
+.SH SYNOPSIS
+.nf
+.B #include <capability.h>
+.sp
+\fBf_status_t f_capability_file_set\fP(
+    \fBconst f_string_static_t \fP\fIpath\fP,
+    \fBconst f_capability_t    \fP\fIcapability\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Set the capability of a file represented by a file path.
+.SH PARAMETERS
+.TP
+.B path
+The file path.
+
+.TP
+.B capability
+The capability to set.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_access_denied\fP (with error bit) on access denied.
+.br
+\fBF_descriptor_not\fP (with error bit) if the file descriptor is invalid.
+.br
+\fBF_directory_not\fP (with error bit) if a directory containing the file does not exist.
+.br
+\fBF_file_found_not\fP (with error bit) if file was not found.
+.br
+\fBF_implemented_not\fP (with error bit) if this function is not available (due to not having libcap support compiled in).
+.br
+\fBF_memory_not\fP (with error bit) if a out of memory.
+.br
+\fBF_name_not\fP (with error bit) if the file name is too long.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+\fBF_prohibited\fP (with error bit) if the file system does not permit this operation.
+.br
+\fBF_supported_not\fP (with error bit) if the file system does not support this operation.
+.br
+\fBF_failure\fP (with error bit) on any other failure.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

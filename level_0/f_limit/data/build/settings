@@ -36,6 +36,8 @@ build_sources_library limit.c limit/set.c limit/value.c limit/private-set.c limi
 
 build_sources_headers limit.h limit/set.h limit/value.h
 
+build_sources_documentation man
+
 build_script yes
 build_shared yes
 build_static no

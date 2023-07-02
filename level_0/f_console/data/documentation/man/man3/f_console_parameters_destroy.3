@@ -1,0 +1,33 @@
+.TH f_console_parameters_destroy "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_console_parameters_destroy
+.SH SYNOPSIS
+.nf
+.B #include <common.h>
+.sp
+\fBf_status_t f_console_parameters_destroy\fP(
+    \fBf_console_parameters_t *const \fP\fIparameters\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Destroy any dynamic allocated data on the parameters object.
+.SH PARAMETERS
+.TP
+.B parameters
+The parameters object.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+Errors (with error bit) from: f_string_dynamics_adjust().
+.br
+Errors (with error bit) from: f_array_lengths_adjust().
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

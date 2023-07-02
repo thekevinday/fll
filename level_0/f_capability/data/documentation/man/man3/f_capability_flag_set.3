@@ -1,0 +1,48 @@
+.TH f_capability_flag_set "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_capability_flag_set
+.SH SYNOPSIS
+.nf
+.B #include <capability.h>
+.sp
+\fBf_status_t f_capability_flag_set\fP(
+    \fBconst f_capability_flag_t       \fP\fIflag\fP,
+    \fBconst f_capability_flag_value_t \fP\fIenabled\fP,
+    \fBconst f_int32s_t                \fP\fIcodes\fP,
+    \fBf_capability_t *const           \fP\fIcapability\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Set the value of a flags from the capability structure.
+.SH PARAMETERS
+.TP
+.B flag
+The flag of the capability code to set the value of.
+
+.TP
+.B enabled
+The capability code flag value to set. This is TRUE when the flag is enabled and FALSE otherwise.
+
+.TP
+.B codes
+An array of codes to set the capability flag value of.
+
+.TP
+.B capability
+The capability to set the flag of.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_implemented_not\fP (with error bit) if this function is not available (due to not having libcap support compiled in).
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+\fBF_failure\fP (with error bit) on any other failure.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

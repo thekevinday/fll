@@ -1,0 +1,54 @@
+.TH f_directory_exists_at "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_directory_exists_at
+.SH SYNOPSIS
+.nf
+.B #include <directory.h>
+.sp
+\fBf_status_t f_directory_exists_at\fP(
+    \fBconst int               \fP\fIat_id\fP,
+    \fBconst f_string_static_t \fP\fIpath\fP,
+    \fBconst int               \fP\fIflag\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Identify whether or not a file exists at the given path and if that file is a directory or a symlink to a directory.
+.SH PARAMETERS
+.TP
+.B at_id
+The parent directory, as an open directory file descriptor, in which path is relative to.
+
+.TP
+.B path
+The file path to the directory.
+
+.TP
+.B flag
+Any valid flag, such as F_directory_at_path_empty_d, F_directory_at_automount_no_d, or F_directory_at_symlink_follow_no_d.
+
+.SH RETURN VALUE
+.PP
+\fBF_true\fP if path was found and path is a directory (or a symlink to a directory).
+\fBF_false\fP if path was found and path is not a directory.
+\fBF_file_found_not\fP if the path was not found.
+\fBF_data_not\fP if path.used is 0.
+.br
+\fBF_access_denied\fP (with error bit) if access to the file was denied.
+.br
+\fBF_directory_descriptor\fP (with error bit) for bad directory descriptor for at_id.
+.br
+\fBF_loop\fP (with error bit) on loop error.
+.br
+\fBF_memory_not\fP (with error bit) if out of memory.
+.br
+\fBF_name\fP (with error bit) on path name error.
+.br
+\fBF_number_overflow\fP (with error bit) on overflow error.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

@@ -37,6 +37,8 @@ build_sources_library type_array/private-array_length.c type_array/private-cell.
 
 build_sources_headers type_array.h type_array/common.h type_array/array_length.h type_array/cell.h type_array/fll_id.h type_array/int8.h type_array/int16.h type_array/int32.h type_array/int64.h type_array/int128.h type_array/state.h type_array/status.h type_array/uint8.h type_array/uint16.h type_array/uint32.h type_array/uint64.h type_array/uint128.h
 
+build_sources_documentation man
+
 build_script yes
 build_shared yes
 build_static no

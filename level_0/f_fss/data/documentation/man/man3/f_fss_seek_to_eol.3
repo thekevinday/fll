@@ -1,0 +1,47 @@
+.TH f_fss_seek_to_eol "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_fss_seek_to_eol
+.SH SYNOPSIS
+.nf
+.B #include <fss.h>
+.sp
+\fBf_status_t f_fss_seek_to_eol\fP(
+    \fBf_state_t                \fP\fIstate\fP,
+    \fBconst f_string_dynamic_t \fP\fIbuffer\fP,
+    \fBf_string_range_t *const  \fP\fIrange\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Seek until an EOL character is reached.
+.PP
+This does not check the character after the EOL is reached. The character after an EOL should be checked to see if it is a combining character. Combining characters after the EOL effectively make the EOL character a non-standard EOL. For most, if not all, FSS standards, a combined EOL is not the same as a standard or normal EOL.
+.SH PARAMETERS
+.TP
+.B state
+A state for providing flags and handling interrupts during long running operations.
+
+.TP
+.B buffer
+The string to process.
+
+.TP
+.B range
+The start and stop positions in the buffer being processed. This increments range->start.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_data_not\fP on success but buffer.used is 0, initial range.start is greater than range.stop, or initial range.start is greater than or equal to buffer.used.
+.br
+\fBF_none_eos\fP on success and EOS was reached.
+.br
+\fBF_none_stop\fP on success and stop point was reached.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

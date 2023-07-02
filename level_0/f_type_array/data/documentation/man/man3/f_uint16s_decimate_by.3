@@ -1,0 +1,40 @@
+.TH f_uint16s_decimate_by "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_uint16s_decimate_by
+.SH SYNOPSIS
+.nf
+.B #include <uint16.h>
+.sp
+\fBf_status_t f_uint16s_decimate_by\fP(
+    \fBconst f_array_length_t \fP\fIamount\fP,
+    \fBf_uint16s_t           *\fP\fIuint16s\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Resize the string uint16s array to a smaller size.
+.PP
+This will resize making the array smaller based on (size - given length). If the given length is too small, then the resize will fail. This will not shrink the size to les than 0.
+.SH PARAMETERS
+.TP
+.B amount
+A positive number representing how much to decimate the size by.
+
+.TP
+.B uint16s
+The string uint16s array to resize.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_data_not\fP if amount is 0.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+Errors (with error bit) from: f_memory_adjust().
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

@@ -36,6 +36,8 @@ build_sources_library control_group.c control_group/common.c
 
 build_sources_headers control_group.h control_group/common.h
 
+build_sources_documentation man
+
 build_script yes
 build_shared yes
 build_static no

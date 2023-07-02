@@ -1,0 +1,40 @@
+.TH f_utf_is_phonetic "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_utf_is_phonetic
+.SH SYNOPSIS
+.nf
+.B #include <is.h>
+.sp
+\fBf_status_t f_utf_is_phonetic\fP(
+    \fBconst f_string_t       \fP\fIsequence\fP,
+    \fBconst f_array_length_t \fP\fIwidth_max\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Check to see if the entire byte block of the character is an ASCII or UTF-8 phonetic character.
+.SH PARAMETERS
+.TP
+.B sequence
+The byte sequence to validate as a character. There must be enough space allocated to compare against, as limited by width_max.
+
+.TP
+.B width_max
+The maximum width available for checking. Can be anything greater than 0.
+
+.SH RETURN VALUE
+.PP
+\fBF_true\fP if a UTF-8 phonetic character.
+.br
+\fBF_false\fP if not a UTF-8 phonetic character.
+.br
+\fBF_complete_not_utf\fP (with error bit set) if character is an incomplete UTF-8 sequence.
+.br
+\fBF_utf_fragment\fP (with error bit) if character is a UTF-8 fragment.
+.br
+\fBF_utf_not\fP (with error bit) if Unicode is an invalid Unicode character.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

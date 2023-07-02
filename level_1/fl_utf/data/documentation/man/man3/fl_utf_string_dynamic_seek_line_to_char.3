@@ -1,0 +1,49 @@
+.TH fl_utf_string_dynamic_seek_line_to_char "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+fl_utf_string_dynamic_seek_line_to_char
+.SH SYNOPSIS
+.nf
+.B #include <utf.h>
+.sp
+\fBf_status_t fl_utf_string_dynamic_seek_line_to_char\fP(
+    \fBconst f_utf_string_static_t \fP\fIbuffer\fP,
+    \fBf_string_range_t *const     \fP\fIrange\fP,
+    \fBconst f_char_t              \fP\fIseek_to_this\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Seek the buffer location forward until the (1-byte wide) character or EOL is reached.
+.SH PARAMETERS
+.TP
+.B buffer
+The buffer to traverse.
+
+.TP
+.B range
+A range within the buffer representing the start and stop locations. The start location will be incremented by seek.
+
+.TP
+.B seek_to_this
+A single-width character.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_none_eol\fP on success, but stopped at EOL.
+.br
+\fBF_none_eos\fP on success, but stopped at end of buffer.
+.br
+\fBF_data_not\fP if buffer length is 0.
+.br
+\fBF_data_not_stop\fP if range.start > range.stop.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+\fBF_utf_fragment\fP (with error bit) if character is a UTF-8 fragment.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

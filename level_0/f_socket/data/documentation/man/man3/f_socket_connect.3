@@ -1,0 +1,61 @@
+.TH f_socket_connect "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_socket_connect
+.SH SYNOPSIS
+.nf
+.B #include <socket.h>
+.sp
+\fBf_status_t f_socket_connect\fP(
+    \fBconst f_socket_t \fP\fIsocket\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Connect to a socket.
+.SH PARAMETERS
+.TP
+.B socket
+The socket structure. The socket.address may point to any valid structure, like "struct sockaddr", "struct sockaddr_un", or "struct sockaddr_in".
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_access_denied\fP (with error bit) on access denied.
+.br
+\fBF_available_not_address\fP (with error bit) if address is unavailable (is non-existent or not local).
+.br
+\fBF_block\fP (with error bit) if socket is blocked.
+.br
+\fBF_busy_address\fP (with error bit) if address is already in use (therefore unavailable).
+.br
+\fBF_complete_not\fP (with error bit) if a non-blocking connection attempt is not yet completed.
+.br
+\fBF_connect\fP (with error bit) if already connected.
+.br
+\fBF_connect_refuse\fP (with error bit) if connection is refused because there is nothing listening.
+.br
+\fBF_domain_not\fP (with error bit) if the given domain is unknown or is unsupported.
+.br
+\fBF_file_descriptor\fP (with error bit) if id is an invalid descriptor.
+.br
+\fBF_interrupt\fP (with error bit) if interrupt is received.
+.br
+\fBF_network_reach_not\fP (with error bit) if the network is unreachable.
+.br
+\fBF_progress\fP (with error bit) if if a non-blocking connection cannot be completed immediately.
+.br
+\fBF_prohibited\fP (with error bit) if the file system does not permit this operation.
+.br
+\fBF_protocol_not\fP (with error bit) if the given protocol is unknown or is unsupported.
+.br
+\fBF_socket_not\fP (with error bit) if the id is not a socket descriptor.
+.br
+\fBF_time_out\fP (with error bit) if a timeout occurred.
+.br
+\fBF_failure\fP (with error bit) for any other error.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

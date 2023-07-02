@@ -1,0 +1,51 @@
+.TH fll_program_parameter_additional_append "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+fll_program_parameter_additional_append
+.SH SYNOPSIS
+.nf
+.B #include <program.h>
+.sp
+\fBf_status_t fll_program_parameter_additional_append\fP(
+    \fBconst f_string_static_t *const \fP\fIarguments\fP,
+    \fBconst f_array_lengths_t        \fP\fIvalues\fP,
+    \fBf_string_dynamics_t *const     \fP\fIdestination\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Allocate new strings from all of the provided locations.
+.PP
+These new strings are appended onto the destination.
+.PP
+Empty console parameters are ignored.
+.SH PARAMETERS
+.TP
+.B arguments
+The program argument array to parse. The caller must guarantee that the indexes within values do not exceed the arguments array length.
+
+.TP
+.B values
+The string locations where the console parameters are found.
+
+.TP
+.B destination
+An array of dynamic strings each representing a console parameter.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_data_not\fP if nothing to rip, no allocations or reallocations are performed.
+.br
+\fBF_array_too_large\fP (with error bit) if a buffer would exceed max length.
+.br
+\fBF_memory_not\fP (with error bit) on out of memory.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+Errors (with error bit) from: f_string_dynamic_append().
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

@@ -1,0 +1,45 @@
+.TH f_signal_wait_until "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_signal_wait_until
+.SH SYNOPSIS
+.nf
+.B #include <signal.h>
+.sp
+\fBf_status_t f_signal_wait_until\fP(
+    \fBconst sigset_t *const   \fP\fIset\fP,
+    \fBconst struct timespec  *\fP\fItimeout\fP,
+    \fBsiginfo_t *const        \fP\fIinformation\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Wait until any signal in a set of signals is received until the given time out is reached.
+.SH PARAMETERS
+.TP
+.B set
+The set of signals to wait for.
+
+.TP
+.B timeout
+The amount of time to wait.
+
+.TP
+.B information
+(optional) The resulting signal information. Set to NULL to not use.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP if signal is found before time out.
+.br
+\fBF_time_out\fP if no signal is find by the time out.
+.br
+\fBF_interrupt\fP (with error bit) if interrupted by a signal other than one specified in the signal set.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+\fBF_failure\fP (with error bit) for any other error.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

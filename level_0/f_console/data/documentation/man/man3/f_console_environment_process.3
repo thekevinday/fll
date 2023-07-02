@@ -1,0 +1,37 @@
+.TH f_console_environment_process "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_console_environment_process
+.SH SYNOPSIS
+.nf
+.B #include <console.h>
+.sp
+\fBf_status_t f_console_environment_process\fP(
+    \fBconst f_console_arguments_t \fP\fIarguments\fP,
+    \fBf_string_maps_t *const      \fP\fIenvironment\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Some console input/output commands. Transcribe the NULL terminated environment strings into maps.
+.PP
+All values are appended to the environment maps.
+.PP
+Errors (with error bit) from: f_string_maps_increase_by().
+.SH PARAMETERS
+.TP
+.B arguments
+
+.TP
+.B environment
+Maps representing the environment variable names and values. Both the name and the value strings may not be NULL terminated. Both the name and the value strings may be pointers to the envp memory addresses.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_data_not\fP if the arguments.envp pointer is NULL or there are no environment variables in arguments.envp.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

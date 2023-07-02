@@ -1,0 +1,44 @@
+.TH f_serialize_to_simple "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_serialize_to_simple
+.SH SYNOPSIS
+.nf
+.B #include <serialize.h>
+.sp
+\fBf_status_t f_serialize_to_simple\fP(
+    \fBconst f_string_static_t   \fP\fIsource\fP,
+    \fBf_string_dynamic_t *const \fP\fIdestination\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Serialized a string using the Simple serialize algorithm.
+.PP
+The simple Serialize algorithm is akin to the PATH environment variable, example: PATH="/bin:/sbin:/usr/bin".
+.PP
+To generate the above example, this would be called 3 times, with the following strings: 1) value = "/bin", then: PATH="/bin". 2) value = "/sbin", then: PATH="/bin:/sbin". 3) value = "/usr/sbin", then: PATH="/bin:/sbin:/usr/sbin".
+.SH PARAMETERS
+.TP
+.B source
+The string to append onto serialize.
+
+.TP
+.B destination
+The dynamic string that to store the serialized string. This string will be NULL terminated after destination.used on success. All serialized values are appended to the destination.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_data_not\fP on success and source.used is 0.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+Errors (with error bit) from: f_string_dynamic_append();
+.br
+Errors (with error bit) from: f_string_dynamic_append_assure();
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

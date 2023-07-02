@@ -1,0 +1,49 @@
+.TH f_print_dynamic_partial_raw "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_print_dynamic_partial_raw
+.SH SYNOPSIS
+.nf
+.B #include <print.h>
+.sp
+\fBf_status_t f_print_dynamic_partial_raw\fP(
+    \fBconst f_string_static_t \fP\fIbuffer\fP,
+    \fBconst f_string_range_t  \fP\fIrange\fP,
+    \fBFILE *const             \fP\fIstream\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Similar to a c-library printf, except that this will only print a specific range in a given dynamic string.
+.PP
+Will not stop at NULL. Will print NULL. Will print up to length 1-byte characters.
+.PP
+All UTF-8 characters, invalid or not, are printed as is.
+.PP
+This print function does not use locking, be sure something like flockfile() and funlockfile() are appropriately called.
+.SH PARAMETERS
+.TP
+.B buffer
+The string to output.
+
+.TP
+.B range
+The range within the provided string to print.
+
+.TP
+.B stream
+The file stream to output to, including standard streams such as stdout and stderr.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_data_not\fP if there is nothing to print.
+.br
+\fBF_output\fP (with error bit) on failure.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

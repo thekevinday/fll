@@ -1,0 +1,98 @@
+.TH f_file_clone "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_file_clone
+.SH SYNOPSIS
+.nf
+.B #include <file.h>
+.sp
+\fBf_status_t f_file_clone\fP(
+    \fBconst f_string_static_t   \fP\fIsource\fP,
+    \fBconst f_string_static_t   \fP\fIdestination\fP,
+    \fBconst f_number_unsigned_t \fP\fIsize_block\fP,
+    \fBconst uint8_t             \fP\fIflag\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Copy a file, as well as its file mode and possibly the owner and group.
+.PP
+The paths must not contain NULL except for the terminating NULL. The paths must be NULL terminated.
+.PP
+For directory file types, this will only copy the directory itself and not its contents.
+.PP
+This does not copy unknown file types.
+.PP
+If f_file_stat_flag_reference_e, will operate directly on a link rather than what it references. If not f_file_stat_flag_reference_e, will dereference any links.
+.PP
+If either f_file_stat_flag_group_e or f_file_stat_flag_owner_e, will copy the owner and group ids. If neither f_file_stat_flag_group_e nor f_file_stat_flag_owner_e, will not copy the owner and group ids.
+.SH PARAMETERS
+.TP
+.B source
+The path to the file to copy from.
+
+.TP
+.B destination
+The path to copy to.
+
+.TP
+.B size_block
+The default number of chunks to read at a time with each chunk being 1-byte. Set to 0 to use default block read size.
+
+.TP
+.B flag
+If f_file_stat_flag_exclusive_e, will fail when file already exists. If not f_file_stat_flag_exclusive_e, will not fail if file already exists (existing file will be replaced).
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_data_not\fP if source.used or destination.used is 0.
+.br
+\fBF_access_denied\fP (with error bit) on access denied.
+.br
+\fBF_access_group\fP (with error bit) if the current user does not have access to assign the specified group.
+.br
+\fBF_access_mode\fP (with error bit) if the current user does not have access to assign the file mode.
+.br
+\fBF_access_owner\fP (with error bit) if the current user does not have access to assign the specified owner.
+.br
+\fBF_busy\fP (with error bit) if file system is too busy to perform write.
+.br
+\fBF_directory_not\fP (with error bit) if a supposed directory in path is not actually a directory.
+.br
+\fBF_file_found\fP (with error bit) if a file was found while exclusive is TRUE.
+.br
+\fBF_file_open_max\fP (with error bit) when system-wide max open files is reached.
+.br
+\fBF_file_read\fP (with error bit) on file read error.
+.br
+\fBF_file_write\fP (with error bit) on file write error.
+.br
+\fBF_filesystem_quota_block\fP (with error bit) if file system's disk blocks or inodes are exhausted.
+.br
+\fBF_interrupt\fP (with error bit) when program received an interrupt signal, halting operation.
+.br
+\fBF_loop\fP (with error bit) on loop error.
+.br
+\fBF_memory_not\fP (with error bit) if out of memory.
+.br
+\fBF_name\fP (with error bit) on path name error.
+.br
+\fBF_number_overflow\fP (with error bit) on overflow error.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+\fBF_prohibited\fP (with error bit) if file system does not allow for making changes.
+.br
+\fBF_read_only\fP (with error bit) if file is read-only.
+.br
+\fBF_space_not\fP (with error bit) if file system is out of space (or file system quota is reached).
+.br
+\fBF_supported_not\fP if copying a given type of file is unsupported.
+.br
+\fBF_failure\fP (with error bit) for any other error.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

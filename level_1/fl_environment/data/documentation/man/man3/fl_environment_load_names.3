@@ -1,0 +1,46 @@
+.TH fl_environment_load_names "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+fl_environment_load_names
+.SH SYNOPSIS
+.nf
+.B #include <environment.h>
+.sp
+\fBf_status_t fl_environment_load_names\fP(
+    \fBconst f_string_statics_t \fP\fInames\fP,
+    \fBf_string_maps_t *const   \fP\fIenvironment\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Append the given environment variable name and value pairs into the given map.
+.PP
+If the environment variable name is not found, then it is not added to the map. If the environment variable name is found but has an empty value, then it is added to the map with an empty value.
+.PP
+Each name and value in the map is NULL terminated after the name.used or size.used.
+.PP
+This does not check for uniqueness in the map.
+.SH PARAMETERS
+.TP
+.B names
+An array of valid environment variable names. The strings in the array must be NULL terminated.
+
+.TP
+.B environment
+An array of maps generated from the loaded environment variable names. All environment names loaded are appended to this.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_data_not\fP if names.used is 0.
+.br
+Errors (with error bit) from: f_environment_get().
+.br
+Errors (with error bit) from: f_string_dynamic_append_nulless().
+.br
+Errors (with error bit) from: f_string_maps_increase_by().
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

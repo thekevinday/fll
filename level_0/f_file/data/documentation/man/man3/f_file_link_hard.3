@@ -1,0 +1,68 @@
+.TH f_file_link_hard "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_file_link_hard
+.SH SYNOPSIS
+.nf
+.B #include <file.h>
+.sp
+\fBf_status_t f_file_link_hard\fP(
+    \fBconst f_string_static_t \fP\fItarget\fP,
+    \fBconst f_string_static_t \fP\fIpoint\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Create a hard link to a file.
+.PP
+This will not replace existing files/links.
+.SH PARAMETERS
+.TP
+.B target
+A path that the link points to.
+
+.TP
+.B point
+A path to the link that does the pointing.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_data_not\fP if target.used or point.used is 0.
+.br
+\fBF_access_denied\fP (with error bit) on access denied.
+.br
+\fBF_buffer\fP (with error bit) if the buffer is invalid.
+.br
+\fBF_busy\fP (with error bit) if file system is too busy to perform write.
+.br
+\fBF_directory_not\fP (with error bit) if a supposed directory in path is not actually a directory.
+.br
+\fBF_file_found\fP (with error bit) if a file aleady exists at the path.
+.br
+\fBF_file_found_not\fP (with error bit) if a parent path in point does not exist or is a broken symlink.
+.br
+\fBF_filesystem_quota_block\fP (with error bit) if file system's disk blocks or inodes are exhausted.
+.br
+\fBF_interrupt\fP (with error bit) when program received an interrupt signal, halting operation.
+.br
+\fBF_loop\fP (with error bit) on loop error.
+.br
+\fBF_memory_not\fP (with error bit) if out of memory.
+.br
+\fBF_name\fP (with error bit) on path name error.
+.br
+\fBF_number_overflow\fP (with error bit) on overflow error.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+\fBF_prohibited\fP (with error bit) if file system does not allow for creating or linking.
+.br
+\fBF_read_only\fP (with error bit) if file system is read-only.
+.br
+\fBF_failure\fP (with error bit) for any other error.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

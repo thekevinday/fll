@@ -1,0 +1,44 @@
+.TH fll_print_except_in_dynamic "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+fll_print_except_in_dynamic
+.SH SYNOPSIS
+.nf
+.B #include <print.h>
+.sp
+\fBf_status_t fll_print_except_in_dynamic\fP(
+    \fBconst f_string_static_t \fP\fIbuffer\fP,
+    \fBconst f_array_lengths_t \fP\fIexcept_at\fP,
+    \fBconst f_string_ranges_t \fP\fIexcept_in\fP,
+    \fBFILE *const             \fP\fIoutput\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+This is a variation of f_print_except_in_dynamic() that uses locking.
+.PP
+Errors (with error bit) from: f_print_except_in_dynamic().
+.SH PARAMETERS
+.TP
+.B buffer
+The string to output.
+
+.TP
+.B except_at
+An array of locations within the given string to not print. The array of locations is required/assumed to be in linear order.
+
+.TP
+.B except_in
+An array of ranges within the string to not print. The array of ranges is required/assumed to be in linear order.
+
+.TP
+.B output
+The file stream to output to, including standard streams such as stdout and stderr.
+
+.SH RETURN VALUE
+.PP
+Success from: f_print_except_in_dynamic().
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

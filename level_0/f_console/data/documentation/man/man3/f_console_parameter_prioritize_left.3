@@ -1,0 +1,47 @@
+.TH f_console_parameter_prioritize_left "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_console_parameter_prioritize_left
+.SH SYNOPSIS
+.nf
+.B #include <console.h>
+.sp
+\fBf_status_t f_console_parameter_prioritize_left\fP(
+    \fBconst f_console_parameters_t    \fP\fIparameters\fP,
+    \fBconst f_console_parameter_ids_t \fP\fIchoices\fP,
+    \fBf_console_parameter_id_t *const \fP\fIdecision\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Given a set of parameter choices, determine which one has the highest priority.
+.PP
+The priority is determined by viewing the parameters from left to right. The left-most parameter defined in the set has the priority over others.
+.PP
+For example, the color context modes override each other, so only one gets priority. If given, say "+l ++no_color +d", the "+d" would be the left-most parameter "+l" and "++no_color". The decision would be "+d".
+.PP
+This also applies to short parameters combined into one, such as "+lnd", the "d" would again be the decision.
+.SH PARAMETERS
+.TP
+.B parameters
+The parameters to process.
+
+.TP
+.B choices
+An array of numeric ids, each representing a parameter within the parameters variable. The order does not matter.
+
+.TP
+.B decision
+The resulting decision. If none of the parameters are found, then this will not be updated (therefore it is safe to have it pre-initialized to the default).
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_data_not\fP if no parameters were found.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

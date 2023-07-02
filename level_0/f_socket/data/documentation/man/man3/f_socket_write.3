@@ -1,0 +1,84 @@
+.TH f_socket_write "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_socket_write
+.SH SYNOPSIS
+.nf
+.B #include <socket.h>
+.sp
+\fBf_status_t f_socket_write\fP(
+    \fBf_socket_t *const \fP\fIsocket\fP,
+    \fBconst int         \fP\fIflags\fP,
+    \fBvoid *const       \fP\fIbuffer\fP,
+    \fBsize_t *const     \fP\fIlength\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Send to a socket.
+.SH PARAMETERS
+.TP
+.B socket
+The socket structure. The socket.id must represent a valid socket file descriptor. The socket.size_write is used to represent the buffer size in buffer and must not be larger than the actual size of the buffer.
+
+.TP
+.B flags
+Read flags.
+
+.TP
+.B buffer
+The buffer to populate.
+
+.TP
+.B length
+(optional) The length of the buffer. This gets replaced with the value of a positive ssize_t representing the length send. Data may be lost if the amount of data send is larger than given buffer length. Set to NULL to not use.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_access_denied\fP (with error bit) on access denied.
+.br
+\fBF_address_not\fP (with error bit) if no address is provided and the connection is not "connection-mode".
+.br
+\fBF_buffer_not\fP (with error bit) if unable to send message because output buffer is full.
+.br
+\fBF_complete_not\fP (with error bit) if an existing connection is not yet complete.
+.br
+\fBF_connect\fP (with error bit) if an address is provided and the connection is "connection-mode".
+.br
+\fBF_connect_not\fP (with error bit) if the socket is not connected.
+.br
+\fBF_connect_refuse\fP (with error bit) if connection is refused.
+.br
+\fBF_connect_reset\fP (with error bit) if connection is reset.
+.br
+\fBF_block\fP (with error bit) if socket is blocked.
+.br
+\fBF_buffer\fP (with error bit) if the buffer is invalid.
+.br
+\fBF_file_descriptor\fP (with error bit) if id is an invalid descriptor.
+.br
+\fBF_interrupt\fP (with error bit) if interrupt is received.
+.br
+\fBF_memory_not\fP (with error bit) if out of memory.
+.br
+\fBF_option_not\fP (with error bit) if a flag is not supported.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+\fBF_pipe\fP (with error bit) if the local end of a connection oriented socket is closed or SIGPIPE is received.
+.br
+\fBF_prohibited\fP (with error bit) if the insufficient privileges to perform send.
+.br
+\fBF_size\fP (with error bit) if size of message makes atomically sending message impossible on a socket type that requires this to be atomic.
+.br
+\fBF_socket_not\fP (with error bit) if the id is not a socket descriptor.
+.br
+\fBF_time_out\fP (with error bit) if a timeout occurred.
+.br
+\fBF_failure\fP (with error bit) for any other error.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

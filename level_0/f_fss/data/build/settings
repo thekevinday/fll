@@ -35,6 +35,8 @@ build_sources_library fss.c private-fss.c fss/common.c fss/named.c fss/nest.c fs
 
 build_sources_headers fss.h fss/comment.h fss/common.h fss/delimit.h fss/named.h fss/nest.h fss/quote.h fss/set.h
 
+build_sources_documentation man
+
 build_script yes
 build_shared yes
 build_static no

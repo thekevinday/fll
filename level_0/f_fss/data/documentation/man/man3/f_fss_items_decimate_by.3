@@ -1,0 +1,40 @@
+.TH f_fss_items_decimate_by "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_fss_items_decimate_by
+.SH SYNOPSIS
+.nf
+.B #include <nest.h>
+.sp
+\fBf_status_t f_fss_items_decimate_by\fP(
+    \fBconst f_array_length_t \fP\fIamount\fP,
+    \fBf_fss_items_t *const   \fP\fIitems\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Resize the nest array to a smaller size.
+.PP
+This will resize making the array smaller based on (size - given length). If the given length is too small, then the resize will fail. This will not shrink the size to less than 0.
+.SH PARAMETERS
+.TP
+.B amount
+A positive number representing how much to decimate the size by.
+
+.TP
+.B items
+The items array to resize.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_data_not\fP if amount is 0.
+.br
+\fBF_memory_not\fP (with error bit) on out of memory.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

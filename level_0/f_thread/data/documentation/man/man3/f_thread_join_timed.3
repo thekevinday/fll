@@ -1,0 +1,53 @@
+.TH f_thread_join_timed "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_thread_join_timed
+.SH SYNOPSIS
+.nf
+.B #include <thread.h>
+.sp
+\fBf_status_t f_thread_join_timed\fP(
+    \fBconst f_thread_id_t   \fP\fIid\fP,
+    \fBconst struct timespec \fP\fIwait\fP,
+    \fBvoid                **\fP\fIresult\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Try to join the given thread to the current thread, blocking until the timeout expires.
+.PP
+This is a semi-blocking operation. This blocks until timeout and then no longer block.
+.SH PARAMETERS
+.TP
+.B id
+The ID of the thread to wait for.
+
+.TP
+.B wait
+The amount of time to wait for. The wait time is relative to the clock, so consider calling clock_gettime() or gettimeofday() and then adding the amount of wait time.
+
+.TP
+.B result
+(optional) The data returned by the terminated thread (usually the exist status). If the terminated thread is cancelled, then this holds PTHREAD_CANCELED. Set to NULL to not use.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_busy\fP on success, but thread could not be joined because it has not yet exited.
+.br
+\fBF_time\fP on success, but thread could not be joined because it has not yet exited and the wait timeout was reached.
+.br
+\fBF_deadlock\fP (with error bit) if operation would cause a deadlock.
+.br
+\fBF_found_not\fP (with error bit) if no thread by the given ID was found.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+\fBF_supported_not\fP (with error bit) if the thread is not joinable or is already being joined by another thread.
+.br
+\fBF_failure\fP (with error bit) on any other error.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

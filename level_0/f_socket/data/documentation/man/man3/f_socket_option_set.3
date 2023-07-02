@@ -1,0 +1,59 @@
+.TH f_socket_option_set "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_socket_option_set
+.SH SYNOPSIS
+.nf
+.B #include <socket.h>
+.sp
+\fBf_status_t f_socket_option_set\fP(
+    \fBf_socket_t *const \fP\fIsocket\fP,
+    \fBconst int         \fP\fIlevel\fP,
+    \fBconst int         \fP\fIoption\fP,
+    \fBconst void *const \fP\fIvalue\fP,
+    \fBconst socklen_t   \fP\fIlength\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Set a socket option value.
+.SH PARAMETERS
+.TP
+.B socket
+The socket structure. The socket.id must represent a valid socket file descriptor.
+
+.TP
+.B level
+The level in which the socket option is located. This may be synonymous with "layer".
+
+.TP
+.B option
+The option code used to represent the option name.
+
+.TP
+.B value
+The value to assign.
+
+.TP
+.B length
+The length of the value (often derived from a sizeof() call).
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_buffer\fP (with error bit) if the given value is out of scope.
+.br
+\fBF_file_descriptor\fP (with error bit) if id is an invalid descriptor.
+.br
+\fBF_option_not\fP (with error bit) if the type is not valid for the given level.
+.br
+\fBF_socket_not\fP (with error bit) if the id is not a socket descriptor.
+.br
+\fBF_value\fP (with error bit) if either the value or the length is invalid.
+.br
+\fBF_failure\fP (with error bit) for any other error.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

@@ -1,0 +1,61 @@
+.TH fll_program_parameter_process "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+fll_program_parameter_process
+.SH SYNOPSIS
+.nf
+.B #include <program.h>
+.sp
+\fBf_status_t fll_program_parameter_process\fP(
+    \fBconst f_console_arguments_t     \fP\fIarguments\fP,
+    \fBf_console_parameters_t *const   \fP\fIparameters\fP,
+    \fBconst f_console_parameter_ids_t \fP\fIchoices\fP,
+    \fBconst bool                      \fP\fIright\fP,
+    \fBf_color_context_t *const        \fP\fIcontext\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Perform basic parameter loading, including initialization of color context.
+.SH PARAMETERS
+.TP
+.B arguments
+The parameters passed to the process.
+
+.TP
+.B parameters
+The console parameters to look for.
+
+.TP
+.B choices
+A set of the color options: no-color option, light-color option, dark-color option. This must have its used size set to 3 and the ids are expected to be in this order: no_color, light, and dark.
+
+.TP
+.B right
+Set to TRUE for right priortization and FALSE for left prioritization.
+
+.TP
+.B context
+The color context.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_data_not\fP if "values" parameters were expected but not found.
+.br
+\fBF_memory_not\fP (with error bit) on out of memory.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+Errors (with error bit) from: f_console_parameter_prioritize_left().
+.br
+Errors (with error bit) from: f_console_parameter_prioritize_right().
+.br
+Errors (with error bit) from: f_console_parameter_process().
+.br
+Errors (with error bit) from: f_color_load_context().
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

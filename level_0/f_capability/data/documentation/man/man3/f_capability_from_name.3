@@ -1,0 +1,40 @@
+.TH f_capability_from_name "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_capability_from_name
+.SH SYNOPSIS
+.nf
+.B #include <capability.h>
+.sp
+\fBf_status_t f_capability_from_name\fP(
+    \fBconst f_string_static_t     \fP\fIname\fP,
+    \fBf_capability_value_t *const \fP\fIcode\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Get the capability code from the capability name.
+.SH PARAMETERS
+.TP
+.B name
+The name of the capability (must be all lower case).
+
+.TP
+.B code
+(optional) The determined code. Set to NULL to not use.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_implemented_not\fP (with error bit) if this function is not available (due to not having libcap support compiled in).
+.br
+\fBF_memory_not\fP (with error bit) if a out of memory.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+\fBF_failure\fP (with error bit) on any other failure.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

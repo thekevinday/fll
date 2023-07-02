@@ -1,0 +1,40 @@
+.TH f_capability_copy "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_capability_copy
+.SH SYNOPSIS
+.nf
+.B #include <capability.h>
+.sp
+\fBf_status_t f_capability_copy\fP(
+    \fBconst f_capability_t  \fP\fIsource\fP,
+    \fBf_capability_t *const \fP\fIdestination\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Copy the capability structure.
+.SH PARAMETERS
+.TP
+.B source
+The capability to copy from.
+
+.TP
+.B destination
+The capability to copy to. This must be freed via f_capability_delete() when finished with.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_implemented_not\fP (with error bit) if this function is not available (due to not having libcap support compiled in).
+.br
+\fBF_memory_not\fP (with error bit) if a out of memory.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+\fBF_failure\fP (with error bit) on any other failure.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

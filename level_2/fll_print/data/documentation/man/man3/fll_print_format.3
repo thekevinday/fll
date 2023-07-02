@@ -1,0 +1,38 @@
+.TH fll_print_format "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+fll_print_format
+.SH SYNOPSIS
+.nf
+.B #include <print.h>
+.sp
+\fBf_status_t fll_print_format\fP(
+    \fBconst f_string_t \fP\fIstring\fP,
+    \fBFILE *const      \fP\fIoutput\fP,
+    \fB...              \fP\fI\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+This is a variation of fl_print_format() that uses locking.
+.PP
+Errors (with error bit) from: fl_print_format().
+.SH PARAMETERS
+.TP
+.B string
+The formatted string to process and output. This is a NULL terminated string.
+
+.TP
+.B output
+The file stream to output to, including standard streams such as stdout and stderr.
+
+.TP
+.B
+
+.SH RETURN VALUE
+.PP
+Success from: fl_print_format().
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

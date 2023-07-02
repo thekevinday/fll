@@ -1,0 +1,59 @@
+.TH fll_execute_into "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+fll_execute_into
+.SH SYNOPSIS
+.nf
+.B #include <execute.h>
+.sp
+\fBf_status_t fll_execute_into\fP(
+    \fBconst f_string_static_t      \fP\fIprogram\fP,
+    \fBconst f_string_statics_t     \fP\fIarguments\fP,
+    \fBconst uint8_t                \fP\fIoption\fP,
+    \fBconst f_string_maps_t *const \fP\fIenvironment\fP,
+    \fBint *const                   \fP\fIresult\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Execute a program given by program name found in the PATH environment (such as "bash") or program path (such as "/bin/bash").
+.PP
+The program will be executed directly and not via a child process.
+.PP
+Because this directly executes a program, it potentially may not return. If and when it does, the executed program is finished executing (be it failure or success). Often times scripts may return and binaries may not.
+.SH PARAMETERS
+.TP
+.B program
+The name or path of the program. Set to NULL, to designate that arguments[0] is the program name or path.
+
+.TP
+.B arguments
+An array of strings representing the arguments.
+
+.TP
+.B option
+A bitwise set of options, such as: FL_execute_parameter_option_exit_d and FL_execute_parameter_option_path_d. If FL_execute_parameter_option_exit_d: this will call exit() at the end of execution (be it success or failure). If FL_execute_parameter_option_path_d: use the whole program path (such as "/bin/bash" instead "bash" when populating argument[0]. If FL_execute_parameter_option_session_d: will start a new session, setting process group id.
+
+.TP
+.B environment
+(optional) An map of strings representing the environment variable names and their respective values. Completely clears the environment and then creates environment variables for each name and value pair in this map. Set to an empty map (set map used length to 0). Set to NULL to not make any changes to the environment. Be careful, when executing without the full path (such as "bash" rather than "/bin/bash") either set this to NULL or be sure to include the PATH in this map. Be careful, scripts might return and the environment will have changed when this is not NULL. Be careful, if this returns F_failure, the environment will have changed when this is not NULL.
+
+.TP
+.B result
+The code returned after finishing execution of program.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_failure\fP (with error bit) on execution failure.
+.br
+Errors (with error bit) from: f_environment_get().
+.br
+Errors (with error bit) from: f_string_dynamic_append().
+.br
+Errors (with error bit) from: fl_environment_path_explode().
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

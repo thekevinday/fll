@@ -1,0 +1,31 @@
+.TH f_capability_mode_get "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_capability_mode_get
+.SH SYNOPSIS
+.nf
+.B #include <capability.h>
+.sp
+\fBf_status_t f_capability_mode_get\fP(
+    \fBf_capability_mode_t *const \fP\fImode\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Get the mode for the current process.
+.SH PARAMETERS
+.TP
+.B mode
+The capability mode.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_implemented_not\fP (with error bit) if this function is not available (due to not having libcap support compiled in).
+.br
+\fBF_failure\fP (with error bit) on any other error.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

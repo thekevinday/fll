@@ -1,0 +1,39 @@
+.TH f_capability_user_set "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_capability_user_set
+.SH SYNOPSIS
+.nf
+.B #include <capability.h>
+.sp
+\fBf_status_t f_capability_user_set\fP(
+    \fBconst uid_t \fP\fIid_user\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Set the user ID.
+.PP
+This is the same as setuid(), except: 1) Helps ensure the correct effective capability is used to perform the operation. 2) Preserves availability of permitted capabilities after the user ID changes. 3) All "effective" capabilities are lowered after this call.
+.SH PARAMETERS
+.TP
+.B id_user
+The ID of the user.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_implemented_not\fP (with error bit) if this function is not available (due to not having libcap support compiled in).
+.br
+\fBF_memory_not\fP (with error bit) if a out of memory.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+\fBF_prohibited\fP (with error bit) if the file system does not permit this operation.
+.br
+\fBF_failure\fP (with error bit) on any other error.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

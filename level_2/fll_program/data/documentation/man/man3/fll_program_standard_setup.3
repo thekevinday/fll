@@ -1,0 +1,35 @@
+.TH fll_program_standard_setup "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+fll_program_standard_setup
+.SH SYNOPSIS
+.nf
+.B #include <program.h>
+.sp
+\fBf_status_t fll_program_standard_setup\fP(
+    \fBf_signal_t *const \fP\fIsignal\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+This provides a standard program setup operations used by FLL programs.
+.PP
+Handle signals so that program can cleanly exit, deallocating as appropriate.
+.SH PARAMETERS
+.TP
+.B signal
+The signal structure.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+Errors (with error bit) from: f_signal_mask().
+.br
+Errors (with error bit) from: f_signal_open().
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

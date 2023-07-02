@@ -1,0 +1,51 @@
+.TH fl_string_dynamic_partial_compare_trim "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+fl_string_dynamic_partial_compare_trim
+.SH SYNOPSIS
+.nf
+.B #include <string.h>
+.sp
+\fBf_status_t fl_string_dynamic_partial_compare_trim\fP(
+    \fBconst f_string_static_t \fP\fIstring1\fP,
+    \fBconst f_string_static_t \fP\fIstring2\fP,
+    \fBconst f_string_range_t  \fP\fIrange1\fP,
+    \fBconst f_string_range_t  \fP\fIrange2\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Compare two strings, similar to strncmp(), but restricted to the given ranges.
+.PP
+This does not stop on NULL. NULL characters are ignored. Ignores leading and trailing whitespace.
+.SH PARAMETERS
+.TP
+.B string1
+String to compare.
+
+.TP
+.B string2
+String to compare.
+
+.TP
+.B range1
+
+.TP
+.B range2
+A range within the string2 to restrict the comparison to.
+
+.SH RETURN VALUE
+.PP
+\fBF_equal_to\fP when both strings equal.
+.br
+\fBF_equal_to_not\fP when both strings do not equal.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+\fBF_parameter\fP (with error bit) from: f_utf_is_combining().
+.br
+\fBF_parameter\fP (with error bit) from: f_utf_is_whitespace().
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

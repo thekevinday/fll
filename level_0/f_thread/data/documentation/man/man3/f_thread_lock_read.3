@@ -1,0 +1,37 @@
+.TH f_thread_lock_read "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_thread_lock_read
+.SH SYNOPSIS
+.nf
+.B #include <thread.h>
+.sp
+\fBf_status_t f_thread_lock_read\fP(
+    \fBf_thread_lock_t *const \fP\fIlock\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Lock the read part of a read/write lock.
+.PP
+This is a blocking function.
+.SH PARAMETERS
+.TP
+.B lock
+The thread lock.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_deadlock\fP (with error bit) if operation would cause a deadlock.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+\fBF_resource_not\fP (with error bit) if max number of read locks allowed is reached.
+.br
+\fBF_failure\fP (with error bit) on any other error.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

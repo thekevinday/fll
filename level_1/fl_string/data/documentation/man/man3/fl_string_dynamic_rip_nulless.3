@@ -1,0 +1,42 @@
+.TH fl_string_dynamic_rip_nulless "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+fl_string_dynamic_rip_nulless
+.SH SYNOPSIS
+.nf
+.B #include <string.h>
+.sp
+\fBf_status_t fl_string_dynamic_rip_nulless\fP(
+    \fBconst f_string_static_t   \fP\fIsource\fP,
+    \fBf_string_dynamic_t *const \fP\fIdestination\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Allocate a new string from the provided range in the buffer.
+.PP
+Ignores leading and trailing whitespace. Ignores leading and trailing NULL characters. As a result, resulting size may be smaller than requested range.
+.PP
+Skips over NULL characters from source when appending.
+.SH PARAMETERS
+.TP
+.B source
+The string to rip from.
+
+.TP
+.B destination
+The new string, which will be allocated or reallocated as necessary.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_data_not_eos\fP if source length is 0.
+.br
+\fBF_memory_not\fP (with error bit) on out of memory.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

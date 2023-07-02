@@ -1,0 +1,24 @@
+.TH f_thread_cancel_test "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_thread_cancel_test
+.SH SYNOPSIS
+.nf
+.B #include <thread.h>
+.sp
+\fBf_status_t f_thread_cancel_test\fP(
+    \fBvoid     \fP\fI\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Force any pending thread cancellation to be processed.
+.PP
+If there is no pending thread cancel, nothing happens. If there is a pending thread cancel, the thread cancels and this function never returns.
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

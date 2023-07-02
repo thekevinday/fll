@@ -1,0 +1,49 @@
+.TH fl_utf_string_rip_nulless "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+fl_utf_string_rip_nulless
+.SH SYNOPSIS
+.nf
+.B #include <utf.h>
+.sp
+\fBf_status_t fl_utf_string_rip_nulless\fP(
+    \fBconst f_utf_string_t          \fP\fIsource\fP,
+    \fBconst f_array_length_t        \fP\fIlength\fP,
+    \fBf_utf_string_dynamic_t *const \fP\fIdestination\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Allocate a new UTF-8 string from the provided range in the string.
+.PP
+Ignores leading and trailing whitespace. As a result, resulting size may be smaller than requested length.
+.PP
+Skips over NULL characters from source when ripping.
+.SH PARAMETERS
+.TP
+.B source
+The string to rip from.
+
+.TP
+.B length
+The length of source to append.
+
+.TP
+.B destination
+The new string, which will be allocated or reallocated as necessary.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_data_not\fP if source length is 0.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+\fBF_utf_fragment\fP (with error bit) if character is a UTF-8 fragment.
+.br
+Errors (with error bit) from: f_utf_character_is_whitespace().
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

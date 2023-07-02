@@ -1,0 +1,31 @@
+.TH f_file_umask_get "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_file_umask_get
+.SH SYNOPSIS
+.nf
+.B #include <file.h>
+.sp
+\fBf_status_t f_file_umask_get\fP(
+    \fBmode_t *const \fP\fImask\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Get the umask.
+.PP
+This sets the umask after getting the umask. This is necessary because the umask() is poorly designed such that it requires changing the umask to get the current umask. The umask() function gets called twice because of this.
+.SH PARAMETERS
+.TP
+.B mask
+The umask value. (The name "mask" is used avoid a naming conflict with the umask() function.)
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

@@ -59,6 +59,8 @@ build_sources_headers string.h
 build_sources_headers utf.h
 build_sources_headers utf_file.h
 
+build_sources_documentation man
+
 build_script yes
 build_shared yes
 build_static no

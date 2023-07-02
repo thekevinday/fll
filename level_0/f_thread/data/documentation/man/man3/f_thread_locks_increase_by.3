@@ -1,0 +1,42 @@
+.TH f_thread_locks_increase_by "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_thread_locks_increase_by
+.SH SYNOPSIS
+.nf
+.B #include <lock.h>
+.sp
+\fBf_status_t f_thread_locks_increase_by\fP(
+    \fBconst f_array_length_t  \fP\fIamount\fP,
+    \fBf_thread_locks_t *const \fP\fIlocks\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Resize the read/write locks array to a larger size.
+.PP
+This will resize making the array larger based on the given length. If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d). If already set to the maximum buffer size, then the resize will fail.
+.SH PARAMETERS
+.TP
+.B amount
+A positive number representing how much to increase the size by.
+
+.TP
+.B locks
+The string locks array to resize.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_data_not\fP on success, but there is no reason to increase size (used + amount <= size).
+.br
+\fBF_array_too_large\fP (with error bit) if the new array length is too large.
+.br
+\fBF_memory_not\fP (with error bit) on out of memory.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

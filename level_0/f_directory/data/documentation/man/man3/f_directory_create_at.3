@@ -1,0 +1,69 @@
+.TH f_directory_create_at "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_directory_create_at
+.SH SYNOPSIS
+.nf
+.B #include <directory.h>
+.sp
+\fBf_status_t f_directory_create_at\fP(
+    \fBconst int               \fP\fIat_id\fP,
+    \fBconst f_string_static_t \fP\fIpath\fP,
+    \fBconst mode_t            \fP\fImode\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Create a directory at the given path within the directories specified by the file descriptor.
+.SH PARAMETERS
+.TP
+.B at_id
+The parent directory, as an open directory file descriptor, in which path is relative to.
+
+.TP
+.B path
+The file path to the directory.
+
+.TP
+.B mode
+The directory mode to use when creating.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_data_not\fP if path.used is 0.
+.br
+\fBF_access_denied\fP (with error bit) on access denied.
+.br
+\fBF_directory_not\fP (with error bit) if a supposed directory in path is not actually a directory.
+.br
+\fBF_directory_descriptor\fP (with error bit) for bad directory descriptor for at_id.
+.br
+\fBF_directory_link_max\fP (with error bit) max links limit reached or exceeded.
+.br
+\fBF_file_found\fP (with error bit) of a directory aleady exists at the path.
+.br
+\fBF_file_found_not\fP (with error bit) if a file within the path is not found (such as a broken symbolic link).
+.br
+\fBF_filesystem_quota_block\fP (with error bit) if file system's disk blocks or inodes are exhausted.
+.br
+\fBF_loop\fP (with error bit) on loop error.
+.br
+\fBF_memory_not\fP (with error bit) if out of memory.
+.br
+\fBF_name\fP (with error bit) on path name error.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+\fBF_prohibited\fP (with error bit) if file system does not allow for removing.
+.br
+\fBF_read_only\fP (with error bit) if file is read-only.
+.br
+\fBF_space_not\fP (with error bit) if file system is out of space (or file system quota is reached).
+.br
+\fBF_failure\fP (with error bit) for any other error.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

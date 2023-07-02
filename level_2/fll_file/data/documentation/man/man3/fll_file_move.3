@@ -1,0 +1,87 @@
+.TH fll_file_move "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+fll_file_move
+.SH SYNOPSIS
+.nf
+.B #include <file.h>
+.sp
+\fBf_status_t fll_file_move\fP(
+    \fBconst f_string_static_t      \fP\fIsource\fP,
+    \fBconst f_string_static_t      \fP\fIdestination\fP,
+    \fBconst fl_directory_recurse_t \fP\fIrecurse\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Move a file.
+.PP
+The paths must not contain NULL except for the terminating NULL. The paths must be NULL terminated.
+.PP
+This attempts to rename a file but if the file is on another file system then it tries to clone the file or directory. If the file or directory is cloned, then the original is deleted after a successful copy.
+.PP
+When this calls the additional functions, if the clone succeeds but the remove fails the source may exist. Therefore, if there is an error during remove, then the file should be checked for existence and possibly be manually removed.
+.SH PARAMETERS
+.TP
+.B source
+The path to the file to copy from.
+
+.TP
+.B destination
+The path to copy to.
+
+.TP
+.B recurse
+The directory recurse data.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_access_denied\fP (with error bit) on access denied.
+.br
+\fBF_buffer\fP (with error bit) if the buffer is invalid.
+.br
+\fBF_busy\fP (with error bit) if file system is too busy to perform write.
+.br
+\fBF_directory\fP (with error bit) if a supposed directory in path is not actually a directory.
+.br
+\fBF_directory_empty_not\fP (with error bit) if the destination is a non-empty directory.
+.br
+\fBF_file_found_not\fP (with error bit) if file at path was not found.
+.br
+\fBF_file_type_directory\fP (with error bit) if destination is a directory but source is not.
+.br
+\fBF_filesystem_quota_block\fP (with error bit) if file system's disk blocks or inodes are exhausted.
+.br
+\fBF_link\fP (with error bit) if source or destination has the maxiumum associated links.
+.br
+\fBF_loop\fP (with error bit) on loop error.
+.br
+\fBF_memory_not\fP (with error bit) if out of memory.
+.br
+\fBF_name\fP (with error bit) on path name error.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+\fBF_prohibited\fP (with error bit) if file system does not allow for making changes.
+.br
+\fBF_read_only\fP (with error bit) if file is read-only.
+.br
+\fBF_space_not\fP (with error bit) if file system is out of space (or file system quota is reached).
+.br
+\fBF_failure\fP (with error bit) for any other error, failures might be populated with individual status codes.
+.br
+Errors (with error bit) from: f_directory_remove_custom().
+.br
+Errors (with error bit) from: f_file_is().
+.br
+Errors (with error bit) from: f_file_remove().
+.br
+Errors (with error bit) from: f_file_rename().
+.br
+Errors (with error bit) from: fl_directory_clone().
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

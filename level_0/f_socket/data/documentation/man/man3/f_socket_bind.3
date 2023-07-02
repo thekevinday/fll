@@ -1,0 +1,53 @@
+.TH f_socket_bind "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_socket_bind
+.SH SYNOPSIS
+.nf
+.B #include <socket.h>
+.sp
+\fBf_status_t f_socket_bind\fP(
+    \fBf_socket_t *const \fP\fIsocket\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Bind a socket to a name.
+.PP
+This does not initialize or otherwise memset() the address.
+.SH PARAMETERS
+.TP
+.B socket
+The socket structure. The socket.address may point to any valid structure, like "struct sockaddr", "struct sockaddr_un", or "struct sockaddr_in". The caller must appropriately initialize and configure the socket.address. The socket.length must represent the full size of the address structure. The socket.id must refer to a valid socket file descriptor.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_address\fP (with error bit) if address is already in use (therefore unavailable).
+.br
+\fBF_available_not_address\fP (with error bit) if address is unavailable (is non-existent or not local).
+.br
+\fBF_buffer\fP (with error bit) if the buffer is invalid.
+.br
+\fBF_busy_address\fP (with error bit) if address is already in use (therefore unavailable).
+.br
+\fBF_directory_found_not\fP (with error bit) if directory was not found.
+.br
+\fBF_file_found_not\fP (with error bit) if file not found.
+.br
+\fBF_memory_not\fP (with error bit) if out of memory.
+.br
+\fBF_name\fP (with error bit) on path name error.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+\fBF_socket_not\fP (with error bit) if the id is not a socket descriptor.
+.br
+\fBF_string_too_large\fP (with error bit) if string is too large to store in the buffer.
+.br
+\fBF_failure\fP (with error bit) for any other error.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

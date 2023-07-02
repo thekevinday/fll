@@ -1,0 +1,42 @@
+.TH f_uint64s_increase_by "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_uint64s_increase_by
+.SH SYNOPSIS
+.nf
+.B #include <uint64.h>
+.sp
+\fBf_status_t f_uint64s_increase_by\fP(
+    \fBconst f_array_length_t \fP\fIamount\fP,
+    \fBf_uint64s_t           *\fP\fIuint64s\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Resize the string uint64s array to a larger size.
+.PP
+This will resize making the string larger based on the given length. If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d). If already set to the maximum buffer size, then the resize will fail.
+.SH PARAMETERS
+.TP
+.B amount
+A positive number representing how much to increase the size by.
+
+.TP
+.B uint64s
+The string uint64s array to resize.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_data_not\fP on success, but there is no reason to increase size (used + amount <= size).
+.br
+\fBF_array_too_large\fP (with error bit) if the new array length is too large.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+Errors (with error bit) from: f_memory_resize().
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

@@ -1378,3 +1378,8 @@ U+3030
 U+303D
 U+3297
 U+3299
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

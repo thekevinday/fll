@@ -36,6 +36,8 @@ build_sources_library color.c private-color.c color/common.c
 
 build_sources_headers color.h color/common.h
 
+build_sources_documentation man
+
 build_script yes
 build_shared yes
 build_static no

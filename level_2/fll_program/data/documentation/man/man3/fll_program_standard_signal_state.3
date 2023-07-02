@@ -1,0 +1,40 @@
+.TH fll_program_standard_signal_state "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+fll_program_standard_signal_state
+.SH SYNOPSIS
+.nf
+.B #include <program.h>
+.sp
+\fBf_status_t fll_program_standard_signal_state\fP(
+    \fBvoid *const \fP\fIstate\fP,
+    \fBvoid *const \fP\fIinternal\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Standardized callback for checking for interrupts via the f_state_t interrupt callback.
+.PP
+F_signal_termination
+.PP
+These signals may not be checked if they are not also blocked via the fll_program_data_t.signals variable.
+.PP
+When one of the above signals is both blocked and received, then this calls fll_program_standard_signal_received().
+.SH PARAMETERS
+.TP
+.B state
+The state data. This must be of type (f_state_t *).
+
+.TP
+.B internal
+Not used.
+
+.SH RETURN VALUE
+.PP
+\fBF_interrupt_not\fP if not interrupted.
+.br
+\fBF_interrupt\fP (with error bit) if interrupted.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

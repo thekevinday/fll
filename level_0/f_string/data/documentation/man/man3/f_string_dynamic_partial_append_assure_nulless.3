@@ -1,0 +1,53 @@
+.TH f_string_dynamic_partial_append_assure_nulless "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_string_dynamic_partial_append_assure_nulless
+.SH SYNOPSIS
+.nf
+.B #include <dynamic.h>
+.sp
+\fBf_status_t f_string_dynamic_partial_append_assure_nulless\fP(
+    \fBconst f_string_static_t   \fP\fIsource\fP,
+    \fBconst f_string_range_t    \fP\fIrange\fP,
+    \fBf_string_dynamic_t *const \fP\fIdestination\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Append the source string onto the destination only if the string is not already at the end and restricted to the given range.
+.PP
+This ignores NULL characters when comparing both the source and the destination.
+.PP
+Skips over NULL characters from source when appending.
+.SH PARAMETERS
+.TP
+.B source
+The source string to append.
+
+.TP
+.B range
+A range within the source to restrict the copy from.
+
+.TP
+.B destination
+The destination string the source is appended onto.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_data_not\fP if source length is 0.
+.br
+\fBF_data_not_eos\fP if range.start >= source.used.
+.br
+\fBF_data_not_stop\fP if range.start > range.stop.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+\fBF_string_too_large\fP (with error bit) if the combined string is too large.
+.br
+Errors (with error bit) from: f_memory_resize().
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

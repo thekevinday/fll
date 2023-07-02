@@ -1,0 +1,49 @@
+.TH fll_print_trim_except_safely "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+fll_print_trim_except_safely
+.SH SYNOPSIS
+.nf
+.B #include <print.h>
+.sp
+\fBf_status_t fll_print_trim_except_safely\fP(
+    \fBconst f_string_t        \fP\fIstring\fP,
+    \fBconst f_array_length_t  \fP\fIoffset\fP,
+    \fBconst f_array_length_t  \fP\fIlength\fP,
+    \fBconst f_array_lengths_t \fP\fIexcept\fP,
+    \fBFILE *const             \fP\fIoutput\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+This is a variation of fl_print_trim_except_safely() that uses locking.
+.PP
+Errors (with error bit) from: fl_print_trim_except_safely().
+.SH PARAMETERS
+.TP
+.B string
+The string to output.
+
+.TP
+.B offset
+The inclusive start point to start printing.
+
+.TP
+.B length
+The total number of characters to print.
+
+.TP
+.B except
+An array of locations within the given string to not print. The array of locations is required/assumed to be in linear order.
+
+.TP
+.B output
+The file stream to output to, including standard streams such as stdout and stderr.
+
+.SH RETURN VALUE
+.PP
+Success from: fl_print_trim_except_safely().
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

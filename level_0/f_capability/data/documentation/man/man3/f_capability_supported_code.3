@@ -1,0 +1,27 @@
+.TH f_capability_supported_code "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_capability_supported_code
+.SH SYNOPSIS
+.nf
+.B #include <capability.h>
+.sp
+\fBbool f_capability_supported_code\fP(
+    \fBf_capability_value_t \fP\fIcode\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Check if the capabilitiy code is supported, using special libcap function/macro.
+.SH PARAMETERS
+.TP
+.B code
+The capability code.
+
+.SH RETURN VALUE
+.PP
+TRUE if the code is supported. FALSE otherwise.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

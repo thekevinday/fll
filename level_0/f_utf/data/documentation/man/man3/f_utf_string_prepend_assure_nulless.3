@@ -1,0 +1,49 @@
+.TH f_utf_string_prepend_assure_nulless "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_utf_string_prepend_assure_nulless
+.SH SYNOPSIS
+.nf
+.B #include <string.h>
+.sp
+\fBf_status_t f_utf_string_prepend_assure_nulless\fP(
+    \fBconst f_utf_string_t          \fP\fIsource\fP,
+    \fBconst f_array_length_t        \fP\fIlength\fP,
+    \fBf_utf_string_dynamic_t *const \fP\fIdestination\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Prepend the source string onto the destination only if the string is not already at the beginning.
+.PP
+Prepend operations require memory move operations and are therefore likely more expensive than append operations.
+.PP
+This ignores NULL characters when comparing both the source and the destination. Skips over NULL characters from source when prepending.
+.SH PARAMETERS
+.TP
+.B source
+The source string to prepend.
+
+.TP
+.B length
+The length of source to append.
+
+.TP
+.B destination
+The destination string the source is prepended onto.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_data_not\fP if source length is 0.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+\fBF_string_too_large\fP (with error bit) if the combined string is too large.
+.br
+Errors (with error bit) from: f_memory_resize().
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

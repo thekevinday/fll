@@ -1,0 +1,38 @@
+.TH f_print_safely_get "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_print_safely_get
+.SH SYNOPSIS
+.nf
+.B #include <print.h>
+.sp
+\fBconst f_string_static_t f_print_safely_get\fP(
+    \fBconst f_string_t       \fP\fIcharacter\fP,
+    \fBconst f_array_length_t \fP\fIwidth_max\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Get a safe representation of the character if the character is considered unsafe.
+.PP
+Control characters are converted to the Unicode control character symbols, including NULL. UTF-8 sequences with a width of 1 are converted to the unknown character '�'. For all other UTF-8 sequences, an empty string is returned.
+.PP
+The returned string will either be an empty string (for characters that are already safe) or a string representing the replacement. This can result in a 3-byte character being returned as a string of 3 1-bytes.
+.PP
+This should only be called for the first 1-byte character of a multibyte character.
+.SH PARAMETERS
+.TP
+.B character
+The character to verify as safe or not and then print.
+
+.TP
+.B width_max
+This is set to the max number of bytes available. This is then updated to represent the max bytes used if enough space is available.
+
+.SH RETURN VALUE
+.PP
+A string with used length of 0 (an empty string) is returned if the character is already safe or is a UTF-8 character whose width is greater than 1. A string with a non-zero used length is returned if the character needs safe replacement. A string with a non-zero used length is returned are NULL terminated (after the used length).
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

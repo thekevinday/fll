@@ -1,0 +1,63 @@
+.TH fll_fss_basic_write "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+fll_fss_basic_write
+.SH SYNOPSIS
+.nf
+.B #include <basic.h>
+.sp
+\fBf_status_t fll_fss_basic_write\fP(
+    \fBconst f_string_static_t   \fP\fIobject\fP,
+    \fBconst f_string_static_t   \fP\fIcontent\fP,
+    \fBconst f_fss_quote_t       \fP\fIquote\fP,
+    \fBf_state_t                 \fP\fIstate\fP,
+    \fBf_string_dynamic_t *const \fP\fIdestination\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Write a single object string and content string to a buffer, using fss-0000 format.
+.SH PARAMETERS
+.TP
+.B object
+A string representing the object.
+
+.TP
+.B content
+A string representing the content.
+
+.TP
+.B quote
+If 0, then double quotes are auto-inserted, when required. Otherwise, this is the type of quote to wrap the object in when writing.
+
+.TP
+.B state
+A state for providing flags and handling interrupts during long running operations. There is no state.handle(). There is no "callbacks" structure. There is no data structure passed to these functions.
+
+.TP
+.B destination
+The buffer where the content is written to.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_none_eos\fP on success after reaching the end of the buffer.
+.br
+\fBF_none_stop\fP on success after reaching stopping point.
+.br
+\fBF_data_not_eos\fP no data to write due start location being greater than or equal to buffer size.
+.br
+\fBF_data_not_stop\fP no data to write due start location being greater than stop location.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+Errors (with error bit) from: f_string_dynamic_increase().
+.br
+Errors (with error bit) from: fl_fss_basic_content_write().
+.br
+Errors (with error bit) from: fl_fss_basic_object_write().
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

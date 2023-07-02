@@ -1,0 +1,42 @@
+.TH f_thread_conditions_increase "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_thread_conditions_increase
+.SH SYNOPSIS
+.nf
+.B #include <condition.h>
+.sp
+\fBf_status_t f_thread_conditions_increase\fP(
+    \fBconst f_array_length_t       \fP\fIstep\fP,
+    \fBf_thread_conditions_t *const \fP\fIconditions\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Increase the size of the thread conditions array, but only if necessary.
+.PP
+If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d). If already set to the maximum buffer size, then the resize will fail.
+.SH PARAMETERS
+.TP
+.B step
+The allocation step to use. Must be greater than 0.
+
+.TP
+.B conditions
+The string conditions array to resize.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_data_not\fP on success, but there is no reason to increase size (used + 1 <= size).
+.br
+\fBF_array_too_large\fP (with error bit) if the new array length is too large.
+.br
+\fBF_memory_not\fP (with error bit) on out of memory.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

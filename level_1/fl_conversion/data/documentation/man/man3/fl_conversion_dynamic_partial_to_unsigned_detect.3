@@ -1,0 +1,66 @@
+.TH fl_conversion_dynamic_partial_to_unsigned_detect "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+fl_conversion_dynamic_partial_to_unsigned_detect
+.SH SYNOPSIS
+.nf
+.B #include <conversion.h>
+.sp
+\fBf_status_t fl_conversion_dynamic_partial_to_unsigned_detect\fP(
+    \fBconst fl_conversion_data_t \fP\fIdata\fP,
+    \fBconst f_string_static_t    \fP\fIbuffer\fP,
+    \fBconst f_string_range_t     \fP\fIrange\fP,
+    \fBf_number_unsigned_t *const \fP\fInumber\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Convert a series of positive number characters into an f_number_unsigned_t.
+.PP
+decimal is used for all other cases.
+.PP
+Leading 0's and whitespace are ignored. Whitespace after the first digit is considered invalid.
+.PP
+This function is similar to strtoull(), but the behavior of error handling and special bases are different. In particular, octals are specified here with '0b' prefix or '0B' prefix instead of the ridiculous '0' prefix. Negative values are reported as such instead of being converted into the unsigned equivalent.
+.SH PARAMETERS
+.TP
+.B data
+Conversion data for specifying things such as treating this as a negative number. This auto-detects the base and negative, ignoring the base number and negative flag.
+
+.TP
+.B buffer
+The string to convert.
+
+.TP
+.B range
+The start/stop range to convert.
+
+.TP
+.B number
+This will store the value of the converted string. This value is only changed on success.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_data_not\fP if string starts with a null (length is 0).
+.br
+\fBF_base_not\fP (with error bit) if no supported or valid base unit is provided.
+.br
+\fBF_complete_not_utf\fP (with error bit) if an incomplete UTF-8 fragment is found.
+.br
+\fBF_number\fP (with error bit) if parameter is not a number.
+.br
+\fBF_number_decimal\fP (with error bit) if number has a decimal digit.
+.br
+\fBF_number_negative\fP (with error bit) on negative value.
+.br
+\fBF_number_positive\fP (with error bit) on positive value (has a +, such as '+1', when only '1' is valid here).
+.br
+\fBF_number_overflow\fP (with error bit) on integer overflow.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

@@ -1,0 +1,38 @@
+.TH f_status_string_to "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_status_string_to
+.SH SYNOPSIS
+.nf
+.B #include <status_string.h>
+.sp
+\fBf_status_t f_status_string_to\fP(
+    \fBconst f_status_t         \fP\fIcode\fP,
+    \fBf_string_static_t *const \fP\fIname\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Convert status codes to their string representation.
+.PP
+The error, warning, and signal bits are ignored.
+.SH PARAMETERS
+.TP
+.B code
+The status number to process.
+
+.TP
+.B name
+The processed code name.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_data\fP (with error bit) if there status is unknown.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

@@ -1,0 +1,36 @@
+.TH f_utf_string_dynamicss_adjust "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_utf_string_dynamicss_adjust
+.SH SYNOPSIS
+.nf
+.B #include <dynamic.h>
+.sp
+\fBf_status_t f_utf_string_dynamicss_adjust\fP(
+    \fBconst f_array_length_t          \fP\fIlength\fP,
+    \fBf_utf_string_dynamicss_t *const \fP\fIdynamicss\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Resize the dynamics string array.
+.SH PARAMETERS
+.TP
+.B length
+The new size to use.
+
+.TP
+.B dynamicss
+The array to resize.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+Errors (with error bit) from: f_memory_adjust().
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

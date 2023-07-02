@@ -1,0 +1,44 @@
+.TH f_thread_condition_wait "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_thread_condition_wait
+.SH SYNOPSIS
+.nf
+.B #include <thread.h>
+.sp
+\fBf_status_t f_thread_condition_wait\fP(
+    \fBf_thread_condition_t *const \fP\fIcondition\fP,
+    \fBf_thread_mutex_t *const     \fP\fImutex\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Wait until condition is triggered.
+.PP
+This is a blocking operation.
+.SH PARAMETERS
+.TP
+.B condition
+The condition to wait on.
+
+.TP
+.B mutex
+The mutex to use for waiting on condition.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_dead\fP (with error bit) if the owning thread terminated while holding the mutex lock (thread is dead).
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+\fBF_prohibited\fP (with error bit) if not allowed to perform the operation (possibly because mutex is not owned by current thread).
+.br
+\fBF_recover_not\fP (with error bit) if the state protected by the mutex is not recoverable.
+.br
+\fBF_failure\fP (with error bit) on any other error.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

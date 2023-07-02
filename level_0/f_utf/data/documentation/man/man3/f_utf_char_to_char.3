@@ -1,0 +1,47 @@
+.TH f_utf_char_to_char "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_utf_char_to_char
+.SH SYNOPSIS
+.nf
+.B #include <convert.h>
+.sp
+\fBf_status_t f_utf_char_to_char\fP(
+    \fBconst f_utf_char_t \fP\fIutf_character\fP,
+    \fBf_string_t        *\fP\fIcharacter\fP,
+    \fBf_array_length_t  *\fP\fIwidth_max\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Convert a specialized f_utf_char_t type to a uint8_t, stored as a string (character buffer).
+.PP
+This will also convert ASCII characters stored in the utf_character array. This will not resize character.
+.SH PARAMETERS
+.TP
+.B utf_character
+The UTF-8 character to convert from.
+
+.TP
+.B character
+A uint8_t representation of the UTF-8 character, stored as a string of width bytes. If width_max is 0, then this should be set to 0.
+
+.TP
+.B width_max
+This is set to the max number of bytes available. This is then updated to represent the max bytes used if enough space is available.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP if conversion was successful.
+.br
+\fBF_failure\fP (with error bit) if width is not long enough to convert.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+\fBF_utf_fragment\fP (with error bit) if character is a UTF-8 fragment.
+.br
+\fBF_utf_not\fP (with error bit) if unicode is an invalid Unicode character.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

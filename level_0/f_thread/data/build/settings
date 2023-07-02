@@ -38,6 +38,8 @@ build_sources_library thread.c private-thread.c thread/attribute.c thread/barrie
 
 build_sources_headers thread.h thread/attribute.h thread/barrier.h thread/barrier_attribute.h thread/condition.h thread/condition_attribute.h thread/id.h thread/key.h thread/lock.h thread/lock_attribute.h thread/mutex.h thread/mutex_attribute.h thread/once.h thread/semaphore.h thread/set.h thread/spin.h
 
+build_sources_documentation man
+
 build_script yes
 build_shared yes
 build_static no

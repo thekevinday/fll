@@ -1,0 +1,33 @@
+.TH f_signal_suspend "3" "July 2023" "FLL - Featureless Linux Library 0.6.6" "Library Functions"
+.SH "NAME"
+f_signal_suspend
+.SH SYNOPSIS
+.nf
+.B #include <signal.h>
+.sp
+\fBf_status_t f_signal_suspend\fP(
+    \fBconst sigset_t *const \fP\fImask\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Suspend the current process until one of the provided signals is received.
+.SH PARAMETERS
+.TP
+.B mask
+The signal mask.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success but no signal found.
+.br
+\fBF_buffer\fP (with error bit) if the mask is pointing to invalid memory.
+.br
+\fBF_interrupt\fP (with error bit) when program received an interrupt signal, halting operation.
+.br
+\fBF_failure\fP (with error bit) for any other error.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.
