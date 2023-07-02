@@ -940,7 +940,7 @@
 #define _di_f_string_dynamic_append_
 #define _di_f_string_dynamic_append_assure_
 #define _di_f_string_dynamic_append_assure_nulless_
-#define _di_f_string_dynamic_append_nulless_
+//#define _di_f_string_dynamic_append_nulless_
 #define _di_f_string_dynamic_decimate_by_
 #define _di_f_string_dynamic_decrease_by_
 #define _di_f_string_dynamic_increase_
