@@ -35,7 +35,7 @@ extern "C" {
  * @see f_int8s_decimate_by()
  */
 #if !defined(_di_f_int8s_adjust_) || !defined(_di_f_int8s_decimate_by_)
-  extern f_status_t private_f_int8s_adjust(const f_number_unsigned_t length, f_int8s_t *int8s) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_int8s_adjust(const f_number_unsigned_t length, f_int8s_t * const int8s) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_int8s_adjust_) || !defined(_di_f_int8s_decimate_by_)
 
 /**
@@ -58,7 +58,7 @@ extern "C" {
  * @see f_int8ss_append()
  */
 #if !defined(_di_f_int8s_append_) || !defined(_di_f_int8ss_append_)
-  extern f_status_t private_f_int8s_append(const int8_t source, f_int8s_t *destination) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_int8s_append(const int8_t source, f_int8s_t * const destination) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_int8s_append_) || !defined(_di_f_int8ss_append_)
 
 /**
@@ -82,7 +82,7 @@ extern "C" {
  * @see f_int8ss_append_all()
  */
 #if !defined(_di_f_int8s_append_) || !defined(_di_f_int8s_append_all_) || !defined(_di_f_int8ss_append_all_)
-  extern f_status_t private_f_int8s_append_all(const f_int8s_t source, f_int8s_t *destination) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_int8s_append_all(const f_int8s_t source, f_int8s_t * const destination) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_int8s_append_) || !defined(_di_f_int8s_append_all_) || !defined(_di_f_int8ss_append_all_)
 
 /**
@@ -112,7 +112,7 @@ extern "C" {
  *
  */
 #if !defined(_di_f_int8s_append_) || !defined(_di_f_int8s_append_all_) || !defined(_di_f_int8s_decrease_by_) || !defined(_di_f_int8s_increase_) || !defined(_di_f_int8s_increase_by_) || !defined(_di_f_int8s_resize_) || !defined(_di_f_int8ss_append_) || !defined(_di_f_int8ss_append_all_)
-  extern f_status_t private_f_int8s_resize(const f_number_unsigned_t length, f_int8s_t *int8s) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_int8s_resize(const f_number_unsigned_t length, f_int8s_t * const int8s) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_int8s_append_) || !defined(_di_f_int8s_append_all_) || !defined(_di_f_int8s_decrease_by_) || !defined(_di_f_int8s_increase_) || !defined(_di_f_int8s_increase_by_) || !defined(_di_f_int8s_resize_) || !defined(_di_f_int8ss_append_) || !defined(_di_f_int8ss_append_all_)
 
 /**
@@ -140,7 +140,7 @@ extern "C" {
  * @see f_int8ss_decimate_by()
  */
 #if !defined(_di_f_int8ss_adjust_) || !defined(_di_f_int8ss_decimate_by_)
-  extern f_status_t private_f_int8ss_adjust(const f_number_unsigned_t length, f_int8ss_t *int8ss) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_int8ss_adjust(const f_number_unsigned_t length, f_int8ss_t * const int8ss) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_int8ss_adjust_) || !defined(_di_f_int8ss_decimate_by_)
 
 /**
@@ -170,7 +170,7 @@ extern "C" {
  * @see f_int8ss_resize()
  */
 #if !defined(_di_f_int8ss_decrease_by_) || !defined(_di_f_int8ss_increase_) || !defined(_di_f_int8ss_increase_by_) || !defined(_di_f_int8ss_resize_)
-  extern f_status_t private_f_int8ss_resize(const f_number_unsigned_t length, f_int8ss_t *int8ss) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_int8ss_resize(const f_number_unsigned_t length, f_int8ss_t * const int8ss) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_int8ss_decrease_by_) || !defined(_di_f_int8ss_increase_) || !defined(_di_f_int8ss_increase_by_) || !defined(_di_f_int8ss_resize_)
 
 #ifdef __cplusplus

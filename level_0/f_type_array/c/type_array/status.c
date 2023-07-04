@@ -7,7 +7,7 @@ extern "C" {
 #endif
 
 #ifndef _di_f_statuss_adjust_
-  f_status_t f_statuss_adjust(const f_number_unsigned_t length, f_statuss_t *statuss) {
+  f_status_t f_statuss_adjust(const f_number_unsigned_t length, f_statuss_t * const statuss) {
     #ifndef _di_level_0_parameter_checking_
       if (!statuss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -17,7 +17,7 @@ extern "C" {
 #endif // _di_f_statuss_adjust_
 
 #ifndef _di_f_statuss_append_
-  f_status_t f_statuss_append(const f_status_t source, f_statuss_t *destination) {
+  f_status_t f_statuss_append(const f_status_t source, f_statuss_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -27,7 +27,7 @@ extern "C" {
 #endif // _di_f_statuss_append_
 
 #ifndef _di_f_statuss_append_all_
-  f_status_t f_statuss_append_all(const f_statuss_t source, f_statuss_t *destination) {
+  f_status_t f_statuss_append_all(const f_statuss_t source, f_statuss_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -39,7 +39,7 @@ extern "C" {
 #endif // _di_f_statuss_append_all_
 
 #ifndef _di_f_statuss_decimate_by_
-  f_status_t f_statuss_decimate_by(const f_number_unsigned_t amount, f_statuss_t *statuss) {
+  f_status_t f_statuss_decimate_by(const f_number_unsigned_t amount, f_statuss_t * const statuss) {
     #ifndef _di_level_0_parameter_checking_
       if (!statuss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -55,7 +55,7 @@ extern "C" {
 #endif // _di_f_statuss_decimate_by_
 
 #ifndef _di_f_statuss_decrease_by_
-  f_status_t f_statuss_decrease_by(const f_number_unsigned_t amount, f_statuss_t *statuss) {
+  f_status_t f_statuss_decrease_by(const f_number_unsigned_t amount, f_statuss_t * const statuss) {
     #ifndef _di_level_0_parameter_checking_
       if (!statuss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -71,7 +71,7 @@ extern "C" {
 #endif // _di_f_statuss_decrease_by_
 
 #ifndef _di_f_statuss_increase_
-  f_status_t f_statuss_increase(const f_number_unsigned_t step, f_statuss_t *statuss) {
+  f_status_t f_statuss_increase(const f_number_unsigned_t step, f_statuss_t * const statuss) {
     #ifndef _di_level_0_parameter_checking_
       if (!statuss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -95,7 +95,7 @@ extern "C" {
 #endif // _di_f_statuss_increase_
 
 #ifndef _di_f_statuss_increase_by_
-  f_status_t f_statuss_increase_by(const f_number_unsigned_t amount, f_statuss_t *statuss) {
+  f_status_t f_statuss_increase_by(const f_number_unsigned_t amount, f_statuss_t * const statuss) {
     #ifndef _di_level_0_parameter_checking_
       if (!statuss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -115,7 +115,7 @@ extern "C" {
 #endif // _di_f_statuss_increase_by_
 
 #ifndef _di_f_statuss_resize_
-  f_status_t f_statuss_resize(const f_number_unsigned_t length, f_statuss_t *statuss) {
+  f_status_t f_statuss_resize(const f_number_unsigned_t length, f_statuss_t * const statuss) {
     #ifndef _di_level_0_parameter_checking_
       if (!statuss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -125,7 +125,7 @@ extern "C" {
 #endif // _di_f_statuss_resize_
 
 #ifndef _di_f_statusss_adjust_
-  f_status_t f_statusss_adjust(const f_number_unsigned_t length, f_statusss_t *statusss) {
+  f_status_t f_statusss_adjust(const f_number_unsigned_t length, f_statusss_t * const statusss) {
     #ifndef _di_level_0_parameter_checking_
       if (!statusss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -135,7 +135,7 @@ extern "C" {
 #endif // _di_f_statusss_adjust_
 
 #ifndef _di_f_statusss_append_
-  f_status_t f_statusss_append(const f_statuss_t source, f_statusss_t *destination) {
+  f_status_t f_statusss_append(const f_statuss_t source, f_statusss_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -159,7 +159,7 @@ extern "C" {
 #endif // _di_f_statusss_append_
 
 #ifndef _di_f_statusss_append_all_
-  f_status_t f_statusss_append_all(const f_statusss_t source, f_statusss_t *destination) {
+  f_status_t f_statusss_append_all(const f_statusss_t source, f_statusss_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -188,7 +188,7 @@ extern "C" {
 #endif // _di_f_statusss_append_all_
 
 #ifndef _di_f_statusss_decimate_by_
-  f_status_t f_statusss_decimate_by(const f_number_unsigned_t amount, f_statusss_t *statusss) {
+  f_status_t f_statusss_decimate_by(const f_number_unsigned_t amount, f_statusss_t * const statusss) {
     #ifndef _di_level_0_parameter_checking_
       if (!statusss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -204,7 +204,7 @@ extern "C" {
 #endif // _di_f_statusss_decimate_by_
 
 #ifndef _di_f_statusss_decrease_by_
-  f_status_t f_statusss_decrease_by(const f_number_unsigned_t amount, f_statusss_t *statusss) {
+  f_status_t f_statusss_decrease_by(const f_number_unsigned_t amount, f_statusss_t * const statusss) {
     #ifndef _di_level_0_parameter_checking_
       if (!statusss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -220,7 +220,7 @@ extern "C" {
 #endif // _di_f_statusss_decrease_by_
 
 #ifndef _di_f_statusss_increase_
-  f_status_t f_statusss_increase(const f_number_unsigned_t step, f_statusss_t *statusss) {
+  f_status_t f_statusss_increase(const f_number_unsigned_t step, f_statusss_t * const statusss) {
     #ifndef _di_level_0_parameter_checking_
       if (!statusss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -244,7 +244,7 @@ extern "C" {
 #endif // _di_f_statusss_increase_
 
 #ifndef _di_f_statusss_increase_by_
-  f_status_t f_statusss_increase_by(const f_number_unsigned_t amount, f_statusss_t *statusss) {
+  f_status_t f_statusss_increase_by(const f_number_unsigned_t amount, f_statusss_t * const statusss) {
     #ifndef _di_level_0_parameter_checking_
       if (!statusss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -264,7 +264,7 @@ extern "C" {
 #endif // _di_f_statusss_increase_by_
 
 #ifndef _di_f_statusss_resize_
-  f_status_t f_statusss_resize(const f_number_unsigned_t length, f_statusss_t *statusss) {
+  f_status_t f_statusss_resize(const f_number_unsigned_t length, f_statusss_t * const statusss) {
     #ifndef _di_level_0_parameter_checking_
       if (!statusss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_

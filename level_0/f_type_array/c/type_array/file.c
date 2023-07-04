@@ -8,7 +8,7 @@ extern "C" {
 #endif
 
 #ifndef _di_f_files_adjust_
-  f_status_t f_files_adjust(const f_number_unsigned_t length, f_files_t *files) {
+  f_status_t f_files_adjust(const f_number_unsigned_t length, f_files_t * const files) {
     #ifndef _di_level_0_parameter_checking_
       if (!files) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -18,7 +18,7 @@ extern "C" {
 #endif // _di_f_files_adjust_
 
 #ifndef _di_f_files_append_
-  f_status_t f_files_append(const f_file_t source, f_files_t *destination) {
+  f_status_t f_files_append(const f_file_t source, f_files_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -28,7 +28,7 @@ extern "C" {
 #endif // _di_f_files_append_
 
 #ifndef _di_f_files_append_all_
-  f_status_t f_files_append_all(const f_files_t source, f_files_t *destination) {
+  f_status_t f_files_append_all(const f_files_t source, f_files_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -40,7 +40,7 @@ extern "C" {
 #endif // _di_f_files_append_all_
 
 #ifndef _di_f_files_decimate_by_
-  f_status_t f_files_decimate_by(const f_number_unsigned_t amount, f_files_t *files) {
+  f_status_t f_files_decimate_by(const f_number_unsigned_t amount, f_files_t * const files) {
     #ifndef _di_level_0_parameter_checking_
       if (!files) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -56,7 +56,7 @@ extern "C" {
 #endif // _di_f_files_decimate_by_
 
 #ifndef _di_f_files_decrease_by_
-  f_status_t f_files_decrease_by(const f_number_unsigned_t amount, f_files_t *files) {
+  f_status_t f_files_decrease_by(const f_number_unsigned_t amount, f_files_t * const files) {
     #ifndef _di_level_0_parameter_checking_
       if (!files) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -72,7 +72,7 @@ extern "C" {
 #endif // _di_f_files_decrease_by_
 
 #ifndef _di_f_files_increase_
-  f_status_t f_files_increase(const f_number_unsigned_t step, f_files_t *files) {
+  f_status_t f_files_increase(const f_number_unsigned_t step, f_files_t * const files) {
     #ifndef _di_level_0_parameter_checking_
       if (!files) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -96,7 +96,7 @@ extern "C" {
 #endif // _di_f_files_increase_
 
 #ifndef _di_f_files_increase_by_
-  f_status_t f_files_increase_by(const f_number_unsigned_t amount, f_files_t *files) {
+  f_status_t f_files_increase_by(const f_number_unsigned_t amount, f_files_t * const files) {
     #ifndef _di_level_0_parameter_checking_
       if (!files) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -116,7 +116,7 @@ extern "C" {
 #endif // _di_f_files_increase_by_
 
 #ifndef _di_f_files_resize_
-  f_status_t f_files_resize(const f_number_unsigned_t length, f_files_t *files) {
+  f_status_t f_files_resize(const f_number_unsigned_t length, f_files_t * const files) {
     #ifndef _di_level_0_parameter_checking_
       if (!files) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -126,7 +126,7 @@ extern "C" {
 #endif // _di_f_files_resize_
 
 #ifndef _di_f_filess_adjust_
-  f_status_t f_filess_adjust(const f_number_unsigned_t length, f_filess_t *filess) {
+  f_status_t f_filess_adjust(const f_number_unsigned_t length, f_filess_t * const filess) {
     #ifndef _di_level_0_parameter_checking_
       if (!filess) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -136,7 +136,7 @@ extern "C" {
 #endif // _di_f_filess_adjust_
 
 #ifndef _di_f_filess_append_
-  f_status_t f_filess_append(const f_files_t source, f_filess_t *destination) {
+  f_status_t f_filess_append(const f_files_t source, f_filess_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -160,7 +160,7 @@ extern "C" {
 #endif // _di_f_filess_append_
 
 #ifndef _di_f_filess_append_all_
-  f_status_t f_filess_append_all(const f_filess_t source, f_filess_t *destination) {
+  f_status_t f_filess_append_all(const f_filess_t source, f_filess_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -189,7 +189,7 @@ extern "C" {
 #endif // _di_f_filess_append_all_
 
 #ifndef _di_f_filess_decimate_by_
-  f_status_t f_filess_decimate_by(const f_number_unsigned_t amount, f_filess_t *filess) {
+  f_status_t f_filess_decimate_by(const f_number_unsigned_t amount, f_filess_t * const filess) {
     #ifndef _di_level_0_parameter_checking_
       if (!filess) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -205,7 +205,7 @@ extern "C" {
 #endif // _di_f_filess_decimate_by_
 
 #ifndef _di_f_filess_decrease_by_
-  f_status_t f_filess_decrease_by(const f_number_unsigned_t amount, f_filess_t *filess) {
+  f_status_t f_filess_decrease_by(const f_number_unsigned_t amount, f_filess_t * const filess) {
     #ifndef _di_level_0_parameter_checking_
       if (!filess) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -221,7 +221,7 @@ extern "C" {
 #endif // _di_f_filess_decrease_by_
 
 #ifndef _di_f_filess_increase_
-  f_status_t f_filess_increase(const f_number_unsigned_t step, f_filess_t *filess) {
+  f_status_t f_filess_increase(const f_number_unsigned_t step, f_filess_t * const filess) {
     #ifndef _di_level_0_parameter_checking_
       if (!filess) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -245,7 +245,7 @@ extern "C" {
 #endif // _di_f_filess_increase_
 
 #ifndef _di_f_filess_increase_by_
-  f_status_t f_filess_increase_by(const f_number_unsigned_t amount, f_filess_t *filess) {
+  f_status_t f_filess_increase_by(const f_number_unsigned_t amount, f_filess_t * const filess) {
     #ifndef _di_level_0_parameter_checking_
       if (!filess) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -265,7 +265,7 @@ extern "C" {
 #endif // _di_f_filess_increase_by_
 
 #ifndef _di_f_filess_resize_
-  f_status_t f_filess_resize(const f_number_unsigned_t length, f_filess_t *filess) {
+  f_status_t f_filess_resize(const f_number_unsigned_t length, f_filess_t * const filess) {
     #ifndef _di_level_0_parameter_checking_
       if (!filess) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_

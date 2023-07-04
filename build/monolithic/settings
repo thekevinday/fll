@@ -56,7 +56,7 @@ build_sources_library level_0/print.c level_0/private-print.c level_0/print/comm
 build_sources_library level_0/rip.c level_0/rip/utf.c level_0/private-rip.c level_0/rip/private-utf.c
 build_sources_library level_0/serialize.c level_0/private-serialize.c level_0/serialize/common.c
 build_sources_library level_0/signal.c
-build_sources_library level_0/socket.c
+build_sources_library level_0/socket.c level_0/socket/socket.c level_0/socket/private-socket.c
 build_sources_library level_0/status_string.c
 build_sources_library level_0/string.c
 build_sources_library level_0/private-string.c level_0/string/common.c
@@ -136,7 +136,7 @@ build_sources_headers level_0/print.h level_0/print/to.h level_0/print/common.h
 build_sources_headers level_0/rip.h level_0/rip/utf.h
 build_sources_headers level_0/serialize.h level_0/serialize/common.h
 build_sources_headers level_0/signal.h level_0/signal/common.h
-build_sources_headers level_0/socket.h level_0/socket/common.h
+build_sources_headers level_0/socket.h level_0/socket/socket.h level_0/socket/common.h
 build_sources_headers level_0/status.h
 build_sources_headers level_0/status_string.h
 build_sources_headers level_0/string.h level_0/string/common.h
@@ -148,7 +148,7 @@ build_sources_headers level_0/string/range.h level_0/string/ranges.h level_0/str
 build_sources_headers level_0/string/static.h level_0/string/statics.h level_0/string/staticss.h
 build_sources_headers level_0/string/triple.h level_0/string/triples.h level_0/string/tripless.h
 build_sources_headers level_0/type.h level_0/type_file.h
-build_sources_headers level_0/type_array.h level_0/type_array/common.h level_0/type_array/cell.h level_0/type_array/file.h level_0/type_array/fll_id.h level_0/type_array/int8.h level_0/type_array/int16.h level_0/type_array/int32.h level_0/type_array/int64.h level_0/type_array/int128.h level_0/type_array/number_unsigned.h level_0/type_array/poll.h level_0/type_array/state.h level_0/type_array/status.h level_0/type_array/uint8.h level_0/type_array/uint16.h level_0/type_array/uint32.h level_0/type_array/uint64.h level_0/type_array/uint128.h
+build_sources_headers level_0/type_array.h level_0/type_array_file.h level_0/type_array/common.h level_0/type_array/cell.h level_0/type_array/file.h level_0/type_array/fll_id.h level_0/type_array/int8.h level_0/type_array/int16.h level_0/type_array/int32.h level_0/type_array/int64.h level_0/type_array/int128.h level_0/type_array/number_unsigned.h level_0/type_array/poll.h level_0/type_array/state.h level_0/type_array/status.h level_0/type_array/uint8.h level_0/type_array/uint16.h level_0/type_array/uint32.h level_0/type_array/uint64.h level_0/type_array/uint128.h
 build_sources_headers level_0/utf.h level_0/utf/common.h level_0/utf/convert.h level_0/utf/dynamic.h level_0/utf/dynamics.h level_0/utf/dynamicss.h level_0/utf/is.h level_0/utf/is_character.h level_0/utf/map.h level_0/utf/maps.h level_0/utf/mapss.h level_0/utf/map_multi.h level_0/utf/map_multis.h level_0/utf/map_multiss.h level_0/utf/static.h level_0/utf/statics.h level_0/utf/staticss.h level_0/utf/string.h level_0/utf/triple.h level_0/utf/triples.h level_0/utf/tripless.h
 
 build_sources_headers level_1/control_group.h

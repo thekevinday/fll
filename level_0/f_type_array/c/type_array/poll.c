@@ -8,7 +8,7 @@ extern "C" {
 #endif
 
 #ifndef _di_f_polls_adjust_
-  f_status_t f_polls_adjust(const f_number_unsigned_t length, f_polls_t *polls) {
+  f_status_t f_polls_adjust(const f_number_unsigned_t length, f_polls_t * const polls) {
     #ifndef _di_level_0_parameter_checking_
       if (!polls) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -18,7 +18,7 @@ extern "C" {
 #endif // _di_f_polls_adjust_
 
 #ifndef _di_f_polls_append_
-  f_status_t f_polls_append(const f_poll_t source, f_polls_t *destination) {
+  f_status_t f_polls_append(const f_poll_t source, f_polls_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -28,7 +28,7 @@ extern "C" {
 #endif // _di_f_polls_append_
 
 #ifndef _di_f_polls_append_all_
-  f_status_t f_polls_append_all(const f_polls_t source, f_polls_t *destination) {
+  f_status_t f_polls_append_all(const f_polls_t source, f_polls_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -40,7 +40,7 @@ extern "C" {
 #endif // _di_f_polls_append_all_
 
 #ifndef _di_f_polls_decimate_by_
-  f_status_t f_polls_decimate_by(const f_number_unsigned_t amount, f_polls_t *polls) {
+  f_status_t f_polls_decimate_by(const f_number_unsigned_t amount, f_polls_t * const polls) {
     #ifndef _di_level_0_parameter_checking_
       if (!polls) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -53,7 +53,7 @@ extern "C" {
 #endif // _di_f_polls_decimate_by_
 
 #ifndef _di_f_polls_decrease_by_
-  f_status_t f_polls_decrease_by(const f_number_unsigned_t amount, f_polls_t *polls) {
+  f_status_t f_polls_decrease_by(const f_number_unsigned_t amount, f_polls_t * const polls) {
     #ifndef _di_level_0_parameter_checking_
       if (!polls) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -66,7 +66,7 @@ extern "C" {
 #endif // _di_f_polls_decrease_by_
 
 #ifndef _di_f_polls_increase_
-  f_status_t f_polls_increase(const f_number_unsigned_t step, f_polls_t *polls) {
+  f_status_t f_polls_increase(const f_number_unsigned_t step, f_polls_t * const polls) {
     #ifndef _di_level_0_parameter_checking_
       if (!polls) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -88,7 +88,7 @@ extern "C" {
 #endif // _di_f_polls_increase_
 
 #ifndef _di_f_polls_increase_by_
-  f_status_t f_polls_increase_by(const f_number_unsigned_t amount, f_polls_t *polls) {
+  f_status_t f_polls_increase_by(const f_number_unsigned_t amount, f_polls_t * const polls) {
     #ifndef _di_level_0_parameter_checking_
       if (!polls) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -106,7 +106,7 @@ extern "C" {
 #endif // _di_f_polls_increase_by_
 
 #ifndef _di_f_polls_resize_
-  f_status_t f_polls_resize(const f_number_unsigned_t length, f_polls_t *polls) {
+  f_status_t f_polls_resize(const f_number_unsigned_t length, f_polls_t * const polls) {
     #ifndef _di_level_0_parameter_checking_
       if (!polls) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -116,7 +116,7 @@ extern "C" {
 #endif // _di_f_polls_resize_
 
 #ifndef _di_f_pollss_adjust_
-  f_status_t f_pollss_adjust(const f_number_unsigned_t length, f_pollss_t *pollss) {
+  f_status_t f_pollss_adjust(const f_number_unsigned_t length, f_pollss_t * const pollss) {
     #ifndef _di_level_0_parameter_checking_
       if (!pollss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -126,7 +126,7 @@ extern "C" {
 #endif // _di_f_pollss_adjust_
 
 #ifndef _di_f_pollss_append_
-  f_status_t f_pollss_append(const f_polls_t source, f_pollss_t *destination) {
+  f_status_t f_pollss_append(const f_polls_t source, f_pollss_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -150,7 +150,7 @@ extern "C" {
 #endif // _di_f_pollss_append_
 
 #ifndef _di_f_pollss_append_all_
-  f_status_t f_pollss_append_all(const f_pollss_t source, f_pollss_t *destination) {
+  f_status_t f_pollss_append_all(const f_pollss_t source, f_pollss_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -179,7 +179,7 @@ extern "C" {
 #endif // _di_f_pollss_append_all_
 
 #ifndef _di_f_pollss_decimate_by_
-  f_status_t f_pollss_decimate_by(const f_number_unsigned_t amount, f_pollss_t *pollss) {
+  f_status_t f_pollss_decimate_by(const f_number_unsigned_t amount, f_pollss_t * const pollss) {
     #ifndef _di_level_0_parameter_checking_
       if (!pollss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -192,7 +192,7 @@ extern "C" {
 #endif // _di_f_pollss_decimate_by_
 
 #ifndef _di_f_pollss_decrease_by_
-  f_status_t f_pollss_decrease_by(const f_number_unsigned_t amount, f_pollss_t *pollss) {
+  f_status_t f_pollss_decrease_by(const f_number_unsigned_t amount, f_pollss_t * const pollss) {
     #ifndef _di_level_0_parameter_checking_
       if (!pollss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -205,7 +205,7 @@ extern "C" {
 #endif // _di_f_pollss_decrease_by_
 
 #ifndef _di_f_pollss_increase_
-  f_status_t f_pollss_increase(const f_number_unsigned_t step, f_pollss_t *pollss) {
+  f_status_t f_pollss_increase(const f_number_unsigned_t step, f_pollss_t * const pollss) {
     #ifndef _di_level_0_parameter_checking_
       if (!pollss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -227,7 +227,7 @@ extern "C" {
 #endif // _di_f_pollss_increase_
 
 #ifndef _di_f_pollss_increase_by_
-  f_status_t f_pollss_increase_by(const f_number_unsigned_t amount, f_pollss_t *pollss) {
+  f_status_t f_pollss_increase_by(const f_number_unsigned_t amount, f_pollss_t * const pollss) {
     #ifndef _di_level_0_parameter_checking_
       if (!pollss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -245,7 +245,7 @@ extern "C" {
 #endif // _di_f_pollss_increase_by_
 
 #ifndef _di_f_pollss_resize_
-  f_status_t f_pollss_resize(const f_number_unsigned_t length, f_pollss_t *pollss) {
+  f_status_t f_pollss_resize(const f_number_unsigned_t length, f_pollss_t * const pollss) {
     #ifndef _di_level_0_parameter_checking_
       if (!pollss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_

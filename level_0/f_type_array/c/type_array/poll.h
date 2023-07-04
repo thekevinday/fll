@@ -32,7 +32,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_adjust().
  */
 #ifndef _di_f_polls_adjust_
-  extern f_status_t f_polls_adjust(const f_number_unsigned_t length, f_polls_t *polls);
+  extern f_status_t f_polls_adjust(const f_number_unsigned_t length, f_polls_t * const polls);
 #endif // _di_f_polls_adjust_
 
 /**
@@ -52,7 +52,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_polls_append_
-  extern f_status_t f_polls_append(const f_poll_t source, f_polls_t *destination);
+  extern f_status_t f_polls_append(const f_poll_t source, f_polls_t * const destination);
 #endif // _di_f_polls_append_
 
 /**
@@ -72,7 +72,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_polls_append_all_
-  extern f_status_t f_polls_append_all(const f_polls_t source, f_polls_t *destination);
+  extern f_status_t f_polls_append_all(const f_polls_t source, f_polls_t * const destination);
 #endif // _di_f_polls_append_all_
 
 /**
@@ -96,7 +96,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_adjust().
  */
 #ifndef _di_f_polls_decimate_by_
-  extern f_status_t f_polls_decimate_by(const f_number_unsigned_t amount, f_polls_t *polls);
+  extern f_status_t f_polls_decimate_by(const f_number_unsigned_t amount, f_polls_t * const polls);
 #endif // _di_f_polls_decimate_by_
 
 /**
@@ -120,7 +120,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_polls_decrease_by_
-  extern f_status_t f_polls_decrease_by(const f_number_unsigned_t amount, f_polls_t *polls);
+  extern f_status_t f_polls_decrease_by(const f_number_unsigned_t amount, f_polls_t * const polls);
 #endif // _di_f_polls_decrease_by_
 
 /**
@@ -145,7 +145,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_polls_increase_
-  extern f_status_t f_polls_increase(const f_number_unsigned_t step, f_polls_t *polls);
+  extern f_status_t f_polls_increase(const f_number_unsigned_t step, f_polls_t * const polls);
 #endif // _di_f_polls_increase_
 
 /**
@@ -170,7 +170,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_polls_increase_by_
-  extern f_status_t f_polls_increase_by(const f_number_unsigned_t amount, f_polls_t *polls);
+  extern f_status_t f_polls_increase_by(const f_number_unsigned_t amount, f_polls_t * const polls);
 #endif // _di_f_polls_increase_by_
 
 /**
@@ -189,7 +189,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_polls_resize_
-  extern f_status_t f_polls_resize(const f_number_unsigned_t length, f_polls_t *polls);
+  extern f_status_t f_polls_resize(const f_number_unsigned_t length, f_polls_t * const polls);
 #endif // _di_f_polls_resize_
 
 /**
@@ -209,7 +209,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_destroy().
  */
 #ifndef _di_f_pollss_adjust_
-  extern f_status_t f_pollss_adjust(const f_number_unsigned_t length, f_pollss_t *pollss);
+  extern f_status_t f_pollss_adjust(const f_number_unsigned_t length, f_pollss_t * const pollss);
 #endif // _di_f_pollss_adjust_
 
 /**
@@ -229,7 +229,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_pollss_append_
-  extern f_status_t f_pollss_append(const f_polls_t source, f_pollss_t *destination);
+  extern f_status_t f_pollss_append(const f_polls_t source, f_pollss_t * const destination);
 #endif // _di_f_pollss_append_
 
 /**
@@ -249,7 +249,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_pollss_append_all_
-  extern f_status_t f_pollss_append_all(const f_pollss_t source, f_pollss_t *destination);
+  extern f_status_t f_pollss_append_all(const f_pollss_t source, f_pollss_t * const destination);
 #endif // _di_f_pollss_append_all_
 
 /**
@@ -274,7 +274,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_destroy().
  */
 #ifndef _di_f_pollss_decimate_by_
-  extern f_status_t f_pollss_decimate_by(const f_number_unsigned_t amount, f_pollss_t *pollss);
+  extern f_status_t f_pollss_decimate_by(const f_number_unsigned_t amount, f_pollss_t * const pollss);
 #endif // _di_f_pollss_decimate_by_
 
 /**
@@ -299,7 +299,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_pollss_decrease_by_
-  extern f_status_t f_pollss_decrease_by(const f_number_unsigned_t amount, f_pollss_t *pollss);
+  extern f_status_t f_pollss_decrease_by(const f_number_unsigned_t amount, f_pollss_t * const pollss);
 #endif // _di_f_pollss_decrease_by_
 
 /**
@@ -324,7 +324,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_pollss_increase_
-  extern f_status_t f_pollss_increase(const f_number_unsigned_t step, f_pollss_t *pollss);
+  extern f_status_t f_pollss_increase(const f_number_unsigned_t step, f_pollss_t * const pollss);
 #endif // _di_f_pollss_increase_
 
 /**
@@ -349,7 +349,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_pollss_increase_by_
-  extern f_status_t f_pollss_increase_by(const f_number_unsigned_t amount, f_pollss_t *pollss);
+  extern f_status_t f_pollss_increase_by(const f_number_unsigned_t amount, f_pollss_t * const pollss);
 #endif // _di_f_pollss_increase_by_
 
 /**
@@ -369,7 +369,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_pollss_resize_
-  extern f_status_t f_pollss_resize(const f_number_unsigned_t length, f_pollss_t *pollss);
+  extern f_status_t f_pollss_resize(const f_number_unsigned_t length, f_pollss_t * const pollss);
 #endif // _di_f_pollss_resize_
 
 #ifdef __cplusplus

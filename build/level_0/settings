@@ -56,7 +56,7 @@ build_sources_library print.c private-print.c print/common.c print/to.c print/pr
 build_sources_library rip.c rip/utf.c private-rip.c rip/private-utf.c
 build_sources_library serialize.c private-serialize.c serialize/common.c
 build_sources_library signal.c
-build_sources_library socket.c
+build_sources_library socket.c socket/socket.c socket/private-socket.c
 build_sources_library status_string.c
 build_sources_library string.c
 build_sources_library private-string.c string/common.c
@@ -114,7 +114,7 @@ build_sources_headers print.h print/to.h print/common.h
 build_sources_headers rip.h rip/utf.h
 build_sources_headers serialize.h serialize/common.h
 build_sources_headers signal.h signal/common.h
-build_sources_headers socket.h socket/common.h
+build_sources_headers socket.h socket/socket.h socket/common.h
 build_sources_headers status.h
 build_sources_headers status_string.h
 build_sources_headers string.h string/common.h
@@ -126,7 +126,7 @@ build_sources_headers string/range.h string/ranges.h string/rangess.h
 build_sources_headers string/static.h string/statics.h string/staticss.h
 build_sources_headers string/triple.h string/triples.h string/tripless.h
 build_sources_headers type.h type_file.h
-build_sources_headers type_array.h type_array/common.h type_array/cell.h type_array/file.h type_array/fll_id.h type_array/int8.h type_array/int16.h type_array/int32.h type_array/int64.h type_array/int128.h type_array/number_unsigned.h type_array/poll.h type_array/state.h type_array/status.h type_array/uint8.h type_array/uint16.h type_array/uint32.h type_array/uint64.h type_array/uint128.h
+build_sources_headers type_array.h type_array_file.h type_array/common.h type_array/cell.h type_array/file.h type_array/fll_id.h type_array/int8.h type_array/int16.h type_array/int32.h type_array/int64.h type_array/int128.h type_array/number_unsigned.h type_array/poll.h type_array/state.h type_array/status.h type_array/uint8.h type_array/uint16.h type_array/uint32.h type_array/uint64.h type_array/uint128.h
 build_sources_headers utf.h utf/common.h utf/convert.h utf/dynamic.h utf/dynamics.h utf/dynamicss.h utf/is.h utf/is_character.h utf/map.h utf/maps.h utf/mapss.h utf/map_multi.h utf/map_multis.h utf/map_multiss.h utf/static.h utf/statics.h utf/staticss.h utf/string.h utf/triple.h utf/triples.h utf/tripless.h
 
 build_sources_headers-thread thread.h thread/attribute.h thread/barrier.h thread/barrier_attribute.h thread/condition.h thread/condition_attribute.h thread/id.h thread/key.h thread/lock.h thread/lock_attribute.h thread/mutex.h thread/mutex_attribute.h thread/once.h thread/semaphore.h thread/set.h thread/spin.h

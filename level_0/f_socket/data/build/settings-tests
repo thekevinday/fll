@@ -26,6 +26,9 @@ build_libraries -lc -lcmocka
 build_libraries-individual -lf_memory -lf_string -lf_type_array -lf_socket
 
 build_sources_program test-socket-accept.c test-socket-bind.c test-socket-bind_local.c test-socket-connect.c test-socket-create.c test-socket-create_pair.c test-socket-disconnect.c test-socket-listen.c test-socket-name_host.c test-socket-name_peer.c test-socket-option_get.c test-socket-option_set.c test-socket-read.c test-socket-read_message.c test-socket-read_stream.c test-socket-write.c test-socket-write_message.c test-socket-write_stream.c
+build_sources_program test-socket-sockets_adjust.c test-socket-sockets_append.c test-socket-sockets_append_all.c test-socket-sockets_decimate_by.c test-socket-sockets_decrease_by.c test-socket-sockets_increase.c test-socket-sockets_increase_by.c test-socket-sockets_resize.c
+build_sources_program test-socket-socketss_adjust.c test-socket-socketss_append.c test-socket-socketss_append_all.c test-socket-socketss_decimate_by.c test-socket-socketss_decrease_by.c test-socket-socketss_increase.c test-socket-socketss_increase_by.c test-socket-socketss_resize.c
+
 build_sources_program test-socket.c
 
 build_script no

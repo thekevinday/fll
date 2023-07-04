@@ -7,7 +7,7 @@ extern "C" {
 #endif
 
 #ifndef _di_f_number_unsigneds_adjust_
-  f_status_t f_number_unsigneds_adjust(const f_number_unsigned_t length, f_number_unsigneds_t *lengths) {
+  f_status_t f_number_unsigneds_adjust(const f_number_unsigned_t length, f_number_unsigneds_t * const lengths) {
     #ifndef _di_level_0_parameter_checking_
       if (!lengths) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -17,7 +17,7 @@ extern "C" {
 #endif // _di_f_number_unsigneds_adjust_
 
 #ifndef _di_f_number_unsigneds_append_
-  f_status_t f_number_unsigneds_append(const f_number_unsigned_t source, f_number_unsigneds_t *destination) {
+  f_status_t f_number_unsigneds_append(const f_number_unsigned_t source, f_number_unsigneds_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -34,7 +34,7 @@ extern "C" {
 #endif // _di_f_number_unsigneds_append_
 
 #ifndef _di_f_number_unsigneds_append_all_
-  f_status_t f_number_unsigneds_append_all(const f_number_unsigneds_t source, f_number_unsigneds_t *destination) {
+  f_status_t f_number_unsigneds_append_all(const f_number_unsigneds_t source, f_number_unsigneds_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -46,7 +46,7 @@ extern "C" {
 #endif // _di_f_number_unsigneds_append_all_
 
 #ifndef _di_f_number_unsigneds_decimate_by_
-  f_status_t f_number_unsigneds_decimate_by(const f_number_unsigned_t amount, f_number_unsigneds_t *lengths) {
+  f_status_t f_number_unsigneds_decimate_by(const f_number_unsigned_t amount, f_number_unsigneds_t * const lengths) {
     #ifndef _di_level_0_parameter_checking_
       if (!lengths) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -62,7 +62,7 @@ extern "C" {
 #endif // _di_f_number_unsigneds_decimate_by_
 
 #ifndef _di_f_number_unsigneds_decrease_by_
-  f_status_t f_number_unsigneds_decrease_by(const f_number_unsigned_t amount, f_number_unsigneds_t *lengths) {
+  f_status_t f_number_unsigneds_decrease_by(const f_number_unsigned_t amount, f_number_unsigneds_t * const lengths) {
     #ifndef _di_level_0_parameter_checking_
       if (!lengths) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -78,7 +78,7 @@ extern "C" {
 #endif // _di_f_number_unsigneds_decrease_by_
 
 #ifndef _di_f_number_unsigneds_increase_
-  f_status_t f_number_unsigneds_increase(const f_number_unsigned_t step, f_number_unsigneds_t *lengths) {
+  f_status_t f_number_unsigneds_increase(const f_number_unsigned_t step, f_number_unsigneds_t * const lengths) {
     #ifndef _di_level_0_parameter_checking_
       if (!lengths) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -102,7 +102,7 @@ extern "C" {
 #endif // _di_f_number_unsigneds_increase_
 
 #ifndef _di_f_number_unsigneds_increase_by_
-  f_status_t f_number_unsigneds_increase_by(const f_number_unsigned_t amount, f_number_unsigneds_t *lengths) {
+  f_status_t f_number_unsigneds_increase_by(const f_number_unsigned_t amount, f_number_unsigneds_t * const lengths) {
     #ifndef _di_level_0_parameter_checking_
       if (!lengths) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -122,7 +122,7 @@ extern "C" {
 #endif // _di_f_number_unsigneds_increase_by_
 
 #ifndef _di_f_number_unsigneds_resize_
-  f_status_t f_number_unsigneds_resize(const f_number_unsigned_t length, f_number_unsigneds_t *lengths) {
+  f_status_t f_number_unsigneds_resize(const f_number_unsigned_t length, f_number_unsigneds_t * const lengths) {
     #ifndef _di_level_0_parameter_checking_
       if (!lengths) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -132,7 +132,7 @@ extern "C" {
 #endif // _di_f_number_unsigneds_resize_
 
 #ifndef _di_f_number_unsignedss_adjust_
-  f_status_t f_number_unsignedss_adjust(const f_number_unsigned_t length, f_number_unsignedss_t *lengthss) {
+  f_status_t f_number_unsignedss_adjust(const f_number_unsigned_t length, f_number_unsignedss_t * const lengthss) {
     #ifndef _di_level_0_parameter_checking_
       if (!lengthss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -142,7 +142,7 @@ extern "C" {
 #endif // _di_f_number_unsignedss_adjust_
 
 #ifndef _di_f_number_unsignedss_append_
-  f_status_t f_number_unsignedss_append(const f_number_unsigneds_t source, f_number_unsignedss_t *destination) {
+  f_status_t f_number_unsignedss_append(const f_number_unsigneds_t source, f_number_unsignedss_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -166,7 +166,7 @@ extern "C" {
 #endif // _di_f_number_unsignedss_append_
 
 #ifndef _di_f_number_unsignedss_append_all_
-  f_status_t f_number_unsignedss_append_all(const f_number_unsignedss_t source, f_number_unsignedss_t *destination) {
+  f_status_t f_number_unsignedss_append_all(const f_number_unsignedss_t source, f_number_unsignedss_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -195,7 +195,7 @@ extern "C" {
 #endif // _di_f_number_unsignedss_append_all_
 
 #ifndef _di_f_number_unsignedss_decimate_by_
-  f_status_t f_number_unsignedss_decimate_by(const f_number_unsigned_t amount, f_number_unsignedss_t *lengthss) {
+  f_status_t f_number_unsignedss_decimate_by(const f_number_unsigned_t amount, f_number_unsignedss_t * const lengthss) {
     #ifndef _di_level_0_parameter_checking_
       if (!lengthss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -211,7 +211,7 @@ extern "C" {
 #endif // _di_f_number_unsignedss_decimate_by_
 
 #ifndef _di_f_number_unsignedss_decrease_by_
-  f_status_t f_number_unsignedss_decrease_by(const f_number_unsigned_t amount, f_number_unsignedss_t *lengthss) {
+  f_status_t f_number_unsignedss_decrease_by(const f_number_unsigned_t amount, f_number_unsignedss_t * const lengthss) {
     #ifndef _di_level_0_parameter_checking_
       if (!lengthss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -227,7 +227,7 @@ extern "C" {
 #endif // _di_f_number_unsignedss_decrease_by_
 
 #ifndef _di_f_number_unsignedss_increase_
-  f_status_t f_number_unsignedss_increase(const f_number_unsigned_t step, f_number_unsignedss_t *lengthss) {
+  f_status_t f_number_unsignedss_increase(const f_number_unsigned_t step, f_number_unsignedss_t * const lengthss) {
     #ifndef _di_level_0_parameter_checking_
       if (!lengthss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -251,7 +251,7 @@ extern "C" {
 #endif // _di_f_number_unsignedss_increase_
 
 #ifndef _di_f_number_unsignedss_increase_by_
-  f_status_t f_number_unsignedss_increase_by(const f_number_unsigned_t amount, f_number_unsignedss_t *lengthss) {
+  f_status_t f_number_unsignedss_increase_by(const f_number_unsigned_t amount, f_number_unsignedss_t * const lengthss) {
     #ifndef _di_level_0_parameter_checking_
       if (!lengthss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -271,7 +271,7 @@ extern "C" {
 #endif // _di_f_number_unsignedss_increase_by_
 
 #ifndef _di_f_number_unsignedss_resize_
-  f_status_t f_number_unsignedss_resize(const f_number_unsigned_t length, f_number_unsignedss_t *lengthss) {
+  f_status_t f_number_unsignedss_resize(const f_number_unsigned_t length, f_number_unsignedss_t * const lengthss) {
     #ifndef _di_level_0_parameter_checking_
       if (!lengthss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_

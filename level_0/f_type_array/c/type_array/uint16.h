@@ -32,7 +32,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_adjust().
  */
 #ifndef _di_f_uint16s_adjust_
-  extern f_status_t f_uint16s_adjust(const f_number_unsigned_t length, f_uint16s_t *uint16s);
+  extern f_status_t f_uint16s_adjust(const f_number_unsigned_t length, f_uint16s_t * const uint16s);
 #endif // _di_f_uint16s_adjust_
 
 /**
@@ -52,7 +52,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_uint16s_append_
-  extern f_status_t f_uint16s_append(const uint16_t source, f_uint16s_t *destination);
+  extern f_status_t f_uint16s_append(const uint16_t source, f_uint16s_t * const destination);
 #endif // _di_f_uint16s_append_
 
 /**
@@ -72,7 +72,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_uint16s_append_all_
-  extern f_status_t f_uint16s_append_all(const f_uint16s_t source, f_uint16s_t *destination);
+  extern f_status_t f_uint16s_append_all(const f_uint16s_t source, f_uint16s_t * const destination);
 #endif // _di_f_uint16s_append_all_
 
 /**
@@ -96,7 +96,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_adjust().
  */
 #ifndef _di_f_uint16s_decimate_by_
-  extern f_status_t f_uint16s_decimate_by(const f_number_unsigned_t amount, f_uint16s_t *uint16s);
+  extern f_status_t f_uint16s_decimate_by(const f_number_unsigned_t amount, f_uint16s_t * const uint16s);
 #endif // _di_f_uint16s_decimate_by_
 
 /**
@@ -119,7 +119,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_uint16s_decrease_by_
-  extern f_status_t f_uint16s_decrease_by(const f_number_unsigned_t amount, f_uint16s_t *uint16s);
+  extern f_status_t f_uint16s_decrease_by(const f_number_unsigned_t amount, f_uint16s_t * const uint16s);
 #endif // _di_f_uint16s_decrease_by_
 
 /**
@@ -144,7 +144,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_uint16s_increase_
-  extern f_status_t f_uint16s_increase(const f_number_unsigned_t step, f_uint16s_t *uint16s);
+  extern f_status_t f_uint16s_increase(const f_number_unsigned_t step, f_uint16s_t * const uint16s);
 #endif // _di_f_uint16s_increase_
 
 /**
@@ -169,7 +169,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_uint16s_increase_by_
-  extern f_status_t f_uint16s_increase_by(const f_number_unsigned_t amount, f_uint16s_t *uint16s);
+  extern f_status_t f_uint16s_increase_by(const f_number_unsigned_t amount, f_uint16s_t * const uint16s);
 #endif // _di_f_uint16s_increase_by_
 
 /**
@@ -188,7 +188,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_uint16s_resize_
-  extern f_status_t f_uint16s_resize(const f_number_unsigned_t length, f_uint16s_t *uint16s);
+  extern f_status_t f_uint16s_resize(const f_number_unsigned_t length, f_uint16s_t * const uint16s);
 #endif // _di_f_uint16s_resize_
 
 /**
@@ -208,7 +208,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_destroy().
  */
 #ifndef _di_f_uint16ss_adjust_
-  extern f_status_t f_uint16ss_adjust(const f_number_unsigned_t length, f_uint16ss_t *uint16ss);
+  extern f_status_t f_uint16ss_adjust(const f_number_unsigned_t length, f_uint16ss_t * const uint16ss);
 #endif // _di_f_uint16ss_adjust_
 
 /**
@@ -228,7 +228,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_uint16ss_append_
-  extern f_status_t f_uint16ss_append(const f_uint16s_t source, f_uint16ss_t *destination);
+  extern f_status_t f_uint16ss_append(const f_uint16s_t source, f_uint16ss_t * const destination);
 #endif // _di_f_uint16ss_append_
 
 /**
@@ -248,7 +248,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_uint16ss_append_all_
-  extern f_status_t f_uint16ss_append_all(const f_uint16ss_t source, f_uint16ss_t *destination);
+  extern f_status_t f_uint16ss_append_all(const f_uint16ss_t source, f_uint16ss_t * const destination);
 #endif // _di_f_uint16ss_append_all_
 
 /**
@@ -273,7 +273,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_destroy().
  */
 #ifndef _di_f_uint16ss_decimate_by_
-  extern f_status_t f_uint16ss_decimate_by(const f_number_unsigned_t amount, f_uint16ss_t *uint16ss);
+  extern f_status_t f_uint16ss_decimate_by(const f_number_unsigned_t amount, f_uint16ss_t * const uint16ss);
 #endif // _di_f_uint16ss_decimate_by_
 
 /**
@@ -297,7 +297,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_uint16ss_decrease_by_
-  extern f_status_t f_uint16ss_decrease_by(const f_number_unsigned_t amount, f_uint16ss_t *uint16ss);
+  extern f_status_t f_uint16ss_decrease_by(const f_number_unsigned_t amount, f_uint16ss_t * const uint16ss);
 #endif // _di_f_uint16ss_decrease_by_
 
 /**
@@ -322,7 +322,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_uint16ss_increase_
-  extern f_status_t f_uint16ss_increase(const f_number_unsigned_t step, f_uint16ss_t *uint16ss);
+  extern f_status_t f_uint16ss_increase(const f_number_unsigned_t step, f_uint16ss_t * const uint16ss);
 #endif // _di_f_uint16ss_increase_
 
 /**
@@ -347,7 +347,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_uint16ss_increase_by_
-  extern f_status_t f_uint16ss_increase_by(const f_number_unsigned_t amount, f_uint16ss_t *uint16ss);
+  extern f_status_t f_uint16ss_increase_by(const f_number_unsigned_t amount, f_uint16ss_t * const uint16ss);
 #endif // _di_f_uint16ss_increase_by_
 
 /**
@@ -367,7 +367,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_uint16ss_resize_
-  extern f_status_t f_uint16ss_resize(const f_number_unsigned_t length, f_uint16ss_t *uint16ss);
+  extern f_status_t f_uint16ss_resize(const f_number_unsigned_t length, f_uint16ss_t * const uint16ss);
 #endif // _di_f_uint16ss_resize_
 
 #ifdef __cplusplus

@@ -32,7 +32,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_adjust().
  */
 #ifndef _di_f_uint8s_adjust_
-  extern f_status_t f_uint8s_adjust(const f_number_unsigned_t length, f_uint8s_t *uint8s);
+  extern f_status_t f_uint8s_adjust(const f_number_unsigned_t length, f_uint8s_t * const uint8s);
 #endif // _di_f_uint8s_adjust_
 
 /**
@@ -52,7 +52,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_uint8s_append_
-  extern f_status_t f_uint8s_append(const uint8_t source, f_uint8s_t *destination);
+  extern f_status_t f_uint8s_append(const uint8_t source, f_uint8s_t * const destination);
 #endif // _di_f_uint8s_append_
 
 /**
@@ -72,7 +72,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_uint8s_append_all_
-  extern f_status_t f_uint8s_append_all(const f_uint8s_t source, f_uint8s_t *destination);
+  extern f_status_t f_uint8s_append_all(const f_uint8s_t source, f_uint8s_t * const destination);
 #endif // _di_f_uint8s_append_all_
 
 /**
@@ -96,7 +96,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_adjust().
  */
 #ifndef _di_f_uint8s_decimate_by_
-  extern f_status_t f_uint8s_decimate_by(const f_number_unsigned_t amount, f_uint8s_t *uint8s);
+  extern f_status_t f_uint8s_decimate_by(const f_number_unsigned_t amount, f_uint8s_t * const uint8s);
 #endif // _di_f_uint8s_decimate_by_
 
 /**
@@ -120,7 +120,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_uint8s_decrease_by_
-  extern f_status_t f_uint8s_decrease_by(const f_number_unsigned_t amount, f_uint8s_t *uint8s);
+  extern f_status_t f_uint8s_decrease_by(const f_number_unsigned_t amount, f_uint8s_t * const uint8s);
 #endif // _di_f_uint8s_decrease_by_
 
 /**
@@ -145,7 +145,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_uint8s_increase_
-  extern f_status_t f_uint8s_increase(const f_number_unsigned_t step, f_uint8s_t *uint8s);
+  extern f_status_t f_uint8s_increase(const f_number_unsigned_t step, f_uint8s_t * const uint8s);
 #endif // _di_f_uint8s_increase_
 
 /**
@@ -170,7 +170,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_uint8s_increase_by_
-  extern f_status_t f_uint8s_increase_by(const f_number_unsigned_t amount, f_uint8s_t *uint8s);
+  extern f_status_t f_uint8s_increase_by(const f_number_unsigned_t amount, f_uint8s_t * const uint8s);
 #endif // _di_f_uint8s_increase_by_
 
 /**
@@ -189,7 +189,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_uint8s_resize_
-  extern f_status_t f_uint8s_resize(const f_number_unsigned_t length, f_uint8s_t *uint8s);
+  extern f_status_t f_uint8s_resize(const f_number_unsigned_t length, f_uint8s_t * const uint8s);
 #endif // _di_f_uint8s_resize_
 
 /**
@@ -209,7 +209,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_destroy().
  */
 #ifndef _di_f_uint8ss_adjust_
-  extern f_status_t f_uint8ss_adjust(const f_number_unsigned_t length, f_uint8ss_t *uint8ss);
+  extern f_status_t f_uint8ss_adjust(const f_number_unsigned_t length, f_uint8ss_t * const uint8ss);
 #endif // _di_f_uint8ss_adjust_
 
 /**
@@ -229,7 +229,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_uint8ss_append_
-  extern f_status_t f_uint8ss_append(const f_uint8s_t source, f_uint8ss_t *destination);
+  extern f_status_t f_uint8ss_append(const f_uint8s_t source, f_uint8ss_t * const destination);
 #endif // _di_f_uint8ss_append_
 
 /**
@@ -249,7 +249,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_uint8ss_append_all_
-  extern f_status_t f_uint8ss_append_all(const f_uint8ss_t source, f_uint8ss_t *destination);
+  extern f_status_t f_uint8ss_append_all(const f_uint8ss_t source, f_uint8ss_t * const destination);
 #endif // _di_f_uint8ss_append_all_
 
 /**
@@ -274,7 +274,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_destroy().
  */
 #ifndef _di_f_uint8ss_decimate_by_
-  extern f_status_t f_uint8ss_decimate_by(const f_number_unsigned_t amount, f_uint8ss_t *uint8ss);
+  extern f_status_t f_uint8ss_decimate_by(const f_number_unsigned_t amount, f_uint8ss_t * const uint8ss);
 #endif // _di_f_uint8ss_decimate_by_
 
 /**
@@ -299,7 +299,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_uint8ss_decrease_by_
-  extern f_status_t f_uint8ss_decrease_by(const f_number_unsigned_t amount, f_uint8ss_t *uint8ss);
+  extern f_status_t f_uint8ss_decrease_by(const f_number_unsigned_t amount, f_uint8ss_t * const uint8ss);
 #endif // _di_f_uint8ss_decrease_by_
 
 /**
@@ -324,7 +324,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_uint8ss_increase_
-  extern f_status_t f_uint8ss_increase(const f_number_unsigned_t step, f_uint8ss_t *uint8ss);
+  extern f_status_t f_uint8ss_increase(const f_number_unsigned_t step, f_uint8ss_t * const uint8ss);
 #endif // _di_f_uint8ss_increase_
 
 /**
@@ -349,7 +349,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_uint8ss_increase_by_
-  extern f_status_t f_uint8ss_increase_by(const f_number_unsigned_t amount, f_uint8ss_t *uint8ss);
+  extern f_status_t f_uint8ss_increase_by(const f_number_unsigned_t amount, f_uint8ss_t * const uint8ss);
 #endif // _di_f_uint8ss_increase_by_
 
 /**
@@ -369,7 +369,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_uint8ss_resize_
-  extern f_status_t f_uint8ss_resize(const f_number_unsigned_t length, f_uint8ss_t *uint8ss);
+  extern f_status_t f_uint8ss_resize(const f_number_unsigned_t length, f_uint8ss_t * const uint8ss);
 #endif // _di_f_uint8ss_resize_
 
 #ifdef __cplusplus

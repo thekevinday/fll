@@ -35,7 +35,7 @@ extern "C" {
  * @see f_files_decimate_by()
  */
 #if !defined(_di_f_files_adjust_) || !defined(_di_f_files_decimate_by_)
-  extern f_status_t private_f_files_adjust(const f_number_unsigned_t length, f_files_t *files) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_files_adjust(const f_number_unsigned_t length, f_files_t * const files) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_files_adjust_) || !defined(_di_f_files_decimate_by_)
 
 /**
@@ -58,7 +58,7 @@ extern "C" {
  * @see f_filess_append()
  */
 #if !defined(_di_f_files_append_) || !defined(_di_f_filess_append_)
-  extern f_status_t private_f_files_append(const f_file_t source, f_files_t *destination) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_files_append(const f_file_t source, f_files_t * const destination) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_files_append_) || !defined(_di_f_filess_append_)
 
 /**
@@ -82,7 +82,7 @@ extern "C" {
  * @see f_filess_append_all()
  */
 #if !defined(_di_f_files_append_) || !defined(_di_f_files_append_all_) || !defined(_di_f_filess_append_all_)
-  extern f_status_t private_f_files_append_all(const f_files_t source, f_files_t *destination) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_files_append_all(const f_files_t source, f_files_t * const destination) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_files_append_) || !defined(_di_f_files_append_all_) || !defined(_di_f_filess_append_all_)
 
 /**
@@ -112,7 +112,7 @@ extern "C" {
  *
  */
 #if !defined(_di_f_files_append_) || !defined(_di_f_files_append_all_) || !defined(_di_f_files_decrease_by_) || !defined(_di_f_files_increase_) || !defined(_di_f_files_increase_by_) || !defined(_di_f_files_resize_) || !defined(_di_f_filess_append_) || !defined(_di_f_filess_append_all_)
-  extern f_status_t private_f_files_resize(const f_number_unsigned_t length, f_files_t *files) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_files_resize(const f_number_unsigned_t length, f_files_t * const files) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_files_append_) || !defined(_di_f_files_append_all_) || !defined(_di_f_files_decrease_by_) || !defined(_di_f_files_increase_) || !defined(_di_f_files_increase_by_) || !defined(_di_f_files_resize_) || !defined(_di_f_filess_append_) || !defined(_di_f_filess_append_all_)
 
 /**
@@ -140,7 +140,7 @@ extern "C" {
  * @see f_filess_decimate_by()
  */
 #if !defined(_di_f_filess_adjust_) || !defined(_di_f_filess_decimate_by_)
-  extern f_status_t private_f_filess_adjust(const f_number_unsigned_t length, f_filess_t *filess) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_filess_adjust(const f_number_unsigned_t length, f_filess_t * const filess) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_filess_adjust_) || !defined(_di_f_filess_decimate_by_)
 
 /**
@@ -170,7 +170,7 @@ extern "C" {
  * @see f_filess_resize()
  */
 #if !defined(_di_f_filess_decrease_by_) || !defined(_di_f_filess_increase_) || !defined(_di_f_filess_increase_by_) || !defined(_di_f_filess_resize_)
-  extern f_status_t private_f_filess_resize(const f_number_unsigned_t length, f_filess_t *filess) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_filess_resize(const f_number_unsigned_t length, f_filess_t * const filess) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_filess_decrease_by_) || !defined(_di_f_filess_increase_) || !defined(_di_f_filess_increase_by_) || !defined(_di_f_filess_resize_)
 
 #ifdef __cplusplus

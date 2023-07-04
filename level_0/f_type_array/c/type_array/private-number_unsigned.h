@@ -35,7 +35,7 @@ extern "C" {
  * @see f_number_unsigneds_decimate_by()
  */
 #if !defined(_di_f_number_unsigneds_adjust_) || !defined(_di_f_number_unsigneds_decimate_by_)
-  extern f_status_t private_f_number_unsigneds_adjust(const f_number_unsigned_t length, f_number_unsigneds_t *lengths) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_number_unsigneds_adjust(const f_number_unsigned_t length, f_number_unsigneds_t * const lengths) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_number_unsigneds_adjust_) || !defined(_di_f_number_unsigneds_decimate_by_)
 
 /**
@@ -58,7 +58,7 @@ extern "C" {
  * @see f_number_unsignedss_append()
  */
 #if !defined(_di_f_number_unsigneds_append_) || !defined(_di_f_number_unsignedss_append_)
-  extern f_status_t private_f_number_unsigneds_append(const f_number_unsigned_t source, f_number_unsigneds_t *destination) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_number_unsigneds_append(const f_number_unsigned_t source, f_number_unsigneds_t * const destination) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_number_unsigneds_append_) || !defined(_di_f_number_unsignedss_append_)
 
 /**
@@ -82,7 +82,7 @@ extern "C" {
  * @see f_number_unsignedss_append_all()
  */
 #if !defined(_di_f_number_unsigneds_append_) || !defined(_di_f_number_unsigneds_append_all_) || !defined(_di_f_number_unsignedss_append_all_)
-  extern f_status_t private_f_number_unsigneds_append_all(const f_number_unsigneds_t source, f_number_unsigneds_t *destination) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_number_unsigneds_append_all(const f_number_unsigneds_t source, f_number_unsigneds_t * const destination) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_number_unsigneds_append_) || !defined(_di_f_number_unsigneds_append_all_) || !defined(_di_f_number_unsignedss_append_all_)
 
 /**
@@ -107,7 +107,7 @@ extern "C" {
  * @see f_number_unsignedss_append()
  */
 #if !defined(_di_f_number_unsigneds_resize_) || !defined(_di_f_number_unsigneds_append_) || !defined(_di_f_number_unsigneds_decrease_by_) || !defined(_di_f_number_unsignedss_append_)
-  extern f_status_t private_f_number_unsigneds_resize(const f_number_unsigned_t length, f_number_unsigneds_t *lengths) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_number_unsigneds_resize(const f_number_unsigned_t length, f_number_unsigneds_t * const lengths) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_number_unsigneds_resize_) || !defined(_di_f_number_unsigneds_append_) || !defined(_di_f_number_unsigneds_decrease_by_) || !defined(_di_f_number_unsignedss_append_)
 
 /**
@@ -135,7 +135,7 @@ extern "C" {
  * @see f_number_unsignedss_decimate_by()
  */
 #if !defined(_di_f_number_unsignedss_adjust_) || !defined(_di_f_number_unsignedss_decimate_by_)
-  extern f_status_t private_f_number_unsignedss_adjust(const f_number_unsigned_t length, f_number_unsignedss_t *lengthss) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_number_unsignedss_adjust(const f_number_unsigned_t length, f_number_unsignedss_t * const lengthss) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_number_unsignedss_adjust_) || !defined(_di_f_number_unsignedss_decimate_by_)
 
 /**
@@ -165,7 +165,7 @@ extern "C" {
  * @see f_number_unsignedss_resize()
  */
 #if !defined(_di_f_number_unsignedss_decrease_by_) || !defined(_di_f_number_unsignedss_increase_) || !defined(_di_f_number_unsignedss_increase_by_) || !defined(_di_f_number_unsignedss_resize_)
-  extern f_status_t private_f_number_unsignedss_resize(const f_number_unsigned_t length, f_number_unsignedss_t *lengthss) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_number_unsignedss_resize(const f_number_unsigned_t length, f_number_unsignedss_t * const lengthss) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_number_unsignedss_decrease_by_) || !defined(_di_f_number_unsignedss_increase_) || !defined(_di_f_number_unsignedss_increase_by_) || !defined(_di_f_number_unsignedss_resize_)
 
 #ifdef __cplusplus

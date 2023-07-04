@@ -35,7 +35,7 @@ extern "C" {
  * @see f_polls_decimate_by()
  */
 #if !defined(_di_f_polls_adjust_) || !defined(_di_f_polls_decimate_by_)
-  extern f_status_t private_f_polls_adjust(const f_number_unsigned_t length, f_polls_t *polls) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_polls_adjust(const f_number_unsigned_t length, f_polls_t * const polls) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_polls_adjust_) || !defined(_di_f_polls_decimate_by_)
 
 /**
@@ -58,7 +58,7 @@ extern "C" {
  * @see f_pollss_append()
  */
 #if !defined(_di_f_polls_append_) || !defined(_di_f_pollss_append_)
-  extern f_status_t private_f_polls_append(const f_poll_t source, f_polls_t *destination) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_polls_append(const f_poll_t source, f_polls_t * const destination) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_polls_append_) || !defined(_di_f_pollss_append_)
 
 /**
@@ -82,7 +82,7 @@ extern "C" {
  * @see f_pollss_append_all()
  */
 #if !defined(_di_f_polls_append_) || !defined(_di_f_polls_append_all_) || !defined(_di_f_pollss_append_all_)
-  extern f_status_t private_f_polls_append_all(const f_polls_t source, f_polls_t *destination) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_polls_append_all(const f_polls_t source, f_polls_t * const destination) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_polls_append_) || !defined(_di_f_polls_append_all_) || !defined(_di_f_pollss_append_all_)
 
 /**
@@ -107,7 +107,7 @@ extern "C" {
  * @see f_pollss_append()
  */
 #if !defined(_di_f_polls_resize_) || !defined(_di_f_polls_append_) || !defined(_di_f_polls_decrease_by_) || !defined(_di_f_pollss_append_)
-  extern f_status_t private_f_polls_resize(const f_number_unsigned_t length, f_polls_t *polls) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_polls_resize(const f_number_unsigned_t length, f_polls_t * const polls) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_polls_resize_) || !defined(_di_f_polls_append_) || !defined(_di_f_polls_decrease_by_) || !defined(_di_f_pollss_append_)
 
 /**
@@ -135,7 +135,7 @@ extern "C" {
  * @see f_pollss_decimate_by()
  */
 #if !defined(_di_f_pollss_adjust_) || !defined(_di_f_pollss_decimate_by_)
-  extern f_status_t private_f_pollss_adjust(const f_number_unsigned_t length, f_pollss_t *pollss) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_pollss_adjust(const f_number_unsigned_t length, f_pollss_t * const pollss) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_pollss_adjust_) || !defined(_di_f_pollss_decimate_by_)
 
 /**
@@ -165,7 +165,7 @@ extern "C" {
  * @see f_pollss_resize()
  */
 #if !defined(_di_f_pollss_decrease_by_) || !defined(_di_f_pollss_increase_) || !defined(_di_f_pollss_increase_by_) || !defined(_di_f_pollss_resize_)
-  extern f_status_t private_f_pollss_resize(const f_number_unsigned_t length, f_pollss_t *pollss) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_pollss_resize(const f_number_unsigned_t length, f_pollss_t * const pollss) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_pollss_decrease_by_) || !defined(_di_f_pollss_increase_) || !defined(_di_f_pollss_increase_by_) || !defined(_di_f_pollss_resize_)
 
 #ifdef __cplusplus

@@ -289,15 +289,18 @@ extern "C" {
 /**
  * Commonly used socket related properties, loosely based off of f_file_t.
  *
- * address:    Pointer to the socket address (stored as "struct sockaddr" but may represent other types such as "struct sockaddr_un" or "struct sockaddr_in").
- * domain:     The socket domain (protocol family).
- * flag:       Flags used for opening the file.
- * id:         File descriptor, with a value of -1 represents a closed file.
- * name:       The name of the socket, if a name is given (for UNIX sockets this represents the path) (Must be a NULL terminated string).
- * protocol:   The socket protocol.
+ * id:       File descriptor, with a value of -1 represents a closed file.
+ * domain:   The socket domain (protocol family).
+ * protocol: The socket protocol.
+ * type:     The socket type.
+ *
  * size_read:  The default number of 1-byte characters to read at a time and is often used for the read buffer size.
  * size_write: The default number of 1-byte characters to read at a time and is often used for the write buffer size.
- * type:       The socket type.
+ *
+ * length:  The length of the socket.
+ * address: Pointer to the socket address (stored as "struct sockaddr" but may represent other types such as "struct sockaddr_un" or "struct sockaddr_in").
+ *
+ * name: The name of the socket, if a name is given (for UNIX sockets this represents the path) (Must be a NULL terminated string).
  */
 #ifndef _di_f_socket_t_
   typedef struct {
@@ -310,15 +313,60 @@ extern "C" {
     size_t size_write;
 
     socklen_t length;
-
     struct sockaddr *address;
 
-    f_string_t name;
+    f_string_static_t name;
   } f_socket_t;
 
-  #define f_socket_t_initialize { -1, 0, 0, 0, F_socket_default_read_size_d, F_socket_default_write_size_d, 0, 0 }
+  #define f_socket_t_initialize { -1, 0, 0, 0, F_socket_default_read_size_d, F_socket_default_write_size_d, 0, 0, f_string_empty_s }
 
-  #define macro_f_socket_t_initialize_1(address) { -1, 0, 0, 0, F_socket_default_read_size_d, F_socket_default_write_size_d, address, 0 }
+  #define macro_f_socket_t_initialize_1(address, length) { \
+    -1, \
+    0, \
+    0, \
+    0, \
+    F_socket_default_read_size_d, \
+    F_socket_default_write_size_d, \
+    address, \
+    length, \
+    f_string_empty_s \
+  }
+
+  #define macro_f_socket_t_initialize_2(address, length, name) { \
+    -1, \
+    0, \
+    0, \
+    0, \
+    F_socket_default_read_size_d, \
+    F_socket_default_write_size_d, \
+    address, \
+    length, \
+    name \
+  }
+
+  #define macro_f_socket_t_initialize_3(id, domain, protocol, type, address, length, name) { \
+    id, \
+    domain, \
+    protocol, \
+    type, \
+    F_socket_default_read_size_d, \
+    F_socket_default_write_size_d, \
+    address, \
+    length, \
+    name \
+  }
+
+  #define macro_f_socket_t_initialize_4(id, domain, protocol, type, size_read, size_write, address, length, name) { \
+    id, \
+    domain, \
+    protocol, \
+    type, \
+    size_read, \
+    size_write, \
+    address, \
+    length, \
+    name \
+  }
 
   #define macro_f_socket_t_clear(file) \
     file.id = -1; \
@@ -328,7 +376,8 @@ extern "C" {
     file.size_read = 0; \
     file.size_write = 0; \
     file.length = 0; \
-    file.name = 0;
+    file.address = 0; \
+    macro_f_string_static_t_clear(file);
 
   #define macro_f_socket_t_reset(file) \
     file.id = -1; \
@@ -338,8 +387,51 @@ extern "C" {
     file.size_read = F_socket_default_read_size_d; \
     file.size_write = F_socket_default_write_size_d; \
     file.length = 0; \
-    file.name = 0;
+    file.address = 0; \
+    macro_f_string_static_t_clear(file);
 #endif // _di_f_socket_t_
+
+/**
+ * An array of f_socket_t.
+ *
+ * array: The array of f_socket_t.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
+ */
+#ifndef _di_f_sockets_t_
+  typedef struct {
+    f_socket_t *array;
+
+    f_number_unsigned_t size;
+    f_number_unsigned_t used;
+  } f_sockets_t;
+
+  #define f_sockets_t_initialize { 0, 0, 0 }
+
+  #define macro_f_sockets_t_initialize_1(array, size, used) { array, size, used }
+  #define macro_f_sockets_t_initialize_2(array, length) { array, length, length }
+#endif // _di_f_sockets_t_
+
+/**
+ * This holds an array of f_sockets_t.
+ *
+ * array: The array of f_socket_t arrays.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
+ */
+#ifndef _di_f_socketss_t_
+  typedef struct {
+    f_sockets_t *array;
+
+    f_number_unsigned_t size;
+    f_number_unsigned_t used;
+  } f_socketss_t;
+
+  #define f_socketss_t_initialize { 0, 0, 0 }
+
+  #define macro_f_socketss_t_initialize_1(array, size, used) { array, size, used }
+  #define macro_f_socketss_t_initialize_2(array, length) { array, length, length }
+#endif // _di_f_socketss_t_
 
 #ifdef __cplusplus
 } // extern "C"

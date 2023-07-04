@@ -32,7 +32,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_adjust().
  */
 #ifndef _di_f_states_adjust_
-  extern f_status_t f_states_adjust(const f_number_unsigned_t length, f_states_t *states);
+  extern f_status_t f_states_adjust(const f_number_unsigned_t length, f_states_t * const states);
 #endif // _di_f_states_adjust_
 
 /**
@@ -52,7 +52,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_states_append_
-  extern f_status_t f_states_append(const f_state_t source, f_states_t *destination);
+  extern f_status_t f_states_append(const f_state_t source, f_states_t * const destination);
 #endif // _di_f_states_append_
 
 /**
@@ -72,7 +72,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_states_append_all_
-  extern f_status_t f_states_append_all(const f_states_t source, f_states_t *destination);
+  extern f_status_t f_states_append_all(const f_states_t source, f_states_t * const destination);
 #endif // _di_f_states_append_all_
 
 /**
@@ -96,7 +96,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_adjust().
  */
 #ifndef _di_f_states_decimate_by_
-  extern f_status_t f_states_decimate_by(const f_number_unsigned_t amount, f_states_t *states);
+  extern f_status_t f_states_decimate_by(const f_number_unsigned_t amount, f_states_t * const states);
 #endif // _di_f_states_decimate_by_
 
 /**
@@ -120,7 +120,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_states_decrease_by_
-  extern f_status_t f_states_decrease_by(const f_number_unsigned_t amount, f_states_t *states);
+  extern f_status_t f_states_decrease_by(const f_number_unsigned_t amount, f_states_t * const states);
 #endif // _di_f_states_decrease_by_
 
 /**
@@ -145,7 +145,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_states_increase_
-  extern f_status_t f_states_increase(const f_number_unsigned_t step, f_states_t *states);
+  extern f_status_t f_states_increase(const f_number_unsigned_t step, f_states_t * const states);
 #endif // _di_f_states_increase_
 
 /**
@@ -170,7 +170,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_states_increase_by_
-  extern f_status_t f_states_increase_by(const f_number_unsigned_t amount, f_states_t *states);
+  extern f_status_t f_states_increase_by(const f_number_unsigned_t amount, f_states_t * const states);
 #endif // _di_f_states_increase_by_
 
 /**
@@ -189,7 +189,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_states_resize_
-  extern f_status_t f_states_resize(const f_number_unsigned_t length, f_states_t *states);
+  extern f_status_t f_states_resize(const f_number_unsigned_t length, f_states_t * const states);
 #endif // _di_f_states_resize_
 
 /**
@@ -209,7 +209,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_destroy().
  */
 #ifndef _di_f_statess_adjust_
-  extern f_status_t f_statess_adjust(const f_number_unsigned_t length, f_statess_t *statess);
+  extern f_status_t f_statess_adjust(const f_number_unsigned_t length, f_statess_t * const statess);
 #endif // _di_f_statess_adjust_
 
 /**
@@ -229,7 +229,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_statess_append_
-  extern f_status_t f_statess_append(const f_states_t source, f_statess_t *destination);
+  extern f_status_t f_statess_append(const f_states_t source, f_statess_t * const destination);
 #endif // _di_f_statess_append_
 
 /**
@@ -249,7 +249,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_statess_append_all_
-  extern f_status_t f_statess_append_all(const f_statess_t source, f_statess_t *destination);
+  extern f_status_t f_statess_append_all(const f_statess_t source, f_statess_t * const destination);
 #endif // _di_f_statess_append_all_
 
 /**
@@ -274,7 +274,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_destroy().
  */
 #ifndef _di_f_statess_decimate_by_
-  extern f_status_t f_statess_decimate_by(const f_number_unsigned_t amount, f_statess_t *statess);
+  extern f_status_t f_statess_decimate_by(const f_number_unsigned_t amount, f_statess_t * const statess);
 #endif // _di_f_statess_decimate_by_
 
 /**
@@ -299,7 +299,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_statess_decrease_by_
-  extern f_status_t f_statess_decrease_by(const f_number_unsigned_t amount, f_statess_t *statess);
+  extern f_status_t f_statess_decrease_by(const f_number_unsigned_t amount, f_statess_t * const statess);
 #endif // _di_f_statess_decrease_by_
 
 /**
@@ -324,7 +324,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_statess_increase_
-  extern f_status_t f_statess_increase(const f_number_unsigned_t step, f_statess_t *statess);
+  extern f_status_t f_statess_increase(const f_number_unsigned_t step, f_statess_t * const statess);
 #endif // _di_f_statess_increase_
 
 /**
@@ -349,7 +349,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_statess_increase_by_
-  extern f_status_t f_statess_increase_by(const f_number_unsigned_t amount, f_statess_t *statess);
+  extern f_status_t f_statess_increase_by(const f_number_unsigned_t amount, f_statess_t * const statess);
 #endif // _di_f_statess_increase_by_
 
 /**
@@ -369,7 +369,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_statess_resize_
-  extern f_status_t f_statess_resize(const f_number_unsigned_t length, f_statess_t *statess);
+  extern f_status_t f_statess_resize(const f_number_unsigned_t length, f_statess_t * const statess);
 #endif // _di_f_statess_resize_
 
 #ifdef __cplusplus

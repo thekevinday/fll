@@ -35,7 +35,7 @@ extern "C" {
  * @see f_fll_ids_decimate_by()
  */
 #if !defined(_di_f_fll_ids_adjust_) || !defined(_di_f_fll_ids_decimate_by_)
-  extern f_status_t private_f_fll_ids_adjust(const f_number_unsigned_t length, f_fll_ids_t *fll_ids) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_fll_ids_adjust(const f_number_unsigned_t length, f_fll_ids_t * const fll_ids) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_fll_ids_adjust_) || !defined(_di_f_fll_ids_decimate_by_)
 
 /**
@@ -58,7 +58,7 @@ extern "C" {
  * @see f_fll_idss_append()
  */
 #if !defined(_di_f_fll_ids_append_) || !defined(_di_f_fll_idss_append_)
-  extern f_status_t private_f_fll_ids_append(const f_fll_id_t source, f_fll_ids_t *destination) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_fll_ids_append(const f_fll_id_t source, f_fll_ids_t * const destination) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_fll_ids_append_) || !defined(_di_f_fll_idss_append_)
 
 /**
@@ -82,7 +82,7 @@ extern "C" {
  * @see f_fll_idss_append_all()
  */
 #if !defined(_di_f_fll_ids_append_) || !defined(_di_f_fll_ids_append_all_) || !defined(_di_f_fll_idss_append_all_)
-  extern f_status_t private_f_fll_ids_append_all(const f_fll_ids_t source, f_fll_ids_t *destination) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_fll_ids_append_all(const f_fll_ids_t source, f_fll_ids_t * const destination) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_fll_ids_append_) || !defined(_di_f_fll_ids_append_all_) || !defined(_di_f_fll_idss_append_all_)
 
 /**
@@ -107,7 +107,7 @@ extern "C" {
  * @see f_fll_idss_append()
  */
 #if !defined(_di_f_fll_ids_resize_) || !defined(_di_f_fll_ids_append_) || !defined(_di_f_fll_ids_decrease_by_) || !defined(_di_f_fll_idss_append_)
-  extern f_status_t private_f_fll_ids_resize(const f_number_unsigned_t length, f_fll_ids_t *fll_ids) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_fll_ids_resize(const f_number_unsigned_t length, f_fll_ids_t * const fll_ids) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_fll_ids_resize_) || !defined(_di_f_fll_ids_append_) || !defined(_di_f_fll_ids_decrease_by_) || !defined(_di_f_fll_idss_append_)
 
 /**
@@ -135,7 +135,7 @@ extern "C" {
  * @see f_fll_idss_decimate_by()
  */
 #if !defined(_di_f_fll_idss_adjust_) || !defined(_di_f_fll_idss_decimate_by_)
-  extern f_status_t private_f_fll_idss_adjust(const f_number_unsigned_t length, f_fll_idss_t *fll_idss) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_fll_idss_adjust(const f_number_unsigned_t length, f_fll_idss_t * const fll_idss) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_fll_idss_adjust_) || !defined(_di_f_fll_idss_decimate_by_)
 
 /**
@@ -165,7 +165,7 @@ extern "C" {
  * @see f_fll_idss_resize()
  */
 #if !defined(_di_f_fll_idss_decrease_by_) || !defined(_di_f_fll_idss_increase_) || !defined(_di_f_fll_idss_increase_by_) || !defined(_di_f_fll_idss_resize_)
-  extern f_status_t private_f_fll_idss_resize(const f_number_unsigned_t length, f_fll_idss_t *fll_idss) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_fll_idss_resize(const f_number_unsigned_t length, f_fll_idss_t * const fll_idss) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_fll_idss_decrease_by_) || !defined(_di_f_fll_idss_increase_) || !defined(_di_f_fll_idss_increase_by_) || !defined(_di_f_fll_idss_resize_)
 
 #ifdef __cplusplus

@@ -87,8 +87,9 @@ extern "C" {
 
       address->sun_family = f_socket_domain_file_d;
 
-      if (socket->name) {
-        strncpy(address->sun_path, socket->name, sizeof(address->sun_path) - 1);
+      if (socket->name.used && socket->name.string) {
+        strncpy(address->sun_path, socket->name.string, socket->name.used);
+        address->sun_path[socket->name.used] = 0;
       }
       else {
         address->sun_path[0] = 0;

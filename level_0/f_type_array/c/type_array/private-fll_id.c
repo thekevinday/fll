@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #if !defined(_di_f_fll_ids_adjust_) || !defined(_di_f_fll_ids_decimate_by_)
-  f_status_t private_f_fll_ids_adjust(const f_number_unsigned_t length, f_fll_ids_t *ids) {
+  f_status_t private_f_fll_ids_adjust(const f_number_unsigned_t length, f_fll_ids_t * const ids) {
 
     const f_status_t status = f_memory_adjust(ids->size, length, sizeof(f_fll_id_t), (void **) & ids->array);
     if (F_status_is_error(status)) return status;
@@ -22,7 +22,7 @@ extern "C" {
 #endif // !defined(_di_f_fll_ids_adjust_) || !defined(_di_f_fll_ids_decimate_by_)
 
 #if !defined(_di_f_fll_ids_append_) || !defined(_di_f_fll_idss_append_)
-  extern f_status_t private_f_fll_ids_append(const f_fll_id_t source, f_fll_ids_t *destination) {
+  extern f_status_t private_f_fll_ids_append(const f_fll_id_t source, f_fll_ids_t * const destination) {
 
     if (destination->used + 1 > destination->size) {
       const f_status_t status = private_f_fll_ids_resize(destination->used + F_memory_default_allocation_small_d, destination);
@@ -39,7 +39,7 @@ extern "C" {
 #endif // !defined(_di_f_fll_ids_append_) || !defined(_di_f_fll_idss_append_)
 
 #if !defined(_di_f_fll_ids_append_) || !defined(_di_f_fll_ids_append_all_) || !defined(_di_f_fll_idss_append_all_)
-  extern f_status_t private_f_fll_ids_append_all(const f_fll_ids_t source, f_fll_ids_t *destination) {
+  extern f_status_t private_f_fll_ids_append_all(const f_fll_ids_t source, f_fll_ids_t * const destination) {
 
     if (destination->used + source.used > destination->size) {
       const f_status_t status = private_f_fll_ids_resize(destination->used + source.used, destination);
@@ -59,7 +59,7 @@ extern "C" {
 #endif // !defined(_di_f_fll_ids_append_) || !defined(_di_f_fll_ids_append_all_) || !defined(_di_f_fll_idss_append_all_)
 
 #if !defined(_di_f_fll_ids_resize_) || !defined(_di_f_fll_ids_append_) || !defined(_di_f_fll_ids_decrease_by_) || !defined(_di_f_fll_idss_append_)
-  f_status_t private_f_fll_ids_resize(const f_number_unsigned_t length, f_fll_ids_t *ids) {
+  f_status_t private_f_fll_ids_resize(const f_number_unsigned_t length, f_fll_ids_t * const ids) {
 
     const f_status_t status = f_memory_resize(ids->size, length, sizeof(f_fll_id_t), (void **) & ids->array);
     if (F_status_is_error(status)) return status;
@@ -75,7 +75,7 @@ extern "C" {
 #endif // !defined(_di_f_fll_ids_resize_) || !defined(_di_f_fll_ids_append_) || !defined(_di_f_fll_ids_decrease_by_) || !defined(_di_f_fll_idss_append_)
 
 #if !defined(_di_f_fll_idss_adjust_) || !defined(_di_f_fll_idss_decimate_by_)
-  f_status_t private_f_fll_idss_adjust(const f_number_unsigned_t length, f_fll_idss_t *idss) {
+  f_status_t private_f_fll_idss_adjust(const f_number_unsigned_t length, f_fll_idss_t * const idss) {
 
     f_status_t status = F_none;
 
@@ -102,7 +102,7 @@ extern "C" {
 #endif // !defined(_di_f_fll_idss_adjust_) || !defined(_di_f_fll_idss_decimate_by_)
 
 #if !defined(_di_f_fll_idss_decrease_by_) || !defined(_di_f_fll_idss_increase_) || !defined(_di_f_fll_idss_increase_by_) || !defined(_di_f_fll_idss_resize_)
-  f_status_t private_f_fll_idss_resize(const f_number_unsigned_t length, f_fll_idss_t *idss) {
+  f_status_t private_f_fll_idss_resize(const f_number_unsigned_t length, f_fll_idss_t * const idss) {
 
     f_status_t status = F_none;
 

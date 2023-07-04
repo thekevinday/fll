@@ -32,7 +32,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_adjust().
  */
 #ifndef _di_f_cells_adjust_
-  extern f_status_t f_cells_adjust(const f_number_unsigned_t length, f_cells_t *cells);
+  extern f_status_t f_cells_adjust(const f_number_unsigned_t length, f_cells_t * const cells);
 #endif // _di_f_cells_adjust_
 
 /**
@@ -52,7 +52,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_cells_append_
-  extern f_status_t f_cells_append(const f_cell_t source, f_cells_t *destination);
+  extern f_status_t f_cells_append(const f_cell_t source, f_cells_t * const destination);
 #endif // _di_f_cells_append_
 
 /**
@@ -72,7 +72,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_cells_append_all_
-  extern f_status_t f_cells_append_all(const f_cells_t source, f_cells_t *destination);
+  extern f_status_t f_cells_append_all(const f_cells_t source, f_cells_t * const destination);
 #endif // _di_f_cells_append_all_
 
 /**
@@ -96,7 +96,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_adjust().
  */
 #ifndef _di_f_cells_decimate_by_
-  extern f_status_t f_cells_decimate_by(const f_number_unsigned_t amount, f_cells_t *cells);
+  extern f_status_t f_cells_decimate_by(const f_number_unsigned_t amount, f_cells_t * const cells);
 #endif // _di_f_cells_decimate_by_
 
 /**
@@ -120,7 +120,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_cells_decrease_by_
-  extern f_status_t f_cells_decrease_by(const f_number_unsigned_t amount, f_cells_t *cells);
+  extern f_status_t f_cells_decrease_by(const f_number_unsigned_t amount, f_cells_t * const cells);
 #endif // _di_f_cells_decrease_by_
 
 /**
@@ -145,7 +145,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_cells_increase_
-  extern f_status_t f_cells_increase(const f_number_unsigned_t step, f_cells_t *cells);
+  extern f_status_t f_cells_increase(const f_number_unsigned_t step, f_cells_t * const cells);
 #endif // _di_f_cells_increase_
 
 /**
@@ -170,7 +170,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_cells_increase_by_
-  extern f_status_t f_cells_increase_by(const f_number_unsigned_t amount, f_cells_t *cells);
+  extern f_status_t f_cells_increase_by(const f_number_unsigned_t amount, f_cells_t * const cells);
 #endif // _di_f_cells_increase_by_
 
 /**
@@ -189,7 +189,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_cells_resize_
-  extern f_status_t f_cells_resize(const f_number_unsigned_t length, f_cells_t *cells);
+  extern f_status_t f_cells_resize(const f_number_unsigned_t length, f_cells_t * const cells);
 #endif // _di_f_cells_resize_
 
 /**
@@ -209,7 +209,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_destroy().
  */
 #ifndef _di_f_cellss_adjust_
-  extern f_status_t f_cellss_adjust(const f_number_unsigned_t length, f_cellss_t *cellss);
+  extern f_status_t f_cellss_adjust(const f_number_unsigned_t length, f_cellss_t * const cellss);
 #endif // _di_f_cellss_adjust_
 
 /**
@@ -229,7 +229,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_cellss_append_
-  extern f_status_t f_cellss_append(const f_cells_t source, f_cellss_t *destination);
+  extern f_status_t f_cellss_append(const f_cells_t source, f_cellss_t * const destination);
 #endif // _di_f_cellss_append_
 
 /**
@@ -249,7 +249,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_cellss_append_all_
-  extern f_status_t f_cellss_append_all(const f_cellss_t source, f_cellss_t *destination);
+  extern f_status_t f_cellss_append_all(const f_cellss_t source, f_cellss_t * const destination);
 #endif // _di_f_cellss_append_all_
 
 /**
@@ -273,7 +273,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_destroy().
  */
 #ifndef _di_f_cellss_decimate_by_
-  extern f_status_t f_cellss_decimate_by(const f_number_unsigned_t amount, f_cellss_t *cellss);
+  extern f_status_t f_cellss_decimate_by(const f_number_unsigned_t amount, f_cellss_t * const cellss);
 #endif // _di_f_cellss_decimate_by_
 
 /**
@@ -297,7 +297,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_cellss_decrease_by_
-  extern f_status_t f_cellss_decrease_by(const f_number_unsigned_t amount, f_cellss_t *cellss);
+  extern f_status_t f_cellss_decrease_by(const f_number_unsigned_t amount, f_cellss_t * const cellss);
 #endif // _di_f_cellss_decrease_by_
 
 /**
@@ -322,7 +322,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_cellss_increase_
-  extern f_status_t f_cellss_increase(const f_number_unsigned_t step, f_cellss_t *cellss);
+  extern f_status_t f_cellss_increase(const f_number_unsigned_t step, f_cellss_t * const cellss);
 #endif // _di_f_cellss_increase_
 
 /**
@@ -347,7 +347,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_cellss_increase_by_
-  extern f_status_t f_cellss_increase_by(const f_number_unsigned_t amount, f_cellss_t *cellss);
+  extern f_status_t f_cellss_increase_by(const f_number_unsigned_t amount, f_cellss_t * const cellss);
 #endif // _di_f_cellss_increase_by_
 
 /**
@@ -367,7 +367,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_cellss_resize_
-  extern f_status_t f_cellss_resize(const f_number_unsigned_t length, f_cellss_t *cellss);
+  extern f_status_t f_cellss_resize(const f_number_unsigned_t length, f_cellss_t * const cellss);
 #endif // _di_f_cellss_resize_
 
 #ifdef __cplusplus

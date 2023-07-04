@@ -32,7 +32,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_adjust().
  */
 #ifndef _di_f_files_adjust_
-  extern f_status_t f_files_adjust(const f_number_unsigned_t length, f_files_t *files);
+  extern f_status_t f_files_adjust(const f_number_unsigned_t length, f_files_t * const files);
 #endif // _di_f_files_adjust_
 
 /**
@@ -52,7 +52,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_files_append_
-  extern f_status_t f_files_append(const f_file_t source, f_files_t *destination);
+  extern f_status_t f_files_append(const f_file_t source, f_files_t * const destination);
 #endif // _di_f_files_append_
 
 /**
@@ -72,7 +72,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_files_append_all_
-  extern f_status_t f_files_append_all(const f_files_t source, f_files_t *destination);
+  extern f_status_t f_files_append_all(const f_files_t source, f_files_t * const destination);
 #endif // _di_f_files_append_all_
 
 /**
@@ -96,7 +96,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_adjust().
  */
 #ifndef _di_f_files_decimate_by_
-  extern f_status_t f_files_decimate_by(const f_number_unsigned_t amount, f_files_t *files);
+  extern f_status_t f_files_decimate_by(const f_number_unsigned_t amount, f_files_t * const files);
 #endif // _di_f_files_decimate_by_
 
 /**
@@ -120,7 +120,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_files_decrease_by_
-  extern f_status_t f_files_decrease_by(const f_number_unsigned_t amount, f_files_t *files);
+  extern f_status_t f_files_decrease_by(const f_number_unsigned_t amount, f_files_t * const files);
 #endif // _di_f_files_decrease_by_
 
 /**
@@ -145,7 +145,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_files_increase_
-  extern f_status_t f_files_increase(const f_number_unsigned_t step, f_files_t *files);
+  extern f_status_t f_files_increase(const f_number_unsigned_t step, f_files_t * const files);
 #endif // _di_f_files_increase_
 
 /**
@@ -170,7 +170,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_files_increase_by_
-  extern f_status_t f_files_increase_by(const f_number_unsigned_t amount, f_files_t *files);
+  extern f_status_t f_files_increase_by(const f_number_unsigned_t amount, f_files_t * const files);
 #endif // _di_f_files_increase_by_
 
 /**
@@ -189,7 +189,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_files_resize_
-  extern f_status_t f_files_resize(const f_number_unsigned_t length, f_files_t *files);
+  extern f_status_t f_files_resize(const f_number_unsigned_t length, f_files_t * const files);
 #endif // _di_f_files_resize_
 
 /**
@@ -209,7 +209,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_destroy().
  */
 #ifndef _di_f_filess_adjust_
-  extern f_status_t f_filess_adjust(const f_number_unsigned_t length, f_filess_t *filess);
+  extern f_status_t f_filess_adjust(const f_number_unsigned_t length, f_filess_t * const filess);
 #endif // _di_f_filess_adjust_
 
 /**
@@ -229,7 +229,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_filess_append_
-  extern f_status_t f_filess_append(const f_files_t source, f_filess_t *destination);
+  extern f_status_t f_filess_append(const f_files_t source, f_filess_t * const destination);
 #endif // _di_f_filess_append_
 
 /**
@@ -249,7 +249,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_filess_append_all_
-  extern f_status_t f_filess_append_all(const f_filess_t source, f_filess_t *destination);
+  extern f_status_t f_filess_append_all(const f_filess_t source, f_filess_t * const destination);
 #endif // _di_f_filess_append_all_
 
 /**
@@ -274,7 +274,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_destroy().
  */
 #ifndef _di_f_filess_decimate_by_
-  extern f_status_t f_filess_decimate_by(const f_number_unsigned_t amount, f_filess_t *filess);
+  extern f_status_t f_filess_decimate_by(const f_number_unsigned_t amount, f_filess_t * const filess);
 #endif // _di_f_filess_decimate_by_
 
 /**
@@ -299,7 +299,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_filess_decrease_by_
-  extern f_status_t f_filess_decrease_by(const f_number_unsigned_t amount, f_filess_t *filess);
+  extern f_status_t f_filess_decrease_by(const f_number_unsigned_t amount, f_filess_t * const filess);
 #endif // _di_f_filess_decrease_by_
 
 /**
@@ -324,7 +324,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_filess_increase_
-  extern f_status_t f_filess_increase(const f_number_unsigned_t step, f_filess_t *filess);
+  extern f_status_t f_filess_increase(const f_number_unsigned_t step, f_filess_t * const filess);
 #endif // _di_f_filess_increase_
 
 /**
@@ -349,7 +349,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_filess_increase_by_
-  extern f_status_t f_filess_increase_by(const f_number_unsigned_t amount, f_filess_t *filess);
+  extern f_status_t f_filess_increase_by(const f_number_unsigned_t amount, f_filess_t * const filess);
 #endif // _di_f_filess_increase_by_
 
 /**
@@ -369,7 +369,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_filess_resize_
-  extern f_status_t f_filess_resize(const f_number_unsigned_t length, f_filess_t *filess);
+  extern f_status_t f_filess_resize(const f_number_unsigned_t length, f_filess_t * const filess);
 #endif // _di_f_filess_resize_
 
 #ifdef __cplusplus

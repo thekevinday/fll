@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #if !defined(_di_f_uint16s_adjust_) || !defined(_di_f_uint16s_decimate_by_)
-  f_status_t private_f_uint16s_adjust(const f_number_unsigned_t length, f_uint16s_t *uint16s) {
+  f_status_t private_f_uint16s_adjust(const f_number_unsigned_t length, f_uint16s_t * const uint16s) {
 
     const f_status_t status = f_memory_adjust(uint16s->size, length, sizeof(uint16_t), (void **) & uint16s->array);
     if (F_status_is_error(status)) return status;
@@ -22,7 +22,7 @@ extern "C" {
 #endif // !defined(_di_f_uint16s_adjust_) || !defined(_di_f_uint16s_decimate_by_)
 
 #if !defined(_di_f_uint16s_append_) || !defined(_di_f_uint16ss_append_)
-  extern f_status_t private_f_uint16s_append(const uint16_t source, f_uint16s_t *destination) {
+  extern f_status_t private_f_uint16s_append(const uint16_t source, f_uint16s_t * const destination) {
 
     if (destination->used + 1 > destination->size) {
       const f_status_t status = private_f_uint16s_resize(destination->used + F_memory_default_allocation_small_d, destination);
@@ -36,7 +36,7 @@ extern "C" {
 #endif // !defined(_di_f_uint16s_append_) || !defined(_di_f_uint16ss_append_)
 
 #if !defined(_di_f_uint16s_append_) || !defined(_di_f_uint16s_append_all_) || !defined(_di_f_uint16ss_append_all_)
-  extern f_status_t private_f_uint16s_append_all(const f_uint16s_t source, f_uint16s_t *destination) {
+  extern f_status_t private_f_uint16s_append_all(const f_uint16s_t source, f_uint16s_t * const destination) {
 
     if (destination->used + source.used > destination->size) {
       const f_status_t status = private_f_uint16s_resize(destination->used + source.used, destination);
@@ -52,7 +52,7 @@ extern "C" {
 #endif // !defined(_di_f_uint16s_append_) || !defined(_di_f_uint16s_append_all_) || !defined(_di_f_uint16ss_append_all_)
 
 #if !defined(_di_f_uint16s_resize_) || !defined(_di_f_uint16s_append_) || !defined(_di_f_uint16s_decrease_by_) || !defined(_di_f_uint16ss_append_)
-  f_status_t private_f_uint16s_resize(const f_number_unsigned_t length, f_uint16s_t *uint16s) {
+  f_status_t private_f_uint16s_resize(const f_number_unsigned_t length, f_uint16s_t * const uint16s) {
 
     const f_status_t status = f_memory_resize(uint16s->size, length, sizeof(uint16_t), (void **) & uint16s->array);
     if (F_status_is_error(status)) return status;
@@ -68,7 +68,7 @@ extern "C" {
 #endif // !defined(_di_f_uint16s_resize_) || !defined(_di_f_uint16s_append_) || !defined(_di_f_uint16s_decrease_by_) || !defined(_di_f_uint16ss_append_)
 
 #if !defined(_di_f_uint16ss_adjust_) || !defined(_di_f_uint16ss_decimate_by_)
-  f_status_t private_f_uint16ss_adjust(const f_number_unsigned_t length, f_uint16ss_t *uint16ss) {
+  f_status_t private_f_uint16ss_adjust(const f_number_unsigned_t length, f_uint16ss_t * const uint16ss) {
 
     f_status_t status = F_none;
 
@@ -95,7 +95,7 @@ extern "C" {
 #endif // !defined(_di_f_uint16ss_adjust_) || !defined(_di_f_uint16ss_decimate_by_)
 
 #if !defined(_di_f_uint16ss_decrease_by_) || !defined(_di_f_uint16ss_increase_) || !defined(_di_f_uint16ss_increase_by_) || !defined(_di_f_uint16ss_resize_)
-  f_status_t private_f_uint16ss_resize(const f_number_unsigned_t length, f_uint16ss_t *uint16ss) {
+  f_status_t private_f_uint16ss_resize(const f_number_unsigned_t length, f_uint16ss_t * const uint16ss) {
 
     f_status_t status = F_none;
 

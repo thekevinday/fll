@@ -27,6 +27,7 @@
 
 // FLL-0 socket includes.
 #include <fll/level_0/socket/common.h>
+#include <fll/level_0/socket/socket.h>
 
 #ifdef __cplusplus
 extern "C" {

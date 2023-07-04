@@ -7,7 +7,7 @@ extern "C" {
 #endif
 
 #if !defined(_di_f_polls_adjust_) || !defined(_di_f_polls_decimate_by_)
-  f_status_t private_f_polls_adjust(const f_number_unsigned_t length, f_polls_t *polls) {
+  f_status_t private_f_polls_adjust(const f_number_unsigned_t length, f_polls_t * const polls) {
 
     const f_status_t status = f_memory_adjust(polls->size, length, sizeof(f_poll_t), (void **) & polls->array);
     if (F_status_is_error(status)) return status;
@@ -23,7 +23,7 @@ extern "C" {
 #endif // !defined(_di_f_polls_adjust_) || !defined(_di_f_polls_decimate_by_)
 
 #if !defined(_di_f_polls_append_) || !defined(_di_f_pollss_append_)
-  extern f_status_t private_f_polls_append(const f_poll_t source, f_polls_t *destination) {
+  extern f_status_t private_f_polls_append(const f_poll_t source, f_polls_t * const destination) {
 
     if (destination->used + 1 > destination->size) {
       const f_status_t status = private_f_polls_resize(destination->used + F_memory_default_allocation_small_d, destination);
@@ -37,7 +37,7 @@ extern "C" {
 #endif // !defined(_di_f_polls_append_) || !defined(_di_f_pollss_append_)
 
 #if !defined(_di_f_polls_append_) || !defined(_di_f_polls_append_all_) || !defined(_di_f_pollss_append_all_)
-  extern f_status_t private_f_polls_append_all(const f_polls_t source, f_polls_t *destination) {
+  extern f_status_t private_f_polls_append_all(const f_polls_t source, f_polls_t * const destination) {
 
     if (destination->used + source.used > destination->size) {
       const f_status_t status = private_f_polls_resize(destination->used + source.used, destination);
@@ -53,7 +53,7 @@ extern "C" {
 #endif // !defined(_di_f_polls_append_) || !defined(_di_f_polls_append_all_) || !defined(_di_f_pollss_append_all_)
 
 #if !defined(_di_f_polls_resize_) || !defined(_di_f_polls_append_) || !defined(_di_f_polls_decrease_by_) || !defined(_di_f_pollss_append_)
-  f_status_t private_f_polls_resize(const f_number_unsigned_t length, f_polls_t *polls) {
+  f_status_t private_f_polls_resize(const f_number_unsigned_t length, f_polls_t * const polls) {
 
     const f_status_t status = f_memory_resize(polls->size, length, sizeof(f_poll_t), (void **) & polls->array);
     if (F_status_is_error(status)) return status;
@@ -69,7 +69,7 @@ extern "C" {
 #endif // !defined(_di_f_polls_resize_) || !defined(_di_f_polls_append_) || !defined(_di_f_polls_decrease_by_) || !defined(_di_f_pollss_append_)
 
 #if !defined(_di_f_pollss_adjust_) || !defined(_di_f_pollss_decimate_by_)
-  f_status_t private_f_pollss_adjust(const f_number_unsigned_t length, f_pollss_t *pollss) {
+  f_status_t private_f_pollss_adjust(const f_number_unsigned_t length, f_pollss_t * const pollss) {
 
     f_status_t status = F_none;
 
@@ -96,7 +96,7 @@ extern "C" {
 #endif // !defined(_di_f_pollss_adjust_) || !defined(_di_f_pollss_decimate_by_)
 
 #if !defined(_di_f_pollss_decrease_by_) || !defined(_di_f_pollss_increase_) || !defined(_di_f_pollss_increase_by_) || !defined(_di_f_pollss_resize_)
-  f_status_t private_f_pollss_resize(const f_number_unsigned_t length, f_pollss_t *pollss) {
+  f_status_t private_f_pollss_resize(const f_number_unsigned_t length, f_pollss_t * const pollss) {
 
     f_status_t status = F_none;
 

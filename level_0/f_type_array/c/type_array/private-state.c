@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #if !defined(_di_f_states_adjust_) || !defined(_di_f_states_decimate_by_)
-  f_status_t private_f_states_adjust(const f_number_unsigned_t length, f_states_t *states) {
+  f_status_t private_f_states_adjust(const f_number_unsigned_t length, f_states_t * const states) {
 
     const f_status_t status = f_memory_adjust(states->size, length, sizeof(f_state_t), (void **) & states->array);
     if (F_status_is_error(status)) return status;
@@ -22,7 +22,7 @@ extern "C" {
 #endif // !defined(_di_f_states_adjust_) || !defined(_di_f_states_decimate_by_)
 
 #if !defined(_di_f_states_append_) || !defined(_di_f_statess_append_)
-  extern f_status_t private_f_states_append(const f_state_t source, f_states_t *destination) {
+  extern f_status_t private_f_states_append(const f_state_t source, f_states_t * const destination) {
 
     if (destination->used + 1 > destination->size) {
       const f_status_t status = private_f_states_resize(destination->used + F_memory_default_allocation_small_d, destination);
@@ -44,7 +44,7 @@ extern "C" {
 #endif // !defined(_di_f_states_append_) || !defined(_di_f_statess_append_)
 
 #if !defined(_di_f_states_append_) || !defined(_di_f_states_append_all_) || !defined(_di_f_statess_append_all_)
-  extern f_status_t private_f_states_append_all(const f_states_t source, f_states_t *destination) {
+  extern f_status_t private_f_states_append_all(const f_states_t source, f_states_t * const destination) {
 
     if (destination->used + source.used > destination->size) {
       const f_status_t status = private_f_states_resize(destination->used + source.used, destination);
@@ -69,7 +69,7 @@ extern "C" {
 #endif // !defined(_di_f_states_append_) || !defined(_di_f_states_append_all_) || !defined(_di_f_statess_append_all_)
 
 #if !defined(_di_f_states_resize_) || !defined(_di_f_states_append_) || !defined(_di_f_states_decrease_by_) || !defined(_di_f_statess_append_)
-  f_status_t private_f_states_resize(const f_number_unsigned_t length, f_states_t *states) {
+  f_status_t private_f_states_resize(const f_number_unsigned_t length, f_states_t * const states) {
 
     const f_status_t status = f_memory_resize(states->size, length, sizeof(f_state_t), (void **) & states->array);
     if (F_status_is_error(status)) return status;
@@ -85,7 +85,7 @@ extern "C" {
 #endif // !defined(_di_f_states_resize_) || !defined(_di_f_states_append_) || !defined(_di_f_states_decrease_by_) || !defined(_di_f_statess_append_)
 
 #if !defined(_di_f_statess_adjust_) || !defined(_di_f_statess_decimate_by_)
-  f_status_t private_f_statess_adjust(const f_number_unsigned_t length, f_statess_t *statess) {
+  f_status_t private_f_statess_adjust(const f_number_unsigned_t length, f_statess_t * const statess) {
 
     f_status_t status = F_none;
 
@@ -112,7 +112,7 @@ extern "C" {
 #endif // !defined(_di_f_statess_adjust_) || !defined(_di_f_statess_decimate_by_)
 
 #if !defined(_di_f_statess_decrease_by_) || !defined(_di_f_statess_increase_) || !defined(_di_f_statess_increase_by_) || !defined(_di_f_statess_resize_)
-  f_status_t private_f_statess_resize(const f_number_unsigned_t length, f_statess_t *statess) {
+  f_status_t private_f_statess_resize(const f_number_unsigned_t length, f_statess_t * const statess) {
 
     f_status_t status = F_none;
 
