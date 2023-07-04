@@ -259,7 +259,7 @@ extern "C" {
     }
 
     if (main->program.parameters.array[iki_read_parameter_replace_e].result != f_console_result_none_e) {
-      if ((main->program.parameters.array[iki_read_parameter_replace_e].result & f_console_result_found_e) || main->program.parameters.array[iki_read_parameter_replace_e].values.used % 2 != 0) {
+      if ((main->program.parameters.array[iki_read_parameter_replace_e].result & f_console_result_found_e) || main->program.parameters.array[iki_read_parameter_replace_e].values.used % 2) {
         main->setting.state.status = F_status_set_error(F_parameter);
 
         if ((main->setting.flag & iki_read_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
@@ -354,7 +354,7 @@ extern "C" {
     if (F_status_is_error(main->setting.state.status)) return;
 
     if (main->program.parameters.array[iki_read_parameter_wrap_e].result != f_console_result_none_e) {
-      if ((main->program.parameters.array[iki_read_parameter_wrap_e].result & f_console_result_found_e) || main->program.parameters.array[iki_read_parameter_wrap_e].values.used % 3 != 0) {
+      if ((main->program.parameters.array[iki_read_parameter_wrap_e].result & f_console_result_found_e) || main->program.parameters.array[iki_read_parameter_wrap_e].values.used % 3) {
         main->setting.state.status = F_status_set_error(F_parameter);
 
         if ((main->setting.flag & iki_read_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
@@ -605,7 +605,7 @@ extern "C" {
 
     if (!(parameter.result & f_console_result_found_e)) return F_false;
 
-    if ((parameter.result & f_console_result_found_e) || parameter.values.used % 3 != 0) {
+    if ((parameter.result & f_console_result_found_e) || parameter.values.used % 3) {
       main->setting.state.status = F_status_set_error(F_parameter);
 
       if ((main->setting.flag & iki_read_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {

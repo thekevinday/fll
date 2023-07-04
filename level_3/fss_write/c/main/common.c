@@ -360,7 +360,7 @@ extern "C" {
     }
 
     if ((main->program.parameters.array[fss_write_parameter_ignore_e].result & f_console_result_value_e) && main->program.parameters.array[fss_write_parameter_ignore_e].values.used) {
-      if (main->program.parameters.array[fss_write_parameter_ignore_e].values.used % 2 != 0) {
+      if (main->program.parameters.array[fss_write_parameter_ignore_e].values.used % 2) {
         main->setting.state.status = F_status_set_error(F_parameter);
 
         if ((main->setting.flag & fss_write_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
