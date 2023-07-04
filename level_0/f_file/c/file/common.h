@@ -157,31 +157,27 @@ extern "C" {
  * Provide file open mode macros.
  *
  * F_file_open_mode_*:
- *   - append:        Open file in append mode.
- *   - read:          Open file in read only mode.
- *   - read_append:   Open file in read append mode.
- *   - read_truncate: Open file in read truncate mode.
- *   - read_write:    Open file in read write mode.
- *   - truncate:      Open file in truncate mode.
+ *   - read:           Open file in read only mode.
+ *   - read_append:    Open file in read append mode.
+ *   - read_truncate:  Open file in read truncate mode.
+ *   - read_write:     Open file in read write mode.
+ *   - write_append:   Open file in write append mode.
+ *   - write_truncate: Open file in write truncate mode.
  */
 #ifndef _di_f_file_open_mode_s_
-  #define F_file_open_mode_append_s        "a"
-  #define F_file_open_mode_read_s          "r"
-  #define F_file_open_mode_read_append_s   "a+"
-  #define F_file_open_mode_read_truncate_s "w+"
-  #define F_file_open_mode_read_write_s    "r+"
-  #define F_file_open_mode_truncate_s      "w"
+  #define F_file_open_mode_read_s           "r"
+  #define F_file_open_mode_read_append_s    "a+"
+  #define F_file_open_mode_read_truncate_s  "w+"
+  #define F_file_open_mode_read_write_s     "r+"
+  #define F_file_open_mode_write_append_s   "a"
+  #define F_file_open_mode_write_truncate_s "w"
 
-  #define F_file_open_mode_append_s_length        1
-  #define F_file_open_mode_read_s_length          1
-  #define F_file_open_mode_read_append_s_length   2
-  #define F_file_open_mode_read_truncate_s_length 2
-  #define F_file_open_mode_read_write_s_length    2
-  #define F_file_open_mode_truncate_s_length      1
-
-  #ifndef _di_f_file_open_mode_append_s_
-    extern const f_string_static_t f_file_open_mode_append_s;
-  #endif // _di_f_file_open_mode_append_s_
+  #define F_file_open_mode_read_s_length           1
+  #define F_file_open_mode_read_append_s_length    2
+  #define F_file_open_mode_read_truncate_s_length  2
+  #define F_file_open_mode_read_write_s_length     2
+  #define F_file_open_mode_write_append_s_length   1
+  #define F_file_open_mode_write_truncate_s_length 1
 
   #ifndef _di_f_file_open_mode_read_s_
     extern const f_string_static_t f_file_open_mode_read_s;
@@ -199,9 +195,13 @@ extern "C" {
     extern const f_string_static_t f_file_open_mode_read_write_s;
   #endif // _di_f_file_open_mode_read_write_s_
 
-  #ifndef _di_f_file_open_mode_truncate_s_
-    extern const f_string_static_t f_file_open_mode_truncate_s;
-  #endif // _di_f_file_open_mode_truncate_s_
+  #ifndef _di_f_file_open_mode_write_append_s_
+    extern const f_string_static_t f_file_open_mode_write_append_s;
+  #endif // _di_f_file_open_mode_write_append_s_
+
+  #ifndef _di_f_file_open_mode_write_truncate_s_
+    extern const f_string_static_t f_file_open_mode_write_truncate_s;
+  #endif // _di_f_file_open_mode_write_truncate_s_
 #endif // _di_f_file_open_mode_s_
 
 /**

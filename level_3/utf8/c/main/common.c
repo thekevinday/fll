@@ -234,7 +234,7 @@ extern "C" {
 
         ++main->setting.path_files_to.used;
 
-        main->setting.state.status = f_file_stream_open(main->program.parameters.arguments.array[main->program.parameters.array[utf8_parameter_to_file_e].values.array[0]], f_file_open_mode_append_s, &main->program.output.to);
+        main->setting.state.status = f_file_stream_open(main->program.parameters.arguments.array[main->program.parameters.array[utf8_parameter_to_file_e].values.array[0]], f_file_open_mode_write_append_s, &main->program.output.to);
 
         if (F_status_is_error(main->setting.state.status)) {
           if ((main->setting.flag & utf8_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {

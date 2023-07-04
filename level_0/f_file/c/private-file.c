@@ -636,11 +636,11 @@ extern "C" {
     }
     else if (flag & F_file_flag_write_only_d) {
       if (flag & F_file_flag_truncate_d) {
-        return f_file_open_mode_truncate_s.string;
+        return f_file_open_mode_write_truncate_s.string;
       }
 
       // Failsafe to append.
-      return f_file_open_mode_append_s.string;
+      return f_file_open_mode_write_append_s.string;
     }
 
     // Failsafe to read only.

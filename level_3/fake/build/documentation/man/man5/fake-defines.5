@@ -1,0 +1,27 @@
+.TH fake-defines "5" "March 2023" "FLL - Featureless Make 0.7.0" "File Formats"
+.SH NAME
+Featureless Make \- "defines" file.
+.SH SYNOPSIS
+.B defines
+.SH DESCRIPTION
+.PP
+The Object name has further restrictions than \fBFSS-0000\fR requires.
+These restrictions are that the Object must only evaluate to a valid C/C++ macro name.
+This is essentially means only Word characters.
+.SH SPECIFICATION
+.PP
+The build settings \fBdefines\fR file follows the \fBFSS-0000 (Basic)\fR format.
+
+Each Object represents a specific a macro name to be defined during compilation.
+Each Content represents documentation explaining the intent and purpose of that define.
+.SH SEE ALSO
+.PP
+\fBfake\fR(1),
+\fBfake\-defines\fR(5),
+\fBfake\-fakefile\fR(5),
+\fBfake\-settings\fR(5)
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, Open Standard License 1.0 or later.

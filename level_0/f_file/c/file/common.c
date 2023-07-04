@@ -39,10 +39,6 @@ extern "C" {
 #endif // _di_f_file_type_s_
 
 #ifndef _di_f_file_open_mode_s_
-  #ifndef _di_f_file_open_mode_append_s_
-    const f_string_static_t f_file_open_mode_append_s = macro_f_string_static_t_initialize_1(F_file_open_mode_append_s, 0, F_file_open_mode_append_s_length);
-  #endif // _di_f_file_open_mode_append_s_
-
   #ifndef _di_f_file_open_mode_read_s_
     const f_string_static_t f_file_open_mode_read_s = macro_f_string_static_t_initialize_1(F_file_open_mode_read_s, 0, F_file_open_mode_read_s_length);
   #endif // _di_f_file_open_mode_read_s_
@@ -59,9 +55,13 @@ extern "C" {
     const f_string_static_t f_file_open_mode_read_write_s = macro_f_string_static_t_initialize_1(F_file_open_mode_read_write_s, 0, F_file_open_mode_read_write_s_length);
   #endif // _di_f_file_open_mode_read_write_s_
 
-  #ifndef _di_f_file_open_mode_truncate_s_
-    const f_string_static_t f_file_open_mode_truncate_s = macro_f_string_static_t_initialize_1(F_file_open_mode_truncate_s, 0, F_file_open_mode_truncate_s_length);
-  #endif // _di_f_file_open_mode_truncate_s_
+  #ifndef _di_f_file_open_mode_write_append_s_
+    const f_string_static_t f_file_open_mode_write_append_s = macro_f_string_static_t_initialize_1(F_file_open_mode_write_append_s, 0, F_file_open_mode_write_append_s_length);
+  #endif // _di_f_file_open_mode_write_append_s_
+
+  #ifndef _di_f_file_open_mode_write_truncate_s_
+    const f_string_static_t f_file_open_mode_write_truncate_s = macro_f_string_static_t_initialize_1(F_file_open_mode_write_truncate_s, 0, F_file_open_mode_write_truncate_s_length);
+  #endif // _di_f_file_open_mode_write_truncate_s_
 #endif // _di_f_file_open_mode_s_
 
 #ifndef _di_f_file_operation_s_

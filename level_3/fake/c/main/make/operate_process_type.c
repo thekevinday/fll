@@ -2059,7 +2059,7 @@ extern "C" {
     main->setting.state.status = f_file_exists(main->cache_arguments.array[0], F_true);
 
     if (main->cache_arguments.used == 1 || main->setting.state.status == F_false) {
-      main->setting.state.status = f_file_stream_open(main->cache_arguments.array[0], f_file_open_mode_truncate_s, &file);
+      main->setting.state.status = f_file_stream_open(main->cache_arguments.array[0], f_file_open_mode_write_truncate_s, &file);
 
       if (F_status_is_error(main->setting.state.status)) {
         if (F_status_is_error_not(fl_path_canonical(main->cache_arguments.array[0], &main->cache_argument))) {
@@ -2088,7 +2088,7 @@ extern "C" {
 
     if (F_status_is_error_not(main->setting.state.status) && main->cache_arguments.used > 1) {
       if (main->setting.state.status != F_false) {
-        main->setting.state.status = f_file_stream_open(main->cache_arguments.array[0], f_file_open_mode_append_s, &file);
+        main->setting.state.status = f_file_stream_open(main->cache_arguments.array[0], f_file_open_mode_write_append_s, &file);
 
         if (F_status_is_error(main->setting.state.status)) {
           if (F_status_is_error_not(fl_path_canonical(main->cache_arguments.array[0], &main->cache_argument))) {
