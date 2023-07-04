@@ -3,7 +3,7 @@
 // To get the list of all possible functions, use something like: "grep -horP '\b_di_f_\w*\b' level_0/f_color/".
 //
 // Example: echo > /tmp/all.txt
-//          for i in f_type f_status f_memory f_type_array f_string f_utf f_account f_capability f_color f_compare f_console f_control_group f_conversion f_directory f_environment f_execute f_file f_fss f_iki f_limit f_parse f_path f_pipe f_print f_rip f_signal f_thread ; do grep -horP '\b_di_f_\w*\b' level_0/$i/c >> /tmp/all.txt ; grep -horP '\b_di_macro_\w*\b' level_0/$i/c >> /tmp/all.txt ; done
+//          for i in f_type f_status f_memory f_type_array f_string f_utf f_account f_capability f_color f_compare f_console f_control_group f_conversion f_directory f_environment f_execute f_file f_fss f_iki f_limit f_network f_parse f_path f_pipe f_print f_rip f_signal f_socket f_thread ; do grep -horP '\b_di_f_\w*\b' level_0/$i/c >> /tmp/all.txt ; grep -horP '\b_di_macro_\w*\b' level_0/$i/c >> /tmp/all.txt ; done
 //          for i in fl_control_group fl_conversion fl_directory fl_environment fl_execute fl_fss fl_iki fl_path fl_print ; do grep -horP '\b_di_fl_\w*\b' level_1/$i/c >> /tmp/all.txt ; grep -horP '\b_di_macro_\w*\b' level_1/$i/c >> /tmp/all.txt ; done
 //          for i in fll_error fll_execute fll_file fll_fss fll_print fll_program ; do grep -horP '\b_di_fll_\w*\b' level_2/$i/c >> /tmp/all.txt ; grep -horP '\b_di_macro_\w*\b' level_2/$i/c >> /tmp/all.txt ; done
 //          sort /tmp/all.txt | uniq | sed -e 's|^_|#define &|g' > /tmp/sorted.txt
@@ -305,6 +305,7 @@
 //#define _di_f_conversion_number_unsigned_print_
 //#define _di_f_conversion_number_unsigned_to_string_
 
+#define _di_f_date_spec_t_
 #define _di_f_date_t_
 
 //#define _di_f_directory_at_d_
@@ -364,7 +365,6 @@
 //#define _di_f_file_at_d_
 //#define _di_f_file_clone_
 //#define _di_f_file_close_
-#define _di_f_file_close_flush_
 //#define _di_f_file_copy_
 //#define _di_f_file_create_
 #define _di_f_file_create_at_
@@ -388,6 +388,7 @@
 #define _di_f_file_link_hard_at_
 #define _di_f_file_link_read_
 #define _di_f_file_link_read_at_
+#define _di_f_file_manipulate_
 //#define _di_f_file_mode_determine_
 //#define _di_f_file_mode_from_string_
 //#define _di_f_file_mode_read_
@@ -453,6 +454,7 @@
 #define _di_f_file_operation_wipe_s_
 //#define _di_f_file_operation_write_s_
 //#define _di_f_file_owner_read_
+#define _di_f_file_poll_
 #define _di_f_file_read_
 //#define _di_f_file_read_block_
 #define _di_f_file_read_until_
@@ -462,11 +464,30 @@
 #define _di_f_file_rename_at_
 //#define _di_f_file_role_change_
 #define _di_f_file_role_change_at_
+#define _di_f_files_adjust_
+#define _di_f_files_append_
+#define _di_f_files_append_all_
+#define _di_f_files_decimate_by_
+#define _di_f_files_decrease_by_
 #define _di_f_file_seek_
 #define _di_f_file_seeks_d_
+#define _di_f_file_select_
+#define _di_f_files_increase_
+#define _di_f_files_increase_by_
 //#define _di_f_file_size_
 #define _di_f_file_size_at_
 #define _di_f_file_size_by_id_
+#define _di_f_files_resize_
+#define _di_f_filess_adjust_
+#define _di_f_filess_append_
+#define _di_f_filess_append_all_
+#define _di_f_filess_decimate_by_
+#define _di_f_filess_decrease_by_
+#define _di_f_filess_increase_
+#define _di_f_filess_increase_by_
+#define _di_f_filess_resize_
+#define _di_f_filess_t_
+#define _di_f_files_t_
 //#define _di_f_file_stat_
 //#define _di_f_file_stat_at_
 #define _di_f_file_stat_by_id_
@@ -808,7 +829,7 @@
 
 //#define _di_fl_control_group_apply_
 
-//#define _di_fl_conversion_data_base_10_c_
+//define _di_fl_conversion_data_base_10_c_
 #define _di_fl_conversion_data_base_12_c_
 #define _di_fl_conversion_data_base_16_c_
 #define _di_fl_conversion_data_base_2_c_
@@ -919,13 +940,13 @@
 //#define _di_fll_error_file_type_directory_s_
 //#define _di_fll_error_file_type_e_
 //#define _di_fll_error_file_type_file_s_
+//#define _di_fll_error_file_type_link_s_
 //#define _di_fll_error_file_type_path_s_
 //#define _di_fll_error_file_type_pipe_s_
 //#define _di_fll_error_file_type_s_
 //#define _di_fll_error_file_type_socket_s_
 #define _di_fll_error_parameter_integer_print_
 //#define _di_fll_error_print_
-
 //#define _di_fll_execute_arguments_add_
 #define _di_fll_execute_arguments_add_parameter_
 //#define _di_fll_execute_arguments_add_parameter_set_
@@ -934,7 +955,6 @@
 //#define _di_fll_execute_program_
 
 //#define _di_fll_file_mode_set_all_
-//#define _di_fll_file_move_
 //#define _di_fll_file_role_change_all_
 
 //#define _di_fll_fss_basic_list_read_
@@ -1066,6 +1086,7 @@
 #define _di_fll_program_print_error_parameter_cannot_use_with_pipe_
 #define _di_fll_program_print_error_parameter_cannot_use_with_without_
 #define _di_fll_program_print_error_parameter_cannot_use_with_xor_
+#define _di_fll_program_print_error_parameter_empty_value_
 #define _di_fll_program_print_error_parameter_integer_not_
 #define _di_fll_program_print_error_parameter_integer_not_negative_
 #define _di_fll_program_print_error_parameter_integer_not_positive_
@@ -1155,6 +1176,17 @@
 
 //#define _di_f_mode_t_
 
+#define _di_f_network_family_e_
+#define _di_f_network_family_ip_4_or_6_t_
+#define _di_f_network_family_ip_t_
+#define _di_f_network_from_host_long_
+#define _di_f_network_from_host_short_
+#define _di_f_network_from_ip_address_
+#define _di_f_network_from_ip_name_
+#define _di_f_network_from_ip_string_
+#define _di_f_network_to_host_long_
+#define _di_f_network_to_host_short_
+#define _di_f_network_to_ip_string_
 #define _di_f_number_unsigneds_adjust_
 #define _di_f_number_unsigneds_append_
 #define _di_f_number_unsigneds_append_all_
@@ -1173,7 +1205,6 @@
 #define _di_f_number_unsignedss_resize_
 #define _di_f_number_unsignedss_t_
 //#define _di_f_number_unsigneds_t_
-//#define _di_f_number_unsigned_t_
 
 #define _di_f_parse_dynamic_partial_fll_identify_
 #define _di_f_parse_dynamic_seek_line_to_utf_character_
@@ -1268,15 +1299,30 @@
 //#define _di_f_pipe_input_exists_
 #define _di_f_pipe_output_exists_
 
+#define _di_f_polls_adjust_
+#define _di_f_polls_append_
+#define _di_f_polls_append_all_
+#define _di_f_polls_decimate_by_
+#define _di_f_polls_decrease_by_
+#define _di_f_polls_increase_
+#define _di_f_polls_increase_by_
+#define _di_f_polls_resize_
+#define _di_f_pollss_adjust_
+#define _di_f_pollss_append_
+#define _di_f_pollss_append_all_
+#define _di_f_pollss_decimate_by_
+#define _di_f_pollss_decrease_by_
+#define _di_f_pollss_increase_
+#define _di_f_pollss_increase_by_
+#define _di_f_pollss_resize_
+#define _di_f_pollss_t_
+#define _di_f_polls_t_
+//#define _di_f_poll_t_
 //#define _di_f_print_
 #define _di_f_print_character_
 #define _di_f_print_character_safely_
 #define _di_f_print_character_safely_get_
 //#define _di_f_print_dynamic_
-#define _di_f_print_dynamic_except_partial_
-#define _di_f_print_dynamic_except_partial_raw_
-#define _di_f_print_dynamic_except_partial_raw_safely_
-#define _di_f_print_dynamic_except_partial_safely_
 #define _di_f_print_dynamic_partial_
 #define _di_f_print_dynamic_partial_raw_
 #define _di_f_print_dynamic_partial_raw_safely_
@@ -1292,9 +1338,6 @@
 #define _di_f_print_dynamic_to_raw_
 #define _di_f_print_except_
 #define _di_f_print_except_dynamic_
-#define _di_f_print_except_dynamic_in_
-#define _di_f_print_except_dynamic_in_raw_
-#define _di_f_print_except_dynamic_in_raw_safely_
 #define _di_f_print_except_dynamic_in_safely_
 #define _di_f_print_except_dynamic_partial_
 #define _di_f_print_except_dynamic_partial_raw_
@@ -1443,6 +1486,52 @@
 //#define _di_f_signal_t_
 //#define _di_f_signal_wait_
 #define _di_f_signal_wait_until_
+
+#define _di_f_socket_accept_
+#define _di_f_socket_bind_
+#define _di_f_socket_bind_local_
+#define _di_f_socket_close_e_
+#define _di_f_socket_connect_
+#define _di_f_socket_create_
+#define _di_f_socket_create_pair_
+#define _di_f_socket_default_d_
+#define _di_f_socket_disconnect_
+#define _di_f_socket_domain_d_
+#define _di_f_socket_flag_d_
+#define _di_f_socket_host_name_
+#define _di_f_socket_listen_
+#define _di_f_socket_message_flag_d_
+#define _di_f_socket_name_host_
+#define _di_f_socket_name_peer_
+#define _di_f_socket_option_d_
+#define _di_f_socket_option_get_
+#define _di_f_socket_option_set_
+#define _di_f_socket_read_
+#define _di_f_socket_read_message_
+#define _di_f_socket_read_stream_
+#define _di_f_sockets_adjust_
+#define _di_f_sockets_append_
+#define _di_f_sockets_append_all_
+#define _di_f_sockets_decimate_by_
+#define _di_f_sockets_decrease_by_
+#define _di_f_sockets_increase_
+#define _di_f_sockets_increase_by_
+#define _di_f_sockets_resize_
+#define _di_f_socketss_adjust_
+#define _di_f_socketss_append_
+#define _di_f_socketss_append_all_
+#define _di_f_socketss_decimate_by_
+#define _di_f_socketss_decrease_by_
+#define _di_f_socketss_increase_
+#define _di_f_socketss_increase_by_
+#define _di_f_socketss_resize_
+#define _di_f_socketss_t_
+#define _di_f_sockets_t_
+#define _di_f_socket_t_
+#define _di_f_socket_type_d_
+#define _di_f_socket_write_
+#define _di_f_socket_write_message_
+#define _di_f_socket_write_stream_
 
 #define _di_f_states_adjust_
 #define _di_f_states_append_
