@@ -25,7 +25,7 @@ test_main() {
   local public_name="FLL Project Mass Test Script"
   local system_name=install
   local called_name=$(basename ${0})
-  local version=0.6.6
+  local version=0.6.7
 
   local grab_next=
   local do_color=dark
