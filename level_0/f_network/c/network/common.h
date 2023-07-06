@@ -41,7 +41,6 @@ extern "C" {
  * macro_f_network_family_ip_4_or_6_t_*:
  *   - initialize_1: Specifically initialize the IP address version 4.
  *   - initialize_2: Specifically initialize the IP address version 6.
- *   - clear:        Clear the union values.
  */
 #ifndef _di_f_network_family_ip_4_or_6_t_
   typedef union {
@@ -53,10 +52,6 @@ extern "C" {
 
   #define macro_f_network_family_ip_4_or_6_t_initialize_1(v4) { .v4 = v4 }
   #define macro_f_network_family_ip_4_or_6_t_initialize_2(v6) { .v6 = v6 }
-
-  #define f_network_family_ip_4_or_6_t_clear(family_ip_4_or_6) \
-    family_ip_4_or_6.v4 = 0; \
-    family_ip_4_or_6.v6 = 0;
 #endif // _di_f_network_family_ip_4_or_6_t_
 
 /**

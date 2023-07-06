@@ -10,7 +10,7 @@ extern "C" {
       if (!socket) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    const int result = accept(id, socket->address, &socket->length);
+    const int result = accept(id, (struct sockaddr *) &socket->address, &socket->length);
 
     if (result == -1) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
@@ -52,7 +52,7 @@ extern "C" {
       if (!socket) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (bind(socket->id, socket->address, socket->length) == -1) {
+    if (bind(socket->id, (struct sockaddr *) &socket->address, socket->length) == -1) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EADDRINUSE) return F_status_set_error(F_busy_address);
       if (errno == EADDRNOTAVAIL) return F_status_set_error(F_available_not_address);
@@ -80,10 +80,10 @@ extern "C" {
 
     if (socket->domain != f_socket_protocol_family_local_e) return F_status_set_error(F_local_not);
 
-    memset(socket->address, 0, sizeof(struct sockaddr_un));
+    memset((void *) &socket->address, 0, sizeof(struct sockaddr_un));
 
     {
-      struct sockaddr_un *address = (struct sockaddr_un *) socket->address;
+      struct sockaddr_un *address = (struct sockaddr_un *) &socket->address;
 
       address->sun_family = f_socket_address_family_local_e;
 
@@ -96,7 +96,7 @@ extern "C" {
       }
     }
 
-    if (bind(socket->id, socket->address, sizeof(struct sockaddr_un)) == -1) {
+    if (bind(socket->id, (struct sockaddr *) &socket->address, sizeof(struct sockaddr_un)) == -1) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EADDRINUSE) return F_status_set_error(F_busy_address);
       if (errno == EADDRNOTAVAIL) return F_status_set_error(F_available_not_address);
@@ -119,7 +119,7 @@ extern "C" {
 #ifndef _di_f_socket_connect_
   f_status_t f_socket_connect(const f_socket_t socket) {
 
-    if (connect(socket.id, socket.address, socket.length) == -1) {
+    if (connect(socket.id, (struct sockaddr *) &socket.address, socket.length) == -1) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EADDRINUSE) return F_status_set_error(F_busy_address);
       if (errno == EADDRNOTAVAIL) return F_status_set_error(F_available_not_address);
@@ -352,7 +352,7 @@ extern "C" {
       if (!socket) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (getpeername(socket->id, socket->address, &socket->length) == -1) {
+    if (getpeername(socket->id, (struct sockaddr *) &socket->address, &socket->length) == -1) {
       if (errno == EBADF) return F_status_set_error(F_file_descriptor);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
       if (errno == EINVAL) return F_status_set_error(F_parameter);
@@ -374,7 +374,7 @@ extern "C" {
       if (!buffer) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    const ssize_t result = recvfrom(socket->id, buffer, socket->size_read, flags, socket->address, &socket->length);
+    const ssize_t result = recvfrom(socket->id, buffer, socket->size_read, flags, (struct sockaddr *) &socket->address, &socket->length);
 
     if (result < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
@@ -491,7 +491,7 @@ extern "C" {
       if (!buffer) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    const ssize_t result = sendto(socket->id, buffer, socket->size_write, flags, socket->address, socket->length);
+    const ssize_t result = sendto(socket->id, buffer, socket->size_write, flags, (struct sockaddr *) &socket->address, socket->length);
 
     if (result < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);

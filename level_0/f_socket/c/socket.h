@@ -12,12 +12,34 @@
 
 // Libc includes.
 #include <malloc.h>
+#include <netinet/in.h>
+#include <netinet/ip.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <sys/un.h>
 #include <unistd.h>
+
+#ifdef _en_support_socket_address_at_
+  #include <linux/atalk.h>
+#endif // _en_support_socket_address_at_
+
+#ifdef _en_support_socket_address_ax25_
+  #include <netax25/ax25.h>
+#endif // _en_support_socket_address_ax25_
+
+#ifdef _en_support_socket_address_dl_
+  #include <nspr/prinet.h>
+#endif // _en_support_socket_address_dl_
+
+#ifdef _en_support_socket_address_ipx_
+  #include <linux/ipx.h>
+#endif // _en_support_socket_address_ipx_
+
+#ifdef _en_support_socket_address_x25_
+  #include <linux/x25.h>
+#endif // _en_support_socket_address_x25_
 
 // FLL-0 includes.
 #include <fll/level_0/type.h>

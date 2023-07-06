@@ -1,2 +1,11 @@
 # fss-0000
 
+_en_support_socket_address_arp_ Enables support for the arp socket structure within the f_socket_address_t union.
+_en_support_socket_address_at_ Enables support for the at socket structure within the f_socket_address_t union.
+_en_support_socket_address_ax25_ Enables support for the ax25 socket structure within the f_socket_address_t union.
+_en_support_socket_address_dl_ Enables support for the dl socket structure within the f_socket_address_t union.
+_en_support_socket_address_eon_ Enables support for the eon socket structure within the f_socket_address_t union.
+_en_support_socket_address_ipx_ Enables support for the ipx socket structure within the f_socket_address_t union.
+_en_support_socket_address_iso_ Enables support for the iso socket structure within the f_socket_address_t union.
+_en_support_socket_address_ns_ Enables support for the ns socket structure within the f_socket_address_t union.
+_en_support_socket_address_x25_ Enables support for the x25 socket structure within the f_socket_address_t union.
