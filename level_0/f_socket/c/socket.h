@@ -121,8 +121,9 @@ extern "C" {
  * @param socket
  *   The socket structure.
  *   The socket.address must point to a "struct sockaddr_un".
+ *   The socket.domain (potocol family) must be assigned to f_socket_protocol_family_local_e.
+ *   The socket.type (address family) will be assigned to f_socket_address_family_local_e.
  *   The socket.name must be assigned to a path.
- *   The socket.type must be assigned to f_socket_domain_file_d.
  *
  * @return
  *   F_none on success.
@@ -191,9 +192,9 @@ extern "C" {
  * @param socket
  *   The socket structure.
  *   The socket.address may point to any valid structure, like "struct sockaddr", "struct sockaddr_un", or "struct sockaddr_in".
- *   The socket.domain must be assigned the desired domain.
- *   The socket.type must be assigned the desired type.
+ *   The socket.domain must be assigned the desired domain (protocol family).
  *   The socket.protocol must be assigned the desired protocol.
+ *   The socket.type must be assigned the desired type (address family).
  *   The socket.id will be updated with a file descriptor representing the created socket.
  *
  * @return

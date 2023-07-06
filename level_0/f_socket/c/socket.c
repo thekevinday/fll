@@ -78,14 +78,14 @@ extern "C" {
       if (!socket) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (socket->domain != f_socket_domain_file_d) return F_status_set_error(F_local_not);
+    if (socket->domain != f_socket_protocol_family_local_e) return F_status_set_error(F_local_not);
 
     memset(socket->address, 0, sizeof(struct sockaddr_un));
 
     {
       struct sockaddr_un *address = (struct sockaddr_un *) socket->address;
 
-      address->sun_family = f_socket_domain_file_d;
+      address->sun_family = f_socket_address_family_local_e;
 
       if (socket->name.used && socket->name.string) {
         strncpy(address->sun_path, socket->name.string, socket->name.used);

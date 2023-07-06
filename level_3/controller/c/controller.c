@@ -97,7 +97,7 @@ extern "C" {
     controller_setting_t setting = controller_setting_t_initialize;
 
     setting.control.server.address = (struct sockaddr *) &setting.control.address;
-    setting.control.server.domain = f_socket_domain_file_d;
+    setting.control.server.domain = f_socket_protocol_family_local_e;
     setting.control.server.type = f_socket_type_stream_d;
     setting.control.server.length = sizeof(struct sockaddr_un);
 

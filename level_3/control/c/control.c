@@ -148,7 +148,7 @@ extern "C" {
           memset(&socket_address, 0, sizeof(struct sockaddr_un));
 
           data.socket.address = (struct sockaddr *) &socket_address;
-          data.socket.domain = f_socket_domain_file_d;
+          data.socket.domain = f_socket_protocol_family_local_e;
           data.socket.type = f_socket_type_stream_d;
           data.socket.length = sizeof(struct sockaddr_un);
 

@@ -293,7 +293,7 @@ extern "C" {
 
       memset(head, 0, sizeof(uint8_t) * length);
 
-      status = f_socket_read(&data->socket, f_socket_flag_peek_d, (void *) head, &length);
+      status = f_socket_read(&data->socket, f_socket_flag_peek_e, (void *) head, &length);
       if (F_status_is_error(status)) return status;
       if (length < 5) return F_status_set_error(F_packet_not);
 
@@ -311,7 +311,7 @@ extern "C" {
       status = f_string_dynamic_increase_by(length, &data->cache.large);
       if (F_status_is_error(status)) return status;
 
-      status = f_socket_read(&data->socket, f_socket_flag_wait_all_d, (void *) head, &length);
+      status = f_socket_read(&data->socket, f_socket_flag_wait_all_e, (void *) head, &length);
       if (F_status_is_error(status)) return status;
       if (length < data->cache.large.used) return F_status_set_error(F_too_small);
       if (length > data->cache.large.used) return F_status_set_error(F_too_large);

@@ -43,7 +43,7 @@ void test__f_socket_bind_local__fails(void **state) {
 
     memset(&address, 0, sizeof(struct sockaddr_un));
 
-    address.sun_family = f_socket_domain_file_d;
+    address.sun_family = f_socket_protocol_family_local_e;
 
     socket.address = (struct sockaddr *) &address;
 
@@ -61,10 +61,10 @@ void test__f_socket_bind_local__fails(void **state) {
 
     memset(&address, 0, sizeof(struct sockaddr_un));
 
-    address.sun_family = f_socket_domain_file_d;
+    address.sun_family = f_socket_protocol_family_local_e;
 
     socket.address = (struct sockaddr *) &address;
-    socket.domain = f_socket_domain_file_d;
+    socket.domain = f_socket_protocol_family_local_e;
 
     for (uint8_t i = 0; i < 12; ++i) {
 
@@ -95,10 +95,10 @@ void test__f_socket_bind_local__works(void **state) {
 
     memset(&address, 0, sizeof(struct sockaddr_un));
 
-    address.sun_family = f_socket_domain_file_d;
+    address.sun_family = f_socket_protocol_family_local_e;
 
     socket.address = (struct sockaddr *) &address;
-    socket.domain = f_socket_domain_file_d;
+    socket.domain = f_socket_protocol_family_local_e;
 
     will_return(__wrap_bind, false);
 
