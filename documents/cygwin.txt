@@ -20,7 +20,7 @@ Cygwin:
   Fortunately, FLL:"Featureless Linux Library" is specifically designed to be hackable so the process is easier than it might otherwise be.
 
   For a monolithic build, compiled statically, add the following to code:"defines" in the file:"data/build/settings" (of the packaged source files).
-    code:"-D_di_libcap_ -D_pthread_attr_unsupported_ -D_pthread_sigqueue_unsupported_ -D_di_f_thread_attribute_default_get_ -D_di_f_thread_attribute_default_set_ -D_di_compiler_attributes_ -DF_attribute_visibility_hidden_d -DF_attribute_visibility_internal_d -DF_attribute_visibility_protected_d -DF_attribute_visibility_public_d -DF_attribute_weak_d".
+    code:"-D_di_libcap_ -D_pthread_attr_unsupported_ -D_pthread_sigqueue_unsupported_ -D_di_f_thread_attribute_default_get_ -D_di_f_thread_attribute_default_set_ -D_di_compiler_attributes_d_ -DF_attribute_visibility_hidden_d -DF_attribute_visibility_internal_d -DF_attribute_visibility_protected_d -DF_attribute_visibility_public_d -DF_attribute_weak_d".
 
   The bold:"Cygwin" system does not support special link modes, such as code:"-z now", so remove code:"-z now" from all build settings files.
 
