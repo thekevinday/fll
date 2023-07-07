@@ -66,17 +66,7 @@ extern "C" {
 
       for (f_number_unsigned_t i = 0; i < main->setting.files.used; ++i) {
 
-        if (!((++main->program.signal_check) % iki_read_signal_check_d)) {
-          if (fll_program_standard_signal_received(&main->program)) {
-            fll_program_print_signal_received(&main->program.warning, main->program.signal_received);
-
-            main->setting.state.status = F_status_set_error(F_interrupt);
-
-            break;
-          }
-
-          main->program.signal_check = 0;
-        }
+        if (iki_read_signal_check(main)) return;
 
         file.stream = 0;
         file.id = -1;

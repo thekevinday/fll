@@ -327,19 +327,7 @@ extern "C" {
 
       for (i = 0; i < main->program.parameters.array[iki_read_parameter_name_e].values.used; ++i) {
 
-        if (!((++main->program.signal_check) % iki_read_signal_check_d)) {
-          if (fll_program_standard_signal_received(&main->program)) {
-            fll_program_print_signal_received(&main->program.warning, main->program.signal_received);
-
-            f_string_dynamic_resize(0, &name);
-
-            main->setting.state.status = F_status_set_error(F_interrupt);
-
-            return;
-          }
-
-          main->program.signal_check = 0;
-        }
+        if (iki_read_signal_check(main)) return;
 
         index = main->program.parameters.array[iki_read_parameter_name_e].values.array[i];
         name.used = 0;

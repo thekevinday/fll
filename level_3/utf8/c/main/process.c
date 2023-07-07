@@ -26,17 +26,7 @@ extern "C" {
 
     for (; text.string[0] && F_status_is_error_not(main->setting.state.status); ) {
 
-      if (!((++main->program.signal_check) % utf8_signal_check_d)) {
-        if (fll_program_standard_signal_received(&main->program)) {
-          fll_program_print_signal_received(&main->program.warning, main->program.signal_received);
-
-          main->setting.state.status = F_status_set_error(F_interrupt);
-
-          break;
-        }
-
-        main->program.signal_check = 0;
-      }
+      if (utf8_signal_check(main)) return;
 
       main->setting.state.status = F_none;
 

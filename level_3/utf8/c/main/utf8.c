@@ -77,15 +77,7 @@ extern "C" {
 
       for (f_number_unsigned_t i = 0; i < main->setting.path_files_from.used && F_status_is_error_not(main->setting.state.status); ++i) {
 
-        if (!((++main->program.signal_check) % utf8_signal_check_d)) {
-          if (fll_program_standard_signal_received(&main->program)) {
-            main->setting.state.status = F_status_set_error(F_interrupt);
-
-            break;
-          }
-
-          main->program.signal_check = 0;
-        }
+        if (utf8_signal_check(main)) return;
 
         utf8_print_data_section_header_file(&main->program.output, main->setting.path_files_from.array[i], i);
 
@@ -149,15 +141,7 @@ extern "C" {
     if (F_status_is_error_not(main->setting.state.status) && main->setting.remaining.used) {
       for (f_number_unsigned_t i = 0; F_status_is_error_not(main->setting.state.status) && i < main->setting.remaining.used; ++i) {
 
-        if (!((++main->program.signal_check) % utf8_signal_check_d)) {
-          if (fll_program_standard_signal_received(&main->program)) {
-            main->setting.state.status = F_status_set_error(F_interrupt);
-
-            break;
-          }
-
-          main->program.signal_check = 0;
-        }
+        if (utf8_signal_check(main)) return;
 
         utf8_print_data_section_header_parameter(&main->program.output, i);
 
