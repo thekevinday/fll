@@ -19,7 +19,7 @@ void test__f_socket_sockets_append__parameter_checking(void **state) {
 void test__f_socket_sockets_append__works(void **state) {
 
   f_string_static_t test = macro_f_string_static_t_initialize_1("test", 0, 4);
-  const f_socket_t source = macro_f_socket_t_initialize_3(1, 2, 3, 4, 0, 0, test);
+  const f_socket_t source = macro_f_socket_t_initialize_3(1, 2, 3, 4, f_socket_address_t_initialize, 0, test);
   f_sockets_t destination = f_sockets_t_initialize;
 
   {

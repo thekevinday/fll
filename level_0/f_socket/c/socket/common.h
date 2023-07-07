@@ -466,61 +466,61 @@ extern "C" {
  */
 #ifndef _di_f_socket_protocol_e_
   enum {
-    f_socket_protocol_ip              = 0,
-    f_socket_protocol_ah              = 51,
-    f_socket_protocol_ax25            = 93,
-    f_socket_protocol_dccp            = 33,
-    f_socket_protocol_ddp             = 37,
-    f_socket_protocol_egp             = 8,
-    f_socket_protocol_eigrp           = 88,
-    f_socket_protocol_encap           = 98,
-    f_socket_protocol_encryption      = 99,
-    f_socket_protocol_esp             = 50,
-    f_socket_protocol_etherip         = 97,
-    f_socket_protocol_fc              = 133,
-    f_socket_protocol_ggp             = 3,
-    f_socket_protocol_gre             = 47,
-    f_socket_protocol_hip             = 139,
-    f_socket_protocol_hmp             = 20,
-    f_socket_protocol_icmp            = 1,
-    f_socket_protocol_idpr_cmtp       = 38,
-    f_socket_protocol_idrp            = 45,
-    f_socket_protocol_igmp            = 2,
-    f_socket_protocol_igp             = 9,
-    f_socket_protocol_ipcomp          = 108,
-    f_socket_protocol_ipencap         = 4,
-    f_socket_protocol_ipip            = 94,
-    f_socket_protocol_ipv6            = 41,
-    f_socket_protocol_ipv6_frag       = 44,
-    f_socket_protocol_ipv6_icmp       = 58,
-    f_socket_protocol_ipv6_nonxt      = 59,
-    f_socket_protocol_ipv6_opts       = 60,
-    f_socket_protocol_ipv6_route      = 43,
-    f_socket_protocol_isis            = 124,
-    f_socket_protocol_iso_tp4         = 29,
-    f_socket_protocol_l2tp            = 115,
-    f_socket_protocol_manet           = 138,
-    f_socket_protocol_mobility_header = 135,
-    f_socket_protocol_mpls_in_ip      = 137,
-    f_socket_protocol_ospf            = 89,
-    f_socket_protocol_pim             = 103,
-    f_socket_protocol_pup             = 12,
-    f_socket_protocol_rdp             = 27,
-    f_socket_protocol_rohc            = 142,
-    f_socket_protocol_rspf            = 73,
-    f_socket_protocol_rsvp            = 46,
-    f_socket_protocol_sctp            = 132,
-    f_socket_protocol_shim6           = 140,
-    f_socket_protocol_skip            = 57,
-    f_socket_protocol_st              = 5,
-    f_socket_protocol_tcp             = 6,
-    f_socket_protocol_udp             = 17,
-    f_socket_protocol_udplite         = 136,
-    f_socket_protocol_vmtp            = 81,
-    f_socket_protocol_vrrp            = 112,
-    f_socket_protocol_wesp            = 141,
-    f_socket_protocol_xns_idp         = 22,
-    f_socket_protocol_xtp             = 36,
+    f_socket_protocol_ip_e              = 0,
+    f_socket_protocol_ah_e              = 51,
+    f_socket_protocol_ax25_e            = 93,
+    f_socket_protocol_dccp_e            = 33,
+    f_socket_protocol_ddp_e             = 37,
+    f_socket_protocol_egp_e             = 8,
+    f_socket_protocol_eigrp_e           = 88,
+    f_socket_protocol_encap_e           = 98,
+    f_socket_protocol_encryption_e      = 99,
+    f_socket_protocol_esp_e             = 50,
+    f_socket_protocol_etherip_e         = 97,
+    f_socket_protocol_fc_e              = 133,
+    f_socket_protocol_ggp_e             = 3,
+    f_socket_protocol_gre_e             = 47,
+    f_socket_protocol_hip_e             = 139,
+    f_socket_protocol_hmp_e             = 20,
+    f_socket_protocol_icmp_e            = 1,
+    f_socket_protocol_idpr_cmtp_e       = 38,
+    f_socket_protocol_idrp_e            = 45,
+    f_socket_protocol_igmp_e            = 2,
+    f_socket_protocol_igp_e             = 9,
+    f_socket_protocol_ipcomp_e          = 108,
+    f_socket_protocol_ipencap_e         = 4,
+    f_socket_protocol_ipip_e            = 94,
+    f_socket_protocol_ipv6_e            = 41,
+    f_socket_protocol_ipv6_frag_e       = 44,
+    f_socket_protocol_ipv6_icmp_e       = 58,
+    f_socket_protocol_ipv6_nonxt_e      = 59,
+    f_socket_protocol_ipv6_opts_e       = 60,
+    f_socket_protocol_ipv6_route_e      = 43,
+    f_socket_protocol_isis_e            = 124,
+    f_socket_protocol_iso_tp4_e         = 29,
+    f_socket_protocol_l2tp_e            = 115,
+    f_socket_protocol_manet_e           = 138,
+    f_socket_protocol_mobility_header_e = 135,
+    f_socket_protocol_mpls_in_ip_e      = 137,
+    f_socket_protocol_ospf_e            = 89,
+    f_socket_protocol_pim_e             = 103,
+    f_socket_protocol_pup_e             = 12,
+    f_socket_protocol_rdp_e             = 27,
+    f_socket_protocol_rohc_e            = 142,
+    f_socket_protocol_rspf_e            = 73,
+    f_socket_protocol_rsvp_e            = 46,
+    f_socket_protocol_sctp_e            = 132,
+    f_socket_protocol_shim6_e           = 140,
+    f_socket_protocol_skip_e            = 57,
+    f_socket_protocol_st_e              = 5,
+    f_socket_protocol_tcp_e             = 6,
+    f_socket_protocol_udp_e             = 17,
+    f_socket_protocol_udplite_e         = 136,
+    f_socket_protocol_vmtp_e            = 81,
+    f_socket_protocol_vrrp_e            = 112,
+    f_socket_protocol_wesp_e            = 141,
+    f_socket_protocol_xns_idp_e         = 22,
+    f_socket_protocol_xtp_e             = 36,
   };
 #endif // _di_f_socket_protocol_e_
 
@@ -529,49 +529,49 @@ extern "C" {
  *
  * f_socket_protocol_family_*_e:
  *   - unspecified: No protocol family specified.
- *   - local:       Localhost, pipes, Unix sockets, or file sockets (PF_LOCAL, PF_UNIX, PF_FILE).
- *   - inet:        IP protocol family.
- *   - ax25:        Amateur Radio AX.25.
- *   - ipx:         Novell Internet Protocol.
- *   - appletalk:   Appletalk DDP.
- *   - netrom:      Amateur radio NetROM.
- *   - bridge:      Multiprotocol bridge.
- *   - atmpvc:      ATM PVCs.
- *   - x25:         Reserved for X.25 project.
- *   - inet6:       IP version 6.
- *   - rose:        Amateur Radio X.25 PLP.
- *   - decnet:      Reserved for DECnet project.
- *   - netbeui:     Reserved for 802.2LLC project.
- *   - security:    Security callback pseudo AF.
- *   - key:         PF_KEY key management API.
- *   - netlink:     Netlink and BSD (PF_NETLINK and PF_ROUTE).
- *   - packet:      Packet family.
- *   - ash:         Ash.
- *   - econet:      Acorn Econet.
- *   - atmsvc:      ATM SVCs.
- *   - rds:         RDS sockets.
- *   - sna:         Linux SNA Project.
- *   - irda:        IRDA sockets.
- *   - pppox:       PPPoX sockets.
- *   - wanpipe:     Wanpipe API sockets.
- *   - llc:         Linux LLC.
- *   - ib:          Native InfiniBand address.
- *   - mpls:        MPLS.
- *   - can:         Controller Area Network.
- *   - tipc:        TIPC sockets.
- *   - bluetooth:   Bluetooth sockets.
- *   - iucb:        IUCV sockets.
- *   - rxrpc:       RxRPC sockets.
- *   - isdn:        mISDN sockets.
- *   - phonet:      Phonet sockets.
- *   - ieee802154:  IEEE 802.15.4 sockets.
- *   - caif:        CAIF sockets.
  *   - alg:         Algorithm sockets.
- *   - nfc:         NFC sockets.
- *   - vsock:       vSockets.
+ *   - appletalk:   Appletalk DDP.
+ *   - ash:         Ash.
+ *   - atmpvc:      ATM PVCs.
+ *   - atmsvc:      ATM SVCs.
+ *   - ax25:        Amateur Radio AX.25.
+ *   - bluetooth:   Bluetooth sockets.
+ *   - bridge:      Multiprotocol bridge.
+ *   - caif:        CAIF sockets.
+ *   - can:         Controller Area Network.
+ *   - decnet:      Reserved for DECnet project.
+ *   - econet:      Acorn Econet.
+ *   - ib:          Native InfiniBand address.
+ *   - ieee802154:  IEEE 802.15.4 sockets.
+ *   - inet:        IP protocol family.
+ *   - inet6:       IP version 6.
+ *   - ipx:         Novell Internet Protocol.
+ *   - irda:        IRDA sockets.
+ *   - isdn:        mISDN sockets.
+ *   - iucb:        IUCV sockets.
  *   - kcm:         Kernel Connection Multiplexor.
+ *   - key:         PF_KEY key management API.
+ *   - llc:         Linux LLC.
+ *   - local:       Localhost, pipes, Unix sockets, or file sockets (PF_LOCAL, PF_UNIX, PF_FILE).
+ *   - mpls:        MPLS.
+ *   - netbeui:     Reserved for 802.2LLC project.
+ *   - netlink:     Netlink and BSD (PF_NETLINK and PF_ROUTE).
+ *   - netrom:      Amateur radio NetROM.
+ *   - nfc:         NFC sockets.
+ *   - packet:      Packet family.
+ *   - phonet:      Phonet sockets.
+ *   - pppox:       PPPoX sockets.
  *   - qipcrtr:     Qualcomm IPC Router.
+ *   - rds:         RDS sockets.
+ *   - rose:        Amateur Radio X.25 PLP.
+ *   - rxrpc:       RxRPC sockets.
+ *   - security:    Security callback pseudo AF.
  *   - smc:         SMC sockets.
+ *   - sna:         Linux SNA Project.
+ *   - tipc:        TIPC sockets.
+ *   - vsock:       vSockets.
+ *   - wanpipe:     Wanpipe API sockets.
+ *   - x25:         Reserved for X.25 project.
  *   - max:         The maximum value for known protocol families (this is not a protocol family).
  */
 #ifndef _di_f_socket_protocol_family_e_
@@ -734,15 +734,15 @@ extern "C" {
  * Commonly used socket related properties, loosely based off of f_file_t.
  *
  * id:       File descriptor, with a value of -1 represents a closed file.
- * domain:   The socket domain (protocol family).
- * protocol: The socket protocol.
- * type:     The socket type (address family).
+ * domain:   The socket domain (protocol family, such as f_socket_protocol_family_local_e).
+ * protocol: The socket protocol(such as f_socket_protocol_tcp_e).
+ * type:     The socket type (address family, such as f_socket_address_family_local_e).
  *
  * size_read:  The default number of 1-byte characters to read at a time and is often used for the read buffer size.
  * size_write: The default number of 1-byte characters to read at a time and is often used for the write buffer size.
  *
- * length:  The length of the socket.
  * address: Tthe socket address.
+ * length:  The length of the socket.
  *
  * name: The name of the socket, if a name is given (for UNIX sockets this represents the path) (Must be a NULL terminated string).
  *
@@ -758,13 +758,13 @@ extern "C" {
     size_t size_read;
     size_t size_write;
 
-    socklen_t length;
     f_socket_address_t address;
+    socklen_t length;
 
     f_string_static_t name;
   } f_socket_t;
 
-  #define f_socket_t_initialize { -1, 0, 0, 0, F_socket_default_read_size_d, F_socket_default_write_size_d, 0, f_socket_address_t_initialize, f_string_empty_s }
+  #define f_socket_t_initialize { -1, 0, 0, 0, F_socket_default_read_size_d, F_socket_default_write_size_d, f_socket_address_t_initialize, 0, f_string_static_t_initialize }
 
   #define macro_f_socket_t_initialize_1(address, length) { \
     -1, \

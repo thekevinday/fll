@@ -53,8 +53,8 @@ void test__f_socket_socketss_append_all__works(void **state) {
   };
 
   f_socket_t sources[] = {
-    macro_f_socket_t_initialize_3(1, 2, 3, 4, 0, 0, tests[0]),
-    macro_f_socket_t_initialize_3(5, 6, 7, 8, 0, 0, tests[1]),
+    macro_f_socket_t_initialize_3(1, 2, 3, 4, f_socket_address_t_initialize, 0, tests[0]),
+    macro_f_socket_t_initialize_3(5, 6, 7, 8, f_socket_address_t_initialize, 0, tests[1]),
   };
 
   f_socketss_t source = f_socketss_t_initialize;
