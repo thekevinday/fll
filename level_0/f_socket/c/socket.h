@@ -103,13 +103,12 @@ extern "C" {
 /**
  * Bind a socket to a name.
  *
- * This does not initialize or otherwise memset() the address.
- *
  * @param socket
  *   The socket structure.
- *   The socket.address may point to any valid structure, like "struct sockaddr", "struct sockaddr_un", or "struct sockaddr_in".
+ *   The socket.address may be any valid structure, like "struct sockaddr", "struct sockaddr_un", or "struct sockaddr_in".
+ *   The socket.address.*.*_family is not directly altered by this function.
  *   The caller must appropriately initialize and configure the socket.address.
- *   The socket.length must represent the full size of the address structure.
+ *   The socket.length must represent the full size of the address structure and is not altered by this function.
  *   The socket.id must refer to a valid socket file descriptor.
  *
  * @return
@@ -136,16 +135,87 @@ extern "C" {
 #endif // _di_f_socket_bind_
 
 /**
- * Bind a socket to a local (UNIX) socket file.
- *
- * This does initialize and memset() the address with the address set to a UNIX socket (struct sockaddr_un).
+ * Bind a socket to an IPv4 address.
  *
  * @param socket
- *   The socket structure.
- *   The socket.address must point to a "struct sockaddr_un".
+ *   The socket to use.
+ *
+ *   The socket.address.inet4.sin_family is directly assigned to f_socket_address_family_inet4_e.
+ *   The socket.domain (potocol family) must be assigned to f_socket_protocol_family_inet4_e.
+ *   The socket.length is updated to represent the size of "struct sockaddr_in".
+ *   The socket.type (address family) will be assigned to f_socket_address_family_inet4_e.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_address (with error bit) if address is already in use (therefore unavailable).
+ *   F_address_not (with error bit) if socket.domain is not set to f_socket_protocol_family_inet4_e.
+ *   F_available_not_address (with error bit) if address is unavailable (is non-existent).
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_busy_address (with error bit) if address is already in use (therefore unavailable).
+ *   F_directory_found_not (with error bit) if directory was not found.
+ *   F_file_found_not (with error bit) if file not found.
+ *   F_memory_not (with error bit) if out of memory.
+ *   F_name (with error bit) on path name error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_socket_not (with error bit) if the id is not a socket descriptor.
+ *   F_string_too_large (with error bit) if string is too large to store in the buffer.
+ *
+ *   F_failure (with error bit) for any other error.
+ *
+ * @see bind()
+ */
+#ifndef _di_f_socket_bind_inet4_
+  extern f_status_t f_socket_bind_inet4(f_socket_t * const socket);
+#endif // _di_f_socket_bind_inet4_
+
+/**
+ * Bind a socket to an IPv6 address.
+ *
+ * @param socket
+ *   The socket to use.
+ *
+ *   The socket.address.inet6.sin_family is directly assigned to f_socket_address_family_inet6_e.
+ *   The socket.domain (potocol family) must be assigned to f_socket_protocol_family_inet6_e.
+ *   The socket.length is updated to represent the size of "struct sockaddr_in6".
+ *   The socket.type (address family) will be assigned to f_socket_address_family_inet6_e.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_address (with error bit) if address is already in use (therefore unavailable).
+ *   F_address_not (with error bit) if socket.domain is not set to f_socket_protocol_family_inet6_e.
+ *   F_available_not_address (with error bit) if address is unavailable (is non-existent).
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_busy_address (with error bit) if address is already in use (therefore unavailable).
+ *   F_directory_found_not (with error bit) if directory was not found.
+ *   F_file_found_not (with error bit) if file not found.
+ *   F_memory_not (with error bit) if out of memory.
+ *   F_name (with error bit) on path name error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_socket_not (with error bit) if the id is not a socket descriptor.
+ *   F_string_too_large (with error bit) if string is too large to store in the buffer.
+ *
+ *   F_failure (with error bit) for any other error.
+ *
+ * @see bind()
+ */
+#ifndef _di_f_socket_bind_inet6_
+  extern f_status_t f_socket_bind_inet6(f_socket_t * const socket);
+#endif // _di_f_socket_bind_inet6_
+
+/**
+ * Bind a socket to a local (UNIX) socket file.
+ *
+ * @param socket
+ *   The socket to use.
+ *
+ *   The socket.address.local.sun_family is directly assigned to f_socket_address_family_local_e.
+ *   The socket.address.local.sun_path is updated with the value from socket.name.string.
  *   The socket.domain (potocol family) must be assigned to f_socket_protocol_family_local_e.
- *   The socket.type (address family) will be assigned to f_socket_address_family_local_e.
+ *   The socket.length is updated to represent the size of "struct sockaddr_un".
  *   The socket.name must be assigned to a path.
+ *   The socket.type (address family) will be assigned to f_socket_address_family_local_e.
  *
  * @return
  *   F_none on success.
@@ -156,7 +226,7 @@ extern "C" {
  *   F_busy_address (with error bit) if address is already in use (therefore unavailable).
  *   F_directory_found_not (with error bit) if directory was not found.
  *   F_file_found_not (with error bit) if file not found.
- *   F_local_not (with erro bit) if domain in not a UNIX socket.
+ *   F_local_not (with error bit) if socket.domain is not set to f_socket_protocol_family_local_e.
  *   F_memory_not (with error bit) if out of memory.
  *   F_name (with error bit) on path name error.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -166,8 +236,7 @@ extern "C" {
  *   F_failure (with error bit) for any other error.
  *
  * @see bind()
- * @see memset()
- * @see strncpy()
+ * @see memcpy()
  */
 #ifndef _di_f_socket_bind_local_
   extern f_status_t f_socket_bind_local(f_socket_t * const socket);
@@ -333,7 +402,7 @@ extern "C" {
  * @param socket
  *   The socket structure.
  *   The socket.id must represent a valid socket file descriptor.
- * @param max_backlog
+ * @param backlog_max
  *   The max length of the pending connections queue.
  *   Suggested default setting: 8.
  *
@@ -350,7 +419,7 @@ extern "C" {
  * @see listen()
  */
 #ifndef _di_f_socket_listen_
-  extern f_status_t f_socket_listen(f_socket_t * const socket, const unsigned int max_backlog);
+  extern f_status_t f_socket_listen(f_socket_t * const socket, const unsigned int backlog_max);
 #endif // _di_f_socket_listen_
 
 /**

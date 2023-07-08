@@ -72,6 +72,68 @@ extern "C" {
   }
 #endif // _di_f_socket_bind_
 
+#ifndef _di_f_socket_bind_inet4_
+  f_status_t f_socket_bind_inet4(f_socket_t * const socket) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!socket) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (socket->domain != f_socket_protocol_family_inet4_e) return F_status_set_error(F_address_not);
+
+    socket->address.inet4.sin_family = f_socket_address_family_inet4_e;
+    socket->length = sizeof(struct sockaddr_in);
+
+    if (bind(socket->id, (struct sockaddr *) &socket->address.inet4, socket->length) == -1) {
+      if (errno == EACCES) return F_status_set_error(F_access_denied);
+      if (errno == EADDRINUSE) return F_status_set_error(F_busy_address);
+      if (errno == EADDRNOTAVAIL) return F_status_set_error(F_available_not_address);
+      if (errno == EFAULT) return F_status_set_error(F_buffer);
+      if (errno == EINVAL) return F_status_set_error(F_parameter);
+      if (errno == ELOOP) return F_status_set_error(F_loop);
+      if (errno == ENAMETOOLONG) return F_status_set_error(F_string_too_large);
+      if (errno == ENOENT) return F_status_set_error(F_file_found_not);
+      if (errno == ENOMEM) return F_status_set_error(F_memory_not);
+      if (errno == ENOTDIR) return F_status_set_error(F_directory_found_not);
+      if (errno == ENOTSOCK) return F_status_set_error(F_socket_not);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_socket_bind_inet4_
+
+#ifndef _di_f_socket_bind_inet6_
+  f_status_t f_socket_bind_inet6(f_socket_t * const socket) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!socket) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (socket->domain != f_socket_protocol_family_inet6_e) return F_status_set_error(F_address_not);
+
+    socket->address.inet6.sin6_family = f_socket_address_family_inet6_e;
+    socket->length = sizeof(struct sockaddr_in6);
+
+    if (bind(socket->id, (struct sockaddr *) &socket->address.inet6, socket->length) == -1) {
+      if (errno == EACCES) return F_status_set_error(F_access_denied);
+      if (errno == EADDRINUSE) return F_status_set_error(F_busy_address);
+      if (errno == EADDRNOTAVAIL) return F_status_set_error(F_available_not_address);
+      if (errno == EFAULT) return F_status_set_error(F_buffer);
+      if (errno == EINVAL) return F_status_set_error(F_parameter);
+      if (errno == ELOOP) return F_status_set_error(F_loop);
+      if (errno == ENAMETOOLONG) return F_status_set_error(F_string_too_large);
+      if (errno == ENOENT) return F_status_set_error(F_file_found_not);
+      if (errno == ENOMEM) return F_status_set_error(F_memory_not);
+      if (errno == ENOTDIR) return F_status_set_error(F_directory_found_not);
+      if (errno == ENOTSOCK) return F_status_set_error(F_socket_not);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_socket_bind_inet6_
+
 #ifndef _di_f_socket_bind_local_
   f_status_t f_socket_bind_local(f_socket_t * const socket) {
     #ifndef _di_level_0_parameter_checking_
@@ -80,23 +142,18 @@ extern "C" {
 
     if (socket->domain != f_socket_protocol_family_local_e) return F_status_set_error(F_local_not);
 
-    memset((void *) &socket->address, 0, sizeof(struct sockaddr_un));
+    socket->address.local.sun_family = f_socket_address_family_local_e;
+    socket->length = sizeof(struct sockaddr_un);
 
-    {
-      struct sockaddr_un *address = (struct sockaddr_un *) &socket->address;
-
-      address->sun_family = f_socket_address_family_local_e;
-
-      if (socket->name.used && socket->name.string) {
-        strncpy(address->sun_path, socket->name.string, socket->name.used);
-        address->sun_path[socket->name.used] = 0;
-      }
-      else {
-        address->sun_path[0] = 0;
-      }
+    if (socket->name.used && socket->name.string) {
+      memcpy((void *) socket->address.local.sun_path, (void *) socket->name.string, socket->name.used);
+      socket->address.local.sun_path[socket->name.used] = 0;
+    }
+    else {
+      socket->address.local.sun_path[0] = 0;
     }
 
-    if (bind(socket->id, (struct sockaddr *) &socket->address, sizeof(struct sockaddr_un)) == -1) {
+    if (bind(socket->id, (struct sockaddr *) &socket->address.local, socket->length) == -1) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EADDRINUSE) return F_status_set_error(F_busy_address);
       if (errno == EADDRNOTAVAIL) return F_status_set_error(F_available_not_address);
@@ -254,12 +311,12 @@ extern "C" {
 #endif // _di_f_socket_disconnect_
 
 #ifndef _di_f_socket_listen_
-  f_status_t f_socket_listen(f_socket_t * const socket, const unsigned int max_backlog) {
+  f_status_t f_socket_listen(f_socket_t * const socket, const unsigned int backlog_max) {
     #ifndef _di_level_0_parameter_checking_
       if (!socket) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (listen(socket->id, max_backlog) == -1) {
+    if (listen(socket->id, backlog_max) == -1) {
       if (errno == EADDRINUSE) return F_status_set_error(F_busy_address);
       if (errno == EBADF) return F_status_set_error(F_file_descriptor);
       if (errno == ENOTSOCK) return F_status_set_error(F_socket_not);

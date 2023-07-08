@@ -28,6 +28,8 @@
 // Test includes.
 #include "test-socket-accept.h"
 #include "test-socket-bind.h"
+#include "test-socket-bind_inet4.h"
+#include "test-socket-bind_inet6.h"
 #include "test-socket-bind_local.h"
 #include "test-socket-connect.h"
 #include "test-socket-create.h"

@@ -1,11 +1,11 @@
 #include "test-socket.h"
-#include "test-socket-bind_local.h"
+#include "test-socket-bind_inet4.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-void test__f_socket_bind_local__fails(void **state) {
+void test__f_socket_bind_inet4__fails(void **state) {
 
   int errnos[] = {
     EACCES,
@@ -39,16 +39,16 @@ void test__f_socket_bind_local__fails(void **state) {
 
   {
     f_socket_t socket = f_socket_t_initialize;
-    socket.domain = f_socket_protocol_family_local_e;
+    socket.domain = f_socket_protocol_family_inet4_e;
     socket.protocol = f_socket_protocol_tcp_e;
-    socket.type = f_socket_address_family_local_e;
+    socket.type = f_socket_address_family_inet4_e;
 
     for (uint8_t i = 0; i < 12; ++i) {
 
       will_return(__wrap_bind, true);
       will_return(__wrap_bind, errnos[i]);
 
-      const f_status_t status = f_socket_bind_local(&socket);
+      const f_status_t status = f_socket_bind_inet4(&socket);
 
       assert_int_equal(status, F_status_set_error(statuss[i]));
     } // for
@@ -56,42 +56,42 @@ void test__f_socket_bind_local__fails(void **state) {
 
   {
     f_socket_t socket = f_socket_t_initialize;
-    socket.domain = f_socket_protocol_family_local_e;
+    socket.domain = f_socket_protocol_family_inet4_e;
     socket.protocol = f_socket_protocol_tcp_e;
-    socket.type = f_socket_address_family_local_e;
+    socket.type = f_socket_address_family_inet4_e;
 
     for (uint8_t i = 0; i < 12; ++i) {
 
       will_return(__wrap_bind, true);
       will_return(__wrap_bind, errnos[i]);
 
-      const f_status_t status = f_socket_bind_local(&socket);
+      const f_status_t status = f_socket_bind_inet4(&socket);
 
       assert_int_equal(status, F_status_set_error(statuss[i]));
     } // for
   }
 }
 
-void test__f_socket_bind_local__parameter_checking(void **state) {
+void test__f_socket_bind_inet4__parameter_checking(void **state) {
 
   {
-    const f_status_t status = f_socket_bind_local(0);
+    const f_status_t status = f_socket_bind_inet4(0);
 
     assert_int_equal(status, F_status_set_error(F_parameter));
   }
 }
 
-void test__f_socket_bind_local__works(void **state) {
+void test__f_socket_bind_inet4__works(void **state) {
 
   {
     f_socket_t socket = f_socket_t_initialize;
-    socket.domain = f_socket_protocol_family_local_e;
+    socket.domain = f_socket_protocol_family_inet4_e;
     socket.protocol = f_socket_protocol_tcp_e;
-    socket.type = f_socket_address_family_local_e;
+    socket.type = f_socket_address_family_inet4_e;
 
     will_return(__wrap_bind, false);
 
-    const f_status_t status = f_socket_bind_local(&socket);
+    const f_status_t status = f_socket_bind_inet4(&socket);
 
     assert_int_equal(status, F_none);
   }

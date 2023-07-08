@@ -37,49 +37,49 @@ extern "C" {
  *
  * f_socket_address_family_*_e:
  *   - unspecified: No protocol family specified.
- *   - local:       Localhost, pipes, Unix sockets, or file sockets (PF_LOCAL, PF_UNIX, PF_FILE).
- *   - inet:        IP protocol family.
- *   - ax25:        Amateur Radio AX.25.
- *   - ipx:         Novell Internet Protocol.
- *   - appletalk:   Appletalk DDP.
- *   - netrom:      Amateur radio NetROM.
- *   - bridge:      Multiprotocol bridge.
- *   - atmpvc:      ATM PVCs.
- *   - x25:         Reserved for X.25 project.
- *   - inet6:       IP version 6.
- *   - rose:        Amateur Radio X.25 PLP.
- *   - decnet:      Reserved for DECnet project.
- *   - netbeui:     Reserved for 802.2LLC project.
- *   - security:    Security callback pseudo AF.
- *   - key:         PF_KEY key management API.
- *   - netlink:     Netlink and BSD (PF_NETLINK and PF_ROUTE).
- *   - packet:      Packet family.
- *   - ash:         Ash.
- *   - econet:      Acorn Econet.
- *   - atmsvc:      ATM SVCs.
- *   - rds:         RDS sockets.
- *   - sna:         Linux SNA Project.
- *   - irda:        IRDA sockets.
- *   - pppox:       PPPoX sockets.
- *   - wanpipe:     Wanpipe API sockets.
- *   - llc:         Linux LLC.
- *   - ib:          Native InfiniBand address.
- *   - mpls:        MPLS.
- *   - can:         Controller Area Network.
- *   - tipc:        TIPC sockets.
- *   - bluetooth:   Bluetooth sockets.
- *   - iucb:        IUCV sockets.
- *   - rxrpc:       RxRPC sockets.
- *   - isdn:        mISDN sockets.
- *   - phonet:      Phonet sockets.
- *   - ieee802154:  IEEE 802.15.4 sockets.
- *   - caif:        CAIF sockets.
  *   - alg:         Algorithm sockets.
- *   - nfc:         NFC sockets.
- *   - vsock:       vSockets.
+ *   - appletalk:   Appletalk DDP.
+ *   - ash:         Ash.
+ *   - atmpvc:      ATM PVCs.
+ *   - atmsvc:      ATM SVCs.
+ *   - ax25:        Amateur Radio AX.25.
+ *   - bluetooth:   Bluetooth sockets.
+ *   - bridge:      Multiprotocol bridge.
+ *   - caif:        CAIF sockets.
+ *   - can:         Controller Area Network.
+ *   - decnet:      Reserved for DECnet project.
+ *   - econet:      Acorn Econet.
+ *   - ib:          Native InfiniBand address.
+ *   - ieee802154:  IEEE 802.15.4 sockets.
+ *   - inet4:       IP version 4.
+ *   - inet6:       IP version 6.
+ *   - ipx:         Novell Internet Protocol.
+ *   - irda:        IRDA sockets.
+ *   - isdn:        mISDN sockets.
+ *   - iucb:        IUCV sockets.
  *   - kcm:         Kernel Connection Multiplexor.
+ *   - key:         PF_KEY key management API.
+ *   - llc:         Linux LLC.
+ *   - local:       Localhost, pipes, Unix sockets, or file sockets (PF_LOCAL, PF_UNIX, PF_FILE).
+ *   - mpls:        MPLS.
+ *   - netbeui:     Reserved for 802.2LLC project.
+ *   - netlink:     Netlink and BSD (PF_NETLINK and PF_ROUTE).
+ *   - netrom:      Amateur radio NetROM.
+ *   - nfc:         NFC sockets.
+ *   - packet:      Packet family.
+ *   - phonet:      Phonet sockets.
+ *   - pppox:       PPPoX sockets.
  *   - qipcrtr:     Qualcomm IPC Router.
+ *   - rds:         RDS sockets.
+ *   - rose:        Amateur Radio X.25 PLP.
+ *   - rxrpc:       RxRPC sockets.
+ *   - security:    Security callback pseudo AF.
  *   - smc:         SMC sockets.
+ *   - sna:         Linux SNA Project.
+ *   - tipc:        TIPC sockets.
+ *   - vsock:       vSockets.
+ *   - wanpipe:     Wanpipe API sockets.
+ *   - x25:         Reserved for X.25 project.
  *   - max:         The maximum value for known protocol families (this is not a protocol family).
  */
 #ifndef _di_f_socket_address_family_e_
@@ -99,7 +99,7 @@ extern "C" {
     f_socket_address_family_econet_e      = AF_ECONET,
     f_socket_address_family_ib_e          = AF_IB,
     f_socket_address_family_ieee802154_e  = AF_IEEE802154,
-    f_socket_address_family_inet_e        = AF_INET,
+    f_socket_address_family_inet4_e       = AF_INET,
     f_socket_address_family_inet6_e       = AF_INET6,
     f_socket_address_family_ipx_e         = AF_IPX,
     f_socket_address_family_irda_e        = AF_IRDA,
@@ -543,7 +543,7 @@ extern "C" {
  *   - econet:      Acorn Econet.
  *   - ib:          Native InfiniBand address.
  *   - ieee802154:  IEEE 802.15.4 sockets.
- *   - inet:        IP protocol family.
+ *   - inet4:       IP version 4.
  *   - inet6:       IP version 6.
  *   - ipx:         Novell Internet Protocol.
  *   - irda:        IRDA sockets.
@@ -591,7 +591,7 @@ extern "C" {
     f_socket_protocol_family_econet_e      = PF_ECONET,
     f_socket_protocol_family_ib_e          = PF_IB,
     f_socket_protocol_family_ieee802154_e  = PF_IEEE802154,
-    f_socket_protocol_family_inet_e        = PF_INET,
+    f_socket_protocol_family_inet4_e       = PF_INET,
     f_socket_protocol_family_inet6_e       = PF_INET6,
     f_socket_protocol_family_ipx_e         = PF_IPX,
     f_socket_protocol_family_irda_e        = PF_IRDA,
@@ -735,13 +735,13 @@ extern "C" {
  *
  * id:       File descriptor, with a value of -1 represents a closed file.
  * domain:   The socket domain (protocol family, such as f_socket_protocol_family_local_e).
- * protocol: The socket protocol(such as f_socket_protocol_tcp_e).
+ * protocol: The socket protocol (such as f_socket_protocol_tcp_e).
  * type:     The socket type (address family, such as f_socket_address_family_local_e).
  *
  * size_read:  The default number of 1-byte characters to read at a time and is often used for the read buffer size.
  * size_write: The default number of 1-byte characters to read at a time and is often used for the write buffer size.
  *
- * address: Tthe socket address.
+ * address: The socket address.
  * length:  The length of the socket.
  *
  * name: The name of the socket, if a name is given (for UNIX sockets this represents the path) (Must be a NULL terminated string).
