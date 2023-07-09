@@ -21,7 +21,7 @@
  *
  *   This alters main.program.signal_received, setting it to a received signal.
  *
- *   This alters setting.status:
+ *   This alters main.setting.state.status:
  *     F_none on success.
  *
  *     Errors (with error bit) from: fll_fss_identify().
@@ -43,7 +43,7 @@
  *
  *   This alters main.program.signal_received, setting it to a received signal.
  *
- *   This alters setting.status:
+ *   This alters main.setting.state.status:
  *     Errors (with error bit) from: f_compare_dynamic_partial_string().
  *     Errors (with error bit) from: f_compare_dynamic_string().
  *     Errors (with error bit) from: fl_conversion_dynamic_partial_to_hexidecimal_unsigned().

@@ -18,7 +18,7 @@
  * @param main
  *   The main program and settings data.
  *
- *   This alters setting.status:
+ *   This alters main.setting.state.status:
  *     F_none on success.
  *
  *     Errors (with error bit) from: f_file_stream_read_block().
