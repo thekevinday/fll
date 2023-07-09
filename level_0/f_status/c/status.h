@@ -582,6 +582,10 @@ extern "C" {
       F_network_server_not,
       F_network_time,
       F_network_time_not,
+      F_network_version_four,
+      F_network_version_four_not,
+      F_network_version_six,
+      F_network_version_six_not,
     #endif // _di_f_status_network_e_
 
     #ifndef _di_f_status_number_e_

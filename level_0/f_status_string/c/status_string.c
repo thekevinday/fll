@@ -456,6 +456,10 @@ extern "C" {
     const f_string_static_t f_status_network_server_not_s = macro_f_string_static_t_initialize_1(F_status_network_server_not_s, 0, F_status_network_server_not_s_length);
     const f_string_static_t f_status_network_time_s = macro_f_string_static_t_initialize_1(F_status_network_time_s, 0, F_status_network_time_s_length);
     const f_string_static_t f_status_network_time_not_s = macro_f_string_static_t_initialize_1(F_status_network_time_not_s, 0, F_status_network_time_not_s_length);
+    const f_string_static_t f_status_network_version_four_s = macro_f_string_static_t_initialize_1(F_status_network_version_four_s, 0, F_status_network_version_four_s_length);
+    const f_string_static_t f_status_network_version_four_not_s = macro_f_string_static_t_initialize_1(F_status_network_version_four_not_s, 0, F_status_network_version_four_not_s_length);
+    const f_string_static_t f_status_network_version_six_s = macro_f_string_static_t_initialize_1(F_status_network_version_six_s, 0, F_status_network_version_six_s_length);
+    const f_string_static_t f_status_network_version_six_not_s = macro_f_string_static_t_initialize_1(F_status_network_version_six_not_s, 0, F_status_network_version_six_not_s_length);
   #endif // _di_f_status_network_s_
 
   #ifndef _di_f_status_number_s_
@@ -2839,6 +2843,26 @@ extern "C" {
 
         case F_network_time_not:
           *name = f_status_network_time_not_s;
+
+          break;
+
+        case F_network_version_four:
+          *name = f_status_network_version_four_s;
+
+          break;
+
+        case F_network_version_four_not:
+          *name = f_status_network_version_four_not_s;
+
+          break;
+
+        case F_network_version_six:
+          *name = f_status_network_version_six_s;
+
+          break;
+
+        case F_network_version_six_not:
+          *name = f_status_network_version_six_not_s;
 
           break;
       #endif // _di_f_status_network_s_

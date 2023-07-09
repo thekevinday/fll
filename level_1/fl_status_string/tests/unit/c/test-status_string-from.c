@@ -475,6 +475,10 @@ void test__fl_status_string_from__works(void **state) {
     F_network_server_not,
     F_network_time,
     F_network_time_not,
+    F_network_version_four,
+    F_network_version_four_not,
+    F_network_version_six,
+    F_network_version_six_not,
     F_number,
     F_number_decimal,
     F_number_decimal_not,
@@ -1091,6 +1095,10 @@ void test__fl_status_string_from__works(void **state) {
     f_status_network_server_not_s,
     f_status_network_time_s,
     f_status_network_time_not_s,
+    f_status_network_version_four_s,
+    f_status_network_version_four_not_s,
+    f_status_network_version_six_s,
+    f_status_network_version_six_not_s,
     f_status_number_s,
     f_status_number_decimal_s,
     f_status_number_decimal_not_s,
@@ -1277,7 +1285,7 @@ void test__fl_status_string_from__works(void **state) {
     f_status_status_code_last_s,
   };
 
-  for (uint16_t i = 0; i < 613; ++i) {
+  for (uint16_t i = 0; i < 617; ++i) {
 
     f_status_t result = F_none;
 

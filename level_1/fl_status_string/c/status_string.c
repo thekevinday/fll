@@ -2606,6 +2606,30 @@ extern "C" {
 
         return F_none;
       }
+
+      if (f_compare_dynamic(name, f_status_network_version_four_s) == F_equal_to) {
+        *code = F_network_version_four;
+
+        return F_none;
+      }
+
+      if (f_compare_dynamic(name, f_status_network_version_four_not_s) == F_equal_to) {
+        *code = F_network_version_four_not;
+
+        return F_none;
+      }
+
+      if (f_compare_dynamic(name, f_status_network_version_six_s) == F_equal_to) {
+        *code = F_network_version_six;
+
+        return F_none;
+      }
+
+      if (f_compare_dynamic(name, f_status_network_version_six_not_s) == F_equal_to) {
+        *code = F_network_version_six_not;
+
+        return F_none;
+      }
     #endif // _di_f_status_network_s_
 
     #ifndef _di_f_status_number_s_

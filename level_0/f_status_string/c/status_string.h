@@ -1303,6 +1303,10 @@ extern "C" {
     #define F_status_network_server_not_s       "F_network_server_not"
     #define F_status_network_time_s             "F_network_time"
     #define F_status_network_time_not_s         "F_network_time_not"
+    #define F_status_network_version_four_s     "F_network_version_four"
+    #define F_status_network_version_four_not_s "F_network_version_four_not"
+    #define F_status_network_version_six_s      "F_network_version_six"
+    #define F_status_network_version_six_not_s  "F_network_version_six_not"
 
     #define F_status_network_s_length                  9
     #define F_status_network_busy_s_length             14
@@ -1326,6 +1330,10 @@ extern "C" {
     #define F_status_network_server_not_s_length       20
     #define F_status_network_time_s_length             14
     #define F_status_network_time_not_s_length         18
+    #define F_status_network_version_four_s_length     22
+    #define F_status_network_version_four_not_s_length 26
+    #define F_status_network_version_six_s_length      21
+    #define F_status_network_version_six_not_s_length  25
 
     extern const f_string_static_t f_status_network_s;
     extern const f_string_static_t f_status_network_busy_s;
@@ -1349,6 +1357,10 @@ extern "C" {
     extern const f_string_static_t f_status_network_server_not_s;
     extern const f_string_static_t f_status_network_time_s;
     extern const f_string_static_t f_status_network_time_not_s;
+    extern const f_string_static_t f_status_network_version_four_s;
+    extern const f_string_static_t f_status_network_version_four_not_s;
+    extern const f_string_static_t f_status_network_version_six_s;
+    extern const f_string_static_t f_status_network_version_six_not_s;
   #endif // _di_f_status_network_s_
 
   #ifndef _di_f_status_number_s_
