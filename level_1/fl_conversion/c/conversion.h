@@ -68,11 +68,11 @@ extern "C" {
  * This will ignore NULL values.
  * This will process signed statuses (+/-).
  * This will detect based types as follows:
- *   - hexidecimals begin with either '0x' or '0X'.
- *   - duodecimals begin with either '0d' or '0D'.
- *   - octals begin with either '0o' or '0O'.
- *   - binaries begin with either '0b' or '0B'.
- *   - decimal is used for all other cases.
+ *   - Hexidecimals begin with either '0x' or '0X'.
+ *   - Duodecimals begin with either '0d' or '0D'.
+ *   - Octals begin with either '0o' or '0O'.
+ *   - Binaries begin with either '0b' or '0B'.
+ *   - Decimal is used for all other cases.
  *
  * Leading 0's and whitespace are ignored.
  * Whitespace after the first digit is considered invalid.
@@ -146,11 +146,11 @@ extern "C" {
  * This will ignore NULL values.
  * This will not process signed statuses (+/-).
  * This will detect based types as follows:
- *   - hexidecimals begin with either '0x' or '0X'.
- *   - duodecimals begin with either '0d' or '0D'.
- *   - octals begin with either '0o' or '0O'.
- *   - binaries begin with either '0b' or '0B'.
- *   - decimal is used for all other cases.
+ *   - Hexidecimals begin with either '0x' or '0X'.
+ *   - Duodecimals begin with either '0d' or '0D'.
+ *   - Octals begin with either '0o' or '0O'.
+ *   - Binaries begin with either '0b' or '0B'.
+ *   - Decimal is used for all other cases.
  *
  * Leading 0's and whitespace are ignored.
  * Whitespace after the first digit is considered invalid.
@@ -226,11 +226,11 @@ extern "C" {
  * This will ignore NULL values.
  * This will process signed statuses (+/-).
  * This will detect based types as follows:
- *   - hexidecimals begin with either '0x' or '0X'.
- *   - duodecimals begin with either '0d' or '0D'.
- *   - octals begin with either '0o' or '0O'.
- *   - binaries begin with either '0b' or '0B'.
- *   - decimal is used for all other cases.
+ *   - Hexidecimals begin with either '0x' or '0X'.
+ *   - Duodecimals begin with either '0d' or '0D'.
+ *   - Octals begin with either '0o' or '0O'.
+ *   - Binaries begin with either '0b' or '0B'.
+ *   - Decimal is used for all other cases.
  *
  * Leading 0's and whitespace are ignored.
  * Whitespace after the first digit is considered invalid.
@@ -301,11 +301,11 @@ extern "C" {
  * This will ignore NULL values.
  * This will not process signed statuses (+/-).
  * This will detect based types as follows:
- *   - hexidecimals begin with either '0x' or '0X'.
- *   - duodecimals begin with either '0d' or '0D'.
- *   - octals begin with either '0o' or '0O'.
- *   - binaries begin with either '0b' or '0B'.
- *   - decimal is used for all other cases.
+ *   - Hexidecimals begin with either '0x' or '0X'.
+ *   - Duodecimals begin with either '0d' or '0D'.
+ *   - Octals begin with either '0o' or '0O'.
+ *   - Binaries begin with either '0b' or '0B'.
+ *   - Decimal is used for all other cases.
  *
  * Leading 0's and whitespace are ignored.
  * Whitespace after the first digit is considered invalid.
