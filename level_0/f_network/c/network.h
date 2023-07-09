@@ -12,6 +12,7 @@
 
 // Libc includes.
 #include <arpa/inet.h>
+#include <ctype.h>
 #include <netdb.h>
 #include <string.h>
 #include <sys/socket.h>
@@ -150,6 +151,46 @@ extern "C" {
 #ifndef _di_f_network_from_ip_string_
   extern f_status_t f_network_from_ip_string(const f_string_static_t from, f_network_family_ip_t * const to);
 #endif // _di_f_network_from_ip_string_
+
+/**
+ * Identify whether or not a string is a valid IPv4 or IPv6 address, including the optional port number.
+ *
+ * This does not fully validate the numbers.
+ * This only checks that the address is in the proper form.
+ *
+ * For IPv6, this only accepts port numbers when the IPv6 address is wrapped in brackets ('[' (U+005B) and ']' (U+005D)).
+ *
+ * @param address
+ *   The string to parse.
+ * @param port
+ *   (optional) This gets updated with the location where the first digit of the port number begins.
+ *   This is set to 0 if there is no port number.
+ *   On any error, this value is not changed.
+ *
+ *   Set to NULL to disable.
+ * @param state
+ *   A state for providing flags and handling interrupts during long running operations.
+ *   There is no state.handle().
+ *   There is no "callbacks" structure.
+ *   There is no data structure passed to these functions.
+ *
+ *   When state.interrupt() returns, only F_interrupt and F_interrupt_not are processed.
+ *   Error bit designates an error but must be passed along with F_interrupt.
+ *   All other statuses are ignored.
+ *
+ *   This alters state.status:
+ *     F_data_not on success but there is nothing to process (address.used is 0).
+ *     F_false on success, but this is not an IP Address.
+ *     F_network_version_four_not on success, but this is not an IP Address but looks close to a IPv4 address.
+ *     F_network_version_six_not on success, but this is not an IP Address but looks close to a IPv6 address.
+ *     F_network_version_four on success and this is an IPv4 address.
+ *     F_network_version_six on success and this is an IPv6 address.
+ *
+ *     F_interrupt (with or without error bit) if stopping due to an interrupt.
+ */
+#ifndef _di_f_network_is_ip_address_
+  extern void f_network_is_ip_address(const f_string_static_t address, f_number_unsigned_t * const port, f_state_t * const state);
+#endif // _di_f_network_is_ip_address_
 
 /**
  * Convert from network byte order to host byte order for an unsigned long integer.

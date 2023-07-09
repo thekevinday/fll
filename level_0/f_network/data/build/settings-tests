@@ -25,7 +25,7 @@ build_language c
 build_libraries -lc -lcmocka
 build_libraries-individual -lf_memory -lf_string -lf_network
 
-build_sources_program test-network-from_host_long.c test-network-from_host_short.c test-network-from_ip_address.c test-network-from_ip_name.c test-network-from_ip_string.c test-network-to_host_long.c test-network-to_host_short.c test-network-to_ip_string.c
+build_sources_program test-network-from_host_long.c test-network-from_host_short.c test-network-from_ip_address.c test-network-from_ip_name.c test-network-from_ip_string.c test-network-is_ip_address.c test-network-to_host_long.c test-network-to_host_short.c test-network-to_ip_string.c
 build_sources_program test-network.c
 
 build_script no
