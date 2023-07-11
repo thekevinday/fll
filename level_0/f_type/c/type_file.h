@@ -233,6 +233,50 @@ extern "C" {
 #endif // _di_f_filess_t_
 
 /**
+ * An enumeration of poll codes.
+ *
+ * f_poll_*_e:
+ *   - error:   There is an error.
+ *   - hang_up: Hang up (disconnect).
+ *   - invalid: Invalid polling request.
+ *   - read:    There is data to read.
+ *   - urgent:  There is urgent data to read (aka "out of band").
+ *   - write:   Writing will not block.
+ *
+ *   - message:      GNU poll message.
+ *   - remove:       GNU poll remove.
+ *   - hang_up_read: GNU poll hang up read.
+ */
+#ifndef _di_f_poll_e_
+  enum {
+    f_poll_error_e   = POLLERR,
+    f_poll_hang_up_e = POLLHUP,
+    f_poll_invalid_e = POLLNVAL,
+    f_poll_read_e    = POLLIN,
+    f_poll_urgent_e  = POLLPRI,
+    f_poll_write_e   = POLLOUT,
+
+    #ifdef POLLMSG
+      f_poll_message_e = POLLMSG,
+    #else
+      f_poll_message_e = 0x400,
+    #endif // POLLMSG
+
+    #ifdef POLLREMOVE
+      f_poll_remove_e = POLLREMOVE,
+    #else
+      f_poll_remove_e = 0x1000,
+    #endif // POLLREMOVE
+
+    #ifdef POLLRDHUP
+      f_poll_hang_up_read_e = POLLRDHUP,
+    #else
+      f_poll_hang_up_read_e = 0x2000,
+    #endif // POLLRDHUP
+  };
+#endif // _di_f_poll_e_
+
+/**
  * A typdef for representing struct pollfd.
  */
 #ifndef _di_f_poll_t_
