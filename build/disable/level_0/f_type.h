@@ -2,7 +2,10 @@
 #define _di_f_cellss_t_
 #define _di_f_cells_t_
 #define _di_f_cell_t_
+#define _di_f_date_spec_t_
 #define _di_f_date_t_
+#define _di_f_filess_t_
+#define _di_f_files_t_
 #define _di_f_file_t_
 #define _di_f_fll_idss_t_
 #define _di_f_fll_ids_t_
@@ -21,6 +24,10 @@
 #define _di_f_mode_t_
 #define _di_f_number_unsignedss_t_
 #define _di_f_number_unsigneds_t_
+#define _di_f_poll_e_
+#define _di_f_pollss_t_
+#define _di_f_polls_t_
+#define _di_f_poll_t_
 #define _di_f_statess_t_
 #define _di_f_states_t_
 #define _di_f_state_t_

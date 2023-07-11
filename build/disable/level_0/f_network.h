@@ -1,4 +1,12 @@
+#define _di_f_network_family_e_
+#define _di_f_network_family_ip_4_or_6_t_
+#define _di_f_network_family_ip_t_
 #define _di_f_network_from_host_long_
 #define _di_f_network_from_host_short_
+#define _di_f_network_from_ip_address_
+#define _di_f_network_from_ip_name_
+#define _di_f_network_from_ip_string_
+#define _di_f_network_is_ip_address_
 #define _di_f_network_to_host_long_
 #define _di_f_network_to_host_short_
+#define _di_f_network_to_ip_string_

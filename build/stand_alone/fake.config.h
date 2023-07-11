@@ -1184,6 +1184,7 @@
 #define _di_f_network_from_ip_address_
 #define _di_f_network_from_ip_name_
 #define _di_f_network_from_ip_string_
+#define _di_f_network_is_ip_address_
 #define _di_f_network_to_host_long_
 #define _di_f_network_to_host_short_
 #define _di_f_network_to_ip_string_
@@ -1317,6 +1318,7 @@
 #define _di_f_pollss_resize_
 #define _di_f_pollss_t_
 #define _di_f_polls_t_
+//#define _di_f_poll_e_
 //#define _di_f_poll_t_
 //#define _di_f_print_
 #define _di_f_print_character_
@@ -1489,7 +1491,10 @@
 
 #define _di_f_socket_accept_
 #define _di_f_socket_address_family_e_
+#define _di_f_socket_address_t_
 #define _di_f_socket_bind_
+#define _di_f_socket_bind_inet4_
+#define _di_f_socket_bind_inet6_
 #define _di_f_socket_bind_local_
 #define _di_f_socket_close_e_
 #define _di_f_socket_connect_
@@ -1499,6 +1504,7 @@
 #define _di_f_socket_disconnect_
 #define _di_f_socket_flag_e_
 #define _di_f_socket_host_name_
+#define _di_f_socket_level_e_
 #define _di_f_socket_listen_
 #define _di_f_socket_message_flag_e_
 #define _di_f_socket_name_host_

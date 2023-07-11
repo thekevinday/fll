@@ -40,13 +40,13 @@
 #define _di_f_file_name_directory_
 #define _di_f_file_open_
 #define _di_f_file_open_at_
-#define _di_f_file_open_mode_append_s_
 #define _di_f_file_open_mode_read_append_s_
 #define _di_f_file_open_mode_read_s_
 #define _di_f_file_open_mode_read_truncate_s_
 #define _di_f_file_open_mode_read_write_s_
 #define _di_f_file_open_mode_s_
-#define _di_f_file_open_mode_truncate_s_
+#define _di_f_file_open_mode_write_append_s_
+#define _di_f_file_open_mode_write_truncate_s_
 #define _di_f_file_operation_access_s_
 #define _di_f_file_operation_analyze_s_
 #define _di_f_file_operation_append_s_
@@ -93,6 +93,7 @@
 #define _di_f_file_operation_wipe_s_
 #define _di_f_file_operation_write_s_
 #define _di_f_file_owner_read_
+#define _di_f_file_poll_
 #define _di_f_file_read_
 #define _di_f_file_read_block_
 #define _di_f_file_read_until_
@@ -104,6 +105,7 @@
 #define _di_f_file_role_change_at_
 #define _di_f_file_seek_
 #define _di_f_file_seeks_d_
+#define _di_f_file_select_
 #define _di_f_file_size_
 #define _di_f_file_size_at_
 #define _di_f_file_size_by_id_
