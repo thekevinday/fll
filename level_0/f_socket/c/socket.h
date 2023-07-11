@@ -285,7 +285,7 @@ extern "C" {
  *   The socket.address may point to any valid structure, like "struct sockaddr", "struct sockaddr_un", or "struct sockaddr_in".
  *   The socket.domain must be assigned the desired domain (protocol family).
  *   The socket.protocol must be assigned the desired protocol.
- *   The socket.type must be assigned the desired type (address family).
+ *   The socket.type must be assigned the desired socket type.
  *   The socket.id will be updated with a file descriptor representing the created socket.
  *
  * @return
