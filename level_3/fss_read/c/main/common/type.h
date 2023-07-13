@@ -192,7 +192,7 @@ extern "C" {
  * flag:         Flags passed to the main function.
  * delimit_mode: The delimit mode.
  *
- * status_thread: A status used eclusively by the threaded signal handler.
+ * status_signal: A status used eclusively by the threaded signal handler.
  * state:         The state data used when processing the FSS data.
  *
  * delimit_depth: The delimit depth.
@@ -221,7 +221,7 @@ extern "C" {
     uint32_t flag;
     uint8_t delimit_mode;
 
-    f_status_t status_thread;
+    f_status_t status_signal;
     f_state_t state;
 
     f_number_unsigned_t delimit_depth;

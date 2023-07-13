@@ -30,7 +30,7 @@ extern "C" {
  *
  * range: A range used for processing as needed.
  *
- * status_thread: A status used eclusively by the threaded signal handler.
+ * status_signal: A status used eclusively by the threaded signal handler.
  * state:         The state information.
  *
  * buffer:A buffer used for processing files.
@@ -48,7 +48,7 @@ extern "C" {
 
     f_string_range_t range;
 
-    f_status_t status_thread;
+    f_status_t status_signal;
     f_state_t state;
 
     f_file_t file;

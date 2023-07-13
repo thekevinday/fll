@@ -24,7 +24,7 @@ extern "C" {
  *
  * flag: Flags passed to the main function.
  *
- * status_thread: A status used eclusively by the threaded signal handler.
+ * status_signal: A status used eclusively by the threaded signal handler.
  * state:         The state data used when processing the FSS data.
  *
  * status_string_from:        A pointer to the status string function (usually either fl_status_string_from() or fll_fss_status_string_from()).
@@ -35,7 +35,7 @@ extern "C" {
   typedef struct {
     uint16_t flag;
 
-    f_status_t status_thread;
+    f_status_t status_signal;
     f_state_t state;
 
     const f_string_static_t *program_name;

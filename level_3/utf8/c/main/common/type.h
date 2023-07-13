@@ -25,7 +25,7 @@ extern "C" {
  * mode: The input/output mode (see utf8_modes_e).
  * flag: Flags passed to the main function.
  *
- * status_thread: A status used eclusively by the threaded signal handler.
+ * status_signal: A status used eclusively by the threaded signal handler.
  * state:         The state data used when processing the FSS data.
  *
  * valid:     Designate the output context set for valid characters.
@@ -46,7 +46,7 @@ extern "C" {
     uint8_t mode;
     uint16_t flag;
 
-    f_status_t status_thread;
+    f_status_t status_signal;
     f_state_t state;
 
     f_color_set_t valid;

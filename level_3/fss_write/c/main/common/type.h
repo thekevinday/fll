@@ -57,7 +57,7 @@ extern "C" {
  *
  * flag: Flags passed to the main function.
  *
- * status_thread: A status used eclusively by the threaded signal handler.
+ * status_signal: A status used eclusively by the threaded signal handler.
  * state:         The state data used when processing the FSS data.
  *
  * range: A range used in conjunction with some buffer during processing.
@@ -82,7 +82,7 @@ extern "C" {
   typedef struct {
     uint16_t flag;
 
-    f_status_t status_thread;
+    f_status_t status_signal;
     f_state_t state;
 
     f_string_range_t range;
