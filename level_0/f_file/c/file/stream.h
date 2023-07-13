@@ -69,7 +69,7 @@ extern "C" {
  *   F_file_descriptor (with error bit) if the file descriptor is invalid.
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
  *   F_input_output (with error bit) on I/O error.
- *   F_interrupt (with error bit) if interrupt was received.
+ *   F_interrupt (with error bit) if interrupt is received.
  *
  *   F_file_synchronize (with error bit) on any other error.
  *
@@ -233,7 +233,7 @@ extern "C" {
  *   F_file_descriptor (with error bit) if the file descriptor is invalid.
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
  *   F_input_output (with error bit) on I/O error.
- *   F_interrupt (with error bit) if interrupt was received.
+ *   F_interrupt (with error bit) if interrupt is received.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  * @see flockfile()

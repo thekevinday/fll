@@ -44,7 +44,7 @@ extern "C" {
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
  *   F_filesystem_quota_block (with error bit) if quota is reached or exceeded.
  *   F_input_output (with error bit) on I/O error.
- *   F_interrupt (with error bit) if interrupt was received.
+ *   F_interrupt (with error bit) if interrupt is received.
  *   F_number_overflow (with error bit) if maximum size reached while writing or attempting to write beyond maximum allowed offset.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_pipe (with error bit) if a connected pipe or socket is closed.
@@ -81,7 +81,7 @@ extern "C" {
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
  *   F_filesystem_quota_block (with error bit) if quota is reached or exceeded.
  *   F_input_output (with error bit) on I/O error.
- *   F_interrupt (with error bit) if interrupt was received.
+ *   F_interrupt (with error bit) if interrupt is received.
  *   F_number_overflow (with error bit) if maximum size reached while writing or attempting to write beyond maximum allowed offset.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_pipe (with error bit) if a connected pipe or socket is closed.
@@ -122,7 +122,7 @@ extern "C" {
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
  *   F_filesystem_quota_block (with error bit) if quota is reached or exceeded.
  *   F_input_output (with error bit) on I/O error.
- *   F_interrupt (with error bit) if interrupt was received.
+ *   F_interrupt (with error bit) if interrupt is received.
  *   F_number_overflow (with error bit) if maximum size reached while writing or attempting to write beyond maximum allowed offset.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_pipe (with error bit) if a connected pipe or socket is closed.
@@ -161,7 +161,7 @@ extern "C" {
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
  *   F_filesystem_quota_block (with error bit) if quota is reached or exceeded.
  *   F_input_output (with error bit) on I/O error.
- *   F_interrupt (with error bit) if interrupt was received.
+ *   F_interrupt (with error bit) if interrupt is received.
  *   F_number_overflow (with error bit) if maximum size reached while writing or attempting to write beyond maximum allowed offset.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_pipe (with error bit) if a connected pipe or socket is closed.
@@ -202,7 +202,7 @@ extern "C" {
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
  *   F_filesystem_quota_block (with error bit) if quota is reached or exceeded.
  *   F_input_output (with error bit) on I/O error.
- *   F_interrupt (with error bit) if interrupt was received.
+ *   F_interrupt (with error bit) if interrupt is received.
  *   F_number_overflow (with error bit) if maximum size reached while writing or attempting to write beyond maximum allowed offset.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_pipe (with error bit) if a connected pipe or socket is closed.
@@ -245,7 +245,7 @@ extern "C" {
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
  *   F_filesystem_quota_block (with error bit) if quota is reached or exceeded.
  *   F_input_output (with error bit) on I/O error.
- *   F_interrupt (with error bit) if interrupt was received.
+ *   F_interrupt (with error bit) if interrupt is received.
  *   F_number_overflow (with error bit) if maximum size reached while writing or attempting to write beyond maximum allowed offset.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_pipe (with error bit) if a connected pipe or socket is closed.
@@ -293,7 +293,7 @@ extern "C" {
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
  *   F_filesystem_quota_block (with error bit) if quota is reached or exceeded.
  *   F_input_output (with error bit) on I/O error.
- *   F_interrupt (with error bit) if interrupt was received.
+ *   F_interrupt (with error bit) if interrupt is received.
  *   F_number_overflow (with error bit) if maximum size reached while writing or attempting to write beyond maximum allowed offset.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_pipe (with error bit) if a connected pipe or socket is closed.
@@ -337,7 +337,7 @@ extern "C" {
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
  *   F_filesystem_quota_block (with error bit) if quota is reached or exceeded.
  *   F_input_output (with error bit) on I/O error.
- *   F_interrupt (with error bit) if interrupt was received.
+ *   F_interrupt (with error bit) if interrupt is received.
  *   F_number_overflow (with error bit) if maximum size reached while writing or attempting to write beyond maximum allowed offset.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_pipe (with error bit) if a connected pipe or socket is closed.
@@ -378,7 +378,7 @@ extern "C" {
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
  *   F_filesystem_quota_block (with error bit) if quota is reached or exceeded.
  *   F_input_output (with error bit) on I/O error.
- *   F_interrupt (with error bit) if interrupt was received.
+ *   F_interrupt (with error bit) if interrupt is received.
  *   F_number_overflow (with error bit) if maximum size reached while writing or attempting to write beyond maximum allowed offset.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_pipe (with error bit) if a connected pipe or socket is closed.
@@ -424,7 +424,7 @@ extern "C" {
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
  *   F_filesystem_quota_block (with error bit) if quota is reached or exceeded.
  *   F_input_output (with error bit) on I/O error.
- *   F_interrupt (with error bit) if interrupt was received.
+ *   F_interrupt (with error bit) if interrupt is received.
  *   F_number_overflow (with error bit) if maximum size reached while writing or attempting to write beyond maximum allowed offset.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_pipe (with error bit) if a connected pipe or socket is closed.
@@ -466,7 +466,7 @@ extern "C" {
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
  *   F_filesystem_quota_block (with error bit) if quota is reached or exceeded.
  *   F_input_output (with error bit) on I/O error.
- *   F_interrupt (with error bit) if interrupt was received.
+ *   F_interrupt (with error bit) if interrupt is received.
  *   F_number_overflow (with error bit) if maximum size reached while writing or attempting to write beyond maximum allowed offset.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_pipe (with error bit) if a connected pipe or socket is closed.
@@ -513,7 +513,7 @@ extern "C" {
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
  *   F_filesystem_quota_block (with error bit) if quota is reached or exceeded.
  *   F_input_output (with error bit) on I/O error.
- *   F_interrupt (with error bit) if interrupt was received.
+ *   F_interrupt (with error bit) if interrupt is received.
  *   F_number_overflow (with error bit) if maximum size reached while writing or attempting to write beyond maximum allowed offset.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_pipe (with error bit) if a connected pipe or socket is closed.
@@ -556,7 +556,7 @@ extern "C" {
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
  *   F_filesystem_quota_block (with error bit) if quota is reached or exceeded.
  *   F_input_output (with error bit) on I/O error.
- *   F_interrupt (with error bit) if interrupt was received.
+ *   F_interrupt (with error bit) if interrupt is received.
  *   F_number_overflow (with error bit) if maximum size reached while writing or attempting to write beyond maximum allowed offset.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_pipe (with error bit) if a connected pipe or socket is closed.
@@ -601,7 +601,7 @@ extern "C" {
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
  *   F_filesystem_quota_block (with error bit) if quota is reached or exceeded.
  *   F_input_output (with error bit) on I/O error.
- *   F_interrupt (with error bit) if interrupt was received.
+ *   F_interrupt (with error bit) if interrupt is received.
  *   F_number_overflow (with error bit) if maximum size reached while writing or attempting to write beyond maximum allowed offset.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_pipe (with error bit) if a connected pipe or socket is closed.
@@ -648,7 +648,7 @@ extern "C" {
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
  *   F_filesystem_quota_block (with error bit) if quota is reached or exceeded.
  *   F_input_output (with error bit) on I/O error.
- *   F_interrupt (with error bit) if interrupt was received.
+ *   F_interrupt (with error bit) if interrupt is received.
  *   F_number_overflow (with error bit) if maximum size reached while writing or attempting to write beyond maximum allowed offset.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_pipe (with error bit) if a connected pipe or socket is closed.
@@ -700,7 +700,7 @@ extern "C" {
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
  *   F_filesystem_quota_block (with error bit) if quota is reached or exceeded.
  *   F_input_output (with error bit) on I/O error.
- *   F_interrupt (with error bit) if interrupt was received.
+ *   F_interrupt (with error bit) if interrupt is received.
  *   F_number_overflow (with error bit) if maximum size reached while writing or attempting to write beyond maximum allowed offset.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_pipe (with error bit) if a connected pipe or socket is closed.
@@ -748,7 +748,7 @@ extern "C" {
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
  *   F_filesystem_quota_block (with error bit) if quota is reached or exceeded.
  *   F_input_output (with error bit) on I/O error.
- *   F_interrupt (with error bit) if interrupt was received.
+ *   F_interrupt (with error bit) if interrupt is received.
  *   F_number_overflow (with error bit) if maximum size reached while writing or attempting to write beyond maximum allowed offset.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_pipe (with error bit) if a connected pipe or socket is closed.
@@ -793,7 +793,7 @@ extern "C" {
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
  *   F_filesystem_quota_block (with error bit) if quota is reached or exceeded.
  *   F_input_output (with error bit) on I/O error.
- *   F_interrupt (with error bit) if interrupt was received.
+ *   F_interrupt (with error bit) if interrupt is received.
  *   F_number_overflow (with error bit) if maximum size reached while writing or attempting to write beyond maximum allowed offset.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_pipe (with error bit) if a connected pipe or socket is closed.
@@ -843,7 +843,7 @@ extern "C" {
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
  *   F_filesystem_quota_block (with error bit) if quota is reached or exceeded.
  *   F_input_output (with error bit) on I/O error.
- *   F_interrupt (with error bit) if interrupt was received.
+ *   F_interrupt (with error bit) if interrupt is received.
  *   F_number_overflow (with error bit) if maximum size reached while writing or attempting to write beyond maximum allowed offset.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_pipe (with error bit) if a connected pipe or socket is closed.
@@ -889,7 +889,7 @@ extern "C" {
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
  *   F_filesystem_quota_block (with error bit) if quota is reached or exceeded.
  *   F_input_output (with error bit) on I/O error.
- *   F_interrupt (with error bit) if interrupt was received.
+ *   F_interrupt (with error bit) if interrupt is received.
  *   F_number_overflow (with error bit) if maximum size reached while writing or attempting to write beyond maximum allowed offset.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_pipe (with error bit) if a connected pipe or socket is closed.
@@ -944,7 +944,7 @@ extern "C" {
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
  *   F_filesystem_quota_block (with error bit) if quota is reached or exceeded.
  *   F_input_output (with error bit) on I/O error.
- *   F_interrupt (with error bit) if interrupt was received.
+ *   F_interrupt (with error bit) if interrupt is received.
  *   F_number_overflow (with error bit) if maximum size reached while writing or attempting to write beyond maximum allowed offset.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_pipe (with error bit) if a connected pipe or socket is closed.
@@ -993,7 +993,7 @@ extern "C" {
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
  *   F_filesystem_quota_block (with error bit) if quota is reached or exceeded.
  *   F_input_output (with error bit) on I/O error.
- *   F_interrupt (with error bit) if interrupt was received.
+ *   F_interrupt (with error bit) if interrupt is received.
  *   F_number_overflow (with error bit) if maximum size reached while writing or attempting to write beyond maximum allowed offset.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_pipe (with error bit) if a connected pipe or socket is closed.
@@ -1044,7 +1044,7 @@ extern "C" {
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
  *   F_filesystem_quota_block (with error bit) if quota is reached or exceeded.
  *   F_input_output (with error bit) on I/O error.
- *   F_interrupt (with error bit) if interrupt was received.
+ *   F_interrupt (with error bit) if interrupt is received.
  *   F_number_overflow (with error bit) if maximum size reached while writing or attempting to write beyond maximum allowed offset.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_pipe (with error bit) if a connected pipe or socket is closed.
@@ -1097,7 +1097,7 @@ extern "C" {
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
  *   F_filesystem_quota_block (with error bit) if quota is reached or exceeded.
  *   F_input_output (with error bit) on I/O error.
- *   F_interrupt (with error bit) if interrupt was received.
+ *   F_interrupt (with error bit) if interrupt is received.
  *   F_number_overflow (with error bit) if maximum size reached while writing or attempting to write beyond maximum allowed offset.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_pipe (with error bit) if a connected pipe or socket is closed.
@@ -1150,7 +1150,7 @@ extern "C" {
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
  *   F_filesystem_quota_block (with error bit) if quota is reached or exceeded.
  *   F_input_output (with error bit) on I/O error.
- *   F_interrupt (with error bit) if interrupt was received.
+ *   F_interrupt (with error bit) if interrupt is received.
  *   F_number_overflow (with error bit) if maximum size reached while writing or attempting to write beyond maximum allowed offset.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_pipe (with error bit) if a connected pipe or socket is closed.
@@ -1201,7 +1201,7 @@ extern "C" {
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
  *   F_filesystem_quota_block (with error bit) if quota is reached or exceeded.
  *   F_input_output (with error bit) on I/O error.
- *   F_interrupt (with error bit) if interrupt was received.
+ *   F_interrupt (with error bit) if interrupt is received.
  *   F_number_overflow (with error bit) if maximum size reached while writing or attempting to write beyond maximum allowed offset.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_pipe (with error bit) if a connected pipe or socket is closed.
@@ -1254,7 +1254,7 @@ extern "C" {
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
  *   F_filesystem_quota_block (with error bit) if quota is reached or exceeded.
  *   F_input_output (with error bit) on I/O error.
- *   F_interrupt (with error bit) if interrupt was received.
+ *   F_interrupt (with error bit) if interrupt is received.
  *   F_number_overflow (with error bit) if maximum size reached while writing or attempting to write beyond maximum allowed offset.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_pipe (with error bit) if a connected pipe or socket is closed.
@@ -1308,7 +1308,7 @@ extern "C" {
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
  *   F_filesystem_quota_block (with error bit) if quota is reached or exceeded.
  *   F_input_output (with error bit) on I/O error.
- *   F_interrupt (with error bit) if interrupt was received.
+ *   F_interrupt (with error bit) if interrupt is received.
  *   F_number_overflow (with error bit) if maximum size reached while writing or attempting to write beyond maximum allowed offset.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_pipe (with error bit) if a connected pipe or socket is closed.
@@ -1360,7 +1360,7 @@ extern "C" {
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
  *   F_filesystem_quota_block (with error bit) if quota is reached or exceeded.
  *   F_input_output (with error bit) on I/O error.
- *   F_interrupt (with error bit) if interrupt was received.
+ *   F_interrupt (with error bit) if interrupt is received.
  *   F_number_overflow (with error bit) if maximum size reached while writing or attempting to write beyond maximum allowed offset.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_pipe (with error bit) if a connected pipe or socket is closed.
@@ -1419,7 +1419,7 @@ extern "C" {
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
  *   F_filesystem_quota_block (with error bit) if quota is reached or exceeded.
  *   F_input_output (with error bit) on I/O error.
- *   F_interrupt (with error bit) if interrupt was received.
+ *   F_interrupt (with error bit) if interrupt is received.
  *   F_number_overflow (with error bit) if maximum size reached while writing or attempting to write beyond maximum allowed offset.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_pipe (with error bit) if a connected pipe or socket is closed.
@@ -1479,7 +1479,7 @@ extern "C" {
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
  *   F_filesystem_quota_block (with error bit) if quota is reached or exceeded.
  *   F_input_output (with error bit) on I/O error.
- *   F_interrupt (with error bit) if interrupt was received.
+ *   F_interrupt (with error bit) if interrupt is received.
  *   F_number_overflow (with error bit) if maximum size reached while writing or attempting to write beyond maximum allowed offset.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_pipe (with error bit) if a connected pipe or socket is closed.
@@ -1537,7 +1537,7 @@ extern "C" {
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
  *   F_filesystem_quota_block (with error bit) if quota is reached or exceeded.
  *   F_input_output (with error bit) on I/O error.
- *   F_interrupt (with error bit) if interrupt was received.
+ *   F_interrupt (with error bit) if interrupt is received.
  *   F_number_overflow (with error bit) if maximum size reached while writing or attempting to write beyond maximum allowed offset.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_pipe (with error bit) if a connected pipe or socket is closed.
@@ -1588,7 +1588,7 @@ extern "C" {
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
  *   F_filesystem_quota_block (with error bit) if quota is reached or exceeded.
  *   F_input_output (with error bit) on I/O error.
- *   F_interrupt (with error bit) if interrupt was received.
+ *   F_interrupt (with error bit) if interrupt is received.
  *   F_number_overflow (with error bit) if maximum size reached while writing or attempting to write beyond maximum allowed offset.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_pipe (with error bit) if a connected pipe or socket is closed.
@@ -1642,7 +1642,7 @@ extern "C" {
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
  *   F_filesystem_quota_block (with error bit) if quota is reached or exceeded.
  *   F_input_output (with error bit) on I/O error.
- *   F_interrupt (with error bit) if interrupt was received.
+ *   F_interrupt (with error bit) if interrupt is received.
  *   F_number_overflow (with error bit) if maximum size reached while writing or attempting to write beyond maximum allowed offset.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_pipe (with error bit) if a connected pipe or socket is closed.
@@ -1692,7 +1692,7 @@ extern "C" {
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
  *   F_filesystem_quota_block (with error bit) if quota is reached or exceeded.
  *   F_input_output (with error bit) on I/O error.
- *   F_interrupt (with error bit) if interrupt was received.
+ *   F_interrupt (with error bit) if interrupt is received.
  *   F_number_overflow (with error bit) if maximum size reached while writing or attempting to write beyond maximum allowed offset.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_pipe (with error bit) if a connected pipe or socket is closed.
@@ -1735,7 +1735,7 @@ extern "C" {
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
  *   F_filesystem_quota_block (with error bit) if quota is reached or exceeded.
  *   F_input_output (with error bit) on I/O error.
- *   F_interrupt (with error bit) if interrupt was received.
+ *   F_interrupt (with error bit) if interrupt is received.
  *   F_number_overflow (with error bit) if maximum size reached while writing or attempting to write beyond maximum allowed offset.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_pipe (with error bit) if a connected pipe or socket is closed.
@@ -1783,7 +1783,7 @@ extern "C" {
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
  *   F_filesystem_quota_block (with error bit) if quota is reached or exceeded.
  *   F_input_output (with error bit) on I/O error.
- *   F_interrupt (with error bit) if interrupt was received.
+ *   F_interrupt (with error bit) if interrupt is received.
  *   F_number_overflow (with error bit) if maximum size reached while writing or attempting to write beyond maximum allowed offset.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_pipe (with error bit) if a connected pipe or socket is closed.
@@ -1824,7 +1824,7 @@ extern "C" {
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
  *   F_filesystem_quota_block (with error bit) if quota is reached or exceeded.
  *   F_input_output (with error bit) on I/O error.
- *   F_interrupt (with error bit) if interrupt was received.
+ *   F_interrupt (with error bit) if interrupt is received.
  *   F_number_overflow (with error bit) if maximum size reached while writing or attempting to write beyond maximum allowed offset.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_pipe (with error bit) if a connected pipe or socket is closed.
@@ -1868,7 +1868,7 @@ extern "C" {
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
  *   F_filesystem_quota_block (with error bit) if quota is reached or exceeded.
  *   F_input_output (with error bit) on I/O error.
- *   F_interrupt (with error bit) if interrupt was received.
+ *   F_interrupt (with error bit) if interrupt is received.
  *   F_number_overflow (with error bit) if maximum size reached while writing or attempting to write beyond maximum allowed offset.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_pipe (with error bit) if a connected pipe or socket is closed.
@@ -1911,7 +1911,7 @@ extern "C" {
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
  *   F_filesystem_quota_block (with error bit) if quota is reached or exceeded.
  *   F_input_output (with error bit) on I/O error.
- *   F_interrupt (with error bit) if interrupt was received.
+ *   F_interrupt (with error bit) if interrupt is received.
  *   F_number_overflow (with error bit) if maximum size reached while writing or attempting to write beyond maximum allowed offset.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_pipe (with error bit) if a connected pipe or socket is closed.
@@ -1953,7 +1953,7 @@ extern "C" {
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
  *   F_filesystem_quota_block (with error bit) if quota is reached or exceeded.
  *   F_input_output (with error bit) on I/O error.
- *   F_interrupt (with error bit) if interrupt was received.
+ *   F_interrupt (with error bit) if interrupt is received.
  *   F_number_overflow (with error bit) if maximum size reached while writing or attempting to write beyond maximum allowed offset.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_pipe (with error bit) if a connected pipe or socket is closed.

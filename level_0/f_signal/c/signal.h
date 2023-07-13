@@ -199,7 +199,7 @@ extern "C" {
  *   F_buffer (with error bit) if the buffer is invalid.
  *   F_descriptor (with error bit) if the signal descriptor is invalid.
  *   F_file_closed (with error bit) if the signal descriptor stream is closed.
- *   F_interrupt (with error bit) if interrupt was received.
+ *   F_interrupt (with error bit) if interrupt is received.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_stream (with error bit) when the poll() returns POLLERR (file stream error).

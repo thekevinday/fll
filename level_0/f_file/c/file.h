@@ -1567,7 +1567,7 @@ extern "C" {
  *   F_time_out if time out is reached befoe a signal is received.
  *
  *   F_buffer (with error bit) if the buffer is invalid.
- *   F_interrupt (with error bit) if interrupt was received.
+ *   F_interrupt (with error bit) if interrupt is received.
  *   F_memory_not (with error bit) if out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_failure (with error bit) for any other error.
@@ -1599,7 +1599,7 @@ extern "C" {
  *   F_file_descriptor (with error bit) if the file descriptor is invalid.
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
  *   F_input_output (with error bit) on I/O error.
- *   F_interrupt (with error bit) if interrupt was received.
+ *   F_interrupt (with error bit) if interrupt is received.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_string_dynamic_increase_by().
@@ -1634,7 +1634,7 @@ extern "C" {
  *   F_file_descriptor (with error bit) if the file descriptor is invalid.
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
  *   F_input_output (with error bit) on I/O error.
- *   F_interrupt (with error bit) if interrupt was received.
+ *   F_interrupt (with error bit) if interrupt is received.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  * @see read()
@@ -1672,7 +1672,7 @@ extern "C" {
  *   F_file_descriptor (with error bit) if the file descriptor is invalid.
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
  *   F_input_output (with error bit) on I/O error.
- *   F_interrupt (with error bit) if interrupt was received.
+ *   F_interrupt (with error bit) if interrupt is received.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  * @see read()
@@ -2398,7 +2398,7 @@ extern "C" {
  *   F_file_descriptor (with error bit) if the file descriptor is invalid.
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
  *   F_input_output (with error bit) on I/O error.
- *   F_interrupt (with error bit) if interrupt was received.
+ *   F_interrupt (with error bit) if interrupt is received.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  * @see write()
@@ -2433,7 +2433,7 @@ extern "C" {
  *   F_file_descriptor (with error bit) if the file descriptor is invalid.
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
  *   F_input_output (with error bit) on I/O error.
- *   F_interrupt (with error bit) if interrupt was received.
+ *   F_interrupt (with error bit) if interrupt is received.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  * @see write()
@@ -2468,7 +2468,7 @@ extern "C" {
  *   F_file_descriptor (with error bit) if the file descriptor is invalid.
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
  *   F_input_output (with error bit) on I/O error.
- *   F_interrupt (with error bit) if interrupt was received.
+ *   F_interrupt (with error bit) if interrupt is received.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  * @see write()
@@ -2502,7 +2502,7 @@ extern "C" {
  *   F_file_descriptor (with error bit) if the file descriptor is invalid.
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
  *   F_input_output (with error bit) on I/O error.
- *   F_interrupt (with error bit) if interrupt was received.
+ *   F_interrupt (with error bit) if interrupt is received.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  * @see write()
