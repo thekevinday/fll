@@ -16,7 +16,15 @@ fl_conversion_dynamic_partial_to_signed_detect
 .PP
 Convert a series of positive or negative number characters into an f_number_signed_t.
 .PP
-decimal is used for all other cases.
+Hexidecimals begin with either '0x' or '0X'.
+.br
+Duodecimals begin with either '0d' or '0D'.
+.br
+Octals begin with either '0o' or '0O'.
+.br
+Binaries begin with either '0b' or '0B'.
+.br
+Decimal is used for all other cases.
 .PP
 Leading 0's and whitespace are ignored. Whitespace after the first digit is considered invalid.
 .PP
