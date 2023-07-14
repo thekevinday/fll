@@ -112,6 +112,11 @@ extern "C" {
 
       main->setting.state.status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, main->program.parameters.arguments.array[index], &main->setting.line);
 
+      // Negative numbers are not supported.
+      if (main->setting.state.status == F_number_negative) {
+        main->setting.state.status = F_status_set_error(F_number_negative);
+      }
+
       if (F_status_is_error(main->setting.state.status)) {
         if ((main->setting.flag & fss_identify_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
           fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);

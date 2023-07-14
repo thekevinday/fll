@@ -82,6 +82,7 @@ extern "C" {
  *
  * @param data
  *   Conversion data for specifying things such as treating this as a negative number.
+ *   This auto-detects the base and negative, ignoring the base number and negative flag.
  * @param buffer
  *   The string to convert.
  * @param range
@@ -173,13 +174,13 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if string starts with a null (length is 0).
+ *   F_number_negative on negative value (has a -, such as '-1').
+ *   F_number_positive on positive value (has a +, such as '+1').
  *
  *   F_base_not (with error bit) if no supported or valid base unit is provided.
  *   F_complete_not_utf (with error bit) if an incomplete UTF-8 fragment is found.
  *   F_number (with error bit) if parameter is not a number.
  *   F_number_decimal (with error bit) if number has a decimal digit.
- *   F_number_negative (with error bit) on negative value.
- *   F_number_positive (with error bit) on positive value (has a +, such as '+1', when only '1' is valid here).
  *   F_number_overflow (with error bit) on integer overflow.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -326,13 +327,13 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if string starts with a null (length is 0).
+ *   F_number_negative on negative value (has a -, such as '-1').
+ *   F_number_positive on positive value (has a +, such as '+1').
  *
  *   F_base_not (with error bit) if no supported or valid base unit is provided.
  *   F_complete_not_utf (with error bit) if an incomplete UTF-8 fragment is found.
  *   F_number (with error bit) if parameter is not a number.
  *   F_number_decimal (with error bit) if number has a decimal digit.
- *   F_number_negative (with error bit) on negative value.
- *   F_number_positive (with error bit) on positive value (has a +, such as '+1', when only '1' is valid here).
  *   F_number_overflow (with error bit) on integer overflow.
  *   F_parameter (with error bit) if a parameter is invalid.
  *

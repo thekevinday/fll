@@ -8,39 +8,23 @@ extern "C" {
 #ifndef _di_f_conversion_character_is_binary_
   f_status_t f_conversion_character_is_binary(const f_char_t character) {
 
-    if (character == 0x30 || character == 0x31) {
-      return F_true;
-    }
-
-    return F_false;
+    return (character == 0x30 || character == 0x31) ? F_true : F_false;
   }
 #endif // _di_f_conversion_character_is_binary_
 
 #ifndef _di_f_conversion_character_is_decimal_
   f_status_t f_conversion_character_is_decimal(const f_char_t character) {
 
-    if (character > 0x2f && character < 0x3a) {
-      return F_true;
-    }
-
-    return F_false;
+    return (character > 0x2f && character < 0x3a) ? F_true : F_false;
   }
 #endif // _di_f_conversion_character_is_decimal_
 
 #ifndef _di_f_conversion_character_is_duodecimal_
   f_status_t f_conversion_character_is_duodecimal(const f_char_t character) {
 
-    if (character > 0x2f && character < 0x3a) {
-      return F_true;
-    }
-
-    if (character == 0x41 || character == 0x42) {
-      return F_true;
-    }
-
-    if (character == 0x61 || character == 0x62) {
-      return F_true;
-    }
+    if (character > 0x2f && character < 0x3a) return F_true;
+    if (character == 0x41 || character == 0x42) return F_true;
+    if (character == 0x61 || character == 0x62) return F_true;
 
     return F_false;
   }
@@ -49,17 +33,9 @@ extern "C" {
 #ifndef _di_f_conversion_character_is_hexidecimal_
   f_status_t f_conversion_character_is_hexidecimal(const f_char_t character) {
 
-    if (character > 0x2f && character < 0x3a) {
-      return F_true;
-    }
-
-    if (character > 0x40 && character < 0x47) {
-      return F_true;
-    }
-
-    if (character > 0x60 && character < 0x67) {
-      return F_true;
-    }
+    if (character > 0x2f && character < 0x3a) return F_true;
+    if (character > 0x40 && character < 0x47) return F_true;
+    if (character > 0x60 && character < 0x67) return F_true;
 
     return F_false;
   }
@@ -68,11 +44,7 @@ extern "C" {
 #ifndef _di_f_conversion_character_is_octal_
   f_status_t f_conversion_character_is_octal(const f_char_t character) {
 
-    if (character > 0x2f && character < 0x38) {
-      return F_true;
-    }
-
-    return F_false;
+    return (character > 0x2f && character < 0x38) ? F_true : F_false;
   }
 #endif // _di_f_conversion_character_is_octal_
 
@@ -160,9 +132,7 @@ extern "C" {
       if (!number) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (character < 0x30 || character > 0x37) {
-      return F_status_set_error(F_number);
-    }
+    if (character < 0x30 || character > 0x37) return F_status_set_error(F_number);
 
     *number = 0xf & character;
 

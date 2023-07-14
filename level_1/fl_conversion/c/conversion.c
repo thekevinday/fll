@@ -11,14 +11,13 @@ extern "C" {
       if (!number) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (!buffer.used || range.start > range.stop) {
-      return F_data_not;
-    }
+    if (!buffer.used || range.start > range.stop) return F_data_not;
 
     if (data.base == 10 || data.base == 16 || data.base == 12 || data.base == 8) {
       return private_fl_conversion_dynamic_to_base_signed(data, buffer.string + range.start, (range.stop - range.start) + 1, number);
     }
-    else if (data.base == 2) {
+
+    if (data.base == 2) {
       return private_fl_conversion_dynamic_to_binary_signed(data.flag, buffer.string + range.start, (range.stop - range.start) + 1, number);
     }
 
@@ -32,14 +31,13 @@ extern "C" {
       if (!number) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (!buffer.used || range.start > range.stop) {
-      return F_data_not;
-    }
+    if (!buffer.used || range.start > range.stop) return F_data_not;
 
     if (data.base == 10 || data.base == 16 || data.base == 12 || data.base == 8) {
       return private_fl_conversion_dynamic_to_base_unsigned(data, buffer.string + range.start, (range.stop - range.start) + 1, number);
     }
-    else if (data.base == 2) {
+
+    if (data.base == 2) {
       return private_fl_conversion_dynamic_to_binary_unsigned(data.flag, buffer.string + range.start, (range.stop - range.start) + 1, number);
     }
 
@@ -53,9 +51,7 @@ extern "C" {
       if (!number) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (!buffer.used || range.start > range.stop) {
-      return F_data_not;
-    }
+    if (!buffer.used || range.start > range.stop) return F_data_not;
 
     return private_fl_conversion_dynamic_to_signed_detect(data.flag, buffer.string + range.start, (range.stop - range.start) + 1, number);
   }
@@ -67,9 +63,7 @@ extern "C" {
       if (!number) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (!buffer.used || range.start > range.stop) {
-      return F_data_not;
-    }
+    if (!buffer.used || range.start > range.stop) return F_data_not;
 
     return private_fl_conversion_dynamic_to_unsigned_detect(data.flag, buffer.string + range.start, (range.stop - range.start) + 1, number);
   }
@@ -81,14 +75,13 @@ extern "C" {
       if (!number) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (!buffer.used) {
-      return F_data_not;
-    }
+    if (!buffer.used) return F_data_not;
 
     if (data.base == 10 || data.base == 16 || data.base == 12 || data.base == 8) {
       return private_fl_conversion_dynamic_to_base_signed(data, buffer.string, buffer.used, number);
     }
-    else if (data.base == 2) {
+
+    if (data.base == 2) {
       return private_fl_conversion_dynamic_to_binary_signed(data.flag, buffer.string, buffer.used, number);
     }
 
@@ -102,14 +95,13 @@ extern "C" {
       if (!number) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (!buffer.used) {
-      return F_data_not;
-    }
+    if (!buffer.used) return F_data_not;
 
     if (data.base == 10 || data.base == 16 || data.base == 12 || data.base == 8) {
       return private_fl_conversion_dynamic_to_base_unsigned(data, buffer.string, buffer.used, number);
     }
-    else if (data.base == 2) {
+
+    if (data.base == 2) {
       return private_fl_conversion_dynamic_to_binary_unsigned(data.flag, buffer.string, buffer.used, number);
     }
 
@@ -123,9 +115,7 @@ extern "C" {
       if (!number) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (!buffer.used) {
-      return F_data_not;
-    }
+    if (!buffer.used) return F_data_not;
 
     return private_fl_conversion_dynamic_to_signed_detect(data.flag, buffer.string, buffer.used, number);
   }
@@ -137,9 +127,7 @@ extern "C" {
       if (!number) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (!buffer.used) {
-      return F_data_not;
-    }
+    if (!buffer.used) return F_data_not;
 
     return private_fl_conversion_dynamic_to_unsigned_detect(data.flag, buffer.string, buffer.used, number);
   }

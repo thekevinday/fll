@@ -60,6 +60,11 @@ extern "C" {
 
     main->setting.state.status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, buffer, &number);
 
+    // Negative numbers are not supported.
+    if (main->setting.state.status == F_number_negative) {
+      main->setting.state.status = F_status_set_error(F_number_negative);
+    }
+
     if (F_status_is_error(main->setting.state.status)) {
 
       // When the buffer is not a number, then check to see if this is a group or owner name.

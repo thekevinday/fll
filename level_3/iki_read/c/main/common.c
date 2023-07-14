@@ -135,6 +135,11 @@ extern "C" {
 
       main->setting.state.status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, main->program.parameters.arguments.array[index], &main->setting.at);
 
+      // Negative numbers are not supported.
+      if (main->setting.state.status == F_number_negative) {
+        main->setting.state.status = F_status_set_error(F_number_negative);
+      }
+
       if (F_status_is_error(main->setting.state.status)) {
         main->setting.state.status = F_status_set_error(F_parameter);
 
@@ -167,6 +172,11 @@ extern "C" {
       main->setting.line = 0;
 
       main->setting.state.status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, main->program.parameters.arguments.array[index], &main->setting.line);
+
+      // Negative numbers are not supported.
+      if (main->setting.state.status == F_number_negative) {
+        main->setting.state.status = F_status_set_error(F_number_negative);
+      }
 
       if (F_status_is_error(main->setting.state.status)) {
         main->setting.state.status = F_status_set_error(F_parameter);

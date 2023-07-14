@@ -14,18 +14,14 @@ extern "C" {
 
     for (f_number_unsigned_t i = 0; i < length; ++i) {
 
-      if (string[i] == f_string_ascii_period_s.string[0]) {
-        return F_status_set_error(F_number_decimal);
-      }
+      if (string[i] == f_string_ascii_period_s.string[0]) return F_status_set_error(F_number_decimal);
 
       if (f_conversion_character_to_binary(string[i], &digit) == F_none) {
         if (digits) {
           ++digits;
 
           if (flag & fl_conversion_data_flag_negative_e) {
-            if (digits > F_conversion_digits_binary_signed_d) {
-              return F_status_set_error(F_number_underflow);
-            }
+            if (digits > F_conversion_digits_binary_signed_d) return F_status_set_error(F_number_underflow);
 
             if (flag & fl_conversion_data_flag_endian_big_e) {
               converted >>= 1;
@@ -44,9 +40,7 @@ extern "C" {
             converted -= digit;
           }
           else {
-            if (digits > F_conversion_digits_binary_signed_d) {
-              return F_status_set_error(F_number_overflow);
-            }
+            if (digits > F_conversion_digits_binary_signed_d) return F_status_set_error(F_number_overflow);
 
             if (flag & fl_conversion_data_flag_endian_big_e) {
               converted >>= 1;
@@ -96,17 +90,13 @@ extern "C" {
 
     for (f_number_unsigned_t i = 0; i < length; ++i) {
 
-      if (string[i] == f_string_ascii_period_s.string[0]) {
-        return F_status_set_error(F_number_decimal);
-      }
+      if (string[i] == f_string_ascii_period_s.string[0]) return F_status_set_error(F_number_decimal);
 
       if (f_conversion_character_to_binary(string[i], &digit) == F_none) {
         if (digits) {
           ++digits;
 
-          if (digits > F_conversion_digits_binary_unsigned_d) {
-            return F_status_set_error(F_number_overflow);
-          }
+          if (digits > F_conversion_digits_binary_unsigned_d) return F_status_set_error(F_number_overflow);
 
           if (flag & fl_conversion_data_flag_endian_big_e) {
             converted >>= 1;
@@ -164,9 +154,7 @@ extern "C" {
 
     for (f_number_unsigned_t i = 0; i < length; ++i) {
 
-      if (string[i] == f_string_ascii_period_s.string[0]) {
-        return F_status_set_error(F_number_decimal);
-      }
+      if (string[i] == f_string_ascii_period_s.string[0]) return F_status_set_error(F_number_decimal);
 
       if (character_to_digit(string[i], &digit) == F_none) {
         if (digits) {
@@ -260,9 +248,7 @@ extern "C" {
 
     for (f_number_unsigned_t i = 0; i < length; ++i) {
 
-      if (string[i] == f_string_ascii_period_s.string[0]) {
-        return F_status_set_error(F_number_decimal);
-      }
+      if (string[i] == f_string_ascii_period_s.string[0]) return F_status_set_error(F_number_decimal);
 
       if (character_to_digit(string[i], &digit) == F_none) {
         if (digits) {
@@ -442,13 +428,7 @@ extern "C" {
       return F_status_set_error(F_number);
     } // for
 
-    if (!mode) {
-      return F_status_set_error(F_number);
-    }
-
-    if (offset >= length) {
-      return F_status_set_error(F_number);
-    }
+    if (!mode || offset >= length) return F_status_set_error(F_number);
 
     fl_conversion_data_t data = macro_fl_conversion_data_t_initialize_1(mode, flag);
 
@@ -568,13 +548,21 @@ extern "C" {
       }
 
       if (string[i] == f_string_ascii_plus_s.string[0]) {
-        ++offset;
-        sign_found = 1;
+        if (!sign_found) {
+          ++offset;
+          sign_found = 1;
+
+          continue;
+        }
       }
 
       if (string[i] == f_string_ascii_minus_s.string[0]) {
-        ++offset;
-        sign_found = -1;
+        if (!sign_found) {
+          ++offset;
+          sign_found = -1;
+
+          continue;
+        }
       }
 
       if (f_conversion_character_is_decimal(string[i]) == F_true) {
@@ -586,13 +574,7 @@ extern "C" {
       return F_status_set_error(F_number);
     } // for
 
-    if (!mode) {
-      return F_status_set_error(F_number);
-    }
-
-    if (offset >= length) {
-      return F_status_set_error(F_number);
-    }
+    if (!mode || offset >= length) return F_status_set_error(F_number);
 
     fl_conversion_data_t data = macro_fl_conversion_data_t_initialize_1(mode, flag);
 
@@ -612,13 +594,7 @@ extern "C" {
 
     // The +/- signs are not allowed.
     if (sign_found) {
-      if (status == F_none) {
-        if (sign_found == -1) {
-          return F_status_set_error(F_number_negative);
-        }
-
-        return F_status_set_error(F_number_positive);
-      }
+      if (status == F_none) return (sign_found == -1) ? F_number_negative : F_number_positive;
 
       return F_status_set_error(F_number);
     }

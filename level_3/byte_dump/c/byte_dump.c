@@ -189,6 +189,11 @@ extern "C" {
 
         status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, data.argv[index], &number);
 
+        // Negative numbers are not supported.
+        if (status == F_number_negative) {
+          status = F_status_set_error(F_number_negative);
+        }
+
         if (F_status_is_error(status) || number < 1 || number >= 0xfb) {
           f_file_stream_lock(main->error.to);
 
@@ -228,6 +233,11 @@ extern "C" {
 
         status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, data.argv[index], &number);
 
+        // Negative numbers are not supported.
+        if (status == F_number_negative) {
+          status = F_status_set_error(F_number_negative);
+        }
+
         if (F_status_is_error(status) || number > F_number_t_size_unsigned_d) {
           f_file_stream_lock(main->error.to);
 
@@ -266,6 +276,11 @@ extern "C" {
         f_number_unsigned_t number = 0;
 
         status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, data.argv[index], &number);
+
+        // Negative numbers are not supported.
+        if (status == F_number_negative) {
+          status = F_status_set_error(F_number_negative);
+        }
 
         if (F_status_is_error(status) || number < 0 || number > F_number_t_size_unsigned_d) {
           f_file_stream_lock(main->error.to);
