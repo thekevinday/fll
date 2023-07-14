@@ -335,6 +335,74 @@ extern "C" {
 #endif // _di_fll_program_print_error_parameter_empty_value_
 
 /**
+ * Print message about parameter not being less than the given number.
+ *
+ * This is only printed when verbosity is not set to quiet.
+ *
+ * This uses the following:
+ *   - print.set->error: For the error context.
+ *   - print.set->strong: For the highlighting context
+ *   - print.prefix: For the prefixing a string to the message (such as "ERROR:").
+ *
+ * @param print
+ *   The output structure.
+ *   This locks, uses, and unlocks the file stream.
+ * @param symbol
+ *   The symbol string prepended to both parameters.
+ *   This locks, uses, and unlocks the file stream.
+ *   This is usually f_console_symbol_long_normal_s.
+ * @param name
+ *   The parameter name.
+ * @param value
+ *   The value.
+ * @param than
+ *   The string representing the number to not be less than.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_fll_program_print_error_parameter_integer_less_than_
+  extern f_status_t fll_program_print_error_parameter_integer_less_than(fl_print_t * const print, const f_string_static_t symbol, const f_string_static_t name, const f_string_static_t value, const f_string_static_t than);
+#endif // _di_fll_program_print_error_parameter_integer_less_than_
+
+/**
+ * Print message about parameter not being less than the given number.
+ *
+ * This is only printed when verbosity is not set to quiet.
+ *
+ * This uses the following:
+ *   - print.set->error: For the error context.
+ *   - print.set->strong: For the highlighting context
+ *   - print.prefix: For the prefixing a string to the message (such as "ERROR:").
+ *
+ * @param print
+ *   The output structure.
+ *   This locks, uses, and unlocks the file stream.
+ * @param symbol
+ *   The symbol string prepended to both parameters.
+ *   This locks, uses, and unlocks the file stream.
+ *   This is usually f_console_symbol_long_normal_s.
+ * @param name
+ *   The parameter name.
+ * @param value
+ *   The value.
+ * @param than
+ *   The string representing the number to not be less than.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_fll_program_print_error_parameter_integer_more_than_
+  extern f_status_t fll_program_print_error_parameter_integer_more_than(fl_print_t * const print, const f_string_static_t symbol, const f_string_static_t name, const f_string_static_t value, const f_string_static_t than);
+#endif // _di_fll_program_print_error_parameter_integer_more_than_
+
+/**
  * Print message about parameter not being a valid integer.
  *
  * This is only printed when verbosity is not set to quiet.
