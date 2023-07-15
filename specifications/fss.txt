@@ -3,11 +3,11 @@
 # license: open-standard-license-1.0
 #
 # This file (assumed to be named fss.txt) can be more easily read using the following iki_read commands:
-#   iki_read fss.txt +Q -w -rrrrrrrr anti-KISS anti-KISS ASCII ASCII BOM BOM FSS FSS KISS KISS UTF-8 UTF-8 URL URL XML XML -WWW character "'" "'" code '"' '"' emphasis '"' '"'
+#   iki_read fss.txt +Q -w -rrrrrrrr anti-KISS anti-KISS ASCII ASCII BOM BOM FSS FSS KISS KISS UTF-8 UTF-8 URL URL XML XML -WWW character "'" "'" code '"' '"' italic '"' '"'
 #
 # Individual sections in this file may be parsed using fss_basic_list_read command and then passed to the iki_read command.
 # To read the "Featureless Settings Specifications" section of this file, use this command sequence:
-#   fss_basic_list_read fss.txt +Q -cn "Featureless Settings Specifications" | iki_read +Q -w -rrrrrrrr anti-KISS anti-KISS ASCII ASCII BOM BOM FSS FSS KISS KISS UTF-8 UTF-8 URL URL XML XML -WWW character "'" "'" code '"' '"' emphasis '"' '"'
+#   fss_basic_list_read fss.txt +Q -cn "Featureless Settings Specifications" | iki_read +Q -w -rrrrrrrr anti-KISS anti-KISS ASCII ASCII BOM BOM FSS FSS KISS KISS UTF-8 UTF-8 URL URL XML XML -WWW character "'" "'" code '"' '"' italic '"' '"'
 #
 
 Featureless Settings Specifications:

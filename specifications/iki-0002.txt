@@ -3,10 +3,10 @@
 # license: open-standard-license-1.0
 #
 # This file (assumed to be named iki-0002.txt) can be more easily read using the following iki_read commands:
-#   iki_read iki-0002.txt +Q -w -WWW character "'" "'" code '"' '"' emphasis '"' '"'
+#   iki_read iki-0002.txt +Q -w -WWW character "'" "'" code '"' '"' italic '"' '"'
 #
 # To read the "IKI Specification: 0002 - Simple Script" section of this file, use this command sequence:
-#   fss_basic_list_read iki-0002.txt +Q -cn "IKI Specification: 0002 - Simple Script" | iki_read +Q -w -WWW character "'" "'" code '"' '"' emphasis '"' '"'
+#   fss_basic_list_read iki-0002.txt +Q -cn "IKI Specification: 0002 - Simple Script" | iki_read +Q -w -WWW character "'" "'" code '"' '"' italic '"' '"'
 #
 
 IKI Specification: 0002 - Simple Script:

@@ -3,10 +3,10 @@
 # license: open-standard-license-1.0
 #
 # This file (assumed to be named iki.txt) can be more easily read using the following iki_read commands:
-#   iki_read iki.txt +Q -w -WWW character "'" "'" code '"' '"' emphasis '"' '"'
+#   iki_read iki.txt +Q -w -WWW character "'" "'" code '"' '"' italic '"' '"'
 #
 # To read the "IKI Specifications" section of this file, use this command sequence:
-#   fss_basic_list_read iki.txt +Q -cn "IKI Specifications" | iki_read +Q -w -WWW character "'" "'" code '"' '"' emphasis '"' '"'
+#   fss_basic_list_read iki.txt +Q -cn "IKI Specifications" | iki_read +Q -w -WWW character "'" "'" code '"' '"' italic '"' '"'
 #
 
 IKI Specifications:
@@ -58,7 +58,7 @@ IKI Specifications:
   Example\:
     code\:'# fss-000c iki-0000
 
-    This is my sentence, anything can go here but sometimes I want to emphasis\:"emphasize some text".
+    This is my sentence, anything can go here but sometimes I want to italic\:"emphasize some text".
 
     Other times I want to render a url such as this example url: url\:'http://www.example.com/url with space/'.
 
@@ -66,13 +66,13 @@ IKI Specifications:
 
     Quotes may be included, such as: code\:"const char *string = \"My \\\"quoted\\\" C string.\";".
 
-    The following emphasis\:"is escaped to not be treated as IKI data".'
+    The following italic\:"is escaped to not be treated as IKI data".'
 
     The conditionally optional open and close brackets allow for putting a variable directly next to another word character like: [context]\:"strong"this[context]\:"strong".
 
   Objects (also called vocabulary or variable name) would be\:
     1) FSS
-    2) emphasis
+    2) italic
     3) url
     4) code
     5) context
