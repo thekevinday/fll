@@ -1,0 +1,43 @@
+# fss-0002 iki-0000
+#
+# license open-standard-license-1.0
+# version 2023/07/16
+#
+# This file (assumed to be named fss-0010.txt) can be more easily read using the following iki_read commands:
+#   iki_read fss-0010.txt +Q -w -r HTTP HTTP -WWWW character "'" "'" code '"' '"' italic '"' '"' bold '"' '"'
+#
+# To read the "Featureless Settings Specification: 0010 - Encrypted Simple Packet" section of this file, use this command sequence:
+#   fss_basic_list_read fss-0010.txt +Q -cn "Featureless Settings Specification: 0010 - Encrypted Simple Packet" | iki_read +Q -w -r HTTP HTTP -WWWW character "'" "'" code '"' '"' italic '"' '"' bold '"' '"'
+#
+
+Featureless Settings Specification: 0010 - Encrypted Simple Packet:
+  This is an encrypted form of the network packet format of code:"FSS-000f (Simple Packet)".
+
+  The entire bold:"Payload Block" is undefined by this standard and is instead defined by the encryption algorithm or standard in use.
+  There is no rule, restriction, requirement, or definition on what encryption can be used.
+  The only rule is that the bold:"Payload Block" must be of a valid length as defined by the bold:"Size Block".
+
+  The general rule is that it can be assumed that the encrypted data in the bold:"Payload Block" would be of the code:"FSS-000e (Payload)" format. Being that the data is supposed to be encrypted, the actual contents of the bold:"Payload Block" is left undefined.
+
+  The code:"FSS-000f (Simple Packet)" that this standard modifies does not require the bold:"Payload Block" to be in code:"FSS-000e (Payload)" format.
+  This standard is even more lax than code:"FSS-000f (Simple Packet)" and drops replaces the words italic:"should be in" from the code:"FSS-000f (Simple Packet)" standard and replaces them with italic:"could be in".
+
+  This allows for the encrypted data to be anything the user wants, such as but not limited to HTTP:"Hypertext Transfer Protocol".
+
+  When it comes to security, any and all data can be useful. For best encryption, one may want to consider not using this format because of the bold:"Control Block" and the bold:"Size Block" are not encrypted.
+
+  The endianness bit should only be used to represent the bold:"Size Block" to avoid any security concerns. The endianness of the encrypted needs to be determined through some other means for any kind of reasonable security.
+
+  This standard uses the third bit from the left in the bold:"Control Block" to designate that this is an encrypted packet.
+
+  The 5 remaining control bits are left undefined.
+
+  See the file:"fss-000f.txt" specification file for details regarding the code:"FSS-000f (Simple Packet)" standard.
+
+  Example Packet Structure\:
+    code:"
+    [ Control Block ] [ Size Block                                  ] [ Payload Block         ]
+    [ 0b10100000    ] [ 0b00000000 0b00000000 0b00000100 0b11010010 ] [ size: 1229 (1234 - 5) ]
+    "
+
+  In the above example, take note that the third bit in the bold:"Control Block" is a 1.
