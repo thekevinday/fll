@@ -398,9 +398,9 @@ extern "C" {
  * This is passed to the program-specific main entry point to designate program settings.
  * These program settings are often processed from the program arguments (often called the command line arguments).
  *
- * flag: Flags passed to the main function.
- *
- * state: The state information.
+ * Properties:
+ *   - flag:  Flags passed to the main function.
+ *   - state: The state information.
  */
 #ifndef _di_byte_dump_setting_t_
   typedef struct {

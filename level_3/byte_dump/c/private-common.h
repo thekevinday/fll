@@ -15,14 +15,15 @@ extern "C" {
 /**
  * The program data.
  *
- * argv:         The argument structure in the progam data parameters for simplifying syntax.
- * first:        The first position.
- * last:         The last position.
- * main:         The main program data.
- * mode:         The digit representation mode.
- * options:      Additional options.
- * presentation: The presentation mode.
- * width:        The number of columns.
+ * Properties:
+ *   - argv:         The argument structure in the progam data parameters for simplifying syntax.
+ *   - first:        The first position.
+ *   - last:         The last position.
+ *   - main:         The main program data.
+ *   - mode:         The digit representation mode.
+ *   - options:      Additional options.
+ *   - presentation: The presentation mode.
+ *   - width:        The number of columns.
  */
 #ifndef _di_byte_dump_data_t_
   typedef struct {
@@ -53,8 +54,9 @@ extern "C" {
 /**
  * A main structure for character row and column position (cell).
  *
- * column: The column position associated with the character cell.
- * row:    The row position associated with the character cell.
+ * Properties:
+ *   - column: The column position associated with the character cell.
+ *   - row:    The row position associated with the character cell.
  */
 #ifndef _di_byte_dump_cell_t_
   typedef struct {
@@ -75,10 +77,11 @@ extern "C" {
  * UTF-8 Characters bytes may overflow beyond the main.width.
  * These overflowed bytes should still have placeholders printed in the next text-mode print.
  *
- * bytes: The number of previous bytes that overflowed from the previous line.
- *        This is used to print the placeholders for the "text" option.
- * invalid: The specific invalid value provided representing the overflowed bytes.
- *          This is used to print the placeholders.
+ * Properties:
+ *   - bytes: The number of previous bytes that overflowed from the previous line.
+ *            This is used to print the placeholders for the "text" option.
+ *   - invalid: The specific invalid value provided representing the overflowed bytes.
+ *              This is used to print the placeholders.
  */
 #ifndef _di_byte_dump_previous_t_
   typedef struct {

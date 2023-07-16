@@ -57,8 +57,9 @@ extern "C" {
 /**
  * A structure for managing an IP address version 4 or 6.
  *
- * type:    The type, usually either one of f_network_family_ip_4_e or f_network_family_ip_6_e.
- * address: The address data.
+ * Properties:
+ *   - type:    The type, usually either one of f_network_family_ip_4_e or f_network_family_ip_6_e.
+ *   - address: The address data.
  *
  * macro_f_network_family_ip_4_or_6_t_*:
  *   - initialize_1: Specifically initialize the IP address version 4.

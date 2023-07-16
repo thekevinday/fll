@@ -205,12 +205,13 @@ extern "C" {
  *
  * This is intended to only store the argc and argv and should not be treated as dynamic.
  *
- * argc: The total number of arguments in argv.
+ * Properties:
+ *   - argc: The total number of arguments in argv.
  *
- * argv: An array of strings representing arguments passed to some program.
- * envp: Any array of strings representing all environment variables at the time the program is called.
+ *   - argv: An array of strings representing arguments passed to some program.
+ *   - envp: Any array of strings representing all environment variables at the time the program is called.
  *
- * macro_f_console_arguments_t_initialize_1() initializes the structure.
+ *   - macro_f_console_arguments_t_initialize_1() initializes the structure.
  */
 #ifndef _di_f_console_arguments_t_
   typedef struct {
@@ -234,19 +235,20 @@ extern "C" {
  *
  * Any changes to the f_console_parameter_process() code likely requires changes or re-interpretation of these properties.
  *
- * type:  Describe the kind of processing is being performed.
- * depth: Designate how many loops to break or continue out of (0 = one loop, 1 = two loops).
- * width: Used like a cache to store width results such as from macro_f_utf_byte_width_is().
- * found: Designate that the currently process parameter has been matched.
+ * Properties:
+ *   - type:  Describe the kind of processing is being performed.
+ *   - depth: Designate how many loops to break or continue out of (0 = one loop, 1 = two loops).
+ *   - width: Used like a cache to store width results such as from macro_f_utf_byte_width_is().
+ *   - found: Designate that the currently process parameter has been matched.
  *
- * result: The parameter result state determined by the appropriate f_console_identify() or similar call.
- * state:  A pointer to the state information.
+ *   - result: The parameter result state determined by the appropriate f_console_identify() or similar call.
+ *   - state:  A pointer to the state information.
  *
- * at:           The location in the parameters array currently being processed (not all types use this).
- * location:     The current location within the argv array.
- * location_sub: The current location within the argv[location] string.
- * increment_by: The amount of characters being processed within the argv[location] for the current pass.
- * need:         The number of additional parameters that need to be grabbed.
+ *   - at:           The location in the parameters array currently being processed (not all types use this).
+ *   - location:     The current location within the argv array.
+ *   - location_sub: The current location within the argv[location] string.
+ *   - increment_by: The amount of characters being processed within the argv[location] for the current pass.
+ *   - need:         The number of additional parameters that need to be grabbed.
  *
  * The expected processing of each type (f_console_parameter_state_type_*_e) is as follows:
  *   - identify:          Determine what type of parameter is being processed.
@@ -347,22 +349,23 @@ extern "C" {
  * The long parameters are prepended with either '--' or '++'.
  * The simple parameters have no prefix characters.
  *
- * match_short:  The NULL terminated single character string, such as 'h' in '-h'.
- * match_long:   The NULL terminated multi-character string, such as 'help' in '--help'.
- * match_simple: The NULL terminated parameter that has no prefix, such as 'all' in 'make all'.
+ * Properties:
+ *   - match_short:  The NULL terminated single character string, such as 'h' in '-h'.
+ *   - match_long:   The NULL terminated multi-character string, such as 'help' in '--help'.
+ *   - match_simple: The NULL terminated parameter that has no prefix, such as 'all' in 'make all'.
  *
- * values_total: Designates that a parameter will have a given number of values arguments, such as 'blue' in '--color blue'.
+ *   - values_total: Designates that a parameter will have a given number of values arguments, such as 'blue' in '--color blue'.
  *
- * flag:   A set of bits for providing states associated with the parameter.
- * result: A set of bits representing if and how the parameter is found (such as '-h' vs '--help').
+ *   - flag:   A set of bits for providing states associated with the parameter.
+ *   - result: A set of bits representing if and how the parameter is found (such as '-h' vs '--help').
  *
- * location:     The last location in argv[] where this parameter is found.
- * location_sub: The last sub-location at location in argv (only used by short parameters, such as -h or +l).
+ *   - location:     The last location in argv[] where this parameter is found.
+ *   - location_sub: The last sub-location at location in argv (only used by short parameters, such as -h or +l).
  *
- * locations:     All locations within argv where this parameter is found (order is preserved).
- * locations_sub: All sub-locations within argv where this parameter is found (order is preserved).
+ *   - locations:     All locations within argv where this parameter is found (order is preserved).
+ *   - locations_sub: All sub-locations within argv where this parameter is found (order is preserved).
  *
- * values: An array of locations representing where in the argv[] the values arguments are found.
+ *   - values: An array of locations representing where in the argv[] the values arguments are found.
  *
  * The macro_f_console_parameter_t_initialize_1() all arguments.
  * The macro_f_console_parameter_t_initialize_2() reduced arguments has short, long, and simple.
@@ -498,10 +501,11 @@ extern "C" {
  *
  * This is not intended to be dynamically allocated, so there is no "size" property.
  *
- * array:     Intended to be populated with an array of f_console_parameter_t whose size is defined by the "used" property.
- * arguments: An array of arguments pointing to the argv[] strings with the string lengths already calculated (This is a dynamic array of f_string_static_t).
- * remaining: An array of indexes within the arguments representing unmatched parameters.
- * length:    The total number of parameters in the parameters array.
+ * Properties:
+ *   - array:     Intended to be populated with an array of f_console_parameter_t whose size is defined by the "used" property.
+ *   - arguments: An array of arguments pointing to the argv[] strings with the string lengths already calculated (This is a dynamic array of f_string_static_t).
+ *   - remaining: An array of indexes within the arguments representing unmatched parameters.
+ *   - length:    The total number of parameters in the parameters array.
  *
  * callback: A callback to perform when matched in order to handle condition values.
  *

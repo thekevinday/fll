@@ -63,24 +63,25 @@ extern "C" {
  * The macro macro_fll_program_console_parameter_standard_initialize provides the standard program parameters to include when initializing the parameters variable.
  * The last comma is not provided, the caller should add the comma to macro_fll_program_console_parameter_standard_initialize as necessary.
  *
- * parameters:  The state of pre-defined parameters passed to the program.
- * environment: Environment variables passed to the program.
+ * Properties:
+ *   - parameters:  The state of pre-defined parameters passed to the program.
+ *   - environment: Environment variables passed to the program.
  *
- * umask: The umask settings, needed for avoiding calls to umask() to read the current umask.
- * pid:   The PID of the program.
- * child: Reserved for a child process, often representing the child return status or the child process ID.
- * pipe:  Designate that a pipe exists and is available for use.
+ *   - umask: The umask settings, needed for avoiding calls to umask() to read the current umask.
+ *   - pid:   The PID of the program.
+ *   - child: Reserved for a child process, often representing the child return status or the child process ID.
+ *   - pipe:  Designate that a pipe exists and is available for use.
  *
- * signal_check:    A counter used to map to for reducing the amount of actual signal check calls.
- * signal_received: The signal received (if 0, then no signal is received).
- * signal:          The process signal management structure.
+ *   - signal_check:    A counter used to map to for reducing the amount of actual signal check calls.
+ *   - signal_received: The signal received (if 0, then no signal is received).
+ *   - signal:          The process signal management structure.
  *
- * message: The output file for normal output messages (often stdout).
- * output:  The output file for normal/non-message output, aka data output (often stdout or a file).
- * error:   The output file for error output messages.
- * warning: The output file for warning output messages.
+ *   - message: The output file for normal output messages (often stdout).
+ *   - output:  The output file for normal/non-message output, aka data output (often stdout or a file).
+ *   - error:   The output file for error output messages.
+ *   - warning: The output file for warning output messages.
  *
- * context: The color context.
+ *   - context: The color context.
  */
 #ifndef _di_fll_program_data_t_
   typedef struct {

@@ -19,9 +19,10 @@ extern "C" {
 /**
  * An array of string tripless.
  *
- * array: The array of string triples.
- * size:  Total amount of allocated space.
- * used:  Total number of allocated spaces used.
+ * Properties:
+ *   - array: The array of string triples.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_string_tripless_t_
   typedef struct {

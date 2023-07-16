@@ -31,13 +31,14 @@ extern "C" {
 /**
  * Provide a complete standard password account structure.
  *
- * id_user:  The user ID.
- * id_group: The group ID.
- * home:     The user's home directory.
- * label:    The user's display name (gecos).
- * name:     The user's account name.
- * password: The user's password.
- * shell:    The user's shell program.
+ * Properties:
+ *   - id_user:  The user ID.
+ *   - id_group: The group ID.
+ *   - home:     The user's home directory.
+ *   - label:    The user's display name (gecos).
+ *   - name:     The user's account name.
+ *   - password: The user's password.
+ *   - shell:    The user's shell program.
  */
 #ifndef _di_f_account_t_
   typedef struct {
@@ -77,9 +78,10 @@ extern "C" {
 /**
  * An array of accounts.
  *
- * array: The array of accounts.
- * size:  Total amount of space available.
- * used:  Total number of space used.
+ * Properties:
+ *   - array: The array of accounts.
+ *   - size:  Total amount of space available.
+ *   - used:  Total number of space used.
  */
 #ifndef _di_f_accounts_t_
   typedef struct {
@@ -111,9 +113,10 @@ extern "C" {
 /**
  * An array of f_accounts_t.
  *
- * array: The array of f_accounts_t.
- * size:  Total amount of allocated space.
- * used:  Total number of allocated spaces used.
+ * Properties:
+ *   - array: The array of f_accounts_t.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_accounts_t_
   typedef struct {

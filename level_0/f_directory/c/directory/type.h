@@ -21,14 +21,15 @@ extern "C" {
  *
  * Each property represents a set of paths grouped by directory entity file type.
  *
- * block:     For S_IFBLK.
- * character: For S_IFCHR.
- * directory: For S_IFDIR.
- * regular:   For S_IFREG.
- * link:      For S_IFLNK.
- * fifo:      For S_IFIFO.
- * socket:    For S_IFSOCK.
- * unknown:   For anything else.
+ * Properties:
+ *   - block:     For S_IFBLK.
+ *   - character: For S_IFCHR.
+ *   - directory: For S_IFDIR.
+ *   - regular:   For S_IFREG.
+ *   - link:      For S_IFLNK.
+ *   - fifo:      For S_IFIFO.
+ *   - socket:    For S_IFSOCK.
+ *   - unknown:   For anything else.
  */
 #ifndef _di_f_directory_listing_t_
   typedef struct {
@@ -70,9 +71,10 @@ extern "C" {
  *
  * The allocation macros apply to the path.
  *
- * step:   The allocation step.
- * status: The status code.
- * path:   The dynamically allocated path associated with the status code.
+ * Properties:
+ *   - step:   The allocation step.
+ *   - status: The status code.
+ *   - path:   The dynamically allocated path associated with the status code.
  */
 #ifndef _di_f_directory_status_t_
   typedef struct {
@@ -92,9 +94,10 @@ extern "C" {
 /**
  * An array of directory status.
  *
- * array: An array of directory status.
- * size:  Total amount of allocated space.
- * used:  Total number of allocated spaces used.
+ * Properties:
+ *   - array: An array of directory status.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_directory_statuss_t_
   typedef struct {
@@ -132,20 +135,21 @@ extern "C" {
  *
  * The callbacks must take care to properly modify the structure or they could cause security, integrity, or functionality problems.
  *
- * depth:     A number representing the depth recursed thus far (generally assigned internally).
- * depth_max: The maximum recursion depth to use.
- * flag:      A set of flags used exclusively by the directory recurse process (not to be confused with state.flag).
- * mode:      A file mode flag to use when working on files, such as when copying a file.
+ * Properties:
+ *   - depth:     A number representing the depth recursed thus far (generally assigned internally).
+ *   - depth_max: The maximum recursion depth to use.
+ *   - flag:      A set of flags used exclusively by the directory recurse process (not to be confused with state.flag).
+ *   - mode:      A file mode flag to use when working on files, such as when copying a file.
  *
- * state:     A pointer to the state information, where state.interrupt() and state.handle() are called appopriately.
- * listing:   A directory listing structure used internally to help reduce repeated memory allocation overhead.
+ *   - state:     A pointer to the state information, where state.interrupt() and state.handle() are called appopriately.
+ *   - listing:   A directory listing structure used internally to help reduce repeated memory allocation overhead.
  *
- * path:       A path representing the current directory path being operated on and usually represents the parent path of some file or directory (generally assigned internally).
- * path_cache: A path-related cache made available for the caller to use, such as combining the path and the file name in the action callback.
- * path_top:   A pointer to the top path string, used for error handling and printing (generally assigned internally).
+ *   - path:       A path representing the current directory path being operated on and usually represents the parent path of some file or directory (generally assigned internally).
+ *   - path_cache: A path-related cache made available for the caller to use, such as combining the path and the file name in the action callback.
+ *   - path_top:   A pointer to the top path string, used for error handling and printing (generally assigned internally).
  *
- * action: A callback used for performing some action (this is required to do anything).
- * handle: A callback used for performing error handling during recursion directly relating to a file.
+ *   - action: A callback used for performing some action (this is required to do anything).
+ *   - handle: A callback used for performing error handling during recursion directly relating to a file.
  *
  * The macro_f_directory_recurse_do_t_initialize_1() all arguments.
  * The macro_f_directory_recurse_do_t_initialize_2() all arguments except for internally managed source, destination, mode, and depth.

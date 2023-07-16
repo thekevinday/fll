@@ -79,9 +79,10 @@ extern "C" {
 /**
  * Provide a structure for customizing conversion settings for a conversion function to use.
  *
- * base:  The base unit the number is to be represented as, only the numbers 2 through 16 are supported as a base.
- * flag:  Store flags from f_conversion_data_flag_*.
- * width: The number of digits representing a minimum width (a width of 0, should result in not printing a 0 when the number is 0).
+ * Properties:
+ *   - base:  The base unit the number is to be represented as, only the numbers 2 through 16 are supported as a base.
+ *   - flag:  Store flags from f_conversion_data_flag_*.
+ *   - width: The number of digits representing a minimum width (a width of 0, should result in not printing a 0 when the number is 0).
  */
 #ifndef _di_f_conversion_data_t_
   typedef struct {

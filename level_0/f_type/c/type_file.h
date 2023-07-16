@@ -149,11 +149,12 @@ extern "C" {
 /**
  * Commonly used file related properties.
  *
- * stream:     File stream.
- * id:         File descriptor, with a value of -1 represents a closed file.
- * flag:       Flags used for opening the file.
- * size_read:  The default number of 1-byte characters to read at a time and is often used for the read buffer size.
- * size_write: The default number of 1-byte characters to read at a time and is often used for the write buffer size.
+ * Properties:
+ *   - stream:     File stream.
+ *   - id:         File descriptor, with a value of -1 represents a closed file.
+ *   - flag:       Flags used for opening the file.
+ *   - size_read:  The default number of 1-byte characters to read at a time and is often used for the read buffer size.
+ *   - size_write: The default number of 1-byte characters to read at a time and is often used for the write buffer size.
  */
 #ifndef _di_f_file_t_
   typedef struct {
@@ -191,9 +192,10 @@ extern "C" {
  *
  * The macros are defined in type_array.h or type_array_file.h.
  *
- * array: The array of f_file_t.
- * size:  Total amount of allocated space.
- * used:  Total number of allocated spaces used.
+ * Properties:
+ *   - array: The array of f_file_t.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_files_t_
   typedef struct {
@@ -214,9 +216,10 @@ extern "C" {
  *
  * The macros are defined in type_array.h or type_array_file.h.
  *
- * array: The array of f_file_t arrays.
- * size:  Total amount of allocated space.
- * used:  Total number of allocated spaces used.
+ * Properties:
+ *   - array: The array of f_file_t arrays.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_filess_t_
   typedef struct {
@@ -299,9 +302,10 @@ extern "C" {
  * The nfds_t is often either uint32_t or an uint64_t.
  * The f_number_unsigned_t is often an uint64_t.
  *
- * array: An array of f_poll_t.
- * size:  Total amount of allocated space.
- * used:  Total number of allocated spaces used.
+ * Properties:
+ *   - array: An array of f_poll_t.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_polls_t_
   typedef struct {
@@ -322,9 +326,10 @@ extern "C" {
  *
  * The macros are defined in type_array.h or type_array_file.h.
  *
- * array: The array of f_polls_t.
- * size:  Total amount of allocated space.
- * used:  Total number of allocated spaces used.
+ * Properties:
+ *   - array: The array of f_polls_t.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_pollss_t_
   typedef struct {

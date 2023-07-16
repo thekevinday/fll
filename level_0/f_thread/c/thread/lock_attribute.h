@@ -35,9 +35,10 @@ extern "C" {
 /**
  * An array of read/write lock attributees.
  *
- * array: The array of f_thread_lock_attribute_t.
- * size:  Total amount of allocated space.
- * used:  Total number of allocated spaces used.
+ * Properties:
+ *   - array: The array of f_thread_lock_attribute_t.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_thread_lock_attributes_t_
   typedef struct {

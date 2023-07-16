@@ -19,9 +19,10 @@ extern "C" {
 /**
  * A string triple consisting of a set of three strings.
  *
- * a: A string representing the first string in the triple.
- * b: A string representing the second string in the triple.
- * c: A string representing the third string in the triple.
+ * Properties:
+ *   - a: A string representing the first string in the triple.
+ *   - b: A string representing the second string in the triple.
+ *   - c: A string representing the third string in the triple.
  */
 #ifndef _di_f_utf_string_triple_t_
   typedef struct {

@@ -23,8 +23,9 @@ extern "C" {
  * Therefore, a range from 0 to 0 would be include position 0.
  * Set start to some value larger than stop to designate that there is no range (such as start = 1, stop = 0).
  *
- * start: the start position.
- * stop:  the stop position.
+ * Properties:
+ *   - start: The start position.
+ *   - stop:  The stop position.
  */
 #ifndef _di_f_string_range_t_
   typedef struct {

@@ -19,9 +19,10 @@ extern "C" {
 /**
  * An array of string maps arrays.
  *
- * array: the array of an array of string maps.
- * size:  total amount of allocated space.
- * used:  total number of allocated spaces used.
+ * Properties:
+ *   - array: The array of an array of string maps.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_string_map_multiss_t_
   typedef struct {

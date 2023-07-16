@@ -22,24 +22,25 @@ extern "C" {
  * This is passed to the program-specific main entry point to designate program settings.
  * These program settings are often processed from the program arguments (often called the command line arguments).
  *
- * mode: The input/output mode (see utf8_modes_e).
- * flag: Flags passed to the main function.
+ * Properties:
+ *   - mode: The input/output mode (see utf8_modes_e).
+ *   - flag: Flags passed to the main function.
  *
- * status_signal: A status used eclusively by the threaded signal handler.
- * state:         The state data used when processing the FSS data.
+ *   - status_signal: A status used eclusively by the threaded signal handler.
+ *   - state:         The state data used when processing the FSS data.
  *
- * valid:     Designate the output context set for valid characters.
- * valid_not: Designate the output context set for invalid characters.
+ *   - valid:     Designate the output context set for valid characters.
+ *   - valid_not: Designate the output context set for invalid characters.
  *
- * append:  A string to append. A value of NULL results in not appending.
- * prepend: A string to prepend. A value of NULL results in not prepending.
+ *   - append:  A string to append. A value of NULL results in not appending.
+ *   - prepend: A string to prepend. A value of NULL results in not prepending.
  *
- * buffer: A buffer to use for printing output (generally for storing a block of input from an input file).
- * text:   A buffer for storing a series of characters for processing (generally for code point processing).
+ *   - buffer: A buffer to use for printing output (generally for storing a block of input from an input file).
+ *   - text:   A buffer for storing a series of characters for processing (generally for code point processing).
  *
- * path_files_from: An array of all "from" file paths for when the flag utf8_main_flag_file_from_e is set.
- * path_files_to:   An array of all "to" file paths for when the flag utf8_main_flag_file_to_e is set.
- * remaining:       An array containing all remaining arguments passed to the program.
+ *   - path_files_from: An array of all "from" file paths for when the flag utf8_main_flag_file_from_e is set.
+ *   - path_files_to:   An array of all "to" file paths for when the flag utf8_main_flag_file_to_e is set.
+ *   - remaining:       An array containing all remaining arguments passed to the program.
  */
 #ifndef _di_utf8_setting_t_
   typedef struct {
@@ -84,8 +85,9 @@ extern "C" {
 /**
  * The main program data as a single structure.
  *
- * program: The main program data.
- * setting: The settings data.
+ * Properties:
+ *   - program: The main program data.
+ *   - setting: The settings data.
  */
 #ifndef _di_utf8_main_t_
   typedef struct {

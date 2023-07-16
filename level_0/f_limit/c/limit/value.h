@@ -37,9 +37,10 @@ extern "C" {
 /**
  * An array of limit values.
  *
- * array: An array of limit values.
- * size:  Total amount of allocated space.
- * used:  Total number of allocated spaces used.
+ * Properties:
+ *   - array: An array of limit values.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_limit_values_t_
   typedef struct {
@@ -71,9 +72,10 @@ extern "C" {
 /**
  * This holds an array of f_limit_values_t.
  *
- * array: An array of f_limit_values_t.
- * size:  Total amount of allocated space.
- * used:  Total number of allocated spaces used.
+ * Properties:
+ *   - array: An array of f_limit_values_t.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_limit_valuess_t_
   typedef struct {

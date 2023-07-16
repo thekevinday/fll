@@ -19,9 +19,10 @@ extern "C" {
 /**
  * A structure containing basic thread information.
  *
- * attribute: The thread attributes (which is a union).
- * id:        The thread identifier.
- * result:    The result of the thread on exit.
+ * Properties:
+ *   - attribute: The thread attributes (which is a union).
+ *   - id:        The thread identifier.
+ *   - result:    The result of the thread on exit.
  */
 #ifndef _di_f_thread_set_t_
   typedef struct {
@@ -45,9 +46,10 @@ extern "C" {
 /**
  * An array of f_thread_set_t.
  *
- * array: The array of f_thread_set_t.
- * size:  Total amount of allocated space.
- * used:  Total number of allocated spaces used.
+ * Properties:
+ *   - array: The array of f_thread_set_t.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_thread_sets_t_
   typedef struct {

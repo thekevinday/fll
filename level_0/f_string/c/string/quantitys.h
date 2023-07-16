@@ -19,9 +19,10 @@ extern "C" {
 /**
  * An array of string quantitys.
  *
- * array: the array of string quantitys.
- * size:  total amount of allocated space.
- * used:  total number of allocated spaces used.
+ * Properties:
+ *   - array: The array of string quantitys.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_string_quantitys_t_
   typedef struct {

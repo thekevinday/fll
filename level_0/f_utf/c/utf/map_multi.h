@@ -19,8 +19,9 @@ extern "C" {
 /**
  * A string map consisting of a name and multiple values.
  *
- * name:  A string representing the map name.
- * value: An array of strings representing the map value.
+ * Properties:
+ *   - name:  A string representing the map name.
+ *   - value: An array of strings representing the map value.
  */
 #ifndef _di_f_utf_string_map_multi_t_
   typedef struct {

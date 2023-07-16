@@ -407,9 +407,10 @@ extern "C" {
 /**
  * Provide structure for containing color format control strings.
  *
- * begin:  String used to designate the start of a color code sequence.
- * end:    String used to designate the end of a color code sequence.
- * medium: String used to designate the separation between two codes in a color code sequence.
+ * Properties:
+ *   - begin:  String used to designate the start of a color code sequence.
+ *   - end:    String used to designate the end of a color code sequence.
+ *   - medium: String used to designate the separation between two codes in a color code sequence.
  */
 #ifndef _di_f_color_format_t_
   typedef struct {
@@ -463,44 +464,45 @@ extern "C" {
  *   - f_color_t_initialize_linux: ideal for linux console.
  *   - f_color_t_initialize_xterminal: ideal for linux x-terminal.
  *
- * reset:            String used to describe reset color code.
- * bold:             String used to describe bold color code.
- * underline:        String used to describe underline color code.
- * blink:            String used to describe blink color code.
- * reverse:          String used to describe revese color code.
- * conceal:          String used to describe conceal color code.
- * black:            String used to describe black color code.
- * red:              String used to describe red color code.
- * green:            String used to describe green color code.
- * yellow:           String used to describe yellow color code.
- * blue:             String used to describe blue color code.
- * purple:           String used to describe purple color code.
- * teal:             String used to describe teal color code.
- * white:            String used to describe white color code.
- * black_bg:         String used to describe black background color code.
- * red_bg:           String used to describe red backgound color code.
- * green_bg:         String used to describe green backgound color code.
- * yellow_bg:        String used to describe yellow backgound color code.
- * blue_bg:          String used to describe blue backgound color code.
- * purple_bg:        String used to describe purple backgound color code.
- * teal_bg:          String used to describe teal backgound color code.
- * white_bg:         String used to describe white backgound color code.
- * bright_black:     String used to describe bright black backgound color code.
- * bright_red:       String used to describe bright red backgound color code.
- * bright_green:     String used to describe bright green backgound color code.
- * bright_yellow:    String used to describe bright yellow backgound color code.
- * bright_blue:      String used to describe bright blue backgound color code.
- * bright_purple:    String used to describe bright purple backgound color code.
- * bright_teal:      String used to describe bright teal backgound color code.
- * bright_white:     String used to describe bright white backgound color code.
- * bright_black_bg:  String used to describe bright black backgound color code.
- * bright_red_bg:    String used to describe bright red backgound color code.
- * bright_green_bg:  String used to describe bright green backgound color code.
- * bright_yellow_bg: String used to describe bright yellow backgound color code.
- * bright_blue_bg:   String used to describe bright blue backgound color code.
- * bright_purple_bg: String used to describe bright purple backgound color code.
- * bright_teal_bg:   String used to describe bright teal backgound color code.
- * bright_white_bg:  String used to describe bright white backgound color code.
+ * Properties:
+ *   - reset:            String used to describe reset color code.
+ *   - bold:             String used to describe bold color code.
+ *   - underline:        String used to describe underline color code.
+ *   - blink:            String used to describe blink color code.
+ *   - reverse:          String used to describe revese color code.
+ *   - conceal:          String used to describe conceal color code.
+ *   - black:            String used to describe black color code.
+ *   - red:              String used to describe red color code.
+ *   - green:            String used to describe green color code.
+ *   - yellow:           String used to describe yellow color code.
+ *   - blue:             String used to describe blue color code.
+ *   - purple:           String used to describe purple color code.
+ *   - teal:             String used to describe teal color code.
+ *   - white:            String used to describe white color code.
+ *   - black_bg:         String used to describe black background color code.
+ *   - red_bg:           String used to describe red backgound color code.
+ *   - green_bg:         String used to describe green backgound color code.
+ *   - yellow_bg:        String used to describe yellow backgound color code.
+ *   - blue_bg:          String used to describe blue backgound color code.
+ *   - purple_bg:        String used to describe purple backgound color code.
+ *   - teal_bg:          String used to describe teal backgound color code.
+ *   - white_bg:         String used to describe white backgound color code.
+ *   - bright_black:     String used to describe bright black backgound color code.
+ *   - bright_red:       String used to describe bright red backgound color code.
+ *   - bright_green:     String used to describe bright green backgound color code.
+ *   - bright_yellow:    String used to describe bright yellow backgound color code.
+ *   - bright_blue:      String used to describe bright blue backgound color code.
+ *   - bright_purple:    String used to describe bright purple backgound color code.
+ *   - bright_teal:      String used to describe bright teal backgound color code.
+ *   - bright_white:     String used to describe bright white backgound color code.
+ *   - bright_black_bg:  String used to describe bright black backgound color code.
+ *   - bright_red_bg:    String used to describe bright red backgound color code.
+ *   - bright_green_bg:  String used to describe bright green backgound color code.
+ *   - bright_yellow_bg: String used to describe bright yellow backgound color code.
+ *   - bright_blue_bg:   String used to describe bright blue backgound color code.
+ *   - bright_purple_bg: String used to describe bright purple backgound color code.
+ *   - bright_teal_bg:   String used to describe bright teal backgound color code.
+ *   - bright_white_bg:  String used to describe bright white backgound color code.
  */
 #ifndef _di_f_color_t_
   typedef struct {
@@ -794,8 +796,9 @@ extern "C" {
  * This is intended to be used for printing, such that the printed code is prefixed with the "before" and postfixed with the "after".
  * These color strings should be NULL terminated.
  *
- * before: A pointer to the dynamic string representing the before color to assign, set to NULL to disable.
- * after:  A pointer to the dynamic string representing the after color to assign, set to NULL to disable.
+ * Properties:
+ *   - before: A pointer to the dynamic string representing the before color to assign, set to NULL to disable.
+ *   - after:  A pointer to the dynamic string representing the after color to assign, set to NULL to disable.
  */
 #ifndef _di_f_color_set_t_
   typedef struct {
@@ -824,16 +827,17 @@ extern "C" {
  *
  * This is intended to be used for printing, such that the printed code is prefixed with the "before" and postfixed with the "after", for each context.
  *
- * error:        Color context associated with "error".
- * important:    Color context associated with "important".
- * normal:       Color context associated with "normal".
- * normal_reset: Color context associated with "normal_reset".
- * notable:      Color context associated with "notable".
- * reset:        Reset the color context.
- * standout:     Color context associated with "standout".
- * success:      Color context associated with "success".
- * title:        Color context associated with "title".
- * warning:      Color context associated with "warning".
+ * Properties:
+ *   - error:        Color context associated with "error".
+ *   - important:    Color context associated with "important".
+ *   - normal:       Color context associated with "normal".
+ *   - normal_reset: Color context associated with "normal_reset".
+ *   - notable:      Color context associated with "notable".
+ *   - reset:        Reset the color context.
+ *   - standout:     Color context associated with "standout".
+ *   - success:      Color context associated with "success".
+ *   - title:        Color context associated with "title".
+ *   - warning:      Color context associated with "warning".
  */
 #ifndef _di_f_color_set_context_t_
   typedef struct {
@@ -893,21 +897,22 @@ extern "C" {
  *
  * This is intended to be used for printing, and this provides a management structure for all color context related data.
  *
- * list:   A list of colors, each with their specific color code string.
- * format: The color code formatting strings.
- * mode:   A code representing the color mode.
- * set:    A collection of color context sets for direct use in color printing.
+ * Properties:
+ *   - list:   A list of colors, each with their specific color code string.
+ *   - format: The color code formatting strings.
+ *   - mode:   A code representing the color mode.
+ *   - set:    A collection of color context sets for direct use in color printing.
  *
- * error:        Color context associated with "error".
- * important:    Color context associated with "important".
- * normal:       Color context associated with "normal".
- * normal_reset: Color context associated with "normal_reset".
- * notable:      Color context associated with "notable".
- * reset:        Reset the color context.
- * standout:     Color context associated with "standout".
- * success:      Color context associated with "success".
- * title:        Color context associated with "title".
- * warning:      Color context associated with "warning".
+ *   - error:        Color context associated with "error".
+ *   - important:    Color context associated with "important".
+ *   - normal:       Color context associated with "normal".
+ *   - normal_reset: Color context associated with "normal_reset".
+ *   - notable:      Color context associated with "notable".
+ *   - reset:        Reset the color context.
+ *   - standout:     Color context associated with "standout".
+ *   - success:      Color context associated with "success".
+ *   - title:        Color context associated with "title".
+ *   - warning:      Color context associated with "warning".
  */
 #ifndef _di_f_color_context_t_
   typedef struct {

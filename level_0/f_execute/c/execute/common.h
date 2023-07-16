@@ -155,8 +155,9 @@ extern "C" {
 /**
  * A structure representing a scheduler and its parameters for execution.
  *
- * policy:   The scheduler policy.
- * priority: The scheduler priority;
+ * Properties:
+ *   - policy:   The scheduler policy.
+ *   - priority: The scheduler priority;
  */
 #ifndef _di_f_execute_scheduler_t_
   typedef struct {

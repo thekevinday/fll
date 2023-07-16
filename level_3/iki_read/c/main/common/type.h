@@ -22,27 +22,28 @@ extern "C" {
  * This is passed to the program-specific main entry point to designate program settings.
  * These program settings are often processed from the program arguments (often called the command line arguments).
  *
- * flag: Flags passed to the main function.
+ * Properties:
+ *   - flag: Flags passed to the main function.
  *
- * status_signal: A status used eclusively by the threaded signal handler.
- * state:         The state data used when processing the FSS data.
+ *   - status_signal: A status used eclusively by the threaded signal handler.
+ *   - state:         The state data used when processing the FSS data.
  *
- * at:   The position representing the "at" index.
- * line: The position representing the "line" index.
+ *   - at:   The position representing the "at" index.
+ *   - line: The position representing the "line" index.
  *
- * buffer: A buffer used for loading the files and other miscellaneous tasks.
- * name:   A string representing the IKI vocabulary name being selected.
- * files:  An array of all files to process (except for the input pipe).
+ *   - buffer: A buffer used for loading the files and other miscellaneous tasks.
+ *   - name:   A string representing the IKI vocabulary name being selected.
+ *   - files:  An array of all files to process (except for the input pipe).
  *
- * replace:    A map containing the Vocabulary name and its replacement as the value.
- * reassign:   A triple containing the Vocabulary name (a), Content to match (b), and the string used as the reassign (c).
- * substitute: A triple containing the Vocabulary name (a), Content to match (b), and the string used as the substitute (c).
- * wrap:       A triple containing the Vocabulary name (a), the string to prepend (b), and the string to append (c).
+ *   - replace:    A map containing the Vocabulary name and its replacement as the value.
+ *   - reassign:   A triple containing the Vocabulary name (a), Content to match (b), and the string used as the reassign (c).
+ *   - substitute: A triple containing the Vocabulary name (a), Content to match (b), and the string used as the substitute (c).
+ *   - wrap:       A triple containing the Vocabulary name (a), the string to prepend (b), and the string to append (c).
  *
- * map_replaces: A pointer representing an array with length of setting->data.vocabulary.used mapping the vocabulary location to a replace array location.
- * map_wraps:    A pointer representing an array with length of setting->data.vocabulary.used mapping the vocabulary location to a wrap array location.
+ *   - map_replaces: A pointer representing an array with length of setting->data.vocabulary.used mapping the vocabulary location to a replace array location.
+ *   - map_wraps:    A pointer representing an array with length of setting->data.vocabulary.used mapping the vocabulary location to a wrap array location.
  *
- * data: The loaded IKI data.
+ *   - data: The loaded IKI data.
  */
 #ifndef _di_iki_read_setting_t_
   typedef struct {
@@ -92,8 +93,9 @@ extern "C" {
 /**
  * The main program data as a single structure.
  *
- * program: The main program data.
- * setting: The settings data.
+ * Properties:
+ *   - program: The main program data.
+ *   - setting: The settings data.
  */
 #ifndef _di_iki_read_main_t_
   typedef struct {

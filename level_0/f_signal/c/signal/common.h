@@ -19,9 +19,10 @@ extern "C" {
 /**
  * This holds a signal type.
  *
- * flags: The signal flags associated with this.
- * id:    The signal descriptor.
- * set:   The signal set.
+ * Properties:
+ *   - flags: The signal flags associated with this.
+ *   - id:    The signal descriptor.
+ *   - set:   The signal set.
  */
 #ifndef _di_f_signal_t_
   typedef struct {
@@ -43,8 +44,9 @@ extern "C" {
 /**
  * This holds a set of signals to block and a set of signals to unblock.
  *
- * block:     The signal flags to block.
- * block_not: The signal flags to unblock.
+ * Properties:
+ *   - block:     The signal flags to block.
+ *   - block_not: The signal flags to unblock.
  */
 #ifndef _di_f_signal_how_t_
   typedef struct {

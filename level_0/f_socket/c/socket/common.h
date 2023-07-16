@@ -733,18 +733,19 @@ extern "C" {
 /**
  * Commonly used socket related properties, loosely based off of f_file_t.
  *
- * id:       File descriptor, with a value of -1 represents a closed file.
- * domain:   The socket domain (protocol family, such as f_socket_protocol_family_local_e).
- * protocol: The socket protocol (such as f_socket_protocol_tcp_e).
- * type:     The socket type (address family, such as f_socket_address_family_local_e).
+ * Properties:
+ *   - id:       File descriptor, with a value of -1 represents a closed file.
+ *   - domain:   The socket domain (protocol family, such as f_socket_protocol_family_local_e).
+ *   - protocol: The socket protocol (such as f_socket_protocol_tcp_e).
+ *   - type:     The socket type (address family, such as f_socket_address_family_local_e).
  *
- * size_read:  The default number of 1-byte characters to read at a time and is often used for the read buffer size.
- * size_write: The default number of 1-byte characters to read at a time and is often used for the write buffer size.
+ *   - size_read:  The default number of 1-byte characters to read at a time and is often used for the read buffer size.
+ *   - size_write: The default number of 1-byte characters to read at a time and is often used for the write buffer size.
  *
- * address: The socket address.
- * length:  The length of the socket.
+ *   - address: The socket address.
+ *   - length:  The length of the socket.
  *
- * name: The name of the socket, if a name is given (for UNIX sockets this represents the path) (Must be a NULL terminated string).
+ *   - name: The name of the socket, if a name is given (for UNIX sockets this represents the path) (Must be a NULL terminated string).
  *
  * The clear and reset macros do not clear or reset the address (type f_socket_address_t) because the struct sockaddr is defined outside of the FLL project.
  */
@@ -838,9 +839,10 @@ extern "C" {
 /**
  * An array of f_socket_t.
  *
- * array: The array of f_socket_t.
- * size:  Total amount of allocated space.
- * used:  Total number of allocated spaces used.
+ * Properties:
+ *   - array: The array of f_socket_t.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_sockets_t_
   typedef struct {
@@ -859,9 +861,10 @@ extern "C" {
 /**
  * This holds an array of f_sockets_t.
  *
- * array: The array of f_socket_t arrays.
- * size:  Total amount of allocated space.
- * used:  Total number of allocated spaces used.
+ * Properties:
+ *   - array: The array of f_socket_t arrays.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_socketss_t_
   typedef struct {

@@ -19,9 +19,10 @@ extern "C" {
 /**
  * An array of static strings.
  *
- * array: The array of static strings.
- * size:  Total amount of space available.
- * used:  Total number of space used.
+ * Properties:
+ *   - array: The array of static strings.
+ *   - size:  Total amount of space available.
+ *   - used:  Total number of space used.
  */
 #ifndef _di_f_utf_string_statics_t_
   typedef struct {

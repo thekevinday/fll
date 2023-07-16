@@ -133,7 +133,7 @@ extern "C" {
 /**
  * Codes for every known FSS standard.
  *
- * f_fss_*:
+ * f_fss_*_e:
  *   - basic:                    FSS-0000: Basic.
  *   - extended:                 FSS-0001: Extended.
  *   - basic_list:               FSS-0002: Basic List.
@@ -180,7 +180,7 @@ extern "C" {
  *
  * The "next" and "end" are only meaningful for a Content and will be treated as "none" for an Object.
  *
- * f_fss_complete_*:
+ * f_fss_complete_*_e:
  *   - none:         Disable completeness.
  *   - end:          Complete as if this is the final piece of a set (such as FSS-0001, adding terminating EOL).
  *   - full:         Complete and add terminating EOL, where applicable.

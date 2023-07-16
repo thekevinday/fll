@@ -35,9 +35,10 @@ extern "C" {
 /**
  * An array of f_thread_attribute_t.
  *
- * array: The array of f_thread_attribute_t.
- * size:  Total amount of allocated space.
- * used:  Total number of allocated spaces used.
+ * Properties:
+ *   - array: The array of f_thread_attribute_t.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_thread_attributes_t_
   typedef struct {

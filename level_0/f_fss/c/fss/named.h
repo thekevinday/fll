@@ -22,10 +22,11 @@ extern "C" {
  * The objects, contents, and quotess should each be of the same used and size.
  * Any deviation to this would require implementing custom equivelents to the standard management macros.
  *
- * name:     The name representing this set.
- * objects:  The array of objects.
- * contents: The array of contents.
- * quotess:  The array of quote for each content.
+ * Properties:
+ *   - name:     The name representing this set.
+ *   - objects:  The array of objects.
+ *   - contents: The array of contents.
+ *   - quotess:  The array of quote for each content.
  */
 #ifndef _di_f_fss_named_t_
   typedef struct {
@@ -61,9 +62,10 @@ extern "C" {
 /**
  * This holds an array of f_fss_named_t.
  *
- * array: An array of f_fss_named_t.
- * size:  Total amount of allocated space.
- * used:  Total number of allocated spaces used.
+ * Properties:
+ *   - array: An array of f_fss_named_t.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_fss_nameds_t_
   typedef struct {

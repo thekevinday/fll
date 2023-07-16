@@ -25,8 +25,9 @@ extern "C" {
  * 1) Exactly that, process a total of 0 strings bytes.
  * 2) Process with no limit, aka infinite.
  *
- * start: The position where the string starts (based on some string/buffer).
- * total: The total number of elements within that string/buffer the quantity represents.
+ * Properties:
+ *   - start: The position where the string starts (based on some string/buffer).
+ *   - total: The total number of elements within that string/buffer the quantity represents.
  */
 #ifndef _di_f_string_quantity_t_
   typedef struct {

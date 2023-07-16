@@ -22,8 +22,9 @@ extern "C" {
  * The objects and contents should each be of the same used and size.
  * Any deviation to this would require implementing custom equivelents to the standard management macros.
  *
- * objects:  the array of objects.
- * contents: the array of contents.
+ * Properties:
+ *   - objects:  The array of objects.
+ *   - contents: The array of contents.
  */
 #ifndef _di_f_fss_set_t_
   typedef struct {
@@ -54,9 +55,10 @@ extern "C" {
 /**
  * This holds an array of f_fss_set_t.
  *
- * array: an array of f_fss_set_t.
- * size:  total amount of allocated space.
- * used:  total number of allocated spaces used.
+ * Properties:
+ *   - array: An array of f_fss_set_t.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_fss_sets_t_
   typedef struct {
@@ -91,10 +93,11 @@ extern "C" {
  * The objects, contents, and quotes should each be of the same used and size.
  * Any deviation to this would require implementing custom equivelents to the standard management macros.
  *
- * objects:        The array of objects.
- * contents:       The array of contents.
- * objects_quote:  The array of objects quote types.
- * contents_quote: The array of contents quote types.
+ * Properties:
+ *   - objects:        The array of objects.
+ *   - contents:       The array of contents.
+ *   - objects_quote:  The array of objects quote types.
+ *   - contents_quote: The array of contents quote types.
  */
 #ifndef _di_f_fss_set_quote_t_
   typedef struct {
@@ -130,9 +133,10 @@ extern "C" {
 /**
  * This holds an array of f_fss_set_quote_t.
  *
- * array: an array of f_fss_set_quote_t.
- * size:  total amount of allocated space.
- * used:  total number of allocated spaces used.
+ * Properties:
+ *   - array: An array of f_fss_set_quote_t.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_fss_set_quotes_t_
   typedef struct {

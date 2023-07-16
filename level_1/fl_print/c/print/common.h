@@ -49,18 +49,19 @@ extern "C" {
 /**
  * Structure for facilitating colored or other managed printing.
  *
- * to:        The file to print to.
- * verbosity: The verbosity mode.
- * flag:      A set of flags, bitwise or otherwise, made available for more advanced manipulation.
+ * Properties:
+ *   - to:        The file to print to.
+ *   - verbosity: The verbosity mode.
+ *   - flag:      A set of flags, bitwise or otherwise, made available for more advanced manipulation.
  *
- * prefix: An optional prefix string for displaying before any special messages.
- * suffix: An optional suffix string for displaying after any special messages.
+ *   - prefix: An optional prefix string for displaying before any special messages.
+ *   - suffix: An optional suffix string for displaying after any special messages.
  *
- * context: The color codes for the entire error message.
- * notable: The color codes for a part of the message to make more visible.
- * set:     An optional pointer to a set of all available color contexts for explicit use.
+ *   - context: The color codes for the entire error message.
+ *   - notable: The color codes for a part of the message to make more visible.
+ *   - set:     An optional pointer to a set of all available color contexts for explicit use.
  *
- * custom: A pointer to a data structure determined by some caller for more advanced manipulation.
+ *   - custom: A pointer to a data structure determined by some caller for more advanced manipulation.
  */
 #ifndef _di_fl_print_t_
   typedef struct {

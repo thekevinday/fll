@@ -22,21 +22,22 @@ extern "C" {
  * This is passed to the program-specific main entry point to designate program settings.
  * These program settings are often processed from the program arguments (often called the command line arguments).
  *
- * flag: Flags passed to the main function.
+ * Properties:
+ *   - flag: Flags passed to the main function.
  *
- * current: The current position within the ids, used to determine when the line is matched.
- * line:    The line number to select.
- * total:   The total ids across all files.
+ *   - current: The current position within the ids, used to determine when the line is matched.
+ *   - line:    The line number to select.
+ *   - total:   The total ids across all files.
  *
- * range: A range used for processing as needed.
+ *   - range: A range used for processing as needed.
+ *   -
+ *   - status_signal: A status used eclusively by the threaded signal handler.
+ *   - state:         The state information.
  *
- * status_signal: A status used eclusively by the threaded signal handler.
- * state:         The state information.
- *
- * buffer:A buffer used for processing files.
- * ids:   A cache for FLL IDs.
- * names: An array of names to select.
- * files: The files to process.
+ *   - buffer: A buffer used for processing files.
+ *   - ids:    A cache for FLL IDs.
+ *   - names:  An array of names to select.
+ *   - files:  The files to process.
  */
 #ifndef _di_fss_identify_setting_t_
   typedef struct {
@@ -79,8 +80,9 @@ extern "C" {
 /**
  * The main program data as a single structure.
  *
- * program: The main program data.
- * setting: The settings data.
+ * Properties:
+ *   - program: The main program data.
+ *   - setting: The settings data.
  */
 #ifndef _di_fss_identify_main_t_
   typedef struct {

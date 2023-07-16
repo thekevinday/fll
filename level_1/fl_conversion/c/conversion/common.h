@@ -19,8 +19,9 @@ extern "C" {
 /**
  * Provide a structure for customizing conversion settings for a conversion function to use.
  *
- * base: The base unit the number is to be represented as, only the numbers 2 through 16 are supported as a base.
- * flag: Store flags from fl_conversion_data_flag_*.
+ * Properties:
+ *   - base: The base unit the number is to be represented as, only the numbers 2 through 16 are supported as a base.
+ *   - flag: Store flags from fl_conversion_data_flag_*.
  */
 #ifndef _di_fl_conversion_data_t_
   typedef struct {

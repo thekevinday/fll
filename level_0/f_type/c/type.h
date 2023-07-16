@@ -93,16 +93,17 @@ extern "C" {
  *   This response is handled within f_talk().
  *   The f_talk() function will then set the state.status when done and might immediately set state.status to F_interrupt (with error bit) if bob_interrupts() returns F_interrupt (with/without error bit).
  *
- * step_large: The allocation step to use for large buffers.
- * step_small: The allocation step to use for small buffers.
- * flag:       A 64-bit digit intended for provided flags that are defined by the function.
- * code:       A 64-bit digit intended for provided flags that are defined by the caller.
- * status:     The status used while processing (This should hold the error passed to the handle callback and should be updated as necessary).
- * handle:     A function to call on a specific error (allowing for the error to be handled before function returns). May be NULL.
- * interrupt:  A function to call for checking to see if an interrupt is to be called. May be NULL.
- * callbacks:  A structure (defined by function/project using this) of additional functions to call. May be NULL.
- * custom:     A structure (defined by caller/parent) for holding custom data to be passed along to the interrupt() or one of the functions. May be NULL.
- * data:       A structure (defined by function) for holding data relevant to the function. May be NULL. May be required.
+ * Properties:
+ *   - step_large: The allocation step to use for large buffers.
+ *   - step_small: The allocation step to use for small buffers.
+ *   - flag:       A 64-bit digit intended for provided flags that are defined by the function.
+ *   - code:       A 64-bit digit intended for provided flags that are defined by the caller.
+ *   - status:     The status used while processing (This should hold the error passed to the handle callback and should be updated as necessary).
+ *   - handle:     A function to call on a specific error (allowing for the error to be handled before function returns). May be NULL.
+ *   - interrupt:  A function to call for checking to see if an interrupt is to be called. May be NULL.
+ *   - callbacks:  A structure (defined by function/project using this) of additional functions to call. May be NULL.
+ *   - custom:     A structure (defined by caller/parent) for holding custom data to be passed along to the interrupt() or one of the functions. May be NULL.
+ *   - data:       A structure (defined by function) for holding data relevant to the function. May be NULL. May be required.
  */
 #ifndef _di_f_state_t_
   typedef struct {
@@ -323,8 +324,9 @@ extern "C" {
 /**
  * A structure designating a row and column, just like a cell in a table.
  *
- * row:    The row position.
- * column: The column position.
+ * Properties:
+ *   - row:    The row position.
+ *   - column: The column position.
  */
 #ifndef _di_f_cell_t_
   typedef struct {
@@ -346,9 +348,10 @@ extern "C" {
  *
  * The macros are defined in type_array.h or type_array-common.h.
  *
- * array: The array of f_cell_t.
- * size:  Total amount of allocated space.
- * used:  Total number of allocated spaces used.
+ * Properties:
+ *   - array: The array of f_cell_t.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_cells_t_
   typedef struct {
@@ -369,9 +372,10 @@ extern "C" {
  *
  * The macros are defined in type_array.h or type_array-common.h.
  *
- * array: The array of f_cell_t arrays.
- * size:  Total amount of allocated space.
- * used:  Total number of allocated spaces used.
+ * Properties:
+ *   - array: The array of f_cell_t arrays.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_cellss_t_
   typedef struct {
@@ -389,6 +393,16 @@ extern "C" {
 
 /**
  * A structure representing a set of modes intended to be used by file or directory operations.
+ *
+ * Properties:
+ *   - block:     The mode for a block.
+ *   - character: The mode for a character.
+ *   - directory: The mode for a directory.
+ *   - fifo:      The mode for a FIFO.
+ *   - regular:   The mode for a regular file.
+ *   - link:      The mode for a link.
+ *   - socket:    The mode for a socket.
+ *   - unknown:   The mode for unknown types.
  */
 #ifndef _di_f_mode_t_
   typedef struct {
@@ -563,9 +577,10 @@ extern "C" {
  *
  * The macros are defined in type_array.h or type_array-common.h.
  *
- * array: An array of array lengths.
- * size:  Total amount of allocated space.
- * used:  Total number of allocated spaces used.
+ * Properties:
+ *   - array: An array of array lengths.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_number_unsigneds_t_
   typedef struct {
@@ -586,9 +601,10 @@ extern "C" {
  *
  * The macros are defined in type_array.h or type_array-common.h.
  *
- * array: The array of an array of array lengths.
- * size:  Total amount of allocated space.
- * used:  Total number of allocated spaces used.
+ * Properties:
+ *   - array: The array of an array of array lengths.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_number_unsignedss_t_
   typedef struct {
@@ -609,9 +625,10 @@ extern "C" {
  *
  * The macros are defined in type_array.h or type_array-common.h.
  *
- * array: An array of int8_t.
- * size:  Total amount of allocated space.
- * used:  Total number of allocated spaces used.
+ * Properties:
+ *   - array: An array of int8_t.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_int8s_t_
   typedef struct {
@@ -632,9 +649,10 @@ extern "C" {
  *
  * The macros are defined in type_array.h or type_array-common.h.
  *
- * array: The array of an array of array int8_t.
- * size:  Total amount of allocated space.
- * used:  Total number of allocated spaces used.
+ * Properties:
+ *   - array: The array of an array of array int8_t.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_int8ss_t_
   typedef struct {
@@ -655,9 +673,10 @@ extern "C" {
  *
  * The macros are defined in type_array.h or type_array-common.h.
  *
- * array: An array of uint8_t.
- * size:  Total amount of allocated space.
- * used:  Total number of allocated spaces used.
+ * Properties:
+ *   - array: An array of uint8_t.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_uint8s_t_
   typedef struct {
@@ -678,9 +697,10 @@ extern "C" {
  *
  * The macros are defined in type_array.h or type_array-common.h.
  *
- * array: The array of an array of array uint8_t.
- * size:  Total amount of allocated space.
- * used:  Total number of allocated spaces used.
+ * Properties:
+ *   - array: The array of an array of array uint8_t.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_uint8ss_t_
   typedef struct {
@@ -701,9 +721,10 @@ extern "C" {
  *
  * The macros are defined in type_array.h or type_array-common.h.
  *
- * array: An array of int16_t.
- * size:  Total amount of allocated space.
- * used:  Total number of allocated spaces used.
+ * Properties:
+ *   - array: An array of int16_t.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_int16s_t_
   typedef struct {
@@ -724,9 +745,10 @@ extern "C" {
  *
  * The macros are defined in type_array.h or type_array-common.h.
  *
- * array: The array of an array of array int16_t.
- * size:  Total amount of allocated space.
- * used:  Total number of allocated spaces used.
+ * Properties:
+ *   - array: The array of an array of array int16_t.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_int16ss_t_
   typedef struct {
@@ -747,9 +769,10 @@ extern "C" {
  *
  * The macros are defined in type_array.h or type_array-common.h.
  *
- * array: An array of uint16_t.
- * size:  Total amount of allocated space.
- * used:  Total number of allocated spaces used.
+ * Properties:
+ *   - array: An array of uint16_t.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_uint16s_t_
   typedef struct {
@@ -770,9 +793,10 @@ extern "C" {
  *
  * The macros are defined in type_array.h or type_array-common.h.
  *
- * array: The array of an array of array uint16_t.
- * size:  Total amount of allocated space.
- * used:  Total number of allocated spaces used.
+ * Properties:
+ *   - array: The array of an array of array uint16_t.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_uint16ss_t_
   typedef struct {
@@ -793,9 +817,10 @@ extern "C" {
  *
  * The macros are defined in type_array.h or type_array-common.h.
  *
- * array: An array of int32_t.
- * size:  Total amount of allocated space.
- * used:  Total number of allocated spaces used.
+ * Properties:
+ *   - array: An array of int32_t.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_int32s_t_
   typedef struct {
@@ -816,9 +841,10 @@ extern "C" {
  *
  * The macros are defined in type_array.h or type_array-common.h.
  *
- * array: The array of an array of array int32_t.
- * size:  Total amount of allocated space.
- * used:  Total number of allocated spaces used.
+ * Properties:
+ *   - array: The array of an array of array int32_t.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_int32ss_t_
   typedef struct {
@@ -839,9 +865,10 @@ extern "C" {
  *
  * The macros are defined in type_array.h or type_array-common.h.
  *
- * array: An array of uint32_t.
- * size:  Total amount of allocated space.
- * used:  Total number of allocated spaces used.
+ * Properties:
+ *   - array: An array of uint32_t.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_uint32s_t_
   typedef struct {
@@ -862,9 +889,10 @@ extern "C" {
  *
  * The macros are defined in type_array.h or type_array-common.h.
  *
- * array: The array of an array of array uint32_t.
- * size:  Total amount of allocated space.
- * used:  Total number of allocated spaces used.
+ * Properties:
+ *   - array: The array of an array of array uint32_t.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_uint32ss_t_
   typedef struct {
@@ -885,9 +913,10 @@ extern "C" {
  *
  * The macros are defined in type_array.h or type_array-common.h.
  *
- * array: An array of int64_t.
- * size:  Total amount of allocated space.
- * used:  Total number of allocated spaces used.
+ * Properties:
+ *   - array: An array of int64_t.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_int64s_t_
   typedef struct {
@@ -908,9 +937,10 @@ extern "C" {
  *
  * The macros are defined in type_array.h or type_array-common.h.
  *
- * array: The array of an array of array int64_t.
- * size:  Total amount of allocated space.
- * used:  Total number of allocated spaces used.
+ * Properties:
+ *   - array: The array of an array of array int64_t.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_int64ss_t_
   typedef struct {
@@ -931,9 +961,10 @@ extern "C" {
  *
  * The macros are defined in type_array.h or type_array-common.h.
  *
- * array: An array of uint64_t.
- * size:  Total amount of allocated space.
- * used:  Total number of allocated spaces used.
+ * Properties:
+ *   - array: An array of uint64_t.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_uint64s_t_
   typedef struct {
@@ -954,9 +985,10 @@ extern "C" {
  *
  * The macros are defined in type_array.h or type_array-common.h.
  *
- * array: The array of an array of array uint64_t.
- * size:  Total amount of allocated space.
- * used:  Total number of allocated spaces used.
+ * Properties:
+ *   - array: The array of an array of array uint64_t.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_uint64ss_t_
   typedef struct {
@@ -1002,9 +1034,10 @@ extern "C" {
  *
  * The macros are defined in type_array.h or type_array-common.h.
  *
- * array: The array of int128_t.
- * size:  Total amount of allocated space.
- * used:  Total number of allocated spaces used.
+ * Properties:
+ *   - array: The array of int128_t.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_int128s_t_
   typedef struct {
@@ -1025,9 +1058,10 @@ extern "C" {
  *
  * The macros are defined in type_array.h or type_array-common.h.
  *
- * array: The array of and array of int128_t.
- * size:  Total amount of allocated space.
- * used:  Total number of allocated spaces used.
+ * Properties:
+ *   - array: The array of and array of int128_t.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_int128ss_t_
   typedef struct {
@@ -1048,9 +1082,10 @@ extern "C" {
  *
  * The macros are defined in type_array.h or type_array-common.h.
  *
- * array: The array of uint128_t.
- * size:  Total amount of allocated space.
- * used:  Total number of allocated spaces used.
+ * Properties:
+ *   - array: The array of uint128_t.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_uint128s_t_
   typedef struct {
@@ -1071,9 +1106,10 @@ extern "C" {
  *
  * The macros are defined in type_array.h or type_array-common.h.
  *
- * array: The array of and array of uint128_t.
- * size:  Total amount of allocated space.
- * used:  Total number of allocated spaces used.
+ * Properties:
+ *   - array: The array of and array of uint128_t.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_uint128ss_t_
   typedef struct {
@@ -1094,9 +1130,10 @@ extern "C" {
  *
  * The macros are defined in type_array.h or type_array-common.h.
  *
- * array: The array of f_status_t arrays.
- * size:  Total amount of allocated space.
- * used:  Total number of allocated spaces used.
+ * Properties:
+ *   - array: The array of f_status_t arrays.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_statuss_t_
   typedef struct {
@@ -1117,9 +1154,10 @@ extern "C" {
  *
  * The macros are defined in type_array.h or type_array-common.h.
  *
- * array: The array of f_status_t arrays.
- * size:  Total amount of allocated space.
- * used:  Total number of allocated spaces used.
+ * Properties:
+ *   - array: The array of f_status_t arrays.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_statusss_t_
   typedef struct {
@@ -1140,9 +1178,10 @@ extern "C" {
  *
  * The macros are defined in type_array.h or type_array-common.h.
  *
- * array: The array of f_state_t arrays.
- * size:  Total amount of allocated space.
- * used:  Total number of allocated spaces used.
+ * Properties:
+ *   - array: The array of f_state_t arrays.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_states_t_
   typedef struct {
@@ -1163,9 +1202,10 @@ extern "C" {
  *
  * The macros are defined in type_array.h or type_array-common.h.
  *
- * array: The array of f_state_t arrays.
- * size:  Total amount of allocated space.
- * used:  Total number of allocated spaces used.
+ * Properties:
+ *   - array: The array of f_state_t arrays.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_statess_t_
   typedef struct {
@@ -1205,9 +1245,10 @@ extern "C" {
  *
  * The name must only be "word" characters (therefore "-" is not allowed).
  *
- * name: The string representing the name of the FLL Identifier (This is not a NULL terminated string).
- * type: The code representing the type of the Identifier.
- * used: A representation of how many bytes in name are in used (if 0, then there is no name, thus this can be seen as not a valid identifier).
+ * Properties:
+ *   - name: The string representing the name of the FLL Identifier (This is not a NULL terminated string).
+ *   - type: The code representing the type of the Identifier.
+ *   - used: A representation of how many bytes in name are in used (if 0, then there is no name, thus this can be seen as not a valid identifier).
  */
 #ifndef _di_f_fll_id_t_
   #define f_fll_id_name_length_d 64
@@ -1238,9 +1279,10 @@ extern "C" {
  *
  * The macros are defined in type_array.h or type_array-common.h.
  *
- * array: The array of f_fll_id_t.
- * size:  Total amount of allocated space.
- * used:  Total number of allocated spaces used.
+ * Properties:
+ *   - array: The array of f_fll_id_t.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_fll_ids_t_
   typedef struct {
@@ -1261,9 +1303,10 @@ extern "C" {
  *
  * The macros are defined in type_array.h or type_array-common.h.
  *
- * array: The array of f_fll_id_t arrays.
- * size:  Total amount of allocated space.
- * used:  Total number of allocated spaces used.
+ * Properties:
+ *   - array: The array of f_fll_id_t arrays.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_fll_idss_t_
   typedef struct {

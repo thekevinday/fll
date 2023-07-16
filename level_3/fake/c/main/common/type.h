@@ -19,14 +19,15 @@ extern "C" {
 /**
  * A structure for managing the operation and if-condition states.
  *
- * block:              The process block state.
- * block_result:       The result of the block.
- * condition:          The current if-condition type.
- * condition_result:   The result of the currently processed condition.
- * operation:          The current operation type.
- * operation_previous: The previous operation type.
- * success:            Current state is considered success when F_true and failure when F_false.
- * success_block:      Current block state is considered success when F_true and failure when F_false.
+ * Properties:
+ *   - block:              The process block state.
+ *   - block_result:       The result of the block.
+ *   - condition:          The current if-condition type.
+ *   - condition_result:   The result of the currently processed condition.
+ *   - operation:          The current operation type.
+ *   - operation_previous: The previous operation type.
+ *   - success:            Current state is considered success when F_true and failure when F_false.
+ *   - success_block:      Current block state is considered success when F_true and failure when F_false.
  */
 #ifndef _di_fake_state_process_t_
   typedef struct {
@@ -58,23 +59,24 @@ extern "C" {
  * This is passed to the program-specific main entry point to designate program settings.
  * These program settings are often processed from the program arguments (often called the command line arguments).
  *
- * flag: Flags passed to the main function.
+ * Properties:
+ *   - flag: Flags passed to the main function.
  *
- * status_signal: A status used eclusively by the threaded signal handler.
- * state:         The state data used when processing the FSS data.
+ *   - status_signal: A status used eclusively by the threaded signal handler.
+ *   - state:         The state data used when processing the FSS data.
  *
- * build:    The build directory.
- * data:     The data directory.
- * fakefile: The fakefile file path.
- * process:  The process name.
- * settings: The settings file path.
- * sources:  The sources directory.
- * work:     The work directory.
+ *   - build:    The build directory.
+ *   - data:     The data directory.
+ *   - fakefile: The fakefile file path.
+ *   - process:  The process name.
+ *   - settings: The settings file path.
+ *   - sources:  The sources directory.
+ *   - work:     The work directory.
 
- * defines: The define data.
- * modes:   The mode data.
+ *   - defines: The define data.
+ *   - modes:   The mode data.
  *
- * operations: The operations, in the order in which they are given.
+ *   - operations: The operations, in the order in which they are given.
  */
 #ifndef _di_fake_setting_t_
   typedef struct {
@@ -125,15 +127,16 @@ extern "C" {
  * program: The main program data.
  * setting: The settings data.
  *
- * buffer:           A string buffer cache often used for files and often held longe than other caches.
- * cache_1:          A string cache.
- * cache_2:          A string cache.
- * cache_argument:   A string cache for some argument.
- * cache_argument:   A string cache for some path.
- * cache_arguments:  An array of strings cache for arguments.
- * cache_map:        A string map cache.
- * cache_iki:        IKI data cache.
- * cache_recurse_do: A cache for the directory recursion do function.
+ * Properties:
+ *   - buffer:           A string buffer cache often used for files and often held longe than other caches.
+ *   - cache_1:          A string cache.
+ *   - cache_2:          A string cache.
+ *   - cache_argument:   A string cache for some argument.
+ *   - cache_argument:   A string cache for some path.
+ *   - cache_arguments:  An array of strings cache for arguments.
+ *   - cache_map:        A string map cache.
+ *   - cache_iki:        IKI data cache.
+ *   - cache_recurse_do: A cache for the directory recursion do function.
  */
 #ifndef _di_fake_main_t_
   typedef struct {
@@ -168,55 +171,56 @@ extern "C" {
 /**
  * The program data.
  *
- * operation: A code representing the currrent operation.
+ * Properties:
+ *   - operation: A code representing the currrent operation.
  *
- * path_build:                  The build path.
- * path_build_documentation:    The build documentation path.
- * path_build_documents:        The build documents path.
- * path_build_includes:         The build includes path.
- * path_build_libraries:        The build libraries path.
- * path_build_libraries_script: The build libraries_script path.
- * path_build_libraries_shared: The build libraries_shared path.
- * path_build_libraries_static: The build libraries_static path.
- * path_build_objects:          The build objects path.
- * path_build_objects_script:   The build objects_script path.
- * path_build_objects_shared:   The build objects_shared path.
- * path_build_objects_static:   The build objects_static path.
- * path_build_programs:         The build programs path.
- * path_build_programs_script:  The build programs_script path.
- * path_build_programs_shared:  The build programs_shared path.
- * path_build_programs_static:  The build programs_static path.
- * path_build_settings:         The build settings path.
- * path_build_stage:            The build stage path.
+ *   - path_build:                  The build path.
+ *   - path_build_documentation:    The build documentation path.
+ *   - path_build_documents:        The build documents path.
+ *   - path_build_includes:         The build includes path.
+ *   - path_build_libraries:        The build libraries path.
+ *   - path_build_libraries_script: The build libraries_script path.
+ *   - path_build_libraries_shared: The build libraries_shared path.
+ *   - path_build_libraries_static: The build libraries_static path.
+ *   - path_build_objects:          The build objects path.
+ *   - path_build_objects_script:   The build objects_script path.
+ *   - path_build_objects_shared:   The build objects_shared path.
+ *   - path_build_objects_static:   The build objects_static path.
+ *   - path_build_programs:         The build programs path.
+ *   - path_build_programs_script:  The build programs_script path.
+ *   - path_build_programs_shared:  The build programs_shared path.
+ *   - path_build_programs_static:  The build programs_static path.
+ *   - path_build_settings:         The build settings path.
+ *   - path_build_stage:            The build stage path.
  *
- * path_data_build:         The build data path.
- * path_data_documentation: The documentation data path.
- * path_data_settings:      The settings data path.
+ *   - path_data_build:         The build data path.
+ *   - path_data_documentation: The documentation data path.
+ *   - path_data_settings:      The settings data path.
  *
- * path_documents: The documents path.
- * path_licenses:  The licenses path.
- * path_sources:   The sources path.
+ *   - path_documents: The documents path.
+ *   - path_licenses:  The licenses path.
+ *   - path_sources:   The sources path.
  *
- * path_work_includes:         The includes work path.
- * path_work_libraries:        The libraries work path.
- * path_work_libraries_script: The libraries_script work path.
- * path_work_libraries_shared: The libraries_shared work path.
- * path_work_libraries_static: The libraries_static work path.
- * path_work_programs:         The programs work path.
- * path_work_programs_script:  The programs_script work path.
- * path_work_programs_shared:  The programs_shared work path.
- * path_work_programs_static:  The programs_static work path.
+ *   - path_work_includes:         The includes work path.
+ *   - path_work_libraries:        The libraries work path.
+ *   - path_work_libraries_script: The libraries_script work path.
+ *   - path_work_libraries_shared: The libraries_shared work path.
+ *   - path_work_libraries_static: The libraries_static work path.
+ *   - path_work_programs:         The programs work path.
+ *   - path_work_programs_script:  The programs_script work path.
+ *   - path_work_programs_shared:  The programs_shared work path.
+ *   - path_work_programs_static:  The programs_static work path.
  *
- * file_data_build_defines:      The defines build file data.
- * file_data_build_dependencies: The dependencies build file data.
- * file_data_build_fakefile:     The fakefile build file data.
- * file_data_build_process_post: The process_post_s build file data.
- * file_data_build_process_pre:  The process_pre_s build file data.
- * file_data_build_settings:     The settings build file data.
+ *   - file_data_build_defines:      The defines build file data.
+ *   - file_data_build_dependencies: The dependencies build file data.
+ *   - file_data_build_fakefile:     The fakefile build file data.
+ *   - file_data_build_process_post: The process_post_s build file data.
+ *   - file_data_build_process_pre:  The process_pre_s build file data.
+ *   - file_data_build_settings:     The settings build file data.
  *
- * file_documents_readme: The documents readme file data.
+ *   - file_documents_readme: The documents readme file data.
  *
- * main: The program and settings data.
+ *   - main: The program and settings data.
  */
 #ifndef _di_fake_data_t_
   typedef struct {
@@ -320,9 +324,10 @@ extern "C" {
 /**
  * The program data for local operations so that custom data can be passed to functions.
  *
- * main:     The program and settings data.
- * custom_1: Custom data that both the caller and the called function know to expect.
- * custom_2: Custom data that both the caller and the called function know to expect.
+ * Properties:
+ *   - main:     The program and settings data.
+ *   - custom_1: Custom data that both the caller and the called function know to expect.
+ *   - custom_2: Custom data that both the caller and the called function know to expect.
  */
 #ifndef _di_fake_local_t_
   typedef struct {
@@ -349,103 +354,104 @@ extern "C" {
 /**
  * Build settings data.
  *
- * flag: Flags from data_build_setting_* (Not strictly part of the build settings file).
+ * Properties:
+ *   - flag: Flags from data_build_setting_* (Not strictly part of the build settings file).
  *
- * build_language: The build_language setting.
+ *   - build_language: The build_language setting.
  *
- * version_file:   The version_file setting.
- * version_target: The version_target setting.
+ *   - version_file:   The version_file setting.
+ *   - version_target: The version_target setting.
  *
- * build_script: The build_script setting.
- * build_shared: The build_shared setting.
- * build_static: The build_static setting.
+ *   - build_script: The build_script setting.
+ *   - build_shared: The build_shared setting.
+ *   - build_static: The build_static setting.
  *
- * has_path_standard:     The has_path_standard setting.
- * preserve_path_headers: The preserve_path_headers setting.
+ *   - has_path_standard:     The has_path_standard setting.
+ *   - preserve_path_headers: The preserve_path_headers setting.
  *
- * search_exclusive: The search_exclusive setting.
- * search_shared:    The search_shared setting.
- * search_static:    The search_static setting.
+ *   - search_exclusive: The search_exclusive setting.
+ *   - search_shared:    The search_shared setting.
+ *   - search_static:    The search_static setting.
  *
- * build_compiler:              The build_compiler setting.
- * build_indexer:               The build_indexer setting.
- * build_name:                  The build_name setting.
- * build_sources_object:        The build_sources_object setting.
- * build_sources_object_shared: The build_sources_object_shared setting.
- * build_sources_object_static: The build_sources_object_static setting.
- * path_headers:                The path_headers setting.
- * path_language:               The path_language setting.
- * path_library_script:         The path_library_script setting.
- * path_library_shared:         The path_library_shared setting.
- * path_library_static:         The path_library_static setting.
- * path_object_script:          The path_object_script setting.
- * path_object_shared:          The path_object_shared setting.
- * path_object_static:          The path_object_static setting.
- * path_program_script:         The path_program_script setting.
- * path_program_shared:         The path_program_shared setting.
- * path_program_static:         The path_program_static setting.
- * path_sources:                The path_sources setting.
- * path_sources_object:         The path_sources_object setting.
- * process_post:                The process_post setting.
- * process_pre:                 The process_pre setting.
- * version_major:               The version_major setting.
- * version_major_prefix:        The version_major_prefix setting.
- * version_micro:               The version_micro setting.
- * version_micro_prefix:        The version_micro_prefix setting.
- * version_minor:               The version_minor setting.
- * version_minor_prefix:        The version_minor_prefix setting.
- * version_nano:                The version_nano setting.
- * version_nano_prefix:         The version_nano_prefix setting.
+ *   - build_compiler:              The build_compiler setting.
+ *   - build_indexer:               The build_indexer setting.
+ *   - build_name:                  The build_name setting.
+ *   - build_sources_object:        The build_sources_object setting.
+ *   - build_sources_object_shared: The build_sources_object_shared setting.
+ *   - build_sources_object_static: The build_sources_object_static setting.
+ *   - path_headers:                The path_headers setting.
+ *   - path_language:               The path_language setting.
+ *   - path_library_script:         The path_library_script setting.
+ *   - path_library_shared:         The path_library_shared setting.
+ *   - path_library_static:         The path_library_static setting.
+ *   - path_object_script:          The path_object_script setting.
+ *   - path_object_shared:          The path_object_shared setting.
+ *   - path_object_static:          The path_object_static setting.
+ *   - path_program_script:         The path_program_script setting.
+ *   - path_program_shared:         The path_program_shared setting.
+ *   - path_program_static:         The path_program_static setting.
+ *   - path_sources:                The path_sources setting.
+ *   - path_sources_object:         The path_sources_object setting.
+ *   - process_post:                The process_post setting.
+ *   - process_pre:                 The process_pre setting.
+ *   - version_major:               The version_major setting.
+ *   - version_major_prefix:        The version_major_prefix setting.
+ *   - version_micro:               The version_micro setting.
+ *   - version_micro_prefix:        The version_micro_prefix setting.
+ *   - version_minor:               The version_minor setting.
+ *   - version_minor_prefix:        The version_minor_prefix setting.
+ *   - version_nano:                The version_nano setting.
+ *   - version_nano_prefix:         The version_nano_prefix setting.
  *
- * build_indexer_arguments:      The build_indexer_arguments setting.
- * build_libraries:              The build_libraries setting.
- * build_libraries_shared:       The build_libraries_shared setting.
- * build_libraries_static:       The build_libraries_static setting.
- * build_objects_library:        The build_objects_library setting.
- * build_objects_library_shared: The build_objects_library_shared setting.
- * build_objects_library_static: The build_objects_library_static setting.
- * build_objects_program:        The build_objects_program setting.
- * build_objects_program_shared: The build_objects_program_shared setting.
- * build_objects_program_static: The build_objects_program_static setting.
- * build_sources_documentation:  The build_sources_documentation setting.
- * build_sources_headers:        The build_sources_headers setting.
- * build_sources_headers_shared: The build_sources_headers_shared setting.
- * build_sources_headers_static: The build_sources_headers_static setting.
- * build_sources_library:        The build_sources_library setting.
- * build_sources_library_shared: The build_sources_library_shared setting.
- * build_sources_library_static: The build_sources_library_static setting.
- * build_sources_program:        The build_sources_program setting.
- * build_sources_program_shared: The build_sources_program_shared setting.
- * build_sources_program_static: The build_sources_program_static setting.
- * build_sources_script:         The build_sources_script setting.
- * build_sources_setting:        The build_sources_setting setting.
- * defines:                      The defines setting.
- * defines_library:              The defines_library setting.
- * defines_library_shared:       The defines_library_shared setting.
- * defines_library_static:       The defines_library_static setting.
- * defines_object:               The defines_object setting.
- * defines_object_shared:        The defines_object_shared setting.
- * defines_object_static:        The defines_object_static setting.
- * defines_program:              The defines_program setting.
- * defines_program_shared:       The defines_program_shared setting.
- * defines_program_static:       The defines_program_static setting.
- * defines_shared:               The defines_shared setting.
- * defines_static:               The defines_static setting.
- * environment:                  The environment setting.
- * flags:                        The flags setting.
- * flags_library:                The flags_library setting.
- * flags_library_shared:         The flags_library_shared setting.
- * flags_library_static:         The flags_library_static setting.
- * flags_object:                 The flags_object setting.
- * flags_object_shared:          The flags_object_shared setting.
- * flags_object_static:          The flags_object_static setting.
- * flags_program:                The flags_program setting.
- * flags_program_shared:         The flags_program_shared setting.
- * flags_program_static:         The flags_program_static setting.
- * flags_shared:                 The flags_shared setting.
- * flags_static:                 The flags_static setting.
- * modes:                        The modes setting.
- * modes_default:                The modes_default setting.
+ *   - build_indexer_arguments:      The build_indexer_arguments setting.
+ *   - build_libraries:              The build_libraries setting.
+ *   - build_libraries_shared:       The build_libraries_shared setting.
+ *   - build_libraries_static:       The build_libraries_static setting.
+ *   - build_objects_library:        The build_objects_library setting.
+ *   - build_objects_library_shared: The build_objects_library_shared setting.
+ *   - build_objects_library_static: The build_objects_library_static setting.
+ *   - build_objects_program:        The build_objects_program setting.
+ *   - build_objects_program_shared: The build_objects_program_shared setting.
+ *   - build_objects_program_static: The build_objects_program_static setting.
+ *   - build_sources_documentation:  The build_sources_documentation setting.
+ *   - build_sources_headers:        The build_sources_headers setting.
+ *   - build_sources_headers_shared: The build_sources_headers_shared setting.
+ *   - build_sources_headers_static: The build_sources_headers_static setting.
+ *   - build_sources_library:        The build_sources_library setting.
+ *   - build_sources_library_shared: The build_sources_library_shared setting.
+ *   - build_sources_library_static: The build_sources_library_static setting.
+ *   - build_sources_program:        The build_sources_program setting.
+ *   - build_sources_program_shared: The build_sources_program_shared setting.
+ *   - build_sources_program_static: The build_sources_program_static setting.
+ *   - build_sources_script:         The build_sources_script setting.
+ *   - build_sources_setting:        The build_sources_setting setting.
+ *   - defines:                      The defines setting.
+ *   - defines_library:              The defines_library setting.
+ *   - defines_library_shared:       The defines_library_shared setting.
+ *   - defines_library_static:       The defines_library_static setting.
+ *   - defines_object:               The defines_object setting.
+ *   - defines_object_shared:        The defines_object_shared setting.
+ *   - defines_object_static:        The defines_object_static setting.
+ *   - defines_program:              The defines_program setting.
+ *   - defines_program_shared:       The defines_program_shared setting.
+ *   - defines_program_static:       The defines_program_static setting.
+ *   - defines_shared:               The defines_shared setting.
+ *   - defines_static:               The defines_static setting.
+ *   - environment:                  The environment setting.
+ *   - flags:                        The flags setting.
+ *   - flags_library:                The flags_library setting.
+ *   - flags_library_shared:         The flags_library_shared setting.
+ *   - flags_library_static:         The flags_library_static setting.
+ *   - flags_object:                 The flags_object setting.
+ *   - flags_object_shared:          The flags_object_shared setting.
+ *   - flags_object_static:          The flags_object_static setting.
+ *   - flags_program:                The flags_program setting.
+ *   - flags_program_shared:         The flags_program_shared setting.
+ *   - flags_program_static:         The flags_program_static setting.
+ *   - flags_shared:                 The flags_shared setting.
+ *   - flags_static:                 The flags_static setting.
+ *   - modes:                        The modes setting.
+ *   - modes_default:                The modes_default setting.
  */
 #ifndef _di_fake_build_setting_t_
   typedef struct {
@@ -644,6 +650,28 @@ extern "C" {
   #define fake_build_setting_total_d 89
 #endif // _di_fake_build_setting_t_
 
+/**
+ * The build stage data.
+ *
+ * Properties:
+ *   - file_library_script:        The script library files.
+ *   - file_library_shared:        The shared library files.
+ *   - file_library_static:        The static library files.
+ *   - file_object_script:         The script object files.
+ *   - file_object_shared:         The shared object files.
+ *   - file_object_static:         The static object files.
+ *   - file_objects_static:        The static objects files.
+ *   - file_process_post:          The post-process files.
+ *   - file_process_pre:           The pre-process files.
+ *   - file_program_script:        The script program files.
+ *   - file_program_shared:        The shared program files.
+ *   - file_program_static:        The static program files.
+ *   - file_skeleton:              The skeleton files.
+ *   - file_sources_documentation: The documentation source files.
+ *   - file_sources_headers:       The header source files.
+ *   - file_sources_script:        The script source files.
+ *   - file_sources_settings:      The setting source files.
+ */
 #ifndef _di_fake_build_stage_t_
   typedef struct {
     f_string_dynamic_t file_library_script;
@@ -691,8 +719,9 @@ extern "C" {
 /**
  * The build data.
  *
- * setting:     The build settings.
- * environment: The environment variables.
+ * Properties:
+ *   - setting:     The build settings.
+ *   - environment: The environment variables.
  */
 #ifndef _di_fake_build_data_t_
   typedef struct {
@@ -706,6 +735,14 @@ extern "C" {
   }
 #endif // _di_fake_build_data_t_
 
+/**
+ * The make settings.
+ *
+ * Properties:
+ *   - load_build: Designate loading the build settings.
+ *   - fail:       Holds the fail state.
+ *   - parameter:  The parameters array map.
+ */
 #ifndef _di_fake_make_setting_t_
   typedef struct {
     bool load_build;
@@ -722,6 +759,24 @@ extern "C" {
   }
 #endif // _di_fake_make_setting_t_
 
+/**
+ * The make parameters.
+ *
+ * Properties:
+ *   - build:     The build parameters.
+ *   - color:     The color parameters.
+ *   - data:      The data parameters.
+ *   - define:    The define parameters.
+ *   - documents: The document parameters.
+ *   - fakefile:  The fakefile parameters.
+ *   - licenses:  The license parameters.
+ *   - mode:      The mode parameters.
+ *   - process:   The process parameters.
+ *   - settings:  The setting parameters.
+ *   - sources:   The source parameters.
+ *   - verbosity: The verbosity parameters.
+ *   - work:      The work parameters.
+ */
 #ifndef _di_fake_make_parameter_t_
   typedef struct {
     f_string_dynamics_t build;
@@ -756,6 +811,13 @@ extern "C" {
   }
 #endif // _di_fake_make_parameter_t_
 
+/**
+ * The make path.
+ *
+ * Properties:
+ *   - top:   The top-most directory.
+ *   - stack: The stack representing the directory paths.
+ */
 #ifndef _di_fake_make_path_t_
   typedef struct {
     f_file_t top;
@@ -772,23 +834,24 @@ extern "C" {
 /**
  * The control data.
  *
- * setting_build:    The build settings.
- * setting_make:     The make settings.
- * environment:      All environment variables allowed to be exposed to the when processing.
- * parameter:        A set of parameters available for IKI substitution.
- * parameter_option: A set of parameters available for IKI option substitution.
- * parameter_value:  A set of parameters available for IKI value substitution.
- * path:             The path to the Fakefile.
- * fakefile:         The loaded Fakefile.
- * buffer:           A buffer used during processing.
- * cache_1:          An additional buffer for caching purposes.
- * cache_2:          An additional buffer for caching purposes.
- * cache_path:       A buffer for path-specific caching.
- * cache_arguments:  A cache for expanded arguments.
- * cache_iki:        A cache for IKI data.
- * id_main:          Index of the "main" Section.
- * main:             The program and settings data.
- * data:             The Fake make program data.
+ * Properties:
+ *   - setting_build:    The build settings.
+ *   - setting_make:     The make settings.
+ *   - environment:      All environment variables allowed to be exposed to the when processing.
+ *   - parameter:        A set of parameters available for IKI substitution.
+ *   - parameter_option: A set of parameters available for IKI option substitution.
+ *   - parameter_value:  A set of parameters available for IKI value substitution.
+ *   - path:             The path to the Fakefile.
+ *   - fakefile:         The loaded Fakefile.
+ *   - buffer:           A buffer used during processing.
+ *   - cache_1:          An additional buffer for caching purposes.
+ *   - cache_2:          An additional buffer for caching purposes.
+ *   - cache_path:       A buffer for path-specific caching.
+ *   - cache_arguments:  A cache for expanded arguments.
+ *   - cache_iki:        A cache for IKI data.
+ *   - id_main:          Index of the "main" Section.
+ *   - main:             The program and settings data.
+ *   - data:             The Fake make program data.
  */
 #ifndef _di_fake_make_data_t_
   typedef struct {

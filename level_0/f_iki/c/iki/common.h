@@ -194,10 +194,11 @@ extern "C" {
 /**
  * This containg all of the IKI data.
  *
- * content:    A set of ranges representing the content (variable value) list to store the content associated with the found vocabulary name.
- * delimits:   A delimits array representing where delimits exist within the buffer.
- * variable:   A set of ranges representing the entire vocabulary (variable name), content, and the syntax.
- * vocabulary: A set of ranges representing the vocabulary (variable name) list to store the found vocabulary name.
+ * Properties:
+ *   - content:    A set of ranges representing the content (variable value) list to store the content associated with the found vocabulary name.
+ *   - delimits:   A delimits array representing where delimits exist within the buffer.
+ *   - variable:   A set of ranges representing the entire vocabulary (variable name), content, and the syntax.
+ *   - vocabulary: A set of ranges representing the vocabulary (variable name) list to store the found vocabulary name.
  */
 #ifndef _di_f_iki_data_t_
   typedef struct {
@@ -229,9 +230,10 @@ extern "C" {
 /**
  * An array of f_iki_data_t.
  *
- * array: The array of IKI data.
- * size:  Total amount of allocated space.
- * used:  Total number of allocated spaces used.
+ * Properties:
+ *   - array: The array of IKI data.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_iki_datas_t_
   typedef struct {
@@ -263,9 +265,10 @@ extern "C" {
 /**
  * An array of f_iki_datas_t.
  *
- * array: The array of IKI datas.
- * size:  Total amount of allocated space.
- * used:  Total number of allocated spaces used.
+ * Properties:
+ *   - array: The array of IKI datas.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_iki_datass_t_
   typedef struct {

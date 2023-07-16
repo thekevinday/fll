@@ -19,9 +19,10 @@ extern "C" {
 /**
  * A structure intended to be used as the "data" structure for f_state_t for interrupt related functionality.
  *
- * interrupts: An array of signal codes to treat as interrupts.
- * signal:     The signal structure to use.
- * trigger:    The signal that triggered the interrupt, if applicable.
+ * Properties:
+ *   - interrupts: An array of signal codes to treat as interrupts.
+ *   - signal:     The signal structure to use.
+ *   - trigger:    The signal that triggered the interrupt, if applicable.
  */
 #ifndef _di_fl_signal_interrupt_t_
   typedef struct {

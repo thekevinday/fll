@@ -19,8 +19,9 @@ extern "C" {
 /**
  * A limit value structure.
  *
- * type:  The limit resource type code.
- * value: The limit value containing the soft and hard limit.
+ * Properties:
+ *   - type:  The limit resource type code.
+ *   - value: The limit value containing the soft and hard limit.
  */
 #ifndef _di_f_limit_set_t_
   typedef struct {
@@ -40,9 +41,10 @@ extern "C" {
 /**
  * An array of limit sets.
  *
- * array: An array of limit sets.
- * size:  Total amount of allocated space.
- * used:  Total number of allocated spaces used.
+ * Properties:
+ *   - array: An array of limit sets.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_limit_sets_t_
   typedef struct {
@@ -74,9 +76,10 @@ extern "C" {
 /**
  * This holds an array of f_limit_sets_t.
  *
- * array: An array of f_limit_sets_t.
- * size:  Total amount of allocated space.
- * used:  Total number of allocated spaces used.
+ * Properties:
+ *   - array: An array of f_limit_sets_t.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_limit_setss_t_
   typedef struct {

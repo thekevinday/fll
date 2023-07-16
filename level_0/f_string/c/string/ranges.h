@@ -19,9 +19,10 @@ extern "C" {
 /**
  * An array of string ranges.
  *
- * array: the array of string ranges.
- * size:  total amount of allocated space.
- * used:  total number of allocated spaces used.
+ * Properties:
+ *   - array: The array of string ranges.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_string_ranges_t_
   typedef struct {

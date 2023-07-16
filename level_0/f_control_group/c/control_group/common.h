@@ -51,9 +51,10 @@ extern "C" {
 /**
  * Provide a structure for associating some process with one or more control groups (cgroups).
  *
- * as_new: If TRUE then the control group is to be unshared, and FALSE the control group is not to be unshared.
- * path:   The sysfs path, must have the trailing slash (such as "/sys/fs/cgroup/").
- * groups: An array of control groups, relative to the sysfs path (such as "memory/example").
+ * Properties:
+ *   - as_new: If TRUE then the control group is to be unshared, and FALSE the control group is not to be unshared.
+ *   - path:   The sysfs path, must have the trailing slash (such as "/sys/fs/cgroup/").
+ *   - groups: An array of control groups, relative to the sysfs path (such as "memory/example").
  */
 #ifndef _di_f_control_group_t_
   typedef struct {

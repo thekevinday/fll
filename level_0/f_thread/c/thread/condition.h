@@ -35,9 +35,10 @@ extern "C" {
 /**
  * An array of thread conditions.
  *
- * array: The array of f_thread_condition_t.
- * size:  Total amount of allocated space.
- * used:  Total number of allocated spaces used.
+ * Properties:
+ *   - array: The array of f_thread_condition_t.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_thread_conditions_t_
   typedef struct {

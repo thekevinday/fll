@@ -24,9 +24,10 @@ extern "C" {
  * A special macro_f_utf_string_static_t_initialize_1() is provided for the special purpose of easily initialize a static string.
  * A special macro_f_utf_string_static_t_initialize_2() is provided for the special purpose of easily initialize a static string with an identical used and size.
  *
- * string: The string.
- * size:   Total amount of space available.
- * used:   Total number of space used.
+ * Properties:
+ *   - string: The string.
+ *   - size:   Total amount of space available.
+ *   - used:   Total number of space used.
  */
 #ifndef _di_f_utf_string_static_t_
   typedef struct {

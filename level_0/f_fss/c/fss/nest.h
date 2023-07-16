@@ -27,9 +27,10 @@ extern "C" {
  * This does not have resize/adjust macros due to multiple things to potentially resize.
  * Any resizing must be manually performed on each applicable property.
  *
- * object:  The object.
- * content: The content associated with the object.
- * parent:  A location referencing a parrent object or content that this object content is nested under.
+ * Properties:
+ *   - object:  The object.
+ *   - content: The content associated with the object.
+ *   - parent:  A location referencing a parrent object or content that this object content is nested under.
  */
 #ifndef _di_f_fss_item_t_
   typedef struct {
@@ -84,9 +85,10 @@ extern "C" {
  *     More content after.
  *   }
  *
- * array: The array of object, their associated content, and their associated parent.
- * size:  Total amount of allocated space.
- * used:  Total number of allocated spaces used.
+ * Properties:
+ *   - array: The array of object, their associated content, and their associated parent.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_fss_items_t_
   typedef struct {
@@ -122,9 +124,10 @@ extern "C" {
  * The top-level will not have any parent, so "parent" must be ignored on anything at index 0.
  * The parent identifier is expected to reference a position in the nesting depth immediately above it.
  *
- * depth: An array of f_fss_items_t, with each index representing the depth.
- * size:  Total amount of allocated space.
- * used:  Total number of allocated spaces used.
+ * Properties:
+ *   - depth: An array of f_fss_items_t, with each index representing the depth.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_fss_nest_t_
   typedef struct {
@@ -156,9 +159,10 @@ extern "C" {
 /**
  * This holds an array of f_fss_nest_t.
  *
- * array: an array of f_fss_nest_t.
- * size: Total amount of allocated space.
- * used: Total number of allocated spaces used.
+ * Properties:
+ *   - array: An array of f_fss_nest_t.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_fss_nests_t_
   typedef struct {

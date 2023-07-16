@@ -19,11 +19,12 @@ extern "C" {
 /**
  * A structure for containing additional parameters for the execute functions that call the execv() family of functions.
  *
- * option:      Accepts the bitwise options
- * wait:        Represents options passed to waitpid(), such as WUNTRACED.
- * environment: The environment variable name and value pairs, set to 0 to not use.
- * signals:     The set of signals the child process should or should block, set to 0 to not use.
- * data:        The data to pipe to the child process, set to 0 to not use.
+ * Properties:
+ *   - option:      Accepts the bitwise options
+ *   - wait:        Represents options passed to waitpid(), such as WUNTRACED.
+ *   - environment: The environment variable name and value pairs, set to 0 to not use.
+ *   - signals:     The set of signals the child process should or should block, set to 0 to not use.
+ *   - data:        The data to pipe to the child process, set to 0 to not use.
  */
 #ifndef _di_fl_execute_parameter_t_
   typedef struct {
@@ -75,15 +76,16 @@ extern "C" {
  * Control Groups, or cgroups, exist here as a full file path in which the PID of a child process is to be written to.
  * This may change as more is learned about using cgroups, but it is not known if there are any functions available like set_cgroup(..).
  *
- * nice:          the niceness value to assign the child process to, set to 0 to not use.
- * id_user:       the id of the user to assign the child process to, set to 0 to not use.
- * id_group:      the id of the group to assign the child process to, set to 0 to not use.
- * affinity:      the cpu affinity to assign the child process to, set to 0 to not use (this is an array of CPU ids, starting from 0).
- * capability:    all of the capabilities to assign the child process to, set to 0 to not use (f_capability_t is a pointer).
- * control_group: an array of cgroups (control groups) to assign the child PID to, set to 0 to not use.
- * limits:        the resource limits to assign the child process to, set to 0 to not use.
- * id_groups:     the ids of each supplemental group to assign the child process to, set to 0 to not use.
- * scheduler:     the scheduler to assign the child process to, set to 0 to not use.
+ * Properties:
+ *   - nice:          The niceness value to assign the child process to, set to 0 to not use.
+ *   - id_user:       The id of the user to assign the child process to, set to 0 to not use.
+ *   - id_group:      The id of the group to assign the child process to, set to 0 to not use.
+ *   - affinity:      The cpu affinity to assign the child process to, set to 0 to not use (this is an array of CPU ids, starting from 0).
+ *   - capability:    All of the capabilities to assign the child process to, set to 0 to not use (f_capability_t is a pointer).
+ *   - control_group: An array of cgroups (control groups) to assign the child PID to, set to 0 to not use.
+ *   - limits:        The resource limits to assign the child process to, set to 0 to not use.
+ *   - id_groups:     The ids of each supplemental group to assign the child process to, set to 0 to not use.
+ *   - scheduler:     The scheduler to assign the child process to, set to 0 to not use.
  */
 #ifndef _di_fl_execute_as_t_
   typedef struct {
