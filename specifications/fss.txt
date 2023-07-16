@@ -159,3 +159,4 @@ Featureless Settings Specifications:
     - fss-000d: Basic Rule
     - fss-000e: Payload
     - fss-000f: Simple Packet
+    - fss-0010: Encrypted Simple Packet
