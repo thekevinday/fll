@@ -7,7 +7,7 @@
 #   iki_read fss-000e.txt +Q -w -rr EOF EOF FLL FLL -WWW character "'" "'" code '"' '"' italic '"' '"'
 #
 # To read the "Featureless Settings Specification: 000e - Payload" section of this file, use this command sequence:
-#   fss_basic_list_read fss-000e.txt +Q -cn "Featureless Settings Specification: 000e - Payload" | iki_read +Q -w -r  EOF EOF FLL FLL -WWW character "'" "'" code '"' '"' italic '"' '"'
+#   fss_basic_list_read fss-000e.txt +Q -cn "Featureless Settings Specification: 000e - Payload" | iki_read +Q -w -r EOF EOF FLL FLL -WWW character "'" "'" code '"' '"' italic '"' '"'
 #
 
 Featureless Settings Specification: 000e - Payload:
