@@ -396,6 +396,8 @@ extern "C" {
       F_parameter_not,
       F_parent,
       F_parent_not,
+      F_partial,
+      F_partial_not,
       F_payload,
       F_payload_not,
       F_pipe,

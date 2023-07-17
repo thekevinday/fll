@@ -36,6 +36,7 @@ build_sources_program test-fss-set_adjust.c test-fss-set_decimate_by.c test-fss-
 build_sources_program test-fss-set_quote_adjust.c test-fss-set_quote_decimate_by.c test-fss-set_quote_decrease_by.c test-fss-set_quote_increase.c test-fss-set_quote_increase_by.c test-fss-set_quote_resize.c
 build_sources_program test-fss-set_quotes_adjust.c test-fss-set_quotes_decimate_by.c test-fss-set_quotes_decrease_by.c test-fss-set_quotes_increase.c test-fss-set_quotes_increase_by.c test-fss-set_quotes_resize.c
 build_sources_program test-fss-sets_adjust.c test-fss-sets_decimate_by.c test-fss-sets_decrease_by.c test-fss-sets_increase.c test-fss-sets_increase_by.c test-fss-sets_resize.c
+build_sources_program test-fss-simple_packet_ranges_adjust.c test-fss-simple_packet_ranges_decimate_by.c test-fss-simple_packet_ranges_decrease_by.c test-fss-simple_packet_ranges_increase.c test-fss-simple_packet_ranges_increase_by.c test-fss-simple_packet_ranges_resize.c
 
 build_sources_program test-fss.c
 

@@ -654,9 +654,9 @@ extern "C" {
 
     f_state_t state = f_state_t_initialize;
     f_string_range_t range = f_string_range_t_initialize;
-    f_fss_objects_t objects = f_fss_objects_t_initialize;
-    f_fss_contents_t contents = f_fss_contents_t_initialize;
-    f_fss_delimits_t delimits = f_fss_delimits_t_initialize;
+    f_string_ranges_t objects = f_string_ranges_t_initialize;
+    f_string_rangess_t contents = f_string_rangess_t_initialize;
+    f_number_unsigneds_t delimits = f_number_unsigneds_t_initialize;
 
     status = fll_fss_extended_read(data->cache.large, state, &range, &objects, &contents, 0, 0, &delimits, 0);
 

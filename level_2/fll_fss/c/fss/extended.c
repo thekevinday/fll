@@ -5,7 +5,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fll_fss_extended_read_
-  void fll_fss_extended_read(const f_string_static_t buffer, f_string_range_t * const range, f_fss_objects_t * const objects, f_fss_contents_t * const contents, f_uint8s_t * const objects_quoted, f_uint8ss_t * const contents_quoted, f_fss_delimits_t * const objects_delimits, f_fss_delimits_t * const contents_delimits, f_state_t * const state) {
+  void fll_fss_extended_read(const f_string_static_t buffer, f_string_range_t * const range, f_string_ranges_t * const objects, f_string_rangess_t * const contents, f_uint8s_t * const objects_quoted, f_uint8ss_t * const contents_quoted, f_number_unsigneds_t * const objects_delimits, f_number_unsigneds_t * const contents_delimits, f_state_t * const state) {
     #ifndef _di_level_2_parameter_checking_
       if (!state) return;
 

@@ -81,14 +81,14 @@ extern "C" {
     f_number_unsigneds_t ats;
     f_number_unsigneds_t stack;
 
-    f_fss_comments_t comments;
-    f_fss_delimits_t delimits;
+    f_string_ranges_t comments;
+    f_number_unsigneds_t delimits;
 
-    f_fss_content_t content_action;
-    f_fss_contents_t content_actions;
-    f_fss_contents_t content_items;
-    f_fss_objects_t object_actions;
-    f_fss_objects_t object_items;
+    f_string_ranges_t content_action;
+    f_string_rangess_t content_actions;
+    f_string_rangess_t content_items;
+    f_string_ranges_t object_actions;
+    f_string_ranges_t object_items;
 
     f_string_dynamic_t buffer_file;
     f_string_dynamic_t buffer_item;
@@ -104,13 +104,13 @@ extern "C" {
     f_string_range_t_initialize, \
     f_number_unsigneds_t_initialize, \
     f_number_unsigneds_t_initialize, \
-    f_fss_comments_t_initialize, \
-    f_fss_delimits_t_initialize, \
-    f_fss_content_t_initialize, \
-    f_fss_contents_t_initialize, \
-    f_fss_contents_t_initialize, \
-    f_fss_objects_t_initialize, \
-    f_fss_objects_t_initialize, \
+    f_string_ranges_t_initialize, \
+    f_number_unsigneds_t_initialize, \
+    f_string_ranges_t_initialize, \
+    f_string_rangess_t_initialize, \
+    f_string_rangess_t_initialize, \
+    f_string_ranges_t_initialize, \
+    f_string_ranges_t_initialize, \
     f_string_dynamic_t_initialize, \
     f_string_dynamic_t_initialize, \
     f_string_dynamic_t_initialize, \
@@ -138,7 +138,7 @@ extern "C" {
  *   The cache to deallocate.
  *
  * @see macro_f_number_unsigneds_t_delete_simple()
- * @see macro_f_fss_delimits_t_delete_simple()
+ * @see macro_f_number_unsigneds_t_delete_simple()
  *
  * @see controller_cache_action_delete_simple()
  * @see f_string_dynamic_resize()

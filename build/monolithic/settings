@@ -44,7 +44,8 @@ build_sources_library level_0/directory.c level_0/directory/common.c level_0/dir
 build_sources_library level_0/environment.c
 build_sources_library level_0/execute.c
 build_sources_library level_0/file.c level_0/private-file.c level_0/file/common.c level_0/file/stream.c
-build_sources_library level_0/fss.c level_0/private-fss.c level_0/fss/common.c level_0/fss/named.c level_0/fss/nest.c level_0/fss/set.c
+build_sources_library level_0/fss.c level_0/fss/common.c level_0/fss/item.c level_0/fss/named.c level_0/fss/nest.c level_0/fss/quote.c level_0/fss/set.c level_0/fss/set_quote.c level_0/fss/simple_packet.c
+build_sources_library level_0/fss/private-item.c level_0/fss/private-named.c level_0/fss/private-nest.c level_0/fss/private-set.c level_0/fss/private-set_quote.c level_0/fss/private-simple_packet.c
 build_sources_library level_0/iki.c level_0/iki/common.c level_0/iki/data.c level_0/private-iki.c level_0/iki/private-data.c
 build_sources_library level_0/limit.c level_0/limit/set.c level_0/limit/value.c level_0/limit/private-set.c level_0/limit/private-value.c
 build_sources_library level_0/memory.c level_0/private-memory.c level_0/memory/structure.c
@@ -124,7 +125,7 @@ build_sources_headers level_0/directory.h level_0/directory/common.h level_0/dir
 build_sources_headers level_0/environment.h level_0/environment/common.h
 build_sources_headers level_0/execute.h level_0/execute/common.h
 build_sources_headers level_0/file.h level_0/file/common.h level_0/file/stream.h
-build_sources_headers level_0/fss.h level_0/fss/comment.h level_0/fss/common.h level_0/fss/delimit.h level_0/fss/named.h level_0/fss/nest.h level_0/fss/quote.h level_0/fss/set.h
+build_sources_headers level_0/fss.h level_0/fss/common.h level_0/fss/item.h level_0/fss/named.h level_0/fss/nest.h level_0/fss/quote.h level_0/fss/set.h level_0/fss/set_quote.h level_0/fss/simple_packet.h
 build_sources_headers level_0/iki.h level_0/iki/common.h level_0/iki/data.h
 build_sources_headers level_0/limit.h level_0/limit/set.h level_0/limit/value.h
 build_sources_headers level_0/memory.h level_0/memory/structure.h level_0/memory/common.h

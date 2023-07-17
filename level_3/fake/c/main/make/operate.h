@@ -103,7 +103,7 @@ extern "C" {
  * @see fake_make_operate_expand_environment()
  */
 #ifndef _di_fake_make_operate_expand_
-  extern void fake_make_operate_expand(fake_make_data_t * const data_make, const f_string_range_t section_name, const f_fss_content_t content, const f_uint8s_t quotes);
+  extern void fake_make_operate_expand(fake_make_data_t * const data_make, const f_string_range_t section_name, const f_string_ranges_t content, const f_uint8s_t quotes);
 #endif // _di_fake_make_operate_expand_
 
 /**

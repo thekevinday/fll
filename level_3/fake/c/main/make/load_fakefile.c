@@ -36,13 +36,13 @@ extern "C" {
       return;
     }
 
-    f_fss_objects_t list_objects = f_fss_objects_t_initialize;
-    f_fss_contents_t list_contents = f_fss_contents_t_initialize;
-    f_fss_delimits_t delimits = f_fss_delimits_t_initialize;
+    f_string_ranges_t list_objects = f_string_ranges_t_initialize;
+    f_string_rangess_t list_contents = f_string_rangess_t_initialize;
+    f_number_unsigneds_t delimits = f_number_unsigneds_t_initialize;
 
     {
       f_string_range_t range = macro_f_string_range_t_initialize_2(data_make->main->buffer.used);
-      f_fss_comments_t comments = f_fss_comments_t_initialize;
+      f_string_ranges_t comments = f_string_ranges_t_initialize;
 
       fll_fss_basic_list_read(data_make->main->buffer, &range, &list_objects, &list_contents, &delimits, 0, &comments, &data_make->main->setting.state);
 
@@ -298,7 +298,7 @@ extern "C" {
 #endif // _di_fake_make_load_fakefile_
 
 #ifndef _di_fake_make_load_fakefile_setting_build_
-  void fake_make_load_fakefile_setting_build(fake_make_data_t * const data_make, f_fss_object_t * const object, f_fss_content_t * const content) {
+  void fake_make_load_fakefile_setting_build(fake_make_data_t * const data_make, f_string_range_t * const object, f_string_ranges_t * const content) {
 
     if (!data_make || !data_make->data || !data_make->main || !object || !content) return;
 
@@ -324,7 +324,7 @@ extern "C" {
 #endif // _di_fake_make_load_fakefile_setting_build_
 
 #ifndef _di_fake_make_load_fakefile_setting_compiler_
-  void fake_make_load_fakefile_setting_compiler(fake_make_data_t * const data_make, f_fss_object_t * const object, f_fss_content_t * const content, f_string_range_t **range_compiler) {
+  void fake_make_load_fakefile_setting_compiler(fake_make_data_t * const data_make, f_string_range_t * const object, f_string_ranges_t * const content, f_string_range_t **range_compiler) {
 
     if (!data_make || !data_make->data || !data_make->main || !object || !content || !range_compiler) return;
 
@@ -426,7 +426,7 @@ extern "C" {
 #endif // _di_fake_make_load_fakefile_setting_define_and_parameter_
 
 #ifndef _di_fake_make_load_fakefile_setting_environment_
-  void fake_make_load_fakefile_setting_environment(fake_make_data_t * const data_make, f_fss_content_t * const content) {
+  void fake_make_load_fakefile_setting_environment(fake_make_data_t * const data_make, f_string_ranges_t * const content) {
 
     if (!data_make || !data_make->data || !data_make->data || !data_make->main || !content) return;
 
@@ -512,7 +512,7 @@ extern "C" {
 #endif // _di_fake_make_load_fakefile_setting_environment_
 
 #ifndef _di_fake_make_load_fakefile_setting_fail_
-  void fake_make_load_fakefile_setting_fail(fake_make_data_t * const data_make, f_fss_object_t * const object, f_fss_content_t * const content) {
+  void fake_make_load_fakefile_setting_fail(fake_make_data_t * const data_make, f_string_range_t * const object, f_string_ranges_t * const content) {
 
     if (!data_make || !data_make->data || !data_make->data || !data_make->main || !object || !content) return;
 
@@ -541,7 +541,7 @@ extern "C" {
 #endif // _di_fake_make_load_fakefile_setting_fail_
 
 #ifndef _di_fake_make_load_fakefile_setting_indexer_
-  void fake_make_load_fakefile_setting_indexer(fake_make_data_t * const data_make, f_fss_object_t * const object, f_fss_content_t * const content, f_string_range_t **range_indexer) {
+  void fake_make_load_fakefile_setting_indexer(fake_make_data_t * const data_make, f_string_range_t * const object, f_string_ranges_t * const content, f_string_range_t **range_indexer) {
 
     if (!data_make || !data_make->data || !data_make->data || !data_make->main || !object || !content || !range_indexer) return;
 
@@ -559,7 +559,7 @@ extern "C" {
 #endif // _di_fake_make_load_fakefile_setting_indexer_
 
 #ifndef _di_fake_make_load_fakefile_setting_parameter_
-  void fake_make_load_fakefile_setting_parameter(fake_make_data_t * const data_make, f_fss_object_t * const object, f_fss_content_t * const content) {
+  void fake_make_load_fakefile_setting_parameter(fake_make_data_t * const data_make, f_string_range_t * const object, f_string_ranges_t * const content) {
 
     if (!data_make || !data_make->data || !data_make->data || !data_make->main || !object || !content) return;
 

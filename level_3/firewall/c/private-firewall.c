@@ -535,8 +535,8 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
           f_string_dynamic_t path_file = f_string_dynamic_t_initialize;
           f_string_dynamic_t local_buffer = f_string_dynamic_t_initialize;
 
-          f_fss_objects_t basic_objects = f_fss_objects_t_initialize;
-          f_fss_contents_t basic_contents = f_fss_objects_t_initialize;
+          f_string_ranges_t basic_objects = f_string_ranges_t_initialize;
+          f_string_rangess_t basic_contents = f_string_ranges_t_initialize;
 
           status = f_string_dynamic_append(firewall_network_path_s, &path_file);
 
@@ -612,7 +612,7 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
               }
             }
             else {
-              f_fss_delimits_t delimits = f_fss_delimits_t_initialize;
+              f_number_unsigneds_t delimits = f_number_unsigneds_t_initialize;
 
               {
                 f_state_t state = f_state_t_initialize;
@@ -1201,8 +1201,8 @@ f_status_t firewall_buffer_rules(firewall_data_t * const data, const f_string_st
     return status;
   }
 
-  f_fss_delimits_t delimits = f_fss_delimits_t_initialize;
-  f_fss_comments_t comments = f_fss_comments_t_initialize;
+  f_number_unsigneds_t delimits = f_number_unsigneds_t_initialize;
+  f_string_range_t comments = f_string_range_t_initialize;
   f_state_t state = f_state_t_initialize;
 
   {
@@ -1237,8 +1237,8 @@ f_status_t firewall_buffer_rules(firewall_data_t * const data, const f_string_st
     }
   }
 
-  macro_f_fss_delimits_t_delete_simple(delimits);
-  macro_f_fss_comments_t_delete_simple(comments);
+  macro_f_number_unsigneds_t_delete_simple(delimits);
+  macro_f_string_range_t_delete_simple(comments);
 
   return status;
 }
@@ -1248,7 +1248,7 @@ f_status_t firewall_process_rules(firewall_data_t * const data, f_string_range_t
   if (!data || !range || !local) return F_status_set_error(F_parameter);
 
   f_status_t status = F_none;
-  f_fss_delimits_t delimits = f_fss_delimits_t_initialize;
+  f_number_unsigneds_t delimits = f_number_unsigneds_t_initialize;
   f_state_t state = f_state_t_initialize;
 
   status = fll_fss_extended_read(local->buffer, state, range, &local->rule_objects, &local->rule_contents, 0, 0, &delimits, 0);
@@ -1261,7 +1261,7 @@ f_status_t firewall_process_rules(firewall_data_t * const data, f_string_range_t
     }
   }
 
-  macro_f_fss_delimits_t_delete_simple(delimits);
+  macro_f_number_unsigneds_t_delete_simple(delimits);
 
   if (F_status_is_error_not(status)) {
     status = firewall_perform_commands(data, local);

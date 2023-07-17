@@ -1571,6 +1571,18 @@ extern "C" {
         return F_none;
       }
 
+      if (f_compare_dynamic(name, f_status_partial_s) == F_equal_to) {
+        *code = F_partial;
+
+        return F_none;
+      }
+
+      if (f_compare_dynamic(name, f_status_partial_not_s) == F_equal_to) {
+        *code = F_partial_not;
+
+        return F_none;
+      }
+
       if (f_compare_dynamic(name, f_status_payload_s) == F_equal_to) {
         *code = F_payload;
 

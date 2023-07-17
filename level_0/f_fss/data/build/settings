@@ -31,9 +31,10 @@ build_language c
 build_libraries -lc
 build_libraries-individual -lf_memory -lf_string -lf_type_array -lf_utf
 
-build_sources_library fss.c private-fss.c fss/common.c fss/named.c fss/nest.c fss/set.c
+build_sources_library fss.c fss/common.c fss/item.c fss/named.c fss/nest.c fss/quote.c fss/set.c fss/set_quote.c fss/simple_packet.c
+build_sources_library fss/private-item.c fss/private-named.c fss/private-nest.c fss/private-set.c fss/private-set_quote.c fss/private-simple_packet.c
 
-build_sources_headers fss.h fss/comment.h fss/common.h fss/delimit.h fss/named.h fss/nest.h fss/quote.h fss/set.h
+build_sources_headers fss.h fss/common.h fss/item.h fss/named.h fss/nest.h fss/quote.h fss/set.h fss/set_quote.h fss/simple_packet.h
 
 build_script yes
 build_shared yes

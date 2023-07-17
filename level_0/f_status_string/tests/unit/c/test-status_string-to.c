@@ -288,6 +288,8 @@ void test__f_status_string_to__works(void **state) {
     F_parameter_not,
     F_parent,
     F_parent_not,
+    F_partial,
+    F_partial_not,
     F_payload,
     F_payload_not,
     F_pipe,
@@ -908,6 +910,8 @@ void test__f_status_string_to__works(void **state) {
     f_status_parameter_not_s,
     f_status_parent_s,
     f_status_parent_not_s,
+    f_status_partial_s,
+    f_status_partial_not_s,
     f_status_payload_s,
     f_status_payload_not_s,
     f_status_pipe_s,
@@ -1269,7 +1273,7 @@ void test__f_status_string_to__works(void **state) {
     f_status_status_code_last_s,
   };
 
-  for (uint16_t i = 0; i < 617; ++i) {
+  for (uint16_t i = 0; i < 619; ++i) {
 
     f_string_static_t result = f_string_static_t_initialize;
 

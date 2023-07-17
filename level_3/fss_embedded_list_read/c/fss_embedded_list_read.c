@@ -249,9 +249,9 @@ extern "C" {
 
       fss_embedded_list_read_depths_t depths = fss_embedded_list_read_depths_t_initialize;
 
-      f_fss_delimits_t objects_delimits = f_fss_delimits_t_initialize;
-      f_fss_delimits_t contents_delimits = f_fss_delimits_t_initialize;
-      f_fss_comments_t comments = f_fss_comments_t_initialize;
+      f_number_unsigneds_t objects_delimits = f_number_unsigneds_t_initialize;
+      f_number_unsigneds_t contents_delimits = f_number_unsigneds_t_initialize;
+      f_string_range_t comments = f_string_range_t_initialize;
 
       if (F_status_is_error_not(status)) {
         status = fss_embedded_list_read_main_preprocess_depth(&data, &depths);

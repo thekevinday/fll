@@ -22,13 +22,14 @@
 #include <fll/level_0/utf.h>
 
 // FLL-0 fss includes.
-#include <fll/level_0/fss/comment.h>
 #include <fll/level_0/fss/common.h>
-#include <fll/level_0/fss/delimit.h>
-#include <fll/level_0/fss/quote.h>
+#include <fll/level_0/fss/item.h>
 #include <fll/level_0/fss/named.h>
 #include <fll/level_0/fss/nest.h>
+#include <fll/level_0/fss/quote.h>
 #include <fll/level_0/fss/set.h>
+#include <fll/level_0/fss/set_quote.h>
+#include <fll/level_0/fss/simple_packet.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -53,7 +54,7 @@ extern "C" {
  *     F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_apply_delimit_
-  extern void f_fss_apply_delimit(const f_fss_delimits_t delimits, f_string_static_t * const buffer, f_state_t * const state);
+  extern void f_fss_apply_delimit(const f_number_unsigneds_t delimits, f_string_static_t * const buffer, f_state_t * const state);
 #endif // _di_f_fss_apply_delimit_
 
 /**
@@ -77,7 +78,7 @@ extern "C" {
  *     F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_apply_delimit_range_
-  extern void f_fss_apply_delimit_range(const f_fss_delimits_t delimits, const f_string_range_t range, f_string_static_t * const buffer, f_state_t * const state);
+  extern void f_fss_apply_delimit_range(const f_number_unsigneds_t delimits, const f_string_range_t range, f_string_static_t * const buffer, f_state_t * const state);
 #endif // _di_f_fss_apply_delimit_range_
 
 /**

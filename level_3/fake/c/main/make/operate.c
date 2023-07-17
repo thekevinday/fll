@@ -217,7 +217,7 @@ extern "C" {
 #endif // _di_fake_make_operate_
 
 #ifndef _di_fake_make_operate_expand_
-  void fake_make_operate_expand(fake_make_data_t * const data_make, const f_string_range_t section_name, const f_fss_content_t content, const f_uint8s_t quotes) {
+  void fake_make_operate_expand(fake_make_data_t * const data_make, const f_string_range_t section_name, const f_string_ranges_t content, const f_uint8s_t quotes) {
 
     if (!data_make || !data_make->main) return;
     if (F_status_is_error(data_make->main->setting.state.status)) return;

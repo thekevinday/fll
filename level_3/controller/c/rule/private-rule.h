@@ -101,7 +101,7 @@ extern "C" {
  * @see fl_iki_read()
  */
 #ifndef _di_controller_rule_parameters_read_
-  extern f_status_t controller_rule_parameters_read(const controller_global_t global, const f_string_static_t buffer, f_fss_object_t * const object, f_fss_content_t * const content, controller_rule_action_t * const action, f_state_t * const state) F_attribute_visibility_internal_d;
+  extern f_status_t controller_rule_parameters_read(const controller_global_t global, const f_string_static_t buffer, f_string_range_t * const object, f_string_ranges_t * const content, controller_rule_action_t * const action, f_state_t * const state) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_parameters_read_
 
 /**

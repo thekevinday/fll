@@ -30,21 +30,21 @@ extern "C" {
  */
 #ifndef _di_f_fss_named_t_
   typedef struct {
-    f_fss_object_t name;
+    f_string_range_t name;
 
-    f_fss_objects_t objects;
-    f_fss_contents_t contents;
+    f_string_ranges_t objects;
+    f_string_rangess_t contents;
     f_uint8ss_t quotess;
   } f_fss_named_t;
 
-  #define f_fss_named_t_initialize { f_fss_object_t_initialize, f_fss_objects_t_initialize, f_fss_contents_t_initialize, f_uint8ss_t_initialize }
+  #define f_fss_named_t_initialize { f_string_range_t_initialize, f_string_ranges_t_initialize, f_string_rangess_t_initialize, f_uint8ss_t_initialize }
 
   #define macro_f_fss_named_t_initialize_1(name, objects, contents, quotess) macro_f_number_unsigneds_t_initialize_1(name, objects, contents, quotess)
 
   #define macro_f_fss_named_t_clear(named) \
-    macro_f_fss_object_t_clear(named.name) \
-    macro_f_fss_objects_t_clear(named.objects) \
-    macro_f_fss_contents_t_clear(named.contents) \
+    macro_f_string_range_t_clear(named.name) \
+    macro_f_string_ranges_t_clear(named.objects) \
+    macro_f_string_rangess_t_clear(named.contents) \
     macro_f_uint8ss_t_clear(named.quotess)
 
   #define macro_f_fss_named_t_resize(status, named, length) status = f_fss_named_resize(length, &named);

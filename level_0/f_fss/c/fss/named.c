@@ -1,5 +1,5 @@
 #include "../fss.h"
-#include "../private-fss.h"
+#include "private-named.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -22,10 +22,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (!amount) return F_data_not;
-
-    if (named->objects.size - amount > 0) {
-      return private_f_fss_named_adjust(named->objects.size - amount, named);
-    }
+    if (named->objects.size - amount > 0) return private_f_fss_named_adjust(named->objects.size - amount, named);
 
     return private_f_fss_named_adjust(0, named);
   }
@@ -38,10 +35,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (!amount) return F_data_not;
-
-    if (named->objects.size - amount > 0) {
-      return private_f_fss_named_resize(named->objects.size - amount, named);
-    }
+    if (named->objects.size - amount > 0) return private_f_fss_named_resize(named->objects.size - amount, named);
 
     return private_f_fss_named_resize(0, named);
   }
@@ -57,9 +51,7 @@ extern "C" {
       f_number_unsigned_t size = named->objects.used + step;
 
       if (size > F_number_t_size_unsigned_d) {
-        if (named->objects.used + 1 > F_number_t_size_unsigned_d) {
-          return F_status_set_error(F_array_too_large);
-        }
+        if (named->objects.used + 1 > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
         size = F_number_t_size_unsigned_d;
       }
@@ -80,9 +72,7 @@ extern "C" {
     if (!amount) return F_data_not;
 
     if (named->objects.used + amount > named->objects.size) {
-      if (named->objects.used + amount > F_number_t_size_unsigned_d) {
-        return F_status_set_error(F_array_too_large);
-      }
+      if (named->objects.used + amount > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
       return private_f_fss_named_resize(named->objects.used + amount, named);
     }
@@ -118,10 +108,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (!amount) return F_data_not;
-
-    if (nameds->size > amount) {
-      return private_f_fss_nameds_adjust(nameds->size - amount, nameds);
-    }
+    if (nameds->size > amount) return private_f_fss_nameds_adjust(nameds->size - amount, nameds);
 
     return private_f_fss_nameds_adjust(0, nameds);
   }
@@ -134,10 +121,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (!amount) return F_data_not;
-
-    if (nameds->size > amount) {
-      return private_f_fss_nameds_resize(nameds->size - amount, nameds);
-    }
+    if (nameds->size > amount) return private_f_fss_nameds_resize(nameds->size - amount, nameds);
 
     return private_f_fss_nameds_resize(0, nameds);
   }
@@ -153,9 +137,7 @@ extern "C" {
       f_number_unsigned_t size = nameds->used + step;
 
       if (size > F_number_t_size_unsigned_d) {
-        if (nameds->used + 1 > F_number_t_size_unsigned_d) {
-          return F_status_set_error(F_array_too_large);
-        }
+        if (nameds->used + 1 > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
         size = F_number_t_size_unsigned_d;
       }
@@ -176,9 +158,7 @@ extern "C" {
     if (!amount) return F_data_not;
 
     if (nameds->used + amount > nameds->size) {
-      if (nameds->used + amount > F_number_t_size_unsigned_d) {
-        return F_status_set_error(F_array_too_large);
-      }
+      if (nameds->used + amount > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
       return private_f_fss_nameds_resize(nameds->used + amount, nameds);
     }

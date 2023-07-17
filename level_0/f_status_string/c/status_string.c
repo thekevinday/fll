@@ -270,6 +270,8 @@ extern "C" {
     const f_string_static_t f_status_parameter_not_s = macro_f_string_static_t_initialize_1(F_status_parameter_not_s, 0, F_status_parameter_not_s_length);
     const f_string_static_t f_status_parent_s = macro_f_string_static_t_initialize_1(F_status_parent_s, 0, F_status_parent_s_length);
     const f_string_static_t f_status_parent_not_s = macro_f_string_static_t_initialize_1(F_status_parent_not_s, 0, F_status_parent_not_s_length);
+    const f_string_static_t f_status_partial_s = macro_f_string_static_t_initialize_1(F_status_partial_s, 0, F_status_partial_s_length);
+    const f_string_static_t f_status_partial_not_s = macro_f_string_static_t_initialize_1(F_status_partial_not_s, 0, F_status_partial_not_s_length);
     const f_string_static_t f_status_payload_s = macro_f_string_static_t_initialize_1(F_status_payload_s, 0, F_status_payload_s_length);
     const f_string_static_t f_status_payload_not_s = macro_f_string_static_t_initialize_1(F_status_payload_not_s, 0, F_status_payload_not_s_length);
     const f_string_static_t f_status_pipe_s = macro_f_string_static_t_initialize_1(F_status_pipe_s, 0, F_status_pipe_s_length);
@@ -1968,6 +1970,16 @@ extern "C" {
 
         case F_parent_not:
           *name = f_status_parent_not_s;
+
+          break;
+
+        case F_partial:
+          *name = f_status_partial_s;
+
+          break;
+
+        case F_partial_not:
+          *name = f_status_partial_not_s;
 
           break;
 

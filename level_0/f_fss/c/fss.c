@@ -1,12 +1,11 @@
 #include "fss.h"
-#include "private-fss.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 #ifndef _di_f_fss_apply_delimit_
-  void f_fss_apply_delimit(const f_fss_delimits_t delimits, f_string_static_t * const buffer, f_state_t * const state) {
+  void f_fss_apply_delimit(const f_number_unsigneds_t delimits, f_string_static_t * const buffer, f_state_t * const state) {
     #ifndef _di_level_0_parameter_checking_
       if (!state) return;
 
@@ -35,7 +34,7 @@ extern "C" {
 #endif // _di_f_fss_apply_delimit_
 
 #ifndef _di_f_fss_apply_delimit_range_
-  void f_fss_apply_delimit_range(const f_fss_delimits_t delimits, const f_string_range_t range, f_string_static_t * const buffer, f_state_t * const state) {
+  void f_fss_apply_delimit_range(const f_number_unsigneds_t delimits, const f_string_range_t range, f_string_static_t * const buffer, f_state_t * const state) {
     #ifndef _di_level_0_parameter_checking_
       if (!state) return;
 

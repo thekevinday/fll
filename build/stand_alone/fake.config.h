@@ -555,18 +555,10 @@
 
 //#define _di_f_fss_apply_delimit_
 #define _di_f_fss_apply_delimit_range_
-#define _di_f_fss_commentss_t_
-//#define _di_f_fss_comments_t_
-//#define _di_f_fss_comment_t_
 #define _di_f_fss_complete_e_
-//#define _di_f_fss_contents_t_
-//#define _di_f_fss_content_t_
 //#define _di_f_fss_count_lines_
 #define _di_f_fss_count_lines_range_
 //#define _di_f_fss_default_d_
-#define _di_f_fss_delimitss_t_
-//#define _di_f_fss_delimits_t_
-//#define _di_f_fss_delimit_t_
 #define _di_f_fss_e_
 //#define _di_f_fss_fail_utf_
 //#define _di_f_fss_fail_utf_to_false_
@@ -611,8 +603,6 @@
 #define _di_f_fss_nests_resize_
 #define _di_f_fss_nests_t_
 #define _di_f_fss_nest_t_
-//#define _di_f_fss_objects_t_
-//#define _di_f_fss_object_t_
 #define _di_f_fss_payload_s_
 //#define _di_f_fss_placeholder_s_
 //#define _di_f_fss_quote_type_e_
@@ -646,6 +636,16 @@
 #define _di_f_fss_sets_resize_
 #define _di_f_fss_sets_t_
 //#define _di_f_fss_set_t_
+#define _di_f_fss_simple_packet_d_
+#define _di_f_fss_simple_packet_identify_
+#define _di_f_fss_simple_packet_ranges_adjust_
+#define _di_f_fss_simple_packet_ranges_decimate_by_
+#define _di_f_fss_simple_packet_ranges_decrease_by_
+#define _di_f_fss_simple_packet_ranges_increase_
+#define _di_f_fss_simple_packet_ranges_increase_by_
+#define _di_f_fss_simple_packet_ranges_resize_
+#define _di_f_fss_simple_packet_ranges_t_
+#define _di_f_fss_simple_packet_range_t_
 //#define _di_f_fss_skip_past_delimit_
 //#define _di_f_fss_skip_past_space_
 //#define _di_f_fss_state_flag_e_
@@ -1302,6 +1302,7 @@
 //#define _di_f_pipe_input_exists_
 #define _di_f_pipe_output_exists_
 
+//#define _di_f_poll_e_
 #define _di_f_polls_adjust_
 #define _di_f_polls_append_
 #define _di_f_polls_append_all_
@@ -1320,7 +1321,6 @@
 #define _di_f_pollss_resize_
 #define _di_f_pollss_t_
 #define _di_f_polls_t_
-//#define _di_f_poll_e_
 //#define _di_f_poll_t_
 //#define _di_f_print_
 #define _di_f_print_character_
@@ -1342,7 +1342,6 @@
 #define _di_f_print_dynamic_to_raw_
 #define _di_f_print_except_
 #define _di_f_print_except_dynamic_
-#define _di_f_print_except_dynamic_in_safely_
 #define _di_f_print_except_dynamic_partial_
 #define _di_f_print_except_dynamic_partial_raw_
 #define _di_f_print_except_dynamic_partial_raw_safely_

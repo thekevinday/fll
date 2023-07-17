@@ -423,6 +423,8 @@ extern "C" {
     #define F_status_parameter_not_s     "F_parameter_not"
     #define F_status_parent_s            "F_parent"
     #define F_status_parent_not_s        "F_parent_not"
+    #define F_status_partial_s           "F_partial"
+    #define F_status_partial_not_s       "F_partial_not"
     #define F_status_payload_s           "F_payload"
     #define F_status_payload_not_s       "F_payload_not"
     #define F_status_pipe_s              "F_pipe"
@@ -735,6 +737,8 @@ extern "C" {
     #define F_status_parameter_not_s_length     15
     #define F_status_parent_s_length            8
     #define F_status_parent_not_s_length        12
+    #define F_status_partial_s_length           9
+    #define F_status_partial_not_s_length       13
     #define F_status_payload_s_length           9
     #define F_status_payload_not_s_length       13
     #define F_status_pipe_s_length              6
@@ -1049,6 +1053,8 @@ extern "C" {
     extern const f_string_static_t f_status_parameter_not_s;
     extern const f_string_static_t f_status_parent_s;
     extern const f_string_static_t f_status_parent_not_s;
+    extern const f_string_static_t f_status_partial_s;
+    extern const f_string_static_t f_status_partial_not_s;
     extern const f_string_static_t f_status_payload_s;
     extern const f_string_static_t f_status_payload_not_s;
     extern const f_string_static_t f_status_previous_s;

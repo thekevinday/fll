@@ -33,18 +33,18 @@ Consider the following example using the fake dependencies for the stand alone b
 # echo $(cat level_3/fake/data/build/dependencies)
 
 Which prints:
-  # fss-0000 f_type f_status f_memory f_type_array f_string f_utf f_account f_capability f_color f_console f_control_group f_conversion f_directory f_environment f_execute f_file f_fss f_iki f_limit f_network f_path f_pipe f_print f_signal fl_control_group fl_conversion fl_directory fl_environment fl_execute fl_fss fl_iki fl_print fl_string fll_error fll_execute fll_file fll_fss fll_path fll_print fll_program
+  # fss-0000 f_type f_status f_memory f_type_array f_string f_utf f_account f_capability f_color f_compare f_console f_control_group f_conversion f_directory f_environment f_execute f_file f_fss f_iki f_limit f_parse f_path f_pipe f_print f_rip f_signal f_thread fl_control_group fl_conversion fl_directory fl_environment fl_execute fl_fss fl_iki fl_path fl_print fll_error fll_execute fll_file fll_fss fll_print fll_program
 
 From this list, build the level_0:
 
-# for i in f_type f_status f_memory f_type_array f_string f_utf f_account f_capability f_color f_console f_control_group f_conversion f_directory f_environment f_execute f_file f_fss f_iki f_limit f_network f_path f_pipe f_print f_signal ; do if [[ -f build/disable/level_0/$i.h ]] ; then echo >> build/stand_alone/fake.config.h && cat build/disable/level_0/$i.h >> build/stand_alone/fake.config.h ; fi ; done
+# for i in f_type f_status f_memory f_type_array f_string f_utf f_account f_capability f_color f_compare f_console f_control_group f_conversion f_directory f_environment f_execute f_file f_fss f_iki f_limit f_parse f_path f_pipe f_print f_rip f_signal f_thread ; do if [[ -f build/disable/level_0/$i.h ]] ; then echo >> build/stand_alone/fake.config.h && cat build/disable/level_0/$i.h >> build/stand_alone/fake.config.h ; fi ; done
 
 From the list, build the level_1:
 
-# for i in fl_control_group fl_conversion fl_directory fl_environment fl_execute fl_fss fl_iki fl_print fl_string ; do if [[ -f build/disable/level_1/$i.h ]] ; then echo >> build/stand_alone/fake.config.h && cat build/disable/level_1/$i.h >> build/stand_alone/fake.config.h ; fi ; done
+# for i in fl_control_group fl_conversion fl_directory fl_environment fl_execute fl_fss fl_iki fl_path fl_print ; do if [[ -f build/disable/level_1/$i.h ]] ; then echo >> build/stand_alone/fake.config.h && cat build/disable/level_1/$i.h >> build/stand_alone/fake.config.h ; fi ; done
 
 From the list, build the level_2:
 
-# for i in fll_error fll_execute fll_file fll_fss fll_path fll_print fll_program ; do if [[ -f build/disable/level_2/$i.h ]] ; then echo >> build/stand_alone/fake.config.h && cat build/disable/level_2/$i.h >> build/stand_alone/fake.config.h ; fi ; done
+# for i in fll_error fll_execute fll_file fll_fss fll_print fll_program ; do if [[ -f build/disable/level_2/$i.h ]] ; then echo >> build/stand_alone/fake.config.h && cat build/disable/level_2/$i.h >> build/stand_alone/fake.config.h ; fi ; done
 
 Then compile the stand alone build and comment out each disable causing a compile failure until compilation succeeds.

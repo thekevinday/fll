@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fl_fss_basic_list_content_read_
-  void fl_fss_basic_list_content_read(const f_string_static_t buffer, f_string_range_t * const range, f_fss_content_t * const found, f_fss_delimits_t * const delimits, f_fss_comments_t * const comments, f_state_t * const state) {
+  void fl_fss_basic_list_content_read(const f_string_static_t buffer, f_string_range_t * const range, f_string_ranges_t * const found, f_number_unsigneds_t * const delimits, f_string_ranges_t * const comments, f_state_t * const state) {
     #ifndef _di_level_1_parameter_checking_
       if (!state) return;
 
@@ -540,7 +540,7 @@ extern "C" {
 #endif // _di_fl_fss_basic_list_content_write_
 
 #ifndef _di_fl_fss_basic_list_object_read_
-  void fl_fss_basic_list_object_read(const f_string_static_t buffer, f_string_range_t * const range, f_fss_object_t * const found, f_fss_delimits_t * const delimits, f_state_t * const state) {
+  void fl_fss_basic_list_object_read(const f_string_static_t buffer, f_string_range_t * const range, f_string_range_t * const found, f_number_unsigneds_t * const delimits, f_state_t * const state) {
     #ifndef _di_level_1_parameter_checking_
       if (!state) return;
 

@@ -7,7 +7,7 @@ extern "C" {
 
 void test__f_fss_apply_delimit_range__parameter_checking(void **state) {
 
-  const f_fss_delimits_t delimits = f_fss_delimits_t_initialize;
+  const f_number_unsigneds_t delimits = f_number_unsigneds_t_initialize;
   f_state_t state_data = f_state_t_initialize;
   const f_string_range_t range = f_string_range_t_initialize;
 
@@ -21,7 +21,7 @@ void test__f_fss_apply_delimit_range__parameter_checking(void **state) {
 void test__f_fss_apply_delimit_range__returns_data_not(void **state) {
 
   f_string_static_t test = macro_f_string_static_t_initialize_1("test", 0, 4);
-  const f_fss_delimits_t delimits = f_fss_delimits_t_initialize;
+  const f_number_unsigneds_t delimits = f_number_unsigneds_t_initialize;
   f_state_t state_data = f_state_t_initialize;
 
   {
@@ -83,52 +83,52 @@ void test__f_fss_apply_delimit_range__works(void **state) {
     macro_f_string_static_t_initialize_1("\0\0\0test全\0est", 0, 14),
   };
 
-  f_fss_delimit_t delimits_0[] = {
-    macro_f_fss_delimit_t_initialize_1(tests[0].used + 2),
+  f_number_unsigned_t delimits_0[] = {
+    tests[0].used + 2,
   };
 
-  f_fss_delimit_t delimits_1[] = {
-    macro_f_fss_delimit_t_initialize_1(1),
+  f_number_unsigned_t delimits_1[] = {
+    1,
   };
 
-  f_fss_delimit_t delimits_2[] = {
-    macro_f_fss_delimit_t_initialize_1(1),
-    macro_f_fss_delimit_t_initialize_1(2),
+  f_number_unsigned_t delimits_2[] = {
+    1,
+    2,
   };
 
-  f_fss_delimit_t delimits_3[] = {
-    macro_f_fss_delimit_t_initialize_1(1),
-    macro_f_fss_delimit_t_initialize_1(3),
+  f_number_unsigned_t delimits_3[] = {
+    1,
+    3,
   };
 
-  f_fss_delimit_t delimits_4[] = {
-    macro_f_fss_delimit_t_initialize_1(0),
-    macro_f_fss_delimit_t_initialize_1(1),
-    macro_f_fss_delimit_t_initialize_1(3),
+  f_number_unsigned_t delimits_4[] = {
+    0,
+    1,
+    3,
   };
 
-  f_fss_delimit_t delimits_5[] = {
-    macro_f_fss_delimit_t_initialize_1(0),
-    macro_f_fss_delimit_t_initialize_1(1),
-    macro_f_fss_delimit_t_initialize_1(2),
-    macro_f_fss_delimit_t_initialize_1(3),
+  f_number_unsigned_t delimits_5[] = {
+    0,
+    1,
+    2,
+    3,
   };
 
-  f_fss_delimit_t delimits_6[] = {
-    macro_f_fss_delimit_t_initialize_1(0),
-    macro_f_fss_delimit_t_initialize_1(1),
-    macro_f_fss_delimit_t_initialize_1(2),
-    macro_f_fss_delimit_t_initialize_1(10),
+  f_number_unsigned_t delimits_6[] = {
+    0,
+    1,
+    2,
+    10,
   };
 
-  const f_fss_delimits_t delimitss[] = {
-    macro_f_fss_delimits_t_initialize_1(delimits_0, 0, 1),
-    macro_f_fss_delimits_t_initialize_1(delimits_1, 0, 1),
-    macro_f_fss_delimits_t_initialize_1(delimits_2, 0, 2),
-    macro_f_fss_delimits_t_initialize_1(delimits_3, 0, 2),
-    macro_f_fss_delimits_t_initialize_1(delimits_4, 0, 3),
-    macro_f_fss_delimits_t_initialize_1(delimits_5, 0, 4),
-    macro_f_fss_delimits_t_initialize_1(delimits_6, 0, 4),
+  const f_number_unsigneds_t delimitss[] = {
+    macro_f_number_unsigneds_t_initialize_1(delimits_0, 0, 1),
+    macro_f_number_unsigneds_t_initialize_1(delimits_1, 0, 1),
+    macro_f_number_unsigneds_t_initialize_1(delimits_2, 0, 2),
+    macro_f_number_unsigneds_t_initialize_1(delimits_3, 0, 2),
+    macro_f_number_unsigneds_t_initialize_1(delimits_4, 0, 3),
+    macro_f_number_unsigneds_t_initialize_1(delimits_5, 0, 4),
+    macro_f_number_unsigneds_t_initialize_1(delimits_6, 0, 4),
   };
 
   for (uint8_t i = 0; i < 7; ++i) {

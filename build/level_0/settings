@@ -44,7 +44,8 @@ build_sources_library directory.c directory/common.c directory/type.c private-di
 build_sources_library environment.c
 build_sources_library execute.c
 build_sources_library file.c private-file.c file/common.c file/stream.c
-build_sources_library fss.c private-fss.c fss/common.c fss/named.c fss/nest.c fss/set.c
+build_sources_library fss.c fss/common.c fss/item.c fss/named.c fss/nest.c fss/quote.c fss/set.c fss/set_quote.c fss/simple_packet.c
+build_sources_library fss/private-item.c fss/private-named.c fss/private-nest.c fss/private-set.c fss/private-set_quote.c fss/private-simple_packet.c
 build_sources_library iki.c iki/common.c iki/data.c private-iki.c iki/private-data.c
 build_sources_library limit.c limit/set.c limit/value.c limit/private-set.c limit/private-value.c
 build_sources_library memory.c private-memory.c memory/structure.c
@@ -102,7 +103,7 @@ build_sources_headers directory.h directory/common.h directory/type.h
 build_sources_headers environment.h environment/common.h
 build_sources_headers execute.h execute/common.h
 build_sources_headers file.h file/common.h file/stream.h
-build_sources_headers fss.h fss/comment.h fss/common.h fss/delimit.h fss/named.h fss/nest.h fss/quote.h fss/set.h
+build_sources_headers fss.h fss/common.h fss/item.h fss/named.h fss/nest.h fss/quote.h fss/set.h fss/set_quote.h fss/simple_packet.h
 build_sources_headers iki.h iki/common.h iki/data.h
 build_sources_headers limit.h limit/set.h limit/value.h
 build_sources_headers memory.h memory/structure.h memory/common.h

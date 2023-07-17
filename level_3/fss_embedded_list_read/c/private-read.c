@@ -240,7 +240,7 @@ extern "C" {
 #endif // _di_fss_embedded_list_read_main_preprocess_depth_
 
 #ifndef _di_fss_embedded_list_read_main_process_file_
-  f_status_t fss_embedded_list_read_main_process_file(fss_embedded_list_read_data_t * const data, const f_string_static_t filename, const fss_embedded_list_read_depths_t depths, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits, f_fss_comments_t *comments) {
+  f_status_t fss_embedded_list_read_main_process_file(fss_embedded_list_read_data_t * const data, const f_string_static_t filename, const fss_embedded_list_read_depths_t depths, f_number_unsigneds_t *objects_delimits, f_number_unsigneds_t *contents_delimits, f_string_range_t *comments) {
 
     f_status_t status = F_none;
 
@@ -336,7 +336,7 @@ extern "C" {
 
 
     if (data->main->parameters.array[fss_embedded_list_read_parameter_original_e].result & f_console_result_found_e) {
-      f_fss_delimits_t except_none = f_fss_delimits_t_initialize;
+      f_number_unsigneds_t except_none = f_number_unsigneds_t_initialize;
 
       return fss_embedded_list_read_main_process_for_depth(data, filename, depths, 0, line, parents, &except_none, &except_none);
     }
@@ -346,7 +346,7 @@ extern "C" {
 #endif // _di_fss_embedded_list_read_main_process_file_
 
 #ifndef _di_fss_embedded_list_read_main_process_for_depth_
-  f_status_t fss_embedded_list_read_main_process_for_depth(fss_embedded_list_read_data_t * const data, const f_string_static_t filename, const fss_embedded_list_read_depths_t depths, const f_number_unsigned_t depths_index, const f_number_unsigned_t line, const fss_embedded_list_read_skip_t parents, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits) {
+  f_status_t fss_embedded_list_read_main_process_for_depth(fss_embedded_list_read_data_t * const data, const f_string_static_t filename, const fss_embedded_list_read_depths_t depths, const f_number_unsigned_t depths_index, const f_number_unsigned_t line, const fss_embedded_list_read_skip_t parents, f_number_unsigneds_t *objects_delimits, f_number_unsigneds_t *contents_delimits) {
 
     f_fss_items_t *items = &data->nest.depth[depths.array[depths_index].depth];
 
@@ -680,7 +680,7 @@ extern "C" {
 #endif // _di_fss_embedded_list_read_main_process_for_depth_
 
 #ifndef _di_fss_embedded_list_read_process_delimits_
-  void fss_embedded_list_read_process_delimits(fss_embedded_list_read_data_t * const data, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits) {
+  void fss_embedded_list_read_process_delimits(fss_embedded_list_read_data_t * const data, f_number_unsigneds_t *objects_delimits, f_number_unsigneds_t *contents_delimits) {
 
     if (!data->nest.used) return;
 
@@ -754,7 +754,7 @@ extern "C" {
 #endif // _di_fss_embedded_list_read_process_delimits_
 
 #ifndef _di_fss_embedded_list_read_process_delimits_contents_
-  void fss_embedded_list_read_process_delimits_contents(fss_embedded_list_read_data_t * const data, const f_number_unsigned_t depth, const f_number_unsigned_t original_delimits[], const f_number_unsigned_t original_used, f_fss_delimits_t *delimits) {
+  void fss_embedded_list_read_process_delimits_contents(fss_embedded_list_read_data_t * const data, const f_number_unsigned_t depth, const f_number_unsigned_t original_delimits[], const f_number_unsigned_t original_used, f_number_unsigneds_t *delimits) {
 
     if (!original_used) return;
 
@@ -807,7 +807,7 @@ extern "C" {
 #endif // _di_fss_embedded_list_read_process_delimits_contents_
 
 #ifndef _di_fss_embedded_list_read_process_delimits_objects_
-  void fss_embedded_list_read_process_delimits_objects(fss_embedded_list_read_data_t * const data, const f_number_unsigned_t depth, const f_number_unsigned_t original_delimits[], const f_number_unsigned_t original_used, f_fss_delimits_t *delimits) {
+  void fss_embedded_list_read_process_delimits_objects(fss_embedded_list_read_data_t * const data, const f_number_unsigned_t depth, const f_number_unsigned_t original_delimits[], const f_number_unsigned_t original_used, f_number_unsigneds_t *delimits) {
 
     if (!original_used) return;
 

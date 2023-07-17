@@ -5,7 +5,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fll_fss_embedded_list_read_
-  void fll_fss_embedded_list_read(const f_string_static_t buffer, f_string_range_t * const range, f_fss_nest_t * const nest, f_fss_delimits_t * const objects_delimits, f_fss_delimits_t * const contents_delimits, f_fss_comments_t * const comments, f_state_t * const state) {
+  void fll_fss_embedded_list_read(const f_string_static_t buffer, f_string_range_t * const range, f_fss_nest_t * const nest, f_number_unsigneds_t * const objects_delimits, f_number_unsigneds_t * const contents_delimits, f_string_ranges_t * const comments, f_state_t * const state) {
     #ifndef _di_level_2_parameter_checking_
       if (!state) return;
 

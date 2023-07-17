@@ -42,7 +42,8 @@ build_sources_program fll/level_0/directory.c fll/level_0/directory/common.c fll
 build_sources_program fll/level_0/environment.c
 build_sources_program fll/level_0/execute.c
 build_sources_program fll/level_0/file.c fll/level_0/private-file.c fll/level_0/file/common.c fll/level_0/file/stream.c
-build_sources_program fll/level_0/fss.c fll/level_0/private-fss.c fll/level_0/fss/common.c fll/level_0/fss/named.c fll/level_0/fss/nest.c fll/level_0/fss/set.c
+build_sources_program fll/level_0/fss.c fll/level_0/fss/common.c fll/level_0/fss/item.c fll/level_0/fss/named.c fll/level_0/fss/nest.c fll/level_0/fss/quote.c fll/level_0/fss/set.c fll/level_0/fss/set_quote.c fll/level_0/fss/simple_packet.c
+build_sources_program fll/level_0/fss/private-item.c fll/level_0/fss/private-named.c fll/level_0/fss/private-nest.c fll/level_0/fss/private-set.c fll/level_0/fss/private-set_quote.c fll/level_0/fss/private-simple_packet.c
 build_sources_program fll/level_0/iki.c fll/level_0/private-iki.c fll/level_0/iki/common.c fll/level_0/iki/private-data.c fll/level_0/iki/data.c
 build_sources_program fll/level_0/limit.c fll/level_0/limit/set.c fll/level_0/limit/value.c fll/level_0/limit/private-set.c fll/level_0/limit/private-value.c
 build_sources_program fll/level_0/memory.c fll/level_0/private-memory.c fll/level_0/memory/structure.c

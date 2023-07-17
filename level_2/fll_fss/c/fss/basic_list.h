@@ -81,7 +81,7 @@ extern "C" {
  * @see fl_fss_basic_list_object_read()
  */
 #ifndef _di_fll_fss_basic_list_read_
-  extern void fll_fss_basic_list_read(const f_string_static_t buffer, f_string_range_t * const range, f_fss_objects_t * const objects, f_fss_contents_t * const contents, f_fss_delimits_t * const objects_delimits, f_fss_delimits_t * const contents_delimits, f_fss_comments_t * const comments, f_state_t * const state);
+  extern void fll_fss_basic_list_read(const f_string_static_t buffer, f_string_range_t * const range, f_string_ranges_t * const objects, f_string_rangess_t * const contents, f_number_unsigneds_t * const objects_delimits, f_number_unsigneds_t * const contents_delimits, f_string_ranges_t * const comments, f_state_t * const state);
 #endif // _di_fll_fss_basic_list_read_
 
 /**

@@ -5,7 +5,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fss_read_print_at_
-  f_status_t fss_read_print_at(fl_print_t * const print, const f_number_unsigned_t at, const f_fss_delimits_t delimits_object, const f_fss_delimits_t delimits_content) {
+  f_status_t fss_read_print_at(fl_print_t * const print, const f_number_unsigned_t at, const f_number_unsigneds_t delimits_object, const f_number_unsigneds_t delimits_content) {
 
     if (!print || !print->custom) return F_status_set_error(F_output_not);
 
@@ -64,7 +64,7 @@ extern "C" {
 #endif // _di_fss_read_print_at_
 
 #ifndef _di_fss_read_print_content_
-  f_status_t fss_read_print_content(fl_print_t * const print, const f_string_range_t range, const uint8_t quote, const f_fss_delimits_t delimits) {
+  f_status_t fss_read_print_content(fl_print_t * const print, const f_string_range_t range, const uint8_t quote, const f_number_unsigneds_t delimits) {
 
     if (!print || !print->custom) return F_status_set_error(F_output_not);
 
@@ -123,7 +123,7 @@ extern "C" {
 #endif // _di_fss_read_print_number_
 
 #ifndef _di_fss_read_print_object_
-  f_status_t fss_read_print_object(fl_print_t * const print, const f_number_unsigned_t at, const f_fss_delimits_t delimits) {
+  f_status_t fss_read_print_object(fl_print_t * const print, const f_number_unsigned_t at, const f_number_unsigneds_t delimits) {
 
     if (!print || !print->custom) return F_status_set_error(F_output_not);
 

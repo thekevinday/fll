@@ -57,7 +57,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fss_embedded_list_read_main_process_file_
-  extern f_status_t fss_embedded_list_read_main_process_file(fss_embedded_list_read_data_t * const data, const f_string_static_t file_name, const fss_embedded_list_read_depths_t depths, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits, f_fss_comments_t *comments) F_attribute_visibility_internal_d;
+  extern f_status_t fss_embedded_list_read_main_process_file(fss_embedded_list_read_data_t * const data, const f_string_static_t file_name, const fss_embedded_list_read_depths_t depths, f_number_unsigneds_t *objects_delimits, f_number_unsigneds_t *contents_delimits, f_string_range_t *comments) F_attribute_visibility_internal_d;
 #endif // _di_fss_embedded_list_read_main_process_file_
 
 /**
@@ -91,7 +91,7 @@ extern "C" {
  * @see fss_embedded_list_read_main_process_file()
  */
 #ifndef _di_fss_embedded_list_read_main_process_for_depth_
-  extern f_status_t fss_embedded_list_read_main_process_for_depth(fss_embedded_list_read_data_t * const data, const f_string_static_t filename, const fss_embedded_list_read_depths_t depths, const f_number_unsigned_t depths_index, const f_number_unsigned_t line, const fss_embedded_list_read_skip_t parents, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits) F_attribute_visibility_internal_d;
+  extern f_status_t fss_embedded_list_read_main_process_for_depth(fss_embedded_list_read_data_t * const data, const f_string_static_t filename, const fss_embedded_list_read_depths_t depths, const f_number_unsigned_t depths_index, const f_number_unsigned_t line, const fss_embedded_list_read_skip_t parents, f_number_unsigneds_t *objects_delimits, f_number_unsigneds_t *contents_delimits) F_attribute_visibility_internal_d;
 #endif // _di_fss_embedded_list_read_main_process_for_depth_
 
 /**
@@ -107,7 +107,7 @@ extern "C" {
  * @see fss_embedded_list_read_main_process_file()
  */
 #ifndef _di_fss_embedded_list_read_process_delimits_
-  extern void fss_embedded_list_read_process_delimits(fss_embedded_list_read_data_t * const data, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits) F_attribute_visibility_internal_d;
+  extern void fss_embedded_list_read_process_delimits(fss_embedded_list_read_data_t * const data, f_number_unsigneds_t *objects_delimits, f_number_unsigneds_t *contents_delimits) F_attribute_visibility_internal_d;
 #endif // _di_fss_embedded_list_read_process_delimits_
 
 /**
@@ -127,7 +127,7 @@ extern "C" {
  * @see fss_embedded_list_read_process_delimits()
  */
 #ifndef _di_fss_embedded_list_read_process_delimits_contents_
-  extern void fss_embedded_list_read_process_delimits_contents(fss_embedded_list_read_data_t * const data, const f_number_unsigned_t depth, const f_number_unsigned_t original_delimits[], const f_number_unsigned_t original_used, f_fss_delimits_t *delimits) F_attribute_visibility_internal_d;
+  extern void fss_embedded_list_read_process_delimits_contents(fss_embedded_list_read_data_t * const data, const f_number_unsigned_t depth, const f_number_unsigned_t original_delimits[], const f_number_unsigned_t original_used, f_number_unsigneds_t *delimits) F_attribute_visibility_internal_d;
 #endif // _di_fss_embedded_list_read_process_delimits_contents_
 
 /**
@@ -147,7 +147,7 @@ extern "C" {
  * @see fss_embedded_list_read_process_delimits()
  */
 #ifndef _di_fss_embedded_list_read_process_delimits_objects_
-  extern void fss_embedded_list_read_process_delimits_objects(fss_embedded_list_read_data_t * const data, const f_number_unsigned_t depth, const f_number_unsigned_t original_delimits[], const f_number_unsigned_t original_used, f_fss_delimits_t *delimits) F_attribute_visibility_internal_d;
+  extern void fss_embedded_list_read_process_delimits_objects(fss_embedded_list_read_data_t * const data, const f_number_unsigned_t depth, const f_number_unsigned_t original_delimits[], const f_number_unsigned_t original_used, f_number_unsigneds_t *delimits) F_attribute_visibility_internal_d;
 #endif // _di_fss_embedded_list_read_process_delimits_objects_
 
 /**

@@ -91,6 +91,12 @@
 #include "test-fss-sets_increase.h"
 #include "test-fss-sets_increase_by.h"
 #include "test-fss-sets_resize.h"
+#include "test-fss-simple_packet_ranges_adjust.h"
+#include "test-fss-simple_packet_ranges_decimate_by.h"
+#include "test-fss-simple_packet_ranges_decrease_by.h"
+#include "test-fss-simple_packet_ranges_increase.h"
+#include "test-fss-simple_packet_ranges_increase_by.h"
+#include "test-fss-simple_packet_ranges_resize.h"
 #include "test-fss-skip_past_delimit.h"
 #include "test-fss-skip_past_space.h"
 

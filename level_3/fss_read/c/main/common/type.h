@@ -144,16 +144,16 @@ extern "C" {
     void (*process_last_line)(void * const main);
     void (*process_normal)(void * const main);
 
-    void (*process_at)(void * const main, const bool names[], const f_fss_delimits_t delimits_object, const f_fss_delimits_t delimits_content);
+    void (*process_at)(void * const main, const bool names[], const f_number_unsigneds_t delimits_object, const f_number_unsigneds_t delimits_content);
     void (*process_at_line)(void * const void_main, const f_number_unsigned_t at, const f_number_unsigneds_t delimits_object, const f_number_unsigneds_t delimits_content, f_number_unsigned_t * const line);
     void (*process_columns)(void * const main, const bool names[]);
     void (*process_load)(void * const main);
     void (*process_name)(void * const main, bool names[]);
     void (*process_total)(void * const main, const bool names[]);
 
-    f_status_t (*print_at)(fl_print_t * const print, const f_number_unsigned_t at, const f_fss_delimits_t delimits_object, const f_fss_delimits_t delimits_content);
-    f_status_t (*print_object)(fl_print_t * const print, const f_number_unsigned_t at, const f_fss_delimits_t delimits);
-    f_status_t (*print_content)(fl_print_t * const print, const f_string_range_t range, const uint8_t quote, const f_fss_delimits_t delimits);
+    f_status_t (*print_at)(fl_print_t * const print, const f_number_unsigned_t at, const f_number_unsigneds_t delimits_object, const f_number_unsigneds_t delimits_content);
+    f_status_t (*print_object)(fl_print_t * const print, const f_number_unsigned_t at, const f_number_unsigneds_t delimits);
+    f_status_t (*print_content)(fl_print_t * const print, const f_string_range_t range, const uint8_t quote, const f_number_unsigneds_t delimits);
     f_status_t (*print_content_ignore)(fl_print_t * const print);
     f_status_t (*print_content_next)(fl_print_t * const print);
     f_status_t (*print_object_end)(fl_print_t * const print);
@@ -236,12 +236,12 @@ extern "C" {
     f_string_static_t standard;
     f_string_dynamic_t buffer;
 
-    f_fss_comments_t comments;
-    f_fss_contents_t contents;
-    f_fss_delimits_t delimits_object;
-    f_fss_delimits_t delimits_content;
+    f_string_ranges_t comments;
+    f_string_rangess_t contents;
+    f_number_unsigneds_t delimits_object;
+    f_number_unsigneds_t delimits_content;
     f_fss_nest_t nest;
-    f_fss_objects_t objects;
+    f_string_ranges_t objects;
 
     f_uint8s_t quotes_object;
     f_uint8ss_t quotes_content;
@@ -261,12 +261,12 @@ extern "C" {
       fss_read_depths_t_initialize, \
       f_string_static_t_initialize, \
       f_string_dynamic_t_initialize, \
-      f_fss_comments_t_initialize, \
-      f_fss_contents_t_initialize, \
-      f_fss_delimits_t_initialize, \
-      f_fss_delimits_t_initialize, \
+      f_string_ranges_t_initialize, \
+      f_string_rangess_t_initialize, \
+      f_number_unsigneds_t_initialize, \
+      f_number_unsigneds_t_initialize, \
       f_fss_nest_t_initialize, \
-      f_fss_objects_t_initialize, \
+      f_string_ranges_t_initialize, \
       f_uint8s_t_initialize, \
       f_uint8ss_t_initialize, \
     }

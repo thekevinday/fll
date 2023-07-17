@@ -73,7 +73,7 @@ extern "C" {
  * @see fss_read_signal_check()
  */
 #ifndef _di_fss_read_process_normal_at_
-  extern void fss_read_process_normal_at(void * const main, const bool names[], const f_fss_delimits_t delimits_object, const f_fss_delimits_t delimits_content);
+  extern void fss_read_process_normal_at(void * const main, const bool names[], const f_number_unsigneds_t delimits_object, const f_number_unsigneds_t delimits_content);
 #endif // _di_fss_read_process_normal_at_
 
 /**
