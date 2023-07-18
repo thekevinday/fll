@@ -113,11 +113,13 @@ extern "C" {
  *   The values array to resize.
  *
  * @return
- *   F_none on success.
+ *   Success from f_memory_array_adjust().
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_adjust().
+ *   Errors (with error bit) from: f_memory_array_adjust().
+ *
+ * @see f_memory_array_adjust()
  */
 #ifndef _di_f_limit_values_adjust_
   extern f_status_t f_limit_values_adjust(const f_number_unsigned_t length, f_limit_values_t *values);
@@ -135,9 +137,15 @@ extern "C" {
  *   F_none on success.
  *   F_data_not on success, but there is nothing to append (size == 0).
  *
+ *   Success from f_memory_array_resize().
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_increase_by().
+ *   Errors (with error bit) from: f_memory_array_resize().
+ *
+ * @see f_memory_array_increase_by()
+ * @see f_memory_array_resize()
  */
 #ifndef _di_f_limit_values_append_
   extern f_status_t f_limit_values_append(const f_limit_value_t source, f_limit_values_t *destination);
@@ -155,9 +163,15 @@ extern "C" {
  *   F_none on success.
  *   F_data_not on success, but there is nothing to append (size == 0).
  *
+ *   Success from f_memory_array_resize().
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_increase_by().
+ *   Errors (with error bit) from: f_memory_array_resize().
+ *
+ * @see f_memory_array_increase_by()
+ * @see f_memory_array_resize()
  */
 #ifndef _di_f_limit_values_append_all_
   extern f_status_t f_limit_values_append_all(const f_limit_values_t source, f_limit_values_t *destination);
@@ -176,12 +190,13 @@ extern "C" {
  *   The values array to resize.
  *
  * @return
- *   F_none on success.
- *   F_data_not if amount is 0.
+ *   Success from f_memory_array_decimate_by().
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_adjust().
+ *   Errors (with error bit) from: f_memory_array_decimate_by().
+ *
+ * @see f_memory_array_decimate_by()
  */
 #ifndef _di_f_limit_values_decimate_by_
   extern f_status_t f_limit_values_decimate_by(const f_number_unsigned_t amount, f_limit_values_t *values);
@@ -200,11 +215,13 @@ extern "C" {
  *   The values array to resize.
  *
  * @return
- *   F_none on success.
+ *   Success from f_memory_array_decrease_by().
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_decrease_by().
+ *
+ * @see f_memory_array_decrease_by()
  */
 #ifndef _di_f_limit_values_decrease_by_
   extern f_status_t f_limit_values_decrease_by(const f_number_unsigned_t amount, f_limit_values_t *values);
@@ -223,13 +240,13 @@ extern "C" {
  *   The values array to resize.
  *
  * @return
- *   F_none on success.
- *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
+ *   Success from f_memory_array_increase().
  *
- *   F_array_too_large (with error bit) if the new array length is too large.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_increase().
+ *
+ * @see f_memory_array_increase()
  */
 #ifndef _di_f_limit_values_increase_
   extern f_status_t f_limit_values_increase(const f_number_unsigned_t step, f_limit_values_t *values);
@@ -248,13 +265,13 @@ extern "C" {
  *   The values array to resize.
  *
  * @return
- *   F_none on success.
- *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
+ *   Success from f_memory_array_increase_by().
  *
- *   F_array_too_large (with error bit) if the new array length is too large.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_increase_by().
+ *
+ * @see f_memory_array_increase_by()
  */
 #ifndef _di_f_limit_values_increase_by_
   extern f_status_t f_limit_values_increase_by(const f_number_unsigned_t amount, f_limit_values_t *values);
@@ -269,11 +286,13 @@ extern "C" {
  *   The values array to adjust.
  *
  * @return
- *   F_none on success.
+ *   Success from f_memory_array_resize().
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_resize().
+ *
+ * @see f_memory_array_resize()
  */
 #ifndef _di_f_limit_values_resize_
   extern f_status_t f_limit_values_resize(const f_number_unsigned_t length, f_limit_values_t *values);
@@ -288,12 +307,13 @@ extern "C" {
  *   The valuess array to resize.
  *
  * @return
- *   F_none on success.
+ *   Success from f_memory_array_adjust().
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_adjust().
- *   Errors (with error bit) from: f_memory_destroy().
+ *   Errors (with error bit) from: f_memory_array_adjust().
+ *
+ * @see f_memory_array_adjust()
  */
 #ifndef _di_f_limit_valuess_adjust_
   extern f_status_t f_limit_valuess_adjust(const f_number_unsigned_t length, f_limit_valuess_t *valuess);
@@ -311,9 +331,15 @@ extern "C" {
  *   F_none on success.
  *   F_data_not on success, but there is nothing to append (size == 0).
  *
+ *   Success from f_memory_array_resize().
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_increase_by().
+ *   Errors (with error bit) from: f_memory_array_resize().
+ *
+ * @see f_memory_array_increase_by()
+ * @see f_memory_array_resize()
  */
 #ifndef _di_f_limit_valuess_append_
   extern f_status_t f_limit_valuess_append(const f_limit_values_t source, f_limit_valuess_t *destination);
@@ -331,9 +357,15 @@ extern "C" {
  *   F_none on success.
  *   F_data_not on success, but there is nothing to append (size == 0).
  *
+ *   Success from f_memory_array_resize().
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_increase_by().
+ *   Errors (with error bit) from: f_memory_array_resize().
+ *
+ * @see f_memory_array_increase_by()
+ * @see f_memory_array_resize()
  */
 #ifndef _di_f_limit_valuess_append_all_
   extern f_status_t f_limit_valuess_append_all(const f_limit_valuess_t source, f_limit_valuess_t *destination);
@@ -352,13 +384,15 @@ extern "C" {
  *   The valuess array to resize.
  *
  * @return
- *   F_none on success.
- *   F_data_not if amount is 0.
+ *   F_data_not on success, but the amount to decrease by is 0.
+ *
+ *   Success from f_memory_array_decimate_by().
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_adjust().
- *   Errors (with error bit) from: f_memory_destroy().
+ *   Errors (with error bit) from: f_memory_array_decimate_by().
+ *
+ * @see f_memory_array_decimate_by()
  */
 #ifndef _di_f_limit_valuess_decimate_by_
   extern f_status_t f_limit_valuess_decimate_by(const f_number_unsigned_t amount, f_limit_valuess_t *valuess);
@@ -377,12 +411,15 @@ extern "C" {
  *   The valuess array to resize.
  *
  * @return
- *   F_none on success.
+ *   F_data_not on success, but the amount to decrease by is 0.
+ *
+ *   Success from f_memory_array_decrease_by().
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_delete().
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_decrease_by().
+ *
+ * @see f_memory_array_decrease_by()
  */
 #ifndef _di_f_limit_valuess_decrease_by_
   extern f_status_t f_limit_valuess_decrease_by(const f_number_unsigned_t amount, f_limit_valuess_t *valuess);
@@ -401,13 +438,13 @@ extern "C" {
  *   The valuess array to resize.
  *
  * @return
- *   F_none on success.
- *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
+ *   Success from f_memory_array_increase().
  *
- *   F_array_too_large (with error bit) if the new array length is too large.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_increase().
+ *
+ * @see f_memory_array_increase()
  */
 #ifndef _di_f_limit_valuess_increase_
   extern f_status_t f_limit_valuess_increase(const f_number_unsigned_t step, f_limit_valuess_t *valuess);
@@ -426,13 +463,13 @@ extern "C" {
  *   The valuess array to resize.
  *
  * @return
- *   F_none on success.
- *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
+ *   Success from f_memory_array_increase_by().
  *
- *   F_array_too_large (with error bit) if the new array length is too large.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_increase_by().
+ *
+ * @see f_memory_array_increase_by()
  */
 #ifndef _di_f_limit_valuess_increase_by_
   extern f_status_t f_limit_valuess_increase_by(const f_number_unsigned_t amount, f_limit_valuess_t *valuess);
@@ -447,12 +484,13 @@ extern "C" {
  *   The valuess array to adjust.
  *
  * @return
- *   F_none on success.
+ *   Success from f_memory_array_resize().
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_delete().
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_resize().
+ *
+ * @see f_memory_array_resize()
  */
 #ifndef _di_f_limit_valuess_resize_
   extern f_status_t f_limit_valuess_resize(const f_number_unsigned_t length, f_limit_valuess_t *valuess);

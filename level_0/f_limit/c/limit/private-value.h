@@ -16,29 +16,6 @@ extern "C" {
 #endif
 
 /**
- * Private implementation for resizing the values array.
- *
- * Intended to be shared to each of the different implementation variations.
- *
- * @param length
- *   The length to adjust to.
- * @param values
- *   The values array to adjust.
- *
- * @return
- *   F_none on success.
- *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
- *
- *   Errors (with error bit) from: f_memory_adjust().
- *
- * @see f_limit_values_adjust()
- * @see f_limit_values_decimate_by()
- */
-#if !defined(_di_f_limit_values_adjust_) || !defined(_di_f_limit_values_decimate_by_)
-  extern f_status_t private_f_limit_values_adjust(const f_number_unsigned_t length, f_limit_values_t *values) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_limit_values_adjust_) || !defined(_di_f_limit_values_decimate_by_)
-
-/**
  * Private implementation for appending the value array.
  *
  * Intended to be shared to each of the different implementation variations.
@@ -84,31 +61,6 @@ extern "C" {
 #if !defined(_di_f_limit_values_append_) || !defined(_di_f_limit_values_append_all_) || !defined(_di_f_limit_valuess_append_all_)
   extern f_status_t private_f_limit_values_append_all(const f_limit_values_t source, f_limit_values_t *destination) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_limit_values_append_) || !defined(_di_f_limit_values_append_all_) || !defined(_di_f_limit_valuess_append_all_)
-
-/**
- * Private implementation for resizing the values array.
- *
- * Intended to be shared to each of the different implementation variations.
- *
- * @param length
- *   The length to adjust to.
- * @param values
- *   The values array to adjust.
- *
- * @return
- *   F_none on success.
- *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
- *
- *   Errors (with error bit) from: f_memory_resize().
- *
- * @see f_limit_values_resize()
- * @see f_limit_values_append()
- * @see f_limit_values_decimate_by()
- * @see f_limit_valuess_append()
- */
-#if !defined(_di_f_limit_values_resize_) || !defined(_di_f_limit_values_append_) || !defined(_di_f_limit_values_decimate_by_) || !defined(_di_f_limit_valuess_append_)
-  extern f_status_t private_f_limit_values_resize(const f_number_unsigned_t length, f_limit_values_t *values) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_limit_values_resize_) || !defined(_di_f_limit_values_append_) || !defined(_di_f_limit_values_decimate_by_) || !defined(_di_f_limit_valuess_append_)
 
 /**
  * Private implementation for resizing the valuess array.

@@ -24,6 +24,12 @@
 
 // Test includes.
 #include "test-memory-adjust.h"
+#include "test-memory-array_adjust.h"
+#include "test-memory-array_decimate_by.h"
+#include "test-memory-array_decrease_by.h"
+#include "test-memory-array_increase.h"
+#include "test-memory-array_increase_by.h"
+#include "test-memory-array_resize.h"
 #include "test-memory-delete.h"
 #include "test-memory-destroy.h"
 #include "test-memory-new.h"
@@ -33,6 +39,17 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+/**
+ * A structure used for testing the memory array functions.
+ */
+typedef struct {
+  int *array;
+  f_number_unsigned_t used;
+  f_number_unsigned_t size;
+} test_memory_array_t;
+
+#define test_memory_array_t_initialize { 0, 0, 0 }
 
 /**
  * Perform any setup operations.

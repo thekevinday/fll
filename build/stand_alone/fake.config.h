@@ -639,11 +639,22 @@
 #define _di_f_fss_simple_packet_d_
 #define _di_f_fss_simple_packet_identify_
 #define _di_f_fss_simple_packet_ranges_adjust_
+#define _di_f_fss_simple_packet_ranges_append_
+#define _di_f_fss_simple_packet_ranges_append_all_
 #define _di_f_fss_simple_packet_ranges_decimate_by_
 #define _di_f_fss_simple_packet_ranges_decrease_by_
 #define _di_f_fss_simple_packet_ranges_increase_
 #define _di_f_fss_simple_packet_ranges_increase_by_
 #define _di_f_fss_simple_packet_ranges_resize_
+#define _di_f_fss_simple_packet_rangess_adjust_
+#define _di_f_fss_simple_packet_rangess_append_
+#define _di_f_fss_simple_packet_rangess_append_all_
+#define _di_f_fss_simple_packet_rangess_decimate_by_
+#define _di_f_fss_simple_packet_rangess_decrease_by_
+#define _di_f_fss_simple_packet_rangess_increase_
+#define _di_f_fss_simple_packet_rangess_increase_by_
+#define _di_f_fss_simple_packet_rangess_resize_
+#define _di_f_fss_simple_packet_rangess_t_
 #define _di_f_fss_simple_packet_ranges_t_
 #define _di_f_fss_simple_packet_range_t_
 //#define _di_f_fss_skip_past_delimit_
@@ -1163,6 +1174,12 @@
 //#define _di_fl_print_warning_s_
 
 #define _di_f_memory_adjust_
+#define _di_f_memory_array_adjust_
+#define _di_f_memory_array_decimate_by_
+#define _di_f_memory_array_decrease_by_
+#define _di_f_memory_array_increase_
+#define _di_f_memory_array_increase_by_
+#define _di_f_memory_array_resize_
 //#define _di_f_memory_default_d_
 //#define _di_f_memory_delete_
 #define _di_f_memory_destroy_

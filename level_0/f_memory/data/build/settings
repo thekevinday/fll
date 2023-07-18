@@ -31,9 +31,10 @@ build_language c
 
 build_libraries -lc
 
-build_sources_library memory.c private-memory.c memory/structure.c
+build_sources_library memory.c memory/array.c memory/structure.c
+build_sources_library private-memory.c memory/private-array.c
 
-build_sources_headers memory.h memory/common.h memory/structure.h
+build_sources_headers memory.h memory/array.h memory/common.h memory/structure.h
 
 build_script yes
 build_shared yes

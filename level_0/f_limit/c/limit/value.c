@@ -12,7 +12,7 @@ extern "C" {
       if (!values) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return private_f_limit_values_adjust(length, values);
+    return f_memory_array_adjust(length, sizeof(f_limit_value_t), (void **) &values->array, &values->used, &values->size);
   }
 #endif // _di_f_limit_values_adjust_
 
@@ -44,13 +44,7 @@ extern "C" {
       if (!values) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) return F_data_not;
-
-    if (values->size > amount) {
-      return private_f_limit_values_adjust(values->size - amount, values);
-    }
-
-    return private_f_limit_values_adjust(0, values);
+    return f_memory_array_decimate_by(amount, sizeof(f_limit_value_t), (void **) &values->array, &values->used, &values->size);
   }
 #endif // _di_f_limit_values_decimate_by_
 
@@ -60,13 +54,7 @@ extern "C" {
       if (!values) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) return F_data_not;
-
-    if (values->size > amount) {
-      return private_f_limit_values_resize(values->size - amount, values);
-    }
-
-    return private_f_limit_values_resize(0, values);
+    return f_memory_array_decrease_by(amount, sizeof(f_limit_value_t), (void **) &values->array, &values->used, &values->size);
   }
 #endif // _di_f_limit_values_decrease_by_
 
@@ -76,21 +64,7 @@ extern "C" {
       if (!values) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (step && values->used + 1 > values->size) {
-      f_number_unsigned_t size = values->used + step;
-
-      if (size > F_number_t_size_unsigned_d) {
-        if (values->used + 1 > F_number_t_size_unsigned_d) {
-          return F_status_set_error(F_array_too_large);
-        }
-
-        size = F_number_t_size_unsigned_d;
-      }
-
-      return private_f_limit_values_resize(size, values);
-    }
-
-    return F_data_not;
+    return f_memory_array_increase(step, sizeof(f_limit_value_t), (void **) &values->array, &values->used, &values->size);
   }
 #endif // _di_f_limit_values_increase_
 
@@ -100,17 +74,7 @@ extern "C" {
       if (!values) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) return F_data_not;
-
-    if (values->used + amount > values->size) {
-      if (values->used + amount > F_number_t_size_unsigned_d) {
-        return F_status_set_error(F_array_too_large);
-      }
-
-      return private_f_limit_values_resize(values->used + amount, values);
-    }
-
-    return F_data_not;
+    return f_memory_array_increase_by(amount, sizeof(f_limit_value_t), (void **) &values->array, &values->used, &values->size);
   }
 #endif // _di_f_limit_values_increase_by_
 
@@ -120,7 +84,7 @@ extern "C" {
       if (!values) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return private_f_limit_values_resize(length, values);
+    return f_memory_array_resize(length, sizeof(f_limit_value_t), (void **) &values->array, &values->used, &values->size);
   }
 #endif // _di_f_limit_values_resize_
 
@@ -142,12 +106,8 @@ extern "C" {
 
     if (!source.used) return F_data_not;
 
-    f_status_t status = F_none;
-
-    if (destination->used + 1 > destination->size) {
-      status = private_f_limit_valuess_resize(destination->used + F_memory_default_allocation_small_d, destination);
-      if (F_status_is_error(status)) return status;
-    }
+    f_status_t status = f_memory_array_increase(F_memory_default_allocation_small_d, sizeof(f_limit_values_t), (void **) &destination->array, &destination->used, &destination->size);
+    if (F_status_is_error(status)) return status;
 
     status = private_f_limit_values_append_all(source, &destination->array[destination->used]);
     if (F_status_is_error(status)) return status;
@@ -166,12 +126,8 @@ extern "C" {
 
     if (!source.used) return F_data_not;
 
-    f_status_t status = F_none;
-
-    if (destination->used + source.used > destination->size) {
-      status = private_f_limit_valuess_resize(destination->used + source.used, destination);
-      if (F_status_is_error(status)) return status;
-    }
+    f_status_t status = f_memory_array_increase(source.used, sizeof(f_limit_values_t), (void **) &destination->array, &destination->used, &destination->size);
+    if (F_status_is_error(status)) return status;
 
     for (f_number_unsigned_t i = 0; i < source.used; ++i, ++destination->used) {
 
@@ -195,11 +151,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (valuess->size > amount) {
-      return private_f_limit_valuess_adjust(valuess->size - amount, valuess);
-    }
-
-    return private_f_limit_valuess_adjust(0, valuess);
+    return private_f_limit_valuess_adjust((valuess->size > amount) ? valuess->size - amount : 0, valuess);
   }
 #endif // _di_f_limit_valuess_decimate_by_
 
@@ -211,11 +163,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (valuess->size > amount) {
-      return private_f_limit_valuess_resize(valuess->size - amount, valuess);
-    }
-
-    return private_f_limit_valuess_resize(0, valuess);
+    return private_f_limit_valuess_resize((valuess->size > amount) ? valuess->size - amount : 0, valuess);
   }
 #endif // _di_f_limit_valuess_decrease_by_
 
@@ -225,21 +173,7 @@ extern "C" {
       if (!valuess) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (step && valuess->used + 1 > valuess->size) {
-      f_number_unsigned_t size = valuess->used + step;
-
-      if (size > F_number_t_size_unsigned_d) {
-        if (valuess->used + 1 > F_number_t_size_unsigned_d) {
-          return F_status_set_error(F_array_too_large);
-        }
-
-        size = F_number_t_size_unsigned_d;
-      }
-
-      return private_f_limit_valuess_resize(size, valuess);
-    }
-
-    return F_data_not;
+    return f_memory_array_increase(step, sizeof(f_limit_values_t), (void **) &valuess->array, &valuess->used, &valuess->size);
   }
 #endif // _di_f_limit_valuess_increase_
 
@@ -249,17 +183,7 @@ extern "C" {
       if (!valuess) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) return F_data_not;
-
-    if (valuess->used + amount > valuess->size) {
-      if (valuess->used + amount > F_number_t_size_unsigned_d) {
-        return F_status_set_error(F_array_too_large);
-      }
-
-      return private_f_limit_valuess_resize(valuess->used + amount, valuess);
-    }
-
-    return F_data_not;
+    return f_memory_array_increase_by(amount, sizeof(f_limit_values_t), (void **) &valuess->array, &valuess->used, &valuess->size);
   }
 #endif // _di_f_limit_valuess_increase_by_
 

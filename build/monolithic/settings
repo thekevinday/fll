@@ -48,7 +48,8 @@ build_sources_library level_0/fss.c level_0/fss/common.c level_0/fss/item.c leve
 build_sources_library level_0/fss/private-item.c level_0/fss/private-named.c level_0/fss/private-nest.c level_0/fss/private-set.c level_0/fss/private-set_quote.c level_0/fss/private-simple_packet.c
 build_sources_library level_0/iki.c level_0/iki/common.c level_0/iki/data.c level_0/private-iki.c level_0/iki/private-data.c
 build_sources_library level_0/limit.c level_0/limit/set.c level_0/limit/value.c level_0/limit/private-set.c level_0/limit/private-value.c
-build_sources_library level_0/memory.c level_0/private-memory.c level_0/memory/structure.c
+build_sources_library level_0/memory.c level_0/memory/array.c level_0/memory/structure.c
+build_sources_library level_0/private-memory.c level_0/memory/private-array.c
 build_sources_library level_0/network.c
 build_sources_library level_0/parse.c level_0/parse/utf.c
 build_sources_library level_0/path.c level_0/private-path.c level_0/path/common.c
@@ -128,7 +129,7 @@ build_sources_headers level_0/file.h level_0/file/common.h level_0/file/stream.h
 build_sources_headers level_0/fss.h level_0/fss/common.h level_0/fss/item.h level_0/fss/named.h level_0/fss/nest.h level_0/fss/quote.h level_0/fss/set.h level_0/fss/set_quote.h level_0/fss/simple_packet.h
 build_sources_headers level_0/iki.h level_0/iki/common.h level_0/iki/data.h
 build_sources_headers level_0/limit.h level_0/limit/set.h level_0/limit/value.h
-build_sources_headers level_0/memory.h level_0/memory/structure.h level_0/memory/common.h
+build_sources_headers level_0/memory.h level_0/memory/array.h level_0/memory/common.h level_0/memory/structure.h
 build_sources_headers level_0/network.h level_0/network/common.h
 build_sources_headers level_0/parse.h level_0/parse/utf.h
 build_sources_headers level_0/path.h level_0/path/common.h

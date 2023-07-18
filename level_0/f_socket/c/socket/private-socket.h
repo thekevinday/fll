@@ -16,29 +16,6 @@ extern "C" {
 #endif
 
 /**
- * Private implementation for resizing the sockets array.
- *
- * Intended to be shared to each of the different implementation variations.
- *
- * @param length
- *   The length to adjust to.
- * @param sockets
- *   The sockets array to adjust.
- *
- * @return
- *   F_none on success.
- *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
- *
- *   Errors (with error bit) from: f_memory_adjust().
- *
- * @see f_sockets_adjust()
- * @see f_sockets_decimate_by()
- */
-#if !defined(_di_f_sockets_adjust_) || !defined(_di_f_sockets_decimate_by_)
-  extern f_status_t private_f_sockets_adjust(const f_number_unsigned_t length, f_sockets_t * const sockets) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_sockets_adjust_) || !defined(_di_f_sockets_decimate_by_)
-
-/**
  * Private implementation for appending the socket array.
  *
  * Intended to be shared to each of the different implementation variations.
@@ -84,31 +61,6 @@ extern "C" {
 #if !defined(_di_f_sockets_append_) || !defined(_di_f_sockets_append_all_) || !defined(_di_f_socketss_append_all_)
   extern f_status_t private_f_sockets_append_all(const f_sockets_t source, f_sockets_t * const destination) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_sockets_append_) || !defined(_di_f_sockets_append_all_) || !defined(_di_f_socketss_append_all_)
-
-/**
- * Private implementation for resizing the sockets array.
- *
- * Intended to be shared to each of the different implementation variations.
- *
- * @param length
- *   The length to adjust to.
- * @param sockets
- *   The sockets array to adjust.
- *
- * @return
- *   F_none on success.
- *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
- *
- *   Errors (with error bit) from: f_memory_resize().
- *
- * @see f_sockets_resize()
- * @see f_sockets_append()
- * @see f_sockets_decrease_by()
- * @see f_socketss_append()
- */
-#if !defined(_di_f_sockets_resize_) || !defined(_di_f_sockets_append_) || !defined(_di_f_sockets_decrease_by_) || !defined(_di_f_socketss_append_)
-  extern f_status_t private_f_sockets_resize(const f_number_unsigned_t length, f_sockets_t * const sockets) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_sockets_resize_) || !defined(_di_f_sockets_append_) || !defined(_di_f_sockets_decrease_by_) || !defined(_di_f_socketss_append_)
 
 /**
  * Private implementation for resizing the socketss array.
