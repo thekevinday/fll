@@ -56,22 +56,20 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: macro_f_string_ranges_t_resize().
- *   Errors (with error bit) from: macro_f_string_rangess_t_resize().
- *   Errors (with error bit) from: macro_f_uint8ss_t_resize().
+ *   Errors (with error bit) from: f_string_ranges_resize().
+ *   Errors (with error bit) from: f_string_rangess_resize().
+ *   Errors (with error bit) from: f_uint8ss_resize().
  *
- * @see macro_f_string_ranges_t_resize()
- * @see macro_f_string_rangess_t_resize()
- * @see macro_f_uint8ss_t_resize()
+ * @see f_string_ranges_resize()
+ * @see f_string_rangess_resize()
+ * @see f_uint8ss_resize()
  *
  * @see f_fss_nameds_decrease_by()
- * @see f_fss_nameds_incease()
- * @see f_fss_nameds_incease_by()
  * @see f_fss_nameds_resize()
  */
-#if !defined(_di_f_fss_nameds_decrease_by_) || !defined(_di_f_fss_nameds_increase_) || !defined(_di_f_fss_nameds_increase_by_) || !defined(_di_f_fss_nameds_resize_)
+#if !defined(_di_f_fss_nameds_decrease_by_) || !defined(_di_f_fss_nameds_resize_)
   extern f_status_t private_f_fss_named_resize(const f_number_unsigned_t length, f_fss_named_t * const named) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_fss_nameds_decrease_by_) || !defined(_di_f_fss_nameds_increase_) || !defined(_di_f_fss_nameds_increase_by_) || !defined(_di_f_fss_nameds_resize_)
+#endif // !defined(_di_f_fss_nameds_decrease_by_) || !defined(_di_f_fss_nameds_resize_)
 
 /**
  * Private implementation for resizing.
@@ -84,16 +82,22 @@ extern "C" {
  *   The nameds to adjust.
  *
  * @return
- *   F_none on success.
+ *   Success from f_memory_array_adjust().
  *
- *   Errors (with error bit) from: f_memory_adjust().
- *   Errors (with error bit) from: private_f_fss_named_adjust().
+ *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see private_f_fss_named_adjust()
+ *   Errors (with error bit) from: f_memory_array_adjust().
+ *   Errors (with error bit) from: f_string_ranges_resize().
+ *   Errors (with error bit) from: f_string_rangess_resize().
+ *   Errors (with error bit) from: f_uint8ss_resize().
+ *
+ * @see f_string_ranges_resize()
+ * @see f_string_rangess_resize()
+ * @see f_uint8ss_resize()
+ * @see f_memory_array_adjust()
  *
  * @see f_fss_nameds_adjust()
  * @see f_fss_nameds_decimate_by()
- * @see f_memory_adjust()
  */
 #if !defined(_di_f_fss_nameds_adjust_) || !defined(_di_f_fss_nameds_decimate_by_)
   extern f_status_t private_f_fss_nameds_adjust(const f_number_unsigned_t length, f_fss_nameds_t * const nameds) F_attribute_visibility_internal_d;
@@ -110,22 +114,26 @@ extern "C" {
  *   The nameds to resize.
  *
  * @return
- *   F_none on success.
+ *   Success from f_memory_array_resize().
  *
- *   Errors (with error bit) from: f_memory_resize().
- *   Errors (with error bit) from: private_f_fss_named_resize().
+ *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see private_f_fss_named_resize()
+ *   Errors (with error bit) from: f_memory_array_resize().
+ *   Errors (with error bit) from: f_string_ranges_resize().
+ *   Errors (with error bit) from: f_string_rangess_resize().
+ *   Errors (with error bit) from: f_uint8ss_resize().
+ *
+ * @see f_memory_array_resize()
+ * @see f_string_ranges_resize()
+ * @see f_string_rangess_resize()
+ * @see f_uint8ss_resize()
  *
  * @see f_fss_nameds_decrease_by()
- * @see f_fss_nameds_increase()
- * @see f_fss_nameds_increase_by()
  * @see f_fss_nameds_resize()
- * @see f_memory_resize()
  */
-#if !defined(_di_f_fss_nameds_decrease_by_) || !defined(_di_f_fss_nameds_increase_) || !defined(_di_f_fss_nameds_increase_by_) || !defined(_di_f_fss_nameds_resize_)
+#if !defined(_di_f_fss_nameds_decrease_by_) || !defined(_di_f_fss_nameds_resize_)
   extern f_status_t private_f_fss_nameds_resize(const f_number_unsigned_t length, f_fss_nameds_t * const nameds) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_fss_nameds_decrease_by_) || !defined(_di_f_fss_nameds_increase_) || !defined(_di_f_fss_nameds_increase_by_) || !defined(_di_f_fss_nameds_resize_)
+#endif // !defined(_di_f_fss_nameds_decrease_by_) || !defined(_di_f_fss_nameds_resize_)
 
 #ifdef __cplusplus
 } // extern "C"

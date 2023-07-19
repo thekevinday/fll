@@ -42,12 +42,11 @@ extern "C" {
  * @see memset()
  *
  * @see f_memory_adjust()
- * @see f_memory_structure_adjust()
- * @see f_memory_structure_decimate_by()
+ * @see f_memory_resize()
  */
-#if !defined(_di_f_memory_adjust_) || !defined(_di_f_memory_structure_adjust_) || !defined(_di_f_memory_structure_decimate_by_)
+#if !defined(_di_f_memory_adjust_) || defined(_f_memory_FORCE_secure_memory_)
   extern f_status_t private_f_memory_adjust(const size_t length_old, const size_t length_new, const size_t type_size, void ** const pointer) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_memory_adjust_) || !defined(_di_f_memory_structure_adjust_) || !defined(_di_f_memory_structure_decimate_by_)
+#endif // !defined(_di_f_memory_adjust_) || defined(_f_memory_FORCE_secure_memory_)
 
 /**
  * Private implementation for resizing.
@@ -75,81 +74,12 @@ extern "C" {
  * @see free()
  * @see memset()
  *
+ * @see f_memory_adjust()
  * @see f_memory_resize()
- * @see f_memory_structure_decrease_by()
- * @see f_memory_structure_increase()
- * @see f_memory_structure_increase_by()
- * @see f_memory_structure_resize()
- *
- * @see private_f_memory_structure_resize()
  */
-#if !defined(_di_f_memory_resize_) || !defined(_di_memory_structure_decrease_by_) || !defined(_di_memory_structure_increase_) || !defined(_di_memory_structure_increase_by_) || !defined(_di_f_memory_structure_resize_)
+#if !defined(_di_f_memory_resize_) || defined(_f_memory_FORCE_fast_memory_)
   extern f_status_t private_f_memory_resize(const size_t length_old, const size_t length_new, const size_t type_size, void ** const pointer) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_memory_resize_) || !defined(_di_memory_structure_decrease_by_) || !defined(_di_memory_structure_increase_) || !defined(_di_memory_structure_increase_by_) || !defined(_di_f_memory_structure_resize_)
-
-/**
- * Private implementation for resizing a structure.
- *
- * Intended to be shared to each of the different implementation variations.
- *
- * @param length_new
- *   The new size of the structure array.
- *   Setting a length of 0 will result in the deletion (freeing) of the structure.
- * @param type_size
- *   The size of the structure type (such as: sizeof(structure_size)).
- * @param structure
- *   The structure to delete.
- * @param used
- *   The amount of data used by the structure.
- * @param size
- *   The amount of data allocated to the structure.
- *
- * @return
- *   Return from: private_f_memory_adjust().
- *
- *   Errors (with error bit) from: private_f_memory_adjust().
- *
- * @see f_memory_structure_adjust()
- * @see f_memory_structure_decimate_by()
- *
- * @see private_f_memory_adjust()
- */
-#if !defined(_di_f_memory_structure_adjust_) || !defined(_di_f_memory_structure_decimate_by_)
-  extern f_status_t private_f_memory_structure_adjust(const size_t length_new, const size_t type_size, void ** const structure, f_number_unsigned_t * const used, f_number_unsigned_t * const size) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_memory_structure_adjust_) || !defined(_di_f_memory_structure_decimate_by_)
-
-/**
- * Private implementation for resizing a structure.
- *
- * Intended to be shared to each of the different implementation variations.
- *
- * @param length_new
- *   The new size of the structure array.
- *   Setting a length of 0 will result in the deletion (freeing) of the structure.
- * @param type_size
- *   The size of the structure type (such as: sizeof(structure_size)).
- * @param structure
- *   The structure to delete.
- * @param used
- *   The amount of data used by the structure.
- * @param size
- *   The amount of data allocated to the structure.
- *
- * @return
- *   Return from: private_f_memory_resize().
- *
- *   Errors (with error bit) from: private_f_memory_structure_resize().
- *
- * @see f_memory_structure_decrease_by()
- * @see f_memory_structure_increase()
- * @see f_memory_structure_increase_by()
- * @see f_memory_structure_resize()
- *
- * @see private_f_memory_resize()
- */
-#if !defined(_di_memory_structure_decrease_by_) || !defined(_di_memory_structure_increase_) || !defined(_di_memory_structure_increase_by_) || !defined(_di_f_memory_structure_resize_)
-  extern f_status_t private_f_memory_structure_resize(const size_t length_new, const size_t type_size, void ** const structure, f_number_unsigned_t * const used, f_number_unsigned_t * const size) F_attribute_visibility_internal_d;
-#endif // !defined(_di_memory_structure_decrease_by_) || !defined(_di_memory_structure_increase_) || !defined(_di_memory_structure_increase_by_) || !defined(_di_f_memory_structure_resize_)
+#endif // !defined(_di_f_memory_resize_) || defined(_f_memory_FORCE_fast_memory_)
 
 #ifdef __cplusplus
 } // extern "C"

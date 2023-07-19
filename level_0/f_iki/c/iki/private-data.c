@@ -8,9 +8,8 @@ extern "C" {
 #if !defined(_di_f_iki_datas_adjust_) || !defined(_di_f_iki_datas_decimate_by_)
   f_status_t private_f_iki_datas_adjust(const f_number_unsigned_t length, f_iki_datas_t *datas) {
 
-    if (datas->used + length > F_number_t_size_unsigned_d) {
-      return F_status_set_error(F_array_too_large);
-    }
+    if (datas->used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+    if (datas->used + length > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
     f_status_t status = F_none;
 
@@ -29,16 +28,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     } // for
 
-    status = f_memory_adjust(datas->size, length, sizeof(f_iki_data_t), (void **) & datas->array);
-    if (F_status_is_error(status)) return status;
-
-    datas->size = length;
-
-    if (datas->used > datas->size) {
-      datas->used = length;
-    }
-
-    return F_none;
+    return f_memory_array_adjust(length, sizeof(f_iki_data_t), (void **) &datas->array, &datas->used, &datas->size);
   }
 #endif // !defined(_di_f_iki_datas_adjust_) || !defined(_di_f_iki_datas_decimate_by_)
 
@@ -128,9 +118,8 @@ extern "C" {
 #if !defined(_di_f_iki_datas_append_) || !defined(_di_f_iki_datas_decrease_by_) || !defined(_di_f_iki_datas_increase_) || !defined(_di_f_iki_datas_increase_by_) || !defined(_di_f_iki_datas_resize_)
   f_status_t private_f_iki_datas_resize(const f_number_unsigned_t length, f_iki_datas_t *datas) {
 
-    if (datas->used + length > F_number_t_size_unsigned_d) {
-      return F_status_set_error(F_array_too_large);
-    }
+    if (datas->used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+    if (datas->used + length > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
     f_status_t status = F_none;
 
@@ -149,16 +138,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     } // for
 
-    status = f_memory_resize(datas->size, length, sizeof(f_iki_data_t), (void **) & datas->array);
-    if (F_status_is_error(status)) return status;
-
-    datas->size = length;
-
-    if (datas->used > datas->size) {
-      datas->used = length;
-    }
-
-    return F_none;
+    return f_memory_array_resize(length, sizeof(f_iki_data_t), (void **) &datas->array, &datas->used, &datas->size);
   }
 #endif // !defined(_di_f_iki_datas_append_) || !defined(_di_f_iki_datas_decrease_by_) || !defined(_di_f_iki_datas_increase_) || !defined(_di_f_iki_datas_increase_by_) || !defined(_di_f_iki_datas_resize_)
 
@@ -169,11 +149,8 @@ extern "C" {
 
     for (f_number_unsigned_t i = length; i < datass->size; ++i) {
 
-      status = f_memory_destroy(datass->array[i].size, sizeof(f_iki_datas_t), (void **) & datass->array[i].array);
+      status = private_f_iki_datas_adjust(0, &datass->array[i]);
       if (F_status_is_error(status)) return status;
-
-      datass->array[i].size = 0;
-      datass->array[i].used = 0;
     } // for
 
     status = f_memory_adjust(datass->size, length, sizeof(f_iki_datas_t), (void **) & datass->array);

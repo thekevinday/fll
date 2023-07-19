@@ -2528,18 +2528,20 @@ extern "C" {
 #ifndef _di_controller_rule_items_increase_by_
   f_status_t controller_rule_items_increase_by(const f_number_unsigned_t amount, controller_rule_items_t * const items) {
 
-    if (items->used + amount > items->size) {
-      if (items->used + amount > F_number_t_size_unsigned_d) {
-        return F_status_set_error(F_array_too_large);
+    if (amount) {
+      if (items->used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+
+      const f_number_unsigned_t length = items->used + amount;
+
+      if (length > items->size) {
+        const f_status_t status = f_memory_resize(items->size, length, sizeof(controller_rule_item_t), (void **) & items->array);
+
+        if (F_status_is_error_not(status)) {
+          items->size = items->used + amount;
+        }
+
+        return status;
       }
-
-      const f_status_t status = f_memory_resize(items->size, items->used + amount, sizeof(controller_rule_item_t), (void **) & items->array);
-
-      if (F_status_is_error_not(status)) {
-        items->size = items->used + amount;
-      }
-
-      return status;
     }
 
     return F_data_not;

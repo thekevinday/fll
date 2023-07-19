@@ -59,8 +59,6 @@ extern "C" {
   #define macro_f_limit_sets_t_initialize_1(array, size, used) { array, size, used }
   #define macro_f_limit_sets_t_initialize_2(array, length) { array, length, length }
 
-  #define macro_f_limit_sets_t_clear(sets) macro_f_memory_structure_clear(sets)
-
   #define macro_f_limit_sets_t_resize(status, sets, length) status = f_limit_sets_resize(length, &sets);
   #define macro_f_limit_sets_t_adjust(status, sets, length) status = f_limit_sets_adjust(length, &sets);
 
@@ -93,8 +91,6 @@ extern "C" {
 
   #define macro_f_limit_setss_t_initialize_1(array, size, used) { array, size, used }
   #define macro_f_limit_setss_t_initialize_2(array, length) { array, length, length }
-
-  #define macro_f_limit_setss_t_clear(setss) macro_f_memory_structure_clear(setss);
 
   #define macro_f_limit_setss_t_resize(status, setss, length) status = f_limit_setss_resize(length, &setss);
   #define macro_f_limit_setss_t_adjust(status, setss, length) status = f_limit_setss_adjust(length, &setss);

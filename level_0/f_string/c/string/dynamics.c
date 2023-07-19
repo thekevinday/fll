@@ -105,12 +105,16 @@ extern "C" {
       if (!dynamics) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (dynamics->used + amount > dynamics->size) {
-      if (dynamics->used + amount > F_number_t_size_unsigned_d) {
-        return F_status_set_error(F_array_too_large);
-      }
+    if (amount) {
+      if (dynamics->used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
-      return private_f_string_dynamics_resize(dynamics->used + amount, dynamics);
+      const f_number_unsigned_t length = dynamics->used + amount;
+
+      if (length > dynamics->size) {
+        if (length > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+
+        return private_f_string_dynamics_resize(dynamics->used + amount, dynamics);
+      }
     }
 
     return F_data_not;

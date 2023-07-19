@@ -89,10 +89,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (!amount) return F_data_not;
-
-    if (datas->size > amount) {
-      return private_f_iki_datas_adjust(datas->size - amount, datas);
-    }
+    if (datas->size > amount) return private_f_iki_datas_adjust(datas->size - amount, datas);
 
     return private_f_iki_datas_adjust(0, datas);
   }
@@ -105,10 +102,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (!amount) return F_data_not;
-
-    if (datas->size > amount) {
-      return private_f_iki_datas_resize(datas->size - amount, datas);
-    }
+    if (datas->size > amount) return private_f_iki_datas_resize(datas->size - amount, datas);
 
     return private_f_iki_datas_resize(0, datas);
   }
@@ -121,12 +115,12 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (step && datas->used + 1 > datas->size) {
+      if (datas->used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+
       f_number_unsigned_t size = datas->used + step;
 
       if (size > F_number_t_size_unsigned_d) {
-        if (datas->used + 1 > F_number_t_size_unsigned_d) {
-          return F_status_set_error(F_array_too_large);
-        }
+        if (datas->used + 1 > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
         size = F_number_t_size_unsigned_d;
       }
@@ -144,14 +138,16 @@ extern "C" {
       if (!datas) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) return F_data_not;
+    if (amount) {
+      if (datas->used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
-    if (datas->used + amount > datas->size) {
-      if (datas->used + amount > F_number_t_size_unsigned_d) {
-        return F_status_set_error(F_array_too_large);
+      const f_number_unsigned_t length = datas->used + amount;
+
+      if (length > datas->size) {
+        if (length > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+
+        return private_f_iki_datas_resize(length, datas);
       }
-
-      return private_f_iki_datas_resize(datas->used + amount, datas);
     }
 
     return F_data_not;
@@ -238,10 +234,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (!amount) return F_data_not;
-
-    if (datass->size > amount) {
-      return private_f_iki_datass_adjust(datass->size - amount, datass);
-    }
+    if (datass->size > amount) return private_f_iki_datass_adjust(datass->size - amount, datass);
 
     return private_f_iki_datass_adjust(0, datass);
   }
@@ -254,10 +247,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (!amount) return F_data_not;
-
-    if (datass->size > amount) {
-      return private_f_iki_datass_resize(datass->size - amount, datass);
-    }
+    if (datass->size > amount) return private_f_iki_datass_resize(datass->size - amount, datass);
 
     return private_f_iki_datass_resize(0, datass);
   }
@@ -270,12 +260,12 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (step && datass->used + 1 > datass->size) {
+      if (datass->used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+
       f_number_unsigned_t size = datass->used + step;
 
       if (size > F_number_t_size_unsigned_d) {
-        if (datass->used + 1 > F_number_t_size_unsigned_d) {
-          return F_status_set_error(F_array_too_large);
-        }
+        if (datass->used + 1 > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
         size = F_number_t_size_unsigned_d;
       }
@@ -293,14 +283,16 @@ extern "C" {
       if (!datass) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) return F_data_not;
+    if (amount) {
+      if (datass->used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
-    if (datass->used + amount > datass->size) {
-      if (datass->used + amount > F_number_t_size_unsigned_d) {
-        return F_status_set_error(F_array_too_large);
+      const f_number_unsigned_t length = datass->used + amount;
+
+      if (length > datass->size) {
+        if (length > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+
+        return private_f_iki_datass_resize(length, datass);
       }
-
-      return private_f_iki_datass_resize(datass->used + amount, datass);
     }
 
     return F_data_not;

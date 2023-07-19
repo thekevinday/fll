@@ -26,16 +26,18 @@ extern "C" {
  *   The nest to adjust.
  *
  * @return
- *   F_none on success.
+ *   Success from f_memory_array_adjust().
  *
- *   Errors (with error bit) from: f_memory_adjust().
- *   Errors (with error bit) from: macro_f_fss_nest_t_adjust().
+ *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see macro_f_fss_nest_t_adjust()
+ *   Errors (with error bit) from: f_memory_array_adjust().
+ *   Errors (with error bit) from: f_string_dynamic_adjust().
  *
- * @see f_fss_nest_adjust()
- * @see f_fss_nest_decimate_by()
- * @see f_memory_adjust()
+ * @see f_memory_array_adjust()
+ * @see f_string_dynamic_adjust()
+ *
+ * @see f_fss_nests_adjust()
+ * @see f_fss_nests_decimate_by()
  */
 #if !defined(_di_f_fss_nest_adjust_) || !defined(_di_f_fss_nest_decimate_by_)
   extern f_status_t private_f_fss_nest_adjust(const f_number_unsigned_t length, f_fss_nest_t * const nest) F_attribute_visibility_internal_d;
@@ -52,22 +54,22 @@ extern "C" {
  *   The nest to resize.
  *
  * @return
- *   F_none on success.
+ *   Success from f_memory_array_resize().
  *
- *   Errors (with error bit) from: f_memory_resize().
- *   Errors (with error bit) from: macro_f_fss_nest_t_resize().
+ *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see macro_f_fss_nest_t_resize()
+ *   Errors (with error bit) from: f_memory_array_resize().
+ *   Errors (with error bit) from: f_string_dynamic_resize().
  *
- * @see f_fss_nest_decrease_by()
- * @see f_fss_nest_increase()
- * @see f_fss_nest_increase_by()
- * @see f_fss_nest_resize()
- * @see f_memory_resize()
+ * @see f_memory_array_resize()
+ * @see f_string_dynamic_resize()
+ *
+ * @see f_fss_nests_decrease_by()
+ * @see f_fss_nests_resize()
  */
-#if !defined(_di_f_fss_nest_decrease_by_) || !defined(_di_f_fss_nest_increase_) || !defined(_di_f_fss_nest_increase_by_) || !defined(_di_f_fss_nest_resize_)
+#if !defined(_di_f_fss_nest_decrease_by_) || !defined(_di_f_fss_nest_resize_)
   extern f_status_t private_f_fss_nest_resize(const f_number_unsigned_t length, f_fss_nest_t * const nest) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_fss_nest_decrease_by_) || !defined(_di_f_fss_nest_increase_) || !defined(_di_f_fss_nest_increase_by_) || !defined(_di_f_fss_nest_resize_)
+#endif // !defined(_di_f_fss_nest_decrease_by_) || !defined(_di_f_fss_nest_resize_)
 
 /**
  * Private implementation for resizing.
@@ -80,16 +82,18 @@ extern "C" {
  *   The nests to adjust.
  *
  * @return
- *   F_none on success.
+ *   Success from f_memory_array_adjust().
  *
- *   Errors (with error bit) from: f_memory_adjust().
- *   Errors (with error bit) from: macro_f_fss_nest_t_adjust().
+ *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see macro_f_fss_nest_t_adjust()
+ *   Errors (with error bit) from: f_memory_array_adjust().
+ *   Errors (with error bit) from: f_string_dynamic_adjust().
+ *
+ * @see f_memory_array_adjust()
+ * @see f_string_dynamic_adjust()
  *
  * @see f_fss_nests_adjust()
  * @see f_fss_nests_decimate_by()
- * @see f_memory_adjust()
  */
 #if !defined(_di_f_fss_nests_adjust_) || !defined(_di_f_fss_nests_decimate_by_)
   extern f_status_t private_f_fss_nests_adjust(const f_number_unsigned_t length, f_fss_nests_t * const nests) F_attribute_visibility_internal_d;
@@ -106,22 +110,22 @@ extern "C" {
  *   The nests to resize.
  *
  * @return
- *   F_none on success.
+ *   Success from f_memory_array_resize().
  *
- *   Errors (with error bit) from: f_memory_resize().
- *   Errors (with error bit) from: macro_f_fss_nest_t_resize().
+ *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see macro_f_fss_nest_t_resize()
+ *   Errors (with error bit) from: f_memory_array_resize().
+ *   Errors (with error bit) from: f_string_dynamic_resize().
+ *
+ * @see f_memory_array_resize()
+ * @see f_string_dynamic_resize()
  *
  * @see f_fss_nests_decrease_by()
- * @see f_fss_nests_increase()
- * @see f_fss_nests_increase_by()
  * @see f_fss_nests_resize()
- * @see f_memory_resize()
  */
-#if !defined(_di_f_fss_nests_decrease_by_) || !defined(_di_f_fss_nests_increase_) || !defined(_di_f_fss_nests_increase_by_) || !defined(_di_f_fss_nests_resize_)
+#if !defined(_di_f_fss_nests_decrease_by_) || !defined(_di_f_fss_nests_resize_)
   extern f_status_t private_f_fss_nests_resize(const f_number_unsigned_t length, f_fss_nests_t * const nests) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_fss_nests_decrease_by_) || !defined(_di_f_fss_nests_increase_) || !defined(_di_f_fss_nests_increase_by_) || !defined(_di_f_fss_nests_resize_)
+#endif // !defined(_di_f_fss_nests_decrease_by_) || !defined(_di_f_fss_nests_resize_)
 
 #ifdef __cplusplus
 } // extern "C"

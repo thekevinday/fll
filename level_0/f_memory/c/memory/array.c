@@ -28,9 +28,8 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (!amount) return F_data_not;
-    if (*size > amount) return private_f_memory_array_adjust(*size - amount, width, array, used, size);
 
-    return private_f_memory_array_adjust(0, width, array, used, size);
+    return private_f_memory_array_adjust((*size > amount) ? *size - amount : 0, width, array, used, size);
   }
 #endif // _di_f_memory_array_decimate_by_
 
@@ -43,9 +42,8 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (!amount) return F_data_not;
-    if (*size > amount) return private_f_memory_array_resize(*size - amount, width, array, used, size);
 
-    return private_f_memory_array_resize(0, width, array, used, size);
+    return private_f_memory_array_resize((*size > amount) ? *size - amount : 0, width, array, used, size);
   }
 #endif // _di_f_memory_array_decrease_by_
 
@@ -58,13 +56,12 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (step && *used + 1 > *size) {
+      if (*used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+
       f_number_unsigned_t length = *used + step;
 
-      if (step > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
-
-      if (*size > F_number_t_size_unsigned_d) {
+      if (length > F_number_t_size_unsigned_d) {
         if (*used + 1 > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
-        if (*used + length > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
         length = F_number_t_size_unsigned_d;
       }
@@ -84,12 +81,16 @@ extern "C" {
       if (!size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) return F_data_not;
+    if (amount) {
+      if (*used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
-    if (*used + amount > *size) {
-      if (*used + amount > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+      const f_number_unsigned_t length = *used + amount;
 
-      return private_f_memory_array_resize(*used + amount, width, array, used, size);
+      if (length > *size) {
+        if (length > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+
+        return private_f_memory_array_resize(length, width, array, used, size);
+      }
     }
 
     return F_data_not;
@@ -104,6 +105,7 @@ extern "C" {
       if (!size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
+    if (*used > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
     if (length > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
     return private_f_memory_array_resize(length, width, array, used, size);

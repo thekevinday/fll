@@ -140,14 +140,16 @@ extern "C" {
       if (!map_multiss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) return F_data_not;
+    if (amount) {
+      if (map_multiss->used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
-    if (map_multiss->used + amount > map_multiss->size) {
-      if (map_multiss->used + amount > F_number_t_size_unsigned_d) {
-        return F_status_set_error(F_array_too_large);
+      const f_number_unsigned_t length = map_multiss->used + amount;
+
+      if (length > map_multiss->size) {
+        if (length > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+
+        return private_f_utf_string_map_multiss_resize(length, map_multiss);
       }
-
-      return private_f_utf_string_map_multiss_resize(map_multiss->used + amount, map_multiss);
     }
 
     return F_data_not;

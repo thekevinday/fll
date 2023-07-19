@@ -37,8 +37,6 @@ extern "C" {
   #define macro_f_utf_string_mapss_t_initialize_1(array, size, used) { array, size, used }
   #define macro_f_utf_string_mapss_t_initialize_2(array, length) { array, length, length }
 
-  #define macro_f_utf_string_mapss_t_clear(maps) macro_f_memory_structure_clear(maps)
-
   #define macro_f_utf_string_mapss_t_resize(status, maps, length) status = f_utf_string_mapss_resize(length, &maps);
   #define macro_f_utf_string_mapss_t_adjust(status, maps, length) status = f_utf_string_mapss_adjust(length, &maps);
 

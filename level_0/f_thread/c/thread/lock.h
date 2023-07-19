@@ -53,16 +53,16 @@ extern "C" {
   #define macro_f_thread_locks_t_initialize_1(array, size, used) { array, size, used }
   #define macro_f_thread_locks_t_initialize_2(array, length) { array, length, length }
 
-  #define macro_f_thread_locks_t_resize(status, locks, length) macro_f_memory_structure_resize(status, locks, f_thread_lock_t, length)
-  #define macro_f_thread_locks_t_adjust(status, locks, length) macro_f_memory_structure_adjust(status, locks, f_thread_lock_t, length)
+  #define macro_f_thread_locks_t_adjust(status, locks, length) status = f_memory_array_adjust(length, sizeof(f_thread_lock_t), (void **) & locks.array, locks.used, locks.size)
+  #define macro_f_thread_locks_t_resize(status, locks, length) status = f_memory_array_resize(length, sizeof(f_thread_lock_t), (void **) & locks.array, locks.used, locks.size)
 
-  #define macro_f_thread_locks_t_delete_simple(locks)  macro_f_memory_structure_delete_simple(locks, f_thread_lock_t)
-  #define macro_f_thread_locks_t_destroy_simple(locks) macro_f_memory_structure_destroy_simple(locks, f_thread_lock_t)
+  #define macro_f_thread_locks_t_delete_simple(locks)  f_memory_array_resize(0, sizeof(f_thread_lock_t), (void **) & locks.array, locks.used, locks.size)
+  #define macro_f_thread_locks_t_destroy_simple(locks) f_memory_array_adjust(0, sizeof(f_thread_lock_t), (void **) & locks.array, locks.used, locks.size)
 
-  #define macro_f_thread_locks_t_increase(status, step, locks)      macro_f_memory_structure_increase(status, step, locks, f_thread_lock_t)
-  #define macro_f_thread_locks_t_increase_by(status, locks, amount) macro_f_memory_structure_increase_by(status, locks, f_thread_lock_t, amount)
-  #define macro_f_thread_locks_t_decrease_by(status, locks, amount) macro_f_memory_structure_decrease_by(status, locks, f_thread_lock_t, amount)
-  #define macro_f_thread_locks_t_decimate_by(status, locks, amount) macro_f_memory_structure_decimate_by(status, locks, f_thread_lock_t, amount)
+  #define macro_f_thread_locks_t_increase(status, step, locks)      status = f_memory_array_increase(step, sizeof(f_thread_lock_t), (void **) & locks.array, locks.used, locks.size)
+  #define macro_f_thread_locks_t_increase_by(status, locks, amount) status = f_memory_array_increase_by(amount, sizeof(f_thread_lock_t), (void **) & locks.array, locks.used, locks.size)
+  #define macro_f_thread_locks_t_decrease_by(status, locks, amount) status = f_memory_array_decrease_by(amount, sizeof(f_thread_lock_t), (void **) & locks.array, locks.used, locks.size)
+  #define macro_f_thread_locks_t_decimate_by(status, locks, amount) status = f_memory_array_decimate_by(amount, sizeof(f_thread_lock_t), (void **) & locks.array, locks.used, locks.size)
 #endif // _di_f_thread_locks_t_
 
 /**

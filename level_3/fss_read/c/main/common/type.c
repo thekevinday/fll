@@ -17,6 +17,7 @@ extern "C" {
   f_status_t fss_read_depths_resize(const f_number_unsigned_t length, fss_read_depths_t * const depths) {
 
     if (!depths) return F_status_set_error(F_parameter);
+    if (length > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
     if (depths->used + length > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
     for (f_number_unsigned_t i = length; i < depths->size; ++i) {
@@ -40,6 +41,7 @@ extern "C" {
   f_status_t fss_read_files_resize(const f_number_unsigned_t length, fss_read_files_t * const files) {
 
     if (!files) return F_status_set_error(F_parameter);
+    if (length > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
     if (files->used + length > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
     const f_status_t status = f_memory_adjust(files->size, length, sizeof(fss_read_file_t), (void **) & files->array);

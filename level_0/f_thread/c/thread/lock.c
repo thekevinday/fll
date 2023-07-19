@@ -78,14 +78,16 @@ extern "C" {
       if (!locks) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) return F_data_not;
+    if (amount) {
+      if (locks->used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
-    if (locks->used + amount > locks->size) {
-      if (locks->used + amount > F_number_t_size_unsigned_d) {
-        return F_status_set_error(F_array_too_large);
+      const f_number_unsigned_t length = locks->used + amount;
+
+      if (length > locks->size) {
+        if (length > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+
+        return private_f_thread_locks_resize(length, locks);
       }
-
-      return private_f_thread_locks_resize(locks->used + amount, locks);
     }
 
     return F_data_not;

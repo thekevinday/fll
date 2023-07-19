@@ -80,8 +80,6 @@ extern "C" {
   #define macro_f_fss_nameds_t_initialize_1(array, size, used) { array, size, used }
   #define macro_f_fss_nameds_t_initialize_2(array, length) { array, length, length }
 
-  #define macro_f_fss_nameds_t_clear(nameds) macro_f_memory_structure_clear(nameds);
-
   #define macro_f_fss_nameds_t_resize(status, nameds, length) status = f_fss_nameds_resize(length, &nameds);
   #define macro_f_fss_nameds_t_adjust(status, nameds, length) status = f_fss_nameds_adjust(length, &nameds);
 
@@ -225,18 +223,27 @@ extern "C" {
 #endif // _di_f_fss_named_resize_
 
 /**
- * Resize the named array.
+ * Adjust the named array.
  *
  * @param length
  *   The new size to use.
  * @param nameds
- *   The nameds array to resize.
+ *   The nameds array to adjust.
  *
  * @return
- *   F_none on success.
+ *   Success from f_memory_array_resize().
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_array_resize().
+ *   Errors (with error bit) from: f_string_ranges_resize().
+ *   Errors (with error bit) from: f_string_rangess_resize().
+ *   Errors (with error bit) from: f_uint8ss_resize().
+ *
+ * @see f_memory_array_resize()
+ * @see f_string_ranges_resize()
+ * @see f_string_rangess_resize()
+ * @see f_uint8ss_resize()
  */
 #ifndef _di_f_fss_nameds_adjust_
   extern f_status_t f_fss_nameds_adjust(const f_number_unsigned_t length, f_fss_nameds_t * const nameds);
@@ -299,12 +306,13 @@ extern "C" {
  *   The nameds array to resize.
  *
  * @return
- *   F_none on success.
- *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
+ *   Success from f_memory_array_increase().
  *
- *   F_array_too_large (with error bit) if the new array length is too large.
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_array_increase().
+ *
+ * @see f_memory_array_increase()
  */
 #ifndef _di_f_fss_nameds_increase_
   extern f_status_t f_fss_nameds_increase(const f_number_unsigned_t step, f_fss_nameds_t * const nameds);
@@ -323,12 +331,13 @@ extern "C" {
  *   The nameds array to resize.
  *
  * @return
- *   F_none on success.
- *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
+ *   Success from f_memory_array_increase_by().
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_array_too_large (with error bit) if the new array length is too large.
+ *
+ *   Errors (with error bit) from: f_memory_array_increase_by().
+ *
+ * @see f_memory_array_increase_by()
  */
 #ifndef _di_f_fss_nameds_increase_by_
   extern f_status_t f_fss_nameds_increase_by(const f_number_unsigned_t amount, f_fss_nameds_t * const nameds);
@@ -340,13 +349,22 @@ extern "C" {
  * @param length
  *   The new size to use.
  * @param nameds
- *   The nameds array to adjust.
+ *   The nameds array to resize.
  *
  * @return
- *   F_none on success.
+ *   Success from f_memory_array_resize().
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_array_resize().
+ *   Errors (with error bit) from: f_string_ranges_resize().
+ *   Errors (with error bit) from: f_string_rangess_resize().
+ *   Errors (with error bit) from: f_uint8ss_resize().
+ *
+ * @see f_memory_array_resize()
+ * @see f_string_ranges_resize()
+ * @see f_string_rangess_resize()
+ * @see f_uint8ss_resize()
  */
 #ifndef _di_f_fss_nameds_resize_
   extern f_status_t f_fss_nameds_resize(const f_number_unsigned_t length, f_fss_nameds_t * const nameds);

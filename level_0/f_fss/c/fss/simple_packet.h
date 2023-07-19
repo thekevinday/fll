@@ -84,8 +84,6 @@ extern "C" {
   #define macro_f_fss_simple_packet_ranges_t_initialize_1(array, size, used) { array, size, used }
   #define macro_f_fss_simple_packet_ranges_t_initialize_2(array, length) { array, length, length }
 
-  #define macro_f_fss_simple_packet_ranges_t_clear(simple_packet_ranges) macro_f_memory_structure_t_clear(simple_packet_range.objects)
-
   #define macro_f_fss_simple_packet_ranges_t_resize(status, simple_packet_ranges, length) status = f_fss_simple_packet_ranges_resize(length, &simple_packet_ranges);
   #define macro_f_fss_simple_packet_ranges_t_adjust(status, simple_packet_ranges, length) status = f_fss_simple_packet_ranges_adjust(length, &simple_packet_ranges);
 
@@ -118,8 +116,6 @@ extern "C" {
 
   #define macro_f_fss_simple_packet_rangess_t_initialize_1(array, size, used) { array, size, used }
   #define macro_f_fss_simple_packet_rangess_t_initialize_2(array, length) { array, length, length }
-
-  #define macro_f_fss_simple_packet_rangess_t_clear(simple_packet_rangess) macro_f_memory_structure_t_clear(simple_packet_ranges.objects)
 
   #define macro_f_fss_simple_packet_rangess_t_resize(status, simple_packet_rangess, length) status = f_fss_simple_packet_rangess_resize(length, &simple_packet_rangess);
   #define macro_f_fss_simple_packet_rangess_t_adjust(status, simple_packet_rangess, length) status = f_fss_simple_packet_rangess_adjust(length, &simple_packet_rangess);
@@ -533,7 +529,7 @@ extern "C" {
  * @param length
  *   The new size to use.
  * @param rangess
- *   The rangess array to adjust.
+ *   The rangess array to resize.
  *
  * @return
  *   Success from f_memory_array_resize().

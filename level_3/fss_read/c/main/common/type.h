@@ -71,8 +71,6 @@ extern "C" {
   } fss_read_depths_t;
 
   #define fss_read_depths_t_initialize { 0, 0, 0 }
-
-  #define macro_fss_read_depths_t_clear(depths) macro_f_memory_structure_clear(depths)
 #endif // _di_fss_read_depths_t_
 
 /**

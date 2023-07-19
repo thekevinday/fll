@@ -22,9 +22,8 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (!amount) return F_data_not;
-    if (items->size > amount) return private_f_fss_items_adjust(items->size - amount, items);
 
-    return private_f_fss_items_adjust(0, items);
+    return private_f_fss_items_adjust((items->size > amount) ? items->size - amount : 0, items);
   }
 #endif // _di_f_fss_items_decimate_by_
 
@@ -35,9 +34,8 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (!amount) return F_data_not;
-    if (items->size > amount) return private_f_fss_items_resize(items->size - amount, items);
 
-    return private_f_fss_items_resize(0, items);
+    return private_f_fss_items_resize((items->size > amount) ? items->size - amount : 0, items);
   }
 #endif // _di_f_fss_items_decrease_by_
 
@@ -47,19 +45,7 @@ extern "C" {
       if (!items) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (step && items->used + 1 > items->size) {
-      f_number_unsigned_t size = items->used + step;
-
-      if (size > F_number_t_size_unsigned_d) {
-        if (items->used + 1 > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
-
-        size = F_number_t_size_unsigned_d;
-      }
-
-      return private_f_fss_items_resize(size, items);
-    }
-
-    return F_data_not;
+    return f_memory_array_increase(step, sizeof(f_fss_item_t), (void **) &items->array, &items->used, &items->size);
   }
 #endif // _di_f_fss_items_increase_
 
@@ -69,15 +55,7 @@ extern "C" {
       if (!items) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) return F_data_not;
-
-    if (items->used + amount > items->size) {
-      if (items->used + amount > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
-
-      return private_f_fss_items_resize(items->used + amount, items);
-    }
-
-    return F_data_not;
+    return f_memory_array_increase_by(amount, sizeof(f_fss_item_t), (void **) &items->array, &items->used, &items->size);
   }
 #endif // _di_f_fss_items_increase_by_
 

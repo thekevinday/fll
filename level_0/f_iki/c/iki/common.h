@@ -248,8 +248,6 @@ extern "C" {
   #define macro_f_iki_datas_t_initialize_1(content, size, used) { array, size, used }
   #define macro_f_iki_datas_t_initialize_2(array, length) { array, length, length }
 
-  #define macro_f_iki_datas_t_clear(datas) macro_f_memory_structure_clear(datas)
-
   #define macro_f_iki_datas_t_resize(status, datas, length) status = f_iki_datas_resize(length, &datas);
   #define macro_f_iki_datas_t_adjust(status, datas, length) status = f_iki_datas_adjust(length, &datas);
 
@@ -282,8 +280,6 @@ extern "C" {
 
   #define macro_f_iki_datass_t_initialize_1(content, size, used) { array, size, used }
   #define macro_f_iki_datass_t_initialize_2(array, length) { array, length, length }
-
-  #define macro_f_iki_datass_t_clear(datas) macro_f_memory_structure_clear(datas)
 
   #define macro_f_iki_datass_t_resize(status, datas, length) status = f_iki_datass_resize(length, &datas);
   #define macro_f_iki_datass_t_adjust(status, datas, length) status = f_iki_datass_adjust(length, &datas);

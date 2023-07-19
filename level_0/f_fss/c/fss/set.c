@@ -22,9 +22,8 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (!amount) return F_data_not;
-    if (set->objects.size - amount > 0) return private_f_fss_set_adjust(set->objects.size - amount, set);
 
-    return private_f_fss_set_adjust(0, set);
+    return private_f_fss_set_adjust((set->objects.size - amount > 0) ? set->objects.size - amount : 0, set);
   }
 #endif // _di_f_fss_set_decimate_by_
 
@@ -35,9 +34,8 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (!amount) return F_data_not;
-    if (set->objects.size - amount > 0) return private_f_fss_set_resize(set->objects.size - amount, set);
 
-    return private_f_fss_set_resize(0, set);
+    return private_f_fss_set_resize((set->objects.size - amount > 0) ? set->objects.size - amount : 0, set);
   }
 #endif // _di_f_fss_set_decrease_by_
 
@@ -48,6 +46,8 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (step && set->objects.used + 1 > set->objects.size) {
+      if (set->objects.used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+
       f_number_unsigned_t size = set->objects.used + step;
 
       if (size > F_number_t_size_unsigned_d) {
@@ -69,12 +69,16 @@ extern "C" {
       if (!set) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) return F_data_not;
+    if (amount) {
+      if (set->objects.used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
-    if (set->objects.used + amount > set->objects.size) {
-      if (set->objects.used + amount > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+      const f_number_unsigned_t length = set->objects.used + amount;
 
-      return private_f_fss_set_resize(set->objects.used + amount, set);
+      if (length > set->objects.size) {
+        if (length > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+
+        return private_f_fss_set_resize(length, set);
+      }
     }
 
     return F_data_not;
@@ -108,9 +112,8 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (!amount) return F_data_not;
-    if (sets->size - amount > 0) return private_f_fss_sets_adjust(sets->size - amount, sets);
 
-    return private_f_fss_sets_adjust(0, sets);
+    return private_f_fss_sets_adjust((sets->size > amount) ? sets->size - amount : 0, sets);
   }
 #endif // _di_f_fss_sets_decimate_by_
 
@@ -121,9 +124,8 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (!amount) return F_data_not;
-    if (sets->size - amount > 0) return private_f_fss_sets_resize(sets->size - amount, sets);
 
-    return private_f_fss_sets_resize(0, sets);
+    return private_f_fss_sets_resize((sets->size > amount) ? sets->size - amount : 0, sets);
   }
 #endif // _di_f_fss_sets_decrease_by_
 
@@ -133,19 +135,7 @@ extern "C" {
       if (!sets) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (step && sets->used + 1 > sets->size) {
-      f_number_unsigned_t size = sets->used + step;
-
-      if (size > F_number_t_size_unsigned_d) {
-        if (sets->used + 1 > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
-
-        size = F_number_t_size_unsigned_d;
-      }
-
-      return private_f_fss_sets_resize(size, sets);
-    }
-
-    return F_data_not;
+    return f_memory_array_increase(step, sizeof(f_fss_set_t), (void **) &sets->array, &sets->used, &sets->size);
   }
 #endif // _di_f_fss_sets_increase_
 
@@ -155,15 +145,7 @@ extern "C" {
       if (!sets) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) return F_data_not;
-
-    if (sets->used + amount > sets->size) {
-      if (sets->used + amount > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
-
-      return private_f_fss_sets_resize(sets->used + amount, sets);
-    }
-
-    return F_data_not;
+    return f_memory_array_increase_by(amount, sizeof(f_fss_set_t), (void **) &sets->array, &sets->used, &sets->size);
   }
 #endif // _di_f_fss_sets_increase_by_
 

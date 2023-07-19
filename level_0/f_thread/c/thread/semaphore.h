@@ -54,8 +54,6 @@ extern "C" {
   #define macro_f_thread_semaphores_t_initialize_1(array, size, used) { array, size, used }
   #define macro_f_thread_semaphores_t_initialize_2(array, length) { array, length, length }
 
-  #define macro_f_thread_semaphores_t_clear(semaphores) macro_f_memory_structure_clear(semaphores)
-
   #define macro_f_thread_semaphores_t_resize(status, semaphores, length) status = f_thread_semaphores_resize(length, &semaphores);
   #define macro_f_thread_semaphores_t_adjust(status, semaphores, length) status = f_thread_semaphores_adjust(length, &semaphores);
 

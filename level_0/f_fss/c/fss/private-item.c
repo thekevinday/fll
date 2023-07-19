@@ -16,16 +16,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     } // for
 
-    status = f_memory_adjust(items->size, length, sizeof(f_fss_item_t), (void **) & items->array);
-    if (F_status_is_error(status)) return status;
-
-    items->size = length;
-
-    if (items->used > items->size) {
-      items->used = length;
-    }
-
-    return F_none;
+    return f_memory_array_adjust(length, sizeof(f_fss_item_t), (void **) &items->array, &items->used, &items->size);
   }
 #endif // !defined(_di_f_fss_items_adjust_) || !defined(_di_f_fss_items_decimate_by_)
 
@@ -40,16 +31,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     } // for
 
-    status = f_memory_resize(items->size, length, sizeof(f_fss_item_t), (void **) & items->array);
-    if (F_status_is_error(status)) return status;
-
-    items->size = length;
-
-    if (items->used > items->size) {
-      items->used = length;
-    }
-
-    return F_none;
+    return f_memory_array_resize(length, sizeof(f_fss_item_t), (void **) &items->array, &items->used, &items->size);
   }
 #endif // !defined(_di_f_fss_items_decrease_by_) || !defined(_di_f_fss_items_increase_) || !defined(_di_f_fss_items_increase_by_) || !defined(_di_f_fss_items_resize_)
 

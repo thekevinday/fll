@@ -64,8 +64,6 @@ extern "C" {
   #define macro_f_thread_sets_t_initialize_1(array, size, used) { array, size, used }
   #define macro_f_thread_sets_t_initialize_2(array, length) { array, length, length }
 
-  #define macro_f_thread_sets_t_clear(sets) macro_f_memory_structure_clear(sets)
-
   #define macro_f_thread_sets_t_resize(status, sets, length) status = f_thread_sets_resize(length, &sets);
   #define macro_f_thread_sets_t_adjust(status, sets, length) status = f_thread_sets_adjust(length, &sets);
 

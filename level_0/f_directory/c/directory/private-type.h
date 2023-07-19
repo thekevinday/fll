@@ -26,16 +26,18 @@ extern "C" {
  *   The statuss to adjust.
  *
  * @return
- *   F_none on success.
+ *   Success from f_memory_array_adjust().
  *
- *   Errors (with error bit) from: f_memory_adjust().
- *   Errors (with error bit) from: private_f_directory_status_adjust().
+ *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see private_f_directory_status_adjust()
+ *   Errors (with error bit) from: f_memory_array_adjust().
+ *   Errors (with error bit) from: f_string_dynamic_adjust().
+ *
+ * @see f_memory_array_adjust()
+ * @see f_string_dynamic_adjust()
  *
  * @see f_directory_statuss_adjust()
  * @see f_directory_statuss_decimate_by()
- * @see f_memory_adjust()
  */
 #if !defined(_di_f_directory_statuss_adjust_) || !defined(_di_f_directory_statuss_decimate_by_)
   extern f_status_t private_f_directory_statuss_adjust(const f_number_unsigned_t length, f_directory_statuss_t * const statuss) F_attribute_visibility_internal_d;
@@ -52,21 +54,22 @@ extern "C" {
  *   The statuss to resize.
  *
  * @return
- *   F_none on success.
+ *   Success from f_memory_array_resize().
  *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_array_resize().
  *   Errors (with error bit) from: f_string_dynamic_resize().
  *
+ * @see f_memory_array_resize()
  * @see f_string_dynamic_resize()
  *
- * @see f_directory_statuss_decrease_by()
- * @see f_directory_statuss_increase()
- * @see f_directory_statuss_increase_by()
  * @see f_directory_statuss_resize()
- * @see f_memory_resize()
+ * @see f_directory_statuss_decimate_by()
  */
-#if !defined(_di_f_directory_statuss_decrease_by_) || !defined(_di_f_directory_statuss_increase_) || !defined(_di_f_directory_statuss_increase_by_) || !defined(_di_f_directory_statuss_resize_)
+#if !defined(_di_f_directory_statuss_decrease_by_) || !defined(_di_f_directory_statuss_resize_)
   extern f_status_t private_f_directory_statuss_resize(const f_number_unsigned_t length, f_directory_statuss_t * const statuss) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_directory_statuss_decrease_by_) || !defined(_di_f_directory_statuss_increase_) || !defined(_di_f_directory_statuss_increase_by_) || !defined(_di_f_directory_statuss_resize_)
+#endif // !defined(_di_f_directory_statuss_decrease_by_) || !defined(_di_f_directory_statuss_resize_)
 
 #ifdef __cplusplus
 } // extern "C"

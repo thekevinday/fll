@@ -26,16 +26,15 @@ extern "C" {
  *   The items to adjust.
  *
  * @return
- *   F_none on success.
+ *   Success from f_memory_array_adjust().
  *
- *   Errors (with error bit) from: macro_f_fss_item_t_adjust().
- *   Errors (with error bit) from: f_memory_adjust().
+ *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see macro_f_fss_item_t_adjust()
+ *   Errors (with error bit) from: f_memory_array_adjust().
+ *   Errors (with error bit) from: f_string_dynamic_adjust().
  *
- * @see f_fss_items_adjust()
- * @see f_fss_items_decimate_by()
- * @see f_memory_adjust()
+ * @see f_memory_array_adjust()
+ * @see f_string_dynamic_adjust()
  */
 #if !defined(_di_f_fss_items_adjust_) || !defined(_di_f_fss_items_decimate_by_)
   extern f_status_t private_f_fss_items_adjust(const f_number_unsigned_t length, f_fss_items_t * const items) F_attribute_visibility_internal_d;
@@ -52,22 +51,19 @@ extern "C" {
  *   The items to resize.
  *
  * @return
- *   F_none on success.
+ *   Success from f_memory_array_resize().
  *
- *   Errors (with error bit) from: macro_f_fss_item_t_resize().
- *   Errors (with error bit) from: f_memory_resize().
+ *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see macro_f_fss_item_t_resize()
+ *   Errors (with error bit) from: f_memory_array_resize().
+ *   Errors (with error bit) from: f_string_dynamic_resize().
  *
- * @see f_fss_items_decrease_by()
- * @see f_fss_items_increase()
- * @see f_fss_items_increase_by()
- * @see f_fss_items_resize()
- * @see f_memory_resize()
+ * @see f_memory_array_resize()
+ * @see f_string_dynamic_resize()
  */
-#if !defined(_di_f_fss_items_decrease_by_) || !defined(_di_f_fss_items_increase_) || !defined(_di_f_fss_items_increase_by_) || !defined(_di_f_fss_items_resize_)
+#if !defined(_di_f_fss_items_decrease_by_) || !defined(_di_f_fss_items_resize_)
   extern f_status_t private_f_fss_items_resize(const f_number_unsigned_t length, f_fss_items_t * const items) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_fss_items_decrease_by_) || !defined(_di_f_fss_items_increase_) || !defined(_di_f_fss_items_increase_by_) || !defined(_di_f_fss_items_resize_)
+#endif // !defined(_di_f_fss_items_decrease_by_) || !defined(_di_f_fss_items_resize_)
 
 #ifdef __cplusplus
 } // extern "C"

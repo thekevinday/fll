@@ -78,14 +78,16 @@ extern "C" {
       if (!sets) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) return F_data_not;
+    if (amount) {
+      if (sets->used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
-    if (sets->used + amount > sets->size) {
-      if (sets->used + amount > F_number_t_size_unsigned_d) {
-        return F_status_set_error(F_array_too_large);
+      const f_number_unsigned_t length = sets->used + amount;
+
+      if (length > sets->size) {
+        if (length > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+
+        return private_f_thread_sets_resize(length, sets);
       }
-
-      return private_f_thread_sets_resize(sets->used + amount, sets);
     }
 
     return F_data_not;

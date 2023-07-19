@@ -26,11 +26,14 @@ extern "C" {
  *   The destination lengths the source is appended onto.
  *
  * @return
- *   F_none on success.
+ *   Success from f_memory_array_increase().
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see f_memory_resize()
+ *   Errors (with error bit) from: f_memory_array_increase().
+ *
+ * @see f_memory_array_increase()
+ *
  * @see f_fss_simple_packet_ranges_append()
  * @see f_fss_simple_packet_rangess_append()
  */
@@ -49,11 +52,14 @@ extern "C" {
  *   The destination lengths the source is appended onto.
  *
  * @return
- *   F_none on success.
+ *   Success from f_memory_array_increase_by().
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see f_memory_resize()
+ *   Errors (with error bit) from: f_memory_array_increase_by().
+ *
+ * @see f_memory_array_increase_by()
+ *
  * @see f_fss_simple_packet_ranges_append_all()
  * @see f_fss_simple_packet_rangess_append()
  * @see f_fss_simple_packet_rangess_append_all()
@@ -73,18 +79,16 @@ extern "C" {
  *   The rangess array to adjust.
  *
  * @return
- *   F_none on success.
- *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
+ *   Success from f_memory_array_adjust().
  *
- *   F_array_too_large (with error bit) if new length is larger than max array length.
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_adjust().
- *   Errors (with error bit) from: f_memory_destroy().
+ *   Errors (with error bit) from: f_memory_array_adjust().
  *
+ * @see f_memory_array_adjust()
+ *
+ * @see f_fss_simple_packet_rangess_decrease_by()
  * @see f_fss_simple_packet_rangess_adjust()
- * @see f_fss_simple_packet_rangess_decimate_by()
  */
 #if !defined(_di_f_fss_simple_packet_rangess_adjust_) || !defined(_di_f_fss_simple_packet_rangess_decimate_by_)
   extern f_status_t private_f_fss_simple_packet_rangess_adjust(const f_number_unsigned_t length, f_fss_simple_packet_rangess_t *rangess) F_attribute_visibility_internal_d;
@@ -101,24 +105,20 @@ extern "C" {
  *   The rangess array to resize.
  *
  * @return
- *   F_none on success.
- *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
+ *   Success from f_memory_array_resize().
  *
- *   F_array_too_large (with error bit) if new length is larger than max array length.
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_delete().
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_resize().
+ *
+ * @see f_memory_array_resize()
  *
  * @see f_fss_simple_packet_rangess_decrease_by()
- * @see f_fss_simple_packet_rangess_increase()
- * @see f_fss_simple_packet_rangess_increase_by()
  * @see f_fss_simple_packet_rangess_resize()
  */
-#if !defined(_di_f_fss_simple_packet_rangess_decrease_by_) || !defined(_di_f_fss_simple_packet_rangess_increase_) || !defined(_di_f_fss_simple_packet_rangess_increase_by_) || !defined(_di_f_fss_simple_packet_rangess_resize_)
+#if !defined(_di_f_fss_simple_packet_rangess_decrease_by_) || !defined(_di_f_fss_simple_packet_rangess_resize_)
   extern f_status_t private_f_fss_simple_packet_rangess_resize(const f_number_unsigned_t length, f_fss_simple_packet_rangess_t *rangess) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_fss_simple_packet_rangess_decrease_by_) || !defined(_di_f_fss_simple_packet_rangess_increase_) || !defined(_di_f_fss_simple_packet_rangess_increase_by_) || !defined(_di_f_fss_simple_packet_rangess_resize_)
+#endif // !defined(_di_f_fss_simple_packet_rangess_decrease_by_) || !defined(_di_f_fss_simple_packet_rangess_resize_)
 
 #ifdef __cplusplus
 } // extern "C"

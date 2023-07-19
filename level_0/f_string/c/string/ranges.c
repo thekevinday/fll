@@ -119,14 +119,16 @@ extern "C" {
       if (!ranges) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) return F_data_not;
+    if (amount) {
+      if (ranges->used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
-    if (ranges->used + amount > ranges->size) {
-      if (ranges->used + amount > F_number_t_size_unsigned_d) {
-        return F_status_set_error(F_array_too_large);
+      const f_number_unsigned_t length = ranges->used + amount;
+
+      if (length > ranges->size) {
+        if (length > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+
+        return private_f_string_ranges_resize(length, ranges);
       }
-
-      return private_f_string_ranges_resize(ranges->used + amount, ranges);
     }
 
     return F_data_not;

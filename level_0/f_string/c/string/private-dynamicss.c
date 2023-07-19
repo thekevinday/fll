@@ -11,7 +11,7 @@ extern "C" {
 #if !defined(_di_f_string_dynamicss_adjust_) || !defined(_di_f_string_dynamicss_append_) || !defined(_di_f_string_dynamicss_decimate_by_) || !defined(_di_f_string_map_multis_adjust_) || !defined(_di_f_string_map_multis_append_)
   f_status_t private_f_string_dynamicss_adjust(const f_number_unsigned_t length, f_string_dynamicss_t * const dynamicss) {
 
-    if (dynamicss->used + length > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+    if (length > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
     f_status_t status = F_none;
 
@@ -37,7 +37,7 @@ extern "C" {
 #if !defined(_di_f_string_dynamicss_decrease_by_) || !defined(_di_f_string_dynamicss_increase_) || !defined(_di_f_string_dynamicss_increase_by_) || !defined(_di_f_string_dynamicss_append_all_) || !defined(_di_f_string_map_multis_append_all_)
   f_status_t private_f_string_dynamicss_resize(const f_number_unsigned_t length, f_string_dynamicss_t * const dynamicss) {
 
-    if (dynamicss->used + length > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+    if (length > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
     f_status_t status = F_none;
 

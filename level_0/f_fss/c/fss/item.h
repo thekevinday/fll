@@ -103,8 +103,6 @@ extern "C" {
   #define macro_f_fss_items_t_initialize_1(array, size, used) { array, size, used }
   #define macro_f_fss_items_t_initialize_2(array, length)     { array, length, length }
 
-  #define macro_f_fss_items_t_clear(items) macro_f_memory_structure_clear(items)
-
   #define macro_f_fss_items_t_resize(status, items, length) status = f_fss_items_resize(length, &items);
   #define macro_f_fss_items_t_adjust(status, items, length) status = f_fss_items_adjust(length, &items);
 
@@ -171,10 +169,15 @@ extern "C" {
  *   The items array to resize.
  *
  * @return
- *   F_none on success.
+ *   Success from f_memory_array_adjust().
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_array_adjust().
+ *   Errors (with error bit) from: f_string_dynamic_adjust().
+ *
+ * @see f_memory_array_adjust()
+ * @see f_string_dynamic_adjust()
  */
 #ifndef _di_f_fss_items_decrease_by_
   extern f_status_t f_fss_items_decrease_by(const f_number_unsigned_t amount, f_fss_items_t * const items);
@@ -193,12 +196,13 @@ extern "C" {
  *   The items array to resize.
  *
  * @return
- *   F_none on success.
- *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
+ *   Success from f_memory_array_increase().
  *
- *   F_array_too_large (with error bit) if the new array length is too large.
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_array_increase().
+ *
+ * @see f_memory_array_increase()
  */
 #ifndef _di_f_fss_items_increase_
   extern f_status_t f_fss_items_increase(const f_number_unsigned_t step, f_fss_items_t * const items);
@@ -217,12 +221,13 @@ extern "C" {
  *   The items array to resize.
  *
  * @return
- *   F_none on success.
- *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
+ *   Success from f_memory_array_increase_by().
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_array_too_large (with error bit) if the new array length is too large.
+ *
+ *   Errors (with error bit) from: f_memory_array_increase_by().
+ *
+ * @see f_memory_array_increase_by()
  */
 #ifndef _di_f_fss_items_increase_by_
   extern f_status_t f_fss_items_increase_by(const f_number_unsigned_t amount, f_fss_items_t * const items);
@@ -234,13 +239,18 @@ extern "C" {
  * @param length
  *   The new size to use.
  * @param items
- *   The items array to adjust.
+ *   The items array to resize.
  *
  * @return
- *   F_none on success.
+ *   Success from f_memory_array_resize().
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_array_resize().
+ *   Errors (with error bit) from: f_string_dynamic_resize().
+ *
+ * @see f_memory_array_resize()
+ * @see f_string_dynamic_resize()
  */
 #ifndef _di_f_fss_items_resize_
   extern f_status_t f_fss_items_resize(const f_number_unsigned_t length, f_fss_items_t * const items);

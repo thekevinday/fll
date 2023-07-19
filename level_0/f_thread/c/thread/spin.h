@@ -52,8 +52,6 @@ extern "C" {
   #define macro_f_thread_spins_t_initialize_1(array, size, used) { array, size, used }
   #define macro_f_thread_spins_t_initialize_2(array, length) { array, length, length }
 
-  #define macro_f_thread_spins_t_clear(spins) macro_f_memory_structure_clear(spins)
-
   #define macro_f_thread_spins_t_resize(status, spins, length) status = f_thread_spins_resize(length, &spins);
   #define macro_f_thread_spins_t_adjust(status, spins, length) status = f_thread_spins_adjust(length, &spins);
 

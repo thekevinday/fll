@@ -401,13 +401,13 @@
 //#define _di_f_file_name_directory_
 //#define _di_f_file_open_
 #define _di_f_file_open_at_
-//#define _di_f_file_open_mode_append_s_
 //#define _di_f_file_open_mode_read_append_s_
 //#define _di_f_file_open_mode_read_s_
 //#define _di_f_file_open_mode_read_truncate_s_
 //#define _di_f_file_open_mode_read_write_s_
 //#define _di_f_file_open_mode_s_
-//#define _di_f_file_open_mode_truncate_s_
+//#define _di_f_file_open_mode_write_append_s_
+//#define _di_f_file_open_mode_write_truncate_s_
 //#define _di_f_file_operation_access_s_
 //#define _di_f_file_operation_analyze_s_
 #define _di_f_file_operation_append_s_
@@ -1179,19 +1179,13 @@
 #define _di_f_memory_array_decrease_by_
 #define _di_f_memory_array_increase_
 #define _di_f_memory_array_increase_by_
-#define _di_f_memory_array_resize_
+//#define _di_f_memory_array_resize_
 //#define _di_f_memory_default_d_
 //#define _di_f_memory_delete_
 #define _di_f_memory_destroy_
 #define _di_f_memory_new_
 #define _di_f_memory_new_aligned_
 //#define _di_f_memory_resize_
-#define _di_f_memory_structure_adjust_
-#define _di_f_memory_structure_decimate_by_
-#define _di_f_memory_structure_decrease_by_
-#define _di_f_memory_structure_increase_
-#define _di_f_memory_structure_increase_by_
-#define _di_f_memory_structure_resize_
 
 //#define _di_f_mode_t_
 
@@ -1527,7 +1521,7 @@
 #define _di_f_socket_message_flag_e_
 #define _di_f_socket_name_host_
 #define _di_f_socket_name_peer_
-#define _di_f_socket_option_d_
+#define _di_f_socket_option_e_
 #define _di_f_socket_option_get_
 #define _di_f_socket_option_set_
 #define _di_f_socket_protocol_e_
@@ -1554,7 +1548,7 @@
 #define _di_f_socketss_t_
 #define _di_f_sockets_t_
 #define _di_f_socket_t_
-#define _di_f_socket_type_d_
+#define _di_f_socket_type_e_
 #define _di_f_socket_write_
 #define _di_f_socket_write_message_
 #define _di_f_socket_write_stream_

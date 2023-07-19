@@ -37,8 +37,6 @@ extern "C" {
   #define macro_f_string_ranges_t_initialize_1(array, size, used) { array, size, used }
   #define macro_f_string_ranges_t_initialize_2(array, length) { array, length, length }
 
-  #define macro_f_string_ranges_t_clear(ranges) macro_f_memory_structure_clear(ranges)
-
   #define macro_f_string_ranges_t_resize(status, ranges, length) status = f_string_ranges_resize(length, &ranges);
   #define macro_f_string_ranges_t_adjust(status, ranges, length) status = f_string_ranges_adjust(length, &ranges);
 

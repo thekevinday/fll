@@ -37,8 +37,6 @@ extern "C" {
   #define macro_f_string_triples_t_initialize_1(array, size, used) { array, size, used }
   #define macro_f_string_triples_t_initialize_2(array, length) { array, length, length }
 
-  #define macro_f_string_triples_t_clear(triples) macro_f_memory_structure_clear(triples)
-
   #define macro_f_string_triples_t_resize(status, triples, length) status = f_string_triples_resize(length, &triples);
   #define macro_f_string_triples_t_adjust(status, triples, length) status = f_string_triples_adjust(length, &triples);
 

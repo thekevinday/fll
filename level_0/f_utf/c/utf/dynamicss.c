@@ -141,14 +141,16 @@ extern "C" {
       if (!dynamicss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) return F_data_not;
+    if (amount) {
+      if (dynamicss->used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
-    if (dynamicss->used + amount > dynamicss->size) {
-      if (dynamicss->used + amount > F_number_t_size_unsigned_d) {
-        return F_status_set_error(F_array_too_large);
+      const f_number_unsigned_t length = dynamicss->used + amount;
+
+      if (length > dynamicss->size) {
+        if (length > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+
+        return private_f_utf_string_dynamicss_resize(length, dynamicss);
       }
-
-      return private_f_utf_string_dynamicss_resize(dynamicss->used + amount, dynamicss);
     }
 
     return F_data_not;

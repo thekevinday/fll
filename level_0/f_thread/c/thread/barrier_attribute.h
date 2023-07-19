@@ -53,8 +53,6 @@ extern "C" {
   #define macro_f_thread_barrier_attributes_t_initialize_1(array, size, used) { array, size, used }
   #define macro_f_thread_barrier_attributes_t_initialize_2(array, length) { array, length, length }
 
-  #define macro_f_thread_barrier_attributes_t_clear(barrier_attributes) macro_f_memory_structure_clear(barrier_attributes)
-
   #define macro_f_thread_barrier_attributes_t_resize(status, barrier_attributes, length) status = f_thread_barrier_attributes_resize(length, &barrier_attributes);
   #define macro_f_thread_barrier_attributes_t_adjust(status, barrier_attributes, length) status = f_thread_barrier_attributes_adjust(length, &barrier_attributes);
 

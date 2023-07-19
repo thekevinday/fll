@@ -72,6 +72,8 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (step && polls->used + 1 > polls->size) {
+      if (polls->used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+
       f_number_unsigned_t size = polls->used + step;
 
       if (size > F_number_t_size_unsigned_d) {
@@ -93,12 +95,16 @@ extern "C" {
       if (!polls) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) return F_data_not;
+    if (amount) {
+      if (polls->used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
-    if (polls->used + amount > polls->size) {
-      if (polls->used + amount > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+      const f_number_unsigned_t length = polls->used + amount;
 
-      return private_f_polls_resize(polls->used + amount, polls);
+      if (length > polls->size) {
+        if (length > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+
+        return private_f_polls_resize(length, polls);
+      }
     }
 
     return F_data_not;
@@ -211,6 +217,8 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (step && pollss->used + 1 > pollss->size) {
+      if (pollss->used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+
       f_number_unsigned_t size = pollss->used + step;
 
       if (size > F_number_t_size_unsigned_d) {
@@ -232,12 +240,16 @@ extern "C" {
       if (!pollss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) return F_data_not;
+    if (amount) {
+      if (pollss->used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
-    if (pollss->used + amount > pollss->size) {
-      if (pollss->used + amount > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+      const f_number_unsigned_t length = pollss->used + amount;
 
-      return private_f_pollss_resize(pollss->used + amount, pollss);
+      if (length > pollss->size) {
+        if (length > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+
+        return private_f_pollss_resize(length, pollss);
+      }
     }
 
     return F_data_not;

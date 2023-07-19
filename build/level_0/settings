@@ -48,7 +48,7 @@ build_sources_library fss.c fss/common.c fss/item.c fss/named.c fss/nest.c fss/q
 build_sources_library fss/private-item.c fss/private-named.c fss/private-nest.c fss/private-set.c fss/private-set_quote.c fss/private-simple_packet.c
 build_sources_library iki.c iki/common.c iki/data.c private-iki.c iki/private-data.c
 build_sources_library limit.c limit/set.c limit/value.c limit/private-set.c limit/private-value.c
-build_sources_library memory.c memory/array.c memory/structure.c
+build_sources_library memory.c memory/array.c
 build_sources_library private-memory.c memory/private-array.c
 build_sources_library network.c
 build_sources_library parse.c parse/utf.c
@@ -107,7 +107,7 @@ build_sources_headers file.h file/common.h file/stream.h
 build_sources_headers fss.h fss/common.h fss/item.h fss/named.h fss/nest.h fss/quote.h fss/set.h fss/set_quote.h fss/simple_packet.h
 build_sources_headers iki.h iki/common.h iki/data.h
 build_sources_headers limit.h limit/set.h limit/value.h
-build_sources_headers memory.h memory/array.h memory/common.h memory/structure.h
+build_sources_headers memory.h memory/array.h memory/common.h
 build_sources_headers network.h network/common.h
 build_sources_headers parse.h parse/utf.h
 build_sources_headers path.h path/common.h

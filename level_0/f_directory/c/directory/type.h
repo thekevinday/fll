@@ -304,13 +304,15 @@ extern "C" {
  *   The statuss structure to adjust.
  *
  * @return
- *   F_none on success.
+ *   Success from f_memory_array_adjust().
  *
- *   Errors (with error bit) from: f_memory_resize().
- *   Errors (with error bit) from: f_string_dynamic_resize().
+ *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   @see f_memory_resize()
- *   @see f_string_dynamic_resize()
+ *   Errors (with error bit) from: f_memory_array_adjust().
+ *   Errors (with error bit) from: f_string_dynamic_adjust().
+ *
+ * @see f_memory_array_adjust()
+ * @see f_string_dynamic_adjust()
  */
 #ifndef _di_f_directory_statuss_adjust_
   extern f_status_t f_directory_statuss_adjust(const f_number_unsigned_t length, f_directory_statuss_t * const statuss);
@@ -329,14 +331,15 @@ extern "C" {
  *   The statuss array to resize.
  *
  * @return
- *   F_none on success.
- *   F_data_not if amount is 0.
+ *   Success from f_memory_array_adjust().
  *
- *   Errors (with error bit) from: f_memory_resize().
- *   Errors (with error bit) from: f_string_dynamic_resize().
+ *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   @see f_memory_resize()
- *   @see f_string_dynamic_resize()
+ *   Errors (with error bit) from: f_memory_array_adjust().
+ *   Errors (with error bit) from: f_string_dynamic_adjust().
+ *
+ * @see f_memory_array_adjust()
+ * @see f_string_dynamic_adjust()
  */
 #ifndef _di_f_directory_statuss_decimate_by_
   extern f_status_t f_directory_statuss_decimate_by(const f_number_unsigned_t amount, f_directory_statuss_t * const statuss);
@@ -355,14 +358,15 @@ extern "C" {
  *   The statuss array to resize.
  *
  * @return
- *   F_none on success.
- *   F_data_not if amount is 0.
+ *   Success from f_memory_array_resize().
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_array_resize().
  *   Errors (with error bit) from: f_string_dynamic_resize().
  *
- *   @see f_memory_resize()
- *   @see f_string_dynamic_resize()
+ * @see f_memory_array_resize()
+ * @see f_string_dynamic_resize()
  */
 #ifndef _di_f_directory_statuss_decrease_by_
   extern f_status_t f_directory_statuss_decrease_by(const f_number_unsigned_t amount, f_directory_statuss_t * const statuss);
@@ -381,14 +385,13 @@ extern "C" {
  *   The statuss array to resize.
  *
  * @return
- *   F_none on success.
- *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
+ *   Success from f_memory_array_increase().
  *
- *   Errors (with error bit) from: f_memory_resize().
- *   Errors (with error bit) from: f_string_dynamic_resize().
+ *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   @see f_memory_resize()
- *   @see f_string_dynamic_resize()
+ *   Errors (with error bit) from: f_memory_array_increase().
+ *
+ * @see f_memory_array_increase()
  */
 #ifndef _di_f_directory_statuss_increase_
   extern f_status_t f_directory_statuss_increase(const f_number_unsigned_t step, f_directory_statuss_t * const statuss);
@@ -407,14 +410,13 @@ extern "C" {
  *   The statuss array to resize.
  *
  * @return
- *   F_none on success.
- *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
+ *   Success from f_memory_array_increase_by().
  *
- *   Errors (with error bit) from: f_memory_resize().
- *   Errors (with error bit) from: f_string_dynamic_resize().
+ *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   @see f_memory_resize()
- *   @see f_string_dynamic_resize()
+ *   Errors (with error bit) from: f_memory_array_increase_by().
+ *
+ * @see f_memory_array_increase_by()
  */
 #ifndef _di_f_directory_statuss_increase_by_
   extern f_status_t f_directory_statuss_increase_by(const f_number_unsigned_t amount, f_directory_statuss_t * const statuss);
@@ -429,13 +431,15 @@ extern "C" {
  *   The directory status array to resize.
  *
  * @return
- *   F_none on success.
+ *   Success from f_memory_array_resize().
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_array_resize().
  *   Errors (with error bit) from: f_string_dynamic_resize().
  *
- *   @see f_memory_resize()
- *   @see f_string_dynamic_resize()
+ * @see f_memory_array_resize()
+ * @see f_string_dynamic_resize()
  */
 #ifndef _di_f_directory_statuss_resize_
   extern f_status_t f_directory_statuss_resize(const f_number_unsigned_t length, f_directory_statuss_t * const statuss);

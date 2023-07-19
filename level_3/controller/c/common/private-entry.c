@@ -29,18 +29,20 @@ extern "C" {
 #ifndef _di_controller_entry_actions_increase_by_
   f_status_t controller_entry_actions_increase_by(const f_number_unsigned_t amount, controller_entry_actions_t * const actions) {
 
-    if (actions->used + amount > actions->size) {
-      if (actions->used + amount > F_number_t_size_unsigned_d) {
-        return F_status_set_error(F_array_too_large);
+    if (amount) {
+      if (actions->used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+
+      const f_number_unsigned_t length = actions->used + amount;
+
+      if (length > actions->size) {
+        const f_status_t status = f_memory_resize(actions->size, length, sizeof(controller_entry_action_t), (void **) & actions->array);
+
+        if (F_status_is_error_not(status)) {
+          actions->size = actions->used + amount;
+        }
+
+        return status;
       }
-
-      const f_status_t status = f_memory_resize(actions->size, actions->used + amount, sizeof(controller_entry_action_t), (void **) & actions->array);
-
-      if (F_status_is_error_not(status)) {
-        actions->size = actions->used + amount;
-      }
-
-      return status;
     }
 
     return F_data_not;
@@ -73,18 +75,20 @@ extern "C" {
 #ifndef _di_controller_entry_items_increase_by_
   f_status_t controller_entry_items_increase_by(const f_number_unsigned_t amount, controller_entry_items_t * const items) {
 
-    if (items->used + amount > items->size) {
-      if (items->used + amount > F_number_t_size_unsigned_d) {
-        return F_status_set_error(F_array_too_large);
+    if (amount) {
+      if (items->used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+
+      const f_number_unsigned_t length = items->used + amount;
+
+      if (length > items->size) {
+        const f_status_t status = f_memory_resize(items->size, length, sizeof(controller_entry_item_t), (void **) & items->array);
+
+        if (F_status_is_error_not(status)) {
+          items->size = items->used + amount;
+        }
+
+        return status;
       }
-
-      const f_status_t status = f_memory_resize(items->size, items->used + amount, sizeof(controller_entry_item_t), (void **) & items->array);
-
-      if (F_status_is_error_not(status)) {
-        items->size = items->used + amount;
-      }
-
-      return status;
     }
 
     return F_data_not;

@@ -37,8 +37,6 @@ extern "C" {
   #define macro_f_string_tripless_t_initialize_1(array, size, used) { array, size, used }
   #define macro_f_string_tripless_t_initialize_2(array, length) { array, length, length }
 
-  #define macro_f_string_tripless_t_clear(tripless) macro_f_memory_structure_clear(tripless)
-
   #define macro_f_string_tripless_t_resize(status, tripless, length) status = f_string_tripless_resize(length, &tripless);
   #define macro_f_string_tripless_t_adjust(status, tripless, length) status = f_string_tripless_adjust(length, &tripless);
 

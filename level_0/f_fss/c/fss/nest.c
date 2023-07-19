@@ -23,9 +23,8 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (!amount) return F_data_not;
-    if (nest->size > amount) return private_f_fss_nest_adjust(nest->size - amount, nest);
 
-    return private_f_fss_nest_adjust(0, nest);
+    return private_f_fss_nest_adjust((nest->size > amount) ? nest->size - amount : 0, nest);
   }
 #endif // _di_f_fss_nest_decimate_by_
 
@@ -36,9 +35,8 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (!amount) return F_data_not;
-    if (nest->size > amount) return private_f_fss_nest_resize(nest->size - amount, nest);
 
-    return private_f_fss_nest_resize(0, nest);
+    return private_f_fss_nest_resize((nest->size > amount) ? nest->size - amount : 0, nest);
   }
 #endif // _di_f_fss_nest_decrease_by_
 
@@ -49,6 +47,8 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (step && nest->used + 1 > nest->size) {
+      if (nest->used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+
       f_number_unsigned_t size = nest->used + step;
 
       if (size > F_number_t_size_unsigned_d) {
@@ -70,12 +70,16 @@ extern "C" {
       if (!nest) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) return F_data_not;
+    if (amount) {
+      if (nest->used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
-    if (nest->used + amount > nest->size) {
-      if (nest->used + amount > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+      const f_number_unsigned_t length = nest->used + amount;
 
-      return private_f_fss_nest_resize(nest->used + amount, nest);
+      if (length > nest->size) {
+        if (length > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+
+        return private_f_fss_nest_resize(length, nest);
+      }
     }
 
     return F_data_not;
@@ -135,6 +139,8 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (step && nests->used + 1 > nests->size) {
+      if (nests->used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+
       f_number_unsigned_t size = nests->used + step;
 
       if (size > F_number_t_size_unsigned_d) {
@@ -156,12 +162,16 @@ extern "C" {
       if (!nests) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) return F_data_not;
+    if (amount) {
+      if (nests->used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
-    if (nests->used + amount > nests->size) {
-      if (nests->used + amount > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+      const f_number_unsigned_t length = nests->used + amount;
 
-      return private_f_fss_nests_resize(nests->used + amount, nests);
+      if (length > nests->size) {
+        if (length > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+
+        return private_f_fss_nests_resize(length, nests);
+      }
     }
 
     return F_data_not;

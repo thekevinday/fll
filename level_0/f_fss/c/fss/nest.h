@@ -225,13 +225,16 @@ extern "C" {
  * @param length
  *   The new size to use.
  * @param nests
- *   The nests array to resize.
+ *   The nests array to adjust.
  *
  * @return
- *   F_none on success.
+ *   Success from f_memory_array_adjust().
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_array_adjust().
+ *
+ * @see f_memory_array_adjust()
  */
 #ifndef _di_f_fss_nests_adjust_
   extern f_status_t f_fss_nests_adjust(const f_number_unsigned_t length, f_fss_nests_t * const nests);
@@ -250,10 +253,13 @@ extern "C" {
  *   The nests array to resize.
  *
  * @return
- *   F_none on success.
+ *   Success from f_memory_array_adjust().
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_array_adjust().
+ *
+ * @see f_memory_array_adjust()
  */
 #ifndef _di_f_fss_nests_decimate_by_
   extern f_status_t f_fss_nests_decimate_by(const f_number_unsigned_t amount, f_fss_nests_t * const nests);
@@ -272,10 +278,13 @@ extern "C" {
  *   The nests array to resize.
  *
  * @return
- *   F_none on success.
+ *   Success from f_memory_array_resize().
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_array_resize().
+ *
+ * @see f_memory_array_resize()
  */
 #ifndef _di_f_fss_nests_decrease_by_
   extern f_status_t f_fss_nests_decrease_by(const f_number_unsigned_t amount, f_fss_nests_t * const nests);
@@ -294,12 +303,13 @@ extern "C" {
  *   The nests array to resize.
  *
  * @return
- *   F_none on success.
- *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
+ *   Success from f_memory_array_increase().
  *
- *   F_array_too_large (with error bit) if the new array length is too large.
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_array_increase().
+ *
+ * @see f_memory_array_increase()
  */
 #ifndef _di_f_fss_nests_increase_
   extern f_status_t f_fss_nests_increase(const f_number_unsigned_t step, f_fss_nests_t * const nests);
@@ -318,12 +328,13 @@ extern "C" {
  *   The nests array to resize.
  *
  * @return
- *   F_none on success.
- *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
+ *   Success from f_memory_array_increase_by().
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_array_too_large (with error bit) if the new array length is too large.
+ *
+ *   Errors (with error bit) from: f_memory_array_increase_by().
+ *
+ * @see f_memory_array_increase_by()
  */
 #ifndef _di_f_fss_nests_increase_by_
   extern f_status_t f_fss_nests_increase_by(const f_number_unsigned_t amount, f_fss_nests_t * const nests);
@@ -335,13 +346,16 @@ extern "C" {
  * @param length
  *   The new size to use.
  * @param nests
- *   The nests array to adjust.
+ *   The nests array to resize.
  *
  * @return
- *   F_none on success.
+ *   Success from f_memory_array_resize().
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_array_resize().
+ *
+ * @see f_memory_array_resize()
  */
 #ifndef _di_f_fss_nests_resize_
   extern f_status_t f_fss_nests_resize(const f_number_unsigned_t length, f_fss_nests_t * const nests);

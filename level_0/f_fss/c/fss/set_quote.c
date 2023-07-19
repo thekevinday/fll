@@ -22,9 +22,8 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (!amount) return F_data_not;
-    if (set_quote->objects.size - amount > 0) return private_f_fss_set_quote_adjust(set_quote->objects.size - amount, set_quote);
 
-    return private_f_fss_set_quote_adjust(0, set_quote);
+    return private_f_fss_set_quote_adjust((set_quote->objects.size - amount > 0) ? set_quote->objects.size - amount : 0, set_quote);
   }
 #endif // _di_f_fss_set_quote_decimate_by_
 
@@ -35,9 +34,8 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (!amount) return F_data_not;
-    if (set_quote->objects.size - amount > 0) return private_f_fss_set_quote_resize(set_quote->objects.size - amount, set_quote);
 
-    return private_f_fss_set_quote_resize(0, set_quote);
+    return private_f_fss_set_quote_resize((set_quote->objects.size - amount > 0) ? set_quote->objects.size - amount : 0, set_quote);
   }
 #endif // _di_f_fss_set_quote_decrease_by_
 
@@ -48,6 +46,8 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (step && set_quote->objects.used + 1 > set_quote->objects.size) {
+      if (set_quote->objects.used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+
       f_number_unsigned_t size = set_quote->objects.used + step;
 
       if (size > F_number_t_size_unsigned_d) {
@@ -69,12 +69,16 @@ extern "C" {
       if (!set_quote) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) return F_data_not;
+    if (amount) {
+      if (set_quote->objects.used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
-    if (set_quote->objects.used + amount > set_quote->objects.size) {
-      if (set_quote->objects.used + amount > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+      const f_number_unsigned_t length = set_quote->objects.used + amount;
 
-      return private_f_fss_set_quote_resize(set_quote->objects.used + amount, set_quote);
+      if (length > set_quote->objects.size) {
+        if (length > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+
+        return private_f_fss_set_quote_resize(length, set_quote);
+      }
     }
 
     return F_data_not;
@@ -108,9 +112,8 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (!amount) return F_data_not;
-    if (set_quotes->size - amount > 0) return private_f_fss_set_quotes_adjust(set_quotes->size - amount, set_quotes);
 
-    return private_f_fss_set_quotes_adjust(0, set_quotes);
+    return private_f_fss_set_quotes_adjust((set_quotes->size > amount) ? set_quotes->size - amount : 0, set_quotes);
   }
 #endif // _di_f_fss_set_quotes_decimate_by_
 
@@ -121,9 +124,8 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (!amount) return F_data_not;
-    if (set_quotes->size - amount > 0) return private_f_fss_set_quotes_resize(set_quotes->size - amount, set_quotes);
 
-    return private_f_fss_set_quotes_resize(0, set_quotes);
+    return private_f_fss_set_quotes_resize((set_quotes->size > amount) ? set_quotes->size - amount : 0, set_quotes);
   }
 #endif // _di_f_fss_set_quotes_decrease_by_
 
@@ -133,19 +135,7 @@ extern "C" {
       if (!set_quotes) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (step && set_quotes->used + 1 > set_quotes->size) {
-      f_number_unsigned_t size = set_quotes->used + step;
-
-      if (size > F_number_t_size_unsigned_d) {
-        if (set_quotes->used + 1 > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
-
-        size = F_number_t_size_unsigned_d;
-      }
-
-      return private_f_fss_set_quotes_resize(size, set_quotes);
-    }
-
-    return F_data_not;
+    return f_memory_array_increase(step, sizeof(f_fss_set_quote_t), (void **) &set_quotes->array, &set_quotes->used, &set_quotes->size);
   }
 #endif // _di_f_fss_set_quotes_increase_
 
@@ -155,15 +145,7 @@ extern "C" {
       if (!set_quotes) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) return F_data_not;
-
-    if (set_quotes->used + amount > set_quotes->size) {
-      if (set_quotes->used + amount > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
-
-      return private_f_fss_set_quotes_resize(set_quotes->used + amount, set_quotes);
-    }
-
-    return F_data_not;
+    return f_memory_array_increase_by(amount, sizeof(f_fss_set_quote_t), (void **) &set_quotes->array, &set_quotes->used, &set_quotes->size);
   }
 #endif // _di_f_fss_set_quotes_increase_by_
 

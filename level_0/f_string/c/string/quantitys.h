@@ -37,8 +37,6 @@ extern "C" {
   #define macro_f_string_quantitys_t_initialize_1(array, size, used) { array, size, used }
   #define macro_f_string_quantitys_t_initialize_2(array, length) { array, length, length }
 
-  #define macro_f_string_quantitys_t_clear(quantitys) macro_f_memory_structure_clear(quantitys)
-
   #define macro_f_string_quantitys_t_resize(status, quantitys, length) status = f_string_quantitys_resize(length, &quantitys);
   #define macro_f_string_quantitys_t_adjust(status, quantitys, length) status = f_string_quantitys_adjust(length, &quantitys);
 

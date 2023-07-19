@@ -35,18 +35,20 @@ extern "C" {
 #ifndef _di_controller_rule_actions_increase_by_
   f_status_t controller_rule_actions_increase_by(const f_number_unsigned_t amount, controller_rule_actions_t * const actions) {
 
-    if (actions->used + amount > actions->size) {
-      if (actions->used + amount > F_number_t_size_unsigned_d) {
-        return F_status_set_error(F_array_too_large);
+    if (amount) {
+      if (actions->used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+
+      const f_number_unsigned_t length = actions->used + amount;
+
+      if (length > actions->size) {
+        const f_status_t status = f_memory_resize(actions->size, length, sizeof(controller_rule_action_t), (void **) & actions->array);
+
+        if (F_status_is_error_not(status)) {
+          actions->size = actions->used + amount;
+        }
+
+        return status;
       }
-
-      const f_status_t status = f_memory_resize(actions->size, actions->used + amount, sizeof(controller_rule_action_t), (void **) & actions->array);
-
-      if (F_status_is_error_not(status)) {
-        actions->size = actions->used + amount;
-      }
-
-      return status;
     }
 
     return F_data_not;

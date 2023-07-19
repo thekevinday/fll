@@ -37,8 +37,6 @@ extern "C" {
   #define macro_f_string_map_multiss_t_initialize_1(array, size, used) { array, size, used }
   #define macro_f_string_map_multiss_t_initialize_2(array, length) { array, length, length }
 
-  #define macro_f_string_map_multiss_t_clear(map_multis) macro_f_memory_structure_clear(map_multis)
-
   #define macro_f_string_map_multiss_t_resize(status, map_multis, length) status = f_string_map_multiss_resize(length, &map_multis);
   #define macro_f_string_map_multiss_t_adjust(status, map_multis, length) status = f_string_map_multiss_adjust(length, &map_multis);
 

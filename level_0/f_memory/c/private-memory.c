@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-#if !defined(_di_f_memory_adjust_) || !defined(_di_f_memory_structure_adjust_) || !defined(_di_f_memory_structure_decimate_by_)
+#if !defined(_di_f_memory_adjust_) || defined(_f_memory_FORCE_secure_memory_)
   f_status_t private_f_memory_adjust(const size_t length_old, const size_t length_new, const size_t type_size, void ** const pointer) {
 
     // When old length is 0 and the pointer is not NULL, then consider this pointer stale and reset it to NULL.
@@ -58,9 +58,9 @@ extern "C" {
 
     return F_status_set_error(F_memory_not);
   }
-#endif // !defined(_di_f_memory_adjust_) || !defined(_di_f_memory_structure_adjust_) || !defined(_di_f_memory_structure_decimate_by_)
+#endif // !defined(_di_f_memory_adjust_) || defined(_f_memory_FORCE_secure_memory_)
 
-#if !defined(_di_f_memory_resize_) || !defined(_di_memory_structure_decrease_by_) || !defined(_di_memory_structure_increase_) || !defined(_di_memory_structure_increase_by_) || !defined(_di_f_memory_structure_resize_)
+#if !defined(_di_f_memory_resize_) || defined(_f_memory_FORCE_fast_memory_)
   f_status_t private_f_memory_resize(const size_t length_old, const size_t length_new, const size_t type_size, void ** const pointer) {
 
     // When old length is 0 and the pointer is not NULL, then consider this pointer stale and reset it to NULL.
@@ -104,41 +104,7 @@ extern "C" {
 
     return F_status_set_error(F_memory_not);
   }
-#endif // !defined(_di_f_memory_resize_) || !defined(_di_memory_structure_decrease_by_) || !defined(_di_memory_structure_increase_) || !defined(_di_memory_structure_increase_by_) || !defined(_di_f_memory_structure_resize_)
-
-#if !defined(_di_f_memory_structure_adjust_) || !defined(_di_f_memory_structure_decimate_by_)
-  f_status_t private_f_memory_structure_adjust(const size_t length_new, const size_t type_size, void ** const structure, f_number_unsigned_t * const used, f_number_unsigned_t * const size) {
-
-    const f_status_t status = private_f_memory_adjust(*size, length_new, type_size, structure);
-
-    if (F_status_is_error_not(status)) {
-      *size = length_new;
-
-      if (*used > *size) {
-        *used = *size;
-      }
-    }
-
-    return status;
-  }
-#endif // !defined(_di_f_memory_structure_adjust_) || !defined(_di_f_memory_structure_decimate_by_)
-
-#if !defined(_di_memory_structure_decrease_by_) || !defined(_di_memory_structure_increase_) || !defined(_di_memory_structure_increase_by_) || !defined(_di_f_memory_structure_resize_)
-  f_status_t private_f_memory_structure_resize(const size_t length_new, const size_t type_size, void ** const structure, f_number_unsigned_t * const used, f_number_unsigned_t * const size) {
-
-    const f_status_t status = private_f_memory_resize(*size, length_new, type_size, structure);
-
-    if (F_status_is_error_not(status)) {
-      *size = length_new;
-
-      if (*used > *size) {
-        *used = *size;
-      }
-    }
-
-    return status;
-  }
-#endif // !defined(_di_memory_structure_decrease_by_) || !defined(_di_memory_structure_increase_) || !defined(_di_memory_structure_increase_by_) || !defined(_di_f_memory_structure_resize_)
+#endif // !!defined(_di_f_memory_resize_) || defined(_f_memory_FORCE_fast_memory_)
 
 #ifdef __cplusplus
 } // extern "C"

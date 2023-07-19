@@ -122,14 +122,16 @@ extern "C" {
       if (!maps) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) return F_data_not;
+    if (amount) {
+      if (maps->used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
-    if (maps->used + amount > maps->size) {
-      if (maps->used + amount > F_number_t_size_unsigned_d) {
-        return F_status_set_error(F_array_too_large);
+      const f_number_unsigned_t length = maps->used + amount;
+
+      if (length > maps->size) {
+        if (length > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+
+        return private_f_string_maps_resize(length, maps);
       }
-
-      return private_f_string_maps_resize(maps->used + amount, maps);
     }
 
     return F_data_not;
