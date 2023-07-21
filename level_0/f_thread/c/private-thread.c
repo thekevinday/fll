@@ -447,7 +447,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     } // for
 
-    status = f_memory_adjust(attributes->size, length, sizeof(f_thread_lock_t), (void **) & attributes->array);
+    status = f_memory_adjust(attributes->size, length, sizeof(f_thread_lock_attribute_t), (void **) & attributes->array);
     if (F_status_is_error(status)) return status;
 
     attributes->size = length;
@@ -471,7 +471,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     } // for
 
-    status = f_memory_resize(attributes->size, length, sizeof(f_thread_lock_t), (void **) & attributes->array);
+    status = f_memory_resize(attributes->size, length, sizeof(f_thread_lock_attribute_t), (void **) & attributes->array);
     if (F_status_is_error(status)) return status;
 
     attributes->size = length;
@@ -575,7 +575,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     } // for
 
-    status = f_memory_adjust(attributes->size, length, sizeof(f_thread_mutex_t), (void **) & attributes->array);
+    status = f_memory_adjust(attributes->size, length, sizeof(f_thread_mutex_attribute_t), (void **) & attributes->array);
     if (F_status_is_error(status)) return status;
 
     attributes->size = length;
@@ -599,7 +599,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     } // for
 
-    status = f_memory_resize(attributes->size, length, sizeof(f_thread_mutex_t), (void **) & attributes->array);
+    status = f_memory_resize(attributes->size, length, sizeof(f_thread_mutex_attribute_t), (void **) & attributes->array);
     if (F_status_is_error(status)) return status;
 
     attributes->size = length;
