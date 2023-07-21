@@ -188,10 +188,10 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_array_increase_by().
+ *   Errors (with error bit) from: f_memory_array_increase().
  *   Errors (with error bit) from: f_memory_array_resize().
  *
- * @see f_memory_array_increase_by()
+ * @see f_memory_array_increase()
  * @see f_memory_array_resize()
  */
 #ifndef _di_f_fss_simple_packet_ranges_append_

@@ -18,7 +18,7 @@ extern "C" {
   }
 #endif // !defined(_di_f_fss_set_adjust_) || !defined(_di_f_fss_set_decimate_by_)
 
-#if !defined(_di_f_fss_set_decrease_by_) || !defined(_di_f_fss_set_resize_)
+#if !defined(_di_f_fss_set_decrease_by_) || !defined(_di_f_fss_set_increase_) || !defined(_di_f_fss_set_increase_by_) || !defined(_di_f_fss_set_resize_)
   f_status_t private_f_fss_set_resize(const f_number_unsigned_t length, f_fss_set_t *set) {
 
     f_status_t status = f_string_ranges_resize(length, &set->objects);
@@ -29,7 +29,7 @@ extern "C" {
 
     return F_none;
   }
-#endif // !defined(_di_f_fss_set_decrease_by_) || !defined(_di_f_fss_set_resize_)
+#endif // !defined(_di_f_fss_set_decrease_by_) || !defined(_di_f_fss_set_increase_) || !defined(_di_f_fss_set_increase_by_) || !defined(_di_f_fss_set_resize_)
 
 #if !defined(_di_f_fss_sets_adjust_) || !defined(_di_f_fss_sets_decimate_by_)
   f_status_t private_f_fss_sets_adjust(const f_number_unsigned_t length, f_fss_sets_t * const sets) {

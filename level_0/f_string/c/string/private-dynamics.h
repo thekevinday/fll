@@ -23,7 +23,7 @@ extern "C" {
  * @param length
  *   The new size to use.
  * @param dynamics
- *   The strings to adjust.
+ *   The dynamics to adjust.
  *
  * @return
  *   F_none on success.
@@ -52,7 +52,7 @@ extern "C" {
  * @param source
  *   The source string to append.
  * @param destination
- *   The destination strings the source is appended onto.
+ *   The destination dynamics the source is appended onto.
  *
  * @return
  *   F_none on success.
@@ -79,7 +79,7 @@ extern "C" {
  * @param source
  *   The source strings to append.
  * @param destination
- *   The destination strings the source is appended onto.
+ *   The destination dynamics the source is appended onto.
  *
  * @return
  *   F_none on success.
@@ -106,7 +106,7 @@ extern "C" {
  * @param length
  *   The new size to use.
  * @param dynamics
- *   The strings to resize.
+ *   The dynamics to resize.
  *
  * @return
  *   F_none on success.

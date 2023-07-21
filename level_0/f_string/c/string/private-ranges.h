@@ -16,30 +16,6 @@ extern "C" {
 #endif
 
 /**
- * Private implementation for resizing.
- *
- * Intended to be shared to each of the different implementation variations.
- *
- * @param length
- *   The new size to use.
- * @param ranges
- *   The ranges to adjust.
- *
- * @return
- *   F_none on success.
- *
- *   F_array_too_large (with error bit) if the combined array is too large.
- *
- *   Errors (with error bit) from: f_memory_adjust().
- *
- * @see f_memory_adjust()
- * @see f_string_ranges_adjust()
- */
-#if !defined(_di_f_string_ranges_adjust_) || !defined(_di_f_string_ranges_decimate_by_)
-  extern f_status_t private_f_string_ranges_adjust(const f_number_unsigned_t length, f_string_ranges_t * const ranges) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_string_ranges_adjust_) || !defined(_di_f_string_ranges_decimate_by_)
-
-/**
  * Private implementation for appending.
  *
  * Intended to be shared to each of the different implementation variations.
@@ -64,40 +40,6 @@ extern "C" {
 #if !defined(_di_f_string_ranges_append_all_) || !defined(_di_f_string_rangess_append_) || !defined(_di_f_string_rangess_append_all_)
   extern f_status_t private_f_string_ranges_append_all(const f_string_ranges_t source, f_string_ranges_t * const destination) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_string_ranges_append_all_) || !defined(_di_f_string_rangess_append_) || !defined(_di_f_string_rangess_append_all_)
-
-/**
- * Private implementation for resizing.
- *
- * Intended to be shared to each of the different implementation variations.
- *
- * @param length
- *   The new size to use.
- * @param ranges
- *   The ranges to resize.
- *
- * @return
- *   F_none on success.
- *
- *   F_array_too_large (with error bit) if the combined array is too large.
- *
- *   Errors (with error bit) from: f_memory_resize().
- *
- * @see f_memory_resize()
- * @see f_string_ranges_append()
- * @see f_string_ranges_append_all()
- * @see f_string_ranges_decrease_by()
- * @see f_string_ranges_increase()
- * @see f_string_ranges_increase_by()
- * @see f_string_ranges_resize()
- * @see f_string_rangess_append()
- * @see f_string_rangess_append_all()
- * @see f_string_rangess_decrease_by()
- * @see f_string_rangess_increase()
- * @see f_string_rangess_increase_by()
- */
-#if !defined(_di_f_string_ranges_append_) || !defined(_di_f_string_ranges_append_all_) || !defined(_di_f_string_ranges_decrease_by_) || !defined(_di_f_string_ranges_increase_) || !defined(_di_f_string_ranges_increase_by_) || !defined(_di_f_string_ranges_resize_) || !defined(_di_f_string_rangess_append_) || !defined(_di_f_string_rangess_append_all_) || !defined(_di_f_string_rangess_decrease_by_) || !defined(_di_f_string_rangess_increase_) || !defined(_di_f_string_rangess_increase_by_)
-  extern f_status_t private_f_string_ranges_resize(const f_number_unsigned_t length, f_string_ranges_t * const ranges) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_string_ranges_append_) || !defined(_di_f_string_ranges_append_all_) || !defined(_di_f_string_ranges_decrease_by_) || !defined(_di_f_string_ranges_increase_) || !defined(_di_f_string_ranges_increase_by_) || !defined(_di_f_string_ranges_resize_) || !defined(_di_f_string_rangess_append_) || !defined(_di_f_string_rangess_append_all_) || !defined(_di_f_string_rangess_decrease_by_) || !defined(_di_f_string_rangess_increase_) || !defined(_di_f_string_rangess_increase_by_)
 
 #ifdef __cplusplus
 } // extern "C"

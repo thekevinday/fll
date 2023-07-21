@@ -1,5 +1,5 @@
 #include "../thread.h"
-#include "../private-thread.h"
+#include "private-spin.h"
 #include "spin.h"
 
 #ifdef __cplusplus
@@ -24,11 +24,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (spins->size > amount) {
-      return private_f_thread_spins_adjust(spins->size - amount, spins);
-    }
-
-    return private_f_thread_spins_adjust(0, spins);
+    return private_f_thread_spins_adjust((spins->size > amount) ? spins->size - amount : 0, spins);
   }
 #endif // _di_f_thread_spins_decimate_by_
 
@@ -40,11 +36,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (spins->size > amount) {
-      return private_f_thread_spins_resize(spins->size - amount, spins);
-    }
-
-    return private_f_thread_spins_resize(0, spins);
+    return private_f_thread_spins_resize((spins->size > amount) ? spins->size - amount : 0, spins);
   }
 #endif // _di_f_thread_spins_decrease_by_
 

@@ -1,5 +1,5 @@
 #include "../thread.h"
-#include "../private-thread.h"
+#include "private-lock_attribute.h"
 #include "lock_attribute.h"
 
 #ifdef __cplusplus

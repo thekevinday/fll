@@ -22,7 +22,12 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return private_f_sockets_append(source, destination);
+    const f_status_t status = f_memory_array_increase(F_memory_default_allocation_small_d, sizeof(f_socket_t), (void **) &destination->array, &destination->used, &destination->size);
+    if (F_status_is_error(status)) return status;
+
+    destination->array[destination->used++] = source;
+
+    return F_none;
   }
 #endif // _di_f_sockets_append_
 

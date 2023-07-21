@@ -45,7 +45,7 @@ extern "C" {
  * Intended to be shared to each of the different implementation variations.
  *
  * @param source
- *   The source triples to append.
+ *   The source destination to append.
  * @param destination
  *   The destination triples the source is appended onto.
  *

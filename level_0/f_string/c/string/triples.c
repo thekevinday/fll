@@ -101,11 +101,9 @@ extern "C" {
       if (!triples) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (triples->size > amount) {
-      return private_f_string_triples_adjust(triples->size - amount, triples);
-    }
+    if (!amount) return F_data_not;
 
-    return private_f_string_triples_adjust(0, triples);
+    return private_f_string_triples_adjust((triples->size > amount) ? triples->size - amount : 0, triples);
   }
 #endif // _di_f_string_triples_decimate_by_
 
@@ -117,11 +115,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (triples->size > amount) {
-      return private_f_string_triples_resize(triples->size - amount, triples);
-    }
-
-    return private_f_string_triples_resize(0, triples);
+    return private_f_string_triples_resize((triples->size > amount) ? triples->size - amount : 0, triples);
   }
 #endif // _di_f_string_triples_decrease_by_
 
@@ -135,9 +129,7 @@ extern "C" {
       f_number_unsigned_t size = triples->used + F_memory_default_allocation_small_d;
 
       if (size > F_number_t_size_unsigned_d) {
-        if (triples->used + 1 > F_number_t_size_unsigned_d) {
-          return F_status_set_error(F_array_too_large);
-        }
+        if (triples->used + 1 > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
         size = F_number_t_size_unsigned_d;
       }

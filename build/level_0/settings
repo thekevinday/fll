@@ -91,7 +91,8 @@ build_sources_library utf/private-map_multis.c utf/private-map_multiss.c
 build_sources_library utf/private-string.c
 build_sources_library utf/private-triples.c utf/private-tripless.c
 
-build_sources_library-thread thread.c private-thread.c thread/attribute.c thread/barrier.c thread/barrier_attribute.c thread/condition.c thread/condition_attribute.c thread/id.c thread/key.c thread/lock.c thread/lock_attribute.c thread/mutex.c thread/mutex_attribute.c thread/once.c thread/semaphore.c thread/set.c thread/spin.c
+build_sources_library-thread thread.c thread/attribute.c thread/barrier.c thread/barrier_attribute.c thread/condition.c thread/condition_attribute.c thread/id.c thread/key.c thread/lock.c thread/lock_attribute.c thread/mutex.c thread/mutex_attribute.c thread/once.c thread/semaphore.c thread/set.c thread/spin.c
+build_sources_library-thread thread/private-attribute.c thread/private-barrier.c thread/private-barrier_attribute.c thread/private-condition.c thread/private-condition_attribute.c thread/private-id.c thread/private-key.c thread/private-lock.c thread/private-lock_attribute.c thread/private-mutex.c thread/private-mutex_attribute.c thread/private-once.c thread/private-semaphore.c thread/private-set.c thread/private-spin.c
 
 build_sources_headers account.h account/accounts.h account/common.h
 build_sources_headers capability.h capability/common.h

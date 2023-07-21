@@ -5,19 +5,7 @@
 extern "C" {
 #endif
 
-#if !defined(_di_f_sockets_append_) || !defined(_di_f_socketss_append_)
-  extern f_status_t private_f_sockets_append(const f_socket_t source, f_sockets_t * const destination) {
-
-    const f_status_t status = f_memory_array_increase(F_memory_default_allocation_small_d, sizeof(f_socket_t), (void **) &destination->array, &destination->used, &destination->size);
-    if (F_status_is_error(status)) return status;
-
-    destination->array[destination->used++] = source;
-
-    return F_none;
-  }
-#endif // !defined(_di_f_sockets_append_) || !defined(_di_f_socketss_append_)
-
-#if !defined(_di_f_sockets_append_) || !defined(_di_f_sockets_append_all_) || !defined(_di_f_socketss_append_all_)
+#if !defined(_di_f_sockets_append_all_) || !defined(_di_f_socketss_append_) || !defined(_di_f_socketss_append_all_)
   extern f_status_t private_f_sockets_append_all(const f_sockets_t source, f_sockets_t * const destination) {
 
     const f_status_t status = f_memory_array_increase_by(source.used, sizeof(f_socket_t), (void **) &destination->array, &destination->used, &destination->size);
@@ -29,7 +17,7 @@ extern "C" {
 
     return F_none;
   }
-#endif // !defined(_di_f_sockets_append_) || !defined(_di_f_sockets_append_all_) || !defined(_di_f_socketss_append_all_)
+#endif // !defined(_di_f_sockets_append_all_) || !defined(_di_f_socketss_append_) || !defined(_di_f_socketss_append_all_)
 
 #if !defined(_di_f_socketss_adjust_) || !defined(_di_f_socketss_decimate_by_)
   f_status_t private_f_socketss_adjust(const f_number_unsigned_t length, f_socketss_t * const socketss) {

@@ -12,7 +12,7 @@ extern "C" {
       if (!ranges) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return private_f_string_ranges_adjust(length, ranges);
+    return f_memory_array_adjust(length, sizeof(f_string_range_t), (void **) &ranges->array, &ranges->used, &ranges->size);
   }
 #endif // _di_f_string_ranges_adjust_
 
@@ -22,8 +22,8 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (destination->used + 1 > destination->size) {
-      const f_status_t status = private_f_string_ranges_resize(destination->used + F_memory_default_allocation_small_d, destination);
+    {
+      const f_status_t status = f_memory_array_increase(F_memory_default_allocation_small_d, sizeof(f_string_range_t), (void **) &destination->array, &destination->used, &destination->size);
       if (F_status_is_error(status)) return status;
     }
 
@@ -42,8 +42,8 @@ extern "C" {
 
     if (!source.used) return F_data_not;
 
-    if (destination->used + source.used > destination->size) {
-      const f_status_t status = private_f_string_ranges_resize(destination->used + source.used, destination);
+    {
+      const f_status_t status = f_memory_array_increase_by(source.used, sizeof(f_string_range_t), (void **) &destination->array, &destination->used, &destination->size);
       if (F_status_is_error(status)) return status;
     }
 
@@ -65,11 +65,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (ranges->size > amount) {
-      return private_f_string_ranges_adjust(ranges->size - amount, ranges);
-    }
-
-    return private_f_string_ranges_adjust(0, ranges);
+    return f_memory_array_decimate_by(amount, sizeof(f_string_range_t), (void **) &ranges->array, &ranges->used, &ranges->size);
   }
 #endif // _di_f_string_ranges_decimate_by_
 
@@ -79,13 +75,7 @@ extern "C" {
       if (!ranges) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) return F_data_not;
-
-    if (ranges->size > amount) {
-      return private_f_string_ranges_resize(ranges->size - amount, ranges);
-    }
-
-    return private_f_string_ranges_resize(0, ranges);
+    return f_memory_array_decrease_by(amount, sizeof(f_string_range_t), (void **) &ranges->array, &ranges->used, &ranges->size);
   }
 #endif // _di_f_string_ranges_decrease_by_
 
@@ -95,21 +85,7 @@ extern "C" {
       if (!ranges) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (step && ranges->used + 1 > ranges->size) {
-      f_number_unsigned_t size = ranges->used + step;
-
-      if (size > F_number_t_size_unsigned_d) {
-        if (ranges->used + 1 > F_number_t_size_unsigned_d) {
-          return F_status_set_error(F_array_too_large);
-        }
-
-        size = F_number_t_size_unsigned_d;
-      }
-
-      return private_f_string_ranges_resize(size, ranges);
-    }
-
-    return F_data_not;
+    return f_memory_array_increase(step, sizeof(f_string_range_t), (void **) &ranges->array, &ranges->used, &ranges->size);
   }
 #endif // _di_f_string_ranges_increase_
 
@@ -119,19 +95,7 @@ extern "C" {
       if (!ranges) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (amount) {
-      if (ranges->used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
-
-      const f_number_unsigned_t length = ranges->used + amount;
-
-      if (length > ranges->size) {
-        if (length > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
-
-        return private_f_string_ranges_resize(length, ranges);
-      }
-    }
-
-    return F_data_not;
+    return f_memory_array_increase_by(amount, sizeof(f_string_range_t), (void **) &ranges->array, &ranges->used, &ranges->size);
   }
 #endif // _di_f_string_ranges_increase_by_
 
@@ -141,7 +105,7 @@ extern "C" {
       if (!ranges) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return private_f_string_ranges_resize(length, ranges);
+    return f_memory_array_resize(length, sizeof(f_string_range_t), (void **) &ranges->array, &ranges->used, &ranges->size);
   }
 #endif // _di_f_string_ranges_resize_
 

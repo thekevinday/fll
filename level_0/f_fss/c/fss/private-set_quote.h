@@ -138,12 +138,14 @@ extern "C" {
  * @see f_uint8ss_adjust()
  *
  * @see f_fss_set_quotes_decrease_by()
+ * @see f_fss_set_quotes_increase()
+ * @see f_fss_set_quotes_increase_by()
  * @see f_fss_set_quotes_resize()
  * @see f_memory_resize()
  */
-#if !defined(_di_f_fss_set_quotes_decrease_by_) || !defined(_di_f_fss_set_quotes_resize_)
+#if !defined(_di_f_fss_set_quote_decrease_by_) || !defined(_di_f_fss_set_quote_increase_) || !defined(_di_f_fss_set_quote_increase_by_) || !defined(_di_f_fss_set_quote_resize_)
   extern f_status_t private_f_fss_set_quotes_resize(const f_number_unsigned_t length, f_fss_set_quotes_t * const set_quotes) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_fss_set_quotes_decrease_by_) || !defined(_di_f_fss_set_quotes_resize_)
+#endif // !defined(_di_f_fss_set_quote_decrease_by_) || !defined(_di_f_fss_set_quote_increase_) || !defined(_di_f_fss_set_quote_increase_by_) || !defined(_di_f_fss_set_quote_resize_)
 
 #ifdef __cplusplus
 } // extern "C"

@@ -82,11 +82,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (tripless->size > amount) {
-      return private_f_string_tripless_adjust(tripless->size - amount, tripless);
-    }
-
-    return private_f_string_tripless_adjust(0, tripless);
+    return private_f_string_tripless_adjust((tripless->size > amount) ? tripless->size - amount : 0, tripless);
   }
 #endif // _di_f_string_tripless_decimate_by_
 
@@ -98,11 +94,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (tripless->size > amount) {
-      return private_f_string_tripless_resize(tripless->size - amount, tripless);
-    }
-
-    return private_f_string_tripless_resize(0, tripless);
+    return private_f_string_tripless_resize((tripless->size > amount) ? tripless->size - amount : 0, tripless);
   }
 #endif // _di_f_string_tripless_decrease_by_
 
@@ -116,9 +108,7 @@ extern "C" {
       f_number_unsigned_t size = tripless->used + step;
 
       if (size > F_number_t_size_unsigned_d) {
-        if (tripless->used + 1 > F_number_t_size_unsigned_d) {
-          return F_status_set_error(F_array_too_large);
-        }
+        if (tripless->used + 1 > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
         size = F_number_t_size_unsigned_d;
       }

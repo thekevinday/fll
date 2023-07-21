@@ -1177,8 +1177,8 @@
 #define _di_f_memory_array_adjust_
 #define _di_f_memory_array_decimate_by_
 #define _di_f_memory_array_decrease_by_
-#define _di_f_memory_array_increase_
-#define _di_f_memory_array_increase_by_
+//#define _di_f_memory_array_increase_
+//#define _di_f_memory_array_increase_by_
 //#define _di_f_memory_array_resize_
 //#define _di_f_memory_default_d_
 //#define _di_f_memory_delete_

@@ -1,5 +1,5 @@
 #include "../thread.h"
-#include "../private-thread.h"
+#include "private-condition.h"
 #include "condition.h"
 
 #ifdef __cplusplus

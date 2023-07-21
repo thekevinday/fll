@@ -46,7 +46,7 @@ extern "C" {
  * Intended to be shared to each of the different implementation variations.
  *
  * @param source
- *   The source map_multis to append.
+ *   The source destination to append.
  * @param destination
  *   The destination map_multis the source is appended onto.
  *

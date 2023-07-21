@@ -82,11 +82,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (rangess->size > amount) {
-      return private_f_string_rangess_adjust(rangess->size - amount, rangess);
-    }
-
-    return private_f_string_rangess_adjust(0, rangess);
+    return private_f_string_rangess_adjust((rangess->size > amount) ? rangess->size - amount : 0, rangess);
   }
 #endif // _di_f_string_rangess_decimate_by_
 
@@ -98,11 +94,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (rangess->size > amount) {
-      return private_f_string_rangess_resize(rangess->size - amount, rangess);
-    }
-
-    return private_f_string_rangess_resize(0, rangess);
+    return private_f_string_rangess_resize((rangess->size > amount) ? rangess->size - amount : 0, rangess);
   }
 #endif // _di_f_string_rangess_decrease_by_
 
@@ -116,9 +108,7 @@ extern "C" {
       f_number_unsigned_t size = rangess->used + step;
 
       if (size > F_number_t_size_unsigned_d) {
-        if (rangess->used + 1 > F_number_t_size_unsigned_d) {
-          return F_status_set_error(F_array_too_large);
-        }
+        if (rangess->used + 1 > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
         size = F_number_t_size_unsigned_d;
       }

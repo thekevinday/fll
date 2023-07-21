@@ -1,5 +1,5 @@
 #include "../thread.h"
-#include "../private-thread.h"
+#include "private-key.h"
 #include "key.h"
 
 #ifdef __cplusplus

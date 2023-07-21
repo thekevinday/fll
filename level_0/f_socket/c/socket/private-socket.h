@@ -21,29 +21,6 @@ extern "C" {
  * Intended to be shared to each of the different implementation variations.
  *
  * @param source
- *   The source socket to append.
- * @param destination
- *   The destination lengths the source is appended onto.
- *
- * @return
- *   F_none on success.
- *
- *   Errors (with error bit) from: f_memory_resize().
- *
- * @see f_memory_resize()
- * @see f_sockets_append()
- * @see f_socketss_append()
- */
-#if !defined(_di_f_sockets_append_) || !defined(_di_f_socketss_append_)
-  extern f_status_t private_f_sockets_append(const f_socket_t source, f_sockets_t * const destination) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_sockets_append_) || !defined(_di_f_socketss_append_)
-
-/**
- * Private implementation for appending the socket array.
- *
- * Intended to be shared to each of the different implementation variations.
- *
- * @param source
  *   The source sockets to append.
  * @param destination
  *   The destination lengths the source is appended onto.
@@ -54,13 +31,14 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  *
  * @see f_memory_resize()
+ *
  * @see f_sockets_append_all()
  * @see f_socketss_append()
  * @see f_socketss_append_all()
  */
-#if !defined(_di_f_sockets_append_) || !defined(_di_f_sockets_append_all_) || !defined(_di_f_socketss_append_all_)
+#if !defined(_di_f_sockets_append_all_) || !defined(_di_f_socketss_append_) || !defined(_di_f_socketss_append_all_)
   extern f_status_t private_f_sockets_append_all(const f_sockets_t source, f_sockets_t * const destination) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_sockets_append_) || !defined(_di_f_sockets_append_all_) || !defined(_di_f_socketss_append_all_)
+#endif // !defined(_di_f_sockets_append_all_) || !defined(_di_f_socketss_append_) || !defined(_di_f_socketss_append_all_)
 
 /**
  * Private implementation for resizing the socketss array.

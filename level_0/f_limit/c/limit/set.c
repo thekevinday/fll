@@ -126,7 +126,7 @@ extern "C" {
 
     if (!source.used) return F_data_not;
 
-    f_status_t status = f_memory_array_increase(source.used, sizeof(f_limit_sets_t), (void **) &destination->array, &destination->used, &destination->size);
+    f_status_t status = f_memory_array_increase_by(source.used, sizeof(f_limit_sets_t), (void **) &destination->array, &destination->used, &destination->size);
     if (F_status_is_error(status)) return status;
 
     for (f_number_unsigned_t i = 0; i < source.used; ++i, ++destination->used) {

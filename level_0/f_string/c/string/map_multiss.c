@@ -84,11 +84,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (map_multiss->size > amount) {
-      return private_f_string_map_multiss_adjust(map_multiss->size - amount, map_multiss);
-    }
-
-    return private_f_string_map_multiss_adjust(0, map_multiss);
+    return private_f_string_map_multiss_adjust((map_multiss->size > amount) ? map_multiss->size - amount : 0, map_multiss);
   }
 #endif // _di_f_string_map_multiss_decimate_by_
 
@@ -100,11 +96,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (map_multiss->size > amount) {
-      return private_f_string_map_multiss_resize(map_multiss->size - amount, map_multiss);
-    }
-
-    return private_f_string_map_multiss_resize(0, map_multiss);
+    return private_f_string_map_multiss_resize((map_multiss->size > amount) ? map_multiss->size - amount : 0, map_multiss);
   }
 #endif // _di_f_string_map_multiss_decrease_by_
 
@@ -118,9 +110,7 @@ extern "C" {
       f_number_unsigned_t size = map_multiss->used + step;
 
       if (size > F_number_t_size_unsigned_d) {
-        if (map_multiss->used + 1 > F_number_t_size_unsigned_d) {
-          return F_status_set_error(F_array_too_large);
-        }
+        if (map_multiss->used + 1 > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
         size = F_number_t_size_unsigned_d;
       }

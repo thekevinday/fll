@@ -33,6 +33,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_adjust().
  *
  * @see f_memory_adjust()
+ *
  * @see f_string_mapss_adjust()
  */
 #if !defined(_di_f_string_mapss_adjust_) || !defined(_di_f_string_mapss_decimate_by_)
@@ -57,6 +58,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  *
  * @see f_memory_resize()
+ *
  * @see f_string_mapss_decrease_by()
  * @see f_string_mapss_increase()
  * @see f_string_mapss_increase_by()

@@ -61,11 +61,13 @@ extern "C" {
  * @see f_string_rangess_resize()()
  *
  * @see f_fss_set_decrease_by()
+ * @see f_fss_set_increase()
+ * @see f_fss_set_increase_by()
  * @see f_fss_set_resize()
  */
-#if !defined(_di_f_fss_set_decrease_by_) || !defined(_di_f_fss_set_resize_)
+#if !defined(_di_f_fss_set_decrease_by_) || !defined(_di_f_fss_set_increase_) || !defined(_di_f_fss_set_increase_by_) || !defined(_di_f_fss_set_resize_)
   extern f_status_t private_f_fss_set_resize(const f_number_unsigned_t length, f_fss_set_t * const set) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_fss_set_decrease_by_) || !defined(_di_f_fss_set_resize_)
+#endif // !defined(_di_f_fss_set_decrease_by_) || !defined(_di_f_fss_set_increase_) || !defined(_di_f_fss_set_increase_by_) || !defined(_di_f_fss_set_resize_)
 
 /**
  * Private implementation for resizing.

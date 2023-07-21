@@ -113,9 +113,8 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (!amount) return F_data_not;
-    if (nests->size > amount) return private_f_fss_nests_adjust(nests->size - amount, nests);
 
-    return private_f_fss_nests_adjust(0, nests);
+    return private_f_fss_nests_adjust((nests->size > amount) ? nests->size - amount : 0, nests);
   }
 #endif // _di_f_fss_nests_decimate_by_
 
@@ -126,9 +125,8 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (!amount) return F_data_not;
-    if (nests->size > amount) return private_f_fss_nests_resize(nests->size - amount, nests);
 
-    return private_f_fss_nests_resize(0, nests);
+    return private_f_fss_nests_resize((nests->size > amount) ? nests->size - amount : 0, nests);
   }
 #endif // _di_f_fss_nests_decrease_by_
 

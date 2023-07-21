@@ -12,7 +12,7 @@ extern "C" {
       if (!quantitys) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return private_f_string_quantitys_adjust(length, quantitys);
+    return f_memory_array_adjust(length, sizeof(f_string_quantity_t), (void **) &quantitys->array, &quantitys->used, &quantitys->size);
   }
 #endif // _di_f_string_quantitys_adjust_
 
@@ -23,7 +23,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (destination->used + 1 > destination->size) {
-      const f_status_t status = private_f_string_quantitys_resize(destination->used + F_memory_default_allocation_small_d, destination);
+      const f_status_t status = f_memory_array_increase(F_memory_default_allocation_small_d, sizeof(f_string_quantity_t), (void **) &destination->array, &destination->used, &destination->size);
       if (F_status_is_error(status)) return status;
     }
 
@@ -52,13 +52,7 @@ extern "C" {
       if (!quantitys) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) return F_data_not;
-
-    if (quantitys->size > amount) {
-      return private_f_string_quantitys_adjust(quantitys->size - amount, quantitys);
-    }
-
-    return private_f_string_quantitys_adjust(0, quantitys);
+    return f_memory_array_decimate_by(amount, sizeof(f_string_quantity_t), (void **) &quantitys->array, &quantitys->used, &quantitys->size);
   }
 #endif // _di_f_string_quantitys_decimate_by_
 
@@ -68,13 +62,8 @@ extern "C" {
       if (!quantitys) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) return F_data_not;
 
-    if (quantitys->size > amount) {
-      return private_f_string_quantitys_resize(quantitys->size - amount, quantitys);
-    }
-
-    return private_f_string_quantitys_resize(0, quantitys);
+    return f_memory_array_decrease_by(amount, sizeof(f_string_quantity_t), (void **) &quantitys->array, &quantitys->used, &quantitys->size);
   }
 #endif // _di_f_string_quantitys_decrease_by_
 
@@ -84,21 +73,7 @@ extern "C" {
       if (!quantitys) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (step && quantitys->used + 1 > quantitys->size) {
-      f_number_unsigned_t size = quantitys->used + step;
-
-      if (size > F_number_t_size_unsigned_d) {
-        if (quantitys->used + 1 > F_number_t_size_unsigned_d) {
-          return F_status_set_error(F_array_too_large);
-        }
-
-        size = F_number_t_size_unsigned_d;
-      }
-
-      return private_f_string_quantitys_resize(size, quantitys);
-    }
-
-    return F_data_not;
+    return f_memory_array_increase(step, sizeof(f_string_quantity_t), (void **) &quantitys->array, &quantitys->used, &quantitys->size);
   }
 #endif // _di_f_string_quantitys_increase_
 
@@ -108,19 +83,7 @@ extern "C" {
       if (!quantitys) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (amount) {
-      if (quantitys->used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
-
-      const f_number_unsigned_t length = quantitys->used + amount;
-
-      if (length > quantitys->size) {
-        if (length > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
-
-        return private_f_string_quantitys_resize(length, quantitys);
-      }
-    }
-
-    return F_data_not;
+    return f_memory_array_increase_by(amount, sizeof(f_string_quantity_t), (void **) &quantitys->array, &quantitys->used, &quantitys->size);
   }
 #endif // _di_f_string_quantitys_increase_by_
 
@@ -130,7 +93,7 @@ extern "C" {
       if (!quantitys) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return private_f_string_quantitys_resize(length, quantitys);
+    return f_memory_array_resize(length, sizeof(f_string_quantity_t), (void **) &quantitys->array, &quantitys->used, &quantitys->size);
   }
 #endif // _di_f_string_quantitys_resize_
 

@@ -35,10 +35,15 @@ extern "C" {
  *
  * @see f_memory_array_adjust()
  * @see f_string_dynamic_adjust()
+ *
+ * @see f_fss_items_adjust()
+ * @see f_fss_items_decimate_by()
+ * @see f_fss_nest_adjust()
+ * @see f_fss_nest_decimate_by()
  */
-#if !defined(_di_f_fss_items_adjust_) || !defined(_di_f_fss_items_decimate_by_)
+#if !defined(_di_f_fss_items_adjust_) || !defined(_di_f_fss_items_decimate_by_) || !defined(_di_f_fss_nest_adjust_) || !defined(_di_f_fss_nest_decimate_by_)
   extern f_status_t private_f_fss_items_adjust(const f_number_unsigned_t length, f_fss_items_t * const items) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_fss_items_adjust_) || !defined(_di_f_fss_items_decimate_by_)
+#endif // !defined(_di_f_fss_items_adjust_) || !defined(_di_f_fss_items_decimate_by_) || !defined(_di_f_fss_nest_adjust_) || !defined(_di_f_fss_nest_decimate_by_)
 
 /**
  * Private implementation for resizing.
@@ -60,10 +65,15 @@ extern "C" {
  *
  * @see f_memory_array_resize()
  * @see f_string_dynamic_resize()
+ *
+ * @see f_fss_items_decrease_by()
+ * @see f_fss_items_resize()
+ * @see f_fss_nest_decrease_by()
+ * @see f_fss_nest_resize()
  */
-#if !defined(_di_f_fss_items_decrease_by_) || !defined(_di_f_fss_items_resize_)
+#if !defined(_di_f_fss_items_decrease_by_) || !defined(_di_f_fss_items_resize_) || !defined(_di_f_fss_nest_decrease_by_) || !defined(_di_f_fss_nest_resize_)
   extern f_status_t private_f_fss_items_resize(const f_number_unsigned_t length, f_fss_items_t * const items) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_fss_items_decrease_by_) || !defined(_di_f_fss_items_resize_)
+#endif // !defined(_di_f_fss_items_decrease_by_) || !defined(_di_f_fss_items_resize_) || !defined(_di_f_fss_nest_decrease_by_) || !defined(_di_f_fss_nest_resize_)
 
 #ifdef __cplusplus
 } // extern "C"

@@ -83,11 +83,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (dynamicss->size > amount) {
-      return private_f_string_dynamicss_adjust(dynamicss->size - amount, dynamicss);
-    }
-
-    return private_f_string_dynamicss_adjust(0, dynamicss);
+    return private_f_string_dynamicss_adjust((dynamicss->size > amount) ? dynamicss->size - amount : 0, dynamicss);
   }
 #endif // _di_f_string_dynamicss_decimate_by_
 
@@ -99,11 +95,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (dynamicss->size > amount) {
-      return private_f_string_dynamicss_resize(dynamicss->size - amount, dynamicss);
-    }
-
-    return private_f_string_dynamicss_resize(0, dynamicss);
+    return private_f_string_dynamicss_resize((dynamicss->size > amount) ? dynamicss->size - amount : 0, dynamicss);
   }
 #endif // _di_f_string_dynamicss_decrease_by_
 
@@ -119,9 +111,7 @@ extern "C" {
       f_number_unsigned_t size = dynamicss->used + step;
 
       if (size > F_number_t_size_unsigned_d) {
-        if (dynamicss->used + 1 > F_number_t_size_unsigned_d) {
-          return F_status_set_error(F_array_too_large);
-        }
+        if (dynamicss->used + 1 > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
         size = F_number_t_size_unsigned_d;
       }

@@ -1,5 +1,5 @@
 #include "../thread.h"
-#include "../private-thread.h"
+#include "private-set.h"
 #include "set.h"
 
 #ifdef __cplusplus
@@ -24,11 +24,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (sets->size > amount) {
-      return private_f_thread_sets_adjust(sets->size - amount, sets);
-    }
-
-    return private_f_thread_sets_adjust(0, sets);
+    return private_f_thread_sets_adjust((sets->size > amount) ? sets->size - amount : 0, sets);
   }
 #endif // _di_f_thread_sets_decimate_by_
 
@@ -40,11 +36,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (sets->size > amount) {
-      return private_f_thread_sets_resize(sets->size - amount, sets);
-    }
-
-    return private_f_thread_sets_resize(0, sets);
+    return private_f_thread_sets_resize((sets->size > amount) ? sets->size - amount : 0, sets);
   }
 #endif // _di_f_thread_sets_decrease_by_
 
@@ -58,9 +50,7 @@ extern "C" {
       f_number_unsigned_t size = sets->used + step;
 
       if (size > F_number_t_size_unsigned_d) {
-        if (sets->used + 1 > F_number_t_size_unsigned_d) {
-          return F_status_set_error(F_array_too_large);
-        }
+        if (sets->used + 1 > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
         size = F_number_t_size_unsigned_d;
       }

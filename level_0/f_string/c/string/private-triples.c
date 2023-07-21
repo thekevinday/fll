@@ -10,34 +10,21 @@ extern "C" {
 #if !defined(_di_f_string_triples_adjust_) || !defined(_di_f_string_triples_decimate_by_)
   f_status_t private_f_string_triples_adjust(const f_number_unsigned_t length, f_string_triples_t * const triples) {
 
-    if (triples->used + length > F_number_t_size_unsigned_d) {
-      return F_status_set_error(F_array_too_large);
-    }
-
     f_status_t status = F_none;
 
     for (f_number_unsigned_t i = length; i < triples->size; ++i) {
 
-      status = private_f_string_dynamic_adjust(0, &triples->array[i].a);
+      status = f_memory_array_adjust(0, sizeof(f_string_triple_t), (void **) &triples->array[i].a.string, &triples->array[i].a.used, &triples->array[i].a.size);
       if (F_status_is_error(status)) return status;
 
-      status = private_f_string_dynamic_adjust(0, &triples->array[i].b);
+      status = f_memory_array_adjust(0, sizeof(f_string_triple_t), (void **) &triples->array[i].b.string, &triples->array[i].b.used, &triples->array[i].b.size);
       if (F_status_is_error(status)) return status;
 
-      status = private_f_string_dynamic_adjust(0, &triples->array[i].c);
+      status = f_memory_array_adjust(0, sizeof(f_string_triple_t), (void **) &triples->array[i].c.string, &triples->array[i].c.used, &triples->array[i].c.size);
       if (F_status_is_error(status)) return status;
     } // for
 
-    status = f_memory_adjust(triples->size, length, sizeof(f_string_triple_t), (void **) & triples->array);
-    if (F_status_is_error(status)) return status;
-
-    triples->size = length;
-
-    if (triples->used > triples->size) {
-      triples->used = length;
-    }
-
-    return F_none;
+    return f_memory_array_adjust(length, sizeof(f_string_triple_t), (void **) &triples->array, &triples->used, &triples->size);
   }
 #endif // !defined(_di_f_string_triples_adjust_) || !defined(_di_f_string_triples_decimate_by_)
 
@@ -80,34 +67,21 @@ extern "C" {
 #if !defined(_di_f_string_triples_decrease_by_) || !defined(_di_f_string_triples_increase_) || !defined(_di_f_string_triples_increase_by_)
   f_status_t private_f_string_triples_resize(const f_number_unsigned_t length, f_string_triples_t * const triples) {
 
-    if (triples->used + length > F_number_t_size_unsigned_d) {
-      return F_status_set_error(F_array_too_large);
-    }
-
     f_status_t status = F_none;
 
     for (f_number_unsigned_t i = length; i < triples->size; ++i) {
 
-      status = private_f_string_dynamic_resize(0, &triples->array[i].a);
+      status = f_memory_array_resize(0, sizeof(f_string_triple_t), (void **) &triples->array[i].a.string, &triples->array[i].a.used, &triples->array[i].a.size);
       if (F_status_is_error(status)) return status;
 
-      status = private_f_string_dynamic_resize(0, &triples->array[i].b);
+      status = f_memory_array_resize(0, sizeof(f_string_triple_t), (void **) &triples->array[i].b.string, &triples->array[i].b.used, &triples->array[i].b.size);
       if (F_status_is_error(status)) return status;
 
-      status = private_f_string_dynamic_resize(0, &triples->array[i].c);
+      status = f_memory_array_resize(0, sizeof(f_string_triple_t), (void **) &triples->array[i].c.string, &triples->array[i].c.used, &triples->array[i].c.size);
       if (F_status_is_error(status)) return status;
     } // for
 
-    status = f_memory_resize(triples->size, length, sizeof(f_string_triple_t), (void **) & triples->array);
-    if (F_status_is_error(status)) return status;
-
-    triples->size = length;
-
-    if (triples->used > triples->size) {
-      triples->used = length;
-    }
-
-    return F_none;
+    return f_memory_array_resize(length, sizeof(f_string_triple_t), (void **) &triples->array, &triples->used, &triples->size);
   }
 #endif // !defined(_di_f_string_triples_decrease_by_) || !defined(_di_f_string_triples_increase_) || !defined(_di_f_string_triples_increase_by_)
 

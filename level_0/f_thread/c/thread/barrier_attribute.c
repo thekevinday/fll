@@ -1,5 +1,5 @@
 #include "../thread.h"
-#include "../private-thread.h"
+#include "private-barrier_attribute.h"
 #include "barrier_attribute.h"
 
 #ifdef __cplusplus

@@ -1,5 +1,5 @@
 #include "../thread.h"
-#include "../private-thread.h"
+#include "private-attribute.h"
 #include "attribute.h"
 
 #ifdef __cplusplus
@@ -24,11 +24,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (attributes->size > amount) {
-      return private_f_thread_attributes_adjust(attributes->size - amount, attributes);
-    }
-
-    return private_f_thread_attributes_adjust(0, attributes);
+    return private_f_thread_attributes_adjust((attributes->size > amount) ? attributes->size - amount : 0, attributes);
   }
 #endif // _di_f_thread_attributes_decimate_by_
 
@@ -40,11 +36,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (attributes->size > amount) {
-      return private_f_thread_attributes_resize(attributes->size - amount, attributes);
-    }
-
-    return private_f_thread_attributes_resize(0, attributes);
+    return private_f_thread_attributes_resize((attributes->size > amount) ? attributes->size - amount : 0, attributes);
   }
 #endif // _di_f_thread_attributes_decrease_by_
 

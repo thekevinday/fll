@@ -129,11 +129,13 @@ extern "C" {
  * @see f_uint8ss_resize()
  *
  * @see f_fss_nameds_decrease_by()
+ * @see f_fss_nameds_increase()
+ * @see f_fss_nameds_increase_by()
  * @see f_fss_nameds_resize()
  */
-#if !defined(_di_f_fss_nameds_decrease_by_) || !defined(_di_f_fss_nameds_resize_)
+#if !defined(_di_f_fss_nameds_decrease_by_) || !defined(_di_f_fss_named_increase_) || !defined(_di_f_fss_named_increase_by_) || !defined(_di_f_fss_nameds_resize_)
   extern f_status_t private_f_fss_nameds_resize(const f_number_unsigned_t length, f_fss_nameds_t * const nameds) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_fss_nameds_decrease_by_) || !defined(_di_f_fss_nameds_resize_)
+#endif // !defined(_di_f_fss_nameds_decrease_by_) || !defined(_di_f_fss_named_increase_) || !defined(_di_f_fss_named_increase_by_) || !defined(_di_f_fss_nameds_resize_)
 
 #ifdef __cplusplus
 } // extern "C"

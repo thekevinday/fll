@@ -33,6 +33,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_adjust().
  *
  * @see f_memory_adjust()
+ *
  * @see f_string_maps_adjust()
  */
 #if !defined(_di_f_string_maps_adjust_) || !defined(_di_f_string_maps_decimate_by_)
@@ -45,7 +46,7 @@ extern "C" {
  * Intended to be shared to each of the different implementation variations.
  *
  * @param source
- *   The source maps to append.
+ *   The source destination to append.
  * @param destination
  *   The destination maps the source is appended onto.
  *
@@ -57,6 +58,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  *
  * @see f_memory_resize()
+ *
  * @see f_string_maps_append_all()
  * @see f_string_mapss_append()
  * @see f_string_mapss_append_all()

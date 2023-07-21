@@ -1,5 +1,15 @@
 #include "thread.h"
-#include "private-thread.h"
+#include "thread/private-attribute.h"
+#include "thread/private-barrier_attribute.h"
+#include "thread/private-condition.h"
+#include "thread/private-condition_attribute.h"
+#include "thread/private-key.h"
+#include "thread/private-lock.h"
+#include "thread/private-lock_attribute.h"
+#include "thread/private-mutex.h"
+#include "thread/private-mutex_attribute.h"
+#include "thread/private-semaphore.h"
+#include "thread/private-spin.h"
 
 #ifdef __cplusplus
 extern "C" {

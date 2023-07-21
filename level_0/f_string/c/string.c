@@ -24,10 +24,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (!length) return F_data_not;
-
-    if (destination->used < length) {
-      return private_f_string_append(source, length, destination);
-    }
+    if (destination->used < length) return private_f_string_append(source, length, destination);
 
     f_number_unsigned_t i = 1;
     f_number_unsigned_t j = 1;
@@ -65,10 +62,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (!length) return F_data_not;
-
-    if (!destination->used) {
-      return private_f_string_append_nulless(source, length, destination);
-    }
+    if (!destination->used) return private_f_string_append_nulless(source, length, destination);
 
     f_number_unsigned_t i = 1;
     f_number_unsigned_t j = 1;
@@ -120,7 +114,7 @@ extern "C" {
     if (!length) return F_data_not;
 
     if (glue_length && destination->used) {
-      f_status_t status = private_f_string_append(glue, glue_length, destination);
+      const f_status_t status = private_f_string_append(glue, glue_length, destination);
       if (F_status_is_error(status)) return status;
     }
 
@@ -154,7 +148,7 @@ extern "C" {
     if (!length) return F_data_not;
 
     if (glue_length && destination->used) {
-      f_status_t status = private_f_string_prepend(glue, glue_length, destination);
+      const f_status_t status = private_f_string_prepend(glue, glue_length, destination);
       if (F_status_is_error(status)) return status;
     }
 
@@ -171,7 +165,7 @@ extern "C" {
     if (!length) return F_data_not;
 
     if (glue_length && destination->used) {
-      f_status_t status = private_f_string_prepend_nulless(glue, glue_length, destination);
+      const f_status_t status = private_f_string_prepend_nulless(glue, glue_length, destination);
       if (F_status_is_error(status)) return status;
     }
 
@@ -198,10 +192,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (!length) return F_data_not;
-
-    if (destination->used < length) {
-      return private_f_string_prepend(source, length, destination);
-    }
+    if (destination->used < length) return private_f_string_prepend(source, length, destination);
 
     f_number_unsigned_t i = 0;
     f_number_unsigned_t j = 0;
@@ -239,10 +230,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (!length) return F_data_not;
-
-    if (!destination->used) {
-      return private_f_string_prepend_nulless(source, length, destination);
-    }
+    if (!destination->used) return private_f_string_prepend_nulless(source, length, destination);
 
     f_number_unsigned_t i = 0;
     f_number_unsigned_t j = 0;
@@ -291,17 +279,13 @@ extern "C" {
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (range->start > range->stop) {
-      return F_data_not_stop;
-    }
+    if (range->start > range->stop) return F_data_not_stop;
 
     while (string[range->start] != f_string_eol_s.string[0]) {
 
       ++range->start;
 
-      if (range->start > range->stop) {
-        return F_none_stop;
-      }
+      if (range->start > range->stop) return F_none_stop;
     } // while
 
     return F_none;
@@ -314,21 +298,15 @@ extern "C" {
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (range->start > range->stop) {
-      return F_data_not_stop;
-    }
+    if (range->start > range->stop) return F_data_not_stop;
 
     while (string[range->start] != seek_to) {
 
-      if (string[range->start] == f_string_eol_s.string[0]) {
-        return F_none_eol;
-      }
+      if (string[range->start] == f_string_eol_s.string[0]) return F_none_eol;
 
       ++range->start;
 
-      if (range->start > range->stop) {
-        return F_none_stop;
-      }
+      if (range->start > range->stop) return F_none_stop;
     } // while
 
     return F_none;
@@ -341,17 +319,13 @@ extern "C" {
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (range->start > range->stop) {
-      return F_data_not_stop;
-    }
+    if (range->start > range->stop) return F_data_not_stop;
 
     while (string[range->start] != seek_to) {
 
       ++range->start;
 
-      if (range->start > range->stop) {
-        return F_none_stop;
-      }
+      if (range->start > range->stop) return F_none_stop;
     } // while
 
     return F_none;

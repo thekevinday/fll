@@ -1,5 +1,5 @@
 #include "../thread.h"
-#include "../private-thread.h"
+#include "private-mutex.h"
 #include "mutex.h"
 
 #ifdef __cplusplus

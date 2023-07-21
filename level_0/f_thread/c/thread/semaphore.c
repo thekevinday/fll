@@ -1,5 +1,5 @@
 #include "../thread.h"
-#include "../private-thread.h"
+#include "private-semaphore.h"
 #include "semaphore.h"
 
 #ifdef __cplusplus
@@ -24,11 +24,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (semaphores->size > amount) {
-      return private_f_thread_semaphores_adjust(semaphores->size - amount, semaphores);
-    }
-
-    return private_f_thread_semaphores_adjust(0, semaphores);
+    return private_f_thread_semaphores_adjust((semaphores->size > amount) ? semaphores->size - amount : 0, semaphores);
   }
 #endif // _di_f_thread_semaphores_decimate_by_
 
@@ -40,11 +36,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (semaphores->size > amount) {
-      return private_f_thread_semaphores_resize(semaphores->size - amount, semaphores);
-    }
-
-    return private_f_thread_semaphores_resize(0, semaphores);
+    return private_f_thread_semaphores_resize((semaphores->size > amount) ? semaphores->size - amount : 0, semaphores);
   }
 #endif // _di_f_thread_semaphores_decrease_by_
 
@@ -58,9 +50,7 @@ extern "C" {
       f_number_unsigned_t size = semaphores->used + step;
 
       if (size > F_number_t_size_unsigned_d) {
-        if (semaphores->used + 1 > F_number_t_size_unsigned_d) {
-          return F_status_set_error(F_array_too_large);
-        }
+        if (semaphores->used + 1 > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
         size = F_number_t_size_unsigned_d;
       }

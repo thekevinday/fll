@@ -1,5 +1,5 @@
 #include "../thread.h"
-#include "../private-thread.h"
+#include "private-once.h"
 #include "once.h"
 
 #ifdef __cplusplus

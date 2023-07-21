@@ -121,11 +121,13 @@ extern "C" {
  * @see f_string_dynamic_resize()
  *
  * @see f_fss_nests_decrease_by()
+ * @see f_fss_nests_increase()
+ * @see f_fss_nests_increase_by()
  * @see f_fss_nests_resize()
  */
-#if !defined(_di_f_fss_nests_decrease_by_) || !defined(_di_f_fss_nests_resize_)
+#if !defined(_di_f_fss_nests_decrease_by_) || !defined(_di_f_fss_nests_increase_) || !defined(_di_f_fss_nests_increase_by_) || !defined(_di_f_fss_nests_resize_)
   extern f_status_t private_f_fss_nests_resize(const f_number_unsigned_t length, f_fss_nests_t * const nests) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_fss_nests_decrease_by_) || !defined(_di_f_fss_nests_resize_)
+#endif // !defined(_di_f_fss_nests_decrease_by_) || !defined(_di_f_fss_nests_increase_) || !defined(_di_f_fss_nests_increase_by_) || !defined(_di_f_fss_nests_resize_)
 
 #ifdef __cplusplus
 } // extern "C"

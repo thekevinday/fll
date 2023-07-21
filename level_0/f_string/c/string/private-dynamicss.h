@@ -23,7 +23,7 @@ extern "C" {
  * @param length
  *   The new size to use.
  * @param dynamicss
- *   The strings to adjust.
+ *   The dynamicss to adjust.
  *
  * @return
  *   F_none on success.
@@ -52,7 +52,7 @@ extern "C" {
  * @param length
  *   The new size to use.
  * @param dynamicss
- *   The strings to resize.
+ *   The dynamicss to resize.
  *
  * @return
  *   F_none on success.

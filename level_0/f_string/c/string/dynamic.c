@@ -12,7 +12,7 @@ extern "C" {
       if (!dynamic) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return private_f_string_dynamic_adjust(length, dynamic);
+    return f_memory_array_adjust(length, sizeof(f_string_t), (void **) &dynamic->string, &dynamic->used, &dynamic->size);
   }
 #endif // _di_f_string_dynamic_adjust_
 
@@ -35,10 +35,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (!source.used) return F_data_not;
-
-    if (destination->used < source.used) {
-      return private_f_string_append(source.string, source.used, destination);
-    }
+    if (destination->used < source.used) return private_f_string_append(source.string, source.used, destination);
 
     f_number_unsigned_t i = 1;
     f_number_unsigned_t j = 1;
@@ -64,10 +61,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (!source.used) return F_data_not;
-
-    if (!destination->used) {
-      return private_f_string_append_nulless(source.string, source.used, destination);
-    }
+    if (!destination->used) return private_f_string_append_nulless(source.string, source.used, destination);
 
     f_number_unsigned_t i = 1;
     f_number_unsigned_t j = 1;
@@ -116,13 +110,7 @@ extern "C" {
       if (!dynamic) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) return F_data_not;
-
-    if (dynamic->size > amount) {
-      return private_f_string_dynamic_adjust(dynamic->size - amount, dynamic);
-    }
-
-    return private_f_string_dynamic_adjust(0, dynamic);
+    return f_memory_array_decimate_by(amount, sizeof(f_string_t), (void **) &dynamic->string, &dynamic->used, &dynamic->size);
   }
 #endif // _di_f_string_dynamic_decimate_by_
 
@@ -132,13 +120,7 @@ extern "C" {
       if (!dynamic) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) return F_data_not;
-
-    if (dynamic->size > amount) {
-      return private_f_string_dynamic_resize(dynamic->size - amount, dynamic);
-    }
-
-    return private_f_string_dynamic_resize(0, dynamic);
+    return f_memory_array_decrease_by(amount, sizeof(f_string_t), (void **) &dynamic->string, &dynamic->used, &dynamic->size);
   }
 #endif // _di_f_string_dynamic_decrease_by_
 
@@ -148,21 +130,7 @@ extern "C" {
       if (!dynamic) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (step && dynamic->used + 1 > dynamic->size) {
-      f_number_unsigned_t size = dynamic->used + step;
-
-      if (size > F_string_t_size_d) {
-        if (dynamic->used + 1 > F_string_t_size_d) {
-          return F_status_set_error(F_string_too_large);
-        }
-
-        size = F_string_t_size_d;
-      }
-
-      return private_f_string_dynamic_resize(size, dynamic);
-    }
-
-    return F_data_not;
+    return f_memory_array_increase(step, sizeof(f_string_t), (void **) &dynamic->string, &dynamic->used, &dynamic->size);
   }
 #endif // _di_f_string_dynamic_increase_
 
@@ -172,9 +140,7 @@ extern "C" {
       if (!dynamic) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) return F_data_not;
-
-    return private_f_string_dynamic_increase_by(amount, dynamic);
+    return f_memory_array_increase_by(amount, sizeof(f_string_t), (void **) &dynamic->string, &dynamic->used, &dynamic->size);
   }
 #endif // _di_f_string_dynamic_increase_by_
 
@@ -276,9 +242,7 @@ extern "C" {
 
     const f_number_unsigned_t length = range.stop >= source.used ? source.used - range.start : (range.stop - range.start) + 1;
 
-    if (destination->used < length) {
-      return private_f_string_append(source.string + range.start, length, destination);
-    }
+    if (destination->used < length) return private_f_string_append(source.string + range.start, length, destination);
 
     const f_number_unsigned_t stop = range.stop >= source.used ? source.used : range.stop + 1;
     f_number_unsigned_t i = 1;
@@ -310,9 +274,7 @@ extern "C" {
 
     const f_number_unsigned_t length = range.stop >= source.used ? source.used - range.start : (range.stop - range.start) + 1;
 
-    if (!destination->used) {
-      return private_f_string_append_nulless(source.string + range.start, length, destination);
-    }
+    if (!destination->used) return private_f_string_append_nulless(source.string + range.start, length, destination);
 
     const f_number_unsigned_t stop = range.stop >= source.used ? source.used : range.stop + 1;
     f_number_unsigned_t i = 1;
@@ -484,9 +446,7 @@ extern "C" {
 
     const f_number_unsigned_t length = range.stop >= source.used ? source.used - range.start : (range.stop - range.start) + 1;
 
-    if (destination->used < length) {
-      return private_f_string_prepend(source.string + range.start, length, destination);
-    }
+    if (destination->used < length) return private_f_string_prepend(source.string + range.start, length, destination);
 
     f_number_unsigned_t i = 0;
     f_number_unsigned_t j = 0;
@@ -583,19 +543,14 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (!source.used) return F_data_not;
-
-    if (destination->used < source.used) {
-      return private_f_string_prepend(source.string, source.used, destination);
-    }
+    if (destination->used < source.used) return private_f_string_prepend(source.string, source.used, destination);
 
     f_number_unsigned_t i = 0;
     f_number_unsigned_t j = 0;
 
     while (i < source.used && j < destination->used) {
 
-      if (source.string[i] != destination->string[j]) {
-        return private_f_string_prepend(source.string, source.used, destination);
-      }
+      if (source.string[i] != destination->string[j]) return private_f_string_prepend(source.string, source.used, destination);
 
       ++i;
       ++j;
@@ -612,10 +567,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (!source.used) return F_data_not;
-
-    if (!destination->used) {
-      return private_f_string_prepend_nulless(source.string, source.used, destination);
-    }
+    if (!destination->used) return private_f_string_prepend_nulless(source.string, source.used, destination);
 
     f_number_unsigned_t i = 0;
     f_number_unsigned_t j = 0;
@@ -634,9 +586,7 @@ extern "C" {
         continue;
       }
 
-      if (source.string[i] != destination->string[j]) {
-        return private_f_string_prepend_nulless(source.string, source.used, destination);
-      }
+      if (source.string[i] != destination->string[j]) return private_f_string_prepend_nulless(source.string, source.used, destination);
 
       ++i;
       ++j;
@@ -664,7 +614,7 @@ extern "C" {
       if (!buffer) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return private_f_string_dynamic_resize(length, buffer);
+    return f_memory_array_resize(length, sizeof(f_string_t), (void **) &buffer->string, &buffer->used, &buffer->size);
   }
 #endif // _di_f_string_dynamic_resize_
 
@@ -742,8 +692,8 @@ extern "C" {
     if (destination->used && !destination->string[destination->used - 1]) return F_none;
     if (destination->used == F_string_t_size_d) return F_status_set_error(F_string_too_large);
 
-    if (destination->used + 1 > destination->size) {
-      const f_status_t status = private_f_string_dynamic_resize(destination->used + (destination->used + 1 == F_string_t_size_d ? 1 : F_memory_default_allocation_small_d), destination);
+    {
+      const f_status_t status = f_memory_array_increase(F_memory_default_allocation_small_d, sizeof(f_string_t), (void **) &destination->string, &destination->used, &destination->size);
       if (F_status_is_error(status)) return status;
     }
 
@@ -760,15 +710,13 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (destination->used < destination->size) {
-      if (!destination->string[destination->used]) {
-        return F_none;
-      }
+      if (!destination->string[destination->used]) return F_none;
     }
 
     if (destination->used == F_string_t_size_d) return F_status_set_error(F_string_too_large);
 
-    if (destination->used + 1 > destination->size) {
-      const f_status_t status = private_f_string_dynamic_resize(destination->used + (destination->used + 1 == F_string_t_size_d ? 1 : F_memory_default_allocation_small_d), destination);
+    {
+      const f_status_t status = f_memory_array_increase(F_memory_default_allocation_small_d, sizeof(f_string_t), (void **) &destination->string, &destination->used, &destination->size);
       if (F_status_is_error(status)) return status;
     }
 

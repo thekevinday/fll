@@ -21,7 +21,7 @@ extern "C" {
   }
 #endif // !defined(_di_f_fss_nameds_adjust_) || !defined(_di_f_fss_nameds_decimate_by_)
 
-#if !defined(_di_f_fss_nameds_decrease_by_) || !defined(_di_f_fss_nameds_resize_)
+#if !defined(_di_f_fss_nameds_decrease_by_) || !defined(_di_f_fss_named_increase_) || !defined(_di_f_fss_named_increase_by_) || !defined(_di_f_fss_nameds_resize_)
   f_status_t private_f_fss_named_resize(const f_number_unsigned_t length, f_fss_named_t * const named) {
 
     f_status_t status = f_string_ranges_resize(length, &named->objects);
@@ -35,7 +35,7 @@ extern "C" {
 
     return F_none;
   }
-#endif // !defined(_di_f_fss_nameds_decrease_by_) || !defined(_di_f_fss_nameds_resize_)
+#endif // !defined(_di_f_fss_nameds_decrease_by_) || !defined(_di_f_fss_named_increase_) || !defined(_di_f_fss_named_increase_by_) || !defined(_di_f_fss_nameds_resize_)
 
 #if !defined(_di_f_fss_nameds_adjust_) || !defined(_di_f_fss_nameds_decimate_by_)
   f_status_t private_f_fss_nameds_adjust(const f_number_unsigned_t length, f_fss_nameds_t * const nameds) {

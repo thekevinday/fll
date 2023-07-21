@@ -68,11 +68,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (maps->size > amount) {
-      return private_f_string_maps_adjust(maps->size - amount, maps);
-    }
-
-    return private_f_string_maps_adjust(0, maps);
+    return private_f_string_maps_adjust((maps->size > amount) ? maps->size - amount : 0, maps);
   }
 #endif // _di_f_string_maps_decimate_by_
 
@@ -84,11 +80,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (maps->size > amount) {
-      return private_f_string_maps_resize(maps->size - amount, maps);
-    }
-
-    return private_f_string_maps_resize(0, maps);
+    return private_f_string_maps_resize((maps->size > amount) ? maps->size - amount : 0, maps);
   }
 #endif // _di_f_string_maps_decrease_by_
 
@@ -102,9 +94,7 @@ extern "C" {
       f_number_unsigned_t size = maps->used + step;
 
       if (size > F_number_t_size_unsigned_d) {
-        if (maps->used + 1 > F_number_t_size_unsigned_d) {
-          return F_status_set_error(F_array_too_large);
-        }
+        if (maps->used + 1 > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
         size = F_number_t_size_unsigned_d;
       }
