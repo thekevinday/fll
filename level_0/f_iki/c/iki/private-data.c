@@ -169,11 +169,8 @@ extern "C" {
 
     for (f_array_length_t i = length; i < datass->size; ++i) {
 
-      status = f_memory_destroy(datass->array[i].size, sizeof(f_iki_datas_t), (void **) & datass->array[i].array);
+      status = private_f_iki_datas_adjust(0, &datass->array[i]);
       if (F_status_is_error(status)) return status;
-
-      datass->array[i].size = 0;
-      datass->array[i].used = 0;
     } // for
 
     status = f_memory_adjust(datass->size, length, sizeof(f_iki_datas_t), (void **) & datass->array);
@@ -196,11 +193,8 @@ extern "C" {
 
     for (f_array_length_t i = length; i < datass->size; ++i) {
 
-      status = f_memory_delete(datass->array[i].size, sizeof(f_iki_datas_t), (void **) & datass->array[i].array);
+      status = private_f_iki_datas_resize(0, &datass->array[i]);
       if (F_status_is_error(status)) return status;
-
-      datass->array[i].size = 0;
-      datass->array[i].used = 0;
     } // for
 
     status = f_memory_resize(datass->size, length, sizeof(f_iki_datas_t), (void **) & datass->array);
