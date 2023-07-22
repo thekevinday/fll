@@ -28,9 +28,9 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_increase_by().
  *
- * @see f_memory_resize()
+ * @see f_memory_array_increase_by()
  *
  * @see f_sockets_append_all()
  * @see f_socketss_append()
@@ -58,8 +58,9 @@ extern "C" {
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_adjust().
- *   Errors (with error bit) from: f_memory_destroy().
+ *   Errors (with error bit) from: f_memory_array_adjust().
+ *
+ * @see f_memory_array_adjust()
  *
  * @see f_socketss_adjust()
  * @see f_socketss_decimate_by()
@@ -86,8 +87,9 @@ extern "C" {
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_delete().
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_resize().
+ *
+ * @see f_memory_array_resize()
  *
  * @see f_socketss_decrease_by()
  * @see f_socketss_increase()

@@ -53,11 +53,9 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_array_increase_by().
- *   Errors (with error bit) from: f_memory_array_resize().
+ *   Errors (with error bit) from: f_memory_array_increase().
  *
- * @see f_memory_array_increase_by()
- * @see f_memory_array_resize()
+ * @see f_memory_array_increase()
  */
 #ifndef _di_f_sockets_append_
   extern f_status_t f_sockets_append(const f_socket_t source, f_sockets_t * const destination);
@@ -80,10 +78,8 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_array_increase_by().
- *   Errors (with error bit) from: f_memory_array_resize().
  *
  * @see f_memory_array_increase_by()
- * @see f_memory_array_resize()
  */
 #ifndef _di_f_sockets_append_all_
   extern f_status_t f_sockets_append_all(const f_sockets_t source, f_sockets_t * const destination);
@@ -223,8 +219,9 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_adjust().
- *   Errors (with error bit) from: f_memory_destroy().
+ *   Errors (with error bit) from: f_memory_array_adjust().
+ *
+ * @see f_memory_array_adjust()
  */
 #ifndef _di_f_socketss_adjust_
   extern f_status_t f_socketss_adjust(const f_number_unsigned_t length, f_socketss_t * const socketss);
@@ -246,11 +243,11 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ *   Errors (with error bit) from: f_memory_array_increase().
  *   Errors (with error bit) from: f_memory_array_increase_by().
- *   Errors (with error bit) from: f_memory_array_resize().
  *
+ * @see f_memory_array_increase()
  * @see f_memory_array_increase_by()
- * @see f_memory_array_resize()
  */
 #ifndef _di_f_socketss_append_
   extern f_status_t f_socketss_append(const f_sockets_t source, f_socketss_t * const destination);
@@ -273,10 +270,8 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_array_increase_by().
- *   Errors (with error bit) from: f_memory_array_resize().
  *
  * @see f_memory_array_increase_by()
- * @see f_memory_array_resize()
  */
 #ifndef _di_f_socketss_append_all_
   extern f_status_t f_socketss_append_all(const f_socketss_t source, f_socketss_t * const destination);

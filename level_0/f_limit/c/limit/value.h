@@ -137,11 +137,9 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_array_increase_by().
- *   Errors (with error bit) from: f_memory_array_resize().
+ *   Errors (with error bit) from: f_memory_array_increase().
  *
- * @see f_memory_array_increase_by()
- * @see f_memory_array_resize()
+ * @see f_memory_array_increase()
  */
 #ifndef _di_f_limit_values_append_
   extern f_status_t f_limit_values_append(const f_limit_value_t source, f_limit_values_t *destination);
@@ -164,10 +162,8 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_array_increase_by().
- *   Errors (with error bit) from: f_memory_array_resize().
  *
  * @see f_memory_array_increase_by()
- * @see f_memory_array_resize()
  */
 #ifndef _di_f_limit_values_append_all_
   extern f_status_t f_limit_values_append_all(const f_limit_values_t source, f_limit_values_t *destination);

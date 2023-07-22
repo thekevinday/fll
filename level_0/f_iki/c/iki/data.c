@@ -182,12 +182,8 @@ extern "C" {
 
     if (!source.used) return F_data_not;
 
-    f_status_t status = F_none;
-
-    if (destination->used + 1 > destination->size) {
-      status = private_f_iki_datass_resize(destination->used + F_memory_default_allocation_small_d, destination);
-      if (F_status_is_error(status)) return status;
-    }
+    f_status_t status = f_memory_array_increase(F_memory_default_allocation_small_d, sizeof(f_iki_datas_t), (void **) &destination->array, &destination->used, &destination->size);
+    if (F_status_is_error(status)) return status;
 
     status = private_f_iki_datas_append_all(source, &destination->array[destination->used]);
     if (F_status_is_error(status)) return status;
@@ -206,12 +202,8 @@ extern "C" {
 
     if (!source.used) return F_data_not;
 
-    f_status_t status = F_none;
-
-    if (destination->used + source.used > destination->size) {
-      status = private_f_iki_datass_resize(destination->used + source.used, destination);
-      if (F_status_is_error(status)) return status;
-    }
+    f_status_t status = f_memory_array_increase_by(source.used, sizeof(f_iki_datas_t), (void **) &destination->array, &destination->used, &destination->size);
+    if (F_status_is_error(status)) return status;
 
     for (f_number_unsigned_t i = 0; i < source.used; ++i, ++destination->used) {
 
@@ -234,9 +226,8 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (!amount) return F_data_not;
-    if (datass->size > amount) return private_f_iki_datass_adjust(datass->size - amount, datass);
 
-    return private_f_iki_datass_adjust(0, datass);
+    return private_f_iki_datass_adjust((datass->size > amount) ? datass->size - amount : 0, datass);
   }
 #endif // _di_f_iki_datass_decimate_by_
 
@@ -247,9 +238,8 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (!amount) return F_data_not;
-    if (datass->size > amount) return private_f_iki_datass_resize(datass->size - amount, datass);
 
-    return private_f_iki_datass_resize(0, datass);
+    return private_f_iki_datass_resize((datass->size > amount) ? datass->size - amount : 0, datass);
   }
 #endif // _di_f_iki_datass_decrease_by_
 

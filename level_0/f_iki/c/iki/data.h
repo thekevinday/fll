@@ -71,7 +71,13 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_adjust().
+ *   Errors (with error bit) from: f_memory_array_adjust().
+ *   Errors (with error bit) from: f_number_unsigneds_adjust().
+ *   Errors (with error bit) from: f_string_ranges_adjust().
+ *
+ * @see f_memory_array_adjust()
+ * @see f_number_unsigneds_adjust()
+ * @see f_string_ranges_adjust()
  */
 #ifndef _di_f_iki_datas_adjust_
   extern f_status_t f_iki_datas_adjust(const f_number_unsigned_t length, f_iki_datas_t *datas);
@@ -91,7 +97,13 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_increase().
+ *   Errors (with error bit) from: f_number_unsigneds_append_all().
+ *   Errors (with error bit) from: f_string_ranges_append_all().
+ *
+ * @see f_memory_array_increase()
+ * @see f_number_unsigneds_append_all()
+ * @see f_string_ranges_append_all()
  */
 #ifndef _di_f_iki_datas_append_
   extern f_status_t f_iki_datas_append(const f_iki_data_t source, f_iki_datas_t *destination);
@@ -111,7 +123,13 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_increase_by().
+ *   Errors (with error bit) from: f_number_unsigneds_append_all().
+ *   Errors (with error bit) from: f_string_ranges_append_all().
+ *
+ * @see f_memory_array_increase_by()
+ * @see f_number_unsigneds_append_all()
+ * @see f_string_ranges_append_all()
  */
 #ifndef _di_f_iki_datas_append_all_
   extern f_status_t f_iki_datas_append_all(const f_iki_datas_t source, f_iki_datas_t *destination);
@@ -135,7 +153,13 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_adjust().
+ *   Errors (with error bit) from: f_memory_array_adjust().
+ *   Errors (with error bit) from: f_number_unsigneds_adjust().
+ *   Errors (with error bit) from: f_string_ranges_adjust().
+ *
+ * @see f_memory_array_adjust()
+ * @see f_number_unsigneds_adjust()
+ * @see f_string_ranges_adjust()
  */
 #ifndef _di_f_iki_datas_decimate_by_
   extern f_status_t f_iki_datas_decimate_by(const f_number_unsigned_t amount, f_iki_datas_t *datas);
@@ -159,7 +183,13 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_resize().
+ *   Errors (with error bit) from: f_number_unsigneds_resize().
+ *   Errors (with error bit) from: f_string_ranges_resize().
+ *
+ * @see f_memory_array_resize()
+ * @see f_number_unsigneds_resize()
+ * @see f_string_ranges_resize()
  */
 #ifndef _di_f_iki_datas_decrease_by_
   extern f_status_t f_iki_datas_decrease_by(const f_number_unsigned_t amount, f_iki_datas_t *datas);
@@ -184,7 +214,13 @@ extern "C" {
  *   F_array_too_large (with error bit) if the new array length is too large.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_resize().
+ *   Errors (with error bit) from: f_number_unsigneds_resize().
+ *   Errors (with error bit) from: f_string_ranges_resize().
+ *
+ * @see f_memory_array_resize()
+ * @see f_number_unsigneds_resize()
+ * @see f_string_ranges_resize()
  */
 #ifndef _di_f_iki_datas_increase_
   extern f_status_t f_iki_datas_increase(const f_number_unsigned_t step, f_iki_datas_t *datas);
@@ -209,7 +245,13 @@ extern "C" {
  *   F_array_too_large (with error bit) if the new array length is too large.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_resize().
+ *   Errors (with error bit) from: f_number_unsigneds_resize().
+ *   Errors (with error bit) from: f_string_ranges_resize().
+ *
+ * @see f_memory_array_resize()
+ * @see f_number_unsigneds_resize()
+ * @see f_string_ranges_resize()
  */
 #ifndef _di_f_iki_datas_increase_by_
   extern f_status_t f_iki_datas_increase_by(const f_number_unsigned_t amount, f_iki_datas_t *datas);
@@ -228,7 +270,13 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_resize().
+ *   Errors (with error bit) from: f_number_unsigneds_resize().
+ *   Errors (with error bit) from: f_string_ranges_resize().
+ *
+ * @see f_memory_array_resize()
+ * @see f_number_unsigneds_resize()
+ * @see f_string_ranges_resize()
  */
 #ifndef _di_f_iki_datas_resize_
   extern f_status_t f_iki_datas_resize(const f_number_unsigned_t length, f_iki_datas_t *datas);
@@ -247,8 +295,13 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_adjust().
- *   Errors (with error bit) from: f_memory_destroy().
+ *   Errors (with error bit) from: f_memory_array_adjust().
+ *   Errors (with error bit) from: f_number_unsigneds_adjust().
+ *   Errors (with error bit) from: f_string_ranges_adjust().
+ *
+ * @see f_memory_array_adjust()
+ * @see f_number_unsigneds_adjust()
+ * @see f_string_ranges_adjust()
  */
 #ifndef _di_f_iki_datass_adjust_
   extern f_status_t f_iki_datass_adjust(const f_number_unsigned_t length, f_iki_datass_t *datass);
@@ -268,7 +321,15 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_increase().
+ *   Errors (with error bit) from: f_memory_array_resize().
+ *   Errors (with error bit) from: f_number_unsigneds_resize().
+ *   Errors (with error bit) from: f_string_ranges_resize().
+ *
+ * @see f_memory_array_increase()
+ * @see f_memory_array_resize()
+ * @see f_number_unsigneds_resize()
+ * @see f_string_ranges_resize()
  */
 #ifndef _di_f_iki_datass_append_
   extern f_status_t f_iki_datass_append(const f_iki_datas_t source, f_iki_datass_t *destination);
@@ -288,7 +349,15 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_increase_by().
+ *   Errors (with error bit) from: f_memory_array_resize().
+ *   Errors (with error bit) from: f_number_unsigneds_resize().
+ *   Errors (with error bit) from: f_string_ranges_resize().
+ *
+ * @see f_memory_array_increase_by()
+ * @see f_memory_array_resize()
+ * @see f_number_unsigneds_resize()
+ * @see f_string_ranges_resize()
  */
 #ifndef _di_f_iki_datass_append_all_
   extern f_status_t f_iki_datass_append_all(const f_iki_datass_t source, f_iki_datass_t *destination);
@@ -312,8 +381,13 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_adjust().
- *   Errors (with error bit) from: f_memory_destroy().
+ *   Errors (with error bit) from: f_memory_array_adjust().
+ *   Errors (with error bit) from: f_number_unsigneds_adjust().
+ *   Errors (with error bit) from: f_string_ranges_adjust().
+ *
+ * @see f_memory_array_adjust()
+ * @see f_number_unsigneds_adjust()
+ * @see f_string_ranges_adjust()
  */
 #ifndef _di_f_iki_datass_decimate_by_
   extern f_status_t f_iki_datass_decimate_by(const f_number_unsigned_t amount, f_iki_datass_t *datass);
@@ -337,8 +411,13 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_delete().
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_resize().
+ *   Errors (with error bit) from: f_number_unsigneds_resize().
+ *   Errors (with error bit) from: f_string_ranges_resize().
+ *
+ * @see f_memory_array_resize()
+ * @see f_number_unsigneds_resize()
+ * @see f_string_ranges_resize()
  */
 #ifndef _di_f_iki_datass_decrease_by_
   extern f_status_t f_iki_datass_decrease_by(const f_number_unsigned_t amount, f_iki_datass_t *datass);
@@ -363,7 +442,13 @@ extern "C" {
  *   F_array_too_large (with error bit) if the new array length is too large.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_resize().
+ *   Errors (with error bit) from: f_number_unsigneds_resize().
+ *   Errors (with error bit) from: f_string_ranges_resize().
+ *
+ * @see f_memory_array_resize()
+ * @see f_number_unsigneds_resize()
+ * @see f_string_ranges_resize()
  */
 #ifndef _di_f_iki_datass_increase_
   extern f_status_t f_iki_datass_increase(const f_number_unsigned_t step, f_iki_datass_t *datass);
@@ -388,7 +473,13 @@ extern "C" {
  *   F_array_too_large (with error bit) if the new array length is too large.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_resize().
+ *   Errors (with error bit) from: f_number_unsigneds_resize().
+ *   Errors (with error bit) from: f_string_ranges_resize().
+ *
+ * @see f_memory_array_resize()
+ * @see f_number_unsigneds_resize()
+ * @see f_string_ranges_resize()
  */
 #ifndef _di_f_iki_datass_increase_by_
   extern f_status_t f_iki_datass_increase_by(const f_number_unsigned_t amount, f_iki_datass_t *datass);
@@ -407,8 +498,13 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_delete().
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_resize().
+ *   Errors (with error bit) from: f_number_unsigneds_resize().
+ *   Errors (with error bit) from: f_string_ranges_resize().
+ *
+ * @see f_memory_array_resize()
+ * @see f_number_unsigneds_resize()
+ * @see f_string_ranges_resize()
  */
 #ifndef _di_f_iki_datass_resize_
   extern f_status_t f_iki_datass_resize(const f_number_unsigned_t length, f_iki_datass_t *datass);

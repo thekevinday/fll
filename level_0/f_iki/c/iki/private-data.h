@@ -22,20 +22,26 @@ extern "C" {
  *
  * @param length
  *   The length to adjust to.
- * @param iki_datas
+ * @param structure
  *   The iki_datas array to adjust.
  *
  * @return
  *   F_none on success.
  *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
  *
- *   Errors (with error bit) from: f_memory_adjust().
+ *   Errors (with error bit) from: f_memory_array_adjust().
+ *   Errors (with error bit) from: f_number_unsigneds_adjust().
+ *   Errors (with error bit) from: f_string_ranges_adjust().
+ *
+ * @see f_memory_array_adjust()
+ * @see f_number_unsigneds_adjust()
+ * @see f_string_ranges_adjust()
  *
  * @see f_iki_datas_adjust()
  * @see f_iki_datas_decimate_by()
  */
 #if !defined(_di_f_iki_datas_adjust_) || !defined(_di_f_iki_datas_decimate_by_)
-  extern f_status_t private_f_iki_datas_adjust(const f_number_unsigned_t length, f_iki_datas_t *datas) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_iki_datas_adjust(const f_number_unsigned_t length, f_iki_datas_t *structure) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_iki_datas_adjust_) || !defined(_di_f_iki_datas_decimate_by_)
 
 /**
@@ -46,14 +52,19 @@ extern "C" {
  * @param source
  *   The source iki_data to append.
  * @param destination
- *   The destination lengths the source is appended onto.
+ *   The iki_datas array the source is appended onto.
  *
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_increase().
+ *   Errors (with error bit) from: f_number_unsigneds_append_all().
+ *   Errors (with error bit) from: f_string_ranges_append_all().
  *
- * @see f_memory_resize()
+ * @see f_memory_array_increase()
+ * @see f_number_unsigneds_append_all()
+ * @see f_string_ranges_append_all()
+ *
  * @see f_iki_datas_append()
  * @see f_iki_datass_append()
  */
@@ -69,15 +80,19 @@ extern "C" {
  * @param source
  *   The source iki_datas to append.
  * @param destination
- *   The destination lengths the source is appended onto.
+ *   The iki_datas array the source is appended onto.
  *
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_increase_by().
+ *   Errors (with error bit) from: f_number_unsigneds_append_all().
+ *   Errors (with error bit) from: f_string_ranges_append_all().
  *
- * @see f_memory_resize()
- * @see f_iki_datas_append_all()
+ * @see f_memory_array_increase_by()
+ * @see f_number_unsigneds_append_all()
+ * @see f_string_ranges_append_all()
+ *
  * @see f_iki_datass_append()
  * @see f_iki_datass_append_all()
  */
@@ -92,14 +107,20 @@ extern "C" {
  *
  * @param length
  *   The length to adjust to.
- * @param iki_datas
+ * @param structure
  *   The iki_datas array to adjust.
  *
  * @return
  *   F_none on success.
  *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_resize().
+ *   Errors (with error bit) from: f_number_unsigneds_resize().
+ *   Errors (with error bit) from: f_string_ranges_resize().
+ *
+ * @see f_memory_array_resize()
+ * @see f_number_unsigneds_resize()
+ * @see f_string_ranges_resize()
  *
  * @see f_iki_datas_resize()
  * @see f_iki_datas_append()
@@ -107,7 +128,7 @@ extern "C" {
  * @see f_iki_datass_append()
  */
 #if !defined(_di_f_iki_datas_resize_) || !defined(_di_f_iki_datas_append_) || !defined(_di_f_iki_datas_decimate_by_) || !defined(_di_f_iki_datass_append_)
-  extern f_status_t private_f_iki_datas_resize(const f_number_unsigned_t length, f_iki_datas_t *datas) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_iki_datas_resize(const f_number_unsigned_t length, f_iki_datas_t *structure) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_iki_datas_resize_) || !defined(_di_f_iki_datas_append_) || !defined(_di_f_iki_datas_decimate_by_) || !defined(_di_f_iki_datass_append_)
 
 /**
@@ -128,8 +149,13 @@ extern "C" {
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_adjust().
- *   Errors (with error bit) from: f_memory_destroy().
+ *   Errors (with error bit) from: f_memory_array_adjust().
+ *   Errors (with error bit) from: f_number_unsigneds_adjust().
+ *   Errors (with error bit) from: f_string_ranges_adjust().
+ *
+ * @see f_memory_array_adjust()
+ * @see f_number_unsigneds_adjust()
+ * @see f_string_ranges_adjust()
  *
  * @see f_iki_datass_adjust()
  * @see f_iki_datass_decimate_by()
@@ -156,8 +182,13 @@ extern "C" {
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_delete().
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_resize().
+ *   Errors (with error bit) from: f_number_unsigneds_resize().
+ *   Errors (with error bit) from: f_string_ranges_resize().
+ *
+ * @see f_memory_array_resize()
+ * @see f_number_unsigneds_resize()
+ * @see f_string_ranges_resize()
  *
  * @see f_iki_datass_decrease_by()
  * @see f_iki_datass_increase()
