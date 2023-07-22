@@ -20,8 +20,8 @@ extern "C" {
  *
  * Intended to be shared to each of the different implementation variations.
  *
- * @param key
- *   The keys to delete.
+ * @param structure
+ *   The key to delete.
  *
  * @return
  *   F_none on success.
@@ -41,7 +41,7 @@ extern "C" {
  * @see f_thread_keys_resize()
  */
 #if !defined(_di_f_thread_keys_adjust_) || !defined(_di_f_thread_keys_decimate_by_) || !defined(_di_f_thread_keys_decrease_) || !defined(_di_f_thread_keys_decrease_by_) || !defined(_di_f_thread_keys_increase_) || !defined(_di_f_thread_keys_increase_by_) || !defined(_di_f_thread_keys_resize_)
-  extern f_status_t private_f_thread_key_delete(f_thread_key_t *key) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_thread_key_delete(f_thread_key_t *structure) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_thread_keys_adjust_) || !defined(_di_f_thread_keys_decimate_by_) || !defined(_di_f_thread_keys_decrease_) || !defined(_di_f_thread_keys_decrease_by_) || !defined(_di_f_thread_keys_increase_) || !defined(_di_f_thread_keys_increase_by_) || !defined(_di_f_thread_keys_resize_)
 
 /**
@@ -51,20 +51,21 @@ extern "C" {
  *
  * @param length
  *   The new size to use.
- * @param keys
+ * @param structure
  *   The keys to adjust.
  *
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: f_memory_adjust().
+ *   Errors (with error bit) from: f_memory_array_resize().
  *
- * @see f_memory_adjust()
+ * @see f_memory_array_resize()
+ *
  * @see f_thread_keys_adjust()
  * @see f_thread_keys_decimate_by()
  */
 #if !defined(_di_f_thread_keys_adjust_) || !defined(_di_f_thread_keys_decimate_by_)
-  extern f_status_t private_f_thread_keys_adjust(const f_number_unsigned_t length, f_thread_keys_t * const keys) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_thread_keys_adjust(const f_number_unsigned_t length, f_thread_keys_t * const structure) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_thread_keys_adjust_) || !defined(_di_f_thread_keys_decimate_by_)
 
 /**
@@ -74,21 +75,22 @@ extern "C" {
  *
  * @param length
  *   The new size to use.
- * @param keys
+ * @param structure
  *   The keys to resize.
  *
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_resize().
  *
- * @see f_memory_resize()
+ * @see f_memory_array_resize()
+ *
  * @see f_thread_keys_decrease_by()
  * @see f_thread_keys_increase()
  * @see f_thread_keys_increase_by()
  */
 #if !defined(_di_f_thread_keys_decrease_by_) || !defined(_di_f_thread_keys_increase_) || !defined(_di_f_thread_keys_increase_by_)
-  extern f_status_t private_f_thread_keys_resize(const f_number_unsigned_t length, f_thread_keys_t * const keys) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_thread_keys_resize(const f_number_unsigned_t length, f_thread_keys_t * const structure) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_thread_keys_decrease_by_) || !defined(_di_f_thread_keys_increase_) || !defined(_di_f_thread_keys_increase_by_)
 
 #ifdef __cplusplus

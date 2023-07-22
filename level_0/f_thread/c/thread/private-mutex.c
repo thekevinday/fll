@@ -6,9 +6,9 @@ extern "C" {
 #endif
 
 #if !defined(_di_f_thread_mutex_delete_) || !defined(_di_f_thread_mutexs_adjust_) || !defined(_di_f_thread_mutexs_decimate_by_) || !defined(_di_f_thread_mutexs_decrease_) || !defined(_di_f_thread_mutexs_decrease_by_) || !defined(_di_f_thread_mutexs_increase_) || !defined(_di_f_thread_mutexs_increase_by_) || !defined(_di_f_thread_mutexs_resize_)
-  f_status_t private_f_thread_mutex_delete(f_thread_mutex_t *mutex) {
+  f_status_t private_f_thread_mutex_delete(f_thread_mutex_t *structure) {
 
-    const int error = pthread_mutex_destroy(mutex);
+    const int error = pthread_mutex_destroy(structure);
 
     if (error) {
       if (error == EBUSY) return F_status_set_error(F_busy);
@@ -22,32 +22,32 @@ extern "C" {
 #endif // !defined(_di_f_thread_mutex_delete_) || !defined(_di_f_thread_mutexs_adjust_) || !defined(_di_f_thread_mutexs_decimate_by_) || !defined(_di_f_thread_mutexs_decrease_) || !defined(_di_f_thread_mutexs_decrease_by_) || !defined(_di_f_thread_mutexs_increase_) || !defined(_di_f_thread_mutexs_increase_by_) || !defined(_di_f_thread_mutexs_resize_)
 
 #if !defined(_di_f_thread_mutexs_adjust_) || !defined(_di_f_thread_mutexs_decimate_by_)
-  f_status_t private_f_thread_mutexs_adjust(const f_number_unsigned_t length, f_thread_mutexs_t * const mutexs) {
+  f_status_t private_f_thread_mutexs_adjust(const f_number_unsigned_t length, f_thread_mutexs_t * const structure) {
 
     f_status_t status = F_none;
 
-    for (f_number_unsigned_t i = length; i < mutexs->size; ++i) {
+    for (f_number_unsigned_t i = length; i < structure->size; ++i) {
 
-      status = private_f_thread_mutex_delete(&mutexs->array[i]);
+      status = private_f_thread_mutex_delete(&structure->array[i]);
       if (F_status_is_error(status)) return status;
     } // for
 
-    return f_memory_array_adjust(length, sizeof(f_thread_mutex_t), (void **) &mutexs->array, &mutexs->used, &mutexs->size);
+    return f_memory_array_adjust(length, sizeof(f_thread_mutex_t), (void **) &structure->array, &structure->used, &structure->size);
   }
 #endif // !defined(_di_f_thread_mutexs_adjust_) || !defined(_di_f_thread_mutexs_decimate_by_)
 
 #if !defined(_di_f_thread_mutexs_decrease_) || !defined(_di_f_thread_mutexs_decrease_by_) || !defined(_di_f_thread_mutexs_increase_) || !defined(_di_f_thread_mutexs_increase_by_)
-  f_status_t private_f_thread_mutexs_resize(const f_number_unsigned_t length, f_thread_mutexs_t * const mutexs) {
+  f_status_t private_f_thread_mutexs_resize(const f_number_unsigned_t length, f_thread_mutexs_t * const structure) {
 
     f_status_t status = F_none;
 
-    for (f_number_unsigned_t i = length; i < mutexs->size; ++i) {
+    for (f_number_unsigned_t i = length; i < structure->size; ++i) {
 
-      status = private_f_thread_mutex_delete(&mutexs->array[i]);
+      status = private_f_thread_mutex_delete(&structure->array[i]);
       if (F_status_is_error(status)) return status;
     } // for
 
-    return f_memory_array_resize(length, sizeof(f_thread_mutex_t), (void **) &mutexs->array, &mutexs->used, &mutexs->size);
+    return f_memory_array_resize(length, sizeof(f_thread_mutex_t), (void **) &structure->array, &structure->used, &structure->size);
   }
 #endif // !defined(_di_f_thread_mutexs_decrease_) || !defined(_di_f_thread_mutexs_decrease_by_) || !defined(_di_f_thread_mutexs_increase_) || !defined(_di_f_thread_mutexs_increase_by_)
 

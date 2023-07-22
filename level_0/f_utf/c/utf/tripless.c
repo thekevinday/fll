@@ -114,17 +114,17 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (step && tripless->used + 1 > tripless->size) {
-      f_number_unsigned_t size = tripless->used + step;
+      f_number_unsigned_t length = tripless->used + step;
 
-      if (size > F_number_t_size_unsigned_d) {
+      if (length > F_number_t_size_unsigned_d) {
         if (tripless->used + 1 > F_number_t_size_unsigned_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = F_number_t_size_unsigned_d;
+        length = F_number_t_size_unsigned_d;
       }
 
-      return private_f_utf_string_tripless_resize(size, tripless);
+      return private_f_utf_string_tripless_resize(length, tripless);
     }
 
     return F_data_not;

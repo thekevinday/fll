@@ -81,8 +81,8 @@ extern "C" {
  *
  * @param length
  *   The new size to use.
- * @param sets
- *   The string sets array to resize.
+ * @param structure
+ *   The thread sets array to resize.
  *
  * @return
  *   F_none on success.
@@ -91,7 +91,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_sets_adjust_
-  extern f_status_t f_thread_sets_adjust(const f_number_unsigned_t length, f_thread_sets_t * const sets);
+  extern f_status_t f_thread_sets_adjust(const f_number_unsigned_t length, f_thread_sets_t * const structure);
 #endif // _di_f_thread_sets_adjust_
 
 /**
@@ -103,8 +103,8 @@ extern "C" {
  *
  * @param amount
  *   A positive number representing how much to decimate the size by.
- * @param sets
- *   The string sets array to resize.
+ * @param structure
+ *   The thread sets array to resize.
  *
  * @return
  *   F_none on success.
@@ -114,7 +114,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_sets_decimate_by_
-  extern f_status_t f_thread_sets_decimate_by(const f_number_unsigned_t amount, f_thread_sets_t * const sets);
+  extern f_status_t f_thread_sets_decimate_by(const f_number_unsigned_t amount, f_thread_sets_t * const structure);
 #endif // _di_f_thread_sets_decimate_by_
 
 /**
@@ -126,8 +126,8 @@ extern "C" {
  *
  * @param amount
  *   A positive number representing how much to decrease the size by.
- * @param sets
- *   The string sets array to resize.
+ * @param structure
+ *   The thread sets array to resize.
  *
  * @return
  *   F_none on success.
@@ -137,7 +137,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_sets_decrease_by_
-  extern f_status_t f_thread_sets_decrease_by(const f_number_unsigned_t amount, f_thread_sets_t * const sets);
+  extern f_status_t f_thread_sets_decrease_by(const f_number_unsigned_t amount, f_thread_sets_t * const structure);
 #endif // _di_f_thread_sets_decrease_by_
 
 /**
@@ -149,8 +149,8 @@ extern "C" {
  * @param step
  *   The allocation step to use.
  *   Must be greater than 0.
- * @param sets
- *   The string sets array to resize.
+ * @param structure
+ *   The thread sets array to resize.
  *
  * @return
  *   F_none on success.
@@ -161,7 +161,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_sets_increase_
-  extern f_status_t f_thread_sets_increase(const f_number_unsigned_t step, f_thread_sets_t * const sets);
+  extern f_status_t f_thread_sets_increase(const f_number_unsigned_t step, f_thread_sets_t * const structure);
 #endif // _di_f_thread_sets_increase_
 
 /**
@@ -173,8 +173,8 @@ extern "C" {
  *
  * @param amount
  *   A positive number representing how much to increase the size by.
- * @param sets
- *   The string sets array to resize.
+ * @param structure
+ *   The thread sets array to resize.
  *
  * @return
  *   F_none on success.
@@ -185,7 +185,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_sets_increase_by_
-  extern f_status_t f_thread_sets_increase_by(const f_number_unsigned_t amount, f_thread_sets_t * const sets);
+  extern f_status_t f_thread_sets_increase_by(const f_number_unsigned_t amount, f_thread_sets_t * const structure);
 #endif // _di_f_thread_sets_increase_by_
 
 /**
@@ -193,8 +193,8 @@ extern "C" {
  *
  * @param length
  *   The new size to use.
- * @param sets
- *   The string sets array to adjust.
+ * @param structure
+ *   The thread sets array to adjust.
  *
  * @return
  *   F_none on success.
@@ -203,7 +203,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_sets_resize_
-  extern f_status_t f_thread_sets_resize(const f_number_unsigned_t length, f_thread_sets_t * const sets);
+  extern f_status_t f_thread_sets_resize(const f_number_unsigned_t length, f_thread_sets_t * const structure);
 #endif // _di_f_thread_sets_resize_
 
 #ifdef __cplusplus

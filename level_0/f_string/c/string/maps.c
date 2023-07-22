@@ -91,15 +91,15 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (step && maps->used + 1 > maps->size) {
-      f_number_unsigned_t size = maps->used + step;
+      f_number_unsigned_t length = maps->used + step;
 
-      if (size > F_number_t_size_unsigned_d) {
+      if (length > F_number_t_size_unsigned_d) {
         if (maps->used + 1 > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
-        size = F_number_t_size_unsigned_d;
+        length = F_number_t_size_unsigned_d;
       }
 
-      return private_f_string_maps_resize(size, maps);
+      return private_f_string_maps_resize(length, maps);
     }
 
     return F_data_not;

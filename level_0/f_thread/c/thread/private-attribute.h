@@ -22,8 +22,8 @@ extern "C" {
  *
  * @param length
  *   The new size to use.
- * @param attributes
- *   The attributes to adjust.
+ * @param structure
+ *   The thread attribute to delete.
  *
  * @return
  *   F_none on success.
@@ -50,7 +50,7 @@ extern "C" {
  * @see f_thread_sets_resize()
  */
 #if !defined(_di_f_thread_attributes_adjust_) || !defined(_di_f_thread_attributes_decimate_by_) || !defined(_di_f_thread_attributes_decrease_) || !defined(_di_f_thread_attributes_decrease_by_) || !defined(_di_f_thread_attributes_increase_) || !defined(_di_f_thread_attributes_increase_by_) || !defined(_di_f_thread_attributes_resize_) || !defined(_di_f_thread_sets_adjust_) || !defined(_di_f_thread_sets_decimate_by_) || !defined(_di_f_thread_sets_decrease_) || !defined(_di_f_thread_sets_decrease_by_) || !defined(_di_f_thread_sets_increase_) || !defined(_di_f_thread_sets_increase_by_) || !defined(_di_f_thread_sets_resize_)
-  extern f_status_t private_f_thread_attribute_delete(f_thread_attribute_t *attribute) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_thread_attribute_delete(f_thread_attribute_t *structure) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_thread_attributes_adjust_) || !defined(_di_f_thread_attributes_decimate_by_) || !defined(_di_f_thread_attributes_decrease_) || !defined(_di_f_thread_attributes_decrease_by_) || !defined(_di_f_thread_attributes_increase_) || !defined(_di_f_thread_attributes_increase_by_) || !defined(_di_f_thread_sets_adjust_) || !defined(_di_f_thread_sets_decimate_by_) || !defined(_di_f_thread_sets_decrease_) || !defined(_di_f_thread_sets_decrease_by_) || !defined(_di_f_thread_sets_increase_) || !defined(_di_f_thread_sets_increase_by_)
 
 /**
@@ -144,9 +144,10 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: f_memory_adjust().
+ *   Errors (with error bit) from: f_memory_array_adjust().
  *
- * @see f_memory_adjust()
+ * @see f_memory_array_adjust()
+ *
  * @see f_thread_barriers_adjust()
  * @see f_thread_barriers_decimate_by()
  */

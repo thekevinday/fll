@@ -22,32 +22,32 @@ extern "C" {
 #endif // !defined(_di_f_thread_condition_delete_) || !defined(_di_f_thread_conditions_adjust_) || !defined(_di_f_thread_conditions_decimate_by_) || !defined(_di_f_thread_conditions_decrease_) || !defined(_di_f_thread_conditions_decrease_by_) || !defined(_di_f_thread_conditions_increase_) || !defined(_di_f_thread_conditions_increase_by_) || !defined(_di_f_thread_conditions_resize_)
 
 #if !defined(_di_f_thread_conditions_adjust_) || !defined(_di_f_thread_conditions_decimate_by_)
-  f_status_t private_f_thread_conditions_adjust(const f_number_unsigned_t length, f_thread_conditions_t * const conditions) {
+  f_status_t private_f_thread_conditions_adjust(const f_number_unsigned_t length, f_thread_conditions_t * const structure) {
 
     f_status_t status = F_none;
 
-    for (f_number_unsigned_t i = length; i < conditions->size; ++i) {
+    for (f_number_unsigned_t i = length; i < structure->size; ++i) {
 
-      status = private_f_thread_condition_delete(&conditions->array[i]);
+      status = private_f_thread_condition_delete(&structure->array[i]);
       if (F_status_is_error(status)) return status;
     } // for
 
-    return f_memory_array_adjust(length, sizeof(f_thread_condition_t), (void **) &conditions->array, &conditions->used, &conditions->size);
+    return f_memory_array_adjust(length, sizeof(f_thread_condition_t), (void **) &structure->array, &structure->used, &structure->size);
   }
 #endif // !defined(_di_f_thread_conditions_adjust_) || !defined(_di_f_thread_conditions_decimate_by_)
 
 #if !defined(_di_f_thread_conditions_decrease_) || !defined(_di_f_thread_conditions_decrease_by_) || !defined(_di_f_thread_conditions_increase_) || !defined(_di_f_thread_conditions_increase_by_)
-  f_status_t private_f_thread_conditions_resize(const f_number_unsigned_t length, f_thread_conditions_t * const conditions) {
+  f_status_t private_f_thread_conditions_resize(const f_number_unsigned_t length, f_thread_conditions_t * const structure) {
 
     f_status_t status = F_none;
 
-    for (f_number_unsigned_t i = length; i < conditions->size; ++i) {
+    for (f_number_unsigned_t i = length; i < structure->size; ++i) {
 
-      status = private_f_thread_condition_delete(&conditions->array[i]);
+      status = private_f_thread_condition_delete(&structure->array[i]);
       if (F_status_is_error(status)) return status;
     } // for
 
-    return f_memory_array_resize(length, sizeof(f_thread_condition_t), (void **) &conditions->array, &conditions->used, &conditions->size);
+    return f_memory_array_resize(length, sizeof(f_thread_condition_t), (void **) &structure->array, &structure->used, &structure->size);
   }
 #endif // !defined(_di_f_thread_conditions_decrease_) || !defined(_di_f_thread_conditions_decrease_by_) || !defined(_di_f_thread_conditions_increase_) || !defined(_di_f_thread_conditions_increase_by_)
 

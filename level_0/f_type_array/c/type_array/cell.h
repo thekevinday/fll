@@ -21,7 +21,7 @@ extern "C" {
  *
  * @param length
  *   The new size to use.
- * @param cells
+ * @param structure
  *   The string cells array to resize.
  *
  * @return
@@ -29,10 +29,12 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_adjust().
+ *   Errors (with error bit) from: f_memory_array_adjust().
+ *
+ * @see f_memory_array_adjust()
  */
 #ifndef _di_f_cells_adjust_
-  extern f_status_t f_cells_adjust(const f_number_unsigned_t length, f_cells_t * const cells);
+  extern f_status_t f_cells_adjust(const f_number_unsigned_t length, f_cells_t * const structure);
 #endif // _di_f_cells_adjust_
 
 /**
@@ -49,7 +51,9 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_increase().
+ *
+ * @see f_memory_array_increase()
  */
 #ifndef _di_f_cells_append_
   extern f_status_t f_cells_append(const f_cell_t source, f_cells_t * const destination);
@@ -69,7 +73,9 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_increase_by().
+ *
+ * @see f_memory_array_increase_by()
  */
 #ifndef _di_f_cells_append_all_
   extern f_status_t f_cells_append_all(const f_cells_t source, f_cells_t * const destination);
@@ -84,7 +90,7 @@ extern "C" {
  *
  * @param amount
  *   A positive number representing how much to decimate the size by.
- * @param cells
+ * @param structure
  *   The string cells array to resize.
  *
  * @return
@@ -93,10 +99,12 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_adjust().
+ *   Errors (with error bit) from: f_memory_array_decimate_by().
+ *
+ * @see f_memory_array_decimate_by()
  */
 #ifndef _di_f_cells_decimate_by_
-  extern f_status_t f_cells_decimate_by(const f_number_unsigned_t amount, f_cells_t * const cells);
+  extern f_status_t f_cells_decimate_by(const f_number_unsigned_t amount, f_cells_t * const structure);
 #endif // _di_f_cells_decimate_by_
 
 /**
@@ -108,7 +116,7 @@ extern "C" {
  *
  * @param amount
  *   A positive number representing how much to decrease the size by.
- * @param cells
+ * @param structure
  *   The string cells array to resize.
  *
  * @return
@@ -117,10 +125,12 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_decrease_by().
+ *
+ * @see f_memory_array_decrease_by()
  */
 #ifndef _di_f_cells_decrease_by_
-  extern f_status_t f_cells_decrease_by(const f_number_unsigned_t amount, f_cells_t * const cells);
+  extern f_status_t f_cells_decrease_by(const f_number_unsigned_t amount, f_cells_t * const structure);
 #endif // _di_f_cells_decrease_by_
 
 /**
@@ -132,7 +142,7 @@ extern "C" {
  * @param step
  *   The allocation step to use.
  *   Must be greater than 0.
- * @param cells
+ * @param structure
  *   The string cells array to resize.
  *
  * @return
@@ -142,10 +152,12 @@ extern "C" {
  *   F_array_too_large (with error bit) if the new array length is too large.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_increase().
+ *
+ * @see f_memory_array_increase()
  */
 #ifndef _di_f_cells_increase_
-  extern f_status_t f_cells_increase(const f_number_unsigned_t step, f_cells_t * const cells);
+  extern f_status_t f_cells_increase(const f_number_unsigned_t step, f_cells_t * const structure);
 #endif // _di_f_cells_increase_
 
 /**
@@ -157,7 +169,7 @@ extern "C" {
  *
  * @param amount
  *   A positive number representing how much to increase the size by.
- * @param cells
+ * @param structure
  *   The string cells array to resize.
  *
  * @return
@@ -167,10 +179,12 @@ extern "C" {
  *   F_array_too_large (with error bit) if the new array length is too large.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_increase_by().
+ *
+ * @see f_memory_array_increase_by()
  */
 #ifndef _di_f_cells_increase_by_
-  extern f_status_t f_cells_increase_by(const f_number_unsigned_t amount, f_cells_t * const cells);
+  extern f_status_t f_cells_increase_by(const f_number_unsigned_t amount, f_cells_t * const structure);
 #endif // _di_f_cells_increase_by_
 
 /**
@@ -178,7 +192,7 @@ extern "C" {
  *
  * @param length
  *   The new size to use.
- * @param cells
+ * @param structure
  *   The string cells array to adjust.
  *
  * @return
@@ -186,10 +200,12 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_resize().
+ *
+ * @see f_memory_array_resize()
  */
 #ifndef _di_f_cells_resize_
-  extern f_status_t f_cells_resize(const f_number_unsigned_t length, f_cells_t * const cells);
+  extern f_status_t f_cells_resize(const f_number_unsigned_t length, f_cells_t * const structure);
 #endif // _di_f_cells_resize_
 
 /**
@@ -197,7 +213,7 @@ extern "C" {
  *
  * @param length
  *   The new size to use.
- * @param cellss
+ * @param structure
  *   The string cellss array to resize.
  *
  * @return
@@ -205,11 +221,12 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_adjust().
- *   Errors (with error bit) from: f_memory_destroy().
+ *   Errors (with error bit) from: f_memory_array_adjust().
+ *
+ * @see f_memory_array_adjust()
  */
 #ifndef _di_f_cellss_adjust_
-  extern f_status_t f_cellss_adjust(const f_number_unsigned_t length, f_cellss_t * const cellss);
+  extern f_status_t f_cellss_adjust(const f_number_unsigned_t length, f_cellss_t * const structure);
 #endif // _di_f_cellss_adjust_
 
 /**
@@ -226,7 +243,11 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_increase().
+ *   Errors (with error bit) from: f_memory_array_increase_by().
+ *
+ * @see f_memory_array_increase()
+ * @see f_memory_array_increase_by()
  */
 #ifndef _di_f_cellss_append_
   extern f_status_t f_cellss_append(const f_cells_t source, f_cellss_t * const destination);
@@ -246,7 +267,9 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_increase_by().
+ *
+ * @see f_memory_array_increase_by()
  */
 #ifndef _di_f_cellss_append_all_
   extern f_status_t f_cellss_append_all(const f_cellss_t source, f_cellss_t * const destination);
@@ -261,7 +284,7 @@ extern "C" {
  *
  * @param amount
  *   A positive number representing how much to decimate the size by.
- * @param cellss
+ * @param structure
  *   The string cellss array to resize.
  *
  * @return
@@ -269,11 +292,12 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_adjust().
- *   Errors (with error bit) from: f_memory_destroy().
+ *   Errors (with error bit) from: f_memory_array_adjust().
+ *
+ * @see f_memory_array_adjust()
  */
 #ifndef _di_f_cellss_decimate_by_
-  extern f_status_t f_cellss_decimate_by(const f_number_unsigned_t amount, f_cellss_t * const cellss);
+  extern f_status_t f_cellss_decimate_by(const f_number_unsigned_t amount, f_cellss_t * const structure);
 #endif // _di_f_cellss_decimate_by_
 
 /**
@@ -285,7 +309,7 @@ extern "C" {
  *
  * @param amount
  *   A positive number representing how much to decrease the size by.
- * @param cellss
+ * @param structure
  *   The string cellss array to resize.
  *
  * @return
@@ -293,11 +317,12 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_delete().
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_resize().
+ *
+ * @see f_memory_array_resize()
  */
 #ifndef _di_f_cellss_decrease_by_
-  extern f_status_t f_cellss_decrease_by(const f_number_unsigned_t amount, f_cellss_t * const cellss);
+  extern f_status_t f_cellss_decrease_by(const f_number_unsigned_t amount, f_cellss_t * const structure);
 #endif // _di_f_cellss_decrease_by_
 
 /**
@@ -309,7 +334,7 @@ extern "C" {
  * @param step
  *   The allocation step to use.
  *   Must be greater than 0.
- * @param cellss
+ * @param structure
  *   The string cellss array to resize.
  *
  * @return
@@ -319,10 +344,12 @@ extern "C" {
  *   F_array_too_large (with error bit) if the new array length is too large.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_resize().
+ *
+ * @see f_memory_array_resize()
  */
 #ifndef _di_f_cellss_increase_
-  extern f_status_t f_cellss_increase(const f_number_unsigned_t step, f_cellss_t * const cellss);
+  extern f_status_t f_cellss_increase(const f_number_unsigned_t step, f_cellss_t * const structure);
 #endif // _di_f_cellss_increase_
 
 /**
@@ -334,7 +361,7 @@ extern "C" {
  *
  * @param amount
  *   A positive number representing how much to increase the size by.
- * @param cellss
+ * @param structure
  *   The string cellss array to resize.
  *
  * @return
@@ -344,10 +371,12 @@ extern "C" {
  *   F_array_too_large (with error bit) if the new array length is too large.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_resize().
+ *
+ * @see f_memory_array_resize()
  */
 #ifndef _di_f_cellss_increase_by_
-  extern f_status_t f_cellss_increase_by(const f_number_unsigned_t amount, f_cellss_t * const cellss);
+  extern f_status_t f_cellss_increase_by(const f_number_unsigned_t amount, f_cellss_t * const structure);
 #endif // _di_f_cellss_increase_by_
 
 /**
@@ -355,7 +384,7 @@ extern "C" {
  *
  * @param length
  *   The new size to use.
- * @param cellss
+ * @param structure
  *   The string cellss array to adjust.
  *
  * @return
@@ -363,11 +392,12 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_delete().
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_resize().
+ *
+ * @see f_memory_array_resize()
  */
 #ifndef _di_f_cellss_resize_
-  extern f_status_t f_cellss_resize(const f_number_unsigned_t length, f_cellss_t * const cellss);
+  extern f_status_t f_cellss_resize(const f_number_unsigned_t length, f_cellss_t * const structure);
 #endif // _di_f_cellss_resize_
 
 #ifdef __cplusplus

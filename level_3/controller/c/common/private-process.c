@@ -9,17 +9,17 @@ extern "C" {
   f_status_t controller_pids_increase(controller_pids_t * const pids) {
 
     if (pids->used + 1 > pids->size) {
-      f_number_unsigned_t size = pids->used + controller_common_allocation_small_d;
+      f_number_unsigned_t length = pids->used + controller_common_allocation_small_d;
 
-      if (size > F_number_t_size_unsigned_d) {
+      if (length > F_number_t_size_unsigned_d) {
         if (pids->used + 1 > F_number_t_size_unsigned_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = F_number_t_size_unsigned_d;
+        length = F_number_t_size_unsigned_d;
       }
 
-      return controller_pids_resize(size, pids);
+      return controller_pids_resize(length, pids);
     }
 
     return F_data_not;
@@ -79,17 +79,17 @@ extern "C" {
   f_status_t controller_processs_increase(controller_processs_t * const processs) {
 
     if (processs->used + 1 > processs->size) {
-      f_number_unsigned_t size = processs->used + controller_common_allocation_small_d;
+      f_number_unsigned_t length = processs->used + controller_common_allocation_small_d;
 
-      if (size > F_number_t_size_unsigned_d) {
+      if (length > F_number_t_size_unsigned_d) {
         if (processs->used + 1 > F_number_t_size_unsigned_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = F_number_t_size_unsigned_d;
+        length = F_number_t_size_unsigned_d;
       }
 
-      return controller_processs_resize(size, processs);
+      return controller_processs_resize(length, processs);
     }
 
     return F_data_not;

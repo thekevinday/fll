@@ -5,27 +5,11 @@
 extern "C" {
 #endif
 
-#if !defined(_di_f_fll_ids_adjust_) || !defined(_di_f_fll_ids_decimate_by_)
-  f_status_t private_f_fll_ids_adjust(const f_number_unsigned_t length, f_fll_ids_t * const ids) {
-
-    const f_status_t status = f_memory_adjust(ids->size, length, sizeof(f_fll_id_t), (void **) & ids->array);
-    if (F_status_is_error(status)) return status;
-
-    ids->size = length;
-
-    if (ids->used > ids->size) {
-      ids->used = length;
-    }
-
-    return F_none;
-  }
-#endif // !defined(_di_f_fll_ids_adjust_) || !defined(_di_f_fll_ids_decimate_by_)
-
 #if !defined(_di_f_fll_ids_append_) || !defined(_di_f_fll_idss_append_)
   extern f_status_t private_f_fll_ids_append(const f_fll_id_t source, f_fll_ids_t * const destination) {
 
-    if (destination->used + 1 > destination->size) {
-      const f_status_t status = private_f_fll_ids_resize(destination->used + F_memory_default_allocation_small_d, destination);
+    {
+      const f_status_t status = f_memory_array_increase(F_memory_default_allocation_small_d, sizeof(f_fll_id_t), (void **) &destination->array, &destination->used, &destination->size);
       if (F_status_is_error(status)) return status;
     }
 
@@ -41,8 +25,8 @@ extern "C" {
 #if !defined(_di_f_fll_ids_append_) || !defined(_di_f_fll_ids_append_all_) || !defined(_di_f_fll_idss_append_all_)
   extern f_status_t private_f_fll_ids_append_all(const f_fll_ids_t source, f_fll_ids_t * const destination) {
 
-    if (destination->used + source.used > destination->size) {
-      const f_status_t status = private_f_fll_ids_resize(destination->used + source.used, destination);
+    {
+      const f_status_t status = f_memory_array_increase_by(source.used, sizeof(f_fll_id_t), (void **) &destination->array, &destination->used, &destination->size);
       if (F_status_is_error(status)) return status;
     }
 
@@ -58,73 +42,33 @@ extern "C" {
   }
 #endif // !defined(_di_f_fll_ids_append_) || !defined(_di_f_fll_ids_append_all_) || !defined(_di_f_fll_idss_append_all_)
 
-#if !defined(_di_f_fll_ids_resize_) || !defined(_di_f_fll_ids_append_) || !defined(_di_f_fll_ids_decrease_by_) || !defined(_di_f_fll_idss_append_)
-  f_status_t private_f_fll_ids_resize(const f_number_unsigned_t length, f_fll_ids_t * const ids) {
-
-    const f_status_t status = f_memory_resize(ids->size, length, sizeof(f_fll_id_t), (void **) & ids->array);
-    if (F_status_is_error(status)) return status;
-
-    ids->size = length;
-
-    if (ids->used > ids->size) {
-      ids->used = length;
-    }
-
-    return F_none;
-  }
-#endif // !defined(_di_f_fll_ids_resize_) || !defined(_di_f_fll_ids_append_) || !defined(_di_f_fll_ids_decrease_by_) || !defined(_di_f_fll_idss_append_)
-
 #if !defined(_di_f_fll_idss_adjust_) || !defined(_di_f_fll_idss_decimate_by_)
-  f_status_t private_f_fll_idss_adjust(const f_number_unsigned_t length, f_fll_idss_t * const idss) {
+  f_status_t private_f_fll_idss_adjust(const f_number_unsigned_t length, f_fll_idss_t * const structure) {
 
     f_status_t status = F_none;
 
-    for (f_number_unsigned_t i = length; i < idss->size; ++i) {
+    for (f_number_unsigned_t i = length; i < structure->size; ++i) {
 
-      status = f_memory_destroy(idss->array[i].size, sizeof(f_fll_ids_t), (void **) & idss->array[i].array);
+      status = f_memory_array_adjust(0, sizeof(f_fll_id_t), (void **) &structure->array[i].array, &structure->array[i].used, &structure->array[i].size);
       if (F_status_is_error(status)) return status;
-
-      idss->array[i].size = 0;
-      idss->array[i].used = 0;
     } // for
 
-    status = f_memory_adjust(idss->size, length, sizeof(f_fll_ids_t), (void **) & idss->array);
-    if (F_status_is_error(status)) return status;
-
-    idss->size = length;
-
-    if (idss->used > idss->size) {
-      idss->used = length;
-    }
-
-    return F_none;
+    return f_memory_array_adjust(length, sizeof(f_fll_ids_t), (void **) &structure->array, &structure->used, &structure->size);
   }
 #endif // !defined(_di_f_fll_idss_adjust_) || !defined(_di_f_fll_idss_decimate_by_)
 
 #if !defined(_di_f_fll_idss_decrease_by_) || !defined(_di_f_fll_idss_increase_) || !defined(_di_f_fll_idss_increase_by_) || !defined(_di_f_fll_idss_resize_)
-  f_status_t private_f_fll_idss_resize(const f_number_unsigned_t length, f_fll_idss_t * const idss) {
+  f_status_t private_f_fll_idss_resize(const f_number_unsigned_t length, f_fll_idss_t * const structure) {
 
     f_status_t status = F_none;
 
-    for (f_number_unsigned_t i = length; i < idss->size; ++i) {
+    for (f_number_unsigned_t i = length; i < structure->size; ++i) {
 
-      status = f_memory_delete(idss->array[i].size, sizeof(f_fll_ids_t), (void **) & idss->array[i].array);
+      status = f_memory_array_resize(0, sizeof(f_fll_id_t), (void **) &structure->array[i].array, &structure->array[i].used, &structure->array[i].size);
       if (F_status_is_error(status)) return status;
-
-      idss->array[i].size = 0;
-      idss->array[i].used = 0;
     } // for
 
-    status = f_memory_resize(idss->size, length, sizeof(f_fll_ids_t), (void **) & idss->array);
-    if (F_status_is_error(status)) return status;
-
-    idss->size = length;
-
-    if (idss->used > idss->size) {
-      idss->used = length;
-    }
-
-    return F_none;
+    return f_memory_array_resize(length, sizeof(f_fll_ids_t), (void **) &structure->array, &structure->used, &structure->size);
   }
 #endif // !defined(_di_f_fll_idss_decrease_by_) || !defined(_di_f_fll_idss_increase_) || !defined(_di_f_fll_idss_increase_by_) || !defined(_di_f_fll_idss_resize_)
 

@@ -151,17 +151,17 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (step && dynamic->used + 1 > dynamic->size) {
-      f_number_unsigned_t size = dynamic->used + step;
+      f_number_unsigned_t length = dynamic->used + step;
 
-      if (size > F_string_t_size_d) {
+      if (length > F_string_t_size_d) {
         if (dynamic->used + 1 > F_string_t_size_d) {
           return F_status_set_error(F_string_too_large);
         }
 
-        size = F_string_t_size_d;
+        length = F_string_t_size_d;
       }
 
-      return private_f_utf_string_dynamic_resize(size, dynamic);
+      return private_f_utf_string_dynamic_resize(length, dynamic);
     }
 
     return F_data_not;

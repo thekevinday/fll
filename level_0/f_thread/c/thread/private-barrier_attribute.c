@@ -6,11 +6,9 @@ extern "C" {
 #endif
 
 #if !defined(_di_f_thread_barrier_attributes_adjust_) || !defined(_di_f_thread_barrier_attributes_decimate_by_) || !defined(_di_f_thread_barrier_attributes_decrease_) || !defined(_di_f_thread_barrier_attributes_decrease_by_) || !defined(_di_f_thread_barrier_attributes_increase_) || !defined(_di_f_thread_barrier_attributes_increase_by_) || !defined(_di_f_thread_barrier_attributes_resize_)
-  f_status_t private_f_thread_barrier_attribute_delete(f_thread_barrier_attribute_t *attribute) {
+  f_status_t private_f_thread_barrier_attribute_delete(f_thread_barrier_attribute_t *structure) {
 
-    if (pthread_barrierattr_destroy(attribute)) return F_status_set_error(F_failure);
-
-    attribute = 0;
+    if (pthread_barrierattr_destroy(structure)) return F_status_set_error(F_failure);
 
     return F_none;
   }

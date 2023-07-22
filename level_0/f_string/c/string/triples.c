@@ -126,15 +126,15 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (step && triples->used + 1 > triples->size) {
-      f_number_unsigned_t size = triples->used + F_memory_default_allocation_small_d;
+      f_number_unsigned_t length = triples->used + F_memory_default_allocation_small_d;
 
-      if (size > F_number_t_size_unsigned_d) {
+      if (length > F_number_t_size_unsigned_d) {
         if (triples->used + 1 > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
-        size = F_number_t_size_unsigned_d;
+        length = F_number_t_size_unsigned_d;
       }
 
-      return private_f_string_triples_resize(size, triples);
+      return private_f_string_triples_resize(length, triples);
     }
 
     return F_data_not;

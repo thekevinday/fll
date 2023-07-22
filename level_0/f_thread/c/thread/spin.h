@@ -65,12 +65,12 @@ extern "C" {
 #endif // _di_f_thread_spins_t_
 
 /**
- * Resize the thread spin locks array.
+ * Resize the thread spins array.
  *
  * @param length
  *   The new size to use.
- * @param spins
- *   The string spins array to resize.
+ * @param structure
+ *   The thread spins array to resize.
  *
  * @return
  *   F_none on success.
@@ -79,11 +79,11 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_spins_adjust_
-  extern f_status_t f_thread_spins_adjust(const f_number_unsigned_t length, f_thread_spins_t * const spins);
+  extern f_status_t f_thread_spins_adjust(const f_number_unsigned_t length, f_thread_spins_t * const structure);
 #endif // _di_f_thread_spins_adjust_
 
 /**
- * Resize the thread spin locks array to a smaller size.
+ * Resize the thread spins array to a smaller size.
  *
  * This will resize making the array smaller based on (size - given length).
  * If the given length is too small, then the resize will fail.
@@ -91,8 +91,8 @@ extern "C" {
  *
  * @param amount
  *   A positive number representing how much to decimate the size by.
- * @param spins
- *   The string spins array to resize.
+ * @param structure
+ *   The thread spins array to resize.
  *
  * @return
  *   F_none on success.
@@ -102,11 +102,11 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_spins_decimate_by_
-  extern f_status_t f_thread_spins_decimate_by(const f_number_unsigned_t amount, f_thread_spins_t * const spins);
+  extern f_status_t f_thread_spins_decimate_by(const f_number_unsigned_t amount, f_thread_spins_t * const structure);
 #endif // _di_f_thread_spins_decimate_by_
 
 /**
- * Resize the thread spin locks array to a smaller size.
+ * Resize the thread spins array to a smaller size.
  *
  * This will resize making the array smaller based on (size - given length).
  * If the given length is too small, then the resize will fail.
@@ -114,8 +114,8 @@ extern "C" {
  *
  * @param amount
  *   A positive number representing how much to decrease the size by.
- * @param spins
- *   The string spins array to resize.
+ * @param structure
+ *   The thread spins array to resize.
  *
  * @return
  *   F_none on success.
@@ -125,11 +125,11 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_spins_decrease_by_
-  extern f_status_t f_thread_spins_decrease_by(const f_number_unsigned_t amount, f_thread_spins_t * const spins);
+  extern f_status_t f_thread_spins_decrease_by(const f_number_unsigned_t amount, f_thread_spins_t * const structure);
 #endif // _di_f_thread_spins_decrease_by_
 
 /**
- * Increase the size of the thread spin locks array, but only if necessary.
+ * Increase the size of the thread spins array, but only if necessary.
  *
  * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
  * If already set to the maximum buffer size, then the resize will fail.
@@ -137,8 +137,8 @@ extern "C" {
  * @param step
  *   The allocation step to use.
  *   Must be greater than 0.
- * @param spins
- *   The string spins array to resize.
+ * @param structure
+ *   The thread spins array to resize.
  *
  * @return
  *   F_none on success.
@@ -149,11 +149,11 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_spins_increase_
-  extern f_status_t f_thread_spins_increase(const f_number_unsigned_t step, f_thread_spins_t * const spins);
+  extern f_status_t f_thread_spins_increase(const f_number_unsigned_t step, f_thread_spins_t * const structure);
 #endif // _di_f_thread_spins_increase_
 
 /**
- * Resize the thread spin locks array to a larger size.
+ * Resize the thread spins array to a larger size.
  *
  * This will resize making the array larger based on the given length.
  * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
@@ -161,8 +161,8 @@ extern "C" {
  *
  * @param amount
  *   A positive number representing how much to increase the size by.
- * @param spins
- *   The string spins array to resize.
+ * @param structure
+ *   The thread spins array to resize.
  *
  * @return
  *   F_none on success.
@@ -173,16 +173,16 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_spins_increase_by_
-  extern f_status_t f_thread_spins_increase_by(const f_number_unsigned_t amount, f_thread_spins_t * const spins);
+  extern f_status_t f_thread_spins_increase_by(const f_number_unsigned_t amount, f_thread_spins_t * const structure);
 #endif // _di_f_thread_spins_increase_by_
 
 /**
- * Resize the thread spin locks array.
+ * Resize the thread spins array.
  *
  * @param length
  *   The new size to use.
- * @param spins
- *   The string spins array to adjust.
+ * @param structure
+ *   The thread spins array to adjust.
  *
  * @return
  *   F_none on success.
@@ -191,7 +191,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_spins_resize_
-  extern f_status_t f_thread_spins_resize(const f_number_unsigned_t length, f_thread_spins_t * const spins);
+  extern f_status_t f_thread_spins_resize(const f_number_unsigned_t length, f_thread_spins_t * const structure);
 #endif // _di_f_thread_spins_resize_
 
 #ifdef __cplusplus

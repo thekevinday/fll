@@ -22,7 +22,7 @@ extern "C" {
  *
  * @param length
  *   The new size to use.
- * @param conditions
+ * @param structure
  *   The conditions to adjust.
  *
  * @return
@@ -44,7 +44,7 @@ extern "C" {
  * @see f_thread_conditions_resize()
  */
 #if !defined(_di_f_thread_condition_delete_) || !defined(_di_f_thread_conditions_adjust_) || !defined(_di_f_thread_conditions_decimate_by_) || !defined(_di_f_thread_conditions_decrease_) || !defined(_di_f_thread_conditions_decrease_by_) || !defined(_di_f_thread_conditions_increase_) || !defined(_di_f_thread_conditions_increase_by_) || !defined(_di_f_thread_conditions_resize_)
-  extern f_status_t private_f_thread_condition_delete(f_thread_condition_t *condition) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_thread_condition_delete(f_thread_condition_t *structure) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_thread_condition_delete_) || !defined(_di_f_thread_conditions_adjust_) || !defined(_di_f_thread_conditions_decimate_by_) || !defined(_di_f_thread_conditions_decrease_) || !defined(_di_f_thread_conditions_decrease_by_) || !defined(_di_f_thread_conditions_increase_) || !defined(_di_f_thread_conditions_increase_by_) || !defined(_di_f_thread_conditions_resize_)
 
 /**
@@ -54,20 +54,21 @@ extern "C" {
  *
  * @param length
  *   The new size to use.
- * @param conditions
+ * @param structure
  *   The conditions to adjust.
  *
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: f_memory_adjust().
+ *   Errors (with error bit) from: f_memory_array_resize().
  *
- * @see f_memory_adjust()
+ * @see f_memory_array_resize()
+ *
  * @see f_thread_conditions_adjust()
  * @see f_thread_conditions_decimate_by()
  */
 #if !defined(_di_f_thread_conditions_adjust_) || !defined(_di_f_thread_conditions_decimate_by_)
-  extern f_status_t private_f_thread_conditions_adjust(const f_number_unsigned_t length, f_thread_conditions_t * const conditions) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_thread_conditions_adjust(const f_number_unsigned_t length, f_thread_conditions_t * const structure) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_thread_conditions_adjust_) || !defined(_di_f_thread_conditions_decimate_by_)
 
 /**
@@ -77,21 +78,22 @@ extern "C" {
  *
  * @param length
  *   The new size to use.
- * @param conditions
+ * @param structure
  *   The conditions to resize.
  *
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_resize().
  *
- * @see f_memory_resize()
+ * @see f_memory_array_resize()
+ *
  * @see f_thread_conditions_decrease_by()
  * @see f_thread_conditions_increase()
  * @see f_thread_conditions_increase_by()
  */
 #if !defined(_di_f_thread_conditions_decrease_by_) || !defined(_di_f_thread_conditions_increase_) || !defined(_di_f_thread_conditions_increase_by_)
-  extern f_status_t private_f_thread_conditions_resize(const f_number_unsigned_t length, f_thread_conditions_t * const conditions) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_thread_conditions_resize(const f_number_unsigned_t length, f_thread_conditions_t * const structure) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_thread_conditions_decrease_by_) || !defined(_di_f_thread_conditions_increase_) || !defined(_di_f_thread_conditions_increase_by_)
 
 #ifdef __cplusplus

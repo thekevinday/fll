@@ -84,17 +84,17 @@ extern "C" {
     if (!step) return F_data_not;
 
     if (dynamics->used + 1 > dynamics->size) {
-      f_number_unsigned_t size = dynamics->used + step;
+      f_number_unsigned_t length = dynamics->used + step;
 
-      if (size > F_number_t_size_unsigned_d) {
+      if (length > F_number_t_size_unsigned_d) {
         if (dynamics->used + 1 > F_number_t_size_unsigned_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = F_number_t_size_unsigned_d;
+        length = F_number_t_size_unsigned_d;
       }
 
-      return private_f_utf_string_dynamics_resize(size, dynamics);
+      return private_f_utf_string_dynamics_resize(length, dynamics);
     }
 
     return F_data_not;

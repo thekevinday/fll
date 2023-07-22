@@ -20,8 +20,8 @@ extern "C" {
  *
  * Intended to be shared to each of the different implementation variations.
  *
- * @param lock
- *   The locks to delete.
+ * @param structure
+ *   The lock to delete.
  *
  * @return
  *   F_none on success.
@@ -42,7 +42,7 @@ extern "C" {
  * @see f_thread_locks_resize()
  */
 #if !defined(_di_f_thread_lock_delete_) || !defined(_di_f_thread_locks_adjust_) || !defined(_di_f_thread_locks_decimate_by_) || !defined(_di_f_thread_locks_decrease_) || !defined(_di_f_thread_locks_decrease_by_) || !defined(_di_f_thread_locks_increase_) || !defined(_di_f_thread_locks_increase_by_) || !defined(_di_f_thread_locks_resize_)
-  extern f_status_t private_f_thread_lock_delete(f_thread_lock_t *lock) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_thread_lock_delete(f_thread_lock_t *structure) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_thread_lock_delete_) || !defined(_di_f_thread_locks_adjust_) || !defined(_di_f_thread_locks_decimate_by_) || !defined(_di_f_thread_locks_decrease_) || !defined(_di_f_thread_locks_decrease_by_) || !defined(_di_f_thread_locks_increase_) || !defined(_di_f_thread_locks_increase_by_) || !defined(_di_f_thread_locks_resize_)
 
 /**
@@ -52,20 +52,21 @@ extern "C" {
  *
  * @param length
  *   The new size to use.
- * @param locks
+ * @param structure
  *   The locks to adjust.
  *
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: f_memory_adjust().
+ *   Errors (with error bit) from: f_memory_array_resize().
  *
- * @see f_memory_adjust()
+ * @see f_memory_array_resize()
+ *
  * @see f_thread_locks_adjust()
  * @see f_thread_locks_decimate_by()
  */
 #if !defined(_di_f_thread_locks_adjust_) || !defined(_di_f_thread_locks_decimate_by_)
-  extern f_status_t private_f_thread_locks_adjust(const f_number_unsigned_t length, f_thread_locks_t * const locks) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_thread_locks_adjust(const f_number_unsigned_t length, f_thread_locks_t * const structure) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_thread_locks_adjust_) || !defined(_di_f_thread_locks_decimate_by_)
 
 /**
@@ -75,21 +76,22 @@ extern "C" {
  *
  * @param length
  *   The new size to use.
- * @param locks
+ * @param structure
  *   The locks to resize.
  *
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_resize().
  *
- * @see f_memory_resize()
+ * @see f_memory_array_resize()
+ *
  * @see f_thread_locks_decrease_by()
  * @see f_thread_locks_increase()
  * @see f_thread_locks_increase_by()
  */
 #if !defined(_di_f_thread_locks_decrease_by_) || !defined(_di_f_thread_locks_increase_) || !defined(_di_f_thread_locks_increase_by_)
-  extern f_status_t private_f_thread_locks_resize(const f_number_unsigned_t length, f_thread_locks_t * const locks) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_thread_locks_resize(const f_number_unsigned_t length, f_thread_locks_t * const structure) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_thread_locks_decrease_by_) || !defined(_di_f_thread_locks_increase_) || !defined(_di_f_thread_locks_increase_by_)
 
 #ifdef __cplusplus

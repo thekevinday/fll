@@ -16,30 +16,7 @@ extern "C" {
 #endif
 
 /**
- * Private implementation for resizing the number array.
- *
- * Intended to be shared to each of the different implementation variations.
- *
- * @param length
- *   The length to adjust to.
- * @param lengths
- *   The lengths array to adjust.
- *
- * @return
- *   F_none on success.
- *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
- *
- *   Errors (with error bit) from: f_memory_adjust().
- *
- * @see f_number_unsigneds_adjust()
- * @see f_number_unsigneds_decimate_by()
- */
-#if !defined(_di_f_number_unsigneds_adjust_) || !defined(_di_f_number_unsigneds_decimate_by_)
-  extern f_status_t private_f_number_unsigneds_adjust(const f_number_unsigned_t length, f_number_unsigneds_t * const lengths) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_number_unsigneds_adjust_) || !defined(_di_f_number_unsigneds_decimate_by_)
-
-/**
- * Private implementation for appending the number array.
+ * Private implementation for appending the number_unsigned array.
  *
  * Intended to be shared to each of the different implementation variations.
  *
@@ -51,9 +28,10 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_increase().
  *
- * @see f_memory_resize()
+ * @see f_memory_array_increase()
+ *
  * @see f_number_unsigneds_append()
  * @see f_number_unsignedss_append()
  */
@@ -62,7 +40,7 @@ extern "C" {
 #endif // !defined(_di_f_number_unsigneds_append_) || !defined(_di_f_number_unsignedss_append_)
 
 /**
- * Private implementation for appending the number array.
+ * Private implementation for appending the number_unsigned array.
  *
  * Intended to be shared to each of the different implementation variations.
  *
@@ -74,9 +52,10 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_increase_by().
  *
- * @see f_memory_resize()
+ * @see f_memory_array_increase_by()
+ *
  * @see f_number_unsigneds_append_all()
  * @see f_number_unsignedss_append()
  * @see f_number_unsignedss_append_all()
@@ -86,39 +65,14 @@ extern "C" {
 #endif // !defined(_di_f_number_unsigneds_append_) || !defined(_di_f_number_unsigneds_append_all_) || !defined(_di_f_number_unsignedss_append_all_)
 
 /**
- * Private implementation for resizing the number array.
+ * Private implementation for resizing the number_unsignedss array.
  *
  * Intended to be shared to each of the different implementation variations.
  *
  * @param length
  *   The length to adjust to.
- * @param lengths
- *   The lengths array to adjust.
- *
- * @return
- *   F_none on success.
- *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
- *
- *   Errors (with error bit) from: f_memory_resize().
- *
- * @see f_number_unsigneds_resize()
- * @see f_number_unsigneds_append()
- * @see f_number_unsigneds_decrease_by()
- * @see f_number_unsignedss_append()
- */
-#if !defined(_di_f_number_unsigneds_resize_) || !defined(_di_f_number_unsigneds_append_) || !defined(_di_f_number_unsigneds_decrease_by_) || !defined(_di_f_number_unsignedss_append_)
-  extern f_status_t private_f_number_unsigneds_resize(const f_number_unsigned_t length, f_number_unsigneds_t * const lengths) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_number_unsigneds_resize_) || !defined(_di_f_number_unsigneds_append_) || !defined(_di_f_number_unsigneds_decrease_by_) || !defined(_di_f_number_unsignedss_append_)
-
-/**
- * Private implementation for resizing the number array.
- *
- * Intended to be shared to each of the different implementation variations.
- *
- * @param length
- *   The length to adjust to.
- * @param lengthss
- *   The number array to adjust.
+ * @param structure
+ *   The number_unsignedss array to adjust.
  *
  * @return
  *   F_none on success.
@@ -128,25 +82,26 @@ extern "C" {
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_adjust().
- *   Errors (with error bit) from: f_memory_destroy().
+ *   Errors (with error bit) from: f_memory_array_adjust().
+ *
+ * @see f_memory_array_adjust()
  *
  * @see f_number_unsignedss_adjust()
  * @see f_number_unsignedss_decimate_by()
  */
 #if !defined(_di_f_number_unsignedss_adjust_) || !defined(_di_f_number_unsignedss_decimate_by_)
-  extern f_status_t private_f_number_unsignedss_adjust(const f_number_unsigned_t length, f_number_unsignedss_t * const lengthss) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_number_unsignedss_adjust(const f_number_unsigned_t length, f_number_unsignedss_t * const structure) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_number_unsignedss_adjust_) || !defined(_di_f_number_unsignedss_decimate_by_)
 
 /**
- * Private implementation for resizing the number array.
+ * Private implementation for resizing the number_unsignedss array.
  *
  * Intended to be shared to each of the different implementation variations.
  *
  * @param length
  *   The length to resize to.
- * @param lengthss
- *   The number array to resize.
+ * @param structure
+ *   The number_unsignedss array to resize.
  *
  * @return
  *   F_none on success.
@@ -156,8 +111,9 @@ extern "C" {
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_delete().
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_resize().
+ *
+ * @see f_memory_array_resize()
  *
  * @see f_number_unsignedss_decrease_by()
  * @see f_number_unsignedss_increase()
@@ -165,7 +121,7 @@ extern "C" {
  * @see f_number_unsignedss_resize()
  */
 #if !defined(_di_f_number_unsignedss_decrease_by_) || !defined(_di_f_number_unsignedss_increase_) || !defined(_di_f_number_unsignedss_increase_by_) || !defined(_di_f_number_unsignedss_resize_)
-  extern f_status_t private_f_number_unsignedss_resize(const f_number_unsigned_t length, f_number_unsignedss_t * const lengthss) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_number_unsignedss_resize(const f_number_unsigned_t length, f_number_unsignedss_t * const structure) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_number_unsignedss_decrease_by_) || !defined(_di_f_number_unsignedss_increase_) || !defined(_di_f_number_unsignedss_increase_by_) || !defined(_di_f_number_unsignedss_resize_)
 
 #ifdef __cplusplus

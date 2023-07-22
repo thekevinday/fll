@@ -20,7 +20,7 @@ extern "C" {
  *
  * Intended to be shared to each of the different implementation variations.
  *
- * @param spin
+ * @param structure
  *   The spins to delete.
  *
  * @return
@@ -41,7 +41,7 @@ extern "C" {
  * @see f_thread_spins_resize()
  */
 #if !defined(_di_f_thread_spins_adjust_) || !defined(_di_f_thread_spins_decimate_by_) || !defined(_di_f_thread_spins_decrease_) || !defined(_di_f_thread_spins_decrease_by_) || !defined(_di_f_thread_spins_increase_) || !defined(_di_f_thread_spins_increase_by_) || !defined(_di_f_thread_spins_resize_)
-  extern f_status_t private_f_thread_spin_delete(f_thread_spin_t *spin) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_thread_spin_delete(f_thread_spin_t *structure) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_thread_spins_adjust_) || !defined(_di_f_thread_spins_decimate_by_) || !defined(_di_f_thread_spins_decrease_) || !defined(_di_f_thread_spins_decrease_by_) || !defined(_di_f_thread_spins_increase_) || !defined(_di_f_thread_spins_increase_by_) || !defined(_di_f_thread_spins_resize_)
 
 /**
@@ -51,20 +51,21 @@ extern "C" {
  *
  * @param length
  *   The new size to use.
- * @param spins
+ * @param structure
  *   The spins to adjust.
  *
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: f_memory_adjust().
+ *   Errors (with error bit) from: f_memory_array_resize().
  *
- * @see f_memory_adjust()
+ * @see f_memory_array_resize()
+ *
  * @see f_thread_spins_adjust()
  * @see f_thread_spins_decimate_by()
  */
 #if !defined(_di_f_thread_spins_adjust_) || !defined(_di_f_thread_spins_decimate_by_)
-  extern f_status_t private_f_thread_spins_adjust(const f_number_unsigned_t length, f_thread_spins_t * const spins) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_thread_spins_adjust(const f_number_unsigned_t length, f_thread_spins_t * const structure) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_thread_spins_adjust_) || !defined(_di_f_thread_spins_decimate_by_)
 
 /**
@@ -74,21 +75,22 @@ extern "C" {
  *
  * @param length
  *   The new size to use.
- * @param spins
+ * @param structure
  *   The spins to resize.
  *
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_resize().
  *
- * @see f_memory_resize()
+ * @see f_memory_array_resize()
+ *
  * @see f_thread_spins_decrease_by()
  * @see f_thread_spins_increase()
  * @see f_thread_spins_increase_by()
  */
 #if !defined(_di_f_thread_spins_decrease_by_) || !defined(_di_f_thread_spins_increase_) || !defined(_di_f_thread_spins_increase_by_)
-  extern f_status_t private_f_thread_spins_resize(const f_number_unsigned_t length, f_thread_spins_t * const spins) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_thread_spins_resize(const f_number_unsigned_t length, f_thread_spins_t * const structure) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_thread_spins_decrease_by_) || !defined(_di_f_thread_spins_increase_) || !defined(_di_f_thread_spins_increase_by_)
 
 #ifdef __cplusplus

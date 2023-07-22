@@ -22,20 +22,22 @@ extern "C" {
  *
  * @param length
  *   The length to adjust to.
- * @param files
+ * @param structure
  *   The files array to adjust.
  *
  * @return
  *   F_none on success.
  *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
  *
- *   Errors (with error bit) from: f_memory_adjust().
+ *   Errors (with error bit) from: f_memory_array_increase().
+ *
+ * @see f_memory_array_increase()
  *
  * @see f_files_adjust()
  * @see f_files_decimate_by()
  */
 #if !defined(_di_f_files_adjust_) || !defined(_di_f_files_decimate_by_)
-  extern f_status_t private_f_files_adjust(const f_number_unsigned_t length, f_files_t * const files) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_files_adjust(const f_number_unsigned_t length, f_files_t * const structure) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_files_adjust_) || !defined(_di_f_files_decimate_by_)
 
 /**
@@ -51,9 +53,10 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_increase().
  *
- * @see f_memory_resize()
+ * @see f_memory_array_increase()
+ *
  * @see f_files_append()
  * @see f_filess_append()
  */
@@ -92,7 +95,7 @@ extern "C" {
  *
  * @param length
  *   The length to adjust to.
- * @param files
+ * @param structure
  *   The files array to adjust.
  *
  * @return
@@ -112,7 +115,7 @@ extern "C" {
  *
  */
 #if !defined(_di_f_files_append_) || !defined(_di_f_files_append_all_) || !defined(_di_f_files_decrease_by_) || !defined(_di_f_files_increase_) || !defined(_di_f_files_increase_by_) || !defined(_di_f_files_resize_) || !defined(_di_f_filess_append_) || !defined(_di_f_filess_append_all_)
-  extern f_status_t private_f_files_resize(const f_number_unsigned_t length, f_files_t * const files) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_files_resize(const f_number_unsigned_t length, f_files_t * const structure) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_files_append_) || !defined(_di_f_files_append_all_) || !defined(_di_f_files_decrease_by_) || !defined(_di_f_files_increase_) || !defined(_di_f_files_increase_by_) || !defined(_di_f_files_resize_) || !defined(_di_f_filess_append_) || !defined(_di_f_filess_append_all_)
 
 /**
@@ -122,7 +125,7 @@ extern "C" {
  *
  * @param length
  *   The length to adjust to.
- * @param filess
+ * @param structure
  *   The filess array to adjust.
  *
  * @return
@@ -140,7 +143,7 @@ extern "C" {
  * @see f_filess_decimate_by()
  */
 #if !defined(_di_f_filess_adjust_) || !defined(_di_f_filess_decimate_by_)
-  extern f_status_t private_f_filess_adjust(const f_number_unsigned_t length, f_filess_t * const filess) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_filess_adjust(const f_number_unsigned_t length, f_filess_t * const structure) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_filess_adjust_) || !defined(_di_f_filess_decimate_by_)
 
 /**
@@ -150,7 +153,7 @@ extern "C" {
  *
  * @param length
  *   The length to resize to.
- * @param filess
+ * @param structure
  *   The filess array to resize.
  *
  * @return
@@ -170,7 +173,7 @@ extern "C" {
  * @see f_filess_resize()
  */
 #if !defined(_di_f_filess_decrease_by_) || !defined(_di_f_filess_increase_) || !defined(_di_f_filess_increase_by_) || !defined(_di_f_filess_resize_)
-  extern f_status_t private_f_filess_resize(const f_number_unsigned_t length, f_filess_t * const filess) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_filess_resize(const f_number_unsigned_t length, f_filess_t * const structure) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_filess_decrease_by_) || !defined(_di_f_filess_increase_) || !defined(_di_f_filess_increase_by_) || !defined(_di_f_filess_resize_)
 
 #ifdef __cplusplus

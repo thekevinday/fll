@@ -69,7 +69,7 @@ extern "C" {
  *
  * @param length
  *   The new size to use.
- * @param barriers
+ * @param structure
  *   The thread barriers array to resize.
  *
  * @return
@@ -79,7 +79,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_barriers_adjust_
-  extern f_status_t f_thread_barriers_adjust(const f_number_unsigned_t length, f_thread_barriers_t * const barriers);
+  extern f_status_t f_thread_barriers_adjust(const f_number_unsigned_t length, f_thread_barriers_t * const structure);
 #endif // _di_f_thread_barriers_adjust_
 
 /**
@@ -91,7 +91,7 @@ extern "C" {
  *
  * @param amount
  *   A positive number representing how much to decimate the size by.
- * @param barriers
+ * @param structure
  *   The thread barriers array to resize.
  *
  * @return
@@ -102,7 +102,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_barriers_decimate_by_
-  extern f_status_t f_thread_barriers_decimate_by(const f_number_unsigned_t amount, f_thread_barriers_t * const barriers);
+  extern f_status_t f_thread_barriers_decimate_by(const f_number_unsigned_t amount, f_thread_barriers_t * const structure);
 #endif // _di_f_thread_barriers_decimate_by_
 
 /**
@@ -114,7 +114,7 @@ extern "C" {
  *
  * @param amount
  *   A positive number representing how much to decrease the size by.
- * @param barriers
+ * @param structure
  *   The thread barriers array to resize.
  *
  * @return
@@ -125,7 +125,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_barriers_decrease_by_
-  extern f_status_t f_thread_barriers_decrease_by(const f_number_unsigned_t amount, f_thread_barriers_t * const barriers);
+  extern f_status_t f_thread_barriers_decrease_by(const f_number_unsigned_t amount, f_thread_barriers_t * const structure);
 #endif // _di_f_thread_barriers_decrease_by_
 
 /**
@@ -137,7 +137,7 @@ extern "C" {
  * @param step
  *   The allocation step to use.
  *   Must be greater than 0.
- * @param barriers
+ * @param structure
  *   The thread barriers array to resize.
  *
  * @return
@@ -149,7 +149,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_barriers_increase_
-  extern f_status_t f_thread_barriers_increase(const f_number_unsigned_t step, f_thread_barriers_t * const barriers);
+  extern f_status_t f_thread_barriers_increase(const f_number_unsigned_t step, f_thread_barriers_t * const structure);
 #endif // _di_f_thread_barriers_increase_
 
 /**
@@ -161,7 +161,7 @@ extern "C" {
  *
  * @param amount
  *   A positive number representing how much to increase the size by.
- * @param barriers
+ * @param structure
  *   The thread barriers array to resize.
  *
  * @return
@@ -173,7 +173,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_barriers_increase_by_
-  extern f_status_t f_thread_barriers_increase_by(const f_number_unsigned_t amount, f_thread_barriers_t * const barriers);
+  extern f_status_t f_thread_barriers_increase_by(const f_number_unsigned_t amount, f_thread_barriers_t * const structure);
 #endif // _di_f_thread_barriers_increase_by_
 
 /**
@@ -181,7 +181,7 @@ extern "C" {
  *
  * @param length
  *   The new size to use.
- * @param barriers
+ * @param structure
  *   The thread barriers array to adjust.
  *
  * @return
@@ -191,7 +191,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_barriers_resize_
-  extern f_status_t f_thread_barriers_resize(const f_number_unsigned_t length, f_thread_barriers_t * const barriers);
+  extern f_status_t f_thread_barriers_resize(const f_number_unsigned_t length, f_thread_barriers_t * const structure);
 #endif // _di_f_thread_barriers_resize_
 
 #ifdef __cplusplus

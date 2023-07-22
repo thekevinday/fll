@@ -107,15 +107,15 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (step && map_multiss->used + 1 > map_multiss->size) {
-      f_number_unsigned_t size = map_multiss->used + step;
+      f_number_unsigned_t length = map_multiss->used + step;
 
-      if (size > F_number_t_size_unsigned_d) {
+      if (length > F_number_t_size_unsigned_d) {
         if (map_multiss->used + 1 > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
-        size = F_number_t_size_unsigned_d;
+        length = F_number_t_size_unsigned_d;
       }
 
-      return private_f_string_map_multiss_resize(size, map_multiss);
+      return private_f_string_map_multiss_resize(length, map_multiss);
     }
 
     return F_data_not;

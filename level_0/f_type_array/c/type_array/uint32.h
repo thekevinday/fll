@@ -21,7 +21,7 @@ extern "C" {
  *
  * @param length
  *   The new size to use.
- * @param uint32s
+ * @param structure
  *   The string uint32s array to resize.
  *
  * @return
@@ -29,10 +29,12 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_adjust().
+ *   Errors (with error bit) from: f_memory_array_adjust().
+ *
+ * @see f_memory_array_adjust()
  */
 #ifndef _di_f_uint32s_adjust_
-  extern f_status_t f_uint32s_adjust(const f_number_unsigned_t length, f_uint32s_t * const uint32s);
+  extern f_status_t f_uint32s_adjust(const f_number_unsigned_t length, f_uint32s_t * const structure);
 #endif // _di_f_uint32s_adjust_
 
 /**
@@ -49,7 +51,9 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_increase().
+ *
+ * @see f_memory_array_increase()
  */
 #ifndef _di_f_uint32s_append_
   extern f_status_t f_uint32s_append(const uint32_t source, f_uint32s_t * const destination);
@@ -69,7 +73,9 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_increase_by().
+ *
+ * @see f_memory_array_increase_by()
  */
 #ifndef _di_f_uint32s_append_all_
   extern f_status_t f_uint32s_append_all(const f_uint32s_t source, f_uint32s_t * const destination);
@@ -84,7 +90,7 @@ extern "C" {
  *
  * @param amount
  *   A positive number representing how much to decimate the size by.
- * @param uint32s
+ * @param structure
  *   The string uint32s array to resize.
  *
  * @return
@@ -93,10 +99,12 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_adjust().
+ *   Errors (with error bit) from: f_memory_array_decimate_by().
+ *
+ * @see f_memory_array_decimate_by()
  */
 #ifndef _di_f_uint32s_decimate_by_
-  extern f_status_t f_uint32s_decimate_by(const f_number_unsigned_t amount, f_uint32s_t * const uint32s);
+  extern f_status_t f_uint32s_decimate_by(const f_number_unsigned_t amount, f_uint32s_t * const structure);
 #endif // _di_f_uint32s_decimate_by_
 
 /**
@@ -108,18 +116,21 @@ extern "C" {
  *
  * @param amount
  *   A positive number representing how much to decrease the size by.
- * @param uint32s
+ * @param structure
  *   The string uint32s array to resize.
  *
  * @return
  *   F_none on success.
+ *   F_data_not if amount is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_decrease_by().
+ *
+ * @see f_memory_array_decrease_by()
  */
 #ifndef _di_f_uint32s_decrease_by_
-  extern f_status_t f_uint32s_decrease_by(const f_number_unsigned_t amount, f_uint32s_t * const uint32s);
+  extern f_status_t f_uint32s_decrease_by(const f_number_unsigned_t amount, f_uint32s_t * const structure);
 #endif // _di_f_uint32s_decrease_by_
 
 /**
@@ -131,7 +142,7 @@ extern "C" {
  * @param step
  *   The allocation step to use.
  *   Must be greater than 0.
- * @param uint32s
+ * @param structure
  *   The string uint32s array to resize.
  *
  * @return
@@ -141,10 +152,12 @@ extern "C" {
  *   F_array_too_large (with error bit) if the new array length is too large.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_increase().
+ *
+ * @see f_memory_array_increase()
  */
 #ifndef _di_f_uint32s_increase_
-  extern f_status_t f_uint32s_increase(const f_number_unsigned_t step, f_uint32s_t * const uint32s);
+  extern f_status_t f_uint32s_increase(const f_number_unsigned_t step, f_uint32s_t * const structure);
 #endif // _di_f_uint32s_increase_
 
 /**
@@ -156,7 +169,7 @@ extern "C" {
  *
  * @param amount
  *   A positive number representing how much to increase the size by.
- * @param uint32s
+ * @param structure
  *   The string uint32s array to resize.
  *
  * @return
@@ -166,10 +179,12 @@ extern "C" {
  *   F_array_too_large (with error bit) if the new array length is too large.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_increase_by().
+ *
+ * @see f_memory_array_increase_by()
  */
 #ifndef _di_f_uint32s_increase_by_
-  extern f_status_t f_uint32s_increase_by(const f_number_unsigned_t amount, f_uint32s_t * const uint32s);
+  extern f_status_t f_uint32s_increase_by(const f_number_unsigned_t amount, f_uint32s_t * const structure);
 #endif // _di_f_uint32s_increase_by_
 
 /**
@@ -177,7 +192,7 @@ extern "C" {
  *
  * @param length
  *   The new size to use.
- * @param uint32s
+ * @param structure
  *   The string uint32s array to adjust.
  *
  * @return
@@ -185,10 +200,12 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_resize().
+ *
+ * @see f_memory_array_resize()
  */
 #ifndef _di_f_uint32s_resize_
-  extern f_status_t f_uint32s_resize(const f_number_unsigned_t length, f_uint32s_t * const uint32s);
+  extern f_status_t f_uint32s_resize(const f_number_unsigned_t length, f_uint32s_t * const structure);
 #endif // _di_f_uint32s_resize_
 
 /**
@@ -196,7 +213,7 @@ extern "C" {
  *
  * @param length
  *   The new size to use.
- * @param uint32ss
+ * @param structure
  *   The string uint32ss array to resize.
  *
  * @return
@@ -204,11 +221,12 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_adjust().
- *   Errors (with error bit) from: f_memory_destroy().
+ *   Errors (with error bit) from: f_memory_array_adjust().
+ *
+ * @see f_memory_array_adjust()
  */
 #ifndef _di_f_uint32ss_adjust_
-  extern f_status_t f_uint32ss_adjust(const f_number_unsigned_t length, f_uint32ss_t * const uint32ss);
+  extern f_status_t f_uint32ss_adjust(const f_number_unsigned_t length, f_uint32ss_t * const structure);
 #endif // _di_f_uint32ss_adjust_
 
 /**
@@ -225,7 +243,11 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_increase().
+ *   Errors (with error bit) from: f_memory_array_increase_by().
+ *
+ * @see f_memory_array_increase()
+ * @see f_memory_array_increase_by()
  */
 #ifndef _di_f_uint32ss_append_
   extern f_status_t f_uint32ss_append(const f_uint32s_t source, f_uint32ss_t * const destination);
@@ -245,7 +267,9 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_increase_by().
+ *
+ * @see f_memory_array_increase_by()
  */
 #ifndef _di_f_uint32ss_append_all_
   extern f_status_t f_uint32ss_append_all(const f_uint32ss_t source, f_uint32ss_t * const destination);
@@ -260,20 +284,20 @@ extern "C" {
  *
  * @param amount
  *   A positive number representing how much to decimate the size by.
- * @param uint32ss
+ * @param structure
  *   The string uint32ss array to resize.
  *
  * @return
  *   F_none on success.
- *   F_data_not if amount is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_adjust().
- *   Errors (with error bit) from: f_memory_destroy().
+ *   Errors (with error bit) from: f_memory_array_adjust().
+ *
+ * @see f_memory_array_adjust()
  */
 #ifndef _di_f_uint32ss_decimate_by_
-  extern f_status_t f_uint32ss_decimate_by(const f_number_unsigned_t amount, f_uint32ss_t * const uint32ss);
+  extern f_status_t f_uint32ss_decimate_by(const f_number_unsigned_t amount, f_uint32ss_t * const structure);
 #endif // _di_f_uint32ss_decimate_by_
 
 /**
@@ -285,7 +309,7 @@ extern "C" {
  *
  * @param amount
  *   A positive number representing how much to decrease the size by.
- * @param uint32ss
+ * @param structure
  *   The string uint32ss array to resize.
  *
  * @return
@@ -293,11 +317,12 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_delete().
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_resize().
+ *
+ * @see f_memory_array_resize()
  */
 #ifndef _di_f_uint32ss_decrease_by_
-  extern f_status_t f_uint32ss_decrease_by(const f_number_unsigned_t amount, f_uint32ss_t * const uint32ss);
+  extern f_status_t f_uint32ss_decrease_by(const f_number_unsigned_t amount, f_uint32ss_t * const structure);
 #endif // _di_f_uint32ss_decrease_by_
 
 /**
@@ -309,7 +334,7 @@ extern "C" {
  * @param step
  *   The allocation step to use.
  *   Must be greater than 0.
- * @param uint32ss
+ * @param structure
  *   The string uint32ss array to resize.
  *
  * @return
@@ -319,10 +344,12 @@ extern "C" {
  *   F_array_too_large (with error bit) if the new array length is too large.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_resize().
+ *
+ * @see f_memory_array_resize()
  */
 #ifndef _di_f_uint32ss_increase_
-  extern f_status_t f_uint32ss_increase(const f_number_unsigned_t step, f_uint32ss_t * const uint32ss);
+  extern f_status_t f_uint32ss_increase(const f_number_unsigned_t step, f_uint32ss_t * const structure);
 #endif // _di_f_uint32ss_increase_
 
 /**
@@ -334,7 +361,7 @@ extern "C" {
  *
  * @param amount
  *   A positive number representing how much to increase the size by.
- * @param uint32ss
+ * @param structure
  *   The string uint32ss array to resize.
  *
  * @return
@@ -344,10 +371,12 @@ extern "C" {
  *   F_array_too_large (with error bit) if the new array length is too large.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_resize().
+ *
+ * @see f_memory_array_resize()
  */
 #ifndef _di_f_uint32ss_increase_by_
-  extern f_status_t f_uint32ss_increase_by(const f_number_unsigned_t amount, f_uint32ss_t * const uint32ss);
+  extern f_status_t f_uint32ss_increase_by(const f_number_unsigned_t amount, f_uint32ss_t * const structure);
 #endif // _di_f_uint32ss_increase_by_
 
 /**
@@ -355,7 +384,7 @@ extern "C" {
  *
  * @param length
  *   The new size to use.
- * @param uint32ss
+ * @param structure
  *   The string uint32ss array to adjust.
  *
  * @return
@@ -363,11 +392,12 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_delete().
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_resize().
+ *
+ * @see f_memory_array_resize()
  */
 #ifndef _di_f_uint32ss_resize_
-  extern f_status_t f_uint32ss_resize(const f_number_unsigned_t length, f_uint32ss_t * const uint32ss);
+  extern f_status_t f_uint32ss_resize(const f_number_unsigned_t length, f_uint32ss_t * const structure);
 #endif // _di_f_uint32ss_resize_
 
 #ifdef __cplusplus

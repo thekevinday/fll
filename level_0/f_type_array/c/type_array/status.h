@@ -21,7 +21,7 @@ extern "C" {
  *
  * @param length
  *   The new size to use.
- * @param statuss
+ * @param structure
  *   The string statuss array to resize.
  *
  * @return
@@ -29,10 +29,12 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_adjust().
+ *   Errors (with error bit) from: f_memory_array_adjust().
+ *
+ * @see f_memory_array_adjust()
  */
 #ifndef _di_f_statuss_adjust_
-  extern f_status_t f_statuss_adjust(const f_number_unsigned_t length, f_statuss_t * const statuss);
+  extern f_status_t f_statuss_adjust(const f_number_unsigned_t length, f_statuss_t * const structure);
 #endif // _di_f_statuss_adjust_
 
 /**
@@ -49,7 +51,9 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_increase().
+ *
+ * @see f_memory_array_increase()
  */
 #ifndef _di_f_statuss_append_
   extern f_status_t f_statuss_append(const f_status_t source, f_statuss_t * const destination);
@@ -69,7 +73,9 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_increase_by().
+ *
+ * @see f_memory_array_increase_by()
  */
 #ifndef _di_f_statuss_append_all_
   extern f_status_t f_statuss_append_all(const f_statuss_t source, f_statuss_t * const destination);
@@ -84,7 +90,7 @@ extern "C" {
  *
  * @param amount
  *   A positive number representing how much to decimate the size by.
- * @param statuss
+ * @param structure
  *   The string statuss array to resize.
  *
  * @return
@@ -93,10 +99,12 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_adjust().
+ *   Errors (with error bit) from: f_memory_array_decimate_by().
+ *
+ * @see f_memory_array_decimate_by()
  */
 #ifndef _di_f_statuss_decimate_by_
-  extern f_status_t f_statuss_decimate_by(const f_number_unsigned_t amount, f_statuss_t * const statuss);
+  extern f_status_t f_statuss_decimate_by(const f_number_unsigned_t amount, f_statuss_t * const structure);
 #endif // _di_f_statuss_decimate_by_
 
 /**
@@ -108,7 +116,7 @@ extern "C" {
  *
  * @param amount
  *   A positive number representing how much to decrease the size by.
- * @param statuss
+ * @param structure
  *   The string statuss array to resize.
  *
  * @return
@@ -117,10 +125,12 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_decrease_by().
+ *
+ * @see f_memory_array_decrease_by()
  */
 #ifndef _di_f_statuss_decrease_by_
-  extern f_status_t f_statuss_decrease_by(const f_number_unsigned_t amount, f_statuss_t * const statuss);
+  extern f_status_t f_statuss_decrease_by(const f_number_unsigned_t amount, f_statuss_t * const structure);
 #endif // _di_f_statuss_decrease_by_
 
 /**
@@ -132,7 +142,7 @@ extern "C" {
  * @param step
  *   The allocation step to use.
  *   Must be greater than 0.
- * @param statuss
+ * @param structure
  *   The string statuss array to resize.
  *
  * @return
@@ -142,10 +152,12 @@ extern "C" {
  *   F_array_too_large (with error bit) if the new array length is too large.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_increase().
+ *
+ * @see f_memory_array_increase()
  */
 #ifndef _di_f_statuss_increase_
-  extern f_status_t f_statuss_increase(const f_number_unsigned_t step, f_statuss_t * const statuss);
+  extern f_status_t f_statuss_increase(const f_number_unsigned_t step, f_statuss_t * const structure);
 #endif // _di_f_statuss_increase_
 
 /**
@@ -157,7 +169,7 @@ extern "C" {
  *
  * @param amount
  *   A positive number representing how much to increase the size by.
- * @param statuss
+ * @param structure
  *   The string statuss array to resize.
  *
  * @return
@@ -167,10 +179,12 @@ extern "C" {
  *   F_array_too_large (with error bit) if the new array length is too large.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_increase_by().
+ *
+ * @see f_memory_array_increase_by()
  */
 #ifndef _di_f_statuss_increase_by_
-  extern f_status_t f_statuss_increase_by(const f_number_unsigned_t amount, f_statuss_t * const statuss);
+  extern f_status_t f_statuss_increase_by(const f_number_unsigned_t amount, f_statuss_t * const structure);
 #endif // _di_f_statuss_increase_by_
 
 /**
@@ -178,7 +192,7 @@ extern "C" {
  *
  * @param length
  *   The new size to use.
- * @param statuss
+ * @param structure
  *   The string statuss array to adjust.
  *
  * @return
@@ -186,10 +200,12 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_resize().
+ *
+ * @see f_memory_array_resize()
  */
 #ifndef _di_f_statuss_resize_
-  extern f_status_t f_statuss_resize(const f_number_unsigned_t length, f_statuss_t * const statuss);
+  extern f_status_t f_statuss_resize(const f_number_unsigned_t length, f_statuss_t * const structure);
 #endif // _di_f_statuss_resize_
 
 /**
@@ -197,7 +213,7 @@ extern "C" {
  *
  * @param length
  *   The new size to use.
- * @param statusss
+ * @param structure
  *   The string statusss array to resize.
  *
  * @return
@@ -205,11 +221,12 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_adjust().
- *   Errors (with error bit) from: f_memory_destroy().
+ *   Errors (with error bit) from: f_memory_array_adjust().
+ *
+ * @see f_memory_array_adjust()
  */
 #ifndef _di_f_statusss_adjust_
-  extern f_status_t f_statusss_adjust(const f_number_unsigned_t length, f_statusss_t * const statusss);
+  extern f_status_t f_statusss_adjust(const f_number_unsigned_t length, f_statusss_t * const structure);
 #endif // _di_f_statusss_adjust_
 
 /**
@@ -226,7 +243,11 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_increase().
+ *   Errors (with error bit) from: f_memory_array_increase_by().
+ *
+ * @see f_memory_array_increase()
+ * @see f_memory_array_increase_by()
  */
 #ifndef _di_f_statusss_append_
   extern f_status_t f_statusss_append(const f_statuss_t source, f_statusss_t * const destination);
@@ -246,7 +267,9 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_increase_by().
+ *
+ * @see f_memory_array_increase_by()
  */
 #ifndef _di_f_statusss_append_all_
   extern f_status_t f_statusss_append_all(const f_statusss_t source, f_statusss_t * const destination);
@@ -261,20 +284,20 @@ extern "C" {
  *
  * @param amount
  *   A positive number representing how much to decimate the size by.
- * @param statusss
+ * @param structure
  *   The string statusss array to resize.
  *
  * @return
  *   F_none on success.
- *   F_data_not if amount is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_adjust().
- *   Errors (with error bit) from: f_memory_destroy().
+ *   Errors (with error bit) from: f_memory_array_adjust().
+ *
+ * @see f_memory_array_adjust()
  */
 #ifndef _di_f_statusss_decimate_by_
-  extern f_status_t f_statusss_decimate_by(const f_number_unsigned_t amount, f_statusss_t * const statusss);
+  extern f_status_t f_statusss_decimate_by(const f_number_unsigned_t amount, f_statusss_t * const structure);
 #endif // _di_f_statusss_decimate_by_
 
 /**
@@ -286,20 +309,20 @@ extern "C" {
  *
  * @param amount
  *   A positive number representing how much to decrease the size by.
- * @param statusss
+ * @param structure
  *   The string statusss array to resize.
  *
  * @return
  *   F_none on success.
- *   F_data_not if amount is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_delete().
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_resize().
+ *
+ * @see f_memory_array_resize()
  */
 #ifndef _di_f_statusss_decrease_by_
-  extern f_status_t f_statusss_decrease_by(const f_number_unsigned_t amount, f_statusss_t * const statusss);
+  extern f_status_t f_statusss_decrease_by(const f_number_unsigned_t amount, f_statusss_t * const structure);
 #endif // _di_f_statusss_decrease_by_
 
 /**
@@ -311,7 +334,7 @@ extern "C" {
  * @param step
  *   The allocation step to use.
  *   Must be greater than 0.
- * @param statusss
+ * @param structure
  *   The string statusss array to resize.
  *
  * @return
@@ -321,10 +344,12 @@ extern "C" {
  *   F_array_too_large (with error bit) if the new array length is too large.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_resize().
+ *
+ * @see f_memory_array_resize()
  */
 #ifndef _di_f_statusss_increase_
-  extern f_status_t f_statusss_increase(const f_number_unsigned_t step, f_statusss_t * const statusss);
+  extern f_status_t f_statusss_increase(const f_number_unsigned_t step, f_statusss_t * const structure);
 #endif // _di_f_statusss_increase_
 
 /**
@@ -336,7 +361,7 @@ extern "C" {
  *
  * @param amount
  *   A positive number representing how much to increase the size by.
- * @param statusss
+ * @param structure
  *   The string statusss array to resize.
  *
  * @return
@@ -346,10 +371,12 @@ extern "C" {
  *   F_array_too_large (with error bit) if the new array length is too large.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_resize().
+ *
+ * @see f_memory_array_resize()
  */
 #ifndef _di_f_statusss_increase_by_
-  extern f_status_t f_statusss_increase_by(const f_number_unsigned_t amount, f_statusss_t * const statusss);
+  extern f_status_t f_statusss_increase_by(const f_number_unsigned_t amount, f_statusss_t * const structure);
 #endif // _di_f_statusss_increase_by_
 
 /**
@@ -357,7 +384,7 @@ extern "C" {
  *
  * @param length
  *   The new size to use.
- * @param statusss
+ * @param structure
  *   The string statusss array to adjust.
  *
  * @return
@@ -365,11 +392,12 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_delete().
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_resize().
+ *
+ * @see f_memory_array_resize()
  */
 #ifndef _di_f_statusss_resize_
-  extern f_status_t f_statusss_resize(const f_number_unsigned_t length, f_statusss_t * const statusss);
+  extern f_status_t f_statusss_resize(const f_number_unsigned_t length, f_statusss_t * const structure);
 #endif // _di_f_statusss_resize_
 
 #ifdef __cplusplus

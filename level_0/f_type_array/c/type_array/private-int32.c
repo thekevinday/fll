@@ -5,27 +5,11 @@
 extern "C" {
 #endif
 
-#if !defined(_di_f_int32s_adjust_) || !defined(_di_f_int32s_decimate_by_)
-  f_status_t private_f_int32s_adjust(const f_number_unsigned_t length, f_int32s_t * const int32s) {
-
-    const f_status_t status = f_memory_adjust(int32s->size, length, sizeof(int32_t), (void **) & int32s->array);
-    if (F_status_is_error(status)) return status;
-
-    int32s->size = length;
-
-    if (int32s->used > int32s->size) {
-      int32s->used = length;
-    }
-
-    return F_none;
-  }
-#endif // !defined(_di_f_int32s_adjust_) || !defined(_di_f_int32s_decimate_by_)
-
 #if !defined(_di_f_int32s_append_) || !defined(_di_f_int32ss_append_)
   extern f_status_t private_f_int32s_append(const int32_t source, f_int32s_t * const destination) {
 
-    if (destination->used + 1 > destination->size) {
-      const f_status_t status = private_f_int32s_resize(destination->used + F_memory_default_allocation_small_d, destination);
+    {
+      const f_status_t status = f_memory_array_increase(F_memory_default_allocation_small_d, sizeof(int32_t), (void **) &destination->array, &destination->used, &destination->size);
       if (F_status_is_error(status)) return status;
     }
 
@@ -38,8 +22,8 @@ extern "C" {
 #if !defined(_di_f_int32s_append_) || !defined(_di_f_int32s_append_all_) || !defined(_di_f_int32ss_append_all_)
   extern f_status_t private_f_int32s_append_all(const f_int32s_t source, f_int32s_t * const destination) {
 
-    if (destination->used + source.used > destination->size) {
-      const f_status_t status = private_f_int32s_resize(destination->used + source.used, destination);
+    {
+      const f_status_t status = f_memory_array_increase_by(source.used, sizeof(int32_t), (void **) &destination->array, &destination->used, &destination->size);
       if (F_status_is_error(status)) return status;
     }
 
@@ -51,73 +35,33 @@ extern "C" {
   }
 #endif // !defined(_di_f_int32s_append_) || !defined(_di_f_int32s_append_all_) || !defined(_di_f_int32ss_append_all_)
 
-#if !defined(_di_f_int32s_resize_) || !defined(_di_f_int32s_append_) || !defined(_di_f_int32s_decrease_by_) || !defined(_di_f_int32ss_append_)
-  f_status_t private_f_int32s_resize(const f_number_unsigned_t length, f_int32s_t * const int32s) {
-
-    const f_status_t status = f_memory_resize(int32s->size, length, sizeof(int32_t), (void **) & int32s->array);
-    if (F_status_is_error(status)) return status;
-
-    int32s->size = length;
-
-    if (int32s->used > int32s->size) {
-      int32s->used = length;
-    }
-
-    return F_none;
-  }
-#endif // !defined(_di_f_int32s_resize_) || !defined(_di_f_int32s_append_) || !defined(_di_f_int32s_decrease_by_) || !defined(_di_f_int32ss_append_)
-
 #if !defined(_di_f_int32ss_adjust_) || !defined(_di_f_int32ss_decimate_by_)
-  f_status_t private_f_int32ss_adjust(const f_number_unsigned_t length, f_int32ss_t * const int32ss) {
+  f_status_t private_f_int32ss_adjust(const f_number_unsigned_t length, f_int32ss_t * const structure) {
 
     f_status_t status = F_none;
 
-    for (f_number_unsigned_t i = length; i < int32ss->size; ++i) {
+    for (f_number_unsigned_t i = length; i < structure->size; ++i) {
 
-      status = f_memory_destroy(int32ss->array[i].size, sizeof(f_int32s_t), (void **) & int32ss->array[i].array);
+      status = f_memory_array_adjust(0, sizeof(int32_t), (void **) &structure->array[i].array, &structure->array[i].used, &structure->array[i].size);
       if (F_status_is_error(status)) return status;
-
-      int32ss->array[i].size = 0;
-      int32ss->array[i].used = 0;
     } // for
 
-    status = f_memory_adjust(int32ss->size, length, sizeof(f_int32s_t), (void **) & int32ss->array);
-    if (F_status_is_error(status)) return status;
-
-    int32ss->size = length;
-
-    if (int32ss->used > int32ss->size) {
-      int32ss->used = length;
-    }
-
-    return F_none;
+    return f_memory_array_adjust(length, sizeof(f_int32s_t), (void **) &structure->array, &structure->used, &structure->size);
   }
 #endif // !defined(_di_f_int32ss_adjust_) || !defined(_di_f_int32ss_decimate_by_)
 
 #if !defined(_di_f_int32ss_decrease_by_) || !defined(_di_f_int32ss_increase_) || !defined(_di_f_int32ss_increase_by_) || !defined(_di_f_int32ss_resize_)
-  f_status_t private_f_int32ss_resize(const f_number_unsigned_t length, f_int32ss_t * const int32ss) {
+  f_status_t private_f_int32ss_resize(const f_number_unsigned_t length, f_int32ss_t * const structure) {
 
     f_status_t status = F_none;
 
-    for (f_number_unsigned_t i = length; i < int32ss->size; ++i) {
+    for (f_number_unsigned_t i = length; i < structure->size; ++i) {
 
-      status = f_memory_delete(int32ss->array[i].size, sizeof(f_int32s_t), (void **) & int32ss->array[i].array);
+      status = f_memory_array_resize(0, sizeof(int32_t), (void **) &structure->array[i].array, &structure->array[i].used, &structure->array[i].size);
       if (F_status_is_error(status)) return status;
-
-      int32ss->array[i].size = 0;
-      int32ss->array[i].used = 0;
     } // for
 
-    status = f_memory_resize(int32ss->size, length, sizeof(f_int32s_t), (void **) & int32ss->array);
-    if (F_status_is_error(status)) return status;
-
-    int32ss->size = length;
-
-    if (int32ss->used > int32ss->size) {
-      int32ss->used = length;
-    }
-
-    return F_none;
+    return f_memory_array_resize(length, sizeof(f_int32s_t), (void **) &structure->array, &structure->used, &structure->size);
   }
 #endif // !defined(_di_f_int32ss_decrease_by_) || !defined(_di_f_int32ss_increase_) || !defined(_di_f_int32ss_increase_by_) || !defined(_di_f_int32ss_resize_)
 

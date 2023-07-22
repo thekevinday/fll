@@ -105,15 +105,15 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (step && rangess->used + 1 > rangess->size) {
-      f_number_unsigned_t size = rangess->used + step;
+      f_number_unsigned_t length = rangess->used + step;
 
-      if (size > F_number_t_size_unsigned_d) {
+      if (length > F_number_t_size_unsigned_d) {
         if (rangess->used + 1 > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
-        size = F_number_t_size_unsigned_d;
+        length = F_number_t_size_unsigned_d;
       }
 
-      return private_f_string_rangess_resize(size, rangess);
+      return private_f_string_rangess_resize(length, rangess);
     }
 
     return F_data_not;

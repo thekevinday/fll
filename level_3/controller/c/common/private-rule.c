@@ -133,17 +133,17 @@ extern "C" {
   f_status_t controller_rule_ons_increase(controller_rule_ons_t * const ons) {
 
     if (ons->used + 1 > ons->size) {
-      f_number_unsigned_t size = ons->used + controller_common_allocation_small_d;
+      f_number_unsigned_t length = ons->used + controller_common_allocation_small_d;
 
-      if (size > F_number_t_size_unsigned_d) {
+      if (length > F_number_t_size_unsigned_d) {
         if (ons->used + 1 > F_number_t_size_unsigned_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = F_number_t_size_unsigned_d;
+        length = F_number_t_size_unsigned_d;
       }
 
-      return controller_rule_ons_resize(size, ons);
+      return controller_rule_ons_resize(length, ons);
     }
 
     return F_data_not;
@@ -181,17 +181,17 @@ extern "C" {
   f_status_t controller_rules_increase(controller_rules_t * const rules) {
 
     if (rules->used + 1 > rules->size) {
-      f_number_unsigned_t size = rules->used + controller_common_allocation_small_d;
+      f_number_unsigned_t length = rules->used + controller_common_allocation_small_d;
 
-      if (size > F_number_t_size_unsigned_d) {
+      if (length > F_number_t_size_unsigned_d) {
         if (rules->used + 1 > F_number_t_size_unsigned_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = F_number_t_size_unsigned_d;
+        length = F_number_t_size_unsigned_d;
       }
 
-      return controller_rules_resize(size, rules);
+      return controller_rules_resize(length, rules);
     }
 
     return F_data_not;

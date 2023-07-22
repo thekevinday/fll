@@ -49,15 +49,15 @@ extern "C" {
     if (step && nest->used + 1 > nest->size) {
       if (nest->used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
-      f_number_unsigned_t size = nest->used + step;
+      f_number_unsigned_t length = nest->used + step;
 
-      if (size > F_number_t_size_unsigned_d) {
+      if (length > F_number_t_size_unsigned_d) {
         if (nest->used + 1 > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
-        size = F_number_t_size_unsigned_d;
+        length = F_number_t_size_unsigned_d;
       }
 
-      return private_f_fss_nest_resize(size, nest);
+      return private_f_fss_nest_resize(length, nest);
     }
 
     return F_data_not;
@@ -139,15 +139,15 @@ extern "C" {
     if (step && nests->used + 1 > nests->size) {
       if (nests->used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
-      f_number_unsigned_t size = nests->used + step;
+      f_number_unsigned_t length = nests->used + step;
 
-      if (size > F_number_t_size_unsigned_d) {
+      if (length > F_number_t_size_unsigned_d) {
         if (nests->used + 1 > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
-        size = F_number_t_size_unsigned_d;
+        length = F_number_t_size_unsigned_d;
       }
 
-      return private_f_fss_nests_resize(size, nests);
+      return private_f_fss_nests_resize(length, nests);
     }
 
     return F_data_not;

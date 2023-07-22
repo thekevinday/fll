@@ -48,15 +48,15 @@ extern "C" {
     if (step && set->objects.used + 1 > set->objects.size) {
       if (set->objects.used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
-      f_number_unsigned_t size = set->objects.used + step;
+      f_number_unsigned_t length = set->objects.used + step;
 
-      if (size > F_number_t_size_unsigned_d) {
+      if (length > F_number_t_size_unsigned_d) {
         if (set->objects.used + 1 > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
-        size = F_number_t_size_unsigned_d;
+        length = F_number_t_size_unsigned_d;
       }
 
-      return private_f_fss_set_resize(size, set);
+      return private_f_fss_set_resize(length, set);
     }
 
     return F_data_not;

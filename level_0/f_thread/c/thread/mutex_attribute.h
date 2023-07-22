@@ -66,12 +66,12 @@ extern "C" {
 #endif // _di_f_thread_mutex_attributes_t_
 
 /**
- * Resize the thread attributes array.
+ * Resize the thread mutex_attributes array.
  *
  * @param length
  *   The new size to use.
- * @param attributes
- *   The thread mutex attributes array to resize.
+ * @param structure
+ *   The thread mutex_attributes array to resize.
  *
  * @return
  *   F_none on success.
@@ -80,11 +80,11 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_mutex_attributes_adjust_
-  extern f_status_t f_thread_mutex_attributes_adjust(const f_number_unsigned_t length, f_thread_mutex_attributes_t * const attributes);
+  extern f_status_t f_thread_mutex_attributes_adjust(const f_number_unsigned_t length, f_thread_mutex_attributes_t * const structure);
 #endif // _di_f_thread_mutex_attributes_adjust_
 
 /**
- * Resize the thread attributes array to a smaller size.
+ * Resize the thread mutex_attributes array to a smaller size.
  *
  * This will resize making the array smaller based on (size - given length).
  * If the given length is too small, then the resize will fail.
@@ -92,8 +92,8 @@ extern "C" {
  *
  * @param amount
  *   A positive number representing how much to decimate the size by.
- * @param attributes
- *   The thread mutex attributes array to resize.
+ * @param structure
+ *   The thread mutex_attributes array to resize.
  *
  * @return
  *   F_none on success.
@@ -103,11 +103,11 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_mutex_attributes_decimate_by_
-  extern f_status_t f_thread_mutex_attributes_decimate_by(const f_number_unsigned_t amount, f_thread_mutex_attributes_t * const attributes);
+  extern f_status_t f_thread_mutex_attributes_decimate_by(const f_number_unsigned_t amount, f_thread_mutex_attributes_t * const structure);
 #endif // _di_f_thread_mutex_attributes_decimate_by_
 
 /**
- * Resize the thread attributes array to a smaller size.
+ * Resize the thread mutex_attributes array to a smaller size.
  *
  * This will resize making the array smaller based on (size - given length).
  * If the given length is too small, then the resize will fail.
@@ -115,8 +115,8 @@ extern "C" {
  *
  * @param amount
  *   A positive number representing how much to decrease the size by.
- * @param attributes
- *   The thread mutex attributes array to resize.
+ * @param structure
+ *   The thread mutex_attributes array to resize.
  *
  * @return
  *   F_none on success.
@@ -126,11 +126,11 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_mutex_attributes_decrease_by_
-  extern f_status_t f_thread_mutex_attributes_decrease_by(const f_number_unsigned_t amount, f_thread_mutex_attributes_t * const attributes);
+  extern f_status_t f_thread_mutex_attributes_decrease_by(const f_number_unsigned_t amount, f_thread_mutex_attributes_t * const structure);
 #endif // _di_f_thread_mutex_attributes_decrease_by_
 
 /**
- * Increase the size of the thread attributes array, but only if necessary.
+ * Increase the size of the thread mutex_attributes array, but only if necessary.
  *
  * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
  * If already set to the maximum buffer size, then the resize will fail.
@@ -138,8 +138,8 @@ extern "C" {
  * @param step
  *   The allocation step to use.
  *   Must be greater than 0.
- * @param attributes
- *   The thread mutex attributes array to resize.
+ * @param structure
+ *   The thread mutex_attributes array to resize.
  *
  * @return
  *   F_none on success.
@@ -150,11 +150,11 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_mutex_attributes_increase_
-  extern f_status_t f_thread_mutex_attributes_increase(const f_number_unsigned_t step, f_thread_mutex_attributes_t * const attributes);
+  extern f_status_t f_thread_mutex_attributes_increase(const f_number_unsigned_t step, f_thread_mutex_attributes_t * const structure);
 #endif // _di_f_thread_mutex_attributes_increase_
 
 /**
- * Resize the thread attributes array to a larger size.
+ * Resize the thread mutex_attributes array to a larger size.
  *
  * This will resize making the array larger based on the given length.
  * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
@@ -162,8 +162,8 @@ extern "C" {
  *
  * @param amount
  *   A positive number representing how much to increase the size by.
- * @param attributes
- *   The thread mutex attributes array to resize.
+ * @param structure
+ *   The thread mutex_attributes array to resize.
  *
  * @return
  *   F_none on success.
@@ -174,16 +174,16 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_mutex_attributes_increase_by_
-  extern f_status_t f_thread_mutex_attributes_increase_by(const f_number_unsigned_t amount, f_thread_mutex_attributes_t * const attributes);
+  extern f_status_t f_thread_mutex_attributes_increase_by(const f_number_unsigned_t amount, f_thread_mutex_attributes_t * const structure);
 #endif // _di_f_thread_mutex_attributes_increase_by_
 
 /**
- * Resize the thread attributes array.
+ * Resize the thread mutex_attributes array.
  *
  * @param length
  *   The new size to use.
- * @param attributes
- *   The thread mutex attributes array to adjust.
+ * @param structure
+ *   The thread mutex_attributes array to adjust.
  *
  * @return
  *   F_none on success.
@@ -192,7 +192,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_mutex_attributes_resize_
-  extern f_status_t f_thread_mutex_attributes_resize(const f_number_unsigned_t length, f_thread_mutex_attributes_t * const attributes);
+  extern f_status_t f_thread_mutex_attributes_resize(const f_number_unsigned_t length, f_thread_mutex_attributes_t * const structure);
 #endif // _di_f_thread_mutex_attributes_resize_
 
 #ifdef __cplusplus

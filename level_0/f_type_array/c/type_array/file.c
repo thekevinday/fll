@@ -8,12 +8,12 @@ extern "C" {
 #endif
 
 #ifndef _di_f_files_adjust_
-  f_status_t f_files_adjust(const f_number_unsigned_t length, f_files_t * const files) {
+  f_status_t f_files_adjust(const f_number_unsigned_t length, f_files_t * const structure) {
     #ifndef _di_level_0_parameter_checking_
-      if (!files) return F_status_set_error(F_parameter);
+      if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return private_f_files_adjust(length, files);
+    return f_memory_array_adjust(length, sizeof(f_file_t), (void **) &structure->array, &structure->used, &structure->size);
   }
 #endif // _di_f_files_adjust_
 
@@ -40,88 +40,52 @@ extern "C" {
 #endif // _di_f_files_append_all_
 
 #ifndef _di_f_files_decimate_by_
-  f_status_t f_files_decimate_by(const f_number_unsigned_t amount, f_files_t * const files) {
+  f_status_t f_files_decimate_by(const f_number_unsigned_t amount, f_files_t * const structure) {
     #ifndef _di_level_0_parameter_checking_
-      if (!files) return F_status_set_error(F_parameter);
+      if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) return F_data_not;
-
-    if (files->size - amount > 0) {
-      return private_f_files_adjust(files->size - amount, files);
-    }
-
-    return private_f_files_adjust(0, files);
+    return f_memory_array_decimate_by(amount, sizeof(f_file_t), (void **) &structure->array, &structure->used, &structure->size);
   }
 #endif // _di_f_files_decimate_by_
 
 #ifndef _di_f_files_decrease_by_
-  f_status_t f_files_decrease_by(const f_number_unsigned_t amount, f_files_t * const files) {
+  f_status_t f_files_decrease_by(const f_number_unsigned_t amount, f_files_t * const structure) {
     #ifndef _di_level_0_parameter_checking_
-      if (!files) return F_status_set_error(F_parameter);
+      if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) return F_data_not;
-
-    if (files->size - amount > 0) {
-      return private_f_files_resize(files->size - amount, files);
-    }
-
-    return private_f_files_resize(0, files);
+    return f_memory_array_decrease_by(amount, sizeof(f_file_t), (void **) &structure->array, &structure->used, &structure->size);
   }
 #endif // _di_f_files_decrease_by_
 
 #ifndef _di_f_files_increase_
-  f_status_t f_files_increase(const f_number_unsigned_t step, f_files_t * const files) {
+  f_status_t f_files_increase(const f_number_unsigned_t step, f_files_t * const structure) {
     #ifndef _di_level_0_parameter_checking_
-      if (!files) return F_status_set_error(F_parameter);
+      if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (step && files->used + 1 > files->size) {
-      f_number_unsigned_t size = files->used + step;
-
-      if (size > F_number_t_size_unsigned_d) {
-        if (files->used + 1 > F_number_t_size_unsigned_d) {
-          return F_status_set_error(F_array_too_large);
-        }
-
-        size = F_number_t_size_unsigned_d;
-      }
-
-      return private_f_files_resize(size, files);
-    }
-
-    return F_data_not;
+    return f_memory_array_increase(step, sizeof(f_file_t), (void **) &structure->array, &structure->used, &structure->size);
   }
 #endif // _di_f_files_increase_
 
 #ifndef _di_f_files_increase_by_
-  f_status_t f_files_increase_by(const f_number_unsigned_t amount, f_files_t * const files) {
+  f_status_t f_files_increase_by(const f_number_unsigned_t amount, f_files_t * const structure) {
     #ifndef _di_level_0_parameter_checking_
-      if (!files) return F_status_set_error(F_parameter);
+      if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) return F_data_not;
-
-    if (files->used + amount > files->size) {
-      if (files->used + amount > F_number_t_size_unsigned_d) {
-        return F_status_set_error(F_array_too_large);
-      }
-
-      return private_f_files_resize(files->used + amount, files);
-    }
-
-    return F_data_not;
+    return f_memory_array_increase_by(amount, sizeof(f_file_t), (void **) &structure->array, &structure->used, &structure->size);
   }
 #endif // _di_f_files_increase_by_
 
 #ifndef _di_f_files_resize_
-  f_status_t f_files_resize(const f_number_unsigned_t length, f_files_t * const files) {
+  f_status_t f_files_resize(const f_number_unsigned_t length, f_files_t * const structure) {
     #ifndef _di_level_0_parameter_checking_
-      if (!files) return F_status_set_error(F_parameter);
+      if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return private_f_files_resize(length, files);
+    return f_memory_array_resize(length, sizeof(f_file_t), (void **) &structure->array, &structure->used, &structure->size);
   }
 #endif // _di_f_files_resize_
 
@@ -143,12 +107,8 @@ extern "C" {
 
     if (!source.used) return F_data_not;
 
-    f_status_t status = F_none;
-
-    if (destination->used + 1 > destination->size) {
-      status = private_f_filess_resize(destination->used + F_memory_default_allocation_small_d, destination);
-      if (F_status_is_error(status)) return status;
-    }
+    f_status_t status = f_memory_array_increase(F_memory_default_allocation_small_d, sizeof(f_files_t), (void **) &destination->array, &destination->used, &destination->size);
+    if (F_status_is_error(status)) return status;
 
     status = private_f_files_append_all(source, &destination->array[destination->used]);
     if (F_status_is_error(status)) return status;
@@ -169,8 +129,8 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    if (destination->used + source.used > destination->size) {
-      status = private_f_filess_resize(destination->used + source.used, destination);
+    {
+      status = f_memory_array_increase_by(source.used, sizeof(f_files_t), (void **) &destination->array, &destination->used, &destination->size);
       if (F_status_is_error(status)) return status;
     }
 
@@ -196,11 +156,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (filess->size - amount > 0) {
-      return private_f_filess_adjust(filess->size - amount, filess);
-    }
-
-    return private_f_filess_adjust(0, filess);
+    return private_f_filess_adjust((filess->size - amount > 0) ? filess->size - amount : 0, filess);
   }
 #endif // _di_f_filess_decimate_by_
 
@@ -212,11 +168,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (filess->size - amount > 0) {
-      return private_f_filess_resize(filess->size - amount, filess);
-    }
-
-    return private_f_filess_resize(0, filess);
+    return private_f_filess_resize((filess->size - amount > 0) ? filess->size - amount : 0, filess);
   }
 #endif // _di_f_filess_decrease_by_
 
@@ -227,17 +179,15 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (step && filess->used + 1 > filess->size) {
-      f_number_unsigned_t size = filess->used + step;
+      f_number_unsigned_t length = filess->used + step;
 
-      if (size > F_number_t_size_unsigned_d) {
-        if (filess->used + 1 > F_number_t_size_unsigned_d) {
-          return F_status_set_error(F_array_too_large);
-        }
+      if (length > F_number_t_size_unsigned_d) {
+        if (filess->used + 1 > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
-        size = F_number_t_size_unsigned_d;
+        length = F_number_t_size_unsigned_d;
       }
 
-      return private_f_filess_resize(size, filess);
+      return private_f_filess_resize(length, filess);
     }
 
     return F_data_not;
@@ -253,9 +203,7 @@ extern "C" {
     if (!amount) return F_data_not;
 
     if (filess->used + amount > filess->size) {
-      if (filess->used + amount > F_number_t_size_unsigned_d) {
-        return F_status_set_error(F_array_too_large);
-      }
+      if (filess->used + amount > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
       return private_f_filess_resize(filess->used + amount, filess);
     }

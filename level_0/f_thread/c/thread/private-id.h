@@ -15,53 +15,6 @@
 extern "C" {
 #endif
 
-/**
- * Private implementation for resizing.
- *
- * Intended to be shared to each of the different implementation variations.
- *
- * @param length
- *   The new size to use.
- * @param ids
- *   The ids to adjust.
- *
- * @return
- *   F_none on success.
- *
- *   Errors (with error bit) from: f_memory_adjust().
- *
- * @see f_memory_adjust()
- * @see f_thread_ids_adjust()
- * @see f_thread_ids_decimate_by()
- */
-#if !defined(_di_f_thread_ids_adjust_) || !defined(_di_f_thread_ids_decimate_by_)
-  extern f_status_t private_f_thread_ids_adjust(const f_number_unsigned_t length, f_thread_ids_t * const ids) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_thread_ids_adjust_) || !defined(_di_f_thread_ids_decimate_by_)
-
-/**
- * Private implementation for resizing.
- *
- * Intended to be shared to each of the different implementation variations.
- *
- * @param length
- *   The new size to use.
- * @param ids
- *   The ids to resize.
- *
- * @return
- *   F_none on success.
- *
- *   Errors (with error bit) from: f_memory_resize().
- *
- * @see f_memory_resize()
- * @see f_thread_ids_decrease_by()
- * @see f_thread_ids_increase()
- * @see f_thread_ids_increase_by()
- */
-#if !defined(_di_f_thread_ids_decrease_by_) || !defined(_di_f_thread_ids_increase_) || !defined(_di_f_thread_ids_increase_by_)
-  extern f_status_t private_f_thread_ids_resize(const f_number_unsigned_t length, f_thread_ids_t * const ids) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_thread_ids_decrease_by_) || !defined(_di_f_thread_ids_increase_) || !defined(_di_f_thread_ids_increase_by_)
-
 #ifdef __cplusplus
 } // extern "C"
 #endif
