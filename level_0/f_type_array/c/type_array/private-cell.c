@@ -77,7 +77,7 @@ extern "C" {
 
     for (f_array_length_t i = length; i < cellss->size; ++i) {
 
-      status = f_memory_destroy(cellss->array[i].size, sizeof(f_cells_t), (void **) & cellss->array[i].array);
+      status = f_memory_destroy(cellss->array[i].size, sizeof(f_cell_t), (void **) & cellss->array[i].array);
       if (F_status_is_error(status)) return status;
 
       cellss->array[i].size = 0;
@@ -104,7 +104,7 @@ extern "C" {
 
     for (f_array_length_t i = length; i < cellss->size; ++i) {
 
-      status = f_memory_delete(cellss->array[i].size, sizeof(f_cells_t), (void **) & cellss->array[i].array);
+      status = f_memory_delete(cellss->array[i].size, sizeof(f_cell_t), (void **) & cellss->array[i].array);
       if (F_status_is_error(status)) return status;
 
       cellss->array[i].size = 0;

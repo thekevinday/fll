@@ -74,7 +74,7 @@ extern "C" {
 
     for (f_array_length_t i = length; i < uint128ss->size; ++i) {
 
-      status = f_memory_destroy(uint128ss->array[i].size, sizeof(f_uint128s_t), (void **) & uint128ss->array[i].array);
+      status = f_memory_destroy(uint128ss->array[i].size, sizeof(uint128_t), (void **) & uint128ss->array[i].array);
       if (F_status_is_error(status)) return status;
 
       uint128ss->array[i].size = 0;
@@ -101,7 +101,7 @@ extern "C" {
 
     for (f_array_length_t i = length; i < uint128ss->size; ++i) {
 
-      status = f_memory_delete(uint128ss->array[i].size, sizeof(f_uint128s_t), (void **) & uint128ss->array[i].array);
+      status = f_memory_delete(uint128ss->array[i].size, sizeof(uint128_t), (void **) & uint128ss->array[i].array);
       if (F_status_is_error(status)) return status;
 
       uint128ss->array[i].size = 0;

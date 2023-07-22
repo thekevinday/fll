@@ -74,7 +74,7 @@ extern "C" {
 
     for (f_array_length_t i = length; i < uint8ss->size; ++i) {
 
-      status = f_memory_destroy(uint8ss->array[i].size, sizeof(f_uint8s_t), (void **) & uint8ss->array[i].array);
+      status = f_memory_destroy(uint8ss->array[i].size, sizeof(uint8_t), (void **) & uint8ss->array[i].array);
       if (F_status_is_error(status)) return status;
 
       uint8ss->array[i].size = 0;
@@ -101,7 +101,7 @@ extern "C" {
 
     for (f_array_length_t i = length; i < uint8ss->size; ++i) {
 
-      status = f_memory_delete(uint8ss->array[i].size, sizeof(f_uint8s_t), (void **) & uint8ss->array[i].array);
+      status = f_memory_delete(uint8ss->array[i].size, sizeof(uint8_t), (void **) & uint8ss->array[i].array);
       if (F_status_is_error(status)) return status;
 
       uint8ss->array[i].size = 0;

@@ -81,7 +81,7 @@ extern "C" {
       int8ss->array[i].used = 0;
     } // for
 
-    status = f_memory_adjust(int8ss->size, length, sizeof(f_int8s_t), (void **) & int8ss->array);
+    status = f_memory_adjust(int8ss->size, length, sizeof(int8_t), (void **) & int8ss->array);
     if (F_status_is_error(status)) return status;
 
     int8ss->size = length;
@@ -101,7 +101,7 @@ extern "C" {
 
     for (f_array_length_t i = length; i < int8ss->size; ++i) {
 
-      status = f_memory_delete(int8ss->array[i].size, sizeof(f_int8s_t), (void **) & int8ss->array[i].array);
+      status = f_memory_delete(int8ss->array[i].size, sizeof(int8_t), (void **) & int8ss->array[i].array);
       if (F_status_is_error(status)) return status;
 
       int8ss->array[i].size = 0;

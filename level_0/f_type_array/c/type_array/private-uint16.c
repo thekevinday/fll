@@ -74,7 +74,7 @@ extern "C" {
 
     for (f_array_length_t i = length; i < uint16ss->size; ++i) {
 
-      status = f_memory_destroy(uint16ss->array[i].size, sizeof(f_uint16s_t), (void **) & uint16ss->array[i].array);
+      status = f_memory_destroy(uint16ss->array[i].size, sizeof(uint16_t), (void **) & uint16ss->array[i].array);
       if (F_status_is_error(status)) return status;
 
       uint16ss->array[i].size = 0;
@@ -101,7 +101,7 @@ extern "C" {
 
     for (f_array_length_t i = length; i < uint16ss->size; ++i) {
 
-      status = f_memory_delete(uint16ss->array[i].size, sizeof(f_uint16s_t), (void **) & uint16ss->array[i].array);
+      status = f_memory_delete(uint16ss->array[i].size, sizeof(uint16_t), (void **) & uint16ss->array[i].array);
       if (F_status_is_error(status)) return status;
 
       uint16ss->array[i].size = 0;
