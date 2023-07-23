@@ -2,7 +2,6 @@
 #include "../private-utf.h"
 #include "private-dynamic.h"
 #include "private-dynamics.h"
-#include "private-dynamicss.h"
 #include "private-map_multis.h"
 #include "private-map_multiss.h"
 #include "private-string.h"
@@ -12,12 +11,12 @@ extern "C" {
 #endif
 
 #ifndef _di_f_utf_string_map_multiss_adjust_
-  f_status_t f_utf_string_map_multiss_adjust(const f_number_unsigned_t length, f_utf_string_map_multiss_t * const map_multiss) {
+  f_status_t f_utf_string_map_multiss_adjust(const f_number_unsigned_t length, f_utf_string_map_multiss_t * const structure) {
     #ifndef _di_level_0_parameter_checking_
-      if (!map_multiss) return F_status_set_error(F_parameter);
+      if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return private_f_utf_string_map_multiss_adjust(length, map_multiss);
+    return private_f_utf_string_map_multiss_adjust(length, structure);
   }
 #endif // _di_f_utf_string_map_multiss_adjust_
 
@@ -79,55 +78,45 @@ extern "C" {
 #endif // _di_f_utf_string_map_multiss_append_all_
 
 #ifndef _di_f_utf_string_map_multiss_decimate_by_
-  f_status_t f_utf_string_map_multiss_decimate_by(const f_number_unsigned_t amount, f_utf_string_map_multiss_t * const map_multiss) {
+  f_status_t f_utf_string_map_multiss_decimate_by(const f_number_unsigned_t amount, f_utf_string_map_multiss_t * const structure) {
     #ifndef _di_level_0_parameter_checking_
-      if (!map_multiss) return F_status_set_error(F_parameter);
+      if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (!amount) return F_data_not;
 
-    if (map_multiss->size > amount) {
-      return private_f_utf_string_map_multiss_adjust(map_multiss->size - amount, map_multiss);
-    }
-
-    return private_f_utf_string_map_multiss_adjust(0, map_multiss);
+    return private_f_utf_string_map_multiss_adjust((structure->size > amount) ? structure->size - amount : 0, structure);
   }
 #endif // _di_f_utf_string_map_multiss_decimate_by_
 
 #ifndef _di_f_utf_string_map_multiss_decrease_by_
-  f_status_t f_utf_string_map_multiss_decrease_by(const f_number_unsigned_t amount, f_utf_string_map_multiss_t * const map_multiss) {
+  f_status_t f_utf_string_map_multiss_decrease_by(const f_number_unsigned_t amount, f_utf_string_map_multiss_t * const structure) {
     #ifndef _di_level_0_parameter_checking_
-      if (!map_multiss) return F_status_set_error(F_parameter);
+      if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (!amount) return F_data_not;
 
-    if (map_multiss->size > amount) {
-      return private_f_utf_string_map_multiss_resize(map_multiss->size - amount, map_multiss);
-    }
-
-    return private_f_utf_string_map_multiss_resize(0, map_multiss);
+    return private_f_utf_string_map_multiss_resize((structure->size > amount) ? structure->size - amount : 0, structure);
   }
 #endif // _di_f_utf_string_map_multiss_decrease_by_
 
 #ifndef _di_f_utf_string_map_multiss_increase_
-  f_status_t f_utf_string_map_multiss_increase(const f_number_unsigned_t step, f_utf_string_map_multiss_t * const map_multiss) {
+  f_status_t f_utf_string_map_multiss_increase(const f_number_unsigned_t step, f_utf_string_map_multiss_t * const structure) {
     #ifndef _di_level_0_parameter_checking_
-      if (!map_multiss) return F_status_set_error(F_parameter);
+      if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (step && map_multiss->used + 1 > map_multiss->size) {
-      f_number_unsigned_t length = map_multiss->used + step;
+    if (step && structure->used + 1 > structure->size) {
+      f_number_unsigned_t length = structure->used + step;
 
       if (length > F_number_t_size_unsigned_d) {
-        if (map_multiss->used + 1 > F_number_t_size_unsigned_d) {
-          return F_status_set_error(F_array_too_large);
-        }
+        if (structure->used + 1 > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
         length = F_number_t_size_unsigned_d;
       }
 
-      return private_f_utf_string_map_multiss_resize(length, map_multiss);
+      return private_f_utf_string_map_multiss_resize(length, structure);
     }
 
     return F_data_not;
@@ -135,20 +124,20 @@ extern "C" {
 #endif // _di_f_utf_string_map_multiss_increase_
 
 #ifndef _di_f_utf_string_map_multiss_increase_by_
-  f_status_t f_utf_string_map_multiss_increase_by(const f_number_unsigned_t amount, f_utf_string_map_multiss_t * const map_multiss) {
+  f_status_t f_utf_string_map_multiss_increase_by(const f_number_unsigned_t amount, f_utf_string_map_multiss_t * const structure) {
     #ifndef _di_level_0_parameter_checking_
-      if (!map_multiss) return F_status_set_error(F_parameter);
+      if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (amount) {
-      if (map_multiss->used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+      if (structure->used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
-      const f_number_unsigned_t length = map_multiss->used + amount;
+      const f_number_unsigned_t length = structure->used + amount;
 
-      if (length > map_multiss->size) {
+      if (length > structure->size) {
         if (length > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
-        return private_f_utf_string_map_multiss_resize(length, map_multiss);
+        return private_f_utf_string_map_multiss_resize(length, structure);
       }
     }
 
@@ -157,12 +146,12 @@ extern "C" {
 #endif // _di_f_utf_string_map_multiss_increase_by_
 
 #ifndef _di_f_utf_string_map_multiss_resize_
-  f_status_t f_utf_string_map_multiss_resize(const f_number_unsigned_t length, f_utf_string_map_multiss_t * const map_multiss) {
+  f_status_t f_utf_string_map_multiss_resize(const f_number_unsigned_t length, f_utf_string_map_multiss_t * const structure) {
     #ifndef _di_level_0_parameter_checking_
-      if (!map_multiss) return F_status_set_error(F_parameter);
+      if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return private_f_utf_string_map_multiss_resize(length, map_multiss);
+    return private_f_utf_string_map_multiss_resize(length, structure);
   }
 #endif // _di_f_utf_string_map_multiss_resize_
 

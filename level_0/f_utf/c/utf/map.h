@@ -5,9 +5,9 @@
  * API Version: 0.7
  * Licenses: lgpl-2.1-or-later
  *
- * Defines map UTF-8 string data.
+ * Defines map string data.
  *
- * This is auto-included by utf.h and should not need to be explicitly included.
+ * This is auto-included by string.h and should not need to be explicitly included.
  */
 #ifndef _F_utf_map_h
 #define _F_utf_map_h

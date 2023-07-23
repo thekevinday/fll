@@ -5,9 +5,9 @@
  * API Version: 0.7
  * Licenses: lgpl-2.1-or-later
  *
- * Defines dynamic (and static) UTF-8 string data.
+ * Defines dynamic string data.
  *
- * This is auto-included by utf.h and should not need to be explicitly included.
+ * This is auto-included by string.h and should not need to be explicitly included.
  */
 #ifndef _F_utf_dynamicss_h
 #define _F_utf_dynamicss_h
@@ -50,7 +50,7 @@ extern "C" {
  *
  * @param length
  *   The new size to use.
- * @param dynamicss
+ * @param structure
  *   The array to resize.
  *
  * @return
@@ -61,7 +61,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_adjust().
  */
 #ifndef _di_f_utf_string_dynamicss_adjust_
-  extern f_status_t f_utf_string_dynamicss_adjust(const f_number_unsigned_t length, f_utf_string_dynamicss_t * const dynamicss);
+  extern f_status_t f_utf_string_dynamicss_adjust(const f_number_unsigned_t length, f_utf_string_dynamicss_t * const structure);
 #endif // _di_f_utf_string_dynamicss_adjust_
 
 /**
@@ -115,7 +115,7 @@ extern "C" {
  *
  * @param amount
  *   A positive number representing how much to decimate the size by.
- * @param dynamicss
+ * @param structure
  *   The array to resize.
  *
  * @return
@@ -127,7 +127,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_dynamicss_decimate_by_
-  extern f_status_t f_utf_string_dynamicss_decimate_by(const f_number_unsigned_t amount, f_utf_string_dynamicss_t * const dynamicss);
+  extern f_status_t f_utf_string_dynamicss_decimate_by(const f_number_unsigned_t amount, f_utf_string_dynamicss_t * const structure);
 #endif // _di_f_utf_string_dynamicss_decimate_by_
 
 /**
@@ -139,7 +139,7 @@ extern "C" {
  *
  * @param amount
  *   A positive number representing how much to decrease the size by.
- * @param dynamicss
+ * @param structure
  *   The array to resize.
  *
  * @return
@@ -151,7 +151,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_dynamicss_decrease_by_
-  extern f_status_t f_utf_string_dynamicss_decrease_by(const f_number_unsigned_t amount, f_utf_string_dynamicss_t * const dynamicss);
+  extern f_status_t f_utf_string_dynamicss_decrease_by(const f_number_unsigned_t amount, f_utf_string_dynamicss_t * const structure);
 #endif // _di_f_utf_string_dynamicss_decrease_by_
 
 /**
@@ -163,7 +163,7 @@ extern "C" {
  * @param step
  *   The allocation step to use.
  *   Must be greater than 0.
- * @param dynamicss
+ * @param structure
  *   The array to resize.
  *
  * @return
@@ -176,7 +176,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_dynamicss_increase_
-  extern f_status_t f_utf_string_dynamicss_increase(const f_number_unsigned_t step, f_utf_string_dynamicss_t * const dynamicss);
+  extern f_status_t f_utf_string_dynamicss_increase(const f_number_unsigned_t step, f_utf_string_dynamicss_t * const structure);
 #endif // _di_f_utf_string_dynamicss_increase_
 
 /**
@@ -188,7 +188,7 @@ extern "C" {
  *
  * @param amount
  *   A positive number representing how much to increase the size by.
- * @param dynamicss
+ * @param structure
  *   The array to resize.
  *
  * @return
@@ -201,7 +201,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_dynamicss_increase_by_
-  extern f_status_t f_utf_string_dynamicss_increase_by(const f_number_unsigned_t amount, f_utf_string_dynamicss_t * const dynamicss);
+  extern f_status_t f_utf_string_dynamicss_increase_by(const f_number_unsigned_t amount, f_utf_string_dynamicss_t * const structure);
 #endif // _di_f_utf_string_dynamicss_increase_by_
 
 /**
@@ -209,7 +209,7 @@ extern "C" {
  *
  * @param length
  *   The new size to use.
- * @param dynamicss
+ * @param structure
  *   The array to resize.
  *
  * @return
@@ -220,7 +220,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_dynamicss_resize_
-  extern f_status_t f_utf_string_dynamicss_resize(const f_number_unsigned_t length, f_utf_string_dynamicss_t * const dynamicss);
+  extern f_status_t f_utf_string_dynamicss_resize(const f_number_unsigned_t length, f_utf_string_dynamicss_t * const structure);
 #endif // _di_f_utf_string_dynamicss_resize_
 
 #ifdef __cplusplus

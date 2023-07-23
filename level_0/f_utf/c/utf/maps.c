@@ -1,19 +1,19 @@
 #include "../utf.h"
 #include "../private-utf.h"
-#include "private-string.h"
 #include "private-maps.h"
+#include "private-string.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 #ifndef _di_f_utf_string_maps_adjust_
-  f_status_t f_utf_string_maps_adjust(const f_number_unsigned_t length, f_utf_string_maps_t * const maps) {
+  f_status_t f_utf_string_maps_adjust(const f_number_unsigned_t length, f_utf_string_maps_t * const structure) {
     #ifndef _di_level_0_parameter_checking_
-      if (!maps) return F_status_set_error(F_parameter);
+      if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return private_f_utf_string_maps_adjust(length, maps);
+    return private_f_utf_string_maps_adjust(length, structure);
   }
 #endif // _di_f_utf_string_maps_adjust_
 
@@ -62,55 +62,45 @@ extern "C" {
 #endif // _di_f_utf_string_maps_append_all_
 
 #ifndef _di_f_utf_string_maps_decimate_by_
-  f_status_t f_utf_string_maps_decimate_by(const f_number_unsigned_t amount, f_utf_string_maps_t * const maps) {
+  f_status_t f_utf_string_maps_decimate_by(const f_number_unsigned_t amount, f_utf_string_maps_t * const structure) {
     #ifndef _di_level_0_parameter_checking_
-      if (!maps) return F_status_set_error(F_parameter);
+      if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (!amount) return F_data_not;
 
-    if (maps->size > amount) {
-      return private_f_utf_string_maps_adjust(maps->size - amount, maps);
-    }
-
-    return private_f_utf_string_maps_adjust(0, maps);
+    return private_f_utf_string_maps_adjust((structure->size > amount) ? structure->size - amount : 0, structure);
   }
 #endif // _di_f_utf_string_maps_decimate_by_
 
 #ifndef _di_f_utf_string_maps_decrease_by_
-  f_status_t f_utf_string_maps_decrease_by(const f_number_unsigned_t amount, f_utf_string_maps_t * const maps) {
+  f_status_t f_utf_string_maps_decrease_by(const f_number_unsigned_t amount, f_utf_string_maps_t * const structure) {
     #ifndef _di_level_0_parameter_checking_
-      if (!maps) return F_status_set_error(F_parameter);
+      if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (!amount) return F_data_not;
 
-    if (maps->size > amount) {
-      return private_f_utf_string_maps_resize(maps->size - amount, maps);
-    }
-
-    return private_f_utf_string_maps_resize(0, maps);
+    return private_f_utf_string_maps_resize((structure->size > amount) ? structure->size - amount : 0, structure);
   }
 #endif // _di_f_utf_string_maps_decrease_by_
 
 #ifndef _di_f_utf_string_maps_increase_
-  f_status_t f_utf_string_maps_increase(const f_number_unsigned_t step, f_utf_string_maps_t * const maps) {
+  f_status_t f_utf_string_maps_increase(const f_number_unsigned_t step, f_utf_string_maps_t * const structure) {
     #ifndef _di_level_0_parameter_checking_
-      if (!maps) return F_status_set_error(F_parameter);
+      if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (step && maps->used + 1 > maps->size) {
-      f_number_unsigned_t length = maps->used + step;
+    if (step && structure->used + 1 > structure->size) {
+      f_number_unsigned_t length = structure->used + step;
 
       if (length > F_number_t_size_unsigned_d) {
-        if (maps->used + 1 > F_number_t_size_unsigned_d) {
-          return F_status_set_error(F_array_too_large);
-        }
+        if (structure->used + 1 > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
         length = F_number_t_size_unsigned_d;
       }
 
-      return private_f_utf_string_maps_resize(length, maps);
+      return private_f_utf_string_maps_resize(length, structure);
     }
 
     return F_data_not;
@@ -118,20 +108,20 @@ extern "C" {
 #endif // _di_f_utf_string_maps_increase_
 
 #ifndef _di_f_utf_string_maps_increase_by_
-  f_status_t f_utf_string_maps_increase_by(const f_number_unsigned_t amount, f_utf_string_maps_t * const maps) {
+  f_status_t f_utf_string_maps_increase_by(const f_number_unsigned_t amount, f_utf_string_maps_t * const structure) {
     #ifndef _di_level_0_parameter_checking_
-      if (!maps) return F_status_set_error(F_parameter);
+      if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (amount) {
-      if (maps->used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+      if (structure->used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
-      const f_number_unsigned_t length = maps->used + amount;
+      const f_number_unsigned_t length = structure->used + amount;
 
-      if (length > maps->size) {
+      if (length > structure->size) {
         if (length > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
-        return private_f_utf_string_maps_resize(length, maps);
+        return private_f_utf_string_maps_resize(length, structure);
       }
     }
 
@@ -140,12 +130,12 @@ extern "C" {
 #endif // _di_f_utf_string_maps_increase_by_
 
 #ifndef _di_f_utf_string_maps_resize_
-  f_status_t f_utf_string_maps_resize(const f_number_unsigned_t length, f_utf_string_maps_t * const maps) {
+  f_status_t f_utf_string_maps_resize(const f_number_unsigned_t length, f_utf_string_maps_t * const structure) {
     #ifndef _di_level_0_parameter_checking_
-      if (!maps) return F_status_set_error(F_parameter);
+      if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return private_f_utf_string_maps_resize(length, maps);
+    return private_f_utf_string_maps_resize(length, structure);
   }
 #endif // _di_f_utf_string_maps_resize_
 

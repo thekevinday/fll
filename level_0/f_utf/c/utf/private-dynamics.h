@@ -1,7 +1,7 @@
 /**
  * FLL - Level 0
  *
- * Project: String
+ * Project: UTF
  * API Version: 0.7
  * Licenses: lgpl-2.1-or-later
  *
@@ -22,8 +22,8 @@ extern "C" {
  *
  * @param length
  *   The new size to use.
- * @param dynamics
- *   The strings to adjust.
+ * @param structure
+ *   The dynamics to adjust.
  *
  * @return
  *   F_none on success.
@@ -41,7 +41,7 @@ extern "C" {
  * @see f_utf_string_map_multis_append()
  */
 #if !defined(_di_f_utf_string_dynamics_adjust_) || !defined(_di_f_utf_string_dynamics_append_) || !defined(_di_f_utf_string_dynamics_decimate_by_) || !defined(_di_f_utf_string_map_multis_adjust_) || !defined(_di_f_utf_string_map_multis_append_)
-  extern f_status_t private_f_utf_string_dynamics_adjust(const f_number_unsigned_t length, f_utf_string_dynamics_t * const dynamics) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_utf_string_dynamics_adjust(const f_number_unsigned_t length, f_utf_string_dynamics_t * const structure) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_utf_string_dynamics_adjust_) || !defined(_di_f_utf_string_dynamics_append_) || !defined(_di_f_utf_string_dynamics_decimate_by_) || !defined(_di_f_utf_string_map_multis_adjust_) || !defined(_di_f_utf_string_map_multis_append_)
 
 /**
@@ -52,7 +52,7 @@ extern "C" {
  * @param source
  *   The source string to append.
  * @param destination
- *   The destination strings the source is appended onto.
+ *   The destination dynamics the source is appended onto.
  *
  * @return
  *   F_none on success.
@@ -79,7 +79,7 @@ extern "C" {
  * @param source
  *   The source strings to append.
  * @param destination
- *   The destination strings the source is appended onto.
+ *   The destination dynamics the source is appended onto.
  *
  * @return
  *   F_none on success.
@@ -105,8 +105,8 @@ extern "C" {
  *
  * @param length
  *   The new size to use.
- * @param dynamics
- *   The strings to resize.
+ * @param structure
+ *   The dynamics to resize.
  *
  * @return
  *   F_none on success.
@@ -120,6 +120,7 @@ extern "C" {
  * @see f_utf_string_dynamics_decrease_by()
  * @see f_utf_string_dynamics_increase()
  * @see f_utf_string_dynamics_increase_by()
+ * @see f_utf_string_dynamics_resize()
  * @see f_utf_string_map_multis_append()
  * @see f_utf_string_map_multis_append_all()
  * @see f_utf_string_map_multis_decrease_by()
@@ -132,9 +133,9 @@ extern "C" {
  * @see f_utf_string_map_multiss_increase()
  * @see f_utf_string_map_multiss_increase_by()
  */
-#if !defined(_di_f_utf_string_dynamics_decrease_by_) || !defined(_di_f_utf_string_dynamics_increase_) || !defined(_di_f_utf_string_dynamics_increase_by_) || !defined(_di_f_utf_string_map_multis_append_) || !defined(_di_f_utf_string_map_multis_append_all_) || !defined(_di_f_utf_string_map_multis_decrease_by_) || !defined(_di_f_utf_string_map_multis_increase_) || !defined(_di_f_utf_string_map_multis_increase_by_) || !defined(_di_f_utf_string_map_multis_resize_) || !defined(_di_f_utf_string_map_multiss_append_) || !defined(_di_f_utf_string_map_multiss_append_all_) || !defined(_di_f_utf_string_map_multiss_decrease_by_) || !defined(_di_f_utf_string_map_multiss_increase_) || !defined(_di_f_utf_string_map_multiss_increase_by_)
-  extern f_status_t private_f_utf_string_dynamics_resize(const f_number_unsigned_t length, f_utf_string_dynamics_t * const dynamics) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_utf_string_dynamics_decrease_by_) || !defined(_di_f_utf_string_dynamics_increase_) || !defined(_di_f_utf_string_dynamics_increase_by_) || !defined(_di_f_utf_string_map_multis_append_) || !defined(_di_f_utf_string_map_multis_append_all_) || !defined(_di_f_utf_string_map_multis_decrease_by_) || !defined(_di_f_utf_string_map_multis_increase_) || !defined(_di_f_utf_string_map_multis_increase_by_) || !defined(_di_f_utf_string_map_multis_resize_) || !defined(_di_f_utf_string_map_multiss_append_) || !defined(_di_f_utf_string_map_multiss_append_all_) || !defined(_di_f_utf_string_map_multiss_decrease_by_) || !defined(_di_f_utf_string_map_multiss_increase_) || !defined(_di_f_utf_string_map_multiss_increase_by_)
+#if !defined(_di_f_utf_string_dynamics_decrease_by_) || !defined(_di_f_utf_string_dynamics_increase_) || !defined(_di_f_utf_string_dynamics_increase_by_) || !defined(f_utf_string_dynamics_resize) || !defined(_di_f_utf_string_map_multis_append_) || !defined(_di_f_utf_string_map_multis_append_all_) || !defined(_di_f_utf_string_map_multis_decrease_by_) || !defined(_di_f_utf_string_map_multis_increase_) || !defined(_di_f_utf_string_map_multis_increase_by_) || !defined(_di_f_utf_string_map_multis_resize_) || !defined(_di_f_utf_string_map_multiss_append_) || !defined(_di_f_utf_string_map_multiss_append_all_) || !defined(_di_f_utf_string_map_multiss_decrease_by_) || !defined(_di_f_utf_string_map_multiss_increase_) || !defined(_di_f_utf_string_map_multiss_increase_by_)
+  extern f_status_t private_f_utf_string_dynamics_resize(const f_number_unsigned_t length, f_utf_string_dynamics_t * const structure) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_utf_string_dynamics_decrease_by_) || !defined(_di_f_utf_string_dynamics_increase_) || !defined(_di_f_utf_string_dynamics_increase_by_) || !defined(f_utf_string_dynamics_resize) || !defined(_di_f_utf_string_map_multis_append_) || !defined(_di_f_utf_string_map_multis_append_all_) || !defined(_di_f_utf_string_map_multis_decrease_by_) || !defined(_di_f_utf_string_map_multis_increase_) || !defined(_di_f_utf_string_map_multis_increase_by_) || !defined(_di_f_utf_string_map_multis_resize_) || !defined(_di_f_utf_string_map_multiss_append_) || !defined(_di_f_utf_string_map_multiss_append_all_) || !defined(_di_f_utf_string_map_multiss_decrease_by_) || !defined(_di_f_utf_string_map_multiss_increase_) || !defined(_di_f_utf_string_map_multiss_increase_by_)
 
 #ifdef __cplusplus
 } // extern "C"

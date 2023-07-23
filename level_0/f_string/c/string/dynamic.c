@@ -7,12 +7,12 @@ extern "C" {
 #endif
 
 #ifndef _di_f_string_dynamic_adjust_
-  f_status_t f_string_dynamic_adjust(const f_number_unsigned_t length, f_string_dynamic_t * const dynamic) {
+  f_status_t f_string_dynamic_adjust(const f_number_unsigned_t length, f_string_dynamic_t * const structure) {
     #ifndef _di_level_0_parameter_checking_
-      if (!dynamic) return F_status_set_error(F_parameter);
+      if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return f_memory_array_adjust(length, sizeof(f_string_t), (void **) &dynamic->string, &dynamic->used, &dynamic->size);
+    return f_memory_array_adjust(length, sizeof(f_string_t), (void **) &structure->string, &structure->used, &structure->size);
   }
 #endif // _di_f_string_dynamic_adjust_
 
@@ -105,42 +105,42 @@ extern "C" {
 #endif // _di_f_string_dynamic_append_nulless_
 
 #ifndef _di_f_string_dynamic_decimate_by_
-  f_status_t f_string_dynamic_decimate_by(const f_number_unsigned_t amount, f_string_dynamic_t * const dynamic) {
+  f_status_t f_string_dynamic_decimate_by(const f_number_unsigned_t amount, f_string_dynamic_t * const structure) {
     #ifndef _di_level_0_parameter_checking_
-      if (!dynamic) return F_status_set_error(F_parameter);
+      if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return f_memory_array_decimate_by(amount, sizeof(f_string_t), (void **) &dynamic->string, &dynamic->used, &dynamic->size);
+    return f_memory_array_decimate_by(amount, sizeof(f_string_t), (void **) &structure->string, &structure->used, &structure->size);
   }
 #endif // _di_f_string_dynamic_decimate_by_
 
 #ifndef _di_f_string_dynamic_decrease_by_
-  f_status_t f_string_dynamic_decrease_by(const f_number_unsigned_t amount, f_string_dynamic_t * const dynamic) {
+  f_status_t f_string_dynamic_decrease_by(const f_number_unsigned_t amount, f_string_dynamic_t * const structure) {
     #ifndef _di_level_0_parameter_checking_
-      if (!dynamic) return F_status_set_error(F_parameter);
+      if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return f_memory_array_decrease_by(amount, sizeof(f_string_t), (void **) &dynamic->string, &dynamic->used, &dynamic->size);
+    return f_memory_array_decrease_by(amount, sizeof(f_string_t), (void **) &structure->string, &structure->used, &structure->size);
   }
 #endif // _di_f_string_dynamic_decrease_by_
 
 #ifndef _di_f_string_dynamic_increase_
-  f_status_t f_string_dynamic_increase(const f_number_unsigned_t step, f_string_dynamic_t * const dynamic) {
+  f_status_t f_string_dynamic_increase(const f_number_unsigned_t step, f_string_dynamic_t * const structure) {
     #ifndef _di_level_0_parameter_checking_
-      if (!dynamic) return F_status_set_error(F_parameter);
+      if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return f_memory_array_increase(step, sizeof(f_string_t), (void **) &dynamic->string, &dynamic->used, &dynamic->size);
+    return f_memory_array_increase(step, sizeof(f_string_t), (void **) &structure->string, &structure->used, &structure->size);
   }
 #endif // _di_f_string_dynamic_increase_
 
 #ifndef _di_f_string_dynamic_increase_by_
-  f_status_t f_string_dynamic_increase_by(const f_number_unsigned_t amount, f_string_dynamic_t * const dynamic) {
+  f_status_t f_string_dynamic_increase_by(const f_number_unsigned_t amount, f_string_dynamic_t * const structure) {
     #ifndef _di_level_0_parameter_checking_
-      if (!dynamic) return F_status_set_error(F_parameter);
+      if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return f_memory_array_increase_by(amount, sizeof(f_string_t), (void **) &dynamic->string, &dynamic->used, &dynamic->size);
+    return f_memory_array_increase_by(amount, sizeof(f_string_t), (void **) &structure->string, &structure->used, &structure->size);
   }
 #endif // _di_f_string_dynamic_increase_by_
 
@@ -609,29 +609,29 @@ extern "C" {
 #endif // _di_f_string_dynamic_prepend_nulless_
 
 #ifndef _di_f_string_dynamic_resize_
-  f_status_t f_string_dynamic_resize(const f_number_unsigned_t length, f_string_dynamic_t * const buffer) {
+  f_status_t f_string_dynamic_resize(const f_number_unsigned_t length, f_string_dynamic_t * const structure) {
     #ifndef _di_level_0_parameter_checking_
-      if (!buffer) return F_status_set_error(F_parameter);
+      if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return f_memory_array_resize(length, sizeof(f_string_t), (void **) &buffer->string, &buffer->used, &buffer->size);
+    return f_memory_array_resize(length, sizeof(f_string_t), (void **) &structure->string, &structure->used, &structure->size);
   }
 #endif // _di_f_string_dynamic_resize_
 
 #ifndef _di_f_string_dynamic_seek_line_
-  f_status_t f_string_dynamic_seek_line(const f_string_static_t buffer, f_string_range_t * const range) {
+  f_status_t f_string_dynamic_seek_line(const f_string_static_t structure, f_string_range_t * const range) {
     #ifndef _di_level_0_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.used) return F_data_not;
+    if (!structure.used) return F_data_not;
     if (range->start > range->stop) return F_data_not_stop;
 
-    while (buffer.string[range->start] != f_string_eol_s.string[0]) {
+    while (structure.string[range->start] != f_string_eol_s.string[0]) {
 
       ++range->start;
 
-      if (range->start >= buffer.used) return F_none_eos;
+      if (range->start >= structure.used) return F_none_eos;
       if (range->start > range->stop) return F_none_stop;
     } // while
 
@@ -640,21 +640,21 @@ extern "C" {
 #endif // _di_f_string_dynamic_seek_line_
 
 #ifndef _di_f_string_dynamic_seek_line_to_
-  f_status_t f_string_dynamic_seek_line_to(const f_string_static_t buffer, const f_char_t seek_to_this, f_string_range_t * const range) {
+  f_status_t f_string_dynamic_seek_line_to(const f_string_static_t structure, const f_char_t seek_to_this, f_string_range_t * const range) {
     #ifndef _di_level_0_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.used) return F_data_not;
+    if (!structure.used) return F_data_not;
     if (range->start > range->stop) return F_data_not_stop;
 
-    while (buffer.string[range->start] != seek_to_this) {
+    while (structure.string[range->start] != seek_to_this) {
 
-      if (buffer.string[range->start] == f_string_eol_s.string[0]) return F_none_eol;
+      if (structure.string[range->start] == f_string_eol_s.string[0]) return F_none_eol;
 
       ++range->start;
 
-      if (range->start >= buffer.used) return F_none_eos;
+      if (range->start >= structure.used) return F_none_eos;
       if (range->start > range->stop) return F_none_stop;
     } // while
 
@@ -663,19 +663,19 @@ extern "C" {
 #endif // _di_f_string_dynamic_seek_line_to_
 
 #ifndef _di_f_string_dynamic_seek_to_
-  f_status_t f_string_dynamic_seek_to(const f_string_static_t buffer, const f_char_t seek_to_this, f_string_range_t * const range) {
+  f_status_t f_string_dynamic_seek_to(const f_string_static_t structure, const f_char_t seek_to_this, f_string_range_t * const range) {
     #ifndef _di_level_0_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.used) return F_data_not;
+    if (!structure.used) return F_data_not;
     if (range->start > range->stop) return F_data_not_stop;
 
-    while (buffer.string[range->start] != seek_to_this) {
+    while (structure.string[range->start] != seek_to_this) {
 
       ++range->start;
 
-      if (range->start >= buffer.used) return F_none_eos;
+      if (range->start >= structure.used) return F_none_eos;
       if (range->start > range->stop) return F_none_stop;
     } // while
 

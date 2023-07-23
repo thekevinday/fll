@@ -8,12 +8,12 @@ extern "C" {
 #endif
 
 #ifndef _di_f_string_mapss_adjust_
-  f_status_t f_string_mapss_adjust(const f_number_unsigned_t length, f_string_mapss_t * const mapss) {
+  f_status_t f_string_mapss_adjust(const f_number_unsigned_t length, f_string_mapss_t * const structure) {
     #ifndef _di_level_0_parameter_checking_
-      if (!mapss) return F_status_set_error(F_parameter);
+      if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return private_f_string_mapss_adjust(length, mapss);
+    return private_f_string_mapss_adjust(length, structure);
   }
 #endif // _di_f_string_mapss_adjust_
 
@@ -75,45 +75,45 @@ extern "C" {
 #endif // _di_f_string_mapss_append_all_
 
 #ifndef _di_f_string_mapss_decimate_by_
-  f_status_t f_string_mapss_decimate_by(const f_number_unsigned_t amount, f_string_mapss_t * const mapss) {
+  f_status_t f_string_mapss_decimate_by(const f_number_unsigned_t amount, f_string_mapss_t * const structure) {
     #ifndef _di_level_0_parameter_checking_
-      if (!mapss) return F_status_set_error(F_parameter);
+      if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (!amount) return F_data_not;
 
-    return private_f_string_mapss_adjust((mapss->size > amount) ? mapss->size - amount : 0, mapss);
+    return private_f_string_mapss_adjust((structure->size > amount) ? structure->size - amount : 0, structure);
   }
 #endif // _di_f_string_mapss_decimate_by_
 
 #ifndef _di_f_string_mapss_decrease_by_
-  f_status_t f_string_mapss_decrease_by(const f_number_unsigned_t amount, f_string_mapss_t * const mapss) {
+  f_status_t f_string_mapss_decrease_by(const f_number_unsigned_t amount, f_string_mapss_t * const structure) {
     #ifndef _di_level_0_parameter_checking_
-      if (!mapss) return F_status_set_error(F_parameter);
+      if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (!amount) return F_data_not;
 
-    return private_f_string_mapss_resize((mapss->size > amount) ? mapss->size - amount : 0, mapss);
+    return private_f_string_mapss_resize((structure->size > amount) ? structure->size - amount : 0, structure);
   }
 #endif // _di_f_string_mapss_decrease_by_
 
 #ifndef _di_f_string_mapss_increase_
-  f_status_t f_string_mapss_increase(const f_number_unsigned_t step, f_string_mapss_t * const mapss) {
+  f_status_t f_string_mapss_increase(const f_number_unsigned_t step, f_string_mapss_t * const structure) {
     #ifndef _di_level_0_parameter_checking_
-      if (!mapss) return F_status_set_error(F_parameter);
+      if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (step && mapss->used + 1 > mapss->size) {
-      f_number_unsigned_t length = mapss->used + step;
+    if (step && structure->used + 1 > structure->size) {
+      f_number_unsigned_t length = structure->used + step;
 
       if (length > F_number_t_size_unsigned_d) {
-        if (mapss->used + 1 > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+        if (structure->used + 1 > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
         length = F_number_t_size_unsigned_d;
       }
 
-      return private_f_string_mapss_resize(length, mapss);
+      return private_f_string_mapss_resize(length, structure);
     }
 
     return F_data_not;
@@ -121,20 +121,20 @@ extern "C" {
 #endif // _di_f_string_mapss_increase_
 
 #ifndef _di_f_string_mapss_increase_by_
-  f_status_t f_string_mapss_increase_by(const f_number_unsigned_t amount, f_string_mapss_t * const mapss) {
+  f_status_t f_string_mapss_increase_by(const f_number_unsigned_t amount, f_string_mapss_t * const structure) {
     #ifndef _di_level_0_parameter_checking_
-      if (!mapss) return F_status_set_error(F_parameter);
+      if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (amount) {
-      if (mapss->used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+      if (structure->used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
-      const f_number_unsigned_t length = mapss->used + amount;
+      const f_number_unsigned_t length = structure->used + amount;
 
-      if (length > mapss->size) {
+      if (length > structure->size) {
         if (length > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
-        return private_f_string_mapss_resize(length, mapss);
+        return private_f_string_mapss_resize(length, structure);
       }
     }
 
@@ -143,12 +143,12 @@ extern "C" {
 #endif // _di_f_string_mapss_increase_by_
 
 #ifndef _di_f_string_mapss_resize_
-  f_status_t f_string_mapss_resize(const f_number_unsigned_t length, f_string_mapss_t * const mapss) {
+  f_status_t f_string_mapss_resize(const f_number_unsigned_t length, f_string_mapss_t * const structure) {
     #ifndef _di_level_0_parameter_checking_
-      if (!mapss) return F_status_set_error(F_parameter);
+      if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return private_f_string_mapss_resize(length, mapss);
+    return private_f_string_mapss_resize(length, structure);
   }
 #endif // _di_f_string_mapss_resize_
 

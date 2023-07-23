@@ -8,12 +8,12 @@ extern "C" {
 #endif
 
 #ifndef _di_f_string_rangess_adjust_
-  f_status_t f_string_rangess_adjust(const f_number_unsigned_t length, f_string_rangess_t * const rangess) {
+  f_status_t f_string_rangess_adjust(const f_number_unsigned_t length, f_string_rangess_t * const structure) {
     #ifndef _di_level_0_parameter_checking_
-      if (!rangess) return F_status_set_error(F_parameter);
+      if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return private_f_string_rangess_adjust(length, rangess);
+    return private_f_string_rangess_adjust(length, structure);
   }
 #endif // _di_f_string_rangess_adjust_
 
@@ -75,45 +75,45 @@ extern "C" {
 #endif // _di_f_string_rangess_append_all_
 
 #ifndef _di_f_string_rangess_decimate_by_
-  f_status_t f_string_rangess_decimate_by(const f_number_unsigned_t amount, f_string_rangess_t * const rangess) {
+  f_status_t f_string_rangess_decimate_by(const f_number_unsigned_t amount, f_string_rangess_t * const structure) {
     #ifndef _di_level_0_parameter_checking_
-      if (!rangess) return F_status_set_error(F_parameter);
+      if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (!amount) return F_data_not;
 
-    return private_f_string_rangess_adjust((rangess->size > amount) ? rangess->size - amount : 0, rangess);
+    return private_f_string_rangess_adjust((structure->size > amount) ? structure->size - amount : 0, structure);
   }
 #endif // _di_f_string_rangess_decimate_by_
 
 #ifndef _di_f_string_rangess_decrease_by_
-  f_status_t f_string_rangess_decrease_by(const f_number_unsigned_t amount, f_string_rangess_t * const rangess) {
+  f_status_t f_string_rangess_decrease_by(const f_number_unsigned_t amount, f_string_rangess_t * const structure) {
     #ifndef _di_level_0_parameter_checking_
-      if (!rangess) return F_status_set_error(F_parameter);
+      if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (!amount) return F_data_not;
 
-    return private_f_string_rangess_resize((rangess->size > amount) ? rangess->size - amount : 0, rangess);
+    return private_f_string_rangess_resize((structure->size > amount) ? structure->size - amount : 0, structure);
   }
 #endif // _di_f_string_rangess_decrease_by_
 
 #ifndef _di_f_string_rangess_increase_
-  f_status_t f_string_rangess_increase(const f_number_unsigned_t step, f_string_rangess_t * const rangess) {
+  f_status_t f_string_rangess_increase(const f_number_unsigned_t step, f_string_rangess_t * const structure) {
     #ifndef _di_level_0_parameter_checking_
-      if (!rangess) return F_status_set_error(F_parameter);
+      if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (step && rangess->used + 1 > rangess->size) {
-      f_number_unsigned_t length = rangess->used + step;
+    if (step && structure->used + 1 > structure->size) {
+      f_number_unsigned_t length = structure->used + step;
 
       if (length > F_number_t_size_unsigned_d) {
-        if (rangess->used + 1 > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+        if (structure->used + 1 > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
         length = F_number_t_size_unsigned_d;
       }
 
-      return private_f_string_rangess_resize(length, rangess);
+      return private_f_string_rangess_resize(length, structure);
     }
 
     return F_data_not;
@@ -121,20 +121,20 @@ extern "C" {
 #endif // _di_f_string_rangess_increase_
 
 #ifndef _di_f_string_rangess_increase_by_
-  f_status_t f_string_rangess_increase_by(const f_number_unsigned_t amount, f_string_rangess_t * const rangess) {
+  f_status_t f_string_rangess_increase_by(const f_number_unsigned_t amount, f_string_rangess_t * const structure) {
     #ifndef _di_level_0_parameter_checking_
-      if (!rangess) return F_status_set_error(F_parameter);
+      if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (amount) {
-      if (rangess->used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+      if (structure->used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
-      const f_number_unsigned_t length = rangess->used + amount;
+      const f_number_unsigned_t length = structure->used + amount;
 
-      if (length > rangess->size) {
+      if (length > structure->size) {
         if (length > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
-        return private_f_string_rangess_resize(length, rangess);
+        return private_f_string_rangess_resize(length, structure);
       }
     }
 
@@ -143,12 +143,12 @@ extern "C" {
 #endif // _di_f_string_rangess_increase_by_
 
 #ifndef _di_f_string_rangess_resize_
-  f_status_t f_string_rangess_resize(const f_number_unsigned_t length, f_string_rangess_t * const rangess) {
+  f_status_t f_string_rangess_resize(const f_number_unsigned_t length, f_string_rangess_t * const structure) {
     #ifndef _di_level_0_parameter_checking_
-      if (!rangess) return F_status_set_error(F_parameter);
+      if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return private_f_string_rangess_resize(length, rangess);
+    return private_f_string_rangess_resize(length, structure);
   }
 #endif // _di_f_string_rangess_resize_
 

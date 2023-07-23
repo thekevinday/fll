@@ -7,12 +7,12 @@ extern "C" {
 #endif
 
 #ifndef _di_f_string_quantitys_adjust_
-  f_status_t f_string_quantitys_adjust(const f_number_unsigned_t length, f_string_quantitys_t * const quantitys) {
+  f_status_t f_string_quantitys_adjust(const f_number_unsigned_t length, f_string_quantitys_t * const structure) {
     #ifndef _di_level_0_parameter_checking_
-      if (!quantitys) return F_status_set_error(F_parameter);
+      if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return f_memory_array_adjust(length, sizeof(f_string_quantity_t), (void **) &quantitys->array, &quantitys->used, &quantitys->size);
+    return f_memory_array_adjust(length, sizeof(f_string_quantity_t), (void **) &structure->array, &structure->used, &structure->size);
   }
 #endif // _di_f_string_quantitys_adjust_
 
@@ -47,53 +47,53 @@ extern "C" {
 #endif // _di_f_string_quantitys_append_all_
 
 #ifndef _di_f_string_quantitys_decimate_by_
-  f_status_t f_string_quantitys_decimate_by(const f_number_unsigned_t amount, f_string_quantitys_t * const quantitys) {
+  f_status_t f_string_quantitys_decimate_by(const f_number_unsigned_t amount, f_string_quantitys_t * const structure) {
     #ifndef _di_level_0_parameter_checking_
-      if (!quantitys) return F_status_set_error(F_parameter);
+      if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return f_memory_array_decimate_by(amount, sizeof(f_string_quantity_t), (void **) &quantitys->array, &quantitys->used, &quantitys->size);
+    return f_memory_array_decimate_by(amount, sizeof(f_string_quantity_t), (void **) &structure->array, &structure->used, &structure->size);
   }
 #endif // _di_f_string_quantitys_decimate_by_
 
 #ifndef _di_f_string_quantitys_decrease_by_
-  f_status_t f_string_quantitys_decrease_by(const f_number_unsigned_t amount, f_string_quantitys_t * const quantitys) {
+  f_status_t f_string_quantitys_decrease_by(const f_number_unsigned_t amount, f_string_quantitys_t * const structure) {
     #ifndef _di_level_0_parameter_checking_
-      if (!quantitys) return F_status_set_error(F_parameter);
+      if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
 
-    return f_memory_array_decrease_by(amount, sizeof(f_string_quantity_t), (void **) &quantitys->array, &quantitys->used, &quantitys->size);
+    return f_memory_array_decrease_by(amount, sizeof(f_string_quantity_t), (void **) &structure->array, &structure->used, &structure->size);
   }
 #endif // _di_f_string_quantitys_decrease_by_
 
 #ifndef _di_f_string_quantitys_increase_
-  f_status_t f_string_quantitys_increase(const f_number_unsigned_t step, f_string_quantitys_t * const quantitys) {
+  f_status_t f_string_quantitys_increase(const f_number_unsigned_t step, f_string_quantitys_t * const structure) {
     #ifndef _di_level_0_parameter_checking_
-      if (!quantitys) return F_status_set_error(F_parameter);
+      if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return f_memory_array_increase(step, sizeof(f_string_quantity_t), (void **) &quantitys->array, &quantitys->used, &quantitys->size);
+    return f_memory_array_increase(step, sizeof(f_string_quantity_t), (void **) &structure->array, &structure->used, &structure->size);
   }
 #endif // _di_f_string_quantitys_increase_
 
 #ifndef _di_f_string_quantitys_increase_by_
-  f_status_t f_string_quantitys_increase_by(const f_number_unsigned_t amount, f_string_quantitys_t * const quantitys) {
+  f_status_t f_string_quantitys_increase_by(const f_number_unsigned_t amount, f_string_quantitys_t * const structure) {
     #ifndef _di_level_0_parameter_checking_
-      if (!quantitys) return F_status_set_error(F_parameter);
+      if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return f_memory_array_increase_by(amount, sizeof(f_string_quantity_t), (void **) &quantitys->array, &quantitys->used, &quantitys->size);
+    return f_memory_array_increase_by(amount, sizeof(f_string_quantity_t), (void **) &structure->array, &structure->used, &structure->size);
   }
 #endif // _di_f_string_quantitys_increase_by_
 
 #ifndef _di_f_string_quantitys_resize_
-  f_status_t f_string_quantitys_resize(const f_number_unsigned_t length, f_string_quantitys_t * const quantitys) {
+  f_status_t f_string_quantitys_resize(const f_number_unsigned_t length, f_string_quantitys_t * const structure) {
     #ifndef _di_level_0_parameter_checking_
-      if (!quantitys) return F_status_set_error(F_parameter);
+      if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return f_memory_array_resize(length, sizeof(f_string_quantity_t), (void **) &quantitys->array, &quantitys->used, &quantitys->size);
+    return f_memory_array_resize(length, sizeof(f_string_quantity_t), (void **) &structure->array, &structure->used, &structure->size);
   }
 #endif // _di_f_string_quantitys_resize_
 

@@ -22,8 +22,8 @@ extern "C" {
  *
  * @param length
  *   The new size to use.
- * @param quantityss
- *   The quantityss to adjust.
+ * @param structure
+ *   The structure to adjust.
  *
  * @return
  *   F_none on success.
@@ -37,7 +37,7 @@ extern "C" {
  * @see f_string_quantityss_adjust()
  */
 #if !defined(_di_f_string_quantityss_adjust_) || !defined(_di_f_string_quantityss_decimate_by_)
-  extern f_status_t private_f_string_quantityss_adjust(const f_number_unsigned_t length, f_string_quantityss_t * const quantityss) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_string_quantityss_adjust(const f_number_unsigned_t length, f_string_quantityss_t * const structure) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_string_quantityss_adjust_) || !defined(_di_f_string_quantityss_decimate_by_)
 
 /**
@@ -47,8 +47,8 @@ extern "C" {
  *
  * @param length
  *   The new size to use.
- * @param quantityss
- *   The quantityss to resize.
+ * @param structure
+ *   The structure to resize.
  *
  * @return
  *   F_none on success.
@@ -64,7 +64,7 @@ extern "C" {
  * @see f_string_quantityss_increase_by()
  */
 #if !defined(_di_f_string_quantityss_decrease_by_) || !defined(_di_f_string_quantityss_increase_) || !defined(_di_f_string_quantityss_increase_by_)
-  extern f_status_t private_f_string_quantityss_resize(const f_number_unsigned_t length, f_string_quantityss_t * const quantityss) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_string_quantityss_resize(const f_number_unsigned_t length, f_string_quantityss_t * const structure) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_string_quantityss_decrease_by_) || !defined(_di_f_string_quantityss_increase_) || !defined(_di_f_string_quantityss_increase_by_)
 
 #ifdef __cplusplus

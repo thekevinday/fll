@@ -131,7 +131,7 @@ extern "C" {
     if (!length) return F_data_not;
 
     if (glue_length && destination->used) {
-      f_status_t status = private_f_string_append_nulless(glue, glue_length, destination);
+      const f_status_t status = private_f_string_append_nulless(glue, glue_length, destination);
       if (F_status_is_error(status)) return status;
     }
 

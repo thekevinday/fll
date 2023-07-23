@@ -5,9 +5,9 @@
  * API Version: 0.7
  * Licenses: lgpl-2.1-or-later
  *
- * Defines 3-tuple of UTF-8 string data called a triple (which is an ordered list of 3 strings).
+ * Defines 3-tuple of string data called a triple (which is an ordered list of 3 strings).
  *
- * This is auto-included by utf.h and should not need to be explicitly included.
+ * This is auto-included by string.h and should not need to be explicitly included.
  */
 #ifndef _F_utf_tripless_h
 #define _F_utf_tripless_h
@@ -54,7 +54,7 @@ extern "C" {
  *
  * @param length
  *   The new size to use.
- * @param tripless
+ * @param structure
  *   The string tripless array to resize.
  *
  * @return
@@ -64,7 +64,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_utf_string_tripless_adjust_
-  extern f_status_t f_utf_string_tripless_adjust(const f_number_unsigned_t length, f_utf_string_tripless_t * const tripless);
+  extern f_status_t f_utf_string_tripless_adjust(const f_number_unsigned_t length, f_utf_string_tripless_t * const structure);
 #endif // _di_f_utf_string_tripless_adjust_
 
 /**
@@ -118,7 +118,7 @@ extern "C" {
  *
  * @param amount
  *   A positive number representing how much to decimate the size by.
- * @param tripless
+ * @param structure
  *   The string tripless array to resize.
  *
  * @return
@@ -130,7 +130,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_tripless_decimate_by_
-  extern f_status_t f_utf_string_tripless_decimate_by(const f_number_unsigned_t amount, f_utf_string_tripless_t * const tripless);
+  extern f_status_t f_utf_string_tripless_decimate_by(const f_number_unsigned_t amount, f_utf_string_tripless_t * const structure);
 #endif // _di_f_utf_string_tripless_decimate_by_
 
 /**
@@ -142,7 +142,7 @@ extern "C" {
  *
  * @param amount
  *   A positive number representing how much to decrease the size by.
- * @param tripless
+ * @param structure
  *   The string tripless array to resize.
  *
  * @return
@@ -154,7 +154,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_tripless_decrease_by_
-  extern f_status_t f_utf_string_tripless_decrease_by(const f_number_unsigned_t amount, f_utf_string_tripless_t * const tripless);
+  extern f_status_t f_utf_string_tripless_decrease_by(const f_number_unsigned_t amount, f_utf_string_tripless_t * const structure);
 #endif // _di_f_utf_string_tripless_decrease_by_
 
 /**
@@ -166,7 +166,7 @@ extern "C" {
  * @param step
  *   The allocation step to use.
  *   Must be greater than 0.
- * @param tripless
+ * @param structure
  *   The string tripless array to resize.
  *
  * @return
@@ -179,7 +179,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_tripless_increase_
-  extern f_status_t f_utf_string_tripless_increase(const f_number_unsigned_t step, f_utf_string_tripless_t * const tripless);
+  extern f_status_t f_utf_string_tripless_increase(const f_number_unsigned_t step, f_utf_string_tripless_t * const structure);
 #endif // _di_f_utf_string_tripless_increase_
 
 /**
@@ -191,7 +191,7 @@ extern "C" {
  *
  * @param amount
  *   A positive number representing how much to increase the size by.
- * @param tripless
+ * @param structure
  *   The string tripless array to resize.
  *
  * @return
@@ -204,7 +204,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_tripless_increase_by_
-  extern f_status_t f_utf_string_tripless_increase_by(const f_number_unsigned_t amount, f_utf_string_tripless_t * const tripless);
+  extern f_status_t f_utf_string_tripless_increase_by(const f_number_unsigned_t amount, f_utf_string_tripless_t * const structure);
 #endif // _di_f_utf_string_tripless_increase_by_
 
 /**
@@ -212,7 +212,7 @@ extern "C" {
  *
  * @param length
  *   The new size to use.
- * @param tripless
+ * @param structure
  *   The string tripless array to adjust.
  *
  * @return
@@ -223,7 +223,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_tripless_resize_
-  extern f_status_t f_utf_string_tripless_resize(const f_number_unsigned_t length, f_utf_string_tripless_t * const tripless);
+  extern f_status_t f_utf_string_tripless_resize(const f_number_unsigned_t length, f_utf_string_tripless_t * const structure);
 #endif // _di_f_utf_string_tripless_resize_
 
 #ifdef __cplusplus

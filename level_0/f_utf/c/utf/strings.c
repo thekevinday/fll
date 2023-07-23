@@ -25,10 +25,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (!length) return F_data_not;
-
-    if (destination->used < length) {
-      return private_f_utf_string_append(source, length, destination);
-    }
+    if (destination->used < length) return private_f_utf_string_append(source, length, destination);
 
     f_number_unsigned_t i = 1;
     f_number_unsigned_t j = 1;
@@ -66,10 +63,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (!length) return F_data_not;
-
-    if (!destination->used) {
-      return private_f_utf_string_append_nulless(source, length, destination);
-    }
+    if (!destination->used) return private_f_utf_string_append_nulless(source, length, destination);
 
     f_number_unsigned_t i = 1;
     f_number_unsigned_t j = 1;
@@ -118,9 +112,7 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!length) {
-      return F_data_not;
-    }
+    if (!length) return F_data_not;
 
     if (glue_length && destination->used) {
       f_status_t status = private_f_utf_string_append(glue, glue_length, destination);
@@ -201,10 +193,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (!length) return F_data_not;
-
-    if (destination->used < length) {
-      return private_f_utf_string_prepend(source, length, destination);
-    }
+    if (destination->used < length) return private_f_utf_string_prepend(source, length, destination);
 
     f_number_unsigned_t i = 0;
     f_number_unsigned_t j = 0;
@@ -242,10 +231,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (!length) return F_data_not;
-
-    if (!destination->used) {
-      return private_f_utf_string_prepend_nulless(source, length, destination);
-    }
+    if (!destination->used) return private_f_utf_string_prepend_nulless(source, length, destination);
 
     f_number_unsigned_t i = 0;
     f_number_unsigned_t j = 0;
@@ -294,21 +280,15 @@ extern "C" {
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (range->start > range->stop) {
-      return F_data_not_stop;
-    }
+    if (range->start > range->stop) return F_data_not_stop;
 
     while (string[range->start] != f_utf_char_t_eol_s) {
 
-      if (macro_f_utf_char_t_width_is(string[range->start]) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
+      if (macro_f_utf_char_t_width_is(string[range->start]) == 1) return F_status_set_error(F_utf_fragment);
 
       ++range->start;
 
-      if (range->start > range->stop) {
-        return F_none_stop;
-      }
+      if (range->start > range->stop) return F_none_stop;
     } // while
 
     return F_none;
@@ -321,21 +301,15 @@ extern "C" {
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (range->start > range->stop) {
-      return F_data_not_stop;
-    }
+    if (range->start > range->stop) return F_data_not_stop;
 
     while (string[range->start] != seek_to) {
 
-      if (string[range->start] == f_utf_char_t_eol_s) {
-        return F_none_eol;
-      }
+      if (string[range->start] == f_utf_char_t_eol_s) return F_none_eol;
 
       ++range->start;
 
-      if (range->start > range->stop) {
-        return F_none_stop;
-      }
+      if (range->start > range->stop) return F_none_stop;
     } // while
 
     return F_none;
@@ -348,17 +322,13 @@ extern "C" {
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (range->start > range->stop) {
-      return F_data_not_stop;
-    }
+    if (range->start > range->stop) return F_data_not_stop;
 
     while (string[range->start] != seek_to) {
 
       ++range->start;
 
-      if (range->start > range->stop) {
-        return F_none_stop;
-      }
+      if (range->start > range->stop) return F_none_stop;
     } // while
 
     return F_none;

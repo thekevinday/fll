@@ -27,9 +27,7 @@ extern "C" {
   f_status_t f_utf_character_is(const f_utf_char_t sequence) {
 
     if (macro_f_utf_char_t_width_is(sequence)) {
-      if (macro_f_utf_char_t_width_is(sequence) == 1) {
-        return F_utf_fragment;
-      }
+      if (macro_f_utf_char_t_width_is(sequence) == 1) return F_utf_fragment;
 
       return F_true;
     }
@@ -42,16 +40,12 @@ extern "C" {
   f_status_t f_utf_character_is_alphabetic(const f_utf_char_t sequence) {
 
     if (macro_f_utf_char_t_width_is(sequence)) {
-      if (macro_f_utf_char_t_width_is(sequence) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
+      if (macro_f_utf_char_t_width_is(sequence) == 1) return F_status_set_error(F_utf_fragment);
 
       return private_f_utf_character_is_alphabetic(sequence);
     }
 
-    if (isalpha(macro_f_utf_char_t_to_char_1(sequence))) {
-      return F_true;
-    }
+    if (isalpha(macro_f_utf_char_t_to_char_1(sequence))) return F_true;
 
     return F_false;
   }
@@ -61,9 +55,7 @@ extern "C" {
   f_status_t f_utf_character_is_alphabetic_digit(const f_utf_char_t sequence, uint64_t * const value) {
 
     if (macro_f_utf_char_t_width_is(sequence)) {
-      if (macro_f_utf_char_t_width_is(sequence) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
+      if (macro_f_utf_char_t_width_is(sequence) == 1) return F_status_set_error(F_utf_fragment);
 
       return private_f_utf_character_is_alphabetic_digit(sequence, value);
     }
@@ -78,16 +70,12 @@ extern "C" {
   f_status_t f_utf_character_is_alphabetic_numeric(const f_utf_char_t sequence) {
 
     if (macro_f_utf_char_t_width_is(sequence)) {
-      if (macro_f_utf_char_t_width_is(sequence) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
+      if (macro_f_utf_char_t_width_is(sequence) == 1) return F_status_set_error(F_utf_fragment);
 
       return private_f_utf_character_is_alphabetic_numeric(sequence);
     }
 
-    if (isalnum(macro_f_utf_char_t_to_char_1(sequence))) {
-      return F_true;
-    }
+    if (isalnum(macro_f_utf_char_t_to_char_1(sequence))) return F_true;
 
     return F_false;
   }
@@ -96,9 +84,7 @@ extern "C" {
 #ifndef _di_f_utf_character_is_ascii_
   f_status_t f_utf_character_is_ascii(const f_utf_char_t sequence) {
 
-    if (macro_f_utf_char_t_width_is(sequence)) {
-      return F_false;
-    }
+    if (macro_f_utf_char_t_width_is(sequence)) return F_false;
 
     return F_true;
   }
@@ -108,9 +94,7 @@ extern "C" {
   f_status_t f_utf_character_is_combining(const f_utf_char_t sequence) {
 
     if (macro_f_utf_char_t_width_is(sequence)) {
-      if (macro_f_utf_char_t_width_is(sequence) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
+      if (macro_f_utf_char_t_width_is(sequence) == 1) return F_status_set_error(F_utf_fragment);
 
       return private_f_utf_character_is_combining(sequence);
     }
@@ -124,16 +108,12 @@ extern "C" {
   f_status_t f_utf_character_is_control(const f_utf_char_t sequence) {
 
     if (macro_f_utf_char_t_width_is(sequence)) {
-      if (macro_f_utf_char_t_width_is(sequence) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
+      if (macro_f_utf_char_t_width_is(sequence) == 1) return F_status_set_error(F_utf_fragment);
 
       return private_f_utf_character_is_control(sequence);
     }
 
-    if (iscntrl(macro_f_utf_char_t_to_char_1(sequence))) {
-      return F_true;
-    }
+    if (iscntrl(macro_f_utf_char_t_to_char_1(sequence))) return F_true;
 
     return F_false;
   }
@@ -143,16 +123,12 @@ extern "C" {
   f_status_t f_utf_character_is_control_code(const f_utf_char_t sequence) {
 
     if (macro_f_utf_char_t_width_is(sequence)) {
-      if (macro_f_utf_char_t_width_is(sequence) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
+      if (macro_f_utf_char_t_width_is(sequence) == 1) return F_status_set_error(F_utf_fragment);
 
       return private_f_utf_character_is_control_code(sequence);
     }
 
-    if (iscntrl(macro_f_utf_char_t_to_char_1(sequence))) {
-      return F_true;
-    }
+    if (iscntrl(macro_f_utf_char_t_to_char_1(sequence))) return F_true;
 
     return F_false;
   }
@@ -162,9 +138,7 @@ extern "C" {
   f_status_t f_utf_character_is_control_format(const f_utf_char_t sequence) {
 
     if (macro_f_utf_char_t_width_is(sequence)) {
-      if (macro_f_utf_char_t_width_is(sequence) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
+      if (macro_f_utf_char_t_width_is(sequence) == 1) return F_status_set_error(F_utf_fragment);
 
       return private_f_utf_character_is_control_format(sequence);
     }
@@ -178,9 +152,7 @@ extern "C" {
   f_status_t f_utf_character_is_control_picture(const f_utf_char_t sequence) {
 
     if (macro_f_utf_char_t_width_is(sequence)) {
-      if (macro_f_utf_char_t_width_is(sequence) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
+      if (macro_f_utf_char_t_width_is(sequence) == 1) return F_status_set_error(F_utf_fragment);
 
       return private_f_utf_character_is_control_picture(sequence);
     }
@@ -194,9 +166,7 @@ extern "C" {
   f_status_t f_utf_character_is_digit(const f_utf_char_t sequence, uint64_t * const value) {
 
     if (macro_f_utf_char_t_width_is(sequence)) {
-      if (macro_f_utf_char_t_width_is(sequence) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
+      if (macro_f_utf_char_t_width_is(sequence) == 1) return F_status_set_error(F_utf_fragment);
 
       return private_f_utf_character_is_digit(sequence, value);
     }
@@ -209,9 +179,7 @@ extern "C" {
   f_status_t f_utf_character_is_emoji(const f_utf_char_t sequence) {
 
     if (macro_f_utf_char_t_width_is(sequence)) {
-      if (macro_f_utf_char_t_width_is(sequence) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
+      if (macro_f_utf_char_t_width_is(sequence) == 1) return F_status_set_error(F_utf_fragment);
 
       return private_f_utf_character_is_emoji(sequence);
     }
@@ -231,28 +199,15 @@ extern "C" {
   f_status_t f_utf_character_is_graph(const f_utf_char_t sequence) {
 
     if (macro_f_utf_char_t_width_is(sequence)) {
-      if (macro_f_utf_char_t_width_is(sequence) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
-
-      if (private_f_utf_character_is_control(sequence)) {
-        return F_false;
-      }
-
-      if (private_f_utf_character_is_whitespace(sequence, F_true)) {
-        return F_false;
-      }
-
-      if (private_f_utf_character_is_zero_width(sequence)) {
-        return F_false;
-      }
+      if (macro_f_utf_char_t_width_is(sequence) == 1) return F_status_set_error(F_utf_fragment);
+      if (private_f_utf_character_is_control(sequence)) return F_false;
+      if (private_f_utf_character_is_whitespace(sequence, F_true)) return F_false;
+      if (private_f_utf_character_is_zero_width(sequence)) return F_false;
 
       return F_true;
     }
 
-    if (isgraph(macro_f_utf_char_t_to_char_1(sequence))) {
-      return F_true;
-    }
+    if (isgraph(macro_f_utf_char_t_to_char_1(sequence))) return F_true;
 
     return F_false;
   }
@@ -262,16 +217,12 @@ extern "C" {
   f_status_t f_utf_character_is_numeric(const f_utf_char_t sequence) {
 
     if (macro_f_utf_char_t_width_is(sequence)) {
-      if (macro_f_utf_char_t_width_is(sequence) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
+      if (macro_f_utf_char_t_width_is(sequence) == 1) return F_status_set_error(F_utf_fragment);
 
       return private_f_utf_character_is_numeric(sequence);
     }
 
-    if (isdigit(macro_f_utf_char_t_to_char_1(sequence))) {
-      return F_true;
-    }
+    if (isdigit(macro_f_utf_char_t_to_char_1(sequence))) return F_true;
 
     return F_false;
   }
@@ -281,9 +232,7 @@ extern "C" {
   f_status_t f_utf_character_is_phonetic(const f_utf_char_t sequence) {
 
     if (macro_f_utf_char_t_width_is(sequence)) {
-      if (macro_f_utf_char_t_width_is(sequence) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
+      if (macro_f_utf_char_t_width_is(sequence) == 1) return F_status_set_error(F_utf_fragment);
 
       return private_f_utf_character_is_phonetic(sequence);
     }
@@ -297,9 +246,7 @@ extern "C" {
   f_status_t f_utf_character_is_private(const f_utf_char_t sequence) {
 
     if (macro_f_utf_char_t_width_is(sequence)) {
-      if (macro_f_utf_char_t_width_is(sequence) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
+      if (macro_f_utf_char_t_width_is(sequence) == 1) return F_status_set_error(F_utf_fragment);
 
       return private_f_utf_character_is_private(sequence);
     }
@@ -313,42 +260,28 @@ extern "C" {
   f_status_t f_utf_character_is_punctuation(const f_utf_char_t sequence) {
 
     if (macro_f_utf_char_t_width_is(sequence)) {
-      if (macro_f_utf_char_t_width_is(sequence) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
+      if (macro_f_utf_char_t_width_is(sequence) == 1) return F_status_set_error(F_utf_fragment);
 
       return private_f_utf_character_is_punctuation(sequence);
     }
 
     // ASCII: U+0021 '!' to U+0023 '#'.
-    if (sequence > 0x20000000 && sequence < 0x24000000) {
-      return F_true;
-    }
+    if (sequence > 0x20000000 && sequence < 0x24000000) return F_true;
 
     // ASCII: U+0025 '%' to U+002A '*'.
-    if (sequence > 0x24000000 && sequence < 0x2b000000) {
-      return F_true;
-    }
+    if (sequence > 0x24000000 && sequence < 0x2b000000) return F_true;
 
     // ASCII: U+002C ',' to U+002F '/'.
-    if (sequence > 0x2b000000 && sequence < 0x30000000) {
-      return F_true;
-    }
+    if (sequence > 0x2b000000 && sequence < 0x30000000) return F_true;
 
     // ASCII: U+003A ':', U+003B ';', U+003F '?', or U+0040 '@'.
-    if (sequence == 0x3a000000 || sequence == 0x3b000000 || sequence == 0x3f000000 || sequence == 0x40000000) {
-      return F_true;
-    }
+    if (sequence == 0x3a000000 || sequence == 0x3b000000 || sequence == 0x3f000000 || sequence == 0x40000000) return F_true;
 
     // ASCII: U+005B '[' to U+005D ']'.
-    if (sequence > 0x5a000000 && sequence < 0x5e000000) {
-      return F_true;
-    }
+    if (sequence > 0x5a000000 && sequence < 0x5e000000) return F_true;
 
     // ASCII: U+005F '_', U+007B '{', or U+007D '}'.
-    if (sequence == 0x5f000000 || sequence == 0x7b000000 || sequence == 0x7d000000) {
-      return F_true;
-    }
+    if (sequence == 0x5f000000 || sequence == 0x7b000000 || sequence == 0x7d000000) return F_true;
 
     return F_false;
   }
@@ -358,9 +291,7 @@ extern "C" {
   f_status_t f_utf_character_is_subscript(const f_utf_char_t sequence) {
 
     if (macro_f_utf_char_t_width_is(sequence)) {
-      if (macro_f_utf_char_t_width_is(sequence) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
+      if (macro_f_utf_char_t_width_is(sequence) == 1) return F_status_set_error(F_utf_fragment);
 
       return private_f_utf_character_is_subscript(sequence);
     }
@@ -373,9 +304,7 @@ extern "C" {
   f_status_t f_utf_character_is_superscript(const f_utf_char_t sequence) {
 
     if (macro_f_utf_char_t_width_is(sequence)) {
-      if (macro_f_utf_char_t_width_is(sequence) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
+      if (macro_f_utf_char_t_width_is(sequence) == 1) return F_status_set_error(F_utf_fragment);
 
       return private_f_utf_character_is_superscript(sequence);
     }
@@ -388,27 +317,19 @@ extern "C" {
   f_status_t f_utf_character_is_symbol(const f_utf_char_t sequence) {
 
     if (macro_f_utf_char_t_width_is(sequence)) {
-      if (macro_f_utf_char_t_width_is(sequence) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
+      if (macro_f_utf_char_t_width_is(sequence) == 1) return F_status_set_error(F_utf_fragment);
 
       return private_f_utf_character_is_symbol(sequence);
     }
 
     // ASCII: U+0024 ('$') or U+002B ('+').
-    if (sequence == 0x24000000 || sequence == 0x2b000000) {
-      return F_true;
-    }
+    if (sequence == 0x24000000 || sequence == 0x2b000000) return F_true;
 
     // ASCII: U+003C ('<') to U+003E ('>').
-    if (sequence >= 0x3c000000 && sequence <= 0x3e000000) {
-      return F_true;
-    }
+    if (sequence >= 0x3c000000 && sequence <= 0x3e000000) return F_true;
 
     // ASCII: U+005E ('^'), U+0060 ('`'), U+007C ('|'), or U+007E ('~').
-    if (sequence == 0x5e000000 || sequence == 0x60000000 || sequence == 0x7c000000 || sequence == 0x7e000000) {
-      return F_true;
-    }
+    if (sequence == 0x5e000000 || sequence == 0x60000000 || sequence == 0x7c000000 || sequence == 0x7e000000) return F_true;
 
     return F_false;
   }
@@ -418,9 +339,7 @@ extern "C" {
   f_status_t f_utf_character_is_unassigned(const f_utf_char_t sequence) {
 
     if (macro_f_utf_char_t_width_is(sequence)) {
-      if (macro_f_utf_char_t_width_is(sequence) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
+      if (macro_f_utf_char_t_width_is(sequence) == 1) return F_status_set_error(F_utf_fragment);
 
       return private_f_utf_character_is_unassigned(sequence);
     }
@@ -441,16 +360,12 @@ extern "C" {
   f_status_t f_utf_character_is_whitespace(const f_utf_char_t sequence, const bool strict) {
 
     if (macro_f_utf_char_t_width_is(sequence)) {
-      if (macro_f_utf_char_t_width_is(sequence) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
+      if (macro_f_utf_char_t_width_is(sequence) == 1) return F_status_set_error(F_utf_fragment);
 
       return private_f_utf_character_is_whitespace(sequence, strict);
     }
 
-    if (isspace(macro_f_utf_char_t_to_char_1(sequence))) {
-      return F_true;
-    }
+    if (isspace(macro_f_utf_char_t_to_char_1(sequence))) return F_true;
 
     return F_false;
   }
@@ -460,9 +375,7 @@ extern "C" {
   f_status_t f_utf_character_is_whitespace_modifier(const f_utf_char_t sequence) {
 
     if (macro_f_utf_char_t_width_is(sequence)) {
-      if (macro_f_utf_char_t_width_is(sequence) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
+      if (macro_f_utf_char_t_width_is(sequence) == 1) return F_status_set_error(F_utf_fragment);
 
       return private_f_utf_character_is_whitespace_modifier(sequence);
     }
@@ -476,9 +389,7 @@ extern "C" {
   f_status_t f_utf_character_is_whitespace_other(const f_utf_char_t sequence) {
 
     if (macro_f_utf_char_t_width_is(sequence)) {
-      if (macro_f_utf_char_t_width_is(sequence) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
+      if (macro_f_utf_char_t_width_is(sequence) == 1) return F_status_set_error(F_utf_fragment);
 
       return private_f_utf_character_is_whitespace_other(sequence);
     }
@@ -492,9 +403,7 @@ extern "C" {
   f_status_t f_utf_character_is_whitespace_zero_width(const f_utf_char_t sequence) {
 
     if (macro_f_utf_char_t_width_is(sequence)) {
-      if (macro_f_utf_char_t_width_is(sequence) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
+      if (macro_f_utf_char_t_width_is(sequence) == 1) return F_status_set_error(F_utf_fragment);
 
       return private_f_utf_character_is_whitespace_zero_width(sequence);
     }
@@ -508,9 +417,7 @@ extern "C" {
   f_status_t f_utf_character_is_wide(const f_utf_char_t sequence) {
 
     if (macro_f_utf_char_t_width_is(sequence)) {
-      if (macro_f_utf_char_t_width_is(sequence) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
+      if (macro_f_utf_char_t_width_is(sequence) == 1) return F_status_set_error(F_utf_fragment);
 
       return private_f_utf_character_is_wide(sequence);
     }
@@ -524,16 +431,12 @@ extern "C" {
   f_status_t f_utf_character_is_word(const f_utf_char_t sequence, const bool strict) {
 
     if (macro_f_utf_char_t_width_is(sequence)) {
-      if (macro_f_utf_char_t_width_is(sequence) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
+      if (macro_f_utf_char_t_width_is(sequence) == 1) return F_status_set_error(F_utf_fragment);
 
       return private_f_utf_character_is_word(sequence, strict);
     }
 
-    if (isalnum(macro_f_utf_char_t_to_char_1(sequence)) || macro_f_utf_char_t_to_char_1(sequence) == f_string_ascii_underscore_s.string[0]) {
-      return F_true;
-    }
+    if (isalnum(macro_f_utf_char_t_to_char_1(sequence)) || macro_f_utf_char_t_to_char_1(sequence) == f_string_ascii_underscore_s.string[0]) return F_true;
 
     return F_false;
   }
@@ -543,16 +446,12 @@ extern "C" {
   f_status_t f_utf_character_is_word_dash(const f_utf_char_t sequence, const bool strict) {
 
     if (macro_f_utf_char_t_width_is(sequence)) {
-      if (macro_f_utf_char_t_width_is(sequence) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
+      if (macro_f_utf_char_t_width_is(sequence) == 1) return F_status_set_error(F_utf_fragment);
 
       return private_f_utf_character_is_word_dash(sequence, strict);
     }
 
-    if (isalnum(macro_f_utf_char_t_to_char_1(sequence)) || macro_f_utf_char_t_to_char_1(sequence) == f_string_ascii_underscore_s.string[0] || macro_f_utf_char_t_to_char_1(sequence) == f_string_ascii_minus_s.string[0]) {
-      return F_true;
-    }
+    if (isalnum(macro_f_utf_char_t_to_char_1(sequence)) || macro_f_utf_char_t_to_char_1(sequence) == f_string_ascii_underscore_s.string[0] || macro_f_utf_char_t_to_char_1(sequence) == f_string_ascii_minus_s.string[0]) return F_true;
 
     return F_false;
   }
@@ -562,16 +461,12 @@ extern "C" {
   f_status_t f_utf_character_is_word_dash_plus(const f_utf_char_t sequence, const bool strict) {
 
     if (macro_f_utf_char_t_width_is(sequence)) {
-      if (macro_f_utf_char_t_width_is(sequence) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
+      if (macro_f_utf_char_t_width_is(sequence) == 1) return F_status_set_error(F_utf_fragment);
 
       return private_f_utf_character_is_word_dash_plus(sequence, strict);
     }
 
-    if (isalnum(macro_f_utf_char_t_to_char_1(sequence)) || macro_f_utf_char_t_to_char_1(sequence) == f_string_ascii_underscore_s.string[0] || macro_f_utf_char_t_to_char_1(sequence) == f_string_ascii_minus_s.string[0] || macro_f_utf_char_t_to_char_1(sequence) == f_string_ascii_plus_s.string[0]) {
-      return F_true;
-    }
+    if (isalnum(macro_f_utf_char_t_to_char_1(sequence)) || macro_f_utf_char_t_to_char_1(sequence) == f_string_ascii_underscore_s.string[0] || macro_f_utf_char_t_to_char_1(sequence) == f_string_ascii_minus_s.string[0] || macro_f_utf_char_t_to_char_1(sequence) == f_string_ascii_plus_s.string[0]) return F_true;
 
     return F_false;
   }
@@ -581,9 +476,7 @@ extern "C" {
   f_status_t f_utf_character_is_zero_width(const f_utf_char_t sequence) {
 
     if (macro_f_utf_char_t_width_is(sequence)) {
-      if (macro_f_utf_char_t_width_is(sequence) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
+      if (macro_f_utf_char_t_width_is(sequence) == 1) return F_status_set_error(F_utf_fragment);
 
       // Control and combining characters are zero-width.
       if (private_f_utf_character_is_control(sequence)) return F_true;
@@ -593,15 +486,9 @@ extern "C" {
     }
 
     // These control characters are considered zero-width spaces.
-    if (macro_f_utf_char_t_to_char_1(sequence) >= 0x00 && macro_f_utf_char_t_to_char_1(sequence) < 0x09) {
-      return F_true;
-    }
-    else if (macro_f_utf_char_t_to_char_1(sequence) > 0x0b && macro_f_utf_char_t_to_char_1(sequence) < 0x20) {
-      return F_true;
-    }
-    else if (macro_f_utf_char_t_to_char_1(sequence) == 0x7f) {
-      return F_true;
-    }
+    if (macro_f_utf_char_t_to_char_1(sequence) >= 0x00 && macro_f_utf_char_t_to_char_1(sequence) < 0x09) return F_true;
+    if (macro_f_utf_char_t_to_char_1(sequence) > 0x0b && macro_f_utf_char_t_to_char_1(sequence) < 0x20) return F_true;
+    if (macro_f_utf_char_t_to_char_1(sequence) == 0x7f) return F_true;
 
     return F_false;
   }

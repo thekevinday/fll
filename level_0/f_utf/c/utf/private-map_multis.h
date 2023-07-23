@@ -1,15 +1,15 @@
 /**
  * FLL - Level 0
  *
- * Project: String
+ * Project: UTF
  * API Version: 0.7
  * Licenses: lgpl-2.1-or-later
  *
  * These are provided for internal reduction in redundant code.
  * These should not be exposed/used outside of this project.
  */
-#ifndef _PRIVATE_F_map_multis_h
-#define _PRIVATE_F_map_multis_h
+#ifndef _PRIVATE_F_utf_map_multis_h
+#define _PRIVATE_F_utf_map_multis_h
 
 #ifdef __cplusplus
 extern "C" {
@@ -46,7 +46,7 @@ extern "C" {
  * Intended to be shared to each of the different implementation variations.
  *
  * @param source
- *   The source map_multis to append.
+ *   The source destination to append.
  * @param destination
  *   The destination map_multis the source is appended onto.
  *
@@ -106,4 +106,4 @@ extern "C" {
 } // extern "C"
 #endif
 
-#endif // _PRIVATE_F_map_multis_h
+#endif // _PRIVATE_F_utf_map_multis_h

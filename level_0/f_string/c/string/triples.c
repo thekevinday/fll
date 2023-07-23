@@ -7,12 +7,12 @@ extern "C" {
 #endif
 
 #ifndef _di_f_string_triples_adjust_
-  f_status_t f_string_triples_adjust(const f_number_unsigned_t length, f_string_triples_t * const triples) {
+  f_status_t f_string_triples_adjust(const f_number_unsigned_t length, f_string_triples_t * const structure) {
     #ifndef _di_level_0_parameter_checking_
-      if (!triples) return F_status_set_error(F_parameter);
+      if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return private_f_string_triples_adjust(length, triples);
+    return private_f_string_triples_adjust(length, structure);
   }
 #endif // _di_f_string_triples_adjust_
 
@@ -96,45 +96,45 @@ extern "C" {
 #endif // _di_f_string_triples_append_all_
 
 #ifndef _di_f_string_triples_decimate_by_
-  f_status_t f_string_triples_decimate_by(const f_number_unsigned_t amount, f_string_triples_t * const triples) {
+  f_status_t f_string_triples_decimate_by(const f_number_unsigned_t amount, f_string_triples_t * const structure) {
     #ifndef _di_level_0_parameter_checking_
-      if (!triples) return F_status_set_error(F_parameter);
+      if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (!amount) return F_data_not;
 
-    return private_f_string_triples_adjust((triples->size > amount) ? triples->size - amount : 0, triples);
+    return private_f_string_triples_adjust((structure->size > amount) ? structure->size - amount : 0, structure);
   }
 #endif // _di_f_string_triples_decimate_by_
 
 #ifndef _di_f_string_triples_decrease_by_
-  f_status_t f_string_triples_decrease_by(const f_number_unsigned_t amount, f_string_triples_t * const triples) {
+  f_status_t f_string_triples_decrease_by(const f_number_unsigned_t amount, f_string_triples_t * const structure) {
     #ifndef _di_level_0_parameter_checking_
-      if (!triples) return F_status_set_error(F_parameter);
+      if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (!amount) return F_data_not;
 
-    return private_f_string_triples_resize((triples->size > amount) ? triples->size - amount : 0, triples);
+    return private_f_string_triples_resize((structure->size > amount) ? structure->size - amount : 0, structure);
   }
 #endif // _di_f_string_triples_decrease_by_
 
 #ifndef _di_f_string_triples_increase_
-  f_status_t f_string_triples_increase(const f_number_unsigned_t step, f_string_triples_t * const triples) {
+  f_status_t f_string_triples_increase(const f_number_unsigned_t step, f_string_triples_t * const structure) {
     #ifndef _di_level_0_parameter_checking_
-      if (!triples) return F_status_set_error(F_parameter);
+      if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (step && triples->used + 1 > triples->size) {
-      f_number_unsigned_t length = triples->used + F_memory_default_allocation_small_d;
+    if (step && structure->used + 1 > structure->size) {
+      f_number_unsigned_t length = structure->used + F_memory_default_allocation_small_d;
 
       if (length > F_number_t_size_unsigned_d) {
-        if (triples->used + 1 > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+        if (structure->used + 1 > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
         length = F_number_t_size_unsigned_d;
       }
 
-      return private_f_string_triples_resize(length, triples);
+      return private_f_string_triples_resize(length, structure);
     }
 
     return F_data_not;
@@ -142,20 +142,20 @@ extern "C" {
 #endif // _di_f_string_triples_increase_
 
 #ifndef _di_f_string_triples_increase_by_
-  f_status_t f_string_triples_increase_by(const f_number_unsigned_t amount, f_string_triples_t * const triples) {
+  f_status_t f_string_triples_increase_by(const f_number_unsigned_t amount, f_string_triples_t * const structure) {
     #ifndef _di_level_0_parameter_checking_
-      if (!triples) return F_status_set_error(F_parameter);
+      if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (amount) {
-      if (triples->used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+      if (structure->used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
-      const f_number_unsigned_t length = triples->used + amount;
+      const f_number_unsigned_t length = structure->used + amount;
 
-      if (length > triples->size) {
+      if (length > structure->size) {
         if (length > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
-        return private_f_string_triples_resize(length, triples);
+        return private_f_string_triples_resize(length, structure);
       }
     }
 
@@ -164,12 +164,12 @@ extern "C" {
 #endif // _di_f_string_triples_increase_by_
 
 #ifndef _di_f_string_triples_resize_
-  f_status_t f_string_triples_resize(const f_number_unsigned_t length, f_string_triples_t * const triples) {
+  f_status_t f_string_triples_resize(const f_number_unsigned_t length, f_string_triples_t * const structure) {
     #ifndef _di_level_0_parameter_checking_
-      if (!triples) return F_status_set_error(F_parameter);
+      if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return private_f_string_triples_resize(length, triples);
+    return private_f_string_triples_resize(length, structure);
   }
 #endif // _di_f_string_triples_resize_
 

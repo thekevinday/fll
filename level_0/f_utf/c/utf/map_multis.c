@@ -10,12 +10,12 @@ extern "C" {
 #endif
 
 #ifndef _di_f_utf_string_map_multis_adjust_
-  f_status_t f_utf_string_map_multis_adjust(const f_number_unsigned_t length, f_utf_string_map_multis_t * const map_multis) {
+  f_status_t f_utf_string_map_multis_adjust(const f_number_unsigned_t length, f_utf_string_map_multis_t * const structure) {
     #ifndef _di_level_0_parameter_checking_
-      if (!map_multis) return F_status_set_error(F_parameter);
+      if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return private_f_utf_string_map_multis_adjust(length, map_multis);
+    return private_f_utf_string_map_multis_adjust(length, structure);
   }
 #endif // _di_f_utf_string_map_multis_adjust_
 
@@ -64,55 +64,45 @@ extern "C" {
 #endif // _di_f_utf_string_map_multis_append_all_
 
 #ifndef _di_f_utf_string_map_multis_decimate_by_
-  f_status_t f_utf_string_map_multis_decimate_by(const f_number_unsigned_t amount, f_utf_string_map_multis_t * const map_multis) {
+  f_status_t f_utf_string_map_multis_decimate_by(const f_number_unsigned_t amount, f_utf_string_map_multis_t * const structure) {
     #ifndef _di_level_0_parameter_checking_
-      if (!map_multis) return F_status_set_error(F_parameter);
+      if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (!amount) return F_data_not;
 
-    if (map_multis->size > amount) {
-      return private_f_utf_string_map_multis_adjust(map_multis->size - amount, map_multis);
-    }
-
-    return private_f_utf_string_map_multis_adjust(0, map_multis);
+    return private_f_utf_string_map_multis_adjust((structure->size > amount) ? structure->size - amount : 0, structure);
   }
 #endif // _di_f_utf_string_map_multis_decimate_by_
 
 #ifndef _di_f_utf_string_map_multis_decrease_by_
-  f_status_t f_utf_string_map_multis_decrease_by(const f_number_unsigned_t amount, f_utf_string_map_multis_t * const map_multis) {
+  f_status_t f_utf_string_map_multis_decrease_by(const f_number_unsigned_t amount, f_utf_string_map_multis_t * const structure) {
     #ifndef _di_level_0_parameter_checking_
-      if (!map_multis) return F_status_set_error(F_parameter);
+      if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (!amount) return F_data_not;
 
-    if (map_multis->size > amount) {
-      return private_f_utf_string_map_multis_resize(map_multis->size - amount, map_multis);
-    }
-
-    return private_f_utf_string_map_multis_resize(0, map_multis);
+    return private_f_utf_string_map_multis_resize((structure->size > amount) ? structure->size - amount : 0, structure);
   }
 #endif // _di_f_utf_string_map_multis_decrease_by_
 
 #ifndef _di_f_utf_string_map_multis_increase_
-  f_status_t f_utf_string_map_multis_increase(const f_number_unsigned_t step, f_utf_string_map_multis_t * const map_multis) {
+  f_status_t f_utf_string_map_multis_increase(const f_number_unsigned_t step, f_utf_string_map_multis_t * const structure) {
     #ifndef _di_level_0_parameter_checking_
-      if (!map_multis) return F_status_set_error(F_parameter);
+      if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (step && map_multis->used + 1 > map_multis->size) {
-      f_number_unsigned_t length = map_multis->used + step;
+    if (step && structure->used + 1 > structure->size) {
+      f_number_unsigned_t length = structure->used + step;
 
       if (length > F_number_t_size_unsigned_d) {
-        if (map_multis->used + 1 > F_number_t_size_unsigned_d) {
-          return F_status_set_error(F_array_too_large);
-        }
+        if (structure->used + 1 > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
         length = F_number_t_size_unsigned_d;
       }
 
-      return private_f_utf_string_map_multis_resize(length, map_multis);
+      return private_f_utf_string_map_multis_resize(length, structure);
     }
 
     return F_data_not;
@@ -120,20 +110,20 @@ extern "C" {
 #endif // _di_f_utf_string_map_multis_increase_
 
 #ifndef _di_f_utf_string_map_multis_increase_by_
-  f_status_t f_utf_string_map_multis_increase_by(const f_number_unsigned_t amount, f_utf_string_map_multis_t * const map_multis) {
+  f_status_t f_utf_string_map_multis_increase_by(const f_number_unsigned_t amount, f_utf_string_map_multis_t * const structure) {
     #ifndef _di_level_0_parameter_checking_
-      if (!map_multis) return F_status_set_error(F_parameter);
+      if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (amount) {
-      if (map_multis->used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+      if (structure->used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
-      const f_number_unsigned_t length = map_multis->used + amount;
+      const f_number_unsigned_t length = structure->used + amount;
 
-      if (length > map_multis->size) {
+      if (length > structure->size) {
         if (length > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
-        return private_f_utf_string_map_multis_resize(length, map_multis);
+        return private_f_utf_string_map_multis_resize(length, structure);
       }
     }
 
@@ -142,12 +132,12 @@ extern "C" {
 #endif // _di_f_utf_string_map_multis_increase_by_
 
 #ifndef _di_f_utf_string_map_multis_resize_
-  f_status_t f_utf_string_map_multis_resize(const f_number_unsigned_t length, f_utf_string_map_multis_t * const map_multis) {
+  f_status_t f_utf_string_map_multis_resize(const f_number_unsigned_t length, f_utf_string_map_multis_t * const structure) {
     #ifndef _di_level_0_parameter_checking_
-      if (!map_multis) return F_status_set_error(F_parameter);
+      if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return private_f_utf_string_map_multis_resize(length, map_multis);
+    return private_f_utf_string_map_multis_resize(length, structure);
   }
 #endif // _di_f_utf_string_map_multis_resize_
 

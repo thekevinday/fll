@@ -11,12 +11,12 @@ extern "C" {
 #endif
 
 #ifndef _di_f_utf_string_dynamicss_adjust_
-  f_status_t f_utf_string_dynamicss_adjust(const f_number_unsigned_t length, f_utf_string_dynamicss_t * const dynamicss) {
+  f_status_t f_utf_string_dynamicss_adjust(const f_number_unsigned_t length, f_utf_string_dynamicss_t * const structure) {
     #ifndef _di_level_0_parameter_checking_
-      if (!dynamicss) return F_status_set_error(F_parameter);
+      if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return private_f_utf_string_dynamicss_adjust(length, dynamicss);
+    return private_f_utf_string_dynamicss_adjust(length, structure);
   }
 #endif // _di_f_utf_string_dynamicss_adjust_
 
@@ -78,57 +78,47 @@ extern "C" {
 #endif // _di_f_utf_string_dynamicss_append_all_
 
 #ifndef _di_f_utf_string_dynamicss_decimate_by_
-  f_status_t f_utf_string_dynamicss_decimate_by(const f_number_unsigned_t amount, f_utf_string_dynamicss_t * const dynamicss) {
+  f_status_t f_utf_string_dynamicss_decimate_by(const f_number_unsigned_t amount, f_utf_string_dynamicss_t * const structure) {
     #ifndef _di_level_0_parameter_checking_
-      if (!dynamicss) return F_status_set_error(F_parameter);
+      if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (!amount) return F_data_not;
 
-    if (dynamicss->size > amount) {
-      return private_f_utf_string_dynamicss_adjust(dynamicss->size - amount, dynamicss);
-    }
-
-    return private_f_utf_string_dynamicss_adjust(0, dynamicss);
+    return private_f_utf_string_dynamicss_adjust((structure->size > amount) ? structure->size - amount : 0, structure);
   }
 #endif // _di_f_utf_string_dynamicss_decimate_by_
 
 #ifndef _di_f_utf_string_dynamicss_decrease_by_
-  f_status_t f_utf_string_dynamicss_decrease_by(const f_number_unsigned_t amount, f_utf_string_dynamicss_t * const dynamicss) {
+  f_status_t f_utf_string_dynamicss_decrease_by(const f_number_unsigned_t amount, f_utf_string_dynamicss_t * const structure) {
     #ifndef _di_level_0_parameter_checking_
-      if (!dynamicss) return F_status_set_error(F_parameter);
+      if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (!amount) return F_data_not;
 
-    if (dynamicss->size > amount) {
-      return private_f_utf_string_dynamicss_resize(dynamicss->size - amount, dynamicss);
-    }
-
-    return private_f_utf_string_dynamicss_resize(0, dynamicss);
+    return private_f_utf_string_dynamicss_resize((structure->size > amount) ? structure->size - amount : 0, structure);
   }
 #endif // _di_f_utf_string_dynamicss_decrease_by_
 
 #ifndef _di_f_utf_string_dynamicss_increase_
-  f_status_t f_utf_string_dynamicss_increase(const f_number_unsigned_t step, f_utf_string_dynamicss_t * const dynamicss) {
+  f_status_t f_utf_string_dynamicss_increase(const f_number_unsigned_t step, f_utf_string_dynamicss_t * const structure) {
     #ifndef _di_level_0_parameter_checking_
-      if (!dynamicss) return F_status_set_error(F_parameter);
+      if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (!step) return F_data_not;
 
-    if (dynamicss->used + 1 > dynamicss->size) {
-      f_number_unsigned_t length = dynamicss->used + step;
+    if (structure->used + 1 > structure->size) {
+      f_number_unsigned_t length = structure->used + step;
 
       if (length > F_number_t_size_unsigned_d) {
-        if (dynamicss->used + 1 > F_number_t_size_unsigned_d) {
-          return F_status_set_error(F_array_too_large);
-        }
+        if (structure->used + 1 > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
         length = F_number_t_size_unsigned_d;
       }
 
-      return private_f_utf_string_dynamicss_resize(length, dynamicss);
+      return private_f_utf_string_dynamicss_resize(length, structure);
     }
 
     return F_data_not;
@@ -136,20 +126,20 @@ extern "C" {
 #endif // _di_f_utf_string_dynamicss_increase_
 
 #ifndef _di_f_utf_string_dynamicss_increase_by_
-  f_status_t f_utf_string_dynamicss_increase_by(const f_number_unsigned_t amount, f_utf_string_dynamicss_t * const dynamicss) {
+  f_status_t f_utf_string_dynamicss_increase_by(const f_number_unsigned_t amount, f_utf_string_dynamicss_t * const structure) {
     #ifndef _di_level_0_parameter_checking_
-      if (!dynamicss) return F_status_set_error(F_parameter);
+      if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (amount) {
-      if (dynamicss->used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+      if (structure->used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
-      const f_number_unsigned_t length = dynamicss->used + amount;
+      const f_number_unsigned_t length = structure->used + amount;
 
-      if (length > dynamicss->size) {
+      if (length > structure->size) {
         if (length > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
-        return private_f_utf_string_dynamicss_resize(length, dynamicss);
+        return private_f_utf_string_dynamicss_resize(structure->used + amount, structure);
       }
     }
 
@@ -158,12 +148,12 @@ extern "C" {
 #endif // _di_f_utf_string_dynamicss_increase_by_
 
 #ifndef _di_f_utf_string_dynamicss_resize_
-  f_status_t f_utf_string_dynamicss_resize(const f_number_unsigned_t length, f_utf_string_dynamicss_t * const dynamicss) {
+  f_status_t f_utf_string_dynamicss_resize(const f_number_unsigned_t length, f_utf_string_dynamicss_t * const structure) {
     #ifndef _di_level_0_parameter_checking_
-      if (!dynamicss) return F_status_set_error(F_parameter);
+      if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return private_f_utf_string_dynamicss_resize(length, dynamicss);
+    return private_f_utf_string_dynamicss_resize(length, structure);
   }
 #endif // _di_f_utf_string_dynamicss_resize_
 

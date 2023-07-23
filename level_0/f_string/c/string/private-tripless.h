@@ -22,7 +22,7 @@ extern "C" {
  *
  * @param length
  *   The new size to use.
- * @param tripless
+ * @param structure
  *   The tripless to adjust.
  *
  * @return
@@ -36,7 +36,7 @@ extern "C" {
  * @see f_string_tripless_adjust()
  */
 #if !defined(_di_f_string_tripless_adjust_) || !defined(_di_f_string_tripless_decimate_by_)
-  extern f_status_t private_f_string_tripless_adjust(const f_number_unsigned_t length, f_string_tripless_t * const tripless) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_string_tripless_adjust(const f_number_unsigned_t length, f_string_tripless_t * const structure) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_string_tripless_adjust_) || !defined(_di_f_string_tripless_decimate_by_)
 
 /**
@@ -46,7 +46,7 @@ extern "C" {
  *
  * @param length
  *   The new size to use.
- * @param tripless
+ * @param structure
  *   The tripless to resize.
  *
  * @return
@@ -62,7 +62,7 @@ extern "C" {
  * @see f_string_tripless_increase_by()
  */
 #if !defined(_di_f_string_tripless_decrease_by_) || !defined(_di_f_string_tripless_increase_) || !defined(_di_f_string_tripless_increase_by_)
-  extern f_status_t private_f_string_tripless_resize(const f_number_unsigned_t length, f_string_tripless_t * const tripless) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_string_tripless_resize(const f_number_unsigned_t length, f_string_tripless_t * const structure) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_string_tripless_decrease_by_) || !defined(_di_f_string_tripless_increase_) || !defined(_di_f_string_tripless_increase_by_)
 
 #ifdef __cplusplus

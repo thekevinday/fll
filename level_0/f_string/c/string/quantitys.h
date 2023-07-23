@@ -54,7 +54,7 @@ extern "C" {
  *
  * @param length
  *   The new size to use.
- * @param quantitys
+ * @param structure
  *   The string quantitys array to resize.
  *
  * @return
@@ -65,7 +65,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_quantitys_adjust_
-  extern f_status_t f_string_quantitys_adjust(const f_number_unsigned_t length, f_string_quantitys_t * const quantitys);
+  extern f_status_t f_string_quantitys_adjust(const f_number_unsigned_t length, f_string_quantitys_t * const structure);
 #endif // _di_f_string_quantitys_adjust_
 
 /**
@@ -117,7 +117,7 @@ extern "C" {
  *
  * @param amount
  *   A positive number representing how much to decimate the size by.
- * @param quantitys
+ * @param structure
  *   The string quantitys array to resize.
  *
  * @return
@@ -129,7 +129,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_quantitys_decimate_by_
-  extern f_status_t f_string_quantitys_decimate_by(const f_number_unsigned_t amount, f_string_quantitys_t * const quantitys);
+  extern f_status_t f_string_quantitys_decimate_by(const f_number_unsigned_t amount, f_string_quantitys_t * const structure);
 #endif // _di_f_string_quantitys_decimate_by_
 
 /**
@@ -141,7 +141,7 @@ extern "C" {
  *
  * @param amount
  *   A positive number representing how much to decrease the size by.
- * @param quantitys
+ * @param structure
  *   The string quantitys array to resize.
  *
  * @return
@@ -152,7 +152,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_quantitys_decrease_by_
-  extern f_status_t f_string_quantitys_decrease_by(const f_number_unsigned_t amount, f_string_quantitys_t * const quantitys);
+  extern f_status_t f_string_quantitys_decrease_by(const f_number_unsigned_t amount, f_string_quantitys_t * const structure);
 #endif // _di_f_string_quantitys_decrease_by_
 
 /**
@@ -164,7 +164,7 @@ extern "C" {
  * @param step
  *   The allocation step to use.
  *   Must be greater than 0.
- * @param quantitys
+ * @param structure
  *   The string quantitys array to resize.
  *
  * @return
@@ -176,7 +176,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_quantitys_increase_
-  extern f_status_t f_string_quantitys_increase(const f_number_unsigned_t step, f_string_quantitys_t * const quantitys);
+  extern f_status_t f_string_quantitys_increase(const f_number_unsigned_t step, f_string_quantitys_t * const structure);
 #endif // _di_f_string_quantitys_increase_
 
 /**
@@ -188,7 +188,7 @@ extern "C" {
  *
  * @param amount
  *   A positive number representing how much to increase the size by.
- * @param quantitys
+ * @param structure
  *   The string quantitys array to resize.
  *
  * @return
@@ -200,7 +200,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_quantitys_increase_by_
-  extern f_status_t f_string_quantitys_increase_by(const f_number_unsigned_t amount, f_string_quantitys_t * const quantitys);
+  extern f_status_t f_string_quantitys_increase_by(const f_number_unsigned_t amount, f_string_quantitys_t * const structure);
 #endif // _di_f_string_quantitys_increase_by_
 
 /**
@@ -208,7 +208,7 @@ extern "C" {
  *
  * @param length
  *   The new size to use.
- * @param quantitys
+ * @param structure
  *   The string quantitys array to adjust.
  *
  * @return
@@ -219,7 +219,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_quantitys_resize_
-  extern f_status_t f_string_quantitys_resize(const f_number_unsigned_t length, f_string_quantitys_t * const quantitys);
+  extern f_status_t f_string_quantitys_resize(const f_number_unsigned_t length, f_string_quantitys_t * const structure);
 #endif // _di_f_string_quantitys_resize_
 
 #ifdef __cplusplus

@@ -57,7 +57,7 @@ extern "C" {
  *
  * @param length
  *   The new size to use.
- * @param dynamic
+ * @param structure
  *   The string to resize.
  *
  * @return
@@ -67,7 +67,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_string_dynamic_adjust_
-  extern f_status_t f_string_dynamic_adjust(const f_number_unsigned_t length, f_string_dynamic_t * const dynamic);
+  extern f_status_t f_string_dynamic_adjust(const f_number_unsigned_t length, f_string_dynamic_t * const structure);
 #endif // _di_f_string_dynamic_adjust_
 
 /**
@@ -167,7 +167,7 @@ extern "C" {
  *
  * @param amount
  *   A positive number representing how much to decrease the size by.
- * @param dynamic
+ * @param structure
  *   The string to resize.
  *
  * @return
@@ -180,7 +180,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamic_decimate_by_
-  extern f_status_t f_string_dynamic_decimate_by(const f_number_unsigned_t amount, f_string_dynamic_t * const dynamic);
+  extern f_status_t f_string_dynamic_decimate_by(const f_number_unsigned_t amount, f_string_dynamic_t * const structure);
 #endif // _di_f_string_dynamic_decimate_by_
 
 /**
@@ -192,7 +192,7 @@ extern "C" {
  *
  * @param amount
  *   A positive number representing how much to decrease the size by.
- * @param dynamic
+ * @param structure
  *   The string to resize.
  *
  * @return
@@ -205,7 +205,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamic_decrease_by_
-  extern f_status_t f_string_dynamic_decrease_by(const f_number_unsigned_t amount, f_string_dynamic_t * const dynamic);
+  extern f_status_t f_string_dynamic_decrease_by(const f_number_unsigned_t amount, f_string_dynamic_t * const structure);
 #endif // _di_f_string_dynamic_decrease_by_
 
 /**
@@ -218,7 +218,7 @@ extern "C" {
  * @param step
  *   The allocation step to use.
  *   Must be greater than 0.
- * @param dynamic
+ * @param structure
  *   The string to resize.
  *
  * @return
@@ -231,7 +231,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamic_increase_
-  extern f_status_t f_string_dynamic_increase(const f_number_unsigned_t step, f_string_dynamic_t * const dynamic);
+  extern f_status_t f_string_dynamic_increase(const f_number_unsigned_t step, f_string_dynamic_t * const structure);
 #endif // _di_f_string_dynamic_increase_
 
 /**
@@ -243,7 +243,7 @@ extern "C" {
  *
  * @param amount
  *   A positive number representing how much to increase the size by.
- * @param dynamic
+ * @param structure
  *   The string to resize.
  *
  * @return
@@ -256,7 +256,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamic_increase_by_
-  extern f_status_t f_string_dynamic_increase_by(const f_number_unsigned_t amount, f_string_dynamic_t * const dynamic);
+  extern f_status_t f_string_dynamic_increase_by(const f_number_unsigned_t amount, f_string_dynamic_t * const structure);
 #endif // _di_f_string_dynamic_increase_by_
 
 /**
@@ -800,7 +800,7 @@ extern "C" {
  *
  * @param length
  *   The new size to use.
- * @param buffer
+ * @param structure
  *   The string to resize.
  *
  * @return
@@ -811,13 +811,13 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamic_resize_
-  extern f_status_t f_string_dynamic_resize(const f_number_unsigned_t length, f_string_dynamic_t * const buffer);
+  extern f_status_t f_string_dynamic_resize(const f_number_unsigned_t length, f_string_dynamic_t * const structure);
 #endif // _di_f_string_dynamic_resize_
 
 /**
  * Seek the buffer location forward until EOL is reached.
  *
- * @param buffer
+ * @param structure
  *   The buffer to traverse.
  * @param range
  *   A range within the buffer representing the start and stop locations.
@@ -835,13 +835,13 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamic_seek_line_
-  extern f_status_t f_string_dynamic_seek_line(const f_string_static_t buffer, f_string_range_t * const range);
+  extern f_status_t f_string_dynamic_seek_line(const f_string_static_t structure, f_string_range_t * const range);
 #endif // _di_f_string_dynamic_seek_line_
 
 /**
  * Seek the buffer location forward until the character (1-byte wide) or EOL is reached.
  *
- * @param buffer
+ * @param structure
  *   The buffer to traverse.
  * @param seek_to_this
  *   A single-width character representing a character to seek to.
@@ -861,13 +861,13 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamic_seek_line_to_
-  extern f_status_t f_string_dynamic_seek_line_to(const f_string_static_t buffer, const f_char_t seek_to_this, f_string_range_t * const range);
+  extern f_status_t f_string_dynamic_seek_line_to(const f_string_static_t structure, const f_char_t seek_to_this, f_string_range_t * const range);
 #endif // _di_f_string_dynamic_seek_line_to_
 
 /**
  * Seek the buffer location forward until the character (1-byte wide) is reached.
  *
- * @param buffer
+ * @param structure
  *   The buffer to traverse.
  * @param seek_to_this
  *   A single-width character representing a character to seek to.
@@ -887,7 +887,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamic_seek_to_
-  extern f_status_t f_string_dynamic_seek_to(const f_string_static_t buffer, const f_char_t seek_to_this, f_string_range_t * const range);
+  extern f_status_t f_string_dynamic_seek_to(const f_string_static_t structure, const f_char_t seek_to_this, f_string_range_t * const range);
 #endif // _di_f_string_dynamic_seek_to_
 
 /**

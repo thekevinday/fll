@@ -5,9 +5,9 @@
  * API Version: 0.7
  * Licenses: lgpl-2.1-or-later
  *
- * Defines map UTF-8 string data.
+ * Defines map string data.
  *
- * This is auto-included by utf.h and should not need to be explicitly included.
+ * This is auto-included by string.h and should not need to be explicitly included.
  */
 #ifndef _F_utf_maps_h
 #define _F_utf_maps_h
@@ -54,7 +54,7 @@ extern "C" {
  *
  * @param length
  *   The new size to use.
- * @param maps
+ * @param structure
  *   The string maps array to resize.
  *
  * @return
@@ -65,7 +65,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_maps_adjust_
-  extern f_status_t f_utf_string_maps_adjust(const f_number_unsigned_t length, f_utf_string_maps_t * const maps);
+  extern f_status_t f_utf_string_maps_adjust(const f_number_unsigned_t length, f_utf_string_maps_t * const structure);
 #endif // _di_f_utf_string_maps_adjust_
 
 /**
@@ -118,7 +118,7 @@ extern "C" {
  *
  * @param amount
  *   A positive number representing how much to decimate the size by.
- * @param maps
+ * @param structure
  *   The string maps array to resize.
  *
  * @return
@@ -130,7 +130,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_maps_decimate_by_
-  extern f_status_t f_utf_string_maps_decimate_by(const f_number_unsigned_t amount, f_utf_string_maps_t * const maps);
+  extern f_status_t f_utf_string_maps_decimate_by(const f_number_unsigned_t amount, f_utf_string_maps_t * const structure);
 #endif // _di_f_utf_string_maps_decimate_by_
 
 /**
@@ -142,7 +142,7 @@ extern "C" {
  *
  * @param amount
  *   A positive number representing how much to decrease the size by.
- * @param maps
+ * @param structure
  *   The string maps array to resize.
  *
  * @return
@@ -153,7 +153,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_maps_decrease_by_
-  extern f_status_t f_utf_string_maps_decrease_by(const f_number_unsigned_t amount, f_utf_string_maps_t * const maps);
+  extern f_status_t f_utf_string_maps_decrease_by(const f_number_unsigned_t amount, f_utf_string_maps_t * const structure);
 #endif // _di_f_utf_string_maps_decrease_by_
 
 /**
@@ -165,7 +165,7 @@ extern "C" {
  * @param step
  *   The allocation step to use.
  *   Must be greater than 0.
- * @param maps
+ * @param structure
  *   The string maps array to resize.
  *
  * @return
@@ -178,7 +178,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_maps_increase_
-  extern f_status_t f_utf_string_maps_increase(const f_number_unsigned_t step, f_utf_string_maps_t * const maps);
+  extern f_status_t f_utf_string_maps_increase(const f_number_unsigned_t step, f_utf_string_maps_t * const structure);
 #endif // _di_f_utf_string_maps_increase_
 
 /**
@@ -190,7 +190,7 @@ extern "C" {
  *
  * @param amount
  *   A positive number representing how much to increase the size by.
- * @param maps
+ * @param structure
  *   The string maps array to resize.
  *
  * @return
@@ -203,7 +203,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_maps_increase_by_
-  extern f_status_t f_utf_string_maps_increase_by(const f_number_unsigned_t amount, f_utf_string_maps_t * const maps);
+  extern f_status_t f_utf_string_maps_increase_by(const f_number_unsigned_t amount, f_utf_string_maps_t * const structure);
 #endif // _di_f_utf_string_maps_increase_by_
 
 /**
@@ -211,7 +211,7 @@ extern "C" {
  *
  * @param length
  *   The new size to use.
- * @param maps
+ * @param structure
  *   The string maps array to adjust.
  *
  * @return
@@ -222,7 +222,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_maps_resize_
-  extern f_status_t f_utf_string_maps_resize(const f_number_unsigned_t length, f_utf_string_maps_t * const maps);
+  extern f_status_t f_utf_string_maps_resize(const f_number_unsigned_t length, f_utf_string_maps_t * const structure);
 #endif // _di_f_utf_string_maps_resize_
 
 #ifdef __cplusplus

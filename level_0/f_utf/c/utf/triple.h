@@ -5,9 +5,9 @@
  * API Version: 0.7
  * Licenses: lgpl-2.1-or-later
  *
- * Defines 3-tuple of UTF-8 string data called a triple (which is an ordered list of 3 strings).
+ * Defines 3-tuple of string data called a triple (which is an ordered list of 3 strings).
  *
- * This is auto-included by utf.h and should not need to be explicitly included.
+ * This is auto-included by string.h and should not need to be explicitly included.
  */
 #ifndef _F_utf_triple_h
 #define _F_utf_triple_h

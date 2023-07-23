@@ -315,18 +315,11 @@ extern "C" {
         if (F_status_is_error(status)) return status;
       }
 
-      if (private_f_utf_character_is_control(utf)) {
-        return F_false;
-      }
-
-      if (private_f_utf_character_is_whitespace(utf, F_true)) {
-        return F_false;
-      }
+      if (private_f_utf_character_is_control(utf)) return F_false;
+      if (private_f_utf_character_is_whitespace(utf, F_true)) return F_false;
 
       // Zero-width characters are be treated as a non-graph.
-      if (private_f_utf_character_is_zero_width(utf)) {
-        return F_false;
-      }
+      if (private_f_utf_character_is_zero_width(utf)) return F_false;
 
       return F_true;
     }
@@ -430,34 +423,22 @@ extern "C" {
     }
 
     // ASCII: U+0021 '!' to U+0023 '#'.
-    if (sequence[0] > 0x20 && sequence[0] < 0x24) {
-      return F_true;
-    }
+    if (sequence[0] > 0x20 && sequence[0] < 0x24) return F_true;
 
     // ASCII: U+0025 '%' to U+002A '*'.
-    if (sequence[0] > 0x24 && sequence[0] < 0x2b) {
-      return F_true;
-    }
+    if (sequence[0] > 0x24 && sequence[0] < 0x2b) return F_true;
 
     // ASCII: U+002C ',' to U+002F '/'.
-    if (sequence[0] > 0x2b && sequence[0] < 0x30) {
-      return F_true;
-    }
+    if (sequence[0] > 0x2b && sequence[0] < 0x30) return F_true;
 
     // ASCII: U+003A ':', U+003B ';', U+003F '?', or U+0040 '@'.
-    if (sequence[0] == 0x3a || sequence[0] == 0x3b || sequence[0] == 0x3f || sequence[0] == 0x40) {
-      return F_true;
-    }
+    if (sequence[0] == 0x3a || sequence[0] == 0x3b || sequence[0] == 0x3f || sequence[0] == 0x40) return F_true;
 
     // ASCII: U+005B '[' to U+005D ']'.
-    if (sequence[0] > 0x5a && sequence[0] < 0x5e) {
-      return F_true;
-    }
+    if (sequence[0] > 0x5a && sequence[0] < 0x5e) return F_true;
 
     // ASCII: U+005F '_', U+007B '{', or U+007D '}'.
-    if (sequence[0] == 0x5f || sequence[0] == 0x7b || sequence[0] == 0x7d) {
-      return F_true;
-    }
+    if (sequence[0] == 0x5f || sequence[0] == 0x7b || sequence[0] == 0x7d) return F_true;
 
     return F_false;
   }
@@ -529,19 +510,13 @@ extern "C" {
     }
 
     // ASCII: U+0024 ('$') or U+002B ('+').
-    if (sequence[0] == 0x24 || sequence[0] == 0x2b) {
-      return F_true;
-    }
+    if (sequence[0] == 0x24 || sequence[0] == 0x2b) return F_true;
 
     // ASCII: U+003C ('<') to U+003E ('>').
-    if (sequence[0] >= 0x3c && sequence[0] <= 0x3e) {
-      return F_true;
-    }
+    if (sequence[0] >= 0x3c && sequence[0] <= 0x3e) return F_true;
 
     // ASCII: U+005E ('^'), U+0060 ('`'), U+007C ('|'), or U+007E ('~').
-    if (sequence[0] == 0x5e || sequence[0] == 0x60 || sequence[0] == 0x7c || sequence[0] == 0x7e) {
-      return F_true;
-    }
+    if (sequence[0] == 0x5e || sequence[0] == 0x60 || sequence[0] == 0x7c || sequence[0] == 0x7e) return F_true;
 
     return F_false;
   }
@@ -733,9 +708,7 @@ extern "C" {
       return private_f_utf_character_is_word(utf, strict);
     }
 
-    if (isalnum(*sequence) || *sequence == f_string_ascii_underscore_s.string[0]) {
-      return F_true;
-    }
+    if (isalnum(*sequence) || *sequence == f_string_ascii_underscore_s.string[0]) return F_true;
 
     return F_false;
   }
@@ -760,9 +733,7 @@ extern "C" {
       return private_f_utf_character_is_word_dash(utf, strict);
     }
 
-    if (isalnum(*sequence) || *sequence == f_string_ascii_underscore_s.string[0] || *sequence == f_string_ascii_minus_s.string[0]) {
-      return F_true;
-    }
+    if (isalnum(*sequence) || *sequence == f_string_ascii_underscore_s.string[0] || *sequence == f_string_ascii_minus_s.string[0]) return F_true;
 
     return F_false;
   }
@@ -787,9 +758,7 @@ extern "C" {
       return private_f_utf_character_is_word_dash_plus(utf, strict);
     }
 
-    if (isalnum(*sequence) || *sequence == f_string_ascii_underscore_s.string[0] || *sequence == f_string_ascii_minus_s.string[0] || *sequence == f_string_ascii_plus_s.string[0]) {
-      return F_true;
-    }
+    if (isalnum(*sequence) || *sequence == f_string_ascii_underscore_s.string[0] || *sequence == f_string_ascii_minus_s.string[0] || *sequence == f_string_ascii_plus_s.string[0]) return F_true;
 
     return F_false;
   }

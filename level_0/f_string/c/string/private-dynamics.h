@@ -22,7 +22,7 @@ extern "C" {
  *
  * @param length
  *   The new size to use.
- * @param dynamics
+ * @param structure
  *   The dynamics to adjust.
  *
  * @return
@@ -41,7 +41,7 @@ extern "C" {
  * @see f_string_map_multis_append()
  */
 #if !defined(_di_f_string_dynamics_adjust_) || !defined(_di_f_string_dynamics_append_) || !defined(_di_f_string_dynamics_decimate_by_) || !defined(_di_f_string_map_multis_adjust_) || !defined(_di_f_string_map_multis_append_)
-  extern f_status_t private_f_string_dynamics_adjust(const f_number_unsigned_t length, f_string_dynamics_t * const dynamics) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_string_dynamics_adjust(const f_number_unsigned_t length, f_string_dynamics_t * const structure) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_string_dynamics_adjust_) || !defined(_di_f_string_dynamics_append_) || !defined(_di_f_string_dynamics_decimate_by_) || !defined(_di_f_string_map_multis_adjust_) || !defined(_di_f_string_map_multis_append_)
 
 /**
@@ -105,7 +105,7 @@ extern "C" {
  *
  * @param length
  *   The new size to use.
- * @param dynamics
+ * @param structure
  *   The dynamics to resize.
  *
  * @return
@@ -134,7 +134,7 @@ extern "C" {
  * @see f_string_map_multiss_increase_by()
  */
 #if !defined(_di_f_string_dynamics_decrease_by_) || !defined(_di_f_string_dynamics_increase_) || !defined(_di_f_string_dynamics_increase_by_) || !defined(f_string_dynamics_resize) || !defined(_di_f_string_map_multis_append_) || !defined(_di_f_string_map_multis_append_all_) || !defined(_di_f_string_map_multis_decrease_by_) || !defined(_di_f_string_map_multis_increase_) || !defined(_di_f_string_map_multis_increase_by_) || !defined(_di_f_string_map_multis_resize_) || !defined(_di_f_string_map_multiss_append_) || !defined(_di_f_string_map_multiss_append_all_) || !defined(_di_f_string_map_multiss_decrease_by_) || !defined(_di_f_string_map_multiss_increase_) || !defined(_di_f_string_map_multiss_increase_by_)
-  extern f_status_t private_f_string_dynamics_resize(const f_number_unsigned_t length, f_string_dynamics_t * const dynamics) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_string_dynamics_resize(const f_number_unsigned_t length, f_string_dynamics_t * const structure) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_string_dynamics_decrease_by_) || !defined(_di_f_string_dynamics_increase_) || !defined(_di_f_string_dynamics_increase_by_) || !defined(f_string_dynamics_resize) || !defined(_di_f_string_map_multis_append_) || !defined(_di_f_string_map_multis_append_all_) || !defined(_di_f_string_map_multis_decrease_by_) || !defined(_di_f_string_map_multis_increase_) || !defined(_di_f_string_map_multis_increase_by_) || !defined(_di_f_string_map_multis_resize_) || !defined(_di_f_string_map_multiss_append_) || !defined(_di_f_string_map_multiss_append_all_) || !defined(_di_f_string_map_multiss_decrease_by_) || !defined(_di_f_string_map_multiss_increase_) || !defined(_di_f_string_map_multiss_increase_by_)
 
 #ifdef __cplusplus
