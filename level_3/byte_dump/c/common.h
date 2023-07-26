@@ -142,7 +142,7 @@ extern "C" {
 /**
  * The program parameters.
  *
- * byte_dump_long_*:
+ * byte_dump parameters:
  *   - first: First offset byte size.
  *   - last:  Last offset byte size.
  *
