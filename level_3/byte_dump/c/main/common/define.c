@@ -1,5 +1,4 @@
-#include "byte_dump.h"
-#include "private-common.h"
+#include "../byte_dump.h"
 
 #ifdef __cplusplus
 extern "C" {

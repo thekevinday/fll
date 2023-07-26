@@ -4,40 +4,25 @@
  * Project: Byte Dump
  * API Version: 0.7
  * Licenses: lgpl-2.1-or-later
+ *
+ * Provides the print data functionality.
+ *
+ * This is auto-included and should not need to be explicitly included.
  */
-#ifndef _PRIVATE_byte_dump_h
-#define _PRIVATE_byte_dump_h
+#ifndef _byte_dump_print_data_h
+#define _byte_dump_print_data_h
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 /**
- * Dump the contents of the file to standard out.
- *
- * @param main
- *   The main program data.
- * @param file_name
- *   The name of the file.
- * @param file
- *   Data for the file to print.
- *   Set to NULL if file is the STDIN pipe.
- *
- * @return
- *   F_none on success.
- *
- *   F_failure (with error bit) on failure, usually when read() fails.
- *   F_interrupt (with error bit) on receiving a process signal, such as an interrupt signal.
- */
-#ifndef _di_byte_dump_file_
-  extern f_status_t byte_dump_file(byte_dump_data_t * const data, const f_string_static_t file_name, const f_file_t file) F_attribute_visibility_internal_d;
-#endif // _di_byte_dump_file_
-
-/**
  * Print a single character hex code and if the width is reached properly terminate the line.
  *
- * @param main
- *   The main program data.
+ * @param print
+ *   Designates the how and where to print.
+ *
+ *   This does not alter print.custom.setting.state.status.
  * @param sequence
  *   An array of UTF-8 and ASCII characters.
  * @param invalid
@@ -71,7 +56,7 @@ extern "C" {
  * @see byte_dump_print_text()
  */
 #ifndef _di_byte_dump_print_character_fragment_
-  extern bool byte_dump_print_character_fragment(byte_dump_data_t * const data, const f_utf_string_static_t sequence, const f_char_t invalid[], const uint8_t width_utf, const f_char_t byte_current, byte_dump_previous_t *previous, byte_dump_cell_t *cell, f_char_t *offset) F_attribute_visibility_internal_d;
+  extern f_status_t byte_dump_print_character_fragment(fl_print_t * const print, const f_utf_string_static_t sequence, const f_char_t invalid[], const uint8_t width_utf, const f_char_t byte_current, byte_dump_previous_t *previous, byte_dump_cell_t *cell, f_char_t *offset);
 #endif // _di_byte_dump_print_character_fragment_
 
 /**
@@ -79,8 +64,33 @@ extern "C" {
  *
  * This should be called only when text mode is enabled.
  *
- * @param main
- *   The main program data.
+ * @param print
+ *   Designates the how and where to print.
+ *
+ *   This does not alter print.custom.setting.state.status.
+ * @param name
+ *   The name of the file the header is associated with.
+ *   If name.used is 0 then this is assumed to be the input pipe.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ *
+ *   F_output_not (with error bit) if setting is NULL.
+ */
+#ifndef _di_byte_dump_print_file_header_
+  extern f_status_t byte_dump_print_file_header(fl_print_t * const print, const f_string_static_t name);
+#endif // _di_byte_dump_print_file_header_
+
+/**
+ * Print the text representation alongside the hex display.
+ *
+ * This should be called only when text mode is enabled.
+ *
+ * @param print
+ *   Designates the how and where to print.
+ *
+ *   This does not alter print.custom.setting.state.status.
  * @param sequence
  *   An array of UTF-8 and ASCII characters.
  * @param invalid
@@ -91,13 +101,19 @@ extern "C" {
  * @param offset
  *   The offset to apply before printing column cells for the row.
  *   Will be reduced to 0 once used.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ *
+ *   F_output_not (with error bit) if setting is NULL.
  */
 #ifndef _di_byte_dump_print_text_
-  extern void byte_dump_print_text(byte_dump_data_t * const data, const f_utf_string_static_t sequence, const f_char_t invalid[], byte_dump_previous_t *previous, f_char_t *offset) F_attribute_visibility_internal_d;
+  extern f_status_t byte_dump_print_text(fl_print_t * const print, const f_utf_string_static_t sequence, const f_char_t invalid[], byte_dump_previous_t *previous, f_char_t *offset);
 #endif // _di_byte_dump_print_text_
 
 #ifdef __cplusplus
 } // extern "C"
 #endif
 
-#endif // _PRIVATE_byte_dump_h
+#endif // _byte_dump_print_data_h
