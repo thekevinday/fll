@@ -79,7 +79,7 @@ extern "C" {
 
     main->setting.state.step_small = fss_embedded_list_read_allocation_small_d;
 
-    // Identify and pocess first/last parameters.
+    // Identify and process first/last parameters.
     if (main->program.parameters.array[fss_embedded_list_read_parameter_line_first_no_e].result & f_console_result_found_e) {
       main->setting.flag -= main->setting.flag & fss_embedded_list_read_main_flag_print_first_e;
     }

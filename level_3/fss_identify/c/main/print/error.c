@@ -7,7 +7,7 @@ extern "C" {
 #ifndef _di_fss_identify_print_error_
   f_status_t fss_identify_print_error(fl_print_t * const print, const f_string_t function) {
 
-    if (!print->custom) return F_status_set_error(F_output_not);
+    if (!print || !print->custom) return F_status_set_error(F_output_not);
     if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
 
     fll_error_print(print, F_status_set_fine(((fss_identify_main_t *) print->custom)->setting.state.status), function, fll_error_file_flag_fallback_e);
@@ -19,7 +19,7 @@ extern "C" {
 #ifndef _di_fss_identify_print_error_file_
   f_status_t fss_identify_print_error_file(fl_print_t * const print, const f_string_t function, const f_string_static_t name, const f_string_static_t operation, const uint8_t type) {
 
-    if (!print->custom) return F_status_set_error(F_output_not);
+    if (!print || !print->custom) return F_status_set_error(F_output_not);
     if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
 
     fss_identify_main_t * const main = (fss_identify_main_t *) print->custom;
@@ -33,6 +33,7 @@ extern "C" {
 #ifndef _di_fss_identify_print_error_no_from_
   f_status_t fss_identify_print_error_no_from(fl_print_t * const print) {
 
+    if (!print) return F_status_set_error(F_output_not);
     if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
 
     fll_print_format("%[%QNo sources are specified, please pipe data or designate a file.%]%r", print->to, print->set->error, print->prefix, print->set->error, f_string_eol_s);
@@ -44,6 +45,7 @@ extern "C" {
 #ifndef _di_fss_identify_print_error_parameter_file_name_empty_
   f_status_t fss_identify_print_error_parameter_file_name_empty(fl_print_t * const print, const f_number_unsigned_t index) {
 
+    if (!print) return F_status_set_error(F_output_not);
     if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
 
     f_file_stream_lock(print->to);
@@ -63,6 +65,7 @@ extern "C" {
 #ifndef _di_fss_identify_print_error_parameter_file_name_invalid_
   f_status_t fss_identify_print_error_parameter_file_name_invalid(fl_print_t * const print, const f_number_unsigned_t index, const f_string_static_t name) {
 
+    if (!print) return F_status_set_error(F_output_not);
     if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
 
     f_file_stream_lock(print->to);

@@ -7,7 +7,7 @@ extern "C" {
 #ifndef _di_fss_identify_print_data_id_
   f_status_t fss_identify_print_data_id(fl_print_t * const print, const f_fll_id_t id) {
 
-    if (!print->custom) return F_status_set_error(F_output_not);
+    if (!print || !print->custom) return F_status_set_error(F_output_not);
 
     fss_identify_main_t * const main = (fss_identify_main_t *) print->custom;
 
@@ -36,7 +36,7 @@ extern "C" {
 #ifndef _di_fss_identify_print_data_total_
   f_status_t fss_identify_print_data_total(fl_print_t * const print) {
 
-    if (!print->custom) return F_status_set_error(F_output_not);
+    if (!print || !print->custom) return F_status_set_error(F_output_not);
 
     fss_identify_main_t * const main = (fss_identify_main_t *) print->custom;
 

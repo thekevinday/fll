@@ -414,8 +414,8 @@ extern "C" {
  *   - none:          No flags set.
  *   - file_from:     Using a specified source file.
  *   - file_to:       Using a specified destination file.
- *   - help:          Print help.
  *   - header:        Enable printing of headers.
+ *   - help:          Print help.
  *   - print_first:   When set, print new line to message output on program begin after loading settings.
  *   - print_last:    When set, print new line to message output on program end.
  *   - separate:      Enable printing of separators.

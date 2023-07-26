@@ -25,8 +25,8 @@ extern "C" {
  *   - copyright:     Print copyright.
  *   - file_from:     Using a specified source file.
  *   - file_to:       Using a specified destination file. (Not used at this time.)
- *   - help:          Print help.
  *   - header:        Enable printing of headers.
+ *   - help:          Print help.
  *   - line:          Print only the identifier at a given line.
  *   - name:          Select using this full or partial type name or code.
  *   - object:        Use the object (The "FSS" part of "FSS-0000").

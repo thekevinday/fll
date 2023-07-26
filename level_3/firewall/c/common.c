@@ -121,7 +121,7 @@ extern "C" {
 
     main->setting.state.status = f_console_parameter_process(state, arguments, &main->program.parameters, &main->setting.state, 0);
 
-    // Identify and pocess first/last parameters.
+    // Identify and process first/last parameters.
     if (main->program.parameters.array[firewall_parameter_line_first_no_e].result & f_console_result_found_e) {
       main->setting.flag -= main->setting.flag & firewall_main_flag_print_first_e;
     }

@@ -15,7 +15,7 @@ extern "C" {
 
     main->setting.state.step_small = utf8_allocation_small_d;
 
-    // Identify and pocess first/last parameters.
+    // Identify and process first/last parameters.
     if (main->program.parameters.array[utf8_parameter_line_first_no_e].result & f_console_result_found_e) {
       main->setting.flag -= main->setting.flag & utf8_main_flag_print_first_e;
     }
@@ -91,6 +91,7 @@ extern "C" {
         uint16_t choices_array[2] = { utf8_parameter_from_bytesequence_e, utf8_parameter_from_codepoint_e };
         choices.array = choices_array;
         choices.used = 2;
+        choice = 0;
 
         main->setting.state.status = f_console_parameter_prioritize_right(main->program.parameters, choices, &choice);
 

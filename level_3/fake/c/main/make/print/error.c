@@ -7,6 +7,7 @@ extern "C" {
 #ifndef _di_fake_make_print_error_argument_invalid_section_
   f_status_t fake_make_print_error_argument_invalid_section(fl_print_t * const print, const f_string_static_t name) {
 
+    if (!print) return F_status_set_error(F_output_not);
     if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
 
     fake_print_context_wrapped_variable(print, "The argument ", name, " is not a valid section name");
@@ -18,6 +19,7 @@ extern "C" {
 #ifndef _di_fake_make_print_error_compiler_not_specified_
   f_status_t fake_make_print_error_compiler_not_specified(fl_print_t * const print, const f_string_static_t action) {
 
+    if (!print) return F_status_set_error(F_output_not);
     if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
 
     fake_print_context_wrapped_variable(print, "No compiler has been specified, cannot perform ", action, " section operation");
@@ -29,6 +31,7 @@ extern "C" {
 #ifndef _di_fake_make_print_error_content_not_directory_
   f_status_t fake_make_print_error_content_not_directory(fl_print_t * const print, const f_string_t content, const f_string_static_t file) {
 
+    if (!print) return F_status_set_error(F_output_not);
     if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
 
     f_file_stream_lock(print->to);
@@ -46,6 +49,7 @@ extern "C" {
 #ifndef _di_fake_make_print_error_define_name_empty_
   f_status_t fake_make_print_error_define_name_empty(fl_print_t * const print) {
 
+    if (!print) return F_status_set_error(F_output_not);
     if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
 
     fake_print_context_simple(print, "Define name must not be an empty string");
@@ -57,6 +61,7 @@ extern "C" {
 #ifndef _di_fake_make_print_error_define_invalid_character_
   f_status_t fake_make_print_error_define_invalid_character(fl_print_t * const print, const f_string_static_t name) {
 
+    if (!print) return F_status_set_error(F_output_not);
     if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
 
     fake_print_context_wrapped_variable(print, "Invalid characters in the define name ", name, ", only alpha-numeric ASCII characters and underscore (without a leading digit) are allowed");
@@ -68,6 +73,7 @@ extern "C" {
 #ifndef _di_fake_make_print_error_fakefile_section_missing_
   f_status_t fake_make_print_error_fakefile_section_missing(fl_print_t * const print, const f_string_static_t fakefile, const f_string_static_t section) {
 
+    if (!print) return F_status_set_error(F_output_not);
     if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
 
     f_file_stream_lock(print->to);
@@ -87,6 +93,7 @@ extern "C" {
 #ifndef _di_fake_make_print_error_file_name_empty_
   f_status_t fake_make_print_error_file_name_empty(fl_print_t * const print) {
 
+    if (!print) return F_status_set_error(F_output_not);
     if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
 
     fake_print_context_simple(print, "File name argument must not be an empty string");
@@ -98,6 +105,7 @@ extern "C" {
 #ifndef _di_fake_make_print_error_file_type_
   f_status_t fake_make_print_error_file_type(fl_print_t * const print, const f_string_static_t type, const f_string_static_t file) {
 
+    if (!print) return F_status_set_error(F_output_not);
     if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
 
     f_file_stream_lock(print->to);
@@ -115,6 +123,7 @@ extern "C" {
 #ifndef _di_fake_make_print_error_indexer_not_specified_
   f_status_t fake_make_print_error_indexer_not_specified(fl_print_t * const print, const f_string_static_t action) {
 
+    if (!print) return F_status_set_error(F_output_not);
     if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
 
     fake_print_context_wrapped_variable(print, "No indexer has been specified, cannot perform ", action, " section operation");
@@ -126,6 +135,7 @@ extern "C" {
 #ifndef _di_fake_make_print_error_after_condition_
   f_status_t fake_make_print_error_after_condition(fl_print_t * const print, const f_string_t message) {
 
+    if (!print) return F_status_set_error(F_output_not);
     if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
 
     f_file_stream_lock(print->to);
@@ -147,6 +157,7 @@ extern "C" {
 #ifndef _di_fake_make_print_error_after_condition_may_only_
   f_status_t fake_make_print_error_after_condition_may_only(fl_print_t * const print) {
 
+    if (!print) return F_status_set_error(F_output_not);
     if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
 
     fake_make_print_error_after_condition(print, "May only be used immediately after");
@@ -158,6 +169,7 @@ extern "C" {
 #ifndef _di_fake_make_print_error_after_condition_must_not_
   f_status_t fake_make_print_error_after_condition_must_not(fl_print_t * const print) {
 
+    if (!print) return F_status_set_error(F_output_not);
     if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
 
     fake_make_print_error_after_condition(print, "Must not be used immediately after");
@@ -169,6 +181,7 @@ extern "C" {
 #ifndef _di_fake_make_print_error_after_condition_no_preceding_
   f_status_t fake_make_print_error_after_condition_no_preceding(fl_print_t * const print) {
 
+    if (!print) return F_status_set_error(F_output_not);
     if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
 
     fake_make_print_error_after_condition(print, "Has no preceding");
@@ -180,6 +193,7 @@ extern "C" {
 #ifndef _di_fake_make_print_error_operation_incomplete_
   f_status_t fake_make_print_error_operation_incomplete(fl_print_t * const print, const uint8_t operation) {
 
+    if (!print) return F_status_set_error(F_output_not);
     if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
 
     f_file_stream_lock(print->to);
@@ -210,6 +224,7 @@ extern "C" {
 #ifndef _di_fake_make_print_error_operation_recursion_
   f_status_t fake_make_print_error_operation_recursion(fl_print_t * const print, const f_string_static_t buffer, const f_string_range_t range) {
 
+    if (!print) return F_status_set_error(F_output_not);
     if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
 
     f_file_stream_lock(print->to);

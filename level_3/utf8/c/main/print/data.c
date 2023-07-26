@@ -7,7 +7,7 @@ extern "C" {
 #ifndef _di_utf8_print_data_bytesequence_
   f_status_t utf8_print_data_bytesequence(fl_print_t * const print, const f_string_static_t sequence) {
 
-    if (!print->custom) return F_status_set_error(F_output_not);
+    if (!print || !print->custom) return F_status_set_error(F_output_not);
 
     utf8_main_t * const main = (utf8_main_t *) print->custom;
 
@@ -20,7 +20,7 @@ extern "C" {
 #ifndef _di_utf8_print_data_character_invalid_
   f_status_t utf8_print_data_character_invalid(fl_print_t * const print, const f_string_static_t invalid) {
 
-    if (!print->custom) return F_status_set_error(F_output_not);
+    if (!print || !print->custom) return F_status_set_error(F_output_not);
 
     utf8_main_t * const main = (utf8_main_t *) print->custom;
 
@@ -53,7 +53,7 @@ extern "C" {
 #ifndef _di_utf8_print_data_codepoint_
   f_status_t utf8_print_data_codepoint(fl_print_t * const print, const uint32_t codepoint) {
 
-    if (!print->custom) return F_status_set_error(F_output_not);
+    if (!print || !print->custom) return F_status_set_error(F_output_not);
 
     utf8_main_t * const main = (utf8_main_t *) print->custom;
 
@@ -74,7 +74,7 @@ extern "C" {
 #ifndef _di_utf8_print_data_combining_or_width_
   f_status_t utf8_print_data_combining_or_width(fl_print_t * const print, const f_string_static_t sequence) {
 
-    if (!print->custom) return F_status_set_error(F_output_not);
+    if (!print || !print->custom) return F_status_set_error(F_output_not);
 
     utf8_main_t * const main = (utf8_main_t *) print->custom;
 
@@ -112,7 +112,7 @@ extern "C" {
 #ifndef _di_utf8_print_data_combining_or_width_invalid_
   f_status_t utf8_print_data_combining_or_width_invalid(fl_print_t * const print) {
 
-    if (!print->custom) return F_status_set_error(F_output_not);
+    if (!print || !print->custom) return F_status_set_error(F_output_not);
 
     utf8_main_t * const main = (utf8_main_t *) print->custom;
 
@@ -127,7 +127,7 @@ extern "C" {
 #ifndef _di_utf8_print_data_raw_bytesequence_
   f_status_t utf8_print_data_raw_bytesequence(fl_print_t * const print, const f_utf_char_t raw, const uint8_t width) {
 
-    if (!print->custom) return F_status_set_error(F_output_not);
+    if (!print || !print->custom) return F_status_set_error(F_output_not);
 
     utf8_main_t * const main = (utf8_main_t *) print->custom;
 
@@ -172,7 +172,7 @@ extern "C" {
 #ifndef _di_utf8_print_data_raw_codepoint_
   f_status_t utf8_print_data_raw_codepoint(fl_print_t * const print, const f_string_static_t raw) {
 
-    if (!print->custom) return F_status_set_error(F_output_not);
+    if (!print || !print->custom) return F_status_set_error(F_output_not);
 
     utf8_main_t * const main = (utf8_main_t *) print->custom;
 
@@ -187,7 +187,7 @@ extern "C" {
 #ifndef _di_utf8_print_data_raw_combining_or_width_
   f_status_t utf8_print_data_raw_combining_or_width(fl_print_t * const print, const uint8_t width) {
 
-    if (!print->custom) return F_status_set_error(F_output_not);
+    if (!print || !print->custom) return F_status_set_error(F_output_not);
 
     utf8_main_t * const main = (utf8_main_t *) print->custom;
 
@@ -230,7 +230,7 @@ extern "C" {
 #ifndef _di_utf8_print_data_section_header_file_
   f_status_t utf8_print_data_section_header_file(fl_print_t * const print, const f_string_static_t name, const f_number_unsigned_t index) {
 
-    if (!print->custom) return F_status_set_error(F_output_not);
+    if (!print || !print->custom) return F_status_set_error(F_output_not);
 
     utf8_main_t * const main = (utf8_main_t *) print->custom;
 
@@ -263,7 +263,7 @@ extern "C" {
 #ifndef _di_utf8_print_data_section_header_parameter_
   f_status_t utf8_print_data_section_header_parameter(fl_print_t * const print, const f_number_unsigned_t index) {
 
-    if (!print->custom) return F_status_set_error(F_output_not);
+    if (!print || !print->custom) return F_status_set_error(F_output_not);
 
     utf8_main_t * const main = (utf8_main_t *) print->custom;
 
@@ -295,7 +295,7 @@ extern "C" {
 #ifndef _di_utf8_print_data_section_header_pipe_
   f_status_t utf8_print_data_section_header_pipe(fl_print_t * const print) {
 
-    if (!print->custom) return F_status_set_error(F_output_not);
+    if (!print || !print->custom) return F_status_set_error(F_output_not);
 
     utf8_main_t * const main = (utf8_main_t *) print->custom;
 
@@ -313,7 +313,7 @@ extern "C" {
 #ifndef _di_utf8_print_data_width_
   f_status_t utf8_print_data_width(fl_print_t * const print, const f_string_static_t sequence) {
 
-    if (!print->custom) return F_status_set_error(F_output_not);
+    if (!print || !print->custom) return F_status_set_error(F_output_not);
     if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
 
     f_status_t status = f_utf_is_wide(sequence.string, sequence.used);
@@ -323,7 +323,7 @@ extern "C" {
     if (status == F_true) {
       fl_print_format("%r%r%r", print->to, main->setting.prepend, utf8_string_width_2_s, main->setting.append);
 
-      return F_output_not;
+      return F_none;
     }
 
     if (status == F_false) {
@@ -332,13 +332,13 @@ extern "C" {
       if (status == F_true) {
         fl_print_format("%r%r%r", print->to, main->setting.prepend, utf8_string_width_1_s, main->setting.append);
 
-        return F_output_not;
+        return F_none;
       }
 
       if (status == F_false) {
         fl_print_format("%r%r%r", print->to, main->setting.prepend, utf8_string_width_0_s, main->setting.append);
 
-        return F_output_not;
+        return F_none;
       }
     }
 

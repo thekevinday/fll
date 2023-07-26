@@ -342,7 +342,7 @@ extern "C" {
 #ifndef _di_fake_print_error_fss_
   f_status_t fake_print_error_fss(fl_print_t * const print, const f_string_t function, const f_string_static_t path_file, const f_string_range_t range, const bool fallback) {
 
-    if (!print->custom) return F_status_set_error(F_output_not);
+    if (!print || !print->custom) return F_status_set_error(F_output_not);
     if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
 
     fake_main_t * const main = (fake_main_t *) print->custom;
@@ -452,7 +452,7 @@ extern "C" {
 #ifndef _di_fake_print_error_operation_failed_
   f_status_t fake_print_error_operation_failed(fl_print_t * const print, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name) {
 
-    if (!print->custom) return F_status_set_error(F_output_not);
+    if (!print || !print->custom) return F_status_set_error(F_output_not);
     if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
 
     fake_main_t * const main = (fake_main_t *) print->custom;
@@ -529,7 +529,7 @@ extern "C" {
 #ifndef _di_fake_print_error_operation_path_outside_
   f_status_t fake_print_error_operation_path_outside(fl_print_t * const print, const f_string_t function, const f_string_static_t path) {
 
-    if (!print->custom) return F_status_set_error(F_output_not);
+    if (!print || !print->custom) return F_status_set_error(F_output_not);
     if (print->verbosity < f_console_verbosity_verbose_e) return F_output_not;
 
     fake_main_t * const main = (fake_main_t *) print->custom;
@@ -548,7 +548,7 @@ extern "C" {
 #ifndef _di_fake_print_error_operation_path_stack_max_
   f_status_t fake_print_error_operation_path_stack_max(fl_print_t * const print, const f_string_t function, const f_string_static_t path) {
 
-    if (!print->custom) return F_status_set_error(F_output_not);
+    if (!print || !print->custom) return F_status_set_error(F_output_not);
     if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
 
     fake_main_t * const main = (fake_main_t *) print->custom;
@@ -580,7 +580,7 @@ extern "C" {
 #ifndef _di_fake_print_error_operation_stack_max_
   f_status_t fake_print_error_operation_stack_max(fl_print_t * const print, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name, const f_number_unsigned_t stack_max) {
 
-    if (!print->custom) return F_status_set_error(F_output_not);
+    if (!print || !print->custom) return F_status_set_error(F_output_not);
     if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
 
     fake_main_t * const main = (fake_main_t *) print->custom;
@@ -613,7 +613,7 @@ extern "C" {
 #ifndef _di_fake_print_error_operation_unknown_
   f_status_t fake_print_error_operation_unknown(fl_print_t * const print, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name) {
 
-    if (!print->custom) return F_status_set_error(F_output_not);
+    if (!print || !print->custom) return F_status_set_error(F_output_not);
     if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
 
     fake_main_t * const main = (fake_main_t *) print->custom;

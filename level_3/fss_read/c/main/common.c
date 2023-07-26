@@ -53,7 +53,7 @@ extern "C" {
 
     main->setting.state.step_small = fss_read_allocation_small_d;
 
-    // Identify and pocess first/last parameters.
+    // Identify and process first/last parameters.
     if (parameters->array[fss_read_parameter_line_first_no_e].result & f_console_result_found_e) {
       main->setting.flag -= main->setting.flag & fss_read_main_flag_print_first_e;
     }
@@ -87,7 +87,7 @@ extern "C" {
         choices.array = choices_array;
         choices.used = 3;
 
-        const uint8_t modes[3] = { f_color_mode_not_e, f_color_mode_light_e, f_color_mode_dark_e };
+        static const uint8_t modes[3] = { f_color_mode_not_e, f_color_mode_light_e, f_color_mode_dark_e };
 
         main->setting.state.status = fll_program_parameter_process_context(choices, modes, F_true, &main->program);
 

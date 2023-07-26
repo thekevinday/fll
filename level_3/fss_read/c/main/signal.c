@@ -7,8 +7,7 @@ extern "C" {
 #if !defined(_di_fss_read_signal_check_) && defined(_di_thread_support_)
   f_status_t fss_read_signal_check(fss_read_main_t * const main) {
 
-    if (!main) return F_false;
-    if (main->program.signal.id == -1) return F_false;
+    if (!main || main->program.signal.id == -1) return F_false;
 
     if (!((++main->program.signal_check) % fss_read_signal_check_d)) {
       if (fll_program_standard_signal_received(&main->program)) {
@@ -29,8 +28,7 @@ extern "C" {
 #if !defined(_di_fss_read_signal_check_) && !defined(_di_thread_support_)
   f_status_t fss_read_signal_check(fss_read_main_t * const main) {
 
-    if (!main) return F_false;
-    if (main->program.signal.id == -1) return F_false;
+    if (!main || main->program.signal.id == -1) return F_false;
 
     if (main->program.signal_received) {
       fll_program_print_signal_received(&main->program.warning, main->program.signal_received);

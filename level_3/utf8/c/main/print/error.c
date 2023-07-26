@@ -7,7 +7,7 @@ extern "C" {
 #ifndef _di_utf8_print_error_
   f_status_t utf8_print_error(fl_print_t * const print, const f_string_t function) {
 
-    if (!print->custom) return F_status_set_error(F_output_not);
+    if (!print || !print->custom) return F_status_set_error(F_output_not);
     if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
 
     fll_error_print(print, F_status_set_fine(((utf8_main_t *) print->custom)->setting.state.status), function, fll_error_file_flag_fallback_e);
@@ -19,7 +19,7 @@ extern "C" {
 #ifndef _di_utf8_print_error_decode_
   f_status_t utf8_print_error_decode(fl_print_t * const print, const f_string_static_t invalid) {
 
-    if (!print->custom) return F_status_set_error(F_output_not);
+    if (!print || !print->custom) return F_status_set_error(F_output_not);
     if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
 
     utf8_main_t * const main = (utf8_main_t *) print->custom;
@@ -60,7 +60,7 @@ extern "C" {
 #ifndef _di_utf8_print_error_encode_
   f_status_t utf8_print_error_encode(fl_print_t * const print, const uint32_t codepoint) {
 
-    if (!print->custom) return F_status_set_error(F_output_not);
+    if (!print || !print->custom) return F_status_set_error(F_output_not);
     if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
 
     utf8_main_t * const main = (utf8_main_t *) print->custom;
@@ -86,7 +86,7 @@ extern "C" {
 #ifndef _di_utf8_print_error_file_
   f_status_t utf8_print_error_file(fl_print_t * const print, const f_string_t function, const f_string_static_t name, const f_string_static_t operation, const uint8_t type) {
 
-    if (!print->custom) return F_status_set_error(F_output_not);
+    if (!print || !print->custom) return F_status_set_error(F_output_not);
     if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
 
     utf8_main_t * const main = (utf8_main_t *) print->custom;
@@ -100,6 +100,7 @@ extern "C" {
 #ifndef _di_utf8_print_error_no_from_
   f_status_t utf8_print_error_no_from(fl_print_t * const print) {
 
+    if (!print) return F_status_set_error(F_output_not);
     if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
 
     fll_print_format("%[%QNo from sources are specified, please pipe data, designate a file, or add parameters.%]%r", print->to, print->set->error, print->prefix, print->set->error, f_string_eol_s);
@@ -111,6 +112,7 @@ extern "C" {
 #ifndef _di_utf8_print_error_parameter_file_name_empty_
   f_status_t utf8_print_error_parameter_file_name_empty(fl_print_t * const print, const f_number_unsigned_t index) {
 
+    if (!print) return F_status_set_error(F_output_not);
     if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
 
     f_file_stream_lock(print->to);
@@ -128,6 +130,7 @@ extern "C" {
 #ifndef _di_utf8_print_error_parameter_file_not_found_
   f_status_t utf8_print_error_parameter_file_not_found(fl_print_t * const print, const bool from, const f_string_static_t name) {
 
+    if (!print) return F_status_set_error(F_output_not);
     if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
 
     f_file_stream_lock(print->to);
@@ -145,6 +148,7 @@ extern "C" {
 #ifndef _di_utf8_print_error_parameter_file_to_too_many_
   f_status_t utf8_print_error_parameter_file_to_too_many(fl_print_t * const print) {
 
+    if (!print) return F_status_set_error(F_output_not);
     if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
 
     fll_print_format("%[%QToo many '%r' files specified, there may only be one '%r' file.%]%r", print->to, print->set->error, print->prefix, utf8_string_to_s, utf8_string_to_s, print->set->error, f_string_eol_s);

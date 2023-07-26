@@ -190,7 +190,7 @@ extern "C" {
 
     setting->state.step_small = control_write_allocation_small_d;
 
-    // Identify and pocess first/last parameters.
+    // Identify and process first/last parameters.
     if (main->parameters.array[control_parameter_line_first_no_e].result & f_console_result_found_e) {
       setting->flag -= setting->flag & control_main_flag_print_first_e;
     }
