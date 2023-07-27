@@ -20,6 +20,7 @@ extern "C" {
  * Byte Dump modes.
  *
  * byte_dump_mode_*_e:
+ *   - none:        No mode.
  *   - hexidecimal: Display using hexidecimal notation (base 16).
  *   - duodecimal:  Display using duodecimal notation (base 12).
  *   - octal:       Display using octal notation (base 8).
@@ -28,7 +29,8 @@ extern "C" {
  */
 #ifndef _di_byte_dump_modes_e_
   enum {
-    byte_dump_mode_hexidecimal_e = 1,
+    byte_dump_mode_none_e = 0,
+    byte_dump_mode_hexidecimal_e,
     byte_dump_mode_duodecimal_e,
     byte_dump_mode_octal_e,
     byte_dump_mode_binary_e,
@@ -40,13 +42,15 @@ extern "C" {
  * Byte Dump presentations.
  *
  * byte_dump_presentation_*_e:
+ *   - none:    No presentation mode.
  *   - normal:  Normal presentation mode.
  *   - simple:  Simple presentation mode.
  *   - classic: Classic presentation mode.
  */
 #ifndef _di_byte_dump_presentations_e_
   enum {
-    byte_dump_presentation_normal_e = 1,
+    byte_dump_presentation_none_e = 0,
+    byte_dump_presentation_normal_e,
     byte_dump_presentation_simple_e,
     byte_dump_presentation_classic_e,
   }; // enum
