@@ -1,2 +1,0 @@
-#define _di_fl_signal_interrupt_t_
-#define _di_fl_signal_state_interrupt_

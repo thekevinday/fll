@@ -99,7 +99,6 @@ build_sources_library level_1/private-fss.c level_1/fss/basic.c level_1/fss/basi
 build_sources_library level_1/iki.c
 build_sources_library level_1/path.c
 build_sources_library level_1/print.c level_1/private-print.c level_1/print/common.c
-build_sources_library level_1/signal.c
 build_sources_library level_1/status_string.c
 build_sources_library level_1/utf_file.c level_1/private-utf_file.c
 
@@ -163,7 +162,6 @@ build_sources_headers level_1/fss.h level_1/fss/basic.h level_1/fss/basic_list.h
 build_sources_headers level_1/iki.h
 build_sources_headers level_1/path.h
 build_sources_headers level_1/print.h level_1/print/common.h
-build_sources_headers level_1/signal.h level_1/signal/common.h
 build_sources_headers level_1/status_string.h
 build_sources_headers level_1/utf_file.h
 
