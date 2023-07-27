@@ -24,7 +24,27 @@ extern "C" {
   const f_string_static_t byte_dump_character_placeholder_s = macro_f_string_static_t_initialize_1(BYTE_DUMP_character_placeholder_s, 0, BYTE_DUMP_character_placeholder_s_length);
   const f_string_static_t byte_dump_character_incomplete_s = macro_f_string_static_t_initialize_1(BYTE_DUMP_character_incomplete_s, 0, BYTE_DUMP_character_incomplete_s_length);
   const f_string_static_t byte_dump_character_unused_s = macro_f_string_static_t_initialize_1(BYTE_DUMP_character_unused_s, 0, BYTE_DUMP_character_unused_s_length);
+
+  const f_string_static_t byte_dump_format_raw_context_s = macro_f_string_static_t_initialize_1(BYTE_DUMP_format_raw_context_s, 0, BYTE_DUMP_format_raw_context_s_length);
 #endif // _di_byte_dump_s_
+
+#ifndef _di_byte_dump_padding_s_
+  const f_string_static_t byte_dump_padding_3_s = macro_f_string_static_t_initialize_1(BYTE_DUMP_padding_3_s, 0, BYTE_DUMP_padding_3_s_length);
+  const f_string_static_t byte_dump_padding_4_s = macro_f_string_static_t_initialize_1(BYTE_DUMP_padding_4_s, 0, BYTE_DUMP_padding_4_s_length);
+  const f_string_static_t byte_dump_padding_5_s = macro_f_string_static_t_initialize_1(BYTE_DUMP_padding_5_s, 0, BYTE_DUMP_padding_5_s_length);
+  const f_string_static_t byte_dump_padding_6_s = macro_f_string_static_t_initialize_1(BYTE_DUMP_padding_6_s, 0, BYTE_DUMP_padding_6_s_length);
+  const f_string_static_t byte_dump_padding_8_s = macro_f_string_static_t_initialize_1(BYTE_DUMP_padding_8_s, 0, BYTE_DUMP_padding_8_s_length);
+  const f_string_static_t byte_dump_padding_9_s = macro_f_string_static_t_initialize_1(BYTE_DUMP_padding_9_s, 0, BYTE_DUMP_padding_9_s_length);
+
+  const f_string_static_t byte_dump_padding_s[] = {
+    byte_dump_padding_9_s,
+    byte_dump_padding_3_s,
+    byte_dump_padding_4_s,
+    byte_dump_padding_4_s,
+    byte_dump_padding_9_s,
+    byte_dump_padding_4_s,
+  };
+#endif // _di_byte_dump_padding_s_
 
 #ifndef _di_byte_dump_parameter_d_
   const f_string_static_t byte_dump_short_binary_s = macro_f_string_static_t_initialize_1(BYTE_DUMP_short_binary_s, 0, BYTE_DUMP_short_binary_s_length);

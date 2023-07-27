@@ -74,6 +74,8 @@ extern "C" {
   #define BYTE_DUMP_character_incomplete_s  "�"
   #define BYTE_DUMP_character_unused_s      "�"
 
+  #define BYTE_DUMP_format_raw_context_s "%[%r%]"
+
   #define BYTE_DUMP_hexidecimal_s_length 11
   #define BYTE_DUMP_duodecimal_s_length  10
   #define BYTE_DUMP_octal_s_length       5
@@ -85,6 +87,8 @@ extern "C" {
   #define BYTE_DUMP_character_incomplete_s_length  3
   #define BYTE_DUMP_character_unused_s_length      3
 
+  #define BYTE_DUMP_format_raw_context_s_length 6
+
   extern const f_string_static_t byte_dump_hexidecimal_s;
   extern const f_string_static_t byte_dump_duodecimal_s;
   extern const f_string_static_t byte_dump_octal_s;
@@ -95,7 +99,45 @@ extern "C" {
   extern const f_string_static_t byte_dump_character_placeholder_s;
   extern const f_string_static_t byte_dump_character_incomplete_s;
   extern const f_string_static_t byte_dump_character_unused_s;
+
+  extern const f_string_static_t byte_dump_format_raw_context_s;
 #endif // _di_byte_dump_s_
+
+/**
+ * Paddings and an array containing the paddings for quick reference.
+ *
+ * The byte_dump_padding_s is an array with the following structure:
+ *   - index 0: unicode.
+ *   - index 1: hexidecimal.
+ *   - index 2: duodecimal.
+ *   - index 3: octal.
+ *   - index 4: binary.
+ *   - index 5: decimal.
+ */
+#ifndef _di_byte_dump_padding_s_
+  #define BYTE_DUMP_padding_3_s "   "
+  #define BYTE_DUMP_padding_4_s "    "
+  #define BYTE_DUMP_padding_5_s "     "
+  #define BYTE_DUMP_padding_6_s "     "
+  #define BYTE_DUMP_padding_8_s "        "
+  #define BYTE_DUMP_padding_9_s "         "
+
+  #define BYTE_DUMP_padding_3_s_length 3
+  #define BYTE_DUMP_padding_4_s_length 4
+  #define BYTE_DUMP_padding_5_s_length 5
+  #define BYTE_DUMP_padding_6_s_length 6
+  #define BYTE_DUMP_padding_8_s_length 8
+  #define BYTE_DUMP_padding_9_s_length 9
+
+  extern const f_string_static_t byte_dump_padding_3_s;
+  extern const f_string_static_t byte_dump_padding_4_s;
+  extern const f_string_static_t byte_dump_padding_5_s;
+  extern const f_string_static_t byte_dump_padding_6_s;
+  extern const f_string_static_t byte_dump_padding_8_s;
+  extern const f_string_static_t byte_dump_padding_9_s;
+
+  extern const f_string_static_t byte_dump_padding_s[];
+#endif // _di_byte_dump_padding_s_
 
 /**
  * The main program parameters.

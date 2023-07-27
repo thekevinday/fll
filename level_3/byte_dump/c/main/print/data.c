@@ -38,30 +38,13 @@ extern "C" {
         // Pad the buffer with spaces to hide any skipped bytes (skipped via --first).
         while (offset_to_print && cell->column < main->setting.width) {
 
-          if (main->setting.flag & byte_dump_main_flag_unicode_e) {
-            f_print_terminated("         ", print->to);
-          }
-          else if (main->setting.mode == byte_dump_mode_hexidecimal_e) {
-            f_print_terminated("   ", print->to);
-          }
-          else if (main->setting.mode == byte_dump_mode_duodecimal_e) {
-            f_print_terminated("    ", print->to);
-          }
-          else if (main->setting.mode == byte_dump_mode_octal_e) {
-            f_print_terminated("    ", print->to);
-          }
-          else if (main->setting.mode == byte_dump_mode_binary_e) {
-            f_print_terminated("         ", print->to);
-          }
-          else if (main->setting.mode == byte_dump_mode_decimal_e) {
-            f_print_terminated("    ", print->to);
-          }
+          f_print_dynamic_raw(byte_dump_padding_s[(main->setting.flag & byte_dump_main_flag_unicode_e) ? 0 : main->setting.mode], print->to);
 
           --offset_to_print;
           ++cell->column;
 
           if (cell->column < main->setting.width) {
-            if (main->setting.flag & byte_dump_main_flag_unicode_e) {
+            if ((main->setting.flag & byte_dump_main_flag_unicode_e) || main->setting.mode == byte_dump_mode_binary_e) {
               if (!(cell->column % 4)) {
                 f_print_dynamic_raw(f_string_space_s, print->to);
               }
@@ -71,22 +54,7 @@ extern "C" {
                 f_print_dynamic_raw(f_string_space_s, print->to);
               }
             }
-            else if (main->setting.mode == byte_dump_mode_duodecimal_e) {
-              if (!(cell->column % 6)) {
-                f_print_dynamic_raw(f_string_space_s, print->to);
-              }
-            }
-            else if (main->setting.mode == byte_dump_mode_octal_e) {
-              if (!(cell->column % 6)) {
-                f_print_dynamic_raw(f_string_space_s, print->to);
-              }
-            }
-            else if (main->setting.mode == byte_dump_mode_binary_e) {
-              if (!(cell->column % 4)) {
-                f_print_dynamic_raw(f_string_space_s, print->to);
-              }
-            }
-            else if (main->setting.mode == byte_dump_mode_decimal_e) {
+            else if (main->setting.mode == byte_dump_mode_duodecimal_e || main->setting.mode == byte_dump_mode_octal_e || main->setting.mode == byte_dump_mode_decimal_e) {
               if (!(cell->column % 6)) {
                 f_print_dynamic_raw(f_string_space_s, print->to);
               }
@@ -138,13 +106,13 @@ extern "C" {
         else {
 
           // Pad the sequence that are incomplete fragments of an already printed valid Unicode.
-          f_print_terminated("         ", print->to);
+          f_print_dynamic_raw(byte_dump_padding_9_s, print->to);
         }
       }
       else {
         if (main->setting.mode == byte_dump_mode_hexidecimal_e) {
           if (main->setting.flag & byte_dump_main_flag_unicode_e) {
-            f_print_terminated("      ", print->to);
+            f_print_dynamic_raw(byte_dump_padding_6_s, print->to);
           }
 
           if (invalid[current]) {
@@ -156,7 +124,7 @@ extern "C" {
         }
         else if (main->setting.mode == byte_dump_mode_duodecimal_e) {
           if (main->setting.flag & byte_dump_main_flag_unicode_e) {
-            f_print_terminated("     ", print->to);
+            f_print_dynamic_raw(byte_dump_padding_5_s, print->to);
           }
 
           if (invalid[current]) {
@@ -168,7 +136,7 @@ extern "C" {
         }
         else if (main->setting.mode == byte_dump_mode_octal_e) {
           if (main->setting.flag & byte_dump_main_flag_unicode_e) {
-            f_print_terminated("     ", print->to);
+            f_print_dynamic_raw(byte_dump_padding_5_s, print->to);
           }
 
           if (invalid[current]) {
@@ -188,7 +156,7 @@ extern "C" {
         }
         else if (main->setting.mode == byte_dump_mode_decimal_e) {
           if (main->setting.flag & byte_dump_main_flag_unicode_e) {
-            f_print_terminated("     ", print->to);
+            f_print_dynamic_raw(byte_dump_padding_5_s, print->to);
           }
 
           if (invalid[current]) {
@@ -232,7 +200,7 @@ extern "C" {
       }
     }
     else {
-      if (main->setting.flag & byte_dump_main_flag_unicode_e) {
+      if ((main->setting.flag & byte_dump_main_flag_unicode_e) || main->setting.mode == byte_dump_mode_binary_e) {
         if (!(cell->column % 4)) {
           f_print_dynamic_raw(f_string_space_s, print->to);
         }
@@ -242,22 +210,7 @@ extern "C" {
           f_print_dynamic_raw(f_string_space_s, print->to);
         }
       }
-      else if (main->setting.mode == byte_dump_mode_duodecimal_e) {
-        if (!(cell->column % 6)) {
-          f_print_dynamic_raw(f_string_space_s, print->to);
-        }
-      }
-      else if (main->setting.mode == byte_dump_mode_octal_e) {
-        if (!(cell->column % 6)) {
-          f_print_dynamic_raw(f_string_space_s, print->to);
-        }
-      }
-      else if (main->setting.mode == byte_dump_mode_binary_e) {
-        if (!(cell->column % 4)) {
-          f_print_dynamic_raw(f_string_space_s, print->to);
-        }
-      }
-      else if (main->setting.mode == byte_dump_mode_decimal_e) {
+      else if (main->setting.mode == byte_dump_mode_duodecimal_e || main->setting.mode == byte_dump_mode_octal_e || main->setting.mode == byte_dump_mode_decimal_e) {
         if (!(cell->column % 6)) {
           f_print_dynamic_raw(f_string_space_s, print->to);
         }
@@ -303,7 +256,7 @@ extern "C" {
         if (main->setting.flag & byte_dump_main_flag_placeholder_e) {
           for (; *offset && at < main->setting.width; --(*offset), ++at) {
 
-            fl_print_format("%[%r%]", print->to, print->set->warning, byte_dump_character_placeholder_s, print->set->warning);
+            fl_print_format(byte_dump_format_raw_context_s.string, print->to, print->set->warning, byte_dump_character_placeholder_s, print->set->warning);
 
             if (main->setting.flag & byte_dump_main_flag_wide_e) {
               f_print_dynamic_raw(f_string_space_s, print->to);
@@ -336,13 +289,13 @@ extern "C" {
           for (; at < previous->bytes && at < main->setting.width; ++at) {
 
             if (previous->invalid) {
-              fl_print_format("%[%r%]", print->to, print->set->error, byte_dump_character_placeholder_s, print->set->error);
+              fl_print_format(byte_dump_format_raw_context_s.string, print->to, print->set->error, byte_dump_character_placeholder_s, print->set->error);
             }
             else if (main->setting.flag & byte_dump_main_flag_classic_e) {
               f_print_dynamic_raw(f_string_ascii_period_s, print->to);
             }
             else {
-              fl_print_format("%[%r%]", print->to, print->set->warning, byte_dump_character_placeholder_s, print->set->warning);
+              fl_print_format(byte_dump_format_raw_context_s.string, print->to, print->set->warning, byte_dump_character_placeholder_s, print->set->warning);
             }
 
             if (main->setting.flag & byte_dump_main_flag_wide_e) {
@@ -377,7 +330,7 @@ extern "C" {
       width_utf = macro_f_utf_byte_width_is(c);
 
       if (invalid[i]) {
-        fl_print_format("%[%r%]", print->to, print->set->error, byte_dump_character_incomplete_s, print->set->error);
+        fl_print_format(byte_dump_format_raw_context_s.string, print->to, print->set->error, byte_dump_character_incomplete_s, print->set->error);
 
         if (main->setting.flag & byte_dump_main_flag_wide_e) {
           f_print_dynamic_raw(f_string_ascii_space_s, print->to);
@@ -496,10 +449,10 @@ extern "C" {
 
           // Print invalid placeholder for invalid UTF-8 widths.
           if (invalid[i]) {
-            fl_print_format("%[%r%]", print->to, print->set->error, byte_dump_character_incomplete_s, print->set->error);
+            fl_print_format(byte_dump_format_raw_context_s.string, print->to, print->set->error, byte_dump_character_incomplete_s, print->set->error);
           }
           else {
-            fl_print_format("%[%r%]", print->to, print->set->warning, byte_dump_character_incomplete_s, print->set->warning);
+            fl_print_format(byte_dump_format_raw_context_s.string, print->to, print->set->warning, byte_dump_character_incomplete_s, print->set->warning);
           }
         }
         else if (width_utf == 2) {
@@ -588,13 +541,13 @@ extern "C" {
       if (width_utf > 1 && at + 1 < main->setting.width) {
         if (main->setting.flag & byte_dump_main_flag_placeholder_e) {
           if (invalid[i]) {
-            fl_print_format("%[%r%]", print->to, print->set->error, byte_dump_character_placeholder_s, print->set->error);
+            fl_print_format(byte_dump_format_raw_context_s.string, print->to, print->set->error, byte_dump_character_placeholder_s, print->set->error);
           }
           else if (main->setting.flag & byte_dump_main_flag_classic_e) {
             f_print_dynamic_raw(f_string_ascii_period_s, print->to);
           }
           else {
-            fl_print_format("%[%r%]", print->to, print->set->warning, byte_dump_character_placeholder_s, print->set->warning);
+            fl_print_format(byte_dump_format_raw_context_s.string, print->to, print->set->warning, byte_dump_character_placeholder_s, print->set->warning);
           }
         }
         else {
@@ -610,13 +563,13 @@ extern "C" {
         if (width_utf > 2 && at + 1 < main->setting.width) {
           if (main->setting.flag & byte_dump_main_flag_placeholder_e) {
             if (invalid[i]) {
-              fl_print_format("%[%r%]", print->to, print->set->error, byte_dump_character_placeholder_s, print->set->error);
+              fl_print_format(byte_dump_format_raw_context_s.string, print->to, print->set->error, byte_dump_character_placeholder_s, print->set->error);
             }
             else if (main->setting.flag & byte_dump_main_flag_classic_e) {
               f_print_dynamic_raw(f_string_ascii_period_s, print->to);
             }
             else {
-              fl_print_format("%[%r%]", print->to, print->set->warning, byte_dump_character_placeholder_s, print->set->warning);
+              fl_print_format(byte_dump_format_raw_context_s.string, print->to, print->set->warning, byte_dump_character_placeholder_s, print->set->warning);
             }
           }
           else {
@@ -632,13 +585,13 @@ extern "C" {
           if (width_utf > 3 && at + 1 < main->setting.width) {
             if (main->setting.flag & byte_dump_main_flag_placeholder_e) {
               if (invalid[i]) {
-                fl_print_format("%[%r%]", print->to, print->set->error, byte_dump_character_placeholder_s, print->set->error);
+                fl_print_format(byte_dump_format_raw_context_s.string, print->to, print->set->error, byte_dump_character_placeholder_s, print->set->error);
               }
               else if (main->setting.flag & byte_dump_main_flag_classic_e) {
                 f_print_dynamic_raw(f_string_ascii_period_s, print->to);
               }
               else {
-                fl_print_format("%[%r%]", print->to, print->set->warning, byte_dump_character_placeholder_s, print->set->warning);
+                fl_print_format(byte_dump_format_raw_context_s.string, print->to, print->set->warning, byte_dump_character_placeholder_s, print->set->warning);
               }
             }
             else {
@@ -660,13 +613,13 @@ extern "C" {
       for (; at < main->setting.width; ++at) {
 
         if (invalid[at]) {
-          fl_print_format("%[%r%]", print->to, print->set->error, byte_dump_character_placeholder_s, print->set->error);
+          fl_print_format(byte_dump_format_raw_context_s.string, print->to, print->set->error, byte_dump_character_placeholder_s, print->set->error);
         }
         else if (main->setting.flag & byte_dump_main_flag_classic_e) {
           f_print_dynamic_raw(f_string_ascii_period_s, print->to);
         }
         else {
-          fl_print_format("%[%r%]", print->to, print->set->warning, byte_dump_character_placeholder_s, print->set->warning);
+          fl_print_format(byte_dump_format_raw_context_s.string, print->to, print->set->warning, byte_dump_character_placeholder_s, print->set->warning);
         }
 
         if (main->setting.flag & byte_dump_main_flag_wide_e) {
