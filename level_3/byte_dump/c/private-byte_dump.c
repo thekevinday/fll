@@ -294,7 +294,7 @@ extern "C" {
             }
           }
           else if (data->mode == byte_dump_mode_binary_e) {
-            if (!(cell.column % 6)) {
+            if (!(cell.column % 4)) {
               f_print_dynamic_raw(f_string_space_s, data->main->output.to.stream);
             }
           }
