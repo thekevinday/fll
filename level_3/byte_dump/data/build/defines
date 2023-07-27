@@ -4,3 +4,5 @@ _di_thread_support_ Disables thread support.
 
 _pthread_attr_unsupported_ Disable non-portable functionality associated with pthread_attr.
 _pthread_sigqueue_unsupported_ Disable GNU specific sigqueue().
+
+_clang_not_a_compile_time_constant_workaround_ Work around CLangs error "initializer element is not a compile-time constant".

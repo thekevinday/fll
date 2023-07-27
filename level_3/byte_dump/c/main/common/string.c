@@ -36,14 +36,25 @@ extern "C" {
   const f_string_static_t byte_dump_padding_8_s = macro_f_string_static_t_initialize_1(BYTE_DUMP_padding_8_s, 0, BYTE_DUMP_padding_8_s_length);
   const f_string_static_t byte_dump_padding_9_s = macro_f_string_static_t_initialize_1(BYTE_DUMP_padding_9_s, 0, BYTE_DUMP_padding_9_s_length);
 
-  const f_string_static_t byte_dump_padding_s[] = {
-    byte_dump_padding_9_s,
-    byte_dump_padding_3_s,
-    byte_dump_padding_4_s,
-    byte_dump_padding_4_s,
-    byte_dump_padding_9_s,
-    byte_dump_padding_4_s,
-  };
+  #ifdef _clang_not_a_compile_time_constant_workaround_
+    const f_string_static_t byte_dump_padding_s[6] = {
+      macro_f_string_static_t_initialize_1(BYTE_DUMP_padding_9_s, 0, BYTE_DUMP_padding_9_s_length),
+      macro_f_string_static_t_initialize_1(BYTE_DUMP_padding_3_s, 0, BYTE_DUMP_padding_3_s_length),
+      macro_f_string_static_t_initialize_1(BYTE_DUMP_padding_4_s, 0, BYTE_DUMP_padding_4_s_length),
+      macro_f_string_static_t_initialize_1(BYTE_DUMP_padding_4_s, 0, BYTE_DUMP_padding_4_s_length),
+      macro_f_string_static_t_initialize_1(BYTE_DUMP_padding_9_s, 0, BYTE_DUMP_padding_9_s_length),
+      macro_f_string_static_t_initialize_1(BYTE_DUMP_padding_4_s, 0, BYTE_DUMP_padding_4_s_length),
+    };
+  #else
+    const f_string_static_t byte_dump_padding_s[] = {
+      byte_dump_padding_9_s,
+      byte_dump_padding_3_s,
+      byte_dump_padding_4_s,
+      byte_dump_padding_4_s,
+      byte_dump_padding_9_s,
+      byte_dump_padding_4_s,
+    };
+  #endif
 #endif // _di_byte_dump_padding_s_
 
 #ifndef _di_byte_dump_parameter_d_
