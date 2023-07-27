@@ -246,7 +246,7 @@ extern "C" {
         ++cell.column;
 
         if (cell.column < main->setting.width) {
-          if (main->setting.flag & byte_dump_main_flag_unicode_e) {
+          if ((main->setting.flag & byte_dump_main_flag_unicode_e) || main->setting.mode == byte_dump_mode_binary_e) {
             if (!(cell.column % 4)) {
               f_print_dynamic_raw(f_string_space_s, main->program.output.to);
             }
@@ -256,7 +256,7 @@ extern "C" {
               f_print_dynamic_raw(f_string_space_s, main->program.output.to);
             }
           }
-          else if (main->setting.mode == byte_dump_mode_duodecimal_e || main->setting.mode == byte_dump_mode_octal_e || main->setting.mode == byte_dump_mode_binary_e || main->setting.mode == byte_dump_mode_decimal_e) {
+          else if (main->setting.mode == byte_dump_mode_duodecimal_e || main->setting.mode == byte_dump_mode_octal_e || main->setting.mode == byte_dump_mode_decimal_e) {
             if (!(cell.column % 6)) {
               f_print_dynamic_raw(f_string_space_s, main->program.output.to);
             }
