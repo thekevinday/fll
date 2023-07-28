@@ -265,6 +265,10 @@ int main(void) {
     cmocka_unit_test(test__f_file_select__returns_data_not),
     cmocka_unit_test(test__f_file_select__works),
 
+    cmocka_unit_test(test__f_file_select_signal__fails),
+    cmocka_unit_test(test__f_file_select_signal__returns_data_not),
+    cmocka_unit_test(test__f_file_select_signal__works),
+
     cmocka_unit_test(test__f_file_size__fails),
     cmocka_unit_test(test__f_file_size__returns_data_not),
     cmocka_unit_test(test__f_file_size__works),
@@ -434,6 +438,7 @@ int main(void) {
       // f_file_role_change_at() doesn't use parameter checking.
       cmocka_unit_test(test__f_file_seek__parameter_checking),
       // f_file_select() doesn't use parameter checking.
+      // f_file_select_signal() doesn't use parameter checking.
       cmocka_unit_test(test__f_file_size__parameter_checking),
       cmocka_unit_test(test__f_file_size_at__parameter_checking),
       cmocka_unit_test(test__f_file_size_by_id__parameter_checking),

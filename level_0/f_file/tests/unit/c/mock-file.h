@@ -67,6 +67,7 @@ extern int __wrap_mknodat(int dirfd, const char *pathname, mode_t mode, dev_t de
 extern int __wrap_open(const char *pathname, int flags, mode_t mode);
 extern int __wrap_openat(int dirfd, const char *pathname, int flags, mode_t mode);
 extern int __wrap_poll(struct pollfd *fds, nfds_t nfds, int timeout);
+extern int __wrap_pselect(int nfds, fd_set *readfds, fd_set *writefds, fd_set *exceptfds, const struct timespec *timeout, const sigset_t *sigmask);
 extern ssize_t __wrap_read(int fd, void *buf, size_t count);
 extern ssize_t __wrap_readlink(const char *pathname, char *buf, size_t bufsiz);
 extern ssize_t __wrap_readlinkat(int dirfd, const char *pathname, char *buf, size_t bufsiz);

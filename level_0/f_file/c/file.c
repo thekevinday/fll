@@ -1915,6 +1915,25 @@ extern "C" {
   }
 #endif // _di_f_file_select_
 
+#ifndef _di_f_file_select_signal_
+  f_status_t f_file_select_signal(const int highest_plus_one, fd_set * const read, fd_set * const write, fd_set * const except, const struct timespec * const timeout, const sigset_t * const signal) {
+
+    if (!highest_plus_one) return F_data_not;
+    if (!read && !write && !except && !timeout) return F_data_not;
+
+    if (pselect(highest_plus_one, read, write, except, timeout, signal) == -1) {
+      if (errno == EBADF) return F_status_set_error(F_file_descriptor);
+      if (errno == EINTR) return F_status_set_error(F_interrupt);
+      if (errno == EINVAL) return F_status_set_error(F_parameter);
+      if (errno == ENOMEM) return F_status_set_error(F_memory_not);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_file_select_signal_
+
 #ifndef _di_f_file_size_
   f_status_t f_file_size(const f_string_static_t path, const bool dereference, off_t * const size) {
     #ifndef _di_level_0_parameter_checking_

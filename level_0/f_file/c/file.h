@@ -1960,7 +1960,45 @@ extern "C" {
 /**
  * Monitor one or more file descriptors.
  *
- * @todo Probably should implement a pselect().
+ * Warning: Some libc implementations, such as GLIBC, use an upper limit of 1023 file descriptors.
+ *          The linux kernel general does not have such a limit.
+ *          To more safely handle more than 1023 file desciptors, instead consider f_file_poll();
+ *
+ * @param highest
+ *   The value of the highest file descriptor between all provided sets (read, write, and except) plus one.
+ *   The caller must remember that one must be added to the highest file descriptor as per requirements by select().
+ *   This cannot be 0.
+ * @param read
+ *   (optional) The set of file descriptors for descriptors that become available for reading.
+ *   Set to NULL to not use.
+ * @param write
+ *   (optional) The set of file descriptors for descriptors that become available for writing.
+ *   Set to NULL to not use.
+ * @param except
+ *   (optional) The set of file descriptors for descriptors that become available for any error conditions.
+ *   Set to NULL to not use.
+ * @param timeout
+ *   (optional) The time to wait before returning.
+ *   Set to NULL to not use.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not if all of read, write, except, and timeout are NULL (having at least one is required) or when highest_plus_one is 0.
+ *
+ *   F_file_descriptor (with error bit) if the file descriptor is invalid.
+ *   F_interrupt (with error bit) when program received an interrupt signal, halting operation.
+ *   F_memory_not (with error bit) if out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_failure (with error bit) on any other error.
+ *
+ * @see select()
+ */
+#ifndef _di_f_file_select_
+  extern f_status_t f_file_select(const int highest_plus_one, fd_set * const read, fd_set * const write, fd_set * const except, struct timeval * const timeout);
+#endif // _di_f_file_select_
+
+/**
+ * Monitor one or more file descriptors in a signal safe manner.
  *
  * Warning: Some libc implementations, such as GLIBC, use an upper limit of 1023 file descriptors.
  *          The linux kernel general does not have such a limit.
@@ -1980,7 +2018,13 @@ extern "C" {
  *   (optional) The set of file descriptors for descriptors that become available for any error conditions.
  *   Set to NULL to not use.
  * @param timeout
- *   (optional)
+ *   (optional) The time to wait before returning.
+ *   Set to NULL to not use.
+ * @param signal
+ *   (optional) The signals to atomically mask while running the pselect() operation.
+ *   This effectively wraps the select call with these two calls:
+ *     - pthread_sigmask(SIG_SETMASK, &sigmask, &origmask);
+ *     - pthread_sigmask(SIG_SETMASK, &origmask, NULL);
  *   Set to NULL to not use.
  *
  * @return
@@ -1993,11 +2037,11 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_failure (with error bit) on any other error.
  *
- * @see select()
+ * @see pselect()
  */
-#ifndef _di_f_file_select_
-  extern f_status_t f_file_select(const int highest_plus_one, fd_set * const read, fd_set * const write, fd_set * const except, struct timeval * const timeout);
-#endif // _di_f_file_select_
+#ifndef _di_f_file_select_signal_
+  extern f_status_t f_file_select_signal(const int highest_plus_one, fd_set * const read, fd_set * const write, fd_set * const except, const struct timespec * const timeout, const sigset_t * const signal);
+#endif // _di_f_file_select_signal_
 
 /**
  * Read the size of file.

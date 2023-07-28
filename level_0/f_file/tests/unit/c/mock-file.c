@@ -509,6 +509,19 @@ int __wrap_poll(struct pollfd *fds, nfds_t nfds, int timeout) {
   return mock_type(int);
 }
 
+int __wrap_pselect(int nfds, fd_set *readfds, fd_set *writefds, fd_set *exceptfds, const struct timespec *timeout, const sigset_t *sigmask) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    errno = mock_type(int);
+
+    return -1;
+  }
+
+  return mock_type(int);
+}
+
 ssize_t __wrap_read(int fd, void *buf, size_t count) {
 
   const bool failure = mock_type(bool);
