@@ -118,7 +118,7 @@ extern "C" {
   #define BYTE_DUMP_padding_3_s "   "
   #define BYTE_DUMP_padding_4_s "    "
   #define BYTE_DUMP_padding_5_s "     "
-  #define BYTE_DUMP_padding_6_s "     "
+  #define BYTE_DUMP_padding_6_s "      "
   #define BYTE_DUMP_padding_8_s "        "
   #define BYTE_DUMP_padding_9_s "         "
 
