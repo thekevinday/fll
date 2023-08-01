@@ -71,7 +71,7 @@ extern "C" {
  *   - flag: Flags passed to the main function.
  *
  *   - status_signal: A status used eclusively by the threaded signal handler.
- *   - state:         The state data used when processing the FSS data.
+ *   - state:         The state data used when processing data.
  *
  *   - first:        The first position.
  *   - last:         The last position.

@@ -142,7 +142,7 @@ extern "C" {
 /**
  * The main program parameters.
  */
-#ifndef _di_byte_dump_parameter_d_
+#ifndef _di_byte_dump_parameter_s_
   #define BYTE_DUMP_short_binary_s      "b"
   #define BYTE_DUMP_short_decimal_s     "d"
   #define BYTE_DUMP_short_duodecimal_s  "D"
@@ -250,7 +250,7 @@ extern "C" {
   extern const f_string_static_t byte_dump_long_normal_s;
   extern const f_string_static_t byte_dump_long_simple_s;
   extern const f_string_static_t byte_dump_long_classic_s;
-#endif // _di_byte_dump_parameter_d_
+#endif // _di_byte_dump_parameter_s_
 
 #ifdef __cplusplus
 } // extern "C"

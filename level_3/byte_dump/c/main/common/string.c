@@ -57,7 +57,7 @@ extern "C" {
   #endif
 #endif // _di_byte_dump_padding_s_
 
-#ifndef _di_byte_dump_parameter_d_
+#ifndef _di_byte_dump_parameter_s_
   const f_string_static_t byte_dump_short_binary_s = macro_f_string_static_t_initialize_1(BYTE_DUMP_short_binary_s, 0, BYTE_DUMP_short_binary_s_length);
   const f_string_static_t byte_dump_short_decimal_s = macro_f_string_static_t_initialize_1(BYTE_DUMP_short_decimal_s, 0, BYTE_DUMP_short_decimal_s_length);
   const f_string_static_t byte_dump_short_duodecimal_s = macro_f_string_static_t_initialize_1(BYTE_DUMP_short_duodecimal_s, 0, BYTE_DUMP_short_duodecimal_s_length);
@@ -93,7 +93,7 @@ extern "C" {
   const f_string_static_t byte_dump_long_normal_s = macro_f_string_static_t_initialize_1(BYTE_DUMP_long_normal_s, 0, BYTE_DUMP_long_normal_s_length);
   const f_string_static_t byte_dump_long_simple_s = macro_f_string_static_t_initialize_1(BYTE_DUMP_long_simple_s, 0, BYTE_DUMP_long_simple_s_length);
   const f_string_static_t byte_dump_long_classic_s = macro_f_string_static_t_initialize_1(BYTE_DUMP_long_classic_s, 0, BYTE_DUMP_long_classic_s_length);
-#endif // _di_byte_dump_parameter_d_
+#endif // _di_byte_dump_parameter_s_
 
 #ifdef __cplusplus
 } // extern "C"
