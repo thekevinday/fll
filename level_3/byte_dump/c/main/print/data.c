@@ -655,11 +655,11 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     if (name.used) {
-      fl_print_format("%r%[%r of: %]%[", print->to, f_string_eol_s, print->set->title, byte_dump_program_name_long_s, print->set->title, print->set->notable);
+      fl_print_format("%[%r of: %]%[", print->to, print->set->title, byte_dump_program_name_long_s, print->set->title, print->set->notable);
       fl_print_format("%Q%] %[(in ", print->to, name, print->set->notable, print->set->title);
     }
     else {
-      fl_print_format("%r%[Piped %q: (in ", print->to, f_string_eol_s, print->set->title, byte_dump_program_name_long_s);
+      fl_print_format("%[Piped %q: (in ", print->to, print->set->title, byte_dump_program_name_long_s);
     }
 
     if (main->setting.mode == byte_dump_mode_hexidecimal_e) {

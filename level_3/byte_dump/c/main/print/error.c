@@ -38,9 +38,9 @@ extern "C" {
 
     f_file_stream_lock(print->to);
 
-    fl_print_format("%[Invalid UTF-8 codes were detected for file '%]", print->to, print->set->error, print->set->error);
+    fl_print_format("%r%[Invalid UTF-8 codes were detected for file '%]", print->to, f_string_eol_s, print->set->error, print->set->error);
     fl_print_format("%[%Q%]", print->to, print->set->notable, name.used ? name : f_string_ascii_minus_s, print->set->notable);
-    fl_print_format("%['.%]%r%r", print->to, print->set->error, print->set->error, f_string_eol_s, f_string_eol_s);
+    fl_print_format("%['.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
 

@@ -272,8 +272,6 @@ extern "C" {
       }
     }
 
-    f_print_dynamic_raw(f_string_eol_s, main->program.output.to);
-
     f_file_stream_unlock(main->program.output.to);
     f_file_stream_flush(main->program.output.to);
 

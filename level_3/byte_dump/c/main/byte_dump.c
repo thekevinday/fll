@@ -51,6 +51,10 @@ extern "C" {
         byte_dump_print_file_header(&main->program.output, f_string_empty_s);
 
         byte_dump_process_file(main, f_string_empty_s, file);
+
+        if (main->setting.files.used && F_status_is_error_not(main->setting.state.status)) {
+          f_print_dynamic_raw(f_string_eol_s, main->program.output.to);
+        }
       }
 
       if (main->setting.files.used && F_status_is_error_not(main->setting.state.status)) {
@@ -78,6 +82,10 @@ extern "C" {
           f_file_stream_close(&file);
 
           if (F_status_is_error(main->setting.state.status)) break;
+
+          if (i + 1 < main->setting.files.used) {
+            f_print_dynamic_raw(f_string_eol_s, main->program.output.to);
+          }
         } // for
       }
       else {
