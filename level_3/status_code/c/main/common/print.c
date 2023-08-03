@@ -8,8 +8,8 @@ extern "C" {
   const f_string_t status_code_f_a[] = {
     "f_console_parameter_process",
     "f_thread_create",
-    "fll_program_parameter_process_context",
-    "fll_program_parameter_process_verbosity",
+    "fll_program_parameter_process_context_standard",
+    "fll_program_parameter_process_verbosity_standard",
     "status_string_from",
     "status_string_to",
   };

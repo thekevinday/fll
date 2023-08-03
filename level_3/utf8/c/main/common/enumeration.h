@@ -118,21 +118,7 @@ extern "C" {
  */
 #ifndef _di_utf8_parameter_e_
   enum {
-    utf8_parameter_help_e,
-    utf8_parameter_copyright_e,
-    utf8_parameter_light_e,
-    utf8_parameter_dark_e,
-    utf8_parameter_no_color_e,
-    utf8_parameter_verbosity_quiet_e,
-    utf8_parameter_verbosity_error_e,
-    utf8_parameter_verbosity_normal_e,
-    utf8_parameter_verbosity_verbose_e,
-    utf8_parameter_verbosity_debug_e,
-    utf8_parameter_version_e,
-    utf8_parameter_line_first_no_e,
-    utf8_parameter_line_last_no_e,
-
-    utf8_parameter_from_bytesequence_e,
+    utf8_parameter_from_bytesequence_e = f_console_standard_parameter_last_e,
     utf8_parameter_from_codepoint_e,
     utf8_parameter_from_file_e,
 

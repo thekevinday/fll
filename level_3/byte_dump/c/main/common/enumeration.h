@@ -120,21 +120,7 @@ extern "C" {
  */
 #ifndef _di_byte_dump_parameter_e_
   enum {
-    byte_dump_parameter_help_e,
-    byte_dump_parameter_copyright_e,
-    byte_dump_parameter_light_e,
-    byte_dump_parameter_dark_e,
-    byte_dump_parameter_no_color_e,
-    byte_dump_parameter_verbosity_quiet_e,
-    byte_dump_parameter_verbosity_error_e,
-    byte_dump_parameter_verbosity_normal_e,
-    byte_dump_parameter_verbosity_verbose_e,
-    byte_dump_parameter_verbosity_debug_e,
-    byte_dump_parameter_version_e,
-    byte_dump_parameter_line_first_no_e,
-    byte_dump_parameter_line_last_no_e,
-
-    byte_dump_parameter_binary_e,
+    byte_dump_parameter_binary_e = f_console_standard_parameter_last_e,
     byte_dump_parameter_decimal_e,
     byte_dump_parameter_duodecimal_e,
     byte_dump_parameter_hexidecimal_e,

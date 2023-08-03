@@ -32,10 +32,12 @@ extern "C" {
  *     F_none on success.
  *
  *     Errors (with error bit) from: f_console_parameter_process().
- *     Errors (with error bit) from: fll_program_parameter_process_context().
+ *     Errors (with error bit) from: fll_program_parameter_process_context_standard().
+ *     Errors (with error bit) from: fll_program_parameter_process_verbosity_standard().
  *
  * @see f_console_parameter_process()
- * @see fll_program_parameter_process_context()
+ * @see fll_program_parameter_process_context_standard()
+ * @see fll_program_parameter_process_verbosity_standard()
  */
 #ifndef _di_byte_dump_setting_load_
   extern void byte_dump_setting_load(const f_console_arguments_t arguments, byte_dump_main_t * const main);

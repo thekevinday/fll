@@ -56,8 +56,8 @@ extern "C" {
     iki_read_f_f_string_triples_increase_by_e,
     iki_read_f_f_thread_create_e,
     iki_read_f_fl_iki_read_e,
-    iki_read_f_fll_program_parameter_process_context_e,
-    iki_read_f_fll_program_parameter_process_verbosity_e,
+    iki_read_f_fll_program_parameter_process_context_standard_e,
+    iki_read_f_fll_program_parameter_process_verbosity_standard_e,
   }; // enum
 #endif // _di_iki_read_f_e_
 

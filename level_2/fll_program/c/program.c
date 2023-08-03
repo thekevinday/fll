@@ -7,71 +7,32 @@ extern "C" {
 
 #ifndef _di_fll_program_parameter_process_context_
   f_status_t fll_program_parameter_process_context(const f_uint16s_t choices, const uint8_t modes[], const bool right, fll_program_data_t * const main) {
+    #ifndef _di_level_2_parameter_checking_
+      if (!main) return F_status_set_error(F_parameter);
+    #endif // _di_level_2_parameter_checking_
 
-    {
-      if (choices.used) {
-        f_status_t status = F_none;
-        f_number_unsigned_t choice = 0;
-
-        if (right) {
-          status = f_console_parameter_prioritize_right(main->parameters, choices, &choice);
-        }
-        else {
-          status = f_console_parameter_prioritize_left(main->parameters, choices, &choice);
-        }
-
-        if (F_status_is_error(status)) return status;
-
-        if (status == F_data_not) {
-          main->context.mode = modes[choices.used - 1];
-        }
-        else {
-          main->context.mode = modes[choice];
-        }
-
-        if (main->context.mode == f_color_mode_dark_e || main->context.mode == f_color_mode_light_e) {
-          status = f_color_load_context(main->context.mode, &main->context);
-          if (F_status_is_error(status)) return status;
-        }
-      }
-      else {
-        main->context.mode = f_color_mode_not_e;
-      }
-    }
-
-    main->message.set = &main->context.set;
-    main->output.set = &main->context.set;
-    main->error.set = &main->context.set;
-    main->warning.set = &main->context.set;
-
-    if (main->context.set.error.before) {
-      main->message.context = f_color_set_empty_s;
-      main->message.notable = main->context.set.notable;
-
-      main->output.context = f_color_set_empty_s;
-      main->output.notable = main->context.set.notable;
-
-      main->error.context = main->context.set.error;
-      main->error.notable = main->context.set.notable;
-
-      main->warning.context = main->context.set.warning;
-      main->warning.notable = main->context.set.notable;
-    }
-    else {
-      f_color_set_t *sets[] = { &main->message.context, &main->message.notable, &main->output.context, &main->output.notable, &main->error.context, &main->error.notable, &main->warning.context, &main->warning.notable, 0 };
-
-      private_fll_program_parameter_process_empty(&main->context, sets);
-    }
-
-    return F_none;
+    return private_fll_program_parameter_process_context(choices, modes, right, main);
   }
 #endif // _di_fll_program_parameter_process_context_
+
+#ifndef _di_fll_program_parameter_process_context_standard_
+  f_status_t fll_program_parameter_process_context_standard(const bool right, fll_program_data_t * const main) {
+    #ifndef _di_level_2_parameter_checking_
+      if (!main) return F_status_set_error(F_parameter);
+    #endif // _di_level_2_parameter_checking_
+
+    uint16_t array[3] = { f_console_standard_parameter_no_color_e, f_console_standard_parameter_light_e, f_console_standard_parameter_dark_e };
+    const f_uint16s_t choices = macro_f_uint16s_t_initialize_1(array, 0, 3);
+    const uint8_t modes[3] = { f_color_mode_not_e, f_color_mode_light_e, f_color_mode_dark_e };
+
+    return private_fll_program_parameter_process_context(choices, modes, right, main);
+  }
+#endif // _di_fll_program_parameter_process_context_standard_
 
 #ifndef _di_fll_program_parameter_process_empty_
   f_status_t fll_program_parameter_process_empty(f_color_context_t * const context, f_color_set_t * const sets[]) {
     #ifndef _di_level_2_parameter_checking_
       if (!context) return F_status_set_error(F_parameter);
-      if (!sets) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
     private_fll_program_parameter_process_empty(context, sets);
@@ -109,11 +70,43 @@ extern "C" {
   }
 #endif // _di_fll_program_parameter_process_verbosity_
 
+#ifndef _di_fll_program_parameter_process_verbosity_standard_
+  f_status_t fll_program_parameter_process_verbosity_standard(const bool right, fll_program_data_t * const main) {
+    #ifndef _di_level_2_parameter_checking_
+      if (!main) return F_status_set_error(F_parameter);
+    #endif // _di_level_2_parameter_checking_
+
+    uint16_t array[5] = { f_console_standard_parameter_verbosity_quiet_e, f_console_standard_parameter_verbosity_error_e, f_console_standard_parameter_verbosity_verbose_e, f_console_standard_parameter_verbosity_debug_e, f_console_standard_parameter_verbosity_normal_e };
+    const f_uint16s_t choices = macro_f_uint16s_t_initialize_1(array, 0, 5);
+
+    const uint8_t verbosity[5] = { f_console_verbosity_quiet_e, f_console_verbosity_error_e, f_console_verbosity_verbose_e, f_console_verbosity_debug_e, f_console_verbosity_normal_e };
+
+
+    f_number_unsigned_t choice = 0;
+
+    {
+      const f_status_t status = right ? f_console_parameter_prioritize_right(main->parameters, choices, &choice) : f_console_parameter_prioritize_left(main->parameters, choices, &choice);
+
+      if (F_status_is_error(status)) return status;
+
+      if (status == F_data_not) {
+        choice = choices.used - 1;
+      }
+    }
+
+    main->message.verbosity = verbosity[choice];
+    main->output.verbosity = main->message.verbosity;
+    main->error.verbosity = main->message.verbosity;
+    main->warning.verbosity = main->message.verbosity;
+
+    return F_none;
+  }
+#endif // _di_fll_program_parameter_process_verbosity_standard_
+
 #ifndef _di_fll_program_parameter_additional_append_
   f_status_t fll_program_parameter_additional_append(const f_string_static_t * const arguments, const f_number_unsigneds_t values, f_string_dynamics_t * const destination) {
     #ifndef _di_level_2_parameter_checking_
-      if (!arguments) return F_status_set_error(F_parameter);
-      if (!destination) return F_status_set_error(F_parameter);
+      if (!arguments || !destination) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
     f_status_t status = F_none;
@@ -149,8 +142,7 @@ extern "C" {
 #ifndef _di_fll_program_parameter_additional_mash_
   f_status_t fll_program_parameter_additional_mash(const f_string_static_t glue, const f_string_static_t * const arguments, const f_number_unsigneds_t values, f_string_dynamic_t * const destination) {
     #ifndef _di_level_2_parameter_checking_
-      if (!arguments) return F_status_set_error(F_parameter);
-      if (!destination) return F_status_set_error(F_parameter);
+      if (!arguments || !destination) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
     f_status_t status = F_none;
@@ -174,8 +166,7 @@ extern "C" {
 #ifndef _di_fll_program_parameter_additional_rip_
   f_status_t fll_program_parameter_additional_rip(const f_string_static_t * const arguments, const f_number_unsigneds_t values, f_string_dynamics_t * const destination) {
     #ifndef _di_level_2_parameter_checking_
-      if (!arguments) return F_status_set_error(F_parameter);
-      if (!destination) return F_status_set_error(F_parameter);
+      if (!arguments || !destination) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
     f_status_t status = F_none;
@@ -211,8 +202,7 @@ extern "C" {
 #ifndef _di_fll_program_parameter_additional_rip_mash_
   f_status_t fll_program_parameter_additional_rip_mash(const f_string_static_t glue, const f_string_static_t * const arguments, const f_number_unsigneds_t values, f_string_dynamic_t * const destination) {
     #ifndef _di_level_2_parameter_checking_
-      if (!arguments) return F_status_set_error(F_parameter);
-      if (!destination) return F_status_set_error(F_parameter);
+      if (!arguments || !destination) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
     f_status_t status = F_none;

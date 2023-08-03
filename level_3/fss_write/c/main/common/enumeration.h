@@ -64,21 +64,7 @@ extern "C" {
  */
 #ifndef _di_fss_write_parameter_e_
   enum {
-    fss_write_parameter_help_e,
-    fss_write_parameter_copyright_e,
-    fss_write_parameter_light_e,
-    fss_write_parameter_dark_e,
-    fss_write_parameter_no_color_e,
-    fss_write_parameter_verbosity_quiet_e,
-    fss_write_parameter_verbosity_error_e,
-    fss_write_parameter_verbosity_normal_e,
-    fss_write_parameter_verbosity_verbose_e,
-    fss_write_parameter_verbosity_debug_e,
-    fss_write_parameter_version_e,
-    fss_write_parameter_line_first_no_e,
-    fss_write_parameter_line_last_no_e,
-
-    fss_write_parameter_as_e,
+    fss_write_parameter_as_e = f_console_standard_parameter_last_e,
     fss_write_parameter_backtick_e,
     fss_write_parameter_content_e,
     fss_write_parameter_content_end_e,

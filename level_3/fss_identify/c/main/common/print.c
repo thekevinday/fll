@@ -16,8 +16,8 @@ extern "C" {
     "f_thread_create",
     "f_utf_is_word_dash",
     "fll_fss_identify",
-    "fll_program_parameter_process_context",
-    "fll_program_parameter_process_verbosity",
+    "fll_program_parameter_process_context_standard",
+    "fll_program_parameter_process_verbosity_standard",
   };
 #endif // _di_fss_identify_f_a_
 

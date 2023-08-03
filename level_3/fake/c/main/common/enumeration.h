@@ -21,21 +21,7 @@ extern "C" {
  */
 #ifndef _di_fake_parameter_e_
   enum {
-    fake_parameter_help_e,
-    fake_parameter_copyright_e,
-    fake_parameter_light_e,
-    fake_parameter_dark_e,
-    fake_parameter_no_color_e,
-    fake_parameter_verbosity_quiet_e,
-    fake_parameter_verbosity_error_e,
-    fake_parameter_verbosity_normal_e,
-    fake_parameter_verbosity_verbose_e,
-    fake_parameter_verbosity_debug_e,
-    fake_parameter_version_e,
-    fake_parameter_line_first_no_e,
-    fake_parameter_line_last_no_e,
-
-    fake_parameter_build_e,
+    fake_parameter_build_e = f_console_standard_parameter_last_e,
     fake_parameter_data_e,
     fake_parameter_define_e,
     fake_parameter_documents_e,

@@ -38,7 +38,7 @@ extern "C" {
  *     Errors (with error bit) from: f_string_maps_resize().
  *     Errors (with error bit) from: f_string_triples_resize().
  *     Errors (with error bit) from: fll_program_parameter_process_context().
- *     Errors (with error bit) from: fll_program_parameter_process_verbosity().
+ *     Errors (with error bit) from: fll_program_parameter_process_verbosity_standard().
  *
  * @see f_console_parameter_process()
  * @see f_file_exists()
@@ -47,7 +47,7 @@ extern "C" {
  * @see f_string_maps_resize()
  * @see f_string_triples_resize()
  * @see fll_program_parameter_process_context()
- * @see fll_program_parameter_process_verbosity()
+ * @see fll_program_parameter_process_verbosity_standard()
  */
 #ifndef _di_iki_read_setting_load_
   extern void iki_read_setting_load(const f_console_arguments_t arguments, iki_read_main_t * const main);

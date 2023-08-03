@@ -53,21 +53,7 @@ extern "C" {
  */
 #ifndef _di_status_code_parameter_e_
   enum {
-    status_code_parameter_help_e,
-    status_code_parameter_copyright_e,
-    status_code_parameter_light_e,
-    status_code_parameter_dark_e,
-    status_code_parameter_no_color_e,
-    status_code_parameter_verbosity_quiet_e,
-    status_code_parameter_verbosity_error_e,
-    status_code_parameter_verbosity_normal_e,
-    status_code_parameter_verbosity_verbose_e,
-    status_code_parameter_verbosity_debug_e,
-    status_code_parameter_version_e,
-    status_code_parameter_line_first_no_e,
-    status_code_parameter_line_last_no_e,
-
-    status_code_parameter_fine_e,
+    status_code_parameter_fine_e = f_console_standard_parameter_last_e,
     status_code_parameter_warning_e,
     status_code_parameter_error_e,
     status_code_parameter_number_e,

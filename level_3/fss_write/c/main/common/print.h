@@ -68,8 +68,8 @@ extern "C" {
     fss_write_f_fl_fss_extended_list_object_write_e,
     fss_write_f_fl_fss_extended_object_write_e,
     fss_write_f_fl_fss_payload_content_write_e,
-    fss_write_f_fll_program_parameter_process_context_e,
-    fss_write_f_fll_program_parameter_process_verbosity_e,
+    fss_write_f_fll_program_parameter_process_context_standard_e,
+    fss_write_f_fll_program_parameter_process_verbosity_standard_e,
     fss_write_f_fll_fss_payload_write_e,
   }; // enum
 #endif // _di_fss_write_f_e_

@@ -26,10 +26,10 @@ extern "C" {
       }
 
       if (main->program.context.mode == f_color_mode_not_e) {
-        if (main->program.parameters.array[fake_parameter_no_color_e].flag & f_console_flag_normal_e) {
+        if (main->program.parameters.array[f_console_standard_parameter_no_color_e].flag & f_console_flag_normal_e) {
           main->setting.state.status = f_string_dynamic_append(f_console_symbol_short_normal_s, &data_make->parameter.color.array[data_make->parameter.color.used]);
         }
-        else if (main->program.parameters.array[fake_parameter_no_color_e].flag & f_console_flag_normal_e) {
+        else if (main->program.parameters.array[f_console_standard_parameter_no_color_e].flag & f_console_flag_normal_e) {
           main->setting.state.status = f_string_dynamic_append(f_console_symbol_short_inverse_s, &data_make->parameter.color.array[data_make->parameter.color.used]);
         }
 
@@ -38,10 +38,10 @@ extern "C" {
         }
       }
       else if (main->program.context.mode == f_color_mode_dark_e) {
-        if (main->program.parameters.array[fake_parameter_dark_e].flag & f_console_flag_normal_e) {
+        if (main->program.parameters.array[f_console_standard_parameter_dark_e].flag & f_console_flag_normal_e) {
           main->setting.state.status = f_string_dynamic_append(f_console_symbol_short_normal_s, &data_make->parameter.color.array[data_make->parameter.color.used]);
         }
-        else if (main->program.parameters.array[fake_parameter_dark_e].flag & f_console_flag_normal_e) {
+        else if (main->program.parameters.array[f_console_standard_parameter_dark_e].flag & f_console_flag_normal_e) {
           main->setting.state.status = f_string_dynamic_append(f_console_symbol_short_inverse_s, &data_make->parameter.color.array[data_make->parameter.color.used]);
         }
 
@@ -50,10 +50,10 @@ extern "C" {
         }
       }
       else {
-        if (main->program.parameters.array[fake_parameter_light_e].flag & f_console_flag_normal_e) {
+        if (main->program.parameters.array[f_console_standard_parameter_light_e].flag & f_console_flag_normal_e) {
           main->setting.state.status = f_string_dynamic_append(f_console_symbol_short_normal_s, &data_make->parameter.color.array[data_make->parameter.color.used]);
         }
-        else if (main->program.parameters.array[fake_parameter_light_e].flag & f_console_flag_normal_e) {
+        else if (main->program.parameters.array[f_console_standard_parameter_light_e].flag & f_console_flag_normal_e) {
           main->setting.state.status = f_string_dynamic_append(f_console_symbol_short_inverse_s, &data_make->parameter.color.array[data_make->parameter.color.used]);
         }
 
@@ -90,10 +90,10 @@ extern "C" {
       }
 
       if (main->program.error.verbosity == f_console_verbosity_quiet_e) {
-        if (main->program.parameters.array[fake_parameter_verbosity_quiet_e].flag & f_console_flag_normal_e) {
+        if (main->program.parameters.array[f_console_standard_parameter_verbosity_quiet_e].flag & f_console_flag_normal_e) {
           main->setting.state.status = f_string_dynamic_append(f_console_symbol_short_normal_s, &data_make->parameter.verbosity.array[data_make->parameter.verbosity.used]);
         }
-        else if (main->program.parameters.array[fake_parameter_verbosity_quiet_e].flag & f_console_flag_normal_e) {
+        else if (main->program.parameters.array[f_console_standard_parameter_verbosity_quiet_e].flag & f_console_flag_normal_e) {
           main->setting.state.status = f_string_dynamic_append(f_console_symbol_short_inverse_s, &data_make->parameter.verbosity.array[data_make->parameter.verbosity.used]);
         }
 
@@ -102,10 +102,10 @@ extern "C" {
         }
       }
       else if (main->program.error.verbosity == f_console_verbosity_error_e) {
-        if (main->program.parameters.array[fake_parameter_verbosity_error_e].flag & f_console_flag_normal_e) {
+        if (main->program.parameters.array[f_console_standard_parameter_verbosity_error_e].flag & f_console_flag_normal_e) {
           main->setting.state.status = f_string_dynamic_append(f_console_symbol_short_normal_s, &data_make->parameter.verbosity.array[data_make->parameter.verbosity.used]);
         }
-        else if (main->program.parameters.array[fake_parameter_verbosity_error_e].flag & f_console_flag_normal_e) {
+        else if (main->program.parameters.array[f_console_standard_parameter_verbosity_error_e].flag & f_console_flag_normal_e) {
           main->setting.state.status = f_string_dynamic_append(f_console_symbol_short_inverse_s, &data_make->parameter.verbosity.array[data_make->parameter.verbosity.used]);
         }
 
@@ -114,10 +114,10 @@ extern "C" {
         }
       }
       else if (main->program.error.verbosity >= f_console_verbosity_verbose_e) {
-        if (main->program.parameters.array[fake_parameter_verbosity_verbose_e].flag & f_console_flag_normal_e) {
+        if (main->program.parameters.array[f_console_standard_parameter_verbosity_verbose_e].flag & f_console_flag_normal_e) {
           main->setting.state.status = f_string_dynamic_append(f_console_symbol_short_normal_s, &data_make->parameter.verbosity.array[data_make->parameter.verbosity.used]);
         }
-        else if (main->program.parameters.array[fake_parameter_verbosity_verbose_e].flag & f_console_flag_normal_e) {
+        else if (main->program.parameters.array[f_console_standard_parameter_verbosity_verbose_e].flag & f_console_flag_normal_e) {
           main->setting.state.status = f_string_dynamic_append(f_console_symbol_short_inverse_s, &data_make->parameter.verbosity.array[data_make->parameter.verbosity.used]);
         }
 
@@ -126,10 +126,10 @@ extern "C" {
         }
       }
       else {
-        if (main->program.parameters.array[fake_parameter_verbosity_debug_e].flag & f_console_flag_normal_e) {
+        if (main->program.parameters.array[f_console_standard_parameter_verbosity_debug_e].flag & f_console_flag_normal_e) {
           main->setting.state.status = f_string_dynamic_append(f_console_symbol_short_normal_s, &data_make->parameter.verbosity.array[data_make->parameter.verbosity.used]);
         }
-        else if (main->program.parameters.array[fake_parameter_verbosity_debug_e].flag & f_console_flag_normal_e) {
+        else if (main->program.parameters.array[f_console_standard_parameter_verbosity_debug_e].flag & f_console_flag_normal_e) {
           main->setting.state.status = f_string_dynamic_append(f_console_symbol_short_inverse_s, &data_make->parameter.verbosity.array[data_make->parameter.verbosity.used]);
         }
 

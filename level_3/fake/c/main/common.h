@@ -36,7 +36,7 @@ extern "C" {
  *     Errors (with error bit) from: f_uint8s_increase_by().
  *     Errors (with error bit) from: fll_program_parameter_additional_rip().
  *     Errors (with error bit) from: fll_program_parameter_process_context().
- *     Errors (with error bit) from: fll_program_parameter_process_verbosity().
+ *     Errors (with error bit) from: fll_program_parameter_process_verbosity_standard().
  *
  * @see f_console_parameter_process()
  * @see f_path_directory_cleanup()
@@ -45,7 +45,7 @@ extern "C" {
  * @see f_uint8s_increase_by()
  * @see fll_program_parameter_additional_rip()
  * @see fll_program_parameter_process_context()
- * @see fll_program_parameter_process_verbosity()
+ * @see fll_program_parameter_process_verbosity_standard()
  */
 #ifndef _di_fake_setting_load_
   extern void fake_setting_load(const f_console_arguments_t arguments, fake_main_t * const main);

@@ -199,21 +199,7 @@ extern "C" {
   extern const f_string_static_t fss_embedded_list_read_long_trim_s;
 
   enum {
-    fss_embedded_list_read_parameter_help_e,
-    fss_embedded_list_read_parameter_copyright_e,
-    fss_embedded_list_read_parameter_light_e,
-    fss_embedded_list_read_parameter_dark_e,
-    fss_embedded_list_read_parameter_no_color_e,
-    fss_embedded_list_read_parameter_verbosity_quiet_e,
-    fss_embedded_list_read_parameter_verbosity_error_e,
-    fss_embedded_list_read_parameter_verbosity_normal_e,
-    fss_embedded_list_read_parameter_verbosity_verbose_e,
-    fss_embedded_list_read_parameter_verbosity_debug_e,
-    fss_embedded_list_read_parameter_version_e,
-    fss_embedded_list_read_parameter_line_first_no_e,
-    fss_embedded_list_read_parameter_line_last_no_e,
-
-    fss_embedded_list_read_parameter_at_e,
+    fss_embedded_list_read_parameter_at_e = f_console_standard_parameter_last_e,
     fss_embedded_list_read_parameter_content_e,
     fss_embedded_list_read_parameter_columns_e,
     fss_embedded_list_read_parameter_delimit_e,

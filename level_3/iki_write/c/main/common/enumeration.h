@@ -52,21 +52,7 @@ extern "C" {
  */
 #ifndef _di_iki_write_parameter_e_
   enum {
-    iki_write_parameter_help_e,
-    iki_write_parameter_copyright_e,
-    iki_write_parameter_light_e,
-    iki_write_parameter_dark_e,
-    iki_write_parameter_no_color_e,
-    iki_write_parameter_verbosity_quiet_e,
-    iki_write_parameter_verbosity_error_e,
-    iki_write_parameter_verbosity_normal_e,
-    iki_write_parameter_verbosity_verbose_e,
-    iki_write_parameter_verbosity_debug_e,
-    iki_write_parameter_version_e,
-    iki_write_parameter_line_first_no_e,
-    iki_write_parameter_line_last_no_e,
-
-    iki_write_parameter_backtick_e,
+    iki_write_parameter_backtick_e = f_console_standard_parameter_last_e,
     iki_write_parameter_content_e,
     iki_write_parameter_double_e,
     iki_write_parameter_file_e,

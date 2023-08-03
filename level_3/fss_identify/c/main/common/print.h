@@ -49,8 +49,8 @@ extern "C" {
     fss_identify_f_f_thread_create_e,
     fss_identify_f_f_utf_is_word_dash_e,
     fss_identify_f_fll_fss_identify_e,
-    fss_identify_f_fll_program_parameter_process_context_e,
-    fss_identify_f_fll_program_parameter_process_verbosity_e,
+    fss_identify_f_fll_program_parameter_process_context_standard_e,
+    fss_identify_f_fll_program_parameter_process_verbosity_standard_e,
   }; // enum
 #endif // _di_fss_identify_f_e_
 

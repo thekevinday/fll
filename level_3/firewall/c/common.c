@@ -122,14 +122,14 @@ extern "C" {
     main->setting.state.status = f_console_parameter_process(state, arguments, &main->program.parameters, &main->setting.state, 0);
 
     // Identify and process first/last parameters.
-    if (main->program.parameters.array[firewall_parameter_line_first_no_e].result & f_console_result_found_e) {
+    if (main->program.parameters.array[f_console_standard_parameter_line_first_no_e].result & f_console_result_found_e) {
       main->setting.flag -= main->setting.flag & firewall_main_flag_print_first_e;
     }
     else {
       main->setting.flag |= firewall_main_flag_print_first_e;
     }
 
-    if (main->program.parameters.array[firewall_parameter_line_last_no_e].result & f_console_result_found_e) {
+    if (main->program.parameters.array[f_console_standard_parameter_line_last_no_e].result & f_console_result_found_e) {
       main->setting.flag -= main->setting.flag & firewall_main_flag_print_last_e;
     }
     else {
@@ -146,64 +146,41 @@ extern "C" {
       return;
     }
 
-    {
-      f_number_unsigned_t choice = 0;
-      f_uint16s_t choices = f_uint16s_t_initialize;
+    main->setting.state.status = fll_program_parameter_process_context_standard(F_true, &main->program);
 
-      // Identify and prioritize "color context" parameters.
-      {
-        uint16_t choices_array[3] = { firewall_parameter_no_color_e, firewall_parameter_light_e, firewall_parameter_dark_e };
-        choices.array = choices_array;
-        choices.used = 3;
+    if (F_status_is_error(main->setting.state.status)) {
+      fll_error_print(&main->program.error, F_status_set_fine(main->setting.state.status), "fll_program_parameter_process_context_standard", fll_error_file_flag_fallback_e);
 
-        static const uint8_t modes[3] = { f_color_mode_not_e, f_color_mode_light_e, f_color_mode_dark_e };
-
-        main->setting.state.status = fll_program_parameter_process_context(choices, modes, F_true, &main->program);
-
-        if (F_status_is_error(main->setting.state.status)) {
-          fll_error_print(&main->program.error, F_status_set_fine(main->setting.state.status), "fll_program_parameter_process_context", fll_error_file_flag_fallback_e);
-
-          if (main->program.error.verbosity > f_console_verbosity_quiet_e) {
-            fll_print_dynamic_raw(f_string_eol_s, main->program.error);
-          }
-
-          return;
-        }
+      if (main->program.error.verbosity > f_console_verbosity_quiet_e) {
+        fll_print_dynamic_raw(f_string_eol_s, main->program.error);
       }
 
-      // Identify and prioritize "verbosity" parameters.
-      {
-        uint16_t choices_array[5] = { firewall_parameter_verbosity_quiet_e, firewall_parameter_verbosity_error_e, firewall_parameter_verbosity_verbose_e, firewall_parameter_verbosity_debug_e, firewall_parameter_verbosity_normal_e };
-        choices.array = choices_array;
-        choices.used = 5;
+      return;
+    }
 
-        static const uint8_t verbosity[5] = { f_console_verbosity_quiet_e, f_console_verbosity_error_e, f_console_verbosity_verbose_e, f_console_verbosity_debug_e, f_console_verbosity_normal_e };
+    main->setting.state.status = fll_program_parameter_process_verbosity_standard(F_true, &main->program);
 
-        main->setting.state.status = fll_program_parameter_process_verbosity(choices, verbosity, F_true, &main->program);
+    if (F_status_is_error(main->setting.state.status)) {
+      fll_error_print(&main->program.error, F_status_set_fine(main->setting.state.status), "fll_program_parameter_process_verbosity_standard", fll_error_file_flag_fallback_e);
 
-        if (F_status_is_error(main->setting.state.status)) {
-          fll_error_print(&main->program.error, F_status_set_fine(main->setting.state.status), "fll_program_parameter_process_verbosity", fll_error_file_flag_fallback_e);
-
-          if (main->program.error.verbosity > f_console_verbosity_quiet_e) {
-            fll_print_dynamic_raw(f_string_eol_s, main->program.error);
-          }
-
-          return;
-        }
+      if (main->program.error.verbosity > f_console_verbosity_quiet_e) {
+        fll_print_dynamic_raw(f_string_eol_s, main->program.error);
       }
+
+      return;
     }
 
     main->program.output.to.id = F_type_descriptor_output_d;
     main->program.output.to.stream = F_type_output_d;
     main->program.output.to.flag = F_file_flag_create_d | F_file_flag_write_only_d | F_file_flag_append_d;
 
-    if (main->program.parameters.array[firewall_parameter_help_e].result & f_console_result_found_e) {
+    if (main->program.parameters.array[f_console_standard_parameter_help_e].result & f_console_result_found_e) {
       main->setting.flag |= firewall_main_flag_help_e;
 
       return;
     }
 
-    if (main->program.parameters.array[firewall_parameter_version_e].result & f_console_result_found_e) {
+    if (main->program.parameters.array[f_console_standard_parameter_version_e].result & f_console_result_found_e) {
       main->setting.flag |= firewall_main_flag_version_e;
 
       return;

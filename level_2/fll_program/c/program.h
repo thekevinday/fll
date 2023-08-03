@@ -75,6 +75,38 @@ extern "C" {
 #endif // _di_fll_program_parameter_process_context_
 
 /**
+ * Determine the color context from the parameters and then set the color context based on the choice.
+ *
+ * This will allow for the color context and the color sets to be safely used when colors are disabled.
+ *
+ * This is identical to fll_program_parameter_process_context() except it provides the standard choices and modes.
+ *
+ * @param right
+ *   If TRUE, use the right-most parameter on conflict.
+ *   If FALSE, use the left-most parameter on conflict.
+ * @param main
+ *   The main program data.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not if "values" parameters were expected but not found.
+ *
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_console_parameter_prioritize_left().
+ *   Errors (with error bit) from: f_console_parameter_prioritize_right().
+ *   Errors (with error bit) from: f_color_load_context().
+ *
+ * @see f_console_parameter_prioritize_left()
+ * @see f_console_parameter_prioritize_right()
+ * @see f_color_load_context()
+ */
+#ifndef _di_fll_program_parameter_process_context_standard_
+  extern f_status_t fll_program_parameter_process_context_standard(const bool right, fll_program_data_t * const main);
+#endif // _di_fll_program_parameter_process_context_standard_
+
+/**
  * Set the provided context to empty along with all additional color sets.
  *
  * This will allow for safe usage of the color context and color sets to be safely processed when colors are disabled.
@@ -125,6 +157,32 @@ extern "C" {
 #ifndef _di_fll_program_parameter_process_verbosity_
   extern f_status_t fll_program_parameter_process_verbosity(const f_uint16s_t choices, const uint8_t verbosity[], const bool right, fll_program_data_t * const main);
 #endif // _di_fll_program_parameter_process_verbosity_
+
+/**
+ * Determine the verbosity from the parameters and then set the verbosity based on the choice.
+ *
+ * This is identical to fll_program_parameter_process_verbosity() except it provides the standard choices and modes.
+ *
+ * @param right
+ *   If TRUE, use the right-most parameter on conflict.
+ *   If FALSE, use the left-most parameter on conflict.
+ * @param main
+ *   The main program data.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_console_parameter_prioritize_left().
+ *   Errors (with error bit) from: f_console_parameter_prioritize_right().
+ *
+ * @see f_console_parameter_prioritize_left()
+ * @see f_console_parameter_prioritize_right()
+ */
+#ifndef _di_fll_program_parameter_process_verbosity_standard_
+  extern f_status_t fll_program_parameter_process_verbosity_standard(const bool right, fll_program_data_t * const main);
+#endif // _di_fll_program_parameter_process_verbosity_standard_
 
 /**
  * Allocate new strings from all of the provided locations.

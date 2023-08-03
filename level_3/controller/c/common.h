@@ -132,21 +132,7 @@ extern "C" {
   extern const f_string_static_t controller_long_validate_s;
 
   enum {
-    controller_parameter_help_e,
-    controller_parameter_copyright_e,
-    controller_parameter_light_e,
-    controller_parameter_dark_e,
-    controller_parameter_no_color_e,
-    controller_parameter_verbosity_quiet_e,
-    controller_parameter_verbosity_error_e,
-    controller_parameter_verbosity_normal_e,
-    controller_parameter_verbosity_verbose_e,
-    controller_parameter_verbosity_debug_e,
-    controller_parameter_version_e,
-    controller_parameter_line_first_no_e,
-    controller_parameter_line_last_no_e,
-
-    controller_parameter_cgroup_e,
+    controller_parameter_cgroup_e = f_console_standard_parameter_last_e,
     controller_parameter_daemon_e,
     controller_parameter_init_e,
     controller_parameter_interruptible_e,

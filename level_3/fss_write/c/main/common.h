@@ -40,7 +40,7 @@ extern "C" {
  *     Errors (with error bit) from: f_file_stream_open().
  *     Errors (with error bit) from: f_string_dynamics_resize().
  *     Errors (with error bit) from: fll_program_parameter_process_context().
- *     Errors (with error bit) from: fll_program_parameter_process_verbosity().
+ *     Errors (with error bit) from: fll_program_parameter_process_verbosity_standard().
  * @param callback
  *   (optional) Designate a function to call after performing the initial processing, but before printing help.
  *   If the function returns F_done, then this function immediately returns, resetting status to F_none.
@@ -50,7 +50,7 @@ extern "C" {
  * @see f_file_stream_open()
  * @see f_string_dynamics_resize()
  * @see fll_program_parameter_process_context()
- * @see fll_program_parameter_process_verbosity()
+ * @see fll_program_parameter_process_verbosity_standard()
  */
 #ifndef _di_fss_write_setting_load_
   extern void fss_write_setting_load(const f_console_arguments_t arguments, fss_write_main_t * const main, void (*callback)(const f_console_arguments_t arguments, fss_write_main_t * const main));

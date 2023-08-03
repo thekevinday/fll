@@ -35,13 +35,13 @@ extern "C" {
  *     Errors (with error bit) from: f_file_stream_open().
  *     Errors (with error bit) from: f_string_dynamics_resize().
  *     Errors (with error bit) from: fll_program_parameter_process_context().
- *     Errors (with error bit) from: fll_program_parameter_process_verbosity().
+ *     Errors (with error bit) from: fll_program_parameter_process_verbosity_standard().
  *
  * @see f_console_parameter_process()
  * @see f_file_stream_open()
  * @see f_string_dynamics_resize()
  * @see fll_program_parameter_process_context()
- * @see fll_program_parameter_process_verbosity()
+ * @see fll_program_parameter_process_verbosity_standard()
  */
 #ifndef _di_iki_write_setting_load_
   extern void iki_write_setting_load(const f_console_arguments_t arguments, iki_write_main_t * const main);

@@ -48,8 +48,8 @@ extern "C" {
     iki_write_f_f_string_dynamics_resize_e,
     iki_write_f_f_thread_create_e,
     iki_write_f_fll_iki_content_escape_e,
-    iki_write_f_fll_program_parameter_process_context_e,
-    iki_write_f_fll_program_parameter_process_verbosity_e,
+    iki_write_f_fll_program_parameter_process_context_standard_e,
+    iki_write_f_fll_program_parameter_process_verbosity_standard_e,
   }; // enum
 #endif // _di_iki_write_f_e_
 

@@ -553,6 +553,34 @@ extern "C" {
 #endif // _di_f_console_parameters_t_
 
 /**
+ * Provide enumerations for the console parameters.
+ *
+ * See the f_console_standard_*_s strings for details.
+ *
+ * The f_console_standard_parameter_last_e is not a parameter.
+ * f_console_standard_parameter_last_e represents the end of the enumeration.
+ * Use f_console_standard_parameter_last_e as the starting enum for any custom project.
+ */
+#ifndef _di_f_console_parameter_state_type_e_
+  enum {
+    f_console_standard_parameter_help_e = 0,
+    f_console_standard_parameter_copyright_e,
+    f_console_standard_parameter_light_e,
+    f_console_standard_parameter_dark_e,
+    f_console_standard_parameter_no_color_e,
+    f_console_standard_parameter_verbosity_quiet_e,
+    f_console_standard_parameter_verbosity_error_e,
+    f_console_standard_parameter_verbosity_normal_e,
+    f_console_standard_parameter_verbosity_verbose_e,
+    f_console_standard_parameter_verbosity_debug_e,
+    f_console_standard_parameter_version_e,
+    f_console_standard_parameter_line_first_no_e,
+    f_console_standard_parameter_line_last_no_e,
+    f_console_standard_parameter_last_e,
+  }; // enum
+#endif // _di_f_console_standard_parameter_e_
+
+/**
  * Create some standard command line parameter options required/expected by the kevux/fss/fll specifications.
  *
  * It is expected that all of the "+" and "++" console options described below are reserved for these purposes.

@@ -16,14 +16,14 @@ extern "C" {
     main->setting.state.step_small = byte_dump_allocation_small_d;
 
     // Identify and process first/last parameters.
-    if (main->program.parameters.array[byte_dump_parameter_line_first_no_e].result & f_console_result_found_e) {
+    if (main->program.parameters.array[f_console_standard_parameter_line_first_no_e].result & f_console_result_found_e) {
       main->setting.flag -= main->setting.flag & byte_dump_main_flag_print_first_e;
     }
     else {
       main->setting.flag |= byte_dump_main_flag_print_first_e;
     }
 
-    if (main->program.parameters.array[byte_dump_parameter_line_last_no_e].result & f_console_result_found_e) {
+    if (main->program.parameters.array[f_console_standard_parameter_line_last_no_e].result & f_console_result_found_e) {
       main->setting.flag -= main->setting.flag & byte_dump_main_flag_print_last_e;
     }
     else {
@@ -40,51 +40,33 @@ extern "C" {
       return;
     }
 
+    main->setting.state.status = fll_program_parameter_process_context_standard(F_true, &main->program);
+
+    if (F_status_is_error(main->setting.state.status)) {
+      if ((main->setting.flag & byte_dump_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
+        fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
+      }
+
+      byte_dump_print_error(&main->program.error, macro_byte_dump_f(fll_program_parameter_process_context_standard));
+
+      return;
+    }
+
+    main->setting.state.status = fll_program_parameter_process_verbosity_standard(F_true, &main->program);
+
+    if (F_status_is_error(main->setting.state.status)) {
+      if ((main->setting.flag & byte_dump_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
+        fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
+      }
+
+      byte_dump_print_error(&main->program.error, macro_byte_dump_f(fll_program_parameter_process_verbosity_standard));
+
+      return;
+    }
+
     {
       f_number_unsigned_t choice = 0;
       f_uint16s_t choices = f_uint16s_t_initialize;
-
-      // Identify and prioritize "color context" parameters.
-      {
-        uint16_t choices_array[3] = { byte_dump_parameter_no_color_e, byte_dump_parameter_light_e, byte_dump_parameter_dark_e };
-        choices.array = choices_array;
-        choices.used = 3;
-
-        static const uint8_t modes[3] = { f_color_mode_not_e, f_color_mode_light_e, f_color_mode_dark_e };
-
-        main->setting.state.status = fll_program_parameter_process_context(choices, modes, F_true, &main->program);
-
-        if (F_status_is_error(main->setting.state.status)) {
-          if ((main->setting.flag & byte_dump_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
-            fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
-          }
-
-          byte_dump_print_error(&main->program.error, macro_byte_dump_f(fll_program_parameter_process_context));
-
-          return;
-        }
-      }
-
-      // Identify and prioritize "verbosity" parameters.
-      {
-        uint16_t choices_array[5] = { byte_dump_parameter_verbosity_quiet_e, byte_dump_parameter_verbosity_error_e, byte_dump_parameter_verbosity_verbose_e, byte_dump_parameter_verbosity_debug_e, byte_dump_parameter_verbosity_normal_e };
-        choices.array = choices_array;
-        choices.used = 5;
-
-        static const uint8_t verbosity[5] = { f_console_verbosity_quiet_e, f_console_verbosity_error_e, f_console_verbosity_verbose_e, f_console_verbosity_debug_e, f_console_verbosity_normal_e };
-
-        main->setting.state.status = fll_program_parameter_process_verbosity(choices, verbosity, F_true, &main->program);
-
-        if (F_status_is_error(main->setting.state.status)) {
-          if ((main->setting.flag & byte_dump_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
-            fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
-          }
-
-          byte_dump_print_error(&main->program.error, macro_byte_dump_f(fll_program_parameter_process_verbosity));
-
-          return;
-        }
-      }
 
       // Identify priority of mode parameters.
       {
@@ -182,19 +164,19 @@ extern "C" {
       }
     }
 
-    if (main->program.parameters.array[byte_dump_parameter_help_e].result & f_console_result_found_e) {
+    if (main->program.parameters.array[f_console_standard_parameter_help_e].result & f_console_result_found_e) {
       main->setting.flag |= byte_dump_main_flag_help_e;
 
       return;
     }
 
-    if (main->program.parameters.array[byte_dump_parameter_version_e].result & f_console_result_found_e) {
+    if (main->program.parameters.array[f_console_standard_parameter_version_e].result & f_console_result_found_e) {
       main->setting.flag |= byte_dump_main_flag_version_e;
 
       return;
     }
 
-    if (main->program.parameters.array[byte_dump_parameter_copyright_e].result & f_console_result_found_e) {
+    if (main->program.parameters.array[f_console_standard_parameter_copyright_e].result & f_console_result_found_e) {
       main->setting.flag |= byte_dump_main_flag_copyright_e;
 
       return;

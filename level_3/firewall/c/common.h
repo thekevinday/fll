@@ -349,18 +349,7 @@ extern "C" {
   }; // enum
 
   enum {
-    firewall_parameter_help_e,
-    firewall_parameter_light_e,
-    firewall_parameter_dark_e,
-    firewall_parameter_no_color_e,
-    firewall_parameter_verbosity_quiet_e,
-    firewall_parameter_verbosity_error_e,
-    firewall_parameter_verbosity_normal_e,
-    firewall_parameter_verbosity_verbose_e,
-    firewall_parameter_verbosity_debug_e,
-    firewall_parameter_version_e,
-
-    firewall_parameter_command_start_e,
+    firewall_parameter_command_start_e = f_console_standard_parameter_last_e,
     firewall_parameter_command_stop_e,
     firewall_parameter_command_restart_e,
     firewall_parameter_command_lock_e,

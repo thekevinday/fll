@@ -2169,13 +2169,13 @@ extern "C" {
       };
 
       const uint8_t codes[] = {
-        controller_parameter_help_e,
-        controller_parameter_dark_e,
-        controller_parameter_no_color_e,
-        controller_parameter_verbosity_quiet_e,
-        controller_parameter_verbosity_normal_e,
-        controller_parameter_verbosity_verbose_e,
-        controller_parameter_verbosity_debug_e,
+        f_console_standard_parameter_help_e,
+        f_console_standard_parameter_dark_e,
+        f_console_standard_parameter_no_color_e,
+        f_console_standard_parameter_verbosity_quiet_e,
+        f_console_standard_parameter_verbosity_normal_e,
+        f_console_standard_parameter_verbosity_verbose_e,
+        f_console_standard_parameter_verbosity_debug_e,
         controller_parameter_init_e,
         controller_parameter_interruptible_e,
         controller_parameter_daemon_e,

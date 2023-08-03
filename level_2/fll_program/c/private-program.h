@@ -16,6 +16,43 @@ extern "C" {
 #endif
 
 /**
+ * Private implementation of fll_program_parameter_process_context().
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param choices
+ *   An array of color modes.
+ *   The default, if no mode is specified, will be the last value in the array.
+ * @param modes
+ *   An array designating the context modes associated with each choice.
+ *   This must exactly match the size of the choices array.
+ *   No bounds checking is performed.
+ * @param right
+ *   If TRUE, use the right-most parameter on conflict.
+ *   If FALSE, use the left-most parameter on conflict.
+ * @param main
+ *   The main program data.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not if "values" parameters were expected but not found.
+ *
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_console_parameter_prioritize_left().
+ *   Errors (with error bit) from: f_console_parameter_prioritize_right().
+ *   Errors (with error bit) from: f_color_load_context().
+ *
+ * @see f_console_parameter_prioritize_left()
+ * @see f_console_parameter_prioritize_right()
+ * @see f_color_load_context()
+ */
+#if !defined(_di_fll_program_parameter_process_context_) || !defined(_di_fll_program_parameter_process_context_standard_)
+  extern f_status_t private_fll_program_parameter_process_context(const f_uint16s_t choices, const uint8_t modes[], const bool right, fll_program_data_t * const main);
+#endif // !defined(_di_fll_program_parameter_process_context_) || !defined(_di_fll_program_parameter_process_context_standard_)
+
+/**
  * Print standard help option.
  *
  * This print function does not use locking, be sure something like flockfile() and funlockfile() are appropriately called.
@@ -79,11 +116,12 @@ extern "C" {
  *   Set to NULL to not use.
  *
  * @see fll_program_parameter_process_context()
+ * @see fll_program_parameter_process_context_standard()
  * @see fll_program_parameter_process_empty()
  */
-#if !defined(_di_fll_program_parameter_process_context_) || !defined(_di_fll_program_parameter_process_empty_)
+#if !defined(_di_fll_program_parameter_process_context_) || !defined(_di_fll_program_parameter_process_context_standard_) || !defined(_di_fll_program_parameter_process_empty_)
   extern void private_fll_program_parameter_process_empty(f_color_context_t * const context, f_color_set_t * const sets[]) F_attribute_visibility_internal_d;
-#endif // !defined(_di_fll_program_parameter_process_context_) || !defined(_di_fll_program_parameter_process_empty_)
+#endif // !defined(_di_fll_program_parameter_process_context_) || !defined(_di_fll_program_parameter_process_context_standard_) || !defined(_di_fll_program_parameter_process_empty_)
 
 #ifdef __cplusplus
 } // extern "C"

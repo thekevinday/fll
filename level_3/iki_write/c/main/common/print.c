@@ -15,8 +15,8 @@ extern "C" {
     "f_string_dynamics_resize",
     "f_thread_create",
     "fll_iki_content_escape",
-    "fll_program_parameter_process_context",
-    "fll_program_parameter_process_verbosity",
+    "fll_program_parameter_process_context_standard",
+    "fll_program_parameter_process_verbosity_standard",
   };
 #endif // _di_iki_write_f_a_
 

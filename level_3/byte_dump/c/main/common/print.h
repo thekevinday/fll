@@ -46,8 +46,8 @@ extern "C" {
     byte_dump_f_f_string_dynamics_increase_by_e,
     byte_dump_f_f_thread_create_e,
     byte_dump_f_fl_conversion_dynamic_to_unsigned_detect_e,
-    byte_dump_f_fll_program_parameter_process_context_e,
-    byte_dump_f_fll_program_parameter_process_verbosity_e,
+    byte_dump_f_fll_program_parameter_process_context_standard_e,
+    byte_dump_f_fll_program_parameter_process_verbosity_standard_e,
   }; // enum
 #endif // _di_byte_dump_f_e_
 

@@ -54,14 +54,14 @@ extern "C" {
     main->setting.state.step_small = fss_read_allocation_small_d;
 
     // Identify and process first/last parameters.
-    if (parameters->array[fss_read_parameter_line_first_no_e].result & f_console_result_found_e) {
+    if (parameters->array[f_console_standard_parameter_line_first_no_e].result & f_console_result_found_e) {
       main->setting.flag -= main->setting.flag & fss_read_main_flag_print_first_e;
     }
     else {
       main->setting.flag |= fss_read_main_flag_print_first_e;
     }
 
-    if (parameters->array[fss_read_parameter_line_last_no_e].result & f_console_result_found_e) {
+    if (parameters->array[f_console_standard_parameter_line_last_no_e].result & f_console_result_found_e) {
       main->setting.flag -= main->setting.flag & fss_read_main_flag_print_last_e;
     }
     else {
@@ -78,65 +78,43 @@ extern "C" {
       return;
     }
 
-    {
-      f_uint16s_t choices = f_uint16s_t_initialize;
+    main->setting.state.status = fll_program_parameter_process_context_standard(F_true, &main->program);
 
-      // Identify and prioritize "color context" parameters.
-      {
-        uint16_t choices_array[3] = { fss_read_parameter_no_color_e, fss_read_parameter_light_e, fss_read_parameter_dark_e };
-        choices.array = choices_array;
-        choices.used = 3;
-
-        static const uint8_t modes[3] = { f_color_mode_not_e, f_color_mode_light_e, f_color_mode_dark_e };
-
-        main->setting.state.status = fll_program_parameter_process_context(choices, modes, F_true, &main->program);
-
-        if (F_status_is_error(main->setting.state.status)) {
-          if ((main->setting.flag & fss_read_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
-            fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
-          }
-
-          fss_read_print_error(&main->program.error, macro_fss_read_f(fll_program_parameter_process_context));
-
-          return;
-        }
+    if (F_status_is_error(main->setting.state.status)) {
+      if ((main->setting.flag & fss_read_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
+        fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
       }
 
-      // Identify and prioritize "verbosity" parameters.
-      {
-        uint16_t choices_array[5] = { fss_read_parameter_verbosity_quiet_e, fss_read_parameter_verbosity_error_e, fss_read_parameter_verbosity_verbose_e, fss_read_parameter_verbosity_debug_e, fss_read_parameter_verbosity_normal_e };
-        choices.array = choices_array;
-        choices.used = 5;
+      fss_read_print_error(&main->program.error, macro_fss_read_f(fll_program_parameter_process_context_standard));
 
-        const uint8_t verbosity[5] = { f_console_verbosity_quiet_e, f_console_verbosity_error_e, f_console_verbosity_verbose_e, f_console_verbosity_debug_e, f_console_verbosity_normal_e };
+      return;
+    }
 
-        main->setting.state.status = fll_program_parameter_process_verbosity(choices, verbosity, F_true, &main->program);
+    main->setting.state.status = fll_program_parameter_process_verbosity_standard(F_true, &main->program);
 
-        if (F_status_is_error(main->setting.state.status)) {
-          if ((main->setting.flag & fss_read_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
-            fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
-          }
-
-          fss_read_print_error(&main->program.error, macro_fss_read_f(fll_program_parameter_process_verbosity));
-
-          return;
-        }
+    if (F_status_is_error(main->setting.state.status)) {
+      if ((main->setting.flag & fss_read_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
+        fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
       }
+
+      fss_read_print_error(&main->program.error, macro_fss_read_f(fll_program_parameter_process_verbosity_standard));
+
+      return;
     }
 
     main->program.output.to.id = F_type_descriptor_output_d;
     main->program.output.to.stream = F_type_output_d;
     main->program.output.to.flag = F_file_flag_create_d | F_file_flag_write_only_d | F_file_flag_append_d;
 
-    if (parameters->array[fss_read_parameter_help_e].result & f_console_result_found_e) {
+    if (parameters->array[f_console_standard_parameter_help_e].result & f_console_result_found_e) {
       main->setting.flag |= fss_read_main_flag_help_e;
     }
 
-    if (parameters->array[fss_read_parameter_version_e].result & f_console_result_found_e) {
+    if (parameters->array[f_console_standard_parameter_version_e].result & f_console_result_found_e) {
       main->setting.flag |= fss_read_main_flag_version_e;
     }
 
-    if (parameters->array[fss_read_parameter_copyright_e].result & f_console_result_found_e) {
+    if (parameters->array[f_console_standard_parameter_copyright_e].result & f_console_result_found_e) {
       main->setting.flag |= fss_read_main_flag_copyright_e;
     }
 
@@ -151,8 +129,8 @@ extern "C" {
       }
     }
 
-    if (parameters->array[fss_read_parameter_help_e].result & f_console_result_found_e) return;
-    if (parameters->array[fss_read_parameter_version_e].result & f_console_result_found_e) return;
+    if (parameters->array[f_console_standard_parameter_help_e].result & f_console_result_found_e) return;
+    if (parameters->array[f_console_standard_parameter_version_e].result & f_console_result_found_e) return;
 
     f_number_unsigned_t i = 0;
     f_number_unsigned_t index = 0;

@@ -62,7 +62,7 @@ extern "C" {
  *     Errors (with error bit) from: f_file_stream_open().
  *     Errors (with error bit) from: f_string_dynamics_resize().
  *     Errors (with error bit) from: fll_program_parameter_process_context().
- *     Errors (with error bit) from: fll_program_parameter_process_verbosity().
+ *     Errors (with error bit) from: fll_program_parameter_process_verbosity_standard().
  *
  *     Errors (with error bit) from: fss_read_setting_load_depth().
  *     Errors (with error bit) from: fss_read_signal_check()
@@ -75,7 +75,7 @@ extern "C" {
  * @see f_file_stream_open()
  * @see f_string_dynamics_resize()
  * @see fll_program_parameter_process_context()
- * @see fll_program_parameter_process_verbosity()
+ * @see fll_program_parameter_process_verbosity_standard()
  *
  * @see fss_read_setting_load_depth()
  * @see fss_read_signal_check()

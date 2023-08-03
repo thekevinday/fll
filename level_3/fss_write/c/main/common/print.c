@@ -35,8 +35,8 @@ extern "C" {
     "fl_fss_extended_list_object_write",
     "fl_fss_extended_object_write",
     "fl_fss_payload_content_write",
-    "fll_program_parameter_process_context",
-    "fll_program_parameter_process_verbosity",
+    "fll_program_parameter_process_context_standard",
+    "fll_program_parameter_process_verbosity_standard",
     "fll_fss_payload_write",
   };
 #endif // _di_fss_write_f_a_

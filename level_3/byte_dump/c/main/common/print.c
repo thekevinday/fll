@@ -13,8 +13,8 @@ extern "C" {
     "f_string_dynamics_increase_by",
     "f_thread_create",
     "fl_conversion_dynamic_to_unsigned_detect",
-    "fll_program_parameter_process_context",
-    "fll_program_parameter_process_verbosity",
+    "fll_program_parameter_process_context_standard",
+    "fll_program_parameter_process_verbosity_standard",
   };
 #endif // _di_byte_dump_f_a_
 
