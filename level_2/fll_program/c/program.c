@@ -127,21 +127,21 @@ extern "C" {
       if (!context) return;
     #endif // _di_level_2_parameter_checking_
 
-    context->set.error = f_color_set_empty_s;
-    context->set.important = f_color_set_empty_s;
-    context->set.normal = f_color_set_empty_s;
-    context->set.normal_reset = f_color_set_empty_s;
-    context->set.notable = f_color_set_empty_s;
-    context->set.reset = f_color_set_empty_s;
-    context->set.standout = f_color_set_empty_s;
-    context->set.success = f_color_set_empty_s;
-    context->set.title = f_color_set_empty_s;
-    context->set.warning = f_color_set_empty_s;
+    context->set.error =
+      context->set.important =
+      context->set.normal =
+      context->set.normal_reset =
+      context->set.notable =
+      context->set.reset =
+      context->set.standout =
+      context->set.success =
+      context->set.title =
+      context->set.warning = f_color_set_empty_s;
 
     if (sets) {
       for (f_array_length_t i = 0; sets[i]; ++i) {
         *sets[i] = f_color_set_empty_s;
-      }
+      } // for
     }
   }
 #endif // _di_fll_program_parameter_process_empty_
@@ -176,11 +176,7 @@ extern "C" {
       }
     } // for
 
-    if (status == F_none && start == destination->used) {
-      return F_data_not;
-    }
-
-    return status;
+    return (status == F_none && start == destination->used) ? F_data_not : status;
   }
 #endif // _di_fll_program_parameter_additional_append_
 
@@ -202,11 +198,7 @@ extern "C" {
       }
     } // for
 
-    if (status == F_none && start == destination->used) {
-      return F_data_not;
-    }
-
-    return status;
+    return (status == F_none && start == destination->used) ? F_data_not : status;
   }
 #endif // _di_fll_program_parameter_additional_mash_
 
@@ -239,11 +231,7 @@ extern "C" {
       }
     } // for
 
-    if (status == F_none && start == destination->used) {
-      return F_data_not;
-    }
-
-    return status;
+    return (status == F_none && start == destination->used) ? F_data_not : status;
   }
 #endif // _di_fll_program_parameter_additional_rip_
 
@@ -275,11 +263,7 @@ extern "C" {
 
     f_string_dynamic_resize(0, &ripped);
 
-    if (status == F_none && start == destination->used) {
-      return F_data_not;
-    }
-
-    return status;
+    return (status == F_none && start == destination->used) ? F_data_not : status;
   }
 #endif // _di_fll_program_parameter_additional_rip_mash_
 
@@ -318,9 +302,7 @@ extern "C" {
 
     const f_status_t status = f_signal_close(signal);
 
-    if (F_status_is_error(status)) return status;
-
-    return F_none;
+    return (F_status_is_error(status)) ? status : F_none;
   }
 #endif // _di_fll_program_standard_setdown_
 
@@ -365,9 +347,8 @@ extern "C" {
     f_signal_set_delete(F_signal_termination, &signal->set);
 
     status = f_signal_mask(SIG_UNBLOCK, &set, 0);
-    if (F_status_is_error(status)) return status;
 
-    return F_none;
+    return (F_status_is_error(status)) ? status : F_none;
   }
 #endif // _di_fll_program_standard_setup_
 
