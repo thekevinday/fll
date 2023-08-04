@@ -1,17 +1,29 @@
-#include "control.h"
-#include "private-common.h"
-#include "private-print.h"
+#include "../control.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#ifndef _di_controller_strings_
-  const f_string_static_t controller_name_socket_s = macro_f_string_static_t_initialize_1(CONTROLLER_name_socket_s, 0, CONTROLLER_name_socket_s_length);
-  const f_string_static_t controller_path_socket_s = macro_f_string_static_t_initialize_1(CONTROLLER_path_socket_s, 0, CONTROLLER_path_socket_s_length);
-  const f_string_static_t controller_path_socket_prefix_s = macro_f_string_static_t_initialize_1(CONTROLLER_path_socket_prefix_s, 0, CONTROLLER_path_socket_prefix_s_length);
-  const f_string_static_t controller_path_socket_suffix_s = macro_f_string_static_t_initialize_1(CONTROLLER_path_socket_suffix_s, 0, CONTROLLER_path_socket_suffix_s_length);
-#endif // _di_controller_strings_
+#ifndef _di_control_program_version_s_
+  const f_string_static_t control_program_version_s = macro_f_string_static_t_initialize_1(CONTROL_program_version_s, 0, CONTROL_program_version_s_length);
+#endif // _di_control_program_version_s_
+
+#ifndef _di_control_program_name_s_
+  const f_string_static_t control_program_name_s = macro_f_string_static_t_initialize_1(CONTROL_program_name_s, 0, CONTROL_program_name_s_length);
+  const f_string_static_t control_program_name_long_s = macro_f_string_static_t_initialize_1(CONTROL_program_name_long_s, 0, CONTROL_program_name_long_s_length);
+#endif // _di_control_program_name_s_
+
+#ifndef _di_control_parameter_s_
+  const f_string_static_t control_short_name_s = macro_f_string_static_t_initialize_1(CONTROL_short_name_s, 0, CONTROL_short_name_s_length);
+  const f_string_static_t control_short_return_s = macro_f_string_static_t_initialize_1(CONTROL_short_return_s, 0, CONTROL_short_return_s_length);
+  const f_string_static_t control_short_settings_s = macro_f_string_static_t_initialize_1(CONTROL_short_settings_s, 0, CONTROL_short_settings_s_length);
+  const f_string_static_t control_short_socket_s = macro_f_string_static_t_initialize_1(CONTROL_short_socket_s, 0, CONTROL_short_socket_s_length);
+
+  const f_string_static_t control_long_name_s = macro_f_string_static_t_initialize_1(CONTROL_long_name_s, 0, CONTROL_long_name_s_length);
+  const f_string_static_t control_long_return_s = macro_f_string_static_t_initialize_1(CONTROL_long_return_s, 0, CONTROL_long_return_s_length);
+  const f_string_static_t control_long_settings_s = macro_f_string_static_t_initialize_1(CONTROL_long_settings_s, 0, CONTROL_long_settings_s_length);
+  const f_string_static_t control_long_socket_s = macro_f_string_static_t_initialize_1(CONTROL_long_socket_s, 0, CONTROL_long_socket_s_length);
+#endif // _di_control_parameter_s_
 
 #ifndef _di_control_strings_s_
   const f_string_static_t control_path_settings_s = macro_f_string_static_t_initialize_1(CONTROL_path_settings_s, 0, CONTROL_path_settings_s_length);
@@ -47,22 +59,12 @@ extern "C" {
   const f_string_static_t control_thaw_s = macro_f_string_static_t_initialize_1(CONTROL_thaw_s, 0, CONTROL_thaw_s_length);
 #endif // _di_control_strings_s_
 
-#ifndef _di_control_data_delete_
-  void control_data_delete(control_data_t * const data) {
-
-    f_string_dynamic_resize(0, &data->cache.large);
-    f_string_dynamic_resize(0, &data->cache.small);
-    f_string_dynamic_resize(0, &data->cache.packet);
-
-    f_string_ranges_resize(0, &data->cache.packet_objects);
-    f_string_rangess_resize(0, &data->cache.packet_contents);
-
-    f_string_ranges_resize(0, &data->cache.header_objects);
-    f_string_rangess_resize(0, &data->cache.header_contents);
-
-    f_number_unsigneds_resize(0, &data->cache.delimits);
-  }
-#endif // _di_control_data_delete_
+#ifndef _di_controller_strings_s_
+  const f_string_static_t controller_name_socket_s = macro_f_string_static_t_initialize_1(CONTROLLER_name_socket_s, 0, CONTROLLER_name_socket_s_length);
+  const f_string_static_t controller_path_socket_s = macro_f_string_static_t_initialize_1(CONTROLLER_path_socket_s, 0, CONTROLLER_path_socket_s_length);
+  const f_string_static_t controller_path_socket_prefix_s = macro_f_string_static_t_initialize_1(CONTROLLER_path_socket_prefix_s, 0, CONTROLLER_path_socket_prefix_s_length);
+  const f_string_static_t controller_path_socket_suffix_s = macro_f_string_static_t_initialize_1(CONTROLLER_path_socket_suffix_s, 0, CONTROLLER_path_socket_suffix_s_length);
+#endif // _di_controller_strings_s_
 
 #ifdef __cplusplus
 } // extern "C"

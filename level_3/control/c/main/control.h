@@ -4,11 +4,6 @@
  * Project: Control
  * API Version: 0.7
  * Licenses: lgpl-2.1-or-later
- *
- * This is the Control program.
- *
- * This program utilizes the Featureless Linux Library.
- * This program is used to communicate with the "controller" program that exists as a system init (an alternative to sysvinit, initng, etc..).
  */
 #ifndef _control_h
 #define _control_h
@@ -35,6 +30,7 @@
 #include <fll/level_0/rip.h>
 #include <fll/level_0/signal.h>
 #include <fll/level_0/socket.h>
+#include <fll/level_0/thread.h>
 #include <fll/level_0/status_string.h>
 
 // FLL-1 includes.
@@ -52,8 +48,22 @@
 #include <fll/level_2/program.h>
 
 // Control includes.
-#include <program/control/common.h>
-#include <program/control/print.h>
+#include <program/control/main/common/define.h>
+#include <program/control/main/common/enumeration.h>
+#include <program/control/main/common/print.h>
+#include <program/control/main/common/string.h>
+#include <program/control/main/common/type.h>
+#include <program/control/main/common.h>
+#include <program/control/main/print/data.h>
+#include <program/control/main/print/debug.h>
+#include <program/control/main/print/error.h>
+#include <program/control/main/print/message.h>
+#include <program/control/main/print/warning.h>
+#include <program/control/main/action.h>
+#include <program/control/main/packet.h>
+#include <program/control/main/payload.h>
+#include <program/control/main/signal.h>
+#include <program/control/main/thread.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -71,19 +81,18 @@ extern "C" {
  *   - F_signal_termination
  *
  * @param main
- *   The main program data.
- * @param arguments
- *   The parameters passed to the process.
+ *   The main program data and settings.
  *
- * @return
- *   F_none on success.
+ *   This alters main.setting.state.status:
+ *     F_none on success.
+ *     F_true on success when performing verification and verify passed.
+ *     F_false on success when performing verification and verify failed.
  *
- *   F_interrupt (with error bit) on receiving a process signal, such as an interrupt signal.
- *
- *   Status codes (with error bit) are returned on any problem.
+ *     F_interrupt (with error bit) on (exit) signal received.
+ *     F_parameter (with error bit) if main is NULL or setting is NULL.
  */
 #ifndef _di_control_main_
-  extern f_status_t control_main(fll_program_data_t * const main, control_setting_t * const setting);
+  extern void control_main(control_main_t * const main);
 #endif // _di_control_main_
 
 #ifdef __cplusplus

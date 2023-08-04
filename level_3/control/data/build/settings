@@ -35,11 +35,11 @@ build_libraries-individual_thread -lf_thread
 build_libraries-level -lfll_2 -lfll_1 -lfll_0
 build_libraries-monolithic -lfll
 
-build_sources_library control.c common.c print.c private-common.c private-control.c private-print.c
+build_sources_library main/common.c main/common/define.c main/common/enumeration.c main/common/print.c main/common/string.c main/common/type.c main/print/data.c main/print/debug.c main/print/error.c main/print/message.c main/print/warning.c main/action.c main/control.c main/packet.c main/payload.c main/signal.c main/thread.c
 
-build_sources_program main.c
+build_sources_program main/main.c
 
-build_sources_headers control.h common.h print.h
+build_sources_headers main/common.h main/common/define.h main/common/enumeration.h main/common/print.h main/common/string.h main/common/type.h main/print.h main/print/data.h main/print/debug.h main/print/error.h main/print/message.h main/print/warning.h main/action.h main/control.h main/packet.h main/payload.h main/signal.h main/thread.h
 
 build_sources_documentation man
 
