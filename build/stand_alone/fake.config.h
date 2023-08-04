@@ -36,7 +36,6 @@
 #define _di_f_accountss_t_
 #define _di_f_accounts_t_
 //#define _di_f_account_t_
-
 #define _di_f_capability_ambient_get_
 #define _di_f_capability_ambient_reset_
 #define _di_f_capability_ambient_set_
@@ -78,7 +77,6 @@
 #define _di_f_capability_to_name_
 #define _di_f_capability_to_text_
 #define _di_f_capability_user_set_
-
 #define _di_f_cells_adjust_
 #define _di_f_cells_append_
 #define _di_f_cells_append_all_
@@ -98,9 +96,7 @@
 #define _di_f_cellss_t_
 #define _di_f_cells_t_
 #define _di_f_cell_t_
-
 //#define _di_f_char_t_
-
 //#define _di_f_color_begin_s_
 //#define _di_f_color_code_black_bg_s_
 //#define _di_f_color_code_black_s_
@@ -165,7 +161,6 @@
 //#define _di_f_color_terminal_name_s_
 //#define _di_f_color_terminal_s_
 //#define _di_f_color_terminal_value_linux_s_
-
 #define _di_f_compare_
 //#define _di_f_compare_dynamic_
 #define _di_f_compare_dynamic_except_
@@ -215,7 +210,6 @@
 #define _di_f_compare_utf_except_trim_
 #define _di_f_compare_utf_trim_
 #define _di_f_compare_utf_utf_dynamic_partial_trim_
-
 //#define _di_f_console_arguments_t_
 #define _di_f_console_environment_process_
 //#define _di_f_console_flag_e_
@@ -250,6 +244,7 @@
 //#define _di_f_console_standard_long_status_out_s_
 //#define _di_f_console_standard_long_verbose_s_
 //#define _di_f_console_standard_long_version_s_
+//#define _di_f_console_standard_parameter_e_
 //#define _di_f_console_standard_s_
 //#define _di_f_console_standard_short_copyright_s_
 //#define _di_f_console_standard_short_dark_s_
@@ -272,7 +267,6 @@
 //#define _di_f_console_symbol_short_inverse_s_
 //#define _di_f_console_symbol_short_normal_s_
 //#define _di_f_console_verbosity_e_
-
 #define _di_f_control_group_copy_
 //#define _di_f_control_group_d_
 //#define _di_f_control_group_path_system_default_s_
@@ -280,7 +274,6 @@
 //#define _di_f_control_group_path_system_suffix_s_
 //#define _di_f_control_group_s_
 //#define _di_f_control_group_t_
-
 //#define _di_f_conversion_character_is_binary_
 //#define _di_f_conversion_character_is_decimal_
 //#define _di_f_conversion_character_is_duodecimal_
@@ -304,10 +297,8 @@
 //#define _di_f_conversion_number_signed_to_string_
 //#define _di_f_conversion_number_unsigned_print_
 //#define _di_f_conversion_number_unsigned_to_string_
-
 #define _di_f_date_spec_t_
 #define _di_f_date_t_
-
 //#define _di_f_directory_at_d_
 #define _di_f_directory_back_s_
 //#define _di_f_directory_create_
@@ -343,7 +334,6 @@
 //#define _di_f_directory_status_t_
 //#define _di_f_directory_touch_
 #define _di_f_directory_touch_at_
-
 #define _di_f_environment_clear_
 //#define _di_f_environment_d_
 //#define _di_f_environment_exists_
@@ -352,13 +342,11 @@
 #define _di_f_environment_secure_is_
 //#define _di_f_environment_set_
 #define _di_f_environment_unset_
-
 //#define _di_f_execute_e_
 #define _di_f_execute_result_t_
 //#define _di_f_execute_scheduler_t_
 #define _di_f_execute_status_from_status_
 #define _di_f_execute_status_to_status_
-
 #define _di_f_file_access_
 #define _di_f_file_access_at_
 #define _di_f_file_access_mode_d_
@@ -472,6 +460,7 @@
 #define _di_f_file_seek_
 #define _di_f_file_seeks_d_
 #define _di_f_file_select_
+#define _di_f_file_select_signal_
 #define _di_f_files_increase_
 #define _di_f_files_increase_by_
 //#define _di_f_file_size_
@@ -532,7 +521,6 @@
 #define _di_f_file_write_range_
 #define _di_f_file_write_until
 #define _di_f_file_write_until_
-
 #define _di_f_fll_ids_adjust_
 #define _di_f_fll_ids_append_
 #define _di_f_fll_ids_append_all_
@@ -552,7 +540,6 @@
 #define _di_f_fll_idss_t_
 #define _di_f_fll_ids_t_
 #define _di_f_fll_id_t_
-
 //#define _di_f_fss_apply_delimit_
 #define _di_f_fss_apply_delimit_range_
 #define _di_f_fss_complete_e_
@@ -665,7 +652,6 @@
 //#define _di_f_fss_status_success_e_
 //#define _di_f_fss_status_warning_e_
 //#define _di_f_fss_type_s_
-
 #define _di_f_f_utf_space_em_per_four_s_
 #define _di_f_f_utf_space_em_per_six_s_
 #define _di_f_f_utf_space_em_per_three_s_
@@ -691,7 +677,6 @@
 #define _di_f_f_utf_substitute_open_box_shouldered_s_
 #define _di_f_f_utf_substitute_symbol_blank_s_
 #define _di_f_f_utf_substitute_symbol_space_s_
-
 #define _di_f_iki_content_is_
 #define _di_f_iki_content_partial_is_
 //#define _di_f_iki_data_delete_
@@ -744,7 +729,6 @@
 //#define _di_f_iki_vocabulary_0002_define_s_
 //#define _di_f_iki_vocabulary_0002_parameter_s_
 //#define _di_f_iki_vocabulary_0002_s_
-
 #define _di_f_int128s_adjust_
 #define _di_f_int128s_append_
 #define _di_f_int128s_append_all_
@@ -837,10 +821,8 @@
 #define _di_f_int8ss_t_
 #define _di_f_int8s_t_
 #define _di_f_int8_t_
-
 //#define _di_fl_control_group_apply_
-
-//define _di_fl_conversion_data_base_10_c_
+//#define _di_fl_conversion_data_base_10_c_
 #define _di_fl_conversion_data_base_12_c_
 #define _di_fl_conversion_data_base_16_c_
 #define _di_fl_conversion_data_base_2_c_
@@ -866,23 +848,19 @@
 #define _di_fl_conversion_dynamic_to_signed_detect_
 #define _di_fl_conversion_dynamic_to_unsigned_
 //#define _di_fl_conversion_dynamic_to_unsigned_detect_
-
 //#define _di_fl_directory_create_
 //#define _di_fl_directory_do_
 //#define _di_fl_directory_list_
 #define _di_fl_directory_path_pop_
 #define _di_fl_directory_path_push_
 #define _di_fl_directory_path_push_dynamic_
-
 //#define _di_fl_environment_load_name_
 //#define _di_fl_environment_load_names_
 //#define _di_fl_environment_path_explode_
 #define _di_fl_environment_path_explode_reverse_
-
 //#define _di_fl_execute_as_t_
 //#define _di_fl_execute_parameter_option_d_
 //#define _di_fl_execute_parameter_t_
-
 #define _di_fl_fss_basic_content_read_
 #define _di_fl_fss_basic_content_write_
 //#define _di_fl_fss_basic_list_content_read_
@@ -903,9 +881,7 @@
 #define _di_fl_fss_extended_list_object_write_
 //#define _di_fl_fss_extended_object_read_
 #define _di_fl_fss_extended_object_write_
-
 //#define _di_fl_iki_read_
-
 //#define _di_f_limit_process_
 #define _di_f_limit_sets_adjust_
 #define _di_f_limit_sets_append_
@@ -945,7 +921,6 @@
 #define _di_f_limit_valuess_t_
 #define _di_f_limit_values_t_
 //#define _di_f_limit_value_t_
-
 //#define _di_fll_error_file_flag_e_
 //#define _di_fll_error_file_print_
 //#define _di_fll_error_file_type_directory_s_
@@ -964,10 +939,8 @@
 #define _di_fll_execute_arguments_add_set_
 #define _di_fll_execute_into_
 //#define _di_fll_execute_program_
-
 //#define _di_fll_file_mode_set_all_
 //#define _di_fll_file_role_change_all_
-
 //#define _di_fll_fss_basic_list_read_
 #define _di_fll_fss_basic_list_write_
 #define _di_fll_fss_basic_read_
@@ -991,7 +964,6 @@
 #define _di_fll_fss_snatch_mash_
 #define _di_fll_fss_snatch_mash_apart_
 #define _di_fll_fss_snatch_together_
-
 #define _di_fll_print_
 #define _di_fll_print_character_
 #define _di_fll_print_character_safely_
@@ -1072,7 +1044,6 @@
 #define _di_fll_print_trim_raw_
 #define _di_fll_print_trim_raw_safely_
 #define _di_fll_print_trim_safely_
-
 //#define _di_fll_program_data_delete_
 #define _di_fll_program_data_destroy_
 //#define _di_fll_program_data_pipe_e_
@@ -1084,8 +1055,10 @@
 #define _di_fll_program_parameter_filename_s_
 #define _di_fll_program_parameter_filenames_s_
 //#define _di_fll_program_parameter_process_context_
+//#define _di_fll_program_parameter_process_context_standard_
 #define _di_fll_program_parameter_process_empty_
 //#define _di_fll_program_parameter_process_verbosity_
+//#define _di_fll_program_parameter_process_verbosity_standard_
 #define _di_fll_program_parameter_s_
 //#define _di_fll_program_print_copyright_
 #define _di_fll_program_print_error_missing_file_
@@ -1125,9 +1098,7 @@
 //#define _di_fll_program_standard_set_up_
 #define _di_fll_program_standard_signal_handle_
 //#define _di_fll_program_standard_signal_received_
-
 //#define _di_fl_path_canonical_
-
 //#define _di_fl_print_debug_s_
 //#define _di_fl_print_error_s_
 //#define _di_fl_print_format_
@@ -1172,7 +1143,6 @@
 #define _di_fl_print_trim_raw_safely_
 #define _di_fl_print_trim_safely_
 //#define _di_fl_print_warning_s_
-
 #define _di_f_memory_adjust_
 #define _di_f_memory_array_adjust_
 #define _di_f_memory_array_decimate_by_
@@ -1186,9 +1156,7 @@
 #define _di_f_memory_new_
 #define _di_f_memory_new_aligned_
 //#define _di_f_memory_resize_
-
 //#define _di_f_mode_t_
-
 #define _di_f_network_family_e_
 #define _di_f_network_family_ip_4_or_6_t_
 #define _di_f_network_family_ip_t_
@@ -1219,7 +1187,6 @@
 #define _di_f_number_unsignedss_resize_
 #define _di_f_number_unsignedss_t_
 //#define _di_f_number_unsigneds_t_
-
 #define _di_f_parse_dynamic_partial_fll_identify_
 #define _di_f_parse_dynamic_seek_line_to_utf_character_
 #define _di_f_parse_dynamic_seek_line_until_graph_
@@ -1238,7 +1205,6 @@
 #define _di_f_parse_utf_seek_line_until_graph_non_
 #define _di_f_parse_utf_seek_to_char_
 #define _di_f_parse_utf_seek_to_character_
-
 //#define _di_f_path_change_
 //#define _di_f_path_change_at_
 //#define _di_f_path_current_
@@ -1308,11 +1274,9 @@
 #define _di_f_path_user_settings_s_
 #define _di_f_path_user_shared_s_
 #define _di_f_path_user_temporary_s_
-
 #define _di_f_pipe_error_exists_
 //#define _di_f_pipe_input_exists_
 #define _di_f_pipe_output_exists_
-
 //#define _di_f_poll_e_
 #define _di_f_polls_adjust_
 #define _di_f_polls_append_
@@ -1470,7 +1434,6 @@
 #define _di_f_print_to_safely_terminated_
 #define _di_f_print_to_terminated_
 //#define _di_f_print_write_max_d_
-
 #define _di_f_rip_
 //#define _di_f_rip_dynamic_
 #define _di_f_rip_dynamic_nulless_
@@ -1481,7 +1444,6 @@
 #define _di_f_rip_utf_dynamic_
 #define _di_f_rip_utf_dynamic_nulless_
 #define _di_f_rip_utf_nulless_
-
 #define _di_f_signal_action_
 //#define _di_f_signal_close_
 //#define _di_f_signal_how_t_
@@ -1500,7 +1462,6 @@
 //#define _di_f_signal_t_
 //#define _di_f_signal_wait_
 #define _di_f_signal_wait_until_
-
 #define _di_f_socket_accept_
 #define _di_f_socket_address_family_e_
 #define _di_f_socket_address_t_
@@ -1552,7 +1513,6 @@
 #define _di_f_socket_write_
 #define _di_f_socket_write_message_
 #define _di_f_socket_write_stream_
-
 #define _di_f_states_adjust_
 #define _di_f_states_append_
 #define _di_f_states_append_all_
@@ -1572,7 +1532,6 @@
 #define _di_f_statess_t_
 #define _di_f_states_t_
 //#define _di_f_state_t_
-
 //#define _di_f_status_access_e_
 //#define _di_f_status_array_e_
 //#define _di_f_status_available_e_
@@ -1613,11 +1572,9 @@
 #define _di_f_statuss_t_
 //#define _di_f_status_t_
 //#define _di_f_status_terminal_e_
-
 //#define _di_f_string_append_
 #define _di_f_string_append_assure_
 #define _di_f_string_append_assure_nulless_
-#define _di_f_string_append_mash_
 //#define _di_f_string_append_nulless_
 //#define _di_f_string_ascii_s_
 #define _di_f_string_constant_t_
@@ -1731,7 +1688,6 @@
 #define _di_f_string_quantitys_append_
 #define _di_f_string_quantitys_append_all_
 #define _di_f_string_quantitys_decimate_by_
-#define _di_f_string_quantitys_decrease_
 #define _di_f_string_quantitys_decrease_by_
 #define _di_f_string_quantitys_increase_
 #define _di_f_string_quantitys_increase_by_
@@ -1794,7 +1750,6 @@
 #define _di_f_string_tripless_t_
 #define _di_f_string_triples_t_
 #define _di_f_string_triple_t_
-
 #define _di_f_thread_at_fork_
 #define _di_f_thread_attribute_affinity_get_
 #define _di_f_thread_attribute_affinity_set_
@@ -1896,7 +1851,6 @@
 #define _di_f_thread_exit_
 #define _di_f_thread_ids_adjust_
 #define _di_f_thread_ids_decimate_by_
-#define _di_f_thread_ids_decrease_
 #define _di_f_thread_ids_decrease_by_
 #define _di_f_thread_ids_increase_
 #define _di_f_thread_ids_increase_by_
@@ -1988,7 +1942,6 @@
 #define _di_f_thread_once_
 #define _di_f_thread_onces_adjust_
 #define _di_f_thread_onces_decimate_by_
-#define _di_f_thread_onces_decrease_
 #define _di_f_thread_onces_decrease_by_
 #define _di_f_thread_onces_increase_
 #define _di_f_thread_onces_increase_by_
@@ -2044,16 +1997,13 @@
 #define _di_f_thread_spin_t_
 #define _di_f_thread_spin_unlock_
 #define _di_f_thread_unlock_
-
 #define _di_f_time_spec_t_
 #define _di_f_time_t_
-
 //#define _di_f_type_d_
 //#define _di_f_type_file_defaults_d_
 //#define _di_f_type_file_flag_d_
 //#define _di_f_type_number_64_t_
 //#define _di_f_type_sizes_d_
-
 #define _di_f_uint128s_adjust_
 #define _di_f_uint128s_append_
 #define _di_f_uint128s_append_all_
@@ -2145,7 +2095,6 @@
 //#define _di_f_uint8ss_resize_
 //#define _di_f_uint8ss_t_
 //#define _di_f_uint8s_t_
-
 #define _di_f_utf_buffer_decrement_
 //#define _di_f_utf_buffer_increment_
 //#define _di_f_utf_byte_d_
@@ -2245,7 +2194,6 @@
 #define _di_f_utf_space_separator_line_s_
 #define _di_f_utf_space_separator_paragraph_s_
 #define _di_f_utf_space_thin_s_
-
 #define _di_f_utf_string_append_
 #define _di_f_utf_string_append_assure_
 #define _di_f_utf_string_append_assure_nulless_
@@ -2306,7 +2254,7 @@
 #define _di_f_utf_string_dynamicss_increase_by_
 #define _di_f_utf_string_dynamicss_resize_
 #define _di_f_utf_string_dynamicss_t_
-#define _di_f_utf_string_dynamics_t_
+//#define _di_f_utf_string_dynamics_t_
 //#define _di_f_utf_string_dynamic_t_
 #define _di_f_utf_string_dynamic_terminate_
 //#define _di_f_utf_string_dynamic_terminate_after_
@@ -2332,8 +2280,6 @@
 #define _di_f_utf_string_map_multiss_resize_
 #define _di_f_utf_string_map_multiss_t_
 #define _di_f_utf_string_map_multis_t_
-#define _di_f_utf_string_map_multis_terminate_
-#define _di_f_utf_string_map_multis_terminate_after_
 #define _di_f_utf_string_map_multi_t_
 #define _di_f_utf_string_maps_adjust_
 #define _di_f_utf_string_maps_append_
@@ -2366,7 +2312,7 @@
 #define _di_f_utf_string_seek_line_to_
 #define _di_f_utf_string_seek_to_
 #define _di_f_utf_string_staticss_t_
-#define _di_f_utf_string_statics_t_
+//#define _di_f_utf_string_statics_t_
 //#define _di_f_utf_string_static_t_
 //#define _di_f_utf_string_t_
 #define _di_f_utf_string_triples_adjust_
@@ -2398,27 +2344,3 @@
 //#define _di_f_utf_unicode_string_to_
 //#define _di_f_utf_unicode_to_
 #define _di_f_utf_width_e_
-
-#define _di_macro_f_memory_structure_adjust_
-#define _di_macro_f_memory_structure_clear_
-#define _di_macro_f_memory_structure_decimate_by_
-#define _di_macro_f_memory_structure_decrease_by_
-#define _di_macro_f_memory_structure_delete_
-#define _di_macro_f_memory_structure_delete_simple_
-#define _di_macro_f_memory_structure_destroy_
-#define _di_macro_f_memory_structure_destroy_simple_
-#define _di_macro_f_memory_structure_increase_
-#define _di_macro_f_memory_structure_increase_by_
-#define _di_macro_f_memory_structure_increment_
-#define _di_macro_f_memory_structure_resize_
-#define _di_macro_f_memory_structures_adjust_
-#define _di_macro_f_memory_structures_clear_
-#define _di_macro_f_memory_structures_decimate_by_
-#define _di_macro_f_memory_structures_decrease_by_
-#define _di_macro_f_memory_structures_delete_
-#define _di_macro_f_memory_structures_delete_simple_
-#define _di_macro_f_memory_structures_destroy_
-#define _di_macro_f_memory_structures_destroy_simple_
-#define _di_macro_f_memory_structures_increase_
-#define _di_macro_f_memory_structures_increase_by_
-#define _di_macro_f_memory_structures_resize_
