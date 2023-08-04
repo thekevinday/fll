@@ -43,7 +43,7 @@ extern "C" {
 
     main->setting.escaped.used = 0;
 
-    if (main->program.pipe & fll_program_data_pipe_input_e) {
+    if (main->setting.flag & iki_write_main_flag_pipe_e) {
       bool object_ended = F_false;
 
       f_number_unsigned_t previous = 0;

@@ -82,6 +82,13 @@ extern "C" {
       return;
     }
 
+    if (main->program.pipe & fll_program_data_pipe_input_e) {
+      main->setting.flag |= iki_read_main_flag_pipe_e;
+    }
+    else {
+      main->setting.flag -= main->setting.flag & iki_read_main_flag_pipe_e;
+    }
+
     if (!(main->program.parameters.remaining.used || (main->program.pipe & fll_program_data_pipe_input_e))) {
       main->setting.state.status = F_status_set_error(F_parameter);
 

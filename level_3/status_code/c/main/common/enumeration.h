@@ -28,6 +28,7 @@ extern "C" {
  *   - fine:        Check if status is "fine".
  *   - help:        Print help.
  *   - number:      Operate in number mode.
+ *   - pipe:        Use the input pipe.
  *   - print_first: When set, print new line to message output on program begin after loading settings.
  *   - print_last:  When set, print new line to message output on program end.
  *   - version:     Print version.
@@ -41,10 +42,11 @@ extern "C" {
     status_code_main_flag_fine_e        = 0x4,
     status_code_main_flag_help_e        = 0x8,
     status_code_main_flag_number_e      = 0x10,
-    status_code_main_flag_print_first_e = 0x20,
-    status_code_main_flag_print_last_e  = 0x40,
-    status_code_main_flag_version_e     = 0x80,
-    status_code_main_flag_warning_e     = 0x100,
+    status_code_main_flag_pipe_e        = 0x20,
+    status_code_main_flag_print_first_e = 0x40,
+    status_code_main_flag_print_last_e  = 0x80,
+    status_code_main_flag_version_e     = 0x100,
+    status_code_main_flag_warning_e     = 0x200,
   }; // enum
 #endif // _di_status_code_main_flag_e_
 

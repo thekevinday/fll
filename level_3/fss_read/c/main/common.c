@@ -135,6 +135,13 @@ extern "C" {
     f_number_unsigned_t i = 0;
     f_number_unsigned_t index = 0;
 
+    if (main->program.pipe & fll_program_data_pipe_input_e) {
+      main->setting.flag |= fss_read_main_flag_pipe_e;
+    }
+    else {
+      main->setting.flag -= main->setting.flag & fss_read_main_flag_pipe_e;
+    }
+
     {
       static const f_number_unsigned_t parameter_code[] = {
         fss_read_parameter_at_e,
@@ -454,7 +461,7 @@ extern "C" {
     }
 
     if (parameters->array[fss_read_parameter_pipe_e].result & f_console_result_found_e) {
-      main->setting.flag |= fss_read_main_flag_pipe_e;
+      main->setting.flag |= fss_read_main_flag_pipe_format_e;
     }
 
     if (parameters->array[fss_read_parameter_total_e].result & f_console_result_found_e) {

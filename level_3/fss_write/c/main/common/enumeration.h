@@ -32,6 +32,7 @@ extern "C" {
  *   - object:           The Object being written is specified.
  *   - object_open:      The Object open characters are to be printed.
  *   - partial:          Do not write end of Object/Content character.
+ *   - pipe:             Use the input pipe.
  *   - print_first:      When set, print new line to message output on program begin after loading settings.
  *   - print_last:       When set, print new line to message output on program end.
  *   - trim:             Trim Object names.
@@ -51,11 +52,12 @@ extern "C" {
     fss_write_main_flag_object_e           = 0x100,
     fss_write_main_flag_object_open_e      = 0x200,
     fss_write_main_flag_partial_e          = 0x400,
-    fss_write_main_flag_prepend_e          = 0x800,
-    fss_write_main_flag_print_first_e      = 0x1000,
-    fss_write_main_flag_print_last_e       = 0x2000,
-    fss_write_main_flag_trim_e             = 0x4000,
-    fss_write_main_flag_version_e          = 0x8000,
+    fss_write_main_flag_pipe_e             = 0x800,
+    fss_write_main_flag_prepend_e          = 0x1000,
+    fss_write_main_flag_print_first_e      = 0x2000,
+    fss_write_main_flag_print_last_e       = 0x4000,
+    fss_write_main_flag_trim_e             = 0x8000,
+    fss_write_main_flag_version_e          = 0x10000,
   }; // enum
 #endif // _di_fss_write_main_flag_e_
 

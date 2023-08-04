@@ -94,6 +94,7 @@ extern "C" {
  *   - operation_clean:    The clean operation is designated.
  *   - operation_make:     The make operation is designated (or enabled as default).
  *   - operation_skeleton: The skeleton operation is designated.
+ *   - pipe:               Use the input pipe.
  *   - print_first:        When set, print new line to message output on program begin after loading settings.
  *   - print_last:         When set, print new line to message output on program end.
  *   - separate:           Enable printing of separators.
@@ -115,12 +116,13 @@ extern "C" {
     fake_main_flag_operation_clean_e    = 0x100,
     fake_main_flag_operation_make_e     = 0x200,
     fake_main_flag_operation_skeleton_e = 0x400,
-    fake_main_flag_print_first_e        = 0x800,
-    fake_main_flag_print_last_e         = 0x1000,
-    fake_main_flag_separate_e           = 0x2000,
-    fake_main_flag_strip_invalid_e      = 0x4000,
-    fake_main_flag_verify_e             = 0x8000,
-    fake_main_flag_version_e            = 0x10000,
+    fake_main_flag_pipe_e               = 0x800,
+    fake_main_flag_print_first_e        = 0x1000,
+    fake_main_flag_print_last_e         = 0x2000,
+    fake_main_flag_separate_e           = 0x4000,
+    fake_main_flag_strip_invalid_e      = 0x8000,
+    fake_main_flag_verify_e             = 0x10000,
+    fake_main_flag_version_e            = 0x20000,
   }; // enum
 #endif // _di_fake_main_flag_e_
 

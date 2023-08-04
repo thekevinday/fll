@@ -26,6 +26,7 @@ extern "C" {
  *   - file_to:     Using a specified destination file.
  *   - help:        Print help.
  *   - object:      The Object being written is specified.
+ *   - pipe:        Use the input pipe.
  *   - print_first: When set, print new line to message output on program begin after loading settings.
  *   - print_last:  When set, print new line to message output on program end.
  *   - print_last:  The Object being written is specified.
@@ -40,10 +41,11 @@ extern "C" {
     iki_write_main_flag_file_to_e     = 0x4,
     iki_write_main_flag_help_e        = 0x8,
     iki_write_main_flag_object_e      = 0x10,
-    iki_write_main_flag_print_first_e = 0x20,
-    iki_write_main_flag_print_last_e  = 0x40,
-    iki_write_main_flag_version_e     = 0x80,
-    iki_write_main_flag_wrap_e        = 0x100,
+    iki_write_main_flag_pipe_e        = 0x20,
+    iki_write_main_flag_print_first_e = 0x40,
+    iki_write_main_flag_print_last_e  = 0x80,
+    iki_write_main_flag_version_e     = 0x100,
+    iki_write_main_flag_wrap_e        = 0x200,
   }; // enum
 #endif // _di_iki_write_main_flag_e_
 

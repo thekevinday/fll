@@ -86,6 +86,13 @@ extern "C" {
       return;
     }
 
+    if (main->program.pipe & fll_program_data_pipe_input_e) {
+      main->setting.flag |= iki_write_main_flag_pipe_e;
+    }
+    else {
+      main->setting.flag -= main->setting.flag & iki_write_main_flag_pipe_e;
+    }
+
     if (main->program.parameters.array[iki_write_parameter_file_e].result & f_console_result_value_e && main->program.parameters.array[iki_write_parameter_file_e].values.used) {
       if (main->program.parameters.array[iki_write_parameter_file_e].values.used > 1) {
         main->setting.state.status = F_status_set_error(F_parameter);

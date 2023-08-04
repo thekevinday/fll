@@ -44,7 +44,7 @@ extern "C" {
     if (main->setting.files.used || (main->program.pipe & fll_program_data_pipe_input_e)) {
       f_file_t file = f_file_t_initialize;
 
-      if (main->program.pipe & fll_program_data_pipe_input_e) {
+      if (main->setting.flag & byte_dump_main_flag_pipe_e) {
         file.id = F_type_descriptor_input_d;
         file.stream = F_type_input_d;
 

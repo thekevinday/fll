@@ -29,6 +29,7 @@ extern "C" {
  *   - line:        Selecting at a specific line.
  *   - name:        Selecting using a specific Vocabulary name.
  *   - object:      Print Objects.
+ *   - pipe:        Use the input pipe.
  *   - print_first: When set, print new line to message output on program begin after loading settings.
  *   - print_last:  When set, print new line to message output on program end.
  *   - replace:     Using re-assignments.
@@ -50,15 +51,16 @@ extern "C" {
     iki_read_main_flag_line_e        = 0x20,
     iki_read_main_flag_name_e        = 0x40,
     iki_read_main_flag_object_e      = 0x80,
-    iki_read_main_flag_print_first_e = 0x100,
-    iki_read_main_flag_print_last_e  = 0x200,
-    iki_read_main_flag_reassign_e    = 0x400,
-    iki_read_main_flag_replace_e     = 0x800,
-    iki_read_main_flag_substitute_e  = 0x1000,
-    iki_read_main_flag_total_e       = 0x2000,
-    iki_read_main_flag_version_e     = 0x4000,
-    iki_read_main_flag_whole_e       = 0x8000,
-    iki_read_main_flag_wrap_e        = 0x10000,
+    iki_read_main_flag_pipe_e        = 0x100,
+    iki_read_main_flag_print_first_e = 0x200,
+    iki_read_main_flag_print_last_e  = 0x400,
+    iki_read_main_flag_reassign_e    = 0x800,
+    iki_read_main_flag_replace_e     = 0x1000,
+    iki_read_main_flag_substitute_e  = 0x2000,
+    iki_read_main_flag_total_e       = 0x4000,
+    iki_read_main_flag_version_e     = 0x8000,
+    iki_read_main_flag_whole_e       = 0x10000,
+    iki_read_main_flag_wrap_e        = 0x20000,
   }; // enum
 #endif // _di_iki_read_main_flag_e_
 

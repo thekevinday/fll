@@ -12,7 +12,7 @@ extern "C" {
     fss_read_main_t * const main = (fss_read_main_t *) print->custom;
 
     if (main->setting.flag & fss_read_main_flag_content_e) {
-      fll_print_dynamic_raw((main->setting.flag & fss_read_main_flag_pipe_e) ? fss_read_pipe_content_start_s : f_fss_extended_next_s, print->to);
+      fll_print_dynamic_raw((main->setting.flag & fss_read_main_flag_pipe_format_e) ? fss_read_pipe_content_start_s : f_fss_extended_next_s, print->to);
     }
 
     return F_none;
@@ -57,7 +57,7 @@ extern "C" {
     fss_read_main_t * const main = (fss_read_main_t *) print->custom;
 
     if (main->setting.flag & fss_read_main_flag_content_e) {
-      if (main->setting.flag & fss_read_main_flag_pipe_e) {
+      if (main->setting.flag & fss_read_main_flag_pipe_format_e) {
         fll_print_dynamic_raw(fss_read_pipe_content_start_s, print->to);
       }
       else {

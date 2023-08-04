@@ -95,6 +95,13 @@ extern "C" {
     f_number_unsigned_t j = 0;
     f_number_unsigned_t index = 0;
 
+    if (main->program.pipe & fll_program_data_pipe_input_e) {
+      main->setting.flag |= fake_main_flag_pipe_e;
+    }
+    else {
+      main->setting.flag -= main->setting.flag & fake_main_flag_pipe_e;
+    }
+
     {
       uint8_t i = 0;
 

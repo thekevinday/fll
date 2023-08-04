@@ -185,6 +185,13 @@ extern "C" {
     f_number_unsigned_t index = 0;
     f_number_unsigned_t number = 0;
 
+    if (main->program.pipe & fll_program_data_pipe_input_e) {
+      main->setting.flag |= byte_dump_main_flag_pipe_e;
+    }
+    else {
+      main->setting.flag -= main->setting.flag & byte_dump_main_flag_pipe_e;
+    }
+
     if (main->program.parameters.array[byte_dump_parameter_width_e].result & f_console_result_value_e) {
       index = main->program.parameters.array[byte_dump_parameter_width_e].values.array[main->program.parameters.array[byte_dump_parameter_width_e].values.used - 1];
 

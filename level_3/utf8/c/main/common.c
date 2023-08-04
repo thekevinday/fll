@@ -173,6 +173,13 @@ extern "C" {
       return;
     }
 
+    if (main->program.pipe & fll_program_data_pipe_input_e) {
+      main->setting.flag |= utf8_main_flag_pipe_e;
+    }
+    else {
+      main->setting.flag -= main->setting.flag & utf8_main_flag_pipe_e;
+    }
+
     if (main->program.parameters.array[utf8_parameter_to_file_e].result & f_console_result_value_e) {
       if (main->program.parameters.array[utf8_parameter_to_file_e].values.used > 1) {
         main->setting.state.status = F_status_set_error(F_parameter);
@@ -363,13 +370,6 @@ extern "C" {
         main->setting.remaining.array[main->setting.remaining.used].used = main->program.parameters.arguments.array[index].used;
         main->setting.remaining.array[main->setting.remaining.used++].size = 0;
       } // for
-    }
-
-    if (main->program.pipe & fll_program_data_pipe_input_e) {
-      main->setting.flag |= utf8_main_flag_pipe_e;
-    }
-    else {
-      main->setting.flag -= main->setting.flag & utf8_main_flag_pipe_e;
     }
 
     if (!((main->setting.flag & (utf8_main_flag_pipe_e | utf8_main_flag_file_from_e)) || main->program.parameters.remaining.used)) {

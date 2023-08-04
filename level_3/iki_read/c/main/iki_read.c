@@ -41,7 +41,7 @@ extern "C" {
       return;
     }
 
-    if (main->program.pipe & fll_program_data_pipe_input_e) {
+    if (main->setting.flag & iki_read_main_flag_pipe_e) {
       f_file_t file = f_file_t_initialize;
 
       file.id = F_type_descriptor_input_d;

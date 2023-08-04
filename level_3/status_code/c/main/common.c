@@ -82,6 +82,13 @@ extern "C" {
       return;
     }
 
+    if (main->program.pipe & fll_program_data_pipe_input_e) {
+      main->setting.flag |= status_code_main_flag_pipe_e;
+    }
+    else {
+      main->setting.flag -= main->setting.flag & status_code_main_flag_pipe_e;
+    }
+
     if (main->program.parameters.array[status_code_parameter_error_e].result & f_console_result_found_e) {
       main->setting.flag |= status_code_main_flag_error_e;
     }

@@ -62,7 +62,7 @@ extern "C" {
 
     f_file_stream_lock(print->to);
 
-    if (main->setting.flag & fss_read_main_flag_pipe_e) {
+    if (main->setting.flag & fss_read_main_flag_pipe_format_e) {
       f_print_dynamic_raw(fss_read_pipe_content_start_s, print->to);
     }
     else {

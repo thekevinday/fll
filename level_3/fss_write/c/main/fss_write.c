@@ -48,7 +48,7 @@ extern "C" {
       return;
     }
 
-    if (main->program.pipe & fll_program_data_pipe_input_e) {
+    if (main->setting.flag & fss_write_main_flag_pipe_e) {
       if (main->callback.process_pipe) {
         main->callback.process_pipe(void_main);
       }

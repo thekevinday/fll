@@ -80,6 +80,13 @@ extern "C" {
       main->setting.flag |= fss_write_main_flag_copyright_e;
     }
 
+    if (main->program.pipe & fll_program_data_pipe_input_e) {
+      main->setting.flag |= fss_write_main_flag_pipe_e;
+    }
+    else {
+      main->setting.flag -= main->setting.flag & fss_write_main_flag_pipe_e;
+    }
+
     if (callback) {
       callback(arguments, main);
       if (F_status_is_error(main->setting.state.status)) return;

@@ -62,7 +62,7 @@ extern "C" {
     f_status_t status = F_none;
 
     if (main->setting.flag & status_code_main_flag_number_e) {
-      if (main->program.pipe & fll_program_data_pipe_input_e) {
+      if (main->setting.flag & status_code_main_flag_pipe_e) {
         // @todo call status_code_process_number() here for all main from pipe that are space separated.
       }
 
@@ -94,7 +94,7 @@ extern "C" {
       }
     }
     else if ((main->setting.flag & status_code_main_flag_error_e) || (main->setting.flag & status_code_main_flag_warning_e) || (main->setting.flag & status_code_main_flag_fine_e)) {
-      if (main->program.pipe & fll_program_data_pipe_input_e) {
+      if (main->setting.flag & status_code_main_flag_pipe_e) {
         // @todo call status_code_process_check() here for all main from pipe that is space separated.
       }
 
@@ -126,7 +126,7 @@ extern "C" {
       }
     }
     else {
-      if (main->program.pipe & fll_program_data_pipe_input_e) {
+      if (main->setting.flag & status_code_main_flag_pipe_e) {
         // @todo call status_code_process_normal() here for all main from pipe that is space separated.
       }
 
