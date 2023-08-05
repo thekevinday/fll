@@ -14,23 +14,25 @@ extern "C" {
  * @return
  *   The appropriate status.
  */
-static inline f_status_t private_inline_f_print_to_error(void) {
+ #ifndef _di_private_inline_private_f_print_to_error_
+  static inline f_status_t private_inline_f_print_to_error(void) {
 
-  if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
-  if (errno == EBADF) return F_status_set_error(F_file_descriptor);
-  if (errno == EDESTADDRREQ) return F_status_set_error(F_socket_not);
-  if (errno == EDQUOT) return F_status_set_error(F_filesystem_quota_block);
-  if (errno == EFBIG) return F_status_set_error(F_number_overflow);
-  if (errno == EFAULT) return F_status_set_error(F_buffer);
-  if (errno == EINTR) return F_status_set_error(F_interrupt);
-  if (errno == EINVAL) return F_status_set_error(F_parameter);
-  if (errno == EIO) return F_status_set_error(F_input_output);
-  if (errno == EISDIR) return F_status_set_error(F_file_type_directory);
-  if (errno == ENOSPC) return F_status_set_error(F_space_not);
-  if (errno == EPIPE) return F_status_set_error(F_pipe);
+    if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
+    if (errno == EBADF) return F_status_set_error(F_file_descriptor);
+    if (errno == EDESTADDRREQ) return F_status_set_error(F_socket_not);
+    if (errno == EDQUOT) return F_status_set_error(F_filesystem_quota_block);
+    if (errno == EFBIG) return F_status_set_error(F_number_overflow);
+    if (errno == EFAULT) return F_status_set_error(F_buffer);
+    if (errno == EINTR) return F_status_set_error(F_interrupt);
+    if (errno == EINVAL) return F_status_set_error(F_parameter);
+    if (errno == EIO) return F_status_set_error(F_input_output);
+    if (errno == EISDIR) return F_status_set_error(F_file_type_directory);
+    if (errno == ENOSPC) return F_status_set_error(F_space_not);
+    if (errno == EPIPE) return F_status_set_error(F_pipe);
 
-  return F_status_set_error(F_output);
-}
+    return F_status_set_error(F_output);
+  }
+#endif // _di_private_inline_private_f_print_to_error_
 
 #if !defined(_di_f_print_to_) || !defined(_di_f_print_dynamic_to_) || !defined(_di_f_print_dynamic_partial_to_)
   f_status_t private_f_print_to(const f_string_t string, const f_number_unsigned_t length, const int id) {

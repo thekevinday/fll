@@ -2344,3 +2344,5 @@
 //#define _di_f_utf_unicode_string_to_
 //#define _di_f_utf_unicode_to_
 #define _di_f_utf_width_e_
+#define _di_private_inline_f_print_to_error_
+#define _di_private_inline_private_f_print_to_error_
