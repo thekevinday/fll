@@ -1,0 +1,63 @@
+# fss-0005 iki-0002
+
+settings:
+  load_build yes
+  fail exit
+
+  environment PATH LD_LIBRARY_PATH
+  environment LANG LC_ALL LC_COLLATE LC_CTYPE LC_FASTMSG LC_MESSAGES LC_MONETARY LC_NUMERIC LC_TIME LOCPATH NLSPATH
+  environment CMOCKA_XML_FILE CMOCKA_MESSAGE_OUTPUT CMOCKA_TEST_ABORT
+
+  # Cmocka is not fully thread-safe, set this to "1" to have cmocka call abort() on a test failure.
+  #CMOCKA_TEST_ABORT 1
+
+  # One of: STDOUT, SUBUNIT, TAP, or XML.
+  #define CMOCKA_MESSAGE_OUTPUT STDOUT
+
+  # When in "XML" output mode, output to this file rather than stdout.
+  #define CMOCKA_XML_FILE ./out.xml
+
+main:
+  build settings individual test
+  build settings-tests individual test
+
+  operate build_path
+  operate ld_library_path
+
+  if exist parameter:"build_path"programs/shared/test-f_time
+    shell parameter:"build_path"programs/shared/test-f_time
+
+  if exist parameter:"build_path"programs/static/test-f_time
+    shell parameter:"build_path"programs/static/test-f_time
+
+  if not exist parameter:"build_path"programs/shared/test-f_time
+  and not exist parameter:"build_path"programs/static/test-f_time
+    operate not_created
+
+not_created:
+  print
+  print 'context:"error"Failed to test due to being unable to find either a shared or static test binary to perform tests. context:"reset"'
+
+  exit failure
+
+build_path:
+  parameter build_path build/
+
+  if parameter build:value
+    parameter build_path parameter:"build:value"
+
+ld_library_path:
+  if define LD_LIBRARY_PATH
+  and parameter work:value
+    define LD_LIBRARY_PATH 'parameter:"build_path"libraries/shared:parameter:"work:value"libraries/shared:define:"LD_LIBRARY_PATH"'
+
+  else
+  if define LD_LIBRARY_PATH
+    define LD_LIBRARY_PATH 'parameter:"build_path"libraries/shared:define:"LD_LIBRARY_PATH"'
+
+  else
+  if parameter work:value
+    define LD_LIBRARY_PATH 'parameter:"build_path"libraries/shared:parameter:"work:value"libraries/shared'
+
+  else
+    define LD_LIBRARY_PATH 'parameter:"build_path"libraries/shared'

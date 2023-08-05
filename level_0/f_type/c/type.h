@@ -491,6 +491,8 @@ extern "C" {
  * 1 (Earth) second = 1000000000 Time or 1 GT (GigaTime).
  *
  * Consequentially, 1 day in units of Time is easily represented as 86.4 TT (TeraTime).
+ *
+ * This is not time_t, which is a different structure that may not be uint64_t and is often signed.
  */
 #ifndef _di_f_time_t_
   typedef uint64_t f_time_t;
@@ -499,7 +501,10 @@ extern "C" {
 #endif // _di_f_time_t_
 
 /**
- * A non-kernel dependent version of "struct timespec".
+ * A non-kernel dependent alternative version of "struct timespec".
+ *
+ * This is may not compatible with struct timespec because seconds is time_t and that may not be a uint64_t.
+ * In many cases of "struct timespec", seconds is signed because time_t is signed.
  *
  * Properties:
  *   - seconds:      The total number of seconds.
