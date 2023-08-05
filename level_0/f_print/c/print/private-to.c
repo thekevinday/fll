@@ -48,9 +48,7 @@ extern "C" {
           total = F_print_write_max_d;
         }
 
-        if (write(id, string + i, total) == -1) {
-          return private_inline_f_print_to_error();
-        }
+        if (write(id, string + i, total) == -1) return private_inline_f_print_to_error();
 
         i += total;
         total = 0;
@@ -69,24 +67,16 @@ extern "C" {
   f_status_t private_f_print_to_character_safely(const f_char_t character, const int id) {
 
     if (character == 0x7f) {
-      if (write(id, f_print_sequence_delete_s.string, f_print_sequence_delete_s.used) != -1) {
-        return F_none;
-      }
+      if (write(id, f_print_sequence_delete_s.string, f_print_sequence_delete_s.used) != -1) return F_none;
     }
     else if (macro_f_utf_byte_width_is(character) == 1) {
-      if (write(id, f_print_sequence_unknown_s.string, f_print_sequence_unknown_s.used) != -1) {
-        return F_none;
-      }
+      if (write(id, f_print_sequence_unknown_s.string, f_print_sequence_unknown_s.used) != -1) return F_none;
     }
     else if (macro_f_utf_byte_width_is(character) > 1) {
-      if (write(id, &character, 1) != -1) {
-        return F_utf;
-      }
+      if (write(id, &character, 1) != -1) return F_utf;
     }
     else if (character > 0x1f) {
-      if (write(id, &character, 1) != -1) {
-        return F_none;
-      }
+      if (write(id, &character, 1) != -1) return F_none;
     }
     else {
       if (write(id, f_print_sequence_set_control_s[(unsigned int) character].string, f_print_sequence_set_control_s[(unsigned int) character].used) != -1) {
@@ -122,9 +112,7 @@ extern "C" {
       }
 
       if (total) {
-        if (write(id, string + start, total) == -1) {
-          return private_inline_f_print_to_error();
-        }
+        if (write(id, string + start, total) == -1) return private_inline_f_print_to_error();
       }
 
       if ((j >= except.used || except.array[j] != i) && string[i]) {
@@ -138,9 +126,7 @@ extern "C" {
     } // while
 
     if (total) {
-      if (write(id, string + start, total) == -1) {
-        return private_inline_f_print_to_error();
-      }
+      if (write(id, string + start, total) == -1) return private_inline_f_print_to_error();
     }
 
     return F_none;
@@ -171,9 +157,7 @@ extern "C" {
       }
 
       if (total) {
-        if (write(id, string + start, total) == -1) {
-          return private_inline_f_print_to_error();
-        }
+        if (write(id, string + start, total) == -1) return private_inline_f_print_to_error();
       }
 
       if (j >= except.used || except.array[j] != i) {
@@ -187,9 +171,7 @@ extern "C" {
     } // while
 
     if (total) {
-      if (write(id, string + start, total) == -1) {
-        return private_inline_f_print_to_error();
-      }
+      if (write(id, string + start, total) == -1) return private_inline_f_print_to_error();
     }
 
     return F_none;
@@ -232,16 +214,12 @@ extern "C" {
 
       if (safe.used) {
         if (total) {
-          if (write(id, string + start, total) == -1) {
-            return private_inline_f_print_to_error();
-          }
+          if (write(id, string + start, total) == -1) return private_inline_f_print_to_error();
 
           total = 0;
         }
 
-        if (write(id, safe.string, safe.used) == -1) {
-          return private_inline_f_print_to_error();
-        }
+        if (write(id, safe.string, safe.used) == -1) return private_inline_f_print_to_error();
 
         start = ++i;
 
@@ -249,9 +227,7 @@ extern "C" {
       }
 
       if (total + width >= F_print_write_max_d) {
-        if (write(id, string + start, total) == -1) {
-          return private_inline_f_print_to_error();
-        }
+        if (write(id, string + start, total) == -1) return private_inline_f_print_to_error();
 
         total = 0;
         start = i;
@@ -262,9 +238,7 @@ extern "C" {
     } // while
 
     if (total) {
-      if (write(id, string + start, total) == -1) {
-        return private_inline_f_print_to_error();
-      }
+      if (write(id, string + start, total) == -1) return private_inline_f_print_to_error();
     }
 
     return F_none;
@@ -302,9 +276,7 @@ extern "C" {
       }
       else {
         if (total) {
-          if (write(id, string + start, total) == -1) {
-            return private_inline_f_print_to_error();
-          }
+          if (write(id, string + start, total) == -1) return private_inline_f_print_to_error();
 
           total = 0;
         }
@@ -316,16 +288,12 @@ extern "C" {
 
       if (safe.used) {
         if (total) {
-          if (write(id, string + start, total) == -1) {
-            return private_inline_f_print_to_error();
-          }
+          if (write(id, string + start, total) == -1) return private_inline_f_print_to_error();
 
           total = 0;
         }
 
-        if (write(id, safe.string, safe.used) == -1) {
-          return private_inline_f_print_to_error();
-        }
+        if (write(id, safe.string, safe.used) == -1) return private_inline_f_print_to_error();
 
         start = ++i;
 
@@ -333,9 +301,7 @@ extern "C" {
       }
 
       if (total + width >= F_print_write_max_d) {
-        if (write(id, string + start, total) == -1) {
-          return private_inline_f_print_to_error();
-        }
+        if (write(id, string + start, total) == -1) return private_inline_f_print_to_error();
 
         total = 0;
         start = i;
@@ -346,9 +312,7 @@ extern "C" {
     } // while
 
     if (total) {
-      if (write(id, string + start, total) == -1) {
-        return private_inline_f_print_to_error();
-      }
+      if (write(id, string + start, total) == -1) return private_inline_f_print_to_error();
     }
 
     return F_none;
@@ -372,9 +336,7 @@ extern "C" {
 
       if (at < except_at.used && except_at.array[at] == i) {
         if (total) {
-          if (write(id, string + start, total) == -1) {
-            return private_inline_f_print_to_error();
-          }
+          if (write(id, string + start, total) == -1) return private_inline_f_print_to_error();
 
           total = 0;
         }
@@ -391,9 +353,7 @@ extern "C" {
 
         if (in < except_in.used && except_in.array[in].start <= i && except_in.array[in].stop >= i) {
           if (total) {
-            if (write(id, string + start, total) == -1) {
-              return private_inline_f_print_to_error();
-            }
+            if (write(id, string + start, total) == -1) return private_inline_f_print_to_error();
 
             total = 0;
           }
@@ -411,9 +371,7 @@ extern "C" {
 
       if (!string[i] || i + 1 == stop || total == F_print_write_max_d) {
         if (total) {
-          if (write(id, string + start, total) == -1) {
-            return private_inline_f_print_to_error();
-          }
+          if (write(id, string + start, total) == -1) return private_inline_f_print_to_error();
 
           total = 0;
         }
@@ -426,9 +384,7 @@ extern "C" {
     } // while
 
     if (total) {
-      if (write(id, string + start, total) == -1) {
-        return private_inline_f_print_to_error();
-      }
+      if (write(id, string + start, total) == -1) return private_inline_f_print_to_error();
     }
 
     return F_none;
@@ -452,9 +408,7 @@ extern "C" {
 
       if (at < except_at.used && except_at.array[at] == i) {
         if (total) {
-          if (write(id, string + start, total) == -1) {
-            return private_inline_f_print_to_error();
-          }
+          if (write(id, string + start, total) == -1) return private_inline_f_print_to_error();
 
           total = 0;
         }
@@ -471,9 +425,7 @@ extern "C" {
 
         if (in < except_in.used && except_in.array[in].start <= i && except_in.array[in].stop >= i) {
           if (total) {
-            if (write(id, string + start, total) == -1) {
-              return private_inline_f_print_to_error();
-            }
+            if (write(id, string + start, total) == -1) return private_inline_f_print_to_error();
 
             total = 0;
           }
@@ -489,9 +441,7 @@ extern "C" {
 
       if (i + 1 == stop || total == F_print_write_max_d) {
         if (total) {
-          if (write(id, string + start, total) == -1) {
-            return private_inline_f_print_to_error();
-          }
+          if (write(id, string + start, total) == -1) return private_inline_f_print_to_error();
 
           total = 0;
         }
@@ -504,9 +454,7 @@ extern "C" {
     } // while
 
     if (total) {
-      if (write(id, string + start, total) == -1) {
-        return private_inline_f_print_to_error();
-      }
+      if (write(id, string + start, total) == -1) return private_inline_f_print_to_error();
     }
 
     return F_none;
@@ -534,9 +482,7 @@ extern "C" {
 
       if (at < except_at.used && except_at.array[at] == i) {
         if (total) {
-          if (write(id, string + start, total) == -1) {
-            return private_inline_f_print_to_error();
-          }
+          if (write(id, string + start, total) == -1) return private_inline_f_print_to_error();
 
           total = 0;
         }
@@ -553,9 +499,7 @@ extern "C" {
 
         if (in < except_in.used && except_in.array[in].start <= i && except_in.array[in].stop >= i) {
           if (total) {
-            if (write(id, string + start, total) == -1) {
-              return private_inline_f_print_to_error();
-            }
+            if (write(id, string + start, total) == -1) return private_inline_f_print_to_error();
 
             total = 0;
           }
@@ -579,16 +523,12 @@ extern "C" {
 
       if (safe.used) {
         if (total) {
-          if (write(id, string + start, total) == -1) {
-            return private_inline_f_print_to_error();
-          }
+          if (write(id, string + start, total) == -1) return private_inline_f_print_to_error();
 
           total = 0;
         }
 
-        if (write(id, safe.string, safe.used) == -1) {
-          return private_inline_f_print_to_error();
-        }
+        if (write(id, safe.string, safe.used) == -1) return private_inline_f_print_to_error();
 
         start = ++i;
 
@@ -596,9 +536,7 @@ extern "C" {
       }
 
       if (total + width >= F_print_write_max_d) {
-        if (write(id, string + start, total) == -1) {
-          return private_inline_f_print_to_error();
-        }
+        if (write(id, string + start, total) == -1) return private_inline_f_print_to_error();
 
         total = 0;
         start = i;
@@ -609,9 +547,7 @@ extern "C" {
     } // while
 
     if (total) {
-      if (write(id, string + start, total) == -1) {
-        return private_inline_f_print_to_error();
-      }
+      if (write(id, string + start, total) == -1) return private_inline_f_print_to_error();
     }
 
     return F_none;
@@ -639,9 +575,7 @@ extern "C" {
 
       if (at < except_at.used && except_at.array[at] == i) {
         if (total) {
-          if (write(id, string + start, total) == -1) {
-            return private_inline_f_print_to_error();
-          }
+          if (write(id, string + start, total) == -1) return private_inline_f_print_to_error();
 
           total = 0;
         }
@@ -658,9 +592,7 @@ extern "C" {
 
         if (in < except_in.used && except_in.array[in].start <= i && except_in.array[in].stop >= i) {
           if (total) {
-            if (write(id, string + start, total) == -1) {
-              return private_inline_f_print_to_error();
-            }
+            if (write(id, string + start, total) == -1) return private_inline_f_print_to_error();
 
             total = 0;
           }
@@ -679,9 +611,7 @@ extern "C" {
       }
       else {
         if (total) {
-          if (write(id, string + start, total) == -1) {
-            return private_inline_f_print_to_error();
-          }
+          if (write(id, string + start, total) == -1) return private_inline_f_print_to_error();
 
           total = 0;
         }
@@ -693,16 +623,12 @@ extern "C" {
 
       if (safe.used) {
         if (total) {
-          if (write(id, string + start, total) == -1) {
-            return private_inline_f_print_to_error();
-          }
+          if (write(id, string + start, total) == -1) return private_inline_f_print_to_error();
 
           total = 0;
         }
 
-        if (write(id, safe.string, safe.used) == -1) {
-          return private_inline_f_print_to_error();
-        }
+        if (write(id, safe.string, safe.used) == -1) return private_inline_f_print_to_error();
 
         start = ++i;
 
@@ -710,9 +636,7 @@ extern "C" {
       }
 
       if (total + width >= F_print_write_max_d) {
-        if (write(id, string + start, total) == -1) {
-          return private_inline_f_print_to_error();
-        }
+        if (write(id, string + start, total) == -1) return private_inline_f_print_to_error();
 
         total = 0;
         start = i;
@@ -723,9 +647,7 @@ extern "C" {
     } // while
 
     if (total) {
-      if (write(id, string + start, total) == -1) {
-        return private_inline_f_print_to_error();
-      }
+      if (write(id, string + start, total) == -1) return private_inline_f_print_to_error();
     }
 
     return F_none;
@@ -747,9 +669,7 @@ extern "C" {
           total = F_print_write_max_d;
         }
 
-        if (write(id, string + i, total) == -1) {
-          return private_inline_f_print_to_error();
-        }
+        if (write(id, string + i, total) == -1) return private_inline_f_print_to_error();
 
         i += total;
         total = 0;
@@ -765,9 +685,7 @@ extern "C" {
 
         } while (i < length && !string[i] && total < F_print_write_max_d);
 
-        if (write(id, string + start, total) == -1) {
-          return private_inline_f_print_to_error();
-        }
+        if (write(id, string + start, total) == -1) return private_inline_f_print_to_error();
       }
     } // for
 
@@ -800,16 +718,12 @@ extern "C" {
 
       if (safe.used) {
         if (total) {
-          if (write(id, string + start, total) == -1) {
-            return private_inline_f_print_to_error();
-          }
+          if (write(id, string + start, total) == -1) return private_inline_f_print_to_error();
 
           total = 0;
         }
 
-        if (write(id, safe.string, safe.used) == -1) {
-          return private_inline_f_print_to_error();
-        }
+        if (write(id, safe.string, safe.used) == -1) return private_inline_f_print_to_error();
 
         i += width;
         start = i;
@@ -818,9 +732,7 @@ extern "C" {
       }
 
       if (total + width >= F_print_write_max_d) {
-        if (write(id, string + start, total) == -1) {
-          return private_inline_f_print_to_error();
-        }
+        if (write(id, string + start, total) == -1) return private_inline_f_print_to_error();
 
         total = 0;
         start = i;
@@ -831,9 +743,7 @@ extern "C" {
     } // while
 
     if (total) {
-      if (write(id, string + start, total) == -1) {
-        return private_inline_f_print_to_error();
-      }
+      if (write(id, string + start, total) == -1) return private_inline_f_print_to_error();
     }
 
     return F_none;
@@ -860,9 +770,7 @@ extern "C" {
       }
       else {
         if (total) {
-          if (write(id, string + start, total) == -1) {
-            return private_inline_f_print_to_error();
-          }
+          if (write(id, string + start, total) == -1) return private_inline_f_print_to_error();
 
           total = 0;
         }
@@ -874,16 +782,12 @@ extern "C" {
 
       if (safe.used) {
         if (total) {
-          if (write(id, string + start, total) == -1) {
-            return private_inline_f_print_to_error();
-          }
+          if (write(id, string + start, total) == -1) return private_inline_f_print_to_error();
 
           total = 0;
         }
 
-        if (write(id, safe.string, safe.used) == -1) {
-          return private_inline_f_print_to_error();
-        }
+        if (write(id, safe.string, safe.used) == -1) return private_inline_f_print_to_error();
 
         i += width;
         start = i;
@@ -892,9 +796,7 @@ extern "C" {
       }
 
       if (total + width >= F_print_write_max_d) {
-        if (write(id, string + start, total) == -1) {
-          return private_inline_f_print_to_error();
-        }
+        if (write(id, string + start, total) == -1) return private_inline_f_print_to_error();
 
         total = 0;
         start = i;
@@ -905,9 +807,7 @@ extern "C" {
     } // while
 
     if (total) {
-      if (write(id, string + start, total) == -1) {
-        return private_inline_f_print_to_error();
-      }
+      if (write(id, string + start, total) == -1) return private_inline_f_print_to_error();
     }
 
     return F_none;
@@ -917,11 +817,7 @@ extern "C" {
 #if !defined(_di_f_print_to_terminated_) || !defined(_di_f_print_to_raw_terminated_)
   f_status_t private_f_print_to_terminated(const f_string_t string, const int id) {
 
-    if (write(id, string, strlen(string)) == -1) {
-      return private_inline_f_print_to_error();
-    }
-
-    return F_none;
+    return write(id, string, strlen(string)) == -1 ? private_inline_f_print_to_error() : F_none;
   }
 #endif // !defined(_di_f_print_to_terminated_) || !defined(_di_f_print_to_raw_terminated_)
 
