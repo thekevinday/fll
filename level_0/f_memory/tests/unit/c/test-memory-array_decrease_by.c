@@ -41,6 +41,15 @@ void test__f_memory_array_decrease_by__parameter_checking(void **state) {
     assert_int_equal(data.size, 0);
   }
 
+  {
+    const f_status_t status = f_memory_array_decrease_by(length, 0, (void **) &data.array, &data.used, &data.size);
+
+    assert_int_equal(status, F_size_not);
+    assert_int_equal(data.array, 0);
+    assert_int_equal(data.used, 0);
+    assert_int_equal(data.size, 0);
+  }
+
   assert_null(data.array);
 }
 

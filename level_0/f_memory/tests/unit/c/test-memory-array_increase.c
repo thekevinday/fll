@@ -41,6 +41,14 @@ void test__f_memory_array_increase__parameter_checking(void **state) {
     assert_int_equal(data.size, 0);
   }
 
+  {
+    const f_status_t status = f_memory_array_increase(length, 0, (void **) &data.array, &data.used, &data.size);
+
+    assert_int_equal(status, F_status_set_error(F_parameter));
+    assert_int_equal(data.used, 0);
+    assert_int_equal(data.size, 0);
+  }
+
   assert_null(data.array);
 }
 

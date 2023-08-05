@@ -20,6 +20,20 @@ void test__f_memory_resize__parameter_checking(void **state) {
   }
 }
 
+void test__f_memory_array_resize__returns_size_not(void **state) {
+
+  test_memory_array_t data = test_memory_array_t_initialize;
+
+  {
+    const f_status_t status = f_memory_array_resize(1, 0, (void **) &data.array, &data.used, &data.size);
+
+    assert_int_equal(status, F_size_not);
+    assert_int_equal(data.array, 0);
+    assert_int_equal(data.used, 0);
+    assert_int_equal(data.size, 0);
+  }
+}
+
 void test__f_memory_resize__works(void **state) {
 
   uint16_t *data = 0;

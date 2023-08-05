@@ -25,6 +25,8 @@
 // Test includes.
 #include "test-memory-adjust.h"
 #include "test-memory-array_adjust.h"
+#include "test-memory-array_append.h"
+#include "test-memory-array_append_all.h"
 #include "test-memory-array_decimate_by.h"
 #include "test-memory-array_decrease_by.h"
 #include "test-memory-array_increase.h"

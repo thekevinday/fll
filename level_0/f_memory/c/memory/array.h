@@ -27,6 +27,7 @@ extern "C" {
  * @param width
  *   The size of the structure represented by array.
  *   The word "width" is used due to conflicts of already using "length" and "size".
+ *   Must not be 0.
  * @param array
  *   The structure.array to resize.
  * @param used
@@ -46,6 +47,74 @@ extern "C" {
 #endif // _di_f_memory_array_adjust_
 
 /**
+ * Append the single source onto the destination array.
+ *
+ * This function is only useful for simple structures of the form "{ array, used, size }" where the array is a simple type.
+ * If the simple type that is "array" requires additional memory manipulation on allocation or de-allocation, then do not use this function.
+ *
+ * @param source
+ *   The source structure to copy from.
+ * @param width
+ *   The size of the structure represented by array.
+ *   The word "width" is used due to conflicts of already using "length" and "size".
+ *   Must not be 0.
+ * @param array
+ *   The structure.array destination.
+ * @param used
+ *   The structure.used destination.
+ * @param size
+ *   The structure.size destination.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_array_too_large (with error bit) if the new array length is too large.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_memory_array_append_
+  extern f_status_t f_memory_array_append(const void * const source, const size_t width, void ** array, f_number_unsigned_t * const used, f_number_unsigned_t * const size);
+#endif // _di_f_memory_array_append_
+
+/**
+ * Append the single source onto the destination array.
+ *
+ * This function is only useful for simple structures of the form "{ array, used, size }" where the array is a simple type.
+ * If the simple type that is "array" requires additional memory manipulation on allocation or de-allocation, then do not use this function.
+ *
+ * Warning: This default implementation of this function uses multiplication between the amount and the width.
+ *          Be careful that the resulting multiplication does not overflow f_number_unsigned_t.
+ *
+ * @param sources
+ *   The source structure to copy from.
+ *   This is generally a structure.array value.
+ * @param amount
+ *   The total length of the sources to copy.
+ *   The is generally the structure.used value.
+ * @param width
+ *   The size of the structure represented by array.
+ *   The word "width" is used due to conflicts of already using "length" and "size".
+ *   Must not be 0.
+ * @param array
+ *   The structure.array destination.
+ * @param used
+ *   The structure.used destination.
+ * @param size
+ *   The structure.size destination.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not if amount is 0.
+ *
+ *   F_array_too_large (with error bit) if the new array length is too large.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_memory_array_append_all_
+  extern f_status_t f_memory_array_append_all(const void * const sources, const f_number_unsigned_t amount, const size_t width, void ** array, f_number_unsigned_t * const used, f_number_unsigned_t * const size);
+#endif // _di_f_memory_array_append_all_
+
+/**
  * Resize the memory array to a smaller size.
  *
  * This will resize making the array smaller based on (size - given length).
@@ -60,6 +129,7 @@ extern "C" {
  * @param width
  *   The size of the structure represented by array.
  *   The word "width" is used due to conflicts of already using "length" and "size".
+ *   Must not be 0.
  * @param array
  *   The structure.array to resize.
  * @param used
@@ -92,6 +162,7 @@ extern "C" {
  * @param width
  *   The size of the structure represented by array.
  *   The word "width" is used due to conflicts of already using "length" and "size".
+ *   Must not be 0.
  * @param array
  *   The structure.array to resize.
  * @param used
@@ -124,6 +195,7 @@ extern "C" {
  * @param width
  *   The size of the structure represented by array.
  *   The word "width" is used due to conflicts of already using "length" and "size".
+ *   Must not be 0.
  * @param array
  *   The structure.array to resize.
  * @param used
@@ -136,7 +208,7 @@ extern "C" {
  *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
  *
  *   F_array_too_large (with error bit) if the new array length is too large.
- *   F_memory_not (with error bit) on out of memory.
+ *   F_memory_not (with error bit) on out of memory..
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_memory_array_increase_
@@ -158,6 +230,7 @@ extern "C" {
  * @param width
  *   The size of the structure represented by array.
  *   The word "width" is used due to conflicts of already using "length" and "size".
+ *   Must not be 0.
  * @param array
  *   The structure.array to resize.
  * @param used
@@ -188,6 +261,7 @@ extern "C" {
  * @param width
  *   The size of the structure represented by array.
  *   The word "width" is used due to conflicts of already using "length" and "size".
+ *   Must not be 0.
  * @param array
  *   The structure.array to resize.
  * @param used

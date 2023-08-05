@@ -8,6 +8,7 @@ extern "C" {
 #ifndef _di_f_memory_array_adjust_
   f_status_t f_memory_array_adjust(const f_number_unsigned_t length, const size_t width, void ** array, f_number_unsigned_t * const used, f_number_unsigned_t * const size) {
     #ifndef _di_level_0_parameter_checking_
+      if (!width) return F_status_set_error(F_parameter);
       if (!array) return F_status_set_error(F_parameter);
       if (!used) return F_status_set_error(F_parameter);
       if (!size) return F_status_set_error(F_parameter);
@@ -19,9 +20,69 @@ extern "C" {
   }
 #endif // _di_f_memory_array_adjust_
 
+#ifndef _di_f_memory_array_append_
+  f_status_t f_memory_array_append(const void * const source, const size_t width, void ** array, f_number_unsigned_t * const used, f_number_unsigned_t * const size) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!width) return F_status_set_error(F_parameter);
+      if (!array) return F_status_set_error(F_parameter);
+      if (!used) return F_status_set_error(F_parameter);
+      if (!size) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (*used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+
+    {
+      const f_number_unsigned_t length = *used + F_memory_default_allocation_small_d;
+
+      if (length > *size) {
+        if (length > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+
+        const f_status_t status = private_f_memory_array_resize(length, width, array, used, size);
+        if (F_status_is_error(status)) return status;
+      }
+    }
+
+    memcpy((*array) + (*used)++, source, width);
+
+    return F_none;
+  }
+#endif // _di_f_memory_array_append_
+
+#ifndef _di_f_memory_array_append_all_
+  f_status_t f_memory_array_append_all(const void * const sources, const f_number_unsigned_t amount, const size_t width, void ** array, f_number_unsigned_t * const used, f_number_unsigned_t * const size) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!width) return F_status_set_error(F_parameter);
+      if (!array) return F_status_set_error(F_parameter);
+      if (!used) return F_status_set_error(F_parameter);
+      if (!size) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (!amount) return F_data_not;
+    if (*used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+
+    {
+      const f_number_unsigned_t length = *used + amount;
+
+      if (length > *size) {
+        if (length > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+
+        const f_status_t status = private_f_memory_array_resize(length, width, array, used, size);
+        if (F_status_is_error(status)) return status;
+      }
+    }
+
+    memcpy(*array + *used, sources, width * amount);
+
+    *used += amount;
+
+    return F_none;
+  }
+#endif // _di_f_memory_array_append_all_
+
 #ifndef _di_f_memory_array_decimate_by_
   f_status_t f_memory_array_decimate_by(const f_number_unsigned_t amount, const size_t width, void ** array, f_number_unsigned_t * const used, f_number_unsigned_t * const size) {
     #ifndef _di_level_0_parameter_checking_
+      if (!width) return F_status_set_error(F_parameter);
       if (!array) return F_status_set_error(F_parameter);
       if (!used) return F_status_set_error(F_parameter);
       if (!size) return F_status_set_error(F_parameter);
@@ -36,6 +97,7 @@ extern "C" {
 #ifndef _di_f_memory_array_decrease_by_
   f_status_t f_memory_array_decrease_by(const f_number_unsigned_t amount, const size_t width, void ** array, f_number_unsigned_t * const used, f_number_unsigned_t * const size) {
     #ifndef _di_level_0_parameter_checking_
+      if (!width) return F_status_set_error(F_parameter);
       if (!array) return F_status_set_error(F_parameter);
       if (!used) return F_status_set_error(F_parameter);
       if (!size) return F_status_set_error(F_parameter);
@@ -50,6 +112,7 @@ extern "C" {
 #ifndef _di_f_memory_array_increase_
   f_status_t f_memory_array_increase(const f_number_unsigned_t step, const size_t width, void ** array, f_number_unsigned_t * const used, f_number_unsigned_t * const size) {
     #ifndef _di_level_0_parameter_checking_
+      if (!width) return F_status_set_error(F_parameter);
       if (!array) return F_status_set_error(F_parameter);
       if (!used) return F_status_set_error(F_parameter);
       if (!size) return F_status_set_error(F_parameter);
@@ -76,6 +139,7 @@ extern "C" {
 #ifndef _di_f_memory_array_increase_by_
   f_status_t f_memory_array_increase_by(const f_number_unsigned_t amount, const size_t width, void ** array, f_number_unsigned_t * const used, f_number_unsigned_t * const size) {
     #ifndef _di_level_0_parameter_checking_
+      if (!width) return F_status_set_error(F_parameter);
       if (!array) return F_status_set_error(F_parameter);
       if (!used) return F_status_set_error(F_parameter);
       if (!size) return F_status_set_error(F_parameter);
@@ -100,6 +164,7 @@ extern "C" {
 #ifndef _di_f_memory_array_resize_
   f_status_t f_memory_array_resize(const f_number_unsigned_t length, const size_t width, void ** array, f_number_unsigned_t * const used, f_number_unsigned_t * const size) {
     #ifndef _di_level_0_parameter_checking_
+      if (!width) return F_status_set_error(F_parameter);
       if (!array) return F_status_set_error(F_parameter);
       if (!used) return F_status_set_error(F_parameter);
       if (!size) return F_status_set_error(F_parameter);
