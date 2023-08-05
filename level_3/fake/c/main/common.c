@@ -106,19 +106,19 @@ extern "C" {
       uint8_t i = 0;
 
       {
-        static const uint8_t enables[] = {
+        const uint8_t enables[] = {
           fake_parameter_documents_enable_e,
           fake_parameter_shared_enable_e,
           fake_parameter_static_enable_e,
         };
 
-        static const uint8_t disables[] = {
+        const uint8_t disables[] = {
           fake_parameter_documents_enable_e,
           fake_parameter_shared_enable_e,
           fake_parameter_static_enable_e,
         };
 
-        static const uint16_t flags[] = {
+        const uint16_t flags[] = {
           fake_main_flag_enable_documents_e,
           fake_main_flag_enable_shared_e,
           fake_main_flag_enable_static_e,
@@ -146,7 +146,7 @@ extern "C" {
       }
 
       {
-        static const f_number_unsigned_t parameters[] = {
+        const f_number_unsigned_t parameters[] = {
           fake_parameter_build_e,
           fake_parameter_data_e,
           fake_parameter_documents_e,
@@ -204,7 +204,7 @@ extern "C" {
           fake_default_work_s,
         };
 
-        static const bool cleanups[] = {
+        const bool cleanups[] = {
           F_true,  // fake_parameter_build_e
           F_true,  // fake_parameter_data_e
           F_true,  // fake_parameter_documents_e
@@ -348,7 +348,7 @@ extern "C" {
       }
 
       {
-        static const f_number_unsigned_t parameters[] = {
+        const f_number_unsigned_t parameters[] = {
           fake_parameter_define_e,
           fake_parameter_mode_e,
         };

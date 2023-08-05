@@ -554,13 +554,13 @@ extern "C" {
     }
 
     {
-      static const uint32_t has[] = {
+      const uint32_t has[] = {
         fss_write_parameter_content_end_e,
         fss_write_parameter_content_next_e,
         fss_write_parameter_object_open_e,
       };
 
-      static const uint16_t has_flag[] = {
+      const uint16_t has_flag[] = {
         fss_write_main_flag_content_end_e,
         fss_write_main_flag_content_next_e,
         fss_write_main_flag_object_open_e,
@@ -572,7 +572,7 @@ extern "C" {
         fss_write_long_object_open_s,
       };
 
-      static const uint16_t has_cannots[][2] = {
+      const uint16_t has_cannots[][2] = {
         { fss_write_parameter_content_next_e, fss_write_parameter_object_open_e },
         { fss_write_parameter_content_end_e, fss_write_parameter_object_open_e },
         { fss_write_parameter_content_end_e, fss_write_parameter_content_next_e },

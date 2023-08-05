@@ -143,7 +143,7 @@ extern "C" {
     }
 
     {
-      static const f_number_unsigned_t parameter_code[] = {
+      const f_number_unsigned_t parameter_code[] = {
         fss_read_parameter_at_e,
         fss_read_parameter_depth_e,
         fss_read_parameter_line_e,
@@ -161,11 +161,11 @@ extern "C" {
         fss_read_long_delimit_s,
       };
 
-      static const f_string_static_t message_positive_number = macro_f_string_static_t_initialize_1("a positive number", 0, 17);
-      static const f_string_static_t message_string = macro_f_string_static_t_initialize_1("a string", 0, 8);
-      static const f_string_static_t message_value = macro_f_string_static_t_initialize_1("a value", 0, 7);
+      const f_string_static_t message_positive_number = macro_f_string_static_t_initialize_1("a positive number", 0, 17);
+      const f_string_static_t message_string = macro_f_string_static_t_initialize_1("a string", 0, 8);
+      const f_string_static_t message_value = macro_f_string_static_t_initialize_1("a value", 0, 7);
 
-      static const f_string_static_t parameter_message[] = {
+      const f_string_static_t parameter_message[] = {
         message_positive_number,
         message_positive_number,
         message_positive_number,
@@ -174,7 +174,7 @@ extern "C" {
         message_value,
       };
 
-      static const uint32_t parameter_flag[] = {
+      const uint32_t parameter_flag[] = {
         fss_read_main_flag_at_e,
         fss_read_main_flag_depth_e,
         fss_read_main_flag_line_e,
@@ -224,7 +224,7 @@ extern "C" {
     }
 
     if (parameters->array[fss_read_parameter_columns_e].result & f_console_result_found_e) {
-      static const f_number_unsigned_t parameter_code[] = {
+      const f_number_unsigned_t parameter_code[] = {
         fss_read_parameter_depth_e,
         fss_read_parameter_line_e,
         fss_read_parameter_pipe_e,
@@ -240,7 +240,7 @@ extern "C" {
         fss_read_long_total_s,
       };
 
-      static const uint8_t parameter_match[] = {
+      const uint8_t parameter_match[] = {
         f_console_result_value_e,
         f_console_result_value_e,
         f_console_result_found_e,

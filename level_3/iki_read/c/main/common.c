@@ -442,7 +442,7 @@ extern "C" {
     }
 
     if (main->program.parameters.array[iki_read_parameter_literal_e].result & f_console_result_found_e) {
-      static const uint8_t ids[3] = {
+      const uint8_t ids[3] = {
         iki_read_parameter_object_e,
         iki_read_parameter_content_e,
         iki_read_parameter_total_e,
@@ -472,7 +472,7 @@ extern "C" {
       main->setting.flag |= iki_read_main_flag_literal_e;
     }
     else if (main->program.parameters.array[iki_read_parameter_object_e].result & f_console_result_found_e) {
-      static const uint8_t ids[2] = {
+      const uint8_t ids[2] = {
         iki_read_parameter_content_e,
         iki_read_parameter_total_e,
       };
