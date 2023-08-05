@@ -36,6 +36,105 @@ extern "C" {
 #endif // _di_f_fss_simple_packet_d_
 
 /**
+ * A structure representing the Simple Packet.
+ *
+ * Properties:
+ *   - control: The Control Block, which is 1 byte long.
+ *   - size:    The Size Block, which is 4 bytes long.
+ *   - payload: The Payload Block, which is inclusively between 0 and (2^32)-6 bytes long.
+ */
+#ifndef _di_f_fss_simple_packet_t_
+  typedef struct {
+    uint8_t control;
+    uint32_t size;
+    f_string_dynamic_t payload;
+  } f_fss_simple_packet_t;
+
+  #define f_fss_simple_packet_t_initialize { \
+    0, \
+    0, \
+    f_string_dynamic_t_initialize, \
+  }
+
+  #define macro_f_fss_simple_packet_t_initialize_1(control, size, payload) { \
+    control, \
+    size, \
+    payload, \
+  }
+
+  #define macro_f_fss_simple_packet_t_initialize_2(payload) { \
+    0, \
+    0, \
+    payload, \
+  }
+#endif // _di_f_fss_simple_packet_t_
+
+/**
+ * This holds an array of f_fss_simple_packet_t.
+ *
+ * Properties:
+ *   - array: An array of f_fss_simple_packet_t.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
+ */
+#ifndef _di_f_fss_simple_packets_t_
+  typedef struct {
+    f_fss_simple_packet_t *array;
+
+    f_number_unsigned_t size;
+    f_number_unsigned_t used;
+  } f_fss_simple_packets_t;
+
+  #define f_fss_simple_packets_t_initialize { 0, 0, 0 }
+
+  #define macro_f_fss_simple_packets_t_initialize_1(array, size, used) { array, size, used }
+  #define macro_f_fss_simple_packets_t_initialize_2(array, length) { array, length, length }
+
+  #define macro_f_fss_simple_packets_t_resize(status, simple_packets, length) status = f_fss_simple_packets_resize(length, &simple_packets);
+  #define macro_f_fss_simple_packets_t_adjust(status, simple_packets, length) status = f_fss_simple_packets_adjust(length, &simple_packets);
+
+  #define macro_f_fss_simple_packets_t_delete_simple(simple_packets)  f_fss_simple_packets_resize(0, &simple_packets);
+  #define macro_f_fss_simple_packets_t_destroy_simple(simple_packets) f_fss_simple_packets_adjust(0, &simple_packets);
+
+  #define macro_f_fss_simple_packets_t_increase(status, step, simple_packets)      status = f_fss_simple_packets_increase(step, &simple_packets);
+  #define macro_f_fss_simple_packets_t_increase_by(status, simple_packets, amount) status = f_fss_simple_packets_increase_by(amount, &simple_packets);
+  #define macro_f_fss_simple_packets_t_decrease_by(status, simple_packets, amount) status = f_fss_simple_packets_decrease_by(amount, &simple_packets);
+  #define macro_f_fss_simple_packets_t_decimate_by(status, simple_packets, amount) status = f_fss_simple_packets_decimate_by(amount, &simple_packets);
+#endif // _di_f_fss_simple_packets_t_
+
+/**
+ * This holds an array of f_fss_simple_packets_t.
+ *
+ * Properties:
+ *   - array: An array of f_fss_simple_packets_t.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
+ */
+#ifndef _di_f_fss_simple_packetss_t_
+  typedef struct {
+    f_fss_simple_packets_t *array;
+
+    f_number_unsigned_t size;
+    f_number_unsigned_t used;
+  } f_fss_simple_packetss_t;
+
+  #define f_fss_simple_packetss_t_initialize { 0, 0, 0 }
+
+  #define macro_f_fss_simple_packetss_t_initialize_1(array, size, used) { array, size, used }
+  #define macro_f_fss_simple_packetss_t_initialize_2(array, length) { array, length, length }
+
+  #define macro_f_fss_simple_packetss_t_resize(status, simple_packetss, length) status = f_fss_simple_packetss_resize(length, &simple_packetss);
+  #define macro_f_fss_simple_packetss_t_adjust(status, simple_packetss, length) status = f_fss_simple_packetss_adjust(length, &simple_packetss);
+
+  #define macro_f_fss_simple_packetss_t_delete_simple(simple_packetss)  f_fss_simple_packetss_resize(0, &simple_packetss);
+  #define macro_f_fss_simple_packetss_t_destroy_simple(simple_packetss) f_fss_simple_packetss_adjust(0, &simple_packetss);
+
+  #define macro_f_fss_simple_packetss_t_increase(status, step, simple_packetss)      status = f_fss_simple_packetss_increase(step, &simple_packetss);
+  #define macro_f_fss_simple_packetss_t_increase_by(status, simple_packetss, amount) status = f_fss_simple_packetss_increase_by(amount, &simple_packetss);
+  #define macro_f_fss_simple_packetss_t_decrease_by(status, simple_packetss, amount) status = f_fss_simple_packetss_decrease_by(amount, &simple_packetss);
+  #define macro_f_fss_simple_packetss_t_decimate_by(status, simple_packetss, amount) status = f_fss_simple_packetss_decimate_by(amount, &simple_packetss);
+#endif // _di_f_fss_simple_packetss_t_
+/**
  * A set of string ranges intending to designate the different ranges for a Simple Packet representing each Block.
  *
  * Properties:
@@ -128,6 +227,44 @@ extern "C" {
   #define macro_f_fss_simple_packet_rangess_t_decrease_by(status, simple_packet_rangess, amount) status = f_fss_simple_packet_rangess_decrease_by(amount, &simple_packet_rangess);
   #define macro_f_fss_simple_packet_rangess_t_decimate_by(status, simple_packet_rangess, amount) status = f_fss_simple_packet_rangess_decimate_by(amount, &simple_packet_rangess);
 #endif // _di_f_fss_simple_packet_rangess_t_
+
+/**
+ * Delete a simple packet.
+ *
+ * @param packet
+ *   The simple packet to delete.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   F_failure (with error bit) on any other error.
+ *
+ * @see f_string_dynamic_resize()
+ */
+#ifndef _di_f_fss_simple_packet_delete_
+  extern f_status_t f_fss_simple_packet_delete(f_fss_simple_packet_t * const packet);
+#endif // _di_f_fss_simple_packet_delete_
+
+/**
+ * Destroy a simple packet.
+ *
+ * @param packet
+ *   The simple packet to destroy.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   F_failure (with error bit) on any other error.
+ *
+ * @see f_string_dynamic_adjust()
+ */
+#ifndef _di_f_fss_simple_packet_destroy_
+  extern f_status_t f_fss_simple_packet_destroy(f_fss_simple_packet_t * const packet);
+#endif // _di_f_fss_simple_packet_destroy_
 
 /**
  * Identify the ranges representing the different parts of the FSS-000F (Simple Packet).
@@ -543,6 +680,399 @@ extern "C" {
 #ifndef _di_f_fss_simple_packet_rangess_resize_
   extern f_status_t f_fss_simple_packet_rangess_resize(const f_number_unsigned_t length, f_fss_simple_packet_rangess_t *rangess);
 #endif // _di_f_fss_simple_packet_rangess_resize_
+
+/**
+ * Resize the simple packet array.
+ *
+ * @param length
+ *   The new size to use.
+ * @param packets
+ *   The simple packet array to resize.
+ *
+ * @return
+ *   Success from f_memory_array_resize().
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_array_resize().
+ *
+ * @see f_memory_array_resize()
+ */
+#ifndef _di_f_fss_simple_packets_adjust_
+  extern f_status_t f_fss_simple_packets_adjust(const f_number_unsigned_t length, f_fss_simple_packets_t *packets);
+#endif // _di_f_fss_simple_packets_adjust_
+
+/**
+ * Append the single source simple packet onto the destination.
+ *
+ * @param source
+ *   The source packet to append.
+ * @param destination
+ *   The destination simple packet the source is appended onto.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is nothing to append (size == 0).
+ *
+ *   Success from f_memory_array_resize().
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_array_increase().
+ *   Errors (with error bit) from: f_memory_array_resize().
+ *
+ * @see f_memory_array_increase()
+ * @see f_memory_array_resize()
+ */
+#ifndef _di_f_fss_simple_packets_append_
+  extern f_status_t f_fss_simple_packets_append(const f_fss_simple_packet_t source, f_fss_simple_packets_t *destination);
+#endif // _di_f_fss_simple_packets_append_
+
+/**
+ * Append the source simple packet onto the destination.
+ *
+ * @param source
+ *   The source packets to append.
+ * @param destination
+ *   The destination simple packet the source is appended onto.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is nothing to append (size == 0).
+ *
+ *   Success from f_memory_array_resize().
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_array_increase_by().
+ *   Errors (with error bit) from: f_memory_array_resize().
+ *
+ * @see f_memory_array_increase_by()
+ * @see f_memory_array_resize()
+ */
+#ifndef _di_f_fss_simple_packets_append_all_
+  extern f_status_t f_fss_simple_packets_append_all(const f_fss_simple_packets_t source, f_fss_simple_packets_t *destination);
+#endif // _di_f_fss_simple_packets_append_all_
+
+/**
+ * Resize the simple packet array to a smaller size.
+ *
+ * This will resize making the array smaller based on (size - given length).
+ * If the given length is too small, then the resize will fail.
+ * This will not shrink the size to les than 0.
+ *
+ * @param amount
+ *   A positive number representing how much to decimate the size by.
+ * @param packets
+ *   The simple packet array to resize.
+ *
+ * @return
+ * @return
+ *   Success from f_memory_array_decimate_by().
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_array_decimate_by().
+ *
+ * @see f_memory_array_decimate_by()
+ */
+#ifndef _di_f_fss_simple_packets_decimate_by_
+  extern f_status_t f_fss_simple_packets_decimate_by(const f_number_unsigned_t amount, f_fss_simple_packets_t *packets);
+#endif // _di_f_fss_simple_packets_decimate_by_
+
+/**
+ * Resize the simple packet array to a smaller size.
+ *
+ * This will resize making the array smaller based on (size - given length).
+ * If the given length is too small, then the resize will fail.
+ * This will not shrink the size to les than 0.
+ *
+ * @param amount
+ *   A positive number representing how much to decrease the size by.
+ * @param packets
+ *   The simple packet array to resize.
+ *
+ * @return
+ *   Success from f_memory_array_decrease_by().
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_array_decrease_by().
+ *
+ * @see f_memory_array_decrease_by()
+ */
+#ifndef _di_f_fss_simple_packets_decrease_by_
+  extern f_status_t f_fss_simple_packets_decrease_by(const f_number_unsigned_t amount, f_fss_simple_packets_t *packets);
+#endif // _di_f_fss_simple_packets_decrease_by_
+
+/**
+ * Increase the size of the simple packet array, but only if necesary.
+ *
+ * If the given length is too large for the buffer, then attempt to packet max buffer size (F_number_t_size_unsigned_d).
+ * If already packet to the maximum buffer size, then the resize will fail.
+ *
+ * @param step
+ *   The allocation step to use.
+ *   Must be greater than 0.
+ * @param packets
+ *   The simple packet array to resize.
+ *
+ * @return
+ *   Success from f_memory_array_increase().
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_array_increase().
+ *
+ * @see f_memory_array_increase()
+ */
+#ifndef _di_f_fss_simple_packets_increase_
+  extern f_status_t f_fss_simple_packets_increase(const f_number_unsigned_t step, f_fss_simple_packets_t *packets);
+#endif // _di_f_fss_simple_packets_increase_
+
+/**
+ * Resize the simple packet array to a larger size.
+ *
+ * This will resize making the array larger based on the given length.
+ * If the given length is too large for the buffer, then attempt to packet max buffer size (F_number_t_size_unsigned_d).
+ * If already packet to the maximum buffer size, then the resize will fail.
+ *
+ * @param amount
+ *   A positive number representing how much to increase the size by.
+ * @param packets
+ *   The simple packet array to resize.
+ *
+ * @return
+ *   Success from f_memory_array_increase_by().
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_array_increase_by().
+ *
+ * @see f_memory_array_increase_by()
+ */
+#ifndef _di_f_fss_simple_packets_increase_by_
+  extern f_status_t f_fss_simple_packets_increase_by(const f_number_unsigned_t amount, f_fss_simple_packets_t *packets);
+#endif // _di_f_fss_simple_packets_increase_by_
+
+/**
+ * Resize the simple packet array.
+ *
+ * @param length
+ *   The new size to use.
+ * @param packets
+ *   The simple packet array to adjust.
+ *
+ * @return
+ *   Success from f_memory_array_resize().
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_array_resize().
+ *
+ * @see f_memory_array_resize()
+ */
+#ifndef _di_f_fss_simple_packets_resize_
+  extern f_status_t f_fss_simple_packets_resize(const f_number_unsigned_t length, f_fss_simple_packets_t *packets);
+#endif // _di_f_fss_simple_packets_resize_
+
+/**
+ * Resize the simple packets array.
+ *
+ * @param length
+ *   The new size to use.
+ * @param packetss
+ *   The simple packets array to resize.
+ *
+ * @return
+ *   Success from f_memory_array_adjust().
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_array_adjust().
+ *
+ * @see f_memory_array_adjust()
+ */
+#ifndef _di_f_fss_simple_packetss_adjust_
+  extern f_status_t f_fss_simple_packetss_adjust(const f_number_unsigned_t length, f_fss_simple_packetss_t *packetss);
+#endif // _di_f_fss_simple_packetss_adjust_
+
+/**
+ * Append the single source simple packets onto the destination.
+ *
+ * @param source
+ *   The source simple packets to append.
+ * @param destination
+ *   The destination simple packets the source is appended onto.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is nothing to append (size == 0).
+ *
+ *   Success from f_memory_array_resize().
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_array_increase_by().
+ *   Errors (with error bit) from: f_memory_array_resize().
+ *
+ * @see f_memory_array_increase_by()
+ * @see f_memory_array_resize()
+ */
+#ifndef _di_f_fss_simple_packetss_append_
+  extern f_status_t f_fss_simple_packetss_append(const f_fss_simple_packets_t source, f_fss_simple_packetss_t *destination);
+#endif // _di_f_fss_simple_packetss_append_
+
+/**
+ * Append the source simple packets onto the destination.
+ *
+ * @param source
+ *   The source simple packets to append.
+ * @param destination
+ *   The destination simple packets the source is appended onto.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is nothing to append (size == 0).
+ *
+ *   Success from f_memory_array_resize().
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_array_increase_by().
+ *   Errors (with error bit) from: f_memory_array_resize().
+ *
+ * @see f_memory_array_increase_by()
+ * @see f_memory_array_resize()
+ */
+#ifndef _di_f_fss_simple_packetss_append_all_
+  extern f_status_t f_fss_simple_packetss_append_all(const f_fss_simple_packetss_t source, f_fss_simple_packetss_t *destination);
+#endif // _di_f_fss_simple_packetss_append_all_
+
+/**
+ * Resize the simple packets array to a smaller size.
+ *
+ * This will resize making the array smaller based on (size - given length).
+ * If the given length is too small, then the resize will fail.
+ * This will not shrink the size to less than 0.
+ *
+ * @param amount
+ *   A positive number representing how much to decimate the size by.
+ * @param packetss
+ *   The simple packets array to resize.
+ *
+ * @return
+ *   F_data_not on success, but the amount to decrease by is 0.
+ *
+ *   Success from f_memory_array_decimate_by().
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_array_decimate_by().
+ *
+ * @see f_memory_array_decimate_by()
+ */
+#ifndef _di_f_fss_simple_packetss_decimate_by_
+  extern f_status_t f_fss_simple_packetss_decimate_by(const f_number_unsigned_t amount, f_fss_simple_packetss_t *packetss);
+#endif // _di_f_fss_simple_packetss_decimate_by_
+
+/**
+ * Resize the simple packets array to a smaller size.
+ *
+ * This will resize making the array smaller based on (size - given length).
+ * If the given length is too small, then the resize will fail.
+ * This will not shrink the size to less than 0.
+ *
+ * @param amount
+ *   A positive number representing how much to decrease the size by.
+ * @param packetss
+ *   The simple packets array to resize.
+ *
+ * @return
+ *   F_data_not on success, but the amount to decrease by is 0.
+ *
+ *   Success from f_memory_array_decrease_by().
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_array_decrease_by().
+ *
+ * @see f_memory_array_decrease_by()
+ */
+#ifndef _di_f_fss_simple_packetss_decrease_by_
+  extern f_status_t f_fss_simple_packetss_decrease_by(const f_number_unsigned_t amount, f_fss_simple_packetss_t *packetss);
+#endif // _di_f_fss_simple_packetss_decrease_by_
+
+/**
+ * Increase the size of the simple packets array, but only if necessary.
+ *
+ * If the given length is too large for the buffer, then attempt to packet max buffer size (F_number_t_size_unsigned_d).
+ * If already packet to the maximum buffer size, then the resize will fail.
+ *
+ * @param step
+ *   The allocation step to use.
+ *   Must be greater than 0.
+ * @param packetss
+ *   The simple packets array to resize.
+ *
+ * @return
+ *   Success from f_memory_array_increase().
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_array_increase().
+ *
+ * @see f_memory_array_increase()
+ */
+#ifndef _di_f_fss_simple_packetss_increase_
+  extern f_status_t f_fss_simple_packetss_increase(const f_number_unsigned_t step, f_fss_simple_packetss_t *packetss);
+#endif // _di_f_fss_simple_packetss_increase_
+
+/**
+ * Resize the simple packets array to a larger size.
+ *
+ * This will resize making the array larger based on the given length.
+ * If the given length is too large for the buffer, then attempt to packet max buffer size (F_number_t_size_unsigned_d).
+ * If already packet to the maximum buffer size, then the resize will fail.
+ *
+ * @param amount
+ *   A positive number representing how much to increase the size by.
+ * @param packetss
+ *   The simple packets array to resize.
+ *
+ * @return
+ *   Success from f_memory_array_increase_by().
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_array_increase_by().
+ *
+ * @see f_memory_array_increase_by()
+ */
+#ifndef _di_f_fss_simple_packetss_increase_by_
+  extern f_status_t f_fss_simple_packetss_increase_by(const f_number_unsigned_t amount, f_fss_simple_packetss_t *packetss);
+#endif // _di_f_fss_simple_packetss_increase_by_
+
+/**
+ * Resize the simple packets array.
+ *
+ * @param length
+ *   The new size to use.
+ * @param packetss
+ *   The simple packets array to resize.
+ *
+ * @return
+ *   Success from f_memory_array_resize().
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_array_resize().
+ *
+ * @see f_memory_array_resize()
+ */
+#ifndef _di_f_fss_simple_packetss_resize_
+  extern f_status_t f_fss_simple_packetss_resize(const f_number_unsigned_t length, f_fss_simple_packetss_t *packetss);
+#endif // _di_f_fss_simple_packetss_resize_
 
 #ifdef __cplusplus
 } // extern "C"

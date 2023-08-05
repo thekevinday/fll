@@ -5,6 +5,26 @@
 extern "C" {
 #endif
 
+#ifndef _di_f_fss_simple_packet_delete_
+  f_status_t f_fss_simple_packet_delete(f_fss_simple_packet_t * const packet) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!packet) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    return f_string_dynamic_resize(0, &packet->payload);
+  }
+#endif // _di_f_fss_simple_packet_delete_
+
+#ifndef _di_f_fss_simple_packet_destroy_
+  f_status_t f_fss_simple_packet_destroy(f_fss_simple_packet_t * const packet) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!packet) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    return f_string_dynamic_adjust(0, &packet->payload);
+  }
+#endif // _di_f_fss_simple_packet_destroy_
+
 #ifndef _di_f_fss_simple_packet_identify_
   f_status_t f_fss_simple_packet_identify(const f_string_static_t buffer, f_fss_simple_packet_range_t * const range) {
     #ifndef _di_level_0_parameter_checking_
@@ -247,6 +267,197 @@ extern "C" {
     return private_f_fss_simple_packet_rangess_resize(length, rangess);
   }
 #endif // _di_f_fss_simple_packet_rangess_resize_
+
+#ifndef _di_f_fss_simple_packets_adjust_
+  f_status_t f_fss_simple_packets_adjust(const f_number_unsigned_t length, f_fss_simple_packets_t *packets) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!packets) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    return private_f_fss_simple_packets_adjust(length, packets);
+  }
+#endif // _di_f_fss_simple_packets_adjust_
+
+#ifndef _di_f_fss_simple_packets_append_
+  f_status_t f_fss_simple_packets_append(const f_fss_simple_packet_t source, f_fss_simple_packets_t *destination) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!destination) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    return private_f_fss_simple_packets_append(source, destination);
+  }
+#endif // _di_f_fss_simple_packets_append_
+
+#ifndef _di_f_fss_simple_packets_append_all_
+  f_status_t f_fss_simple_packets_append_all(const f_fss_simple_packets_t source, f_fss_simple_packets_t *destination) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!destination) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (!source.used) return F_data_not;
+
+    return private_f_fss_simple_packets_append_all(source, destination);
+  }
+#endif // _di_f_fss_simple_packets_append_all_
+
+#ifndef _di_f_fss_simple_packets_decimate_by_
+  f_status_t f_fss_simple_packets_decimate_by(const f_number_unsigned_t amount, f_fss_simple_packets_t *packets) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!packets) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    return f_memory_array_decimate_by(amount, sizeof(f_fss_simple_packet_t), (void **) &packets->array, &packets->used, &packets->size);
+  }
+#endif // _di_f_fss_simple_packets_decimate_by_
+
+#ifndef _di_f_fss_simple_packets_decrease_by_
+  f_status_t f_fss_simple_packets_decrease_by(const f_number_unsigned_t amount, f_fss_simple_packets_t *packets) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!packets) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    return f_memory_array_decrease_by(amount, sizeof(f_fss_simple_packet_t), (void **) &packets->array, &packets->used, &packets->size);
+  }
+#endif // _di_f_fss_simple_packets_decrease_by_
+
+#ifndef _di_f_fss_simple_packets_increase_
+  f_status_t f_fss_simple_packets_increase(const f_number_unsigned_t step, f_fss_simple_packets_t *packets) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!packets) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    return f_memory_array_increase(step, sizeof(f_fss_simple_packet_t), (void **) &packets->array, &packets->used, &packets->size);
+  }
+#endif // _di_f_fss_simple_packets_increase_
+
+#ifndef _di_f_fss_simple_packets_increase_by_
+  f_status_t f_fss_simple_packets_increase_by(const f_number_unsigned_t amount, f_fss_simple_packets_t *packets) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!packets) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    return f_memory_array_increase_by(amount, sizeof(f_fss_simple_packet_t), (void **) &packets->array, &packets->used, &packets->size);
+  }
+#endif // _di_f_fss_simple_packets_increase_by_
+
+#ifndef _di_f_fss_simple_packets_resize_
+  f_status_t f_fss_simple_packets_resize(const f_number_unsigned_t length, f_fss_simple_packets_t *packets) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!packets) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    return private_f_fss_simple_packets_resize(length, packets);
+  }
+#endif // _di_f_fss_simple_packets_resize_
+
+#ifndef _di_f_fss_simple_packetss_adjust_
+  f_status_t f_fss_simple_packetss_adjust(const f_number_unsigned_t length, f_fss_simple_packetss_t *packetss) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!packetss) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    return private_f_fss_simple_packetss_adjust(length, packetss);
+  }
+#endif // _di_f_fss_simple_packetss_adjust_
+
+#ifndef _di_f_fss_simple_packetss_append_
+  f_status_t f_fss_simple_packetss_append(const f_fss_simple_packets_t source, f_fss_simple_packetss_t *destination) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!destination) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (!source.used) return F_data_not;
+
+    f_status_t status = f_memory_array_increase(F_memory_default_allocation_small_d, sizeof(f_fss_simple_packets_t), (void **) &destination->array, &destination->used, &destination->size);
+    if (F_status_is_error(status)) return status;
+
+    status = private_f_fss_simple_packets_append_all(source, &destination->array[destination->used]);
+    if (F_status_is_error(status)) return status;
+
+    ++destination->used;
+
+    return F_none;
+  }
+#endif // _di_f_fss_simple_packetss_append_
+
+#ifndef _di_f_fss_simple_packetss_append_all_
+  f_status_t f_fss_simple_packetss_append_all(const f_fss_simple_packetss_t source, f_fss_simple_packetss_t *destination) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!destination) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (!source.used) return F_data_not;
+
+    f_status_t status = f_memory_array_increase_by(source.used, sizeof(f_fss_simple_packets_t), (void **) &destination->array, &destination->used, &destination->size);
+    if (F_status_is_error(status)) return status;
+
+    for (f_number_unsigned_t i = 0; i < source.used; ++i, ++destination->used) {
+
+      destination->array[destination->used].used = 0;
+
+      if (source.array[i].used) {
+        status = private_f_fss_simple_packets_append_all(source.array[i], &destination->array[destination->used]);
+        if (F_status_is_error(status)) return status;
+      }
+    } // for
+
+    return F_none;
+  }
+#endif // _di_f_fss_simple_packetss_append_all_
+
+#ifndef _di_f_fss_simple_packetss_decimate_by_
+  f_status_t f_fss_simple_packetss_decimate_by(const f_number_unsigned_t amount, f_fss_simple_packetss_t *packetss) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!packetss) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (!amount) return F_data_not;
+
+    return private_f_fss_simple_packetss_adjust((packetss->size > amount) ? packetss->size - amount : 0, packetss);
+  }
+#endif // _di_f_fss_simple_packetss_decimate_by_
+
+#ifndef _di_f_fss_simple_packetss_decrease_by_
+  f_status_t f_fss_simple_packetss_decrease_by(const f_number_unsigned_t amount, f_fss_simple_packetss_t *packetss) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!packetss) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (!amount) return F_data_not;
+
+    return private_f_fss_simple_packetss_resize((packetss->size > amount) ? packetss->size - amount : 0, packetss);
+  }
+#endif // _di_f_fss_simple_packetss_decrease_by_
+
+#ifndef _di_f_fss_simple_packetss_increase_
+  f_status_t f_fss_simple_packetss_increase(const f_number_unsigned_t step, f_fss_simple_packetss_t *packetss) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!packetss) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    return f_memory_array_increase(step, sizeof(f_fss_simple_packets_t), (void **) &packetss->array, &packetss->used, &packetss->size);
+  }
+#endif // _di_f_fss_simple_packetss_increase_
+
+#ifndef _di_f_fss_simple_packetss_increase_by_
+  f_status_t f_fss_simple_packetss_increase_by(const f_number_unsigned_t amount, f_fss_simple_packetss_t *packetss) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!packetss) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    return f_memory_array_increase_by(amount, sizeof(f_fss_simple_packets_t), (void **) &packetss->array, &packetss->used, &packetss->size);
+  }
+#endif // _di_f_fss_simple_packetss_increase_by_
+
+#ifndef _di_f_fss_simple_packetss_resize_
+  f_status_t f_fss_simple_packetss_resize(const f_number_unsigned_t length, f_fss_simple_packetss_t *packetss) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!packetss) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    return private_f_fss_simple_packetss_resize(length, packetss);
+  }
+#endif // _di_f_fss_simple_packetss_resize_
 
 #ifdef __cplusplus
 } // extern "C"
