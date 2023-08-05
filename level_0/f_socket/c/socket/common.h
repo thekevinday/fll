@@ -734,7 +734,8 @@ extern "C" {
  * Commonly used socket related properties, loosely based off of f_file_t.
  *
  * Properties:
- *   - id:       File descriptor, with a value of -1 represents a closed file.
+ *   - id:       Socket file descriptor, used for binding and listening.
+ *   - id_data:  Data file descriptor, used for reading and writing data from or to the socket.
  *   - domain:   The socket domain (protocol family, such as f_socket_protocol_family_local_e).
  *   - protocol: The socket protocol (such as f_socket_protocol_tcp_e).
  *   - type:     The socket type (address family, such as f_socket_address_family_local_e).
@@ -752,6 +753,7 @@ extern "C" {
 #ifndef _di_f_socket_t_
   typedef struct {
     int id;
+    int id_data;
     int domain;
     int protocol;
     int type;
@@ -765,9 +767,10 @@ extern "C" {
     f_string_static_t name;
   } f_socket_t;
 
-  #define f_socket_t_initialize { -1, 0, 0, 0, F_socket_default_read_size_d, F_socket_default_write_size_d, f_socket_address_t_initialize, 0, f_string_static_t_initialize }
+  #define f_socket_t_initialize { -1, -1, 0, 0, 0, F_socket_default_read_size_d, F_socket_default_write_size_d, f_socket_address_t_initialize, 0, f_string_static_t_initialize }
 
   #define macro_f_socket_t_initialize_1(address, length) { \
+    -1, \
     -1, \
     0, \
     0, \
@@ -781,6 +784,7 @@ extern "C" {
 
   #define macro_f_socket_t_initialize_2(address, length, name) { \
     -1, \
+    -1, \
     0, \
     0, \
     0, \
@@ -793,6 +797,7 @@ extern "C" {
 
   #define macro_f_socket_t_initialize_3(id, domain, protocol, type, address, length, name) { \
     id, \
+    -1, \
     domain, \
     protocol, \
     type, \
@@ -805,6 +810,20 @@ extern "C" {
 
   #define macro_f_socket_t_initialize_4(id, domain, protocol, type, size_read, size_write, address, length, name) { \
     id, \
+    -1, \
+    domain, \
+    protocol, \
+    type, \
+    size_read, \
+    size_write, \
+    address, \
+    length, \
+    name \
+  }
+
+  #define macro_f_socket_t_initialize_5(id, id_data, domain, protocol, type, size_read, size_write, address, length, name) { \
+    id, \
+    id_data, \
     domain, \
     protocol, \
     type, \
@@ -817,6 +836,7 @@ extern "C" {
 
   #define macro_f_socket_t_clear(file) \
     file.id = -1; \
+    file.id_data = -1; \
     file.domain = 0; \
     file.protocol = 0; \
     file.type = 0; \
@@ -827,6 +847,7 @@ extern "C" {
 
   #define macro_f_socket_t_reset(file) \
     file.id = -1; \
+    file.id_data = -1; \
     file.domain = 0; \
     file.protocol = 0; \
     file.type = 0; \

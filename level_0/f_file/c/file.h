@@ -203,6 +203,32 @@ extern "C" {
 #endif // _di_f_file_close_
 
 /**
+ * Close an open file directly by the file descriptor.
+ *
+ * Will not flush before closing.
+ *
+ * @param id
+ *   The file descriptor.
+ *
+ * @return
+ *   F_none on success.
+ *   F_file_descriptor_not if id is -1.
+ *
+ *   F_file_close (with error bit) if fclose() failed for any other reason.
+ *   F_file_descriptor (with error bit) if file descriptor is invalid.
+ *   F_file_synchronize (with error bit) on flush failure.
+ *   F_filesystem_quota_block (with error bit) if file system's disk blocks or inodes are exhausted.
+ *   F_input_output (with error bit) on I/O error.
+ *   F_interrupt (with error bit) when program received an interrupt signal, halting operation.
+ *   F_space_not (with error bit) if file system is out of space (or file system quota is reached).
+ *
+ * @see fclose()
+ */
+#ifndef _di_f_file_close_id_
+  extern f_status_t f_file_close_id(int * const id);
+#endif // _di_f_file_close_id_
+
+/**
  * Copy a file.
  *
  * The paths must not contain NULL except for the terminating NULL.
@@ -2108,7 +2134,7 @@ extern "C" {
 #endif // _di_f_file_size_at_
 
 /**
- * Read size of a file relative to the path represented by the file descriptor id.
+ * Read size of a file relative to the path represented by the file descriptor.
  *
  * @param file
  *   The file.
@@ -2171,7 +2197,7 @@ extern "C" {
 #endif // _di_f_file_stat_
 
 /**
- * Read statistics of a file relative to the path represented by the file descriptor id.
+ * Read statistics of a file relative to the path represented by the file descriptor.
  *
  * @param directory
  *   The parent directory, via an open directory file descriptor, in which path is relative to.
@@ -2205,7 +2231,7 @@ extern "C" {
 #endif // _di_f_file_stat_at_
 
 /**
- * Read statistics of a file using a file descriptor id.
+ * Read statistics of a file using a file descriptor.
  *
  * @param file
  *   The file.

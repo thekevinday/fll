@@ -61,9 +61,8 @@ extern "C" {
  * @param socket
  *   The client socket structure.
  *   The structure should be memset as appropriate before calling this.
- *   The properties of the structure, namely socket.id, socket.address, and socket.length, are updated upon a successful return.
- * @param id
- *   The socket file descriptor representing an actively listening socket to retrieve from.
+ *   The socket.id is the socket file descriptor used to establish the data file descriptor socket.id_data.
+ *   The socket.id_data, socket.address, and socket.length are updated upon a successful return.
  *
  * @return
  *   F_none on success.
@@ -97,7 +96,7 @@ extern "C" {
  * @see accept()
  */
 #ifndef _di_f_socket_accept_
-  extern f_status_t f_socket_accept(f_socket_t * const socket, const int id);
+  extern f_status_t f_socket_accept(f_socket_t * const socket);
 #endif // _di_f_socket_accept_
 
 /**
@@ -557,9 +556,11 @@ extern "C" {
  *
  * This is the recommneded way to read UDP streams.
  *
+ * This uses the socket.id_data and not the socket.id for processing the data.
+ *
  * @param socket
  *   The socket structure.
- *   The socket.id must represent a valid socket file descriptor.
+ *   The socket.id_data must represent a valid file descriptor.
  *   The socket.size_read is used to represent the buffer size in buffer and must not be larger than the actual size of the buffer.
  * @param flags
  *   Read flags.
@@ -602,9 +603,11 @@ extern "C" {
 /**
  * Read a message from a socket.
  *
+ * This uses the socket.id_data and not the socket.id for processing the data.
+ *
  * @param socket
  *   The socket structure.
- *   The socket.id must represent a valid socket file descriptor.
+ *   The socket.id_data must represent a valid file descriptor.
  * @param flags
  *   Read flags.
  * @param header
@@ -647,9 +650,11 @@ extern "C" {
  *
  * This is the recommneded way to read TCP streams.
  *
+ * This uses the socket.id_data and not the socket.id for processing the data.
+ *
  * @param socket
  *   The socket structure.
- *   The socket.id must represent a valid socket file descriptor.
+ *   The socket.id_data must represent a valid file descriptor.
  *   The socket.size_read is used to represent the buffer size in buffer and must not be larger than the actual size of the buffer.
  * @param flags
  *   Read flags.
@@ -694,9 +699,11 @@ extern "C" {
  *
  * This is the recommneded way to write UDP streams.
  *
+ * This uses the socket.id_data and not the socket.id for processing the data.
+ *
  * @param socket
  *   The socket structure.
- *   The socket.id must represent a valid socket file descriptor.
+ *   The socket.id_data must represent a valid socket file descriptor.
  *   The socket.size_write is used to represent the buffer size in buffer and must not be larger than the actual size of the buffer.
  * @param flags
  *   Read flags.
@@ -743,9 +750,11 @@ extern "C" {
 /**
  * Send a message to a socket.
  *
+ * This uses the socket.id_data and not the socket.id for processing the data.
+ *
  * @param socket
  *   The socket structure.
- *   The socket.id must represent a valid socket file descriptor.
+ *   The socket.id_data must represent a valid file descriptor.
  * @param flags
  *   Read flags.
  * @param header
@@ -792,9 +801,11 @@ extern "C" {
  *
  * This is the recommneded way to write TCP streams.
  *
+ * This uses the socket.id_data and not the socket.id for processing the data.
+ *
  * @param socket
  *   The socket structure.
- *   The socket.id must represent a valid socket file descriptor.
+ *   The socket.id_data must represent a valid socket file descriptor.
  *   The socket.size_write is used to represent the buffer size in buffer and must not be larger than the actual size of the buffer.
  * @param flags
  *   Read flags.

@@ -40,6 +40,10 @@ int main(void) {
     cmocka_unit_test(test__f_file_close__returns_file_descriptor_not),
     cmocka_unit_test(test__f_file_close__works),
 
+    cmocka_unit_test(test__f_file_close_id__fails),
+    cmocka_unit_test(test__f_file_close_id__returns_file_descriptor_not),
+    cmocka_unit_test(test__f_file_close_id__works),
+
     cmocka_unit_test(test__f_file_copy__fails_during_read_write),
     cmocka_unit_test(test__f_file_copy__fails_for_block),
     cmocka_unit_test(test__f_file_copy__fails_for_character),
@@ -390,6 +394,7 @@ int main(void) {
       // f_file_access_at() doesn't use parameter checking.
       // f_file_clone() doesn't use parameter checking.
       cmocka_unit_test(test__f_file_close__parameter_checking),
+      cmocka_unit_test(test__f_file_close_id__parameter_checking),
       // f_file_copy() doesn't use parameter checking.
       // f_file_create() doesn't use parameter checking.
       // f_file_create_at() doesn't use parameter checking.

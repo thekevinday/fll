@@ -128,9 +128,21 @@ extern "C" {
 
     if (file->id == -1) return F_file_descriptor_not;
 
-    return private_f_file_close(file);
+    return private_f_file_close(&file->id);
   }
 #endif // _di_f_file_close_
+
+#ifndef _di_f_file_close_id_
+  f_status_t f_file_close_id(int * const id) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!id) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (*id == -1) return F_file_descriptor_not;
+
+    return private_f_file_close(id);
+  }
+#endif // _di_f_file_close_id_
 
 #ifndef _di_f_file_copy_
   f_status_t f_file_copy(const f_string_static_t source, const f_string_static_t destination, const f_mode_t mode, const f_number_unsigned_t size_block, const uint8_t flag) {

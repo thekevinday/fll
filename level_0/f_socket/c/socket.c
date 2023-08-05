@@ -5,12 +5,12 @@ extern "C" {
 #endif
 
 #ifndef _di_f_socket_accept_
-  f_status_t f_socket_accept(f_socket_t * const socket, const int id) {
+  f_status_t f_socket_accept(f_socket_t * const socket) {
     #ifndef _di_level_0_parameter_checking_
       if (!socket) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    const int result = accept(id, (struct sockaddr *) &socket->address, &socket->length);
+    const int result = accept(socket->id, (struct sockaddr *) &socket->address, &socket->length);
 
     if (result == -1) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
@@ -40,7 +40,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    socket->id = result;
+    socket->id_data = result;
 
     return F_none;
   }
@@ -431,7 +431,7 @@ extern "C" {
       if (!buffer) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    const ssize_t result = recvfrom(socket->id, buffer, socket->size_read, flags, (struct sockaddr *) &socket->address, &socket->length);
+    const ssize_t result = recvfrom(socket->id_data, buffer, socket->size_read, flags, (struct sockaddr *) &socket->address, &socket->length);
 
     if (result < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
@@ -470,7 +470,7 @@ extern "C" {
       if (!header) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    const ssize_t result = recvmsg(socket->id, header, flags);
+    const ssize_t result = recvmsg(socket->id_data, header, flags);
 
     if (result < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
@@ -509,7 +509,7 @@ extern "C" {
       if (!buffer) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    const ssize_t result = recv(socket->id, buffer, socket->size_read, flags);
+    const ssize_t result = recv(socket->id_data, buffer, socket->size_read, flags);
 
     if (result < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
@@ -548,7 +548,7 @@ extern "C" {
       if (!buffer) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    const ssize_t result = sendto(socket->id, buffer, socket->size_write, flags, (struct sockaddr *) &socket->address, socket->length);
+    const ssize_t result = sendto(socket->id_data, buffer, socket->size_write, flags, (struct sockaddr *) &socket->address, socket->length);
 
     if (result < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
@@ -590,7 +590,7 @@ extern "C" {
       if (!header) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    const ssize_t result = sendmsg(socket->id, header, flags);
+    const ssize_t result = sendmsg(socket->id_data, header, flags);
 
     if (result < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
@@ -632,7 +632,7 @@ extern "C" {
       if (!buffer) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    const ssize_t result = send(socket->id, buffer, socket->size_write, flags);
+    const ssize_t result = send(socket->id_data, buffer, socket->size_write, flags);
 
     if (result < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);

@@ -6,13 +6,13 @@ extern "C" {
 #endif
 
 #if !defined(_di_f_file_clone_) || !defined(_di_f_file_close_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_create_) || !defined(_di_f_file_create_at_) || !defined(_di_f_file_stream_close_)
-  f_status_t private_f_file_close(f_file_t * const file) {
+  f_status_t private_f_file_close(int * const id) {
 
-    if (close(file->id) < 0) {
+    if (close(*id) < 0) {
 
       // According to man pages, retrying close() after another close on error is invalid on Linux because Linux releases the descriptor before stages that cause failures.
       if (errno != EBADF && errno != EINTR) {
-        file->id = -1;
+        *id = -1;
       }
 
       if (errno == EBADF) return F_status_set_error(F_file_descriptor);
@@ -24,7 +24,7 @@ extern "C" {
       return F_status_set_error(F_file_close);
     }
 
-    file->id = -1;
+    *id = -1;
 
     return F_none;
   }
@@ -46,7 +46,7 @@ extern "C" {
 
     if (F_status_is_error(status)) {
       private_f_file_flush(file_source);
-      private_f_file_close(&file_source);
+      private_f_file_close(&file_source.id);
 
       return status;
     }
@@ -65,8 +65,8 @@ extern "C" {
         private_f_file_flush(file_destination);
         private_f_file_flush(file_source);
 
-        private_f_file_close(&file_destination);
-        private_f_file_close(&file_source);
+        private_f_file_close(&file_destination.id);
+        private_f_file_close(&file_source.id);
 
         return F_status_set_error(F_file_write);
       }
@@ -75,8 +75,8 @@ extern "C" {
     private_f_file_flush(file_destination);
     private_f_file_flush(file_source);
 
-    private_f_file_close(&file_destination);
-    private_f_file_close(&file_source);
+    private_f_file_close(&file_destination.id);
+    private_f_file_close(&file_source.id);
 
     if (size_read < 0) return F_status_set_error(F_file_read);
 
@@ -100,7 +100,7 @@ extern "C" {
     if (F_status_is_error_not(status) && file.id != -1) {
       private_f_file_flush(file);
 
-      status = private_f_file_close(&file);
+      status = private_f_file_close(&file.id);
     }
 
     if (F_status_is_error(status)) return status;
@@ -125,7 +125,7 @@ extern "C" {
     if (F_status_is_error_not(status) && file_internal.id != -1) {
       private_f_file_flush(file_internal);
 
-      status = private_f_file_close(&file_internal);
+      status = private_f_file_close(&file_internal.id);
     }
 
     if (F_status_is_error(status)) return status;

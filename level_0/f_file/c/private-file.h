@@ -20,8 +20,8 @@ extern "C" {
  *
  * Intended to be shared to each of the different implementation variations.
  *
- * @param file
- *   The file to close.
+ * @param id
+ *   The file descriptor to close.
  *   The file descriptor gets set to -1.
  *
  * @return
@@ -47,7 +47,7 @@ extern "C" {
  * @see f_file_stream_close()
  */
 #if !defined(_di_f_file_clone_) || !defined(_di_f_file_close_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_create_) || !defined(_di_f_file_create_at_) || !defined(_di_f_file_stream_close_)
-  extern f_status_t private_f_file_close(f_file_t * const file) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_file_close(int * const id) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_file_clone_) || !defined(_di_f_file_close_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_create_) || !defined(_di_f_file_create_at_) || !defined(_di_f_file_stream_close_)
 
 /**
