@@ -83,7 +83,7 @@ extern "C" {
     // Prevent double-allocations and unnecessary frees.
     if (*pointer || !length) return F_data_not;
 
-    if (*pointer = calloc(length, size)) return F_none;
+    if ((*pointer = calloc(length, size))) return F_none;
 
     return F_status_set_error(F_memory_not);
   }
