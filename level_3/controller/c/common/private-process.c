@@ -64,7 +64,7 @@ extern "C" {
 
     f_string_dynamics_resize(0, &process->path_pids);
 
-    f_number_unsigneds_resize(0, &process->stack);
+    f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &process->stack.array, &process->stack.used, &process->stack.size);
   }
 #endif // _di_controller_process_delete_simple_
 

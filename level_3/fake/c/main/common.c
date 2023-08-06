@@ -559,7 +559,7 @@ extern "C" {
     }
 
     if (iki_data->delimits.used > fake_max_over_array_d) {
-      f_number_unsigneds_resize(fake_allocation_large_d, &iki_data->delimits);
+      f_memory_array_resize(fake_allocation_large_d, sizeof(f_number_unsigned_t), (void **) &iki_data->delimits.array, &iki_data->delimits.used, &iki_data->delimits.size);
     }
 
     if (iki_data->variable.used > fake_max_over_array_d) {

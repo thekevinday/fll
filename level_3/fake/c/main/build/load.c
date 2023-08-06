@@ -169,7 +169,7 @@ extern "C" {
           }
         }
 
-        macro_f_number_unsigneds_t_delete_simple(delimits);
+        f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &delimits.array, &delimits.used, &delimits.size);
       }
 
       f_string_dynamic_resize(0, &buffer);

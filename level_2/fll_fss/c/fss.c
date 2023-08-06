@@ -373,7 +373,7 @@ extern "C" {
             }
 
             if (indexs) {
-              macro_f_number_unsigneds_t_resize(status, (*indexs[j]), indexs[j]->used + 1);
+              status = f_memory_array_resize(indexs[j]->used + 1, sizeof(f_number_unsigned_t), (void **) &indexs[j]->array, &indexs[j]->used, &indexs[j]->size);
               if (F_status_is_error(status)) return status;
             }
           }
@@ -387,7 +387,7 @@ extern "C" {
             }
 
             if (indexs) {
-              macro_f_number_unsigneds_t_resize(status, (*indexs[j]), indexs[j]->used + F_fss_default_allocation_step_d);
+              status = f_memory_array_increase(F_fss_default_allocation_step_d, sizeof(f_number_unsigned_t), (void **) &indexs[j]->array, &indexs[j]->used, &indexs[j]->size);
               if (F_status_is_error(status)) return status;
             }
           }
@@ -465,7 +465,7 @@ extern "C" {
         if (F_status_is_error(status)) return status;
 
         if (indexs) {
-          macro_f_number_unsigneds_t_increase(status, F_fss_default_allocation_step_small_d, (*indexs[j]));
+          status = f_memory_array_increase(F_fss_default_allocation_step_small_d, sizeof(f_number_unsigned_t), (void **) &indexs[j]->array, &indexs[j]->used, &indexs[j]->size);
           if (F_status_is_error(status)) return status;
         }
 
@@ -539,7 +539,7 @@ extern "C" {
         if (F_status_is_error(status)) return status;
 
         if (indexs) {
-          macro_f_number_unsigneds_t_increase(status, F_fss_default_allocation_step_small_d, (*indexs[j]));
+          status = f_memory_array_increase(F_fss_default_allocation_step_small_d, sizeof(f_number_unsigned_t), (void **) &indexs[j]->array, &indexs[j]->used, &indexs[j]->size);
           if (F_status_is_error(status)) return status;
         }
 
@@ -646,7 +646,7 @@ extern "C" {
           if (F_status_is_error(status)) return status;
 
           if (indexs) {
-            macro_f_number_unsigneds_t_increase(status, F_fss_default_allocation_step_small_d, (*indexs[j]));
+            status = f_memory_array_increase(F_fss_default_allocation_step_small_d, sizeof(f_number_unsigned_t), (void **) &indexs[j]->array, &indexs[j]->used, &indexs[j]->size);
             if (F_status_is_error(status)) return status;
           }
 
@@ -762,7 +762,7 @@ extern "C" {
           if (F_status_is_error(status)) return status;
 
           if (indexs) {
-            macro_f_number_unsigneds_t_increase(status, F_fss_default_allocation_step_small_d, (*indexs[j]));
+            status = f_memory_array_increase(F_fss_default_allocation_step_small_d, sizeof(f_number_unsigned_t), (void **) &indexs[j]->array, &indexs[j]->used, &indexs[j]->size);
             if (F_status_is_error(status)) return status;
           }
 
@@ -890,7 +890,7 @@ extern "C" {
         if (F_status_is_error(status)) return status;
 
         if (indexs) {
-          macro_f_number_unsigneds_t_increase(status, F_fss_default_allocation_step_small_d, (*indexs[j]));
+          status = f_memory_array_increase(F_fss_default_allocation_step_small_d, sizeof(f_number_unsigned_t), (void **) &indexs[j]->array, &indexs[j]->used, &indexs[j]->size);
           if (F_status_is_error(status)) return status;
         }
 

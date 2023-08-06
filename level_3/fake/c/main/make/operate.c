@@ -207,7 +207,7 @@ extern "C" {
     f_file_stream_flush(data_make.path.top);
     f_file_stream_close(&data_make.path.top);
 
-    f_number_unsigneds_resize(0, &section_stack);
+    f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &section_stack.array, &section_stack.used, &section_stack.size);
     fake_make_data_delete(&data_make);
 
     if (F_status_is_error_not(main->setting.state.status)) {

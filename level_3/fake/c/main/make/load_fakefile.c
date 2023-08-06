@@ -64,7 +64,7 @@ extern "C" {
       if (F_status_is_error(data_make->main->setting.state.status)) {
         f_string_ranges_resize(0, &list_objects);
         f_string_rangess_resize(0, &list_contents);
-        f_number_unsigneds_resize(0, &delimits);
+        f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &delimits.array, &delimits.used, &delimits.size);
 
         return;
       }
@@ -86,7 +86,7 @@ extern "C" {
         f_fss_set_resize(0, &settings);
         f_string_ranges_resize(0, &list_objects);
         f_string_rangess_resize(0, &list_contents);
-        f_number_unsigneds_resize(0, &delimits);
+        f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &delimits.array, &delimits.used, &delimits.size);
 
         return;
       }
@@ -172,7 +172,7 @@ extern "C" {
 
       f_string_ranges_resize(0, &list_objects);
       f_string_rangess_resize(0, &list_contents);
-      f_number_unsigneds_resize(0, &delimits);
+      f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &delimits.array, &delimits.used, &delimits.size);
 
       if (F_status_is_error(data_make->main->setting.state.status)) {
         f_fss_set_resize(0, &settings);

@@ -3240,11 +3240,11 @@ extern "C" {
 
     if (F_status_is_error_not(status) && stack.used) {
       if (process->stack.size < stack.used) {
-        status = f_number_unsigneds_resize(stack.used, &process->stack);
+        status = f_memory_array_resize(stack.used, sizeof(f_number_unsigned_t), (void **) &process->stack.array, &process->stack.used, &process->stack.size);
       }
 
       if (F_status_is_error(status)) {
-        controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_number_unsigneds_resize", F_true);
+        controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_memory_array_resize", F_true);
       }
       else {
         for (f_number_unsigned_t i = 0; i < stack.used; ++i) {

@@ -662,7 +662,7 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
                 }
 
                 if (F_status_is_error(status)) {
-                  f_number_unsigneds_resize(0, &delimits);
+                  f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &delimits.array, &delimits.used, &delimits.size);
 
                   break;
                 }
@@ -684,7 +684,7 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
                   status = fll_execute_program(current_tool, arguments, 0, 0, (void *) &return_code);
 
                   if (status == F_child) {
-                    f_number_unsigneds_resize(0, &delimits);
+                    f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &delimits.array, &delimits.used, &delimits.size);
 
                     f_string_dynamic_resize(0, &ip_list);
                     f_string_dynamics_resize(0, &arguments);
@@ -718,7 +718,7 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
                 --arguments.used;
               }
 
-              f_number_unsigneds_resize(0, &delimits);
+              f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &delimits.array, &delimits.used, &delimits.size);
             }
           }
 
@@ -1237,7 +1237,7 @@ f_status_t firewall_buffer_rules(firewall_data_t * const data, const f_string_st
     }
   }
 
-  macro_f_number_unsigneds_t_delete_simple(delimits);
+  f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &delimits.array, &delimits.used, &delimits.size);
   macro_f_string_range_t_delete_simple(comments);
 
   return status;
@@ -1261,7 +1261,7 @@ f_status_t firewall_process_rules(firewall_data_t * const data, f_string_range_t
     }
   }
 
-  macro_f_number_unsigneds_t_delete_simple(delimits);
+  f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &delimits.array, &delimits.used, &delimits.size);
 
   if (F_status_is_error_not(status)) {
     status = firewall_perform_commands(data, local);
@@ -1298,7 +1298,7 @@ f_status_t firewall_delete_local_data(firewall_local_data_t * const local) {
   local->chain = 0;
 
   f_string_dynamic_resize(0, &local->buffer);
-  f_number_unsigneds_resize(0, &local->chain_ids);
+  f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &local->chain_ids.array, &local->chain_ids.used, &local->chain_ids.size);
 
   f_string_ranges_resize(0, &local->chain_objects);
   f_string_rangess_resize(0, &local->chain_contents);

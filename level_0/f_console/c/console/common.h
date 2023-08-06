@@ -815,11 +815,9 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_string_dynamics_resize().
- *   Errors (with error bit) from: f_number_unsigneds_resize().
+ *   Errors (with error bit) from: f_memory_array_resize().
  *
- * @see f_string_dynamics_resize()
- * @see f_number_unsigneds_resize()
+ * @see f_memory_array_resize()
  */
 #ifndef _di_f_console_parameter_state_delete_
   extern f_status_t f_console_parameter_state_delete(f_console_parameter_state_t * const state);
@@ -836,11 +834,9 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_string_dynamics_adjust().
- *   Errors (with error bit) from: f_number_unsigneds_adjust().
+ *   Errors (with error bit) from: f_memory_array_adjust().
  *
- * @see f_string_dynamics_adjust()
- * @see f_number_unsigneds_adjust()
+ * @see f_memory_array_adjust()
  */
 #ifndef _di_f_console_parameter_state_destroy_
   extern f_status_t f_console_parameter_state_destroy(f_console_parameter_state_t * const state);
@@ -857,11 +853,11 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_string_dynamics_resize().
- *   Errors (with error bit) from: f_number_unsigneds_resize().
+ *   Errors (with error bit) from: f_memory_array_resize().
+ *   Errors (with error bit) from: f_string_dynamics_adjust().
  *
- * @see f_string_dynamics_resize()
- * @see f_number_unsigneds_resize()
+ * @see f_memory_array_resize()
+ * @see f_string_dynamics_adjust()
  */
 #ifndef _di_f_console_parameters_delete_
   extern f_status_t f_console_parameters_delete(f_console_parameters_t * const parameters);
@@ -878,11 +874,11 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ *   Errors (with error bit) from: f_memory_array_resize().
  *   Errors (with error bit) from: f_string_dynamics_adjust().
- *   Errors (with error bit) from: f_number_unsigneds_adjust().
  *
+ * @see f_memory_array_resize()
  * @see f_string_dynamics_adjust()
- * @see f_number_unsigneds_adjust()
  */
 #ifndef _di_f_console_parameters_destroy_
   extern f_status_t f_console_parameters_destroy(f_console_parameters_t * const parameters);

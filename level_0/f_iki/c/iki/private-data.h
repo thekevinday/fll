@@ -30,11 +30,9 @@ extern "C" {
  *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
  *
  *   Errors (with error bit) from: f_memory_array_adjust().
- *   Errors (with error bit) from: f_number_unsigneds_adjust().
  *   Errors (with error bit) from: f_string_ranges_adjust().
  *
  * @see f_memory_array_adjust()
- * @see f_number_unsigneds_adjust()
  * @see f_string_ranges_adjust()
  *
  * @see f_iki_datas_adjust()
@@ -115,11 +113,9 @@ extern "C" {
  *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
  *
  *   Errors (with error bit) from: f_memory_array_resize().
- *   Errors (with error bit) from: f_number_unsigneds_resize().
  *   Errors (with error bit) from: f_string_ranges_resize().
  *
  * @see f_memory_array_resize()
- * @see f_number_unsigneds_resize()
  * @see f_string_ranges_resize()
  *
  * @see f_iki_datas_resize()
@@ -150,11 +146,9 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_array_adjust().
- *   Errors (with error bit) from: f_number_unsigneds_adjust().
  *   Errors (with error bit) from: f_string_ranges_adjust().
  *
  * @see f_memory_array_adjust()
- * @see f_number_unsigneds_adjust()
  * @see f_string_ranges_adjust()
  *
  * @see f_iki_datass_adjust()
@@ -183,11 +177,9 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_array_resize().
- *   Errors (with error bit) from: f_number_unsigneds_resize().
  *   Errors (with error bit) from: f_string_ranges_resize().
  *
  * @see f_memory_array_resize()
- * @see f_number_unsigneds_resize()
  * @see f_string_ranges_resize()
  *
  * @see f_iki_datass_decrease_by()

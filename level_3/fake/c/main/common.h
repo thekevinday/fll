@@ -116,7 +116,7 @@ extern "C" {
  * @param iki_data
  *   The iki data to shrink.
  *
- * @see f_number_unsigneds_resize()
+ * @see f_memory_array_resize()
  * @see f_string_ranges_resize()
  */
 #ifndef _di_fake_iki_data_reset_

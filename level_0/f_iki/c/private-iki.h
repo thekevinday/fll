@@ -57,11 +57,11 @@ extern "C" {
  *   F_none on success.
  *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
  *
- *   Errors (with error bit) from: f_number_unsigneds_adjust().
+ *   Errors (with error bit) from: f_number_unsigneds_resize().
  *   Errors (with error bit) from: f_memory_adjust().
  *   Errors (with error bit) from: f_string_ranges_adjust().
  *
- * @see f_number_unsigneds_adjust()
+ * @see f_number_unsigneds_resize()
  * @see f_memory_adjust()
  * @see f_string_ranges_adjust()
  */

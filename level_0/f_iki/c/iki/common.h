@@ -222,9 +222,6 @@ extern "C" {
     f_number_unsigneds_t_clear(data.delimits) \
     f_string_ranges_t_clear(data.variable) \
     f_string_ranges_t_clear(data.vocabulary)
-
-  #define macro_f_iki_data_t_delete_simple(data)  status = f_iki_data_delete(data);
-  #define macro_f_iki_data_t_destroy_simple(data) status = f_iki_data_destroy(data);
 #endif // _di_f_iki_data_t_
 
 /**

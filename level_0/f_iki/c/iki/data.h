@@ -27,10 +27,10 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_number_unsigneds_resize().
+ *   Errors (with error bit) from: f_memory_array_resize().
  *   Errors (with error bit) from: f_string_ranges_resize().
  *
- * @see f_number_unsigneds_resize()
+ * @see f_memory_array_resize()
  * @see f_string_ranges_resize()
  */
 #ifndef _di_f_iki_data_delete_
@@ -48,10 +48,10 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_number_unsigneds_adjust().
+ *   Errors (with error bit) from: f_memory_array_adjust().
  *   Errors (with error bit) from: f_string_ranges_adjust().
  *
- * @see f_number_unsigneds_adjust()
+ * @see f_memory_array_adjust()
  * @see f_string_ranges_adjust()
  */
 #ifndef _di_f_iki_data_destroy_
@@ -72,11 +72,9 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_array_adjust().
- *   Errors (with error bit) from: f_number_unsigneds_adjust().
  *   Errors (with error bit) from: f_string_ranges_adjust().
  *
  * @see f_memory_array_adjust()
- * @see f_number_unsigneds_adjust()
  * @see f_string_ranges_adjust()
  */
 #ifndef _di_f_iki_datas_adjust_
@@ -154,11 +152,9 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_array_adjust().
- *   Errors (with error bit) from: f_number_unsigneds_adjust().
  *   Errors (with error bit) from: f_string_ranges_adjust().
  *
  * @see f_memory_array_adjust()
- * @see f_number_unsigneds_adjust()
  * @see f_string_ranges_adjust()
  */
 #ifndef _di_f_iki_datas_decimate_by_
@@ -184,11 +180,9 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_array_resize().
- *   Errors (with error bit) from: f_number_unsigneds_resize().
  *   Errors (with error bit) from: f_string_ranges_resize().
  *
  * @see f_memory_array_resize()
- * @see f_number_unsigneds_resize()
  * @see f_string_ranges_resize()
  */
 #ifndef _di_f_iki_datas_decrease_by_
@@ -215,11 +209,9 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_array_resize().
- *   Errors (with error bit) from: f_number_unsigneds_resize().
  *   Errors (with error bit) from: f_string_ranges_resize().
  *
  * @see f_memory_array_resize()
- * @see f_number_unsigneds_resize()
  * @see f_string_ranges_resize()
  */
 #ifndef _di_f_iki_datas_increase_
@@ -246,11 +238,9 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_array_resize().
- *   Errors (with error bit) from: f_number_unsigneds_resize().
  *   Errors (with error bit) from: f_string_ranges_resize().
  *
  * @see f_memory_array_resize()
- * @see f_number_unsigneds_resize()
  * @see f_string_ranges_resize()
  */
 #ifndef _di_f_iki_datas_increase_by_
@@ -271,11 +261,9 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_array_resize().
- *   Errors (with error bit) from: f_number_unsigneds_resize().
  *   Errors (with error bit) from: f_string_ranges_resize().
  *
  * @see f_memory_array_resize()
- * @see f_number_unsigneds_resize()
  * @see f_string_ranges_resize()
  */
 #ifndef _di_f_iki_datas_resize_
@@ -296,11 +284,9 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_array_adjust().
- *   Errors (with error bit) from: f_number_unsigneds_adjust().
  *   Errors (with error bit) from: f_string_ranges_adjust().
  *
  * @see f_memory_array_adjust()
- * @see f_number_unsigneds_adjust()
  * @see f_string_ranges_adjust()
  */
 #ifndef _di_f_iki_datass_adjust_
@@ -323,12 +309,10 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_array_increase().
  *   Errors (with error bit) from: f_memory_array_resize().
- *   Errors (with error bit) from: f_number_unsigneds_resize().
  *   Errors (with error bit) from: f_string_ranges_resize().
  *
  * @see f_memory_array_increase()
  * @see f_memory_array_resize()
- * @see f_number_unsigneds_resize()
  * @see f_string_ranges_resize()
  */
 #ifndef _di_f_iki_datass_append_
@@ -351,12 +335,10 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_array_increase_by().
  *   Errors (with error bit) from: f_memory_array_resize().
- *   Errors (with error bit) from: f_number_unsigneds_resize().
  *   Errors (with error bit) from: f_string_ranges_resize().
  *
  * @see f_memory_array_increase_by()
  * @see f_memory_array_resize()
- * @see f_number_unsigneds_resize()
  * @see f_string_ranges_resize()
  */
 #ifndef _di_f_iki_datass_append_all_
@@ -382,11 +364,9 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_array_adjust().
- *   Errors (with error bit) from: f_number_unsigneds_adjust().
  *   Errors (with error bit) from: f_string_ranges_adjust().
  *
  * @see f_memory_array_adjust()
- * @see f_number_unsigneds_adjust()
  * @see f_string_ranges_adjust()
  */
 #ifndef _di_f_iki_datass_decimate_by_
@@ -412,11 +392,9 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_array_resize().
- *   Errors (with error bit) from: f_number_unsigneds_resize().
  *   Errors (with error bit) from: f_string_ranges_resize().
  *
  * @see f_memory_array_resize()
- * @see f_number_unsigneds_resize()
  * @see f_string_ranges_resize()
  */
 #ifndef _di_f_iki_datass_decrease_by_
@@ -443,11 +421,9 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_array_resize().
- *   Errors (with error bit) from: f_number_unsigneds_resize().
  *   Errors (with error bit) from: f_string_ranges_resize().
  *
  * @see f_memory_array_resize()
- * @see f_number_unsigneds_resize()
  * @see f_string_ranges_resize()
  */
 #ifndef _di_f_iki_datass_increase_
@@ -474,11 +450,9 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_array_resize().
- *   Errors (with error bit) from: f_number_unsigneds_resize().
  *   Errors (with error bit) from: f_string_ranges_resize().
  *
  * @see f_memory_array_resize()
- * @see f_number_unsigneds_resize()
  * @see f_string_ranges_resize()
  */
 #ifndef _di_f_iki_datass_increase_by_
@@ -499,11 +473,9 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_array_resize().
- *   Errors (with error bit) from: f_number_unsigneds_resize().
  *   Errors (with error bit) from: f_string_ranges_resize().
  *
  * @see f_memory_array_resize()
- * @see f_number_unsigneds_resize()
  * @see f_string_ranges_resize()
  */
 #ifndef _di_f_iki_datass_resize_

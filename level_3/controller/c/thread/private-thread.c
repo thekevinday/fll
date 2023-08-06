@@ -119,7 +119,7 @@ extern "C" {
 
           // Deallocate dynamic portions of the structure that are only ever needed while the process is running.
           controller_cache_delete_simple(&process->cache);
-          f_number_unsigneds_resize(0, &process->stack);
+          f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &process->stack.array, &process->stack.used, &process->stack.size);
 
           // Shrink the childs array.
           if (process->childs.used) {

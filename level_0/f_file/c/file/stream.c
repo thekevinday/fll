@@ -282,7 +282,7 @@ extern "C" {
 
     funlockfile(file.stream);
 
-    return F_none;
+    return F_none_eof;
   }
 #endif // _di_f_file_stream_read_block_
 

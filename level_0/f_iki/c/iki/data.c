@@ -15,7 +15,7 @@ extern "C" {
     f_status_t status = f_string_ranges_resize(0, &data->content);
     if (F_status_is_error(status)) return status;
 
-    status = f_number_unsigneds_resize(0, &data->delimits);
+    status = f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &data->delimits.array, &data->delimits.used, &data->delimits.size);
     if (F_status_is_error(status)) return status;
 
     status = f_string_ranges_resize(0, &data->variable);
@@ -37,7 +37,7 @@ extern "C" {
     f_status_t status = f_string_ranges_adjust(0, &data->content);
     if (F_status_is_error(status)) return status;
 
-    status = f_number_unsigneds_adjust(0, &data->delimits);
+    status = f_memory_array_adjust(0, sizeof(f_number_unsigned_t), (void **) &data->delimits.array, &data->delimits.used, &data->delimits.size);
     if (F_status_is_error(status)) return status;
 
     status = f_string_ranges_adjust(0, &data->variable);

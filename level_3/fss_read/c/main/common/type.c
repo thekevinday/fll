@@ -83,8 +83,8 @@ extern "C" {
 
     f_fss_nest_resize(0, &setting->nest);
 
-    f_number_unsigneds_resize(0, &setting->delimits_object);
-    f_number_unsigneds_resize(0, &setting->delimits_content);
+    f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &setting->delimits_object.array, &setting->delimits_object.used, &setting->delimits_object.size);
+    f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &setting->delimits_content.array, &setting->delimits_content.used, &setting->delimits_content.size);
 
     f_uint8s_resize(0, &setting->quotes_object);
     f_uint8ss_resize(0, &setting->quotes_content);

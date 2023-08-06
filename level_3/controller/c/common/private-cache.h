@@ -137,10 +137,9 @@ extern "C" {
  * @param cache
  *   The cache to deallocate.
  *
- * @see macro_f_number_unsigneds_t_delete_simple()
- * @see macro_f_number_unsigneds_t_delete_simple()
- *
  * @see controller_cache_action_delete_simple()
+ *
+ * @see f_memory_array_resize()
  * @see f_string_dynamic_resize()
  * @see f_string_ranges_resize()
  * @see f_string_rangess_resize()

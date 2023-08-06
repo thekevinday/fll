@@ -163,24 +163,6 @@ extern "C" {
 /**
  * Macros for f_number_unsigneds_t, see type.h for typedefs.
  */
-#ifndef _di_f_number_unsigneds_t_
-  #define macro_f_number_unsigneds_t_clear(lengths) macro_f_memory_structures_clear(lengths)
-
-  #define macro_f_number_unsigneds_t_resize(status, lengths, length) status = f_number_unsigneds_resize(length, &lengths);
-  #define macro_f_number_unsigneds_t_adjust(status, lengths, length) status = f_number_unsigneds_adjust(length, &lengths);
-
-  #define macro_f_number_unsigneds_t_delete_simple(lengths)  f_number_unsigneds_resize(0, &lengths);
-  #define macro_f_number_unsigneds_t_destroy_simple(lengths) f_number_unsigneds_adjust(0, &lengths);
-
-  #define macro_f_number_unsigneds_t_increase(status, step, lengths)      status = f_number_unsigneds_increase(step, &lengths);
-  #define macro_f_number_unsigneds_t_increase_by(status, lengths, amount) status = f_number_unsigneds_increase_by(amount, &lengths);
-  #define macro_f_number_unsigneds_t_decrease_by(status, lengths, amount) status = f_number_unsigneds_decrease_by(amount, &lengths);
-  #define macro_f_number_unsigneds_t_decimate_by(status, lengths, amount) status = f_number_unsigneds_decimate_by(amount, &lengths);
-#endif // _di_f_number_unsigneds_t_
-
-/**
- * Macros for f_number_unsigneds_t, see type.h for typedefs.
- */
 #ifndef _di_f_number_unsignedss_t_
   #define macro_f_number_unsignedss_t_clear(lengthss) macro_f_memory_structures_clear(lengthss)
 

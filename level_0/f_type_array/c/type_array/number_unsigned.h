@@ -17,27 +17,6 @@ extern "C" {
 #endif
 
 /**
- * Resize the string number_unsigneds array.
- *
- * @param length
- *   The new size to use.
- * @param structure
- *   The string number_unsigneds array to resize.
- *
- * @return
- *   F_none on success.
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: f_memory_array_adjust().
- *
- * @see f_memory_array_adjust()
- */
-#ifndef _di_f_number_unsigneds_adjust_
-  extern f_status_t f_number_unsigneds_adjust(const f_number_unsigned_t length, f_number_unsigneds_t * const structure);
-#endif // _di_f_number_unsigneds_adjust_
-
-/**
  * Append the single source number_unsigned onto the destination.
  *
  * @param source
@@ -186,27 +165,6 @@ extern "C" {
 #ifndef _di_f_number_unsigneds_increase_by_
   extern f_status_t f_number_unsigneds_increase_by(const f_number_unsigned_t amount, f_number_unsigneds_t * const structure);
 #endif // _di_f_number_unsigneds_increase_by_
-
-/**
- * Resize the string number_unsigneds array.
- *
- * @param length
- *   The new size to use.
- * @param structure
- *   The string number_unsigneds array to adjust.
- *
- * @return
- *   F_none on success.
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: f_memory_array_resize().
- *
- * @see f_memory_array_resize()
- */
-#ifndef _di_f_number_unsigneds_resize_
-  extern f_status_t f_number_unsigneds_resize(const f_number_unsigned_t length, f_number_unsigneds_t * const structure);
-#endif // _di_f_number_unsigneds_resize_
 
 /**
  * Resize the string number_unsignedss array.

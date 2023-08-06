@@ -25,7 +25,7 @@ extern "C" {
     f_string_ranges_resize(0, &main->cache.header_objects);
     f_string_rangess_resize(0, &main->cache.header_contents);
 
-    f_number_unsigneds_resize(0, &main->cache.delimits);
+    f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &main->cache.delimits.array, &main->cache.delimits.used, &main->cache.delimits.size);
   }
 #endif // _di_control_main_delete_
 

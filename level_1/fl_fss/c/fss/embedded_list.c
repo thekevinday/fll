@@ -35,7 +35,7 @@ extern "C" {
     state->status = f_string_ranges_increase(state->step_small, &objects);
 
     if (F_status_is_error(state->status)) {
-      f_number_unsigneds_resize(0, &positions_start);
+      f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &positions_start.array, &positions_start.used, &positions_start.size);
 
       return;
     }
@@ -45,7 +45,7 @@ extern "C" {
     state->status = f_number_unsigneds_increase(state->step_small, &slashes);
 
     if (F_status_is_error(state->status)) {
-      f_number_unsigneds_resize(0, &positions_start);
+      f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &positions_start.array, &positions_start.used, &positions_start.size);
       f_string_ranges_resize(0, &objects);
 
       return;
@@ -104,9 +104,9 @@ extern "C" {
             delimits->used = delimits_used;
             comments->used = comments_used;
 
-            f_number_unsigneds_resize(0, &positions_start);
+            f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &positions_start.array, &positions_start.used, &positions_start.size);
             f_string_ranges_resize(0, &objects);
-            f_number_unsigneds_resize(0, &slashes);
+            f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &slashes.array, &slashes.used, &slashes.size);
 
             state->status = (range->start >= buffer.used) ? F_end_not_nest_eos : F_end_not_nest_stop;
 
@@ -115,9 +115,9 @@ extern "C" {
         }
         else {
           if (range->start >= buffer.used || range->start > range->stop) {
-            f_number_unsigneds_resize(0, &positions_start);
+            f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &positions_start.array, &positions_start.used, &positions_start.size);
             f_string_ranges_resize(0, &objects);
-            f_number_unsigneds_resize(0, &slashes);
+            f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &slashes.array, &slashes.used, &slashes.size);
 
             state->status = (range->start >= buffer.used) ? F_none_eos : F_none_stop;
 
@@ -163,9 +163,9 @@ extern "C" {
             delimits->used = delimits_used;
             comments->used = comments_used;
 
-            f_number_unsigneds_resize(0, &positions_start);
+            f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &positions_start.array, &positions_start.used, &positions_start.size);
             f_string_ranges_resize(0, &objects);
-            f_number_unsigneds_resize(0, &slashes);
+            f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &slashes.array, &slashes.used, &slashes.size);
 
             state->status = (range->start >= buffer.used) ? F_end_not_nest_eos : F_end_not_nest_stop;
 
@@ -177,9 +177,9 @@ extern "C" {
             delimits->used = delimits_used;
             comments->used = comments_used;
 
-            f_number_unsigneds_resize(0, &positions_start);
+            f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &positions_start.array, &positions_start.used, &positions_start.size);
             f_string_ranges_resize(0, &objects);
-            f_number_unsigneds_resize(0, &slashes);
+            f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &slashes.array, &slashes.used, &slashes.size);
 
             state->status = (range->start >= buffer.used) ? F_data_not_eos : F_data_not_stop;
 
@@ -259,9 +259,9 @@ extern "C" {
               delimits->used = delimits_used;
               comments->used = comments_used;
 
-              f_number_unsigneds_resize(0, &positions_start);
+              f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &positions_start.array, &positions_start.used, &positions_start.size);
               f_string_ranges_resize(0, &objects);
-              f_number_unsigneds_resize(0, &slashes);
+              f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &slashes.array, &slashes.used, &slashes.size);
 
               state->status = (range->start >= buffer.used) ? F_end_not_nest_eos : F_end_not_nest_stop;
 
@@ -273,9 +273,9 @@ extern "C" {
               delimits->used = delimits_used;
               comments->used = comments_used;
 
-              f_number_unsigneds_resize(0, &positions_start);
+              f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &positions_start.array, &positions_start.used, &positions_start.size);
               f_string_ranges_resize(0, &objects);
-              f_number_unsigneds_resize(0, &slashes);
+              f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &slashes.array, &slashes.used, &slashes.size);
 
               state->status = (range->start >= buffer.used) ? F_data_not_eos : F_data_not_stop;
 
@@ -400,9 +400,9 @@ extern "C" {
             delimits->used = delimits_used;
             comments->used = comments_used;
 
-            f_number_unsigneds_resize(0, &positions_start);
+            f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &positions_start.array, &positions_start.used, &positions_start.size);
             f_string_ranges_resize(0, &objects);
-            f_number_unsigneds_resize(0, &slashes);
+            f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &slashes.array, &slashes.used, &slashes.size);
 
             state->status = (range->start >= buffer.used) ? F_end_not_nest_eos : F_end_not_nest_stop;
 
@@ -414,9 +414,9 @@ extern "C" {
             delimits->used = delimits_used;
             comments->used = comments_used;
 
-            f_number_unsigneds_resize(0, &positions_start);
+            f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &positions_start.array, &positions_start.used, &positions_start.size);
             f_string_ranges_resize(0, &objects);
-            f_number_unsigneds_resize(0, &slashes);
+            f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &slashes.array, &slashes.used, &slashes.size);
 
             state->status = (range->start >= buffer.used) ? F_data_not_eos : F_data_not_stop;
 
@@ -505,9 +505,9 @@ extern "C" {
               delimits->used = delimits_used;
               comments->used = comments_used;
 
-              f_number_unsigneds_resize(0, &positions_start);
+              f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &positions_start.array, &positions_start.used, &positions_start.size);
               f_string_ranges_resize(0, &objects);
-              f_number_unsigneds_resize(0, &slashes);
+              f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &slashes.array, &slashes.used, &slashes.size);
 
               state->status = (range->start >= buffer.used) ? F_end_not_nest_eos : F_end_not_nest_stop;
 
@@ -519,9 +519,9 @@ extern "C" {
               delimits->used = delimits_used;
               comments->used = comments_used;
 
-              f_number_unsigneds_resize(0, &positions_start);
+              f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &positions_start.array, &positions_start.used, &positions_start.size);
               f_string_ranges_resize(0, &objects);
-              f_number_unsigneds_resize(0, &slashes);
+              f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &slashes.array, &slashes.used, &slashes.size);
 
               state->status = (range->start >= buffer.used) ? F_data_not_eos : F_data_not_stop;
 
@@ -563,9 +563,9 @@ extern "C" {
             delimits->used = delimits_used;
             comments->used = comments_used;
 
-            f_number_unsigneds_resize(0, &positions_start);
+            f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &positions_start.array, &positions_start.used, &positions_start.size);
             f_string_ranges_resize(0, &objects);
-            f_number_unsigneds_resize(0, &slashes);
+            f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &slashes.array, &slashes.used, &slashes.size);
 
             state->status = (range->start >= buffer.used) ? F_end_not_nest_eos : F_end_not_nest_stop;
 
@@ -577,9 +577,9 @@ extern "C" {
             delimits->used = delimits_used;
             comments->used = comments_used;
 
-            f_number_unsigneds_resize(0, &positions_start);
+            f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &positions_start.array, &positions_start.used, &positions_start.size);
             f_string_ranges_resize(0, &objects);
-            f_number_unsigneds_resize(0, &slashes);
+            f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &slashes.array, &slashes.used, &slashes.size);
 
             state->status = (range->start >= buffer.used) ? F_data_not_eos : F_data_not_stop;
 
@@ -638,9 +638,9 @@ extern "C" {
             state->status = f_utf_buffer_increment(buffer, range, 1);
             if (F_status_is_error(state->status)) break;
 
-            f_number_unsigneds_resize(0, &positions_start);
+            f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &positions_start.array, &positions_start.used, &positions_start.size);
             f_string_ranges_resize(0, &objects);
-            f_number_unsigneds_resize(0, &slashes);
+            f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &slashes.array, &slashes.used, &slashes.size);
 
             if (range->start >= buffer.used) {
               state->status = F_none_eos;
@@ -694,9 +694,9 @@ extern "C" {
               delimits->used = delimits_used;
               comments->used = comments_used;
 
-              f_number_unsigneds_resize(0, &positions_start);
+              f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &positions_start.array, &positions_start.used, &positions_start.size);
               f_string_ranges_resize(0, &objects);
-              f_number_unsigneds_resize(0, &slashes);
+              f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &slashes.array, &slashes.used, &slashes.size);
 
               state->status = (range->start >= buffer.used) ? F_end_not_nest_eos : F_end_not_nest_stop;
 
@@ -708,9 +708,9 @@ extern "C" {
               delimits->used = delimits_used;
               comments->used = comments_used;
 
-              f_number_unsigneds_resize(0, &positions_start);
+              f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &positions_start.array, &positions_start.used, &positions_start.size);
               f_string_ranges_resize(0, &objects);
-              f_number_unsigneds_resize(0, &slashes);
+              f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &slashes.array, &slashes.used, &slashes.size);
 
               state->status = (range->start >= buffer.used) ? F_data_not_eos : F_data_not_stop;
 
@@ -773,9 +773,9 @@ extern "C" {
       if (F_status_is_error(state->status)) break;
     } // while
 
-    f_number_unsigneds_resize(0, &positions_start);
+    f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &positions_start.array, &positions_start.used, &positions_start.size);
     f_string_ranges_resize(0, &objects);
-    f_number_unsigneds_resize(0, &slashes);
+    f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &slashes.array, &slashes.used, &slashes.size);
 
     delimits->used = delimits_used;
     comments->used = comments_used;

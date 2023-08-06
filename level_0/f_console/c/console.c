@@ -669,7 +669,7 @@ extern "C" {
       }
     }
 
-    f_number_unsigneds_resize(0, &process.needs);
+    f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &process.needs.array, &process.needs.used, &process.needs.size);
   }
 #endif // _di_f_console_parameter_process_
 

@@ -150,7 +150,7 @@ extern "C" {
       if (!state) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return f_number_unsigneds_resize(0, &state->needs);
+    return f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &state->needs.array, &state->needs.used, &state->needs.size);
   }
 #endif // _di_f_console_parameter_state_delete_
 
@@ -160,7 +160,7 @@ extern "C" {
       if (!state) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return f_number_unsigneds_adjust(0, &state->needs);
+    return f_memory_array_adjust(0, sizeof(f_number_unsigned_t), (void **) &state->needs.array, &state->needs.used, &state->needs.size);
   }
 #endif // _di_f_console_parameter_state_destroy_
 
@@ -174,20 +174,20 @@ extern "C" {
 
     for (f_number_unsigned_t i = 0; i < parameters->used; ++i) {
 
-      status = f_number_unsigneds_resize(0, &parameters->array[i].locations);
+      status = f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &parameters->array[i].locations.array, &parameters->array[i].locations.used, &parameters->array[i].locations.size);
       if (F_status_is_error(status)) return status;
 
-      status = f_number_unsigneds_resize(0, &parameters->array[i].locations_sub);
+      status = f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &parameters->array[i].locations_sub.array, &parameters->array[i].locations_sub.used, &parameters->array[i].locations_sub.size);
       if (F_status_is_error(status)) return status;
 
-      status = f_number_unsigneds_resize(0, &parameters->array[i].values);
+      status = f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &parameters->array[i].values.array, &parameters->array[i].values.used, &parameters->array[i].values.size);
       if (F_status_is_error(status)) return status;
     } // for
 
     status = f_string_dynamics_resize(0, &parameters->arguments);
     if (F_status_is_error(status)) return status;
 
-    status = f_number_unsigneds_resize(0, &parameters->remaining);
+    status = f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &parameters->remaining.array, &parameters->remaining.used, &parameters->remaining.size);
     if (F_status_is_error(status)) return status;
 
     return F_none;
@@ -204,20 +204,21 @@ extern "C" {
 
     for (f_number_unsigned_t i = 0; i < parameters->used; ++i) {
 
-      status = f_number_unsigneds_adjust(0, &parameters->array[i].locations);
+      status = f_memory_array_adjust(0, sizeof(f_number_unsigned_t), (void **) &parameters->array[i].locations.array, &parameters->array[i].locations.used, &parameters->array[i].locations.size);
       if (F_status_is_error(status)) return status;
 
-      status = f_number_unsigneds_adjust(0, &parameters->array[i].locations_sub);
+
+      status = f_memory_array_adjust(0, sizeof(f_number_unsigned_t), (void **) &parameters->array[i].locations_sub.array, &parameters->array[i].locations_sub.used, &parameters->array[i].locations_sub.size);
       if (F_status_is_error(status)) return status;
 
-      status = f_number_unsigneds_adjust(0, &parameters->array[i].values);
+      status = f_memory_array_adjust(0, sizeof(f_number_unsigned_t), (void **) &parameters->array[i].values.array, &parameters->array[i].values.used, &parameters->array[i].values.size);
       if (F_status_is_error(status)) return status;
     } // for
 
     status = f_string_dynamics_adjust(0, &parameters->arguments);
     if (F_status_is_error(status)) return status;
 
-    status = f_number_unsigneds_adjust(0, &parameters->remaining);
+    status = f_memory_array_adjust(0, sizeof(f_number_unsigned_t), (void **) &parameters->remaining.array, &parameters->remaining.used, &parameters->remaining.size);
     if (F_status_is_error(status)) return status;
 
     return F_none;

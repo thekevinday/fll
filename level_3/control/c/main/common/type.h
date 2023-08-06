@@ -181,7 +181,7 @@ extern "C" {
  *
  *   This does not alter main.setting.state.status.
  *
- * @see f_number_unsigneds_resize()
+ * @see f_memory_array_resize()
  * @see f_string_dynamic_resize()
  * @see f_string_ranges_resize()
  * @see f_string_rangess_resize()

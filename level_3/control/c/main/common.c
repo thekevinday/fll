@@ -387,7 +387,7 @@ extern "C" {
 
     f_string_ranges_resize(0, &main->cache.objects);
     f_string_rangess_resize(0, &main->cache.contents);
-    f_number_unsigneds_resize(0, &main->cache.delimits);
+    f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &main->cache.delimits.array, &main->cache.delimits.used, &main->cache.delimits.size);
 
     {
       const uint8_t ids[] = {
