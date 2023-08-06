@@ -800,7 +800,7 @@ f_status_t firewall_create_custom_chains(firewall_data_t * const data, firewall_
   status = f_string_dynamics_resize(2, &arguments);
   if (F_status_is_error(status)) return status;
 
-  status = f_number_unsigneds_increase_by(local->chain_objects.used, &local->chain_ids);
+  status = f_memory_array_increase_by(local->chain_objects.used, sizeof(f_number_unsigned_t), (void **) &local->chain_ids.array, &local->chain_ids.used, &local->chain_ids.size);
   if (F_status_is_error(status)) return status;
 
   memset(local->chain_ids.array, 0, sizeof(f_number_unsigned_t) * local->chain_ids.used);

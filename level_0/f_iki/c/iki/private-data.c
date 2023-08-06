@@ -46,7 +46,7 @@ extern "C" {
     }
 
     if (source.delimits.used) {
-      status = f_number_unsigneds_append_all(source.delimits, &destination->array[destination->used].delimits);
+      status = f_memory_array_append_all((const void *) &source.delimits.array, source.delimits.used, sizeof(f_number_unsigned_t), (void **) &destination->array[destination->used].delimits.array, &destination->array[destination->used].delimits.used, &destination->array[destination->used].delimits.size);
       if (F_status_is_error(status)) return status;
     }
 
@@ -85,7 +85,7 @@ extern "C" {
       }
 
       if (source.array[i].delimits.used) {
-        status = f_number_unsigneds_append_all(source.array[i].delimits, &destination->array[destination->used].delimits);
+        status = f_memory_array_append_all((const void *) &source.array[i].delimits.array, source.array[i].delimits.used, sizeof(f_number_unsigned_t), (void **) &destination->array[destination->used].delimits.array, &destination->array[destination->used].delimits.used, &destination->array[destination->used].delimits.size);
         if (F_status_is_error(status)) return status;
       }
 

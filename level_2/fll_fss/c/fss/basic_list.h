@@ -68,15 +68,15 @@ extern "C" {
  *     F_number_overflow (with error bit) if the maximum buffer size is reached.
  *     F_parameter (with error bit) if a parameter is invalid.
  *
+ *     Errors (with error bit) from: f_memory_array_increase().
  *     Errors (with error bit) from: f_string_ranges_increase().
  *     Errors (with error bit) from: f_string_rangess_increase().
- *     Errors (with error bit) from: f_uint8s_increase().
  *     Errors (with error bit) from: fl_fss_basic_list_content_read().
  *     Errors (with error bit) from: fl_fss_basic_list_object_read().
  *
+ * @see f_memory_array_increase()
  * @see f_string_ranges_increase()
  * @see f_string_rangess_increase()
- * @see f_uint8s_increase()
  * @see fl_fss_basic_list_content_read()
  * @see fl_fss_basic_list_object_read()
  */

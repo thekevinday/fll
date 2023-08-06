@@ -215,7 +215,7 @@ extern "C" {
 
               // Save delimit for a would-be valid IKI that is now delimited.
               if (buffer->string[range->start] == f_iki_syntax_quote_single_s.string[0] || buffer->string[range->start] == f_iki_syntax_quote_double_s.string[0] || buffer->string[range->start] == f_iki_syntax_quote_backtick_s.string[0]) {
-                state->status = f_number_unsigneds_increase(state->step_small, &data->delimits);
+                state->status = f_memory_array_increase(state->step_small, sizeof(f_number_unsigned_t), (void **) &data->delimits.array, &data->delimits.used, &data->delimits.size);
                 if (F_status_is_error(state->status)) break;
 
                 data->delimits.array[data->delimits.used++] = vocabulary_slash_first;
@@ -374,7 +374,7 @@ extern "C" {
                   ++content_slash_delimits;
                 }
 
-                state->status = f_number_unsigneds_increase_by(content_slash_delimits, &data->delimits);
+                state->status = f_memory_array_increase_by(content_slash_delimits, sizeof(f_number_unsigned_t), (void **) &data->delimits.array, &data->delimits.used, &data->delimits.size);
                 if (F_status_is_error(state->status)) break;
 
                 content_range.start = content_slash_first;

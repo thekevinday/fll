@@ -28,13 +28,13 @@ extern "C" {
  * @return
  *   F_none on success.
  *
+ *   Errors (with error bit) from: f_memory_arrays_adjust().
  *   Errors (with error bit) from: macro_f_string_ranges_t_adjust().
  *   Errors (with error bit) from: macro_f_string_rangess_t_adjust().
- *   Errors (with error bit) from: macro_f_uint8ss_t_adjust().
  *
+ * @see f_memory_arrays_adjust()
  * @see macro_f_string_ranges_t_adjust()
  * @see macro_f_string_rangess_t_adjust()
- * @see macro_f_uint8ss_t_adjust()
  *
  * @see f_fss_nameds_adjust()
  * @see f_fss_nameds_decimate_by()
@@ -56,13 +56,13 @@ extern "C" {
  * @return
  *   F_none on success.
  *
+ *   Errors (with error bit) from: f_memory_arrays_resize().
  *   Errors (with error bit) from: f_string_ranges_resize().
  *   Errors (with error bit) from: f_string_rangess_resize().
- *   Errors (with error bit) from: f_uint8ss_resize().
  *
+ * @see f_memory_arrays_resize()
  * @see f_string_ranges_resize()
  * @see f_string_rangess_resize()
- * @see f_uint8ss_resize()
  *
  * @see f_fss_nameds_decrease_by()
  * @see f_fss_nameds_resize()
@@ -87,14 +87,14 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_array_adjust().
+ *   Errors (with error bit) from: f_memory_arrays_resize().
  *   Errors (with error bit) from: f_string_ranges_resize().
  *   Errors (with error bit) from: f_string_rangess_resize().
- *   Errors (with error bit) from: f_uint8ss_resize().
  *
+ * @see f_memory_array_adjust()
+ * @see f_memory_arrays_adjust()
  * @see f_string_ranges_resize()
  * @see f_string_rangess_resize()
- * @see f_uint8ss_resize()
- * @see f_memory_array_adjust()
  *
  * @see f_fss_nameds_adjust()
  * @see f_fss_nameds_decimate_by()
@@ -119,14 +119,14 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_array_resize().
+ *   Errors (with error bit) from: f_memory_arrays_resize().
  *   Errors (with error bit) from: f_string_ranges_resize().
  *   Errors (with error bit) from: f_string_rangess_resize().
- *   Errors (with error bit) from: f_uint8ss_resize().
  *
  * @see f_memory_array_resize()
+ * @see f_memory_arrays_resize()
  * @see f_string_ranges_resize()
  * @see f_string_rangess_resize()
- * @see f_uint8ss_resize()
  *
  * @see f_fss_nameds_decrease_by()
  * @see f_fss_nameds_increase()

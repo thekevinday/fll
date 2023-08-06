@@ -1,6 +1,5 @@
 #include "string.h"
 #include "private-string.h"
-#include "string/private-dynamic.h"
 
 #ifdef __cplusplus
 extern "C" {

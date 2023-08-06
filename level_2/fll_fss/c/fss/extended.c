@@ -34,12 +34,12 @@ extern "C" {
       contents->array[contents->used].used = 0;
 
       if (objects_quoted) {
-        state->status = f_uint8s_increase(state->step_small, objects_quoted);
+        state->status = f_memory_array_increase(state->step_small, sizeof(uint8_t), (void **) &objects_quoted->array, &objects_quoted->used, &objects_quoted->size);
         if (F_status_is_error(state->status)) return;
       }
 
       if (contents_quoted) {
-        state->status = f_uint8ss_increase(state->step_small, contents_quoted);
+        state->status = f_memory_array_increase(state->step_small, sizeof(f_uint8s_t), (void **) &contents_quoted->array, &contents_quoted->used, &contents_quoted->size);
         if (F_status_is_error(state->status)) return;
 
         contents_quoted->array[contents_quoted->used].used = 0;
@@ -67,7 +67,7 @@ extern "C" {
             contents->array[contents->used++].used = 0;
 
             if (contents_quoted) {
-              status = f_uint8s_increase(state->step_small, &contents_quoted->array[contents_quoted->used]);
+              status = f_memory_array_increase(state->step_small, sizeof(uint8_t), (void **) &contents_quoted->array[contents_quoted->used].array, &contents_quoted->array[contents_quoted->used].used, &contents_quoted->array[contents_quoted->used].size);
               if (F_status_is_error(status)) return;
 
               contents_quoted->array[contents_quoted->used++].used = 0;
@@ -96,7 +96,7 @@ extern "C" {
           contents->array[contents->used].used = 0;
 
           if (contents_quoted) {
-            state->status = f_uint8s_increase(state->step_small, &contents_quoted->array[contents_quoted->used]);
+            state->status = f_memory_array_increase(state->step_small, sizeof(uint8_t), (void **) &contents_quoted->array[contents_quoted->used].array, &contents_quoted->array[contents_quoted->used].used, &contents_quoted->array[contents_quoted->used].size);
             if (F_status_is_error(state->status)) return;
 
             quoted_content = &contents_quoted->array[contents_quoted->used];

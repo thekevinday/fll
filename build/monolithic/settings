@@ -48,7 +48,7 @@ build_sources_library level_0/fss.c level_0/fss/common.c level_0/fss/item.c leve
 build_sources_library level_0/fss/private-item.c level_0/fss/private-named.c level_0/fss/private-nest.c level_0/fss/private-set.c level_0/fss/private-set_quote.c level_0/fss/private-simple_packet.c
 build_sources_library level_0/iki.c level_0/iki/common.c level_0/iki/data.c level_0/private-iki.c level_0/iki/private-data.c
 build_sources_library level_0/limit.c level_0/limit/set.c level_0/limit/value.c level_0/limit/private-set.c level_0/limit/private-value.c
-build_sources_library level_0/memory.c level_0/memory/array.c
+build_sources_library level_0/memory.c level_0/memory/array.c level_0/memory/arrays.c
 build_sources_library level_0/private-memory.c level_0/memory/private-array.c
 build_sources_library level_0/network.c
 build_sources_library level_0/parse.c level_0/parse/utf.c
@@ -62,7 +62,7 @@ build_sources_library level_0/socket.c level_0/socket/socket.c level_0/socket/pr
 build_sources_library level_0/status_string.c
 build_sources_library level_0/string.c
 build_sources_library level_0/private-string.c level_0/string/common.c
-build_sources_library level_0/string/private-dynamic.c level_0/string/private-dynamics.c level_0/string/private-dynamicss.c
+build_sources_library level_0/string/private-dynamics.c level_0/string/private-dynamicss.c
 build_sources_library level_0/string/private-maps.c level_0/string/private-mapss.c
 build_sources_library level_0/string/private-map_multis.c level_0/string/private-map_multiss.c
 build_sources_library level_0/string/private-quantitys.c level_0/string/private-quantityss.c
@@ -77,7 +77,7 @@ build_sources_library level_0/string/static.c level_0/string/statics.c level_0/s
 build_sources_library level_0/string/triple.c level_0/string/triples.c level_0/string/tripless.c
 build_sources_library level_0/time.c
 build_sources_library level_0/type_array/cell.c level_0/type_array/file.c level_0/type_array/fll_id.c level_0/type_array/int8.c level_0/type_array/int16.c level_0/type_array/int32.c level_0/type_array/int64.c level_0/type_array/int128.c level_0/type_array/number_unsigned.c level_0/type_array/poll.c level_0/type_array/state.c level_0/type_array/status.c level_0/type_array/uint8.c level_0/type_array/uint16.c level_0/type_array/uint32.c level_0/type_array/uint64.c level_0/type_array/uint128.c
-build_sources_library level_0/type_array/private-cell.c level_0/type_array/private-file.c level_0/type_array/private-fll_id.c level_0/type_array/private-int8.c level_0/type_array/private-int16.c level_0/type_array/private-int32.c level_0/type_array/private-int64.c level_0/type_array/private-int128.c level_0/type_array/private-poll.c level_0/type_array/private-state.c level_0/type_array/private-status.c level_0/type_array/private-uint8.c level_0/type_array/private-uint16.c level_0/type_array/private-uint32.c level_0/type_array/private-uint64.c level_0/type_array/private-uint128.c
+build_sources_library level_0/type_array/private-poll.c level_0/type_array/private-state.c level_0/type_array/private-status.c
 build_sources_library level_0/utf.c level_0/private-utf.c level_0/private-utf_alphabetic.c level_0/private-utf_combining.c level_0/private-utf_control.c level_0/private-utf_digit.c level_0/private-utf_emoji.c level_0/private-utf_numeric.c level_0/private-utf_phonetic.c level_0/private-utf_private.c level_0/private-utf_punctuation.c level_0/private-utf_subscript.c level_0/private-utf_superscript.c level_0/private-utf_symbol.c level_0/private-utf_unassigned.c level_0/private-utf_valid.c level_0/private-utf_whitespace.c level_0/private-utf_wide.c level_0/private-utf_word.c level_0/private-utf_zero_width.c
 build_sources_library level_0/utf/common.c level_0/utf/convert.c
 build_sources_library level_0/utf/dynamic.c level_0/utf/dynamics.c level_0/utf/dynamicss.c
@@ -130,7 +130,7 @@ build_sources_headers level_0/file.h level_0/file/common.h level_0/file/stream.h
 build_sources_headers level_0/fss.h level_0/fss/common.h level_0/fss/item.h level_0/fss/named.h level_0/fss/nest.h level_0/fss/quote.h level_0/fss/set.h level_0/fss/set_quote.h level_0/fss/simple_packet.h
 build_sources_headers level_0/iki.h level_0/iki/common.h level_0/iki/data.h
 build_sources_headers level_0/limit.h level_0/limit/set.h level_0/limit/value.h
-build_sources_headers level_0/memory.h level_0/memory/array.h level_0/memory/common.h
+build_sources_headers level_0/memory.h level_0/memory/array.h level_0/memory/arrays.h level_0/memory/common.h
 build_sources_headers level_0/network.h level_0/network/common.h
 build_sources_headers level_0/parse.h level_0/parse/utf.h
 build_sources_headers level_0/path.h level_0/path/common.h

@@ -1,14 +1,14 @@
 /**
  * FLL - Level 0
  *
- * Project: FSS
+ * Project: Memory
  * API Version: 0.7
  * Licenses: lgpl-2.1-or-later
  *
  * Test set quote increase in the fss project.
  */
-#ifndef _TEST__F_fss__simple_packet_range_increase
-#define _TEST__F_fss__simple_packet_range_increase
+#ifndef _TEST__F_memory__array_increase
+#define _TEST__F_memory__array_increase
 
 /**
  * Test that the function correctly fails on invalid parameter.
@@ -38,4 +38,4 @@ extern void test__f_memory_array_increase__returns_data_not(void **state);
  */
 extern void test__f_memory_array_increase__works(void **state);
 
-#endif // _TEST__F_fss__simple_packet_range_increase
+#endif // _TEST__F_memory__array_increase

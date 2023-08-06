@@ -44,7 +44,7 @@ void test__f_memory_array_decimate_by__parameter_checking(void **state) {
   {
     const f_status_t status = f_memory_array_decimate_by(length, 0, (void **) &data.array, &data.used, &data.size);
 
-    assert_int_equal(status, F_size_not);
+    assert_int_equal(status, F_status_set_error(F_parameter));
     assert_int_equal(data.array, 0);
     assert_int_equal(data.used, 0);
     assert_int_equal(data.size, 0);

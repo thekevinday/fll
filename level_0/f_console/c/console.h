@@ -175,13 +175,11 @@ extern "C" {
  *   (optional) A variable passed to the callback, if provided.
  *   Set to NULL to not use.
  *
- *   Errors (with error bit) from: f_number_unsigneds_increase().
- *   Errors (with error bit) from: f_number_unsigneds_increase_by().
+ *   Errors (with error bit) from: f_memory_array_increase_by().
  *   Errors (with error bit) from: f_string_dynamics_increase_by().
  *   Errors (with error bit) from: f_utf_char_to_character().
  *
- * @see f_number_unsigneds_increase()
- * @see f_number_unsigneds_increase_by()
+ * @see f_memory_array_increase_by()
  * @see f_string_dynamics_increase_by()
  * @see f_utf_char_to_character()
  */

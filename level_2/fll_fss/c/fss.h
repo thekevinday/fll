@@ -64,11 +64,11 @@ extern "C" {
  *
  *   F_complete_not_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *
- *   Errors (with error bit) from: f_fll_ids_increase().
+ *   Errors (with error bit) from: f_memory_array_increase().
  *   Errors (with error bit) from: f_utf_is_whitespace().
  *   Errors (with error bit) from: f_parse_dynamic_partial_fll_identify().
  *
- * @see f_fll_ids_increase()
+ * @see f_memory_array_increase()
  * @see f_utf_is_whitespace()
  * @see f_parse_dynamic_partial_fll_identify()
  */
@@ -160,11 +160,13 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_string_dynamic_partial_append_nulless().
  *   Errors (with error bit) from: f_compare_dynamic_partial_trim_string().
+ *   Errors (with error bit) from: f_memory_array_increase_by().
+ *   Errors (with error bit) from: f_string_dynamic_partial_append_nulless().
  *
- * @see f_string_dynamic_partial_append_nulless()
  * @see f_compare_trim()
+ * @see f_memory_array_increase_by()
+ * @see f_string_dynamic_partial_append_nulless()
  */
 #ifndef _di_fll_fss_snatch_apart_
   extern f_status_t fll_fss_snatch_apart(const f_string_static_t buffer, const f_string_ranges_t objects, const f_string_rangess_t contents, const f_string_static_t names[], const f_number_unsigned_t size, f_string_dynamics_t * const values[], bool matches[], f_number_unsigneds_t * const indexs[]);

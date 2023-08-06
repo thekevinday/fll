@@ -86,8 +86,8 @@ extern "C" {
     f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &setting->delimits_object.array, &setting->delimits_object.used, &setting->delimits_object.size);
     f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &setting->delimits_content.array, &setting->delimits_content.used, &setting->delimits_content.size);
 
-    f_uint8s_resize(0, &setting->quotes_object);
-    f_uint8ss_resize(0, &setting->quotes_content);
+    f_memory_array_resize(0, sizeof(uint8_t), (void **) &setting->quotes_object.array, &setting->quotes_object.used, &setting->quotes_object.size);
+    f_memory_arrays_resize(0, sizeof(f_uint8s_t), (void **) &setting->quotes_content.array, &setting->quotes_content.used, &setting->quotes_content.size, &f_uint8s_resize_callback);
 
     return F_none;
   }

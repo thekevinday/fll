@@ -60,6 +60,21 @@ extern "C" {
  *   Must not be 0.
  * @param array
  *   The structure.array destination.
+ *
+ *   A literal array structure cannot be directly passed or this may segfault.
+ *   Bad:
+ *     {
+ *       int arr[5] = { 0 };
+ *       ...
+ *       f_memory_array_append(source, width, (void **) &arr, used, size);
+ *     }
+ *   Better:
+ *     {
+ *       int arr[5] = { 0 };
+ *       int *arr_pounter = arr;
+ *       ...
+ *       f_memory_array_append(source, width, (void **) &arr_pounter, used, size);
+ *     }
  * @param used
  *   The structure.used destination.
  * @param size
@@ -97,6 +112,21 @@ extern "C" {
  *   Must not be 0.
  * @param array
  *   The structure.array destination.
+ *
+ *   A literal array structure cannot be directly passed or this may segfault.
+ *   Bad:
+ *     {
+ *       int arr[5] = { 0 };
+ *       ...
+ *       f_memory_array_append_all(sources, amount, width, (void **) &arr, used, size);
+ *     }
+ *   Better:
+ *     {
+ *       int arr[5] = { 0 };
+ *       int *arr_pounter = arr;
+ *       ...
+ *       f_memory_array_append_all(sources, amount, width, (void **) &arr_pounter, used, size);
+ *     }
  * @param used
  *   The structure.used destination.
  * @param size

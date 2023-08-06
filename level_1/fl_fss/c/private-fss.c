@@ -259,7 +259,7 @@ extern "C" {
 
         // Only the first slash before a quote needs to be escaped (or not) as once there is a slash before a quote, this cannot ever be a quote object.
         // This simplifies the number of slashes needed.
-        state->status = f_number_unsigneds_increase(state->step_small, delimits);
+        state->status = f_memory_array_increase(state->step_small, sizeof(f_number_unsigned_t), (void **) &delimits->array, &delimits->used, &delimits->size);
         if (F_status_is_error(state->status)) return;
 
         delimits->array[delimits->used++] = first_slash;
@@ -382,7 +382,7 @@ extern "C" {
               range->start = first_slash;
 
               if (slash_count % 2 == 0) {
-                state->status = f_number_unsigneds_increase_by(slash_count / 2, delimits);
+                state->status = f_memory_array_increase_by(slash_count / 2, sizeof(f_number_unsigned_t), (void **) &delimits->array, &delimits->used, &delimits->size);
                 if (F_status_is_error(state->status)) return;
 
                 while (slash_count > 0) {
@@ -480,7 +480,7 @@ extern "C" {
                 return;
               }
 
-              state->status = f_number_unsigneds_increase_by((slash_count / 2) + 1, delimits);
+              state->status = f_memory_array_increase_by((slash_count / 2) + 1, sizeof(f_number_unsigned_t), (void **) &delimits->array, &delimits->used, &delimits->size);
               if (F_status_is_error(state->status)) return;
 
               while (slash_count > 0) {

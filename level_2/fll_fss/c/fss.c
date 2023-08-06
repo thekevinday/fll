@@ -111,7 +111,7 @@ extern "C" {
 
     do {
       if (ids && ids->used + 1 > ids->size) {
-        status = f_fll_ids_increase(F_fss_default_allocation_step_small_d, ids);
+        status = f_memory_array_increase(F_fss_default_allocation_step_small_d, sizeof(f_fll_id_t), (void **) &ids->array, &ids->used, &ids->size);
       }
 
       if (F_status_is_error_not(status)) {
@@ -140,7 +140,7 @@ extern "C" {
       }
 
       if (ids) {
-        status = f_fll_ids_increase(F_fss_default_allocation_step_small_d, ids);
+        status = f_memory_array_increase(F_fss_default_allocation_step_small_d, sizeof(f_fll_id_t), (void **) &ids->array, &ids->used, &ids->size);
 
         if (F_status_is_error(status)) {
           if (ids) {
@@ -260,7 +260,7 @@ extern "C" {
           if (F_status_is_error(status)) return status;
 
           if (indexs) {
-            status = f_number_unsigneds_increase_by(content->used, indexs[j]);
+            status = f_memory_array_increase_by(content->used, sizeof(f_number_unsigned_t), (void **) &indexs[j]->array, &indexs[j]->used, &indexs[j]->size);
             if (F_status_is_error(status)) return status;
           }
         }

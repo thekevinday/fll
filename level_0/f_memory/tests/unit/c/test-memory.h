@@ -32,6 +32,8 @@
 #include "test-memory-array_increase.h"
 #include "test-memory-array_increase_by.h"
 #include "test-memory-array_resize.h"
+#include "test-memory-arrays_adjust.h"
+#include "test-memory-arrays_resize.h"
 #include "test-memory-delete.h"
 #include "test-memory-destroy.h"
 #include "test-memory-new.h"
@@ -52,6 +54,17 @@ typedef struct {
 } test_memory_array_t;
 
 #define test_memory_array_t_initialize { 0, 0, 0 }
+
+/**
+ * A structure used for testing the memory arrays functions.
+ */
+typedef struct {
+  test_memory_array_t *array;
+  f_number_unsigned_t used;
+  f_number_unsigned_t size;
+} test_memory_arrays_t;
+
+#define test_memory_arrays_t_initialize { 0, 0, 0 }
 
 /**
  * Perform any setup operations.
@@ -85,6 +98,11 @@ extern int setdown(void **state);
  * @see cmocka_unit_test()
  */
 extern int main(void);
+
+/**
+ * Callback for passing to f_memory_arrays functions.
+ */
+extern f_status_t test_memory_array_callback(const f_number_unsigned_t start, const f_number_unsigned_t size, void * const array);
 
 #ifdef __cplusplus
 } // extern "C"

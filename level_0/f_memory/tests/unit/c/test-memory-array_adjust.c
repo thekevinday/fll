@@ -80,7 +80,13 @@ void test__f_memory_array_adjust__works(void **state) {
     assert_int_equal(data.size, length);
   }
 
-  free((void *) data.array);
+  {
+    const f_status_t status = f_memory_array_adjust(0, sizeof(int), (void **) &data.array, &data.used, &data.size);
+
+    assert_int_equal(status, F_none);
+    assert_int_equal(data.used, 0);
+    assert_int_equal(data.size, 0);
+  }
 }
 
 #ifdef __cplusplus

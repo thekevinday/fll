@@ -285,7 +285,7 @@ extern "C" {
     f_string_dynamics_resize(0, &setting->defines);
     f_string_dynamics_resize(0, &setting->modes);
 
-    f_uint8s_resize(0, &setting->operations);
+    f_memory_array_resize(0, sizeof(uint8_t), (void **) &setting->operations.array, &setting->operations.used, &setting->operations.size);
   }
 #endif // _di_fake_setting_delete_
 

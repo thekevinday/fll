@@ -31,6 +31,8 @@ extern "C" {
 const static int mock_errno_generic = 32767;
 
 extern int __wrap_poll(f_poll_t *fds, nfds_t nfds, int timeout);
+extern f_status_t __wrap_f_memory_array_adjust(const f_number_unsigned_t length, const size_t width, void ** array, f_number_unsigned_t * const used, f_number_unsigned_t * const size);
+extern f_status_t __wrap_f_memory_array_resizze(const f_number_unsigned_t length, const size_t width, void ** array, f_number_unsigned_t * const used, f_number_unsigned_t * const size);
 
 #ifdef __cplusplus
 } // extern "C"

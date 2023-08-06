@@ -236,14 +236,14 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_array_resize().
+ *   Errors (with error bit) from: f_memory_arrays_resize().
  *   Errors (with error bit) from: f_string_ranges_resize().
  *   Errors (with error bit) from: f_string_rangess_resize().
- *   Errors (with error bit) from: f_uint8ss_resize().
  *
  * @see f_memory_array_resize()
+ * @see f_memory_arrays_resize()
  * @see f_string_ranges_resize()
  * @see f_string_rangess_resize()
- * @see f_uint8ss_resize()
  */
 #ifndef _di_f_fss_nameds_adjust_
   extern f_status_t f_fss_nameds_adjust(const f_number_unsigned_t length, f_fss_nameds_t * const nameds);
@@ -357,14 +357,14 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_array_resize().
+ *   Errors (with error bit) from: f_memory_arrays_resize().
  *   Errors (with error bit) from: f_string_ranges_resize().
  *   Errors (with error bit) from: f_string_rangess_resize().
- *   Errors (with error bit) from: f_uint8ss_resize().
  *
  * @see f_memory_array_resize()
+ * @see f_memory_arrays_resize()
  * @see f_string_ranges_resize()
  * @see f_string_rangess_resize()
- * @see f_uint8ss_resize()
  */
 #ifndef _di_f_fss_nameds_resize_
   extern f_status_t f_fss_nameds_resize(const f_number_unsigned_t length, f_fss_nameds_t * const nameds);

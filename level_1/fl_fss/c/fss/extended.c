@@ -63,7 +63,7 @@ extern "C" {
         }
 
         if (F_status_is_error_not(status) && quotes) {
-          status = f_uint8s_increase(state->step_small, quotes);
+          status = f_memory_array_increase(state->step_small, sizeof(uint8_t), (void **) &quotes->array, &quotes->used, &quotes->size);
         }
 
         if (F_status_is_error(status)) {

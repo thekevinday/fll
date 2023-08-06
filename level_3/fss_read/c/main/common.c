@@ -11,7 +11,7 @@ extern "C" {
     f_number_unsigned_t j = 0;
 
     if (main->setting.quotes_object.used < main->setting.objects.used) {
-      main->setting.state.status = f_uint8s_resize(main->setting.objects.used, &main->setting.quotes_object);
+      main->setting.state.status = f_memory_array_resize(main->setting.objects.used, sizeof(uint8_t), (void **) &main->setting.quotes_object.array, &main->setting.quotes_object.used, &main->setting.quotes_object.size);
       if (F_status_is_error(main->setting.state.status)) return;
 
       for (i = main->setting.quotes_object.used; i < main->setting.objects.used; ++i) {
@@ -20,12 +20,12 @@ extern "C" {
     }
 
     if (main->setting.quotes_content.used < main->setting.contents.used) {
-      main->setting.state.status = f_uint8ss_resize(main->setting.contents.used, &main->setting.quotes_content);
+      f_memory_arrays_resize(main->setting.contents.used, sizeof(f_uint8s_t), (void **) &main->setting.quotes_content.array, &main->setting.quotes_content.used, &main->setting.quotes_content.size, &f_uint8s_resize_callback);
       if (F_status_is_error(main->setting.state.status)) return;
 
       for (i = main->setting.quotes_content.used; i < main->setting.contents.used; ++i) {
 
-        main->setting.state.status = f_uint8s_resize(main->setting.contents.array[i].used, &main->setting.quotes_content.array[i]);
+        main->setting.state.status = f_memory_array_resize(main->setting.contents.array[i].used, sizeof(uint8_t), (void **) &main->setting.quotes_content.array[i].array, &main->setting.quotes_content.array[i].used, &main->setting.quotes_content.array[i].size);
         if (F_status_is_error(main->setting.state.status)) return;
 
         main->setting.quotes_content.array[i].used = 0;

@@ -23,6 +23,7 @@ extern "C" {
 #ifndef _di_f_memory_array_append_
   f_status_t f_memory_array_append(const void * const source, const size_t width, void ** array, f_number_unsigned_t * const used, f_number_unsigned_t * const size) {
     #ifndef _di_level_0_parameter_checking_
+      if (!source) return F_status_set_error(F_parameter);
       if (!width) return F_status_set_error(F_parameter);
       if (!array) return F_status_set_error(F_parameter);
       if (!used) return F_status_set_error(F_parameter);
@@ -42,7 +43,11 @@ extern "C" {
       }
     }
 
-    memcpy((*array) + (*used)++, source, width);
+    // uint8_t * is of a data size size of 1, casting it to bool should result in a single-length increment.
+    // This is done to avoid problems with (void *) having arithmetic issues.
+    memcpy((void *) (((uint8_t *) (*array)) + (*used * width)), source, width);
+
+    ++(*used);
 
     return F_none;
   }
@@ -51,6 +56,7 @@ extern "C" {
 #ifndef _di_f_memory_array_append_all_
   f_status_t f_memory_array_append_all(const void * const sources, const f_number_unsigned_t amount, const size_t width, void ** array, f_number_unsigned_t * const used, f_number_unsigned_t * const size) {
     #ifndef _di_level_0_parameter_checking_
+      if (!sources) return F_status_set_error(F_parameter);
       if (!width) return F_status_set_error(F_parameter);
       if (!array) return F_status_set_error(F_parameter);
       if (!used) return F_status_set_error(F_parameter);
@@ -71,7 +77,9 @@ extern "C" {
       }
     }
 
-    memcpy(*array + *used, sources, width * amount);
+    // uint8_t * is of a data size size of 1, casting it to bool should result in a single-length increment.
+    // This is done to avoid problems with (void *) having arithmetic issues.
+    memcpy((void *) (((uint8_t *) (*array)) + (*used * width)), sources, width * amount);
 
     *used += amount;
 

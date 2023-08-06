@@ -14,10 +14,10 @@ extern "C" {
     status = f_string_rangess_adjust(length, &set_quote->contents);
     if (F_status_is_error(status)) return status;
 
-    status = f_uint8s_adjust(length, &set_quote->objects_quote);
+    status = f_memory_array_adjust(length, sizeof(uint8_t), (void **) &set_quote->objects_quote.array, &set_quote->objects_quote.used, &set_quote->objects_quote.size);
     if (F_status_is_error(status)) return status;
 
-    status = f_uint8ss_adjust(length, &set_quote->contents_quote);
+    status = f_memory_arrays_adjust(length, sizeof(f_uint8s_t), (void **) &set_quote->contents_quote.array, &set_quote->contents_quote.used, &set_quote->contents_quote.size, &f_uint8s_resize_callback);
     if (F_status_is_error(status)) return status;
 
     return F_none;
@@ -33,10 +33,10 @@ extern "C" {
     status = f_string_rangess_resize(length, &set_quote->contents);
     if (F_status_is_error(status)) return status;
 
-    status = f_uint8s_resize(length, &set_quote->objects_quote);
+    status = f_memory_array_resize(length, sizeof(uint8_t), (void **) &set_quote->objects_quote.array, &set_quote->objects_quote.used, &set_quote->objects_quote.size);
     if (F_status_is_error(status)) return status;
 
-    status = f_uint8ss_resize(length, &set_quote->contents_quote);
+    status = f_memory_arrays_resize(length, sizeof(f_uint8s_t), (void **) &set_quote->contents_quote.array, &set_quote->contents_quote.used, &set_quote->contents_quote.size, &f_uint8s_resize_callback);
     if (F_status_is_error(status)) return status;
 
     return F_none;
@@ -57,10 +57,10 @@ extern "C" {
         status = f_string_rangess_adjust(0, &set_quotes->array[i].contents);
         if (F_status_is_error(status)) return status;
 
-        status = f_uint8s_adjust(0, &set_quotes->array[i].objects_quote);
+        status = f_memory_array_adjust(0, sizeof(uint8_t), (void **) &set_quotes->array[i].objects_quote.array, &set_quotes->array[i].objects_quote.used, &set_quotes->array[i].objects_quote.size);
         if (F_status_is_error(status)) return status;
 
-        status = f_uint8ss_adjust(0, &set_quotes->array[i].contents_quote);
+        status = f_memory_arrays_adjust(0, sizeof(f_uint8s_t), (void **) &set_quotes->array[i].contents_quote.array, &set_quotes->array[i].contents_quote.used, &set_quotes->array[i].contents_quote.size, &f_uint8s_resize_callback);
         if (F_status_is_error(status)) return status;
       } // for
     }
@@ -83,10 +83,10 @@ extern "C" {
         status = f_string_rangess_resize(0, &set_quotes->array[i].contents);
         if (F_status_is_error(status)) return status;
 
-        status = f_uint8s_resize(0, &set_quotes->array[i].objects_quote);
+        status = f_memory_array_resize(0, sizeof(uint8_t), (void **) &set_quotes->array[i].objects_quote.array, &set_quotes->array[i].objects_quote.used, &set_quotes->array[i].objects_quote.size);
         if (F_status_is_error(status)) return status;
 
-        status = f_uint8ss_resize(0, &set_quotes->array[i].contents_quote);
+        status = f_memory_arrays_resize(0, sizeof(f_uint8s_t), (void **) &set_quotes->array[i].contents_quote.array, &set_quotes->array[i].contents_quote.used, &set_quotes->array[i].contents_quote.size, &f_uint8s_resize_callback);
         if (F_status_is_error(status)) return status;
       } // for
     }

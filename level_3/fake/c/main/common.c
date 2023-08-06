@@ -443,14 +443,14 @@ extern "C" {
       main->setting.flag |= fake_main_flag_operation_make_e;
       main->setting.flag -= main->setting.flag & fake_main_flag_operation_e;
 
-      main->setting.state.status = f_uint8s_increase_by(1, &main->setting.operations);
+      main->setting.state.status = f_memory_array_increase_by(1, sizeof(uint8_t), (void **) &main->setting.operations.array, &main->setting.operations.used, &main->setting.operations.size);
 
       if (F_status_is_error(main->setting.state.status)) {
       if ((main->setting.flag & fake_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
         fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
       }
 
-        fake_print_error(&main->program.error, macro_fake_f(f_uint8s_increase_by));
+        fake_print_error(&main->program.error, macro_fake_f(f_memory_array_increase_by));
 
         return;
       }
@@ -475,10 +475,10 @@ extern "C" {
 
     if (!data->main) return;
 
-    parameter_state->state->status = f_uint8s_increase(parameter_state->state->step_small, &data->main->setting.operations);
+    parameter_state->state->status = f_memory_array_increase(parameter_state->state->step_small, sizeof(uint8_t), (void **) &data->main->setting.operations.array, &data->main->setting.operations.used, &data->main->setting.operations.size);
 
     if (F_status_is_error(parameter_state->state->status)) {
-      fake_print_error(&data->main->program.error, macro_fake_f(f_uint8s_increase));
+      fake_print_error(&data->main->program.error, macro_fake_f(f_memory_array_increase));
 
       return;
     }

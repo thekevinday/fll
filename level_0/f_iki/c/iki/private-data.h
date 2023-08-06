@@ -55,12 +55,12 @@ extern "C" {
  * @return
  *   F_none on success.
  *
+ *   Errors (with error bit) from: f_memory_array_append_all().
  *   Errors (with error bit) from: f_memory_array_increase().
- *   Errors (with error bit) from: f_number_unsigneds_append_all().
  *   Errors (with error bit) from: f_string_ranges_append_all().
  *
+ * @see f_memory_array_append_all()
  * @see f_memory_array_increase()
- * @see f_number_unsigneds_append_all()
  * @see f_string_ranges_append_all()
  *
  * @see f_iki_datas_append()
@@ -83,12 +83,12 @@ extern "C" {
  * @return
  *   F_none on success.
  *
+ *   Errors (with error bit) from: f_memory_array_append_all().
  *   Errors (with error bit) from: f_memory_array_increase_by().
- *   Errors (with error bit) from: f_number_unsigneds_append_all().
  *   Errors (with error bit) from: f_string_ranges_append_all().
  *
+ * @see f_memory_array_append_all()
  * @see f_memory_array_increase_by()
- * @see f_number_unsigneds_append_all()
  * @see f_string_ranges_append_all()
  *
  * @see f_iki_datass_append()

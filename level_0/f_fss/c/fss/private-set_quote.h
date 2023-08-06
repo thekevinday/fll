@@ -28,15 +28,15 @@ extern "C" {
  * @return
  *   F_none on success.
  *
+ *   Errors (with error bit) from: f_memory_array_resize().
+ *   Errors (with error bit) from: f_memory_arrays_resize().
  *   Errors (with error bit) from: f_string_ranges_adjust().
  *   Errors (with error bit) from: f_string_rangess_adjust().
- *   Errors (with error bit) from: f_uint8s_adjust().
- *   Errors (with error bit) from: f_uint8ss_adjust().
  *
+ * @see f_memory_array_resize()
+ * @see f_memory_arrays_resize()
  * @see f_string_ranges_adjust()
  * @see f_string_rangess_adjust()
- * @see f_uint8s_adjust()
- * @see f_uint8ss_adjust()
  *
  * @see f_fss_set_quote_adjust()
  * @see f_fss_set_quote_decimate_by()
@@ -58,15 +58,15 @@ extern "C" {
  * @return
  *   F_none on success.
  *
+ *   Errors (with error bit) from: f_memory_array_resize().
+ *   Errors (with error bit) from: f_memory_arrays_resize().
  *   Errors (with error bit) from: f_string_ranges_resize().
  *   Errors (with error bit) from: f_string_rangess_resize().
- *   Errors (with error bit) from: f_uint8s_resize().
- *   Errors (with error bit) from: f_uint8ss_resize().
  *
+ * @see f_memory_array_resize()
+ * @see f_memory_arrays_resize()
  * @see f_string_ranges_resize()
  * @see f_string_rangess_resize()
- * @see f_uint8s_resize()
- * @see f_uint8ss_resize()
  *
  * @see f_fss_set_quote_decrease_by()
  * @see f_fss_set_quote_resize()
@@ -91,16 +91,14 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_array_adjust().
+ *   Errors (with error bit) from: f_memory_arrays_adjust().
  *   Errors (with error bit) from: f_string_ranges_adjust().
  *   Errors (with error bit) from: f_string_rangess_adjust().
- *   Errors (with error bit) from: f_uint8s_adjust().
- *   Errors (with error bit) from: f_uint8ss_adjust().
  *
  * @see f_memory_array_adjust()
+ * @see f_memory_arrays_adjust()
  * @see f_string_ranges_adjust()
  * @see f_string_rangess_adjust()
- * @see f_uint8s_adjust()
- * @see f_uint8ss_adjust()
  *
  * @see f_fss_set_quotes_decrease_by()
  * @see f_fss_set_quotes_adjust()
@@ -125,17 +123,15 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_array_resize().
+ *   Errors (with error bit) from: f_memory_array_adjust().
+ *   Errors (with error bit) from: f_memory_arrays_adjust().
  *   Errors (with error bit) from: f_string_ranges_adjust().
  *   Errors (with error bit) from: f_string_rangess_adjust().
- *   Errors (with error bit) from: f_uint8s_adjust().
- *   Errors (with error bit) from: f_uint8ss_adjust().
  *
- * @see f_memory_array_resize()
+ * @see f_memory_array_adjust()
+ * @see f_memory_arrays_adjust()
  * @see f_string_ranges_adjust()
  * @see f_string_rangess_adjust()
- * @see f_uint8s_adjust()
- * @see f_uint8ss_adjust()
  *
  * @see f_fss_set_quotes_decrease_by()
  * @see f_fss_set_quotes_increase()

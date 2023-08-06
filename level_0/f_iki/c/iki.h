@@ -170,6 +170,8 @@ extern "C" {
  *     F_memory_not (with error bit) on out of memory.
  *     F_parameter (with error bit) if a parameter is invalid.
  *     F_string_too_large (with error bit) if a string length is too large to store in the buffer.
+ *
+ * @see f_memory_array_increase_by()
  */
 #ifndef _di_f_iki_read_
   extern void f_iki_read(f_string_static_t * const buffer, f_string_range_t * const range, f_iki_data_t * const data, f_state_t * const state);

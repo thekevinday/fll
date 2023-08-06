@@ -85,7 +85,7 @@ void test__f_memory_array_increase_by__returns_data_not(void **state) {
 
     assert_int_equal(status, F_status_set_error(F_parameter));
     assert_int_equal(data.used, 0);
-    assert_int_equal(data.size, 0);
+    assert_int_equal(data.size, length);
   }
 
   free((void *) data.array);

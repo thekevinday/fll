@@ -33,7 +33,7 @@ extern "C" {
       contents->array[contents->used].used = 0;
 
       if (objects_quoted) {
-        state->status = f_uint8s_increase(state->step_small, objects_quoted);
+        state->status = f_memory_array_increase(state->step_small, sizeof(uint8_t), (void **) &objects_quoted->array, &objects_quoted->used, &objects_quoted->size);
         if (F_status_is_error(state->status)) return;
       }
 

@@ -95,12 +95,12 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ *   Errors (with error bit) from: f_memory_array_append_all().
  *   Errors (with error bit) from: f_memory_array_increase().
- *   Errors (with error bit) from: f_number_unsigneds_append_all().
  *   Errors (with error bit) from: f_string_ranges_append_all().
  *
+ * @see f_memory_array_append_all()
  * @see f_memory_array_increase()
- * @see f_number_unsigneds_append_all()
  * @see f_string_ranges_append_all()
  */
 #ifndef _di_f_iki_datas_append_
@@ -121,12 +121,12 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ *   Errors (with error bit) from: f_memory_array_append_all().
  *   Errors (with error bit) from: f_memory_array_increase_by().
- *   Errors (with error bit) from: f_number_unsigneds_append_all().
  *   Errors (with error bit) from: f_string_ranges_append_all().
  *
+ * @see f_memory_array_append_all()
  * @see f_memory_array_increase_by()
- * @see f_number_unsigneds_append_all()
  * @see f_string_ranges_append_all()
  */
 #ifndef _di_f_iki_datas_append_all_

@@ -21,7 +21,7 @@ extern "C" {
 
     f_string_dynamic_resize(0, &setting->buffer);
 
-    f_fll_ids_resize(0, &setting->ids);
+    f_memory_array_resize(0, sizeof(f_fll_id_t), (void **) &setting->ids.array, &setting->ids.used, &setting->ids.size);
 
     f_string_dynamics_resize(0, &setting->names);
     f_string_dynamics_resize(0, &setting->files);

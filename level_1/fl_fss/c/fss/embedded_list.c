@@ -27,7 +27,7 @@ extern "C" {
 
     f_number_unsigneds_t positions_start = f_number_unsigneds_t_initialize;
 
-    state->status = f_number_unsigneds_increase(state->step_small, &positions_start);
+    state->status = f_memory_array_increase(state->step_small, sizeof(f_number_unsigned_t), (void **) &positions_start.array, &positions_start.used, &positions_start.size);
     if (F_status_is_error(state->status)) return;
 
     f_string_ranges_t objects = f_string_ranges_t_initialize;
@@ -42,7 +42,7 @@ extern "C" {
 
     f_number_unsigneds_t slashes = f_number_unsigneds_t_initialize;
 
-    state->status = f_number_unsigneds_increase(state->step_small, &slashes);
+    state->status = f_memory_array_increase(state->step_small, sizeof(f_number_unsigned_t), (void **) &slashes.array, &slashes.used, &slashes.size);
 
     if (F_status_is_error(state->status)) {
       f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &positions_start.array, &positions_start.used, &positions_start.size);
@@ -89,7 +89,7 @@ extern "C" {
 
       if (buffer.string[range->start] == f_fss_eol_s.string[0]) {
         if (graph_first == 0x2) {
-          state->status = f_number_unsigneds_increase(state->step_small, delimits);
+          state->status = f_memory_array_increase(state->step_small, sizeof(f_number_unsigned_t), (void **) &delimits->array, &delimits->used, &delimits->size);
           if (F_status_is_error(state->status)) break;
 
           delimits->array[delimits->used++] = comment_delimit;
@@ -194,7 +194,7 @@ extern "C" {
         // When slash is odd and a (delimited) valid open/close is found, then save delimited positions and continue.
         if (buffer.string[range->start] == f_fss_eol_s.string[0]) {
           if (graph_first == 0x2) {
-            state->status = f_number_unsigneds_increase(state->step_small, delimits);
+            state->status = f_memory_array_increase(state->step_small, sizeof(f_number_unsigned_t), (void **) &delimits->array, &delimits->used, &delimits->size);
             if (F_status_is_error(state->status)) break;
 
             delimits->array[delimits->used++] = comment_delimit;
@@ -225,7 +225,7 @@ extern "C" {
 
             if (buffer.string[range->start] == f_fss_eol_s.string[0]) {
               if (graph_first == 0x2) {
-                state->status = f_number_unsigneds_increase(state->step_small, delimits);
+                state->status = f_memory_array_increase(state->step_small, sizeof(f_number_unsigned_t), (void **) &delimits->array, &delimits->used, &delimits->size);
                 if (F_status_is_error(state->status)) break;
 
                 delimits->array[delimits->used++] = comment_delimit;
@@ -298,7 +298,7 @@ extern "C" {
 
               range->start = slash_first;
 
-              state->status = f_number_unsigneds_increase_by((slashes.array[depth] / 2) + 1, delimits);
+              state->status = f_memory_array_increase_by((slashes.array[depth] / 2) + 1, sizeof(f_number_unsigned_t), (void **) &delimits->array, &delimits->used, &delimits->size);
               if (F_status_is_error(state->status)) break;
 
               // Apply slash delimits, only slashes and placeholders should be present.
@@ -321,13 +321,13 @@ extern "C" {
               // When slashes are even, the object is valid and needs to be processed.
               if (is_object) {
                 if (++depth > positions_start.size) {
-                  state->status = f_number_unsigneds_increase(state->step_small, &positions_start);
+                  state->status = f_memory_array_increase(state->step_small, sizeof(f_number_unsigned_t), (void **) &positions_start.array, &positions_start.used, &positions_start.size);
                   if (F_status_is_error(state->status)) break;
 
                   state->status = f_string_ranges_increase(state->step_small, &objects);
                   if (F_status_is_error(state->status)) break;
 
-                  state->status = f_number_unsigneds_increase(state->step_small, &slashes);
+                  state->status = f_memory_array_increase(state->step_small, sizeof(f_number_unsigned_t), (void **) &slashes.array, &slashes.used, &slashes.size);
                   if (F_status_is_error(state->status)) break;
                 }
 
@@ -345,7 +345,7 @@ extern "C" {
               }
             }
             else {
-              state->status = f_number_unsigneds_increase(state->step_small, delimits);
+              state->status = f_memory_array_increase(state->step_small, sizeof(f_number_unsigned_t), (void **) &delimits->array, &delimits->used, &delimits->size);
               if (F_status_is_error(state->status)) break;
 
               delimits->array[delimits->used++] = slash_last;
@@ -428,13 +428,13 @@ extern "C" {
           ++depth;
 
           if (depth >= positions_start.size) {
-            state->status = f_number_unsigneds_increase(state->step_small, &positions_start);
+            state->status = f_memory_array_increase(state->step_small, sizeof(f_number_unsigned_t), (void **) &positions_start.array, &positions_start.used, &positions_start.size);
             if (F_status_is_error(state->status)) break;
 
             state->status = f_string_ranges_increase(state->step_small, &objects);
             if (F_status_is_error(state->status)) break;
 
-            state->status = f_number_unsigneds_increase(state->step_small, &slashes);
+            state->status = f_memory_array_increase(state->step_small, sizeof(f_number_unsigned_t), (void **) &slashes.array, &slashes.used, &slashes.size);
             if (F_status_is_error(state->status)) break;
           }
 
@@ -451,7 +451,7 @@ extern "C" {
           slashes.array[depth] = 0;
 
           if (graph_first == 0x2) {
-            state->status = f_number_unsigneds_increase(state->step_small, delimits);
+            state->status = f_memory_array_increase(state->step_small, sizeof(f_number_unsigned_t), (void **) &delimits->array, &delimits->used, &delimits->size);
             if (F_status_is_error(state->status)) break;
 
             delimits->array[delimits->used++] = comment_delimit;
@@ -468,7 +468,7 @@ extern "C" {
           if (F_status_is_error(state->status)) break;
 
           if (graph_first == 0x2) {
-            state->status = f_number_unsigneds_increase(state->step_small, delimits);
+            state->status = f_memory_array_increase(state->step_small, sizeof(f_number_unsigned_t), (void **) &delimits->array, &delimits->used, &delimits->size);
             if (F_status_is_error(state->status)) break;
 
             delimits->array[delimits->used++] = comment_delimit;
@@ -624,7 +624,7 @@ extern "C" {
           }
 
           if (graph_first == 0x2) {
-            state->status = f_number_unsigneds_increase(state->step_small, delimits);
+            state->status = f_memory_array_increase(state->step_small, sizeof(f_number_unsigned_t), (void **) &delimits->array, &delimits->used, &delimits->size);
             if (F_status_is_error(state->status)) break;
 
             delimits->array[delimits->used++] = comment_delimit;
@@ -668,7 +668,7 @@ extern "C" {
 
             if (buffer.string[range->start] == f_fss_eol_s.string[0]) {
               if (graph_first == 0x2) {
-                state->status = f_number_unsigneds_increase(state->step_small, delimits);
+                state->status = f_memory_array_increase(state->step_small, sizeof(f_number_unsigned_t), (void **) &delimits->array, &delimits->used, &delimits->size);
                 if (F_status_is_error(state->status)) break;
 
                 delimits->array[delimits->used++] = comment_delimit;
@@ -733,7 +733,7 @@ extern "C" {
         }
         else {
           if (graph_first == 0x2) {
-            state->status = f_number_unsigneds_increase(state->step_small, delimits);
+            state->status = f_memory_array_increase(state->step_small, sizeof(f_number_unsigned_t), (void **) &delimits->array, &delimits->used, &delimits->size);
             if (F_status_is_error(state->status)) break;
 
             delimits->array[delimits->used++] = comment_delimit;
@@ -1263,7 +1263,7 @@ extern "C" {
 
             range->start = slash_first;
 
-            state->status = f_number_unsigneds_increase_by((slash_count / 2) + 1, delimits);
+            state->status = f_memory_array_increase_by((slash_count / 2) + 1, sizeof(f_number_unsigned_t), (void **) &delimits->array, &delimits->used, &delimits->size);
             if (F_status_is_error(state->status)) break;
 
             if (slash_count % 2 == 0) {
@@ -1300,7 +1300,7 @@ extern "C" {
           graph_first = F_false;
 
           // Comments may only have white space before the '#', therefore only the first slash needs to be delimited.
-          state->status = f_number_unsigneds_increase(state->step_small, delimits);
+          state->status = f_memory_array_increase(state->step_small, sizeof(f_number_unsigned_t), (void **) &delimits->array, &delimits->used, &delimits->size);
           if (F_status_is_error(state->status)) break;
 
           delimits->array[delimits->used++] = slash_first;

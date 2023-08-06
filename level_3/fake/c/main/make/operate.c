@@ -1248,10 +1248,10 @@ extern "C" {
     }
 
     // Add the operation id to the operation stack.
-    main->setting.state.status = f_number_unsigneds_increase(main->setting.state.step_small, section_stack);
+    main->setting.state.status = f_memory_array_increase(main->setting.state.step_small, sizeof(f_number_unsigned_t), (void **) &section_stack->array, &section_stack->used, &section_stack->size);
 
     if (F_status_is_error(main->setting.state.status)) {
-      fake_print_error(&data_make->error, macro_fake_f(f_number_unsigneds_increase));
+      fake_print_error(&data_make->error, macro_fake_f(f_memory_array_increase));
 
       return 0;
     }

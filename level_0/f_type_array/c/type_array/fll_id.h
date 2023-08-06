@@ -17,204 +17,17 @@ extern "C" {
 #endif
 
 /**
- * Resize the string fll_ids array.
+ * A callback intended to be passed to f_memory_arrays_adjust() for an f_fll_idss_t structure.
  *
- * @param length
- *   The new size to use.
- * @param structure
- *   The string fll_ids array to resize.
+ * This does not do parameter checking.
  *
- * @return
- *   F_none on success.
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: f_memory_array_adjust().
- *
- * @see f_memory_array_adjust()
- */
-#ifndef _di_f_fll_ids_adjust_
-  extern f_status_t f_fll_ids_adjust(const f_number_unsigned_t length, f_fll_ids_t * const structure);
-#endif // _di_f_fll_ids_adjust_
-
-/**
- * Append the single source fll_id onto the destination.
- *
- * @param source
- *   The source fll_id to append.
- * @param destination
- *   The destination fll_ids the source is appended onto.
- *
- * @return
- *   F_none on success.
- *   F_data_not on success, but there is nothing to append (size == 0).
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: f_memory_array_increase().
- *
- * @see f_memory_array_increase()
- */
-#ifndef _di_f_fll_ids_append_
-  extern f_status_t f_fll_ids_append(const f_fll_id_t source, f_fll_ids_t * const destination);
-#endif // _di_f_fll_ids_append_
-
-/**
- * Append the source fll_ids onto the destination.
- *
- * @param source
- *   The source fll_ids to append.
- * @param destination
- *   The destination fll_ids the source is appended onto.
- *
- * @return
- *   F_none on success.
- *   F_data_not on success, but there is nothing to append (size == 0).
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: f_memory_array_increase_by().
- *
- * @see f_memory_array_increase_by()
- */
-#ifndef _di_f_fll_ids_append_all_
-  extern f_status_t f_fll_ids_append_all(const f_fll_ids_t source, f_fll_ids_t * const destination);
-#endif // _di_f_fll_ids_append_all_
-
-/**
- * Resize the string fll_ids array to a smaller size.
- *
- * This will resize making the array smaller based on (size - given length).
- * If the given length is too small, then the resize will fail.
- * This will not shrink the size to les than 0.
- *
- * @param amount
- *   A positive number representing how much to decimate the size by.
- * @param structure
- *   The string fll_ids array to resize.
- *
- * @return
- *   F_none on success.
- *   F_data_not if amount is 0.
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: f_memory_array_decimate_by().
- *
- * @see f_memory_array_decimate_by()
- */
-#ifndef _di_f_fll_ids_decimate_by_
-  extern f_status_t f_fll_ids_decimate_by(const f_number_unsigned_t amount, f_fll_ids_t * const structure);
-#endif // _di_f_fll_ids_decimate_by_
-
-/**
- * Resize the string fll_ids array to a smaller size.
- *
- * This will resize making the array smaller based on (size - given length).
- * If the given length is too small, then the resize will fail.
- * This will not shrink the size to les than 0.
- *
- * @param amount
- *   A positive number representing how much to decrease the size by.
- * @param structure
- *   The string fll_ids array to resize.
- *
- * @return
- *   F_none on success.
- *   F_data_not if amount is 0.
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: f_memory_array_decrease_by().
- *
- * @see f_memory_array_decrease_by()
- */
-#ifndef _di_f_fll_ids_decrease_by_
-  extern f_status_t f_fll_ids_decrease_by(const f_number_unsigned_t amount, f_fll_ids_t * const structure);
-#endif // _di_f_fll_ids_decrease_by_
-
-/**
- * Increase the size of the string fll_ids array, but only if necesary.
- *
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
- * If already set to the maximum buffer size, then the resize will fail.
- *
- * @param step
- *   The allocation step to use.
- *   Must be greater than 0.
- * @param structure
- *   The string fll_ids array to resize.
- *
- * @return
- *   F_none on success.
- *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
- *
- *   F_array_too_large (with error bit) if the new array length is too large.
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: f_memory_array_increase().
- *
- * @see f_memory_array_increase()
- */
-#ifndef _di_f_fll_ids_increase_
-  extern f_status_t f_fll_ids_increase(const f_number_unsigned_t step, f_fll_ids_t * const structure);
-#endif // _di_f_fll_ids_increase_
-
-/**
- * Resize the string fll_ids array to a larger size.
- *
- * This will resize making the array larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
- * If already set to the maximum buffer size, then the resize will fail.
- *
- * @param amount
- *   A positive number representing how much to increase the size by.
- * @param structure
- *   The string fll_ids array to resize.
- *
- * @return
- *   F_none on success.
- *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
- *
- *   F_array_too_large (with error bit) if the new array length is too large.
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: f_memory_array_increase_by().
- *
- * @see f_memory_array_increase_by()
- */
-#ifndef _di_f_fll_ids_increase_by_
-  extern f_status_t f_fll_ids_increase_by(const f_number_unsigned_t amount, f_fll_ids_t * const structure);
-#endif // _di_f_fll_ids_increase_by_
-
-/**
- * Resize the string fll_ids array.
- *
- * @param length
- *   The new size to use.
- * @param structure
- *   The string fll_ids array to adjust.
- *
- * @return
- *   F_none on success.
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: f_memory_array_resize().
- *
- * @see f_memory_array_resize()
- */
-#ifndef _di_f_fll_ids_resize_
-  extern f_status_t f_fll_ids_resize(const f_number_unsigned_t length, f_fll_ids_t * const structure);
-#endif // _di_f_fll_ids_resize_
-
-/**
- * Resize the string fll_idss array.
- *
- * @param length
- *   The new size to use.
- * @param structure
- *   The string fll_idss array to resize.
+ * @param start
+ *   The start position in the array to start deleting.
+ * @param stop
+ *   The stop in the array to stop deleting.
+ * @param array
+ *   The array structure to delete all values of.
+ *   Must not be NULL.
  *
  * @return
  *   F_none on success.
@@ -224,93 +37,24 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_array_adjust().
  *
  * @see f_memory_array_adjust()
+ * @see f_memory_arrays_adjust()
  */
-#ifndef _di_f_fll_idss_adjust_
-  extern f_status_t f_fll_idss_adjust(const f_number_unsigned_t length, f_fll_idss_t * const structure);
-#endif // _di_f_fll_idss_adjust_
+#ifndef _di_f_fll_ids_adjust_callback_
+  extern f_status_t f_fll_ids_adjust_callback(const f_number_unsigned_t start, const f_number_unsigned_t size, void * const array);
+#endif // _di_f_fll_ids_adjust_callback_
 
 /**
- * Append the single source fll_ids onto the destination.
+ * A callback intended to be passed to f_memory_arrays_resize() for an f_fll_idss_t structure.
  *
- * @param source
- *   The source fll_ids to append.
- * @param destination
- *   The destination ranges the source is appended onto.
+ * This does not do parameter checking.
  *
- * @return
- *   F_none on success.
- *   F_data_not on success, but there is nothing to append (size == 0).
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: f_memory_array_increase().
- *   Errors (with error bit) from: f_memory_array_increase_by().
- *
- * @see f_memory_array_increase()
- * @see f_memory_array_increase_by()
- */
-#ifndef _di_f_fll_idss_append_
-  extern f_status_t f_fll_idss_append(const f_fll_ids_t source, f_fll_idss_t * const destination);
-#endif // _di_f_fll_idss_append_
-
-/**
- * Append the source fll_idss onto the destination.
- *
- * @param source
- *   The source fll_idss to append.
- * @param destination
- *   The destination ranges the source is appended onto.
- *
- * @return
- *   F_none on success.
- *   F_data_not on success, but there is nothing to append (size == 0).
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: f_memory_array_increase_by().
- *
- * @see f_memory_array_increase_by()
- */
-#ifndef _di_f_fll_idss_append_all_
-  extern f_status_t f_fll_idss_append_all(const f_fll_idss_t source, f_fll_idss_t * const destination);
-#endif // _di_f_fll_idss_append_all_
-
-/**
- * Resize the string fll_idss array to a smaller size.
- *
- * This will resize making the array smaller based on (size - given length).
- * If the given length is too small, then the resize will fail.
- * This will not shrink the size to less than 0.
- *
- * @param amount
- *   A positive number representing how much to decimate the size by.
- * @param structure
- *   The string fll_idss array to resize.
- *
- * @return
- *   F_none on success.
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: f_memory_array_adjust().
- *
- * @see f_memory_array_adjust()
- */
-#ifndef _di_f_fll_idss_decimate_by_
-  extern f_status_t f_fll_idss_decimate_by(const f_number_unsigned_t amount, f_fll_idss_t * const structure);
-#endif // _di_f_fll_idss_decimate_by_
-
-/**
- * Resize the string fll_idss array to a smaller size.
- *
- * This will resize making the array smaller based on (size - given length).
- * If the given length is too small, then the resize will fail.
- * This will not shrink the size to less than 0.
- *
- * @param amount
- *   A positive number representing how much to decrease the size by.
- * @param structure
- *   The string fll_idss array to resize.
+ * @param start
+ *   The start position in the array to start deleting.
+ * @param stop
+ *   The stop in the array to stop deleting.
+ * @param array
+ *   The array structure to delete all values of.
+ *   Must not be NULL.
  *
  * @return
  *   F_none on success.
@@ -320,85 +64,11 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_array_resize().
  *
  * @see f_memory_array_resize()
+ * @see f_memory_arrays_resize()
  */
-#ifndef _di_f_fll_idss_decrease_by_
-  extern f_status_t f_fll_idss_decrease_by(const f_number_unsigned_t amount, f_fll_idss_t * const structure);
-#endif // _di_f_fll_idss_decrease_by_
-
-/**
- * Increase the size of the string fll_idss array, but only if necessary.
- *
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
- * If already set to the maximum buffer size, then the resize will fail.
- *
- * @param step
- *   The allocation step to use.
- *   Must be greater than 0.
- * @param structure
- *   The string fll_idss array to resize.
- *
- * @return
- *   F_none on success.
- *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
- *
- *   F_array_too_large (with error bit) if the new array length is too large.
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: f_memory_array_resize().
- *
- * @see f_memory_array_resize()
- */
-#ifndef _di_f_fll_idss_increase_
-  extern f_status_t f_fll_idss_increase(const f_number_unsigned_t step, f_fll_idss_t * const structure);
-#endif // _di_f_fll_idss_increase_
-
-/**
- * Resize the string fll_idss array to a larger size.
- *
- * This will resize making the array larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
- * If already set to the maximum buffer size, then the resize will fail.
- *
- * @param amount
- *   A positive number representing how much to increase the size by.
- * @param structure
- *   The string fll_idss array to resize.
- *
- * @return
- *   F_none on success.
- *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
- *
- *   F_array_too_large (with error bit) if the new array length is too large.
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: f_memory_array_resize().
- *
- * @see f_memory_array_resize()
- */
-#ifndef _di_f_fll_idss_increase_by_
-  extern f_status_t f_fll_idss_increase_by(const f_number_unsigned_t amount, f_fll_idss_t * const structure);
-#endif // _di_f_fll_idss_increase_by_
-
-/**
- * Resize the string fll_idss array.
- *
- * @param length
- *   The new size to use.
- * @param structure
- *   The string fll_idss array to adjust.
- *
- * @return
- *   F_none on success.
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: f_memory_array_resize().
- *
- * @see f_memory_array_resize()
- */
-#ifndef _di_f_fll_idss_resize_
-  extern f_status_t f_fll_idss_resize(const f_number_unsigned_t length, f_fll_idss_t * const structure);
-#endif // _di_f_fll_idss_resize_
+#ifndef _di_f_fll_ids_resize_callback_
+  extern f_status_t f_fll_ids_resize_callback(const f_number_unsigned_t start, const f_number_unsigned_t size, void * const array);
+#endif // _di_f_fll_ids_resize_callback_
 
 #ifdef __cplusplus
 } // extern "C"

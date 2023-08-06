@@ -206,7 +206,7 @@ extern "C" {
  *     F_recurse (with error bit) is returned if unable to recurse to another operation section (usually max stack depth reached).
  *     F_valid_not (with error bit) is returned if any part of the section is invalid, such as an invalid operation name.
  *
- *     Errors (with error bit) from: f_number_unsigneds_increase()
+ *     Errors (with error bit) from: f_memory_array_increase()
  *
  *     Errors (with error bit) from: fake_make_operate_block_postprocess()
  *     Errors (with error bit) from: fake_make_operate_block_prepare()
@@ -222,8 +222,7 @@ extern "C" {
  *   The return code of the execution process.
  *   This generally is only needed when F_child is returned, where this holds the return status of the child process.
  *
- * @see f_number_unsigneds_increase()
- * @see fll_program_print_signal_received()
+ * @see f_memory_array_increase()
  *
  * @see fake_make_operate_block_postprocess()
  * @see fake_make_operate_block_prepare()

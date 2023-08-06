@@ -7,8 +7,8 @@
  *
  * Test set quote adjust in the fss project.
  */
-#ifndef _TEST__F_fss__simple_packet_range_adjust
-#define _TEST__F_fss__simple_packet_range_adjust
+#ifndef _TEST__F_memory__array_adjust
+#define _TEST__F_memory__array_adjust
 
 /**
  * Test that the function correctly fails on invalid parameter.
@@ -31,4 +31,4 @@ extern void test__f_memory_array_adjust__returns_array_too_large(void **state);
  */
 extern void test__f_memory_array_adjust__works(void **state);
 
-#endif // _TEST__F_fss__simple_packet_range_adjust
+#endif // _TEST__F_memory__array_adjust

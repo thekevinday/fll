@@ -31,7 +31,7 @@ build_libraries -lc
 build_libraries-individual -lf_memory
 
 build_sources_library type_array/cell.c type_array/file.c type_array/fll_id.c type_array/int8.c type_array/int16.c type_array/int32.c type_array/int64.c type_array/int128.c type_array/number_unsigned.c type_array/poll.c type_array/state.c type_array/status.c type_array/uint8.c type_array/uint16.c type_array/uint32.c type_array/uint64.c type_array/uint128.c
-build_sources_library type_array/private-cell.c type_array/private-file.c type_array/private-fll_id.c type_array/private-int8.c type_array/private-int16.c type_array/private-int32.c type_array/private-int64.c type_array/private-int128.c type_array/private-poll.c type_array/private-state.c type_array/private-status.c type_array/private-uint8.c type_array/private-uint16.c type_array/private-uint32.c type_array/private-uint64.c type_array/private-uint128.c
+build_sources_library type_array/private-poll.c type_array/private-state.c type_array/private-status.c
 build_sources_library ../../tests/unit/c/mock-type_array.c
 
 build_sources_headers type_array.h type_array_file.h type_array/common.h type_array/cell.h type_array/file.h type_array/fll_id.h type_array/int8.h type_array/int16.h type_array/int32.h type_array/int64.h type_array/int128.h type_array/number_unsigned.h type_array/poll.h type_array/state.h type_array/status.h type_array/uint8.h type_array/uint16.h type_array/uint32.h type_array/uint64.h type_array/uint128.h
@@ -63,4 +63,6 @@ flags-coverage --coverage -fprofile-abs-path -fprofile-dir=build/coverage/
 flags_library -fPIC
 
 # Inject mocks.
+flags -Wl,--wrap=f_memory_array_adjust
+flags -Wl,--wrap=f_memory_array_resize
 flags -Wl,--wrap=poll

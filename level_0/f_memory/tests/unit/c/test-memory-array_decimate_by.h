@@ -1,14 +1,14 @@
 /**
  * FLL - Level 0
  *
- * Project: FSS
+ * Project: Memory
  * API Version: 0.7
  * Licenses: lgpl-2.1-or-later
  *
  * Test set quote decimate by in the fss project.
  */
-#ifndef _TEST__F_fss__simple_packet_range_decimate_by
-#define _TEST__F_fss__simple_packet_range_decimate_by
+#ifndef _TEST__F_memory__array_decimate_by
+#define _TEST__F_memory__array_decimate_by
 
 /**
  * Test that the function correctly fails on invalid parameter.
@@ -31,4 +31,4 @@ extern void test__f_memory_array_decimate_by__returns_data_not(void **state);
  */
 extern void test__f_memory_array_decimate_by__works(void **state);
 
-#endif // _TEST__F_fss__simple_packet_range_decimate_by
+#endif // _TEST__F_memory__array_decimate_by

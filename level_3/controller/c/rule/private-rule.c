@@ -3470,10 +3470,10 @@ extern "C" {
         }
 
         if (F_status_is_error_not(status)) {
-          status = f_number_unsigneds_increase(controller_common_allocation_small_d, &process->stack);
+          status = f_memory_array_increase(controller_common_allocation_small_d, sizeof(f_number_unsigned_t), (void **) &process->stack.array, &process->stack.used, &process->stack.size);
 
           if (F_status_is_error(status)) {
-            controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_number_unsigneds_increase", F_true);
+            controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_memory_array_increase", F_true);
           }
           else {
             f_thread_unlock(&process->lock);

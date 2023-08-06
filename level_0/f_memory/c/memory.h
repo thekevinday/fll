@@ -22,6 +22,7 @@
 // FLL-0 memory includes.
 #include <fll/level_0/memory/common.h>
 #include <fll/level_0/memory/array.h>
+#include <fll/level_0/memory/arrays.h>
 
 #ifdef __cplusplus
 extern "C" {

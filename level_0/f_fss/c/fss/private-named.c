@@ -14,7 +14,7 @@ extern "C" {
     status = f_string_rangess_adjust(length, &named->contents);
     if (F_status_is_error(status)) return status;
 
-    status = f_uint8ss_adjust(length, &named->quotess);
+    status = f_memory_arrays_adjust(length, sizeof(f_uint8s_t), (void **) &named->quotess.array, &named->quotess.used, &named->quotess.size, &f_uint8s_resize_callback);
     if (F_status_is_error(status)) return status;
 
     return F_none;
@@ -30,7 +30,7 @@ extern "C" {
     status = f_string_rangess_resize(length, &named->contents);
     if (F_status_is_error(status)) return status;
 
-    status = f_uint8ss_resize(length, &named->quotess);
+    status = f_memory_arrays_resize(length, sizeof(f_uint8s_t), (void **) &named->quotess.array, &named->quotess.used, &named->quotess.size, &f_uint8s_resize_callback);
     if (F_status_is_error(status)) return status;
 
     return F_none;

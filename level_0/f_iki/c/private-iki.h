@@ -57,12 +57,12 @@ extern "C" {
  *   F_none on success.
  *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
  *
- *   Errors (with error bit) from: f_number_unsigneds_resize().
  *   Errors (with error bit) from: f_memory_adjust().
+ *   Errors (with error bit) from: f_memory_array_resize().
  *   Errors (with error bit) from: f_string_ranges_adjust().
  *
- * @see f_number_unsigneds_resize()
  * @see f_memory_adjust()
+ * @see f_memory_array_resize()
  * @see f_string_ranges_adjust()
  */
 #if !defined(_di_f_iki_datas_adjust_) || !defined(_di_f_iki_datas_decimate_by_)
@@ -107,11 +107,11 @@ extern "C" {
  *   F_none on success.
  *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
  *
- *   Errors (with error bit) from: f_number_unsigneds_resize().
+ *   Errors (with error bit) from: f_memory_array_resize().
  *   Errors (with error bit) from: f_memory_resize().
  *   Errors (with error bit) from: f_string_ranges_resize().
  *
- * @see f_number_unsigneds_resize()
+ * @see f_memory_array_resize()
  * @see f_memory_resize()
  * @see f_string_ranges_resize()
  */

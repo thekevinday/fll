@@ -174,7 +174,7 @@ extern "C" {
     state->status = f_string_dynamics_increase_by(arguments.argc, &parameters->arguments);
     if (F_status_is_error(state->status)) return;
 
-    state->status = f_number_unsigneds_increase(state->step_small, &process.needs);
+    state->status = f_memory_array_increase(state->step_small, sizeof(f_number_unsigned_t), (void **) &process.needs.array, &process.needs.used, &process.needs.size);
     if (F_status_is_error(state->status)) return;
 
     // Append the program name parameter as a static string.
@@ -359,7 +359,7 @@ extern "C" {
           process.location_sub = 1;
           process.needs.used = 0;
 
-          state->status = f_number_unsigneds_increase_by(parameters->arguments.array[process.location].used, &process.needs);
+          state->status = f_memory_array_increase_by(parameters->arguments.array[process.location].used, sizeof(f_number_unsigned_t), (void **) &process.needs.array, &process.needs.used, &process.needs.size);
           if (F_status_is_error(state->status)) break;
 
           // The process.location_sub is used on a per-increment basis (such as 'tar -xcf', the '-' would have an increment of 1, therefore x, c, and f would all be three separate parameters).
@@ -423,10 +423,10 @@ extern "C" {
               }
 
               if (state->status == F_process) {
-                state->status = f_number_unsigneds_increase(state->step_small, &parameters->array[i].locations);
+                state->status = f_memory_array_increase(state->step_small, sizeof(f_number_unsigned_t), (void **) &parameters->array[i].locations.array, &parameters->array[i].locations.used, &parameters->array[i].locations.size);
                 if (F_status_is_error(state->status)) break;
 
-                state->status = f_number_unsigneds_increase(state->step_small, &parameters->array[i].locations_sub);
+                state->status = f_memory_array_increase(state->step_small, sizeof(f_number_unsigned_t), (void **) &parameters->array[i].locations_sub.array, &parameters->array[i].locations_sub.used, &parameters->array[i].locations_sub.size);
                 if (F_status_is_error(state->status)) break;
 
                 if (parameters->array[i].location != process.location) {
@@ -442,7 +442,7 @@ extern "C" {
                   process.needs.array[process.needs.used++] = i;
                 } // for
 
-                state->status = f_number_unsigneds_increase_by(process.needs.used, &parameters->array[i].values);
+                state->status = f_memory_array_increase_by(process.needs.used, sizeof(f_number_unsigned_t), (void **) &parameters->array[i].values.array, &parameters->array[i].values.used, &parameters->array[i].values.size);
                 if (F_status_is_error(state->status)) break;
               }
 
@@ -585,10 +585,10 @@ extern "C" {
         }
 
         if (state->status == F_process && process.found && i < parameters->used) {
-          state->status = f_number_unsigneds_increase(state->step_small, &parameters->array[i].locations);
+          state->status = f_memory_array_increase(state->step_small, sizeof(f_number_unsigned_t), (void **) &parameters->array[i].locations.array, &parameters->array[i].locations.used, &parameters->array[i].locations.size);
           if (F_status_is_error(state->status)) break;
 
-          state->status = f_number_unsigneds_increase(state->step_small, &parameters->array[i].locations_sub);
+          state->status = f_memory_array_increase(state->step_small, sizeof(f_number_unsigned_t), (void **) &parameters->array[i].locations_sub.array, &parameters->array[i].locations_sub.used, &parameters->array[i].locations_sub.size);
           if (F_status_is_error(state->status)) break;
 
           parameters->array[i].result |= process.result | f_console_result_found_e;
@@ -601,7 +601,7 @@ extern "C" {
             process.needs.array[process.needs.used++] = i;
           } // for
 
-          state->status = f_number_unsigneds_increase_by(process.needs.used, &parameters->array[i].values);
+          state->status = f_memory_array_increase_by(process.needs.used, sizeof(f_number_unsigned_t), (void **) &parameters->array[i].values.array, &parameters->array[i].values.used, &parameters->array[i].values.size);
           if (F_status_is_error(state->status)) break;
         }
 
@@ -626,7 +626,7 @@ extern "C" {
         }
 
         if (state->status == F_process) {
-          state->status = f_number_unsigneds_increase(state->step_small, &parameters->remaining);
+          state->status = f_memory_array_increase(state->step_small, sizeof(f_number_unsigned_t), (void **) &parameters->remaining.array, &parameters->remaining.used, &parameters->remaining.size);
           if (F_status_is_error(state->status)) break;
 
           parameters->remaining.array[parameters->remaining.used++] = process.location;
