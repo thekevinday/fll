@@ -12,7 +12,7 @@ extern "C" {
       if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return f_memory_array_adjust(length, sizeof(f_string_t), (void **) &structure->string, &structure->used, &structure->size);
+    return f_memory_array_adjust(length, sizeof(f_char_t), (void **) &structure->string, &structure->used, &structure->size);
   }
 #endif // _di_f_string_dynamic_adjust_
 
@@ -110,7 +110,7 @@ extern "C" {
       if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return f_memory_array_decimate_by(amount, sizeof(f_string_t), (void **) &structure->string, &structure->used, &structure->size);
+    return f_memory_array_decimate_by(amount, sizeof(f_char_t), (void **) &structure->string, &structure->used, &structure->size);
   }
 #endif // _di_f_string_dynamic_decimate_by_
 
@@ -120,7 +120,7 @@ extern "C" {
       if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return f_memory_array_decrease_by(amount, sizeof(f_string_t), (void **) &structure->string, &structure->used, &structure->size);
+    return f_memory_array_decrease_by(amount, sizeof(f_char_t), (void **) &structure->string, &structure->used, &structure->size);
   }
 #endif // _di_f_string_dynamic_decrease_by_
 
@@ -130,7 +130,7 @@ extern "C" {
       if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return f_memory_array_increase(step, sizeof(f_string_t), (void **) &structure->string, &structure->used, &structure->size);
+    return f_memory_array_increase(step, sizeof(f_char_t), (void **) &structure->string, &structure->used, &structure->size);
   }
 #endif // _di_f_string_dynamic_increase_
 
@@ -140,7 +140,7 @@ extern "C" {
       if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return f_memory_array_increase_by(amount, sizeof(f_string_t), (void **) &structure->string, &structure->used, &structure->size);
+    return f_memory_array_increase_by(amount, sizeof(f_char_t), (void **) &structure->string, &structure->used, &structure->size);
   }
 #endif // _di_f_string_dynamic_increase_by_
 
@@ -614,7 +614,7 @@ extern "C" {
       if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return f_memory_array_resize(length, sizeof(f_string_t), (void **) &structure->string, &structure->used, &structure->size);
+    return f_memory_array_resize(length, sizeof(f_char_t), (void **) &structure->string, &structure->used, &structure->size);
   }
 #endif // _di_f_string_dynamic_resize_
 
@@ -693,7 +693,7 @@ extern "C" {
     if (destination->used == F_string_t_size_d) return F_status_set_error(F_string_too_large);
 
     {
-      const f_status_t status = f_memory_array_increase(F_memory_default_allocation_small_d, sizeof(f_string_t), (void **) &destination->string, &destination->used, &destination->size);
+      const f_status_t status = f_memory_array_increase(F_memory_default_allocation_small_d, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
       if (F_status_is_error(status)) return status;
     }
 
@@ -716,7 +716,7 @@ extern "C" {
     if (destination->used == F_string_t_size_d) return F_status_set_error(F_string_too_large);
 
     {
-      const f_status_t status = f_memory_array_increase(F_memory_default_allocation_small_d, sizeof(f_string_t), (void **) &destination->string, &destination->used, &destination->size);
+      const f_status_t status = f_memory_array_increase(F_memory_default_allocation_small_d, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
       if (F_status_is_error(status)) return status;
     }
 

@@ -15,7 +15,7 @@ extern "C" {
 
     for (f_number_unsigned_t i = length; i < structure->size; ++i) {
 
-      status = f_memory_array_adjust(0, sizeof(f_string_t), (void **) &structure->array[i].name.string, &structure->array[i].name.used, &structure->array[i].name.size);
+      status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &structure->array[i].name.string, &structure->array[i].name.used, &structure->array[i].name.size);
       if (F_status_is_error(status)) return status;
 
       status = private_f_string_dynamics_adjust(0, &structure->array[i].value);
@@ -63,7 +63,7 @@ extern "C" {
 
     for (f_number_unsigned_t i = length; i < structure->size; ++i) {
 
-      status = f_memory_array_resize(0, sizeof(f_string_t), (void **) &structure->array[i].name.string, &structure->array[i].name.used, &structure->array[i].name.size);
+      status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &structure->array[i].name.string, &structure->array[i].name.used, &structure->array[i].name.size);
       if (F_status_is_error(status)) return status;
 
       status = private_f_string_dynamics_resize(0, &structure->array[i].value);

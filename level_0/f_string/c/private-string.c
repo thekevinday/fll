@@ -10,7 +10,7 @@ extern "C" {
   f_status_t private_f_string_append(const f_string_t source, const f_number_unsigned_t length, f_string_dynamic_t * const destination) {
 
     {
-      const f_status_t status = f_memory_array_increase_by(length + 1, sizeof(f_string_t), (void **) &destination->string, &destination->used, &destination->size);
+      const f_status_t status = f_memory_array_increase_by(length + 1, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
       if (F_status_is_error(status)) return status;
     }
 
@@ -38,7 +38,7 @@ extern "C" {
 
     if (size + 1 > F_string_t_size_d) return F_status_set_error(F_string_too_large);
 
-    status = f_memory_array_increase_by(size + 1, sizeof(f_string_t), (void **) &destination->string, &destination->used, &destination->size);
+    status = f_memory_array_increase_by(size + 1, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
     if (F_status_is_error(status)) return status;
 
     f_number_unsigned_t first = 0;
@@ -81,7 +81,7 @@ extern "C" {
     if (destination->used + length + 1 > F_string_t_size_d) return F_status_set_error(F_string_too_large);
 
     {
-      const f_status_t status = f_memory_array_increase_by(length + 1, sizeof(f_string_t), (void **) &destination->string, &destination->used, &destination->size);
+      const f_status_t status = f_memory_array_increase_by(length + 1, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
       if (F_status_is_error(status)) return status;
     }
 
@@ -116,7 +116,7 @@ extern "C" {
         if (i > first) {
           size = i - first;
 
-          status = f_memory_array_increase_by(size + 1, sizeof(f_string_t), (void **) &destination->string, &destination->used, &destination->size);
+          status = f_memory_array_increase_by(size + 1, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
           if (F_status_is_error(status)) return status;
 
           memmove(destination->string + offset + size, destination->string + offset, sizeof(f_char_t) * (destination->used - offset));
@@ -134,7 +134,7 @@ extern "C" {
           if (i > first) {
             size = i - first;
 
-            status = f_memory_array_increase_by(size + 1, sizeof(f_string_t), (void **) &destination->string, &destination->used, &destination->size);
+            status = f_memory_array_increase_by(size + 1, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
             if (F_status_is_error(status)) return status;
 
             memmove(destination->string + offset + size, destination->string + offset, sizeof(f_char_t) * (destination->used - offset));

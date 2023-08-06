@@ -301,7 +301,7 @@ extern "C" {
 
       // There is no reason to include "." and ".." in the directory listing.
       if (!strncmp(name_directory.string, "..", 3) || !strncmp(name_directory.string, ".", 2)) {
-        f_memory_resize(1, 0, sizeof(f_string_t), (void **) & entity[i]);
+        f_memory_resize(1, 0, sizeof(f_char_t), (void **) & entity[i]);
 
         continue;
       }
