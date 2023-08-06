@@ -76,7 +76,7 @@ extern "C" {
 
     for (f_number_unsigned_t i = length; i < structure->size; ++i) {
 
-      status = f_memory_array_resize(0, sizeof(f_string_t), (void **) &structure->array[i].string, &structure->array[i].used, &structure->array[i].size);
+      status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &structure->array[i].string, &structure->array[i].used, &structure->array[i].size);
       if (F_status_is_error(status)) return status;
     } // for
 
