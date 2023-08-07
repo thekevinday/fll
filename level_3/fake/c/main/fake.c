@@ -454,7 +454,7 @@ extern "C" {
         ];
 
       if (parameter->result & f_console_result_value_e) {
-        const f_number_unsigned_t index = parameter->values.array[parameter->location];
+        const f_number_unsigned_t index = parameter->values.array[parameter->values.used - 1];
 
         // @fixme these should not be accessing main->program.parameters.arguments directly and should instead use setting flags.
         if (f_path_is_absolute(main->program.parameters.arguments.array[index]) == F_true || f_path_is_relative_current(main->program.parameters.arguments.array[index]) == F_true) {
