@@ -44,6 +44,15 @@ int main(void) {
     cmocka_unit_test(test__f_type_array_number_unsigneds_adjust_callback__fails),
     cmocka_unit_test(test__f_type_array_number_unsigneds_resize_callback__fails),
 
+    cmocka_unit_test(test__f_type_array_polls_adjust_callback__fails),
+    cmocka_unit_test(test__f_type_array_polls_resize_callback__fails),
+
+    cmocka_unit_test(test__f_type_array_states_adjust_callback__fails),
+    cmocka_unit_test(test__f_type_array_states_resize_callback__fails),
+
+    cmocka_unit_test(test__f_type_array_statuss_adjust_callback__fails),
+    cmocka_unit_test(test__f_type_array_statuss_resize_callback__fails),
+
     cmocka_unit_test(test__f_type_array_uint8s_adjust_callback__fails),
     cmocka_unit_test(test__f_type_array_uint8s_resize_callback__fails),
 
@@ -85,6 +94,15 @@ int main(void) {
 
     cmocka_unit_test(test__f_type_array_number_unsigneds_adjust_callback__works),
     cmocka_unit_test(test__f_type_array_number_unsigneds_resize_callback__works),
+
+    cmocka_unit_test(test__f_type_array_polls_adjust_callback__works),
+    cmocka_unit_test(test__f_type_array_polls_resize_callback__works),
+
+    cmocka_unit_test(test__f_type_array_states_adjust_callback__works),
+    cmocka_unit_test(test__f_type_array_states_resize_callback__works),
+
+    cmocka_unit_test(test__f_type_array_statuss_adjust_callback__works),
+    cmocka_unit_test(test__f_type_array_statuss_resize_callback__works),
 
     cmocka_unit_test(test__f_type_array_uint8s_adjust_callback__works),
     cmocka_unit_test(test__f_type_array_uint8s_resize_callback__works),
@@ -128,6 +146,15 @@ int main(void) {
 
       // f_number_unsigneds_adjust_callback() doesn't use parameter checking.
       // f_number_unsigneds_resize_callback() doesn't use parameter checking.
+
+      // f_polls_adjust_callback() doesn't use parameter checking.
+      // f_polls_resize_callback() doesn't use parameter checking.
+
+      // f_states_adjust_callback() doesn't use parameter checking.
+      // f_states_resize_callback() doesn't use parameter checking.
+
+      // f_statuss_adjust_callback() doesn't use parameter checking.
+      // f_statuss_resize_callback() doesn't use parameter checking.
 
       // f_uint8s_adjust_callback() doesn't use parameter checking.
       // f_uint8s_resize_callback() doesn't use parameter checking.

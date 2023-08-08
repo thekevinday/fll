@@ -1,15 +1,8 @@
 #include "thread.h"
-#include "thread/private-attribute.h"
+#include "thread/private-barrier.h"
 #include "thread/private-barrier_attribute.h"
 #include "thread/private-condition.h"
 #include "thread/private-condition_attribute.h"
-#include "thread/private-key.h"
-#include "thread/private-lock.h"
-#include "thread/private-lock_attribute.h"
-#include "thread/private-mutex.h"
-#include "thread/private-mutex_attribute.h"
-#include "thread/private-semaphore.h"
-#include "thread/private-spin.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -177,7 +170,9 @@ extern "C" {
       if (!attribute) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return private_f_thread_attribute_delete(attribute);
+    if (pthread_attr_destroy(attribute)) return F_status_set_error(F_failure);
+
+    return F_none;
   }
 #endif // _di_f_thread_attribute_delete_
 
@@ -1030,12 +1025,16 @@ extern "C" {
 #endif // _di_f_thread_key_create_
 
 #ifndef _di_f_thread_key_delete_
-  f_status_t f_thread_key_delete(f_thread_key_t *key) {
+  f_status_t f_thread_key_delete(f_thread_key_t * const key) {
     #ifndef _di_level_0_parameter_checking_
       if (!key) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return private_f_thread_key_delete(key);
+    if (pthread_key_delete(*key)) return F_status_set_error(F_failure);
+
+    *key = 0;
+
+    return F_none;
   }
 #endif // _di_f_thread_key_delete_
 
@@ -1097,7 +1096,16 @@ extern "C" {
       if (!attribute) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return private_f_thread_lock_attribute_delete(attribute);
+    const int error = pthread_rwlockattr_destroy(attribute);
+
+    if (error) {
+      if (error == EBUSY) return F_status_set_error(F_busy);
+      if (error == EINVAL) return F_status_set_error(F_parameter);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
   }
 #endif // _di_f_thread_lock_attribute_delete_
 
@@ -1159,7 +1167,18 @@ extern "C" {
       if (!lock) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return private_f_thread_lock_delete(lock);
+    {
+      int error = pthread_rwlock_destroy(lock);
+
+      if (error) {
+        if (error == EBUSY) return F_status_set_error(F_busy);
+        if (error == EINVAL) return F_status_set_error(F_parameter);
+
+        return F_status_set_error(F_failure);
+      }
+    }
+
+    return F_none;
   }
 #endif // _di_f_thread_lock_delete_
 
@@ -1314,7 +1333,18 @@ extern "C" {
       if (!attribute) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return private_f_thread_mutex_attribute_delete(attribute);
+    {
+      const int error = pthread_mutexattr_destroy(attribute);
+
+      if (error) {
+        if (error == EBUSY) return F_status_set_error(F_busy);
+        if (error == EINVAL) return F_status_set_error(F_parameter);
+
+        return F_status_set_error(F_failure);
+      }
+    }
+
+    return F_none;
   }
 #endif // _di_f_thread_mutex_attribute_delete_
 
@@ -1491,7 +1521,18 @@ extern "C" {
       if (!mutex) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return private_f_thread_mutex_delete(mutex);
+    {
+      const int error = pthread_mutex_destroy(mutex);
+
+      if (error) {
+        if (error == EBUSY) return F_status_set_error(F_busy);
+        if (error == EINVAL) return F_status_set_error(F_parameter);
+
+        return F_status_set_error(F_failure);
+      }
+    }
+
+    return F_none;
   }
 #endif // _di_f_thread_mutex_delete_
 
@@ -1720,7 +1761,9 @@ extern "C" {
       if (!semaphore) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return private_f_thread_semaphore_delete(semaphore);
+    if (sem_destroy(semaphore) == -1) return (errno == EINVAL) ? F_status_set_error(F_parameter) : F_status_set_error(F_failure);
+
+    return F_none;
   }
 #endif // _di_f_thread_semaphore_delete_
 
@@ -1967,7 +2010,16 @@ extern "C" {
       if (!spin) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return private_f_thread_spin_delete(spin);
+    const int error = pthread_spin_destroy(spin);
+
+    if (error) {
+      if (error == EBUSY) return F_status_set_error(F_busy);
+      if (error == EINVAL) return F_status_set_error(F_parameter);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
   }
 #endif // _di_f_thread_spin_delete_
 

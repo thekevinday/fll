@@ -1355,7 +1355,7 @@ extern "C" {
  * @see pthread_key_delete()
  */
 #ifndef _di_f_thread_key_delete_
-  extern f_status_t f_thread_key_delete(f_thread_key_t *key);
+  extern f_status_t f_thread_key_delete(f_thread_key_t * const key);
 #endif // _di_f_thread_key_delete_
 
 /**

@@ -17,204 +17,17 @@ extern "C" {
 #endif
 
 /**
- * Resize the string statuss array.
+ * A callback intended to be passed to f_memory_arrays_adjust() for an f_statusss_t structure.
  *
- * @param length
- *   The new size to use.
- * @param structure
- *   The string statuss array to resize.
+ * This does not do parameter checking.
  *
- * @return
- *   F_none on success.
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: f_memory_array_adjust().
- *
- * @see f_memory_array_adjust()
- */
-#ifndef _di_f_statuss_adjust_
-  extern f_status_t f_statuss_adjust(const f_number_unsigned_t length, f_statuss_t * const structure);
-#endif // _di_f_statuss_adjust_
-
-/**
- * Append the single source status onto the destination.
- *
- * @param source
- *   The source status to append.
- * @param destination
- *   The destination statuss the source is appended onto.
- *
- * @return
- *   F_none on success.
- *   F_data_not on success, but there is nothing to append (size == 0).
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: f_memory_array_increase().
- *
- * @see f_memory_array_increase()
- */
-#ifndef _di_f_statuss_append_
-  extern f_status_t f_statuss_append(const f_status_t source, f_statuss_t * const destination);
-#endif // _di_f_statuss_append_
-
-/**
- * Append the source statuss onto the destination.
- *
- * @param source
- *   The source statuss to append.
- * @param destination
- *   The destination statuss the source is appended onto.
- *
- * @return
- *   F_none on success.
- *   F_data_not on success, but there is nothing to append (size == 0).
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: f_memory_array_increase_by().
- *
- * @see f_memory_array_increase_by()
- */
-#ifndef _di_f_statuss_append_all_
-  extern f_status_t f_statuss_append_all(const f_statuss_t source, f_statuss_t * const destination);
-#endif // _di_f_statuss_append_all_
-
-/**
- * Resize the string statuss array to a smaller size.
- *
- * This will resize making the array smaller based on (size - given length).
- * If the given length is too small, then the resize will fail.
- * This will not shrink the size to les than 0.
- *
- * @param amount
- *   A positive number representing how much to decimate the size by.
- * @param structure
- *   The string statuss array to resize.
- *
- * @return
- *   F_none on success.
- *   F_data_not if amount is 0.
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: f_memory_array_decimate_by().
- *
- * @see f_memory_array_decimate_by()
- */
-#ifndef _di_f_statuss_decimate_by_
-  extern f_status_t f_statuss_decimate_by(const f_number_unsigned_t amount, f_statuss_t * const structure);
-#endif // _di_f_statuss_decimate_by_
-
-/**
- * Resize the string statuss array to a smaller size.
- *
- * This will resize making the array smaller based on (size - given length).
- * If the given length is too small, then the resize will fail.
- * This will not shrink the size to les than 0.
- *
- * @param amount
- *   A positive number representing how much to decrease the size by.
- * @param structure
- *   The string statuss array to resize.
- *
- * @return
- *   F_none on success.
- *   F_data_not if amount is 0.
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: f_memory_array_decrease_by().
- *
- * @see f_memory_array_decrease_by()
- */
-#ifndef _di_f_statuss_decrease_by_
-  extern f_status_t f_statuss_decrease_by(const f_number_unsigned_t amount, f_statuss_t * const structure);
-#endif // _di_f_statuss_decrease_by_
-
-/**
- * Increase the size of the string statuss array, but only if necesary.
- *
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
- * If already set to the maximum buffer size, then the resize will fail.
- *
- * @param step
- *   The allocation step to use.
- *   Must be greater than 0.
- * @param structure
- *   The string statuss array to resize.
- *
- * @return
- *   F_none on success.
- *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
- *
- *   F_array_too_large (with error bit) if the new array length is too large.
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: f_memory_array_increase().
- *
- * @see f_memory_array_increase()
- */
-#ifndef _di_f_statuss_increase_
-  extern f_status_t f_statuss_increase(const f_number_unsigned_t step, f_statuss_t * const structure);
-#endif // _di_f_statuss_increase_
-
-/**
- * Resize the string statuss array to a larger size.
- *
- * This will resize making the array larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
- * If already set to the maximum buffer size, then the resize will fail.
- *
- * @param amount
- *   A positive number representing how much to increase the size by.
- * @param structure
- *   The string statuss array to resize.
- *
- * @return
- *   F_none on success.
- *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
- *
- *   F_array_too_large (with error bit) if the new array length is too large.
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: f_memory_array_increase_by().
- *
- * @see f_memory_array_increase_by()
- */
-#ifndef _di_f_statuss_increase_by_
-  extern f_status_t f_statuss_increase_by(const f_number_unsigned_t amount, f_statuss_t * const structure);
-#endif // _di_f_statuss_increase_by_
-
-/**
- * Resize the string statuss array.
- *
- * @param length
- *   The new size to use.
- * @param structure
- *   The string statuss array to adjust.
- *
- * @return
- *   F_none on success.
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: f_memory_array_resize().
- *
- * @see f_memory_array_resize()
- */
-#ifndef _di_f_statuss_resize_
-  extern f_status_t f_statuss_resize(const f_number_unsigned_t length, f_statuss_t * const structure);
-#endif // _di_f_statuss_resize_
-
-/**
- * Resize the string statusss array.
- *
- * @param length
- *   The new size to use.
- * @param structure
- *   The string statusss array to resize.
+ * @param start
+ *   The start position in the array to start deleting.
+ * @param stop
+ *   The stop in the array to stop deleting.
+ * @param array
+ *   The array structure to delete all values of.
+ *   Must not be NULL.
  *
  * @return
  *   F_none on success.
@@ -224,93 +37,24 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_array_adjust().
  *
  * @see f_memory_array_adjust()
+ * @see f_memory_arrays_adjust()
  */
-#ifndef _di_f_statusss_adjust_
-  extern f_status_t f_statusss_adjust(const f_number_unsigned_t length, f_statusss_t * const structure);
-#endif // _di_f_statusss_adjust_
+#ifndef _di_f_statuss_adjust_callback_
+  extern f_status_t f_statuss_adjust_callback(const f_number_unsigned_t start, const f_number_unsigned_t size, void * const array);
+#endif // _di_f_statuss_adjust_callback_
 
 /**
- * Append the single source statuss onto the destination.
+ * A callback intended to be passed to f_memory_arrays_resize() for an f_statusss_t structure.
  *
- * @param source
- *   The source statuss to append.
- * @param destination
- *   The destination ranges the source is appended onto.
+ * This does not do parameter checking.
  *
- * @return
- *   F_none on success.
- *   F_data_not on success, but there is nothing to append (size == 0).
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: f_memory_array_increase().
- *   Errors (with error bit) from: f_memory_array_increase_by().
- *
- * @see f_memory_array_increase()
- * @see f_memory_array_increase_by()
- */
-#ifndef _di_f_statusss_append_
-  extern f_status_t f_statusss_append(const f_statuss_t source, f_statusss_t * const destination);
-#endif // _di_f_statusss_append_
-
-/**
- * Append the source statusss onto the destination.
- *
- * @param source
- *   The source statusss to append.
- * @param destination
- *   The destination ranges the source is appended onto.
- *
- * @return
- *   F_none on success.
- *   F_data_not on success, but there is nothing to append (size == 0).
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: f_memory_array_increase_by().
- *
- * @see f_memory_array_increase_by()
- */
-#ifndef _di_f_statusss_append_all_
-  extern f_status_t f_statusss_append_all(const f_statusss_t source, f_statusss_t * const destination);
-#endif // _di_f_statusss_append_all_
-
-/**
- * Resize the string statusss array to a smaller size.
- *
- * This will resize making the array smaller based on (size - given length).
- * If the given length is too small, then the resize will fail.
- * This will not shrink the size to less than 0.
- *
- * @param amount
- *   A positive number representing how much to decimate the size by.
- * @param structure
- *   The string statusss array to resize.
- *
- * @return
- *   F_none on success.
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: f_memory_array_adjust().
- *
- * @see f_memory_array_adjust()
- */
-#ifndef _di_f_statusss_decimate_by_
-  extern f_status_t f_statusss_decimate_by(const f_number_unsigned_t amount, f_statusss_t * const structure);
-#endif // _di_f_statusss_decimate_by_
-
-/**
- * Resize the string statusss array to a smaller size.
- *
- * This will resize making the array smaller based on (size - given length).
- * If the given length is too small, then the resize will fail.
- * This will not shrink the size to less than 0.
- *
- * @param amount
- *   A positive number representing how much to decrease the size by.
- * @param structure
- *   The string statusss array to resize.
+ * @param start
+ *   The start position in the array to start deleting.
+ * @param stop
+ *   The stop in the array to stop deleting.
+ * @param array
+ *   The array structure to delete all values of.
+ *   Must not be NULL.
  *
  * @return
  *   F_none on success.
@@ -320,85 +64,11 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_array_resize().
  *
  * @see f_memory_array_resize()
+ * @see f_memory_arrays_resize()
  */
-#ifndef _di_f_statusss_decrease_by_
-  extern f_status_t f_statusss_decrease_by(const f_number_unsigned_t amount, f_statusss_t * const structure);
-#endif // _di_f_statusss_decrease_by_
-
-/**
- * Increase the size of the string statusss array, but only if necessary.
- *
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
- * If already set to the maximum buffer size, then the resize will fail.
- *
- * @param step
- *   The allocation step to use.
- *   Must be greater than 0.
- * @param structure
- *   The string statusss array to resize.
- *
- * @return
- *   F_none on success.
- *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
- *
- *   F_array_too_large (with error bit) if the new array length is too large.
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: f_memory_array_resize().
- *
- * @see f_memory_array_resize()
- */
-#ifndef _di_f_statusss_increase_
-  extern f_status_t f_statusss_increase(const f_number_unsigned_t step, f_statusss_t * const structure);
-#endif // _di_f_statusss_increase_
-
-/**
- * Resize the string statusss array to a larger size.
- *
- * This will resize making the array larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
- * If already set to the maximum buffer size, then the resize will fail.
- *
- * @param amount
- *   A positive number representing how much to increase the size by.
- * @param structure
- *   The string statusss array to resize.
- *
- * @return
- *   F_none on success.
- *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
- *
- *   F_array_too_large (with error bit) if the new array length is too large.
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: f_memory_array_resize().
- *
- * @see f_memory_array_resize()
- */
-#ifndef _di_f_statusss_increase_by_
-  extern f_status_t f_statusss_increase_by(const f_number_unsigned_t amount, f_statusss_t * const structure);
-#endif // _di_f_statusss_increase_by_
-
-/**
- * Resize the string statusss array.
- *
- * @param length
- *   The new size to use.
- * @param structure
- *   The string statusss array to adjust.
- *
- * @return
- *   F_none on success.
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: f_memory_array_resize().
- *
- * @see f_memory_array_resize()
- */
-#ifndef _di_f_statusss_resize_
-  extern f_status_t f_statusss_resize(const f_number_unsigned_t length, f_statusss_t * const structure);
-#endif // _di_f_statusss_resize_
+#ifndef _di_f_statuss_resize_callback_
+  extern f_status_t f_statuss_resize_callback(const f_number_unsigned_t start, const f_number_unsigned_t size, void * const array);
+#endif // _di_f_statuss_resize_callback_
 
 #ifdef __cplusplus
 } // extern "C"
