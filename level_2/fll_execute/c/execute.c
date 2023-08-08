@@ -278,13 +278,25 @@ extern "C" {
     f_string_t fixed_arguments[arguments.used + 2];
     f_string_static_t program_name = f_string_static_t_initialize;
 
-    const f_string_t last_slash = (f_string_t) strrchr((program.used ? program.string : arguments.array[0].string), (char) f_path_separator_s.string[0]);
+    const f_string_t last_slash = (f_string_t) strrchr(
+      (program.used
+        ? program.string
+        : arguments.used && arguments.array[0].used
+          ? arguments.array[0].string
+          : 0
+      ),
+      (char) f_path_separator_s.string[0]
+    );
 
     if (last_slash) {
       program_name.used = strnlen((last_slash + 1), F_path_length_max_d);
     }
     else {
-      program_name.used = program.used ? program.used : arguments.array[0].used;
+      program_name.used = program.used
+        ? program.used
+        : arguments.used && arguments.array[0].used
+          ? arguments.array[0].used
+          : 0;
     }
 
     f_char_t program_name_string[program_name.used + 1];
