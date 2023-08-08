@@ -19,7 +19,7 @@ extern "C" {
 
           // uint8_t * is of a data size size of 1, casting it to uint8_t should result in a single-length increment.
           // This is done to avoid problems with (void *) having arithmetic issues.
-          memset(((uint8_t *) *pointer) + length_new, 0, type_size * (length_old - length_new));
+          memset((void *) (((uint8_t *) *pointer) + length_new), 0, type_size * (length_old - length_new));
         }
       }
 
@@ -31,7 +31,7 @@ extern "C" {
 
             // uint8_t * is of a data size size of 1, casting it to bool should result in a single-length increment.
             // This is done to avoid problems with (void *) having arithmetic issues.
-            memset(((uint8_t *) new_pointer) + (type_size * length_old), 0, type_size * (length_new - length_old));
+            memset((void *) (((uint8_t *) new_pointer) + (type_size * length_old)), 0, type_size * (length_new - length_old));
           }
 
           *pointer = new_pointer;
@@ -77,7 +77,7 @@ extern "C" {
 
             // uint8_t * is of a data size size of 1, casting it to bool should result in a single-length increment.
             // This is done to avoid problems with (void *) having arithmetic issues.
-            memset(((uint8_t *) new_pointer) + (type_size * length_old), 0, type_size * (length_new - length_old));
+            memset((void *) (((uint8_t *) new_pointer) + (type_size * length_old)), 0, type_size * (length_new - length_old));
           }
 
           *pointer = new_pointer;
