@@ -36,7 +36,7 @@ void test__f_iki_datass_append_all__works(void **state) {
         assert_int_equal(status, F_none);
         assert_int_equal(source.array[source.used].array[j].content.size, length);
 
-        status = f_number_unsigneds_resize(length, &source.array[source.used].array[j].delimits);
+        status = f_memory_array_resize(length, sizeof(f_number_unsigned_t), (void **) &source.array[source.used].array[j].delimits.array, &source.array[source.used].array[j].delimits.used, &source.array[source.used].array[j].delimits.size);
 
         assert_int_equal(status, F_none);
         assert_int_equal(source.array[source.used].array[j].delimits.size, length);

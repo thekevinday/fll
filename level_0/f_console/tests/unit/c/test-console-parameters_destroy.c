@@ -25,7 +25,7 @@ void test__f_console_parameters_destroy__frees_memory(void **state) {
   }
 
   {
-    const f_status_t status = f_number_unsigneds_resize(size, &parameters.array[0].locations);
+    const f_status_t status = f_memory_array_resize(size, sizeof(f_number_unsigned_t), (void **) &parameters.array[0].locations.array, &parameters.array[0].locations.used, &parameters.array[0].locations.size);
 
     assert_int_equal(status, F_none);
     assert_int_not_equal(parameters.array[0].locations.size, 0);
@@ -33,7 +33,7 @@ void test__f_console_parameters_destroy__frees_memory(void **state) {
   }
 
   {
-    const f_status_t status = f_number_unsigneds_resize(size, &parameters.array[0].locations_sub);
+    const f_status_t status = f_memory_array_resize(size, sizeof(f_number_unsigned_t), (void **) &parameters.array[0].locations_sub.array, &parameters.array[0].locations_sub.used, &parameters.array[0].locations_sub.size);
 
     assert_int_equal(status, F_none);
     assert_int_not_equal(parameters.array[0].locations_sub.size, 0);

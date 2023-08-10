@@ -1,8 +1,4 @@
 #include "thread.h"
-#include "thread/private-barrier.h"
-#include "thread/private-barrier_attribute.h"
-#include "thread/private-condition.h"
-#include "thread/private-condition_attribute.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -493,7 +489,7 @@ extern "C" {
       if (!attribute) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return private_f_thread_barrier_attribute_delete(attribute);
+    return pthread_barrierattr_destroy(attribute) ? F_status_set_error(F_failure) : F_none;
   }
 #endif // _di_f_thread_barrier_attribute_delete_
 
@@ -561,7 +557,16 @@ extern "C" {
       if (!barrier) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return private_f_thread_barrier_delete(barrier);
+    const int error = pthread_barrier_destroy(barrier);
+
+    if (error) {
+      if (error == EBUSY) return F_status_set_error(F_busy);
+      if (error == EINVAL) return F_status_set_error(F_parameter);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
   }
 #endif // _di_f_thread_barrier_delete_
 
@@ -745,7 +750,18 @@ extern "C" {
       if (!condition_attribute) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return private_f_thread_condition_attribute_delete(condition_attribute);
+    {
+      const int error = pthread_condattr_destroy(condition_attribute);
+
+      if (error) {
+        if (error == EBUSY) return F_status_set_error(F_busy);
+        if (error == EINVAL) return F_status_set_error(F_parameter);
+
+        return F_status_set_error(F_failure);
+      }
+    }
+
+    return F_none;
   }
 #endif // _di_f_thread_condition_attribute_delete_
 
@@ -813,7 +829,16 @@ extern "C" {
       if (!condition) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return private_f_thread_condition_delete(condition);
+    const int error = pthread_cond_destroy(condition);
+
+    if (error) {
+      if (error == EBUSY) return F_status_set_error(F_busy);
+      if (error == EINVAL) return F_status_set_error(F_parameter);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
   }
 #endif // _di_f_thread_condition_delete_
 

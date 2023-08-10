@@ -46,7 +46,7 @@ build_sources_program fll/level_0/fss.c fll/level_0/fss/common.c fll/level_0/fss
 build_sources_program fll/level_0/fss/private-item.c fll/level_0/fss/private-named.c fll/level_0/fss/private-nest.c fll/level_0/fss/private-set.c fll/level_0/fss/private-set_quote.c fll/level_0/fss/private-simple_packet.c
 build_sources_program fll/level_0/iki.c fll/level_0/private-iki.c fll/level_0/iki/common.c fll/level_0/iki/private-data.c fll/level_0/iki/data.c
 build_sources_program fll/level_0/limit.c fll/level_0/limit/set.c fll/level_0/limit/value.c fll/level_0/limit/private-set.c fll/level_0/limit/private-value.c
-build_sources_program fll/level_0/memory.c fll/level_0/memory/array.c
+build_sources_program fll/level_0/memory.c fll/level_0/memory/array.c fll/level_0/memory/arrays.c
 build_sources_program fll/level_0/private-memory.c fll/level_0/memory/private-array.c
 build_sources_program fll/level_0/parse.c fll/level_0/parse/utf.c
 build_sources_program fll/level_0/path.c fll/level_0/private-path.c fll/level_0/path/common.c
@@ -62,7 +62,6 @@ build_sources_program fll/level_0/utf/common.c fll/level_0/utf/convert.c fll/lev
 build_sources_program fll/level_0/utf/private-dynamic.c fll/level_0/utf/private-dynamics.c fll/level_0/utf/private-dynamicss.c fll/level_0/utf/private-maps.c fll/level_0/utf/private-mapss.c fll/level_0/utf/private-map_multis.c fll/level_0/utf/private-map_multiss.c fll/level_0/utf/private-string.c fll/level_0/utf/private-triples.c fll/level_0/utf/private-tripless.c
 
 build_sources_program-thread fll/level_0/thread.c fll/level_0/thread/attribute.c fll/level_0/thread/barrier.c fll/level_0/thread/barrier_attribute.c fll/level_0/thread/condition.c fll/level_0/thread/condition_attribute.c fll/level_0/thread/id.c fll/level_0/thread/key.c fll/level_0/thread/lock.c fll/level_0/thread/lock_attribute.c fll/level_0/thread/mutex.c fll/level_0/thread/mutex_attribute.c fll/level_0/thread/once.c fll/level_0/thread/semaphore.c fll/level_0/thread/set.c fll/level_0/thread/spin.c
-build_sources_program-thread fll/level_0/thread/private-barrier.c fll/level_0/thread/private-barrier_attribute.c fll/level_0/thread/private-condition.c fll/level_0/thread/private-condition_attribute.c
 
 build_sources_program fll/level_1/control_group.c
 build_sources_program fll/level_1/conversion.c fll/level_1/private-conversion.c fll/level_1/conversion/common.c

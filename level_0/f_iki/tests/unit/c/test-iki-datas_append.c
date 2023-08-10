@@ -19,7 +19,7 @@ void test__f_iki_datas_append__works(void **state) {
     assert_int_equal(status, F_none);
     assert_int_equal(source.content.size, length);
 
-    status = f_number_unsigneds_resize(length, &source.delimits);
+    status = f_memory_array_resize(length, sizeof(f_number_unsigned_t), (void **) &source.delimits.array, &source.delimits.used, &source.delimits.size);
 
     assert_int_equal(status, F_none);
     assert_int_equal(source.delimits.size, length);

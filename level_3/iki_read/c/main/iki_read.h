@@ -47,7 +47,6 @@
 #include <fll/level_1/conversion.h>
 #include <fll/level_1/iki.h>
 #include <fll/level_1/print.h>
-#include <fll/level_1/signal.h>
 
 // FLL-2 includes.
 #include <fll/level_2/error.h>

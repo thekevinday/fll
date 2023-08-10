@@ -1,5 +1,4 @@
 #include "../thread.h"
-#include "private-condition.h"
 #include "condition.h"
 
 #ifdef __cplusplus
@@ -12,7 +11,23 @@ extern "C" {
       if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return private_f_thread_conditions_adjust(length, structure);
+    {
+      int error = 0;
+
+      for (f_number_unsigned_t i = length; i < structure->size; ++i) {
+
+        error = pthread_cond_destroy(&structure->array[i]);
+
+        if (error) {
+          if (error == EBUSY) return F_status_set_error(F_busy);
+          if (error == EINVAL) return F_status_set_error(F_parameter);
+
+          return F_status_set_error(F_failure);
+        }
+      } // for
+    }
+
+    return f_memory_array_adjust(length, sizeof(f_thread_condition_t), (void **) &structure->array, &structure->used, &structure->size);
   }
 #endif // _di_f_thread_conditions_adjust_
 
@@ -24,7 +39,25 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    return private_f_thread_conditions_adjust((structure->size > amount) ? structure->size - amount : 0, structure);
+    const f_number_unsigned_t length = (structure->size > amount) ? structure->size - amount : 0;
+
+    {
+      int error = 0;
+
+      for (f_number_unsigned_t i = length; i < structure->size; ++i) {
+
+        error = pthread_cond_destroy(&structure->array[i]);
+
+        if (error) {
+          if (error == EBUSY) return F_status_set_error(F_busy);
+          if (error == EINVAL) return F_status_set_error(F_parameter);
+
+          return F_status_set_error(F_failure);
+        }
+      } // for
+    }
+
+    return f_memory_array_adjust(length, sizeof(f_thread_condition_t), (void **) &structure->array, &structure->used, &structure->size);
   }
 #endif // _di_f_thread_conditions_decimate_by_
 
@@ -36,7 +69,25 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    return private_f_thread_conditions_resize((structure->size > amount) ? structure->size - amount : 0, structure);
+    const f_number_unsigned_t length = (structure->size > amount) ? structure->size - amount : 0;
+
+    {
+      int error = 0;
+
+      for (f_number_unsigned_t i = length; i < structure->size; ++i) {
+
+        error = pthread_cond_destroy(&structure->array[i]);
+
+        if (error) {
+          if (error == EBUSY) return F_status_set_error(F_busy);
+          if (error == EINVAL) return F_status_set_error(F_parameter);
+
+          return F_status_set_error(F_failure);
+        }
+      } // for
+    }
+
+    return f_memory_array_resize(length, sizeof(f_thread_condition_t), (void **) &structure->array, &structure->used, &structure->size);
   }
 #endif // _di_f_thread_conditions_decrease_by_
 
@@ -55,7 +106,23 @@ extern "C" {
         length = F_number_t_size_unsigned_d;
       }
 
-      return private_f_thread_conditions_resize(length, structure);
+      {
+        int error = 0;
+
+        for (f_number_unsigned_t i = length; i < structure->size; ++i) {
+
+          error = pthread_cond_destroy(&structure->array[i]);
+
+          if (error) {
+            if (error == EBUSY) return F_status_set_error(F_busy);
+            if (error == EINVAL) return F_status_set_error(F_parameter);
+
+            return F_status_set_error(F_failure);
+          }
+        } // for
+      }
+
+        return f_memory_array_resize(length, sizeof(f_thread_condition_t), (void **) &structure->array, &structure->used, &structure->size);
     }
 
     return F_data_not;
@@ -76,7 +143,23 @@ extern "C" {
       if (length > structure->size) {
         if (length > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
 
-        return private_f_thread_conditions_resize(length, structure);
+        {
+          int error = 0;
+
+          for (f_number_unsigned_t i = length; i < structure->size; ++i) {
+
+            error = pthread_cond_destroy(&structure->array[i]);
+
+            if (error) {
+              if (error == EBUSY) return F_status_set_error(F_busy);
+              if (error == EINVAL) return F_status_set_error(F_parameter);
+
+              return F_status_set_error(F_failure);
+            }
+          } // for
+        }
+
+        return f_memory_array_resize(length, sizeof(f_thread_condition_t), (void **) &structure->array, &structure->used, &structure->size);
       }
     }
 
@@ -90,7 +173,23 @@ extern "C" {
       if (!structure) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return private_f_thread_conditions_resize(length, structure);
+    {
+      int error = 0;
+
+      for (f_number_unsigned_t i = length; i < structure->size; ++i) {
+
+        error = pthread_cond_destroy(&structure->array[i]);
+
+        if (error) {
+          if (error == EBUSY) return F_status_set_error(F_busy);
+          if (error == EINVAL) return F_status_set_error(F_parameter);
+
+          return F_status_set_error(F_failure);
+        }
+      } // for
+    }
+
+    return f_memory_array_resize(length, sizeof(f_thread_condition_t), (void **) &structure->array, &structure->used, &structure->size);
   }
 #endif // _di_f_thread_conditions_resize_
 
