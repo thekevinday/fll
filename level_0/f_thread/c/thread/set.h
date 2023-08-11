@@ -30,7 +30,7 @@ extern "C" {
     int result;
   } f_thread_set_t;
 
-  #define f_thread_set_t_initialize { f_thread_attribute_t_initialize, f_thread_id_t_initialize, 0 }
+  #define f_thread_set_t_initialize { 0 }
 
   #define macro_f_thread_set_t_initialize(attribute, id, result) { attribute, id, result }
 
