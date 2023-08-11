@@ -22,9 +22,9 @@ extern "C" {
  * This does not do parameter checking.
  *
  * @param start
- *   The start position in the array to start deleting.
+ *   The inclusive start position in the array to start deleting.
  * @param stop
- *   The stop in the array to stop deleting.
+ *   The exclusive stop position in the array to stop deleting.
  * @param array
  *   The array structure to delete all values of.
  *   Must not be NULL.
@@ -40,7 +40,7 @@ extern "C" {
  * @see f_memory_arrays_adjust()
  */
 #ifndef _di_f_cells_adjust_callback_
-  extern f_status_t f_cells_adjust_callback(const f_number_unsigned_t start, const f_number_unsigned_t size, void * const array);
+  extern f_status_t f_cells_adjust_callback(const f_number_unsigned_t start, const f_number_unsigned_t stop, void * const array);
 #endif // _di_f_cells_adjust_callback_
 
 /**
@@ -49,9 +49,9 @@ extern "C" {
  * This does not do parameter checking.
  *
  * @param start
- *   The start position in the array to start deleting.
+ *   The inclusive start position in the array to start deleting.
  * @param stop
- *   The stop in the array to stop deleting.
+ *   The exclusive stop position in the array to stop deleting.
  * @param array
  *   The array structure to delete all values of.
  *   Must not be NULL.
@@ -67,7 +67,7 @@ extern "C" {
  * @see f_memory_arrays_resize()
  */
 #ifndef _di_f_cells_resize_callback_
-  extern f_status_t f_cells_resize_callback(const f_number_unsigned_t start, const f_number_unsigned_t size, void * const array);
+  extern f_status_t f_cells_resize_callback(const f_number_unsigned_t start, const f_number_unsigned_t stop, void * const array);
 #endif // _di_f_cells_resize_callback_
 
 #ifdef __cplusplus

@@ -4,6 +4,32 @@
 extern "C" {
 #endif
 
+f_status_t __wrap_f_memory_array_adjust(const f_number_unsigned_t length, const size_t width, void ** array, f_number_unsigned_t * const used, f_number_unsigned_t * const size) {
+
+  if (!array || !used || !size) return F_status_set_error(F_parameter_not);
+
+  const bool failure = mock_type(bool);
+
+  if (failure) return mock_type(f_status_t);
+
+  *size = length;
+
+  return mock_type(f_status_t);
+}
+
+f_status_t __wrap_f_memory_array_resize(const f_number_unsigned_t length, const size_t width, void ** array, f_number_unsigned_t * const used, f_number_unsigned_t * const size) {
+
+  if (!array || !used || !size) return F_status_set_error(F_parameter_not);
+
+  const bool failure = mock_type(bool);
+
+  if (failure) return mock_type(f_status_t);
+
+  *size = length;
+
+  return mock_type(f_status_t);
+}
+
 int __wrap_pthread_atfork(void (*prepare)(void), void (*parent)(void), void (*child)(void)) {
 
   const bool failure = mock_type(bool);

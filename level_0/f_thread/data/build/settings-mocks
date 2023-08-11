@@ -30,7 +30,8 @@ build_language c
 build_libraries -pthread -lc
 build_libraries-individual -lf_memory -lf_string
 
-build_sources_library thread.c thread/attribute.c thread/barrier.c thread/barrier_attribute.c thread/condition.c thread/condition_attribute.c thread/id.c thread/key.c thread/lock.c thread/lock_attribute.c thread/mutex.c thread/mutex_attribute.c thread/once.c thread/semaphore.c thread/set.c thread/spin.c ../../tests/unit/c/mock-thread.c
+build_sources_library thread.c thread/attribute.c thread/barrier.c thread/barrier_attribute.c thread/condition.c thread/condition_attribute.c thread/id.c thread/key.c thread/lock.c thread/lock_attribute.c thread/mutex.c thread/mutex_attribute.c thread/once.c thread/semaphore.c thread/set.c thread/spin.c
+build_sources_library ../../tests/unit/c/mock-thread.c
 
 build_sources_headers thread.h thread/attribute.h thread/barrier.h thread/barrier_attribute.h thread/condition.h thread/condition_attribute.h thread/id.h thread/key.h thread/lock.h thread/lock_attribute.h thread/mutex.h thread/mutex_attribute.h thread/once.h thread/semaphore.h thread/set.h thread/spin.h
 
@@ -64,6 +65,8 @@ flags-coverage --coverage -fprofile-abs-path -fprofile-dir=build/coverage/
 flags_library -fPIC
 
 # Inject mocks.
+flags -Wl,--wrap=f_memory_array_adjust
+flags -Wl,--wrap=f_memory_array_resize
 flags -Wl,--wrap=pthread_atfork
 flags -Wl,--wrap=pthread_attr_destroy
 flags -Wl,--wrap=pthread_attr_getaffinity_np

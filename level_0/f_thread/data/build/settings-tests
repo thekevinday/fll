@@ -25,21 +25,19 @@ build_language c
 build_libraries -lc -lcmocka
 build_libraries-individual -lf_memory -lf_string -lf_thread
 
-build_sources_program test-thread-attributes_adjust.c test-thread-attributes_decimate_by.c test-thread-attributes_decrease_by.c test-thread-attributes_increase.c test-thread-attributes_increase_by.c test-thread-attributes_resize.c
-build_sources_program test-thread-barrier_attributes_adjust.c test-thread-barrier_attributes_decimate_by.c test-thread-barrier_attributes_decrease_by.c test-thread-barrier_attributes_increase.c test-thread-barrier_attributes_increase_by.c test-thread-barrier_attributes_resize.c
-build_sources_program test-thread-barriers_adjust.c test-thread-barriers_decimate_by.c test-thread-barriers_decrease_by.c test-thread-barriers_increase.c test-thread-barriers_increase_by.c test-thread-barriers_resize.c
-build_sources_program test-thread-condition_attributes_adjust.c test-thread-condition_attributes_decimate_by.c test-thread-condition_attributes_decrease_by.c test-thread-condition_attributes_increase.c test-thread-condition_attributes_increase_by.c test-thread-condition_attributes_resize.c
-build_sources_program test-thread-conditions_adjust.c test-thread-conditions_decimate_by.c test-thread-conditions_decrease_by.c test-thread-conditions_increase.c test-thread-conditions_increase_by.c test-thread-conditions_resize.c
-build_sources_program test-thread-ids_adjust.c test-thread-ids_decimate_by.c test-thread-ids_decrease_by.c test-thread-ids_increase.c test-thread-ids_increase_by.c test-thread-ids_resize.c
-build_sources_program test-thread-keys_adjust.c test-thread-keys_decimate_by.c test-thread-keys_decrease_by.c test-thread-keys_increase.c test-thread-keys_increase_by.c test-thread-keys_resize.c
-build_sources_program test-thread-lock_attributes_adjust.c test-thread-lock_attributes_decimate_by.c test-thread-lock_attributes_decrease_by.c test-thread-lock_attributes_increase.c test-thread-lock_attributes_increase_by.c test-thread-lock_attributes_resize.c
-build_sources_program test-thread-locks_adjust.c test-thread-locks_decimate_by.c test-thread-locks_decrease_by.c test-thread-locks_increase.c test-thread-locks_increase_by.c test-thread-locks_resize.c
-build_sources_program test-thread-mutex_attributes_adjust.c test-thread-mutex_attributes_decimate_by.c test-thread-mutex_attributes_decrease_by.c test-thread-mutex_attributes_increase.c test-thread-mutex_attributes_increase_by.c test-thread-mutex_attributes_resize.c
-build_sources_program test-thread-mutexs_adjust.c test-thread-mutexs_decimate_by.c test-thread-mutexs_decrease_by.c test-thread-mutexs_increase.c test-thread-mutexs_increase_by.c test-thread-mutexs_resize.c
-build_sources_program test-thread-onces_adjust.c test-thread-onces_decimate_by.c test-thread-onces_decrease_by.c test-thread-onces_increase.c test-thread-onces_increase_by.c test-thread-onces_resize.c
-build_sources_program test-thread-semaphores_adjust.c test-thread-semaphores_decimate_by.c test-thread-semaphores_decrease_by.c test-thread-semaphores_increase.c test-thread-semaphores_increase_by.c test-thread-semaphores_resize.c
-build_sources_program test-thread-sets_adjust.c test-thread-sets_decimate_by.c test-thread-sets_decrease_by.c test-thread-sets_increase.c test-thread-sets_increase_by.c test-thread-sets_resize.c
-build_sources_program test-thread-spins_adjust.c test-thread-spins_decimate_by.c test-thread-spins_decrease_by.c test-thread-spins_increase.c test-thread-spins_increase_by.c test-thread-spins_resize.c
+build_sources_program test-thread-attributes_adjust_callback.c test-thread-attributes_resize_callback.c
+build_sources_program test-thread-barriers_adjust_callback.c test-thread-barriers_resize_callback.c
+build_sources_program test-thread-barrier_attributes_adjust_callback.c test-thread-barrier_attributes_resize_callback.c
+build_sources_program test-thread-conditions_adjust_callback.c test-thread-conditions_resize_callback.c
+build_sources_program test-thread-condition_attributes_adjust_callback.c test-thread-condition_attributes_resize_callback.c
+build_sources_program test-thread-keys_adjust_callback.c test-thread-keys_resize_callback.c
+build_sources_program test-thread-locks_adjust_callback.c test-thread-locks_resize_callback.c
+build_sources_program test-thread-lock_attributes_adjust_callback.c test-thread-lock_attributes_resize_callback.c
+build_sources_program test-thread-mutexs_adjust_callback.c test-thread-mutexs_resize_callback.c
+build_sources_program test-thread-mutex_attributes_adjust_callback.c test-thread-mutex_attributes_resize_callback.c
+build_sources_program test-thread-semaphores_adjust_callback.c test-thread-semaphores_resize_callback.c
+build_sources_program test-thread-sets_adjust_callback.c test-thread-sets_resize_callback.c
+build_sources_program test-thread-spins_adjust_callback.c test-thread-spins_resize_callback.c
 
 build_sources_program test-thread-at_fork.c
 build_sources_program test-thread-attribute_affinity_get.c test-thread-attribute_affinity_set.c
