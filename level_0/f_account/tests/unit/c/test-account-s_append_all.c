@@ -23,7 +23,7 @@ void test__f_accounts_append_all__returns_data_not(void **state) {
   f_accounts_t destination = f_accounts_t_initialize;
 
   {
-    const f_status_t status = f_accounts_resize(length, &source);
+    const f_status_t status = f_memory_array_resize(length, sizeof(f_account_t), (void **) &source.array, &source.used, &source.size);
 
     assert_int_equal(status, F_none);
     assert_int_equal(source.used, 0);
@@ -43,6 +43,8 @@ void test__f_accounts_append_all__returns_data_not(void **state) {
 }
 
 void test__f_accounts_append_all__works(void **state) {
+
+  mock_unwrap = 1;
 
   const int length = 5;
   f_accounts_t source = f_accounts_t_initialize;
@@ -64,7 +66,7 @@ void test__f_accounts_append_all__works(void **state) {
   const f_account_t account_1 = { .home = home_1, .label = label_1, .name = name_1, .password = password_1, .shell = shell_1 };
 
   {
-    const f_status_t status = f_accounts_resize(length, &source);
+    const f_status_t status = f_memory_array_resize(length, sizeof(f_account_t), (void **) &source.array, &source.used, &source.size);
 
     assert_int_equal(status, F_none);
     assert_int_equal(source.used, 0);
@@ -95,6 +97,17 @@ void test__f_accounts_append_all__works(void **state) {
   }
 
   free((void *) source.array);
+
+  free((void *) destination.array[0].home.string);
+  free((void *) destination.array[0].label.string);
+  free((void *) destination.array[0].name.string);
+  free((void *) destination.array[0].password.string);
+  free((void *) destination.array[0].shell.string);
+  free((void *) destination.array[1].home.string);
+  free((void *) destination.array[1].label.string);
+  free((void *) destination.array[1].name.string);
+  free((void *) destination.array[1].password.string);
+  free((void *) destination.array[1].shell.string);
   free((void *) destination.array);
 }
 

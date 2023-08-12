@@ -87,14 +87,16 @@ extern "C" {
  *   F_none on success.
  *
  *   Errors (with error bit) from: f_fss_count_lines().
- *   Errors (with error bit) from: f_iki_datas_increase_by().
+ *   Errors (with error bit) from: f_memory_array_increase().
+ *   Errors (with error bit) from: f_memory_array_increase_by().
  *   Errors (with error bit) from: f_string_dynamic_partial_append_nulless().
  *   Errors (with error bit) from: f_string_dynamics_increase().
  *   Errors (with error bit) from: f_string_dynamics_increase_by().
  *   Errors (with error bit) from: fl_iki_read().
  *
  * @see f_fss_count_lines()
- * @see f_iki_datas_increase_by()
+ * @see f_memory_array_increase()
+ * @see f_memory_array_increase_by()
  * @see f_string_dynamic_partial_append_nulless()
  * @see f_string_dynamics_increase()
  * @see f_string_dynamics_increase_by()

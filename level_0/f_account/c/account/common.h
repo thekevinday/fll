@@ -97,17 +97,6 @@ extern "C" {
   #define macro_f_accounts_t_initialize_2(array, length) { array, length, length }
 
   #define macro_f_accounts_t_clear(accounts) macro_f_memory_structures_clear(accounts)
-
-  #define macro_f_accounts_t_resize(status, accounts, length) status = f_accounts_resize(length, &accounts);
-  #define macro_f_accounts_t_adjust(status, accounts, length) status = f_accounts_adjust(length, &accounts);
-
-  #define macro_f_accounts_t_delete_simple(accounts)  f_accounts_resize(0, &accounts);
-  #define macro_f_accounts_t_destroy_simple(accounts) f_accounts_adjust(0, &accounts);
-
-  #define macro_f_accounts_t_increase(status, step, accounts)      status = f_accounts_increase(step, &accounts);
-  #define macro_f_accounts_t_increase_by(status, accounts, amount) status = f_accounts_increase_by(amount, &accounts);
-  #define macro_f_accounts_t_decrease_by(status, accounts, amount) status = f_accounts_decrease_by(amount, &accounts);
-  #define macro_f_accounts_t_decimate_by(status, accounts, amount) status = f_accounts_decimate_by(amount, &accounts);
 #endif // _di_f_accounts_t_
 
 /**
@@ -132,17 +121,6 @@ extern "C" {
   #define macro_f_accountss_t_initialize_2(array, length) { array, length, length }
 
   #define macro_f_accountss_t_clear(accountss) macro_f_memory_structures_clear(accountss)
-
-  #define macro_f_accountss_t_resize(status, accountss, length) status = f_accountss_resize(length, &accountss);
-  #define macro_f_accountss_t_adjust(status, accountss, length) status = f_accountss_adjust(length, &accountss);
-
-  #define macro_f_accountss_t_delete_simple(accountss)  f_accountss_resize(0, &accountss);
-  #define macro_f_accountss_t_destroy_simple(accountss) f_accountss_adjust(0, &accountss);
-
-  #define macro_f_accountss_t_increase(status, step, accountss)      status = f_accountss_increase(step, &accountss);
-  #define macro_f_accountss_t_increase_by(status, accountss, amount) status = f_accountss_increase_by(amount, &accountss);
-  #define macro_f_accountss_t_decrease_by(status, accountss, amount) status = f_accountss_decrease_by(amount, &accountss);
-  #define macro_f_accountss_t_decimate_by(status, accountss, amount) status = f_accountss_decimate_by(amount, &accountss);
 #endif // _di_f_accountss_t_
 
 #ifdef __cplusplus

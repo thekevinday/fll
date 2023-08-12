@@ -7,6 +7,8 @@ extern "C" {
 
 void test__f_account_by_id__fails(void **state) {
 
+  mock_unwrap = 1;
+
   const long size = 20;
   uid_t uid = 0;
   f_account_t account = f_account_t_initialize;
@@ -47,6 +49,8 @@ void test__f_account_by_id__fails(void **state) {
 
 void test__f_account_by_id__not_found(void **state) {
 
+  mock_unwrap = 1;
+
   const long size = 20;
   struct passwd password;
   uid_t uid = 0;
@@ -76,6 +80,8 @@ void test__f_account_by_id__parameter_checking(void **state) {
 }
 
 void test__f_account_by_id__works(void **state) {
+
+  mock_unwrap = 1;
 
   const long size = 20;
   struct passwd password;

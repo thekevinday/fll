@@ -244,17 +244,6 @@ extern "C" {
 
   #define macro_f_iki_datas_t_initialize_1(content, size, used) { array, size, used }
   #define macro_f_iki_datas_t_initialize_2(array, length) { array, length, length }
-
-  #define macro_f_iki_datas_t_resize(status, datas, length) status = f_iki_datas_resize(length, &datas);
-  #define macro_f_iki_datas_t_adjust(status, datas, length) status = f_iki_datas_adjust(length, &datas);
-
-  #define macro_f_iki_datas_t_delete_simple(datas)  status = f_iki_datas_resize(0, &datas);
-  #define macro_f_iki_datas_t_destroy_simple(datas) status = f_iki_datas_adjust(0, &datas);
-
-  #define macro_f_iki_datas_t_increase(status, step, datas)      status = f_iki_datas_increase(step, &datas);
-  #define macro_f_iki_datas_t_increase_by(status, datas, amount) status = f_iki_datas_increase_by(amount, &datas);
-  #define macro_f_iki_datas_t_decrease_by(status, datas, amount) status = f_iki_datas_decrease_by(amount, &datas);
-  #define macro_f_iki_datas_t_decimate_by(status, datas, amount) status = f_iki_datas_decimate_by(amount, &datas);
 #endif // _di_f_iki_datas_t_
 
 /**
@@ -277,17 +266,6 @@ extern "C" {
 
   #define macro_f_iki_datass_t_initialize_1(content, size, used) { array, size, used }
   #define macro_f_iki_datass_t_initialize_2(array, length) { array, length, length }
-
-  #define macro_f_iki_datass_t_resize(status, datas, length) status = f_iki_datass_resize(length, &datas);
-  #define macro_f_iki_datass_t_adjust(status, datas, length) status = f_iki_datass_adjust(length, &datas);
-
-  #define macro_f_iki_datass_t_delete_simple(datas)  status = f_iki_datass_resize(0, &datas);
-  #define macro_f_iki_datass_t_destroy_simple(datas) status = f_iki_datass_adjust(0, &datas);
-
-  #define macro_f_iki_datass_t_increase(status, step, datas)      status = f_iki_datass_increase(step, &datas);
-  #define macro_f_iki_datass_t_increase_by(status, datas, amount) status = f_iki_datass_increase_by(amount, &datas);
-  #define macro_f_iki_datass_t_decrease_by(status, datas, amount) status = f_iki_datass_decrease_by(amount, &datas);
-  #define macro_f_iki_datass_t_decimate_by(status, datas, amount) status = f_iki_datass_decimate_by(amount, &datas);
 #endif // _di_f_iki_datass_t_
 
 #ifdef __cplusplus

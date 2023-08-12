@@ -28,6 +28,14 @@ extern "C" {
 
 const static int mock_errno_generic = 32767;
 
+extern int mock_unwrap;
+
+extern f_status_t __real_f_string_dynamic_adjust(const f_number_unsigned_t length, f_string_dynamic_t * const structure);
+extern f_status_t __real_f_string_dynamic_resize(const f_number_unsigned_t length, f_string_dynamic_t * const structure);
+
+extern f_status_t __wrap_f_string_dynamic_adjust(const f_number_unsigned_t length, f_string_dynamic_t * const structure);
+extern f_status_t __wrap_f_string_dynamic_resize(const f_number_unsigned_t length, f_string_dynamic_t * const structure);
+
 extern int __wrap_getpwnam_r(const char * const name, struct passwd *pwd, char *buf, size_t buflen, struct passwd **result);
 extern int __wrap_getpwuid_r(uid_t uid, struct passwd *pwd, char *buf, size_t buflen, struct passwd **result);
 extern int __wrap_getgrgid_r(uid_t uid, struct group *grp, char *buf, size_t buflen, struct group **result);

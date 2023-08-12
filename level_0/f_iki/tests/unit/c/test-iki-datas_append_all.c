@@ -12,7 +12,7 @@ void test__f_iki_datas_append_all__works(void **state) {
   f_iki_datas_t destination = f_iki_datas_t_initialize;
 
   {
-    f_status_t status = f_iki_datas_resize(2, &source);
+    f_status_t status = f_memory_array_resize(2, sizeof(f_iki_data_t), (void **) &source.array, &source.used, &source.size);
 
     assert_int_equal(status, F_none);
     assert_int_equal(source.size, 2);
@@ -126,7 +126,7 @@ void test__f_iki_datas_append_all__returns_data_not(void **state) {
   f_iki_datas_t destination = f_iki_datas_t_initialize;
 
   {
-    const f_status_t status = f_iki_datas_resize(length, &source);
+    const f_status_t status = f_memory_array_resize(length, sizeof(f_iki_data_t), (void **) &source.array, &source.used, &source.size);
 
     assert_int_equal(status, F_none);
     assert_int_equal(source.used, 0);

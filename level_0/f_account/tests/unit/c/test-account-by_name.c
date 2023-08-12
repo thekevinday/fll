@@ -7,6 +7,8 @@ extern "C" {
 
 void test__f_account_by_name__fails(void **state) {
 
+  mock_unwrap = 1;
+
   const long size = 20;
   f_account_t account = f_account_t_initialize;
 

@@ -23,7 +23,7 @@ void test__f_accountss_append_all__returns_data_not(void **state) {
   f_accountss_t destination = f_accountss_t_initialize;
 
   {
-    const f_status_t status = f_accountss_resize(length, &source);
+    const f_status_t status = f_memory_arrays_resize(length, sizeof(f_accounts_t), (void **) &source.array, &source.used, &source.size, &f_accounts_resize_callback);
 
     assert_int_equal(status, F_none);
     assert_int_equal(source.used, 0);
@@ -43,6 +43,8 @@ void test__f_accountss_append_all__returns_data_not(void **state) {
 }
 
 void test__f_accountss_append_all__works(void **state) {
+
+  mock_unwrap = 1;
 
   const int length = 5;
   const int length_inner = 2;
@@ -65,7 +67,7 @@ void test__f_accountss_append_all__works(void **state) {
   const f_account_t account_1 = { .home = home_1, .label = label_1, .name = name_1, .password = password_1, .shell = shell_1 };
 
   {
-    const f_status_t status = f_accountss_resize(length, &source);
+    const f_status_t status = f_memory_arrays_resize(length, sizeof(f_accounts_t), (void **) &source.array, &source.used, &source.size, &f_accounts_resize_callback);
 
     assert_int_equal(status, F_none);
     assert_int_equal(source.used, 0);
@@ -75,7 +77,7 @@ void test__f_accountss_append_all__works(void **state) {
   {
     for (; source.used < length; ++source.used) {
 
-      const f_status_t status = f_accounts_resize(length_inner, &source.array[source.used]);
+      const f_status_t status = f_memory_array_resize(length_inner, sizeof(f_account_t), (void **) &source.array[source.used].array, &source.array[source.used].used, &source.array[source.used].size);
 
       assert_int_equal(status, F_none);
 
@@ -115,6 +117,16 @@ void test__f_accountss_append_all__works(void **state) {
   } // for
 
   for (f_number_unsigned_t i = 0; i < destination.used; ++i) {
+
+    for (f_number_unsigned_t j = 0; j < destination.array[i].used; ++j) {
+
+      free((void *) destination.array[i].array[j].home.string);
+      free((void *) destination.array[i].array[j].label.string);
+      free((void *) destination.array[i].array[j].name.string);
+      free((void *) destination.array[i].array[j].password.string);
+      free((void *) destination.array[i].array[j].shell.string);
+    }
+
     free((void *) destination.array[i].array);
   } // for
 

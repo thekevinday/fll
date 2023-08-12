@@ -50,15 +50,32 @@ extern "C" {
   }
 #endif // _di_f_iki_data_destroy_
 
-#ifndef _di_f_iki_datas_adjust_
-  f_status_t f_iki_datas_adjust(const f_number_unsigned_t length, f_iki_datas_t *datas) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!datas) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+#ifndef _di_f_iki_datas_adjust_callback_
+  f_status_t f_iki_datas_adjust_callback(const f_number_unsigned_t start, const f_number_unsigned_t stop, void * const void_array) {
 
-    return private_f_iki_datas_adjust(length, datas);
+    {
+      f_iki_datas_t * const array = (f_iki_datas_t *) void_array;
+      f_status_t status = F_none;
+
+      for (f_number_unsigned_t i = start; i < stop; ++i) {
+
+        status = f_string_ranges_adjust(0, &array->array[i].content);
+        if (F_status_is_error(status)) return status;
+
+        status = f_memory_array_adjust(0, sizeof(f_number_unsigned_t), (void **) &array->array[i].delimits.array, &array->array[i].delimits.used, &array->array[i].delimits.size);
+        if (F_status_is_error(status)) return status;
+
+        status = f_string_ranges_adjust(0, &array->array[i].variable);
+        if (F_status_is_error(status)) return status;
+
+        status = f_string_ranges_adjust(0, &array->array[i].vocabulary);
+        if (F_status_is_error(status)) return status;
+      } // for
+    }
+
+    return F_none;
   }
-#endif // _di_f_iki_datas_adjust_
+#endif // _di_f_iki_datas_adjust_callback_
 
 #ifndef _di_f_iki_datas_append_
   f_status_t f_iki_datas_append(const f_iki_data_t source, f_iki_datas_t *destination) {
@@ -66,7 +83,40 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return private_f_iki_datas_append(source, destination);
+    f_status_t status = f_memory_array_increase(F_iki_default_allocation_small_d, sizeof(f_iki_data_t), (void **) &destination->array, &destination->used, &destination->size);
+    if (F_status_is_error(status)) return status;
+
+    destination->array[destination->used].content.used = 0;
+    destination->array[destination->used].delimits.used = 0;
+    destination->array[destination->used].variable.used = 0;
+    destination->array[destination->used].vocabulary.used = 0;
+
+    if (source.content.used) {
+      status = f_string_ranges_append_all(source.content, &destination->array[destination->used].content);
+      if (F_status_is_error(status)) return status;
+    }
+
+    if (source.delimits.used) {
+      for (f_number_unsigned_t i = 0; i < source.delimits.used; ++i) {
+
+        status = f_memory_array_append(source.delimits.array + i, sizeof(f_number_unsigned_t), (void **) &destination->array[destination->used].delimits.array, &destination->array[destination->used].delimits.used, &destination->array[destination->used].delimits.size);
+        if (F_status_is_error(status)) return status;
+      } // for
+    }
+
+    if (source.variable.used) {
+      status = f_string_ranges_append_all(source.variable, &destination->array[destination->used].variable);
+      if (F_status_is_error(status)) return status;
+    }
+
+    if (source.vocabulary.used) {
+      status = f_string_ranges_append_all(source.vocabulary, &destination->array[destination->used].vocabulary);
+      if (F_status_is_error(status)) return status;
+    }
+
+    ++destination->used;
+
+    return F_none;
   }
 #endif // _di_f_iki_datas_append_
 
@@ -82,97 +132,32 @@ extern "C" {
   }
 #endif // _di_f_iki_datas_append_all_
 
-#ifndef _di_f_iki_datas_decimate_by_
-  f_status_t f_iki_datas_decimate_by(const f_number_unsigned_t amount, f_iki_datas_t *datas) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!datas) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+#ifndef _di_f_iki_datas_resize_callback_
+  f_status_t f_iki_datas_resize_callback(const f_number_unsigned_t start, const f_number_unsigned_t stop, void * const void_array) {
 
-    if (!amount) return F_data_not;
-    if (datas->size > amount) return private_f_iki_datas_adjust(datas->size - amount, datas);
+    {
+      f_iki_datas_t * const array = (f_iki_datas_t *) void_array;
+      f_status_t status = F_none;
 
-    return private_f_iki_datas_adjust(0, datas);
-  }
-#endif // _di_f_iki_datas_decimate_by_
+      for (f_number_unsigned_t i = start; i < stop; ++i) {
 
-#ifndef _di_f_iki_datas_decrease_by_
-  f_status_t f_iki_datas_decrease_by(const f_number_unsigned_t amount, f_iki_datas_t *datas) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!datas) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+        status = f_string_ranges_resize(0, &array->array[i].content);
+        if (F_status_is_error(status)) return status;
 
-    if (!amount) return F_data_not;
-    if (datas->size > amount) return private_f_iki_datas_resize(datas->size - amount, datas);
+        status = f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &array->array[i].delimits.array, &array->array[i].delimits.used, &array->array[i].delimits.size);
+        if (F_status_is_error(status)) return status;
 
-    return private_f_iki_datas_resize(0, datas);
-  }
-#endif // _di_f_iki_datas_decrease_by_
+        status = f_string_ranges_resize(0, &array->array[i].variable);
+        if (F_status_is_error(status)) return status;
 
-#ifndef _di_f_iki_datas_increase_
-  f_status_t f_iki_datas_increase(const f_number_unsigned_t step, f_iki_datas_t *datas) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!datas) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (step && datas->used + 1 > datas->size) {
-      if (datas->used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
-
-      f_number_unsigned_t length = datas->used + step;
-
-      if (length > F_number_t_size_unsigned_d) {
-        if (datas->used + 1 > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
-
-        length = F_number_t_size_unsigned_d;
-      }
-
-      return private_f_iki_datas_resize(length, datas);
+        status = f_string_ranges_resize(0, &array->array[i].vocabulary);
+        if (F_status_is_error(status)) return status;
+      } // for
     }
 
-    return F_data_not;
+    return F_none;
   }
-#endif // _di_f_iki_datas_increase_
-
-#ifndef _di_f_iki_datas_increase_by_
-  f_status_t f_iki_datas_increase_by(const f_number_unsigned_t amount, f_iki_datas_t *datas) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!datas) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (amount) {
-      if (datas->used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
-
-      const f_number_unsigned_t length = datas->used + amount;
-
-      if (length > datas->size) {
-        if (length > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
-
-        return private_f_iki_datas_resize(length, datas);
-      }
-    }
-
-    return F_data_not;
-  }
-#endif // _di_f_iki_datas_increase_by_
-
-#ifndef _di_f_iki_datas_resize_
-  f_status_t f_iki_datas_resize(const f_number_unsigned_t length, f_iki_datas_t *datas) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!datas) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return private_f_iki_datas_resize(length, datas);
-  }
-#endif // _di_f_iki_datas_resize_
-
-#ifndef _di_f_iki_datass_adjust_
-  f_status_t f_iki_datass_adjust(const f_number_unsigned_t length, f_iki_datass_t *datass) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!datass) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return private_f_iki_datass_adjust(length, datass);
-  }
-#endif // _di_f_iki_datass_adjust_
+#endif // _di_f_iki_datas_resize_callback_
 
 #ifndef _di_f_iki_datass_append_
   f_status_t f_iki_datass_append(const f_iki_datas_t source, f_iki_datass_t *destination) {
@@ -218,86 +203,6 @@ extern "C" {
     return F_none;
   }
 #endif // _di_f_iki_datass_append_all_
-
-#ifndef _di_f_iki_datass_decimate_by_
-  f_status_t f_iki_datass_decimate_by(const f_number_unsigned_t amount, f_iki_datass_t *datass) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!datass) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (!amount) return F_data_not;
-
-    return private_f_iki_datass_adjust((datass->size > amount) ? datass->size - amount : 0, datass);
-  }
-#endif // _di_f_iki_datass_decimate_by_
-
-#ifndef _di_f_iki_datass_decrease_by_
-  f_status_t f_iki_datass_decrease_by(const f_number_unsigned_t amount, f_iki_datass_t *datass) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!datass) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (!amount) return F_data_not;
-
-    return private_f_iki_datass_resize((datass->size > amount) ? datass->size - amount : 0, datass);
-  }
-#endif // _di_f_iki_datass_decrease_by_
-
-#ifndef _di_f_iki_datass_increase_
-  f_status_t f_iki_datass_increase(const f_number_unsigned_t step, f_iki_datass_t *datass) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!datass) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (step && datass->used + 1 > datass->size) {
-      if (datass->used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
-
-      f_number_unsigned_t length = datass->used + step;
-
-      if (length > F_number_t_size_unsigned_d) {
-        if (datass->used + 1 > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
-
-        length = F_number_t_size_unsigned_d;
-      }
-
-      return private_f_iki_datass_resize(length, datass);
-    }
-
-    return F_data_not;
-  }
-#endif // _di_f_iki_datass_increase_
-
-#ifndef _di_f_iki_datass_increase_by_
-  f_status_t f_iki_datass_increase_by(const f_number_unsigned_t amount, f_iki_datass_t *datass) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!datass) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (amount) {
-      if (datass->used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
-
-      const f_number_unsigned_t length = datass->used + amount;
-
-      if (length > datass->size) {
-        if (length > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
-
-        return private_f_iki_datass_resize(length, datass);
-      }
-    }
-
-    return F_data_not;
-  }
-#endif // _di_f_iki_datass_increase_by_
-
-#ifndef _di_f_iki_datass_resize_
-  f_status_t f_iki_datass_resize(const f_number_unsigned_t length, f_iki_datass_t *datass) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!datass) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return private_f_iki_datass_resize(length, datass);
-  }
-#endif // _di_f_iki_datass_resize_
 
 #ifdef __cplusplus
 } // extern "C"

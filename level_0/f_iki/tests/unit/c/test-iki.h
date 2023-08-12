@@ -23,27 +23,17 @@
 #include <fll/level_0/iki.h>
 
 // Mock includes.
-//#include "mock-iki.h"
+#include "mock-iki.h"
 
 // Test includes.
 #include "test-iki-content_is.h"
 #include "test-iki-content_partial_is.h"
-#include "test-iki-datas_adjust.h"
+#include "test-iki-datas_adjust_callback.h"
 #include "test-iki-datas_append.h"
 #include "test-iki-datas_append_all.h"
-#include "test-iki-datas_decimate_by.h"
-#include "test-iki-datas_decrease_by.h"
-#include "test-iki-datas_increase.h"
-#include "test-iki-datas_increase_by.h"
-#include "test-iki-datas_resize.h"
-#include "test-iki-datass_adjust.h"
+#include "test-iki-datas_resize_callback.h"
 #include "test-iki-datass_append.h"
 #include "test-iki-datass_append_all.h"
-#include "test-iki-datass_decimate_by.h"
-#include "test-iki-datass_decrease_by.h"
-#include "test-iki-datass_increase.h"
-#include "test-iki-datass_increase_by.h"
-#include "test-iki-datass_resize.h"
 #include "test-iki-object_is.h"
 #include "test-iki-object_partial_is.h"
 #include "test-iki-read.h"

@@ -77,6 +77,8 @@ void test__f_account_name_by_id__parameter_checking(void **state) {
 
 void test__f_account_name_by_id__works(void **state) {
 
+  mock_unwrap = 0;
+
   const long size = 20;
   struct passwd password;
   struct passwd pointer;

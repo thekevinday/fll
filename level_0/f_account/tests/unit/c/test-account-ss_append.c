@@ -23,7 +23,7 @@ void test__f_accountss_append__returns_data_not(void **state) {
   f_accountss_t destination = f_accountss_t_initialize;
 
   {
-    const f_status_t status = f_accounts_resize(length, &source);
+    const f_status_t status = f_memory_array_resize(length, sizeof(f_account_t), (void **) &source.array, &source.used, &source.size);
 
     assert_int_equal(status, F_none);
     assert_int_equal(source.used, 0);
@@ -44,6 +44,8 @@ void test__f_accountss_append__returns_data_not(void **state) {
 
 void test__f_accountss_append__works(void **state) {
 
+  mock_unwrap = 1;
+
   const int length = 5;
   f_accounts_t sources = f_accounts_t_initialize;
   f_accountss_t destination = f_accountss_t_initialize;
@@ -57,7 +59,7 @@ void test__f_accountss_append__works(void **state) {
   const f_account_t source = { .home = home, .label = label, .name = name, .password = password, .shell = shell };
 
   {
-    const f_status_t status = f_accounts_resize(length, &sources);
+    const f_status_t status = f_memory_array_resize(length, sizeof(f_account_t), (void **) &sources.array, &sources.used, &sources.size);
 
     assert_int_equal(status, F_none);
     assert_int_equal(sources.used, 0);
@@ -93,6 +95,16 @@ void test__f_accountss_append__works(void **state) {
   }
 
   for (f_number_unsigned_t i = 0; i < destination.used; ++i) {
+
+    for (f_number_unsigned_t j = 0; j < destination.array[i].used; ++j) {
+
+      free((void *) destination.array[i].array[j].home.string);
+      free((void *) destination.array[i].array[j].label.string);
+      free((void *) destination.array[i].array[j].name.string);
+      free((void *) destination.array[i].array[j].password.string);
+      free((void *) destination.array[i].array[j].shell.string);
+    }
+
     free((void *) destination.array[i].array);
   } // for
 

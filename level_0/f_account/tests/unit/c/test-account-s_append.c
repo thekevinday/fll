@@ -18,6 +18,8 @@ void test__f_accounts_append__parameter_checking(void **state) {
 
 void test__f_accounts_append__works(void **state) {
 
+  mock_unwrap = 1;
+
   f_string_static_t home = macro_f_string_static_t_initialize_1("home", 0, 4);
   f_string_static_t label = macro_f_string_static_t_initialize_1("label", 0, 5);
   f_string_static_t name = macro_f_string_static_t_initialize_1("name", 0, 4);
@@ -46,6 +48,11 @@ void test__f_accounts_append__works(void **state) {
     assert_int_equal(destination.array[0].shell.used, source.shell.used);
   }
 
+  free((void *) destination.array[0].home.string);
+  free((void *) destination.array[0].label.string);
+  free((void *) destination.array[0].name.string);
+  free((void *) destination.array[0].password.string);
+  free((void *) destination.array[0].shell.string);
   free((void *) destination.array);
 }
 

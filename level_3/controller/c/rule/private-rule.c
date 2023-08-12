@@ -82,14 +82,14 @@ extern "C" {
       }
 
       if (content) {
-        status = f_iki_datas_increase_by(content->used + 1, &action->ikis);
+        status = f_memory_array_increase_by(content->used + 1, sizeof(f_iki_data_t), (void **) &action->ikis.array, &action->ikis.used, &action->ikis.size);
       }
       else {
-        status = f_iki_datas_increase(controller_common_allocation_small_d, &action->ikis);
+        status = f_memory_array_increase(controller_common_allocation_small_d, sizeof(f_iki_data_t), (void **) &action->ikis.array, &action->ikis.used, &action->ikis.size);
       }
 
       if (F_status_is_error(status)) {
-        controller_print_error(global.thread, global.main->error, F_status_set_fine(status), content ? "f_iki_datas_increase_by" : "f_iki_datas_increase", F_true);
+        controller_print_error(global.thread, global.main->error, F_status_set_fine(status), content ? "f_memory_array_increase_by" : "f_memory_array_increase", F_true);
 
         return status;
       }
@@ -121,10 +121,10 @@ extern "C" {
         return status;
       }
 
-      status = f_iki_datas_increase_by(content->used, &action->ikis);
+      status = f_memory_array_increase_by(content->used, sizeof(f_iki_data_t), (void **) &action->ikis.array, &action->ikis.used, &action->ikis.size);
 
       if (F_status_is_error(status)) {
-        controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_iki_datas_increase_by", F_true);
+        controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_memory_array_increase_by", F_true);
 
         return status;
       }
@@ -276,10 +276,10 @@ extern "C" {
             return status;
           }
 
-          status = f_iki_datas_increase(controller_common_allocation_small_d, &actions->array[actions->used].ikis);
+          status = f_memory_array_increase(controller_common_allocation_small_d, sizeof(f_iki_data_t), (void **) &actions->array[actions->used].ikis.array, &actions->array[actions->used].ikis.used, &actions->array[actions->used].ikis.size);
 
           if (F_status_is_error(status)) {
-            controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_iki_datas_increase", F_true);
+            controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_memory_array_increase", F_true);
 
             return status;
           }
@@ -576,10 +576,10 @@ extern "C" {
             return status;
           }
 
-          status = f_iki_datas_increase(controller_common_allocation_small_d, &actions->array[actions->used].ikis);
+          status = f_memory_array_increase(controller_common_allocation_small_d, sizeof(f_iki_data_t), (void **) &actions->array[actions->used].ikis.array, &actions->array[actions->used].ikis.used, &actions->array[actions->used].ikis.size);
 
           if (F_status_is_error(status)) {
-            controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_iki_datas_increase", F_true);
+            controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_memory_array_increase", F_true);
 
             return status;
           }

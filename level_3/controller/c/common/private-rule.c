@@ -14,7 +14,7 @@ extern "C" {
   void controller_rule_action_delete_simple(controller_rule_action_t * const action) {
 
     f_string_dynamics_resize(0, &action->parameters);
-    f_iki_datas_resize(0, &action->ikis);
+    f_memory_array_resize(0, sizeof(f_iki_data_t), (void **) &action->ikis.array, &action->ikis.used, &action->ikis.size);
   }
 #endif // _di_controller_rule_action_delete_simple_
 

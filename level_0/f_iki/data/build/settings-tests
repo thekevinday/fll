@@ -26,7 +26,7 @@ build_libraries -lc -lcmocka
 build_libraries-individual -lf_memory -lf_string -lf_type_array -lf_utf -lf_iki
 
 build_sources_program test-iki-content_is.c test-iki-content_partial_is.c test-iki-object_is.c test-iki-object_partial_is.c test-iki-read.c
-build_sources_program test-iki-datas_adjust.c test-iki-datas_append.c test-iki-datas_append_all.c test-iki-datas_decimate_by.c test-iki-datas_decrease_by.c test-iki-datas_increase.c test-iki-datas_increase_by.c test-iki-datas_resize.c test-iki-datass_adjust.c test-iki-datass_append.c test-iki-datass_append_all.c test-iki-datass_decimate_by.c test-iki-datass_decrease_by.c test-iki-datass_increase.c test-iki-datass_increase_by.c test-iki-datass_resize.c
+build_sources_program test-iki-datas_adjust_callback.c test-iki-datas_append.c test-iki-datas_append_all.c test-iki-datas_resize_callback.c test-iki-datass_append.c test-iki-datass_append_all.c
 build_sources_program test-iki.c
 
 build_script no

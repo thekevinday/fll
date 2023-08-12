@@ -83,6 +83,8 @@ void test__f_iki_read__returns_data_not_stop(void **state) {
 
 void test__f_iki_read__works(void **state) {
 
+  mock_unwrap = 1;
+
   f_state_t state_data = f_state_t_initialize;
   f_string_static_t empty = macro_f_string_static_t_initialize_1(f_string_empty_s.string, f_string_empty_s.size, f_string_empty_s.used);
   f_string_static_t ascii_a = macro_f_string_static_t_initialize_1(f_string_ascii_a_s.string, f_string_ascii_a_s.size, f_string_ascii_a_s.used);
