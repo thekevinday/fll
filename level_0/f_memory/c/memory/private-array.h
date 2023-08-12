@@ -42,7 +42,7 @@ extern "C" {
  * @see f_memory_adjust()
  */
 #if !defined(_di_f_memory_array_adjust_) || !defined(_di_f_memory_array_decimate_by_)
-  extern f_status_t private_f_memory_array_adjust(const f_number_unsigned_t length, const size_t width, void ** array, f_number_unsigned_t * const used, f_number_unsigned_t * const size) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_memory_array_adjust(const f_number_unsigned_t length, const size_t width, void ** const const array, f_number_unsigned_t * const used, f_number_unsigned_t * const size) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_memory_array_adjust_) || !defined(_di_f_memory_array_decimate_by_)
 
 /**
@@ -76,7 +76,7 @@ extern "C" {
  * @see f_memory_resize()
  */
 #if !defined(_di_f_memory_array_append_) || !defined(_di_f_memory_array_append_all_) || !defined(_di_f_memory_array_decrease_by_) || !defined(_di_f_memory_array_increase_) || !defined(_di_f_memory_array_increase_by_) || !defined(_di_f_memory_array_resize_)
-  extern f_status_t private_f_memory_array_resize(const f_number_unsigned_t length, const size_t width, void ** array, f_number_unsigned_t * const used, f_number_unsigned_t * const size) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_memory_array_resize(const f_number_unsigned_t length, const size_t width, void ** const array, f_number_unsigned_t * const used, f_number_unsigned_t * const size) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_memory_array_append_) || !defined(_di_f_memory_array_append_all_) || !defined(_di_f_memory_array_decrease_by_) || !defined(_di_f_memory_array_increase_) || !defined(_di_f_memory_array_increase_by_) || !defined(_di_f_memory_array_resize_)
 
 #ifdef __cplusplus
