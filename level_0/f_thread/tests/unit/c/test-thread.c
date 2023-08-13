@@ -19,70 +19,70 @@ int setdown(void **state) {
 int main(void) {
 
   const struct CMUnitTest tests[] = {
-    cmocka_unit_test(test__f_thread_attributes_adjust_callback__fails),
-    cmocka_unit_test(test__f_thread_attributes_resize_callback__fails),
-    cmocka_unit_test(test__f_thread_attributes_adjust_callback__works),
-    cmocka_unit_test(test__f_thread_attributes_resize_callback__works),
+    cmocka_unit_test(test__f_thread_attributes_destroy_callback__fails),
+    cmocka_unit_test(test__f_thread_attributes_delete_callback__fails),
+    cmocka_unit_test(test__f_thread_attributes_destroy_callback__works),
+    cmocka_unit_test(test__f_thread_attributes_delete_callback__works),
 
-    cmocka_unit_test(test__f_thread_barriers_adjust_callback__fails),
-    cmocka_unit_test(test__f_thread_barriers_resize_callback__fails),
-    cmocka_unit_test(test__f_thread_barriers_adjust_callback__works),
-    cmocka_unit_test(test__f_thread_barriers_resize_callback__works),
+    cmocka_unit_test(test__f_thread_barriers_destroy_callback__fails),
+    cmocka_unit_test(test__f_thread_barriers_delete_callback__fails),
+    cmocka_unit_test(test__f_thread_barriers_destroy_callback__works),
+    cmocka_unit_test(test__f_thread_barriers_delete_callback__works),
 
-    cmocka_unit_test(test__f_thread_barrier_attributes_adjust_callback__fails),
-    cmocka_unit_test(test__f_thread_barrier_attributes_resize_callback__fails),
-    cmocka_unit_test(test__f_thread_barrier_attributes_adjust_callback__works),
-    cmocka_unit_test(test__f_thread_barrier_attributes_resize_callback__works),
+    cmocka_unit_test(test__f_thread_barrier_attributes_destroy_callback__fails),
+    cmocka_unit_test(test__f_thread_barrier_attributes_delete_callback__fails),
+    cmocka_unit_test(test__f_thread_barrier_attributes_destroy_callback__works),
+    cmocka_unit_test(test__f_thread_barrier_attributes_delete_callback__works),
 
-    cmocka_unit_test(test__f_thread_conditions_adjust_callback__fails),
-    cmocka_unit_test(test__f_thread_conditions_resize_callback__fails),
-    cmocka_unit_test(test__f_thread_conditions_adjust_callback__works),
-    cmocka_unit_test(test__f_thread_conditions_resize_callback__works),
+    cmocka_unit_test(test__f_thread_conditions_destroy_callback__fails),
+    cmocka_unit_test(test__f_thread_conditions_delete_callback__fails),
+    cmocka_unit_test(test__f_thread_conditions_destroy_callback__works),
+    cmocka_unit_test(test__f_thread_conditions_delete_callback__works),
 
-    cmocka_unit_test(test__f_thread_condition_attributes_adjust_callback__fails),
-    cmocka_unit_test(test__f_thread_condition_attributes_resize_callback__fails),
-    cmocka_unit_test(test__f_thread_condition_attributes_adjust_callback__works),
-    cmocka_unit_test(test__f_thread_condition_attributes_resize_callback__works),
+    cmocka_unit_test(test__f_thread_condition_attributes_destroy_callback__fails),
+    cmocka_unit_test(test__f_thread_condition_attributes_delete_callback__fails),
+    cmocka_unit_test(test__f_thread_condition_attributes_destroy_callback__works),
+    cmocka_unit_test(test__f_thread_condition_attributes_delete_callback__works),
 
-    cmocka_unit_test(test__f_thread_keys_adjust_callback__fails),
-    cmocka_unit_test(test__f_thread_keys_resize_callback__fails),
-    cmocka_unit_test(test__f_thread_keys_adjust_callback__works),
-    cmocka_unit_test(test__f_thread_keys_resize_callback__works),
+    cmocka_unit_test(test__f_thread_keys_destroy_callback__fails),
+    cmocka_unit_test(test__f_thread_keys_delete_callback__fails),
+    cmocka_unit_test(test__f_thread_keys_destroy_callback__works),
+    cmocka_unit_test(test__f_thread_keys_delete_callback__works),
 
-    cmocka_unit_test(test__f_thread_locks_adjust_callback__fails),
-    cmocka_unit_test(test__f_thread_locks_resize_callback__fails),
-    cmocka_unit_test(test__f_thread_locks_adjust_callback__works),
-    cmocka_unit_test(test__f_thread_locks_resize_callback__works),
+    cmocka_unit_test(test__f_thread_locks_destroy_callback__fails),
+    cmocka_unit_test(test__f_thread_locks_delete_callback__fails),
+    cmocka_unit_test(test__f_thread_locks_destroy_callback__works),
+    cmocka_unit_test(test__f_thread_locks_delete_callback__works),
 
-    cmocka_unit_test(test__f_thread_lock_attributes_adjust_callback__fails),
-    cmocka_unit_test(test__f_thread_lock_attributes_resize_callback__fails),
-    cmocka_unit_test(test__f_thread_lock_attributes_adjust_callback__works),
-    cmocka_unit_test(test__f_thread_lock_attributes_resize_callback__works),
+    cmocka_unit_test(test__f_thread_lock_attributes_destroy_callback__fails),
+    cmocka_unit_test(test__f_thread_lock_attributes_delete_callback__fails),
+    cmocka_unit_test(test__f_thread_lock_attributes_destroy_callback__works),
+    cmocka_unit_test(test__f_thread_lock_attributes_delete_callback__works),
 
-    cmocka_unit_test(test__f_thread_mutexs_adjust_callback__fails),
-    cmocka_unit_test(test__f_thread_mutexs_resize_callback__fails),
-    cmocka_unit_test(test__f_thread_mutexs_adjust_callback__works),
-    cmocka_unit_test(test__f_thread_mutexs_resize_callback__works),
+    cmocka_unit_test(test__f_thread_mutexs_destroy_callback__fails),
+    cmocka_unit_test(test__f_thread_mutexs_delete_callback__fails),
+    cmocka_unit_test(test__f_thread_mutexs_destroy_callback__works),
+    cmocka_unit_test(test__f_thread_mutexs_delete_callback__works),
 
-    cmocka_unit_test(test__f_thread_mutex_attributes_adjust_callback__fails),
-    cmocka_unit_test(test__f_thread_mutex_attributes_resize_callback__fails),
-    cmocka_unit_test(test__f_thread_mutex_attributes_adjust_callback__works),
-    cmocka_unit_test(test__f_thread_mutex_attributes_resize_callback__works),
+    cmocka_unit_test(test__f_thread_mutex_attributes_destroy_callback__fails),
+    cmocka_unit_test(test__f_thread_mutex_attributes_delete_callback__fails),
+    cmocka_unit_test(test__f_thread_mutex_attributes_destroy_callback__works),
+    cmocka_unit_test(test__f_thread_mutex_attributes_delete_callback__works),
 
-    cmocka_unit_test(test__f_thread_semaphores_adjust_callback__fails),
-    cmocka_unit_test(test__f_thread_semaphores_resize_callback__fails),
-    cmocka_unit_test(test__f_thread_semaphores_adjust_callback__works),
-    cmocka_unit_test(test__f_thread_semaphores_resize_callback__works),
+    cmocka_unit_test(test__f_thread_semaphores_destroy_callback__fails),
+    cmocka_unit_test(test__f_thread_semaphores_delete_callback__fails),
+    cmocka_unit_test(test__f_thread_semaphores_destroy_callback__works),
+    cmocka_unit_test(test__f_thread_semaphores_delete_callback__works),
 
-    cmocka_unit_test(test__f_thread_sets_adjust_callback__fails),
-    cmocka_unit_test(test__f_thread_sets_resize_callback__fails),
-    cmocka_unit_test(test__f_thread_sets_adjust_callback__works),
-    cmocka_unit_test(test__f_thread_sets_resize_callback__works),
+    cmocka_unit_test(test__f_thread_sets_destroy_callback__fails),
+    cmocka_unit_test(test__f_thread_sets_delete_callback__fails),
+    cmocka_unit_test(test__f_thread_sets_destroy_callback__works),
+    cmocka_unit_test(test__f_thread_sets_delete_callback__works),
 
-    cmocka_unit_test(test__f_thread_spins_adjust_callback__fails),
-    cmocka_unit_test(test__f_thread_spins_resize_callback__fails),
-    cmocka_unit_test(test__f_thread_spins_adjust_callback__works),
-    cmocka_unit_test(test__f_thread_spins_resize_callback__works),
+    cmocka_unit_test(test__f_thread_spins_destroy_callback__fails),
+    cmocka_unit_test(test__f_thread_spins_delete_callback__fails),
+    cmocka_unit_test(test__f_thread_spins_destroy_callback__works),
+    cmocka_unit_test(test__f_thread_spins_delete_callback__works),
 
     cmocka_unit_test(test__f_thread_at_fork__fails),
     cmocka_unit_test(test__f_thread_at_fork__works),
@@ -407,44 +407,44 @@ int main(void) {
     cmocka_unit_test(test__f_thread_spin_unlock__works),
 
     #ifndef _di_level_0_parameter_checking_
-      // f_thread_attributes_adjust_callback() doesn't use parameter checking.
-      // f_thread_attributes_resize_callback() doesn't use parameter checking.
+      // f_thread_attributes_destroy_callback() doesn't use parameter checking.
+      // f_thread_attributes_delete_callback() doesn't use parameter checking.
 
-      // f_thread_barriers_adjust_callback() doesn't use parameter checking.
-      // f_thread_barriers_resize_callback() doesn't use parameter checking.
+      // f_thread_barriers_destroy_callback() doesn't use parameter checking.
+      // f_thread_barriers_delete_callback() doesn't use parameter checking.
 
-      // f_thread_barrier_attributes_adjust_callback() doesn't use parameter checking.
-      // f_thread_barrier_attributes_resize_callback() doesn't use parameter checking.
+      // f_thread_barrier_attributes_destroy_callback() doesn't use parameter checking.
+      // f_thread_barrier_attributes_delete_callback() doesn't use parameter checking.
 
-      // f_thread_conditions_adjust_callback() doesn't use parameter checking.
-      // f_thread_conditions_resize_callback() doesn't use parameter checking.
+      // f_thread_conditions_destroy_callback() doesn't use parameter checking.
+      // f_thread_conditions_delete_callback() doesn't use parameter checking.
 
-      // f_thread_condition_attributes_adjust_callback() doesn't use parameter checking.
-      // f_thread_condition_attributes_resize_callback() doesn't use parameter checking.
+      // f_thread_condition_attributes_destroy_callback() doesn't use parameter checking.
+      // f_thread_condition_attributes_delete_callback() doesn't use parameter checking.
 
-      // f_thread_keys_adjust_callback() doesn't use parameter checking.
-      // f_thread_keys_resize_callback() doesn't use parameter checking.
+      // f_thread_keys_destroy_callback() doesn't use parameter checking.
+      // f_thread_keys_delete_callback() doesn't use parameter checking.
 
-      // f_thread_locks_adjust_callback() doesn't use parameter checking.
-      // f_thread_locks_resize_callback() doesn't use parameter checking.
+      // f_thread_locks_destroy_callback() doesn't use parameter checking.
+      // f_thread_locks_delete_callback() doesn't use parameter checking.
 
-      // f_thread_lock_attributes_adjust_callback() doesn't use parameter checking.
-      // f_thread_lock_attributes_resize_callback() doesn't use parameter checking.
+      // f_thread_lock_attributes_destroy_callback() doesn't use parameter checking.
+      // f_thread_lock_attributes_delete_callback() doesn't use parameter checking.
 
-      // f_thread_mutexs_adjust_callback() doesn't use parameter checking.
-      // f_thread_mutexs_resize_callback() doesn't use parameter checking.
+      // f_thread_mutexs_destroy_callback() doesn't use parameter checking.
+      // f_thread_mutexs_delete_callback() doesn't use parameter checking.
 
-      // f_thread_mutex_attributes_adjust_callback() doesn't use parameter checking.
-      // f_thread_mutex_attributes_resize_callback() doesn't use parameter checking.
+      // f_thread_mutex_attributes_destroy_callback() doesn't use parameter checking.
+      // f_thread_mutex_attributes_delete_callback() doesn't use parameter checking.
 
-      // f_thread_semaphores_adjust_callback() doesn't use parameter checking.
-      // f_thread_semaphores_resize_callback() doesn't use parameter checking.
+      // f_thread_semaphores_destroy_callback() doesn't use parameter checking.
+      // f_thread_semaphores_delete_callback() doesn't use parameter checking.
 
-      // f_thread_sets_adjust_callback() doesn't use parameter checking.
-      // f_thread_sets_resize_callback() doesn't use parameter checking.
+      // f_thread_sets_destroy_callback() doesn't use parameter checking.
+      // f_thread_sets_delete_callback() doesn't use parameter checking.
 
-      // f_thread_spins_adjust_callback() doesn't use parameter checking.
-      // f_thread_spins_resize_callback() doesn't use parameter checking.
+      // f_thread_spins_destroy_callback() doesn't use parameter checking.
+      // f_thread_spins_delete_callback() doesn't use parameter checking.
 
       cmocka_unit_test(test__f_thread_at_fork__parameter_checking),
 

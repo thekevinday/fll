@@ -22,7 +22,7 @@ extern "C" {
     if (state->status == F_data_not) return;
     if (state->status == F_none_eos || state->status == F_none_stop) return;
 
-    state->status = f_fss_nest_increase(state->step_small, found);
+    state->status = f_memory_array_increase(state->step_small, sizeof(f_fss_nest_t), (void **) &found->depth, &found->used, &found->size);
     if (F_status_is_error(state->status)) return;
 
     f_number_unsigneds_t positions_start = f_number_unsigneds_t_initialize;
@@ -588,11 +588,11 @@ extern "C" {
         }
 
         if (buffer.string[range->start] == f_fss_eol_s.string[0]) {
-          state->status = f_fss_nest_increase(state->step_small, found);
+          state->status = f_memory_array_increase(state->step_small, sizeof(f_fss_nest_t), (void **) &found->depth, &found->used, &found->size);
           if (F_status_is_error(state->status)) break;
 
           if (found->depth[depth].used == found->depth[depth].size) {
-            state->status = f_fss_items_increase(state->step_small, &found->depth[depth]);
+            state->status = f_memory_array_increase(state->step_small, sizeof(f_fss_item_t), (void **) &found->depth[depth].array, &found->depth[depth].used, &found->depth[depth].size);
             if (F_status_is_error(state->status)) break;
           }
 

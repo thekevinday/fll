@@ -68,6 +68,24 @@ int main(void) {
     cmocka_unit_test(test__f_directory_remove_custom__returns_data_not),
     cmocka_unit_test(test__f_directory_remove_custom__works),
 
+    cmocka_unit_test(test__f_directory_listings_destroy_callback__fails),
+    cmocka_unit_test(test__f_directory_listings_delete_callback__fails),
+
+    cmocka_unit_test(test__f_directory_listings_destroy_callback__works),
+    cmocka_unit_test(test__f_directory_listings_delete_callback__works),
+
+    cmocka_unit_test(test__f_directory_recurse_dos_destroy_callback__fails),
+    cmocka_unit_test(test__f_directory_recurse_dos_delete_callback__fails),
+
+    cmocka_unit_test(test__f_directory_recurse_dos_destroy_callback__works),
+    cmocka_unit_test(test__f_directory_recurse_dos_delete_callback__works),
+
+    cmocka_unit_test(test__f_directory_statuss_destroy_callback__fails),
+    cmocka_unit_test(test__f_directory_statuss_delete_callback__fails),
+
+    cmocka_unit_test(test__f_directory_statuss_destroy_callback__works),
+    cmocka_unit_test(test__f_directory_statuss_delete_callback__works),
+
     cmocka_unit_test(test__f_directory_touch__fails),
     cmocka_unit_test(test__f_directory_touch__returns_data_not),
     cmocka_unit_test(test__f_directory_touch__works),
@@ -88,6 +106,8 @@ int main(void) {
       cmocka_unit_test(test__f_directory_open_at__parameter_checking),
       cmocka_unit_test(test__f_directory_remove__parameter_checking),
       cmocka_unit_test(test__f_directory_remove_custom__parameter_checking),
+      // f_directory_statuss_destroy_callback() doesn't use parameter checking.
+      // f_directory_statuss_delete_callback() doesn't use parameter checking.
       // f_directory_touch() doesn't use parameter checking.
       // f_directory_touch_at() doesn't use parameter checking.
     #endif // _di_level_0_parameter_checking_

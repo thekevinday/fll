@@ -27,16 +27,16 @@ build_libraries-individual -lf_memory -lf_string -lf_type_array -lf_utf -lf_fss
 
 build_sources_program test-fss-apply_delimit.c test-fss-apply_delimit_range.c test-fss-count_lines.c test-fss-count_lines_range.c test-fss-fail_utf.c test-fss-fail_utf_to_false.c test-fss-is_combining.c test-fss-is_graph.c test-fss-is_space.c test-fss-is_zero_width.c test-fss-seek_to_eol.c test-fss-skip_past_delimit.c test-fss-skip_past_space.c
 
-build_sources_program test-fss-items_adjust.c test-fss-items_decimate_by.c test-fss-items_decrease_by.c test-fss-items_increase.c test-fss-items_increase_by.c test-fss-items_resize.c
-build_sources_program test-fss-named_adjust.c test-fss-named_decimate_by.c test-fss-named_decrease_by.c test-fss-named_increase.c test-fss-named_increase_by.c test-fss-named_resize.c
-build_sources_program test-fss-nameds_adjust.c test-fss-nameds_decimate_by.c test-fss-nameds_decrease_by.c test-fss-nameds_increase.c test-fss-nameds_increase_by.c test-fss-nameds_resize.c
-build_sources_program test-fss-nest_adjust.c test-fss-nest_decimate_by.c test-fss-nest_decrease_by.c test-fss-nest_increase.c test-fss-nest_increase_by.c test-fss-nest_resize.c
-build_sources_program test-fss-nests_adjust.c test-fss-nests_decimate_by.c test-fss-nests_decrease_by.c test-fss-nests_increase.c test-fss-nests_increase_by.c test-fss-nests_resize.c
-build_sources_program test-fss-set_adjust.c test-fss-set_decimate_by.c test-fss-set_decrease_by.c test-fss-set_increase.c test-fss-set_increase_by.c test-fss-set_resize.c
-build_sources_program test-fss-set_quote_adjust.c test-fss-set_quote_decimate_by.c test-fss-set_quote_decrease_by.c test-fss-set_quote_increase.c test-fss-set_quote_increase_by.c test-fss-set_quote_resize.c
-build_sources_program test-fss-set_quotes_adjust.c test-fss-set_quotes_decimate_by.c test-fss-set_quotes_decrease_by.c test-fss-set_quotes_increase.c test-fss-set_quotes_increase_by.c test-fss-set_quotes_resize.c
-build_sources_program test-fss-sets_adjust.c test-fss-sets_decimate_by.c test-fss-sets_decrease_by.c test-fss-sets_increase.c test-fss-sets_increase_by.c test-fss-sets_resize.c
-build_sources_program test-fss-simple_packet_ranges_adjust.c test-fss-simple_packet_ranges_decimate_by.c test-fss-simple_packet_ranges_decrease_by.c test-fss-simple_packet_ranges_increase.c test-fss-simple_packet_ranges_increase_by.c test-fss-simple_packet_ranges_resize.c
+#build_sources_program test-fss-items_destroy_callback.c test-fss-items_delete_callback.c
+#build_sources_program test-fss-named_destroy_callback.c test-fss-named_delete_callback.c
+#build_sources_program test-fss-nameds_destroy_callback.c test-fss-nameds_delete_callback.c
+#build_sources_program test-fss-nest_destroy_callback.c test-fss-nest_delete_callback.c
+#build_sources_program test-fss-nests_destroy_callback.c test-fss-nests_delete_callback.c
+#build_sources_program test-fss-set_destroy_callback.c test-fss-set_delete_callback.c
+#build_sources_program test-fss-set_quote_destroy_callback.c test-fss-set_quote_delete_callback.c
+#build_sources_program test-fss-set_quotes_destroy_callback.c test-fss-set_quotes_delete_callback.c
+#build_sources_program test-fss-sets_destroy_callback.c test-fss-sets_delete_callback.c
+#build_sources_program test-fss-simple_packet_ranges_destroy_callback.c test-fss-simple_packet_ranges_delete_callback.c
 
 build_sources_program test-fss.c
 

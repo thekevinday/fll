@@ -29,11 +29,11 @@ int main(void) {
     cmocka_unit_test(test__f_iki_content_partial_is__returns_false),
     cmocka_unit_test(test__f_iki_content_partial_is__returns_true),
 
-    cmocka_unit_test(test__f_iki_datas_adjust_callback__fails),
-    cmocka_unit_test(test__f_iki_datas_resize_callback__fails),
+    cmocka_unit_test(test__f_iki_datas_destroy_callback__fails),
+    cmocka_unit_test(test__f_iki_datas_delete_callback__fails),
 
-    cmocka_unit_test(test__f_iki_datas_adjust_callback__works),
-    cmocka_unit_test(test__f_iki_datas_resize_callback__works),
+    cmocka_unit_test(test__f_iki_datas_destroy_callback__works),
+    cmocka_unit_test(test__f_iki_datas_delete_callback__works),
 
     cmocka_unit_test(test__f_iki_datas_append__works),
     cmocka_unit_test(test__f_iki_datas_append_all__works),
@@ -63,8 +63,8 @@ int main(void) {
       cmocka_unit_test(test__f_iki_content_is__parameter_checking),
       cmocka_unit_test(test__f_iki_content_partial_is__parameter_checking),
 
-      // f_iki_datas_adjust_callback() doesn't use parameter checking.
-      // f_iki_datas_resize_callback() doesn't use parameter checking.
+      // f_iki_datas_destroy_callback() doesn't use parameter checking.
+      // f_iki_datas_delete_callback() doesn't use parameter checking.
 
       cmocka_unit_test(test__f_iki_datas_append__parameter_checking),
       cmocka_unit_test(test__f_iki_datas_append_all__parameter_checking),

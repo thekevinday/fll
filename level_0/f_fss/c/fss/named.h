@@ -46,17 +46,6 @@ extern "C" {
     macro_f_string_ranges_t_clear(named.objects) \
     macro_f_string_rangess_t_clear(named.contents) \
     macro_f_uint8ss_t_clear(named.quotess)
-
-  #define macro_f_fss_named_t_resize(status, named, length) status = f_fss_named_resize(length, &named);
-  #define macro_f_fss_named_t_adjust(status, named, length) status = f_fss_named_adjust(length, &named);
-
-  #define macro_f_fss_named_t_delete_simple(named)  f_fss_named_resize(0, &named);
-  #define macro_f_fss_named_t_destroy_simple(named) f_fss_named_adjust(0, &named);
-
-  #define macro_f_fss_named_t_increase(status, step, named)      status = f_fss_named_increase(step, &named);
-  #define macro_f_fss_named_t_increase_by(status, named, amount) status = f_fss_named_increase_by(amount, &named);
-  #define macro_f_fss_named_t_decrease_by(status, named, amount) status = f_fss_named_decrease_by(amount, &named);
-  #define macro_f_fss_named_t_decimate_by(status, named, amount) status = f_fss_named_decimate_by(amount, &named);
 #endif // _di_f_fss_named_t_
 
 /**
@@ -80,295 +69,182 @@ extern "C" {
   #define macro_f_fss_nameds_t_initialize_1(array, size, used) { array, size, used }
   #define macro_f_fss_nameds_t_initialize_2(array, length) { array, length, length }
 
-  #define macro_f_fss_nameds_t_resize(status, nameds, length) status = f_fss_nameds_resize(length, &nameds);
-  #define macro_f_fss_nameds_t_adjust(status, nameds, length) status = f_fss_nameds_adjust(length, &nameds);
-
-  #define macro_f_fss_nameds_t_delete_simple(nameds)  f_fss_nameds_resize(0, &nameds);
-  #define macro_f_fss_nameds_t_destroy_simple(nameds) f_fss_nameds_adjust(0, &nameds);
-
-  #define macro_f_fss_nameds_t_increase(status, step, nameds)      status = f_fss_nameds_increase(step, &nameds);
-  #define macro_f_fss_nameds_t_increase_by(status, nameds, amount) status = f_fss_nameds_increase_by(amount, &nameds);
-  #define macro_f_fss_nameds_t_decrease_by(status, nameds, amount) status = f_fss_nameds_decrease_by(amount, &nameds);
-  #define macro_f_fss_nameds_t_decimate_by(status, nameds, amount) status = f_fss_nameds_decimate_by(amount, &nameds);
+  #define macro_f_fss_nameds_t_clear(nameds) macro_f_memory_structures_clear(nameds)
 #endif // _di_f_fss_nameds_t_
 
 /**
- * Resize all parts of the named structure using the same length.
+ * Delete a named.
  *
- * @param length
- *   The new size to use.
  * @param named
- *   The named structure to adjust.
+ *   The named to delete.
  *
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_f_fss_named_adjust_
-  extern f_status_t f_fss_named_adjust(const f_number_unsigned_t length, f_fss_named_t * const named);
-#endif // _di_f_fss_named_adjust_
-
-/**
- * Resize all parts of the named structure to a smaller size.
- *
- * This will resize making the array smaller based on (size - given length).
- * If the given length is too small, then the resize will fail.
- * This will not shrink the size to less than 0.
- *
- * @param amount
- *   A positive number representing how much to decimate the size by.
- * @param named
- *   The named array to resize.
- *
- * @return
- *   F_none on success.
- *   F_data_not if amount is 0.
- *
- *   F_memory_not (with error bit) on out of memory.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_f_fss_named_decimate_by_
-  extern f_status_t f_fss_named_decimate_by(const f_number_unsigned_t amount, f_fss_named_t * const named);
-#endif // _di_f_fss_named_decimate_by_
-
-/**
- * Resize all parts of the named structure to a smaller size.
- *
- * This will resize making the array smaller based on (size - given length).
- * If the given length is too small, then the resize will fail.
- * This will not shrink the size to less than 0.
- *
- * @param amount
- *   A positive number representing how much to decrease the size by.
- * @param named
- *   The named array to resize.
- *
- * @return
- *   F_none on success.
- *   F_data_not if amount is 0.
- *
- *   F_memory_not (with error bit) on out of memory.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_f_fss_named_decrease_by_
-  extern f_status_t f_fss_named_decrease_by(const f_number_unsigned_t amount, f_fss_named_t * const named);
-#endif // _di_f_fss_named_decrease_by_
-
-/**
- * Increase the size of all parts of the named structure, but only if necessary.
- *
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
- * If already set to the maximum buffer size, then the resize will fail.
- *
- * @param step
- *   The allocation step to use.
- *   Must be greater than 0.
- * @param named
- *   The named array to resize.
- *
- * @return
- *   F_none on success.
- *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
- *
- *   F_array_too_large (with error bit) if the new array length is too large.
- *   F_memory_not (with error bit) on out of memory.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_f_fss_named_increase_
-  extern f_status_t f_fss_named_increase(const f_number_unsigned_t step, f_fss_named_t * const named);
-#endif // _di_f_fss_named_increase_
-
-/**
- * Resize all parts of the named structure to a larger size.
- *
- * This will resize making the array larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
- * If already set to the maximum buffer size, then the resize will fail.
- *
- * @param amount
- *   A positive number representing how much to increase the size by.
- * @param named
- *   The named array to resize.
- *
- * @return
- *   F_none on success.
- *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
- *
- *   F_memory_not (with error bit) on out of memory.
- *   F_parameter (with error bit) if a parameter is invalid.
- *   F_array_too_large (with error bit) if the new array length is too large.
- */
-#ifndef _di_f_fss_named_increase_by_
-  extern f_status_t f_fss_named_increase_by(const f_number_unsigned_t amount, f_fss_named_t * const named);
-#endif // _di_f_fss_named_increase_by_
-
-/**
- * Resize all parts of the named structure using the same length.
- *
- * @param length
- *   The new size to use.
- * @param named
- *   The named array to resize.
- *
- * @return
- *   F_none on success.
- *
- *   F_memory_not (with error bit) on out of memory.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_f_fss_named_resize_
-  extern f_status_t f_fss_named_resize(const f_number_unsigned_t length, f_fss_named_t * const named);
-#endif // _di_f_fss_named_resize_
-
-/**
- * Adjust the named array.
- *
- * @param length
- *   The new size to use.
- * @param nameds
- *   The nameds array to adjust.
- *
- * @return
- *   Success from f_memory_array_resize().
- *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_array_resize().
- *   Errors (with error bit) from: f_memory_arrays_resize().
  *   Errors (with error bit) from: f_string_ranges_resize().
  *   Errors (with error bit) from: f_string_rangess_resize().
+ *   Errors (with error bit) from: f_memory_arrays_resize().
  *
- * @see f_memory_array_resize()
- * @see f_memory_arrays_resize()
  * @see f_string_ranges_resize()
  * @see f_string_rangess_resize()
+ * @see f_memory_arrays_resize()
  */
-#ifndef _di_f_fss_nameds_adjust_
-  extern f_status_t f_fss_nameds_adjust(const f_number_unsigned_t length, f_fss_nameds_t * const nameds);
-#endif // _di_f_fss_nameds_adjust_
+#ifndef _di_f_fss_named_delete_
+  extern f_status_t f_fss_named_delete(f_fss_named_t * const named);
+#endif // _di_f_fss_named_delete_
 
 /**
- * Resize the named array to a smaller size.
+ * Destroy a named.
  *
- * This will resize making the array smaller based on (size - given length).
- * If the given length is too small, then the resize will fail.
- * This will not shrink the size to less than 0.
- *
- * @param amount
- *   A positive number representing how much to decimate the size by.
- * @param nameds
- *   The nameds array to resize.
+ * @param named
+ *   The named to destroy.
  *
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_string_ranges_adjust().
+ *   Errors (with error bit) from: f_string_rangess_adjust().
+ *   Errors (with error bit) from: f_memory_arrays_adjust().
+ *
+ * @see f_string_ranges_adjust()
+ * @see f_string_rangess_adjust()
+ * @see f_memory_arrays_adjust()
  */
-#ifndef _di_f_fss_nameds_decimate_by_
-  extern f_status_t f_fss_nameds_decimate_by(const f_number_unsigned_t amount, f_fss_nameds_t * const nameds);
-#endif // _di_f_fss_nameds_decimate_by_
+#ifndef _di_f_fss_named_destroy_
+  extern f_status_t f_fss_named_destroy(f_fss_named_t * const named);
+#endif // _di_f_fss_named_destroy_
 
 /**
- * Resize the named array to a smaller size.
+ * A callback intended to be passed to f_memory_arrays_resize() for an f_nameds_t structure.
  *
- * This will resize making the array smaller based on (size - given length).
- * If the given length is too small, then the resize will fail.
- * This will not shrink the size to less than 0.
+ * This is only called when shrinking the array and generally should perform deallocations.
  *
- * @param amount
- *   A positive number representing how much to decrease the size by.
- * @param nameds
- *   The nameds array to resize.
+ * This does not do parameter checking.
+ *
+ * @param start
+ *   The inclusive start position in the array to start deleting.
+ * @param stop
+ *   The exclusive stop position in the array to stop deleting.
+ * @param array
+ *   The array structure to delete all values of.
+ *   Must not be NULL.
  *
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_f_fss_nameds_decrease_by_
-  extern f_status_t f_fss_nameds_decrease_by(const f_number_unsigned_t amount, f_fss_nameds_t * const nameds);
-#endif // _di_f_fss_nameds_decrease_by_
-
-/**
- * Increase the size of the nameds array, but only if necessary.
- *
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
- * If already set to the maximum buffer size, then the resize will fail.
- *
- * @param step
- *   The allocation step to use.
- *   Must be greater than 0.
- * @param nameds
- *   The nameds array to resize.
- *
- * @return
- *   Success from f_memory_array_increase().
- *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_array_increase().
- *
- * @see f_memory_array_increase()
- */
-#ifndef _di_f_fss_nameds_increase_
-  extern f_status_t f_fss_nameds_increase(const f_number_unsigned_t step, f_fss_nameds_t * const nameds);
-#endif // _di_f_fss_nameds_increase_
-
-/**
- * Resize the nameds array to a larger size.
- *
- * This will resize making the array larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
- * If already set to the maximum buffer size, then the resize will fail.
- *
- * @param amount
- *   A positive number representing how much to increase the size by.
- * @param nameds
- *   The nameds array to resize.
- *
- * @return
- *   Success from f_memory_array_increase_by().
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: f_memory_array_increase_by().
- *
- * @see f_memory_array_increase_by()
- */
-#ifndef _di_f_fss_nameds_increase_by_
-  extern f_status_t f_fss_nameds_increase_by(const f_number_unsigned_t amount, f_fss_nameds_t * const nameds);
-#endif // _di_f_fss_nameds_increase_by_
-
-/**
- * Resize the nameds array.
- *
- * @param length
- *   The new size to use.
- * @param nameds
- *   The nameds array to resize.
- *
- * @return
- *   Success from f_memory_array_resize().
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: f_memory_array_resize().
- *   Errors (with error bit) from: f_memory_arrays_resize().
  *   Errors (with error bit) from: f_string_ranges_resize().
  *   Errors (with error bit) from: f_string_rangess_resize().
+ *   Errors (with error bit) from: f_memory_arrays_resize().
  *
- * @see f_memory_array_resize()
- * @see f_memory_arrays_resize()
  * @see f_string_ranges_resize()
  * @see f_string_rangess_resize()
+ * @see f_memory_arrays_resize()
  */
-#ifndef _di_f_fss_nameds_resize_
-  extern f_status_t f_fss_nameds_resize(const f_number_unsigned_t length, f_fss_nameds_t * const nameds);
-#endif // _di_f_fss_nameds_resize_
+#ifndef _di_f_fss_nameds_delete_callback_
+  extern f_status_t f_fss_nameds_delete_callback(const f_number_unsigned_t start, const f_number_unsigned_t stop, void * const array);
+#endif // _di_f_fss_nameds_delete_callback_
+
+/**
+ * A callback intended to be passed to f_memory_arrays_adjust() for an f_nameds_t structure.
+ *
+ * This is only called when shrinking the array and generally should perform deallocations.
+ *
+ * This does not do parameter checking.
+ *
+ * @param start
+ *   The inclusive start position in the array to start deleting.
+ * @param stop
+ *   The exclusive stop position in the array to stop deleting.
+ * @param array
+ *   The array structure to delete all values of.
+ *   Must not be NULL.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_string_ranges_adjust().
+ *   Errors (with error bit) from: f_string_rangess_adjust().
+ *   Errors (with error bit) from: f_memory_arrays_adjust().
+ *
+ * @see f_string_ranges_adjust()
+ * @see f_string_rangess_adjust()
+ * @see f_memory_arrays_adjust()
+ */
+#ifndef _di_f_fss_nameds_destroy_callback_
+  extern f_status_t f_fss_nameds_destroy_callback(const f_number_unsigned_t start, const f_number_unsigned_t stop, void * const array);
+#endif // _di_f_fss_nameds_destroy_callback_
+
+/**
+ * A callback intended to be passed to f_memory_arrays_resize() for an f_namedss_t structure.
+ *
+ * This is only called when shrinking the array and generally should perform deallocations.
+ *
+ * This does not do parameter checking.
+ *
+ * @param start
+ *   The inclusive start position in the array to start deleting.
+ * @param stop
+ *   The exclusive stop position in the array to stop deleting.
+ * @param array
+ *   The array structure to delete all values of.
+ *   Must not be NULL.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_string_ranges_resize().
+ *   Errors (with error bit) from: f_string_rangess_resize().
+ *   Errors (with error bit) from: f_memory_arrays_resize().
+ *
+ * @see f_string_ranges_resize()
+ * @see f_string_rangess_resize()
+ * @see f_memory_arrays_resize()
+ */
+#ifndef _di_f_fss_namedss_delete_callback_
+  extern f_status_t f_fss_namedss_delete_callback(const f_number_unsigned_t start, const f_number_unsigned_t stop, void * const array);
+#endif // _di_f_fss_namedss_delete_callback_
+
+/**
+ * A callback intended to be passed to f_memory_arrays_adjust() for an f_namedss_t structure.
+ *
+ * This is only called when shrinking the array and generally should perform deallocations.
+ *
+ * This does not do parameter checking.
+ *
+ * @param start
+ *   The inclusive start position in the array to start deleting.
+ * @param stop
+ *   The exclusive stop position in the array to stop deleting.
+ * @param array
+ *   The array structure to delete all values of.
+ *   Must not be NULL.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_string_ranges_adjust().
+ *   Errors (with error bit) from: f_string_rangess_adjust().
+ *   Errors (with error bit) from: f_memory_arrays_adjust().
+ *
+ * @see f_string_ranges_adjust()
+ * @see f_string_rangess_adjust()
+ * @see f_memory_arrays_adjust()
+ */
+#ifndef _di_f_fss_namedss_destroy_callback_
+  extern f_status_t f_fss_namedss_destroy_callback(const f_number_unsigned_t start, const f_number_unsigned_t stop, void * const array);
+#endif // _di_f_fss_namedss_destroy_callback_
 
 #ifdef __cplusplus
 } // extern "C"

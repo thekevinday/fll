@@ -12,17 +12,19 @@ extern "C" {
       if (!data) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    f_status_t status = f_string_ranges_resize(0, &data->content);
-    if (F_status_is_error(status)) return status;
+    {
+      f_status_t status = f_string_ranges_resize(0, &data->content);
+      if (F_status_is_error(status)) return status;
 
-    status = f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &data->delimits.array, &data->delimits.used, &data->delimits.size);
-    if (F_status_is_error(status)) return status;
+      status = f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &data->delimits.array, &data->delimits.used, &data->delimits.size);
+      if (F_status_is_error(status)) return status;
 
-    status = f_string_ranges_resize(0, &data->variable);
-    if (F_status_is_error(status)) return status;
+      status = f_string_ranges_resize(0, &data->variable);
+      if (F_status_is_error(status)) return status;
 
-    status = f_string_ranges_resize(0, &data->vocabulary);
-    if (F_status_is_error(status)) return status;
+      status = f_string_ranges_resize(0, &data->vocabulary);
+      if (F_status_is_error(status)) return status;
+    }
 
     return F_none;
   }
@@ -34,48 +36,23 @@ extern "C" {
       if (!data) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    f_status_t status = f_string_ranges_adjust(0, &data->content);
-    if (F_status_is_error(status)) return status;
-
-    status = f_memory_array_adjust(0, sizeof(f_number_unsigned_t), (void **) &data->delimits.array, &data->delimits.used, &data->delimits.size);
-    if (F_status_is_error(status)) return status;
-
-    status = f_string_ranges_adjust(0, &data->variable);
-    if (F_status_is_error(status)) return status;
-
-    status = f_string_ranges_adjust(0, &data->vocabulary);
-    if (F_status_is_error(status)) return status;
-
-    return F_none;
-  }
-#endif // _di_f_iki_data_destroy_
-
-#ifndef _di_f_iki_datas_adjust_callback_
-  f_status_t f_iki_datas_adjust_callback(const f_number_unsigned_t start, const f_number_unsigned_t stop, void * const void_array) {
-
     {
-      f_iki_datas_t * const array = (f_iki_datas_t *) void_array;
-      f_status_t status = F_none;
+      f_status_t status = f_string_ranges_adjust(0, &data->content);
+      if (F_status_is_error(status)) return status;
 
-      for (f_number_unsigned_t i = start; i < stop; ++i) {
+      status = f_memory_array_adjust(0, sizeof(f_number_unsigned_t), (void **) &data->delimits.array, &data->delimits.used, &data->delimits.size);
+      if (F_status_is_error(status)) return status;
 
-        status = f_string_ranges_adjust(0, &array->array[i].content);
-        if (F_status_is_error(status)) return status;
+      status = f_string_ranges_adjust(0, &data->variable);
+      if (F_status_is_error(status)) return status;
 
-        status = f_memory_array_adjust(0, sizeof(f_number_unsigned_t), (void **) &array->array[i].delimits.array, &array->array[i].delimits.used, &array->array[i].delimits.size);
-        if (F_status_is_error(status)) return status;
-
-        status = f_string_ranges_adjust(0, &array->array[i].variable);
-        if (F_status_is_error(status)) return status;
-
-        status = f_string_ranges_adjust(0, &array->array[i].vocabulary);
-        if (F_status_is_error(status)) return status;
-      } // for
+      status = f_string_ranges_adjust(0, &data->vocabulary);
+      if (F_status_is_error(status)) return status;
     }
 
     return F_none;
   }
-#endif // _di_f_iki_datas_adjust_callback_
+#endif // _di_f_iki_data_destroy_
 
 #ifndef _di_f_iki_datas_append_
   f_status_t f_iki_datas_append(const f_iki_data_t source, f_iki_datas_t *destination) {
@@ -132,32 +109,59 @@ extern "C" {
   }
 #endif // _di_f_iki_datas_append_all_
 
-#ifndef _di_f_iki_datas_resize_callback_
-  f_status_t f_iki_datas_resize_callback(const f_number_unsigned_t start, const f_number_unsigned_t stop, void * const void_array) {
+#ifndef _di_f_iki_datas_delete_callback_
+  f_status_t f_iki_datas_delete_callback(const f_number_unsigned_t start, const f_number_unsigned_t stop, void * const void_array) {
 
     {
-      f_iki_datas_t * const array = (f_iki_datas_t *) void_array;
+      f_iki_data_t * const array = (f_iki_data_t *) void_array;
       f_status_t status = F_none;
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
 
-        status = f_string_ranges_resize(0, &array->array[i].content);
+        status = f_string_ranges_resize(0, &array[i].content);
         if (F_status_is_error(status)) return status;
 
-        status = f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &array->array[i].delimits.array, &array->array[i].delimits.used, &array->array[i].delimits.size);
+        status = f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &array[i].delimits.array, &array[i].delimits.used, &array[i].delimits.size);
         if (F_status_is_error(status)) return status;
 
-        status = f_string_ranges_resize(0, &array->array[i].variable);
+        status = f_string_ranges_resize(0, &array[i].variable);
         if (F_status_is_error(status)) return status;
 
-        status = f_string_ranges_resize(0, &array->array[i].vocabulary);
+        status = f_string_ranges_resize(0, &array[i].vocabulary);
         if (F_status_is_error(status)) return status;
       } // for
     }
 
     return F_none;
   }
-#endif // _di_f_iki_datas_resize_callback_
+#endif // _di_f_iki_datas_delete_callback_
+
+#ifndef _di_f_iki_datas_destroy_callback_
+  f_status_t f_iki_datas_destroy_callback(const f_number_unsigned_t start, const f_number_unsigned_t stop, void * const void_array) {
+
+    {
+      f_iki_data_t * const array = (f_iki_data_t *) void_array;
+      f_status_t status = F_none;
+
+      for (f_number_unsigned_t i = start; i < stop; ++i) {
+
+        status = f_string_ranges_adjust(0, &array[i].content);
+        if (F_status_is_error(status)) return status;
+
+        status = f_memory_array_adjust(0, sizeof(f_number_unsigned_t), (void **) &array[i].delimits.array, &array[i].delimits.used, &array[i].delimits.size);
+        if (F_status_is_error(status)) return status;
+
+        status = f_string_ranges_adjust(0, &array[i].variable);
+        if (F_status_is_error(status)) return status;
+
+        status = f_string_ranges_adjust(0, &array[i].vocabulary);
+        if (F_status_is_error(status)) return status;
+      } // for
+    }
+
+    return F_none;
+  }
+#endif // _di_f_iki_datas_destroy_callback_
 
 #ifndef _di_f_iki_datass_append_
   f_status_t f_iki_datass_append(const f_iki_datas_t source, f_iki_datass_t *destination) {
@@ -203,6 +207,78 @@ extern "C" {
     return F_none;
   }
 #endif // _di_f_iki_datass_append_all_
+
+#ifndef _di_f_iki_datass_delete_callback_
+  f_status_t f_iki_datass_delete_callback(const f_number_unsigned_t start, const f_number_unsigned_t stop, void * const void_array) {
+
+    {
+      f_iki_datas_t * const array = (f_iki_datas_t *) void_array;
+      f_status_t status = F_none;
+      f_number_unsigned_t j = 0;
+
+      for (f_number_unsigned_t i = start; i < stop; ++i) {
+
+        for (j = 0; j < array[i].size; ++j) {
+
+          status = f_string_ranges_resize(0, &array[i].array[j].content);
+          if (F_status_is_error(status)) return status;
+
+          status = f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &array[i].array[j].delimits.array, &array[i].array[j].delimits.used, &array[i].array[j].delimits.size);
+          if (F_status_is_error(status)) return status;
+
+          status = f_string_ranges_resize(0, &array[i].array[j].variable);
+          if (F_status_is_error(status)) return status;
+
+          status = f_string_ranges_resize(0, &array[i].array[j].vocabulary);
+          if (F_status_is_error(status)) return status;
+        } // for
+
+        if (array[i].size) {
+          status = f_memory_array_resize(0, sizeof(f_iki_data_t), (void **) &array[i].array, &array[i].used, &array[i].size);
+          if (F_status_is_error(status)) return status;
+        }
+      } // for
+    }
+
+    return F_none;
+  }
+#endif // _di_f_iki_datass_delete_callback_
+
+#ifndef _di_f_iki_datass_destroy_callback_
+  f_status_t f_iki_datass_destroy_callback(const f_number_unsigned_t start, const f_number_unsigned_t stop, void * const void_array) {
+
+    {
+      f_iki_datas_t * const array = (f_iki_datas_t *) void_array;
+      f_status_t status = F_none;
+      f_number_unsigned_t j = 0;
+
+      for (f_number_unsigned_t i = start; i < stop; ++i) {
+
+        for (j = 0; j < array[i].size; ++j) {
+
+          status = f_string_ranges_adjust(0, &array[i].array[j].content);
+          if (F_status_is_error(status)) return status;
+
+          status = f_memory_array_adjust(0, sizeof(f_number_unsigned_t), (void **) &array[i].array[j].delimits.array, &array[i].array[j].delimits.used, &array[i].array[j].delimits.size);
+          if (F_status_is_error(status)) return status;
+
+          status = f_string_ranges_adjust(0, &array[i].array[j].variable);
+          if (F_status_is_error(status)) return status;
+
+          status = f_string_ranges_adjust(0, &array[i].array[j].vocabulary);
+          if (F_status_is_error(status)) return status;
+        } // for
+
+        if (array[i].size) {
+          status = f_memory_array_adjust(0, sizeof(f_iki_data_t), (void **) &array[i].array, &array[i].used, &array[i].size);
+          if (F_status_is_error(status)) return status;
+        }
+      } // for
+    }
+
+    return F_none;
+  }
+#endif // _di_f_iki_datass_destroy_callback_
 
 #ifdef __cplusplus
 } // extern "C"

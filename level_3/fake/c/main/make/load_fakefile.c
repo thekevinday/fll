@@ -76,14 +76,14 @@ extern "C" {
 
       f_fss_set_t settings = f_fss_set_t_initialize;
 
-      if (list_objects.used > data_make->fakefile.size) {
-        data_make->main->setting.state.status = f_fss_nameds_resize(list_objects.used, &data_make->fakefile);
-      }
+      data_make->fakefile.used = 0;
+
+      data_make->main->setting.state.status = f_memory_array_increase_by(list_objects.used, sizeof(f_fss_named_t), (void **) &data_make->fakefile.array, &data_make->fakefile.used, &data_make->fakefile.size);
 
       if (F_status_is_error(data_make->main->setting.state.status)) {
-        fake_print_error(&data_make->main->program.error, macro_fake_f(f_fss_nameds_resize));
+        fake_print_error(&data_make->main->program.error, macro_fake_f(f_memory_array_resize));
 
-        f_fss_set_resize(0, &settings);
+        f_fss_set_delete(&settings);
         f_string_ranges_resize(0, &list_objects);
         f_string_rangess_resize(0, &list_contents);
         f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &delimits.array, &delimits.used, &delimits.size);
@@ -175,7 +175,7 @@ extern "C" {
       f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &delimits.array, &delimits.used, &delimits.size);
 
       if (F_status_is_error(data_make->main->setting.state.status)) {
-        f_fss_set_resize(0, &settings);
+        f_fss_set_delete(&settings);
 
         return;
       }
@@ -206,7 +206,7 @@ extern "C" {
         if (F_status_is_error(data_make->main->setting.state.status)) {
           fake_print_error(&data_make->main->program.error, function_name);
 
-          f_fss_set_resize(0, &settings);
+          f_fss_set_delete(&settings);
 
           return;
         }
@@ -245,7 +245,7 @@ extern "C" {
         } // for
 
         if (F_status_is_error(data_make->main->setting.state.status)) {
-          f_fss_set_resize(0, &settings);
+          f_fss_set_delete(&settings);
 
           return;
         }
@@ -260,7 +260,7 @@ extern "C" {
       }
 
       if (F_status_is_error(data_make->main->setting.state.status)) {
-        f_fss_set_resize(0, &settings);
+        f_fss_set_delete(&settings);
 
         return;
       }
@@ -283,14 +283,14 @@ extern "C" {
           fake_print_error(&data_make->main->program.error, macro_fake_f(f_string_dynamic_partial_append));
         }
 
-        f_fss_set_resize(0, &settings);
+        f_fss_set_delete(&settings);
 
         return;
       }
 
       fake_make_load_fakefile_setting_define_and_parameter(data_make, &settings);
 
-      f_fss_set_resize(0, &settings);
+      f_fss_set_delete(&settings);
     }
 
     data_make->main->setting.state.status = F_none;
@@ -345,7 +345,7 @@ extern "C" {
   void fake_make_load_fakefile_setting_define_and_parameter(fake_make_data_t * const data_make, f_fss_set_t * const settings) {
 
     if (!data_make || !data_make->data || !data_make->data || !data_make->main || !settings) return;
-;
+
     f_string_map_multis_t define = f_string_map_multis_t_initialize;
 
     // Load the fakefile "settings" as if they are build "settings".

@@ -1,163 +1,173 @@
 #include "../fss.h"
-#include "private-named.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#ifndef _di_f_fss_named_adjust_
-  f_status_t f_fss_named_adjust(const f_number_unsigned_t length, f_fss_named_t * const named) {
+#ifndef _di_f_fss_named_delete_
+  f_status_t f_fss_named_delete(f_fss_named_t * const named) {
     #ifndef _di_level_0_parameter_checking_
       if (!named) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return private_f_fss_named_adjust(length, named);
-  }
-#endif // _di_f_fss_named_adjust_
+    {
+      f_status_t status = f_string_ranges_resize(0, &named->objects);
+      if (F_status_is_error(status)) return status;
 
-#ifndef _di_f_fss_named_decimate_by_
-  f_status_t f_fss_named_decimate_by(const f_number_unsigned_t amount, f_fss_named_t * const named) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!named) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+      status = f_string_rangess_resize(0, &named->contents);
+      if (F_status_is_error(status)) return status;
 
-    if (!amount) return F_data_not;
-
-    return private_f_fss_named_adjust((named->objects.size - amount > 0) ? named->objects.size - amount : 0, named);
-  }
-#endif // _di_f_fss_named_decimate_by_
-
-#ifndef _di_f_fss_named_decrease_by_
-  f_status_t f_fss_named_decrease_by(const f_number_unsigned_t amount, f_fss_named_t * const named) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!named) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (!amount) return F_data_not;
-
-    return private_f_fss_named_resize((named->objects.size - amount > 0) ? named->objects.size - amount : 0, named);
-  }
-#endif // _di_f_fss_named_decrease_by_
-
-#ifndef _di_f_fss_named_increase_
-  f_status_t f_fss_named_increase(const f_number_unsigned_t step, f_fss_named_t * const named) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!named) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (step && named->objects.used + 1 > named->objects.size) {
-      if (named->objects.used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
-
-      f_number_unsigned_t length = named->objects.used + step;
-
-      if (length > F_number_t_size_unsigned_d) {
-        if (named->objects.used + 1 > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
-
-        length = F_number_t_size_unsigned_d;
-      }
-
-      return private_f_fss_named_resize(length, named);
+      status = f_memory_arrays_resize(0, sizeof(uint8_t), (void **) &named->quotess.array, &named->quotess.used, &named->quotess.size, &f_uint8ss_delete_callback);
+      if (F_status_is_error(status)) return status;
     }
 
-    return F_data_not;
+    return F_none;
   }
-#endif // _di_f_fss_named_increase_
+#endif // _di_f_fss_named_delete_
 
-#ifndef _di_f_fss_named_increase_by_
-  f_status_t f_fss_named_increase_by(const f_number_unsigned_t amount, f_fss_named_t * const named) {
+#ifndef _di_f_fss_named_destroy_
+  f_status_t f_fss_named_destroy(f_fss_named_t * const named) {
     #ifndef _di_level_0_parameter_checking_
       if (!named) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (amount) {
-      if (named->objects.used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+    named->name.start = 1;
+    named->name.stop = 0;
 
-      const f_number_unsigned_t length = named->objects.used + amount;
+    {
+      f_status_t status = f_string_ranges_adjust(0, &named->objects);
+      if (F_status_is_error(status)) return status;
 
-      if (length > named->objects.size) {
-        if (length > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+      status = f_string_rangess_adjust(0, &named->contents);
+      if (F_status_is_error(status)) return status;
 
-        return private_f_fss_named_resize(length, named);
-      }
+      status = f_memory_arrays_adjust(0, sizeof(uint8_t), (void **) &named->quotess.array, &named->quotess.used, &named->quotess.size, &f_uint8ss_destroy_callback);
+      if (F_status_is_error(status)) return status;
     }
 
-    return F_data_not;
+    return F_none;
   }
-#endif // _di_f_fss_named_increase_by_
+#endif // _di_f_fss_named_destroy_
 
-#ifndef _di_f_fss_named_resize_
-  f_status_t f_fss_named_resize(const f_number_unsigned_t length, f_fss_named_t * const named) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!named) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+#ifndef _di_f_fss_nameds_delete_callback_
+  f_status_t f_fss_nameds_delete_callback(const f_number_unsigned_t start, const f_number_unsigned_t stop, void * const void_array) {
 
-    return private_f_fss_named_resize(length, named);
+    {
+      f_fss_named_t * const array = (f_fss_named_t *) void_array;
+      f_status_t status = F_none;
+
+      for (f_number_unsigned_t i = start; i < stop; ++i) {
+
+        status = f_string_ranges_resize(0, &array[i].objects);
+        if (F_status_is_error(status)) return status;
+
+        status = f_string_rangess_resize(0, &array[i].contents);
+        if (F_status_is_error(status)) return status;
+
+        status = f_memory_arrays_resize(0, sizeof(uint8_t), (void **) &array[i].quotess.array, &array[i].quotess.used, &array[i].quotess.size, &f_uint8ss_delete_callback);
+        if (F_status_is_error(status)) return status;
+      } // for
+    }
+
+    return F_none;
   }
-#endif // _di_f_fss_named_resize_
+#endif // _di_f_fss_nameds_delete_callback_
 
-#ifndef _di_f_fss_nameds_adjust_
-  f_status_t f_fss_nameds_adjust(const f_number_unsigned_t length, f_fss_nameds_t * const nameds) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!nameds) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+#ifndef _di_f_fss_nameds_destroy_callback_
+  f_status_t f_fss_nameds_destroy_callback(const f_number_unsigned_t start, const f_number_unsigned_t stop, void * const void_array) {
 
-    return private_f_fss_nameds_adjust(length, nameds);
+    {
+      f_fss_named_t * const array = (f_fss_named_t *) void_array;
+      f_status_t status = F_none;
+
+      for (f_number_unsigned_t i = start; i < stop; ++i) {
+
+        array[i].name.start = 1;
+        array[i].name.stop = 0;
+
+        status = f_string_ranges_adjust(0, &array[i].objects);
+        if (F_status_is_error(status)) return status;
+
+        status = f_string_rangess_adjust(0, &array[i].contents);
+        if (F_status_is_error(status)) return status;
+
+        status = f_memory_arrays_adjust(0, sizeof(uint8_t), (void **) &array[i].quotess.array, &array[i].quotess.used, &array[i].quotess.size, &f_uint8ss_destroy_callback);
+        if (F_status_is_error(status)) return status;
+      } // for
+    }
+
+    return F_none;
   }
-#endif // _di_f_fss_nameds_adjust_
+#endif // _di_f_fss_nameds_destroy_callback_
 
-#ifndef _di_f_fss_nameds_decimate_by_
-  f_status_t f_fss_nameds_decimate_by(const f_number_unsigned_t amount, f_fss_nameds_t * const nameds) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!nameds) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+#ifndef _di_f_fss_namedss_delete_callback_
+  f_status_t f_fss_namedss_delete_callback(const f_number_unsigned_t start, const f_number_unsigned_t stop, void * const void_array) {
 
-    if (!amount) return F_data_not;
+    {
+      f_fss_nameds_t * const array = (f_fss_nameds_t *) void_array;
+      f_status_t status = F_none;
+      f_number_unsigned_t j = 0;
 
-    return private_f_fss_nameds_adjust((nameds->size > amount) ? nameds->size - amount : 0, nameds);
+      for (f_number_unsigned_t i = start; i < stop; ++i) {
+
+        for (j = 0; j < array[i].size; ++j) {
+
+          status = f_string_ranges_resize(0, &array[i].array[j].objects);
+          if (F_status_is_error(status)) return status;
+
+          status = f_string_rangess_resize(0, &array[i].array[j].contents);
+          if (F_status_is_error(status)) return status;
+
+          status = f_memory_arrays_resize(0, sizeof(uint8_t), (void **) &array[i].array[j].quotess.array, &array[i].array[j].quotess.used, &array[i].array[j].quotess.size, &f_uint8ss_delete_callback);
+          if (F_status_is_error(status)) return status;
+        } // for
+
+        if (array[i].size) {
+          status = f_memory_array_resize(0, sizeof(f_fss_named_t), (void **) &array[i].array, &array[i].used, &array[i].size);
+          if (F_status_is_error(status)) return status;
+        }
+      } // for
+    }
+
+    return F_none;
   }
-#endif // _di_f_fss_nameds_decimate_by_
+#endif // _di_f_fss_namedss_delete_callback_
 
-#ifndef _di_f_fss_nameds_decrease_by_
-  f_status_t f_fss_nameds_decrease_by(const f_number_unsigned_t amount, f_fss_nameds_t * const nameds) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!nameds) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+#ifndef _di_f_fss_namedss_destroy_callback_
+  f_status_t f_fss_namedss_destroy_callback(const f_number_unsigned_t start, const f_number_unsigned_t stop, void * const void_array) {
 
-    if (!amount) return F_data_not;
+    {
+      f_fss_nameds_t * const array = (f_fss_nameds_t *) void_array;
+      f_status_t status = F_none;
+      f_number_unsigned_t j = 0;
 
-    return private_f_fss_nameds_resize((nameds->size > amount) ? nameds->size - amount : 0, nameds);
+      for (f_number_unsigned_t i = start; i < stop; ++i) {
+
+        for (j = 0; j < array[i].size; ++j) {
+
+          array[i].array[j].name.start = 1;
+          array[i].array[j].name.stop = 0;
+
+          status = f_string_ranges_adjust(0, &array[i].array[j].objects);
+          if (F_status_is_error(status)) return status;
+
+          status = f_string_rangess_adjust(0, &array[i].array[j].contents);
+          if (F_status_is_error(status)) return status;
+
+          status = f_memory_arrays_adjust(0, sizeof(uint8_t), (void **) &array[i].array[j].quotess.array, &array[i].array[j].quotess.used, &array[i].array[j].quotess.size, &f_uint8ss_destroy_callback);
+          if (F_status_is_error(status)) return status;
+        } // for
+
+        if (array[i].size) {
+          status = f_memory_array_adjust(0, sizeof(f_fss_named_t), (void **) &array[i].array, &array[i].used, &array[i].size);
+          if (F_status_is_error(status)) return status;
+        }
+      } // for
+    }
+
+    return F_none;
   }
-#endif // _di_f_fss_nameds_decrease_by_
-
-#ifndef _di_f_fss_nameds_increase_
-  f_status_t f_fss_nameds_increase(const f_number_unsigned_t step, f_fss_nameds_t * const nameds) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!nameds) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return f_memory_array_increase(step, sizeof(f_fss_named_t), (void **) &nameds->array, &nameds->used, &nameds->size);
-  }
-#endif // _di_f_fss_nameds_increase_
-
-#ifndef _di_f_fss_nameds_increase_by_
-  f_status_t f_fss_nameds_increase_by(const f_number_unsigned_t amount, f_fss_nameds_t * const nameds) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!nameds) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return f_memory_array_increase_by(amount, sizeof(f_fss_named_t), (void **) &nameds->array, &nameds->used, &nameds->size);
-  }
-#endif // _di_f_fss_nameds_increase_by_
-
-#ifndef _di_f_fss_nameds_resize_
-  f_status_t f_fss_nameds_resize(const f_number_unsigned_t length, f_fss_nameds_t * const nameds) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!nameds) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return private_f_fss_nameds_resize(length, nameds);
-  }
-#endif // _di_f_fss_nameds_resize_
+#endif // _di_f_fss_namedss_destroy_callback_
 
 #ifdef __cplusplus
 } // extern "C"

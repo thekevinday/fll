@@ -28,6 +28,18 @@ extern "C" {
 
 const static int mock_errno_generic = 32767;
 
+extern int mock_unwrap;
+
+extern f_status_t __real_f_string_dynamic_adjust(const f_number_unsigned_t length, f_string_dynamic_t * const structure);
+extern f_status_t __real_f_string_dynamic_resize(const f_number_unsigned_t length, f_string_dynamic_t * const structure);
+extern f_status_t __real_f_string_dynamics_adjust(const f_number_unsigned_t length, f_string_dynamics_t * const structure);
+extern f_status_t __real_f_string_dynamics_resize(const f_number_unsigned_t length, f_string_dynamics_t * const structure);
+
+extern f_status_t __wrap_f_string_dynamic_adjust(const f_number_unsigned_t length, f_string_dynamic_t * const structure);
+extern f_status_t __wrap_f_string_dynamic_resize(const f_number_unsigned_t length, f_string_dynamic_t * const structure);
+extern f_status_t __wrap_f_string_dynamics_adjust(const f_number_unsigned_t length, f_string_dynamics_t * const structure);
+extern f_status_t __wrap_f_string_dynamics_resize(const f_number_unsigned_t length, f_string_dynamics_t * const structure);
+
 extern int __wrap_alphasort(const struct dirent **a, const struct dirent **b);
 extern int __wrap_fstatat(int dirfd, const char *pathname, struct stat *statbuf, int flags);
 extern int __wrap_mkdir(const char *pathname, mode_t mode);

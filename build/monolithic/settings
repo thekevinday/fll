@@ -33,19 +33,19 @@ build_language c
 
 build_libraries -lc -lcap
 
-build_sources_library level_0/account.c level_0/private-account.c level_0/account/accounts.c level_0/account/private-accounts.c
+build_sources_library level_0/account.c level_0/private-account.c level_0/account/accounts.c
 build_sources_library level_0/capability.c
 build_sources_library level_0/color.c level_0/private-color.c level_0/color/common.c
 build_sources_library level_0/compare.c level_0/compare/utf.c level_0/private-compare.c level_0/compare/private-utf.c
 build_sources_library level_0/console.c level_0/console/common.c level_0/private-console.c
 build_sources_library level_0/control_group.c level_0/control_group/common.c
 build_sources_library level_0/conversion.c level_0/private-conversion.c level_0/conversion/common.c
-build_sources_library level_0/directory.c level_0/directory/common.c level_0/directory/type.c level_0/private-directory.c level_0/directory/private-type.c
+build_sources_library level_0/directory.c level_0/directory/common.c level_0/directory/listing.c level_0/directory/recurse_do.c level_0/directory/status.c
+build_sources_library level_0/private-directory.c
 build_sources_library level_0/environment.c
 build_sources_library level_0/execute.c
 build_sources_library level_0/file.c level_0/private-file.c level_0/file/common.c level_0/file/stream.c
 build_sources_library level_0/fss.c level_0/fss/common.c level_0/fss/item.c level_0/fss/named.c level_0/fss/nest.c level_0/fss/quote.c level_0/fss/set.c level_0/fss/set_quote.c level_0/fss/simple_packet.c
-build_sources_library level_0/fss/private-item.c level_0/fss/private-named.c level_0/fss/private-nest.c level_0/fss/private-set.c level_0/fss/private-set_quote.c level_0/fss/private-simple_packet.c
 build_sources_library level_0/iki.c level_0/iki/common.c level_0/iki/data.c level_0/private-iki.c level_0/iki/private-data.c
 build_sources_library level_0/limit.c level_0/limit/set.c level_0/limit/value.c level_0/limit/private-set.c level_0/limit/private-value.c
 build_sources_library level_0/memory.c level_0/memory/array.c level_0/memory/arrays.c
@@ -121,7 +121,7 @@ build_sources_headers level_0/compare.h level_0/compare/utf.h
 build_sources_headers level_0/console.h level_0/console/common.h level_0/private-console.h
 build_sources_headers level_0/control_group.h level_0/control_group/common.h
 build_sources_headers level_0/conversion.h level_0/conversion/common.h
-build_sources_headers level_0/directory.h level_0/directory/common.h level_0/directory/type.h
+build_sources_headers level_0/directory.h level_0/directory/common.h level_0/directory/listing.h level_0/directory/recurse_do.h level_0/directory/status.h
 build_sources_headers level_0/environment.h level_0/environment/common.h
 build_sources_headers level_0/execute.h level_0/execute/common.h
 build_sources_headers level_0/file.h level_0/file/common.h level_0/file/stream.h

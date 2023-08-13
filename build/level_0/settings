@@ -33,19 +33,19 @@ build_language c
 
 build_libraries -lc -lcap
 
-build_sources_library account.c private-account.c account/accounts.c account/private-accounts.c
+build_sources_library account.c private-account.c account/accounts.c
 build_sources_library capability.c
 build_sources_library color.c private-color.c color/common.c
 build_sources_library compare.c compare/utf.c private-compare.c compare/private-utf.c
 build_sources_library console.c console/common.c private-console.c
 build_sources_library control_group.c control_group/common.c
 build_sources_library conversion.c private-conversion.c conversion/common.c
-build_sources_library directory.c directory/common.c directory/type.c private-directory.c directory/private-type.c
+build_sources_library directory.c directory/common.c directory/listing.c directory/recurse_do.c directory/status.c
+build_sources_library private-directory.c
 build_sources_library environment.c
 build_sources_library execute.c
 build_sources_library file.c private-file.c file/common.c file/stream.c
 build_sources_library fss.c fss/common.c fss/item.c fss/named.c fss/nest.c fss/quote.c fss/set.c fss/set_quote.c fss/simple_packet.c
-build_sources_library fss/private-item.c fss/private-named.c fss/private-nest.c fss/private-set.c fss/private-set_quote.c fss/private-simple_packet.c
 build_sources_library iki.c iki/common.c iki/data.c private-iki.c iki/private-data.c
 build_sources_library limit.c limit/set.c limit/value.c limit/private-set.c limit/private-value.c
 build_sources_library memory.c memory/array.c memory/arrays.c
@@ -100,7 +100,7 @@ build_sources_headers compare.h compare/utf.h
 build_sources_headers console.h console/common.h private-console.h
 build_sources_headers control_group.h control_group/common.h
 build_sources_headers conversion.h conversion/common.h
-build_sources_headers directory.h directory/common.h directory/type.h
+build_sources_headers directory.h directory/common.h directory/listing.h directory/recurse_do.h directory/status.h
 build_sources_headers environment.h environment/common.h
 build_sources_headers execute.h execute/common.h
 build_sources_headers file.h file/common.h file/stream.h

@@ -34,6 +34,8 @@
 #include "test-memory-array_resize.h"
 #include "test-memory-arrays_adjust.h"
 #include "test-memory-arrays_resize.h"
+#include "test-memory-arrayss_adjust.h"
+#include "test-memory-arrayss_resize.h"
 #include "test-memory-delete.h"
 #include "test-memory-destroy.h"
 #include "test-memory-new.h"
@@ -65,6 +67,17 @@ typedef struct {
 } test_memory_arrays_t;
 
 #define test_memory_arrays_t_initialize { 0, 0, 0 }
+
+/**
+ * A structure used for testing the memory arrayss functions.
+ */
+typedef struct {
+  test_memory_arrays_t *array;
+  f_number_unsigned_t used;
+  f_number_unsigned_t size;
+} test_memory_arrayss_t;
+
+#define test_memory_arrayss_t_initialize { 0, 0, 0 }
 
 /**
  * Perform any setup operations.

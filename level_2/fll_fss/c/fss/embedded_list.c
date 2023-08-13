@@ -21,7 +21,7 @@ extern "C" {
     bool found_data = F_false;
 
     if (!nest->used) {
-      state->status = f_fss_nest_resize(state->step_small, nest);
+      state->status = f_memory_array_increase(state->step_small, sizeof(f_fss_nest_t), (void **) &nest->depth, &nest->used, &nest->size);
       if (F_status_is_error(state->status)) return;
     }
     else {
@@ -30,7 +30,7 @@ extern "C" {
 
     do {
       do {
-        state->status = f_fss_items_resize(state->step_small, &nest->depth[0]);
+        state->status = f_memory_array_increase(state->step_small, sizeof(f_fss_item_t), (void **) &nest->depth[0].array, &nest->depth[0].used, &nest->depth[0].size);
         if (F_status_is_error(state->status)) return;
 
         nest->depth[nest->used].used = 0;

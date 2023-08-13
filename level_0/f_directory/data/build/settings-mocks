@@ -30,9 +30,11 @@ build_language c
 build_libraries -lc
 build_libraries-individual -lf_memory -lf_string
 
-build_sources_library directory.c directory/common.c directory/type.c private-directory.c directory/private-type.c ../../tests/unit/c/mock-directory.c
+build_sources_library directory.c directory/common.c directory/listing.c directory/recurse_do.c directory/status.c
+build_sources_library private-directory.c
+build_sources_library ../../tests/unit/c/mock-directory.c
 
-build_sources_headers directory.h directory/common.h directory/type.h
+build_sources_headers directory.h directory/common.h directory/listing.h directory/recurse_do.h directory/status.h
 
 build_script yes
 build_shared yes
@@ -61,6 +63,10 @@ flags-coverage --coverage -fprofile-abs-path -fprofile-dir=build/coverage/
 flags_library -fPIC
 
 # Inject mocks.
+flags -Wl,--wrap=f_string_dynamic_adjust
+flags -Wl,--wrap=f_string_dynamic_resize
+flags -Wl,--wrap=f_string_dynamics_adjust
+flags -Wl,--wrap=f_string_dynamics_resize
 flags -Wl,--wrap=alphasort
 flags -Wl,--wrap=fstatat
 flags -Wl,--wrap=mkdir

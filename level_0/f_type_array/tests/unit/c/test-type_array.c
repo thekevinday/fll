@@ -17,159 +17,159 @@ int setdown(void **state) {
 int main(void) {
 
   const struct CMUnitTest tests[] = {
-    cmocka_unit_test(test__f_type_array_cells_adjust_callback__fails),
-    cmocka_unit_test(test__f_type_array_cells_resize_callback__fails),
+    cmocka_unit_test(test__f_type_array_cells_destroy_callback__fails),
+    cmocka_unit_test(test__f_type_array_cells_delete_callback__fails),
 
-    cmocka_unit_test(test__f_type_array_files_adjust_callback__fails),
-    cmocka_unit_test(test__f_type_array_files_resize_callback__fails),
+    cmocka_unit_test(test__f_type_array_files_destroy_callback__fails),
+    cmocka_unit_test(test__f_type_array_files_delete_callback__fails),
 
-    cmocka_unit_test(test__f_type_array_fll_ids_adjust_callback__fails),
-    cmocka_unit_test(test__f_type_array_fll_ids_resize_callback__fails),
+    cmocka_unit_test(test__f_type_array_fll_ids_destroy_callback__fails),
+    cmocka_unit_test(test__f_type_array_fll_ids_delete_callback__fails),
 
-    cmocka_unit_test(test__f_type_array_int8s_adjust_callback__fails),
-    cmocka_unit_test(test__f_type_array_int8s_resize_callback__fails),
+    cmocka_unit_test(test__f_type_array_int8s_destroy_callback__fails),
+    cmocka_unit_test(test__f_type_array_int8s_delete_callback__fails),
 
-    cmocka_unit_test(test__f_type_array_int16s_adjust_callback__fails),
-    cmocka_unit_test(test__f_type_array_int16s_resize_callback__fails),
+    cmocka_unit_test(test__f_type_array_int16s_destroy_callback__fails),
+    cmocka_unit_test(test__f_type_array_int16s_delete_callback__fails),
 
-    cmocka_unit_test(test__f_type_array_int32s_adjust_callback__fails),
-    cmocka_unit_test(test__f_type_array_int32s_resize_callback__fails),
+    cmocka_unit_test(test__f_type_array_int32s_destroy_callback__fails),
+    cmocka_unit_test(test__f_type_array_int32s_delete_callback__fails),
 
-    cmocka_unit_test(test__f_type_array_int64s_adjust_callback__fails),
-    cmocka_unit_test(test__f_type_array_int64s_resize_callback__fails),
+    cmocka_unit_test(test__f_type_array_int64s_destroy_callback__fails),
+    cmocka_unit_test(test__f_type_array_int64s_delete_callback__fails),
 
-    cmocka_unit_test(test__f_type_array_int128s_adjust_callback__fails),
-    cmocka_unit_test(test__f_type_array_int128s_resize_callback__fails),
+    cmocka_unit_test(test__f_type_array_int128s_destroy_callback__fails),
+    cmocka_unit_test(test__f_type_array_int128s_delete_callback__fails),
 
-    cmocka_unit_test(test__f_type_array_number_unsigneds_adjust_callback__fails),
-    cmocka_unit_test(test__f_type_array_number_unsigneds_resize_callback__fails),
+    cmocka_unit_test(test__f_type_array_number_unsigneds_destroy_callback__fails),
+    cmocka_unit_test(test__f_type_array_number_unsigneds_delete_callback__fails),
 
-    cmocka_unit_test(test__f_type_array_polls_adjust_callback__fails),
-    cmocka_unit_test(test__f_type_array_polls_resize_callback__fails),
+    cmocka_unit_test(test__f_type_array_polls_destroy_callback__fails),
+    cmocka_unit_test(test__f_type_array_polls_delete_callback__fails),
 
-    cmocka_unit_test(test__f_type_array_states_adjust_callback__fails),
-    cmocka_unit_test(test__f_type_array_states_resize_callback__fails),
+    cmocka_unit_test(test__f_type_array_states_destroy_callback__fails),
+    cmocka_unit_test(test__f_type_array_states_delete_callback__fails),
 
-    cmocka_unit_test(test__f_type_array_statuss_adjust_callback__fails),
-    cmocka_unit_test(test__f_type_array_statuss_resize_callback__fails),
+    cmocka_unit_test(test__f_type_array_statuss_destroy_callback__fails),
+    cmocka_unit_test(test__f_type_array_statuss_delete_callback__fails),
 
-    cmocka_unit_test(test__f_type_array_uint8s_adjust_callback__fails),
-    cmocka_unit_test(test__f_type_array_uint8s_resize_callback__fails),
+    cmocka_unit_test(test__f_type_array_uint8s_destroy_callback__fails),
+    cmocka_unit_test(test__f_type_array_uint8s_delete_callback__fails),
 
-    cmocka_unit_test(test__f_type_array_uint16s_adjust_callback__fails),
-    cmocka_unit_test(test__f_type_array_uint16s_resize_callback__fails),
+    cmocka_unit_test(test__f_type_array_uint16s_destroy_callback__fails),
+    cmocka_unit_test(test__f_type_array_uint16s_delete_callback__fails),
 
-    cmocka_unit_test(test__f_type_array_uint32s_adjust_callback__fails),
-    cmocka_unit_test(test__f_type_array_uint32s_resize_callback__fails),
+    cmocka_unit_test(test__f_type_array_uint32s_destroy_callback__fails),
+    cmocka_unit_test(test__f_type_array_uint32s_delete_callback__fails),
 
-    cmocka_unit_test(test__f_type_array_uint64s_adjust_callback__fails),
-    cmocka_unit_test(test__f_type_array_uint64s_resize_callback__fails),
+    cmocka_unit_test(test__f_type_array_uint64s_destroy_callback__fails),
+    cmocka_unit_test(test__f_type_array_uint64s_delete_callback__fails),
 
-    cmocka_unit_test(test__f_type_array_uint128s_adjust_callback__fails),
-    cmocka_unit_test(test__f_type_array_uint128s_resize_callback__fails),
+    cmocka_unit_test(test__f_type_array_uint128s_destroy_callback__fails),
+    cmocka_unit_test(test__f_type_array_uint128s_delete_callback__fails),
 
-    cmocka_unit_test(test__f_type_array_cells_adjust_callback__works),
-    cmocka_unit_test(test__f_type_array_cells_resize_callback__works),
+    cmocka_unit_test(test__f_type_array_cells_destroy_callback__works),
+    cmocka_unit_test(test__f_type_array_cells_delete_callback__works),
 
-    cmocka_unit_test(test__f_type_array_files_adjust_callback__works),
-    cmocka_unit_test(test__f_type_array_files_resize_callback__works),
+    cmocka_unit_test(test__f_type_array_files_destroy_callback__works),
+    cmocka_unit_test(test__f_type_array_files_delete_callback__works),
 
-    cmocka_unit_test(test__f_type_array_fll_ids_adjust_callback__works),
-    cmocka_unit_test(test__f_type_array_fll_ids_resize_callback__works),
+    cmocka_unit_test(test__f_type_array_fll_ids_destroy_callback__works),
+    cmocka_unit_test(test__f_type_array_fll_ids_delete_callback__works),
 
-    cmocka_unit_test(test__f_type_array_int8s_adjust_callback__works),
-    cmocka_unit_test(test__f_type_array_int8s_resize_callback__works),
+    cmocka_unit_test(test__f_type_array_int8s_destroy_callback__works),
+    cmocka_unit_test(test__f_type_array_int8s_delete_callback__works),
 
-    cmocka_unit_test(test__f_type_array_int16s_adjust_callback__works),
-    cmocka_unit_test(test__f_type_array_int16s_resize_callback__works),
+    cmocka_unit_test(test__f_type_array_int16s_destroy_callback__works),
+    cmocka_unit_test(test__f_type_array_int16s_delete_callback__works),
 
-    cmocka_unit_test(test__f_type_array_int32s_adjust_callback__works),
-    cmocka_unit_test(test__f_type_array_int32s_resize_callback__works),
+    cmocka_unit_test(test__f_type_array_int32s_destroy_callback__works),
+    cmocka_unit_test(test__f_type_array_int32s_delete_callback__works),
 
-    cmocka_unit_test(test__f_type_array_int64s_adjust_callback__works),
-    cmocka_unit_test(test__f_type_array_int64s_resize_callback__works),
+    cmocka_unit_test(test__f_type_array_int64s_destroy_callback__works),
+    cmocka_unit_test(test__f_type_array_int64s_delete_callback__works),
 
-    cmocka_unit_test(test__f_type_array_int128s_adjust_callback__works),
-    cmocka_unit_test(test__f_type_array_int128s_resize_callback__works),
+    cmocka_unit_test(test__f_type_array_int128s_destroy_callback__works),
+    cmocka_unit_test(test__f_type_array_int128s_delete_callback__works),
 
-    cmocka_unit_test(test__f_type_array_number_unsigneds_adjust_callback__works),
-    cmocka_unit_test(test__f_type_array_number_unsigneds_resize_callback__works),
+    cmocka_unit_test(test__f_type_array_number_unsigneds_destroy_callback__works),
+    cmocka_unit_test(test__f_type_array_number_unsigneds_delete_callback__works),
 
-    cmocka_unit_test(test__f_type_array_polls_adjust_callback__works),
-    cmocka_unit_test(test__f_type_array_polls_resize_callback__works),
+    cmocka_unit_test(test__f_type_array_polls_destroy_callback__works),
+    cmocka_unit_test(test__f_type_array_polls_delete_callback__works),
 
-    cmocka_unit_test(test__f_type_array_states_adjust_callback__works),
-    cmocka_unit_test(test__f_type_array_states_resize_callback__works),
+    cmocka_unit_test(test__f_type_array_states_destroy_callback__works),
+    cmocka_unit_test(test__f_type_array_states_delete_callback__works),
 
-    cmocka_unit_test(test__f_type_array_statuss_adjust_callback__works),
-    cmocka_unit_test(test__f_type_array_statuss_resize_callback__works),
+    cmocka_unit_test(test__f_type_array_statuss_destroy_callback__works),
+    cmocka_unit_test(test__f_type_array_statuss_delete_callback__works),
 
-    cmocka_unit_test(test__f_type_array_uint8s_adjust_callback__works),
-    cmocka_unit_test(test__f_type_array_uint8s_resize_callback__works),
+    cmocka_unit_test(test__f_type_array_uint8s_destroy_callback__works),
+    cmocka_unit_test(test__f_type_array_uint8s_delete_callback__works),
 
-    cmocka_unit_test(test__f_type_array_uint16s_adjust_callback__works),
-    cmocka_unit_test(test__f_type_array_uint16s_resize_callback__works),
+    cmocka_unit_test(test__f_type_array_uint16s_destroy_callback__works),
+    cmocka_unit_test(test__f_type_array_uint16s_delete_callback__works),
 
-    cmocka_unit_test(test__f_type_array_uint32s_adjust_callback__works),
-    cmocka_unit_test(test__f_type_array_uint32s_resize_callback__works),
+    cmocka_unit_test(test__f_type_array_uint32s_destroy_callback__works),
+    cmocka_unit_test(test__f_type_array_uint32s_delete_callback__works),
 
-    cmocka_unit_test(test__f_type_array_uint64s_adjust_callback__works),
-    cmocka_unit_test(test__f_type_array_uint64s_resize_callback__works),
+    cmocka_unit_test(test__f_type_array_uint64s_destroy_callback__works),
+    cmocka_unit_test(test__f_type_array_uint64s_delete_callback__works),
 
-    cmocka_unit_test(test__f_type_array_uint128s_adjust_callback__works),
-    cmocka_unit_test(test__f_type_array_uint128s_resize_callback__works),
+    cmocka_unit_test(test__f_type_array_uint128s_destroy_callback__works),
+    cmocka_unit_test(test__f_type_array_uint128s_delete_callback__works),
 
     #ifndef _di_level_0_parameter_checking_
-      // f_cells_adjust_callback() doesn't use parameter checking.
-      // f_cells_resize_callback() doesn't use parameter checking.
+      // f_cells_destroy_callback() doesn't use parameter checking.
+      // f_cells_delete_callback() doesn't use parameter checking.
 
-      // f_files_adjust_callback() doesn't use parameter checking.
-      // f_files_resize_callback() doesn't use parameter checking.
+      // f_files_destroy_callback() doesn't use parameter checking.
+      // f_files_delete_callback() doesn't use parameter checking.
 
-      // f_fll_ids_adjust_callback() doesn't use parameter checking.
-      // f_fll_ids_resize_callback() doesn't use parameter checking.
+      // f_fll_ids_destroy_callback() doesn't use parameter checking.
+      // f_fll_ids_delete_callback() doesn't use parameter checking.
 
-      // f_int8s_adjust_callback() doesn't use parameter checking.
-      // f_int8s_resize_callback() doesn't use parameter checking.
+      // f_int8s_destroy_callback() doesn't use parameter checking.
+      // f_int8s_delete_callback() doesn't use parameter checking.
 
-      // f_int16s_adjust_callback() doesn't use parameter checking.
-      // f_int16s_resize_callback() doesn't use parameter checking.
+      // f_int16s_destroy_callback() doesn't use parameter checking.
+      // f_int16s_delete_callback() doesn't use parameter checking.
 
-      // f_int32s_adjust_callback() doesn't use parameter checking.
-      // f_int32s_resize_callback() doesn't use parameter checking.
+      // f_int32s_destroy_callback() doesn't use parameter checking.
+      // f_int32s_delete_callback() doesn't use parameter checking.
 
-      // f_int64s_adjust_callback() doesn't use parameter checking.
-      // f_int64s_resize_callback() doesn't use parameter checking.
+      // f_int64s_destroy_callback() doesn't use parameter checking.
+      // f_int64s_delete_callback() doesn't use parameter checking.
 
-      // f_int128s_adjust_callback() doesn't use parameter checking.
-      // f_int128s_resize_callback() doesn't use parameter checking.
+      // f_int128s_destroy_callback() doesn't use parameter checking.
+      // f_int128s_delete_callback() doesn't use parameter checking.
 
-      // f_number_unsigneds_adjust_callback() doesn't use parameter checking.
-      // f_number_unsigneds_resize_callback() doesn't use parameter checking.
+      // f_number_unsigneds_destroy_callback() doesn't use parameter checking.
+      // f_number_unsigneds_delete_callback() doesn't use parameter checking.
 
-      // f_polls_adjust_callback() doesn't use parameter checking.
-      // f_polls_resize_callback() doesn't use parameter checking.
+      // f_polls_destroy_callback() doesn't use parameter checking.
+      // f_polls_delete_callback() doesn't use parameter checking.
 
-      // f_states_adjust_callback() doesn't use parameter checking.
-      // f_states_resize_callback() doesn't use parameter checking.
+      // f_states_destroy_callback() doesn't use parameter checking.
+      // f_states_delete_callback() doesn't use parameter checking.
 
-      // f_statuss_adjust_callback() doesn't use parameter checking.
-      // f_statuss_resize_callback() doesn't use parameter checking.
+      // f_statuss_destroy_callback() doesn't use parameter checking.
+      // f_statuss_delete_callback() doesn't use parameter checking.
 
-      // f_uint8s_adjust_callback() doesn't use parameter checking.
-      // f_uint8s_resize_callback() doesn't use parameter checking.
+      // f_uint8s_destroy_callback() doesn't use parameter checking.
+      // f_uint8s_delete_callback() doesn't use parameter checking.
 
-      // f_uint16s_adjust_callback() doesn't use parameter checking.
-      // f_uint16s_resize_callback() doesn't use parameter checking.
+      // f_uint16s_destroy_callback() doesn't use parameter checking.
+      // f_uint16s_delete_callback() doesn't use parameter checking.
 
-      // f_uint32s_adjust_callback() doesn't use parameter checking.
-      // f_uint32s_resize_callback() doesn't use parameter checking.
+      // f_uint32s_destroy_callback() doesn't use parameter checking.
+      // f_uint32s_delete_callback() doesn't use parameter checking.
 
-      // f_uint64s_adjust_callback() doesn't use parameter checking.
-      // f_uint64s_resize_callback() doesn't use parameter checking.
+      // f_uint64s_destroy_callback() doesn't use parameter checking.
+      // f_uint64s_delete_callback() doesn't use parameter checking.
 
-      // f_uint128s_adjust_callback() doesn't use parameter checking.
-      // f_uint128s_resize_callback() doesn't use parameter checking.
+      // f_uint128s_destroy_callback() doesn't use parameter checking.
+      // f_uint128s_delete_callback() doesn't use parameter checking.
     #endif // _di_level_0_parameter_checking_
   };
 

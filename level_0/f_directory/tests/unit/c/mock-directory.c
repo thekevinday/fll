@@ -4,6 +4,76 @@
 extern "C" {
 #endif
 
+int mock_unwrap = 0;
+
+f_status_t __wrap_f_string_dynamic_adjust(const f_number_unsigned_t length, f_string_dynamic_t * const structure) {
+
+  if (mock_unwrap) {
+    return __real_f_string_dynamic_adjust(length, structure);
+  }
+
+  if (!structure) return F_status_set_error(F_parameter_not);
+
+  const bool failure = mock_type(bool);
+
+  if (failure) return mock_type(f_status_t);
+
+  structure->size = length;
+
+  return mock_type(f_status_t);
+}
+
+f_status_t __wrap_f_string_dynamic_resize(const f_number_unsigned_t length, f_string_dynamic_t * const structure) {
+
+  if (mock_unwrap) {
+    return __real_f_string_dynamic_resize(length, structure);
+  }
+
+  if (!structure) return F_status_set_error(F_parameter_not);
+
+  const bool failure = mock_type(bool);
+
+  if (failure) return mock_type(f_status_t);
+
+  structure->size = length;
+
+  return mock_type(f_status_t);
+}
+
+f_status_t __wrap_f_string_dynamics_adjust(const f_number_unsigned_t length, f_string_dynamics_t * const structure) {
+
+  if (mock_unwrap) {
+    return __real_f_string_dynamics_adjust(length, structure);
+  }
+
+  if (!structure) return F_status_set_error(F_parameter_not);
+
+  const bool failure = mock_type(bool);
+
+  if (failure) return mock_type(f_status_t);
+
+  structure->size = length;
+
+  return mock_type(f_status_t);
+}
+
+f_status_t __wrap_f_string_dynamics_resize(const f_number_unsigned_t length, f_string_dynamics_t * const structure) {
+
+  if (mock_unwrap) {
+    return __real_f_string_dynamics_resize(length, structure);
+  }
+
+  if (!structure) return F_status_set_error(F_parameter_not);
+
+  const bool failure = mock_type(bool);
+
+  if (failure) return mock_type(f_status_t);
+
+  structure->size = length;
+
+  return mock_type(f_status_t);
+}
+
 int __wrap_alphasort(const struct dirent **a, const struct dirent **b) {
 
   const bool failure = mock_type(bool);

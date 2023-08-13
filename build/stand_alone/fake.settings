@@ -31,19 +31,18 @@ build_language c
 
 build_libraries -lc -lcap
 
-build_sources_program fll/level_0/account.c fll/level_0/private-account.c fll/level_0/account/accounts.c fll/level_0/account/private-accounts.c
+build_sources_program fll/level_0/account.c fll/level_0/private-account.c fll/level_0/account/accounts.c
 build_sources_program fll/level_0/capability.c
 build_sources_program fll/level_0/color.c fll/level_0/private-color.c fll/level_0/color/common.c
 build_sources_program fll/level_0/compare.c fll/level_0/compare/utf.c fll/level_0/private-compare.c fll/level_0/compare/private-utf.c
 build_sources_program fll/level_0/console.c fll/level_0/console/common.c fll/level_0/private-console.c
 build_sources_program fll/level_0/control_group.c fll/level_0/control_group/common.c
 build_sources_program fll/level_0/conversion.c fll/level_0/private-conversion.c fll/level_0/conversion/common.c
-build_sources_program fll/level_0/directory.c fll/level_0/directory/common.c fll/level_0/directory/type.c fll/level_0/private-directory.c fll/level_0/directory/private-type.c
+build_sources_program fll/level_0/directory.c fll/level_0/directory/common.c fll/level_0/directory/type.c fll/level_0/private-directory.c
 build_sources_program fll/level_0/environment.c
 build_sources_program fll/level_0/execute.c
 build_sources_program fll/level_0/file.c fll/level_0/private-file.c fll/level_0/file/common.c fll/level_0/file/stream.c
 build_sources_program fll/level_0/fss.c fll/level_0/fss/common.c fll/level_0/fss/item.c fll/level_0/fss/named.c fll/level_0/fss/nest.c fll/level_0/fss/quote.c fll/level_0/fss/set.c fll/level_0/fss/set_quote.c fll/level_0/fss/simple_packet.c
-build_sources_program fll/level_0/fss/private-item.c fll/level_0/fss/private-named.c fll/level_0/fss/private-nest.c fll/level_0/fss/private-set.c fll/level_0/fss/private-set_quote.c fll/level_0/fss/private-simple_packet.c
 build_sources_program fll/level_0/iki.c fll/level_0/private-iki.c fll/level_0/iki/common.c fll/level_0/iki/private-data.c fll/level_0/iki/data.c
 build_sources_program fll/level_0/limit.c fll/level_0/limit/set.c fll/level_0/limit/value.c fll/level_0/limit/private-set.c fll/level_0/limit/private-value.c
 build_sources_program fll/level_0/memory.c fll/level_0/memory/array.c fll/level_0/memory/arrays.c

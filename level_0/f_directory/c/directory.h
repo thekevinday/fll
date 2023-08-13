@@ -38,7 +38,9 @@
 
 // FLL-0 directory includes.
 #include <fll/level_0/directory/common.h>
-#include <fll/level_0/directory/type.h>
+#include <fll/level_0/directory/listing.h>
+#include <fll/level_0/directory/recurse_do.h>
+#include <fll/level_0/directory/status.h>
 
 #ifdef __cplusplus
 extern "C" {

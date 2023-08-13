@@ -32,12 +32,10 @@
 #include "test-account-group_name_by_id.h"
 #include "test-account-id_by_name.h"
 #include "test-account-name_by_id.h"
-#include "test-account-s_adjust_callback.h"
-#include "test-account-s_append.h"
-#include "test-account-s_append_all.h"
-#include "test-account-s_resize_callback.h"
-#include "test-account-ss_append.h"
-#include "test-account-ss_append_all.h"
+#include "test-account-s_destroy_callback.h"
+#include "test-account-s_delete_callback.h"
+#include "test-account-ss_destroy_callback.h"
+#include "test-account-ss_delete_callback.h"
 
 #ifdef __cplusplus
 extern "C" {

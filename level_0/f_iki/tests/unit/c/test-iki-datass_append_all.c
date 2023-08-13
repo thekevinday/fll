@@ -14,7 +14,7 @@ void test__f_iki_datass_append_all__works(void **state) {
   f_iki_datass_t destination = f_iki_datass_t_initialize;
 
   {
-    f_status_t status = f_memory_arrays_resize(length_outer, sizeof(f_iki_data_t), (void **) &source.array, &source.used, &source.size, &f_iki_datas_resize_callback);
+    f_status_t status = f_memory_arrays_resize(length_outer, sizeof(f_iki_data_t), (void **) &source.array, &source.used, &source.size, &f_iki_datas_delete_callback);
 
     assert_int_equal(status, F_none);
     assert_int_equal(source.size, length_outer);
@@ -147,7 +147,7 @@ void test__f_iki_datass_append_all__returns_data_not(void **state) {
   f_iki_datass_t destination = f_iki_datass_t_initialize;
 
   {
-    const f_status_t status = f_memory_arrays_resize(length, sizeof(f_iki_data_t), (void **) &source.array, &source.used, &source.size, &f_iki_datas_resize_callback);
+    const f_status_t status = f_memory_arrays_resize(length, sizeof(f_iki_data_t), (void **) &source.array, &source.used, &source.size, &f_iki_datas_delete_callback);
 
     assert_int_equal(status, F_none);
     assert_int_equal(source.used, 0);

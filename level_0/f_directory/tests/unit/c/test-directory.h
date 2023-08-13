@@ -37,8 +37,15 @@
 #include "test-directory-open_at.h"
 #include "test-directory-remove.h"
 #include "test-directory-remove_custom.h"
+#include "test-directory-listings_destroy_callback.h"
+#include "test-directory-listings_delete_callback.h"
+#include "test-directory-recurse_dos_destroy_callback.h"
+#include "test-directory-recurse_dos_delete_callback.h"
+#include "test-directory-statuss_destroy_callback.h"
+#include "test-directory-statuss_delete_callback.h"
 #include "test-directory-touch.h"
 #include "test-directory-touch_at.h"
+
 
 #ifdef __cplusplus
 extern "C" {

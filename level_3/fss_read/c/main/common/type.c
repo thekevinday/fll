@@ -81,13 +81,13 @@ extern "C" {
     f_string_ranges_resize(0, &setting->comments);
     f_string_rangess_resize(0, &setting->contents);
 
-    f_fss_nest_resize(0, &setting->nest);
+    f_fss_nest_delete(&setting->nest);
 
     f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &setting->delimits_object.array, &setting->delimits_object.used, &setting->delimits_object.size);
     f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &setting->delimits_content.array, &setting->delimits_content.used, &setting->delimits_content.size);
 
     f_memory_array_resize(0, sizeof(uint8_t), (void **) &setting->quotes_object.array, &setting->quotes_object.used, &setting->quotes_object.size);
-    f_memory_arrays_resize(0, sizeof(f_uint8s_t), (void **) &setting->quotes_content.array, &setting->quotes_content.used, &setting->quotes_content.size, &f_uint8s_resize_callback);
+    f_memory_arrays_resize(0, sizeof(f_uint8s_t), (void **) &setting->quotes_content.array, &setting->quotes_content.used, &setting->quotes_content.size, &f_uint8ss_delete_callback);
 
     return F_none;
   }

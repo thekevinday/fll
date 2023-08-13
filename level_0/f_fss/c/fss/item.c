@@ -1,73 +1,130 @@
 #include "../fss.h"
-#include "private-item.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#ifndef _di_f_fss_items_adjust_
-  f_status_t f_fss_items_adjust(const f_number_unsigned_t length, f_fss_items_t * const items) {
+#ifndef _di_f_fss_item_delete_
+  f_status_t f_fss_item_delete(f_fss_item_t * const item) {
     #ifndef _di_level_0_parameter_checking_
-      if (!items) return F_status_set_error(F_parameter);
+      if (!item) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return private_f_fss_items_adjust(length, items);
+    return f_string_ranges_resize(0, &item->content);
   }
-#endif // _di_f_fss_items_adjust_
+#endif // _di_f_fss_item_delete_
 
-#ifndef _di_f_fss_items_decimate_by_
-  f_status_t f_fss_items_decimate_by(const f_number_unsigned_t amount, f_fss_items_t * const items) {
+#ifndef _di_f_fss_item_destroy_
+  f_status_t f_fss_item_destroy(f_fss_item_t * const item) {
     #ifndef _di_level_0_parameter_checking_
-      if (!items) return F_status_set_error(F_parameter);
+      if (!item) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) return F_data_not;
+    item->object.start = 1;
+    item->object.stop = 0;
+    item->parent = 0;
 
-    return private_f_fss_items_adjust((items->size > amount) ? items->size - amount : 0, items);
+    return f_string_ranges_adjust(0, &item->content);
   }
-#endif // _di_f_fss_items_decimate_by_
+#endif // _di_f_fss_item_destroy_
 
-#ifndef _di_f_fss_items_decrease_by_
-  f_status_t f_fss_items_decrease_by(const f_number_unsigned_t amount, f_fss_items_t * const items) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!items) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+#ifndef _di_f_fss_items_delete_callback_
+  f_status_t f_fss_items_delete_callback(const f_number_unsigned_t start, const f_number_unsigned_t stop, void * const void_array) {
 
-    if (!amount) return F_data_not;
+    {
+      f_fss_item_t * const array = (f_fss_item_t *) void_array;
+      f_status_t status = F_none;
 
-    return private_f_fss_items_resize((items->size > amount) ? items->size - amount : 0, items);
+      for (f_number_unsigned_t i = start; i < stop; ++i) {
+
+        status = f_string_ranges_resize(0, &array[i].content);
+        if (F_status_is_error(status)) return status;
+      } // for
+    }
+
+    return F_none;
   }
-#endif // _di_f_fss_items_decrease_by_
+#endif // _di_f_fss_items_delete_callback_
 
-#ifndef _di_f_fss_items_increase_
-  f_status_t f_fss_items_increase(const f_number_unsigned_t step, f_fss_items_t * const items) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!items) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+#ifndef _di_f_fss_items_destroy_callback_
+  f_status_t f_fss_items_destroy_callback(const f_number_unsigned_t start, const f_number_unsigned_t stop, void * const void_array) {
 
-    return f_memory_array_increase(step, sizeof(f_fss_item_t), (void **) &items->array, &items->used, &items->size);
+    {
+      f_fss_item_t * const array = (f_fss_item_t *) void_array;
+      f_status_t status = F_none;
+
+      for (f_number_unsigned_t i = start; i < stop; ++i) {
+
+        array[i].object.start = 1;
+        array[i].object.stop = 0;
+        array[i].parent = 0;
+
+        status = f_string_ranges_adjust(0, &array[i].content);
+        if (F_status_is_error(status)) return status;
+      } // for
+    }
+
+    return F_none;
   }
-#endif // _di_f_fss_items_increase_
+#endif // _di_f_fss_items_destroy_callback_
 
-#ifndef _di_f_fss_items_increase_by_
-  f_status_t f_fss_items_increase_by(const f_number_unsigned_t amount, f_fss_items_t * const items) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!items) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+#ifndef _di_f_fss_itemss_delete_callback_
+  f_status_t f_fss_itemss_delete_callback(const f_number_unsigned_t start, const f_number_unsigned_t stop, void * const void_array) {
 
-    return f_memory_array_increase_by(amount, sizeof(f_fss_item_t), (void **) &items->array, &items->used, &items->size);
+    {
+      f_fss_items_t * const array = (f_fss_items_t *) void_array;
+      f_status_t status = F_none;
+      f_number_unsigned_t j = 0;
+
+      for (f_number_unsigned_t i = start; i < stop; ++i) {
+
+        for (j = 0; j < array[i].size; ++j) {
+
+          status = f_string_ranges_resize(0, &array[i].array[j].content);
+          if (F_status_is_error(status)) return status;
+        } // for
+
+        if (array[i].size) {
+          status = f_memory_array_resize(0, sizeof(f_fss_item_t), (void **) &array[i].array, &array[i].used, &array[i].size);
+          if (F_status_is_error(status)) return status;
+        }
+      } // for
+    }
+
+    return F_none;
   }
-#endif // _di_f_fss_items_increase_by_
+#endif // _di_f_fss_itemss_delete_callback_
 
-#ifndef _di_f_fss_items_resize_
-  f_status_t f_fss_items_resize(const f_number_unsigned_t length, f_fss_items_t * const items) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!items) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+#ifndef _di_f_fss_itemss_destroy_callback_
+  f_status_t f_fss_itemss_destroy_callback(const f_number_unsigned_t start, const f_number_unsigned_t stop, void * const void_array) {
 
-    return private_f_fss_items_resize(length, items);
+    {
+      f_fss_items_t * const array = (f_fss_items_t *) void_array;
+      f_status_t status = F_none;
+      f_number_unsigned_t j = 0;
+
+      for (f_number_unsigned_t i = start; i < stop; ++i) {
+
+        for (j = 0; j < array[i].size; ++j) {
+
+          array[i].array[j].object.start = 1;
+          array[i].array[j].object.stop = 0;
+          array[i].array[j].parent = 0;
+
+          status = f_string_ranges_adjust(0, &array[i].array[j].content);
+          if (F_status_is_error(status)) return status;
+        } // for
+
+        if (array[i].size) {
+          status = f_memory_array_adjust(0, sizeof(f_fss_item_t), (void **) &array[i].array, &array[i].used, &array[i].size);
+          if (F_status_is_error(status)) return status;
+        }
+      } // for
+    }
+
+    return F_none;
   }
-#endif // _di_f_fss_items_resize_
+#endif // _di_f_fss_itemss_destroy_callback_
 
 #ifdef __cplusplus
 } // extern "C"

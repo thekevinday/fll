@@ -32,9 +32,10 @@ build_language c
 build_libraries -lc
 build_libraries-individual -lf_memory -lf_string
 
-build_sources_library directory.c directory/common.c directory/type.c private-directory.c directory/private-type.c
+build_sources_library directory.c directory/common.c directory/listing.c directory/recurse_do.c directory/status.c
+build_sources_library private-directory.c
 
-build_sources_headers directory.h directory/common.h directory/type.h
+build_sources_headers directory.h directory/common.h directory/listing.h directory/recurse_do.h directory/status.h
 
 build_script yes
 build_shared yes

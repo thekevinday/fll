@@ -30,7 +30,8 @@ build_language c
 build_libraries -lc
 build_libraries-individual -lf_memory -lf_string
 
-build_sources_library account.c private-account.c account/accounts.c account/private-accounts.c ../../tests/unit/c/mock-account.c
+build_sources_library account.c private-account.c account/accounts.c
+build_sources_library ../../tests/unit/c/mock-account.c
 
 build_sources_headers account.h account/accounts.h account/common.h
 
@@ -61,6 +62,8 @@ flags-coverage --coverage -fprofile-abs-path -fprofile-dir=build/coverage/
 flags_library -fPIC
 
 # Inject mocks.
+flags -Wl,--wrap=f_memory_array_adjust
+flags -Wl,--wrap=f_memory_array_resize
 flags -Wl,--wrap=f_string_dynamic_adjust
 flags -Wl,--wrap=f_string_dynamic_resize
 flags -Wl,--wrap=getpwnam_r

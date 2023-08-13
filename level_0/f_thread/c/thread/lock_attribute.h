@@ -53,34 +53,9 @@ extern "C" {
 #endif // _di_f_thread_lock_attributes_t_
 
 /**
- * A callback intended to be passed to f_memory_arrays_adjust() for an f_thread_lock_attributess_t structure.
+ * A callback intended to be passed to f_memory_arrays_resize() for an f_thread_lock_attributes_t structure.
  *
- * This does not do parameter checking.
- *
- * @param start
- *   The inclusive start position in the array to start deleting.
- * @param stop
- *   The exclusive stop position in the array to stop deleting.
- * @param array
- *   The array structure to delete all values of.
- *   Must not be NULL.
- *
- * @return
- *   F_none on success.
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: f_memory_array_adjust().
- *
- * @see f_memory_array_adjust()
- * @see f_memory_arrays_adjust()
- */
-#ifndef _di_f_thread_lock_attributes_adjust_callback_
-  extern f_status_t f_thread_lock_attributes_adjust_callback(const f_number_unsigned_t start, const f_number_unsigned_t stop, void * const array);
-#endif // _di_f_thread_lock_attributes_adjust_callback_
-
-/**
- * A callback intended to be passed to f_memory_arrays_resize() for an f_thread_lock_attributess_t structure.
+ * This is only called when shrinking the array and generally should perform deallocations.
  *
  * This does not do parameter checking.
  *
@@ -102,9 +77,96 @@ extern "C" {
  * @see f_memory_array_resize()
  * @see f_memory_arrays_resize()
  */
-#ifndef _di_f_thread_lock_attributes_resize_callback_
-  extern f_status_t f_thread_lock_attributes_resize_callback(const f_number_unsigned_t start, const f_number_unsigned_t stop, void * const array);
-#endif // _di_f_thread_lock_attributes_resize_callback_
+#ifndef _di_f_thread_lock_attributes_delete_callback_
+  extern f_status_t f_thread_lock_attributes_delete_callback(const f_number_unsigned_t start, const f_number_unsigned_t stop, void * const array);
+#endif // _di_f_thread_lock_attributes_delete_callback_
+
+/**
+ * A callback intended to be passed to f_memory_arrays_adjust() for an f_thread_lock_attributes_t structure.
+ *
+ * This is only called when shrinking the array and generally should perform deallocations.
+ *
+ * This does not do parameter checking.
+ *
+ * @param start
+ *   The inclusive start position in the array to start deleting.
+ * @param stop
+ *   The exclusive stop position in the array to stop deleting.
+ * @param array
+ *   The array structure to delete all values of.
+ *   Must not be NULL.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_array_adjust().
+ *
+ * @see f_memory_array_adjust()
+ * @see f_memory_arrays_adjust()
+ */
+#ifndef _di_f_thread_lock_attributes_destroy_callback_
+  extern f_status_t f_thread_lock_attributes_destroy_callback(const f_number_unsigned_t start, const f_number_unsigned_t stop, void * const array);
+#endif // _di_f_thread_lock_attributes_destroy_callback_
+
+/**
+ * A callback intended to be passed to f_memory_arrays_resize() for an f_thread_lock_attributess_t structure.
+ *
+ * This is only called when shrinking the array and generally should perform deallocations.
+ *
+ * This does not do parameter checking.
+ *
+ * @param start
+ *   The inclusive start position in the array to start deleting.
+ * @param stop
+ *   The exclusive stop position in the array to stop deleting.
+ * @param array
+ *   The array structure to delete all values of.
+ *   Must not be NULL.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_array_resize().
+ *
+ * @see f_memory_array_resize()
+ * @see f_memory_arrays_resize()
+ */
+#ifndef _di_f_thread_lock_attributess_delete_callback_
+  extern f_status_t f_thread_lock_attributess_delete_callback(const f_number_unsigned_t start, const f_number_unsigned_t stop, void * const array);
+#endif // _di_f_thread_lock_attributess_delete_callback_
+
+/**
+ * A callback intended to be passed to f_memory_arrays_adjust() for an f_thread_lock_attributess_t structure.
+ *
+ * This is only called when shrinking the array and generally should perform deallocations.
+ *
+ * This does not do parameter checking.
+ *
+ * @param start
+ *   The inclusive start position in the array to start deleting.
+ * @param stop
+ *   The exclusive stop position in the array to stop deleting.
+ * @param array
+ *   The array structure to delete all values of.
+ *   Must not be NULL.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_array_adjust().
+ *
+ * @see f_memory_array_adjust()
+ * @see f_memory_arrays_adjust()
+ */
+#ifndef _di_f_thread_lock_attributess_destroy_callback_
+  extern f_status_t f_thread_lock_attributess_destroy_callback(const f_number_unsigned_t start, const f_number_unsigned_t stop, void * const array);
+#endif // _di_f_thread_lock_attributess_destroy_callback_
 
 #ifdef __cplusplus
 } // extern "C"

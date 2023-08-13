@@ -28,10 +28,10 @@
 // Test includes.
 #include "test-iki-content_is.h"
 #include "test-iki-content_partial_is.h"
-#include "test-iki-datas_adjust_callback.h"
+#include "test-iki-datas_destroy_callback.h"
 #include "test-iki-datas_append.h"
 #include "test-iki-datas_append_all.h"
-#include "test-iki-datas_resize_callback.h"
+#include "test-iki-datas_delete_callback.h"
 #include "test-iki-datass_append.h"
 #include "test-iki-datass_append_all.h"
 #include "test-iki-object_is.h"

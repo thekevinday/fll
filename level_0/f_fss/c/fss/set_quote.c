@@ -1,163 +1,182 @@
 #include "../fss.h"
-#include "private-set_quote.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#ifndef _di_f_fss_set_quote_adjust_
-  f_status_t f_fss_set_quote_adjust(const f_number_unsigned_t length, f_fss_set_quote_t * const set_quote) {
+#ifndef _di_f_fss_set_quote_delete_
+  f_status_t f_fss_set_quote_delete(f_fss_set_quote_t * const set_quote) {
     #ifndef _di_level_0_parameter_checking_
       if (!set_quote) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return private_f_fss_set_quote_adjust(length, set_quote);
-  }
-#endif // _di_f_fss_set_quote_adjust_
+    {
+      f_status_t status = f_string_ranges_resize(0, &set_quote->objects);
+      if (F_status_is_error(status)) return status;
 
-#ifndef _di_f_fss_set_quote_decimate_by_
-  f_status_t f_fss_set_quote_decimate_by(const f_number_unsigned_t amount, f_fss_set_quote_t * const set_quote) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!set_quote) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+      status = f_string_rangess_resize(0, &set_quote->contents);
+      if (F_status_is_error(status)) return status;
 
-    if (!amount) return F_data_not;
+      status = f_memory_array_resize(0, sizeof(uint8_t), (void **) &set_quote->objects_quote.array, &set_quote->objects_quote.used, &set_quote->objects_quote.size);
+      if (F_status_is_error(status)) return status;
 
-    return private_f_fss_set_quote_adjust((set_quote->objects.size - amount > 0) ? set_quote->objects.size - amount : 0, set_quote);
-  }
-#endif // _di_f_fss_set_quote_decimate_by_
-
-#ifndef _di_f_fss_set_quote_decrease_by_
-  f_status_t f_fss_set_quote_decrease_by(const f_number_unsigned_t amount, f_fss_set_quote_t * const set_quote) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!set_quote) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (!amount) return F_data_not;
-
-    return private_f_fss_set_quote_resize((set_quote->objects.size - amount > 0) ? set_quote->objects.size - amount : 0, set_quote);
-  }
-#endif // _di_f_fss_set_quote_decrease_by_
-
-#ifndef _di_f_fss_set_quote_increase_
-  f_status_t f_fss_set_quote_increase(const f_number_unsigned_t step, f_fss_set_quote_t * const set_quote) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!set_quote) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (step && set_quote->objects.used + 1 > set_quote->objects.size) {
-      if (set_quote->objects.used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
-
-      f_number_unsigned_t length = set_quote->objects.used + step;
-
-      if (length > F_number_t_size_unsigned_d) {
-        if (set_quote->objects.used + 1 > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
-
-        length = F_number_t_size_unsigned_d;
-      }
-
-      return private_f_fss_set_quote_resize(length, set_quote);
+      status = f_memory_arrays_resize(0, sizeof(uint8_t), (void **) &set_quote->contents_quote.array, &set_quote->contents_quote.used, &set_quote->contents_quote.size, &f_uint8ss_delete_callback);
+      if (F_status_is_error(status)) return status;
     }
 
-    return F_data_not;
+    return F_none;
   }
-#endif // _di_f_fss_set_quote_increase_
+#endif // _di_f_fss_set_quote_delete_
 
-#ifndef _di_f_fss_set_quote_increase_by_
-  f_status_t f_fss_set_quote_increase_by(const f_number_unsigned_t amount, f_fss_set_quote_t * const set_quote) {
+#ifndef _di_f_fss_set_quote_destroy_
+  f_status_t f_fss_set_quote_destroy(f_fss_set_quote_t * const set_quote) {
     #ifndef _di_level_0_parameter_checking_
       if (!set_quote) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (amount) {
-      if (set_quote->objects.used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+    {
+      f_status_t status = f_string_ranges_adjust(0, &set_quote->objects);
+      if (F_status_is_error(status)) return status;
 
-      const f_number_unsigned_t length = set_quote->objects.used + amount;
+      status = f_string_rangess_adjust(0, &set_quote->contents);
+      if (F_status_is_error(status)) return status;
 
-      if (length > set_quote->objects.size) {
-        if (length > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+      status = f_memory_array_adjust(0, sizeof(uint8_t), (void **) &set_quote->objects_quote.array, &set_quote->objects_quote.used, &set_quote->objects_quote.size);
+      if (F_status_is_error(status)) return status;
 
-        return private_f_fss_set_quote_resize(length, set_quote);
-      }
+      status = f_memory_arrays_adjust(0, sizeof(uint8_t), (void **) &set_quote->contents_quote.array, &set_quote->contents_quote.used, &set_quote->contents_quote.size, &f_uint8ss_destroy_callback);
+      if (F_status_is_error(status)) return status;
     }
 
-    return F_data_not;
+    return F_none;
   }
-#endif // _di_f_fss_set_quote_increase_by_
+#endif // _di_f_fss_set_quote_destroy_
 
-#ifndef _di_f_fss_set_quote_resize_
-  f_status_t f_fss_set_quote_resize(const f_number_unsigned_t length, f_fss_set_quote_t * const set_quote) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!set_quote) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+#ifndef _di_f_fss_set_quotes_delete_callback_
+  f_status_t f_fss_set_quotes_delete_callback(const f_number_unsigned_t start, const f_number_unsigned_t stop, void * const void_array) {
 
-    return private_f_fss_set_quote_resize(length, set_quote);
+    {
+      f_fss_set_quote_t * const array = (f_fss_set_quote_t *) void_array;
+      f_status_t status = F_none;
+
+      for (f_number_unsigned_t i = start; i < stop; ++i) {
+
+        status = f_string_ranges_resize(0, &array[i].objects);
+        if (F_status_is_error(status)) return status;
+
+        status = f_string_rangess_resize(0, &array[i].contents);
+        if (F_status_is_error(status)) return status;
+
+        status = f_memory_array_resize(0, sizeof(uint8_t), (void **) &array[i].objects_quote.array, &array[i].objects_quote.used, &array[i].objects_quote.size);
+        if (F_status_is_error(status)) return status;
+
+        status = f_memory_arrays_resize(0, sizeof(uint8_t), (void **) &array[i].contents_quote.array, &array[i].contents_quote.used, &array[i].contents_quote.size, &f_uint8ss_delete_callback);
+        if (F_status_is_error(status)) return status;
+      } // for
+    }
+
+    return F_none;
   }
-#endif // _di_f_fss_set_quote_resize_
+#endif // _di_f_fss_set_quotes_delete_callback_
 
-#ifndef _di_f_fss_set_quotes_adjust_
-  f_status_t f_fss_set_quotes_adjust(const f_number_unsigned_t length, f_fss_set_quotes_t * const set_quotes) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!set_quotes) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+#ifndef _di_f_fss_set_quotes_destroy_callback_
+  f_status_t f_fss_set_quotes_destroy_callback(const f_number_unsigned_t start, const f_number_unsigned_t stop, void * const void_array) {
 
-    return private_f_fss_set_quotes_adjust(length, set_quotes);
+    {
+      f_fss_set_quote_t * const array = (f_fss_set_quote_t *) void_array;
+      f_status_t status = F_none;
+
+      for (f_number_unsigned_t i = start; i < stop; ++i) {
+
+        status = f_string_ranges_adjust(0, &array[i].objects);
+        if (F_status_is_error(status)) return status;
+
+        status = f_string_rangess_adjust(0, &array[i].contents);
+        if (F_status_is_error(status)) return status;
+
+        status = f_memory_array_adjust(0, sizeof(uint8_t), (void **) &array[i].objects_quote.array, &array[i].objects_quote.used, &array[i].objects_quote.size);
+        if (F_status_is_error(status)) return status;
+
+        status = f_memory_arrays_adjust(0, sizeof(uint8_t), (void **) &array[i].contents_quote.array, &array[i].contents_quote.used, &array[i].contents_quote.size, &f_uint8ss_destroy_callback);
+        if (F_status_is_error(status)) return status;
+      } // for
+    }
+
+    return F_none;
   }
-#endif // _di_f_fss_set_quotes_adjust_
+#endif // _di_f_fss_set_quotes_destroy_callback_
 
-#ifndef _di_f_fss_set_quotes_decimate_by_
-  f_status_t f_fss_set_quotes_decimate_by(const f_number_unsigned_t amount, f_fss_set_quotes_t * const set_quotes) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!set_quotes) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+#ifndef _di_f_fss_set_quotess_delete_callback_
+  f_status_t f_fss_set_quotess_delete_callback(const f_number_unsigned_t start, const f_number_unsigned_t stop, void * const void_array) {
 
-    if (!amount) return F_data_not;
+    {
+      f_fss_set_quotes_t * const array = (f_fss_set_quotes_t *) void_array;
+      f_status_t status = F_none;
+      f_number_unsigned_t j = 0;
 
-    return private_f_fss_set_quotes_adjust((set_quotes->size > amount) ? set_quotes->size - amount : 0, set_quotes);
+      for (f_number_unsigned_t i = start; i < stop; ++i) {
+
+        for (j = 0; j < array[i].size; ++j) {
+
+          status = f_string_ranges_resize(0, &array[i].array[j].objects);
+          if (F_status_is_error(status)) return status;
+
+          status = f_string_rangess_resize(0, &array[i].array[j].contents);
+          if (F_status_is_error(status)) return status;
+
+          status = f_memory_array_resize(0, sizeof(uint8_t), (void **) &array[i].array[j].objects_quote.array, &array[i].array[j].objects_quote.used, &array[i].array[j].objects_quote.size);
+          if (F_status_is_error(status)) return status;
+
+          status = f_memory_arrays_resize(0, sizeof(uint8_t), (void **) &array[i].array[j].contents_quote.array, &array[i].array[j].contents_quote.used, &array[i].array[j].contents_quote.size, &f_uint8ss_delete_callback);
+          if (F_status_is_error(status)) return status;
+        } // for
+
+        if (array[i].size) {
+          status = f_memory_array_resize(0, sizeof(f_fss_set_quote_t), (void **) &array[i].array, &array[i].used, &array[i].size);
+          if (F_status_is_error(status)) return status;
+        }
+      } // for
+    }
+
+    return F_none;
   }
-#endif // _di_f_fss_set_quotes_decimate_by_
+#endif // _di_f_fss_set_quotess_delete_callback_
 
-#ifndef _di_f_fss_set_quotes_decrease_by_
-  f_status_t f_fss_set_quotes_decrease_by(const f_number_unsigned_t amount, f_fss_set_quotes_t * const set_quotes) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!set_quotes) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+#ifndef _di_f_fss_set_quotess_destroy_callback_
+  f_status_t f_fss_set_quotess_destroy_callback(const f_number_unsigned_t start, const f_number_unsigned_t stop, void * const void_array) {
 
-    if (!amount) return F_data_not;
+    {
+      f_fss_set_quotes_t * const array = (f_fss_set_quotes_t *) void_array;
+      f_status_t status = F_none;
+      f_number_unsigned_t j = 0;
 
-    return private_f_fss_set_quotes_resize((set_quotes->size > amount) ? set_quotes->size - amount : 0, set_quotes);
+      for (f_number_unsigned_t i = start; i < stop; ++i) {
+
+        for (j = 0; j < array[i].size; ++j) {
+
+          status = f_string_ranges_adjust(0, &array[i].array[j].objects);
+          if (F_status_is_error(status)) return status;
+
+          status = f_string_rangess_adjust(0, &array[i].array[j].contents);
+          if (F_status_is_error(status)) return status;
+
+          status = f_memory_array_adjust(0, sizeof(uint8_t), (void **) &array[i].array[j].objects_quote.array, &array[i].array[j].objects_quote.used, &array[i].array[j].objects_quote.size);
+          if (F_status_is_error(status)) return status;
+
+          status = f_memory_arrays_adjust(0, sizeof(uint8_t), (void **) &array[i].array[j].contents_quote.array, &array[i].array[j].contents_quote.used, &array[i].array[j].contents_quote.size, &f_uint8ss_destroy_callback);
+          if (F_status_is_error(status)) return status;
+        } // for
+
+        if (array[i].size) {
+          status = f_memory_array_resize(0, sizeof(f_fss_set_quote_t), (void **) &array[i].array, &array[i].used, &array[i].size);
+          if (F_status_is_error(status)) return status;
+        }
+      } // for
+    }
+
+    return F_none;
   }
-#endif // _di_f_fss_set_quotes_decrease_by_
-
-#ifndef _di_f_fss_set_quotes_increase_
-  f_status_t f_fss_set_quotes_increase(const f_number_unsigned_t step, f_fss_set_quotes_t * const set_quotes) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!set_quotes) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return f_memory_array_increase(step, sizeof(f_fss_set_quote_t), (void **) &set_quotes->array, &set_quotes->used, &set_quotes->size);
-  }
-#endif // _di_f_fss_set_quotes_increase_
-
-#ifndef _di_f_fss_set_quotes_increase_by_
-  f_status_t f_fss_set_quotes_increase_by(const f_number_unsigned_t amount, f_fss_set_quotes_t * const set_quotes) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!set_quotes) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return f_memory_array_increase_by(amount, sizeof(f_fss_set_quote_t), (void **) &set_quotes->array, &set_quotes->used, &set_quotes->size);
-  }
-#endif // _di_f_fss_set_quotes_increase_by_
-
-#ifndef _di_f_fss_set_quotes_resize_
-  f_status_t f_fss_set_quotes_resize(const f_number_unsigned_t length, f_fss_set_quotes_t * const set_quotes) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!set_quotes) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return private_f_fss_set_quotes_resize(length, set_quotes);
-  }
-#endif // _di_f_fss_set_quotes_resize_
+#endif // _di_f_fss_set_quotess_destroy_callback_
 
 #ifdef __cplusplus
 } // extern "C"

@@ -39,6 +39,7 @@ extern "C" {
  * @param callback
  *   A callback to call on each array value when reducing the length of the array.
  *   This callback is expected to know the appropriate type and will cast the structure parameter to the appropriate type.
+ *   This callback is intended to be used for deleting data and does not get called when adding new data.
  *
  *   This is only called when the requested length is less than the given size.
  *
@@ -84,6 +85,7 @@ extern "C" {
  * @param callback
  *   A callback to call on each array value when reducing the length of the array.
  *   This callback is expected to know the appropriate type and will cast the structure parameter to the appropriate type.
+ *   This callback is intended to be used for deleting data and does not get called when adding new data.
  *
  *   This is only called when the requested length is less than the given size.
  *

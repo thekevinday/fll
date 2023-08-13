@@ -20,7 +20,7 @@ extern "C" {
     }
 
     if (main->setting.quotes_content.used < main->setting.contents.used) {
-      f_memory_arrays_resize(main->setting.contents.used, sizeof(f_uint8s_t), (void **) &main->setting.quotes_content.array, &main->setting.quotes_content.used, &main->setting.quotes_content.size, &f_uint8s_resize_callback);
+      f_memory_arrays_resize(main->setting.contents.used, sizeof(f_uint8s_t), (void **) &main->setting.quotes_content.array, &main->setting.quotes_content.used, &main->setting.quotes_content.size, &f_uint8ss_delete_callback);
       if (F_status_is_error(main->setting.state.status)) return;
 
       for (i = main->setting.quotes_content.used; i < main->setting.contents.used; ++i) {

@@ -32,7 +32,7 @@ build_language c
 build_libraries -lc
 build_libraries-individual -lf_memory -lf_string
 
-build_sources_library account.c private-account.c account/accounts.c account/private-accounts.c
+build_sources_library account.c private-account.c account/accounts.c
 
 build_sources_headers account.h account/accounts.h account/common.h
 

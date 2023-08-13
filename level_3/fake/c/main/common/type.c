@@ -256,7 +256,7 @@ extern "C" {
 
     f_string_dynamics_resize(0, &data_make->path.stack);
 
-    f_fss_nameds_resize(0, &data_make->fakefile);
+    f_memory_arrays_resize(0, sizeof(f_fss_named_t), (void **) &data_make->fakefile.array, &data_make->fakefile.used, &data_make->fakefile.size, &f_fss_nameds_delete_callback);
   }
 #endif // _di_fake_make_data_delete_
 
