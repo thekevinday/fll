@@ -7,7 +7,7 @@ extern "C" {
 #ifndef _di_f_execute_status_from_status_
   uint8_t f_execute_status_from_status(f_status_t status) {
 
-    if (F_status_set_fine(status) == F_none)                        return F_execute_none;
+    if (F_status_set_fine(status) == F_okay)                        return F_execute_okay;
     if (F_status_set_fine(status) == F_access)                      return F_execute_access;
     if (F_status_set_fine(status) == F_buffer)                      return F_execute_buffer;
     if (F_status_set_fine(status) == F_busy)                        return F_execute_busy;
@@ -117,7 +117,7 @@ extern "C" {
 #ifndef _di_f_execute_status_to_status_
   f_status_t f_execute_status_to_status(uint8_t status) {
 
-    if (status == F_execute_none)                        return F_none;
+    if (status == F_execute_okay)                        return F_okay;
     if (status == F_execute_access)                      return F_access;
     if (status == F_execute_bad)                         return F_execute_not;
     if (status == F_execute_buffer)                      return F_buffer;

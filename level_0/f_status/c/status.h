@@ -124,7 +124,7 @@ extern "C" {
  * 1) F_false, must always evaluate to 0.
  * 2) F_true, must always evaluate to 1 and will conflict with F_signal_hangup.
  * 3) All f_signal_*, these numbers must map directly to the standard signal codes.
- * 4) F_none, this is intended to be the default return code and the return code representing the standard start code.
+ * 4) F_okay, this is intended to be the default return code and the return code representing the standard start code.
  * 5) F_status_code_last, this is intended to designate the last code provided by level_0 status project.
  *    All code sets started by another project (such as FSS status codes) must start at this number + 1 with a code start map.
  */
@@ -202,7 +202,8 @@ extern "C" {
 
     // Basic.
     // Start at 197 to allow compatibility with the reserved bash return codes (keep in mind fss return codes can be larger than 255).
-    F_none = 197,
+    F_okay = 197,
+    F_okay_not,
     F_abort,
     F_abort_not,
     F_absolute,
@@ -211,6 +212,8 @@ extern "C" {
     F_address_not,
     F_again,
     F_again_not,
+    F_all,
+    F_all_not,
     F_ascii,
     F_ascii_not,
     F_atomic,
@@ -378,10 +381,10 @@ extern "C" {
     F_nice_not,
     F_no,
     F_no_not,
+    F_none,
+    F_none_not,
     F_object,
     F_object_not,
-    F_okay,
-    F_okay_not,
     F_once,
     F_once_not,
     F_option,
@@ -457,6 +460,8 @@ extern "C" {
     F_size_not,
     F_skip,
     F_skip_not,
+    F_some,
+    F_some_not,
     F_space,
     F_space_not,
     F_start,

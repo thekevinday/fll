@@ -230,7 +230,8 @@ extern "C" {
   extern const f_string_static_t f_status_signal_reserved_64_s;
 
   // Basic.
-  #define F_status_none_s              "F_none"
+  #define F_status_okay_s              "F_okay"
+  #define F_status_okay_not_s          "F_okay_not"
   #define F_status_abort_s             "F_abort"
   #define F_status_abort_not_s         "F_abort_not"
   #define F_status_absolute_s          "F_absolute"
@@ -239,6 +240,8 @@ extern "C" {
   #define F_status_address_not_s       "F_address_not"
   #define F_status_again_s             "F_again"
   #define F_status_again_not_s         "F_again_not"
+  #define F_status_all_s               "F_all"
+  #define F_status_all_not_s           "F_all_not"
   #define F_status_ascii_s             "F_ascii"
   #define F_status_ascii_not_s         "F_ascii_not"
   #define F_status_atomic_s            "F_atomic"
@@ -406,10 +409,10 @@ extern "C" {
   #define F_status_nice_not_s          "F_nice_not"
   #define F_status_no_s                "F_no"
   #define F_status_no_not_s            "F_no_not"
+  #define F_status_none_s              "F_none"
+  #define F_status_none_not_s          "F_none_not"
   #define F_status_object_s            "F_object"
   #define F_status_object_not_s        "F_object_not"
-  #define F_status_okay_s              "F_okay"
-  #define F_status_okay_not_s          "F_okay_not"
   #define F_status_once_s              "F_once"
   #define F_status_once_not_s          "F_once_not"
   #define F_status_option_s            "F_option"
@@ -485,6 +488,8 @@ extern "C" {
   #define F_status_signal_not_s        "F_signal_not"
   #define F_status_skip_s              "F_skip"
   #define F_status_skip_not_s          "F_skip_not"
+  #define F_status_some_s              "F_some"
+  #define F_status_some_not_s          "F_some_not"
   #define F_status_space_s             "F_space"
   #define F_status_space_not_s         "F_space_not"
   #define F_status_start_s             "F_start"
@@ -544,7 +549,8 @@ extern "C" {
   #define F_status_yes_s               "F_yes"
   #define F_status_yes_not_s           "F_yes_not"
 
-  #define F_status_none_s_length              6
+  #define F_status_okay_s_length              6
+  #define F_status_okay_not_s_length          10
   #define F_status_abort_s_length             7
   #define F_status_abort_not_s_length         11
   #define F_status_absolute_s_length          10
@@ -553,6 +559,8 @@ extern "C" {
   #define F_status_address_not_s_length       13
   #define F_status_again_s_length             7
   #define F_status_again_not_s_length         11
+  #define F_status_all_s_length               5
+  #define F_status_all_not_s_length           9
   #define F_status_ascii_s_length             7
   #define F_status_ascii_not_s_length         11
   #define F_status_atomic_s_length            8
@@ -720,10 +728,10 @@ extern "C" {
   #define F_status_nice_not_s_length          10
   #define F_status_no_s_length                4
   #define F_status_no_not_s_length            8
+  #define F_status_none_s_length              6
+  #define F_status_none_not_s_length          10
   #define F_status_object_s_length            8
   #define F_status_object_not_s_length        12
-  #define F_status_okay_s_length              6
-  #define F_status_okay_not_s_length          10
   #define F_status_once_s_length              6
   #define F_status_once_not_s_length          10
   #define F_status_option_s_length            8
@@ -799,6 +807,8 @@ extern "C" {
   #define F_status_signal_not_s_length        12
   #define F_status_skip_s_length              6
   #define F_status_skip_not_s_length          10
+  #define F_status_some_s_length              6
+  #define F_status_some_not_s_length          10
   #define F_status_space_s_length             7
   #define F_status_space_not_s_length         11
   #define F_status_start_s_length             7
@@ -858,7 +868,8 @@ extern "C" {
   #define F_status_yes_s_length               5
   #define F_status_yes_not_s_length           9
 
-  extern const f_string_static_t f_status_none_s;
+  extern const f_string_static_t f_status_okay_s;
+  extern const f_string_static_t f_status_okay_not_s;
   extern const f_string_static_t f_status_abort_s;
   extern const f_string_static_t f_status_abort_not_s;
   extern const f_string_static_t f_status_absolute_s;
@@ -867,6 +878,8 @@ extern "C" {
   extern const f_string_static_t f_status_address_not_s;
   extern const f_string_static_t f_status_again_s;
   extern const f_string_static_t f_status_again_not_s;
+  extern const f_string_static_t f_status_all_s;
+  extern const f_string_static_t f_status_all_not_s;
   extern const f_string_static_t f_status_ascii_s;
   extern const f_string_static_t f_status_ascii_not_s;
   extern const f_string_static_t f_status_atomic_s;
@@ -1036,10 +1049,10 @@ extern "C" {
   extern const f_string_static_t f_status_nice_not_s;
   extern const f_string_static_t f_status_no_s;
   extern const f_string_static_t f_status_no_not_s;
+  extern const f_string_static_t f_status_none_s;
+  extern const f_string_static_t f_status_none_not_s;
   extern const f_string_static_t f_status_object_s;
   extern const f_string_static_t f_status_object_not_s;
-  extern const f_string_static_t f_status_okay_s;
-  extern const f_string_static_t f_status_okay_not_s;
   extern const f_string_static_t f_status_once_s;
   extern const f_string_static_t f_status_once_not_s;
   extern const f_string_static_t f_status_option_s;
@@ -1115,6 +1128,8 @@ extern "C" {
   extern const f_string_static_t f_status_signal_not_s;
   extern const f_string_static_t f_status_skip_s;
   extern const f_string_static_t f_status_skip_not_s;
+  extern const f_string_static_t f_status_some_s;
+  extern const f_string_static_t f_status_some_not_s;
   extern const f_string_static_t f_status_space_s;
   extern const f_string_static_t f_status_space_not_s;
   extern const f_string_static_t f_status_start_s;
@@ -1437,7 +1452,6 @@ extern "C" {
   #define F_status_none_eof_s               "F_none_eof"
   #define F_status_none_eol_s               "F_none_eol"
   #define F_status_none_eos_s               "F_none_eos"
-  #define F_status_none_not_s               "F_none_not"
   #define F_status_none_start_s             "F_none_start"
   #define F_status_none_stop_s              "F_none_stop"
   #define F_status_data_s                   "F_data"
@@ -1469,7 +1483,6 @@ extern "C" {
   #define F_status_none_eof_s_length               10
   #define F_status_none_eol_s_length               10
   #define F_status_none_eos_s_length               10
-  #define F_status_none_not_s_length               10
   #define F_status_none_start_s_length             12
   #define F_status_none_stop_s_length              11
   #define F_status_data_s_length                   6
@@ -1501,7 +1514,6 @@ extern "C" {
   extern const f_string_static_t f_status_none_eof_s;
   extern const f_string_static_t f_status_none_eol_s;
   extern const f_string_static_t f_status_none_eos_s;
-  extern const f_string_static_t f_status_none_not_s;
   extern const f_string_static_t f_status_none_start_s;
   extern const f_string_static_t f_status_none_stop_s;
   extern const f_string_static_t f_status_data_s;

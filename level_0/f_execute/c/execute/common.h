@@ -41,7 +41,7 @@ extern "C" {
  */
 #ifndef _di_f_execute_e_
   enum {
-    F_execute_none = 0,
+    F_execute_okay = 0,
     F_execute_failure,
     F_execute_parameter,
     F_execute_access,
