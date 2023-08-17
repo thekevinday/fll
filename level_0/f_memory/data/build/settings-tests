@@ -26,7 +26,6 @@ build_libraries-individual -lf_memory
 build_sources_program test-memory-adjust.c test-memory-delete.c test-memory-destroy.c test-memory-new_aligned.c test-memory-new.c test-memory-resize.c test-memory.c
 build_sources_program test-memory-array_adjust.c test-memory-array_append.c test-memory-array_append_all.c test-memory-array_decimate_by.c test-memory-array_decrease_by.c test-memory-array_increase.c test-memory-array_increase_by.c test-memory-array_resize.c
 build_sources_program test-memory-arrays_adjust.c test-memory-arrays_resize.c
-build_sources_program test-memory-arrayss_adjust.c test-memory-arrayss_resize.c
 
 build_script no
 build_shared yes

@@ -53,7 +53,7 @@ int main(void) {
     cmocka_unit_test(test__f_accountss_destroy_callback__fails),
 
     cmocka_unit_test(test__f_accountss_delete_callback__works),
-    //cmocka_unit_test(test__f_accountss_destroy_callback__works),
+    cmocka_unit_test(test__f_accountss_destroy_callback__works),
 
     #ifndef _di_level_0_parameter_checking_
       cmocka_unit_test(test__f_account_by_id__parameter_checking),
@@ -65,7 +65,6 @@ int main(void) {
 
       // f_accounts_delete_callback() doesn't use parameter checking.
       // f_accounts_destroy_callback() doesn't use parameter checking.
-
       // f_accountss_delete_callback() doesn't use parameter checking.
       // f_accountss_destroy_callback() doesn't use parameter checking.
     #endif // _di_level_0_parameter_checking_

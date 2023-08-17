@@ -45,6 +45,66 @@ int main(void) {
     cmocka_unit_test(test__f_fss_fail_utf__works_for_no_error),
     cmocka_unit_test(test__f_fss_fail_utf_to_false__works_for_no_error),
 
+    cmocka_unit_test(test__f_fss_items_delete_callback__fails),
+    cmocka_unit_test(test__f_fss_items_destroy_callback__fails),
+    cmocka_unit_test(test__f_fss_itemss_delete_callback__fails),
+    cmocka_unit_test(test__f_fss_itemss_destroy_callback__fails),
+
+    cmocka_unit_test(test__f_fss_items_delete_callback__works),
+    cmocka_unit_test(test__f_fss_items_destroy_callback__works),
+    cmocka_unit_test(test__f_fss_itemss_delete_callback__works),
+    cmocka_unit_test(test__f_fss_itemss_destroy_callback__works),
+
+    cmocka_unit_test(test__f_fss_nameds_delete_callback__fails),
+    cmocka_unit_test(test__f_fss_nameds_destroy_callback__fails),
+    cmocka_unit_test(test__f_fss_namedss_delete_callback__fails),
+    cmocka_unit_test(test__f_fss_namedss_destroy_callback__fails),
+
+    cmocka_unit_test(test__f_fss_nameds_delete_callback__works),
+    cmocka_unit_test(test__f_fss_nameds_destroy_callback__works),
+    cmocka_unit_test(test__f_fss_namedss_delete_callback__works),
+    cmocka_unit_test(test__f_fss_namedss_destroy_callback__works),
+
+    cmocka_unit_test(test__f_fss_nests_delete_callback__fails),
+    cmocka_unit_test(test__f_fss_nests_destroy_callback__fails),
+    cmocka_unit_test(test__f_fss_nestss_delete_callback__fails),
+    cmocka_unit_test(test__f_fss_nestss_destroy_callback__fails),
+
+    cmocka_unit_test(test__f_fss_nests_delete_callback__works),
+    cmocka_unit_test(test__f_fss_nests_destroy_callback__works),
+    cmocka_unit_test(test__f_fss_nestss_delete_callback__works),
+    cmocka_unit_test(test__f_fss_nestss_destroy_callback__works),
+
+    cmocka_unit_test(test__f_fss_set_quotes_delete_callback__fails),
+    cmocka_unit_test(test__f_fss_set_quotes_destroy_callback__fails),
+    cmocka_unit_test(test__f_fss_set_quotess_delete_callback__fails),
+    cmocka_unit_test(test__f_fss_set_quotess_destroy_callback__fails),
+
+    cmocka_unit_test(test__f_fss_set_quotes_delete_callback__works),
+    cmocka_unit_test(test__f_fss_set_quotes_destroy_callback__works),
+    cmocka_unit_test(test__f_fss_set_quotess_delete_callback__works),
+    cmocka_unit_test(test__f_fss_set_quotess_destroy_callback__works),
+
+    cmocka_unit_test(test__f_fss_sets_delete_callback__fails),
+    cmocka_unit_test(test__f_fss_sets_destroy_callback__fails),
+    cmocka_unit_test(test__f_fss_setss_delete_callback__fails),
+    cmocka_unit_test(test__f_fss_setss_destroy_callback__fails),
+
+    cmocka_unit_test(test__f_fss_sets_delete_callback__works),
+    cmocka_unit_test(test__f_fss_sets_destroy_callback__works),
+    cmocka_unit_test(test__f_fss_setss_delete_callback__works),
+    cmocka_unit_test(test__f_fss_setss_destroy_callback__works),
+
+    cmocka_unit_test(test__f_fss_simple_packets_delete_callback__fails),
+    cmocka_unit_test(test__f_fss_simple_packets_destroy_callback__fails),
+    cmocka_unit_test(test__f_fss_simple_packetss_delete_callback__fails),
+    cmocka_unit_test(test__f_fss_simple_packetss_destroy_callback__fails),
+
+    cmocka_unit_test(test__f_fss_simple_packets_delete_callback__works),
+    cmocka_unit_test(test__f_fss_simple_packets_destroy_callback__works),
+    cmocka_unit_test(test__f_fss_simple_packetss_delete_callback__works),
+    cmocka_unit_test(test__f_fss_simple_packetss_destroy_callback__works),
+
     #ifndef _di_level_0_parameter_checking_
       cmocka_unit_test(test__f_fss_apply_delimit__parameter_checking),
       cmocka_unit_test(test__f_fss_apply_delimit_range__parameter_checking),
@@ -59,6 +119,31 @@ int main(void) {
       cmocka_unit_test(test__f_fss_seek_to_eol__parameter_checking),
       cmocka_unit_test(test__f_fss_skip_past_delimit__parameter_checking),
       cmocka_unit_test(test__f_fss_skip_past_space__parameter_checking),
+
+      // f_fss_items_delete_callback() doesn't use parameter checking.
+      // f_fss_items_destroy_callback() doesn't use parameter checking.
+      // f_fss_itemss_delete_callback() doesn't use parameter checking.
+      // f_fss_itemss_destroy_callback() doesn't use parameter checking.
+      // f_fss_nameds_delete_callback() doesn't use parameter checking.
+      // f_fss_nameds_destroy_callback() doesn't use parameter checking.
+      // f_fss_namedss_delete_callback() doesn't use parameter checking.
+      // f_fss_namedss_destroy_callback() doesn't use parameter checking.
+      // f_fss_nests_delete_callback() doesn't use parameter checking.
+      // f_fss_nests_destroy_callback() doesn't use parameter checking.
+      // f_fss_nestss_delete_callback() doesn't use parameter checking.
+      // f_fss_nestss_destroy_callback() doesn't use parameter checking.
+      // f_fss_set_quotes_delete_callback() doesn't use parameter checking.
+      // f_fss_set_quotes_destroy_callback() doesn't use parameter checking.
+      // f_fss_set_quotess_delete_callback() doesn't use parameter checking.
+      // f_fss_set_quotess_destroy_callback() doesn't use parameter checking.
+      // f_fss_sets_delete_callback() doesn't use parameter checking.
+      // f_fss_sets_destroy_callback() doesn't use parameter checking.
+      // f_fss_setss_delete_callback() doesn't use parameter checking.
+      // f_fss_setss_destroy_callback() doesn't use parameter checking.
+      // f_fss_simple_packets_delete_callback() doesn't use parameter checking.
+      // f_fss_simple_packets_destroy_callback() doesn't use parameter checking.
+      // f_fss_simple_packetss_delete_callback() doesn't use parameter checking.
+      // f_fss_simple_packetss_destroy_callback() doesn't use parameter checking.
     #endif // _di_level_0_parameter_checking_
   };
 

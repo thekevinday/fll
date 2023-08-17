@@ -66,6 +66,30 @@ extern "C" {
 #endif // _di_f_fss_sets_t_
 
 /**
+ * This holds an array of an array of f_fss_sets_t.
+ *
+ * Properties:
+ *   - array: An array of an array of f_fss_sets_t.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
+ */
+#ifndef _di_f_fss_setss_t_
+  typedef struct {
+    f_fss_sets_t *array;
+
+    f_number_unsigned_t size;
+    f_number_unsigned_t used;
+  } f_fss_setss_t;
+
+  #define f_fss_setss_t_initialize { 0, 0, 0 }
+
+  #define macro_f_fss_setss_t_initialize_1(array, size, used) { array, size, used }
+  #define macro_f_fss_setss_t_initialize_2(array, length) { array, length, length }
+
+  #define macro_f_fss_setss_t_clear(sets) macro_f_memory_structures_clear(sets)
+#endif // _di_f_fss_setss_t_
+
+/**
  * Delete a set.
  *
  * @param set

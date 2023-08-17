@@ -70,7 +70,7 @@ extern "C" {
  * An array of directory listing.
  *
  * Properties:
- *   - array: An array of directory status.
+ *   - array: An array of directory listing.
  *   - size:  Total amount of allocated space.
  *   - used:  Total number of allocated spaces used.
  */
@@ -88,6 +88,29 @@ extern "C" {
 
   #define macro_f_directory_listings_t_clear(structures) macro_f_memory_structures_clear(structures)
 #endif // _di_f_directory_listings_t_
+
+/**
+ * An array of an array of directory listing.
+ *
+ * Properties:
+ *   - array: An array of an array of directory listing.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
+ */
+#ifndef _di_f_directory_listingss_t_
+  typedef struct {
+    f_directory_listings_t *array;
+    f_number_unsigned_t size;
+    f_number_unsigned_t used;
+  } f_directory_listingss_t;
+
+  #define f_directory_listingss_t_initialize { 0, 0, 0 }
+
+  #define macro_f_directory_listingss_t_initialize_1(content, size, used) { array, size, used }
+  #define macro_f_directory_listingss_t_initialize_2(array, length) { array, length, length }
+
+  #define macro_f_directory_listingss_t_clear(structures) macro_f_memory_structures_clear(structures)
+#endif // _di_f_directory_listingss_t_
 
 /**
  * Delete all arrays within the listing.

@@ -65,6 +65,29 @@ extern "C" {
 #endif // _di_f_directory_statuss_t_
 
 /**
+ * An array of an array of directory status.
+ *
+ * Properties:
+ *   - array: An array of an array of directory status.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
+ */
+#ifndef _di_f_directory_statusss_t_
+  typedef struct {
+    f_directory_statuss_t *array;
+    f_number_unsigned_t size;
+    f_number_unsigned_t used;
+  } f_directory_statusss_t;
+
+  #define f_directory_statusss_t_initialize { 0, 0, 0 }
+
+  #define macro_f_directory_statusss_t_initialize_1(content, size, used) { array, size, used }
+  #define macro_f_directory_statusss_t_initialize_2(array, length) { array, length, length }
+
+  #define macro_f_directory_statusss_t_clear(structures) macro_f_memory_structures_clear(structures)
+#endif // _di_f_directory_statusss_t_
+
+/**
  * A callback intended to be passed to f_memory_arrays_resize() for an f_directory_statuss_t structure.
  *
  * This is only called when shrinking the array and generally should perform deallocations.

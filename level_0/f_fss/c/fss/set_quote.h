@@ -73,6 +73,30 @@ extern "C" {
 #endif // _di_f_fss_set_quotes_t_
 
 /**
+ * This holds an array of an array of f_fss_set_quotes_t.
+ *
+ * Properties:
+ *   - array: An array of an array of f_fss_set_quotes_t.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
+ */
+#ifndef _di_f_fss_set_quotess_t_
+  typedef struct {
+    f_fss_set_quotes_t *array;
+
+    f_number_unsigned_t size;
+    f_number_unsigned_t used;
+  } f_fss_set_quotess_t;
+
+  #define f_fss_set_quotess_t_initialize { 0, 0, 0 }
+
+  #define macro_f_fss_set_quotess_t_initialize_1(array, size, used) { array, size, used }
+  #define macro_f_fss_set_quotess_t_initialize_2(array, length)     { array, length, length }
+
+  #define macro_f_fss_set_quotess_t_clear(set_quotes) macro_f_memory_structures_clear(set_quotes)
+#endif // _di_f_fss_set_quotess_t_
+
+/**
  * Delete a quote set.
  *
  * @param set_quote
@@ -83,15 +107,15 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ *   Errors (with error bit) from: f_memory_array_resize().
+ *   Errors (with error bit) from: f_memory_arrays_resize().
  *   Errors (with error bit) from: f_string_ranges_resize().
  *   Errors (with error bit) from: f_string_rangess_resize().
- *   Errors (with error bit) from: f_uint8s_resize().
- *   Errors (with error bit) from: f_uint8ss_resize().
  *
+ * @see f_memory_array_resize()
+ * @see f_memory_arrays_resize()
  * @see f_string_ranges_resize()
  * @see f_string_rangess_resize()
- * @see f_uint8s_resize()
- * @see f_uint8ss_resize()
  */
 #ifndef _di_f_fss_set_quote_delete_
   extern f_status_t f_fss_set_quote_delete(f_fss_set_quote_t * const set_quote);
@@ -108,15 +132,15 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ *   Errors (with error bit) from: f_memory_array_adjust().
+ *   Errors (with error bit) from: f_memory_arrays_adjust().
  *   Errors (with error bit) from: f_string_ranges_adjust().
  *   Errors (with error bit) from: f_string_rangess_adjust().
- *   Errors (with error bit) from: f_uint8s_adjust().
- *   Errors (with error bit) from: f_uint8ss_adjust().
  *
+ * @see f_memory_array_adjust()
+ * @see f_memory_arrays_adjust()
  * @see f_string_ranges_adjust()
  * @see f_string_rangess_adjust()
- * @see f_uint8s_adjust()
- * @see f_uint8ss_adjust()
  */
 #ifndef _di_f_fss_set_quote_destroy_
   extern f_status_t f_fss_set_quote_destroy(f_fss_set_quote_t * const set_quote);
@@ -142,16 +166,15 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ *   Errors (with error bit) from: f_memory_array_resize().
+ *   Errors (with error bit) from: f_memory_arrays_resize().
  *   Errors (with error bit) from: f_string_ranges_resize().
  *   Errors (with error bit) from: f_string_rangess_resize().
  *
- *   Errors (with error bit) from: f_uint8s_resize().
- *   Errors (with error bit) from: f_uint8ss_resize().
- *
+ * @see f_memory_array_resize()
+ * @see f_memory_arrays_resize()
  * @see f_string_ranges_resize()
  * @see f_string_rangess_resize()
- * @see f_uint8s_resize()
- * @see f_uint8ss_resize()
  */
 #ifndef _di_f_fss_set_quotes_delete_callback_
   extern f_status_t f_fss_set_quotes_delete_callback(const f_number_unsigned_t start, const f_number_unsigned_t stop, void * const array);
@@ -177,16 +200,15 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ *   Errors (with error bit) from: f_memory_array_adjust().
+ *   Errors (with error bit) from: f_memory_arrays_adjust().
  *   Errors (with error bit) from: f_string_ranges_adjust().
  *   Errors (with error bit) from: f_string_rangess_adjust().
  *
- *   Errors (with error bit) from: f_uint8s_adjust().
- *   Errors (with error bit) from: f_uint8ss_adjust().
- *
+ * @see f_memory_array_adjust()
+ * @see f_memory_arrays_adjust()
  * @see f_string_ranges_adjust()
  * @see f_string_rangess_adjust()
- * @see f_uint8s_adjust()
- * @see f_uint8ss_adjust()
  */
 #ifndef _di_f_fss_set_quotes_destroy_callback_
   extern f_status_t f_fss_set_quotes_destroy_callback(const f_number_unsigned_t start, const f_number_unsigned_t stop, void * const array);
@@ -212,16 +234,15 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ *   Errors (with error bit) from: f_memory_array_resize().
+ *   Errors (with error bit) from: f_memory_arrays_resize().
  *   Errors (with error bit) from: f_string_ranges_resize().
  *   Errors (with error bit) from: f_string_rangess_resize().
  *
- *   Errors (with error bit) from: f_uint8s_resize().
- *   Errors (with error bit) from: f_uint8ss_resize().
- *
+ * @see f_memory_array_resize()
+ * @see f_memory_arrays_resize()
  * @see f_string_ranges_resize()
  * @see f_string_rangess_resize()
- * @see f_uint8s_resize()
- * @see f_uint8ss_resize()
  */
 #ifndef _di_f_fss_set_quotess_delete_callback_
   extern f_status_t f_fss_set_quotess_delete_callback(const f_number_unsigned_t start, const f_number_unsigned_t stop, void * const array);
@@ -247,16 +268,15 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ *   Errors (with error bit) from: f_memory_array_adjust().
+ *   Errors (with error bit) from: f_memory_arrays_adjust().
  *   Errors (with error bit) from: f_string_ranges_adjust().
  *   Errors (with error bit) from: f_string_rangess_adjust().
  *
- *   Errors (with error bit) from: f_uint8s_adjust().
- *   Errors (with error bit) from: f_uint8ss_adjust().
- *
+ * @see f_memory_array_adjust()
+ * @see f_memory_arrays_adjust()
  * @see f_string_ranges_adjust()
  * @see f_string_rangess_adjust()
- * @see f_uint8s_adjust()
- * @see f_uint8ss_adjust()
  */
 #ifndef _di_f_fss_set_quotess_destroy_callback_
   extern f_status_t f_fss_set_quotess_destroy_callback(const f_number_unsigned_t start, const f_number_unsigned_t stop, void * const array);

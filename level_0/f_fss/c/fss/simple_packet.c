@@ -165,7 +165,7 @@ extern "C" {
         } // for
 
         if (array[i].size) {
-          status = f_memory_array_resize(0, sizeof(f_fss_simple_packet_t), (void **) &array[i].array, &array[i].used, &array[i].size);
+          status = f_memory_array_adjust(0, sizeof(f_fss_simple_packet_t), (void **) &array[i].array, &array[i].used, &array[i].size);
           if (F_status_is_error(status)) return status;
         }
       } // for

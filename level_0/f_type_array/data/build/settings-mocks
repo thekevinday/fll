@@ -64,4 +64,6 @@ flags_library -fPIC
 # Inject mocks.
 flags -Wl,--wrap=f_memory_array_adjust
 flags -Wl,--wrap=f_memory_array_resize
+flags -Wl,--wrap=f_memory_arrays_adjust
+flags -Wl,--wrap=f_memory_arrays_resize
 flags -Wl,--wrap=poll

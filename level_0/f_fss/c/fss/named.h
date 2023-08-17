@@ -73,6 +73,30 @@ extern "C" {
 #endif // _di_f_fss_nameds_t_
 
 /**
+ * This holds an array of an array of f_fss_nameds_t.
+ *
+ * Properties:
+ *   - array: An array an array of of f_fss_nameds_t.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
+ */
+#ifndef _di_f_fss_namedss_t_
+  typedef struct {
+    f_fss_nameds_t *array;
+
+    f_number_unsigned_t size;
+    f_number_unsigned_t used;
+  } f_fss_namedss_t;
+
+  #define f_fss_namedss_t_initialize { 0, 0, 0 }
+
+  #define macro_f_fss_namedss_t_initialize_1(array, size, used) { array, size, used }
+  #define macro_f_fss_namedss_t_initialize_2(array, length) { array, length, length }
+
+  #define macro_f_fss_namedss_t_clear(nameds) macro_f_memory_structures_clear(nameds)
+#endif // _di_f_fss_namedss_t_
+
+/**
  * Delete a named.
  *
  * @param named

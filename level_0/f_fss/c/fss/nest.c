@@ -90,6 +90,11 @@ extern "C" {
             if (F_status_is_error(status)) return status;
           }
         } // for
+
+        if (array[i].size) {
+          status = f_memory_array_resize(0, sizeof(f_fss_items_t), (void **) &array[i].depth, &array[i].used, &array[i].size);
+          if (F_status_is_error(status)) return status;
+        }
       } // for
     }
 
@@ -125,6 +130,11 @@ extern "C" {
             if (F_status_is_error(status)) return status;
           }
         } // for
+
+        if (array[i].size) {
+          status = f_memory_array_adjust(0, sizeof(f_fss_items_t), (void **) &array[i].depth, &array[i].used, &array[i].size);
+          if (F_status_is_error(status)) return status;
+        }
       } // for
     }
 
@@ -159,6 +169,11 @@ extern "C" {
               if (F_status_is_error(status)) return status;
             }
           } // for
+
+          if (array[i].array[j].size) {
+            status = f_memory_array_resize(0, sizeof(f_fss_items_t), (void **) &array[i].array[j].depth, &array[i].array[j].used, &array[i].array[j].size);
+            if (F_status_is_error(status)) return status;
+          }
         } // for
 
         if (array[i].size) {
@@ -203,6 +218,11 @@ extern "C" {
               if (F_status_is_error(status)) return status;
             }
           } // for
+
+          if (array[i].array[j].size) {
+            status = f_memory_array_adjust(0, sizeof(f_fss_items_t), (void **) &array[i].array[j].depth, &array[i].array[j].used, &array[i].array[j].size);
+            if (F_status_is_error(status)) return status;
+          }
         } // for
 
         if (array[i].size) {

@@ -75,7 +75,7 @@ extern "C" {
  *   }
  *
  * Properties:
- *   - array: The array of object, their associated content, and their associated parent.
+ *   - array: The array of fss_items.
  *   - size:  Total amount of allocated space.
  *   - used:  Total number of allocated spaces used.
  */
@@ -92,6 +92,28 @@ extern "C" {
   #define macro_f_fss_items_t_initialize_1(array, size, used) { array, size, used }
   #define macro_f_fss_items_t_initialize_2(array, length)     { array, length, length }
 #endif // _di_f_fss_items_t_
+
+/**
+ * This holds an array of an array of fss_items.
+ *
+ * Properties:
+ *   - array: The array of an array of fss_items.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
+ */
+#ifndef _di_f_fss_itemss_t_
+  typedef struct {
+    f_fss_items_t *array;
+
+    f_number_unsigned_t size;
+    f_number_unsigned_t used;
+  } f_fss_itemss_t;
+
+  #define f_fss_itemss_t_initialize { 0, 0, 0 }
+
+  #define macro_f_fss_itemss_t_initialize_1(array, size, used) { array, size, used }
+  #define macro_f_fss_itemss_t_initialize_2(array, length)     { array, length, length }
+#endif // _di_f_fss_itemss_t_
 
 /**
  * Delete an item.

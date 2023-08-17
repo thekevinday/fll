@@ -169,10 +169,10 @@ extern "C" {
 #endif // _di_f_fss_simple_packet_ranges_t_
 
 /**
- * This holds an array of f_fss_simple_packet_ranges_t.
+ * This holds an array of an array of f_fss_simple_packet_range_t.
  *
  * Properties:
- *   - array: An array of f_fss_simple_packet_ranges_t.
+ *   - array: An array of an array of f_fss_simple_packet_range_t.
  *   - size:  Total amount of allocated space.
  *   - used:  Total number of allocated spaces used.
  */

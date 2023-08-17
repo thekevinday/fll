@@ -7,8 +7,8 @@
  *
  * Test the array types in the type project.
  */
-#ifndef _TEST__F_fss__listings_destroy_callback
-#define _TEST__F_fss__listings_destroy_callback
+#ifndef _TEST__F_fss__items_destroy_callback
+#define _TEST__F_fss__items_destroy_callback
 
 /**
  * Test that the function fails.
@@ -24,4 +24,4 @@ extern void test__f_fss_items_destroy_callback__fails(void **state);
  */
 extern void test__f_fss_items_destroy_callback__works(void **state);
 
-#endif // _TEST__F_fss__listings_destroy_callback
+#endif // _TEST__F_fss__items_destroy_callback

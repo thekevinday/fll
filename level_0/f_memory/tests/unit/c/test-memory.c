@@ -44,9 +44,6 @@ int main(void) {
     cmocka_unit_test(test__f_memory_arrays_adjust__returns_array_too_large),
     cmocka_unit_test(test__f_memory_arrays_resize__returns_array_too_large),
 
-    cmocka_unit_test(test__f_memory_arrayss_adjust__returns_array_too_large),
-    cmocka_unit_test(test__f_memory_arrayss_resize__returns_array_too_large),
-
     cmocka_unit_test(test__f_memory_array_append_all__returns_data_not),
     cmocka_unit_test(test__f_memory_array_decimate_by__returns_data_not),
     cmocka_unit_test(test__f_memory_array_decrease_by__returns_data_not),
@@ -64,9 +61,6 @@ int main(void) {
 
     cmocka_unit_test(test__f_memory_arrays_adjust__works),
     cmocka_unit_test(test__f_memory_arrays_resize__works),
-
-    cmocka_unit_test(test__f_memory_arrayss_adjust__works),
-    cmocka_unit_test(test__f_memory_arrayss_resize__works),
 
     #ifndef _di_level_0_parameter_checking_
       cmocka_unit_test(test__f_memory_adjust__parameter_checking),
@@ -86,9 +80,6 @@ int main(void) {
 
       cmocka_unit_test(test__f_memory_arrays_adjust__parameter_checking),
       cmocka_unit_test(test__f_memory_arrays_resize__parameter_checking),
-
-      cmocka_unit_test(test__f_memory_arrayss_adjust__parameter_checking),
-      cmocka_unit_test(test__f_memory_arrayss_resize__parameter_checking),
     #endif // _di_level_0_parameter_checking_
   };
 

@@ -26,9 +26,9 @@ build_libraries -lc -lcmocka
 build_libraries-individual -lf_memory -lf_string -lf_directory
 
 build_sources_program test-directory.c test-directory-create.c test-directory-create_at.c test-directory-exists.c test-directory-exists_at.c test-directory-is.c test-directory-is_at.c test-directory-list.c test-directory-open.c test-directory-open_at.c test-directory-remove.c test-directory-remove_custom.c test-directory-touch.c test-directory-touch_at.c
-build_sources_program test-directory-listings_destroy_callback.c test-directory-listings_delete_callback.c
-build_sources_program test-directory-recurse_dos_destroy_callback.c test-directory-recurse_dos_delete_callback.c
-build_sources_program test-directory-statuss_destroy_callback.c test-directory-statuss_delete_callback.c
+build_sources_program test-directory-listings_destroy_callback.c test-directory-listings_delete_callback.c test-directory-listingss_destroy_callback.c test-directory-listingss_delete_callback.c
+build_sources_program test-directory-recurse_dos_destroy_callback.c test-directory-recurse_dos_delete_callback.c test-directory-recurse_doss_destroy_callback.c test-directory-recurse_doss_delete_callback.c
+build_sources_program test-directory-statuss_destroy_callback.c test-directory-statuss_delete_callback.c test-directory-statusss_destroy_callback.c test-directory-statusss_delete_callback.c
 
 build_script no
 build_shared yes

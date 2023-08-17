@@ -118,10 +118,10 @@ extern "C" {
 #endif // _di_f_directory_recurse_do_t_
 
 /**
- * An array of directory recurse.
+ * An array of directory recursion information.
  *
  * Properties:
- *   - array: An array of directory status.
+ *   - array: An array of directory recursion information.
  *   - size:  Total amount of allocated space.
  *   - used:  Total number of allocated spaces used.
  */
@@ -139,6 +139,29 @@ extern "C" {
 
   #define macro_f_directory_recurse_dos_t_clear(structures) macro_f_memory_structures_clear(structures)
 #endif // _di_f_directory_recurse_dos_t_
+
+/**
+ * An array of an array of directory recursion information.
+ *
+ * Properties:
+ *   - array: An array of directory recursion information.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
+ */
+#ifndef _di_f_directory_recurse_doss_t_
+  typedef struct {
+    f_directory_recurse_dos_t *array;
+    f_number_unsigned_t size;
+    f_number_unsigned_t used;
+  } f_directory_recurse_doss_t;
+
+  #define f_directory_recurse_doss_t_initialize { 0, 0, 0 }
+
+  #define macro_f_directory_recurse_doss_t_initialize_1(content, size, used) { array, size, used }
+  #define macro_f_directory_recurse_doss_t_initialize_2(array, length) { array, length, length }
+
+  #define macro_f_directory_recurse_doss_t_clear(structures) macro_f_memory_structures_clear(structures)
+#endif // _di_f_directory_recurse_doss_t_
 
 /**
  * Delete all non-pointer based dynamic arrays within the recurse.
