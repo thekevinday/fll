@@ -9,7 +9,7 @@ extern "C" {
 
     if (!main) return;
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
 
     bool valid_not = F_false;
 
@@ -64,13 +64,13 @@ extern "C" {
             }
           }
           else if (main->setting.mode & utf8_mode_to_bytesequence_e) {
-            main->setting.state.status = F_none;
+            main->setting.state.status = F_okay;
             unicode.used = macro_f_utf_byte_width(unicode.string[0]);
 
             utf8_print_data_bytesequence(&main->program.output, unicode);
           }
           else {
-            main->setting.state.status = F_none;
+            main->setting.state.status = F_okay;
 
             utf8_print_data_combining_or_width(&main->program.output, unicode);
           }
@@ -78,12 +78,12 @@ extern "C" {
       }
     }
     else if (*mode == utf8_codepoint_mode_bad_end_e) {
-      main->setting.state.status = F_none;
+      main->setting.state.status = F_okay;
 
       utf8_print_data_character_invalid(&main->program.output, unicode);
     }
     else {
-      main->setting.state.status = F_none;
+      main->setting.state.status = F_okay;
 
       return;
     }
@@ -102,7 +102,7 @@ extern "C" {
 
     if (!main) return;
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
 
     bool valid_not = F_false;
 
@@ -170,12 +170,12 @@ extern "C" {
       }
     }
     else if (*mode == utf8_codepoint_mode_bad_end_e) {
-      main->setting.state.status = F_none;
+      main->setting.state.status = F_okay;
 
       utf8_print_data_character_invalid(&main->program.output, hex);
     }
     else {
-      main->setting.state.status = F_none;
+      main->setting.state.status = F_okay;
 
       return;
     }
@@ -201,7 +201,7 @@ extern "C" {
       return;
     }
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
 
     if (unicode.string[0] == f_string_ascii_u_s.string[0] || unicode.string[0] == f_string_ascii_U_s.string[0] || unicode.string[0] == f_string_ascii_plus_s.string[0]) {
       // Do nothing.
@@ -239,7 +239,7 @@ extern "C" {
           }
         }
 
-        main->setting.state.status = (main->setting.state.status == F_true) ? F_space : F_none;
+        main->setting.state.status = (main->setting.state.status == F_true) ? F_space : F_okay;
       }
     }
 
@@ -310,7 +310,7 @@ extern "C" {
 
     if (!main) return;
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
 
     bool valid = F_true;
     bool next = F_true;
@@ -325,7 +325,7 @@ extern "C" {
     do {
       main->setting.state.status = f_file_stream_read_block(file, &main->setting.buffer);
 
-      if (main->setting.state.status == F_none_eof && !main->setting.buffer.used) {
+      if (main->setting.state.status == F_okay_eof && !main->setting.buffer.used) {
 
         // Handle complete character, which must be explicitly set to end in this situation.
         if (mode_codepoint == utf8_codepoint_mode_number_e || mode_codepoint == utf8_codepoint_mode_raw_number_e) {
@@ -345,7 +345,7 @@ extern "C" {
 
           j = 0;
           next = F_true;
-          main->setting.state.status = F_none_eof;
+          main->setting.state.status = F_okay_eof;
           mode_codepoint = utf8_codepoint_mode_ready_e;
         }
 
@@ -356,7 +356,7 @@ extern "C" {
 
         if (utf8_signal_check(main)) return;
 
-        main->setting.state.status = F_none;
+        main->setting.state.status = F_okay;
 
         // Get the current width only when processing a new block.
         if (next) {

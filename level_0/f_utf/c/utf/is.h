@@ -751,7 +751,7 @@ extern "C" {
  *   This is the width in bytes the codepoint takes up in UTF-8.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if width_max is less than 1.
  *
  *   F_complete_not_utf (with error bit set) if character is an incomplete UTF-8 sequence.

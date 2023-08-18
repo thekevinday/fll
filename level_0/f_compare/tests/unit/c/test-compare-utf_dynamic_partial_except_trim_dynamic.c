@@ -278,7 +278,7 @@ void test__f_compare_utf_dynamic_partial_except_trim_dynamic__works(void **state
   const f_number_unsigneds_t excepts_2 = f_number_unsigneds_t_initialize;
   uint8_t i = 0;
 
-  f_status_t status = F_none;
+  f_status_t status = F_okay;
   f_utf_string_dynamic_t utf_string_1 = f_utf_string_dynamic_t_initialize;
   f_utf_string_dynamic_t utf_string_2 = f_utf_string_dynamic_t_initialize;
 
@@ -289,10 +289,10 @@ void test__f_compare_utf_dynamic_partial_except_trim_dynamic__works(void **state
     utf_string_2.used = 0;
 
     status = test_convert_dynamic_to_utf(string_1s[i], &utf_string_1);
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
 
     status = test_convert_dynamic_to_utf(string_2s[i], &utf_string_2);
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
 
     if (i % 8 == 0) {
       status = f_compare_utf_dynamic_partial_except_trim_dynamic(utf_string_1, utf_string_2, f_string_range_empty_c, excepts_1, excepts_2);
@@ -312,10 +312,10 @@ void test__f_compare_utf_dynamic_partial_except_trim_dynamic__works(void **state
     utf_string_2.used = 0;
 
     status = test_convert_dynamic_to_utf(string_1s[i], &utf_string_1);
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
 
     status = test_convert_dynamic_to_utf(string_2s[i], &utf_string_2);
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
 
     if (i % 8 == 0) {
       status = f_compare_utf_dynamic_partial_except_trim_dynamic(utf_string_1, utf_string_2, f_string_range_empty_c, excepts_1, excepts_2);

@@ -87,7 +87,7 @@ void test__f_file_stream_read_until__works(void **state) {
 
     const f_status_t status = f_file_stream_read_until(file, 1, &buffer);
 
-    assert_int_equal(status, F_none_stop);
+    assert_int_equal(status, F_okay_stop);
   }
 
   f_string_dynamic_resize(0, &buffer);

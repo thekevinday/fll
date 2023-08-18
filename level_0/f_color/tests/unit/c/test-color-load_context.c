@@ -34,13 +34,13 @@ void test__f_color_load_context__works(void **state) {
 
   f_status_t statuss[4] = {
     F_data_not,
-    F_none,
-    F_none,
-    F_none,
+    F_okay,
+    F_okay,
+    F_okay,
   };
 
   {
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     macro_f_color_context_t_new(status, context);
   }

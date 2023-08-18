@@ -37,7 +37,7 @@ Featureless Settings Specification: 000e - Payload:
   The recommended italic:"length" italic:"header" Object used to designate the italic:"payload" size does not necessarily have to be defined in the italic:"header".
   That is to say, if the italic:"payload" is expected to be of some pre-defined or static length then a length does not need to be provided in the italic:"header".
 
-  The recommended italic:"status" italic:"header" Object may be a string, such as code:"F_none", or a positive whole number.
+  The recommended italic:"status" italic:"header" Object may be a string, such as code:"F_okay", or a positive whole number.
   What the status code represents is application specific (or specific to a sub-standard) but may often be used to represent FLL:"Featureless Linux Library" status code.
   - The FLL:"Featureless Linux Library" status code is a 16-bit digit whose first two high-order bits represent italic:"error" and italic:"warning" ( representing italic:"signal").
   - The FLL:"Featureless Linux Library" status code as a number is binary sensitive and may not be portable across binaries or systems.

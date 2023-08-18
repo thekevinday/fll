@@ -103,7 +103,7 @@ void test__f_console_parameter_prioritize_right__works(void **state) {
 
     const f_status_t status = f_console_parameter_prioritize_right(parameters, choices, &decision);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(decision, 0);
   }
 

@@ -51,7 +51,7 @@ extern "C" {
           recurse->state.status = f_string_dynamic_append_nulless(map->name, &recurse->path_cache);
 
           if (F_status_is_error_not(recurse->state.status)) {
-            recurse->state.status = F_none;
+            recurse->state.status = F_okay;
 
             // Do not allow trailing path separators in the string's length calculation, except root directory '/'.
             for (; recurse->path_cache.used; --recurse->path_cache.used) {

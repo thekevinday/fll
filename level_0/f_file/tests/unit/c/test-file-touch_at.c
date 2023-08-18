@@ -59,7 +59,7 @@ void test__f_file_touch_at__fails(void **state) {
       const f_status_t status = f_file_touch_at(file, path, mode, 0);
 
       if (statuss[i] == F_file_found_not) {
-        assert_int_equal(status, F_none);
+        assert_int_equal(status, F_okay);
       }
       else {
         assert_int_equal(status, F_status_set_error(statuss[i]));
@@ -166,7 +166,7 @@ void test__f_file_touch_at__works(void **state) {
 
     const f_status_t status = f_file_touch_at(file, path, mode, 0);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 }
 

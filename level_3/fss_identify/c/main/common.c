@@ -161,7 +161,7 @@ extern "C" {
 
       f_number_unsigned_t i = 0;
       f_number_unsigned_t j = 0;
-      f_status_t status = F_none;
+      f_status_t status = F_okay;
 
       for (; i < main->setting.names.used; ++i) {
 

@@ -30,11 +30,11 @@ extern "C" {
 
       if (range->start >= buffer.used) {
         found->array[found->used].stop = buffer.used - 1;
-        state->status = F_none_eos;
+        state->status = F_okay_eos;
       }
       else {
         found->array[found->used].stop = range->stop;
-        state->status = F_none_stop;
+        state->status = F_okay_stop;
       }
 
       return;
@@ -61,13 +61,13 @@ extern "C" {
       f_fss_skip_past_space(buffer, range, state);
       if (F_status_is_error(state->status)) break;
 
-      if (state->status == F_none_eol) {
+      if (state->status == F_okay_eol) {
         newline_last = range->start++;
 
         continue;
       }
 
-      if (state->status == F_none_eos || state->status == F_none_stop) break;
+      if (state->status == F_okay_eos || state->status == F_okay_stop) break;
 
       if (buffer.string[range->start] == f_fss_slash_s.string[0]) {
         slash_first = range->start;
@@ -240,10 +240,10 @@ extern "C" {
     if (F_status_is_error(state->status)) return;
     if (state->status == F_data_not) return;
 
-    if (state->status == F_none_eos) {
+    if (state->status == F_okay_eos) {
       state->status = F_data_not_eos;
     }
-    else if (state->status == F_none_stop) {
+    else if (state->status == F_okay_stop) {
       state->status = F_data_not_stop;
     }
 
@@ -515,13 +515,13 @@ extern "C" {
     }
 
     if (range->start > range->stop) {
-      state->status = F_none_stop;
+      state->status = F_okay_stop;
     }
     else if (range->start >= content.used) {
-      state->status = F_none_eos;
+      state->status = F_okay_eos;
     }
     else {
-      state->status = F_none;
+      state->status = F_okay;
     }
   }
 #endif // _di_fl_fss_extended_list_content_write_
@@ -544,7 +544,7 @@ extern "C" {
     if (F_status_is_error(state->status)) return;
     if (state->status == F_data_not) return;
 
-    if (state->status == F_none_eol) {
+    if (state->status == F_okay_eol) {
 
       // Move the start position to after the EOL.
       ++range->start;
@@ -553,13 +553,13 @@ extern "C" {
       return;
     }
 
-    if (state->status == F_none_eos) {
+    if (state->status == F_okay_eos) {
       state->status = F_data_not_eos;
 
       return;
     }
 
-    if (state->status == F_none_stop) {
+    if (state->status == F_okay_stop) {
       state->status = F_data_not_stop;
 
       return;
@@ -588,13 +588,13 @@ extern "C" {
         return;
       }
 
-      if (state->status == F_none_eos) {
+      if (state->status == F_okay_eos) {
         state->status = F_data_not_eos;
 
         return;
       }
 
-      if (state->status == F_none_stop) {
+      if (state->status == F_okay_stop) {
         state->status = F_data_not_stop;
 
         return;
@@ -781,14 +781,14 @@ extern "C" {
 
         if (range->start >= buffer.used) {
           found->stop = buffer.used - 1;
-          state->status = F_none_eos;
+          state->status = F_okay_eos;
 
           return;
         }
 
         if (range->start > range->stop) {
           found->stop = range->stop;
-          state->status = F_none_stop;
+          state->status = F_okay_stop;
 
           return;
         }
@@ -883,10 +883,10 @@ extern "C" {
     if (F_status_is_error(state->status)) return;
     if (state->status == F_data_not) return;
 
-    if (state->status == F_none_eos) {
+    if (state->status == F_okay_eos) {
       state->status = F_data_not_eos;
     }
-    else if (state->status == F_none_stop) {
+    else if (state->status == F_okay_stop) {
       state->status = F_data_not_stop;
     }
 
@@ -954,7 +954,7 @@ extern "C" {
       // Objects will not have leading white spaces, but having this does not result in an invalid object, so just write the provided spaces.
       if (object.string[range->start] != f_fss_placeholder_s.string[0]) {
         if (object.string[range->start] == f_fss_eol_s.string[0]) {
-          state->status = F_status_set_error(F_none_eol);
+          state->status = F_status_set_error(F_okay_eol);
 
           break;
         }
@@ -964,7 +964,7 @@ extern "C" {
         }
         else {
           if (object.string[range->start] == f_fss_eol_s.string[0]) {
-            state->status = F_status_set_error(F_none_eol);
+            state->status = F_status_set_error(F_okay_eol);
 
             break;
           }
@@ -1040,7 +1040,7 @@ extern "C" {
 
       if (object.string[range->start] != f_fss_placeholder_s.string[0]) {
         if (object.string[range->start] == f_fss_eol_s.string[0]) {
-          state->status = F_status_set_error(F_none_eol);
+          state->status = F_status_set_error(F_okay_eol);
 
           break;
         }
@@ -1052,7 +1052,7 @@ extern "C" {
           ends_on_space = F_true;
 
           if (object.string[range->start] == f_fss_eol_s.string[0]) {
-            state->status = F_status_set_error(F_none_eol);
+            state->status = F_status_set_error(F_okay_eol);
 
             break;
           }
@@ -1114,13 +1114,13 @@ extern "C" {
     }
 
     if (range->start > range->stop) {
-      state->status = F_none_stop;
+      state->status = F_okay_stop;
     }
     else if (range->start >= object.used) {
-      state->status = F_none_eos;
+      state->status = F_okay_eos;
     }
     else {
-      state->status = F_none;
+      state->status = F_okay;
     }
   }
 #endif // _di_fl_fss_extended_list_object_write_

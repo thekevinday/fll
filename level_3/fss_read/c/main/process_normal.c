@@ -21,7 +21,7 @@ extern "C" {
         fss_read_print_number(&main->program.output, 0);
       }
 
-      main->setting.state.status = F_none;
+      main->setting.state.status = F_okay;
 
       return;
     }
@@ -110,7 +110,7 @@ extern "C" {
 
     if (F_status_is_error(main->setting.state.status)) return;
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
   }
 #endif // _di_fss_read_process_normal_
 
@@ -126,7 +126,7 @@ extern "C" {
         fss_read_print_number(&main->program.output, 0);
       }
 
-      main->setting.state.status = F_none;
+      main->setting.state.status = F_okay;
 
       return;
     }
@@ -134,7 +134,7 @@ extern "C" {
     // If the standard only has one line per Content, then any line value greater than 0 equates to no line to print.
     if ((main->setting.flag & fss_read_main_flag_line_e) && (main->setting.flag & fss_read_main_flag_line_single_e)) {
       if (main->setting.line) {
-        main->setting.state.status = F_none;
+        main->setting.state.status = F_okay;
 
         return;
       }
@@ -169,7 +169,7 @@ extern "C" {
 
         if (F_status_is_error(main->setting.state.status)) return;
 
-        main->setting.state.status = F_none;
+        main->setting.state.status = F_okay;
 
         return;
       }
@@ -183,7 +183,7 @@ extern "C" {
       fss_read_print_number(&main->program.output, 0);
     }
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
   }
 #endif // _di_fss_read_process_normal_at_
 
@@ -236,7 +236,7 @@ extern "C" {
           ++(*line);
         }
 
-        main->setting.state.status = F_none;
+        main->setting.state.status = F_okay;
 
         return;
       }
@@ -346,7 +346,7 @@ extern "C" {
       }
     }
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
   }
 #endif // _di_fss_read_process_normal_at_line_
 
@@ -360,7 +360,7 @@ extern "C" {
     if (!(main->setting.flag & fss_read_main_flag_content_e)) {
       fss_read_print_number(&main->program.output, 0);
 
-      main->setting.state.status = F_none;
+      main->setting.state.status = F_okay;
 
       return;
     }
@@ -393,7 +393,7 @@ extern "C" {
 
     fss_read_print_number(&main->program.output, max);
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
   }
 #endif // _di_fss_read_process_normal_columns_
 
@@ -434,7 +434,7 @@ extern "C" {
       memset(names, F_true, sizeof(bool) * main->setting.objects.used);
     }
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
   }
 #endif // _di_fss_read_process_normal_name_
 
@@ -488,7 +488,7 @@ extern "C" {
         : total
     );
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
   }
 #endif // _di_fss_read_process_normal_total_
 
@@ -566,7 +566,7 @@ extern "C" {
         : total
     );
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
   }
 #endif // _di_fss_read_process_normal_total_multiple_
 

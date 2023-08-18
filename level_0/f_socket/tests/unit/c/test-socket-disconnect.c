@@ -168,7 +168,7 @@ void test__f_socket_disconnect__works_for_close_fast(void **state) {
 
     const f_status_t status = f_socket_disconnect(&socket, f_socket_close_fast_e);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(socket.id, -1);
   }
 }
@@ -184,7 +184,7 @@ void test__f_socket_disconnect__works_for_close_read(void **state) {
 
     const f_status_t status = f_socket_disconnect(&socket, f_socket_close_read_e);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(socket.id, 1);
   }
 }
@@ -200,7 +200,7 @@ void test__f_socket_disconnect__works_for_close_write(void **state) {
 
     const f_status_t status = f_socket_disconnect(&socket, f_socket_close_write_e);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(socket.id, 1);
   }
 }

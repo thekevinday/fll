@@ -8,7 +8,7 @@ extern "C" {
 #if !defined(_di_f_rip_utf_) || !defined(_di_f_rip_utf_dynamic_) || !defined(_di_f_rip_utf_nulless_) || !defined(_di_f_rip_utf_dynamic_nulless_)
   f_status_t private_f_rip_utf_find_range(const f_utf_string_t source, f_number_unsigned_t *start, f_number_unsigned_t *stop) {
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     // Skip past leading whitespace.
     for (; *start <= *stop; ++(*start)) {
@@ -67,7 +67,7 @@ extern "C" {
       }
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_rip_utf_) || !defined(_di_f_rip_utf_dynamic_) || !defined(_di_f_rip_utf_nulless_) || !defined(_di_f_rip_utf_dynamic_nulless_)
 

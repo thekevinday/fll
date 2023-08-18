@@ -98,7 +98,7 @@ void test__f_network_from_ip_address__works(void **state) {
 
     const f_status_t status = f_network_from_ip_address(family, &host);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_string_equal(host.h_name, mocked.h_name);
     assert_int_equal(host.h_aliases, mocked.h_aliases);
     assert_int_equal(host.h_length, mocked.h_length);
@@ -117,7 +117,7 @@ void test__f_network_from_ip_address__works(void **state) {
 
     const f_status_t status = f_network_from_ip_address(family, &host);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_string_equal(host.h_name, mocked.h_name);
     assert_int_equal(host.h_aliases, mocked.h_aliases);
     assert_int_equal(host.h_length, mocked.h_length);

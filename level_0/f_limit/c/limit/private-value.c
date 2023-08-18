@@ -14,7 +14,7 @@ extern "C" {
 
     destination->array[destination->used++] = source;
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_limit_values_append_) || !defined(_di_f_limit_valuess_append_)
 
@@ -28,14 +28,14 @@ extern "C" {
       destination->array[destination->used++] = source.array[i];
     } // for
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_limit_values_append_) || !defined(_di_f_limit_values_append_all_) || !defined(_di_f_limit_valuess_append_all_)
 
 #if !defined(_di_f_limit_valuess_adjust_) || !defined(_di_f_limit_valuess_decimate_by_)
   f_status_t private_f_limit_valuess_adjust(const f_number_unsigned_t length, f_limit_valuess_t *valuess) {
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     for (f_number_unsigned_t i = length; i < valuess->size; ++i) {
 
@@ -50,7 +50,7 @@ extern "C" {
 #if !defined(_di_f_limit_valuess_decrease_by_) || !defined(_di_f_limit_valuess_increase_) || !defined(_di_f_limit_valuess_increase_by_) || !defined(_di_f_limit_valuess_resize_)
   f_status_t private_f_limit_valuess_resize(const f_number_unsigned_t length, f_limit_valuess_t *valuess) {
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     for (f_number_unsigned_t i = length; i < valuess->size; ++i) {
 

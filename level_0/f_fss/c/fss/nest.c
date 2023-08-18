@@ -11,7 +11,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     {
-      f_status_t status = F_none;
+      f_status_t status = F_okay;
       f_number_unsigned_t j = 0;
 
       for (f_number_unsigned_t i = 0; i < nest->size; ++i) {
@@ -40,7 +40,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     {
-      f_status_t status = F_none;
+      f_status_t status = F_okay;
       f_number_unsigned_t j = 0;
 
       for (f_number_unsigned_t i = 0; i < nest->size; ++i) {
@@ -71,7 +71,7 @@ extern "C" {
 
     {
       f_fss_nest_t * const array = (f_fss_nest_t *) void_array;
-      f_status_t status = F_none;
+      f_status_t status = F_okay;
       f_number_unsigned_t j = 0;
       f_number_unsigned_t k = 0;
 
@@ -98,7 +98,7 @@ extern "C" {
       } // for
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_fss_nests_delete_callback_
 
@@ -107,7 +107,7 @@ extern "C" {
 
     {
       f_fss_nest_t * const array = (f_fss_nest_t *) void_array;
-      f_status_t status = F_none;
+      f_status_t status = F_okay;
       f_number_unsigned_t j = 0;
       f_number_unsigned_t k = 0;
 
@@ -138,7 +138,7 @@ extern "C" {
       } // for
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_fss_nests_destroy_callback_
 
@@ -147,7 +147,7 @@ extern "C" {
 
     {
       f_fss_nests_t * const array = (f_fss_nests_t *) void_array;
-      f_status_t status = F_none;
+      f_status_t status = F_okay;
       f_number_unsigned_t j = 0;
       f_number_unsigned_t k = 0;
       f_number_unsigned_t l = 0;
@@ -183,7 +183,7 @@ extern "C" {
       } // for
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_fss_nestss_delete_callback_
 
@@ -192,7 +192,7 @@ extern "C" {
 
     {
       f_fss_nests_t * const array = (f_fss_nests_t *) void_array;
-      f_status_t status = F_none;
+      f_status_t status = F_okay;
       f_number_unsigned_t j = 0;
       f_number_unsigned_t k = 0;
       f_number_unsigned_t l = 0;
@@ -232,7 +232,7 @@ extern "C" {
       } // for
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_fss_nestss_destroy_callback_
 

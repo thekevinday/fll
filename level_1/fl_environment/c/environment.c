@@ -35,7 +35,7 @@ extern "C" {
 
     ++environment->used;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fl_environment_load_name_
 
@@ -74,7 +74,7 @@ extern "C" {
       ++environment->used;
     } // for
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fl_environment_load_names_
 
@@ -84,7 +84,7 @@ extern "C" {
       if (!paths) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     if (!path.used) {
 
@@ -95,7 +95,7 @@ extern "C" {
 
       paths->array[paths->used++].used = 0;
 
-      return F_none;
+      return F_okay;
     }
 
     f_number_unsigned_t i = 0;
@@ -250,7 +250,7 @@ extern "C" {
       f_string_dynamic_resize(0, &architecture_bits);
     #endif // _en_kevux_path_architecture_bits_
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fl_environment_path_explode_
 
@@ -260,7 +260,7 @@ extern "C" {
       if (!paths) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     if (!path.used) {
 
@@ -271,7 +271,7 @@ extern "C" {
 
       paths->array[paths->used++].used = 0;
 
-      return F_none;
+      return F_okay;
     }
 
     f_number_unsigned_t i = 0;
@@ -427,7 +427,7 @@ extern "C" {
       f_string_dynamic_resize(0, &architecture_bits);
     #endif // _en_kevux_path_architecture_bits_
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fl_environment_path_explode_reverse_
 

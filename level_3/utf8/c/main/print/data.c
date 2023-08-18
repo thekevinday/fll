@@ -13,7 +13,7 @@ extern "C" {
 
     fl_print_format("%r%r%r", print->to, main->setting.prepend, sequence, main->setting.append);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_utf8_print_data_bytesequence_
 
@@ -46,7 +46,7 @@ extern "C" {
       fl_print_format("%]%r", print->to, main->setting.valid_not, main->setting.append);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_utf8_print_data_character_invalid_
 
@@ -67,7 +67,7 @@ extern "C" {
       fl_print_format("%rU+%06_U%r", print->to, main->setting.prepend, codepoint, main->setting.append);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_utf8_print_data_codepoint_
 
@@ -105,7 +105,7 @@ extern "C" {
       utf8_print_data_width(print, sequence);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_utf8_print_data_combining_or_width_
 
@@ -120,7 +120,7 @@ extern "C" {
 
     fl_print_format("%r%[%r%]%r", print->to, main->setting.prepend, main->setting.valid_not, utf8_string_unknown_s, main->setting.valid_not, main->setting.append);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_utf8_print_data_combining_or_width_invalid_
 
@@ -165,7 +165,7 @@ extern "C" {
 
     fl_print_format("%r%[%r%]%r", print->to, main->setting.prepend, main->setting.valid_not, character, main->setting.valid_not, main->setting.append);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_utf8_print_data_raw_bytesequence_
 
@@ -180,7 +180,7 @@ extern "C" {
 
     fl_print_format("%r%[%r%]%r", print->to, main->setting.prepend, main->setting.valid_not, raw, main->setting.valid_not, main->setting.append);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_utf8_print_data_raw_codepoint_
 
@@ -223,7 +223,7 @@ extern "C" {
       fl_print_format("%r%[%r%]%r", print->to, main->setting.prepend, main->setting.valid_not, *character, main->setting.valid_not, main->setting.append);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_utf8_print_data_raw_combining_or_width_
 
@@ -256,7 +256,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_utf8_print_data_section_header_file_
 
@@ -288,7 +288,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_utf8_print_data_section_header_parameter_
 
@@ -306,7 +306,7 @@ extern "C" {
       fll_print_format("%[Pipe%]:%r", print->to, print->set->title, print->set->title, f_string_eol_s);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_utf8_print_data_section_header_pipe_
 
@@ -323,7 +323,7 @@ extern "C" {
     if (status == F_true) {
       fl_print_format("%r%r%r", print->to, main->setting.prepend, utf8_string_width_2_s, main->setting.append);
 
-      return F_none;
+      return F_okay;
     }
 
     if (status == F_false) {
@@ -332,19 +332,19 @@ extern "C" {
       if (status == F_true) {
         fl_print_format("%r%r%r", print->to, main->setting.prepend, utf8_string_width_1_s, main->setting.append);
 
-        return F_none;
+        return F_okay;
       }
 
       if (status == F_false) {
         fl_print_format("%r%r%r", print->to, main->setting.prepend, utf8_string_width_0_s, main->setting.append);
 
-        return F_none;
+        return F_okay;
       }
     }
 
     utf8_print_data_combining_or_width_invalid(print);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_utf8_print_data_width_
 

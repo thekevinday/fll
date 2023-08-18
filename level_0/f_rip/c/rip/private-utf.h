@@ -30,7 +30,7 @@ extern "C" {
  *   Will be updated to reflect the new stop range.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success but only white space found.
  *
  *   F_parameter (with error bit) if a parameter is invalid.

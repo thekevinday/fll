@@ -59,7 +59,7 @@ extern "C" {
       } // while
     } // for
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_print_to_) || !defined(_di_f_print_dynamic_to_) || !defined(_di_f_print_dynamic_partial_to_)
 
@@ -67,20 +67,20 @@ extern "C" {
   f_status_t private_f_print_to_character_safely(const f_char_t character, const int id) {
 
     if (character == 0x7f) {
-      if (write(id, f_print_sequence_delete_s.string, f_print_sequence_delete_s.used) != -1) return F_none;
+      if (write(id, f_print_sequence_delete_s.string, f_print_sequence_delete_s.used) != -1) return F_okay;
     }
     else if (macro_f_utf_byte_width_is(character) == 1) {
-      if (write(id, f_print_sequence_unknown_s.string, f_print_sequence_unknown_s.used) != -1) return F_none;
+      if (write(id, f_print_sequence_unknown_s.string, f_print_sequence_unknown_s.used) != -1) return F_okay;
     }
     else if (macro_f_utf_byte_width_is(character) > 1) {
       if (write(id, &character, 1) != -1) return F_utf;
     }
     else if (character > 0x1f) {
-      if (write(id, &character, 1) != -1) return F_none;
+      if (write(id, &character, 1) != -1) return F_okay;
     }
     else {
       if (write(id, f_print_sequence_set_control_s[(unsigned int) character].string, f_print_sequence_set_control_s[(unsigned int) character].used) != -1) {
-        return F_none;
+        return F_okay;
       }
     }
 
@@ -129,7 +129,7 @@ extern "C" {
       if (write(id, string + start, total) == -1) return private_inline_f_print_to_error();
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_print_to_except_) || !defined(_di_f_print_to_except_dynamic_) || !defined(_di_f_print_to_except_dynamic_partial_)
 
@@ -174,7 +174,7 @@ extern "C" {
       if (write(id, string + start, total) == -1) return private_inline_f_print_to_error();
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_print_to_except_raw_) || !defined(_di_f_print_to_except_dynamic_raw_) || !defined(_di_f_print_to_except_dynamic_partial_raw_)
 
@@ -241,7 +241,7 @@ extern "C" {
       if (write(id, string + start, total) == -1) return private_inline_f_print_to_error();
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_print_to_except_dynamic_raw_safely_) || !defined(_di_f_print_to_except_dynamic_partial_raw_safely_) || !defined(_di_f_print_to_except_raw_safely_)
 
@@ -315,7 +315,7 @@ extern "C" {
       if (write(id, string + start, total) == -1) return private_inline_f_print_to_error();
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_print_to_except_dynamic_safely_) || !defined(_di_f_print_to_except_dynamic_partial_safely_) || !defined(_di_f_print_to_except_safely_)
 
@@ -387,7 +387,7 @@ extern "C" {
       if (write(id, string + start, total) == -1) return private_inline_f_print_to_error();
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_print_to_except_in_) || !defined(_di_f_print_to_except_in_dynamic_) || !defined(_di_f_print_to_except_in_dynamic_partial_)
 
@@ -457,7 +457,7 @@ extern "C" {
       if (write(id, string + start, total) == -1) return private_inline_f_print_to_error();
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_print_to_except_in_raw_) || !defined(_di_f_print_to_except_in_dynamic_raw_) || !defined(_di_f_print_to_except_in_dynamic_partial_raw_)
 
@@ -550,7 +550,7 @@ extern "C" {
       if (write(id, string + start, total) == -1) return private_inline_f_print_to_error();
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_print_to_except_in_raw_safely_) || !defined(_di_f_print_to_except_in_dynamic_raw_safely_) || !defined(_di_f_print_to_except_in_dynamic_partial_raw_safely_)
 
@@ -650,7 +650,7 @@ extern "C" {
       if (write(id, string + start, total) == -1) return private_inline_f_print_to_error();
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_print_to_except_in_safely_) || !defined(_di_f_print_to_except_in_dynamic_safely_) || !defined(_di_f_print_to_except_in_dynamic_partial_safely_)
 
@@ -689,7 +689,7 @@ extern "C" {
       }
     } // for
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_print_to_raw_) || !defined(_di_f_print_dynamic_to_raw_) || !defined(_di_f_print_dynamic_partial_to_raw_)
 
@@ -746,7 +746,7 @@ extern "C" {
       if (write(id, string + start, total) == -1) return private_inline_f_print_to_error();
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_print_to_dynamic_raw_safely_) || !defined(_di_f_print_dynamic_partial_to_raw_safely_) || !defined(_di_f_print_to_raw_safely_)
 
@@ -810,14 +810,14 @@ extern "C" {
       if (write(id, string + start, total) == -1) return private_inline_f_print_to_error();
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_print_to_dynamic_safely_) || !defined(_di_f_print_dynamic_partial_to_safely_) || !defined(_di_f_print_to_safely_)
 
 #if !defined(_di_f_print_to_terminated_) || !defined(_di_f_print_to_raw_terminated_)
   f_status_t private_f_print_to_terminated(const f_string_t string, const int id) {
 
-    return write(id, string, strlen(string)) == -1 ? private_inline_f_print_to_error() : F_none;
+    return write(id, string, strlen(string)) == -1 ? private_inline_f_print_to_error() : F_okay;
   }
 #endif // !defined(_di_f_print_to_terminated_) || !defined(_di_f_print_to_raw_terminated_)
 

@@ -25,7 +25,7 @@ extern "C" {
  *   All make related setting data, including data from the fakefile and the build settings file.
  *
  *   This alters data_make.main->setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *
  *     F_interrupt (with error bit) on interrupt signal received.
  *
@@ -117,7 +117,7 @@ extern "C" {
  *   All make related setting data, including data from the fakefile and the build settings file.
  *
  *   This alters data_make.main->setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *
  *     Errors (with error bit) from: f_environment_set().
  *     Errors (with error bit) from: f_string_dynamic_mash().
@@ -148,7 +148,7 @@ extern "C" {
  *   All make related setting data, including data from the fakefile and the build settings file.
  *
  *   This alters data_make.main->setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *
  *     Errors (with error bit) from: f_string_dynamic_append().
  *     Errors (with error bit) from: f_string_dynamic_append_nulless().
@@ -212,7 +212,7 @@ extern "C" {
  *   All make related setting data, including data from the fakefile and the build settings file.
  *
  *   This alters data_make.main->setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *
  *     Errors (with error bit) from: f_string_append_assure().
  *     Errors (with error bit) from: f_string_dynamic_append_assure().

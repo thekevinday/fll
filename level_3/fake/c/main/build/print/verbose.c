@@ -12,7 +12,7 @@ extern "C" {
 
     fake_print_common_simple_variable(print, "Created directory ", directory);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_build_print_verbose_create_directory_
 
@@ -24,7 +24,7 @@ extern "C" {
 
     fake_print_common_wrapped_variables(print, "Linked file ", from, " to ", to, 0);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_build_print_verbose_linked_file_
 

@@ -52,7 +52,7 @@ void test__f_thread_attribute_scheduler_inherit_get__works(void **state) {
 
     const f_status_t status = f_thread_attribute_scheduler_inherit_get(attribute, &inherit);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 }
 

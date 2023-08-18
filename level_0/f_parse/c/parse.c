@@ -16,7 +16,7 @@ extern "C" {
 
     const unsigned short seek_width = macro_f_utf_char_t_width(seek_to_this);
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     unsigned short width = 0;
     f_number_unsigned_t width_max = 0;
@@ -29,8 +29,8 @@ extern "C" {
       if (!width) {
         width = 1;
 
-        if (buffer.string[range->start] == f_string_eol_s.string[0]) return F_none_eol;
-        if (seek_width == width && buffer.string[range->start] == seek_to_this) return F_none;
+        if (buffer.string[range->start] == f_string_eol_s.string[0]) return F_okay_eol;
+        if (seek_width == width && buffer.string[range->start] == seek_to_this) return F_okay;
       }
       // Do not operate on UTF-8 fragments that are not the first byte of the character.
       else if (width == 1) {
@@ -45,17 +45,17 @@ extern "C" {
 
           status = f_utf_char_to_character(buffer.string + range->start, width_max, &character);
           if (F_status_is_error(status)) return status;
-          if (character == seek_to_this) return F_none;
+          if (character == seek_to_this) return F_okay;
         }
       }
 
       range->start += width;
 
-      if (range->start >= range->stop) return F_none_stop;
-      if (range->start > buffer.used) return F_none_eos;
+      if (range->start >= range->stop) return F_okay_stop;
+      if (range->start > buffer.used) return F_okay_eos;
     } // while
 
-    return F_none_eos;
+    return F_okay_eos;
   }
 #endif // _di_f_parse_dynamic_seek_line_to_utf_character_
 
@@ -69,7 +69,7 @@ extern "C" {
     if (range->start > range->stop) return F_data_not_stop;
     if (range->start >= buffer.used) return F_data_not_eos;
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
     unsigned short width = 0;
 
     f_number_unsigned_t width_max = (range->stop - range->start) + 1;
@@ -77,7 +77,7 @@ extern "C" {
     while (buffer.string[range->start] == placeholder || (status = f_utf_is_graph(buffer.string + range->start, width_max)) == F_false) {
 
       if (F_status_is_error(status)) return status;
-      if (buffer.string[range->start] == f_string_eol_s.string[0]) return F_none_eol;
+      if (buffer.string[range->start] == f_string_eol_s.string[0]) return F_okay_eol;
 
       width = macro_f_utf_byte_width_is(buffer.string[range->start]);
 
@@ -96,15 +96,15 @@ extern "C" {
 
       range->start += width;
 
-      if (range->start > range->stop) return F_none_stop;
-      if (range->start >= buffer.used) return F_none_eos;
+      if (range->start > range->stop) return F_okay_stop;
+      if (range->start >= buffer.used) return F_okay_eos;
 
       width_max = (range->stop - range->start) + 1;
     } // while
 
     if (F_status_is_error(status)) return status;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_parse_dynamic_seek_line_until_graph_
 
@@ -118,7 +118,7 @@ extern "C" {
     if (range->start > range->stop) return F_data_not_stop;
     if (range->start >= buffer.used) return F_data_not_eos;
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
     unsigned short width = 0;
 
     f_number_unsigned_t width_max = (range->stop - range->start) + 1;
@@ -126,7 +126,7 @@ extern "C" {
     while (buffer.string[range->start] == placeholder || (status = f_utf_is_whitespace(buffer.string + range->start, width_max, F_false)) == F_false) {
 
       if (F_status_is_error(status)) return status;
-      if (buffer.string[range->start] == f_string_eol_s.string[0]) return F_none_eol;
+      if (buffer.string[range->start] == f_string_eol_s.string[0]) return F_okay_eol;
 
       width = macro_f_utf_byte_width_is(buffer.string[range->start]);
 
@@ -145,15 +145,15 @@ extern "C" {
 
       range->start += width;
 
-      if (range->start > range->stop) return F_none_stop;
-      if (range->start >= buffer.used) return F_none_eos;
+      if (range->start > range->stop) return F_okay_stop;
+      if (range->start >= buffer.used) return F_okay_eos;
 
       width_max = (range->stop - range->start) + 1;
     } // while
 
     if (F_status_is_error(status)) return status;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_parse_dynamic_seek_line_until_graph_non_
 
@@ -170,7 +170,7 @@ extern "C" {
 
     const unsigned short seek_width = macro_f_utf_char_t_width(seek_to_this);
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     unsigned short width = 0;
 
@@ -185,7 +185,7 @@ extern "C" {
         width = 1;
 
         if (seek_width == width) {
-          if (buffer.string[range->start] == seek_to_this) return F_none;
+          if (buffer.string[range->start] == seek_to_this) return F_okay;
         }
       }
       // Do not operate on UTF-8 fragments that are not the first byte of the character.
@@ -201,16 +201,16 @@ extern "C" {
 
           status = f_utf_char_to_character(buffer.string + range->start, width_max, &character);
           if (F_status_is_error(status)) return status;
-          if (character == seek_to_this) return F_none;
+          if (character == seek_to_this) return F_okay;
         }
       }
 
       range->start += width;
     } // while
 
-    if (range->start >= range->stop) return F_none_stop;
+    if (range->start >= range->stop) return F_okay_stop;
 
-    return F_none_eos;
+    return F_okay_eos;
   }
 #endif // _di_f_parse_dynamic_seek_to_utf_character_
 
@@ -252,7 +252,7 @@ extern "C" {
       return F_found_not;
     }
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     for (; range->start <= range->stop && range->start < buffer.used; ) {
 
@@ -477,7 +477,7 @@ extern "C" {
 
     const unsigned short seek_width = macro_f_utf_char_t_width(seek_to);
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     unsigned short width = 0;
     f_number_unsigned_t width_max = (range->stop - range->start) + 1;
@@ -491,8 +491,8 @@ extern "C" {
       if (!width) {
         width = 1;
 
-        if (string[range->start] == f_string_eol_s.string[0]) return F_none_eol;
-        if (seek_width == width && string[range->start] == seek_to) return F_none;
+        if (string[range->start] == f_string_eol_s.string[0]) return F_okay_eol;
+        if (seek_width == width && string[range->start] == seek_to) return F_okay;
       }
       // Do not operate on UTF-8 fragments that are not the first byte of the character.
       else if (width == 1) {
@@ -506,12 +506,12 @@ extern "C" {
 
           status = f_utf_char_to_character(string + range->start, width_max, &character);
           if (F_status_is_error(status)) return status;
-          if (character == seek_to) return F_none;
+          if (character == seek_to) return F_okay;
         }
       }
     } // for
 
-    return F_none_stop;
+    return F_okay_stop;
   }
 #endif // _di_f_parse_seek_line_to_utf_character_
 
@@ -523,7 +523,7 @@ extern "C" {
 
     if (range->start > range->stop) return F_data_not_stop;
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
     unsigned short width = 0;
 
     f_number_unsigned_t width_max = (range->stop - range->start) + 1;
@@ -531,7 +531,7 @@ extern "C" {
     while (string[range->start] == placeholder || (status = f_utf_is_graph(string + range->start, width_max)) == F_false) {
 
       if (F_status_is_error(status)) return status;
-      if (string[range->start] == f_string_eol_s.string[0]) return F_none_eol;
+      if (string[range->start] == f_string_eol_s.string[0]) return F_okay_eol;
 
       width = macro_f_utf_byte_width_is(string[range->start]);
 
@@ -549,14 +549,14 @@ extern "C" {
 
       range->start += width;
 
-      if (range->start > range->stop) return F_none_stop;
+      if (range->start > range->stop) return F_okay_stop;
 
       width_max = (range->stop - range->start) + 1;
     } // while
 
     if (F_status_is_error(status)) return status;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_parse_seek_line_until_graph_
 
@@ -568,7 +568,7 @@ extern "C" {
 
     if (range->start > range->stop) return F_data_not_stop;
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
     unsigned short width = 0;
 
     f_number_unsigned_t width_max = (range->stop - range->start) + 1;
@@ -577,7 +577,7 @@ extern "C" {
 
       if (F_status_is_error(status)) return status;
 
-      if (string[range->start] == f_string_eol_s.string[0]) return F_none_eol;
+      if (string[range->start] == f_string_eol_s.string[0]) return F_okay_eol;
 
       width = macro_f_utf_byte_width_is(string[range->start]);
 
@@ -595,14 +595,14 @@ extern "C" {
 
       range->start += width;
 
-      if (range->start > range->stop) return F_none_stop;
+      if (range->start > range->stop) return F_okay_stop;
 
       width_max = (range->stop - range->start) + 1;
     } // while
 
     if (F_status_is_error(status)) return status;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_parse_seek_line_until_graph_non_
 
@@ -616,7 +616,7 @@ extern "C" {
 
     const unsigned short seek_width = macro_f_utf_char_t_width(seek_to);
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     unsigned short width = 0;
     f_number_unsigned_t width_max = 0;
@@ -630,7 +630,7 @@ extern "C" {
       if (!width) {
         width = 1;
 
-        if (seek_width == width && string[range->start] == seek_to) return F_none;
+        if (seek_width == width && string[range->start] == seek_to) return F_okay;
       }
       // Do not operate on UTF-8 fragments that are not the first byte of the character.
       else if (width == 1) {
@@ -644,12 +644,12 @@ extern "C" {
 
           status = f_utf_char_to_character(string + range->start, width_max, &character);
           if (F_status_is_error(status)) return status;
-          if (character == seek_to) return F_none;
+          if (character == seek_to) return F_okay;
         }
       }
     } // for
 
-    return F_none_stop;
+    return F_okay_stop;
   }
 #endif // _di_f_parse_seek_to_utf_character_
 

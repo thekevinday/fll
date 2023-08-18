@@ -26,7 +26,7 @@ extern "C" {
     f_string_dynamics_resize(0, &setting->path_files_to);
     f_string_dynamics_resize(0, &setting->remaining);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_utf8_setting_delete_
 

@@ -20,7 +20,7 @@ extern "C" {
       *used = length;
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_memory_array_adjust_) || !defined(_di_f_memory_array_decimate_by_)
 
@@ -38,7 +38,7 @@ extern "C" {
       *used = length;
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_memory_array_append_) || !defined(_di_f_memory_array_append_all_) || !defined(_di_f_memory_array_decrease_by_) || !defined(_di_f_memory_array_increase_) || !defined(_di_f_memory_array_increase_by_) || !defined(_di_f_memory_array_resize_)
 

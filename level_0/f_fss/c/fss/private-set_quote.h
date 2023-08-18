@@ -26,7 +26,7 @@ extern "C" {
  *   The set_quote to adjust.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   Errors (with error bit) from: f_memory_array_resize().
  *   Errors (with error bit) from: f_memory_arrays_resize().
@@ -56,7 +56,7 @@ extern "C" {
  *   The set_quote to resize.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   Errors (with error bit) from: f_memory_array_resize().
  *   Errors (with error bit) from: f_memory_arrays_resize().

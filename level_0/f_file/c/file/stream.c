@@ -42,7 +42,7 @@ extern "C" {
 
     file->stream = 0;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_file_stream_close_
 
@@ -64,7 +64,7 @@ extern "C" {
       return F_status_set_error(F_file_synchronize);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_file_stream_flush_
 
@@ -75,7 +75,7 @@ extern "C" {
 
     flockfile(file.stream);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_file_stream_lock_
 
@@ -86,7 +86,7 @@ extern "C" {
 
     if (ftrylockfile(file.stream)) return F_busy;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_file_stream_lock_try_
 
@@ -129,7 +129,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_file_stream_open_
 
@@ -172,7 +172,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_file_stream_open_descriptor_
 
@@ -190,7 +190,7 @@ extern "C" {
     if (feof_unlocked(file.stream)) {
       funlockfile(file.stream);
 
-      return F_none_eof;
+      return F_okay_eof;
     }
 
     if (ferror_unlocked(file.stream)) {
@@ -199,7 +199,7 @@ extern "C" {
       return F_status_set_error(F_error);
     }
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
     size_t size_read = 0;
 
     do {
@@ -225,7 +225,7 @@ extern "C" {
 
     funlockfile(file.stream);
 
-    return F_none_eof;
+    return F_okay_eof;
   }
 #endif // _di_f_file_stream_read_
 
@@ -243,7 +243,7 @@ extern "C" {
     if (feof_unlocked(file.stream)) {
       funlockfile(file.stream);
 
-      return F_none_eof;
+      return F_okay_eof;
     }
 
     if (ferror_unlocked(file.stream)) {
@@ -277,12 +277,12 @@ extern "C" {
     if (feof_unlocked(file.stream)) {
       funlockfile(file.stream);
 
-      return F_none_eof;
+      return F_okay_eof;
     }
 
     funlockfile(file.stream);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_file_stream_read_block_
 
@@ -301,7 +301,7 @@ extern "C" {
     if (feof_unlocked(file.stream)) {
       funlockfile(file.stream);
 
-      return F_none_eof;
+      return F_okay_eof;
     }
 
     if (ferror_unlocked(file.stream)) {
@@ -316,7 +316,7 @@ extern "C" {
       if (F_status_is_error(status)) {
         funlockfile(file.stream);
 
-        return F_none_eof;
+        return F_okay_eof;
       }
     }
 
@@ -344,7 +344,7 @@ extern "C" {
       if (feof_unlocked(file.stream)) {
         funlockfile(file.stream);
 
-        return F_none_eof;
+        return F_okay_eof;
       }
 
       buffer_count += size_read;
@@ -354,7 +354,7 @@ extern "C" {
 
     funlockfile(file.stream);
 
-    return F_none_stop;
+    return F_okay_stop;
   }
 #endif // _di_f_file_stream_read_until_
 
@@ -399,7 +399,7 @@ extern "C" {
 
     file->stream = result;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_file_stream_reopen_
 
@@ -410,7 +410,7 @@ extern "C" {
 
     funlockfile(file.stream);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_file_stream_unlock_
 
@@ -425,24 +425,24 @@ extern "C" {
       return file.stream ? F_data_not : F_stream_not;
     }
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     if (written) {
       status = private_f_file_stream_write_until(file, buffer, buffer.used, written);
 
-      if (status == F_none && *written == buffer.used) return F_none_eos;
+      if (status == F_okay && *written == buffer.used) return F_okay_eos;
     }
     else {
       f_number_unsigned_t written_local = 0;
 
       status = private_f_file_stream_write_until(file, buffer, buffer.used, &written_local);
 
-      if (status == F_none && written_local == buffer.used) return F_none_eos;
+      if (status == F_okay && written_local == buffer.used) return F_okay_eos;
     }
 
     if (F_status_is_error(status)) return status;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_file_stream_write_
 
@@ -459,14 +459,14 @@ extern "C" {
 
     const f_number_unsigned_t write_max = file.size_write > buffer.used ? buffer.used : file.size_write;
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     if (written) {
       status = private_f_file_stream_write_until(file, buffer, write_max, written);
 
-      if (status == F_none) {
-        if (*written == buffer.used) return F_none_eos;
-        if (*written == write_max) return F_none_stop;
+      if (status == F_okay) {
+        if (*written == buffer.used) return F_okay_eos;
+        if (*written == write_max) return F_okay_stop;
       }
     }
     else {
@@ -474,15 +474,15 @@ extern "C" {
 
       status = private_f_file_stream_write_until(file, buffer, write_max, &written_local);
 
-      if (status == F_none) {
-        if (written_local == buffer.used) return F_none_eos;
-        if (written_local == write_max) return F_none_stop;
+      if (status == F_okay) {
+        if (written_local == buffer.used) return F_okay_eos;
+        if (written_local == write_max) return F_okay_stop;
       }
     }
 
     if (F_status_is_error(status)) return status;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_file_stream_write_block_
 
@@ -499,14 +499,14 @@ extern "C" {
 
     const f_number_unsigned_t write_max = total > buffer.used ? buffer.used : total;
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     if (written) {
       status = private_f_file_stream_write_until(file, buffer, write_max, written);
 
-      if (status == F_none) {
-        if (*written == buffer.used) return F_none_eos;
-        if (*written == write_max) return F_none_stop;
+      if (status == F_okay) {
+        if (*written == buffer.used) return F_okay_eos;
+        if (*written == write_max) return F_okay_stop;
       }
     }
     else {
@@ -514,15 +514,15 @@ extern "C" {
 
       status = private_f_file_stream_write_until(file, buffer, buffer.used, &written_local);
 
-      if (status == F_none) {
-        if (written_local == buffer.used) return F_none_eos;
-        if (written_local == write_max) return F_none_stop;
+      if (status == F_okay) {
+        if (written_local == buffer.used) return F_okay_eos;
+        if (written_local == write_max) return F_okay_stop;
       }
     }
 
     if (F_status_is_error(status)) return status;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_file_stream_write_until_
 
@@ -540,14 +540,14 @@ extern "C" {
     const f_number_unsigned_t write_max = (range.stop - range.start) + 1 > buffer.used ? buffer.used : (range.stop - range.start) + 1;
     const f_string_static_t buffer_adjusted = macro_f_string_static_t_initialize_1(buffer.string + range.start, 0, buffer.used - range.start);
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     if (written) {
       status = private_f_file_stream_write_until(file, buffer_adjusted, write_max, written);
 
-      if (status == F_none) {
-        if (range.start + *written == buffer.used) return F_none_eos;
-        if (range.start + *written == write_max) return F_none_stop;
+      if (status == F_okay) {
+        if (range.start + *written == buffer.used) return F_okay_eos;
+        if (range.start + *written == write_max) return F_okay_stop;
       }
     }
     else {
@@ -555,15 +555,15 @@ extern "C" {
 
       status = private_f_file_stream_write_until(file, buffer_adjusted, write_max, &written_local);
 
-      if (status == F_none) {
-        if (range.start + written_local == buffer.used) return F_none_eos;
-        if (range.start + written_local == write_max) return F_none_stop;
+      if (status == F_okay) {
+        if (range.start + written_local == buffer.used) return F_okay_eos;
+        if (range.start + written_local == write_max) return F_okay_stop;
       }
     }
 
     if (F_status_is_error(status)) return status;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_file_stream_write_range_
 

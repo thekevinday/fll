@@ -10,7 +10,7 @@ void test__f_execute_status_from_status__fails(void **state) {
   for (f_status_t i = 0; i < F_status_code_last; ++i) {
 
     // Skip past all valid status codes.
-    if (i == F_none) continue;
+    if (i == F_okay) continue;
     if (i == F_access) continue;
     if (i == F_execute_not) continue;
     if (i == F_buffer) continue;
@@ -122,7 +122,7 @@ void test__f_execute_status_from_status__fails(void **state) {
 void test__f_execute_status_from_status__works(void **state) {
 
   const uint8_t status_executes[] = {
-    F_execute_none,
+    F_execute_okay,
     F_execute_access,
     F_execute_bad,
     F_execute_buffer,
@@ -227,7 +227,7 @@ void test__f_execute_status_from_status__works(void **state) {
   };
 
   const f_status_t statuss[] = {
-    F_none,
+    F_okay,
     F_access,
     F_execute_not,
     F_buffer,

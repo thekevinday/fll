@@ -17,7 +17,7 @@ extern "C" {
     f_file_stream_flush(print->to);
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_print_operation_all_complete_
 
@@ -49,7 +49,7 @@ extern "C" {
     f_file_stream_flush(print->to);
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_print_operation_cancelled_
 

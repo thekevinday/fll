@@ -28,7 +28,7 @@ extern "C" {
           return F_status_set_error(F_complete_not_utf_eos);
         }
 
-        return F_none_eos;
+        return F_okay_eos;
       }
 
       ++i;
@@ -36,7 +36,7 @@ extern "C" {
 
     } while (i < step);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_utf_buffer_decrement_
 
@@ -64,7 +64,7 @@ extern "C" {
 
         range->start += width;
 
-        return F_none_stop;
+        return F_okay_stop;
       }
       else if (range->start + width >= buffer.used) {
         if (width > 1 && range->start + width >= buffer.used + 1) {
@@ -73,7 +73,7 @@ extern "C" {
 
         range->start += width;
 
-        return F_none_eos;
+        return F_okay_eos;
       }
 
       ++i;
@@ -81,7 +81,7 @@ extern "C" {
 
     } while (i < step);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_utf_buffer_increment_
 

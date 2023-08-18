@@ -111,7 +111,7 @@ void test__f_file_stream_reopen__works(void **state) {
 
     const f_status_t status = f_file_stream_reopen(path, path, &file);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(file.stream, F_type_input_d);
   }
 
@@ -123,7 +123,7 @@ void test__f_file_stream_reopen__works(void **state) {
 
     const f_status_t status = f_file_stream_reopen(path, f_string_empty_s, &file);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(file.stream, F_type_input_d);
   }
 }

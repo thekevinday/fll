@@ -45,7 +45,7 @@ extern "C" {
  *   A pointer to the address that will be resized.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success, but there was nothing to do.
  *
  *   F_memory_not (with error bit) on out of memory.
@@ -76,7 +76,7 @@ extern "C" {
  *   A pointer to the address that will be freed.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success, but there was nothing to do.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -102,7 +102,7 @@ extern "C" {
  *   A pointer to the address that will be freed.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success, but there was nothing to do.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -127,7 +127,7 @@ extern "C" {
  *   Must be greater than 0.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success, but there was nothing to do.
  *
  *   F_memory_not (with error bit) on allocation error.
@@ -154,7 +154,7 @@ extern "C" {
  *   A pointer that will be updated to the address of the newly allocated memory.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success, but there was nothing to do.
  *
  *   F_memory_not (with error bit) on allocation error.
@@ -185,7 +185,7 @@ extern "C" {
  *   A pointer to the address that will be resized.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success, but there was nothing to do.
  *
  *   F_memory_not (with error bit) on out of memory.

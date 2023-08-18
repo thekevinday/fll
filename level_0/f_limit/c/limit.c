@@ -19,7 +19,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_limit_process_
 

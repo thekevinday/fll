@@ -107,7 +107,7 @@ extern "C" {
  *   Set the pointer address to 0 to disable.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not when there is no buffer, objects or contents to process.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -155,7 +155,7 @@ extern "C" {
  *   Set the pointer address to 0 to disable.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not when there is no buffer, objects or contents to process.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -207,7 +207,7 @@ extern "C" {
  *   Set the pointer address to 0 to disable.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not when there is no buffer, objects or contents to process.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -259,7 +259,7 @@ extern "C" {
  *   Set the pointer address to 0 to disable.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not when there is no buffer, objects or contents to process.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -312,7 +312,7 @@ extern "C" {
  *   Set the pointer address to 0 to disable.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not when there is no buffer, objects or contents to process.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -363,7 +363,7 @@ extern "C" {
  *   Set the pointer address to 0 to disable.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not when there is no buffer, objects or contents to process.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -416,7 +416,7 @@ extern "C" {
  *   Set the pointer address to 0 to disable.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not when there is no buffer, objects or contents to process.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -466,7 +466,7 @@ extern "C" {
  *   Set the pointer address to 0 to disable.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not when there is no buffer, objects or contents to process.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -514,7 +514,7 @@ extern "C" {
  *   Set the pointer address to 0 to disable.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not when there is no buffer, objects or contents to process.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -562,7 +562,7 @@ extern "C" {
  *   Set the pointer address to 0 to disable.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not when there is no buffer, objects or contents to process.
  *
  *   F_parameter (with error bit) if a parameter is invalid.

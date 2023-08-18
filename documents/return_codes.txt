@@ -33,7 +33,7 @@ Implicit Return Types for f_status_t:
 Common Return Types for f_status_t:
   There are some code:"f_status_t" return types that are not required to be returned but are used quite often that they might seem required.
 
-  code:"F_none"\:
+  code:"F_okay"\:
     This general designates that no error occurred.
     This is a generic status code used all over the place.
 

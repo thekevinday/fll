@@ -28,7 +28,7 @@ void test__f_string_tripless_append__works(void **state) {
   {
     const f_status_t status = f_string_tripless_append(source, &destination);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(destination.array[0].used, length_sources);
 
     for (f_number_unsigned_t i = 0; i < length_sources; ++i) {
@@ -63,7 +63,7 @@ void test__f_string_tripless_append__returns_data_not(void **state) {
   {
     const f_status_t status = f_string_triples_resize(length, &source);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(source.used, 0);
     assert_int_equal(source.size, length);
   }

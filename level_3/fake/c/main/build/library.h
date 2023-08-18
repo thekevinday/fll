@@ -28,7 +28,7 @@ extern "C" {
  *   The program data.
  *
  *   This alters data.main->setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *
  *     Errors (with error bit) from: f_file_link()
  *     Errors (with error bit) from: f_string_dynamics_resize()
@@ -74,7 +74,7 @@ extern "C" {
  *   This modifies data.main.cache_arguments.
  *
  *   This alters data.main->setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *
  *     Errors (with error bit) from: f_file_link()
  *     Errors (with error bit) from: fll_execute_arguments_add()
@@ -118,7 +118,7 @@ extern "C" {
  *   This modifies data.main.cache_arguments.
  *
  *   This alters data.main->setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *
  *     Errors (with error bit) from: f_file_name_directory()
  *     Errors (with error bit) from: f_string_dynamic_append_assure()

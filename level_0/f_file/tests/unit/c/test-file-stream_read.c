@@ -88,7 +88,7 @@ void test__f_file_stream_read__works(void **state) {
 
     const f_status_t status = f_file_stream_read(file, &buffer);
 
-    assert_int_equal(status, F_none_eof);
+    assert_int_equal(status, F_okay_eof);
   }
 
   f_string_dynamic_resize(0, &buffer);

@@ -490,7 +490,7 @@ extern "C" {
  *   The actions to resize.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_array_too_large (with error bit) if the resulting new size is bigger than the max array length.
  *
  *   Errors (with error bit) from: f_memory_resize().
@@ -581,7 +581,7 @@ extern "C" {
  *   The on array to resize.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success, but there is no reason to increase size (used + controller_common_allocation_small_d <= size).
  *
  *   F_array_too_large (with error bit) if the new array length is too large.
@@ -603,7 +603,7 @@ extern "C" {
  *   The on array to resize.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -636,7 +636,7 @@ extern "C" {
  *   The rule array to resize.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success, but there is no reason to increase size (used + controller_common_allocation_small_d <= size).
  *
  *   F_array_too_large (with error bit) if the new array length is too large.
@@ -658,7 +658,7 @@ extern "C" {
  *   The rule array to resize.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.

@@ -123,7 +123,7 @@ extern "C" {
  *   Must be of type fss_read_main_t.
  *
  *   This alters main.setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *     F_true on success when performing verification and verify passed.
  *     F_false on success when performing verification and verify failed.
  *
@@ -164,7 +164,7 @@ extern "C" {
  *   Must be of type fss_read_main_t.
  *
  *   This alters main.setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *
  *     Errors (with error bit) from: f_string_dynamic_append_assure().
  *

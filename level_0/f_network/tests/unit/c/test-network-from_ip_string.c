@@ -81,7 +81,7 @@ void test__f_network_from_ip_string__works(void **state) {
 
     const f_status_t status = f_network_from_ip_string(ip, &family);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 
   family.type = f_network_family_ip_6_e;
@@ -91,7 +91,7 @@ void test__f_network_from_ip_string__works(void **state) {
 
     const f_status_t status = f_network_from_ip_string(ip, &family);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 }
 

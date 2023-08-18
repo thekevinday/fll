@@ -97,18 +97,18 @@ void test__f_fss_seek_to_eol__works(void **state) {
   };
 
   f_status_t statuss[] = {
-    F_none_eos,
-    F_none_eos,
-    F_none,
-    F_none,
-    F_none,
-    F_none,
-    F_none_stop,
-    F_none_stop,
-    F_none,
-    F_none,
-    F_none,
-    F_none,
+    F_okay_eos,
+    F_okay_eos,
+    F_okay,
+    F_okay,
+    F_okay,
+    F_okay,
+    F_okay_stop,
+    F_okay_stop,
+    F_okay,
+    F_okay,
+    F_okay,
+    F_okay,
   };
 
   for (uint8_t i = 0; i < 12; ++i) {

@@ -36,7 +36,7 @@ extern "C" {
  *   Set to NULL to not use.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_found on success, but nothing was done because an existing process was found.
  *
  *   F_lock (with error bit) if failed to re-establish read lock on global.thread->lock.process while returning.
@@ -106,7 +106,7 @@ extern "C" {
  *   (optional) Set to NULL to disable.
  *
  * @return
- *   F_none if not given a valid id to search.
+ *   F_okay if not given a valid id to search.
  *   F_false if there is no process found.
  *   F_true if there is a process found (address is stored in "at").
  */
@@ -123,7 +123,7 @@ extern "C" {
  *   The process to wait on.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_interrupt (with error bit) on receiving a process signal, such as an interrupt signal.
  *

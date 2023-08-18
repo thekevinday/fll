@@ -12,7 +12,7 @@ extern "C" {
 
     fake_print_common_wrapped_variables(print, "Cloning file ", source, " to ", destination, f_string_empty_s.string);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_print_verbose_cloning_
 
@@ -24,7 +24,7 @@ extern "C" {
 
     fake_print_common_wrapped_variables(print, "Copying file ", source, " to ", destination, f_string_empty_s.string);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_print_verbose_copying_
 
@@ -46,7 +46,7 @@ extern "C" {
 
     fake_print_common_simple_variable(print, "Created file ", path);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_print_verbose_create_file_
 
@@ -58,7 +58,7 @@ extern "C" {
 
     fake_print_common_wrapped_variable(print, "Directory ", path, " already exists");
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_print_verbose_directory_exists_
 
@@ -70,7 +70,7 @@ extern "C" {
 
     fake_print_common_wrapped_variable(print, "File ", path, " already exists");
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_print_verbose_file_exists_
 
@@ -82,7 +82,7 @@ extern "C" {
 
     fake_print_common_wrapped_variable(print, "File ", path, " already exists (as a symbolic link)");
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_print_verbose_file_exists_as_link_
 
@@ -94,7 +94,7 @@ extern "C" {
 
     fake_print_common_wrapped_variable(print, "File ", path, " already exists but is not a regular file (or a symbolic link)");
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_print_verbose_file_exists_not_regular_or_link_
 
@@ -106,7 +106,7 @@ extern "C" {
 
     fake_print_common_simple_variable(print, "Pre-populated file ", path);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_print_verbose_file_pre_populated_
 
@@ -118,7 +118,7 @@ extern "C" {
 
     fake_print_common_wrapped_variables(print, "Moving file ", source, " to ", destination, f_string_empty_s.string);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_print_verbose_moving_
 

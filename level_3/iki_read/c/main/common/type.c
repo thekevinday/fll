@@ -30,7 +30,7 @@ extern "C" {
 
     f_iki_data_delete(&setting->data);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_iki_read_setting_delete_
 

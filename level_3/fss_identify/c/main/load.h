@@ -19,7 +19,7 @@
  *   The main program and settings data.
  *
  *   This alters main.setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *
  *     Errors (with error bit) from: f_file_stream_read_block().
  *     Errors (with error bit) from: f_string_dynamic_resize().

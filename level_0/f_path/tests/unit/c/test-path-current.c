@@ -109,7 +109,7 @@ void test__f_path_current__works(void **state) {
 
     const f_status_t status = f_path_current(F_false, &destination);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(destination.used, path.used);
     assert_string_equal(destination.string, path.string);
   }
@@ -125,7 +125,7 @@ void test__f_path_current__works(void **state) {
 
     const f_status_t status = f_path_current(F_true, &destination);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(destination.used, path_real.used);
     assert_string_equal(destination.string, path_real.string);
   }

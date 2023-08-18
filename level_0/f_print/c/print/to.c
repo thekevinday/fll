@@ -53,7 +53,7 @@ extern "C" {
       return private_inline_f_print_to_error();
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_print_to_character_
 
@@ -597,7 +597,7 @@ extern "C" {
       }
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_print_to_safely_terminated_
 

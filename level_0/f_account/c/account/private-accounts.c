@@ -36,7 +36,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     } // for
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_accounts_append_) || !defined(_di_f_accounts_append_all_) || !defined(_di_f_accountss_append_all_)
 

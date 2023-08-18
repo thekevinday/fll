@@ -26,7 +26,7 @@ void test__f_directory_recurse_doss_destroy_callback__fails(void **state) {
 
   {
     will_return(__wrap_f_string_dynamic_adjust, false);
-    will_return(__wrap_f_string_dynamic_adjust, F_none);
+    will_return(__wrap_f_string_dynamic_adjust, F_okay);
 
     will_return(__wrap_f_string_dynamic_adjust, true);
     will_return(__wrap_f_string_dynamic_adjust, F_status_set_error(F_failure));
@@ -38,10 +38,10 @@ void test__f_directory_recurse_doss_destroy_callback__fails(void **state) {
 
   {
     will_return(__wrap_f_string_dynamic_adjust, false);
-    will_return(__wrap_f_string_dynamic_adjust, F_none);
+    will_return(__wrap_f_string_dynamic_adjust, F_okay);
 
     will_return(__wrap_f_string_dynamic_adjust, false);
-    will_return(__wrap_f_string_dynamic_adjust, F_none);
+    will_return(__wrap_f_string_dynamic_adjust, F_okay);
 
     will_return(__wrap_f_string_dynamics_adjust, true);
     will_return(__wrap_f_string_dynamics_adjust, F_status_set_error(F_failure));
@@ -53,13 +53,13 @@ void test__f_directory_recurse_doss_destroy_callback__fails(void **state) {
 
   {
     will_return(__wrap_f_string_dynamic_adjust, false);
-    will_return(__wrap_f_string_dynamic_adjust, F_none);
+    will_return(__wrap_f_string_dynamic_adjust, F_okay);
 
     will_return(__wrap_f_string_dynamic_adjust, false);
-    will_return(__wrap_f_string_dynamic_adjust, F_none);
+    will_return(__wrap_f_string_dynamic_adjust, F_okay);
 
     will_return(__wrap_f_string_dynamics_adjust, false);
-    will_return(__wrap_f_string_dynamics_adjust, F_none);
+    will_return(__wrap_f_string_dynamics_adjust, F_okay);
 
     will_return(__wrap_f_string_dynamics_adjust, true);
     will_return(__wrap_f_string_dynamics_adjust, F_status_set_error(F_failure));
@@ -71,16 +71,16 @@ void test__f_directory_recurse_doss_destroy_callback__fails(void **state) {
 
   {
     will_return(__wrap_f_string_dynamic_adjust, false);
-    will_return(__wrap_f_string_dynamic_adjust, F_none);
+    will_return(__wrap_f_string_dynamic_adjust, F_okay);
 
     will_return(__wrap_f_string_dynamic_adjust, false);
-    will_return(__wrap_f_string_dynamic_adjust, F_none);
+    will_return(__wrap_f_string_dynamic_adjust, F_okay);
 
     will_return(__wrap_f_string_dynamics_adjust, false);
-    will_return(__wrap_f_string_dynamics_adjust, F_none);
+    will_return(__wrap_f_string_dynamics_adjust, F_okay);
 
     will_return(__wrap_f_string_dynamics_adjust, false);
-    will_return(__wrap_f_string_dynamics_adjust, F_none);
+    will_return(__wrap_f_string_dynamics_adjust, F_okay);
 
     will_return(__wrap_f_string_dynamics_adjust, true);
     will_return(__wrap_f_string_dynamics_adjust, F_status_set_error(F_failure));
@@ -92,19 +92,19 @@ void test__f_directory_recurse_doss_destroy_callback__fails(void **state) {
 
   {
     will_return(__wrap_f_string_dynamic_adjust, false);
-    will_return(__wrap_f_string_dynamic_adjust, F_none);
+    will_return(__wrap_f_string_dynamic_adjust, F_okay);
 
     will_return(__wrap_f_string_dynamic_adjust, false);
-    will_return(__wrap_f_string_dynamic_adjust, F_none);
+    will_return(__wrap_f_string_dynamic_adjust, F_okay);
 
     will_return(__wrap_f_string_dynamics_adjust, false);
-    will_return(__wrap_f_string_dynamics_adjust, F_none);
+    will_return(__wrap_f_string_dynamics_adjust, F_okay);
 
     will_return(__wrap_f_string_dynamics_adjust, false);
-    will_return(__wrap_f_string_dynamics_adjust, F_none);
+    will_return(__wrap_f_string_dynamics_adjust, F_okay);
 
     will_return(__wrap_f_string_dynamics_adjust, false);
-    will_return(__wrap_f_string_dynamics_adjust, F_none);
+    will_return(__wrap_f_string_dynamics_adjust, F_okay);
 
     will_return(__wrap_f_string_dynamics_adjust, true);
     will_return(__wrap_f_string_dynamics_adjust, F_status_set_error(F_failure));
@@ -116,22 +116,22 @@ void test__f_directory_recurse_doss_destroy_callback__fails(void **state) {
 
   {
     will_return(__wrap_f_string_dynamic_adjust, false);
-    will_return(__wrap_f_string_dynamic_adjust, F_none);
+    will_return(__wrap_f_string_dynamic_adjust, F_okay);
 
     will_return(__wrap_f_string_dynamic_adjust, false);
-    will_return(__wrap_f_string_dynamic_adjust, F_none);
+    will_return(__wrap_f_string_dynamic_adjust, F_okay);
 
     will_return(__wrap_f_string_dynamics_adjust, false);
-    will_return(__wrap_f_string_dynamics_adjust, F_none);
+    will_return(__wrap_f_string_dynamics_adjust, F_okay);
 
     will_return(__wrap_f_string_dynamics_adjust, false);
-    will_return(__wrap_f_string_dynamics_adjust, F_none);
+    will_return(__wrap_f_string_dynamics_adjust, F_okay);
 
     will_return(__wrap_f_string_dynamics_adjust, false);
-    will_return(__wrap_f_string_dynamics_adjust, F_none);
+    will_return(__wrap_f_string_dynamics_adjust, F_okay);
 
     will_return(__wrap_f_string_dynamics_adjust, false);
-    will_return(__wrap_f_string_dynamics_adjust, F_none);
+    will_return(__wrap_f_string_dynamics_adjust, F_okay);
 
     will_return(__wrap_f_string_dynamics_adjust, true);
     will_return(__wrap_f_string_dynamics_adjust, F_status_set_error(F_failure));
@@ -143,25 +143,25 @@ void test__f_directory_recurse_doss_destroy_callback__fails(void **state) {
 
   {
     will_return(__wrap_f_string_dynamic_adjust, false);
-    will_return(__wrap_f_string_dynamic_adjust, F_none);
+    will_return(__wrap_f_string_dynamic_adjust, F_okay);
 
     will_return(__wrap_f_string_dynamic_adjust, false);
-    will_return(__wrap_f_string_dynamic_adjust, F_none);
+    will_return(__wrap_f_string_dynamic_adjust, F_okay);
 
     will_return(__wrap_f_string_dynamics_adjust, false);
-    will_return(__wrap_f_string_dynamics_adjust, F_none);
+    will_return(__wrap_f_string_dynamics_adjust, F_okay);
 
     will_return(__wrap_f_string_dynamics_adjust, false);
-    will_return(__wrap_f_string_dynamics_adjust, F_none);
+    will_return(__wrap_f_string_dynamics_adjust, F_okay);
 
     will_return(__wrap_f_string_dynamics_adjust, false);
-    will_return(__wrap_f_string_dynamics_adjust, F_none);
+    will_return(__wrap_f_string_dynamics_adjust, F_okay);
 
     will_return(__wrap_f_string_dynamics_adjust, false);
-    will_return(__wrap_f_string_dynamics_adjust, F_none);
+    will_return(__wrap_f_string_dynamics_adjust, F_okay);
 
     will_return(__wrap_f_string_dynamics_adjust, false);
-    will_return(__wrap_f_string_dynamics_adjust, F_none);
+    will_return(__wrap_f_string_dynamics_adjust, F_okay);
 
     will_return(__wrap_f_string_dynamics_adjust, true);
     will_return(__wrap_f_string_dynamics_adjust, F_status_set_error(F_failure));
@@ -173,28 +173,28 @@ void test__f_directory_recurse_doss_destroy_callback__fails(void **state) {
 
   {
     will_return(__wrap_f_string_dynamic_adjust, false);
-    will_return(__wrap_f_string_dynamic_adjust, F_none);
+    will_return(__wrap_f_string_dynamic_adjust, F_okay);
 
     will_return(__wrap_f_string_dynamic_adjust, false);
-    will_return(__wrap_f_string_dynamic_adjust, F_none);
+    will_return(__wrap_f_string_dynamic_adjust, F_okay);
 
     will_return(__wrap_f_string_dynamics_adjust, false);
-    will_return(__wrap_f_string_dynamics_adjust, F_none);
+    will_return(__wrap_f_string_dynamics_adjust, F_okay);
 
     will_return(__wrap_f_string_dynamics_adjust, false);
-    will_return(__wrap_f_string_dynamics_adjust, F_none);
+    will_return(__wrap_f_string_dynamics_adjust, F_okay);
 
     will_return(__wrap_f_string_dynamics_adjust, false);
-    will_return(__wrap_f_string_dynamics_adjust, F_none);
+    will_return(__wrap_f_string_dynamics_adjust, F_okay);
 
     will_return(__wrap_f_string_dynamics_adjust, false);
-    will_return(__wrap_f_string_dynamics_adjust, F_none);
+    will_return(__wrap_f_string_dynamics_adjust, F_okay);
 
     will_return(__wrap_f_string_dynamics_adjust, false);
-    will_return(__wrap_f_string_dynamics_adjust, F_none);
+    will_return(__wrap_f_string_dynamics_adjust, F_okay);
 
     will_return(__wrap_f_string_dynamics_adjust, false);
-    will_return(__wrap_f_string_dynamics_adjust, F_none);
+    will_return(__wrap_f_string_dynamics_adjust, F_okay);
 
     will_return(__wrap_f_string_dynamics_adjust, true);
     will_return(__wrap_f_string_dynamics_adjust, F_status_set_error(F_failure));
@@ -206,31 +206,31 @@ void test__f_directory_recurse_doss_destroy_callback__fails(void **state) {
 
   {
     will_return(__wrap_f_string_dynamic_adjust, false);
-    will_return(__wrap_f_string_dynamic_adjust, F_none);
+    will_return(__wrap_f_string_dynamic_adjust, F_okay);
 
     will_return(__wrap_f_string_dynamic_adjust, false);
-    will_return(__wrap_f_string_dynamic_adjust, F_none);
+    will_return(__wrap_f_string_dynamic_adjust, F_okay);
 
     will_return(__wrap_f_string_dynamics_adjust, false);
-    will_return(__wrap_f_string_dynamics_adjust, F_none);
+    will_return(__wrap_f_string_dynamics_adjust, F_okay);
 
     will_return(__wrap_f_string_dynamics_adjust, false);
-    will_return(__wrap_f_string_dynamics_adjust, F_none);
+    will_return(__wrap_f_string_dynamics_adjust, F_okay);
 
     will_return(__wrap_f_string_dynamics_adjust, false);
-    will_return(__wrap_f_string_dynamics_adjust, F_none);
+    will_return(__wrap_f_string_dynamics_adjust, F_okay);
 
     will_return(__wrap_f_string_dynamics_adjust, false);
-    will_return(__wrap_f_string_dynamics_adjust, F_none);
+    will_return(__wrap_f_string_dynamics_adjust, F_okay);
 
     will_return(__wrap_f_string_dynamics_adjust, false);
-    will_return(__wrap_f_string_dynamics_adjust, F_none);
+    will_return(__wrap_f_string_dynamics_adjust, F_okay);
 
     will_return(__wrap_f_string_dynamics_adjust, false);
-    will_return(__wrap_f_string_dynamics_adjust, F_none);
+    will_return(__wrap_f_string_dynamics_adjust, F_okay);
 
     will_return(__wrap_f_string_dynamics_adjust, false);
-    will_return(__wrap_f_string_dynamics_adjust, F_none);
+    will_return(__wrap_f_string_dynamics_adjust, F_okay);
 
     will_return(__wrap_f_string_dynamics_adjust, true);
     will_return(__wrap_f_string_dynamics_adjust, F_status_set_error(F_failure));
@@ -242,34 +242,34 @@ void test__f_directory_recurse_doss_destroy_callback__fails(void **state) {
 
   {
     will_return(__wrap_f_string_dynamic_adjust, false);
-    will_return(__wrap_f_string_dynamic_adjust, F_none);
+    will_return(__wrap_f_string_dynamic_adjust, F_okay);
 
     will_return(__wrap_f_string_dynamic_adjust, false);
-    will_return(__wrap_f_string_dynamic_adjust, F_none);
+    will_return(__wrap_f_string_dynamic_adjust, F_okay);
 
     will_return(__wrap_f_string_dynamics_adjust, false);
-    will_return(__wrap_f_string_dynamics_adjust, F_none);
+    will_return(__wrap_f_string_dynamics_adjust, F_okay);
 
     will_return(__wrap_f_string_dynamics_adjust, false);
-    will_return(__wrap_f_string_dynamics_adjust, F_none);
+    will_return(__wrap_f_string_dynamics_adjust, F_okay);
 
     will_return(__wrap_f_string_dynamics_adjust, false);
-    will_return(__wrap_f_string_dynamics_adjust, F_none);
+    will_return(__wrap_f_string_dynamics_adjust, F_okay);
 
     will_return(__wrap_f_string_dynamics_adjust, false);
-    will_return(__wrap_f_string_dynamics_adjust, F_none);
+    will_return(__wrap_f_string_dynamics_adjust, F_okay);
 
     will_return(__wrap_f_string_dynamics_adjust, false);
-    will_return(__wrap_f_string_dynamics_adjust, F_none);
+    will_return(__wrap_f_string_dynamics_adjust, F_okay);
 
     will_return(__wrap_f_string_dynamics_adjust, false);
-    will_return(__wrap_f_string_dynamics_adjust, F_none);
+    will_return(__wrap_f_string_dynamics_adjust, F_okay);
 
     will_return(__wrap_f_string_dynamics_adjust, false);
-    will_return(__wrap_f_string_dynamics_adjust, F_none);
+    will_return(__wrap_f_string_dynamics_adjust, F_okay);
 
     will_return(__wrap_f_string_dynamics_adjust, false);
-    will_return(__wrap_f_string_dynamics_adjust, F_none);
+    will_return(__wrap_f_string_dynamics_adjust, F_okay);
 
     will_return(__wrap_f_memory_array_adjust, true);
     will_return(__wrap_f_memory_array_adjust, F_status_set_error(F_failure));
@@ -291,46 +291,46 @@ void test__f_directory_recurse_doss_destroy_callback__works(void **state) {
 
   {
     f_status_t status = f_memory_array_adjust(length, sizeof(f_directory_recurse_dos_t), (void **) &datass.array, &datass.used, &datass.size);
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
 
     status = f_memory_array_adjust(1, sizeof(f_directory_recurse_do_t), (void **) &datass.array[0].array, &datass.array[0].used, &datass.array[0].size);
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
 
     status = f_string_dynamic_adjust(1, &datass.array[0].array[0].path);
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
 
     status = f_string_dynamic_adjust(1, &datass.array[0].array[0].path_cache);
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
 
     status = f_string_dynamics_adjust(1, &datass.array[0].array[0].listing.block);
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
 
     status = f_string_dynamics_adjust(1, &datass.array[0].array[0].listing.character);
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
 
     status = f_string_dynamics_adjust(1, &datass.array[0].array[0].listing.directory);
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
 
     status = f_string_dynamics_adjust(1, &datass.array[0].array[0].listing.regular);
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
 
     status = f_string_dynamics_adjust(1, &datass.array[0].array[0].listing.link);
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
 
     status = f_string_dynamics_adjust(1, &datass.array[0].array[0].listing.fifo);
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
 
     status = f_string_dynamics_adjust(1, &datass.array[0].array[0].listing.socket);
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
 
     status = f_string_dynamics_adjust(1, &datass.array[0].array[0].listing.unknown);
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 
   {
     const f_status_t status = f_directory_recurse_doss_destroy_callback(0, length, (void *) datass.array);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(datass.array[0].size, 0);
   }
 

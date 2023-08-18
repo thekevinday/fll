@@ -163,7 +163,7 @@ extern "C" {
       size_write = write(file.id, buffer_write, used);
 
       if (!size_write) {
-        return F_none_stop;
+        return F_okay_stop;
       }
 
       if (size_write < 0) {
@@ -187,7 +187,7 @@ extern "C" {
 
     } while (*written < write_max);
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_fl_utf_file_write_) || !defined(_di_fl_utf_file_write_until_) || !defined(fl_utf_file_write_range)
 

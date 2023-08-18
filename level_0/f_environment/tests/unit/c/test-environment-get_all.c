@@ -28,7 +28,7 @@ void test__f_environment_get_all__works(void **state) {
 
     const f_status_t status = f_environment_get_all(&environment);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(environment.used, 1);
     assert_string_equal(environment.array[0].name.string, name.string);
     assert_string_equal(environment.array[0].value.string, value.string);

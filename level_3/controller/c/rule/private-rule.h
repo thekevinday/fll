@@ -55,7 +55,7 @@ extern "C" {
  *   (optional) Set to NULL to disable.
  *
  * @return
- *   F_none on success, but the id.used is 0.
+ *   F_okay on success, but the id.used is 0.
  *   F_true on success and rule was found, index is updated.
  *   F_false on success and rule was not found.
  */
@@ -84,7 +84,7 @@ extern "C" {
  *   The state data for passing to fl_iki_read().
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   Errors (with error bit) from: f_fss_count_lines().
  *   Errors (with error bit) from: f_memory_array_increase().
@@ -146,7 +146,7 @@ extern "C" {
  *   This is expected to be set to a position immediately after a valid object read.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   Errors (with error bit) from: controller_rule_actions_increase_by().
  *   Errors (with error bit) from: controller_rule_parameters_read().
@@ -171,7 +171,7 @@ extern "C" {
  *   The destination rule to copy to.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   Errors (with error bit) from: f_capability_copy().
  *   Errors (with error bit) from: f_control_group_copy().
@@ -220,7 +220,7 @@ extern "C" {
  *   The process data for processing this rule.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_child on child process exiting.
  *   F_ignore if the rule is unknown and nothing can be done.
  *
@@ -256,7 +256,7 @@ extern "C" {
  *   The process data for processing this rule.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_child on child process exiting.
  *
  *   F_interrupt (with error bit) on receiving a process signal, such as an interrupt signal.
@@ -297,7 +297,7 @@ extern "C" {
  *   The process data for processing this rule.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_child on child process exiting.
  *
  *   F_file_found (with error bit) if the PID file already exists.
@@ -346,7 +346,7 @@ extern "C" {
  *   The process information.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   Errors (with error bit) from: controller_rule_expand_iki().
  *
@@ -371,7 +371,7 @@ extern "C" {
  *   The buffer to expand into.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   Errors (with error bit) from: f_environment_get().
  *   Errors (with error bit) from: f_string_dynamic_append().
@@ -398,7 +398,7 @@ extern "C" {
  *   The constructed alias.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   Errors (with error bit) from: f_string_dynamic_partial_append_nulless().
  *
@@ -461,7 +461,7 @@ extern "C" {
  *   The processed item.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_valid_not (with error bit) on invalid data.
  *
  *   Errors (with error bit) from: f_fss_count_lines().
@@ -486,7 +486,7 @@ extern "C" {
  *   The items to resize.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_array_too_large (with error bit) if the resulting new size is bigger than the max array length.
  *
  *   Errors (with error bit) from: f_memory_resize().
@@ -515,7 +515,7 @@ extern "C" {
  *   The process data for processing this rule.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_child on child process exiting.
  *   F_failure on execution failure.
  *
@@ -554,7 +554,7 @@ extern "C" {
  *   A structure for containing and caching relevant data.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_busy on success and the process was found to already be running (nothing to do).
  *
  *   F_found_not (with error bit) if unable to for a process for the given rule id.
@@ -590,7 +590,7 @@ extern "C" {
  *   The process data.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_found on the process was found to already be running (nothing to do).
  *   F_process_not if the process was not executed because it is a "consider" Action.
  *
@@ -631,7 +631,7 @@ extern "C" {
  *   The rule status will be updated by this function.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   Simplified status (with error bit) from controller_status_simplify_error() on failure.
  *
@@ -666,7 +666,7 @@ extern "C" {
  *   The processed number will be saved here.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_valid_not (with error bit) on failure due to invalid value.
  *
@@ -700,7 +700,7 @@ extern "C" {
  *   The processed rule.
  *
  * @return
- *    F_none on success.
+ *    F_okay on success.
  *
  *    F_valid_not (with error bit) on success but there were one or more invalid settings encountered.
  *
@@ -763,7 +763,7 @@ extern "C" {
  *   If FALSE, process all waits, returning normally (required rules still result in failure).
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success and nothing to do.
  *   F_require on success, but a required rule has not been run yet.
  *

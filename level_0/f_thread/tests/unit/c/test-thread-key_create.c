@@ -64,7 +64,7 @@ void test__f_thread_key_create__works(void **state) {
 
     const f_status_t status = f_thread_key_create(stub_other, &key);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 }
 

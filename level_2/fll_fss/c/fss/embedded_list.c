@@ -50,7 +50,7 @@ extern "C" {
           if (state->status == F_data_not) return;
 
           if (found_data) {
-            state->status = (range->start >= buffer.used) ? F_none_eos : F_none_stop;
+            state->status = (range->start >= buffer.used) ? F_okay_eos : F_okay_stop;
 
             return;
           }
@@ -76,13 +76,13 @@ extern "C" {
 
       } while (state->status == F_fss_found_object_not);
 
-      if (state->status == F_none_eos || state->status == F_none_stop) return;
+      if (state->status == F_okay_eos || state->status == F_okay_stop) return;
 
       if (state->status == F_data_not || state->status == F_data_not_eos || state->status == F_data_not_stop) {
 
-        // If at least some valid object was found, then return F_none equivalents.
+        // If at least some valid object was found, then return F_okay equivalents.
         if (nest->depth[0].used > initial_used) {
-          state->status = (state->status == F_data_not_eos) ? F_none_eos : F_none_stop;
+          state->status = (state->status == F_data_not_eos) ? F_okay_eos : F_okay_stop;
         }
 
         return;
@@ -90,9 +90,9 @@ extern "C" {
 
       if (state->status == F_end_not_eos || state->status == F_end_not_stop || state->status == F_end_not_nest_eos || state->status == F_end_not_nest_stop) {
 
-        // If at least some valid object was found, then return F_none equivalents.
+        // If at least some valid object was found, then return F_okay equivalents.
         if (nest->depth[0].used > initial_used) {
-          state->status = (state->status == F_data_not_eos) ? F_none_eos : F_data_not_stop;
+          state->status = (state->status == F_data_not_eos) ? F_okay_eos : F_data_not_stop;
         }
 
         return;
@@ -105,7 +105,7 @@ extern "C" {
       if (range->start >= range->stop || range->start >= buffer.used) {
 
         // When content is found, the range->start is incremented, if content is found at range->stop, then range->start will be > range.stop.
-        state->status = (range->start >= buffer.used) ? F_none_eos : F_none_stop;
+        state->status = (range->start >= buffer.used) ? F_okay_eos : F_okay_stop;
 
         return;
       }
@@ -130,7 +130,7 @@ extern "C" {
       return;
     }
 
-    if (state->status == F_none || state->status == F_none_stop || state->status == F_none_eos || state->status == F_none_eol) {
+    if (state->status == F_okay || state->status == F_okay_stop || state->status == F_okay_eos || state->status == F_okay_eol) {
       if (content.used) {
         range.start = 0;
         range.stop = content.used - 1;

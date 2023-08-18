@@ -19,7 +19,7 @@ extern "C" {
 
     if (!setting) return F_status_set_error(F_parameter);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_status_code_setting_delete_
 

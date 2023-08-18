@@ -46,7 +46,7 @@ extern "C" {
  *   The destination sockets the source is appended onto.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success, but there is nothing to append (size == 0).
  *
  *   Success from f_memory_array_resize().
@@ -70,7 +70,7 @@ extern "C" {
  *   The destination sockets the source is appended onto.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success, but there is nothing to append (size == 0).
  *
  *   Success from f_memory_array_resize().
@@ -215,7 +215,7 @@ extern "C" {
  *   The string socketss array to resize.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -236,7 +236,7 @@ extern "C" {
  *   The destination ranges the source is appended onto.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success, but there is nothing to append (size == 0).
  *
  *   Success from f_memory_array_resize().
@@ -262,7 +262,7 @@ extern "C" {
  *   The destination ranges the source is appended onto.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success, but there is nothing to append (size == 0).
  *
  *   Success from f_memory_array_resize().

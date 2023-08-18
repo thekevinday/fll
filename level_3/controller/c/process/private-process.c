@@ -15,7 +15,7 @@ extern "C" {
 #ifndef _di_controller_process_find_
   f_status_t controller_process_find(const f_number_unsigned_t action, const f_string_static_t alias, const controller_processs_t processs, f_number_unsigned_t *at) {
 
-    if (!alias.used) return F_none;
+    if (!alias.used) return F_okay;
     if (!processs.used) return F_false;
 
     for (f_number_unsigned_t i = 0; i < processs.used; ++i) {
@@ -34,7 +34,7 @@ extern "C" {
 #ifndef _di_controller_process_prepare_
   f_status_t controller_process_prepare(const controller_global_t global, const bool is_normal, const uint8_t action, const f_string_static_t alias, f_number_unsigned_t *id) {
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     if (controller_process_find(action, alias, global.thread->processs, id) == F_false) {
       f_thread_unlock(&global.thread->lock.process);
@@ -65,7 +65,7 @@ extern "C" {
 
           if (F_status_is_error_not(status)) {
             process->id = global.thread->processs.used++;
-            status = F_none;
+            status = F_okay;
 
             if (id) {
               *id = process->id;
@@ -109,8 +109,8 @@ extern "C" {
 
     struct timespec time;
 
-    f_status_t status = F_none;
-    f_status_t status_lock = F_none;
+    f_status_t status = F_okay;
+    f_status_t status_lock = F_okay;
 
     uint8_t count = 0;
 
@@ -151,7 +151,7 @@ extern "C" {
       if (!controller_rule_status_is_available(process->action, process->rule) && !(process->state == controller_process_state_active_e || process->state == controller_process_state_busy_e)) {
         f_thread_unlock(&process->lock);
 
-        return F_none;
+        return F_okay;
       }
 
       if (status != F_time) {

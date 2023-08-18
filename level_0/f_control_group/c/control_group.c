@@ -14,7 +14,7 @@ extern "C" {
     destination->path.used = 0;
     destination->groups.used = 0;
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     if (source.path.used) {
       status = f_string_dynamic_append(source.path, &destination->path);
@@ -26,7 +26,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_control_group_copy_
 

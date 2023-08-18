@@ -42,7 +42,7 @@ extern "C" {
  *   The file path.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -68,7 +68,7 @@ extern "C" {
  *   An open directory file descriptor, in which path is relative to.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -100,7 +100,7 @@ extern "C" {
  *   This will be NULL terminated at real->used + 1.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -140,7 +140,7 @@ extern "C" {
  *   The directory string is replaced by this function.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -253,7 +253,7 @@ extern "C" {
  *   This will be NULL terminated at real->used + 1.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_buffer (with error bit) if the buffer is invalid.

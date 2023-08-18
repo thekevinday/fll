@@ -40,7 +40,7 @@ extern "C" {
  *   The control group(s) to ensure the directories exist.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_directory_not (with error bit) if control_group.path does not exist.
  *

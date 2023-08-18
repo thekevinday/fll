@@ -62,7 +62,7 @@ extern "C" {
         return F_status_set_error(F_number);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_conversion_character_to_binary_
 
@@ -75,7 +75,7 @@ extern "C" {
     if (character > 0x2f && character < 0x3a) {
       *number = 0xf & character;
 
-      return F_none;
+      return F_okay;
     }
 
     return F_status_set_error(F_number);
@@ -91,13 +91,13 @@ extern "C" {
     if (character > 0x2f && character < 0x3a) {
       *number = 0xf & character;
 
-      return F_none;
+      return F_okay;
     }
 
     if ((character > 0x40 && character < 0x43) || (character > 0x60 && character < 0x63)) {
       *number = 9 + (0xf & character);
 
-      return F_none;
+      return F_okay;
     }
 
     return F_status_set_error(F_number);
@@ -113,13 +113,13 @@ extern "C" {
     if (character > 0x2f && character < 0x3a) {
       *number = 0xf & character;
 
-      return F_none;
+      return F_okay;
     }
 
     if ((character > 0x40 && character < 0x47) || (character > 0x60 && character < 0x67)) {
       *number = 9 + (0xf & character);
 
-      return F_none;
+      return F_okay;
     }
 
     return F_status_set_error(F_number);
@@ -136,7 +136,7 @@ extern "C" {
 
     *number = 0xf & character;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_conversion_character_to_octal_
 

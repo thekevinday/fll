@@ -30,7 +30,7 @@ extern "C" {
     destination->array[destination->used].start = source.start;
     destination->array[destination->used++].stop = source.stop;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_string_ranges_append_
 
@@ -53,7 +53,7 @@ extern "C" {
       destination->array[destination->used++].stop = source.array[i].stop;
     } // for
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_string_ranges_append_all_
 

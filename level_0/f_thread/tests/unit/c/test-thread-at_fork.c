@@ -80,7 +80,7 @@ void test__f_thread_at_fork__works(void **state) {
 
     const f_status_t status = f_thread_at_fork(stub, stub, stub);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 }
 

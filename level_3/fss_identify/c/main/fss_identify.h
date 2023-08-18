@@ -73,7 +73,7 @@ extern "C" {
  *   The main program and setting data.
  *
  *   This alters main.setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *
  *     F_interrupt (with error bit) on interrupt signal received.
  *

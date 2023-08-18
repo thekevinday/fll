@@ -90,7 +90,7 @@ extern "C" {
  *   The main program settings.
  *
  *   This alters setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *     F_true on success when performing verification and verify passed.
  *     F_false on success when performing verification and verify failed.
  *     F_interrupt on (exit) signal received.

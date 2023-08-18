@@ -57,7 +57,7 @@ extern "C" {
     recurse->path_cache.used = 0;
     recurse->path_top = &path;
     recurse->depth = 0;
-    recurse->state.status = F_none;
+    recurse->state.status = F_okay;
     recurse->state.data = (void *) recurse;
 
     // Guarantee initialization even for parameter checking failures.
@@ -101,7 +101,7 @@ extern "C" {
     }
 
     if ((recurse->flag & f_directory_recurse_do_flag_top_e) && (recurse->flag & f_directory_recurse_do_flag_before_e)) {
-      recurse->state.status = F_none;
+      recurse->state.status = F_okay;
 
       recurse->action((void *) recurse, path, f_directory_recurse_do_flag_top_e | f_directory_recurse_do_flag_path_e | f_directory_recurse_do_flag_before_e);
 
@@ -111,7 +111,7 @@ extern "C" {
       }
 
       if (recurse->state.status == F_done) {
-        recurse->state.status = F_none;
+        recurse->state.status = F_okay;
 
         return;
       }
@@ -147,7 +147,7 @@ extern "C" {
         if (F_status_is_error(recurse->state.status)) return;
       }
 
-      recurse->state.status = F_none;
+      recurse->state.status = F_okay;
 
       recurse->action((void *) recurse, path, f_directory_recurse_do_flag_top_e | f_directory_recurse_do_flag_directory_e);
 
@@ -157,14 +157,14 @@ extern "C" {
       }
 
       if (recurse->state.status == F_done) {
-        recurse->state.status = F_none;
+        recurse->state.status = F_okay;
 
         return;
       }
     }
 
     if ((recurse->flag & f_directory_recurse_do_flag_top_e) && (recurse->flag & f_directory_recurse_do_flag_after_e)) {
-      recurse->state.status = F_none;
+      recurse->state.status = F_okay;
 
       recurse->action((void *) recurse, path, f_directory_recurse_do_flag_top_e | f_directory_recurse_do_flag_path_e | f_directory_recurse_do_flag_after_e);
     }
@@ -174,7 +174,7 @@ extern "C" {
       if (F_status_is_error(recurse->state.status)) return;
     }
 
-    recurse->state.status = F_none;
+    recurse->state.status = F_okay;
   }
 #endif // _di_fl_directory_do_
 
@@ -204,7 +204,7 @@ extern "C" {
     f_number_unsigned_t i = path->used - 1;
     f_number_unsigned_t j = 0;
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     for (; i > 0; --i) {
 
@@ -229,7 +229,7 @@ extern "C" {
             path->used = i + 1;
           }
 
-          return F_none;
+          return F_okay;
         }
       }
       else {
@@ -258,7 +258,7 @@ extern "C" {
 
     path->used = 0;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fl_directory_path_pop_
 

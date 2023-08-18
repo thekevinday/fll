@@ -1014,7 +1014,7 @@ extern "C" {
  *   The context object.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -1033,7 +1033,7 @@ extern "C" {
  *   The context object.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *

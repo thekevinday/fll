@@ -190,7 +190,7 @@ extern "C" {
       if (!context) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     status = f_string_dynamic_resize(0, &context->error);
 
@@ -234,7 +234,7 @@ extern "C" {
 
     macro_f_color_context_t_clear((*context))
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_color_context_delete_
 
@@ -244,7 +244,7 @@ extern "C" {
       if (!context) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     status = f_string_dynamic_adjust(0, &context->error);
 
@@ -288,7 +288,7 @@ extern "C" {
 
     macro_f_color_context_t_clear((*context))
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_color_context_destroy_
 

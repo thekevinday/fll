@@ -53,7 +53,7 @@ void test__f_environment_unset__works(void **state) {
 
     const f_status_t status = f_environment_unset(path);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 }
 

@@ -30,7 +30,7 @@ extern "C" {
     destination->array[destination->used].start = source.start;
     destination->array[destination->used++].total = source.total;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_string_quantitys_append_
 

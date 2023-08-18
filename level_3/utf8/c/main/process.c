@@ -15,7 +15,7 @@ extern "C" {
       return;
     }
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
 
     bool valid = F_true;
     uint8_t mode_codepoint = utf8_codepoint_mode_ready_e;
@@ -28,7 +28,7 @@ extern "C" {
 
       if (utf8_signal_check(main)) return;
 
-      main->setting.state.status = F_none;
+      main->setting.state.status = F_okay;
 
       if (main->setting.mode & utf8_mode_from_bytesequence_e) {
         utf8_convert_bytesequence(main, text);

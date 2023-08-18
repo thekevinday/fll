@@ -49,7 +49,7 @@ extern "C" {
  *   The max recursion depth.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
@@ -94,7 +94,7 @@ extern "C" {
  *   The max recursion depth.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_access_group (with error bit) if the current user does not have access to assign the specified group.

@@ -13,7 +13,7 @@ void test__f_utf_append_assure__works(void **state) {
   {
     const f_status_t status = f_utf_string_append_assure(source.string, source.used, &destination);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(destination.used, source.used);
 
     for (f_number_unsigned_t i = 0; i < source.used; ++i) {
@@ -25,7 +25,7 @@ void test__f_utf_append_assure__works(void **state) {
   {
     const f_status_t status = f_utf_string_append_assure(source.string, source.used, &destination);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(destination.used, source.used);
 
     for (f_number_unsigned_t i = 0; i < source.used; ++i) {

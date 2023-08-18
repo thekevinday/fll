@@ -36,7 +36,7 @@ extern "C" {
 
           *pointer = new_pointer;
 
-          return F_none;
+          return F_okay;
         }
       }
       else {
@@ -45,12 +45,12 @@ extern "C" {
         // Assure that the pointer is always 0 after deallocation.
         *pointer = 0;
 
-        return F_none;
+        return F_okay;
       }
     }
     else if (length_new) {
       *pointer = calloc(type_size, length_new);
-      if (*pointer) return F_none;
+      if (*pointer) return F_okay;
     }
     else {
       return F_data_not;
@@ -82,7 +82,7 @@ extern "C" {
 
           *pointer = new_pointer;
 
-          return F_none;
+          return F_okay;
         }
       }
       else {
@@ -91,12 +91,12 @@ extern "C" {
         // Assure that the pointer is always 0 after deallocation.
         *pointer = 0;
 
-        return F_none;
+        return F_okay;
       }
     }
     else if (length_new) {
       *pointer = calloc(type_size, length_new);
-      if (*pointer) return F_none;
+      if (*pointer) return F_okay;
     }
     else {
       return F_data_not;

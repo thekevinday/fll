@@ -12,7 +12,7 @@ extern "C" {
 
     fll_error_print(print, F_status_set_fine(((byte_dump_main_t *) print->custom)->setting.state.status), function, fll_error_file_flag_fallback_e);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_byte_dump_print_error_
 
@@ -26,7 +26,7 @@ extern "C" {
 
     fll_error_file_print(print, F_status_set_fine(main->setting.state.status), function, fll_error_file_flag_fallback_e, name, operation, type);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_byte_dump_print_error_file_
 
@@ -44,7 +44,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fll_program_print_error_file_code_invalid_
 
@@ -56,7 +56,7 @@ extern "C" {
 
     fll_print_format("%[%QNo files are specified, please pipe data or designate a file.%]%r", print->to, print->set->error, print->prefix, print->set->error, f_string_eol_s);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_byte_dump_print_error_file_none_
 
@@ -74,7 +74,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fll_program_print_error_file_read_
 
@@ -100,7 +100,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fll_program_print_error_parameter_first_greater_than_last_
 
@@ -124,7 +124,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_byte_dump_print_error_parameter_range_out_
 

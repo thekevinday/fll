@@ -40,7 +40,7 @@ extern "C" {
  *   The destination the source is appended onto.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *

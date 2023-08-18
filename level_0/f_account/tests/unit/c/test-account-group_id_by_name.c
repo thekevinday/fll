@@ -107,7 +107,7 @@ void test__f_account_group_id_by_name__works(void **state) {
 
     const f_status_t status = f_account_group_id_by_name(name, &gid);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(gid, group_data.gr_gid);
   }
 }

@@ -94,7 +94,7 @@ void test__f_directory_open__works(void **state) {
 
     const f_status_t status = f_directory_open(path, F_false, &id);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(id, 5);
   }
 }

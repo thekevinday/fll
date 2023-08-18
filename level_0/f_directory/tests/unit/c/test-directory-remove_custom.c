@@ -118,13 +118,13 @@ void test__f_directory_remove_custom__works(void **state) {
 
     const f_status_t status = f_directory_remove_custom(path, 0, F_false, 0);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 
   {
     const f_status_t status = f_directory_remove_custom(path, 0, F_true, 0);
 
-    assert_int_equal(F_status_set_fine(status), F_none);
+    assert_int_equal(F_status_set_fine(status), F_okay);
   }
 
   {
@@ -135,7 +135,7 @@ void test__f_directory_remove_custom__works(void **state) {
 
     const f_status_t status = f_directory_remove_custom(path, 1, F_false, 0);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 
   {
@@ -144,7 +144,7 @@ void test__f_directory_remove_custom__works(void **state) {
 
     const f_status_t status = f_directory_remove_custom(path, 1, F_true, 0);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 }
 

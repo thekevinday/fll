@@ -27,7 +27,7 @@ extern "C" {
 
     const struct timespec delay = controller_time_seconds((global->main->parameters.array[controller_parameter_simulate_e].result & f_console_result_found_e) ? controller_thread_cleanup_interval_short_d : controller_thread_cleanup_interval_long_d);
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     while (global->thread->enabled == controller_thread_enabled_e) {
 
@@ -35,7 +35,7 @@ extern "C" {
 
       if (global->thread->enabled != controller_thread_enabled_e) break;
 
-      if (f_thread_lock_write_try(&global->thread->lock.process) == F_none) {
+      if (f_thread_lock_write_try(&global->thread->lock.process) == F_okay) {
         controller_process_t *process = 0;
 
         f_number_unsigned_t i = 0;
@@ -47,12 +47,12 @@ extern "C" {
           process = global->thread->processs.array[i];
 
           // If "active" has a read lock, then do not attempt to clean it.
-          if (f_thread_lock_write_try(&process->active) != F_none) {
+          if (f_thread_lock_write_try(&process->active) != F_okay) {
             continue;
           }
 
           // If "lock" has a read or write lock, then do not attempt to clean it.
-          if (f_thread_lock_write_try(&process->lock) != F_none) {
+          if (f_thread_lock_write_try(&process->lock) != F_okay) {
             f_thread_unlock(&process->active);
 
             continue;
@@ -197,7 +197,7 @@ extern "C" {
 #ifndef _di_controller_thread_main_
   f_status_t controller_thread_main(controller_main_t * const main, controller_setting_t * const setting) {
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     controller_thread_t thread = controller_thread_t_initialize;
     controller_global_t global = macro_controller_global_t_initialize_1(main, setting, &thread);
@@ -346,7 +346,7 @@ extern "C" {
       return F_status_set_error(F_interrupt);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_controller_thread_main_
 

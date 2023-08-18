@@ -36,11 +36,11 @@ void test__f_directory_statuss_delete_callback__works(void **state) {
 
   {
     will_return(__wrap_f_string_dynamic_resize, false);
-    will_return(__wrap_f_string_dynamic_resize, F_none);
+    will_return(__wrap_f_string_dynamic_resize, F_okay);
 
     const f_status_t status = f_directory_statuss_delete_callback(0, length, (void *) datass_array);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 }
 

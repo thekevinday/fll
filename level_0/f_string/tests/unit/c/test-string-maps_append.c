@@ -16,13 +16,13 @@ void test__f_string_maps_append__works(void **state) {
   {
     f_status_t status = f_string_dynamic_append(test_name, &source.name);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_string_equal(source.name.string, test_name.string);
     assert_int_equal(source.name.used, test_name.used);
 
     status = f_string_dynamic_append(test_value, &source.value);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_string_equal(source.value.string, test_value.string);
     assert_int_equal(source.value.used, test_value.used);
   }
@@ -30,7 +30,7 @@ void test__f_string_maps_append__works(void **state) {
   {
     const f_status_t status = f_string_maps_append(source, &destination);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(destination.used, 1);
     assert_int_equal(destination.array[0].name.used, source.name.used);
     assert_int_equal(destination.array[0].value.used, source.value.used);

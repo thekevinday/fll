@@ -1923,7 +1923,7 @@ void test__f_file_mode_from_string__works_basic_alphabet(void **state) {
 
     const f_status_t status = f_file_mode_from_string(codes[i], 0, &mode, &replace);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(mode, modes[i]);
     assert_int_equal(replace, replaces[i]);
   } // for
@@ -2475,7 +2475,7 @@ void test__f_file_mode_from_string__works_basic_digit(void **state) {
 
     const f_status_t status = f_file_mode_from_string(codes[i], 0, &mode, &replace);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(mode, modes[i]);
     assert_int_equal(replace, replaces[i]);
   } // for

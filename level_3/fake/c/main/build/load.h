@@ -23,7 +23,7 @@ extern "C" {
  *   The program data.
  *
  *   This alters data.main->setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *
  *     F_array_too_large (with error bit) if the environment variable values are too large.
  *
@@ -48,7 +48,7 @@ extern "C" {
  *   The program data.
  *
  *   This alters data.main->setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *
  *     F_interrupt (with error bit) on interrupt signal received.
  *
@@ -98,7 +98,7 @@ extern "C" {
  *   The program data.
  *
  *   This alters data.main->setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *
  *     F_failure (with error bit) on error.
  *
@@ -120,7 +120,7 @@ extern "C" {
  *   The program data.
  *
  *   This alters data.main->setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *
  *     F_interrupt (with error bit) on interrupt signal received.
  *
@@ -166,7 +166,7 @@ extern "C" {
  *   The program data.
  *
  *   This alters data.main->setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *
  *     F_interrupt (with error bit) on interrupt signal received.
  *

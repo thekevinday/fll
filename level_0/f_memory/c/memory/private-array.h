@@ -33,7 +33,7 @@ extern "C" {
  *   The structure.size.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   Errors (with error bit) from: f_memory_adjust().
  *
@@ -63,7 +63,7 @@ extern "C" {
  *   The structure.size.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   Errors (with error bit) from: f_memory_resize().
  *

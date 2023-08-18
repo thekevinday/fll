@@ -16,7 +16,7 @@ void test__f_iki_datass_append_all__works(void **state) {
   {
     f_status_t status = f_memory_arrays_resize(length_outer, sizeof(f_iki_data_t), (void **) &source.array, &source.used, &source.size, &f_iki_datas_delete_callback);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(source.size, length_outer);
 
     f_number_unsigned_t i = 1;
@@ -26,29 +26,29 @@ void test__f_iki_datass_append_all__works(void **state) {
 
       status = f_memory_array_resize(length_inner, sizeof(f_iki_data_t), (void **) &source.array[source.used].array, &source.array[source.used].used, &source.array[source.used].size);
 
-      assert_int_equal(status, F_none);
+      assert_int_equal(status, F_okay);
       assert_int_equal(source.array[source.used].size, length_inner);
 
       for (j = 0; j < length_inner; ++j) {
 
         status = f_string_ranges_resize(length, &source.array[source.used].array[j].content);
 
-        assert_int_equal(status, F_none);
+        assert_int_equal(status, F_okay);
         assert_int_equal(source.array[source.used].array[j].content.size, length);
 
         status = f_memory_array_resize(length, sizeof(f_number_unsigned_t), (void **) &source.array[source.used].array[j].delimits.array, &source.array[source.used].array[j].delimits.used, &source.array[source.used].array[j].delimits.size);
 
-        assert_int_equal(status, F_none);
+        assert_int_equal(status, F_okay);
         assert_int_equal(source.array[source.used].array[j].delimits.size, length);
 
         status = f_string_ranges_resize(length, &source.array[source.used].array[j].variable);
 
-        assert_int_equal(status, F_none);
+        assert_int_equal(status, F_okay);
         assert_int_equal(source.array[source.used].array[j].variable.size, length);
 
         status = f_string_ranges_resize(length, &source.array[source.used].array[j].vocabulary);
 
-        assert_int_equal(status, F_none);
+        assert_int_equal(status, F_okay);
         assert_int_equal(source.array[source.used].array[j].vocabulary.size, length);
 
         for (; source.array[source.used].array[j].content.used < length; ++i) {
@@ -81,7 +81,7 @@ void test__f_iki_datass_append_all__works(void **state) {
   {
     const f_status_t status = f_iki_datass_append_all(source, &destination);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(destination.used, source.used);
 
     for (f_number_unsigned_t k = 0; k < length_outer; ++k) {
@@ -149,7 +149,7 @@ void test__f_iki_datass_append_all__returns_data_not(void **state) {
   {
     const f_status_t status = f_memory_arrays_resize(length, sizeof(f_iki_data_t), (void **) &source.array, &source.used, &source.size, &f_iki_datas_delete_callback);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(source.used, 0);
     assert_int_equal(source.size, length);
   }

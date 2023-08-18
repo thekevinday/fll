@@ -94,7 +94,7 @@ void test__f_file_size_by_id__works(void **state) {
 
     const f_status_t status = f_file_size_by_id(file, &size);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(size, statistics.st_size);
   }
 }

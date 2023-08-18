@@ -21,7 +21,7 @@ extern "C" {
       fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
     }
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
 
     if (main->setting.flag & (fake_main_flag_help_e | fake_main_flag_version_e | fake_main_flag_copyright_e)) {
       if (main->setting.flag & fake_main_flag_help_e) {
@@ -200,7 +200,7 @@ extern "C" {
     }
     else if (main->setting.state.status != F_child) {
       if (F_status_is_error_not(main->setting.state.status)) {
-        main->setting.state.status = F_none;
+        main->setting.state.status = F_okay;
 
         fake_print_operation_all_complete(&main->program.message);
       }
@@ -341,7 +341,7 @@ extern "C" {
         fake_print_error_file(&main->program.error, macro_fake_f(f_file_read), path_file, f_file_operation_read_s, fll_error_file_type_file_e);
       }
       else {
-        main->setting.state.status = F_none;
+        main->setting.state.status = F_okay;
       }
     }
     else {
@@ -384,13 +384,13 @@ extern "C" {
 
       main->setting.state.status = f_file_stream_read_block(file, buffer);
 
-    } while (F_status_is_fine(main->setting.state.status) && main->setting.state.status != F_interrupt && main->setting.state.status != F_none_eof);
+    } while (F_status_is_fine(main->setting.state.status) && main->setting.state.status != F_interrupt && main->setting.state.status != F_okay_eof);
 
     if (F_status_is_error(main->setting.state.status)) {
       fake_print_error_file(&main->program.error, macro_fake_f(f_file_stream_read_block), f_string_ascii_minus_s, f_file_operation_read_s, fll_error_file_type_file_e);
     }
     else {
-      main->setting.state.status = F_none;
+      main->setting.state.status = F_okay;
     }
   }
 #endif // _di_fake_pipe_buffer_
@@ -432,7 +432,7 @@ extern "C" {
 
     struct stat directory_stat;
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
 
     // Check only expected operations (fake_operation_clean_e and fake_operation_skeleton_e should not call this function).
     if (data->operation == fake_operation_make_e) {
@@ -458,13 +458,13 @@ extern "C" {
 
         // @fixme these should not be accessing main->program.parameters.arguments directly and should instead use setting flags.
         if (f_path_is_absolute(main->program.parameters.arguments.array[index]) == F_true || f_path_is_relative_current(main->program.parameters.arguments.array[index]) == F_true) {
-          requireds[1] = F_none; // fake_long_data_s
+          requireds[1] = F_okay; // fake_long_data_s
         }
         else {
           main->setting.state.status = f_file_exists(main->program.parameters.arguments.array[index], F_true);
 
           if (F_status_is_error_not(main->setting.state.status) && main->setting.state.status == F_true) {
-            requireds[1] = F_none; // fake_long_data_s
+            requireds[1] = F_okay; // fake_long_data_s
           }
         }
       }
@@ -472,7 +472,7 @@ extern "C" {
 
     for (uint8_t i = 0; i < 6; ++i) {
 
-      if (requireds[i] != F_none && values[i].used) {
+      if (requireds[i] != F_okay && values[i].used) {
         memset(&directory_stat, 0, sizeof(struct stat));
 
         main->setting.state.status = f_file_stat(values[i], F_true, &directory_stat);
@@ -498,7 +498,7 @@ extern "C" {
       }
     } // for
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
   }
 #endif // _di_fake_validate_parameter_paths_
 

@@ -231,7 +231,14 @@ extern "C" {
 
   // Basic.
   #define F_status_okay_s              "F_okay"
+  #define F_status_okay_block_s        "F_okay_block"
+  #define F_status_okay_eoa_s          "F_okay_eoa"
+  #define F_status_okay_eof_s          "F_okay_eof"
+  #define F_status_okay_eol_s          "F_okay_eol"
+  #define F_status_okay_eos_s          "F_okay_eos"
   #define F_status_okay_not_s          "F_okay_not"
+  #define F_status_okay_start_s        "F_okay_start"
+  #define F_status_okay_stop_s         "F_okay_stop"
   #define F_status_abort_s             "F_abort"
   #define F_status_abort_not_s         "F_abort_not"
   #define F_status_absolute_s          "F_absolute"
@@ -550,7 +557,14 @@ extern "C" {
   #define F_status_yes_not_s           "F_yes_not"
 
   #define F_status_okay_s_length              6
+  #define F_status_okay_block_s_length        12
+  #define F_status_okay_eoa_s_length          10
+  #define F_status_okay_eof_s_length          10
+  #define F_status_okay_eol_s_length          10
+  #define F_status_okay_eos_s_length          10
   #define F_status_okay_not_s_length          10
+  #define F_status_okay_start_s_length        12
+  #define F_status_okay_stop_s_length         11
   #define F_status_abort_s_length             7
   #define F_status_abort_not_s_length         11
   #define F_status_absolute_s_length          10
@@ -869,7 +883,14 @@ extern "C" {
   #define F_status_yes_not_s_length           9
 
   extern const f_string_static_t f_status_okay_s;
+  extern const f_string_static_t f_status_okay_block_s;
+  extern const f_string_static_t f_status_okay_eoa_s;
+  extern const f_string_static_t f_status_okay_eof_s;
+  extern const f_string_static_t f_status_okay_eol_s;
+  extern const f_string_static_t f_status_okay_eos_s;
   extern const f_string_static_t f_status_okay_not_s;
+  extern const f_string_static_t f_status_okay_start_s;
+  extern const f_string_static_t f_status_okay_stop_s;
   extern const f_string_static_t f_status_abort_s;
   extern const f_string_static_t f_status_abort_not_s;
   extern const f_string_static_t f_status_absolute_s;
@@ -1447,13 +1468,6 @@ extern "C" {
   #define F_status_complete_not_utf_eos_s   "F_complete_not_utf_eos"
   #define F_status_complete_not_utf_start_s "F_complete_not_utf_start"
   #define F_status_complete_not_utf_stop_s  "F_complete_not_utf_stop"
-  #define F_status_none_block_s             "F_none_block"
-  #define F_status_none_eoa_s               "F_none_eoa"
-  #define F_status_none_eof_s               "F_none_eof"
-  #define F_status_none_eol_s               "F_none_eol"
-  #define F_status_none_eos_s               "F_none_eos"
-  #define F_status_none_start_s             "F_none_start"
-  #define F_status_none_stop_s              "F_none_stop"
   #define F_status_data_s                   "F_data"
   #define F_status_data_not_s               "F_data_not"
   #define F_status_data_not_block_s         "F_data_not_block"
@@ -1478,13 +1492,6 @@ extern "C" {
   #define F_status_complete_not_utf_eos_s_length   22
   #define F_status_complete_not_utf_start_s_length 24
   #define F_status_complete_not_utf_stop_s_length  23
-  #define F_status_none_block_s_length             12
-  #define F_status_none_eoa_s_length               10
-  #define F_status_none_eof_s_length               10
-  #define F_status_none_eol_s_length               10
-  #define F_status_none_eos_s_length               10
-  #define F_status_none_start_s_length             12
-  #define F_status_none_stop_s_length              11
   #define F_status_data_s_length                   6
   #define F_status_data_not_s_length               10
   #define F_status_data_not_block_s_length         16
@@ -1509,13 +1516,6 @@ extern "C" {
   extern const f_string_static_t f_status_complete_not_utf_eos_s;
   extern const f_string_static_t f_status_complete_not_utf_start_s;
   extern const f_string_static_t f_status_complete_not_utf_stop_s;
-  extern const f_string_static_t f_status_none_block_s;
-  extern const f_string_static_t f_status_none_eoa_s;
-  extern const f_string_static_t f_status_none_eof_s;
-  extern const f_string_static_t f_status_none_eol_s;
-  extern const f_string_static_t f_status_none_eos_s;
-  extern const f_string_static_t f_status_none_start_s;
-  extern const f_string_static_t f_status_none_stop_s;
   extern const f_string_static_t f_status_data_s;
   extern const f_string_static_t f_status_data_not_s;
   extern const f_string_static_t f_status_data_not_block_s;
@@ -1987,7 +1987,7 @@ extern "C" {
  *   The processed code name.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_data (with error bit) if there status is unknown.
  *   F_parameter (with error bit) if a parameter is invalid.

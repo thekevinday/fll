@@ -66,7 +66,7 @@ void test__f_file_poll__works(void **state) {
 
     const f_status_t status = f_file_poll(polls, 0);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(poll.fd, fd);
     assert_int_equal(poll.events, total);
     assert_int_equal(poll.revents, revents);

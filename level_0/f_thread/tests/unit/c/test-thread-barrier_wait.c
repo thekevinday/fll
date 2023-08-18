@@ -24,7 +24,7 @@ void test__f_thread_barrier_wait__works(void **state) {
 
     const f_status_t status = f_thread_barrier_wait(&attribute, &result);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 }
 

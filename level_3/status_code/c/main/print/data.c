@@ -12,7 +12,7 @@ extern "C" {
 
     fll_print_format("%ui%r", print->to, code, f_string_eol_s);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_status_code_print_data_code_
 
@@ -24,7 +24,7 @@ extern "C" {
 
     fll_print_format("%[%Q%]%r", print->to, context, value, context, f_string_eol_s);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_status_code_print_data_context_value_
 

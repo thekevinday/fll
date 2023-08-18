@@ -37,7 +37,7 @@ extern "C" {
 
     private_fll_program_parameter_process_empty(context, sets);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fll_program_parameter_process_empty_
 
@@ -66,7 +66,7 @@ extern "C" {
     main->error.verbosity = main->message.verbosity;
     main->warning.verbosity = main->message.verbosity;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fll_program_parameter_process_verbosity_
 
@@ -99,7 +99,7 @@ extern "C" {
     main->error.verbosity = main->message.verbosity;
     main->warning.verbosity = main->message.verbosity;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fll_program_parameter_process_verbosity_standard_
 
@@ -109,7 +109,7 @@ extern "C" {
       if (!arguments || !destination) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
     const f_number_unsigned_t start = destination->used;
 
     for (f_number_unsigned_t i = 0; i < values.used; ++i) {
@@ -124,7 +124,7 @@ extern "C" {
         if (F_status_is_error(status)) break;
 
         if (status == F_data_not) {
-          status = F_none;
+          status = F_okay;
         }
         else {
           ++destination->used;
@@ -135,7 +135,7 @@ extern "C" {
     if (F_status_is_error(status)) return status;
     if (start == destination->used) return F_data_not;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fll_program_parameter_additional_append_
 
@@ -145,7 +145,7 @@ extern "C" {
       if (!arguments || !destination) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
     const f_number_unsigned_t start = destination->used;
 
     for (f_number_unsigned_t i = 0; i < values.used; ++i) {
@@ -159,7 +159,7 @@ extern "C" {
     if (F_status_is_error(status)) return status;
     if (start == destination->used) return F_data_not;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fll_program_parameter_additional_mash_
 
@@ -169,7 +169,7 @@ extern "C" {
       if (!arguments || !destination) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
     const f_number_unsigned_t start = destination->used;
 
     for (f_number_unsigned_t i = 0; i < values.used; ++i) {
@@ -184,7 +184,7 @@ extern "C" {
         if (F_status_is_error(status)) break;
 
         if (status == F_data_not) {
-          status = F_none;
+          status = F_okay;
         }
         else {
           ++destination->used;
@@ -195,7 +195,7 @@ extern "C" {
     if (F_status_is_error(status)) return status;
     if (start == destination->used) return F_data_not;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fll_program_parameter_additional_rip_
 
@@ -205,7 +205,7 @@ extern "C" {
       if (!arguments || !destination) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
     const f_number_unsigned_t start = destination->used;
     f_string_dynamic_t ripped = f_string_dynamic_t_initialize;
 
@@ -229,7 +229,7 @@ extern "C" {
     if (F_status_is_error(status)) return status;
     if (start == destination->used) return F_data_not;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fll_program_parameter_additional_rip_mash_
 
@@ -472,7 +472,7 @@ extern "C" {
     const f_status_t status = f_signal_close(&program->signal);
     if (F_status_is_error(status)) return status;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fll_program_standard_set_down_
 
@@ -517,7 +517,7 @@ extern "C" {
     status = f_signal_mask(SIG_UNBLOCK, &program->signal.set, 0);
     if (F_status_is_error(status)) return status;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fll_program_standard_set_up_
 

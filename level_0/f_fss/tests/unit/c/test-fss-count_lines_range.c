@@ -71,7 +71,7 @@ void test__f_fss_count_lines_range__works(void **state) {
 
     f_fss_count_lines_range(buffers[i], range, &line, &state_data);
 
-    assert_int_equal(state_data.status, F_none);
+    assert_int_equal(state_data.status, F_okay);
     assert_int_equal(line, expect);
   } // for
 }

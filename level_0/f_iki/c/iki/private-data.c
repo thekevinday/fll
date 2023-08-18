@@ -44,7 +44,7 @@ extern "C" {
       } // for
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_iki_datas_append_) || !defined(_di_f_iki_datas_append_all_) || !defined(_di_f_iki_datass_append_all_)
 

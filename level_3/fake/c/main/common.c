@@ -320,7 +320,7 @@ extern "C" {
                 return;
               }
 
-              main->setting.state.status = F_none;
+              main->setting.state.status = F_okay;
             }
           }
           else {
@@ -514,7 +514,7 @@ extern "C" {
         return;
     }
 
-    parameter_state->state->status = F_none;
+    parameter_state->state->status = F_okay;
   }
 #endif // _di_fake_setting_load_parameter_callback_
 

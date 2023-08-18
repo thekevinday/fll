@@ -11,7 +11,7 @@ extern "C" {
     if (!file.stream) return F_stream_not;
     if (!string) return F_data_not;
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     va_list ap;
 
@@ -23,7 +23,7 @@ extern "C" {
 
     if (F_status_is_error(status)) return status;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fl_print_format_
 
@@ -46,7 +46,7 @@ extern "C" {
       return private_fl_print_format_convert(string, file, ap, status);
     }
 
-    f_status_t status_local = F_none;
+    f_status_t status_local = F_okay;
 
     return private_fl_print_format_convert(string, file, ap, &status_local);
   }
@@ -58,12 +58,12 @@ extern "C" {
     if (!file.stream) return F_stream_not;
     if (!string) return F_data_not;
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     private_fl_print_format_convert(string, file, ap, &status);
     if (F_status_is_error(status)) return status;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fl_print_string_va_
 

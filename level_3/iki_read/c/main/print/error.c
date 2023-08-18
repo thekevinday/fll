@@ -12,7 +12,7 @@ extern "C" {
 
     fll_error_print(print, F_status_set_fine(((iki_read_main_t *) print->custom)->setting.state.status), function, fll_error_file_flag_fallback_e);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_iki_read_print_error_
 
@@ -26,7 +26,7 @@ extern "C" {
 
     fll_error_file_print(print, F_status_set_fine(main->setting.state.status), function, fll_error_file_flag_fallback_e, name, operation, type);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_iki_read_print_error_file_
 

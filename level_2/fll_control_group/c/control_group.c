@@ -7,7 +7,7 @@ extern "C" {
 #ifndef _di_fll_control_group_prepare_
   f_status_t fll_control_group_prepare(const f_control_group_t control_group) {
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     if (control_group.path.used) {
       status = f_directory_exists(control_group.path);
@@ -39,7 +39,7 @@ extern "C" {
 
     if (F_status_is_error(status)) return status;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fll_control_group_prepare_
 

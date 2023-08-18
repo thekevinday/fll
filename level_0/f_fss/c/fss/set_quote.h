@@ -103,7 +103,7 @@ extern "C" {
  *   The quote set to delete.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -128,7 +128,7 @@ extern "C" {
  *   The quote set to destroy.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -162,7 +162,7 @@ extern "C" {
  *   Must not be NULL.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -196,7 +196,7 @@ extern "C" {
  *   Must not be NULL.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -230,7 +230,7 @@ extern "C" {
  *   Must not be NULL.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -264,7 +264,7 @@ extern "C" {
  *   Must not be NULL.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *

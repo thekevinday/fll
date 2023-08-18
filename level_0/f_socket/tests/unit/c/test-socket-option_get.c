@@ -100,7 +100,7 @@ void test__f_socket_option_get__works(void **state) {
 
     const f_status_t status = f_socket_option_get(&socket, 0, 0, (void *) &value, &length);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 }
 

@@ -77,7 +77,7 @@ void test__f_directory_create_at__works(void **state) {
 
     const f_status_t status = f_directory_create_at(0, path, 0);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 }
 

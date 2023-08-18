@@ -27,7 +27,7 @@ extern "C" {
         &main->setting.state
       );
 
-      if (F_status_set_fine(main->setting.state.status) == F_none_eol) {
+      if (F_status_set_fine(main->setting.state.status) == F_okay_eol) {
         main->setting.state.status = F_status_set_error(F_support_not);
 
         fss_write_print_error_unsupported_eol(&main->program.error);
@@ -89,7 +89,7 @@ extern "C" {
         &main->setting.state
       );
 
-      if (F_status_set_fine(main->setting.state.status) == F_none_eol) {
+      if (F_status_set_fine(main->setting.state.status) == F_okay_eol) {
         main->setting.state.status = F_status_set_error(F_support_not);
 
         fss_write_print_error_unsupported_eol(&main->program.error);

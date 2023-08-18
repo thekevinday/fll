@@ -108,7 +108,7 @@ extern "C" {
 
     if (!setting) return F_status_set_error(F_parameter);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_firewall_setting_delete_
 
@@ -201,7 +201,7 @@ extern "C" {
 
     firewall_setting_delete(&main->setting);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_firewall_setting_unload_
 

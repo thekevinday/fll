@@ -104,7 +104,7 @@ extern "C" {
   #define fake_setting_t_initialize \
     { \
       0, \
-      F_none, \
+      F_okay, \
       f_state_t_initialize, \
       f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \

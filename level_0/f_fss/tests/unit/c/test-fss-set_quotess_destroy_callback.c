@@ -26,7 +26,7 @@ void test__f_fss_set_quotess_destroy_callback__fails(void **state) {
 
   {
     will_return(__wrap_f_string_ranges_adjust, false);
-    will_return(__wrap_f_string_ranges_adjust, F_none);
+    will_return(__wrap_f_string_ranges_adjust, F_okay);
 
     will_return(__wrap_f_string_rangess_adjust, true);
     will_return(__wrap_f_string_rangess_adjust, F_status_set_error(F_failure));
@@ -38,10 +38,10 @@ void test__f_fss_set_quotess_destroy_callback__fails(void **state) {
 
   {
     will_return(__wrap_f_string_ranges_adjust, false);
-    will_return(__wrap_f_string_ranges_adjust, F_none);
+    will_return(__wrap_f_string_ranges_adjust, F_okay);
 
     will_return(__wrap_f_string_rangess_adjust, false);
-    will_return(__wrap_f_string_rangess_adjust, F_none);
+    will_return(__wrap_f_string_rangess_adjust, F_okay);
 
     will_return(__wrap_f_memory_array_adjust, true);
     will_return(__wrap_f_memory_array_adjust, F_status_set_error(F_failure));
@@ -53,13 +53,13 @@ void test__f_fss_set_quotess_destroy_callback__fails(void **state) {
 
   {
     will_return(__wrap_f_string_ranges_adjust, false);
-    will_return(__wrap_f_string_ranges_adjust, F_none);
+    will_return(__wrap_f_string_ranges_adjust, F_okay);
 
     will_return(__wrap_f_string_rangess_adjust, false);
-    will_return(__wrap_f_string_rangess_adjust, F_none);
+    will_return(__wrap_f_string_rangess_adjust, F_okay);
 
     will_return(__wrap_f_memory_array_adjust, false);
-    will_return(__wrap_f_memory_array_adjust, F_none);
+    will_return(__wrap_f_memory_array_adjust, F_okay);
 
     will_return(__wrap_f_memory_arrays_adjust, true);
     will_return(__wrap_f_memory_arrays_adjust, F_status_set_error(F_failure));
@@ -81,28 +81,28 @@ void test__f_fss_set_quotess_destroy_callback__works(void **state) {
 
   {
     f_status_t status = f_memory_array_adjust(length, sizeof(f_fss_set_quotes_t), (void **) &datass.array, &datass.used, &datass.size);
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
 
     status = f_memory_array_adjust(1, sizeof(f_fss_set_quote_t), (void **) &datass.array[0].array, &datass.array[0].used, &datass.array[0].size);
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
 
     status = f_string_ranges_adjust(1, &datass.array[0].array[0].objects);
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
 
     status = f_string_rangess_adjust(1, &datass.array[0].array[0].contents);
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
 
     status = f_memory_array_adjust(1, sizeof(uint8_t), (void **) &datass.array[0].array[0].objects_quote.array, &datass.array[0].array[0].objects_quote.used, &datass.array[0].array[0].objects_quote.size);
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
 
     status = f_memory_arrays_adjust(1, sizeof(f_uint8s_t), (void **) &datass.array[0].array[0].contents_quote.array, &datass.array[0].array[0].contents_quote.used, &datass.array[0].array[0].contents_quote.size, &f_uint8ss_destroy_callback);
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 
   {
     const f_status_t status = f_fss_set_quotess_destroy_callback(0, length, (void *) datass.array);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(datass.array[0].size, 0);
   }
 

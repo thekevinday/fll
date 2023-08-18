@@ -40,7 +40,7 @@ extern "C" {
 
     f_string_dynamics_resize(0, &setting->actions);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_control_setting_delete_
 

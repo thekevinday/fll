@@ -76,7 +76,7 @@ void test__f_console_environment_process__works(void **state) {
   {
     const f_status_t status = f_console_environment_process(arguments, &maps);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(maps.used, 5);
     assert_int_equal(maps.array[0].name.used, 1);
     assert_int_equal(maps.array[0].value.used, 1);

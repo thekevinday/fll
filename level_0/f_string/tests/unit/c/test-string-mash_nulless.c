@@ -16,7 +16,7 @@ void test__f_string_mash_nulless__works(void **state) {
   {
     const f_status_t status = f_string_mash_nulless(glue.string, glue.used, source.string, source.used, &destination);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(destination.used, expected1.used);
 
     assert_string_equal(destination.string, expected1.string);
@@ -26,7 +26,7 @@ void test__f_string_mash_nulless__works(void **state) {
   {
     const f_status_t status = f_string_mash_nulless(glue.string, glue.used, source.string, source.used, &destination);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(destination.used, expected2.used);
 
     assert_string_equal(destination.string, expected2.string);

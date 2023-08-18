@@ -23,7 +23,7 @@ extern "C" {
  *   All make related setting data, including data from the fakefile and the build settings file.
  *
  *   This alters data_make.main->setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *
  *     F_interrupt (with error bit) on interrupt signal received.
  *
@@ -133,7 +133,7 @@ extern "C" {
  *   All make related setting data, including data from the fakefile and the build settings file.
  *
  *   This alters date_make.setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *     F_data_not if source.used is 0.
  *
  *     Errors (with error bit) from: f_string_dynamic_increase_by().
@@ -160,7 +160,7 @@ extern "C" {
  *   All make related setting data, including data from the fakefile and the build settings file.
  *
  *   This alters date_make.setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *     F_data_not if both program.used is 0 and arguments.used is 0.
  *
  *     F_interrupt (with error bit) on interrupt signal received.
@@ -200,7 +200,7 @@ extern "C" {
  *   All make related setting data, including data from the fakefile and the build settings file.
  *
  *   This alters date_make.setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *     F_failure on identifying the return code as an error code and fail mode is not set to fake_make_operation_fail_exit_e.
  *
  *     F_failure (with error bit) on identifying the return code as an error code and fail mode is set to fake_make_operation_fail_exit_e.

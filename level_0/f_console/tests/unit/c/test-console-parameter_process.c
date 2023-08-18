@@ -267,7 +267,7 @@ void test__f_console_parameter_process__no_arguments(void **state) {
       f_state_t state = f_state_t_initialize;
       f_console_parameter_process(arguments, &parameters, &state, 0);
 
-      assert_int_equal(state.status, argc ? F_none : F_data_not);
+      assert_int_equal(state.status, argc ? F_okay : F_data_not);
 
       assert_int_equal(parameter[0].result, f_console_result_none_e);
       assert_int_equal(parameter[0].locations.used, 0);
@@ -510,7 +510,7 @@ void test__f_console_parameter_process__only_remaining(void **state) {
     f_state_t state = f_state_t_initialize;
     f_console_parameter_process(arguments, &parameters, &state, 0);
 
-    assert_int_equal(state.status, F_none);
+    assert_int_equal(state.status, F_okay);
 
     assert_int_equal(parameter[0].result, f_console_result_none_e);
     assert_int_equal(parameter[0].locations.used, 0);
@@ -691,7 +691,7 @@ void test__f_console_parameter_process__works(void **state) {
     f_state_t state = f_state_t_initialize;
     f_console_parameter_process(arguments, &parameters, &state, 0);
 
-    assert_int_equal(state.status, F_none);
+    assert_int_equal(state.status, F_okay);
 
     assert_int_equal(parameter[0].result & f_console_result_value_e, f_console_result_value_e);
     assert_int_equal(parameter[0].locations.used, 1);

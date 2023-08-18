@@ -53,7 +53,7 @@ extern "C" {
  *   - timestamp: This is updated to reflect the last changed timestamp.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_file_found_not if required is FALSE and the file is not found.
  *
  *   Errors (with error bit) from: f_file_stat().
@@ -79,7 +79,7 @@ extern "C" {
  *   The file path to the pid file to create.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_access_denied if pid file is not created due to access denied errors.
  *   F_directory_not if pid file is not created due to a parent directory is unavailable or invalid.
  *
@@ -106,7 +106,7 @@ extern "C" {
  *   The file path to the pid file to create.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_number_not (with error bit) if the number from the pid file doesn't match the expected pid.
  *
@@ -128,7 +128,7 @@ extern "C" {
  *   The PID to be read.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   Errors (with error bit) from: f_file_stream_close().
  *   Errors (with error bit) from: f_file_stream_open().
@@ -152,7 +152,7 @@ extern "C" {
  *   The determined user ID.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_exist_not (with error bit) if failed to match the name to an ID.
  *   F_number_too_large (with error bit) if the given ID is too large.
  *
@@ -181,7 +181,7 @@ extern "C" {
  *   The determined group ID.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_exist_not (with error bit) if failed to match the name to an ID.
  *   F_number_too_large (with error bit) if the given ID is too large.
  *
@@ -217,7 +217,7 @@ extern "C" {
  *   The destination will be completely replaced on success.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   Errors (with error bit) from: fl_path_canonical().
  *
@@ -243,7 +243,7 @@ extern "C" {
  *   If FALSE, then this operate as an exit.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   Errors from controller_file_pid_create() are not returned, unless it is a memory error.
  *
@@ -269,7 +269,7 @@ extern "C" {
  *   If FALSE, then this operate as an exit.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success but socket file not created.
  *
  *   Errors (with error bit) from: f_file_mode_set().
@@ -382,7 +382,7 @@ extern "C" {
  * @return
  *   F_true on valid.
  *   F_false on invalid.
- *   F_none if there is no string to validate (used = 0).
+ *   F_okay if there is no string to validate (used = 0).
  *
  *   Errors (with error bit) from: f_utf_is_alphabetic().
  *   Errors (with error bit) from: f_utf_is_alphabetic_digit().
@@ -403,7 +403,7 @@ extern "C" {
  * @return
  *   F_true on valid.
  *   F_false on invalid.
- *   F_none if there is no string to validate (used = 0).
+ *   F_okay if there is no string to validate (used = 0).
  *
  *   Errors (with error bit) from: f_utf_is_graph().
  *

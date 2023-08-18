@@ -15,7 +15,7 @@ void test__f_utf_seek_line_to__after_newline(void **state) {
 
     const f_status_t status = f_utf_string_seek_line_to(source.string, to.string[0], &range);
 
-    assert_int_equal(status, F_none_eol);
+    assert_int_equal(status, F_okay_eol);
 
     assert_int_equal(range.start, 2);
     assert_int_equal(range.stop, source.used - 1);
@@ -32,7 +32,7 @@ void test__f_utf_seek_line_to__before_newline(void **state) {
 
     const f_status_t status = f_utf_string_seek_line_to(source.string, to.string[0], &range);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
 
     assert_int_equal(range.start, 2);
     assert_int_equal(range.stop, source.used - 1);
@@ -63,7 +63,7 @@ void test__f_utf_seek_line_to__returns_none_stop(void **state) {
 
     const f_status_t status = f_utf_string_seek_line_to(source.string, to.string[0], &range);
 
-    assert_int_equal(status, F_none_stop);
+    assert_int_equal(status, F_okay_stop);
 
     assert_int_equal(range.start, source.used);
     assert_int_equal(range.stop, source.used - 1);

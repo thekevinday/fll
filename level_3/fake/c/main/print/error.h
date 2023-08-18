@@ -31,7 +31,7 @@ extern "C" {
  *   The function name.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.
@@ -57,7 +57,7 @@ extern "C" {
  *   The index of the argument that is an empty string.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.
@@ -134,7 +134,7 @@ extern "C" {
  *   Likely should have a space added at the start of the string.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if print is NULL.
@@ -191,7 +191,7 @@ extern "C" {
  *   The name of the file or directory.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.
@@ -215,7 +215,7 @@ extern "C" {
  *   The identifier of the operation that failed.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.
@@ -241,7 +241,7 @@ extern "C" {
  *   The name of the script that failed.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.
@@ -294,7 +294,7 @@ extern "C" {
  *   A valid file type code from the fll_error_file_type enum.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.
@@ -318,7 +318,7 @@ extern "C" {
  *   The name of the file or directory.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.
@@ -342,7 +342,7 @@ extern "C" {
  *   The name of the not found program.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.
@@ -372,7 +372,7 @@ extern "C" {
  *   A valid file type code from the fll_error_file_type enum.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.
@@ -440,7 +440,7 @@ extern "C" {
  *   Set to F_true to print the fallback error message for unknown errors.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.
@@ -466,7 +466,7 @@ extern "C" {
  *   A string representing the group (either as a name or as a group ID).
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.
@@ -490,7 +490,7 @@ extern "C" {
  *   A string representing the invalid mode.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.
@@ -514,7 +514,7 @@ extern "C" {
  *   A string representing the number that is too large.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.
@@ -540,7 +540,7 @@ extern "C" {
  *   The range within the buffer representing the operation name within the section.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.
@@ -564,7 +564,7 @@ extern "C" {
  *   The argument that is unknown by the link operation.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.
@@ -588,7 +588,7 @@ extern "C" {
  *   The argument representing the point file.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.
@@ -612,7 +612,7 @@ extern "C" {
  *   The argument representing the point file.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.
@@ -640,7 +640,7 @@ extern "C" {
  *   The path that is outside of the project path.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.
@@ -668,7 +668,7 @@ extern "C" {
  *   The path to the directory.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.
@@ -699,7 +699,7 @@ extern "C" {
  *   The max stack depth.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.
@@ -727,7 +727,7 @@ extern "C" {
  *   The range within the buffer representing the operation name within the section.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.
@@ -757,7 +757,7 @@ extern "C" {
  *   The value that is invalid.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.
@@ -785,7 +785,7 @@ extern "C" {
  *   The value that is not found.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.
@@ -813,7 +813,7 @@ extern "C" {
  *   The value that is invalid.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.
@@ -841,7 +841,7 @@ extern "C" {
  *   The name of the second operation that cannot be used.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.
@@ -861,7 +861,7 @@ extern "C" {
  *   The parameter name.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.
@@ -879,7 +879,7 @@ extern "C" {
  *   All make related setting data, including data from the fakefile and the build settings file.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.
@@ -897,7 +897,7 @@ extern "C" {
  *   All make related setting data, including data from the fakefile and the build settings file.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.
@@ -921,7 +921,7 @@ extern "C" {
  *   A string representing the user (either as a name or as a user ID).
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.

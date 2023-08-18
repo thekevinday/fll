@@ -32,7 +32,7 @@ extern "C" {
     status = f_thread_condition_create(0, &lock->alert_condition);
     if (F_status_is_error(status)) return status;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_controller_lock_create_
 
@@ -41,7 +41,7 @@ extern "C" {
 
     struct timespec time;
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     for (;;) {
 
@@ -82,7 +82,7 @@ extern "C" {
 
     struct timespec time;
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     for (;;) {
 

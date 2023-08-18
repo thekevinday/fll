@@ -29,7 +29,7 @@ extern "C" {
  *   The main program data and settings.
  *
  *   This alters main.setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *
  *     Errors (with error bit) from: f_console_parameter_process().
  *     Errors (with error bit) from: fll_program_parameter_process_context().

@@ -397,7 +397,7 @@ extern "C" {
         return F_status_set_error(F_support_not);
       }
 
-      return F_none;
+      return F_okay;
     }
   #endif // _di_f_capability_ambient_get_
 
@@ -414,7 +414,7 @@ extern "C" {
         return F_status_set_error(F_failure);
       }
 
-      return F_none;
+      return F_okay;
     }
   #endif // _di_f_capability_ambient_reset_
 
@@ -429,7 +429,7 @@ extern "C" {
         return F_status_set_error(F_failure);
       }
 
-      return F_none;
+      return F_okay;
     }
   #endif // _di_f_capability_ambient_set_
 
@@ -451,7 +451,7 @@ extern "C" {
         return F_status_set_error(F_failure);
       }
 
-      return F_none;
+      return F_okay;
     }
   #endif // _di_f_capability_clear_
 
@@ -467,7 +467,7 @@ extern "C" {
         return F_status_set_error(F_failure);
       }
 
-      return F_none;
+      return F_okay;
     }
   #endif // _di_f_capability_clear_flag_
 
@@ -507,7 +507,7 @@ extern "C" {
       *destination = cap_dup(source);
 
       if (*destination) {
-        return F_none;
+        return F_okay;
       }
 
       if (errno == EINVAL) return F_status_set_error(F_parameter);
@@ -535,7 +535,7 @@ extern "C" {
 
       if (size) *size = result;
 
-      return F_none;
+      return F_okay;
     }
   #endif // _di_f_capability_copy_external_
 
@@ -549,7 +549,7 @@ extern "C" {
       *capability = cap_copy_int(external);
 
       if (*capability) {
-        return F_none;
+        return F_okay;
       }
 
       if (errno == EINVAL) return F_status_set_error(F_parameter);
@@ -575,7 +575,7 @@ extern "C" {
 
       *capability = 0;
 
-      return F_none;
+      return F_okay;
     }
   #endif // _di_f_capability_delete_
 
@@ -588,7 +588,7 @@ extern "C" {
       *capability = cap_get_fd(descriptor);
 
       if (*capability) {
-        return F_none;
+        return F_okay;
       }
 
       if (errno == EACCES) return F_status_set_error(F_access_denied);
@@ -622,7 +622,7 @@ extern "C" {
         return F_status_set_error(F_failure);
       }
 
-      return F_none;
+      return F_okay;
     }
   #endif // _di_f_capability_file_descriptor_set_
 
@@ -635,7 +635,7 @@ extern "C" {
       *capability = cap_get_file(path.string);
 
       if (*capability) {
-        return F_none;
+        return F_okay;
       }
 
       if (errno == EACCES) return F_status_set_error(F_access_denied);
@@ -669,7 +669,7 @@ extern "C" {
         return F_status_set_error(F_failure);
       }
 
-      return F_none;
+      return F_okay;
     }
   #endif // _di_f_capability_file_set_
 
@@ -685,7 +685,7 @@ extern "C" {
         return F_status_set_error(F_failure);
       }
 
-      return F_none;
+      return F_okay;
     }
   #endif // _di_f_capability_flag_get_
 
@@ -701,7 +701,7 @@ extern "C" {
         return F_status_set_error(F_failure);
       }
 
-      return F_none;
+      return F_okay;
     }
   #endif // _di_f_capability_flag_set_
 
@@ -718,7 +718,7 @@ extern "C" {
         return F_status_set_error(F_failure);
       }
 
-      return F_none;
+      return F_okay;
     }
   #endif // _di_f_capability_from_name_
 
@@ -731,7 +731,7 @@ extern "C" {
       *capability = cap_from_text(text.string);
 
       if (*capability) {
-        return F_none;
+        return F_okay;
       }
 
       if (errno == EINVAL) return F_status_set_error(F_parameter);
@@ -756,7 +756,7 @@ extern "C" {
         return F_status_set_error(F_failure);
       }
 
-      return F_none;
+      return F_okay;
     }
   #endif // _di_f_capability_groups_set_
 
@@ -773,7 +773,7 @@ extern "C" {
       *capability = cap_init();
 
       if (*capability) {
-        return F_none;
+        return F_okay;
       }
 
       if (errno == EINVAL) return F_status_set_error(F_parameter);
@@ -795,7 +795,7 @@ extern "C" {
 
       *mode = cap_get_mode();
 
-      return F_none;
+      return F_okay;
     }
   #endif // _di_f_capability_mode_get_
 
@@ -808,7 +808,7 @@ extern "C" {
 
       *name = cap_mode_name(mode);
 
-      return F_none;
+      return F_okay;
     }
   #endif // _di_f_capability_mode_get_name_
 
@@ -823,7 +823,7 @@ extern "C" {
         return F_status_set_error(F_failure);
       }
 
-      return F_none;
+      return F_okay;
     }
   #endif // _di_f_capability_mode_set_
 
@@ -835,7 +835,7 @@ extern "C" {
 
       *id_user = cap_get_nsowner(capability);
 
-      return F_none;
+      return F_okay;
     }
   #endif // _di_f_capability_owner_get_
 
@@ -855,7 +855,7 @@ extern "C" {
         return F_status_set_error(F_failure);
       }
 
-      return F_none;
+      return F_okay;
     }
   #endif // _di_f_capability_owner_set_
 
@@ -879,7 +879,7 @@ extern "C" {
         return F_status_set_error(F_failure);
       }
 
-      return F_none;
+      return F_okay;
     }
   #endif // _di_f_capability_process_bound_drop_
 
@@ -895,7 +895,7 @@ extern "C" {
         return F_status_set_error(F_known_not);
       }
 
-      return F_none;
+      return F_okay;
     }
   #endif // _di_f_capability_process_bound_get_
 
@@ -908,7 +908,7 @@ extern "C" {
       *capability = cap_get_proc();
 
       if (*capability) {
-        return F_none;
+        return F_okay;
       }
 
       if (errno == EINVAL) return F_status_set_error(F_parameter);
@@ -927,7 +927,7 @@ extern "C" {
       *capability = cap_get_pid(id);
 
       if (*capability) {
-        return F_none;
+        return F_okay;
       }
 
       return F_status_set_error(F_failure);
@@ -945,7 +945,7 @@ extern "C" {
         return F_status_set_error(F_failure);
       }
 
-      return F_none;
+      return F_okay;
     }
   #endif // _di_f_capability_process_set_
 
@@ -961,7 +961,7 @@ extern "C" {
 
       *bits = cap_get_secbits();
 
-      return F_none;
+      return F_okay;
     }
   #endif // _di_f_capability_security_bits_get_
 
@@ -976,7 +976,7 @@ extern "C" {
         return F_status_set_error(F_failure);
       }
 
-      return F_none;
+      return F_okay;
     }
   #endif // _di_f_capability_security_bits_set_
 
@@ -1000,7 +1000,7 @@ extern "C" {
         return F_status_set_error(F_failure);
       }
 
-      return F_none;
+      return F_okay;
     }
   #endif // _di_f_capability_size_
 
@@ -1071,7 +1071,7 @@ extern "C" {
 
         cap_free(result);
 
-        return F_none;
+        return F_okay;
       }
 
       if (errno == EINVAL) return F_status_set_error(F_parameter);
@@ -1112,7 +1112,7 @@ extern "C" {
 
         cap_free(result);
 
-        return F_none;
+        return F_okay;
       }
 
       if (errno == EINVAL) return F_status_set_error(F_parameter);
@@ -1137,7 +1137,7 @@ extern "C" {
         return F_status_set_error(F_failure);
       }
 
-      return F_none;
+      return F_okay;
     }
   #endif // _di_f_capability_user_set_
 

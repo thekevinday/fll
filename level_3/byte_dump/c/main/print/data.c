@@ -640,7 +640,7 @@ extern "C" {
 
     fl_print_format(" %[%r%]%r", print->to, print->set->notable, byte_dump_character_wall_s, print->set->notable, f_string_eol_s);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_byte_dump_print_text_
 
@@ -682,7 +682,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_byte_dump_print_file_header_
 

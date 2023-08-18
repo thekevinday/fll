@@ -90,7 +90,7 @@ f_status_t test_memory_array_callback(const f_number_unsigned_t start, const f_n
 
   {
     test_memory_array_t * const array = (test_memory_array_t *) void_array;
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     for (f_number_unsigned_t i = start; i < size; ++i) {
 
@@ -99,7 +99,7 @@ f_status_t test_memory_array_callback(const f_number_unsigned_t start, const f_n
     } // for
   }
 
-  return F_none;
+  return F_okay;
 }
 
 #ifdef __cplusplus

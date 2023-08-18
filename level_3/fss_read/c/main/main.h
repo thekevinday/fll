@@ -43,7 +43,7 @@ extern int main(const int argc, const f_string_t *argv, const f_string_t *envp);
  *   This does not alter main.setting.state.status.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  */
 #ifndef _di_fss_read_main_process_help_
@@ -65,7 +65,7 @@ extern int main(const int argc, const f_string_t *argv, const f_string_t *envp);
  *   This alters main.callback.process_help, main.callback.process_normal, and main.callback.process_pipe.
  *
  *   This alters main.setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *     F_data_not on success but nothing was provided to operate with.
 
  *     F_parameter (with error bit) on parameter related error.

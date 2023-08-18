@@ -79,7 +79,7 @@ void test__f_fss_skip_past_delimit__works(void **state) {
 
     f_fss_skip_past_delimit(tests[i], &range, &state_data);
 
-    assert_int_equal(state_data.status, F_none);
+    assert_int_equal(state_data.status, F_okay);
     assert_int_equal(range.start, expects[i]);
   } // for
 }

@@ -22,7 +22,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_make_print_warning_cannot_change_back_
 
@@ -34,7 +34,7 @@ extern "C" {
 
     fake_print_context_simple_variable(print, "The environment name", name, "is already added, replacing previous value");
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_make_print_warning_environment_name_already_added_
 
@@ -46,7 +46,7 @@ extern "C" {
 
     fake_print_context_simple_variable(print, "The environment name", name, "is invalid, ignoring");
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_make_print_warning_environment_name_invalid_
 
@@ -58,7 +58,7 @@ extern "C" {
 
     fake_print_context_simple_variable(print, "The fakefile", fakefile, "is empty");
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_make_print_warning_fakefile_empty_
 
@@ -70,7 +70,7 @@ extern "C" {
 
     fake_print_context_simple_variable(print, "The file", file, "cannot be found");
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_make_print_warning_file_not_found_
 
@@ -92,7 +92,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_make_print_warning_setting_content_empty_
 
@@ -116,7 +116,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_make_print_warning_setting_content_invalid_
 
@@ -128,7 +128,7 @@ extern "C" {
 
     fake_print_context_wrapped_variables(print, "The fakefile ", fakefile, " may only have a single content for the object ", name, ", only using the first");
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_make_print_warning_setting_content_multiple_
 
@@ -140,7 +140,7 @@ extern "C" {
 
     fake_print_context_wrapped_variables(print, "The object ", name, " in the fakefile ", fakefile, " may only be specified once, only using the first");
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_make_print_warning_setting_object_multiple_
 

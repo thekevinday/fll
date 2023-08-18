@@ -54,7 +54,7 @@ extern "C" {
 #ifndef _di_f_status_t_
   typedef uint16_t f_status_t;
 
-  #define f_status_t_initialize F_none
+  #define f_status_t_initialize F_okay
 #endif // _di_f_status_t_
 
 /**
@@ -124,7 +124,7 @@ extern "C" {
   #define f_state_t_initialize { \
     F_memory_default_allocation_large_d, \
     F_memory_default_allocation_small_d, \
-    F_none, \
+    F_okay, \
     0, \
     0, \
     0, \
@@ -150,7 +150,7 @@ extern "C" {
   #define macro_f_state_t_clear(state) \
     state.step_large = 0; \
     state.step_small = 0; \
-    state.status = F_none; \
+    state.status = F_okay; \
     state.flag = 0; \
     state.code = 0; \
     state.handle = 0; \

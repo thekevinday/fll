@@ -33,7 +33,7 @@ extern "C" {
 
     {
       f_fss_item_t * const array = (f_fss_item_t *) void_array;
-      f_status_t status = F_none;
+      f_status_t status = F_okay;
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
 
@@ -42,7 +42,7 @@ extern "C" {
       } // for
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_fss_items_delete_callback_
 
@@ -51,7 +51,7 @@ extern "C" {
 
     {
       f_fss_item_t * const array = (f_fss_item_t *) void_array;
-      f_status_t status = F_none;
+      f_status_t status = F_okay;
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
 
@@ -64,7 +64,7 @@ extern "C" {
       } // for
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_fss_items_destroy_callback_
 
@@ -73,7 +73,7 @@ extern "C" {
 
     {
       f_fss_items_t * const array = (f_fss_items_t *) void_array;
-      f_status_t status = F_none;
+      f_status_t status = F_okay;
       f_number_unsigned_t j = 0;
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
@@ -91,7 +91,7 @@ extern "C" {
       } // for
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_fss_itemss_delete_callback_
 
@@ -100,7 +100,7 @@ extern "C" {
 
     {
       f_fss_items_t * const array = (f_fss_items_t *) void_array;
-      f_status_t status = F_none;
+      f_status_t status = F_okay;
       f_number_unsigned_t j = 0;
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
@@ -122,7 +122,7 @@ extern "C" {
       } // for
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_fss_itemss_destroy_callback_
 

@@ -243,7 +243,7 @@ void test__f_file_select_signal__works(void **state) {
 
     const f_status_t status = f_file_select_signal(1, &read, &write, &except, &timeout, &signal);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 
   {
@@ -252,7 +252,7 @@ void test__f_file_select_signal__works(void **state) {
 
     const f_status_t status = f_file_select_signal(1, &read, &write, &except, &timeout, 0);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 
   {
@@ -261,7 +261,7 @@ void test__f_file_select_signal__works(void **state) {
 
     const f_status_t status = f_file_select_signal(1, &read, &write, &except, 0, &signal);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 
   {
@@ -270,7 +270,7 @@ void test__f_file_select_signal__works(void **state) {
 
     const f_status_t status = f_file_select_signal(1, &read, &write, 0, &timeout, &signal);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 
   {
@@ -279,7 +279,7 @@ void test__f_file_select_signal__works(void **state) {
 
     const f_status_t status = f_file_select_signal(1, &read, 0, &except, &timeout, &signal);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 
   {
@@ -288,7 +288,7 @@ void test__f_file_select_signal__works(void **state) {
 
     const f_status_t status = f_file_select_signal(1, 0, &write, &except, &timeout, &signal);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 
   {
@@ -297,7 +297,7 @@ void test__f_file_select_signal__works(void **state) {
 
     const f_status_t status = f_file_select_signal(1, &read, 0, 0, &timeout, &signal);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 
   {
@@ -306,7 +306,7 @@ void test__f_file_select_signal__works(void **state) {
 
     const f_status_t status = f_file_select_signal(1, &read, 0, &except, 0, &signal);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 
   {
@@ -315,7 +315,7 @@ void test__f_file_select_signal__works(void **state) {
 
     const f_status_t status = f_file_select_signal(1, &read, 0, &except, &timeout, 0);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 
   {
@@ -324,7 +324,7 @@ void test__f_file_select_signal__works(void **state) {
 
     const f_status_t status = f_file_select_signal(1, 0, &write, 0, &timeout, &signal);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 
   {
@@ -333,7 +333,7 @@ void test__f_file_select_signal__works(void **state) {
 
     const f_status_t status = f_file_select_signal(1, 0, &write, &except, 0, &signal);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 
   {
@@ -342,7 +342,7 @@ void test__f_file_select_signal__works(void **state) {
 
     const f_status_t status = f_file_select_signal(1, 0, &write, &except, &timeout, 0);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 
   {
@@ -351,7 +351,7 @@ void test__f_file_select_signal__works(void **state) {
 
     const f_status_t status = f_file_select_signal(1, 0, 0, &except, &timeout, &signal);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 
   {
@@ -360,7 +360,7 @@ void test__f_file_select_signal__works(void **state) {
 
     const f_status_t status = f_file_select_signal(1, 0, &read, &except, 0, &signal);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 
   {
@@ -369,7 +369,7 @@ void test__f_file_select_signal__works(void **state) {
 
     const f_status_t status = f_file_select_signal(1, 0, &read, &except, &timeout, 0);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 
   {
@@ -378,7 +378,7 @@ void test__f_file_select_signal__works(void **state) {
 
     const f_status_t status = f_file_select_signal(1, &read, &write, 0, 0, &signal);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 
   {
@@ -387,7 +387,7 @@ void test__f_file_select_signal__works(void **state) {
 
     const f_status_t status = f_file_select_signal(1, &read, &write, 0, &timeout, 0);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 
   {
@@ -396,7 +396,7 @@ void test__f_file_select_signal__works(void **state) {
 
     const f_status_t status = f_file_select_signal(1, &read, 0, &except, 0, &signal);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 
   {
@@ -405,7 +405,7 @@ void test__f_file_select_signal__works(void **state) {
 
     const f_status_t status = f_file_select_signal(1, &read, 0, &except, &timeout, 0);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 
   {
@@ -414,7 +414,7 @@ void test__f_file_select_signal__works(void **state) {
 
     const f_status_t status = f_file_select_signal(1, 0, &write, &except, 0, &signal);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 
   {
@@ -423,7 +423,7 @@ void test__f_file_select_signal__works(void **state) {
 
     const f_status_t status = f_file_select_signal(1, 0, &write, &except, &timeout, 0);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 
   {
@@ -432,7 +432,7 @@ void test__f_file_select_signal__works(void **state) {
 
     const f_status_t status = f_file_select_signal(1, &read, 0, 0, 0, &signal);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 
   {
@@ -441,7 +441,7 @@ void test__f_file_select_signal__works(void **state) {
 
     const f_status_t status = f_file_select_signal(1, 0, &write, 0, 0, &signal);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 
   {
@@ -450,7 +450,7 @@ void test__f_file_select_signal__works(void **state) {
 
     const f_status_t status = f_file_select_signal(1, 0, 0, &except, 0, &signal);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 
   {
@@ -459,7 +459,7 @@ void test__f_file_select_signal__works(void **state) {
 
     const f_status_t status = f_file_select_signal(1, 0, 0, 0, &timeout, &signal);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 
   {
@@ -468,7 +468,7 @@ void test__f_file_select_signal__works(void **state) {
 
     const f_status_t status = f_file_select_signal(1, &read, 0, 0, &timeout, 0);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 
   {
@@ -477,7 +477,7 @@ void test__f_file_select_signal__works(void **state) {
 
     const f_status_t status = f_file_select_signal(1, 0, &write, 0, &timeout, 0);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 
   {
@@ -486,7 +486,7 @@ void test__f_file_select_signal__works(void **state) {
 
     const f_status_t status = f_file_select_signal(1, 0, 0, &except, &timeout, 0);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 
   {
@@ -495,7 +495,7 @@ void test__f_file_select_signal__works(void **state) {
 
     const f_status_t status = f_file_select_signal(1, 0, 0, 0, &timeout, 0);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 
   {
@@ -504,7 +504,7 @@ void test__f_file_select_signal__works(void **state) {
 
     const f_status_t status = f_file_select_signal(1, 0, 0, &except, 0, 0);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 
   {
@@ -513,7 +513,7 @@ void test__f_file_select_signal__works(void **state) {
 
     const f_status_t status = f_file_select_signal(1, 0, &write, 0, 0, 0);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 
   {
@@ -522,7 +522,7 @@ void test__f_file_select_signal__works(void **state) {
 
     const f_status_t status = f_file_select_signal(1, &read, 0, 0, 0, 0);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 }
 

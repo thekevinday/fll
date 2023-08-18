@@ -23,7 +23,7 @@ void test__f_environment_clear__works(void **state) {
 
     const f_status_t status = f_environment_clear();
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 }
 

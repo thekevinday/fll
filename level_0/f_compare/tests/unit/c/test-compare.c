@@ -147,7 +147,7 @@ f_status_t test_convert_dynamic_to_utf(const f_string_static_t dynamic, f_utf_st
     if (F_status_is_error(status)) return status;
   } // for
 
-  return F_none;
+  return F_okay;
 }
 
 #ifdef __cplusplus

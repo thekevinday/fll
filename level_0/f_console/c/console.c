@@ -56,7 +56,7 @@ extern "C" {
       }
     } // for
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_console_environment_process_
 
@@ -105,7 +105,7 @@ extern "C" {
 
     *decision = priority;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_console_parameter_prioritize_left_
 
@@ -144,7 +144,7 @@ extern "C" {
 
     *decision = priority;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_console_parameter_prioritize_right_
 
@@ -230,7 +230,7 @@ extern "C" {
           process.needs.array[i] = process.needs.array[i + 1];
         } // for
 
-        state->status = F_none;
+        state->status = F_okay;
 
         continue;
       }
@@ -254,7 +254,7 @@ extern "C" {
       }
 
       process.found = F_false;
-      state->status = F_none;
+      state->status = F_okay;
 
       if (process.result & f_console_result_short_e) {
 
@@ -293,7 +293,7 @@ extern "C" {
                   break;
                 }
 
-                state->status = F_none;
+                state->status = F_okay;
 
                 if (state->status == F_break) break;
 
@@ -333,7 +333,7 @@ extern "C" {
               break;
             }
 
-            state->status = F_none;
+            state->status = F_okay;
 
             if (state->status == F_break) break;
 
@@ -347,7 +347,7 @@ extern "C" {
 
         if (state->status == F_break || state->status == F_continue) {
           process.depth = 0;
-          state->status = F_none;
+          state->status = F_okay;
 
           if (state->status == F_break) break;
 
@@ -411,7 +411,7 @@ extern "C" {
                     break;
                   }
 
-                  state->status = F_none;
+                  state->status = F_okay;
 
                   if (state->status == F_break) break;
 
@@ -446,7 +446,7 @@ extern "C" {
                 if (F_status_is_error(state->status)) break;
               }
 
-              state->status = F_none;
+              state->status = F_okay;
 
               break;
             } // for
@@ -460,7 +460,7 @@ extern "C" {
                 break;
               }
 
-              state->status = F_none;
+              state->status = F_okay;
 
               if (state->status == F_break) break;
 
@@ -472,7 +472,7 @@ extern "C" {
 
           if (state->status == F_break || state->status == F_continue) {
             process.depth = 0;
-            state->status = F_none;
+            state->status = F_okay;
 
             if (state->status == F_break) break;
 
@@ -513,7 +513,7 @@ extern "C" {
                   break;
                 }
 
-                state->status = F_none;
+                state->status = F_okay;
 
                 if (state->status == F_break) break;
 
@@ -556,7 +556,7 @@ extern "C" {
                   break;
                 }
 
-                state->status = F_none;
+                state->status = F_okay;
 
                 if (state->status == F_break) break;
 
@@ -577,7 +577,7 @@ extern "C" {
 
         if (state->status == F_break || state->status == F_continue) {
           process.depth = 0;
-          state->status = F_none;
+          state->status = F_okay;
 
           if (state->status == F_break) break;
 
@@ -605,7 +605,7 @@ extern "C" {
           if (F_status_is_error(state->status)) break;
         }
 
-        state->status = F_none;
+        state->status = F_okay;
       }
 
       if (F_status_is_error(state->status)) break;
@@ -632,7 +632,7 @@ extern "C" {
           parameters->remaining.array[parameters->remaining.used++] = process.location;
         }
 
-        state->status = F_none;
+        state->status = F_okay;
       }
 
       ++process.location;
@@ -650,7 +650,7 @@ extern "C" {
     }
 
     if (state->status == F_process) {
-      state->status = F_none;
+      state->status = F_okay;
 
       for (; process.location < arguments.argc && arguments.argv[process.location]; ++process.location) {
 
@@ -665,7 +665,7 @@ extern "C" {
       } // for
 
       if (F_status_is_error_not(state->status)) {
-        state->status = process.needs.used ? F_complete_not : F_none;
+        state->status = process.needs.used ? F_complete_not : F_okay;
       }
     }
 

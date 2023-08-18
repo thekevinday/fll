@@ -15,14 +15,14 @@ extern "C" {
       destination->array[destination->used++] = source.array[i];
     } // for
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_sockets_append_all_) || !defined(_di_f_socketss_append_) || !defined(_di_f_socketss_append_all_)
 
 #if !defined(_di_f_socketss_adjust_) || !defined(_di_f_socketss_decimate_by_)
   f_status_t private_f_socketss_adjust(const f_number_unsigned_t length, f_socketss_t * const socketss) {
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     for (f_number_unsigned_t i = length; i < socketss->size; ++i) {
 
@@ -37,7 +37,7 @@ extern "C" {
 #if !defined(_di_f_socketss_decrease_by_) || !defined(_di_f_socketss_increase_) || !defined(_di_f_socketss_increase_by_) || !defined(_di_f_socketss_resize_)
   f_status_t private_f_socketss_resize(const f_number_unsigned_t length, f_socketss_t * const socketss) {
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     for (f_number_unsigned_t i = length; i < socketss->size; ++i) {
 

@@ -23,7 +23,7 @@ extern "C" {
  *   The output structure to print to.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  */
 #ifndef _di_controller_print_help_

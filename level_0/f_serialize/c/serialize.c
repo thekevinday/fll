@@ -13,7 +13,7 @@ extern "C" {
 
     if (!source.used) return F_data_not;
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
     f_number_unsigned_t i = 0;
     f_number_unsigned_t start = 0;
     f_number_unsigned_t total = 0;
@@ -79,7 +79,7 @@ extern "C" {
       ++destination->used;
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_serialize_from_simple_
 
@@ -119,7 +119,7 @@ extern "C" {
 
     if (!source.used) return F_data_not;
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
     f_number_unsigned_t i = 0;
     f_number_unsigned_t start = 0;
     f_number_unsigned_t total = 0;
@@ -193,7 +193,7 @@ extern "C" {
       }
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_serialize_from_simple_range_
 
@@ -217,7 +217,7 @@ extern "C" {
 
     if (!source.used) return F_data_not;
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     if (destination->used) {
       status = f_string_dynamic_append_assure(f_serialize_to_simple_splitter_s, destination);
@@ -227,7 +227,7 @@ extern "C" {
     status = f_string_dynamic_append(source, destination);
     if (F_status_is_error(status)) return status;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_serialize_to_simple_
 

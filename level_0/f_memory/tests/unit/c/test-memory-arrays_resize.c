@@ -83,7 +83,7 @@ void test__f_memory_arrays_resize__works(void **state) {
   {
     const f_status_t status = f_memory_arrays_resize(length, sizeof(test_memory_array_t), (void **) &data.array, &data.used, &data.size, &test_memory_array_callback);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(data.used, 0);
     assert_int_equal(data.size, length);
   }
@@ -94,7 +94,7 @@ void test__f_memory_arrays_resize__works(void **state) {
 
     const f_status_t status = f_memory_array_resize(length_inner, sizeof(int), (void **) &data.array[0].array, &data.array[0].used, &data.array[0].size);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(data.array[0].used, 0);
     assert_int_equal(data.array[0].size, length_inner);
   }
@@ -102,7 +102,7 @@ void test__f_memory_arrays_resize__works(void **state) {
   {
     const f_status_t status = f_memory_arrays_resize(0, sizeof(test_memory_array_t), (void **) &data.array, &data.used, &data.size, &test_memory_array_callback);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(data.used, 0);
     assert_int_equal(data.size, 0);
   }

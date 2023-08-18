@@ -120,7 +120,7 @@ extern "C" {
   #define controller_thread_t_initialize { \
     controller_thread_enabled_e, \
     0, \
-    F_none, \
+    F_okay, \
     f_thread_id_t_initialize, \
     f_thread_id_t_initialize, \
     f_thread_id_t_initialize, \

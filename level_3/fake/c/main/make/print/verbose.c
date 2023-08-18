@@ -12,7 +12,7 @@ extern "C" {
 
     fake_print_context_simple_variable(print, "Breaking as ", arguments.used ? arguments.array[0] : fake_make_operation_argument_success_s, 0);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_make_print_verbose_operate_break_
 
@@ -29,7 +29,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_make_print_verbose_operate_copy_
 
@@ -41,7 +41,7 @@ extern "C" {
 
     fake_print_context_simple_variable(print, "Defined environment variable ", variable, 0);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_make_print_verbose_operate_define_
 
@@ -53,7 +53,7 @@ extern "C" {
 
     fake_print_context_simple_variable(print, "Removed ", path, 0);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_make_print_verbose_operate_delete_
 
@@ -65,7 +65,7 @@ extern "C" {
 
     fake_print_context_simple_variable(print, "Exiting as ", arguments.used ? arguments.array[0] : fake_make_operation_argument_success_s, 0);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_make_print_verbose_operate_exiting_as_
 
@@ -77,7 +77,7 @@ extern "C" {
 
     fll_print_format("The %Q '%[%Q%]' is not found.%]%r", print->to, print->set->notable, is_directory ? f_file_type_name_directory_s : f_file_type_name_file_s, file, print->set->notable, f_string_eol_s);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_make_print_verbose_operate_file_not_found_
 
@@ -111,7 +111,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_make_print_verbose_operate_program_
 
@@ -139,7 +139,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_make_print_verbose_operate_set_failure_state_
 
@@ -155,7 +155,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_make_print_verbose_operate_set_mode_
 
@@ -167,7 +167,7 @@ extern "C" {
 
     fake_print_context_simple_variable(print, "Changed project path to ", path, 0);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_make_print_verbose_operate_set_path_
 
@@ -184,7 +184,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_make_print_verbose_operate_set_role_
 
@@ -201,7 +201,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_make_print_verbose_operate_symbolic_link_
 
@@ -213,7 +213,7 @@ extern "C" {
 
     fake_print_context_simple_variable(print, "Touched ", path, 0);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_make_print_verbose_operate_touch_
 

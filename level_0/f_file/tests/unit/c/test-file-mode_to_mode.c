@@ -86,7 +86,7 @@ void test__f_file_mode_to_mode__works(void **state) {
 
     const f_status_t status = f_file_mode_to_mode(file_modes[i], &mode);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(mode, modes[i]);
   } // for
 }

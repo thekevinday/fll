@@ -27,7 +27,7 @@ extern "C" {
  *   This does not alter print.custom.setting.state.status.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if a parameter is NULL.
@@ -58,7 +58,7 @@ extern "C" {
  *   A valid file type code from the fll_error_file_type enum.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if a parameter is NULL.
@@ -87,7 +87,7 @@ extern "C" {
  *   The message to print regarding why the message should be displayed.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if a parameter is NULL.
@@ -116,7 +116,7 @@ extern "C" {
  *   The parameter value that is before the "value" function parameter.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if a parameter is NULL.
@@ -143,7 +143,7 @@ extern "C" {
  *   The parameter value that is already specified.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if a parameter is NULL.
@@ -163,7 +163,7 @@ extern "C" {
  *   This does not alter print.custom.setting.state.status.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if a parameter is NULL.
@@ -183,7 +183,7 @@ extern "C" {
  *   This does not alter print.custom.setting.state.status.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if a parameter is NULL.

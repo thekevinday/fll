@@ -60,7 +60,7 @@ extern "C" {
  *   The string rangess array to resize.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -79,7 +79,7 @@ extern "C" {
  *   The destination rangess the source is appended onto.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success, but there is nothing to append (size == 0).
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -99,7 +99,7 @@ extern "C" {
  *   The destination rangess the source is appended onto.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success, but there is nothing to append (size == 0).
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -123,7 +123,7 @@ extern "C" {
  *   The string rangess array to resize.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if amount is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -147,7 +147,7 @@ extern "C" {
  *   The string rangess array to resize.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if amount is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -171,7 +171,7 @@ extern "C" {
  *   The string rangess array to resize.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
  *
  *   F_array_too_large (with error bit) if the new array length is too large.
@@ -196,7 +196,7 @@ extern "C" {
  *   The string rangess array to resize.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
  *
  *   F_array_too_large (with error bit) if the new array length is too large.
@@ -217,7 +217,7 @@ extern "C" {
  *   The string rangess array to adjust.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *

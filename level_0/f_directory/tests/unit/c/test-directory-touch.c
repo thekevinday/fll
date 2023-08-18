@@ -173,7 +173,7 @@ void test__f_directory_touch__works(void **state) {
 
     const f_status_t status = f_directory_touch(path, 0);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 
   {
@@ -184,7 +184,7 @@ void test__f_directory_touch__works(void **state) {
 
     const f_status_t status = f_directory_touch(path, 0);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 }
 

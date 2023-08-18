@@ -288,7 +288,7 @@ extern "C" {
     }
 
     if (!F_status_is_error(main->setting.state.status)) {
-      main->setting.state.status = F_none;
+      main->setting.state.status = F_okay;
     }
   }
 #endif // byte_dump_process_file

@@ -57,7 +57,7 @@ extern "C" {
  *   The retrieved ambient value.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -75,7 +75,7 @@ extern "C" {
  * Reset the ambient capability.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_memory_not (with error bit) if a out of memory.
@@ -99,7 +99,7 @@ extern "C" {
  *   The capability flag value.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_memory_not (with error bit) if a out of memory.
@@ -121,7 +121,7 @@ extern "C" {
  *   The capability to clear.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -143,7 +143,7 @@ extern "C" {
  *   The capability to clear the flag of.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_memory_not (with error bit) if a out of memory.
@@ -193,7 +193,7 @@ extern "C" {
  *   This must be freed via f_capability_delete() when finished with.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_memory_not (with error bit) if a out of memory.
@@ -222,7 +222,7 @@ extern "C" {
  *   Set to NULL to not use.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -247,7 +247,7 @@ extern "C" {
  *   This must be freed via f_capability_delete() when finished with.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -269,7 +269,7 @@ extern "C" {
  *   Pointer address is set to 0 on success.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_memory_not (with error bit) if a out of memory (which doesn't make sense here but man page includes this).
@@ -293,7 +293,7 @@ extern "C" {
  *   This must be freed via f_capability_delete() when finished with.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_descriptor_not (with error bit) if the file descriptor is invalid.
@@ -323,7 +323,7 @@ extern "C" {
  *   The capability to set.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_descriptor_not (with error bit) if the file descriptor is invalid.
@@ -354,7 +354,7 @@ extern "C" {
  *   This must be freed via f_capability_delete() when finished with.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_descriptor_not (with error bit) if the file descriptor is invalid.
@@ -384,7 +384,7 @@ extern "C" {
  *   The capability to set.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_descriptor_not (with error bit) if the file descriptor is invalid.
@@ -419,7 +419,7 @@ extern "C" {
  *   This is TRUE when the flag is enabled and FALSE otherwise.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -446,7 +446,7 @@ extern "C" {
  *   The capability to set the flag of.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -469,7 +469,7 @@ extern "C" {
  *   Set to NULL to not use.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_memory_not (with error bit) if a out of memory.
@@ -494,7 +494,7 @@ extern "C" {
  *   This must be freed via f_capability_delete().
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_memory_not (with error bit) if a out of memory.
@@ -523,7 +523,7 @@ extern "C" {
  *   The array of supplementary group IDs (as in setgroups()).
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_memory_not (with error bit) if a out of memory.
@@ -548,7 +548,7 @@ extern "C" {
  *   This must be freed via f_capability_delete() when finished with.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_memory_not (with error bit) if a out of memory.
@@ -569,7 +569,7 @@ extern "C" {
  *   The capability mode.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *
@@ -591,7 +591,7 @@ extern "C" {
  *   This is a NULL terminated string.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *
@@ -610,7 +610,7 @@ extern "C" {
  *   The capability mode.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_memory_not (with error bit) if a out of memory.
@@ -634,7 +634,7 @@ extern "C" {
  *   The ID of the user.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *
@@ -655,7 +655,7 @@ extern "C" {
  *   The ID of the user.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_descriptor_not (with error bit) if the file descriptor is invalid.
@@ -692,7 +692,7 @@ extern "C" {
  *   The determined bound value.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_memory_not (with error bit) if a out of memory.
@@ -716,7 +716,7 @@ extern "C" {
  *   The determined bound value.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_known_not (with error bit) if the code is unknown to the current system.
@@ -738,7 +738,7 @@ extern "C" {
  *   This must be freed via f_capability_delete() when finished with.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -762,7 +762,7 @@ extern "C" {
  *   This must be freed via f_capability_delete() when finished with.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -782,7 +782,7 @@ extern "C" {
  *   The capability to assign.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_memory_not (with error bit) if a out of memory.
@@ -804,7 +804,7 @@ extern "C" {
  *   The security bits.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *
@@ -823,7 +823,7 @@ extern "C" {
  *   The security bits.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_memory_not (with error bit) if a out of memory.
@@ -848,7 +848,7 @@ extern "C" {
  *   Size may be set to -1 on error.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -916,7 +916,7 @@ extern "C" {
  *   This is NULL terminated after the name.used.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_memory_not (with error bit) if a out of memory.
@@ -948,7 +948,7 @@ extern "C" {
  *   This is NULL terminated after the text.used.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_memory_not (with error bit) if a out of memory.
@@ -980,7 +980,7 @@ extern "C" {
  *   The ID of the user.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_implement_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_memory_not (with error bit) if a out of memory.

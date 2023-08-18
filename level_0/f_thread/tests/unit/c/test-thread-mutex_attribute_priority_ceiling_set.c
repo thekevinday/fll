@@ -54,7 +54,7 @@ void test__f_thread_mutex_attribute_priority_ceiling_set__works(void **state) {
 
     const f_status_t status = f_thread_mutex_attribute_priority_ceiling_set(ceiling, &attribute);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 }
 

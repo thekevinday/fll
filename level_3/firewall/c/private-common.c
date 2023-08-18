@@ -11,7 +11,7 @@ extern "C" {
     f_string_dynamics_resize(0, &data->chains);
     f_string_dynamics_resize(0, &data->devices);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_firewall_data_delete_
 

@@ -167,7 +167,7 @@ Return Code Names:
   These are enumerations but they do not follow the enumeration style guide and are an exception to it.
 
   Examples\:
-  - code:"F_none".
+  - code:"F_okay".
   - code:"F_signal_file_size_limit".
 
 Global String Constant Names:

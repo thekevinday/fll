@@ -222,7 +222,7 @@ extern "C" {
     f_string_dynamic_resize(0, &main->program.path_pid);
     f_string_dynamic_resize(0, &main->program.path_setting);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_controller_main_delete_
 
@@ -607,7 +607,7 @@ extern "C" {
 
     if (!setting) return F_status_set_error(F_parameter);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_controller_setting_delete_
 
@@ -708,7 +708,7 @@ extern "C" {
 
     controller_setting_delete(&main->setting);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_controller_setting_unload_
 

@@ -17,7 +17,7 @@ extern "C" {
     status = f_memory_arrays_adjust(length, sizeof(f_uint8s_t), (void **) &named->quotess.array, &named->quotess.used, &named->quotess.size, &f_uint8s_delete_callback);
     if (F_status_is_error(status)) return status;
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_fss_nameds_adjust_) || !defined(_di_f_fss_nameds_decimate_by_)
 
@@ -33,7 +33,7 @@ extern "C" {
     status = f_memory_arrays_resize(length, sizeof(f_uint8s_t), (void **) &named->quotess.array, &named->quotess.used, &named->quotess.size, &f_uint8s_delete_callback);
     if (F_status_is_error(status)) return status;
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_fss_nameds_decrease_by_) || !defined(_di_f_fss_named_increase_) || !defined(_di_f_fss_named_increase_by_) || !defined(_di_f_fss_nameds_resize_)
 
@@ -41,7 +41,7 @@ extern "C" {
   f_status_t private_f_fss_nameds_adjust(const f_number_unsigned_t length, f_fss_nameds_t * const nameds) {
 
     {
-      f_status_t status = F_none;
+      f_status_t status = F_okay;
 
       for (f_number_unsigned_t i = length; i < nameds->size; ++i) {
 
@@ -58,7 +58,7 @@ extern "C" {
   f_status_t private_f_fss_nameds_resize(const f_number_unsigned_t length, f_fss_nameds_t * const nameds) {
 
     {
-      f_status_t status = F_none;
+      f_status_t status = F_okay;
 
       for (f_number_unsigned_t i = length; i < nameds->size; ++i) {
 

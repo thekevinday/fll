@@ -20,7 +20,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_key_create_
 
@@ -46,7 +46,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // defined(_pthread_attr_unsupported_) && !defined(_di_f_thread_attribute_affinity_get_)
 
@@ -73,7 +73,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // defined(_pthread_attr_unsupported_) && !defined(_di_f_thread_attribute_affinity_set_)
 
@@ -85,7 +85,7 @@ extern "C" {
 
     *level = pthread_getconcurrency();
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_attribute_concurrency_get_
 
@@ -101,7 +101,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_attribute_concurrency_set_
 
@@ -119,7 +119,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_attribute_create_
 
@@ -137,7 +137,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_attribute_default_get_
 
@@ -156,7 +156,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_attribute_default_set_
 
@@ -168,7 +168,7 @@ extern "C" {
 
     if (pthread_attr_destroy(attribute)) return F_status_set_error(F_failure);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_attribute_delete_
 
@@ -186,7 +186,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_attribute_detach_get_
 
@@ -204,7 +204,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_attribute_detach_set_
 
@@ -222,7 +222,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_attribute_guard_get_
 
@@ -240,7 +240,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_attribute_guard_set_
 
@@ -258,7 +258,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_attribute_scheduler_inherit_get_
 
@@ -276,7 +276,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_attribute_scheduler_inherit_set_
 
@@ -294,7 +294,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_attribute_scheduler_parameter_get_
 
@@ -312,7 +312,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_attribute_scheduler_parameter_set_
 
@@ -330,7 +330,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_attribute_scheduler_policy_get_
 
@@ -348,7 +348,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_attribute_scheduler_policy_set_
 
@@ -366,7 +366,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_attribute_scope_get_
 
@@ -385,7 +385,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_attribute_scope_set_
 
@@ -405,7 +405,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_attribute_stack_get_
 
@@ -425,7 +425,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_attribute_stack_set_
 
@@ -443,7 +443,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_attribute_stack_size_get_
 
@@ -461,7 +461,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_attribute_stack_size_set_
 
@@ -479,7 +479,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_barrier_attribute_create_
 
@@ -489,7 +489,7 @@ extern "C" {
       if (!attribute) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return pthread_barrierattr_destroy(attribute) ? F_status_set_error(F_failure) : F_none;
+    return pthread_barrierattr_destroy(attribute) ? F_status_set_error(F_failure) : F_okay;
   }
 #endif // _di_f_thread_barrier_attribute_delete_
 
@@ -508,7 +508,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_barrier_attribute_shared_get_
 
@@ -526,7 +526,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_barrier_attribute_shared_set_
 
@@ -547,7 +547,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_barrier_create_
 
@@ -566,7 +566,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_barrier_delete_
 
@@ -583,7 +583,7 @@ extern "C" {
       pthread_barrier_wait(barrier);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_barrier_wait_
 
@@ -605,7 +605,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_cancel_
 
@@ -630,7 +630,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_cancel_state_set_
 
@@ -639,7 +639,7 @@ extern "C" {
 
     pthread_testcancel();
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_cancel_test_
 
@@ -654,7 +654,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_cancel_type_set_
 
@@ -673,7 +673,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_clock_get_id_
 
@@ -703,7 +703,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_condition_attribute_clock_get_
 
@@ -721,7 +721,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_condition_attribute_clock_set_
 
@@ -740,7 +740,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_condition_attribute_create_
 
@@ -761,7 +761,7 @@ extern "C" {
       }
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_condition_attribute_delete_
 
@@ -780,7 +780,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_condition_attribute_shared_get_
 
@@ -798,7 +798,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_condition_attribute_shared_set_
 
@@ -819,7 +819,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_condition_create_
 
@@ -838,7 +838,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_condition_delete_
 
@@ -856,7 +856,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_condition_signal_
 
@@ -874,7 +874,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_condition_signal_all_
 
@@ -896,7 +896,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_condition_wait_
 
@@ -919,7 +919,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_condition_wait_timed_
 
@@ -940,7 +940,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_create_
 
@@ -956,7 +956,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_detach_
 
@@ -968,7 +968,7 @@ extern "C" {
 
     pthread_exit(result);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_exit_
 
@@ -986,7 +986,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_join_
 
@@ -1005,7 +1005,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_join_try_
 
@@ -1025,7 +1025,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_join_timed_
 
@@ -1045,7 +1045,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_key_create_
 
@@ -1059,7 +1059,7 @@ extern "C" {
 
     *key = 0;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_key_delete_
 
@@ -1071,7 +1071,7 @@ extern "C" {
 
     *value = pthread_getspecific(key);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_key_get_
 
@@ -1089,7 +1089,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_key_set_
 
@@ -1111,7 +1111,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_lock_attribute_create_
 
@@ -1130,7 +1130,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_lock_attribute_delete_
 
@@ -1145,7 +1145,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_lock_attribute_shared_get_
 
@@ -1163,7 +1163,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_lock_attribute_shared_set_
 
@@ -1182,7 +1182,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_lock_create_
 
@@ -1203,7 +1203,7 @@ extern "C" {
       }
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_lock_delete_
 
@@ -1223,7 +1223,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_lock_read_
 
@@ -1245,7 +1245,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_lock_read_timed_
 
@@ -1265,7 +1265,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_lock_read_try_
 
@@ -1285,7 +1285,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_lock_write_
 
@@ -1306,7 +1306,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_lock_write_timed_
 
@@ -1326,7 +1326,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_lock_write_try_
 
@@ -1348,7 +1348,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_mutex_attribute_create_
 
@@ -1369,7 +1369,7 @@ extern "C" {
       }
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_mutex_attribute_delete_
 
@@ -1389,7 +1389,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_mutex_attribute_priority_ceiling_get_
 
@@ -1408,7 +1408,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_mutex_attribute_priority_ceiling_set_
 
@@ -1428,7 +1428,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_mutex_attribute_protocol_get_
 
@@ -1448,7 +1448,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_mutex_attribute_protocol_set_
 
@@ -1463,7 +1463,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_mutex_attribute_shared_get_
 
@@ -1481,7 +1481,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_mutex_attribute_shared_set_
 
@@ -1496,7 +1496,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_mutex_attribute_type_get_
 
@@ -1514,7 +1514,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_mutex_attribute_type_set_
 
@@ -1536,7 +1536,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_mutex_create_
 
@@ -1557,7 +1557,7 @@ extern "C" {
       }
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_mutex_delete_
 
@@ -1577,7 +1577,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_mutex_lock_
 
@@ -1601,7 +1601,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_mutex_lock_timed_
 
@@ -1621,7 +1621,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_mutex_lock_try_
 
@@ -1641,7 +1641,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_mutex_priority_ceiling_get_
 
@@ -1664,7 +1664,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_mutex_priority_ceiling_set_
 
@@ -1685,7 +1685,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_mutex_unlock_
 
@@ -1704,7 +1704,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_once_
 
@@ -1723,7 +1723,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_scheduler_parameter_get_
 
@@ -1742,7 +1742,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_scheduler_parameter_set_
 
@@ -1759,7 +1759,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_scheduler_priority_set_
 
@@ -1776,7 +1776,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_semaphore_create_
 
@@ -1788,7 +1788,7 @@ extern "C" {
 
     if (sem_destroy(semaphore) == -1) return (errno == EINVAL) ? F_status_set_error(F_parameter) : F_status_set_error(F_failure);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_semaphore_delete_
 
@@ -1804,7 +1804,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_semaphore_file_close_
 
@@ -1820,7 +1820,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_semaphore_file_delete_
 
@@ -1851,7 +1851,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_semaphore_file_open_
 
@@ -1868,7 +1868,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_semaphore_lock_
 
@@ -1887,7 +1887,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_semaphore_lock_timed_
 
@@ -1905,7 +1905,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_semaphore_lock_try_
 
@@ -1922,7 +1922,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_semaphore_unlock_
 
@@ -1939,7 +1939,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_semaphore_value_get_
 
@@ -1958,7 +1958,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_signal_mask_
 
@@ -1981,7 +1981,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // defined(_pthread_sigqueue_unsupported_) && !defined(_di_f_thread_signal_queue_)
 
@@ -2003,7 +2003,7 @@ extern "C" {
     }
 
     if (signal) {
-      return F_none;
+      return F_okay;
     }
 
     return F_found;
@@ -2025,7 +2025,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_spin_create_
 
@@ -2044,7 +2044,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_spin_delete_
 
@@ -2064,7 +2064,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_spin_lock_
 
@@ -2084,7 +2084,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_spin_lock_try_
 
@@ -2105,7 +2105,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_spin_unlock_
 
@@ -2126,7 +2126,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_unlock_
 

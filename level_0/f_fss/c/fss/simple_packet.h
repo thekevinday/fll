@@ -199,7 +199,7 @@ extern "C" {
  *   The simple packet to delete.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -218,7 +218,7 @@ extern "C" {
  *   The simple packet to destroy.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -241,7 +241,7 @@ extern "C" {
  *   If the buffer is too small (including when F_data_not is returned), then the ranges are all set to the out of range values as appropriate.
  *
  * @return
- *   F_none on success (The end of the Payload Block is assumed to be the remainder of the buffer or F_fss_simple_packet_block_payload_size_d, whichever is smaller).
+ *   F_okay on success (The end of the Payload Block is assumed to be the remainder of the buffer or F_fss_simple_packet_block_payload_size_d, whichever is smaller).
  *   F_partial on success but not all blocks are identified.
  *   F_data_not if buffer.used is 0.
  *
@@ -268,7 +268,7 @@ extern "C" {
  *   Must not be NULL.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -296,7 +296,7 @@ extern "C" {
  *   Must not be NULL.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -324,7 +324,7 @@ extern "C" {
  *   Must not be NULL.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -352,7 +352,7 @@ extern "C" {
  *   Must not be NULL.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *

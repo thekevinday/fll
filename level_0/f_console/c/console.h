@@ -41,7 +41,7 @@ extern "C" {
  *   Both the name and the value strings may be pointers to the envp memory addresses.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if the arguments.envp pointer is NULL or there are no environment variables in arguments.envp.
  *
  *   Errors (with error bit) from: f_string_maps_increase_by().
@@ -61,7 +61,7 @@ extern "C" {
  *   The flag with the console type bits determined by this function.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not the input string is empty.
  */
 #ifndef _di_f_console_identify_
@@ -90,7 +90,7 @@ extern "C" {
  *   If none of the parameters are found, then this will not be updated (therefore it is safe to have it pre-initialized to the default).
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if no parameters were matched with the available choices.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -121,7 +121,7 @@ extern "C" {
  *   If none of the parameters are found, then this will not be updated (therefore it is safe to have it pre-initialized to the default).
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if no parameters were matched with the available choices.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -163,7 +163,7 @@ extern "C" {
  *   A state for providing flags and handling interrupts during long running operations.
  *
  *   This alters state.status:
- *     F_none on success.
+ *     F_okay on success.
  *     F_data_not if argc is 0, argv is a NULL pointer, or if argv[0] is NULL.
  *     F_complete_not if "values" parameters were expected but not found.
  *

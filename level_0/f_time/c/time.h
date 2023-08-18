@@ -41,7 +41,7 @@ extern "C" {
  *   This is still updated on F_number_underflow, but the underflow value is set to 0.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_number_overflow (with error bit) if the summation of seconds and milliseconds results in an overflow when cast to appropriate integer type.
  *   F_number_underflow (with error bit) if the seconds or milliseconds is less than 0 when cast to appropriate integer type.
@@ -69,7 +69,7 @@ extern "C" {
  *   This is still updated on F_number_underflow, but the underflow value is set to 0.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_number_overflow (with error bit) if the summation of seconds and nanoseconds results in an overflow when cast to appropriate integer type.
  *   F_number_underflow (with error bit) if the second or nanoseconds is less than 0 when cast to appropriate integer type.

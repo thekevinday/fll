@@ -26,7 +26,7 @@ extern "C" {
  *   The tripless to adjust.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_array_too_large (with error bit) if the combined array is too large.
  *
@@ -50,7 +50,7 @@ extern "C" {
  *   The tripless to resize.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_array_too_large (with error bit) if the combined array is too large.
  *

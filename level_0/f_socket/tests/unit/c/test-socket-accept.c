@@ -99,7 +99,7 @@ void test__f_socket_accept__works(void **state) {
 
     const f_status_t status = f_socket_accept(&socket);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(socket.id_data, id);
     assert_int_not_equal(socket.id, id);
   }

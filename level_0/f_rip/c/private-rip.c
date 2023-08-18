@@ -10,7 +10,7 @@ extern "C" {
 
     const f_number_unsigned_t stop_original = *stop;
     f_number_unsigned_t previous = 0;
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     // Skip past leading whitespace.
     for (; *start <= *stop; *start += macro_f_utf_byte_width(string[*start])) {
@@ -110,7 +110,7 @@ extern "C" {
       }
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_rip_dynamic_partial_) || !defined(_di_f_rip_dynamic_partial_nulless_) || !defined(_di_f_rip_dynamic_)  || !defined(_di_f_rip_) || !defined(_di_f_rip_nulless_)
 

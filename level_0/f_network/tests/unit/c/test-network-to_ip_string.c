@@ -77,7 +77,7 @@ void test__f_network_to_ip_string__works(void **state) {
 
     const f_status_t status = f_network_to_ip_string(family, &ip);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(ip.used, expect.used);
     assert_string_equal(ip.string, expect.string);
   }
@@ -94,7 +94,7 @@ void test__f_network_to_ip_string__works(void **state) {
 
     const f_status_t status = f_network_to_ip_string(family, &ip);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(ip.used, expect.used);
     assert_string_equal(ip.string, expect.string);
   }

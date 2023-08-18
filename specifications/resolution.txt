@@ -1,0 +1,34 @@
+Initial Draft - Currently Just Notes.
+
+Need an alternative to /etc/resolv.conf.
+
+Expand kevux specific practices that include "port" and "extension".
+Add "scheme".
+
+The "scheme" is a group or category in this case.
+Consider "inet" for classic internet.
+
+example resolution file (/etc/resolution):
+  # fss-????
+  inet:
+    namesever 208.67.222.222
+    extension kevux 127.0.0.2:123
+
+  kevux:
+    nameserver 127.0.0.2:123
+    extension turtle 127.0.0.3:456
+
+
+Can then do nslookup like this:
+  nslookup google.com
+  nslookup turtle.kevux
+  nslookup kevux://google.com
+  nslookup kevux://turtle.kevux
+  nslookup kevux://kevin.turtle
+
+Recommend reserving "http" and "https" for "inet" use in programs.
+
+Need to include additional files that can be created dynamically.
+Allow for user-specific checks.
+Allow for custom cached includes.
+Allow for custom use for things like VPN.

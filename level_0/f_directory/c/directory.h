@@ -55,7 +55,7 @@ extern "C" {
  *   The directory mode to use when creating.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
@@ -90,7 +90,7 @@ extern "C" {
  *   The directory mode to use when creating.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
@@ -243,7 +243,7 @@ extern "C" {
  *   Will be populated with the names of each file and/or directory inside path.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if path.used is 0.
  *   F_directory_empty if directory is empty.
  *
@@ -275,7 +275,7 @@ extern "C" {
  *   This is updated with the result of open() or openat().
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
@@ -317,7 +317,7 @@ extern "C" {
  *   This is updated with the result of open() or openat().
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
@@ -357,7 +357,7 @@ extern "C" {
  *   When depth_max is 0, then this should only be FALSE (setting this to TRUE would be a no-op).
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
@@ -401,7 +401,7 @@ extern "C" {
  *   Such as a custom function for verbose printing of removed files.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
@@ -439,7 +439,7 @@ extern "C" {
  *   The file mode to use when (directory) file is created.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
@@ -483,7 +483,7 @@ extern "C" {
  *   Any valid flag, such as F_file_at_path_empty_d, F_file_at_automount_no_d, or F_file_at_symlink_follow_no_d.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.

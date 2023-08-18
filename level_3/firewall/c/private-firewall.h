@@ -21,7 +21,7 @@ extern "C" {
  *   Local firewall settings.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_child on child process exiting.
  *
  *   F_interrupt (with error bit) on receiving a process signal, such as an interrupt signal.
@@ -50,7 +50,7 @@ extern f_status_t firewall_perform_commands(firewall_data_t * const data, firewa
  *   Local firewall settings.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_child on child process exiting.
  *
  *   F_interrupt (with error bit) on receiving a process signal, such as an interrupt signal.
@@ -67,7 +67,7 @@ extern f_status_t firewall_create_custom_chains(firewall_data_t * const data, fi
  *   The program data.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_child on child process exiting.
  *
  *   F_interrupt (with error bit) on receiving a process signal, such as an interrupt signal.
@@ -84,7 +84,7 @@ extern f_status_t firewall_delete_chains(firewall_data_t * const data) F_attribu
  *   The program data.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_child on child process exiting.
  *
  *   Status codes (with error bit) are returned on any problem.
@@ -105,7 +105,7 @@ extern f_status_t firewall_default_lock(firewall_data_t * const data) F_attribut
  *   Local firewall settings.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_child on child process exiting.
  *
  *   Status codes (with error bit) are returned on any problem.
@@ -123,7 +123,7 @@ extern f_status_t firewall_buffer_rules(firewall_data_t * const data, const f_st
  *   Local firewall settings.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_child on child process exiting.
  *
  *   Status codes (with error bit) are returned on any problem.
@@ -137,7 +137,7 @@ extern f_status_t firewall_process_rules(firewall_data_t * const data, f_string_
  *   Local firewall settings.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   Status codes (with error bit) are returned on any problem.
  */

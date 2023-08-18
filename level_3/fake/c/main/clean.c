@@ -14,7 +14,7 @@ extern "C" {
 
     fake_print_message_delete_all_files(&main->program.message);
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
 
     if (main->program.error.verbosity >= f_console_verbosity_verbose_e) {
       main->setting.state.status = f_directory_remove_custom(main->setting.build, F_directory_max_descriptors_d, F_true, fake_clean_remove_recursively_verbosely);
@@ -26,14 +26,14 @@ extern "C" {
     if (F_status_set_fine(main->setting.state.status) == F_file_found_not || F_status_set_fine(main->setting.state.status) == F_directory) {
       fake_print_warning_build_directory_not_directory(&main->program.warning, main->setting.build);
 
-      main->setting.state.status = F_none;
+      main->setting.state.status = F_okay;
     }
 
     if (F_status_is_error(main->setting.state.status)) {
       fake_print_error_file(&main->program.error, macro_fake_f(f_directory_remove), main->setting.build, f_file_operation_delete_s, fll_error_file_type_directory_e);
     }
     else {
-      main->setting.state.status = F_none;
+      main->setting.state.status = F_okay;
     }
   }
 #endif // _di_fake_clean_operate_

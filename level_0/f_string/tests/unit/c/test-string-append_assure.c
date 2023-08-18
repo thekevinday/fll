@@ -13,7 +13,7 @@ void test__f_string_append_assure__works(void **state) {
   {
     const f_status_t status = f_string_append_assure(source.string, source.used, &destination);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(destination.used, source.used);
 
     assert_string_equal(destination.string, source.string);
@@ -24,7 +24,7 @@ void test__f_string_append_assure__works(void **state) {
   {
     const f_status_t status = f_string_append_assure(source.string, source.used, &destination);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(destination.used, source.used);
 
     assert_string_equal(destination.string, source.string);

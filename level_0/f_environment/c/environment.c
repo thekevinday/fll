@@ -11,7 +11,7 @@ extern char **environ;
   f_status_t f_environment_clear(void) {
 
     if (!clearenv()) {
-      return F_none;
+      return F_okay;
     }
 
     return F_status_set_error(F_failure);
@@ -68,7 +68,7 @@ extern char **environ;
       value->used = 0;
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_environment_get_
 
@@ -78,7 +78,7 @@ extern char **environ;
       if (!environment) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
     char *at = 0;
     f_string_map_t map = f_string_map_t_initialize;
 
@@ -104,7 +104,7 @@ extern char **environ;
       if (F_status_is_error(status)) return status;
     } // for
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_environment_get_all_
 
@@ -163,7 +163,7 @@ extern char **environ;
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_environment_set_
 
@@ -181,7 +181,7 @@ extern char **environ;
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_environment_unset_
 

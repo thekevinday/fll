@@ -79,7 +79,7 @@ void test__f_serialize_from_simple__works(void **state) {
 
     const f_status_t status = f_serialize_from_simple(sources[i], &destination);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(destination.used, expecteds[i].used);
 
     for (uint8_t j = 0; j < destination.used; ++j) {

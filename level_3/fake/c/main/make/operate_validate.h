@@ -26,7 +26,7 @@ extern "C" {
  *   All make related setting data, including data from the fakefile and the build settings file.
  *
  *   This alters data_make.main->setting.status:
- *     F_none on success.
+ *     F_okay on success.
  *
  *     F_parameter (with error bit) on invalid parameter.
  *

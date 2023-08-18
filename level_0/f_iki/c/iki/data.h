@@ -23,7 +23,7 @@ extern "C" {
  *   The IKI data to delete.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -44,7 +44,7 @@ extern "C" {
  *   The IKI data to destroy.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -67,7 +67,7 @@ extern "C" {
  *   The destination iki_datas the source is appended onto.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success, but there is nothing to append (size == 0).
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -93,7 +93,7 @@ extern "C" {
  *   The destination iki_datas the source is appended onto.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success, but there is nothing to append (size == 0).
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -126,7 +126,7 @@ extern "C" {
  *   Must not be NULL.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -155,7 +155,7 @@ extern "C" {
  *   Must not be NULL.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -177,7 +177,7 @@ extern "C" {
  *   The destination ranges the source is appended onto.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success, but there is nothing to append (size == 0).
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -203,7 +203,7 @@ extern "C" {
  *   The destination ranges the source is appended onto.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success, but there is nothing to append (size == 0).
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -236,7 +236,7 @@ extern "C" {
  *   Must not be NULL.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -265,7 +265,7 @@ extern "C" {
  *   Must not be NULL.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *

@@ -43,7 +43,7 @@ extern "C" {
 #ifndef _di_controller_rule_find_
   f_status_t controller_rule_find(const f_string_static_t alias, const controller_rules_t rules, f_number_unsigned_t *at) {
 
-    if (!alias.used) return F_none;
+    if (!alias.used) return F_okay;
     if (!rules.used) return F_false;
 
     for (f_number_unsigned_t i = 0; i < rules.used; ++i) {
@@ -62,7 +62,7 @@ extern "C" {
 #ifndef _di_controller_rule_parameters_read_
   f_status_t controller_rule_parameters_read(const controller_global_t global, const f_string_static_t buffer, f_string_range_t * const object, f_string_ranges_t * const content, controller_rule_action_t * const action, f_state_t * const state) {
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     action->parameters.used = 0;
     action->ikis.used = 0;
@@ -169,7 +169,7 @@ extern "C" {
       } // for
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_controller_rule_parameters_read_
 
@@ -219,10 +219,10 @@ extern "C" {
 #ifndef _di_controller_rule_action_read_
   f_status_t controller_rule_action_read(const controller_global_t global, const bool is_normal, const uint8_t type, const uint8_t method, controller_cache_t * const cache, controller_rule_item_t *item, controller_rule_actions_t *actions, f_string_range_t *range) {
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     controller_state_interrupt_t custom = macro_controller_state_interrupt_t_initialize_1(is_normal, global.thread);
-    f_state_t state = macro_f_state_t_initialize_1(controller_common_allocation_large_d, controller_common_allocation_small_d, F_none, 0, 0, 0, &controller_thread_signal_state_fss, 0, (void *) &custom, 0);
+    f_state_t state = macro_f_state_t_initialize_1(controller_common_allocation_large_d, controller_common_allocation_small_d, F_okay, 0, 0, 0, &controller_thread_signal_state_fss, 0, (void *) &custom, 0);
 
     f_number_unsigned_t i = 0;
 
@@ -672,7 +672,7 @@ extern "C" {
 #ifndef _di_controller_rule_action_read_rerun_number_
   f_status_t controller_rule_action_read_rerun_number(const controller_global_t global, const f_string_t name, controller_cache_t * const cache, f_number_unsigned_t * const index, f_number_unsigned_t * const number) {
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
     f_number_signed_t parsed = 0;
 
     if (*index + 1 == cache->content_action.used) {
@@ -734,7 +734,7 @@ extern "C" {
 
     *number = (f_number_unsigned_t) parsed;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_controller_rule_action_read_rerun_number_
 
@@ -794,7 +794,7 @@ extern "C" {
     destination->ons.used = 0;
     destination->items.used = 0;
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     status = f_string_dynamic_append(source.alias, &destination->alias);
     if (F_status_is_error(status)) return status;
@@ -948,7 +948,7 @@ extern "C" {
 #ifndef _di_controller_rule_execute_
   f_status_t controller_rule_execute(const controller_global_t global, const uint8_t action, const uint8_t options, controller_process_t * const process) {
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
     f_status_t success = F_false;
 
     f_number_unsigned_t i = 0;
@@ -1390,15 +1390,15 @@ extern "C" {
       return F_ignore;
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_controller_rule_execute_
 
 #ifndef _di_controller_rule_execute_foreground_
   f_status_t controller_rule_execute_foreground(const uint8_t type, const f_string_static_t program, const f_string_statics_t arguments, const uint8_t options, controller_execute_set_t * const execute_set, controller_process_t * const process) {
 
-    f_status_t status = F_none;
-    f_status_t status_lock = F_none;
+    f_status_t status = F_okay;
+    f_status_t status_lock = F_okay;
 
     controller_main_t * const main = (controller_main_t *) process->main_data;
     controller_thread_t * const thread = (controller_thread_t *) process->main_thread;
@@ -1492,7 +1492,7 @@ extern "C" {
         if (F_status_set_fine(status_lock) != F_interrupt) {
           status = controller_lock_read_process(process, thread, &process->lock);
 
-          if (status == F_none) {
+          if (status == F_okay) {
             return status_lock;
           }
         }
@@ -1518,14 +1518,14 @@ extern "C" {
       }
 
       if (F_status_set_fine(status_lock) == F_interrupt || !controller_thread_is_enabled_process(process, thread)) {
-        if (status_lock == F_none) {
+        if (status_lock == F_okay) {
           return F_status_set_error(F_interrupt);
         }
 
         return F_status_set_error(F_lock);
       }
 
-      if (status_lock == F_none) {
+      if (status_lock == F_okay) {
         f_thread_unlock(&process->lock);
       }
 
@@ -1537,7 +1537,7 @@ extern "C" {
         if (F_status_set_fine(status_lock) != F_interrupt) {
           status = controller_lock_read_process(process, thread, &process->lock);
 
-          if (status == F_none) {
+          if (status == F_okay) {
             return status_lock;
           }
         }
@@ -1564,7 +1564,7 @@ extern "C" {
         status = F_status_set_error(F_failure);
       }
       else {
-        status = F_none;
+        status = F_okay;
       }
     }
     else {
@@ -1610,8 +1610,8 @@ extern "C" {
 #ifndef _di_controller_rule_execute_pid_with_
   f_status_t controller_rule_execute_pid_with(const f_string_dynamic_t pid_file, const uint8_t type, const f_string_static_t program, const f_string_statics_t arguments, const uint8_t options, const uint8_t with, controller_execute_set_t * const execute_set, controller_process_t * const process) {
 
-    f_status_t status = F_none;
-    f_status_t status_lock = F_none;
+    f_status_t status = F_okay;
+    f_status_t status_lock = F_okay;
 
     controller_main_t * const main = (controller_main_t *) process->main_data;
     controller_thread_t * const thread = (controller_thread_t *) process->main_thread;
@@ -1749,7 +1749,7 @@ extern "C" {
         if (F_status_set_fine(status_lock) != F_interrupt) {
           status = controller_lock_read_process(process, thread, &process->lock);
 
-          if (status == F_none) {
+          if (status == F_okay) {
             return status_lock;
           }
         }
@@ -1775,14 +1775,14 @@ extern "C" {
       }
 
       if (!controller_thread_is_enabled_process(process, thread)) {
-        if (status_lock == F_none) {
+        if (status_lock == F_okay) {
           return F_status_set_error(F_interrupt);
         }
 
         return F_status_set_error(F_lock);
       }
 
-      if (status_lock == F_none) {
+      if (status_lock == F_okay) {
         f_thread_unlock(&process->lock);
       }
 
@@ -1794,7 +1794,7 @@ extern "C" {
         if (F_status_set_fine(status_lock) != F_interrupt) {
           status = controller_lock_read_process(process, thread, &process->lock);
 
-          if (status == F_none) {
+          if (status == F_okay) {
             return status_lock;
           }
         }
@@ -1821,7 +1821,7 @@ extern "C" {
         status = F_status_set_error(F_failure);
       }
       else {
-        status = F_none;
+        status = F_okay;
       }
     }
     else {
@@ -1936,7 +1936,7 @@ extern "C" {
     process->cache.expanded.used = 0;
 
     if (!action.parameters.used) {
-      return F_none;
+      return F_okay;
     }
 
     f_status_t status = f_string_dynamics_increase_by(action.parameters.used, &process->cache.expanded);
@@ -2009,17 +2009,17 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     } // for
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_controller_rule_expand_
 
 #ifndef _di_controller_rule_expand_iki_
   f_status_t controller_rule_expand_iki(controller_process_t * const process, const f_string_static_t source, const f_string_range_t vocabulary, const f_string_range_t content, f_string_dynamic_t * const destination) {
 
-    if (vocabulary.start > vocabulary.stop) return F_none;
-    if (content.start > content.stop) return F_none;
+    if (vocabulary.start > vocabulary.stop) return F_okay;
+    if (content.start > content.stop) return F_okay;
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     if (f_compare_dynamic_partial_string(controller_define_s.string, source, controller_define_s.used, vocabulary) == F_equal_to) {
       f_number_unsigned_t i = 0;
@@ -2302,14 +2302,14 @@ extern "C" {
       } // for
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_controller_rule_expand_iki_
 
 #ifndef _di_controller_rule_id_construct_
   f_status_t controller_rule_id_construct(const controller_global_t global, const f_string_static_t source, const f_string_range_t directory, const f_string_range_t basename, f_string_dynamic_t * const alias) {
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     alias->used = 0;
 
@@ -2358,9 +2358,9 @@ extern "C" {
 #ifndef _di_controller_rule_item_read_
   f_status_t controller_rule_item_read(const controller_global_t global, const bool is_normal, controller_cache_t * const cache, controller_rule_item_t * const item) {
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
     controller_state_interrupt_t custom = macro_controller_state_interrupt_t_initialize_1(is_normal, global.thread);
-    f_state_t state = macro_f_state_t_initialize_1(controller_common_allocation_large_d, controller_common_allocation_small_d, F_none, 0, 0, 0, &controller_thread_signal_state_fss, 0, (void *) &custom, 0);
+    f_state_t state = macro_f_state_t_initialize_1(controller_common_allocation_large_d, controller_common_allocation_small_d, F_okay, 0, 0, 0, &controller_thread_signal_state_fss, 0, (void *) &custom, 0);
     f_string_range_t range = macro_f_string_range_t_initialize_2(cache->buffer_item.used);
     f_number_unsigned_t last = 0;
 
@@ -2579,8 +2579,8 @@ extern "C" {
         return F_status_set_error(F_parameter);
     }
 
-    f_status_t status = F_none;
-    f_status_t status_lock = F_none;
+    f_status_t status = F_okay;
+    f_status_t status_lock = F_okay;
 
     process->cache.action.name_action.used = 0;
     process->cache.action.name_item.used = 0;
@@ -3112,8 +3112,8 @@ extern "C" {
       return F_status_set_error(F_interrupt);
     }
 
-    f_status_t status = F_none;
-    f_status_t status_lock = F_none;
+    f_status_t status = F_okay;
+    f_status_t status_lock = F_okay;
 
     controller_process_t *process = 0;
 
@@ -3329,14 +3329,14 @@ extern "C" {
       return status;
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_controller_rule_process_begin_
 
 #ifndef _di_controller_rule_process_do_
   f_status_t controller_rule_process_do(const uint8_t options_force, controller_process_t * const process) {
 
-    f_status_t status_lock = F_none;
+    f_status_t status_lock = F_okay;
 
     controller_global_t global = macro_controller_global_t_initialize_1((controller_main_t *) process->main_data, (controller_setting_t *) process->main_setting, (controller_thread_t *) process->main_thread);
 
@@ -3363,7 +3363,7 @@ extern "C" {
       return status_lock;
     }
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     f_number_unsigned_t id_rule = 0;
 
@@ -3617,7 +3617,7 @@ extern "C" {
 #ifndef _di_controller_rule_read_
   f_status_t controller_rule_read(const controller_global_t global, const bool is_normal, const f_string_static_t alias, controller_cache_t * const cache, controller_entry_t * const entry, controller_rule_t * const rule) {
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     bool for_item = F_true;
 
@@ -3732,7 +3732,7 @@ extern "C" {
 
           rule->items.array[i].actions.array[j].type = 0;
           rule->items.array[i].actions.array[j].line = 0;
-          rule->items.array[i].actions.array[j].status = F_none;
+          rule->items.array[i].actions.array[j].status = F_okay;
           rule->items.array[i].actions.array[j].parameters.used = 0;
           rule->items.array[i].actions.array[j].ikis.used = 0;
 
@@ -3787,7 +3787,7 @@ extern "C" {
 
       if (cache->buffer_file.used) {
         controller_state_interrupt_t custom = macro_controller_state_interrupt_t_initialize_1(is_normal, global.thread);
-        f_state_t state = macro_f_state_t_initialize_1(controller_common_allocation_large_d, controller_common_allocation_small_d, F_none, 0, 0, 0, &controller_thread_signal_state_fss, 0, (void *) &custom, 0);
+        f_state_t state = macro_f_state_t_initialize_1(controller_common_allocation_large_d, controller_common_allocation_small_d, F_okay, 0, 0, 0, &controller_thread_signal_state_fss, 0, (void *) &custom, 0);
         f_string_range_t range = macro_f_string_range_t_initialize_2(cache->buffer_file.used);
 
         status = fll_fss_basic_list_read(cache->buffer_file, state, &range, &cache->object_items, &cache->content_items, &cache->delimits, 0, &cache->comments);
@@ -3939,21 +3939,21 @@ extern "C" {
       return rule->status[0];
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_controller_rule_read_
 
 #ifndef _di_controller_rule_setting_read_
   f_status_t controller_rule_setting_read(const controller_global_t global, const bool is_normal, const controller_setting_t setting, controller_cache_t * const cache, controller_rule_t * const rule) {
 
-    f_status_t status = F_none;
-    f_status_t status_return = F_none;
+    f_status_t status = F_okay;
+    f_status_t status_return = F_okay;
 
     f_string_range_t range = macro_f_string_range_t_initialize_2(cache->buffer_item.used);
     f_string_range_t range2 = f_string_range_t_initialize;
 
     controller_state_interrupt_t custom = macro_controller_state_interrupt_t_initialize_1(is_normal, global.thread);
-    f_state_t state = macro_f_state_t_initialize_1(controller_common_allocation_large_d, controller_common_allocation_small_d, F_none, 0, 0, 0, &controller_thread_signal_state_fss, 0, (void *) &custom, 0);
+    f_state_t state = macro_f_state_t_initialize_1(controller_common_allocation_large_d, controller_common_allocation_small_d, F_okay, 0, 0, 0, &controller_thread_signal_state_fss, 0, (void *) &custom, 0);
 
     status = fll_fss_extended_read(cache->buffer_item, state, &range, &cache->object_actions, &cache->content_actions, 0, 0, &cache->delimits, 0);
 
@@ -6195,7 +6195,7 @@ extern "C" {
       return F_data_not;
     }
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     bool required_not_run = F_false;
     bool skip = F_false;
@@ -6273,7 +6273,7 @@ extern "C" {
           if (process_list[i]->state == controller_process_state_done_e) {
             f_thread_unlock(&process_list[i]->active);
 
-            if (f_thread_lock_write_try(&process_list[i]->active) == F_none) {
+            if (f_thread_lock_write_try(&process_list[i]->active) == F_okay) {
               controller_thread_join(&process_list[i]->id_thread);
 
               process_list[i]->state = controller_process_state_idle_e;
@@ -6383,7 +6383,7 @@ extern "C" {
       return F_require;
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_controller_rule_wait_all_
 

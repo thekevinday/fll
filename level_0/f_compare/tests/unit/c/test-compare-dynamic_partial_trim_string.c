@@ -273,7 +273,7 @@ void test__f_compare_dynamic_partial_trim_string__works(void **state) {
   };
 
   uint8_t i = 0;
-  f_status_t status = F_none;
+  f_status_t status = F_okay;
 
   // First eight are against empty strings for first argument.
   for (; i < 8; ++i) {

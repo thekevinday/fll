@@ -49,7 +49,7 @@ void test__f_fss_count_lines__works(void **state) {
 
     f_fss_count_lines(buffers[i], buffers[i].used, &line, &state_data);
 
-    assert_int_equal(state_data.status, F_none);
+    assert_int_equal(state_data.status, F_okay);
     assert_int_equal(line, expect);
   } // for
 }

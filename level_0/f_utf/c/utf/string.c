@@ -55,7 +55,7 @@ extern "C" {
       ++j;
     } // while
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_utf_string_append_assure_
 
@@ -96,7 +96,7 @@ extern "C" {
       ++j;
     } // while
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_utf_string_append_assure_nulless_
 
@@ -231,7 +231,7 @@ extern "C" {
       ++j;
     } // while
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_utf_string_prepend_assure_
 
@@ -272,7 +272,7 @@ extern "C" {
       ++j;
     } // while
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_utf_string_prepend_assure_nulless_
 
@@ -307,11 +307,11 @@ extern "C" {
       ++range->start;
 
       if (range->start > range->stop) {
-        return F_none_stop;
+        return F_okay_stop;
       }
     } // while
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_utf_string_seek_line_
 
@@ -328,17 +328,17 @@ extern "C" {
     while (string[range->start] != seek_to) {
 
       if (string[range->start] == f_utf_char_eol_s) {
-        return F_none_eol;
+        return F_okay_eol;
       }
 
       ++range->start;
 
       if (range->start > range->stop) {
-        return F_none_stop;
+        return F_okay_stop;
       }
     } // while
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_utf_string_seek_line_to_
 
@@ -357,11 +357,11 @@ extern "C" {
       ++range->start;
 
       if (range->start > range->stop) {
-        return F_none_stop;
+        return F_okay_stop;
       }
     } // while
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_utf_string_seek_to_
 

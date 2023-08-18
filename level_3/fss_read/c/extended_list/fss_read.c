@@ -55,7 +55,7 @@ extern "C" {
       return;
     }
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
   }
 #endif // _di_fss_read_extended_list_process_load_
 

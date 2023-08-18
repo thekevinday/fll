@@ -27,7 +27,7 @@ extern "C" {
  *   The main program and setting data.
  *
  *   This alters main.setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *
  *     Errors (with error bit) from: f_console_parameter_process().
  *     Errors (with error bit) from: f_memory_array_increase_by().
@@ -66,7 +66,7 @@ extern "C" {
  *   The state.status is used to represent the return status of this callback.
  *
  *   This alters parameter_state->state->status:
- *     F_none on success.
+ *     F_okay on success.
  *     F_process on success, designating that processing should be performed (see f_console_parameter_process()).
  *
  *     Errors (with error bit) from: f_memory_array_increase().

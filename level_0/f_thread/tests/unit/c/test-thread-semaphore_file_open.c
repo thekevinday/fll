@@ -101,7 +101,7 @@ void test__f_thread_semaphore_file_open__works(void **state) {
 
     const f_status_t status = f_thread_semaphore_file_open(name, flag, &mode, value, &semaphore_ptr);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 
   {
@@ -112,7 +112,7 @@ void test__f_thread_semaphore_file_open__works(void **state) {
 
     const f_status_t status = f_thread_semaphore_file_open(name, flag, &mode, value, &semaphore_ptr);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 }
 

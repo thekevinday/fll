@@ -29,7 +29,7 @@ extern "C" {
  *   The name or path of the file that is empty.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.
@@ -57,7 +57,7 @@ extern "C" {
  *   The section structure containing the section name range.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.

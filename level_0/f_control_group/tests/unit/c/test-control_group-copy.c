@@ -27,7 +27,7 @@ void test__f_control_group_copy__works(void **state) {
 
     const f_status_t status = f_control_group_copy(source, &destination);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
 
     macro_f_control_group_t_delete_simple(destination);
 
@@ -50,7 +50,7 @@ void test__f_control_group_copy__works(void **state) {
 
     const f_status_t status = f_control_group_copy(source, &destination);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
 
     assert_int_equal(destination.as_new, source.as_new);
 
@@ -90,7 +90,7 @@ void test__f_control_group_copy__works(void **state) {
 
     const f_status_t status = f_control_group_copy(source, &destination);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
 
     assert_int_equal(destination.as_new, source.as_new);
 
@@ -141,7 +141,7 @@ void test__f_control_group_copy__works(void **state) {
 
     const f_status_t status = f_control_group_copy(source, &destination);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
 
     assert_int_equal(destination.as_new, source.as_new);
 

@@ -30,7 +30,7 @@ extern "C" {
  *     - fake_state_code_local_e: This is required and assumed to be set.
  *
  *   This alters recurse.state.custom.main.setting.state.status and recurse.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *
  *     F_parameter (with error bit) on invalid parameter to the callback.
  *

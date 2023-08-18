@@ -49,9 +49,9 @@ extern "C" {
  *   This must not be NULL.
  *
  *   This alters state.status:
- *     F_none on success and an IKI vocabulary name was found.
- *     F_none_stop on success and an IKI vocabulary name was found and stop point was reached.
- *     F_none_eos on success and an IKI vocabulary name was found and end of string was reached.
+ *     F_okay on success and an IKI vocabulary name was found.
+ *     F_okay_stop on success and an IKI vocabulary name was found and stop point was reached.
+ *     F_okay_eos on success and an IKI vocabulary name was found and end of string was reached.
  *     F_complete_not_utf_eos on success and EOS was reached, but at an incomplete UTF-8 sequence.
  *     F_complete_not_utf_stop on success and stop point was reached, but at an incomplete UTF-8 sequence.
  *     F_data_not_eos on success and EOS was reached, but there were no IKI vocabularie names found.

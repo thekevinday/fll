@@ -27,7 +27,7 @@ extern "C" {
     f_string_dynamics_resize(0, &setting->objects);
     f_string_dynamics_resize(0, &setting->contents);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_iki_write_setting_delete_
 

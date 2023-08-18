@@ -29,7 +29,7 @@ void test__f_socket_socketss_increase__returns_data_not(void **state) {
   {
     const f_status_t status = f_socketss_resize(length, &data);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(data.used, 0);
     assert_int_equal(data.size, length);
   }
@@ -53,7 +53,7 @@ void test__f_socket_socketss_increase__works(void **state) {
   {
     const f_status_t status = f_socketss_resize(length, &data);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(data.used, 0);
     assert_int_equal(data.size, length);
   }
@@ -63,7 +63,7 @@ void test__f_socket_socketss_increase__works(void **state) {
 
     const f_status_t status = f_socketss_increase(length, &data);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(data.used, length);
     assert_in_range(data.size, length + 1, length + 1 + F_memory_default_allocation_small_d);
   }

@@ -24,7 +24,7 @@ extern "C" {
  *   The file.stream is set to NULL, on both success or on failure.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_stream_not if file.stream is NULL.
  *
  *   F_access_denied (with error bit) on access denied.
@@ -59,7 +59,7 @@ extern "C" {
  *   The file.id is updated with the file descriptor, if necessary and able.
  *
  * @return
- *   F_none is returned on success.
+ *   F_okay is returned on success.
  *   F_stream_not if file.stream is NULL.
  *   F_file_descriptor_not if file.id is -1.
  *
@@ -88,7 +88,7 @@ extern "C" {
  *   The file to lock.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_stream_not if file.stream is NULL.
  *
  * @see flockfile()
@@ -106,7 +106,7 @@ extern "C" {
  *   The file to lock.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_busy on success, but the file.stream is already locked.
  *   F_stream_not if file.stream is NULL.
  *
@@ -145,7 +145,7 @@ extern "C" {
  *   The file.id is updated with the file descriptor, if necessary and able.
  *
  * @return
- *   F_none is returned on success.
+ *   F_okay is returned on success.
  *   F_data_not if both path.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
@@ -185,7 +185,7 @@ extern "C" {
  *   The file with a valid file descriptor (file.id).
  *
  * @return
- *   F_none is returned on success.
+ *   F_okay is returned on success.
  *   F_file_descriptor_not if file.id is -1.
  *
  *   F_access_denied (with error bit) on access denied.
@@ -223,7 +223,7 @@ extern "C" {
  *   The contents of the file is appended into this buffer.
  *
  * @return
- *   F_none_eof on success and EOF was reached.
+ *   F_okay_eof on success and EOF was reached.
  *   F_stream_not if file.stream is NULL.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the read would result in a blocking operation.
@@ -259,8 +259,8 @@ extern "C" {
  *   The contents of the file is appended into this buffer.
  *
  * @return
- *   F_none on success.
- *   F_none_eof on success and EOF was reached.
+ *   F_okay on success.
+ *   F_okay_eof on success and EOF was reached.
  *   F_stream_not if file.stream is NULL.
  *
  *   F_error (with error bit) if the file is already in the error state at the start of this function.
@@ -297,8 +297,8 @@ extern "C" {
  *   The buffer the file is being read into.
  *
  * @return
- *   F_none_eof on success and EOF was reached.
- *   F_none_stop on success and total was reached.
+ *   F_okay_eof on success and EOF was reached.
+ *   F_okay_stop on success and total was reached.
  *   F_data_not if total is 0.
  *   F_stream_not if file.stream is NULL.
  *
@@ -340,7 +340,7 @@ extern "C" {
  *   The file.stream is updated, if necessary.
  *
  * @return
- *   F_none is returned on success.
+ *   F_okay is returned on success.
  *   F_data_not if both path.used and mode.used are 0.
  *
  *   F_access_denied (with error bit) on access denied.
@@ -376,7 +376,7 @@ extern "C" {
  *   The file to unlock.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_stream_not if file.stream is NULL.
  *
  * @see funlockfile()
@@ -399,9 +399,9 @@ extern "C" {
  *   Set to NULL to not use.
  *
  * @return
- *   F_none on success.
- *   F_none_eof when the file stream is at the end of the file.
- *   F_none_stop on success but no data was written (written == 0) (not an error and often happens if file type is not a regular file).
+ *   F_okay on success.
+ *   F_okay_eof when the file stream is at the end of the file.
+ *   F_okay_stop on success but no data was written (written == 0) (not an error and often happens if file type is not a regular file).
  *   F_data_not on success but buffer.used is 0.
  *   F_stream_not if file.stream is NULL.
  *
@@ -435,9 +435,9 @@ extern "C" {
  *   Set to NULL to not use.
  *
  * @return
- *   F_none on success.
- *   F_none_eof when the file stream is at the end of the file.
- *   F_none_stop on success but no data was written (written == 0) (not an error and often happens if file type is not a regular file).
+ *   F_okay on success.
+ *   F_okay_eof when the file stream is at the end of the file.
+ *   F_okay_stop on success but no data was written (written == 0) (not an error and often happens if file type is not a regular file).
  *   F_data_not on success but buffer.used is 0.
  *   F_stream_not if file.stream is NULL.
  *
@@ -471,10 +471,10 @@ extern "C" {
  *   Set to NULL to not use..
  *
  * @return
- *   F_none on success.
- *   F_none_eof when the file stream is at the end of the file.
- *   F_none_eos on success but range.stop exceeded buffer.used (only wrote up to buffer.used).
- *   F_none_stop on success but no data was written (written == 0) (not an error and often happens if file type is not a regular file).
+ *   F_okay on success.
+ *   F_okay_eof when the file stream is at the end of the file.
+ *   F_okay_eos on success but range.stop exceeded buffer.used (only wrote up to buffer.used).
+ *   F_okay_stop on success but no data was written (written == 0) (not an error and often happens if file type is not a regular file).
  *   F_data_not on success but either buffer.used or total is 0.
  *   F_stream_not if file.stream is NULL.
  *
@@ -507,9 +507,9 @@ extern "C" {
  *   Set to NULL to not use.
  *
  * @return
- *   F_none on success.
- *   F_none_stop on success but no data was written (written == 0) (not an error and often happens if file type is not a regular file).
- *   F_none_eos on success but range.stop exceeded buffer.used (only wrote up to buffer.used).
+ *   F_okay on success.
+ *   F_okay_stop on success but no data was written (written == 0) (not an error and often happens if file type is not a regular file).
+ *   F_okay_eos on success but range.stop exceeded buffer.used (only wrote up to buffer.used).
  *   F_stream_not if file.stream is NULL.
  *
  *   F_file_write (with error bit) on error during file write.

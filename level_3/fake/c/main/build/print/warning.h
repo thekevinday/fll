@@ -39,7 +39,7 @@ extern "C" {
  *   The name for the third parameter (the fallback).
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.
@@ -67,7 +67,7 @@ extern "C" {
  *   The value being defaulted to.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.
@@ -97,7 +97,7 @@ extern "C" {
  *   The name for the language.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.
@@ -125,7 +125,7 @@ extern "C" {
  *   The value being defaulted to.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  * @see f_file_stream_lock()
@@ -153,7 +153,7 @@ extern "C" {
  *   The name for the language.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  * @see fake_print_context_wrapped_parameters()
@@ -179,7 +179,7 @@ extern "C" {
  *   The value being defaulted to.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  * @see f_file_stream_lock()

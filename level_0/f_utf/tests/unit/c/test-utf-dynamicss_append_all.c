@@ -20,7 +20,7 @@ void test__f_utf_dynamicss_append_all__works(void **state) {
   {
     f_status_t status = f_utf_string_dynamicss_resize(length_outer, &source);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(source.used, 0);
     assert_int_equal(source.size, length_outer);
 
@@ -30,7 +30,7 @@ void test__f_utf_dynamicss_append_all__works(void **state) {
 
       status = f_utf_string_dynamics_resize(length_inner, &source.array[source.used]);
 
-      assert_int_equal(status, F_none);
+      assert_int_equal(status, F_okay);
       assert_int_equal(source.array[source.used].used, 0);
       assert_int_equal(source.array[source.used].size, length_inner);
 
@@ -38,7 +38,7 @@ void test__f_utf_dynamicss_append_all__works(void **state) {
 
         status = f_utf_string_dynamic_append(test_names[i], &source.array[source.used].array[i]);
 
-        assert_int_equal(status, F_none);
+        assert_int_equal(status, F_okay);
         assert_int_equal(source.array[source.used].array[i].used, test_names[i].used);
 
         for (f_number_unsigned_t j = 0; j < source.array[source.used].array[i].used; ++j) {
@@ -53,7 +53,7 @@ void test__f_utf_dynamicss_append_all__works(void **state) {
   {
     const f_status_t status = f_utf_string_dynamicss_append_all(source, &destination);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(destination.used, source.used);
 
     for (f_number_unsigned_t j = 0; j < length_outer; ++j) {
@@ -100,7 +100,7 @@ void test__f_utf_dynamicss_append_all__returns_data_not(void **state) {
   {
     const f_status_t status = f_utf_string_dynamicss_resize(length, &source);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(source.used, 0);
     assert_int_equal(source.size, length);
   }

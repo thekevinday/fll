@@ -29,7 +29,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fss_identify_print_data_id_
 
@@ -42,7 +42,7 @@ extern "C" {
 
     fll_print_format("%ul%r", print->to, main->setting.total, f_string_eol_s);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fss_identify_print_data_total_
 

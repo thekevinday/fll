@@ -29,7 +29,7 @@ extern "C" {
 
     f_file_stream_unlock(main->program.output.to);
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
   }
 #endif // _di_status_code_process_check_
 
@@ -43,7 +43,7 @@ extern "C" {
 
       main->setting.state.status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, value, &number);
 
-      if (main->setting.state.status == F_none) {
+      if (main->setting.state.status == F_okay) {
         status_code_print_data_context_value(&main->program.output, main->program.context.set.error, status_code_invalid_name_s);
 
         main->setting.state.status = F_status_set_error(F_parameter);
@@ -58,7 +58,7 @@ extern "C" {
       }
     }
 
-    f_status_t code = F_none;
+    f_status_t code = F_okay;
 
     main->setting.state.status = main->setting.status_string_from(value, &code);
 
@@ -76,7 +76,7 @@ extern "C" {
     if (main->setting.state.status == F_data) {
       status_code_print_data_context_value(&main->program.output, main->program.context.set.error, status_code_unknown_code_s);
 
-      main->setting.state.status = F_none;
+      main->setting.state.status = F_okay;
 
       return;
     }
@@ -91,7 +91,7 @@ extern "C" {
 
     status_code_print_data_code(&main->program.output, code);
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
   }
 #endif // _di_status_code_process_number_
 
@@ -124,7 +124,7 @@ extern "C" {
 
     status_code_print_data_context_value(&main->program.output, f_color_set_empty_s, name);
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
   }
 #endif // _di_status_code_process_normal_
 

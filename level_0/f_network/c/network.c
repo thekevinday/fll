@@ -12,7 +12,7 @@ extern "C" {
 
     *to = htonl(from);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_network_from_host_long_
 
@@ -24,7 +24,7 @@ extern "C" {
 
     *to = htons(from);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_network_from_host_short_
 
@@ -53,7 +53,7 @@ extern "C" {
 
     memcpy((void *) to, (void *) result, sizeof(struct hostent));
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_network_from_ip_address_
 
@@ -80,7 +80,7 @@ extern "C" {
 
     memcpy((void *) to, (void *) result, sizeof(struct hostent));
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_network_from_ip_name_
 
@@ -98,7 +98,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_network_from_ip_string_
 
@@ -430,7 +430,7 @@ extern "C" {
 
     *to = ntohl(from);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_network_to_host_long_
 
@@ -442,7 +442,7 @@ extern "C" {
 
     *to = ntohs(from);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_network_to_host_short_
 
@@ -473,7 +473,7 @@ extern "C" {
     // The string should be NULL terminated, but in case it is not, ensure one always exists.
     to->string[to->used] = 0;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_network_to_ip_string_
 

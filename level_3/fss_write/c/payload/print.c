@@ -16,7 +16,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fss_write_payload_print_error_payload_not_last_
 
@@ -48,7 +48,7 @@ extern "C" {
     f_file_stream_flush(print->to);
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fss_write_payload_print_help_
 

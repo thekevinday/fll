@@ -25,7 +25,7 @@ extern "C" {
  *   This does not alter print.custom.setting.state.status.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.
@@ -54,7 +54,7 @@ extern "C" {
  *   A valid file type code from the fll_error_file_type enum.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.
@@ -78,7 +78,7 @@ extern "C" {
  *   A string representing the name of the status code from header.status.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.
@@ -100,7 +100,7 @@ extern "C" {
  *   A string representing the name of the status code from header.status.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.
@@ -117,7 +117,7 @@ extern "C" {
  *   This does not alter print.custom.setting.state.status.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.
@@ -137,7 +137,7 @@ extern "C" {
  *   The parameter representing an action.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.
@@ -157,7 +157,7 @@ extern "C" {
  *   The parameter representing an action.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.
@@ -177,7 +177,7 @@ extern "C" {
  *   The parameter representing an action.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.
@@ -197,7 +197,7 @@ extern "C" {
  *   The parameter representing an action.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.
@@ -217,7 +217,7 @@ extern "C" {
  *   The parameter representing an action.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.
@@ -237,7 +237,7 @@ extern "C" {
  *   The parameter representing an action.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.
@@ -259,7 +259,7 @@ extern "C" {
  *   The additional parameter in which is requiring additional arguments that are not met.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.
@@ -279,7 +279,7 @@ extern "C" {
  *   The parameter representing an action.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.
@@ -301,7 +301,7 @@ extern "C" {
  *   The additional parameter in which is requiring additional arguments that are not met.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.
@@ -322,7 +322,7 @@ extern "C" {
  *   The additional parameter in which is requiring additional arguments that are not met.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.
@@ -342,7 +342,7 @@ extern "C" {
  *   The parameter name.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.
@@ -362,7 +362,7 @@ extern "C" {
  *   The parameter name.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.
@@ -380,7 +380,7 @@ extern "C" {
  *   This does not alter print.custom.setting.state.status.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.
@@ -398,7 +398,7 @@ extern "C" {
  *   This does not alter print.custom.setting.state.status.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.
@@ -416,7 +416,7 @@ extern "C" {
  *   This does not alter print.custom.setting.state.status.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.
@@ -436,7 +436,7 @@ extern "C" {
  *   The socket file path.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.
@@ -456,7 +456,7 @@ extern "C" {
  *   The socket file path.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.
@@ -476,7 +476,7 @@ extern "C" {
  *   The socket file path.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.

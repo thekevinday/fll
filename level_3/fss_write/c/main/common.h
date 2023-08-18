@@ -31,7 +31,7 @@ extern "C" {
  *   The main program settings.
  *
  *   This alters setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *     F_data_not on success but nothing was provided to operate with.
  *
  *     F_parameter (with error bit) on parameter error.
@@ -43,7 +43,7 @@ extern "C" {
  *     Errors (with error bit) from: fll_program_parameter_process_verbosity_standard().
  * @param callback
  *   (optional) Designate a function to call after performing the initial processing, but before printing help.
- *   If the function returns F_done, then this function immediately returns, resetting status to F_none.
+ *   If the function returns F_done, then this function immediately returns, resetting status to F_okay.
  *   Set to NULL to disable.
  *
  * @see f_console_parameter_process()

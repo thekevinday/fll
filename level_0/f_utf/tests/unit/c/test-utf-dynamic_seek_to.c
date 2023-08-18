@@ -15,7 +15,7 @@ void test__f_utf_dynamic_seek_to__after_newline(void **state) {
 
     const f_status_t status = f_utf_string_dynamic_seek_to(source, to.string[0], &range);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
 
     assert_int_equal(range.start, 3);
     assert_int_equal(range.stop, source.used - 1);
@@ -32,7 +32,7 @@ void test__f_utf_dynamic_seek_to__before_newline(void **state) {
 
     const f_status_t status = f_utf_string_dynamic_seek_to(source, to.string[0], &range);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
 
     assert_int_equal(range.start, 2);
     assert_int_equal(range.stop, source.used - 1);
@@ -63,7 +63,7 @@ void test__f_utf_dynamic_seek_to__returns_none_eos(void **state) {
 
     const f_status_t status = f_utf_string_dynamic_seek_to(source, to.string[0], &range);
 
-    assert_int_equal(status, F_none_eos);
+    assert_int_equal(status, F_okay_eos);
 
     assert_int_equal(range.start, source.used);
     assert_int_equal(range.stop, source.used - 1);
@@ -80,7 +80,7 @@ void test__f_utf_dynamic_seek_to__returns_none_stop(void **state) {
 
     const f_status_t status = f_utf_string_dynamic_seek_to(source, to.string[0], &range);
 
-    assert_int_equal(status, F_none_stop);
+    assert_int_equal(status, F_okay_stop);
 
     assert_int_equal(range.start, source.used - 1);
     assert_int_equal(range.stop, source.used - 2);
@@ -98,7 +98,7 @@ void test__f_utf_dynamic_seek_to__works(void **state) {
 
     const f_status_t status = f_utf_string_dynamic_seek_to(source, to.string[0], &range);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
 
     assert_int_equal(range.start, 3);
     assert_int_equal(range.stop, source.used - 1);
@@ -111,7 +111,7 @@ void test__f_utf_dynamic_seek_to__works(void **state) {
 
     const f_status_t status = f_utf_string_dynamic_seek_to(source, to.string[0], &range);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
 
     assert_int_equal(range.start, 2);
     assert_int_equal(range.stop, source.used - 1);

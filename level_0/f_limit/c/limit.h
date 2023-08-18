@@ -50,7 +50,7 @@ extern "C" {
  *   If both value_next and value_current are non-zero, then this represents the value prior to the assignment of value_next.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_address_not (with error bit) if a pointer is outside of valid address space.
  *   F_found_not (with error bit) if no process by the given PID was found.
  *   F_parameter (with error bit) if a parameter is invalid.

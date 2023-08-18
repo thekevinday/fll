@@ -26,7 +26,7 @@ extern "C" {
  *   The maps to adjust.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_array_too_large (with error bit) if the combined array is too large.
  *
@@ -51,7 +51,7 @@ extern "C" {
  *   The destination maps the source is appended onto.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_array_too_large (with error bit) if the combined array is too large.
  *
@@ -78,7 +78,7 @@ extern "C" {
  *   The maps to resize.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_array_too_large (with error bit) if the combined array is too large.
  *

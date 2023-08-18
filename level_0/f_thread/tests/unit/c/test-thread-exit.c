@@ -23,7 +23,7 @@ void test__f_thread_exit__works(void **state) {
 
     const f_status_t status = f_thread_exit(&result);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(result, 1);
   }
 }

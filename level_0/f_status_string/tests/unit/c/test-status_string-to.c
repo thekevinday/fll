@@ -97,7 +97,14 @@ void test__f_status_string_to__works(void **state) {
     F_signal_reserved_63,
     F_signal_reserved_64,
     F_okay,
+    F_okay_block,
+    F_okay_eoa,
+    F_okay_eof,
+    F_okay_eol,
+    F_okay_eos,
     F_okay_not,
+    F_okay_start,
+    F_okay_stop,
     F_abort,
     F_abort_not,
     F_absolute,
@@ -501,13 +508,6 @@ void test__f_status_string_to__works(void **state) {
     F_complete_not_utf_eos,
     F_complete_not_utf_start,
     F_complete_not_utf_stop,
-    F_none_block,
-    F_none_eoa,
-    F_none_eof,
-    F_none_eol,
-    F_none_eos,
-    F_none_start,
-    F_none_stop,
     F_data,
     F_data_not,
     F_data_not_block,
@@ -659,7 +659,7 @@ void test__f_status_string_to__works(void **state) {
   const f_string_static_t status_strings[] = {
     f_status_false_s,
     f_status_true_s,
-    f_status_signal_hangup_s,
+    f_status_true_s, // This is F_signal_hangup, but it overlaps and falls back to F_true.
     f_status_signal_interrupt_s,
     f_status_signal_quit_s,
     f_status_signal_illegal_s,
@@ -724,7 +724,14 @@ void test__f_status_string_to__works(void **state) {
     f_status_signal_reserved_63_s,
     f_status_signal_reserved_64_s,
     f_status_okay_s,
+    f_status_okay_block_s,
+    f_status_okay_eoa_s,
+    f_status_okay_eof_s,
+    f_status_okay_eol_s,
+    f_status_okay_eos_s,
     f_status_okay_not_s,
+    f_status_okay_start_s,
+    f_status_okay_stop_s,
     f_status_abort_s,
     f_status_abort_not_s,
     f_status_absolute_s,
@@ -1128,13 +1135,6 @@ void test__f_status_string_to__works(void **state) {
     f_status_complete_not_utf_eos_s,
     f_status_complete_not_utf_start_s,
     f_status_complete_not_utf_stop_s,
-    f_status_none_block_s,
-    f_status_none_eoa_s,
-    f_status_none_eof_s,
-    f_status_none_eol_s,
-    f_status_none_eos_s,
-    f_status_none_start_s,
-    f_status_none_stop_s,
     f_status_data_s,
     f_status_data_not_s,
     f_status_data_not_block_s,
@@ -1289,7 +1289,7 @@ void test__f_status_string_to__works(void **state) {
 
     const f_status_t status = f_status_string_to(statuss[i], &result);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(result.used, status_strings[i].used);
     assert_string_equal(result.string, status_strings[i].string);
   } // for

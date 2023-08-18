@@ -15,7 +15,7 @@ void test__f_string_dynamic_mash__works(void **state) {
   {
     const f_status_t status = f_string_dynamic_mash(glue, source, &destination);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(destination.used, source.used);
 
     assert_string_equal(destination.string, source.string);
@@ -26,7 +26,7 @@ void test__f_string_dynamic_mash__works(void **state) {
   {
     const f_status_t status = f_string_dynamic_mash(glue, source, &destination);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(destination.used, expected.used);
 
     assert_string_equal(destination.string, expected.string);

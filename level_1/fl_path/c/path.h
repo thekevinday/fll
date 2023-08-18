@@ -44,7 +44,7 @@ extern "C" {
  *   This will be NULL terminated at canonical->used + 1.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   Errors (with error bit) from: f_path_current().
  *   Errors (with error bit) from: f_string_append().

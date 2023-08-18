@@ -26,7 +26,7 @@ void test__f_directory_listingss_delete_callback__fails(void **state) {
 
   {
     will_return(__wrap_f_string_dynamics_resize, false);
-    will_return(__wrap_f_string_dynamics_resize, F_none);
+    will_return(__wrap_f_string_dynamics_resize, F_okay);
 
     will_return(__wrap_f_string_dynamics_resize, true);
     will_return(__wrap_f_string_dynamics_resize, F_status_set_error(F_failure));
@@ -38,10 +38,10 @@ void test__f_directory_listingss_delete_callback__fails(void **state) {
 
   {
     will_return(__wrap_f_string_dynamics_resize, false);
-    will_return(__wrap_f_string_dynamics_resize, F_none);
+    will_return(__wrap_f_string_dynamics_resize, F_okay);
 
     will_return(__wrap_f_string_dynamics_resize, false);
-    will_return(__wrap_f_string_dynamics_resize, F_none);
+    will_return(__wrap_f_string_dynamics_resize, F_okay);
 
     will_return(__wrap_f_string_dynamics_resize, true);
     will_return(__wrap_f_string_dynamics_resize, F_status_set_error(F_failure));
@@ -53,13 +53,13 @@ void test__f_directory_listingss_delete_callback__fails(void **state) {
 
   {
     will_return(__wrap_f_string_dynamics_resize, false);
-    will_return(__wrap_f_string_dynamics_resize, F_none);
+    will_return(__wrap_f_string_dynamics_resize, F_okay);
 
     will_return(__wrap_f_string_dynamics_resize, false);
-    will_return(__wrap_f_string_dynamics_resize, F_none);
+    will_return(__wrap_f_string_dynamics_resize, F_okay);
 
     will_return(__wrap_f_string_dynamics_resize, false);
-    will_return(__wrap_f_string_dynamics_resize, F_none);
+    will_return(__wrap_f_string_dynamics_resize, F_okay);
 
     will_return(__wrap_f_string_dynamics_resize, true);
     will_return(__wrap_f_string_dynamics_resize, F_status_set_error(F_failure));
@@ -71,16 +71,16 @@ void test__f_directory_listingss_delete_callback__fails(void **state) {
 
   {
     will_return(__wrap_f_string_dynamics_resize, false);
-    will_return(__wrap_f_string_dynamics_resize, F_none);
+    will_return(__wrap_f_string_dynamics_resize, F_okay);
 
     will_return(__wrap_f_string_dynamics_resize, false);
-    will_return(__wrap_f_string_dynamics_resize, F_none);
+    will_return(__wrap_f_string_dynamics_resize, F_okay);
 
     will_return(__wrap_f_string_dynamics_resize, false);
-    will_return(__wrap_f_string_dynamics_resize, F_none);
+    will_return(__wrap_f_string_dynamics_resize, F_okay);
 
     will_return(__wrap_f_string_dynamics_resize, false);
-    will_return(__wrap_f_string_dynamics_resize, F_none);
+    will_return(__wrap_f_string_dynamics_resize, F_okay);
 
     will_return(__wrap_f_string_dynamics_resize, true);
     will_return(__wrap_f_string_dynamics_resize, F_status_set_error(F_failure));
@@ -92,19 +92,19 @@ void test__f_directory_listingss_delete_callback__fails(void **state) {
 
   {
     will_return(__wrap_f_string_dynamics_resize, false);
-    will_return(__wrap_f_string_dynamics_resize, F_none);
+    will_return(__wrap_f_string_dynamics_resize, F_okay);
 
     will_return(__wrap_f_string_dynamics_resize, false);
-    will_return(__wrap_f_string_dynamics_resize, F_none);
+    will_return(__wrap_f_string_dynamics_resize, F_okay);
 
     will_return(__wrap_f_string_dynamics_resize, false);
-    will_return(__wrap_f_string_dynamics_resize, F_none);
+    will_return(__wrap_f_string_dynamics_resize, F_okay);
 
     will_return(__wrap_f_string_dynamics_resize, false);
-    will_return(__wrap_f_string_dynamics_resize, F_none);
+    will_return(__wrap_f_string_dynamics_resize, F_okay);
 
     will_return(__wrap_f_string_dynamics_resize, false);
-    will_return(__wrap_f_string_dynamics_resize, F_none);
+    will_return(__wrap_f_string_dynamics_resize, F_okay);
 
     will_return(__wrap_f_string_dynamics_resize, true);
     will_return(__wrap_f_string_dynamics_resize, F_status_set_error(F_failure));
@@ -116,22 +116,22 @@ void test__f_directory_listingss_delete_callback__fails(void **state) {
 
   {
     will_return(__wrap_f_string_dynamics_resize, false);
-    will_return(__wrap_f_string_dynamics_resize, F_none);
+    will_return(__wrap_f_string_dynamics_resize, F_okay);
 
     will_return(__wrap_f_string_dynamics_resize, false);
-    will_return(__wrap_f_string_dynamics_resize, F_none);
+    will_return(__wrap_f_string_dynamics_resize, F_okay);
 
     will_return(__wrap_f_string_dynamics_resize, false);
-    will_return(__wrap_f_string_dynamics_resize, F_none);
+    will_return(__wrap_f_string_dynamics_resize, F_okay);
 
     will_return(__wrap_f_string_dynamics_resize, false);
-    will_return(__wrap_f_string_dynamics_resize, F_none);
+    will_return(__wrap_f_string_dynamics_resize, F_okay);
 
     will_return(__wrap_f_string_dynamics_resize, false);
-    will_return(__wrap_f_string_dynamics_resize, F_none);
+    will_return(__wrap_f_string_dynamics_resize, F_okay);
 
     will_return(__wrap_f_string_dynamics_resize, false);
-    will_return(__wrap_f_string_dynamics_resize, F_none);
+    will_return(__wrap_f_string_dynamics_resize, F_okay);
 
     will_return(__wrap_f_string_dynamics_resize, true);
     will_return(__wrap_f_string_dynamics_resize, F_status_set_error(F_failure));
@@ -143,25 +143,25 @@ void test__f_directory_listingss_delete_callback__fails(void **state) {
 
   {
     will_return(__wrap_f_string_dynamics_resize, false);
-    will_return(__wrap_f_string_dynamics_resize, F_none);
+    will_return(__wrap_f_string_dynamics_resize, F_okay);
 
     will_return(__wrap_f_string_dynamics_resize, false);
-    will_return(__wrap_f_string_dynamics_resize, F_none);
+    will_return(__wrap_f_string_dynamics_resize, F_okay);
 
     will_return(__wrap_f_string_dynamics_resize, false);
-    will_return(__wrap_f_string_dynamics_resize, F_none);
+    will_return(__wrap_f_string_dynamics_resize, F_okay);
 
     will_return(__wrap_f_string_dynamics_resize, false);
-    will_return(__wrap_f_string_dynamics_resize, F_none);
+    will_return(__wrap_f_string_dynamics_resize, F_okay);
 
     will_return(__wrap_f_string_dynamics_resize, false);
-    will_return(__wrap_f_string_dynamics_resize, F_none);
+    will_return(__wrap_f_string_dynamics_resize, F_okay);
 
     will_return(__wrap_f_string_dynamics_resize, false);
-    will_return(__wrap_f_string_dynamics_resize, F_none);
+    will_return(__wrap_f_string_dynamics_resize, F_okay);
 
     will_return(__wrap_f_string_dynamics_resize, false);
-    will_return(__wrap_f_string_dynamics_resize, F_none);
+    will_return(__wrap_f_string_dynamics_resize, F_okay);
 
     will_return(__wrap_f_string_dynamics_resize, true);
     will_return(__wrap_f_string_dynamics_resize, F_status_set_error(F_failure));
@@ -173,28 +173,28 @@ void test__f_directory_listingss_delete_callback__fails(void **state) {
 
   {
     will_return(__wrap_f_string_dynamics_resize, false);
-    will_return(__wrap_f_string_dynamics_resize, F_none);
+    will_return(__wrap_f_string_dynamics_resize, F_okay);
 
     will_return(__wrap_f_string_dynamics_resize, false);
-    will_return(__wrap_f_string_dynamics_resize, F_none);
+    will_return(__wrap_f_string_dynamics_resize, F_okay);
 
     will_return(__wrap_f_string_dynamics_resize, false);
-    will_return(__wrap_f_string_dynamics_resize, F_none);
+    will_return(__wrap_f_string_dynamics_resize, F_okay);
 
     will_return(__wrap_f_string_dynamics_resize, false);
-    will_return(__wrap_f_string_dynamics_resize, F_none);
+    will_return(__wrap_f_string_dynamics_resize, F_okay);
 
     will_return(__wrap_f_string_dynamics_resize, false);
-    will_return(__wrap_f_string_dynamics_resize, F_none);
+    will_return(__wrap_f_string_dynamics_resize, F_okay);
 
     will_return(__wrap_f_string_dynamics_resize, false);
-    will_return(__wrap_f_string_dynamics_resize, F_none);
+    will_return(__wrap_f_string_dynamics_resize, F_okay);
 
     will_return(__wrap_f_string_dynamics_resize, false);
-    will_return(__wrap_f_string_dynamics_resize, F_none);
+    will_return(__wrap_f_string_dynamics_resize, F_okay);
 
     will_return(__wrap_f_string_dynamics_resize, false);
-    will_return(__wrap_f_string_dynamics_resize, F_none);
+    will_return(__wrap_f_string_dynamics_resize, F_okay);
 
     will_return(__wrap_f_memory_array_resize, true);
     will_return(__wrap_f_memory_array_resize, F_status_set_error(F_failure));
@@ -216,40 +216,40 @@ void test__f_directory_listingss_delete_callback__works(void **state) {
 
   {
     f_status_t status = f_memory_array_resize(length, sizeof(f_directory_listings_t), (void **) &datass.array, &datass.used, &datass.size);
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
 
     status = f_memory_array_resize(1, sizeof(f_directory_listing_t), (void **) &datass.array[0].array, &datass.array[0].used, &datass.array[0].size);
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
 
     status = f_string_dynamics_resize(1, &datass.array[0].array[0].block);
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
 
     status = f_string_dynamics_resize(1, &datass.array[0].array[0].character);
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
 
     status = f_string_dynamics_resize(1, &datass.array[0].array[0].directory);
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
 
     status = f_string_dynamics_resize(1, &datass.array[0].array[0].regular);
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
 
     status = f_string_dynamics_resize(1, &datass.array[0].array[0].link);
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
 
     status = f_string_dynamics_resize(1, &datass.array[0].array[0].fifo);
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
 
     status = f_string_dynamics_resize(1, &datass.array[0].array[0].socket);
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
 
     status = f_string_dynamics_resize(1, &datass.array[0].array[0].unknown);
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 
   {
     const f_status_t status = f_directory_listingss_delete_callback(0, length, (void *) datass.array);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(datass.array[0].size, 0);
   }
 

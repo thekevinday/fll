@@ -67,7 +67,7 @@ void test__f_capability_flag_get__works(void **state) {
     #if defined(_di_libcap_)
       assert_int_equal(F_status_set_fine(status), F_implement_not);
     #else
-      assert_int_equal(status, F_none);
+      assert_int_equal(status, F_okay);
     #endif // defined(_di_libcap_)
   }
 }

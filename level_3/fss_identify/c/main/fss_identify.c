@@ -21,7 +21,7 @@ extern "C" {
       fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
     }
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
 
     if (main->setting.flag & (fss_identify_main_flag_help_e | fss_identify_main_flag_version_e | fss_identify_main_flag_copyright_e)) {
       if (main->setting.flag & fss_identify_main_flag_help_e) {
@@ -92,7 +92,7 @@ extern "C" {
     if (F_status_set_fine(main->setting.state.status) == F_interrupt) return;
     if (F_status_is_error(main->setting.state.status)) return;
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
   }
 #endif // _di_fss_identify_main_
 

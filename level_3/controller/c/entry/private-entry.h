@@ -56,7 +56,7 @@ extern "C" {
  *   The processed actions.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   Errors (with error bit) from: controller_entry_actions_increase_by().
  *   Errors (with error bit) from: f_fss_count_lines().
@@ -90,7 +90,7 @@ extern "C" {
  *   The main/global cache to use.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_recurse (with error bit) on a recursion error.
  *   F_valid_not (with error bit) on invalid entry item, entry item action, or entry item action value.
  *
@@ -122,7 +122,7 @@ extern "C" {
  *   If FALSE, then this operate as an exit.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_execute on success and program exiting (scripts may result in this) or when execute would have been executed but is instead simulated.
  *
  *   F_require (with error bit) if a required Item failed.
@@ -156,7 +156,7 @@ extern "C" {
  *   This should be the cache global.thread->asynchronouss.array[global.id].cache.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_file_found_not on file not found for a an exit file (is_entry is FALSE).
  *
  *   Errors (with error bit) from: controller_entry_actions_read().

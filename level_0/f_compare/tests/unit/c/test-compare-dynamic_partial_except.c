@@ -265,7 +265,7 @@ void test__f_compare_dynamic_partial_except__works(void **state) {
   const f_number_unsigneds_t excepts_1 = macro_f_number_unsigneds_t_initialize_1(except_1, 0, 4);
   const f_number_unsigneds_t excepts_2 = f_number_unsigneds_t_initialize;
   uint8_t i = 0;
-  f_status_t status = F_none;
+  f_status_t status = F_okay;
 
   // First eight are against empty strings for first argument.
   for (; i < 8; ++i) {

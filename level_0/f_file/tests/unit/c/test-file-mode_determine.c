@@ -72,7 +72,7 @@ void test__f_file_mode_determine__works_basic(void **state) {
 
       const f_status_t status = f_file_mode_determine(existing, changes[i], 0, F_false, &changed);
 
-      assert_int_equal(status, F_none);
+      assert_int_equal(status, F_okay);
       assert_int_equal(changed, changeds[i]);
     } // for
   }
@@ -128,7 +128,7 @@ void test__f_file_mode_determine__works_basic(void **state) {
 
       const f_status_t status = f_file_mode_determine(existing, changes[i], 0, F_true, &changed);
 
-      assert_int_equal(status, F_none);
+      assert_int_equal(status, F_okay);
       assert_int_equal(changed, changeds[i]);
     } // for
   }
@@ -189,7 +189,7 @@ void test__f_file_mode_determine__works_basic_replace(void **state) {
 
       const f_status_t status = f_file_mode_determine(existing, changes[i], F_file_mode_t_replace_all_d, F_false, &changed);
 
-      assert_int_equal(status, F_none);
+      assert_int_equal(status, F_okay);
       assert_int_equal(changed, changeds[i]);
     } // for
   }
@@ -245,7 +245,7 @@ void test__f_file_mode_determine__works_basic_replace(void **state) {
 
       const f_status_t status = f_file_mode_determine(existing, changes[i], F_file_mode_t_replace_all_d, F_true, &changed);
 
-      assert_int_equal(status, F_none);
+      assert_int_equal(status, F_okay);
       assert_int_equal(changed, changeds[i]);
     } // for
   }

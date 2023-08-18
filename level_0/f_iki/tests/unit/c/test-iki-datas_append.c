@@ -16,22 +16,22 @@ void test__f_iki_datas_append__works(void **state) {
 
     f_status_t status = f_string_ranges_resize(length, &source.content);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(source.content.size, length);
 
     status = f_memory_array_resize(length, sizeof(f_number_unsigned_t), (void **) &source.delimits.array, &source.delimits.used, &source.delimits.size);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(source.delimits.size, length);
 
     status = f_string_ranges_resize(length, &source.variable);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(source.variable.size, length);
 
     status = f_string_ranges_resize(length, &source.vocabulary);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(source.vocabulary.size, length);
 
     for (; source.content.used < length; ++i) {
@@ -60,7 +60,7 @@ void test__f_iki_datas_append__works(void **state) {
   {
     const f_status_t status = f_iki_datas_append(source, &destination);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(destination.used, 1);
     assert_int_equal(destination.array[0].content.used, source.content.used);
     assert_int_equal(destination.array[0].delimits.used, source.delimits.used);

@@ -28,7 +28,7 @@ extern "C" {
           return string;
         }
 
-        *status = F_none;
+        *status = F_okay;
 
         uint8_t base = 10;
         uint32_t flag = 0;
@@ -1204,7 +1204,7 @@ extern "C" {
     f_number_unsigned_t in = 0;
     f_number_unsigned_t in2 = 0;
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     // Skip past leading white space.
     while (i < stop) {
@@ -1307,7 +1307,7 @@ extern "C" {
       if (status == F_true || !string[i]) {
         previous = i;
         j = i + macro_f_utf_byte_width(string[i]);
-        status = F_none;
+        status = F_okay;
 
         while (j < stop) {
 
@@ -1352,7 +1352,7 @@ extern "C" {
 
           // Search for the next non-NULL character and check if it is a combining character.
           if (status == F_true) {
-            status = F_none;
+            status = F_okay;
 
             for (k = j + macro_f_utf_byte_width(string[j]); k < stop; k += macro_f_utf_byte_width(string[k])) {
 
@@ -1457,7 +1457,7 @@ extern "C" {
       i += macro_f_utf_byte_width(string[i]);
     } // while
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_fl_print_format_) || !defined(_di_fl_print_format_convert_) || !defined(_di_fl_print_trim_except_) || !defined(_di_fl_print_trim_except_dynamic_) || !defined(_di_fl_print_trim_except_dynamic_partial_) || !defined(_di_fl_print_trim_except_in_) || !defined(_di_fl_print_trim_except_in_dynamic_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_)
 
@@ -1473,7 +1473,7 @@ extern "C" {
     f_number_unsigned_t in = 0;
     f_number_unsigned_t in2 = 0;
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     // Skip past leading white space.
     while (i < stop) {
@@ -1554,7 +1554,7 @@ extern "C" {
       if (status == F_true || !string[i]) {
         previous = i;
         j = i + macro_f_utf_byte_width(string[i]);
-        status = F_none;
+        status = F_okay;
 
         while (j < stop) {
 
@@ -1592,7 +1592,7 @@ extern "C" {
 
           // Search for the next non-NULL character and check if it is a combining character.
           if (status == F_true) {
-            status = F_none;
+            status = F_okay;
 
             for (k = j + macro_f_utf_byte_width(string[j]); k < stop; k += macro_f_utf_byte_width(string[k])) {
 
@@ -1663,7 +1663,7 @@ extern "C" {
       i += macro_f_utf_byte_width(string[i]);
     } // while
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_fl_print_format_) || !defined(_di_fl_print_format_convert_) || !defined(_di_fl_print_trim_except_raw_) || !defined(_di_fl_print_trim_except_dynamic_raw_) || !defined(_di_fl_print_trim_except_dynamic_partial_raw_) || !defined(_di_fl_print_trim_except_in_raw_) || !defined(_di_fl_print_trim_except_in_dynamic_raw_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_raw_)
 
@@ -1679,7 +1679,7 @@ extern "C" {
     f_number_unsigned_t in = 0;
     f_number_unsigned_t in2 = 0;
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     // Skip past leading white space.
     while (i < stop) {
@@ -1759,7 +1759,7 @@ extern "C" {
       if (status == F_true || !string[i]) {
         previous = j;
         j = i + macro_f_utf_byte_width(string[i]);
-        status = F_none;
+        status = F_okay;
 
         while (j < stop) {
 
@@ -1796,7 +1796,7 @@ extern "C" {
 
           // Search for the next non-NULL character and check if it is a combining character.
           if (status == F_true) {
-            status = F_none;
+            status = F_okay;
 
             for (k = j + macro_f_utf_byte_width(string[j]); k < stop; k += macro_f_utf_byte_width(string[k])) {
 
@@ -1855,7 +1855,7 @@ extern "C" {
             }
 
             i = stop;
-            status = F_none;
+            status = F_okay;
 
             break;
           }
@@ -1924,7 +1924,7 @@ extern "C" {
       i += macro_f_utf_byte_width(string[i]);
     } // while
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_fl_print_format_) || !defined(_di_fl_print_format_convert_) || !defined(_di_fl_print_trim_except_raw_safely_) || !defined(_di_fl_print_trim_except_dynamic_raw_safely_) || !defined(_di_fl_print_trim_except_dynamic_partial_raw_safely_) || !defined(_di_fl_print_trim_except_in_raw_safely_) || !defined(_di_fl_print_trim_except_in_dynamic_raw_safely_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_raw_safely_)
 
@@ -1940,7 +1940,7 @@ extern "C" {
     f_number_unsigned_t in = 0;
     f_number_unsigned_t in2 = 0;
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     // Skip past leading white space.
     while (i < stop) {
@@ -2021,7 +2021,7 @@ extern "C" {
       if (status == F_true || !string[i]) {
         previous = i;
         j = i + macro_f_utf_byte_width(string[i]);
-        status = F_none;
+        status = F_okay;
 
         while (j < stop) {
 
@@ -2059,7 +2059,7 @@ extern "C" {
 
           // Search for the next non-NULL character and check if it is a combining character.
           if (status == F_true) {
-            status = F_none;
+            status = F_okay;
 
             for (k = j + macro_f_utf_byte_width(string[j]); k < stop; k += macro_f_utf_byte_width(string[k])) {
 
@@ -2118,7 +2118,7 @@ extern "C" {
             }
 
             i = stop;
-            status = F_none;
+            status = F_okay;
 
             break;
           }
@@ -2183,7 +2183,7 @@ extern "C" {
       i += macro_f_utf_byte_width(string[i]);
     } // while
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_fl_print_format_) || !defined(_di_fl_print_format_convert_) || !defined(_di_fl_print_trim_except_dynamic_safely_) || !defined(_di_fl_print_trim_except_dynamic_partial_safely_) || !defined(_di_fl_print_trim_except_in_dynamic_safely_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_safely_) || !defined(_di_fl_print_trim_except_in_safely_) || !defined(_di_fl_print_trim_except_safely_)
 
@@ -2195,7 +2195,7 @@ extern "C" {
     f_number_unsigned_t k = 0;
     f_number_unsigned_t previous = 0;
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     // Skip past leading white space.
     while (i < length) {
@@ -2254,7 +2254,7 @@ extern "C" {
       if (status == F_true || !string[i]) {
         previous = i;
         j = i + macro_f_utf_byte_width(string[i]);
-        status = F_none;
+        status = F_okay;
 
         while (j < length) {
 
@@ -2278,7 +2278,7 @@ extern "C" {
 
           // Search for the next non-NULL character and check if it is a combining character.
           if (status == F_true) {
-            status = F_none;
+            status = F_okay;
 
             for (k = j + macro_f_utf_byte_width(string[j]); k < length; k += macro_f_utf_byte_width(string[k])) {
 
@@ -2363,7 +2363,7 @@ extern "C" {
       i += macro_f_utf_byte_width(string[i]);
     } // while
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_fl_print_format_) || !defined(_di_fl_print_format_convert_) || !defined(_di_fl_print_trim_) || !defined(_di_fl_print_trim_dynamic_) || !defined(_di_fl_print_trim_dynamic_partial_)
 
@@ -2375,7 +2375,7 @@ extern "C" {
     f_number_unsigned_t k = 0;
     f_number_unsigned_t previous = 0;
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     // Skip past leading white space.
     while (i < length) {
@@ -2414,7 +2414,7 @@ extern "C" {
       if (status == F_true || !string[i]) {
         previous = i;
         j = i + macro_f_utf_byte_width(string[i]);
-        status = F_none;
+        status = F_okay;
 
         while (j < length) {
 
@@ -2431,7 +2431,7 @@ extern "C" {
 
           // Search for the next non-NULL character and check if it is a combining character.
           if (status == F_true) {
-            status = F_none;
+            status = F_okay;
 
             for (k = j + macro_f_utf_byte_width(string[j]); k < length; k += macro_f_utf_byte_width(string[k])) {
 
@@ -2482,7 +2482,7 @@ extern "C" {
       i += macro_f_utf_byte_width(string[i]);
     } // while
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_fl_print_format_) || !defined(_di_fl_print_format_convert_) || !defined(_di_fl_print_trim_raw_) || !defined(_di_fl_print_trim_dynamic_raw_) || !defined(_di_fl_print_trim_dynamic_partial_raw_)
 
@@ -2494,7 +2494,7 @@ extern "C" {
     f_number_unsigned_t k = 0;
     f_number_unsigned_t previous = 0;
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     // Skip past leading white space.
     while (i < length) {
@@ -2533,7 +2533,7 @@ extern "C" {
       if (status == F_true || !string[i]) {
         previous = i;
         j = i + macro_f_utf_byte_width(string[i]);
-        status = F_none;
+        status = F_okay;
 
         while (j < length) {
 
@@ -2587,7 +2587,7 @@ extern "C" {
             }
 
             i = length;
-            status = F_none;
+            status = F_okay;
 
             break;
           }
@@ -2656,7 +2656,7 @@ extern "C" {
       i += macro_f_utf_byte_width(string[i]);
     } // while
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_fl_print_format_) || !defined(_di_fl_print_format_convert_) || !defined(_di_fl_print_trim_raw_safely_) || !defined(_di_fl_print_trim_dynamic_raw_safely_) || !defined(_di_fl_print_trim_dynamic_partial_raw_safely_)
 
@@ -2668,7 +2668,7 @@ extern "C" {
     f_number_unsigned_t k = 0;
     f_number_unsigned_t previous = 0;
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     // Skip past leading white space.
     while (i < length) {
@@ -2705,7 +2705,7 @@ extern "C" {
       if (status == F_true || !string[i]) {
         previous = j;
         j = i + macro_f_utf_byte_width(string[i]);
-        status = F_none;
+        status = F_okay;
 
         while (j < length) {
 
@@ -2759,7 +2759,7 @@ extern "C" {
             }
 
             i = length;
-            status = F_none;
+            status = F_okay;
 
             break;
           }
@@ -2824,7 +2824,7 @@ extern "C" {
       i += macro_f_utf_byte_width(string[i]);
     } // while
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_fl_print_format_) || !defined(_di_fl_print_format_convert_) || !defined(_di_fl_print_trim_safely_) || !defined(_di_fl_print_trim_dynamic_safely_) || !defined(_di_fl_print_trim_dynamic_partial_safely_)
 

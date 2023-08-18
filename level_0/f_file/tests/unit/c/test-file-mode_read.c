@@ -87,7 +87,7 @@ void test__f_file_mode_read__works(void **state) {
 
     const f_status_t status = f_file_mode_read(path, F_false, &mode);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(mode, statistics.st_mode);
   }
 
@@ -102,7 +102,7 @@ void test__f_file_mode_read__works(void **state) {
 
     const f_status_t status = f_file_mode_read(path, F_true, &mode);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(mode, statistics.st_mode);
   }
 }

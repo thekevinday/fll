@@ -72,7 +72,7 @@ extern "C" {
  *   This does not alter main.setting.state.status.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  */
 #ifndef _di_fss_write_payload_process_help_
@@ -89,7 +89,7 @@ extern "C" {
  *   Must be of type fss_write_main_t.
  *
  *   This alters main.setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *     F_data_not on success but pipe contained no relevant data.
  *     F_payload on success and the payload has been printed.
  *     F_interrupt on (exit) signal received.
@@ -110,7 +110,7 @@ extern "C" {
  *   Must be of type fss_write_main_t.
  *
  *   This alters main.setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *     F_interrupt on (exit) signal received.
  *
  *     F_parameter (with error bit) if main is NULL or setting is NULL.
@@ -136,14 +136,14 @@ extern "C" {
  *   This alters setting.process_help, setting.process_normal, and setting.process_pipe.
  *
  *   This alters setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *     F_interrupt on (exit) signal received.
  *
  *     F_parameter (with error bit) if main is NULL or setting is NULL.
  *     F_parameter (with error bit) on parameter error.
  *
  *   This alters setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *     F_data_not on success but nothing was provided to operate with.
  *
  * @see fss_write_setting_load()

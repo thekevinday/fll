@@ -13,7 +13,7 @@ extern "C" {
 
     destination->array[destination->used++] = source;
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_fss_simple_packet_ranges_append_) || !defined(_di_f_fss_simple_packet_rangess_append_)
 
@@ -29,7 +29,7 @@ extern "C" {
       destination->array[destination->used++] = source.array[i];
     } // for
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_fss_simple_packet_ranges_append_) || !defined(_di_f_fss_simple_packet_ranges_append_all_) || !defined(_di_f_fss_simple_packet_rangess_append_all_)
 
@@ -37,7 +37,7 @@ extern "C" {
   f_status_t private_f_fss_simple_packet_rangess_adjust(const f_number_unsigned_t length, f_fss_simple_packet_rangess_t *rangess) {
 
     {
-      f_status_t status = F_none;
+      f_status_t status = F_okay;
 
       for (f_number_unsigned_t i = length; i < rangess->size; ++i) {
 
@@ -54,7 +54,7 @@ extern "C" {
   f_status_t private_f_fss_simple_packet_rangess_resize(const f_number_unsigned_t length, f_fss_simple_packet_rangess_t *rangess) {
 
     {
-      f_status_t status = F_none;
+      f_status_t status = F_okay;
 
       for (f_number_unsigned_t i = length; i < rangess->size; ++i) {
 
@@ -71,7 +71,7 @@ extern "C" {
   f_status_t private_f_fss_simple_packets_adjust(const f_number_unsigned_t length, f_fss_simple_packets_t *packets) {
 
     {
-      f_status_t status = F_none;
+      f_status_t status = F_okay;
 
       for (f_number_unsigned_t i = length; i < packets->size; ++i) {
 
@@ -92,7 +92,7 @@ extern "C" {
 
     destination->array[destination->used++] = source;
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_fss_simple_packets_append_) || !defined(_di_f_fss_simple_packetss_append_)
 
@@ -108,7 +108,7 @@ extern "C" {
       destination->array[destination->used++] = source.array[i];
     } // for
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_fss_simple_packets_append_) || !defined(_di_f_fss_simple_packets_append_all_) || !defined(_di_f_fss_simple_packetss_append_all_)
 
@@ -116,7 +116,7 @@ extern "C" {
   f_status_t private_f_fss_simple_packets_resize(const f_number_unsigned_t length, f_fss_simple_packets_t *packets) {
 
     {
-      f_status_t status = F_none;
+      f_status_t status = F_okay;
 
       for (f_number_unsigned_t i = length; i < packets->size; ++i) {
 
@@ -133,7 +133,7 @@ extern "C" {
   f_status_t private_f_fss_simple_packetss_adjust(const f_number_unsigned_t length, f_fss_simple_packetss_t *packetss) {
 
     {
-      f_status_t status = F_none;
+      f_status_t status = F_okay;
 
       for (f_number_unsigned_t i = length; i < packetss->size; ++i) {
 
@@ -150,7 +150,7 @@ extern "C" {
   f_status_t private_f_fss_simple_packetss_resize(const f_number_unsigned_t length, f_fss_simple_packetss_t *packetss) {
 
     {
-      f_status_t status = F_none;
+      f_status_t status = F_okay;
 
       for (f_number_unsigned_t i = length; i < packetss->size; ++i) {
 

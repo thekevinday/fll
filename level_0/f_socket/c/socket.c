@@ -42,7 +42,7 @@ extern "C" {
 
     socket->id_data = result;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_socket_accept_
 
@@ -68,7 +68,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_socket_bind_
 
@@ -99,7 +99,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_socket_bind_inet4_
 
@@ -130,7 +130,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_socket_bind_inet6_
 
@@ -169,7 +169,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_socket_bind_local_
 
@@ -198,7 +198,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_socket_connect_
 
@@ -226,7 +226,7 @@ extern "C" {
 
     socket_structure->id = result;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_socket_create_
 
@@ -255,7 +255,7 @@ extern "C" {
     *id_1 = pair[0];
     *id_2 = pair[1];
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_socket_create_pair_
 
@@ -306,7 +306,7 @@ extern "C" {
       socket->id = -1;
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_socket_disconnect_
 
@@ -325,7 +325,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_socket_listen_
 
@@ -347,7 +347,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_socket_option_get_
 
@@ -368,7 +368,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_socket_option_set_
 
@@ -399,7 +399,7 @@ extern "C" {
       if (!name->string[name->used]) break;
     } // while
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_socket_host_name_
 
@@ -420,7 +420,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_socket_name_peer_
 
@@ -459,7 +459,7 @@ extern "C" {
       *length = (size_t) result;
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_socket_read_
 
@@ -498,7 +498,7 @@ extern "C" {
       *length = (size_t) result;
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_socket_read_message_
 
@@ -537,7 +537,7 @@ extern "C" {
       *length = (size_t) result;
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_socket_read_stream_
 
@@ -579,7 +579,7 @@ extern "C" {
       *length = (size_t) result;
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_socket_write_
 
@@ -621,7 +621,7 @@ extern "C" {
       *length = (size_t) result;
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_socket_write_message_
 
@@ -663,7 +663,7 @@ extern "C" {
       *length = (size_t) result;
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_socket_write_stream_
 

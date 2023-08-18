@@ -78,7 +78,7 @@ void test__f_file_close__works(void **state) {
 
     const f_status_t status = f_file_close(&file);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(file.id, -1);
   }
 }

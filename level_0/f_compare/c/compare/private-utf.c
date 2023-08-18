@@ -112,7 +112,7 @@ extern "C" {
 
     f_number_unsigned_t previous = 0;
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     // Skip past leading whitespace in string1.
     for (; i1 < stop1; ++i1) {
@@ -355,7 +355,7 @@ extern "C" {
     f_number_unsigned_t i1 = offset1;
     f_number_unsigned_t i2 = offset2;
     f_number_unsigned_t previous = 0;
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     // Skip past leading whitespace in string1.
     for (; i1 < stop1; i1 += macro_f_utf_byte_width(string1[i1])) {

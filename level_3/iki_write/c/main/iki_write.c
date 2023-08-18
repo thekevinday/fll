@@ -21,7 +21,7 @@ extern "C" {
       fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
     }
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
 
     if (main->setting.flag & (iki_write_main_flag_help_e | iki_write_main_flag_version_e | iki_write_main_flag_copyright_e)) {
       if (main->setting.flag & iki_write_main_flag_help_e) {
@@ -48,7 +48,7 @@ extern "C" {
 
       f_number_unsigned_t previous = 0;
       f_string_range_t range = f_string_range_t_initialize;
-      f_status_t status = F_none;
+      f_status_t status = F_okay;
       f_file_t pipe = f_file_t_initialize;
 
       pipe.id = F_type_descriptor_input_d;
@@ -73,7 +73,7 @@ extern "C" {
           main->program.signal_check = 0;
         }
 
-        if (status != F_none_eof) {
+        if (status != F_okay_eof) {
           status = f_file_read(pipe, &main->setting.buffer);
 
           if (F_status_is_error(status)) {
@@ -180,7 +180,7 @@ extern "C" {
           main->setting.buffer.used = 0;
         }
 
-      } while (status != F_none_eof || main->setting.buffer.used || object_ended);
+      } while (status != F_okay_eof || main->setting.buffer.used || object_ended);
 
       if (object_ended) {
         main->setting.state.status = F_status_set_error(F_parameter);

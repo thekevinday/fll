@@ -56,9 +56,9 @@ extern "C" {
  *   All other statuses are ignored.
  *
  *   This alters state.status:
- *     F_none on success (both valid object and valid content found with start location is at end of content).
- *     F_none_eos on success after reaching the end of the buffer (both valid object and valid content found with start location is at end of buffer).
- *     F_none_stop on success after reaching stopping point (both valid object and valid content found with start location is at stop point).
+ *     F_okay on success (both valid object and valid content found with start location is at end of content).
+ *     F_okay_eos on success after reaching the end of the buffer (both valid object and valid content found with start location is at end of buffer).
+ *     F_okay_stop on success after reaching stopping point (both valid object and valid content found with start location is at stop point).
  *     F_data_not if buffer is empty (buffer.used is 0).
  *     F_data_not_eol if there is no data to write and EOL was reached.
  *     F_data_not_eos no data to write due start location being greater than or equal to buffer size.
@@ -112,9 +112,9 @@ extern "C" {
  *   All other statuses are ignored.
  *
  *   This alters state.status:
- *     F_none on success.
- *     F_none_eos on success after reaching the end of the buffer.
- *     F_none_stop on success after reaching stopping point.
+ *     F_okay on success.
+ *     F_okay_eos on success after reaching the end of the buffer.
+ *     F_okay_stop on success after reaching stopping point.
  *     F_data_not if object or contents are empty (either object.used or contents.used is 0).
  *     F_data_not_eos no data to write due start location being greater than or equal to buffer size.
  *     F_data_not_stop no data to write due start location being greater than stop location.

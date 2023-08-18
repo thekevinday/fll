@@ -170,7 +170,7 @@ extern "C" {
       if (!parameters) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     for (f_number_unsigned_t i = 0; i < parameters->used; ++i) {
 
@@ -190,7 +190,7 @@ extern "C" {
     status = f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &parameters->remaining.array, &parameters->remaining.used, &parameters->remaining.size);
     if (F_status_is_error(status)) return status;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_console_parameters_delete_
 
@@ -200,7 +200,7 @@ extern "C" {
       if (!parameters) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     for (f_number_unsigned_t i = 0; i < parameters->used; ++i) {
 
@@ -221,7 +221,7 @@ extern "C" {
     status = f_memory_array_adjust(0, sizeof(f_number_unsigned_t), (void **) &parameters->remaining.array, &parameters->remaining.used, &parameters->remaining.size);
     if (F_status_is_error(status)) return status;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_console_parameters_destroy_
 

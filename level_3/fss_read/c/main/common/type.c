@@ -33,7 +33,7 @@ extern "C" {
       depths->used = length;
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fss_read_depths_resize_
 
@@ -53,7 +53,7 @@ extern "C" {
       files->used = length;
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fss_read_files_resize_
 
@@ -89,7 +89,7 @@ extern "C" {
     f_memory_array_resize(0, sizeof(uint8_t), (void **) &setting->quotes_object.array, &setting->quotes_object.used, &setting->quotes_object.size);
     f_memory_arrays_resize(0, sizeof(f_uint8s_t), (void **) &setting->quotes_content.array, &setting->quotes_content.used, &setting->quotes_content.size, &f_uint8ss_delete_callback);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fss_read_setting_delete_
 

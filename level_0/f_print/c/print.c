@@ -11,7 +11,7 @@ extern "C" {
  * This will keep trying to print using fwrite_unlocked() until all bytes are written or an error occurs.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_output (with error bit) on error.
  *
@@ -29,7 +29,7 @@ extern "C" {
 
     } while (count < total);
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_print_character_) && !defined(_di_f_print_character_safely_)
 
@@ -633,7 +633,7 @@ extern "C" {
       } while (count < total);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_print_safely_terminated_
 

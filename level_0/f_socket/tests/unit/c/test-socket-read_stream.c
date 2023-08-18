@@ -103,7 +103,7 @@ void test__f_socket_read_stream__works(void **state) {
 
     const f_status_t status = f_socket_read_stream(&socket, 0, (void *) buffer, &length);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(length, 1);
   }
 }

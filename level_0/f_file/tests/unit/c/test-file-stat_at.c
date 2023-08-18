@@ -117,7 +117,7 @@ void test__f_file_stat_at__works(void **state) {
 
     const f_status_t status = f_file_stat_at(file, path, F_false, &result);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(result.st_mode, statistics.st_mode);
     assert_int_equal(result.st_size, statistics.st_size);
   }
@@ -136,7 +136,7 @@ void test__f_file_stat_at__works(void **state) {
 
     const f_status_t status = f_file_stat_at(file, path, F_true, &result);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(result.st_mode, statistics.st_mode);
     assert_int_equal(result.st_size, statistics.st_size);
   }

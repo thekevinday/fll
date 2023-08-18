@@ -11,7 +11,7 @@ extern "C" {
 
     fake_main_t * const main = data_make->main;
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
 
     if (!main->cache_arguments.used || f_compare_dynamic(fake_make_operation_argument_success_s, main->cache_arguments.array[0]) == F_equal_to) {
       main->setting.state.status = F_signal_abort;
@@ -20,7 +20,7 @@ extern "C" {
       main->setting.state.status = F_status_set_error(F_signal_abort);
     }
     else {
-      main->setting.state.status = F_none;
+      main->setting.state.status = F_okay;
 
       return;
     }
@@ -86,7 +86,7 @@ extern "C" {
 
     fake_main_t * const main = data_make->main;
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
 
     if (state_process->condition == fake_make_operation_if_type_if_define_e) {
       fake_make_operate_process_type_if_define(data_make, F_false, state_process);
@@ -210,7 +210,7 @@ extern "C" {
     fake_main_t * const main = data_make->main;
 
     const f_number_unsigned_t total = main->cache_arguments.used - 1;
-    f_status_t failed = F_none;
+    f_status_t failed = F_okay;
     fake_local_t local = macro_fake_local_t_initialize_1(main, &main->cache_map, &failed);
 
     main->cache_recurse_do.action = &fake_do_copy_action;
@@ -337,7 +337,7 @@ extern "C" {
       main->setting.state.status = F_status_set_error(F_failure);
     }
     else {
-      main->setting.state.status = F_none;
+      main->setting.state.status = F_okay;
     }
   }
 #endif // _di_fake_make_operate_process_type_copy_
@@ -362,7 +362,7 @@ extern "C" {
     else {
       fake_make_print_verbose_operate_define(&main->program.message, main->cache_arguments.array[0]);
 
-      main->setting.state.status = F_none;
+      main->setting.state.status = F_okay;
     }
   }
 #endif // _di_fake_make_operate_process_type_define_
@@ -377,7 +377,7 @@ extern "C" {
     const int recursion_max = all ? F_directory_max_descriptors_d : 0;
     struct stat file_stat;
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
 
     for (f_number_unsigned_t i = 0; i < main->cache_arguments.used; ++i) {
 
@@ -389,7 +389,7 @@ extern "C" {
         if (F_status_set_fine(main->setting.state.status) == F_file_found_not) {
           fake_make_print_warning_file_not_found(&main->program.warning, main->cache_arguments.array[i]);
 
-          main->setting.state.status = F_none;
+          main->setting.state.status = F_okay;
         }
         else {
           fake_print_error_file(&main->program.error, macro_fake_f(f_file_stat), main->cache_arguments.array[i], f_file_operation_delete_s, fll_error_file_type_file_e);
@@ -410,7 +410,7 @@ extern "C" {
         if (F_status_set_fine(main->setting.state.status) == F_file_found_not) {
           fake_make_print_verbose_operate_file_not_found(&main->program.message, F_true, main->cache_arguments.array[i]);
 
-          main->setting.state.status = F_none;
+          main->setting.state.status = F_okay;
         }
 
         if (F_status_is_error(main->setting.state.status)) {
@@ -429,7 +429,7 @@ extern "C" {
             fake_make_print_verbose_operate_file_not_found(&main->program.message, F_false, main->cache_arguments.array[i]);
           }
 
-          main->setting.state.status = F_none;
+          main->setting.state.status = F_okay;
         }
 
         if (F_status_is_error(main->setting.state.status)) {
@@ -444,7 +444,7 @@ extern "C" {
       fake_make_print_verbose_operate_delete(&main->program.message, main->cache_arguments.array[i]);
     } // for
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
   }
 #endif // _di_fake_make_operate_process_type_deletes_
 
@@ -455,7 +455,7 @@ extern "C" {
 
     fake_main_t * const main = data_make->main;
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
 
     if (!main->cache_arguments.used || f_compare_dynamic(fake_make_operation_argument_success_s, main->cache_arguments.array[0]) == F_equal_to) {
       main->setting.state.status = F_signal_quit;
@@ -474,7 +474,7 @@ extern "C" {
       data_make->error.set = &main->program.context.set;
     }
     else {
-      main->setting.state.status = F_none;
+      main->setting.state.status = F_okay;
 
       return;
     }
@@ -531,7 +531,7 @@ extern "C" {
     bool dereference = F_true;
     f_number_unsigned_t i = 0;
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
 
     if (f_compare_dynamic(fake_make_operation_argument_no_dereference_s, main->cache_arguments.array[i]) == F_equal_to) {
       ++i;
@@ -572,7 +572,7 @@ extern "C" {
       fake_make_print_verbose_operate_set_role(&main->program.message, all ? 0x1 : 0x0, main->cache_arguments.array[i], (f_number_unsigned_t) id);
     } // for
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
   }
 #endif // _di_fake_make_operate_process_type_groups_
 
@@ -619,7 +619,7 @@ extern "C" {
     f_number_unsigned_t i = if_not ? 2 : 1;
     bool dereference = F_true;
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
 
     if (i == main->cache_arguments.used) {
       if (if_not) {
@@ -629,7 +629,7 @@ extern "C" {
         state_process->condition_result = fake_condition_result_false_e;
       }
 
-      main->setting.state.status = F_none;
+      main->setting.state.status = F_okay;
 
       return;
     }
@@ -671,7 +671,7 @@ extern "C" {
       }
     } // for
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
   }
 #endif // _di_fake_make_operate_process_type_if_exist_
 
@@ -691,7 +691,7 @@ extern "C" {
     f_number_unsigned_t i = if_not ? 2 : 1;
     bool dereference = F_true;
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
 
     if (f_compare_dynamic(fake_make_operation_argument_no_dereference_s, main->cache_arguments.array[i]) == F_equal_to) {
       ++i;
@@ -706,7 +706,7 @@ extern "C" {
         state_process->condition_result = fake_condition_result_false_e;
       }
 
-      main->setting.state.status = F_none;
+      main->setting.state.status = F_okay;
 
       return;
     }
@@ -799,7 +799,7 @@ extern "C" {
       }
     } // for
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
   }
 #endif // _di_fake_make_operate_process_type_if_is_
 
@@ -819,7 +819,7 @@ extern "C" {
 
     f_number_unsigned_t i = 1;
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
     state_process->condition_result = fake_condition_result_true_e;
 
     range.start = 0;
@@ -841,7 +841,7 @@ extern "C" {
     }
 
     if (F_status_is_error_not(main->setting.state.status)) {
-      for (i = 2; i < main->cache_arguments.used; ++i, main->setting.state.status = F_none, number_left = number_right, is_negative_left = is_negative_right) {
+      for (i = 2; i < main->cache_arguments.used; ++i, main->setting.state.status = F_okay, number_left = number_right, is_negative_left = is_negative_right) {
 
         if (main->cache_arguments.array[i].used) {
           range.start = 0;
@@ -946,7 +946,7 @@ extern "C" {
       main->setting.state.status = F_status_set_error(F_failure);
     }
     else {
-      main->setting.state.status = F_none;
+      main->setting.state.status = F_okay;
     }
   }
 #endif // _di_fake_make_operate_process_type_if_greater_if_lesser_
@@ -962,7 +962,7 @@ extern "C" {
     f_number_unsigned_t i = if_not ? 2 : 1;
     bool dereference = F_true;
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
 
     if (f_compare_dynamic(fake_make_operation_argument_no_dereference_s, main->cache_arguments.array[i]) == F_equal_to) {
       ++i;
@@ -1013,7 +1013,7 @@ extern "C" {
       }
     } // for
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
   }
 #endif // _di_fake_make_operate_process_type_if_group_
 
@@ -1112,7 +1112,7 @@ extern "C" {
       }
     } // for
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
   }
 #endif // _di_fake_make_operate_process_type_if_mode_
 
@@ -1127,7 +1127,7 @@ extern "C" {
     f_number_unsigned_t i = if_not ? 2 : 1;
     bool dereference = F_true;
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
 
     if (f_compare_dynamic(fake_make_operation_argument_no_dereference_s, main->cache_arguments.array[i]) == F_equal_to) {
       ++i;
@@ -1178,7 +1178,7 @@ extern "C" {
       }
     } // for
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
   }
 #endif // _di_fake_make_operate_process_type_if_owner_
 
@@ -1404,7 +1404,7 @@ extern "C" {
 
     fake_make_print_verbose_operate_symbolic_link(&main->program.message, main->cache_arguments.array[main->cache_arguments.used - 1], main->cache_arguments.array[0]);
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
   }
 #endif // _di_fake_make_operate_process_type_link_
 
@@ -1415,7 +1415,7 @@ extern "C" {
 
     fake_main_t * const main = data_make->main;
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
 
     f_file_mode_t mode_rule = 0;
     uint8_t replace = 0;
@@ -1473,7 +1473,7 @@ extern "C" {
       fake_make_print_verbose_operate_set_mode(&main->program.message, main->cache_arguments.array[i], mode);
     } // for
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
   }
 #endif // _di_fake_make_operate_process_type_modes_
 
@@ -1564,7 +1564,7 @@ extern "C" {
       main->setting.state.status = F_status_set_error(F_failure);
     }
     else {
-      main->setting.state.status = F_none;
+      main->setting.state.status = F_okay;
     }
   }
 #endif // _di_fake_make_operate_process_type_move_
@@ -1591,7 +1591,7 @@ extern "C" {
 
     // Ensure that a break only happens within its active state_process->operation stack.
     if (main->setting.state.status == F_signal_abort) {
-      main->setting.state.status = F_none;
+      main->setting.state.status = F_okay;
     }
     else if (F_status_set_fine(main->setting.state.status) == F_signal_abort) {
       main->setting.state.status = F_status_set_error(F_failure);
@@ -1655,7 +1655,7 @@ extern "C" {
       fake_make_print_verbose_operate_set_role(&main->program.message, all ? 0x3 : 0x2, main->cache_arguments.array[i], (f_number_unsigned_t) id);
     } // for
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
   }
 #endif // _di_fake_make_operate_process_type_owners_
 
@@ -1753,7 +1753,7 @@ extern "C" {
       } // for
     }
 
-     main->setting.state.status = F_none;
+     main->setting.state.status = F_okay;
   }
 #endif // _di_fake_make_operate_process_type_parameter_
 
@@ -1797,7 +1797,7 @@ extern "C" {
       fake_make_print_verbose_operate_set_path(&main->program.message, main->cache_argument);
     }
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
   }
 #endif // _di_fake_make_operate_process_type_pop_
 
@@ -1865,7 +1865,7 @@ extern "C" {
 
     f_file_stream_unlock(main->program.message.to);
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
   }
 #endif // _di_fake_make_operate_process_type_print_
 
@@ -1958,7 +1958,7 @@ extern "C" {
       ++data_make->path.stack.used;
     }
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
   }
 #endif // _di_fake_make_operate_process_type_to_
 
@@ -1990,7 +1990,7 @@ extern "C" {
 
     data_make->path.stack.used = 1;
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
   }
 #endif // _di_fake_make_operate_process_type_top_
 
@@ -2043,7 +2043,7 @@ extern "C" {
       fake_make_print_verbose_operate_touch(&main->program.message, main->cache_arguments.array[i]);
     } // for
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
   }
 #endif // _di_fake_make_operate_process_type_touch_
 
@@ -2079,7 +2079,7 @@ extern "C" {
         main->setting.state.status = F_false;
       }
       else {
-        main->setting.state.status = F_none;
+        main->setting.state.status = F_okay;
 
         f_file_stream_flush(file);
         f_file_stream_close(&file);
@@ -2147,7 +2147,7 @@ extern "C" {
       f_file_stream_close(&file);
     }
 
-    main->setting.state.status = F_status_is_error(main->setting.state.status) ? F_status_set_error(F_failure) : F_none;
+    main->setting.state.status = F_status_is_error(main->setting.state.status) ? F_status_set_error(F_failure) : F_okay;
   }
 #endif // _di_fake_make_operate_process_type_write_
 

@@ -65,7 +65,7 @@ void test__f_print_except_dynamic_partial_raw__works(void **state) {
 
     const f_status_t status = f_print_except_dynamic_partial_raw(test, partial, except, output);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 
   {
@@ -78,7 +78,7 @@ void test__f_print_except_dynamic_partial_raw__works(void **state) {
 
     const f_status_t status = f_print_except_dynamic_partial_raw(test, partial, except, output);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 }
 

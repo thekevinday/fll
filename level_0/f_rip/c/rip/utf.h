@@ -28,7 +28,7 @@ extern "C" {
  *   The new string, which will be allocated or reallocated as necessary.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if source length is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -56,7 +56,7 @@ extern "C" {
  *   The new string, which will be allocated or reallocated as necessary.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if source length is 0.
  *   F_data_not_stop if range.start > range.stop.
  *
@@ -86,7 +86,7 @@ extern "C" {
  *   The new string, which will be allocated or reallocated as necessary.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if source length is 0.
  *   F_data_not_stop if range.start > range.stop.
  *
@@ -116,7 +116,7 @@ extern "C" {
  *   The new string, which will be allocated or reallocated as necessary.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if source length is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.

@@ -44,7 +44,7 @@ extern "C" {
       iki_read_process_buffer_total(main);
 
       if (F_status_is_error_not(main->setting.state.status)) {
-        main->setting.state.status = F_none;
+        main->setting.state.status = F_okay;
       }
 
       return;
@@ -75,7 +75,7 @@ extern "C" {
     }
 
     if (F_status_is_error_not(main->setting.state.status)) {
-      main->setting.state.status = F_none;
+      main->setting.state.status = F_okay;
     }
   }
 #endif // _di_iki_read_process_buffer_
@@ -144,7 +144,7 @@ extern "C" {
         main->setting.state.status = F_data_not;
       }
       else {
-        main->setting.state.status = F_none;
+        main->setting.state.status = F_okay;
       }
     }
     else {
@@ -159,7 +159,7 @@ extern "C" {
 
             f_file_stream_unlock(main->program.output.to);
 
-            main->setting.state.status = F_none;
+            main->setting.state.status = F_okay;
           }
           else {
             main->setting.state.status = F_data_not;
@@ -177,7 +177,7 @@ extern "C" {
 
           f_file_stream_unlock(main->program.output.to);
 
-          main->setting.state.status = F_none;
+          main->setting.state.status = F_okay;
         }
       }
       else {
@@ -209,7 +209,7 @@ extern "C" {
     if (!main->setting.data.variable.used) {
       fll_print_dynamic_partial(main->setting.buffer, buffer_range, main->program.output.to);
 
-      main->setting.state.status = F_none;
+      main->setting.state.status = F_okay;
 
       return;
     }
@@ -274,7 +274,7 @@ extern "C" {
       f_file_stream_unlock(main->program.output.to);
     }
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
   }
 #endif // _di_iki_read_process_buffer_ranges_whole_
 
@@ -289,7 +289,7 @@ extern "C" {
       if (range.start > main->setting.buffer.used) {
         fll_print_format("%r%r", main->program.output.to, f_string_ascii_0_s, f_string_eol_s);
 
-        main->setting.state.status = F_none;
+        main->setting.state.status = F_okay;
 
         return;
       }
@@ -297,7 +297,7 @@ extern "C" {
     else if (main->setting.state.status == F_data_not) {
       fll_print_format("%r%r", main->program.output.to, f_string_ascii_0_s, f_string_eol_s);
 
-      main->setting.state.status = F_none;
+      main->setting.state.status = F_okay;
 
       return;
     }
@@ -370,7 +370,7 @@ extern "C" {
 
     fll_print_format("%ul%r", main->program.output.to, total, f_string_eol_s);
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
   }
 #endif // _di_iki_read_process_buffer_total_
 

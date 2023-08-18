@@ -28,7 +28,7 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *
  *   F_output (with error bit) on failure.
@@ -55,7 +55,7 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *
  *   F_output (with error bit) on failure.
@@ -134,7 +134,7 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *
  *   F_output (with error bit) on failure.
@@ -171,7 +171,7 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *
  *   F_output (with error bit) on failure.
@@ -208,7 +208,7 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *
  *   F_output (with error bit) on failure.
@@ -245,7 +245,7 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *
  *   F_output (with error bit) on failure.
@@ -282,7 +282,7 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *
  *   F_output (with error bit) on failure.
@@ -316,7 +316,7 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *
  *   F_output (with error bit) on failure.
@@ -350,7 +350,7 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *
  *   F_output (with error bit) on failure.
@@ -384,7 +384,7 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *
  *   F_output (with error bit) on failure.
@@ -413,7 +413,7 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *
  *   F_output (with error bit) on failure.
@@ -445,7 +445,7 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *
  *   F_output (with error bit) on failure.
@@ -474,7 +474,7 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *
  *   F_output (with error bit) on failure.
@@ -544,7 +544,7 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *
  *   F_output (with error bit) on failure.

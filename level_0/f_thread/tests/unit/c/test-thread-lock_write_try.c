@@ -52,7 +52,7 @@ void test__f_thread_lock_write_try__works(void **state) {
 
     const f_status_t status = f_thread_lock_write_try(&lock);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 }
 

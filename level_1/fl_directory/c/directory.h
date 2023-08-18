@@ -60,7 +60,7 @@ extern "C" {
  *   This is applied to all created directories.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if path.used is 0.
  *   F_directory_found on success, but the directory already exists.
  *
@@ -109,7 +109,7 @@ extern "C" {
  *   This must not be NULL.
  *
  *   This alters recurse.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *     F_data_not if source.used or destination.used is 0.
  *
  *     F_directory_descriptor (with error bit) on directory file descriptor error.
@@ -187,7 +187,7 @@ extern "C" {
  *   Will be populated with the names of all top-level paths found within the given directory.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if source.used or destination.used is 0.
  *   F_directory_empty if directory is empty.
  *
@@ -229,7 +229,7 @@ extern "C" {
  *   This will only be NULL terminated if path string is already NULL terminated.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if path.used is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -256,7 +256,7 @@ extern "C" {
  *   This will only be NULL terminated if destination string is already NULL terminated.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if source.used is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.

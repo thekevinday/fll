@@ -38,11 +38,11 @@ void test__f_fss_items_delete_callback__works(void **state) {
 
   {
     will_return(__wrap_f_string_ranges_resize, false);
-    will_return(__wrap_f_string_ranges_resize, F_none);
+    will_return(__wrap_f_string_ranges_resize, F_okay);
 
     const f_status_t status = f_fss_items_delete_callback(0, length, (void *) datas_array);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 }
 

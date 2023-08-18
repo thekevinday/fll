@@ -78,7 +78,7 @@ void test__f_print_except_in_raw_safely__works(void **state) {
 
     const f_status_t status = f_print_except_in_raw_safely(test.string, 0, test.used, except, range, output);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 
   {
@@ -91,7 +91,7 @@ void test__f_print_except_in_raw_safely__works(void **state) {
 
     const f_status_t status = f_print_except_in_raw_safely(test.string, 2, test.used, except, range, output);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 
   {
@@ -108,7 +108,7 @@ void test__f_print_except_in_raw_safely__works(void **state) {
 
     const f_status_t status = f_print_except_in_raw_safely(test.string, 1, test.used, except, range, output);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 }
 

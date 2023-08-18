@@ -56,7 +56,7 @@ extern "C" {
       fake_print_error(&main->program.error, macro_fake_f(fl_environment_load_names));
     }
     else {
-      main->setting.state.status = F_none;
+      main->setting.state.status = F_okay;
     }
   }
 #endif // _di_fake_build_load_environment_
@@ -205,7 +205,7 @@ extern "C" {
         return;
       }
 
-      main->setting.state.status = F_none;
+      main->setting.state.status = F_okay;
     }
 
     fake_build_load_setting_override(data, setting);
@@ -544,7 +544,7 @@ extern "C" {
 
     main->setting.state.status = fll_fss_snatch_apart(buffer, objects, contents, settings_name, fake_build_setting_total_d, settings_value, settings_matches, 0);
 
-    if (main->setting.state.status == F_none) {
+    if (main->setting.state.status == F_okay) {
       const int total_build_libraries = setting->build_libraries.used;
 
       // Custom modes are always used if provided, otherwise if any mode is specified, the entire defaults is replaced.
@@ -615,7 +615,7 @@ extern "C" {
           }
         } // for
 
-        if (main->setting.state.status == F_none) {
+        if (main->setting.state.status == F_okay) {
           main->setting.state.status = fll_fss_snatch_apart(buffer, objects, contents, settings_mode_names, fake_build_setting_total_d, settings_value, 0, 0);
 
           if (F_status_is_error(main->setting.state.status)) {
@@ -1376,7 +1376,7 @@ extern "C" {
       &stage->file_sources_settings,
     };
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
 
     f_string_dynamic_t settings_file_base = f_string_dynamic_t_initialize;
 

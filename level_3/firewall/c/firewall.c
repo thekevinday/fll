@@ -15,7 +15,7 @@ extern "C" {
 #ifndef _di_firewall_main_
   f_status_t firewall_main(fll_program_data_t * const main, firewall_setting_t * const setting) {
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     setting->state.step_small = firewall_allocation_console_d;
 
@@ -52,22 +52,22 @@ extern "C" {
     if (main->parameters.array[f_console_standard_parameter_help_e].result & f_console_result_found_e) {
       firewall_print_help(setting, main->message);
 
-      return F_none;
+      return F_okay;
     }
 
     if (main->parameters.array[f_console_standard_parameter_version_e].result & f_console_result_found_e) {
       fll_program_print_version(&main->message, firewall_program_version_s);
 
-      return F_none;
+      return F_okay;
     }
 
     if (main->parameters.array[f_console_standard_parameter_copyright_e].result & f_console_result_found_e) {
       fll_program_print_copyright(&main->message);
 
-      return F_none;
+      return F_okay;
     }
 
-    status = F_none;
+    status = F_okay;
 
     firewall_data_t data = firewall_data_t_initialize;
     data.main = main;

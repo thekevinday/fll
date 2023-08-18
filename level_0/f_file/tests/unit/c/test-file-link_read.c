@@ -124,7 +124,7 @@ void test__f_file_link_read__works(void **state) {
 
     const f_status_t status = f_file_link_read(path, F_true, &buffer);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 
   f_string_dynamic_resize(0, &buffer);

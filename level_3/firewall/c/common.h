@@ -461,7 +461,7 @@ extern "C" {
  *   This does not alter setting.state.status.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  */
@@ -484,7 +484,7 @@ extern "C" {
  *   The main program settings.
  *
  *   This alters setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *
  *     Errors (with error bit) from: f_console_parameter_process().
  *     Errors (with error bit) from: fll_program_parameter_process_context().
@@ -506,7 +506,7 @@ extern "C" {
  *   This does not alter main.setting.state.status.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *

@@ -38,10 +38,10 @@ extern "C" {
  *   The start location will be incremented by seek.
  *
  * @return
- *   F_none on success.
- *   F_none_eol on success, but stopped at EOL.
- *   F_none_eos on success, but stopped at end of buffer.
- *   F_none_stop on success, but stopped at end of range.
+ *   F_okay on success.
+ *   F_okay_eol on success, but stopped at EOL.
+ *   F_okay_eos on success, but stopped at end of buffer.
+ *   F_okay_stop on success, but stopped at end of range.
  *   F_data_not on success, but there was no string data to seek.
  *   F_data_not_eos on success, but the range.start >= buffer.used.
  *   F_data_not_stop on success, but the range.start > range.stop.
@@ -71,10 +71,10 @@ extern "C" {
  *   A range within the buffer representing the start and stop locations.
  *
  * @return
- *   F_none on success.
- *   F_none_eol on success, but stopped at EOL.
- *   F_none_eos on success, but stopped at end of buffer.
- *   F_none_stop on success, but stopped at end of range.
+ *   F_okay on success.
+ *   F_okay_eol on success, but stopped at EOL.
+ *   F_okay_eos on success, but stopped at end of buffer.
+ *   F_okay_stop on success, but stopped at end of range.
  *   F_data_not on success, but there was no string data to seek.
  *   F_data_not_eos on success, but the range.start >= buffer.used.
  *   F_data_not_stop on success, but the range.start > range.stop.
@@ -104,10 +104,10 @@ extern "C" {
  *   A range within the buffer representing the start and stop locations.
  *
  * @return
- *   F_none on success.
- *   F_none_eol on success, but stopped at EOL.
- *   F_none_eos on success, but stopped at end of buffer.
- *   F_none_stop on success, but stopped at end of range.
+ *   F_okay on success.
+ *   F_okay_eol on success, but stopped at EOL.
+ *   F_okay_eos on success, but stopped at end of buffer.
+ *   F_okay_stop on success, but stopped at end of range.
  *   F_data_not on success, but there was no string data to seek.
  *   F_data_not_eos on success, but the range.start >= buffer.used.
  *   F_data_not_stop on success, but the range.start > range.stop.
@@ -138,10 +138,10 @@ extern "C" {
  *   The start location will be incremented by seek.
  *
  * @return
- *   F_none on success.
- *   F_none_eol on success, but stopped at EOL.
- *   F_none_eos on success, but stopped at end of buffer.
- *   F_none_stop on success, but stopped at end of range.
+ *   F_okay on success.
+ *   F_okay_eol on success, but stopped at EOL.
+ *   F_okay_eos on success, but stopped at end of buffer.
+ *   F_okay_stop on success, but stopped at end of range.
  *   F_data_not on success, but there was no string data to seek.
  *   F_data_not_eos on success, but the range.start >= buffer.used.
  *   F_data_not_stop on success, but the range.start > range.stop.
@@ -228,8 +228,8 @@ extern "C" {
  *   The start location will be incremented by seek.
  *
  * @return
- *   F_none on success.
- *   F_none_eol on success, but stopped at EOL.
+ *   F_okay on success.
+ *   F_okay_eol on success, but stopped at EOL.
  *   F_data_not_stop if range.start > range.stop.
  *
  *   F_complete_not_utf (with error bit) if character is an incomplete UTF-8 fragment.
@@ -257,8 +257,8 @@ extern "C" {
  *   The start location will be incremented by seek.
  *
  * @return
- *   F_none on success.
- *   F_none_eol on success, but stopped at EOL.
+ *   F_okay on success.
+ *   F_okay_eol on success, but stopped at EOL.
  *   F_data_not_stop if range.start > range.stop.
  *
  *   F_complete_not_utf (with error bit) if character is an incomplete UTF-8 fragment.
@@ -286,9 +286,9 @@ extern "C" {
  *   The start location will be incremented by seek.
  *
  * @return
- *   F_none on success.
- *   F_none_eol on success, but stopped at EOL.
- *   F_none_stop on success, but stopped stop location.
+ *   F_okay on success.
+ *   F_okay_eol on success, but stopped at EOL.
+ *   F_okay_stop on success, but stopped stop location.
  *   F_data_not_stop if range.start > range.stop.
  *
  *   F_complete_not_utf (with error bit) if character is an incomplete UTF-8 fragment.
@@ -318,8 +318,8 @@ extern "C" {
  *   The start location will be incremented by seek.
  *
  * @return
- *   F_none on success.
- *   F_none_stop on success, but stopped stop location.
+ *   F_okay on success.
+ *   F_okay_stop on success, but stopped stop location.
  *   F_data_not_stop if range.start > range.stop.
  *
  *   F_complete_not_utf (with error bit) if character is an incomplete UTF-8 fragment.

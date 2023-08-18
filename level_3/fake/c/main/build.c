@@ -135,7 +135,7 @@ extern "C" {
       } // for
     }
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
   }
 #endif // _di_fake_build_arguments_standard_add_
 
@@ -150,7 +150,7 @@ extern "C" {
     fake_main_t * const main = data->main;
 
     f_string_static_t buffer = f_string_static_t_initialize;
-    f_status_t failed = F_none;
+    f_status_t failed = F_okay;
     fake_local_t local = macro_fake_local_t_initialize_1(main, &main->cache_map, &failed);
 
     main->cache_recurse_do.action = &fake_do_copy_action;
@@ -315,7 +315,7 @@ extern "C" {
         break;
       }
 
-      main->setting.state.status = F_none;
+      main->setting.state.status = F_okay;
     } // for
 
     fake_build_touch(data, file_stage);
@@ -521,7 +521,7 @@ extern "C" {
     fake_main_t * const main = data->main;
 
     name->used = 0;
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
 
     if (!path.used) return;
 
@@ -542,7 +542,7 @@ extern "C" {
       }
     } // for
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
   }
 #endif // _di_fake_build_get_file_name_without_extension_
 
@@ -580,7 +580,7 @@ extern "C" {
       } // for
     } // for
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
   }
 #endif // _di_fake_build_objects_add_
 
@@ -593,7 +593,7 @@ extern "C" {
 
     fake_main_t * const main = data->main;
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
 
     f_mode_t mode = f_mode_t_initialize;
 
@@ -788,7 +788,7 @@ extern "C" {
       } // for
     } // for
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
   }
 #endif // _di_fake_build_sources_add_
 
@@ -798,7 +798,7 @@ extern "C" {
     if (!data || !data->main || !data_build || !generic || !specific) return;
 
     if (!generic->used && !specific->used) {
-      data->main->setting.state.status = F_none;
+      data->main->setting.state.status = F_okay;
 
       return;
     }
@@ -826,7 +826,7 @@ extern "C" {
       return;
     }
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
   }
 #endif // _di_fake_build_sources_object_add_
 
@@ -849,7 +849,7 @@ extern "C" {
       fake_print_error_file(&main->program.error, macro_fake_f(f_file_touch), file, f_file_operation_touch_s, fll_error_file_type_file_e);
     }
     else {
-      main->setting.state.status = F_none;
+      main->setting.state.status = F_okay;
     }
   }
 #endif // _di_fake_build_touch_

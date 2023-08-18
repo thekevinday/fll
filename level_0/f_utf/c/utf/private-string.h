@@ -30,7 +30,7 @@ extern "C" {
  *   The destination string the source and glue are appended onto.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_string_too_large (with error bit) if the combined string is too large.
  *
@@ -71,7 +71,7 @@ extern "C" {
  *   The destination string the source and glue are appended onto.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_string_too_large (with error bit) if the combined string is too large.
  *
@@ -108,7 +108,7 @@ extern "C" {
  *   The destination string the source and glue are prepended onto.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_string_too_large (with error bit) if the combined string is too large.
  *
@@ -146,7 +146,7 @@ extern "C" {
  *   The destination string the source and glue are prepended onto.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_string_too_large (with error bit) if the combined string is too large.
  *

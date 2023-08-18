@@ -13,7 +13,7 @@ extern "C" {
 
     if (!main) return;
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
     main->setting.buffer.used = 0;
     main->setting.range.start = 0;
     main->setting.range.stop = 0;
@@ -43,12 +43,12 @@ extern "C" {
 
       main->setting.range.stop = main->setting.range.start;
 
-    } while (main->setting.state.status != F_none_eof && main->setting.buffer.string[main->setting.range.start] != f_string_eol_s.string[0]);
+    } while (main->setting.state.status != F_okay_eof && main->setting.buffer.string[main->setting.range.start] != f_string_eol_s.string[0]);
 
     // Reset the start point to prepare the buffer for processing.
     main->setting.range.start = 0;
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
   }
 #endif // _di_fss_identify_load_line_
 

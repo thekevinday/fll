@@ -14,7 +14,7 @@ void test__f_string_dynamic_terminate__appends_null(void **state) {
   {
     const f_status_t status = f_string_dynamic_resize(length, &data);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
 
     data.string[0] = 'X';
   }
@@ -22,7 +22,7 @@ void test__f_string_dynamic_terminate__appends_null(void **state) {
   {
     const f_status_t status = f_string_dynamic_terminate(&data);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(data.used, 1);
     assert_int_equal(data.string[0], 0);
   }
@@ -39,7 +39,7 @@ void test__f_string_dynamic_terminate__doesnt_append_null(void **state) {
   {
     const f_status_t status = f_string_dynamic_resize(length, &data);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
 
     data.string[0] = 0;
   }
@@ -47,7 +47,7 @@ void test__f_string_dynamic_terminate__doesnt_append_null(void **state) {
   {
     const f_status_t status = f_string_dynamic_terminate(&data);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(data.used, 1);
     assert_int_equal(data.string[0], 0);
   }

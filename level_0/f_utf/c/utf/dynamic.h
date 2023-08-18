@@ -59,7 +59,7 @@ extern "C" {
  *   The string to resize.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -77,7 +77,7 @@ extern "C" {
  *   The destination string the source is appended onto.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if source length is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -98,7 +98,7 @@ extern "C" {
  *   The destination string the source is appended onto.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if source length is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -121,7 +121,7 @@ extern "C" {
  *   The destination string the source is appended onto.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if source length is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -144,7 +144,7 @@ extern "C" {
  *   The destination string the source is appended onto.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if source length is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -169,7 +169,7 @@ extern "C" {
  *   The string to resize.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if amount is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -194,7 +194,7 @@ extern "C" {
  *   The string to resize.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if amount is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -220,7 +220,7 @@ extern "C" {
  *   The string to resize.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success, but there is no reason to increase size (used + 1 <= size) (or step is 0).
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -245,7 +245,7 @@ extern "C" {
  *   The string to resize.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -270,7 +270,7 @@ extern "C" {
  *   The destination string the source and glue are appended onto.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if source length is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -297,7 +297,7 @@ extern "C" {
  *   The destination string the source and glue are appended onto.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if source length is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -322,7 +322,7 @@ extern "C" {
  *   The destination string the source and glue are appended onto.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if source length is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -349,7 +349,7 @@ extern "C" {
  *   The destination string the source and glue are appended onto.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if source length is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -374,7 +374,7 @@ extern "C" {
  *   The destination string the source is appended onto.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if source length is 0.
  *   F_data_not_eos if range.start >= source.used.
  *   F_data_not_stop if range.start > range.stop.
@@ -399,7 +399,7 @@ extern "C" {
  *   The destination string the source is appended onto.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if source length is 0.
  *   F_data_not_eos if range.start >= source.used.
  *   F_data_not_stop if range.start > range.stop.
@@ -428,7 +428,7 @@ extern "C" {
  *   The destination string the source is appended onto.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if source length is 0.
  *   F_data_not_eos if range.start >= source.used.
  *   F_data_not_stop if range.start > range.stop.
@@ -455,7 +455,7 @@ extern "C" {
  *   The destination string the source is appended onto.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if source length is 0.
  *   F_data_not_eos if range.start >= source.used.
  *   F_data_not_stop if range.start > range.stop.
@@ -484,7 +484,7 @@ extern "C" {
  *   The destination string the source and glue are appended onto.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if source length is 0.
  *   F_data_not_eos if range.start >= source.used.
  *   F_data_not_stop if range.start > range.stop.
@@ -515,7 +515,7 @@ extern "C" {
  *   The destination string the source and glue are appended onto.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if source length is 0.
  *   F_data_not_eos if range.start >= source.used.
  *   F_data_not_stop if range.start > range.stop.
@@ -544,7 +544,7 @@ extern "C" {
  *   The destination string the source and glue are appended onto.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if source length is 0.
  *   F_data_not_eos if range.start >= source.used.
  *   F_data_not_stop if range.start > range.stop.
@@ -575,7 +575,7 @@ extern "C" {
  *   The destination string the source and glue are appended onto.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if source length is 0.
  *   F_data_not_eos if range.start >= source.used.
  *   F_data_not_stop if range.start > range.stop.
@@ -602,7 +602,7 @@ extern "C" {
  *   The destination string the source is prepended onto.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if source length is 0.
  *   F_data_not_eos if range.start >= source.used.
  *   F_data_not_stop if range.start > range.stop.
@@ -629,7 +629,7 @@ extern "C" {
  *   The destination string the source is prepended onto.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if source length is 0.
  *   F_data_not_eos if range.start >= source.used.
  *   F_data_not_stop if range.start > range.stop.
@@ -658,7 +658,7 @@ extern "C" {
  *   The destination string the source is prepended onto.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if source length is 0.
  *   F_data_not_eos if range.start >= source.used.
  *   F_data_not_stop if range.start > range.stop.
@@ -685,7 +685,7 @@ extern "C" {
  *   The destination string the source is prepended onto.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if source length is 0.
  *   F_data_not_eos if range.start >= source.used.
  *   F_data_not_stop if range.start > range.stop.
@@ -710,7 +710,7 @@ extern "C" {
  *   The destination string the source is prepended onto.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if source length is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -733,7 +733,7 @@ extern "C" {
  *   The destination string the source is prepended onto.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if source length is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -758,7 +758,7 @@ extern "C" {
  *   The destination string the source is prepended onto.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if source length is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -781,7 +781,7 @@ extern "C" {
  *   The destination string the source is prepended onto.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if source length is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -802,7 +802,7 @@ extern "C" {
  *   The string to resize.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -822,9 +822,9 @@ extern "C" {
  *   The start location will be incremented by seek.
  *
  * @return
- *   F_none on success.
- *   F_none_eos on success, but stopped at end of string.
- *   F_none_stop on success, but stopped at end of range.
+ *   F_okay on success.
+ *   F_okay_eos on success, but stopped at end of string.
+ *   F_okay_stop on success, but stopped at end of range.
  *   F_data_not on success, but there was no string data to seek.
  *   F_data_not_stop on success, but the range.start > range.stop.
  *
@@ -849,9 +849,9 @@ extern "C" {
  *   The start location will be incremented by seek.
  *
  * @return
- *   F_none on success.
- *   F_none_eos on success, but stopped at end of string.
- *   F_none_stop on success, but stopped at end of range.
+ *   F_okay on success.
+ *   F_okay_eos on success, but stopped at end of string.
+ *   F_okay_stop on success, but stopped at end of range.
  *   F_data_not on success, but there was no string data to seek.
  *   F_data_not_stop on success, but the range.start > range.stop.
  *
@@ -876,9 +876,9 @@ extern "C" {
  *   The start location will be incremented by seek.
  *
  * @return
- *   F_none on success.
- *   F_none_eos on success, but stopped at end of string.
- *   F_none_stop on success, but stopped at end of range.
+ *   F_okay on success.
+ *   F_okay_eos on success, but stopped at end of string.
+ *   F_okay_stop on success, but stopped at end of range.
  *   F_data_not on success, but there was no string data to seek.
  *   F_data_not_stop on success, but the range.start > range.stop.
  *
@@ -903,7 +903,7 @@ extern "C" {
  *   The new string, which will be allocated or reallocated as necessary.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if string is too large to fit into the buffer.
@@ -928,7 +928,7 @@ extern "C" {
  *   The new string, which will be allocated or reallocated as necessary.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if string is too large to fit into the buffer.

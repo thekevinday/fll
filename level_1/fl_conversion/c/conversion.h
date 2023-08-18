@@ -47,7 +47,7 @@ extern "C" {
  *   This value is only changed on success.
  *
  * @return
- *   F_none if the binary string was converted to an signed long.
+ *   F_okay if the binary string was converted to an signed long.
  *   F_data_not if string starts with a null (length is 0).
  *
  *   F_base_not (with error bit) if no supported or valid base unit is provided.
@@ -92,7 +92,7 @@ extern "C" {
  *   This value is only changed on success.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if string starts with a null (length is 0).
  *
  *   F_base_not (with error bit) if no supported or valid base unit is provided.
@@ -127,7 +127,7 @@ extern "C" {
  *   This value is only changed on success.
  *
  * @return
- *   F_none if the binary string was converted to an unsigned long.
+ *   F_okay if the binary string was converted to an unsigned long.
  *   F_data_not if string starts with a null (length is 0).
  *
  *   F_base_not (with error bit) if no supported or valid base unit is provided.
@@ -172,7 +172,7 @@ extern "C" {
  *   This value is only changed on success.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if string starts with a null (length is 0).
  *   F_number_negative on negative value (has a -, such as '-1').
  *   F_number_positive on positive value (has a +, such as '+1').
@@ -206,7 +206,7 @@ extern "C" {
  *   This value is only changed on success.
  *
  * @return
- *   F_none if the binary string was converted to an signed long.
+ *   F_okay if the binary string was converted to an signed long.
  *   F_data_not if string starts with a null (length is 0).
  *
  *   F_base_not (with error bit) if no supported or valid base unit is provided.
@@ -249,7 +249,7 @@ extern "C" {
  *   This value is only changed on success.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if string starts with a null (length is 0).
  *
  *   F_base_not (with error bit) if no supported or valid base unit is provided.
@@ -282,7 +282,7 @@ extern "C" {
  *   This value is only changed on success.
  *
  * @return
- *   F_none if the binary string was converted to an unsigned long.
+ *   F_okay if the binary string was converted to an unsigned long.
  *   F_data_not if string starts with a null (length is 0).
  *
  *   F_base_not (with error bit) if no supported or valid base unit is provided.
@@ -325,7 +325,7 @@ extern "C" {
  *   This value is only changed on success.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if string starts with a null (length is 0).
  *   F_number_negative on negative value (has a -, such as '-1').
  *   F_number_positive on positive value (has a +, such as '+1').

@@ -27,7 +27,7 @@ void test__f_utf_seek_line__returns_none_stop(void **state) {
 
     const f_status_t status = f_utf_string_seek_line(source.string, &range);
 
-    assert_int_equal(status, F_none_stop);
+    assert_int_equal(status, F_okay_stop);
 
     assert_int_equal(range.start, source.used);
     assert_int_equal(range.stop, source.used - 1);
@@ -43,7 +43,7 @@ void test__f_utf_seek_line__works(void **state) {
 
     const f_status_t status = f_utf_string_seek_line(source.string, &range);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
 
     assert_int_equal(range.start, 4);
     assert_int_equal(range.stop, source.used - 1);

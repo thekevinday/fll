@@ -17,7 +17,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_control_print_debug_packet_header_object_and_content_
 
@@ -50,7 +50,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_control_print_debug_packet_message_
 

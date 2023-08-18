@@ -49,7 +49,7 @@ extern "C" {
       ++j;
     } // while
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_string_dynamic_append_assure_
 
@@ -87,7 +87,7 @@ extern "C" {
       ++j;
     } // while
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_string_dynamic_append_assure_nulless_
 
@@ -257,7 +257,7 @@ extern "C" {
       ++j;
     } // while
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_string_dynamic_partial_append_assure_
 
@@ -301,7 +301,7 @@ extern "C" {
       ++j;
     } // while
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_string_dynamic_append_assure_nulless_
 
@@ -460,7 +460,7 @@ extern "C" {
       ++j;
     } // while
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_string_dynamic_partial_prepend_assure_
 
@@ -505,7 +505,7 @@ extern "C" {
       ++j;
     } // while
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_string_dynamic_partial_prepend_assure_nulless
 
@@ -555,7 +555,7 @@ extern "C" {
       ++j;
     } // while
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_string_dynamic_prepend_assure_
 
@@ -591,7 +591,7 @@ extern "C" {
       ++j;
     } // while
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_string_dynamic_prepend_assure_nulless_
 
@@ -630,11 +630,11 @@ extern "C" {
 
       ++range->start;
 
-      if (range->start >= structure.used) return F_none_eos;
-      if (range->start > range->stop) return F_none_stop;
+      if (range->start >= structure.used) return F_okay_eos;
+      if (range->start > range->stop) return F_okay_stop;
     } // while
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_string_dynamic_seek_line_
 
@@ -649,15 +649,15 @@ extern "C" {
 
     while (structure.string[range->start] != seek_to_this) {
 
-      if (structure.string[range->start] == f_string_eol_s.string[0]) return F_none_eol;
+      if (structure.string[range->start] == f_string_eol_s.string[0]) return F_okay_eol;
 
       ++range->start;
 
-      if (range->start >= structure.used) return F_none_eos;
-      if (range->start > range->stop) return F_none_stop;
+      if (range->start >= structure.used) return F_okay_eos;
+      if (range->start > range->stop) return F_okay_stop;
     } // while
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_string_dynamic_seek_line_to_
 
@@ -674,11 +674,11 @@ extern "C" {
 
       ++range->start;
 
-      if (range->start >= structure.used) return F_none_eos;
-      if (range->start > range->stop) return F_none_stop;
+      if (range->start >= structure.used) return F_okay_eos;
+      if (range->start > range->stop) return F_okay_stop;
     } // while
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_string_dynamic_seek_to_
 
@@ -688,7 +688,7 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (destination->used && !destination->string[destination->used - 1]) return F_none;
+    if (destination->used && !destination->string[destination->used - 1]) return F_okay;
     if (destination->used == F_string_t_size_d) return F_status_set_error(F_string_too_large);
 
     {
@@ -698,7 +698,7 @@ extern "C" {
 
     destination->string[destination->used++] = 0;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_string_dynamic_terminate_
 
@@ -709,7 +709,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (destination->used < destination->size) {
-      if (!destination->string[destination->used]) return F_none;
+      if (!destination->string[destination->used]) return F_okay;
     }
 
     if (destination->used == F_string_t_size_d) return F_status_set_error(F_string_too_large);
@@ -721,7 +721,7 @@ extern "C" {
 
     destination->string[destination->used] = 0;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_string_dynamic_terminate_after_
 

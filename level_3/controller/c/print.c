@@ -43,7 +43,7 @@ extern "C" {
 
     controller_unlock_print_flush(print.to, 0);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_controller_print_help_
 

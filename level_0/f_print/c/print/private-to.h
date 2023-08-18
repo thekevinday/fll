@@ -28,7 +28,7 @@ extern "C" {
  *   The file descriptor to output to.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
@@ -68,7 +68,7 @@ extern "C" {
  *   The file descriptor to output to.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *   F_utf on success, but character is a UTF-8 character.
  *
@@ -124,7 +124,7 @@ extern "C" {
  *   The file descriptor to output to.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
@@ -173,7 +173,7 @@ extern "C" {
  *   The file descriptor to output to.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *
  *   F_output (with error bit) on failure.
@@ -210,7 +210,7 @@ extern "C" {
  *   The file descriptor to output to.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *
  *   F_output (with error bit) on failure.
@@ -247,7 +247,7 @@ extern "C" {
  *   The file descriptor to output to.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *
  *   F_output (with error bit) on failure.
@@ -285,7 +285,7 @@ extern "C" {
  *   The file descriptor to output to.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *
  *   F_output (with error bit) on failure.
@@ -320,7 +320,7 @@ extern "C" {
  *   The file descriptor to output to.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
@@ -367,7 +367,7 @@ extern "C" {
  *   The file descriptor to output to.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
@@ -415,7 +415,7 @@ extern "C" {
  *   The file descriptor to output to.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
@@ -458,7 +458,7 @@ extern "C" {
  *   The file descriptor to output to.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
@@ -500,7 +500,7 @@ extern "C" {
  *   The file descriptor to output to.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
@@ -543,7 +543,7 @@ extern "C" {
  *   The file descriptor to output to.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
@@ -584,7 +584,7 @@ extern "C" {
  *   The file descriptor to output to.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.

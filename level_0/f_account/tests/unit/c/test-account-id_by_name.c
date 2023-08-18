@@ -109,7 +109,7 @@ void test__f_account_id_by_name__works(void **state) {
 
     const f_status_t status = f_account_id_by_name(name, &uid);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(uid, password.pw_uid);
   }
 }

@@ -73,7 +73,7 @@ void test__f_file_stream_write_block__works(void **state) {
 
     f_status_t status = f_file_stream_write_block(file, test, &written);
 
-    assert_int_equal(status, F_none_stop);
+    assert_int_equal(status, F_okay_stop);
     assert_int_equal(written, file.size_write);
 
     // The letter 'e'.
@@ -83,7 +83,7 @@ void test__f_file_stream_write_block__works(void **state) {
 
     status = f_file_stream_write_block(file, test, &written);
 
-    assert_int_equal(status, F_none_stop);
+    assert_int_equal(status, F_okay_stop);
     assert_int_equal(written, file.size_write);
 
     // The letter 's'.
@@ -93,7 +93,7 @@ void test__f_file_stream_write_block__works(void **state) {
 
     status = f_file_stream_write_block(file, test, &written);
 
-    assert_int_equal(status, F_none_stop);
+    assert_int_equal(status, F_okay_stop);
     assert_int_equal(written, file.size_write);
 
     // The letter 't'.
@@ -103,7 +103,7 @@ void test__f_file_stream_write_block__works(void **state) {
 
     status = f_file_stream_write_block(file, test, &written);
 
-    assert_int_equal(status, F_none_stop);
+    assert_int_equal(status, F_okay_stop);
     assert_int_equal(written, file.size_write);
   }
 
@@ -117,7 +117,7 @@ void test__f_file_stream_write_block__works(void **state) {
 
     const f_status_t status = f_file_stream_write_block(file, test, 0);
 
-    assert_int_equal(status, F_none_eos);
+    assert_int_equal(status, F_okay_eos);
   }
 }
 

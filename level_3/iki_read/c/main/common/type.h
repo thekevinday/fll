@@ -73,8 +73,8 @@ extern "C" {
   #define iki_read_setting_t_initialize \
     { \
       iki_read_main_flag_none_e, \
-      F_none, \
-      macro_f_state_t_initialize_1(iki_read_allocation_large_d, iki_read_allocation_small_d, F_none, 0, 0, 0, 0, 0, 0, 0), \
+      F_okay, \
+      macro_f_state_t_initialize_1(iki_read_allocation_large_d, iki_read_allocation_small_d, F_okay, 0, 0, 0, 0, 0, 0, 0), \
       0, \
       0, \
       f_string_dynamic_t_initialize, \
@@ -131,7 +131,7 @@ extern "C" {
  *   This does not alter setting.state.status.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  */

@@ -21,7 +21,7 @@ extern "C" {
 
     f_string_dynamics_resize(0, &setting->files);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_byte_dump_setting_delete_
 

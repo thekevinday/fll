@@ -135,7 +135,7 @@ void test__f_file_copy__fails_for_block(void **state) {
       const f_status_t status = f_file_copy(path, path, mode, 0, 0);
 
       if (statuss[i] == F_file_found) {
-        assert_int_equal(status, F_none);
+        assert_int_equal(status, F_okay);
       }
       else {
         assert_int_equal(status, F_status_set_error(statuss[i]));
@@ -197,7 +197,7 @@ void test__f_file_copy__fails_for_block(void **state) {
       const f_status_t status = f_file_copy(path, path, mode, 0, 0);
 
       if (statuss[i] == F_file_found) {
-        assert_int_equal(status, F_none);
+        assert_int_equal(status, F_okay);
       }
       else {
         assert_int_equal(status, F_status_set_error(statuss[i]));
@@ -271,7 +271,7 @@ void test__f_file_copy__fails_for_character(void **state) {
       const f_status_t status = f_file_copy(path, path, mode, 0, 0);
 
       if (statuss[i] == F_file_found) {
-        assert_int_equal(status, F_none);
+        assert_int_equal(status, F_okay);
       }
       else {
         assert_int_equal(status, F_status_set_error(statuss[i]));
@@ -333,7 +333,7 @@ void test__f_file_copy__fails_for_character(void **state) {
       const f_status_t status = f_file_copy(path, path, mode, 0, 0);
 
       if (statuss[i] == F_file_found) {
-        assert_int_equal(status, F_none);
+        assert_int_equal(status, F_okay);
       }
       else {
         assert_int_equal(status, F_status_set_error(statuss[i]));
@@ -407,7 +407,7 @@ void test__f_file_copy__fails_for_directory(void **state) {
       const f_status_t status = f_file_copy(path, path, mode, 0, 0);
 
       if (statuss[i] == F_file_found) {
-        assert_int_equal(status, F_none);
+        assert_int_equal(status, F_okay);
       }
       else {
         assert_int_equal(status, F_status_set_error(statuss[i]));
@@ -469,7 +469,7 @@ void test__f_file_copy__fails_for_directory(void **state) {
       const f_status_t status = f_file_copy(path, path, mode, 0, 0);
 
       if (statuss[i] == F_file_found) {
-        assert_int_equal(status, F_none);
+        assert_int_equal(status, F_okay);
       }
       else {
         assert_int_equal(status, F_status_set_error(statuss[i]));
@@ -533,7 +533,7 @@ void test__f_file_copy__fails_for_fifo(void **state) {
       const f_status_t status = f_file_copy(path, path, mode, 0, 0);
 
       if (statuss[i] == F_file_found) {
-        assert_int_equal(status, F_none);
+        assert_int_equal(status, F_okay);
       }
       else {
         assert_int_equal(status, F_status_set_error(statuss[i]));
@@ -595,7 +595,7 @@ void test__f_file_copy__fails_for_fifo(void **state) {
       const f_status_t status = f_file_copy(path, path, mode, 0, 0);
 
       if (statuss[i] == F_file_found) {
-        assert_int_equal(status, F_none);
+        assert_int_equal(status, F_okay);
       }
       else {
         assert_int_equal(status, F_status_set_error(statuss[i]));
@@ -728,7 +728,7 @@ void test__f_file_copy__fails_for_link(void **state) {
       const f_status_t status = f_file_copy(path, path, mode, 0, 0);
 
       if (statuss[i] == F_file_found) {
-        assert_int_equal(status, F_none);
+        assert_int_equal(status, F_okay);
       }
       else {
         assert_int_equal(status, F_status_set_error(statuss[i]));
@@ -1378,7 +1378,7 @@ void test__f_file_copy__fails_for_socket(void **state) {
       const f_status_t status = f_file_copy(path, path, mode, 0, 0);
 
       if (statuss[i] == F_file_found) {
-        assert_int_equal(status, F_none);
+        assert_int_equal(status, F_okay);
       }
       else {
         assert_int_equal(status, F_status_set_error(statuss[i]));
@@ -1441,7 +1441,7 @@ void test__f_file_copy__fails_for_socket(void **state) {
       const f_status_t status = f_file_copy(path, path, mode, 0, 0);
 
       if (statuss[i] == F_file_found) {
-        assert_int_equal(status, F_none);
+        assert_int_equal(status, F_okay);
       }
       else {
         assert_int_equal(status, F_status_set_error(statuss[i]));
@@ -1499,7 +1499,7 @@ void test__f_file_copy__works_for_block(void **state) {
 
     const f_status_t status = f_file_copy(path, path, mode, 0, 0);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 }
 
@@ -1528,7 +1528,7 @@ void test__f_file_copy__works_for_character(void **state) {
 
     const f_status_t status = f_file_copy(path, path, mode, 0, 0);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 }
 
@@ -1557,7 +1557,7 @@ void test__f_file_copy__works_for_directory(void **state) {
 
     const f_status_t status = f_file_copy(path, path, mode, 0, 0);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 }
 
@@ -1586,7 +1586,7 @@ void test__f_file_copy__works_for_fifo(void **state) {
 
     const f_status_t status = f_file_copy(path, path, mode, 0, 0);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 }
 
@@ -1620,7 +1620,7 @@ void test__f_file_copy__works_for_link(void **state) {
 
     const f_status_t status = f_file_copy(path, path, mode, 0, 0);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 }
 
@@ -1690,7 +1690,7 @@ void test__f_file_copy__works_for_regular(void **state) {
 
     const f_status_t status = f_file_copy(path, path, mode, 0, 0);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 }
 
@@ -1719,7 +1719,7 @@ void test__f_file_copy__works_for_socket(void **state) {
 
     const f_status_t status = f_file_copy(path, path, mode, 0, 0);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 }
 

@@ -55,7 +55,7 @@ extern "C" {
       }
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_console_identify_) || !defined(_di_f_console_parameter_process_)
 

@@ -11,7 +11,7 @@ extern "C" {
 
     fake_print_context_wrapped_parameters(print, "The parameters ", symbol_1, name_1, " and ", symbol_2, name_2, " contradict, defaulting to ", symbol_3, name_3, 0);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_build_print_warning_parameters_contradict_
 
@@ -36,7 +36,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_build_print_warning_setting_boolean_may_only_be_
 
@@ -47,7 +47,7 @@ extern "C" {
 
     fake_print_context_wrapped_parameters(print, "The build settings ", f_string_empty_s, name_1, " and ", f_string_empty_s, name_2, " cannot both be false when using the language ", f_string_empty_s, language, 0);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_build_print_warning_setting_both_cannot_using_language_
 
@@ -74,7 +74,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_build_print_warning_setting_language_may_only_be_
 
@@ -95,7 +95,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_build_print_warning_setting_required_default_to_
 
@@ -125,7 +125,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_build_print_warning_setting_version_may_only_be_
 

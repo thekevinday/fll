@@ -115,7 +115,7 @@ extern "C" {
     fake_skeleton_operate_file_create(data, data->file_data_build_fakefile, F_false, fake_make_skeleton_content_fakefile_s);
     if (F_status_is_error(main->setting.state.status)) return;
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
   }
 #endif // _di_fake_skeleton_operate_
 
@@ -131,7 +131,7 @@ extern "C" {
     if (main->setting.state.status == F_true) {
       fake_print_verbose_directory_exists(&main->program.message, path);
 
-      main->setting.state.status = F_none;
+      main->setting.state.status = F_okay;
 
       return;
     }
@@ -166,7 +166,7 @@ extern "C" {
       return;
     }
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
   }
 #endif // _di_fake_skeleton_operate_directory_create_
 
@@ -182,7 +182,7 @@ extern "C" {
     if (main->setting.state.status == F_true) {
       fake_print_verbose_file_exists(&main->program.message, path);
 
-      main->setting.state.status = F_none;
+      main->setting.state.status = F_okay;
 
       return;
     }
@@ -194,7 +194,7 @@ extern "C" {
       if (main->setting.state.status == F_true) {
         fake_print_verbose_file_exists_as_link(&main->program.message, path);
 
-        main->setting.state.status = F_none;
+        main->setting.state.status = F_okay;
 
         return;
       }
@@ -203,7 +203,7 @@ extern "C" {
     if (main->setting.state.status == F_false) {
       fake_print_verbose_file_exists_not_regular_or_link(&main->program.message, path);
 
-      main->setting.state.status = F_status_set_warning(F_none);
+      main->setting.state.status = F_status_set_warning(F_okay);
 
       return;
     }
@@ -267,7 +267,7 @@ extern "C" {
       return;
     }
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
   }
 #endif // _di_fake_skeleton_operate_file_create_
 

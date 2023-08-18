@@ -33,7 +33,7 @@ extern "C" {
 
     buffer->string[buffer->used] = 0;
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_color_load_context_) || !defined(_di_f_color_save_2_)
 
@@ -77,7 +77,7 @@ extern "C" {
 
     buffer->string[buffer->used] = 0;
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_color_load_context_) || !defined(_di_f_color_save_2_)
 

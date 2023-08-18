@@ -22,7 +22,7 @@ void test__f_utf_map_multis_append__works(void **state) {
   {
     f_status_t status = f_utf_string_dynamic_append(test_name, &source.name);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(source.name.used, test_name.used);
 
     for (f_number_unsigned_t i = 0; i < source.name.used; ++i) {
@@ -31,7 +31,7 @@ void test__f_utf_map_multis_append__works(void **state) {
 
     status = f_utf_string_dynamics_append_all(test_value, &source.value);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(source.value.used, test_value.used);
     assert_int_equal(source.value.array[0].used, test_value.array[0].used);
     assert_int_equal(source.value.array[1].used, test_value.array[1].used);
@@ -48,7 +48,7 @@ void test__f_utf_map_multis_append__works(void **state) {
   {
     const f_status_t status = f_utf_string_map_multis_append(source, &destination);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(destination.used, 1);
     assert_int_equal(destination.array[0].name.used, source.name.used);
     assert_int_equal(destination.array[0].value.used, source.value.used);

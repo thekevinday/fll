@@ -18,7 +18,7 @@ extern "C" {
 
     ++arguments->used;
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_fll_execute_arguments_add_) || !defined(_di_fll_execute_arguments_add_set_)
 
@@ -48,7 +48,7 @@ extern "C" {
 
     ++arguments->used;
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_fll_execute_arguments_add_parameter_) || !defined(_di_fll_execute_arguments_add_parameter_set_)
 
@@ -119,7 +119,7 @@ extern "C" {
       }
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_fll_execute_program_)
 
@@ -186,7 +186,7 @@ extern "C" {
       } // for
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_fll_execute_program_)
 
@@ -248,12 +248,12 @@ extern "C" {
 
       // This must explicitly check for 0 (as opposed to checking (!result)).
       if (result != 0) {
-        if (WIFEXITED(*((int *) result))) return F_none;
+        if (WIFEXITED(*((int *) result))) return F_okay;
 
         return F_status_set_error(F_failure);
       }
 
-      return F_none;
+      return F_okay;
     }
 
     if (parameter && parameter->option & FL_execute_parameter_option_session_d) {
@@ -392,7 +392,7 @@ extern "C" {
 
         const f_file_t file = macro_f_file_t_initialize_2(0, descriptors[1], F_file_flag_write_only_d);
 
-        f_status_t status = F_none;
+        f_status_t status = F_okay;
 
         // Have the parent perform all appropriate access controls and then send either '0' for no error or '1' for error to the child.
         if (as) {
@@ -430,12 +430,12 @@ extern "C" {
 
       // This must explicitly check for 0 (as opposed to checking (!result)).
       if (result != 0) {
-        if (WIFEXITED(*((int *) result))) return F_none;
+        if (WIFEXITED(*((int *) result))) return F_okay;
 
         return F_status_set_error(F_failure);
       }
 
-      return F_none;
+      return F_okay;
     }
 
     if (parameter && parameter->option & FL_execute_parameter_option_session_d) {

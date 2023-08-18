@@ -146,7 +146,7 @@ extern "C" {
  *   If neither f_file_stat_flag_group_e nor f_file_stat_flag_owner_e, will not copy the owner and group ids.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if source.used or destination.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
@@ -185,7 +185,7 @@ extern "C" {
  *   The file.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_file_descriptor_not if file.id is -1.
  *
  *   F_file_close (with error bit) if fclose() failed for any other reason.
@@ -211,7 +211,7 @@ extern "C" {
  *   The file descriptor.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_file_descriptor_not if id is -1.
  *
  *   F_file_close (with error bit) if fclose() failed for any other reason.
@@ -258,7 +258,7 @@ extern "C" {
  *   If not f_file_stat_flag_reference_e, will dereference any links.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if source.used or destination.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
@@ -299,7 +299,7 @@ extern "C" {
  *   If FALSE, will not fail if file already exists.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
@@ -341,7 +341,7 @@ extern "C" {
  *   If FALSE, will not fail if file already exists.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if path.used is 0.
  *   F_file_descriptor_not if file.id is -1.
  *
@@ -386,7 +386,7 @@ extern "C" {
  *   Is ignored by pipe file types.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
@@ -428,7 +428,7 @@ extern "C" {
  *   Is ignored by pipe file types.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if path.used is 0.
  *   F_file_descriptor_not if file.id is -1.
  *
@@ -462,7 +462,7 @@ extern "C" {
  *   The file mode to assign.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
@@ -495,7 +495,7 @@ extern "C" {
  *   The file mode to assign.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if path.used is 0.
  *   F_file_descriptor_not if file.id is -1.
  *
@@ -531,7 +531,7 @@ extern "C" {
  *   Is ignored by pipe file types.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
@@ -567,7 +567,7 @@ extern "C" {
  *   Is ignored by pipe file types.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if path.used is 0.
  *   F_file_descriptor_not if file.id is -1.
  *
@@ -598,7 +598,7 @@ extern "C" {
  *   The file.
  *
  * @return
- *   F_none is returned on success.
+ *   F_okay is returned on success.
  *   F_stream_not if file.stream is NULL.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -684,7 +684,7 @@ extern "C" {
  *   The file.
  *
  * @return
- *   F_none is returned on success.
+ *   F_okay is returned on success.
  *   F_file_descriptor_not if file.id is -1.
  *
  *   F_file_descriptor (with error bit) if file descriptor is invalid.
@@ -713,7 +713,7 @@ extern "C" {
  *   The id of the file's group.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) if access to the file was denied.
@@ -830,7 +830,7 @@ extern "C" {
  *   A path to the link that does the pointing.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if target.used or point.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
@@ -870,7 +870,7 @@ extern "C" {
  *   A path to the link that does the pointing.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if target.used or point.used is 0.
  *   F_file_descriptor_not if file.id is -1.
  *
@@ -909,7 +909,7 @@ extern "C" {
  *   A path to the link that does the pointing.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if target.used or point.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
@@ -952,7 +952,7 @@ extern "C" {
  *   Any valid flag, such as F_file_at_path_empty_d, F_file_at_automount_no_d, or F_file_at_symlink_follow_no_d.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if target.used or point.used is 0.
  *   F_file_descriptor_not if either file.id is -1.
  *
@@ -997,7 +997,7 @@ extern "C" {
  *   Will be NULL terminated with the NULL at target.string[target.used];
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
@@ -1043,7 +1043,7 @@ extern "C" {
  *   Will be NULL terminated with the NULL at target.string[target.used];
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if path.used is 0.
  *   F_file_descriptor_not if file.id is -1.
  *
@@ -1087,7 +1087,7 @@ extern "C" {
  *   See fcntl() for details.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_access_denied (with error bit) on access denied (due to locks being held by other processes).
  *   F_again (with error bit) on operation on file is prohibited (often due to file being memory mapped by another process).
@@ -1129,7 +1129,7 @@ extern "C" {
  *   The determined mode.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -1226,7 +1226,7 @@ extern "C" {
  *   Set to NULL to not use.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_syntax (with error bit) if the string fails to follow the syntax rules.
@@ -1253,7 +1253,7 @@ extern "C" {
  *   The read file mode.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) if access to the file was denied.
@@ -1285,7 +1285,7 @@ extern "C" {
  *   The read file mode.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if path.used is 0.
  *   F_file_descriptor_not if file.id is -1.
  *
@@ -1317,7 +1317,7 @@ extern "C" {
  *   The new mode to use.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
@@ -1352,7 +1352,7 @@ extern "C" {
  *   The new mode to use.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if path.used is 0.
  *   F_file_descriptor_not if file.id is -1.
  *
@@ -1386,7 +1386,7 @@ extern "C" {
  *   The determined mode.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -1408,7 +1408,7 @@ extern "C" {
  *   This is NULL terminated after the name_directory.used.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if path.used is 0.
  *
  *   F_memory_not (with error bit) on out of memory.
@@ -1439,7 +1439,7 @@ extern "C" {
  *   This is NULL terminated after the name_directory.used.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if path.used is 0.
  *
  *   F_memory_not (with error bit) on out of memory.
@@ -1473,7 +1473,7 @@ extern "C" {
  *   This will be updated with the file descriptor.
  *
  * @return
- *   F_none is returned on success.
+ *   F_okay is returned on success.
  *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
@@ -1518,7 +1518,7 @@ extern "C" {
  *   This will be updated with the file descriptor.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if path.used is 0.
  *   F_file_descriptor_not if file.id is -1.
  *
@@ -1545,7 +1545,7 @@ extern "C" {
  *   The id of the file's owner.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) if access to the file was denied.
@@ -1588,7 +1588,7 @@ extern "C" {
  *   A value of 0 results in immediate return.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if polls.used is 0.
  *   F_time_out if time out is reached befoe a signal is received.
  *
@@ -1616,7 +1616,7 @@ extern "C" {
  *   The contents of the file is appended into this buffer.
  *
  * @return
- *   F_none_eof on success and EOF was reached.
+ *   F_okay_eof on success and EOF was reached.
  *   F_file_descriptor_not if file.id is -1.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the read would result in a blocking operation.
@@ -1650,8 +1650,8 @@ extern "C" {
  *   The contents of the file is appended into this buffer.
  *
  * @return
- *   F_none on success.
- *   F_none_eof on success and EOF was reached.
+ *   F_okay on success.
+ *   F_okay_eof on success and EOF was reached.
  *   F_file_descriptor_not if file.id is -1.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the read would result in a blocking operation.
@@ -1687,8 +1687,8 @@ extern "C" {
  *   The buffer the file is being read into.
  *
  * @return
- *   F_none_eof on success and EOF was reached.
- *   F_none_stop on success and total was reached.
+ *   F_okay_eof on success and EOF was reached.
+ *   F_okay_stop on success and total was reached.
  *   F_data_not if total is 0.
  *   F_file_descriptor_not if file.id is -1.
  *
@@ -1714,7 +1714,7 @@ extern "C" {
  *   The path file name.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_busy (with error bit) if file is busy.
@@ -1747,7 +1747,7 @@ extern "C" {
  *   Any valid flag, such as F_file_at_path_empty_d, F_file_at_automount_no_d, or F_file_at_symlink_follow_no_d.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_file_descriptor_not if file.id is -1.
  *
  *   F_access_denied (with error bit) on access denied.
@@ -1789,7 +1789,7 @@ extern "C" {
  *   The path to copy to.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -1842,7 +1842,7 @@ extern "C" {
  *   If this is compiled with renameat2 support (), then flag is used otherwise flag is always 0 regardless of this property.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_file_descriptor_not if file.id is -1.
  *
  *   F_access_denied (with error bit) on access denied.
@@ -1887,7 +1887,7 @@ extern "C" {
  *   Set to FALSE to operate on the symlink itself.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if either both uid and gid are -1 or path.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
@@ -1928,7 +1928,7 @@ extern "C" {
  *   Any valid flag, such as F_file_at_path_empty_d, F_file_at_automount_no_d, or F_file_at_symlink_follow_no_d.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if either both uid and gid are -1 or path.used is 0.
  *   F_file_descriptor_not if file.id is -1.
  *
@@ -1967,7 +1967,7 @@ extern "C" {
  *   To be compared against offset.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_file_descriptor_not if file.id is -1.
  *
  *   F_bound_not (with error bit) if SEEK_DATA or SEEK_HOLE is specified as whence and offset is beyond the end of file.
@@ -2008,7 +2008,7 @@ extern "C" {
  *   Set to NULL to not use.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if all of read, write, except, and timeout are NULL (having at least one is required) or when highest_plus_one is 0.
  *
  *   F_file_descriptor (with error bit) if the file descriptor is invalid.
@@ -2054,7 +2054,7 @@ extern "C" {
  *   Set to NULL to not use.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if all of read, write, except, and timeout are NULL (having at least one is required) or when highest_plus_one is 0.
  *
  *   F_file_descriptor (with error bit) if the file descriptor is invalid.
@@ -2081,7 +2081,7 @@ extern "C" {
  *   This gets set to the size of the file.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_access_denied (with error bit) if access to the file was denied.
  *   F_directory_not (with error bit) on invalid directory.
@@ -2112,7 +2112,7 @@ extern "C" {
  *   This gets set to the size of the file.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_file_descriptor_not if file.id is -1.
  *
  *   F_access_denied (with error bit) if access to the file was denied.
@@ -2142,7 +2142,7 @@ extern "C" {
  *   This gets set to the size of the file.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_file_descriptor_not if file.id is -1.
  *
  *   F_access_denied (with error bit) if access to the file was denied.
@@ -2176,7 +2176,7 @@ extern "C" {
  *   The statistics read.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_file_descriptor_not if file.id is -1.
  *
  *   F_access_denied (with error bit) if access to the file was denied.
@@ -2209,7 +2209,7 @@ extern "C" {
  *   The statistics read.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_file_descriptor_not if file.id is -1.
  *
  *   F_access_denied (with error bit) if access to the file was denied.
@@ -2239,7 +2239,7 @@ extern "C" {
  *   The statistics read.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_file_descriptor_not if file.id is -1.
  *
  *   F_access_denied (with error bit) if access to the file was denied.
@@ -2273,7 +2273,7 @@ extern "C" {
  *   Set to FALSE to operate on the symlink itself.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -2316,7 +2316,7 @@ extern "C" {
  *   Any valid flag, such as F_file_at_path_empty_d, F_file_at_automount_no_d, or F_file_at_symlink_follow_no_d.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_file_descriptor_not if file.id is -1.
  *
  *   F_access_denied (with error bit) on access denied.
@@ -2360,7 +2360,7 @@ extern "C" {
  *   The type of the file.
  *
  * @return
- *   F_none if path was found and and the type was loaded in the type parameter.
+ *   F_okay if path was found and and the type was loaded in the type parameter.
  *   F_file_found_not if the path was not found.
  *
  *   F_access_denied (with error bit) if access to the file was denied.
@@ -2390,7 +2390,7 @@ extern "C" {
  *   The type of the file.
  *
  * @return
- *   F_none if path was found and and the type was loaded in the type parameter.
+ *   F_okay if path was found and and the type was loaded in the type parameter.
  *   F_file_descriptor_not if file.id is -1.
  *   F_file_found_not if the path was not found.
  *
@@ -2421,7 +2421,7 @@ extern "C" {
  *   (The name "mask" is used avoid a naming conflict with the umask() function.)
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -2439,7 +2439,7 @@ extern "C" {
  *   (The name "mask" is used avoid a naming conflict with the umask() function.)
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  */
 #ifndef _di_f_file_umask_set_
   extern f_status_t f_file_umask_set(const mode_t mask);
@@ -2457,8 +2457,8 @@ extern "C" {
  *   Set to NULL to not use.
  *
  * @return
- *   F_none on success.
- *   F_none_eos on success and wrote up to buffer.used.
+ *   F_okay on success.
+ *   F_okay_eos on success and wrote up to buffer.used.
  *   F_data_not if buffer.used is 0 or range.start > range.stop.
  *   F_file_descriptor_not if file.id is -1.
  *
@@ -2491,9 +2491,9 @@ extern "C" {
  *   Set to NULL to not use.
  *
  * @return
- *   F_none on success.
- *   F_none_stop on success and wrote up to stop point.
- *   F_none_eos on success and wrote up to buffer.used (buffer.used is reached before stop point).
+ *   F_okay on success.
+ *   F_okay_stop on success and wrote up to stop point.
+ *   F_okay_eos on success and wrote up to buffer.used (buffer.used is reached before stop point).
  *   F_data_not if buffer.used is 0 or range.start > range.stop.
  *   F_file_descriptor_not if file.id is -1.
  *
@@ -2526,9 +2526,9 @@ extern "C" {
  *   Set to NULL to not use.
  *
  * @return
- *   F_none on success.
- *   F_none_stop on success and wrote up to stop point.
- *   F_none_eos on success and wrote up to buffer.used (buffer.used is reached before stop point).
+ *   F_okay on success.
+ *   F_okay_stop on success and wrote up to stop point.
+ *   F_okay_eos on success and wrote up to buffer.used (buffer.used is reached before stop point).
  *   F_data_not if buffer.used is 0 or range.start > range.stop.
  *   F_file_descriptor_not if file.id is -1.
  *
@@ -2561,9 +2561,9 @@ extern "C" {
  *   Set to NULL to not use.
  *
  * @return
- *   F_none on success.
- *   F_none_stop on success and wrote up to stop point.
- *   F_none_eos on success and wrote up to buffer.used (buffer.used is reached before stop point).
+ *   F_okay on success.
+ *   F_okay_stop on success and wrote up to stop point.
+ *   F_okay_eos on success and wrote up to buffer.used (buffer.used is reached before stop point).
  *   F_data_not if buffer.used is 0 or range.start > range.stop.
  *   F_file_descriptor_not if file.id is -1.
  *

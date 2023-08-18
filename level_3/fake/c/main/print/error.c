@@ -14,7 +14,7 @@ extern "C" {
 
     fll_error_print(print, F_status_set_fine(main->setting.state.status), function, fll_error_file_flag_fallback_e);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_print_error_
 
@@ -26,7 +26,7 @@ extern "C" {
 
     fake_print_context_wrapped_number(print, "The ", (f_number_unsigned_t) index, " argument must not be an empty string");
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_print_error_argument_empty_
 
@@ -198,7 +198,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_print_error_build_operation_file_full_
 
@@ -228,7 +228,7 @@ extern "C" {
 
     fake_print_context_wrapped_variable(print, "The directory ", path, " could not be created, a parent directory is missing or invalid");
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_print_error_directory_create_parent_missing_
 
@@ -240,7 +240,7 @@ extern "C" {
 
     fake_print_context_simple_variable(print, "Failed to find program ", program, " for executing");
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_print_error_execute_program_not_found_
 
@@ -271,7 +271,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_print_error_failure_operation_
 
@@ -283,7 +283,7 @@ extern "C" {
 
     fake_print_context_wrapped_variable(print, "Failed to execute script ", script, "");
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_print_error_failure_script_
 
@@ -309,7 +309,7 @@ extern "C" {
 
     fll_error_file_print(print, F_status_set_fine(main->setting.state.status), function, fll_error_file_flag_fallback_e, name, operation, type);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_print_error_file_
 
@@ -321,7 +321,7 @@ extern "C" {
 
     fake_print_context_wrapped_variable(print, "The file ", path, " could not be created, a parent directory is missing or invalid");
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_print_error_file_create_parent_missing_
 
@@ -335,7 +335,7 @@ extern "C" {
 
     fll_error_file_print(print, F_status_set_fine(main->setting.state.status), function, fll_error_file_flag_simple_e, name, operation, type);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_print_error_file_simple_
 
@@ -409,7 +409,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_print_error_fss_message_
 
@@ -421,7 +421,7 @@ extern "C" {
 
     fake_print_context_wrapped_variable(print, "The group ", group, " is not found");
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_print_error_group_not_found_
 
@@ -433,7 +433,7 @@ extern "C" {
 
     fake_print_context_wrapped_variable(print, "The mode ", mode, " is invalid");
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_print_error_mode_invalid_
 
@@ -445,7 +445,7 @@ extern "C" {
 
     fake_print_context_wrapped_variable(print, "The number ", number, " is too large");
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_print_error_number_too_large_
 
@@ -476,7 +476,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_print_error_operation_failed_
 
@@ -498,7 +498,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_print_error_operation_link_argument_unknown_
 
@@ -510,7 +510,7 @@ extern "C" {
 
     fake_print_context_wrapped_variable(print, "The point file ", argument, " already exists");
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_print_error_operation_link_point_exists_
 
@@ -522,7 +522,7 @@ extern "C" {
 
     fake_print_context_wrapped_variable(print, "The target file ", argument, " does not exist");
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_print_error_operation_link_target_exists_not_
 
@@ -541,7 +541,7 @@ extern "C" {
       fake_print_error_file(print, function, path, fake_common_file_path_determine_real_s, fll_error_file_type_file_e);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_print_error_operation_path_outside_
 
@@ -573,7 +573,7 @@ extern "C" {
       fake_print_error_file(print, function, path, fake_common_file_path_change_to_s, fll_error_file_type_directory_e);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_print_error_operation_path_stack_max_
 
@@ -606,7 +606,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_print_error_operation_stack_max_
 
@@ -637,7 +637,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_print_error_operation_unknown_
 
@@ -649,7 +649,7 @@ extern "C" {
 
     fake_print_context_wrapped_parameter(print, "The ", symbol, name, " parameter must not be empty and must not contain only white space");
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_print_error_parameter_not_empty_
 
@@ -661,7 +661,7 @@ extern "C" {
 
     fake_print_context_wrapped_parameter_value(print, "The value of the directory parameter ", symbol, name, " has a path of ", value, " that is not found.");
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_print_error_parameter_directory_not_found_path_
 
@@ -681,7 +681,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_print_error_parameter_not_word_
 
@@ -693,7 +693,7 @@ extern "C" {
 
     fake_print_context_wrapped_variables(print, "The operation ", operation_1, " cannot be specified with the operation ", operation_2, 0);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_print_error_parameter_operation_not_with_
 
@@ -705,7 +705,7 @@ extern "C" {
 
     fake_print_context_wrapped_parameter(print, "The parameter ", symbol, parameter, " is specified too many times");
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_print_error_parameter_too_many_
 
@@ -717,7 +717,7 @@ extern "C" {
 
     fake_print_context_simple(print, "Requires more arguments");
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_print_error_requires_more_arguments_
 
@@ -729,7 +729,7 @@ extern "C" {
 
     fake_print_context_simple(print, "Has too many arguments");
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_print_error_too_many_arguments_
 
@@ -741,7 +741,7 @@ extern "C" {
 
     fake_print_context_wrapped_variable(print, "The user ", user, " is not found");
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_print_error_user_not_found_
 

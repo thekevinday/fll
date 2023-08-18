@@ -29,7 +29,7 @@ extern "C" {
  *   The program data.
  *
  *   This alters data.main->setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *
  *     Errors (with error bit) from: fake_build_touch().
  * @param data_build
@@ -59,7 +59,7 @@ extern "C" {
  *   This modifies data.main.cache_arguments.
  *
  *   This alters data.main->setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *
  *     Errors (with error bit) from: fll_execute_arguments_add().
  *
@@ -96,7 +96,7 @@ extern "C" {
  *   The program data.
  *
  *   This alters data.main->setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *
  *     Errors (with error bit) from: fll_execute_arguments_add().
  *

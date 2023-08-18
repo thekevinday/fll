@@ -25,7 +25,7 @@ extern "C" {
  *   The parameter value to process.
  *
  *   This alters setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *     F_data_not if string starts wth a null (length is 0).
  *     F_parameter (with error bit) if a parameter is invalid.
  *     F_number (with error bit) if parameter is not a number.
@@ -50,7 +50,7 @@ extern "C" {
  *   The parameter value to process.
  *
  *   This alters setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *     F_data_not if string is empty.
  *
  *     Errors (with error bit) from: fl_console_parameter_to_number_unsigned().
@@ -74,7 +74,7 @@ extern "C" {
  *   The parameter value to process.
  *
  *   This alters setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *     F_data_not if string starts wth a null (length is 0).
  *     F_complete_not_utf (with error bit) if an incomplete UTF-8 fragment is found.
  *     F_number (with error bit) if parameter is not a number.

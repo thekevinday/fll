@@ -26,7 +26,7 @@ extern "C" {
  *   The named to adjust.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   Errors (with error bit) from: f_memory_arrays_adjust().
  *   Errors (with error bit) from: macro_f_string_ranges_t_adjust().
@@ -54,7 +54,7 @@ extern "C" {
  *   The named to resize.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   Errors (with error bit) from: f_memory_arrays_resize().
  *   Errors (with error bit) from: f_string_ranges_resize().

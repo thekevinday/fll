@@ -20,7 +20,7 @@ extern "C" {
       if (!data) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     status = f_console_parameters_delete(&data->parameters);
     if (F_status_is_error(status)) return status;
@@ -28,7 +28,7 @@ extern "C" {
     status = f_color_context_delete(&data->context);
     if (F_status_is_error(status)) return status;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fll_program_data_delete_
 
@@ -38,7 +38,7 @@ extern "C" {
       if (!data) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     status = f_console_parameters_destroy(&data->parameters);
     if (F_status_is_error(status)) return status;
@@ -46,7 +46,7 @@ extern "C" {
     status = f_color_context_destroy(&data->context);
     if (F_status_is_error(status)) return status;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fll_program_data_destroy_
 

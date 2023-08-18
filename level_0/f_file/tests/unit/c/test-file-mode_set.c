@@ -73,7 +73,7 @@ void test__f_file_mode_set__works(void **state) {
 
     const f_status_t status = f_file_mode_set(path, mode);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 }
 

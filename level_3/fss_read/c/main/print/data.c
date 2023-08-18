@@ -59,7 +59,7 @@ extern "C" {
       }
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fss_read_print_at_
 
@@ -92,7 +92,7 @@ extern "C" {
       main->callback.print_content_ignore(&main->program.output);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fss_read_print_content_
 
@@ -107,7 +107,7 @@ extern "C" {
       fll_print_dynamic_raw(fss_read_pipe_content_ignore_s, print->to);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fss_read_print_content_ignore_
 
@@ -118,7 +118,7 @@ extern "C" {
 
     fll_print_format("%ul%r", print->to, number, f_string_eol_s);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fss_read_print_number_
 
@@ -164,7 +164,7 @@ extern "C" {
       }
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fss_read_print_object_
 
@@ -184,7 +184,7 @@ extern "C" {
       );
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fss_read_print_quote_
 
@@ -197,7 +197,7 @@ extern "C" {
 
     fll_print_dynamic_raw((main->setting.flag & fss_read_main_flag_pipe_format_e) ? fss_read_pipe_content_end_s : f_string_eol_s, print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fss_read_print_set_end_
 
@@ -212,7 +212,7 @@ extern "C" {
       fll_print_dynamic_raw(fss_read_pipe_content_end_s, print->to);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fss_read_print_set_end_no_eol_
 

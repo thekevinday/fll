@@ -41,7 +41,7 @@ void test__f_thread_cancel_state_set__works(void **state) {
 
     const f_status_t status = f_thread_cancel_state_set(state_data, &previous);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 }
 

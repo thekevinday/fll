@@ -23,7 +23,7 @@ extern "C" {
  *   The program data.
  *
  *   This alters data.main->setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *
  *     F_interrupt (with error bit) on interrupt signal received.
  *
@@ -44,7 +44,7 @@ extern "C" {
  *   The program data.
  *
  *   This alters data.main->setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *
  *     F_failure (with warning bit) on path exists but is not a directory.
  *
@@ -67,9 +67,9 @@ extern "C" {
  *   The program data.
  *
  *   This alters data.main->setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *
- *     F_none (with warning bit) on file exists but is not a regular or a link.
+ *     F_okay (with warning bit) on file exists but is not a regular or a link.
  *
  *     Errors (with error bit) from: f_file_create()
  *     Errors (with error bit) from: f_file_is()

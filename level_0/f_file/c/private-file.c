@@ -26,7 +26,7 @@ extern "C" {
 
     *id = -1;
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_file_clone_) || !defined(_di_f_file_close_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_create_) || !defined(_di_f_file_create_at_) || !defined(_di_f_file_stream_close_)
 
@@ -80,7 +80,7 @@ extern "C" {
 
     if (size_read < 0) return F_status_set_error(F_file_read);
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_file_copy_) || !defined(_di_f_file_clone_)
 
@@ -105,7 +105,7 @@ extern "C" {
 
     if (F_status_is_error(status)) return status;
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_file_create_) || !defined(_di_f_file_copy_)
 
@@ -130,7 +130,7 @@ extern "C" {
 
     if (F_status_is_error(status)) return status;
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_file_create_at_)
 
@@ -156,7 +156,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_file_copy_)
 
@@ -177,7 +177,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_file_create_fifo_) || !defined(_di_f_file_copy_)
 
@@ -203,7 +203,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_file_create_device_) || !defined(_di_f_file_create_node_) || !defined(_di_f_file_copy_)
 
@@ -230,7 +230,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_file_create_device_at_) || !defined(_di_f_file_create_node_at_)
 
@@ -248,7 +248,7 @@ extern "C" {
       return F_status_set_error(F_file_synchronize);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_file_clone_) || !defined(_di_f_file_close_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_create_) || !defined(_di_f_file_create_at_) || !defined(_di_f_file_stream_close_)
 
@@ -276,7 +276,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_file_link_) || !defined(_di_f_file_copy_)
 
@@ -305,7 +305,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_file_link_at_)
 
@@ -338,7 +338,7 @@ extern "C" {
     status = f_string_dynamic_terminate_after(target);
     if (F_status_is_error(status)) return status;
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_file_link_read_) || !defined(_di_f_file_copy_)
 
@@ -372,7 +372,7 @@ extern "C" {
     status = f_string_dynamic_terminate_after(target);
     if (F_status_is_error(status)) return status;
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_file_link_read_at_)
 
@@ -394,7 +394,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_file_mode_set_) || !defined(_di_f_file_copy_)
 
@@ -427,7 +427,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_file_open_) || !defined(_di_f_file_copy_)
 
@@ -461,7 +461,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_file_create_at_) || !defined(_di_f_file_open_at_)
 
@@ -510,7 +510,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_file_role_change_) || !defined(_di_f_file_copy_)
 
@@ -550,7 +550,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_file_role_change_at_)
 
@@ -571,7 +571,7 @@ extern "C" {
       return F_status_set_error(F_file_stat);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_file_clone_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_exists_) || !defined(_di_f_file_group_read_) || !defined(_di_f_file_is_) || !defined(_di_f_file_link_read_) || !defined(_di_f_file_mode_read_) || !defined(_di_f_file_owner_read_) || !defined(_di_f_file_size_) || !defined(_di_f_file_stat_) || !defined(_di_f_file_touch_) || !defined(_di_f_file_type_)
 
@@ -593,7 +593,7 @@ extern "C" {
       return F_status_set_error(F_file_stat);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_file_exists_at_) || !defined(_di_f_file_link_read_at_) || !defined(_di_f_file_mode_read_at_) || !defined(_di_f_file_size_at_) || !defined(_di_f_file_stat_at_) || !defined(_di_f_file_touch_at_) || !defined(_di_f_file_type_at_)
 
@@ -615,7 +615,7 @@ extern "C" {
       return F_status_set_error(F_file_stat);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_file_stat_by_id_) || !defined(_di_f_file_size_by_id_)
 
@@ -688,13 +688,13 @@ extern "C" {
       if (!size_write) {
         funlockfile(file.stream);
 
-        return F_none_stop;
+        return F_okay_stop;
       }
     } // while
 
     funlockfile(file.stream);
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_file_stream_write_) || !defined(_di_f_file_stream_write_block_) || !defined(_di_f_file_stream_write_until) || !defined(_di_f_file_stream_write_range)
 
@@ -722,7 +722,7 @@ extern "C" {
     } // while
 
     if (!size_write) {
-      return F_none_stop;
+      return F_okay_stop;
     }
 
     if (size_write < 0) {
@@ -737,7 +737,7 @@ extern "C" {
       return F_status_set_error(F_file_write);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_file_write_) || !defined(_di_f_file_write_block_) || !defined(_di_f_file_write_until) || !defined(_di_f_file_write_range)
 

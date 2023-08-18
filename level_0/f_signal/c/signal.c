@@ -17,7 +17,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_signal_action_
 
@@ -43,7 +43,7 @@ extern "C" {
 
     signal->id = 0;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_signal_close_
 
@@ -60,7 +60,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_signal_mask_
 
@@ -84,7 +84,7 @@ extern "C" {
 
     signal->id = result;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_signal_open_
 
@@ -93,7 +93,7 @@ extern "C" {
 
     pause();
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_signal_pause_
 
@@ -109,7 +109,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_signal_queue_
 
@@ -156,7 +156,7 @@ extern "C" {
       }
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_signal_read_
 
@@ -171,7 +171,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_signal_send_
 
@@ -187,7 +187,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_signal_set_add_
 
@@ -203,7 +203,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_signal_set_delete_
 
@@ -219,7 +219,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_signal_set_empty_
 
@@ -236,7 +236,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_signal_set_fill_
 
@@ -273,7 +273,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_signal_suspend_
 
@@ -287,7 +287,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_signal_wait_
 
@@ -302,7 +302,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_signal_wait_until_
 

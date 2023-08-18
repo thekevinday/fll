@@ -10,13 +10,13 @@ extern "C" {
       if (!canonical) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     if (!path.used) {
       status = f_path_current(F_true, canonical);
       if (F_status_is_error(status)) return status;
 
-      return F_none;
+      return F_okay;
     }
 
     f_number_unsigned_t at = 0;
@@ -36,7 +36,7 @@ extern "C" {
       status = f_path_current(F_true, canonical);
       if (F_status_is_error(status)) return status;
 
-      if (!path.string[0]) return F_none;
+      if (!path.string[0]) return F_okay;
 
       at = 0;
     }
@@ -137,7 +137,7 @@ extern "C" {
       --canonical->used;
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fl_path_canonical_
 

@@ -64,9 +64,9 @@ extern "C" {
  *   All other statuses are ignored.
  *
  *   This alters state.status:
- *     F_none on success.
- *     F_none_eos on success after reaching the end of the buffer.
- *     F_none_stop on success after reaching stopping point.
+ *     F_okay on success.
+ *     F_okay_eos on success after reaching the end of the buffer.
+ *     F_okay_stop on success after reaching stopping point.
  *     F_data_not if buffer is empty (buffer.used is 0).
  *     F_data_not_eos no data to write due start location being greater than or equal to buffer size.
  *     F_data_not_stop no data to write due start location being greater than stop location.
@@ -74,9 +74,9 @@ extern "C" {
  *     F_fss_found_object_content_not (with error bit) When payload Content is missing.
  *     F_data_not_eos (with error bit) no data to write due start location being greater than or equal to buffer size, except that no "payload" is found.
  *     F_data_not_stop (with error bit) no data to write due start location being greater than stop location, except that no "payload" is found.
- *     F_none (with error bit) on success, except that no "payload" is found.
- *     F_none_eos (with error bit) on success after reaching the end of the buffer, except that no "payload" is found.
- *     F_none_stop (with error bit) on success after reaching stopping point, except that no "payload" is found.
+ *     F_okay (with error bit) on success, except that no "payload" is found.
+ *     F_okay_eos (with error bit) on success after reaching the end of the buffer, except that no "payload" is found.
+ *     F_okay_stop (with error bit) on success after reaching stopping point, except that no "payload" is found.
  *     F_number_overflow (with error bit) if the maximum buffer size is reached.
  *     F_parameter (with error bit) if a parameter is invalid.
  *
@@ -134,9 +134,9 @@ extern "C" {
  *   All other statuses are ignored.
  *
  *   This alters state.status:
- *     F_none on success.
- *     F_none_eos on success after reaching the end of the buffer.
- *     F_none_stop on success after reaching stopping point.
+ *     F_okay on success.
+ *     F_okay_eos on success after reaching the end of the buffer.
+ *     F_okay_stop on success after reaching stopping point.
  *     F_data_not if object or contents are empty (either object.used or contents.used is 0).
  *     F_data_not_eos no data to write due start location being greater than or equal to buffer size.
  *     F_data_not_stop no data to write due start location being greater than stop location.

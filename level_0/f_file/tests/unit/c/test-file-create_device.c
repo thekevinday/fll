@@ -116,7 +116,7 @@ void test__f_file_create_device__works(void **state) {
 
       const f_status_t status = f_file_create_device(path, modes[i], 1, 1);
 
-      assert_int_equal(status, F_none);
+      assert_int_equal(status, F_okay);
     } // for
   }
 }

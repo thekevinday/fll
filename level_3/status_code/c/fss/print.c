@@ -27,7 +27,7 @@ extern "C" {
     fl_print_format("  Each code will be printed on its own line.%r", print->to, f_string_eol_s);
     fl_print_format("  Errors regarding each code may be printed on its own line.%r", print->to, f_string_eol_s);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_status_code_fss_print_help_detail_
 

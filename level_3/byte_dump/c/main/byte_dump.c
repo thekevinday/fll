@@ -21,7 +21,7 @@ extern "C" {
       fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
     }
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
 
     if (main->setting.flag & (byte_dump_main_flag_help_e | byte_dump_main_flag_version_e | byte_dump_main_flag_copyright_e)) {
       if (main->setting.flag & byte_dump_main_flag_help_e) {

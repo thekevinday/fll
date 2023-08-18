@@ -30,11 +30,11 @@ extern "C" {
 
       if (range->start >= buffer.used) {
         found->array[found->used].stop = buffer.used - 1;
-        state->status = F_none_eos;
+        state->status = F_okay_eos;
       }
       else {
         found->array[found->used].stop = range->stop;
-        state->status = F_none_stop;
+        state->status = F_okay_stop;
       }
 
       return;
@@ -273,14 +273,14 @@ extern "C" {
 
     if (range->start >= buffer.used) {
       found->array[found->used].stop = buffer.used - 1;
-      state->status = F_none_eos;
+      state->status = F_okay_eos;
 
       return;
     }
 
     if (range->start > range->stop) {
       found->array[found->used].stop = range->stop;
-      state->status = F_none_stop;
+      state->status = F_okay_stop;
 
       return;
     }
@@ -306,7 +306,7 @@ extern "C" {
     if (F_status_is_error(state->status)) return;
     if (state->status == F_data_not) return;
 
-    if (state->status == F_none_stop || state->status == F_none_eos) {
+    if (state->status == F_okay_stop || state->status == F_okay_eos) {
       if (complete == f_fss_complete_full_e || complete == f_fss_complete_full_trim_e || complete == f_fss_complete_end_e) {
         const f_status_t status = f_string_dynamic_increase(state->step_large, destination);
 
@@ -319,7 +319,7 @@ extern "C" {
         destination->string[destination->used++] = f_fss_basic_list_close_s.string[0];
       }
 
-      state->status = state->status == F_none_stop ? F_data_not_stop : F_data_not_eos;
+      state->status = state->status == F_okay_stop ? F_data_not_stop : F_data_not_eos;
 
       return;
     }
@@ -528,13 +528,13 @@ extern "C" {
     }
 
     if (range->start > range->stop) {
-      state->status = F_none_stop;
+      state->status = F_okay_stop;
     }
     else if (range->start >= content.used) {
-      state->status = F_none_eos;
+      state->status = F_okay_eos;
     }
     else {
-      state->status = F_none;
+      state->status = F_okay;
     }
   }
 #endif // _di_fl_fss_basic_list_content_write_
@@ -557,7 +557,7 @@ extern "C" {
     if (F_status_is_error(state->status)) return;
     if (state->status == F_data_not) return;
 
-    if (state->status == F_none_eol) {
+    if (state->status == F_okay_eol) {
 
       // Move the start position to after the EOL.
       ++range->start;
@@ -566,13 +566,13 @@ extern "C" {
       return;
     }
 
-    if (state->status == F_none_eos) {
+    if (state->status == F_okay_eos) {
       state->status = F_data_not_eos;
 
       return;
     }
 
-    if (state->status == F_none_stop) {
+    if (state->status == F_okay_stop) {
       state->status = F_data_not_stop;
 
       return;
@@ -587,13 +587,13 @@ extern "C" {
       f_fss_seek_to_eol(buffer, range, state);
       if (F_status_is_error(state->status)) return;
 
-      if (state->status == F_none_eos) {
+      if (state->status == F_okay_eos) {
         state->status = F_data_not_eos;
 
         return;
       }
 
-      if (state->status == F_none_stop) {
+      if (state->status == F_okay_stop) {
         state->status = F_data_not_stop;
 
         return;
@@ -781,14 +781,14 @@ extern "C" {
 
         if (range->start >= buffer.used) {
           found->stop = buffer.used - 1;
-          state->status = F_none_eos;
+          state->status = F_okay_eos;
 
           return;
         }
 
         if (range->start > range->stop) {
           found->stop = range->stop;
-          state->status = F_none_stop;
+          state->status = F_okay_stop;
 
           return;
         }
@@ -824,13 +824,13 @@ extern "C" {
       return;
     }
 
-    if (state->status == F_none_eos) {
+    if (state->status == F_okay_eos) {
       state->status = F_data_not_eos;
 
       return;
     }
 
-    if (state->status == F_none_stop) {
+    if (state->status == F_okay_stop) {
       state->status = F_data_not_stop;
 
       return;
@@ -861,7 +861,7 @@ extern "C" {
     if (F_status_is_error(state->status)) return;
     if (state->status == F_data_not) return;
 
-    if (state->status == F_none_stop || state->status == F_none_eos) {
+    if (state->status == F_okay_stop || state->status == F_okay_eos) {
       if (complete == f_fss_complete_partial_e || complete == f_fss_complete_partial_trim_e || complete == f_fss_complete_full_e || complete == f_fss_complete_full_trim_e) {
         {
           const f_status_t status = f_string_dynamic_increase_by(state->step_small + 2, destination);
@@ -880,7 +880,7 @@ extern "C" {
         }
       }
 
-      state->status = state->status == F_none_stop ? F_data_not_stop : F_data_not_eos;
+      state->status = state->status == F_okay_stop ? F_data_not_stop : F_data_not_eos;
 
       return;
     }
@@ -921,7 +921,7 @@ extern "C" {
       // Objects will not have leading white spaces, but having this does not result in an invalid object, so just write the provided spaces.
       if (object.string[range->start] != f_fss_placeholder_s.string[0]) {
         if (object.string[range->start] == f_fss_eol_s.string[0]) {
-          state->status = F_status_set_error(F_none_eol);
+          state->status = F_status_set_error(F_okay_eol);
 
           break;
         }
@@ -931,7 +931,7 @@ extern "C" {
         }
         else {
           if (object.string[range->start] == f_fss_eol_s.string[0]) {
-            state->status = F_status_set_error(F_none_eol);
+            state->status = F_status_set_error(F_okay_eol);
 
             break;
           }
@@ -1000,7 +1000,7 @@ extern "C" {
 
       if (object.string[range->start] != f_fss_placeholder_s.string[0]) {
         if (object.string[range->start] == f_fss_eol_s.string[0]) {
-          state->status = F_status_set_error(F_none_eol);
+          state->status = F_status_set_error(F_okay_eol);
 
           break;
         }
@@ -1054,13 +1054,13 @@ extern "C" {
     }
 
     if (range->start > range->stop) {
-      state->status = F_none_stop;
+      state->status = F_okay_stop;
     }
     else if (range->start >= object.used) {
-      state->status = F_none_eos;
+      state->status = F_okay_eos;
     }
     else {
-      state->status = F_none;
+      state->status = F_okay;
     }
   }
 #endif // _di_fl_fss_basic_list_object_write_

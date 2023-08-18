@@ -22,7 +22,7 @@
  *   This alters main.program.signal_received, setting it to a received signal.
  *
  *   This alters main.setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *
  *     Errors (with error bit) from: fll_fss_identify().
  * @param name

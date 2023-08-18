@@ -90,7 +90,7 @@ extern "C" {
  *   This does not alter main.setting.state.status.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  */
 #ifndef _di_fss_write_extended_list_process_help_

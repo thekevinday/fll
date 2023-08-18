@@ -192,7 +192,7 @@ extern "C" {
  *   Additional arguments relating to the string.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success but there is nothing to print.
  *   F_stream_not if file.stream is NULL.
  *
@@ -253,7 +253,7 @@ extern "C" {
  *
  *   The status parameter will be set as follows:
  *
- *     F_none on success.
+ *     F_okay on success.
  *     F_data_not on success but there is nothing to print.
  *     F_stream_not if file.stream is NULL.
  *
@@ -306,7 +306,7 @@ extern "C" {
  *   The va_start(ap, string) and va_end(ap) is required to be called outside this function.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success but there is nothing to print.
  *   F_stream_not if file.stream is NULL.
  *
@@ -359,7 +359,7 @@ extern "C" {
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success but there is nothing to print.
  *   F_stream_not if file.stream is NULL.
  *
@@ -403,7 +403,7 @@ extern "C" {
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success but there is nothing to print.
  *   F_stream_not if file.stream is NULL.
  *
@@ -444,7 +444,7 @@ extern "C" {
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success but there is nothing to print.
  *   F_stream_not if file.stream is NULL.
  *
@@ -485,7 +485,7 @@ extern "C" {
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success but there is nothing to print.
  *   F_stream_not if file.stream is NULL.
  *
@@ -526,7 +526,7 @@ extern "C" {
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success but there is nothing to print.
  *   F_stream_not if file.stream is NULL.
  *
@@ -571,7 +571,7 @@ extern "C" {
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success but there is nothing to print.
  *   F_stream_not if file.stream is NULL.
  *
@@ -614,7 +614,7 @@ extern "C" {
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success but there is nothing to print.
  *   F_stream_not if file.stream is NULL.
  *
@@ -656,7 +656,7 @@ extern "C" {
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success but there is nothing to print.
  *   F_stream_not if file.stream is NULL.
  *
@@ -699,7 +699,7 @@ extern "C" {
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success but there is nothing to print.
  *   F_stream_not if file.stream is NULL.
  *
@@ -746,7 +746,7 @@ extern "C" {
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success but there is nothing to print.
  *   F_stream_not if file.stream is NULL.
  *
@@ -791,7 +791,7 @@ extern "C" {
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success but there is nothing to print.
  *   F_stream_not if file.stream is NULL.
  *
@@ -835,7 +835,7 @@ extern "C" {
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success but there is nothing to print.
  *   F_stream_not if file.stream is NULL.
  *
@@ -883,7 +883,7 @@ extern "C" {
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success but there is nothing to print.
  *   F_stream_not if file.stream is NULL.
  *
@@ -935,7 +935,7 @@ extern "C" {
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success but there is nothing to print.
  *   F_stream_not if file.stream is NULL.
  *
@@ -985,7 +985,7 @@ extern "C" {
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success but there is nothing to print.
  *   F_stream_not if file.stream is NULL.
  *
@@ -1034,7 +1034,7 @@ extern "C" {
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success but there is nothing to print.
  *   F_stream_not if file.stream is NULL.
  *
@@ -1079,7 +1079,7 @@ extern "C" {
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success but there is nothing to print.
  *   F_stream_not if file.stream is NULL.
  *
@@ -1128,7 +1128,7 @@ extern "C" {
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success but there is nothing to print.
  *   F_stream_not if file.stream is NULL.
  *
@@ -1175,7 +1175,7 @@ extern "C" {
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success but there is nothing to print.
  *   F_stream_not if file.stream is NULL.
  *
@@ -1221,7 +1221,7 @@ extern "C" {
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success but there is nothing to print.
  *   F_stream_not if file.stream is NULL.
  *
@@ -1273,7 +1273,7 @@ extern "C" {
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success but there is nothing to print.
  *   F_stream_not if file.stream is NULL.
  *
@@ -1329,7 +1329,7 @@ extern "C" {
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success but there is nothing to print.
  *   F_stream_not if file.stream is NULL.
  *
@@ -1383,7 +1383,7 @@ extern "C" {
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success but there is nothing to print.
  *   F_stream_not if file.stream is NULL.
  *
@@ -1436,7 +1436,7 @@ extern "C" {
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success but there is nothing to print.
  *   F_stream_not if file.stream is NULL.
  *
@@ -1487,7 +1487,7 @@ extern "C" {
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success but there is nothing to print.
  *   F_stream_not if file.stream is NULL.
  *
@@ -1540,7 +1540,7 @@ extern "C" {
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success but there is nothing to print.
  *   F_stream_not if file.stream is NULL.
  *
@@ -1591,7 +1591,7 @@ extern "C" {
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success but there is nothing to print.
  *   F_stream_not if file.stream is NULL.
  *
@@ -1641,7 +1641,7 @@ extern "C" {
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success but there is nothing to print.
  *   F_stream_not if file.stream is NULL.
  *
@@ -1692,7 +1692,7 @@ extern "C" {
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success but there is nothing to print.
  *   F_stream_not if file.stream is NULL.
  *
@@ -1747,7 +1747,7 @@ extern "C" {
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success but there is nothing to print.
  *   F_stream_not if file.stream is NULL.
  *
@@ -1799,7 +1799,7 @@ extern "C" {
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success but there is nothing to print.
  *   F_stream_not if file.stream is NULL.
  *
@@ -1851,7 +1851,7 @@ extern "C" {
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success but there is nothing to print.
  *   F_stream_not if file.stream is NULL.
  *
@@ -1898,7 +1898,7 @@ extern "C" {
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success but there is nothing to print.
  *   F_stream_not if file.stream is NULL.
  *
@@ -1949,7 +1949,7 @@ extern "C" {
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success but there is nothing to print.
  *   F_stream_not if file.stream is NULL.
  *
@@ -1997,7 +1997,7 @@ extern "C" {
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success but there is nothing to print.
  *   F_stream_not if file.stream is NULL.
  *
@@ -2045,7 +2045,7 @@ extern "C" {
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success but there is nothing to print.
  *   F_stream_not if file.stream is NULL.
  *

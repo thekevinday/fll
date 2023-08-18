@@ -20,7 +20,7 @@ extern "C" {
     f_fss_skip_past_delimit(buffer, range, state);
     if (F_status_is_error(state->status)) return;
     if (state->status == F_data_not) return;
-    if (state->status == F_none_eos || state->status == F_none_stop) return;
+    if (state->status == F_okay_eos || state->status == F_okay_stop) return;
 
     state->status = f_memory_array_increase(state->step_small, sizeof(f_fss_nest_t), (void **) &found->depth, &found->used, &found->size);
     if (F_status_is_error(state->status)) return;
@@ -119,7 +119,7 @@ extern "C" {
             f_string_ranges_resize(0, &objects);
             f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &slashes.array, &slashes.used, &slashes.size);
 
-            state->status = (range->start >= buffer.used) ? F_none_eos : F_none_stop;
+            state->status = (range->start >= buffer.used) ? F_okay_eos : F_okay_stop;
 
             return;
           }
@@ -643,9 +643,9 @@ extern "C" {
             f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &slashes.array, &slashes.used, &slashes.size);
 
             if (range->start >= buffer.used) {
-              state->status = F_none_eos;
+              state->status = F_okay_eos;
             } else if (range->start > range->stop) {
-              state->status = F_none_stop;
+              state->status = F_okay_stop;
             }
             else {
               state->status = F_fss_found_content;
@@ -808,10 +808,10 @@ extern "C" {
     if (F_status_is_error(state->status)) return;
     if (state->status == F_data_not) return;
 
-    if (state->status == F_none_eos) {
+    if (state->status == F_okay_eos) {
       state->status = F_data_not_eos;
     }
-    else if (state->status == F_none_stop) {
+    else if (state->status == F_okay_stop) {
       state->status = F_data_not_stop;
     }
 
@@ -1075,13 +1075,13 @@ extern "C" {
     }
 
     if (range->start > range->stop) {
-      state->status = F_none_stop;
+      state->status = F_okay_stop;
     }
     else if (range->start >= content.used) {
-      state->status = F_none_eos;
+      state->status = F_okay_eos;
     }
     else {
-      state->status = F_none;
+      state->status = F_okay;
     }
   }
 #endif // _di_fl_fss_embedded_list_content_write_
@@ -1104,7 +1104,7 @@ extern "C" {
     if (F_status_is_error(state->status)) return;
     if (state->status == F_data_not) return;
 
-    if (state->status == F_none_eol) {
+    if (state->status == F_okay_eol) {
 
       // Move the start position to after the EOL.
       ++range->start;
@@ -1113,13 +1113,13 @@ extern "C" {
       return;
     }
 
-    if (state->status == F_none_eos) {
+    if (state->status == F_okay_eos) {
       state->status = F_data_not_eos;
 
       return;
     }
 
-    if (state->status == F_none_stop) {
+    if (state->status == F_okay_stop) {
       state->status = F_data_not_stop;
 
       return;
@@ -1148,13 +1148,13 @@ extern "C" {
         return;
       }
 
-      if (state->status == F_none_eos) {
+      if (state->status == F_okay_eos) {
         state->status = F_data_not_eos;
 
         return;
       }
 
-      if (state->status == F_none_stop) {
+      if (state->status == F_okay_stop) {
         state->status = F_data_not_stop;
 
         return;
@@ -1342,14 +1342,14 @@ extern "C" {
 
         if (range->start >= buffer.used) {
           found->stop = buffer.used - 1;
-          state->status = F_none_eos;
+          state->status = F_okay_eos;
 
           return;
         }
 
         if (range->start > range->stop) {
           found->stop = range->stop;
-          state->status = F_none_stop;
+          state->status = F_okay_stop;
 
           return;
         }
@@ -1444,10 +1444,10 @@ extern "C" {
     if (F_status_is_error(state->status)) return;
     if (state->status == F_data_not) return;
 
-    if (state->status == F_none_eos) {
+    if (state->status == F_okay_eos) {
       state->status = F_data_not_eos;
     }
-    else if (state->status == F_none_stop) {
+    else if (state->status == F_okay_stop) {
       state->status = F_data_not_stop;
     }
 
@@ -1514,7 +1514,7 @@ extern "C" {
       // Objects will not have leading white spaces, but having this does not result in an invalid object, so just write the provided spaces.
       if (object.string[range->start] != f_fss_placeholder_s.string[0]) {
         if (object.string[range->start] == f_fss_eol_s.string[0]) {
-          state->status = F_status_set_error(F_none_eol);
+          state->status = F_status_set_error(F_okay_eol);
 
           break;
         }
@@ -1524,7 +1524,7 @@ extern "C" {
         }
         else {
           if (object.string[range->start] == f_fss_eol_s.string[0]) {
-            state->status = F_status_set_error(F_none_eol);
+            state->status = F_status_set_error(F_okay_eol);
 
             break;
           }
@@ -1600,7 +1600,7 @@ extern "C" {
 
       if (object.string[range->start] != f_fss_placeholder_s.string[0]) {
         if (object.string[range->start] == f_fss_eol_s.string[0]) {
-          state->status = F_status_set_error(F_none_eol);
+          state->status = F_status_set_error(F_okay_eol);
 
           break;
         }
@@ -1612,7 +1612,7 @@ extern "C" {
           ends_on_space = F_true;
 
           if (object.string[range->start] == f_fss_eol_s.string[0]) {
-            state->status = F_status_set_error(F_none_eol);
+            state->status = F_status_set_error(F_okay_eol);
 
             break;
           }
@@ -1674,13 +1674,13 @@ extern "C" {
     }
 
     if (range->start > range->stop) {
-      state->status = F_none_stop;
+      state->status = F_okay_stop;
     }
     else if (range->start >= object.used) {
-      state->status = F_none_eos;
+      state->status = F_okay_eos;
     }
     else {
-      state->status = F_none;
+      state->status = F_okay;
     }
   }
 #endif // _di_fl_fss_embedded_list_object_write_

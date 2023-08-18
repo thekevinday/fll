@@ -23,7 +23,7 @@ extern "C" {
  *   The main program and settings data.
  *
  *   This alters main.setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *
  *     F_failure (with error bit) on failure, usually when read() fails.
  *     F_interrupt (with error bit) on receiving a process signal, such as an interrupt signal.

@@ -106,7 +106,7 @@ void test__f_file_type_at__works(void **state) {
 
     const f_status_t status = f_file_type_at(file, path, 0, &type);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(type, F_file_type_link_d);
   }
 
@@ -125,7 +125,7 @@ void test__f_file_type_at__works(void **state) {
 
     const f_status_t status = f_file_type_at(file, path, 0, &type);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(type, F_file_type_regular_d);
   }
 }

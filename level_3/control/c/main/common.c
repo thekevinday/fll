@@ -483,7 +483,7 @@ extern "C" {
       } // for
     }
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
   }
 #endif // _di_control_setting_load_
 

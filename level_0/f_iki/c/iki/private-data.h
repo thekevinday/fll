@@ -26,7 +26,7 @@ extern "C" {
  *   The iki_datas array the source is appended onto.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   Errors (with error bit) from: f_memory_array_append().
  *   Errors (with error bit) from: f_memory_array_increase_by().

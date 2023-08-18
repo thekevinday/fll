@@ -10,7 +10,7 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
 
   if (!data || !local || local->device >= data->devices.used) return F_status_set_error(F_parameter);
 
-  f_status_t status = F_none;
+  f_status_t status = F_okay;
 
   bool invalid = F_false;
   bool is_ip_list = F_false;
@@ -396,7 +396,7 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
           if (F_status_is_error(status)) break;
 
           if (status == F_data_not) {
-            status = F_none;
+            status = F_okay;
           }
           else {
             ++arguments.used;
@@ -561,7 +561,7 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
                 fll_print_format("%r%[%QCannot find the file '%Q'.%]%r", data->main->warning.to, f_string_eol_s, data->main->warning.context, data->main->warning.prefix, path_file, data->main->warning.context, f_string_eol_s);
               }
 
-              status = F_none;
+              status = F_okay;
             }
             else if (F_status_set_fine(status) == F_file_open) {
               if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
@@ -782,7 +782,7 @@ f_status_t firewall_create_custom_chains(firewall_data_t * const data, firewall_
 
   if (!data || !local) return F_status_set_error(F_parameter);
 
-  f_status_t status = F_none;
+  f_status_t status = F_okay;
 
   uint8_t tool = firewall_program_iptables_e;
   bool new_chain = F_false;
@@ -975,7 +975,7 @@ f_status_t firewall_delete_chains(firewall_data_t * const data) {
   if (!data) return F_status_set_error(F_parameter);
 
   const f_string_static_t tools[2] = { firewall_tool_iptables_s, firewall_tool_ip6tables_s };
-  f_status_t status = F_none;
+  f_status_t status = F_okay;
 
   for (f_number_unsigned_t i = 0; i < 2; ++i) {
 
@@ -1071,7 +1071,7 @@ f_status_t firewall_default_lock(firewall_data_t * const data) {
   const f_string_static_t chains[3] = { firewall_chain_input_s, firewall_chain_output_s, firewall_chain_forward_s };
   const f_string_static_t tools[2] = { firewall_tool_iptables_s, firewall_tool_ip6tables_s };
 
-  f_status_t status = F_none;
+  f_status_t status = F_okay;
 
   int return_code = 0;
 
@@ -1247,7 +1247,7 @@ f_status_t firewall_process_rules(firewall_data_t * const data, f_string_range_t
 
   if (!data || !range || !local) return F_status_set_error(F_parameter);
 
-  f_status_t status = F_none;
+  f_status_t status = F_okay;
   f_number_unsigneds_t delimits = f_number_unsigneds_t_initialize;
   f_state_t state = f_state_t_initialize;
 
@@ -1306,7 +1306,7 @@ f_status_t firewall_delete_local_data(firewall_local_data_t * const local) {
   f_string_ranges_resize(0, &local->rule_objects);
   f_string_rangess_resize(0, &local->rule_contents);
 
-  return F_none;
+  return F_okay;
 }
 
 #ifdef __cplusplus

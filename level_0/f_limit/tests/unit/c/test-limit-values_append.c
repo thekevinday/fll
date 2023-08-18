@@ -24,7 +24,7 @@ void test__f_limit_values_append__works(void **state) {
   {
     const f_status_t status = f_limit_values_append(source, &destination);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(destination.used, 1);
     assert_int_equal(destination.array[0].rlim_cur, source.rlim_cur);
     assert_int_equal(destination.array[0].rlim_max, source.rlim_max);

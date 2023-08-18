@@ -19,14 +19,14 @@ void test__f_string_dynamics_append_all__works(void **state) {
   {
     f_status_t status = f_string_dynamics_resize(length_inner, &source);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(source.size, length_inner);
 
     for (; source.used < length_inner; ++source.used) {
 
       status = f_string_dynamic_append(test_sources[source.used], &source.array[source.used]);
 
-      assert_int_equal(status, F_none);
+      assert_int_equal(status, F_okay);
       assert_int_equal(source.array[source.used].used, test_sources[source.used].used);
 
       assert_string_equal(source.array[source.used].string, test_sources[source.used].string);
@@ -37,7 +37,7 @@ void test__f_string_dynamics_append_all__works(void **state) {
   {
     const f_status_t status = f_string_dynamics_append_all(source, &destination);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(destination.used, source.used);
     assert_int_equal(destination.size, source.used);
 
@@ -70,7 +70,7 @@ void test__f_string_dynamics_append_all__returns_data_not(void **state) {
   {
     const f_status_t status = f_string_dynamics_resize(length, &source);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(source.used, 0);
     assert_int_equal(source.size, length);
   }

@@ -43,7 +43,7 @@ extern "C" {
  *   Set to NULL to not use.
  *
  * @return
- *   F_none on success but no signal found.
+ *   F_okay on success but no signal found.
  *
  *   F_buffer (with error bit) if the buffer is invalid (action or previous point to invalid memory).
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -65,7 +65,7 @@ extern "C" {
  *   The signal settings.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success, but no descriptor was provided to close.
  *
  *   F_descriptor (with error bit) if id is an invalid descriptor.
@@ -98,7 +98,7 @@ extern "C" {
  *   Set to NULL to not use.
  *
  * @return
- *   F_none on success but no signal found.
+ *   F_okay on success but no signal found.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -122,7 +122,7 @@ extern "C" {
  *   Otherwise, signal.id is used as the file descriptor.
  *
  * @return
- *   F_none on success but no signal found.
+ *   F_okay on success but no signal found.
  *
  *   F_device (with error bit) if could not mount the internal inode device.
  *   F_file_descriptor_max (with error bit) if max file descriptors is reached.
@@ -160,7 +160,7 @@ extern "C" {
  *   The signal value to send.
  *
  * @return
- *   F_none on success but no signal found.
+ *   F_okay on success but no signal found.
  *
  *   F_found_not (with error bit) if the given PID was found.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -191,7 +191,7 @@ extern "C" {
  *   The signal data to be populated if a signal is found during read.
  *
  * @return
- *   F_none on success but no signal found.
+ *   F_okay on success but no signal found.
  *   F_data_not on success, but no descriptor was provided to read.
  *   F_signal on success and signal found.
  *
@@ -225,7 +225,7 @@ extern "C" {
  *   This may also be a process group id.
  *
  * @return
- *   F_none on success but no signal found.
+ *   F_okay on success but no signal found.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_prohibited (with error bit) if not allowed to send signals to the given process.
@@ -248,7 +248,7 @@ extern "C" {
  *   The set of signals to add to.
  *
  * @return
- *   F_none on success but no signal found.
+ *   F_okay on success but no signal found.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -269,7 +269,7 @@ extern "C" {
  *   The set of signals to delete from.
  *
  * @return
- *   F_none on success but no signal found.
+ *   F_okay on success but no signal found.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -288,7 +288,7 @@ extern "C" {
  *   The set of signals to clear.
  *
  * @return
- *   F_none on success but no signal found.
+ *   F_okay on success but no signal found.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -307,7 +307,7 @@ extern "C" {
  *   The set of signals to fully populate.
  *
  * @return
- *   F_none on success but no signal found.
+ *   F_okay on success but no signal found.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -348,7 +348,7 @@ extern "C" {
  *   The signal mask.
  *
  * @return
- *   F_none on success but no signal found.
+ *   F_okay on success but no signal found.
  *
  *   F_buffer (with error bit) if the mask is pointing to invalid memory.
  *   F_interrupt (with error bit) when program received an interrupt signal, halting operation.
@@ -371,7 +371,7 @@ extern "C" {
  *   Set to NULL to not use.
  *
  * @return
- *   F_none if signal is found.
+ *   F_okay if signal is found.
  *   F_interrupt if interrupted by a signal other than one specified in the signal set.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -396,7 +396,7 @@ extern "C" {
  *   Set to NULL to not use.
  *
  * @return
- *   F_none if signal is found before time out.
+ *   F_okay if signal is found before time out.
  *   F_interrupt if interrupted by a signal other than one specified in the signal set.
  *   F_time_out if no signal is find by the time out.
  *

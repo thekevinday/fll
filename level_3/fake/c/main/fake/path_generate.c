@@ -11,7 +11,7 @@ extern "C" {
 
     fake_main_t * const main = data->main;
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
     uint8_t i = 0;
 
     {
@@ -359,7 +359,7 @@ extern "C" {
       }
     }
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
   }
 #endif // _di_fake_path_generate_
 
@@ -370,7 +370,7 @@ extern "C" {
 
     fake_main_t * const main = data->main;
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
 
     for (uint8_t i = 0; i < length; ++i) {
 

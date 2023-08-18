@@ -9,7 +9,7 @@ extern "C" {
 #if !defined(_di_f_string_triples_adjust_) || !defined(_di_f_string_triples_decimate_by_)
   f_status_t private_f_string_triples_adjust(const f_number_unsigned_t length, f_string_triples_t * const structure) {
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     for (f_number_unsigned_t i = length; i < structure->size; ++i) {
 
@@ -30,7 +30,7 @@ extern "C" {
 #if !defined(_di_f_string_triples_append_all_) || !defined(_di_f_string_tripless_append_) || !defined(_di_f_string_tripless_append_all_)
   f_status_t private_f_string_triples_append_all(const f_string_triples_t source, f_string_triples_t * const destination) {
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     if (destination->used + source.used > destination->size) {
       status = private_f_string_triples_resize(destination->used + source.used, destination);
@@ -59,14 +59,14 @@ extern "C" {
       }
     } // for
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_string_triples_append_all_) || !defined(_di_f_string_tripless_append_) || !defined(_di_f_string_tripless_append_all_)
 
 #if !defined(_di_f_string_triples_decrease_by_) || !defined(_di_f_string_triples_increase_) || !defined(_di_f_string_triples_increase_by_)
   f_status_t private_f_string_triples_resize(const f_number_unsigned_t length, f_string_triples_t * const structure) {
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     for (f_number_unsigned_t i = length; i < structure->size; ++i) {
 

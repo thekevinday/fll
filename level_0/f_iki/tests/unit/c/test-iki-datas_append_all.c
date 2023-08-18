@@ -14,7 +14,7 @@ void test__f_iki_datas_append_all__works(void **state) {
   {
     f_status_t status = f_memory_array_resize(2, sizeof(f_iki_data_t), (void **) &source.array, &source.used, &source.size);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(source.size, 2);
 
     f_number_unsigned_t i = 1;
@@ -24,22 +24,22 @@ void test__f_iki_datas_append_all__works(void **state) {
 
       status = f_string_ranges_resize(length, &source.array[j].content);
 
-      assert_int_equal(status, F_none);
+      assert_int_equal(status, F_okay);
       assert_int_equal(source.array[j].content.size, length);
 
       status = f_memory_array_resize(length, sizeof(f_number_unsigned_t), (void **) &source.array[j].delimits.array, &source.array[j].delimits.used, &source.array[j].delimits.size);
 
-      assert_int_equal(status, F_none);
+      assert_int_equal(status, F_okay);
       assert_int_equal(source.array[j].delimits.size, length);
 
       status = f_string_ranges_resize(length, &source.array[j].variable);
 
-      assert_int_equal(status, F_none);
+      assert_int_equal(status, F_okay);
       assert_int_equal(source.array[j].variable.size, length);
 
       status = f_string_ranges_resize(length, &source.array[j].vocabulary);
 
-      assert_int_equal(status, F_none);
+      assert_int_equal(status, F_okay);
       assert_int_equal(source.array[j].vocabulary.size, length);
 
       for (; source.array[j].content.used < length; ++i) {
@@ -72,7 +72,7 @@ void test__f_iki_datas_append_all__works(void **state) {
   {
     const f_status_t status = f_iki_datas_append_all(source, &destination);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(destination.used, source.used);
     assert_int_equal(destination.size, source.used);
 
@@ -128,7 +128,7 @@ void test__f_iki_datas_append_all__returns_data_not(void **state) {
   {
     const f_status_t status = f_memory_array_resize(length, sizeof(f_iki_data_t), (void **) &source.array, &source.used, &source.size);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(source.used, 0);
     assert_int_equal(source.size, length);
   }

@@ -496,13 +496,13 @@ extern "C" {
   const f_string_static_t f_status_complete_not_utf_eos_s = macro_f_string_static_t_initialize_1(F_status_complete_not_utf_eos_s, 0, F_status_complete_not_utf_eos_s_length);
   const f_string_static_t f_status_complete_not_utf_start_s = macro_f_string_static_t_initialize_1(F_status_complete_not_utf_start_s, 0, F_status_complete_not_utf_start_s_length);
   const f_string_static_t f_status_complete_not_utf_stop_s = macro_f_string_static_t_initialize_1(F_status_complete_not_utf_stop_s, 0, F_status_complete_not_utf_stop_s_length);
-  const f_string_static_t f_status_none_block_s = macro_f_string_static_t_initialize_1(F_status_none_block_s, 0, F_status_none_block_s_length);
-  const f_string_static_t f_status_none_eoa_s = macro_f_string_static_t_initialize_1(F_status_none_eoa_s, 0, F_status_none_eoa_s_length);
-  const f_string_static_t f_status_none_eof_s = macro_f_string_static_t_initialize_1(F_status_none_eof_s, 0, F_status_none_eof_s_length);
-  const f_string_static_t f_status_none_eol_s = macro_f_string_static_t_initialize_1(F_status_none_eol_s, 0, F_status_none_eol_s_length);
-  const f_string_static_t f_status_none_eos_s = macro_f_string_static_t_initialize_1(F_status_none_eos_s, 0, F_status_none_eos_s_length);
-  const f_string_static_t f_status_none_start_s = macro_f_string_static_t_initialize_1(F_status_none_start_s, 0, F_status_none_start_s_length);
-  const f_string_static_t f_status_none_stop_s = macro_f_string_static_t_initialize_1(F_status_none_stop_s, 0, F_status_none_stop_s_length);
+  const f_string_static_t f_status_okay_block_s = macro_f_string_static_t_initialize_1(F_status_okay_block_s, 0, F_status_okay_block_s_length);
+  const f_string_static_t f_status_okay_eoa_s = macro_f_string_static_t_initialize_1(F_status_okay_eoa_s, 0, F_status_okay_eoa_s_length);
+  const f_string_static_t f_status_okay_eof_s = macro_f_string_static_t_initialize_1(F_status_okay_eof_s, 0, F_status_okay_eof_s_length);
+  const f_string_static_t f_status_okay_eol_s = macro_f_string_static_t_initialize_1(F_status_okay_eol_s, 0, F_status_okay_eol_s_length);
+  const f_string_static_t f_status_okay_eos_s = macro_f_string_static_t_initialize_1(F_status_okay_eos_s, 0, F_status_okay_eos_s_length);
+  const f_string_static_t f_status_okay_start_s = macro_f_string_static_t_initialize_1(F_status_okay_start_s, 0, F_status_okay_start_s_length);
+  const f_string_static_t f_status_okay_stop_s = macro_f_string_static_t_initialize_1(F_status_okay_stop_s, 0, F_status_okay_stop_s_length);
   const f_string_static_t f_status_data_s = macro_f_string_static_t_initialize_1(F_status_data_s, 0, F_status_data_s_length);
   const f_string_static_t f_status_data_not_s = macro_f_string_static_t_initialize_1(F_status_data_not_s, 0, F_status_data_not_s_length);
   const f_string_static_t f_status_data_not_block_s = macro_f_string_static_t_initialize_1(F_status_data_not_block_s, 0, F_status_data_not_block_s_length);
@@ -1012,8 +1012,43 @@ extern "C" {
 
         break;
 
+      case F_okay_block:
+        *name = f_status_okay_block_s;
+
+        break;
+
+      case F_okay_eoa:
+        *name = f_status_okay_eoa_s;
+
+        break;
+
+      case F_okay_eof:
+        *name = f_status_okay_eof_s;
+
+        break;
+
+      case F_okay_eol:
+        *name = f_status_okay_eol_s;
+
+        break;
+
+      case F_okay_eos:
+        *name = f_status_okay_eos_s;
+
+        break;
+
       case F_okay_not:
         *name = f_status_okay_not_s;
+
+        break;
+
+      case F_okay_start:
+        *name = f_status_okay_start_s;
+
+        break;
+
+      case F_okay_stop:
+        *name = f_status_okay_stop_s;
 
         break;
 
@@ -3039,41 +3074,6 @@ extern "C" {
 
         break;
 
-      case F_none_block:
-        *name = f_status_none_block_s;
-
-        break;
-
-      case F_none_eoa:
-        *name = f_status_none_eoa_s;
-
-        break;
-
-      case F_none_eof:
-        *name = f_status_none_eof_s;
-
-        break;
-
-      case F_none_eol:
-        *name = f_status_none_eol_s;
-
-        break;
-
-      case F_none_eos:
-        *name = f_status_none_eos_s;
-
-        break;
-
-      case F_none_start:
-        *name = f_status_none_start_s;
-
-        break;
-
-      case F_none_stop:
-        *name = f_status_none_stop_s;
-
-        break;
-
       case F_data:
         *name = f_status_data_s;
 
@@ -3820,7 +3820,7 @@ extern "C" {
         return F_status_set_error(F_data);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_status_string_to_
 

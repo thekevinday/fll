@@ -13,7 +13,7 @@ void test__f_utf_character_is_valid__works(void **state) {
   uint8_t fourth = 0;
   uint8_t width = 0;
 
-  f_status_t status = F_none;
+  f_status_t status = F_okay;
 
   for (f_utf_char_t sequence = 0; sequence < UINT32_MAX; ++sequence) {
 

@@ -25,7 +25,7 @@ extern "C" {
  *   This does not alter print.custom.setting.state.status.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.
@@ -54,7 +54,7 @@ extern "C" {
  *   A valid file type code from the fll_error_file_type enum.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.
@@ -74,7 +74,7 @@ extern "C" {
  *   This does not alter print.custom.setting.state.status.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.
@@ -96,7 +96,7 @@ extern "C" {
  *   The index within the argv[] array where the empty string is found.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.
@@ -122,7 +122,7 @@ extern "C" {
  *   The parameter name value string that is invalid.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.

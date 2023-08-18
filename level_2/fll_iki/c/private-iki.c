@@ -8,7 +8,7 @@ extern "C" {
 #if !defined(_di_fll_iki_content_escape_) || !defined(_di_fll_iki_content_partial_escape_)
   f_status_t private_fll_iki_content_partial_escape(const f_string_static_t content, const f_string_range_t range, const f_char_t quote, f_string_dynamic_t * const escaped) {
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     // Ensure escaped is at least the same size as content.
     if (content.used > escaped->size) {
@@ -66,14 +66,14 @@ extern "C" {
       } // for
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_fll_iki_content_escape_) || !defined(_di_fll_iki_content_partial_escape_)
 
 #if !defined(_di_fll_iki_content_unescape_) || !defined(_di_fll_iki_content_partial_unescape_)
   f_status_t private_fll_iki_content_partial_unescape(const f_string_static_t content, const f_string_range_t range, const f_char_t quote, f_string_dynamic_t * const unescaped) {
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     // Ensure escaped is at least the same size as content.
     if (content.used > unescaped->size) {
@@ -183,7 +183,7 @@ extern "C" {
       }
     } // for
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_fll_iki_content_unescape_) || !defined(_di_fll_iki_content_partial_unescape_)
 

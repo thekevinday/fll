@@ -17,20 +17,20 @@ void test__f_utf_maps_append_all__works(void **state) {
   {
     f_status_t status = f_utf_string_maps_resize(length_inner, &source);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(source.size, length_inner);
 
     for (; source.used < length_inner; ++source.used) {
 
       status = f_utf_string_dynamic_append(test_name, &source.array[source.used].name);
 
-      assert_int_equal(status, F_none);
+      assert_int_equal(status, F_okay);
       assert_string_equal(source.array[source.used].name.string, test_name.string);
       assert_int_equal(source.array[source.used].name.used, test_name.used);
 
       status = f_utf_string_dynamic_append(test_value, &source.array[source.used].value);
 
-      assert_int_equal(status, F_none);
+      assert_int_equal(status, F_okay);
       assert_string_equal(source.array[source.used].value.string, test_value.string);
       assert_int_equal(source.array[source.used].value.used, test_value.used);
     } // for
@@ -39,7 +39,7 @@ void test__f_utf_maps_append_all__works(void **state) {
   {
     const f_status_t status = f_utf_string_maps_append_all(source, &destination);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(destination.used, source.used);
     assert_int_equal(destination.size, source.used);
 
@@ -78,7 +78,7 @@ void test__f_utf_maps_append_all__returns_data_not(void **state) {
   {
     const f_status_t status = f_utf_string_maps_resize(length, &source);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(source.used, 0);
     assert_int_equal(source.size, length);
   }

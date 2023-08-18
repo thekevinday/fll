@@ -74,8 +74,8 @@ extern "C" {
 #ifndef _di_controller_entry_actions_read_
   f_status_t controller_entry_actions_read(const controller_global_t global, const bool is_entry, const f_string_range_t content_range, controller_cache_t * const cache, controller_entry_actions_t *actions) {
 
-    f_status_t status = F_none;
-    f_status_t status_action = F_none;
+    f_status_t status = F_okay;
+    f_status_t status_action = F_okay;
 
     actions->used = 0;
 
@@ -95,7 +95,7 @@ extern "C" {
 
     {
       controller_state_interrupt_t custom = macro_controller_state_interrupt_t_initialize_1(is_entry, global.thread);
-      f_state_t state = macro_f_state_t_initialize_1(controller_common_allocation_large_d, controller_common_allocation_small_d, F_none, 0, 0, 0, &controller_thread_signal_state_fss, 0, (void *) &custom, 0);
+      f_state_t state = macro_f_state_t_initialize_1(controller_common_allocation_large_d, controller_common_allocation_small_d, F_okay, 0, 0, 0, &controller_thread_signal_state_fss, 0, (void *) &custom, 0);
       f_string_range_t range = content_range;
 
       status = fll_fss_extended_read(cache->buffer_file, state, &range, &cache->object_actions, &cache->content_actions, 0, 0, &cache->delimits, 0);
@@ -292,7 +292,7 @@ extern "C" {
         }
       }
       else {
-        action->status = F_none;
+        action->status = F_okay;
       }
 
       if (F_status_is_error(action->status)) {
@@ -444,7 +444,7 @@ extern "C" {
                 action->code |= controller_entry_rule_code_wait_d;
               }
               else {
-                if (action->status == F_none) {
+                if (action->status == F_okay) {
                   action->status = F_status_set_error(F_support_not);
 
                   if (F_status_is_error_not(status_action)) {
@@ -524,7 +524,7 @@ extern "C" {
               }
             }
 
-            if (action->status == F_none) {
+            if (action->status == F_okay) {
               if (action->parameters.used == 2) {
                 if (action->flag & controller_entry_action_flag_undefined_e) {
                   action->flag -= controller_entry_action_flag_undefined_e;
@@ -605,8 +605,8 @@ extern "C" {
 #ifndef _di_controller_entry_preprocess_
   f_status_t controller_entry_preprocess(const controller_global_t global, const bool is_entry, controller_cache_t * const cache) {
 
-    f_status_t status = F_none;
-    f_status_t status2 = F_none;
+    f_status_t status = F_okay;
+    f_status_t status2 = F_okay;
 
     f_number_unsigned_t i = 0;
     f_number_unsigned_t j = 0;
@@ -838,8 +838,8 @@ extern "C" {
 #ifndef _di_controller_entry_process_
   f_status_t controller_entry_process(const controller_global_t * const global, controller_cache_t * const cache, const bool failsafe, const bool is_entry) {
 
-    f_status_t status = F_none;
-    f_status_t status_lock = F_none;
+    f_status_t status = F_okay;
+    f_status_t status_lock = F_okay;
 
     f_number_unsigned_t at_i = 0;
     f_number_unsigned_t at_j = 1;
@@ -1514,7 +1514,7 @@ extern "C" {
 #ifndef _di_controller_entry_read_
   f_status_t controller_entry_read(const controller_global_t global, const bool is_entry, controller_cache_t * const cache) {
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     controller_entry_t *entry = is_entry ? &global.setting->entry : &global.setting->exit;
 
@@ -1577,7 +1577,7 @@ extern "C" {
     if (F_status_is_error_not(status)) {
       if (cache->buffer_file.used) {
         controller_state_interrupt_t custom = macro_controller_state_interrupt_t_initialize_1(is_entry, global.thread);
-        f_state_t state = macro_f_state_t_initialize_1(controller_common_allocation_large_d, controller_common_allocation_small_d, F_none, 0, 0, 0, &controller_thread_signal_state_fss, 0, (void *) &custom, 0);
+        f_state_t state = macro_f_state_t_initialize_1(controller_common_allocation_large_d, controller_common_allocation_small_d, F_okay, 0, 0, 0, &controller_thread_signal_state_fss, 0, (void *) &custom, 0);
         f_string_range_t range = macro_f_string_range_t_initialize_2(cache->buffer_file.used);
 
         status = fll_fss_basic_list_read(cache->buffer_file, state, &range, &cache->object_items, &cache->content_items, &cache->delimits, 0, &cache->comments);
@@ -1862,7 +1862,7 @@ extern "C" {
       entry->status = controller_status_simplify_error(F_status_set_fine(status));
     }
     else {
-      entry->status = F_none;
+      entry->status = F_okay;
     }
 
     return entry->status;
@@ -1872,11 +1872,11 @@ extern "C" {
 #ifndef _di_controller_entry_settings_read_
   f_status_t controller_entry_settings_read(const controller_global_t global, const bool is_entry, const f_string_range_t content_range, controller_cache_t * const cache) {
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     {
       controller_state_interrupt_t custom = macro_controller_state_interrupt_t_initialize_1(is_entry, global.thread);
-      f_state_t state = macro_f_state_t_initialize_1(controller_common_allocation_large_d, controller_common_allocation_small_d, F_none, 0, 0, 0, &controller_thread_signal_state_fss, 0, (void *) &custom, 0);
+      f_state_t state = macro_f_state_t_initialize_1(controller_common_allocation_large_d, controller_common_allocation_small_d, F_okay, 0, 0, 0, &controller_thread_signal_state_fss, 0, (void *) &custom, 0);
       f_string_range_t range = content_range;
 
       status = fll_fss_extended_read(cache->buffer_file, state, &range, &cache->object_actions, &cache->content_actions, 0, 0, &cache->delimits, 0);
@@ -2341,7 +2341,7 @@ extern "C" {
 
     ++setting_maps->used;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_controller_entry_settings_read_map_
 
@@ -2354,7 +2354,7 @@ extern "C" {
 
     const f_string_static_t *string = 0;
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
     f_number_unsigned_t i = 0;
     f_number_unsigned_t j = 0;
 

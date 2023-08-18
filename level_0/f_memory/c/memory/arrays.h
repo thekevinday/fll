@@ -52,7 +52,7 @@ extern "C" {
  *     The standard status codes similar to this function.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_array_too_large (with error bit) if the new array length is too large.
  *   F_memory_not (with error bit) on out of memory.
@@ -98,7 +98,7 @@ extern "C" {
  *     The standard status codes similar to this function.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_array_too_large (with error bit) if the new array length is too large.
  *   F_memory_not (with error bit) on out of memory.

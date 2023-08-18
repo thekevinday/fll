@@ -165,7 +165,7 @@ extern "C" {
           }
         }
 
-        main->setting.state.status = F_none;
+        main->setting.state.status = F_okay;
 
         return;
 
@@ -224,7 +224,7 @@ extern "C" {
         }
     }
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
   }
 #endif // _di_control_action_verify_
 

@@ -25,7 +25,7 @@ void test__f_limit_valuess_append__returns_data_not(void **state) {
   {
     const f_status_t status = f_limit_values_resize(length, &source);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(source.used, 0);
     assert_int_equal(source.size, length);
   }
@@ -51,7 +51,7 @@ void test__f_limit_valuess_append__works(void **state) {
   {
     const f_status_t status = f_limit_values_resize(length, &source);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(source.used, 0);
     assert_int_equal(source.size, length);
   }
@@ -65,7 +65,7 @@ void test__f_limit_valuess_append__works(void **state) {
   {
     const f_status_t status = f_limit_valuess_append(source, &destination);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(destination.used, 1);
     assert_int_equal(destination.array[0].used, source.used);
     assert_int_equal(destination.array[0].size, source.used);

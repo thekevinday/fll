@@ -113,7 +113,7 @@ extern "C" {
         if (F_status_is_error(status)) return status;
       }
 
-      return F_none;
+      return F_okay;
     }
 
     return F_support_not;
@@ -149,7 +149,7 @@ extern "C" {
 
     if (!source.used || !destination.used) return F_data_not;
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
     struct stat source_stat;
 
     memset(&source_stat, 0, sizeof(struct stat));
@@ -179,7 +179,7 @@ extern "C" {
       status = private_f_file_mode_set(destination, (~F_file_type_mask_d) & mode.directory);
       if (F_status_is_error(status)) return status;
 
-      return F_none;
+      return F_okay;
     }
 
     if (macro_f_file_type_is_link(source_stat.st_mode)) {
@@ -203,7 +203,7 @@ extern "C" {
         }
       }
 
-      return F_none;
+      return F_okay;
     }
 
     if (macro_f_file_type_is_fifo(source_stat.st_mode)) {
@@ -218,7 +218,7 @@ extern "C" {
       status = private_f_file_mode_set(destination, (~F_file_type_mask_d) & mode.fifo);
       if (F_status_is_error(status)) return status;
 
-      return F_none;
+      return F_okay;
     }
 
     if (macro_f_file_type_is_socket(source_stat.st_mode)) {
@@ -233,7 +233,7 @@ extern "C" {
       status = private_f_file_mode_set(destination, (~F_file_type_mask_d) & mode.socket);
       if (F_status_is_error(status)) return status;
 
-      return F_none;
+      return F_okay;
     }
 
     if (macro_f_file_type_is_block(source_stat.st_mode) || macro_f_file_type_is_character(source_stat.st_mode)) {
@@ -248,7 +248,7 @@ extern "C" {
       status = private_f_file_mode_set(destination, (~F_file_type_mask_d) & mode.block);
       if (F_status_is_error(status)) return status;
 
-      return F_none;
+      return F_okay;
     }
 
     return F_support_not;
@@ -335,7 +335,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_file_create_fifo_at_
 
@@ -378,7 +378,7 @@ extern "C" {
 
     if (file->id == -1) return F_status_set_error(F_file_descriptor_not);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_file_descriptor_
 
@@ -453,7 +453,7 @@ extern "C" {
 
     *group = stat_file.st_gid;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_file_group_read_
 
@@ -561,7 +561,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_file_link_hard_
 
@@ -593,7 +593,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_file_link_hard_at_
 
@@ -662,7 +662,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_file_manipulate_
 
@@ -965,7 +965,7 @@ extern "C" {
       }
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_file_mode_determine_
 
@@ -1326,7 +1326,7 @@ extern "C" {
         *replace = replace_result;
       }
 
-      return F_none;
+      return F_okay;
     }
 
     return F_status_set_error(F_syntax);
@@ -1352,7 +1352,7 @@ extern "C" {
 
     *mode = stat_file.st_mode;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_file_mode_read_
 
@@ -1376,7 +1376,7 @@ extern "C" {
 
     *mode = stat_file.st_mode;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_file_mode_read_at_
 
@@ -1411,7 +1411,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_file_mode_set_at_
 
@@ -1473,7 +1473,7 @@ extern "C" {
       *to |= F_file_mode_world_x_d;
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_file_mode_to_mode_
 
@@ -1502,7 +1502,7 @@ extern "C" {
     name_base->used += size;
     name_base->string[name_base->used] = 0;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_file_name_base_
 
@@ -1538,7 +1538,7 @@ extern "C" {
     name_directory->used += size;
     name_directory->string[name_directory->used] = 0;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_file_name_directory_
 
@@ -1586,7 +1586,7 @@ extern "C" {
 
     *owner = stat_file.st_uid;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_file_owner_read_
 
@@ -1606,7 +1606,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return result ? F_none : F_time_out;
+    return result ? F_okay : F_time_out;
   }
 #endif // _di_f_file_poll_
 
@@ -1619,7 +1619,7 @@ extern "C" {
 
     if (file.id == -1) return F_file_descriptor_not;
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
     ssize_t size_read = 0;
 
     do {
@@ -1644,7 +1644,7 @@ extern "C" {
 
     } while (size_read);
 
-    return F_none_eof;
+    return F_okay_eof;
   }
 #endif // _di_f_file_read_
 
@@ -1682,9 +1682,9 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    if (size_read) return F_none;
+    if (size_read) return F_okay;
 
-    return F_none_eof;
+    return F_okay_eof;
   }
 #endif // _di_f_file_read_block_
 
@@ -1701,7 +1701,7 @@ extern "C" {
     f_number_unsigned_t buffer_size = file.size_read;
     f_number_unsigned_t buffer_count = 0;
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
     ssize_t size_read = 0;
 
     for (;;) {
@@ -1729,14 +1729,14 @@ extern "C" {
 
       buffer->used += size_read;
 
-      if (!size_read) return F_none_eof;
+      if (!size_read) return F_okay_eof;
 
       buffer_count += size_read;
 
       if (buffer_count >= total) break;
     } // for
 
-    return F_none_stop;
+    return F_okay_stop;
   }
 #endif // _di_f_file_read_until_
 
@@ -1762,7 +1762,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_file_remove_
 
@@ -1790,7 +1790,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_file_remove_at_
 
@@ -1822,7 +1822,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_file_rename_
 
@@ -1860,7 +1860,7 @@ extern "C" {
         return F_status_set_error(F_failure);
       }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_file_rename_at_
 
@@ -1904,7 +1904,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_file_seek_
 
@@ -1923,7 +1923,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_file_select_
 
@@ -1942,7 +1942,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_file_select_signal_
 
@@ -1965,7 +1965,7 @@ extern "C" {
 
     *size = stat_file.st_size;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_file_size_
 
@@ -1989,7 +1989,7 @@ extern "C" {
 
     *size = stat_file.st_size;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_file_size_at_
 
@@ -2012,7 +2012,7 @@ extern "C" {
 
     *size = stat_file.st_size;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_file_size_by_id_
 
@@ -2088,7 +2088,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_file_touch_
 
@@ -2128,7 +2128,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_file_touch_at_
 
@@ -2151,7 +2151,7 @@ extern "C" {
 
     *type = macro_f_file_type_get(stat_file.st_mode);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_file_type_
 
@@ -2175,7 +2175,7 @@ extern "C" {
 
     *type = macro_f_file_type_get(stat_file.st_mode);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_file_type_at_
 
@@ -2191,7 +2191,7 @@ extern "C" {
     // Restore umask.
     umask(*mask);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_file_umask_get_
 
@@ -2200,7 +2200,7 @@ extern "C" {
 
     umask(mask);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_file_umask_set_
 
@@ -2217,7 +2217,7 @@ extern "C" {
       const f_status_t status = private_f_file_write_until(file, buffer, buffer.used, written);
       if (F_status_is_error(status)) return status;
 
-      if (status == F_none && *written == buffer.used) return F_none_eos;
+      if (status == F_okay && *written == buffer.used) return F_okay_eos;
     }
     else {
       f_number_unsigned_t written_local = 0;
@@ -2225,10 +2225,10 @@ extern "C" {
       const f_status_t status = private_f_file_write_until(file, buffer, buffer.used, &written_local);
       if (F_status_is_error(status)) return status;
 
-      if (status == F_none && written_local == buffer.used) return F_none_eos;
+      if (status == F_okay && written_local == buffer.used) return F_okay_eos;
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_file_write_
 
@@ -2247,9 +2247,9 @@ extern "C" {
       const f_status_t status = private_f_file_write_until(file, buffer, write_max, written);
       if (F_status_is_error(status)) return status;
 
-      if (status == F_none) {
-        if (*written == buffer.used) return F_none_eos;
-        if (*written == write_max) return F_none_stop;
+      if (status == F_okay) {
+        if (*written == buffer.used) return F_okay_eos;
+        if (*written == write_max) return F_okay_stop;
       }
     }
     else {
@@ -2258,13 +2258,13 @@ extern "C" {
       const f_status_t status = private_f_file_write_until(file, buffer, write_max, &written_local);
       if (F_status_is_error(status)) return status;
 
-      if (status == F_none) {
-        if (written_local == buffer.used) return F_none_eos;
-        if (written_local == write_max) return F_none_stop;
+      if (status == F_okay) {
+        if (written_local == buffer.used) return F_okay_eos;
+        if (written_local == write_max) return F_okay_stop;
       }
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_file_write_block_
 
@@ -2283,9 +2283,9 @@ extern "C" {
       const f_status_t status = private_f_file_write_until(file, buffer, write_max, written);
       if (F_status_is_error(status)) return status;
 
-      if (status == F_none) {
-        if (*written == buffer.used) return F_none_eos;
-        if (*written == write_max) return F_none_stop;
+      if (status == F_okay) {
+        if (*written == buffer.used) return F_okay_eos;
+        if (*written == write_max) return F_okay_stop;
       }
     }
     else {
@@ -2294,13 +2294,13 @@ extern "C" {
       const f_status_t status = private_f_file_write_until(file, buffer, buffer.used, &written_local);
       if (F_status_is_error(status)) return status;
 
-      if (status == F_none) {
-        if (written_local == buffer.used) return F_none_eos;
-        if (written_local == write_max) return F_none_stop;
+      if (status == F_okay) {
+        if (written_local == buffer.used) return F_okay_eos;
+        if (written_local == write_max) return F_okay_stop;
       }
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_file_write_until_
 
@@ -2323,9 +2323,9 @@ extern "C" {
       const f_status_t status = private_f_file_write_until(file, buffer_adjusted, write_max, written);
       if (F_status_is_error(status)) return status;
 
-      if (status == F_none) {
-        if (range.start + *written == buffer.used) return F_none_eos;
-        if (range.start + *written == write_max) return F_none_stop;
+      if (status == F_okay) {
+        if (range.start + *written == buffer.used) return F_okay_eos;
+        if (range.start + *written == write_max) return F_okay_stop;
       }
     }
     else {
@@ -2335,13 +2335,13 @@ extern "C" {
       const f_status_t status = private_f_file_write_until(file, buffer_adjusted, write_max, &written_local);
       if (F_status_is_error(status)) return status;
 
-      if (status == F_none) {
-        if (range.start + written_local == buffer.used) return F_none_eos;
-        if (range.start + written_local == write_max) return F_none_stop;
+      if (status == F_okay) {
+        if (range.start + written_local == buffer.used) return F_okay_eos;
+        if (range.start + written_local == write_max) return F_okay_stop;
       }
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_file_write_range_
 

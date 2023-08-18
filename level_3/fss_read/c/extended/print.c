@@ -15,7 +15,7 @@ extern "C" {
       fll_print_dynamic_raw((main->setting.flag & fss_read_main_flag_pipe_format_e) ? fss_read_pipe_content_start_s : f_fss_extended_next_s, print->to);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fss_read_extended_print_content_next_
 
@@ -45,7 +45,7 @@ extern "C" {
     f_file_stream_flush(print->to);
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fss_read_extended_print_help_
 
@@ -65,7 +65,7 @@ extern "C" {
       }
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fss_read_extended_print_object_end_
 

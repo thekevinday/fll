@@ -516,7 +516,7 @@ extern "C" {
  *   - data:       The structure determined by the caller for passing to the parameter processing function and is intended to be used for updating based on results.
  *
  * The callback function state.status interpretations:
- *   - F_none:     On no error and processing complete.
+ *   - F_okay:     On no error and processing complete.
  *   - F_break:    To tell the caller to break out of the loop (based on depth, when applicable).
  *   - F_continue: To tell the caller to continue the loop (based on depth, when applicable).
  *   - F_process:  To tell the caller to perform the built in functionality.
@@ -811,7 +811,7 @@ extern "C" {
  *   The state object.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -830,7 +830,7 @@ extern "C" {
  *   A state for providing flags and handling interrupts during long running operations.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -849,7 +849,7 @@ extern "C" {
  *   The parameters object.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -870,7 +870,7 @@ extern "C" {
  *   The parameters object.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *

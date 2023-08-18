@@ -58,8 +58,8 @@ extern "C" {
  *   This alters state.status:
  *     F_fss_found_content on success and content was found (start location is at end of content).
  *     F_fss_found_content_not on success and no content was found (start location is after character designating this is not a content).
- *     F_none_eos on success after reaching the end of the buffer (a valid object is not yet confirmed).
- *     F_none_stop on success after reaching stopping point (a valid object is not yet confirmed).
+ *     F_okay_eos on success after reaching the end of the buffer (a valid object is not yet confirmed).
+ *     F_okay_stop on success after reaching stopping point (a valid object is not yet confirmed).
  *     F_data_not if buffer is empty (buffer.used is 0).
  *     F_data_not_eos no objects found after reaching the end of the buffer (essentially only comments are found).
  *     F_data_not_stop no data found after reaching stopping point (essentially only comments are found).
@@ -113,15 +113,15 @@ extern "C" {
  *   Error bit designates an error but must be passed along with F_interrupt.
  *
  *   This alters state.status:
- *     F_none on success.
- *     F_none_eos on success after reaching the end of the buffer.
- *     F_none_stop on success after reaching the range stop.
+ *     F_okay on success.
+ *     F_okay_eos on success after reaching the end of the buffer.
+ *     F_okay_stop on success after reaching the range stop.
  *     F_data_not if content is empty (content.used is 0).
  *     F_data_not_eos no data to write due start location being greater than or equal to buffer size.
  *     F_data_not_stop no data to write due start location being greater than stop location.
  *
  *     F_interrupt (with error bit) if stopping due to an interrupt.
- *     F_none_eol (with error bit) after reaching an EOL, which is not supported by the standard.
+ *     F_okay_eol (with error bit) after reaching an EOL, which is not supported by the standard.
  *     F_parameter (with error bit) if a parameter is invalid.
  *
  *     Errors (with error bit) from: f_fss_skip_past_delimit().
@@ -169,8 +169,8 @@ extern "C" {
  *     F_fss_found_object on success and object was found (start location is at end of object).
  *     F_fss_found_object_content_not on success but object ended at the line so there can be no content.
  *     F_fss_found_object_not on success and no object was found (start location is after character designating this is not an object).
- *     F_none_eos on success after reaching the end of the buffer (a valid object is not yet confirmed).
- *     F_none_stop on success after reaching stopping point (a valid object is not yet confirmed).
+ *     F_okay_eos on success after reaching the end of the buffer (a valid object is not yet confirmed).
+ *     F_okay_stop on success after reaching stopping point (a valid object is not yet confirmed).
  *     F_data_not if buffer is empty (buffer.used is 0).
  *     F_data_not_eos no objects found after reaching the end of the buffer (essentially only comments are found).
  *     F_data_not_stop no data found after reaching stopping point (essentially only comments are found).
@@ -237,15 +237,15 @@ extern "C" {
  *   All other statuses are ignored.
  *
  *   This alters state.status:
- *     F_none on success.
- *     F_none_eos on success after reaching the end of the buffer.
- *     F_none_stop on success after reaching the range stop.
+ *     F_okay on success.
+ *     F_okay_eos on success after reaching the end of the buffer.
+ *     F_okay_stop on success after reaching the range stop.
  *     F_data_not if object is empty (object.used is 0).
  *     F_data_not_eos no data to write due start location being greater than or equal to buffer size.
  *     F_data_not_stop no data to write due start location being greater than stop location.
  *
  *     F_interrupt (with error bit) if stopping due to an interrupt.
- *     F_none_eol (with error bit) after reaching an EOL, which is not supported by the standard.
+ *     F_okay_eol (with error bit) after reaching an EOL, which is not supported by the standard.
  *     F_parameter (with error bit) if a parameter is invalid.
  *
  *     Errors (with error bit) from: f_fss_is_space().

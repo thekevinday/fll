@@ -49,7 +49,7 @@ void test__f_signal_queue__works(void **state) {
 
     const f_status_t status = f_signal_queue(0, 0, value);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 }
 

@@ -23,7 +23,7 @@ extern "C" {
  *   The program and settings data.
  *
  *   This alters main.setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *
  *     Errors (with error bit) from: f_iki_object_is().
  *     Errors (with error bit) from: fll_iki_content_escape().

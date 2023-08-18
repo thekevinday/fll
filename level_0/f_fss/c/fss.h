@@ -48,7 +48,7 @@ extern "C" {
  *   A state for providing flags and handling interrupts during long running operations.
  *
  *   This alters state.status:
- *     F_none on success.
+ *     F_okay on success.
  *     F_data_not on success but buffer.used is 0.
  *
  *     F_parameter (with error bit) if a parameter is invalid.
@@ -72,7 +72,7 @@ extern "C" {
  *   A state for providing flags and handling interrupts during long running operations.
  *
  *   This alters state.status:
- *     F_none on success.
+ *     F_okay on success.
  *     F_data_not on success but buffer.used is 0.
  *
  *     F_parameter (with error bit) if a parameter is invalid.
@@ -100,7 +100,7 @@ extern "C" {
  *   A state for providing flags and handling interrupts during long running operations.
  *
  *   This alters state.status:
- *     F_none on success.
+ *     F_okay on success.
  *     F_data_not on success but buffer.used is 0 (line is set to 0).
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -128,7 +128,7 @@ extern "C" {
  *   A state for providing flags and handling interrupts during long running operations.
  *
  *   This alters state.status:
- *     F_none on success.
+ *     F_okay on success.
  *     F_data_not on success but the range.start is greater than buffer.used or buffer.used is 0 (line is set to 0).
  *
  *     F_parameter (with error bit) if a parameter is invalid.
@@ -263,7 +263,7 @@ extern "C" {
  *   A state for providing flags and handling interrupts during long running operations.
  *
  *   This alters state.status:
- *     F_none on success.
+ *     F_okay on success.
  *     F_data_not on success but nothing is processed.
  *     F_parameter (with error bit) if a parameter is invalid.
  *
@@ -334,10 +334,10 @@ extern "C" {
  *   A state for providing flags and handling interrupts during long running operations.
  *
  *   This alters state.status:
- *     F_none on success.
+ *     F_okay on success.
  *     F_data_not on success but buffer.used is 0, initial range.start is greater than range.stop, or initial range.start is greater than or equal to buffer.used.
- *     F_none_eos on success and EOS was reached.
- *     F_none_stop on success and stop point was reached.
+ *     F_okay_eos on success and EOS was reached.
+ *     F_okay_stop on success and stop point was reached.
  *
  *     F_parameter (with error bit) if a parameter is invalid.
  */
@@ -357,10 +357,10 @@ extern "C" {
  *   A state for providing flags and handling interrupts during long running operations.
  *
  *   This alters state.status:
- *     F_none on success.
+ *     F_okay on success.
  *     F_data_not on success but buffer.used is 0, initial range.start is greater than range.stop, or initial range.start is greater than or equal to buffer.used.
- *     F_none_eos on success and EOS was reached.
- *     F_none_stop on success and stop point was reached.
+ *     F_okay_eos on success and EOS was reached.
+ *     F_okay_stop on success and stop point was reached.
  *
  *     F_parameter (with error bit) if a parameter is invalid.
  */
@@ -383,11 +383,11 @@ extern "C" {
  *   A state for providing flags and handling interrupts during long running operations.
  *
  *   This alters state.status:
- *     F_none on success.
+ *     F_okay on success.
  *     F_data_not on success but buffer.used is 0, initial range.start is greater than range.stop, or initial range.start is greater than or equal to buffer.used.
- *     F_none_eol on success and EOL was reached.
- *     F_none_eos on success and EOS was reached.
- *     F_none_stop on success and stop point was reached.
+ *     F_okay_eol on success and EOL was reached.
+ *     F_okay_eos on success and EOS was reached.
+ *     F_okay_stop on success and stop point was reached.
  *
  *     F_complete_not_utf_eos (with error bit) if unable to get entire UTF-8 sequence due to EOS.
  *     F_complete_not_utf_start (with error bit) if the first character is a combining character.

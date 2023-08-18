@@ -12,7 +12,7 @@ extern "C" {
 
     fll_error_print(print, F_status_set_fine(((control_main_t *) print->custom)->setting.state.status), function, fll_error_file_flag_fallback_e);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_control_print_error_
 
@@ -26,7 +26,7 @@ extern "C" {
 
     fll_error_file_print(print, F_status_set_fine(main->setting.state.status), function, fll_error_file_flag_fallback_e, name, operation, type);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_control_print_error_file_
 
@@ -56,7 +56,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_control_print_error_packet_response_
 
@@ -86,7 +86,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_control_print_error_packet_response_failure_
 
@@ -98,7 +98,7 @@ extern "C" {
 
     fll_print_format("%[%QNo actions provided.%]%r", print->to, print->set->error, print->prefix, print->set->error, f_string_eol_s);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_control_print_error_parameter_actions_none_
 
@@ -116,7 +116,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_control_print_error_parameter_action_not_
 
@@ -134,7 +134,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_control_print_error_parameter_action_rule_basename_empty_
 
@@ -152,7 +152,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_control_print_error_parameter_action_rule_directory_empty_
 
@@ -170,7 +170,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_control_print_error_parameter_action_rule_empty_
 
@@ -188,7 +188,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_control_print_error_parameter_action_rule_not_
 
@@ -206,7 +206,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_control_print_error_parameter_action_rule_too_few_
 
@@ -226,7 +226,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_control_print_error_parameter_action_rule_too_few_with_
 
@@ -244,7 +244,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_control_print_error_parameter_action_rule_too_many_
 
@@ -264,7 +264,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_control_print_error_parameter_action_rule_too_many_with_
 
@@ -284,7 +284,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_control_print_error_parameter_action_rule_with_unknown_
 
@@ -302,7 +302,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_control_print_error_parameter_value_empty_
 
@@ -320,7 +320,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_control_print_error_parameter_value_not_
 
@@ -332,7 +332,7 @@ extern "C" {
 
     fll_print_format("%[%QPipe input is not supported by this program.%]%r", print->to, print->set->error, print->prefix, print->set->error, f_string_eol_s);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_control_print_error_pipe_supported_not_
 
@@ -344,7 +344,7 @@ extern "C" {
 
     fll_print_format("%[%QThe received response is not a valid or supported packet.%]%r", print->to, print->set->error, print->prefix, print->set->error, f_string_eol_s);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_control_print_error_response_packet_valid_not_
 
@@ -356,7 +356,7 @@ extern "C" {
 
     fll_print_format("%[%QThe generated packet is too large, cannot send packet.%]%r", print->to, print->set->error, print->prefix, print->set->error, f_string_eol_s);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_control_print_error_request_packet_too_large_
 
@@ -374,7 +374,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_control_print_error_socket_file_failed_
 
@@ -392,7 +392,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_control_print_error_socket_file_missing_
 
@@ -410,7 +410,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_control_print_error_socket_file_not_
 

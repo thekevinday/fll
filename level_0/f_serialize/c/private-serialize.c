@@ -28,7 +28,7 @@ extern "C" {
             range->stop = i - 1;
           }
 
-          return F_none;
+          return F_okay;
         }
 
         start = i + width;
@@ -39,7 +39,7 @@ extern "C" {
           range->start = 1;
           range->stop = 0;
 
-          return F_none;
+          return F_okay;
         }
       }
       else if (i == source.used) {
@@ -48,7 +48,7 @@ extern "C" {
           range->stop = i - 1;
         }
 
-        return F_none_eos;
+        return F_okay_eos;
       }
 
       if (i + width > source.used) {

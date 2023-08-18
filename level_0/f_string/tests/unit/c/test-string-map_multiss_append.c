@@ -35,20 +35,20 @@ void test__f_string_map_multiss_append__works(void **state) {
   {
     f_status_t status = f_string_map_multis_resize(length_inner, &source);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(source.size, length_inner);
 
     for (; source.used < length_inner; ++source.used) {
 
       status = f_string_dynamic_append(test_names[source.used], &source.array[source.used].name);
 
-      assert_int_equal(status, F_none);
+      assert_int_equal(status, F_okay);
       assert_string_equal(source.array[source.used].name.string, test_names[source.used].string);
       assert_int_equal(source.array[source.used].name.used, test_names[source.used].used);
 
       status = f_string_dynamics_append_all(test_values[source.used], &source.array[source.used].value);
 
-      assert_int_equal(status, F_none);
+      assert_int_equal(status, F_okay);
       assert_int_equal(source.array[source.used].value.used, test_values[source.used].used);
       assert_int_equal(source.array[source.used].value.array[0].used, test_values[source.used].array[0].used);
       assert_int_equal(source.array[source.used].value.array[1].used, test_values[source.used].array[1].used);
@@ -61,7 +61,7 @@ void test__f_string_map_multiss_append__works(void **state) {
   {
     const f_status_t status = f_string_map_multiss_append(source, &destination);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(destination.array[0].used, length_inner);
 
     for (f_number_unsigned_t i = 0; i < length_inner; ++i) {
@@ -108,7 +108,7 @@ void test__f_string_map_multiss_append__returns_data_not(void **state) {
   {
     const f_status_t status = f_string_map_multis_resize(length, &source);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(source.used, 0);
     assert_int_equal(source.size, length);
   }

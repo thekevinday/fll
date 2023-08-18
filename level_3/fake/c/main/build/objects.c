@@ -126,7 +126,7 @@ extern "C" {
         }
 
         if (main->cache_argument.used) {
-          main->setting.state.status = F_none;
+          main->setting.state.status = F_okay;
         }
         else {
           main->setting.state.status = f_string_dynamic_append_nulless(data->path_build_objects, &main->cache_argument);

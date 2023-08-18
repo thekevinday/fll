@@ -56,7 +56,7 @@ extern "C" {
  *   The main program data.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if "values" parameters were expected but not found.
  *
  *   F_memory_not (with error bit) on out of memory.
@@ -88,7 +88,7 @@ extern "C" {
  *   The main program data.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if "values" parameters were expected but not found.
  *
  *   F_memory_not (with error bit) on out of memory.
@@ -118,7 +118,7 @@ extern "C" {
  *   Set to NULL to not use.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  */
@@ -143,7 +143,7 @@ extern "C" {
  *   The main program data.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success but choices.used is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -170,7 +170,7 @@ extern "C" {
  *   The main program data.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -200,7 +200,7 @@ extern "C" {
  *   An array of dynamic strings each representing a console parameter.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if nothing to rip, no allocations or reallocations are performed.
  *
  *   F_array_too_large (with error bit) if a buffer would exceed max length.
@@ -229,7 +229,7 @@ extern "C" {
  *   The destination string the source and glue are appended onto.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if nothing to rip, no allocations or reallocations are performed.
  *
  *   F_memory_not (with error bit) on out of memory.
@@ -258,7 +258,7 @@ extern "C" {
  *   An array of dynamic strings each representing a console parameter.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if nothing to rip, no allocations or reallocations are performed.
  *
  *   F_memory_not (with error bit) on out of memory.
@@ -288,7 +288,7 @@ extern "C" {
  *   The destination string the source and glue are appended onto.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if nothing to rip, no allocations or reallocations are performed.
  *
  *   F_memory_not (with error bit) on out of memory.
@@ -319,7 +319,7 @@ extern "C" {
  *   The program data.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -345,7 +345,7 @@ extern "C" {
  *   The program data.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *

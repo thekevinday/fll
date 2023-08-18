@@ -24,7 +24,7 @@ void test__f_accounts_delete_callback__fails(void **state) {
 
   {
     will_return(__wrap_f_string_dynamic_resize, false);
-    will_return(__wrap_f_string_dynamic_resize, F_none);
+    will_return(__wrap_f_string_dynamic_resize, F_okay);
 
     will_return(__wrap_f_string_dynamic_resize, true);
     will_return(__wrap_f_string_dynamic_resize, F_status_set_error(F_failure));
@@ -36,10 +36,10 @@ void test__f_accounts_delete_callback__fails(void **state) {
 
   {
     will_return(__wrap_f_string_dynamic_resize, false);
-    will_return(__wrap_f_string_dynamic_resize, F_none);
+    will_return(__wrap_f_string_dynamic_resize, F_okay);
 
     will_return(__wrap_f_string_dynamic_resize, false);
-    will_return(__wrap_f_string_dynamic_resize, F_none);
+    will_return(__wrap_f_string_dynamic_resize, F_okay);
 
     will_return(__wrap_f_string_dynamic_resize, true);
     will_return(__wrap_f_string_dynamic_resize, F_status_set_error(F_failure));
@@ -51,13 +51,13 @@ void test__f_accounts_delete_callback__fails(void **state) {
 
   {
     will_return(__wrap_f_string_dynamic_resize, false);
-    will_return(__wrap_f_string_dynamic_resize, F_none);
+    will_return(__wrap_f_string_dynamic_resize, F_okay);
 
     will_return(__wrap_f_string_dynamic_resize, false);
-    will_return(__wrap_f_string_dynamic_resize, F_none);
+    will_return(__wrap_f_string_dynamic_resize, F_okay);
 
     will_return(__wrap_f_string_dynamic_resize, false);
-    will_return(__wrap_f_string_dynamic_resize, F_none);
+    will_return(__wrap_f_string_dynamic_resize, F_okay);
 
     will_return(__wrap_f_string_dynamic_resize, true);
     will_return(__wrap_f_string_dynamic_resize, F_status_set_error(F_failure));
@@ -69,16 +69,16 @@ void test__f_accounts_delete_callback__fails(void **state) {
 
   {
     will_return(__wrap_f_string_dynamic_resize, false);
-    will_return(__wrap_f_string_dynamic_resize, F_none);
+    will_return(__wrap_f_string_dynamic_resize, F_okay);
 
     will_return(__wrap_f_string_dynamic_resize, false);
-    will_return(__wrap_f_string_dynamic_resize, F_none);
+    will_return(__wrap_f_string_dynamic_resize, F_okay);
 
     will_return(__wrap_f_string_dynamic_resize, false);
-    will_return(__wrap_f_string_dynamic_resize, F_none);
+    will_return(__wrap_f_string_dynamic_resize, F_okay);
 
     will_return(__wrap_f_string_dynamic_resize, false);
-    will_return(__wrap_f_string_dynamic_resize, F_none);
+    will_return(__wrap_f_string_dynamic_resize, F_okay);
 
     will_return(__wrap_f_string_dynamic_resize, true);
     will_return(__wrap_f_string_dynamic_resize, F_status_set_error(F_failure));
@@ -100,28 +100,28 @@ void test__f_accounts_delete_callback__works(void **state) {
 
   {
     f_status_t status = f_memory_array_resize(length, sizeof(f_account_t), (void **) &datas.array, &datas.used, &datas.size);
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
 
     status = f_string_dynamic_resize(1, &datas.array[0].home);
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
 
     status = f_string_dynamic_resize(1, &datas.array[0].label);
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
 
     status = f_string_dynamic_resize(1, &datas.array[0].name);
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
 
     status = f_string_dynamic_resize(1, &datas.array[0].password);
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
 
     status = f_string_dynamic_resize(1, &datas.array[0].shell);
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 
   {
     const f_status_t status = f_accounts_delete_callback(0, length, (void *) datas.array);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(datas.array[0].home.size, 0);
     assert_int_equal(datas.array[0].label.size, 0);
     assert_int_equal(datas.array[0].name.size, 0);

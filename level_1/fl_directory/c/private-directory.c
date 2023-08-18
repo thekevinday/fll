@@ -45,7 +45,7 @@ extern "C" {
       }
     }
 
-    recurse->state.status = F_none;
+    recurse->state.status = F_okay;
 
     if (recurse->flag & f_directory_recurse_do_flag_list_e) {
       recurse->action((void *) recurse, recurse->path, f_directory_recurse_do_flag_list_e);
@@ -56,7 +56,7 @@ extern "C" {
       }
 
       if (recurse->state.status != F_done && F_status_is_error_not(recurse->state.status)) {
-        recurse->state.status = F_none;
+        recurse->state.status = F_okay;
       }
     }
 
@@ -126,7 +126,7 @@ extern "C" {
           for (j = 0; j < 3; ++j) {
 
             if (!flag_actions[j] || (recurse->flag & flag_actions[j])) {
-              recurse->state.status = F_none;
+              recurse->state.status = F_okay;
 
               recurse->action((void *) recurse, list[k]->array[i], flag_actions[j] | flags[k]);
 
@@ -201,7 +201,7 @@ extern "C" {
             }
           }
           else {
-            recurse->state.status = F_none;
+            recurse->state.status = F_okay;
 
             if (recurse->depth < recurse->depth_max) {
               ++recurse->depth;
@@ -232,7 +232,7 @@ extern "C" {
 
         if (F_status_is_error(recurse->state.status) || recurse->state.status == F_done) break;
 
-        recurse->state.status = F_none;
+        recurse->state.status = F_okay;
       } // for
     }
 
@@ -252,7 +252,7 @@ extern "C" {
 
     struct dirent **entity = 0;
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     DIR *parent = opendir(path.string);
 
@@ -366,7 +366,7 @@ extern "C" {
     if (F_status_is_error(status)) return status;
     if (!length) return F_directory_empty;
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_fl_directory_do_) || !defined(_di_fl_directory_list_)
 
@@ -380,7 +380,7 @@ extern "C" {
     f_number_unsigned_t total = 0;
     f_number_unsigned_t start = 0;
     f_number_unsigned_t length_truncated = source.used;
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     {
       f_number_unsigned_t i = 0;
@@ -580,7 +580,7 @@ extern "C" {
       destination->string[destination->used - 1] = 0;
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_fl_directory_path_push_) || !defined(_di_fl_directory_path_push_dynamic_)
 

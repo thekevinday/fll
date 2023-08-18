@@ -23,7 +23,7 @@ extern "C" {
  *   The main program data.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_too_large (with error bit) If the message is too large for the packet format to transmit.
  *
@@ -81,7 +81,7 @@ extern "C" {
  *   The main program data.
  *
  *   This alters main.setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *
  *     F_header_not (with error bit) If there is a problem processing the packet header.
  *     F_memory_not (with error bit) On out of memory issues (this is passed through from called functions).
@@ -138,7 +138,7 @@ extern "C" {
  *   The main program data.
  *
  *   This alters main.setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *
  *     Errors (with error bit) from: f_socket_write().
  *

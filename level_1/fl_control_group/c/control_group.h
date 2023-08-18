@@ -47,7 +47,7 @@ extern "C" {
  *   The PID of the process to apply the control group(s) to.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_memory_not (with error bit) if a out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.

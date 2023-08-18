@@ -103,7 +103,7 @@ void test__f_memory_array_append_all__works(void **state) {
   {
     const f_status_t status = f_memory_array_append_all((void *) sources.array, sources.used, sizeof(int), (void **) &data.array, &data.used, &data.size);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(data.used, 2);
     assert_int_equal(data.array[0], sources.array[0]);
     assert_int_equal(data.array[1], sources.array[1]);
@@ -118,7 +118,7 @@ void test__f_memory_array_append_all__works(void **state) {
   {
     const f_status_t status = f_memory_array_append_all((void *) sources_next.array, sources_next.used, sizeof(int), (void **) &data.array, &data.used, &data.size);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(data.used, 3);
     assert_int_equal(data.array[0], sources.array[0]);
     assert_int_equal(data.array[1], sources.array[1]);

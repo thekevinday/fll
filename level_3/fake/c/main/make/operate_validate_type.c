@@ -31,7 +31,7 @@ extern "C" {
       }
     }
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
   }
 #endif // _di_fake_make_operate_validate_type_break_
 
@@ -81,7 +81,7 @@ extern "C" {
       }
     }
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
   }
 #endif // _di_fake_make_operate_validate_type_build_
 
@@ -98,7 +98,7 @@ extern "C" {
       main->setting.state.status = F_status_set_error(F_failure);
     }
     else {
-      main->setting.state.status = F_none;
+      main->setting.state.status = F_okay;
     }
   }
 #endif // _di_fake_make_operate_validate_type_clean_top_skeleton_
@@ -111,7 +111,7 @@ extern "C" {
     fake_main_t * const main = data_make->main;
 
     if (main->cache_arguments.used > 1) {
-      f_status_t status = F_none;
+      f_status_t status = F_okay;
 
       for (f_number_unsigned_t i = 0; i < main->cache_arguments.used; ++i) {
 
@@ -195,7 +195,7 @@ extern "C" {
       main->setting.state.status = F_status_set_error(F_failure);
     }
     else {
-      main->setting.state.status = F_none;
+      main->setting.state.status = F_okay;
     }
   }
 #endif // _di_fake_make_operate_validate_type_compile_
@@ -421,7 +421,7 @@ extern "C" {
             main->setting.state.status = F_status_set_error(F_failure);
           }
           else {
-            main->setting.state.status = F_none;
+            main->setting.state.status = F_okay;
           }
 
           return;
@@ -434,14 +434,14 @@ extern "C" {
             main->setting.state.status = F_status_set_error(F_failure);
           }
           else {
-            main->setting.state.status = F_none;
+            main->setting.state.status = F_okay;
           }
 
           return;
         }
 
         if (state_process->condition == fake_make_operation_if_type_if_exist_e || state_process->condition == fake_make_operation_if_type_if_not_exist_e) {
-          main->setting.state.status = F_none;
+          main->setting.state.status = F_okay;
 
           return;
         }
@@ -559,7 +559,7 @@ extern "C" {
           }
 
           if (i < main->cache_arguments.used) {
-            f_status_t status = F_none;
+            f_status_t status = F_okay;
 
             for (; i < main->cache_arguments.used; ++i) {
 
@@ -590,7 +590,7 @@ extern "C" {
             main->setting.state.status = status;
           }
           else {
-            main->setting.state.status = F_none;
+            main->setting.state.status = F_okay;
           }
 
           return;
@@ -605,11 +605,11 @@ extern "C" {
             return;
           }
 
-          f_status_t status = F_none;
+          f_status_t status = F_okay;
           f_string_range_t range = f_string_range_t_initialize;
           f_number_unsigned_t number = 0;
 
-          for (i = k; i < main->cache_arguments.used; ++i, main->setting.state.status = F_none) {
+          for (i = k; i < main->cache_arguments.used; ++i, main->setting.state.status = F_okay) {
 
             if (main->cache_arguments.array[i].used) {
               range.start = 0;
@@ -648,7 +648,7 @@ extern "C" {
           main->setting.state.status = status;
         }
         else {
-          main->setting.state.status = F_none;
+          main->setting.state.status = F_okay;
         }
 
         return;
@@ -670,7 +670,7 @@ extern "C" {
     fake_main_t * const main = data_make->main;
 
     if (main->cache_arguments.used > 1) {
-      f_status_t status = F_none;
+      f_status_t status = F_okay;
       f_number_unsigned_t i = 0;
 
       for (; i < main->cache_arguments.used; ++i) {
@@ -747,7 +747,7 @@ extern "C" {
       main->setting.state.status = fake_make_operate_validate_define_name(main->cache_arguments.array[0]);
 
       if (main->setting.state.status == F_true) {
-        main->setting.state.status = F_none;
+        main->setting.state.status = F_okay;
 
         return;
       }
@@ -775,7 +775,7 @@ extern "C" {
     fake_main_t * const main = data_make->main;
 
     if (main->cache_arguments.used) {
-      f_status_t status = F_none;
+      f_status_t status = F_okay;
 
       for (f_number_unsigned_t i = 0; i < main->cache_arguments.used; ++i) {
 
@@ -837,7 +837,7 @@ extern "C" {
       return;
     }
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
   }
 #endif // _di_fake_make_operate_validate_type_else_
 
@@ -868,7 +868,7 @@ extern "C" {
       }
     }
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
   }
 #endif // _di_fake_make_operate_validate_type_exit_
 
@@ -892,7 +892,7 @@ extern "C" {
         }
       }
 
-      main->setting.state.status = F_none;
+      main->setting.state.status = F_okay;
     }
     else {
       fake_print_error_requires_more_arguments(&main->program.error);
@@ -920,7 +920,7 @@ extern "C" {
       main->setting.state.status = F_status_set_error(F_failure);
     }
     else {
-      main->setting.state.status = F_none;
+      main->setting.state.status = F_okay;
     }
   }
 #endif // _di_fake_make_operate_validate_type_index_
@@ -941,7 +941,7 @@ extern "C" {
     }
 
     if (main->cache_arguments.used > 1) {
-      f_status_t status = F_none;
+      f_status_t status = F_okay;
 
       // 0x1 = force, 0x2 = strict.
       uint8_t flag = 0;
@@ -1099,7 +1099,7 @@ extern "C" {
 
     if (main->cache_arguments.used > 1) {
       {
-        f_status_t status = F_none;
+        f_status_t status = F_okay;
 
         for (f_number_unsigned_t i = 0; i < main->cache_arguments.used; ++i) {
 
@@ -1167,7 +1167,7 @@ extern "C" {
         }
       }
 
-      main->setting.state.status = F_none;
+      main->setting.state.status = F_okay;
     }
     else {
       fake_print_error_requires_more_arguments(&main->program.error);
@@ -1221,7 +1221,7 @@ extern "C" {
         }
       } // for
 
-      main->setting.state.status = F_none;
+      main->setting.state.status = F_okay;
     }
     else {
       fake_print_error_requires_more_arguments(&main->program.error);
@@ -1275,7 +1275,7 @@ extern "C" {
         fake_make_parameter_variable_value_work_s,
       };
 
-      f_status_t status = F_none;
+      f_status_t status = F_okay;
 
       for (f_number_unsigned_t i = 0; i < 33; ++i) {
 
@@ -1313,7 +1313,7 @@ extern "C" {
       }
 
       if (main->cache_arguments.used > i) {
-        f_status_t status = F_none;
+        f_status_t status = F_okay;
 
         for (; i < main->cache_arguments.used; ++i) {
 
@@ -1366,7 +1366,7 @@ extern "C" {
       main->setting.state.status = F_status_set_error(F_failure);
     }
     else {
-      main->setting.state.status = F_none;
+      main->setting.state.status = F_okay;
     }
   }
 #endif // _di_fake_make_operate_validate_type_pop_
@@ -1384,7 +1384,7 @@ extern "C" {
       main->setting.state.status = F_status_set_error(F_failure);
     }
     else {
-      main->setting.state.status = F_none;
+      main->setting.state.status = F_okay;
     }
   }
 #endif // _di_fake_make_operate_validate_type_run_
@@ -1427,7 +1427,7 @@ extern "C" {
         }
 
         if (main->setting.state.status) {
-          main->setting.state.status = F_none;
+          main->setting.state.status = F_okay;
         }
         else {
           fake_make_print_error_content_not_directory(&main->program.error, 0, main->cache_arguments.array[0]);
@@ -1465,7 +1465,7 @@ extern "C" {
         }
       }
 
-      f_status_t status = F_none;
+      f_status_t status = F_okay;
 
       for (f_number_unsigned_t i = 1; i < main->cache_arguments.used; ++i) {
 
@@ -1512,7 +1512,7 @@ extern "C" {
         main->setting.state.status = F_status_set_error(F_failure);
       }
       else {
-        main->setting.state.status = F_none;
+        main->setting.state.status = F_okay;
       }
     }
     else {

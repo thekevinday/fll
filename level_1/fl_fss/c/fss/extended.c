@@ -21,20 +21,20 @@ extern "C" {
     if (F_status_is_error(state->status)) return;
     if (state->status == F_data_not) return;
 
-    if (state->status == F_none_eol) {
+    if (state->status == F_okay_eol) {
       ++range->start;
       state->status = F_fss_found_content_not;
 
       return;
     }
 
-    if (state->status == F_none_eos) {
+    if (state->status == F_okay_eos) {
       state->status = F_data_not_eos;
 
       return;
     }
 
-    if (state->status == F_none_stop) {
+    if (state->status == F_okay_stop) {
       state->status = F_data_not_stop;
 
       return;
@@ -46,7 +46,7 @@ extern "C" {
     uint8_t content_found = 0;
     uint8_t quote = 0;
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     while (range->start <= range->stop && range->start < buffer.used) {
 
@@ -92,7 +92,7 @@ extern "C" {
       }
       else if (state->status == F_data_not_eos) {
         if (content_found) {
-          state->status = F_none_eos;
+          state->status = F_okay_eos;
         }
 
         content_found = 2;
@@ -101,7 +101,7 @@ extern "C" {
       }
       else if (state->status == F_data_not_stop) {
         if (content_found) {
-          state->status = F_none_stop;
+          state->status = F_okay_stop;
         }
 
         content_found = 2;
@@ -160,7 +160,7 @@ extern "C" {
       return;
     }
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     if (state->status == F_data_not_stop || state->status == F_data_not_eos) {
 
@@ -183,7 +183,7 @@ extern "C" {
         destination->string[destination->used++] = f_fss_extended_close_s.string[0];
       }
 
-      state->status = (state->status == F_data_not_stop) ? F_none_stop : F_none_eos;
+      state->status = (state->status == F_data_not_stop) ? F_okay_stop : F_okay_eos;
 
       return;
     }
@@ -258,7 +258,7 @@ void fl_fss_extended_object_write(const f_string_static_t object, const uint8_t 
       return;
     }
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     if (state->status == F_data_not_stop || state->status == F_data_not_eos) {
 
@@ -277,8 +277,8 @@ void fl_fss_extended_object_write(const f_string_static_t object, const uint8_t 
     }
 
     if (complete == f_fss_complete_partial_e || complete == f_fss_complete_partial_trim_e || complete == f_fss_complete_full_e || complete == f_fss_complete_full_trim_e || complete == f_fss_complete_trim_e) {
-      if (state->status == F_none_stop || state->status == F_none_eos || state->status == F_data_not_stop || state->status == F_data_not_eos) {
-        status = F_none;
+      if (state->status == F_okay_stop || state->status == F_okay_eos || state->status == F_data_not_stop || state->status == F_data_not_eos) {
+        status = F_okay;
 
         if (complete == f_fss_complete_full_trim_e || complete == f_fss_complete_trim_e) {
           private_fl_fss_basic_write_object_trim(quote ? quote : f_fss_quote_double_s.string[0], destination_used, destination, state);

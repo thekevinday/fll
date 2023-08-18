@@ -42,7 +42,7 @@ extern "C" {
  *   An array of maps generated from the loaded environment variable names.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if names.used is 0.
  *   F_exist_not if name does not exist.
  *
@@ -76,7 +76,7 @@ extern "C" {
  *   All environment names loaded are appended to this.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if names.used is 0.
  *
  *   Errors (with error bit) from: f_environment_get().
@@ -105,7 +105,7 @@ extern "C" {
  *   Each exploded path is not NULL terminated.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_array_too_large (with error bit) if paths array is too large for further addressing.
  *   F_memory_not (with error bit) on out of memory.
@@ -139,7 +139,7 @@ extern "C" {
  *   Each exploded path is not NULL terminated.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_array_too_large (with error bit) if paths array is too large for further addressing.
  *   F_memory_not (with error bit) on out of memory.

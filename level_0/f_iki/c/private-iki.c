@@ -37,7 +37,7 @@ extern "C" {
 #if !defined(_di_f_iki_object_is_) || !defined(_di_f_iki_object_partial_is_)
   f_status_t private_f_iki_object_partial_is(const f_string_t buffer, const f_number_unsigned_t length) {
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     for (f_number_unsigned_t i = 0; i < length; i += macro_f_utf_byte_width(buffer[i])) {
 

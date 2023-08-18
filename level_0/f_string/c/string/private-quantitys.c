@@ -20,7 +20,7 @@ extern "C" {
       destination->array[destination->used++].total = source.array[i].total;
     } // for
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_string_quantitys_append_all_) || !defined(_di_f_string_quantityss_append_) || !defined(_di_f_string_quantityss_append_all_)
 

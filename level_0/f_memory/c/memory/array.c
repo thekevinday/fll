@@ -49,7 +49,7 @@ extern "C" {
 
     ++(*used);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_memory_array_append_
 
@@ -83,7 +83,7 @@ extern "C" {
 
     *used += amount;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_memory_array_append_all_
 

@@ -65,7 +65,7 @@ extern "C" {
  *   The socket.id_data, socket.address, and socket.length are updated upon a successful return.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_block (with error bit) if socket is blocked.
@@ -111,7 +111,7 @@ extern "C" {
  *   The socket.id must refer to a valid socket file descriptor.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_address (with error bit) if address is already in use (therefore unavailable).
  *   F_available_not_address (with error bit) if address is unavailable (is non-existent or not local).
@@ -145,7 +145,7 @@ extern "C" {
  *   The socket.type (address family) will be assigned to f_socket_address_family_inet4_e.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_address (with error bit) if address is already in use (therefore unavailable).
  *   F_address_not (with error bit) if socket.domain is not set to f_socket_protocol_family_inet4_e.
@@ -180,7 +180,7 @@ extern "C" {
  *   The socket.type (address family) will be assigned to f_socket_address_family_inet6_e.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_address (with error bit) if address is already in use (therefore unavailable).
  *   F_address_not (with error bit) if socket.domain is not set to f_socket_protocol_family_inet6_e.
@@ -217,7 +217,7 @@ extern "C" {
  *   The socket.type (address family) will be assigned to f_socket_address_family_local_e.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_address (with error bit) if address is already in use (therefore unavailable).
  *   F_available_not_address (with error bit) if address is unavailable (is non-existent or not local).
@@ -249,7 +249,7 @@ extern "C" {
  *   The socket.address may point to any valid structure, like "struct sockaddr", "struct sockaddr_un", or "struct sockaddr_in".
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_available_not_address (with error bit) if address is unavailable (is non-existent or not local).
@@ -288,7 +288,7 @@ extern "C" {
  *   The socket.id will be updated with a file descriptor representing the created socket.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_buffer_not (with error bit) if unable to create socket due to resource restrictions (maps to ENOBUFS).
@@ -327,7 +327,7 @@ extern "C" {
  *   This socket is supposed to be identical to the one specified by id_1.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_buffer_not (with error bit) if unable to create socket due to resource restrictions (maps to ENOBUFS).
@@ -373,7 +373,7 @@ extern "C" {
  *   f_socket_close_fast_e calls close().
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_connect_not if the socket is not connected.
  *
  *   F_busy_address (with error bit) if address is already in use (therefore unavailable).
@@ -406,7 +406,7 @@ extern "C" {
  *   Suggested default setting: 8.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_busy_address (with error bit) if address is already in use (therefore unavailable).
  *   F_file_descriptor (with error bit) if id is an invalid descriptor.
@@ -438,7 +438,7 @@ extern "C" {
  *   The length of the value (often derived from a sizeof() call).
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_buffer (with error bit) if the given value is out of scope.
  *   F_file_descriptor (with error bit) if id is an invalid descriptor.
@@ -471,7 +471,7 @@ extern "C" {
  *   The length of the value (often derived from a sizeof() call).
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_buffer (with error bit) if the given value is out of scope.
  *   F_file_descriptor (with error bit) if id is an invalid descriptor.
@@ -502,7 +502,7 @@ extern "C" {
  *   If name.size is 0, then a default max (F_socket_default_name_max_d) is used.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_buffer (with error bit) if the buffer is invalid.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -534,7 +534,7 @@ extern "C" {
  *   The socket.address is used to store the name of the remote connection.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_file_descriptor (with error bit) if id is an invalid descriptor.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -573,7 +573,7 @@ extern "C" {
  *   Set to NULL to not use.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_complete_not (with error bit) if an existing connection is not yet complete.
@@ -618,7 +618,7 @@ extern "C" {
  *   Data may be lost if the amount of data read is larger than given buffer length.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_complete_not (with error bit) if an existing connection is not yet complete.
@@ -667,7 +667,7 @@ extern "C" {
  *   Set to NULL to not use.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_complete_not (with error bit) if an existing connection is not yet complete.
@@ -716,7 +716,7 @@ extern "C" {
  *   Set to NULL to not use.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_address_not (with error bit) if no address is provided and the connection is not "connection-mode".
@@ -765,7 +765,7 @@ extern "C" {
  *   Data may be lost if the amount of data send is larger than given buffer length.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_address_not (with error bit) if no address is provided and the connection is not "connection-mode".
@@ -818,7 +818,7 @@ extern "C" {
  *   Set to NULL to not use.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_address_not (with error bit) if no address is provided and the connection is not "connection-mode".

@@ -15,7 +15,7 @@ extern "C" {
 #ifndef _di_controller_main_
   f_status_t controller_main(controller_main_t * const main, const f_console_arguments_t arguments) {
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     setting->state.step_small = controller_allocation_console_d;
 
@@ -52,22 +52,22 @@ extern "C" {
     if (main->parameters.array[f_console_standard_parameter_help_e].result & f_console_result_found_e) {
       controller_print_help(main);
 
-      return F_none;
+      return F_okay;
     }
 
     if (main->parameters.array[f_console_standard_parameter_version_e].result & f_console_result_found_e) {
       fll_program_print_version(main->message, controller_program_version_s);
 
-      return F_none;
+      return F_okay;
     }
 
     if (main->parameters.array[f_console_standard_parameter_copyright_e].result & f_console_result_found_e) {
       fll_program_print_copyright(main->message);
 
-      return F_none;
+      return F_okay;
     }
 
-    status = F_none;
+    status = F_okay;
 
     f_string_static_t * const argv = main->parameters.arguments.array;
 

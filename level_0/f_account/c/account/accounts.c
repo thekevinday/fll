@@ -28,7 +28,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_account_delete_
 
@@ -58,7 +58,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_account_destroy_
 
@@ -67,7 +67,7 @@ extern "C" {
 
     {
       f_account_t * const array = (f_account_t *) void_array;
-      f_status_t status = F_none;
+      f_status_t status = F_okay;
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
 
@@ -88,7 +88,7 @@ extern "C" {
       } // for
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_accounts_delete_callback_
 
@@ -97,7 +97,7 @@ extern "C" {
 
     {
       f_account_t * const array = (f_account_t *) void_array;
-      f_status_t status = F_none;
+      f_status_t status = F_okay;
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
 
@@ -121,7 +121,7 @@ extern "C" {
       } // for
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_accounts_destroy_callback_
 
@@ -130,7 +130,7 @@ extern "C" {
 
     {
       f_accounts_t * const array = (f_accounts_t *) void_array;
-      f_status_t status = F_none;
+      f_status_t status = F_okay;
       f_number_unsigned_t j = 0;
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
@@ -160,7 +160,7 @@ extern "C" {
       } // for
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_accountss_delete_callback_
 
@@ -169,7 +169,7 @@ extern "C" {
 
     {
       f_accounts_t * const array = (f_accounts_t *) void_array;
-      f_status_t status = F_none;
+      f_status_t status = F_okay;
       f_number_unsigned_t j = 0;
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
@@ -199,7 +199,7 @@ extern "C" {
       } // for
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_accountss_destroy_callback_
 

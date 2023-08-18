@@ -115,7 +115,7 @@ void test__f_file_read_block__works(void **state) {
     f_string_dynamic_increase_by(1, &buffer);
     buffer.string[buffer.used] = 0;
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(buffer.used, 4);
     assert_string_equal(buffer.string, "abcd");
   }
@@ -128,7 +128,7 @@ void test__f_file_read_block__works(void **state) {
 
     const f_status_t status = f_file_read_block(file, &buffer);
 
-    assert_int_equal(status, F_none_eof);
+    assert_int_equal(status, F_okay_eof);
     assert_int_equal(buffer.used, 4);
     assert_string_equal(buffer.string, "abcd");
   }

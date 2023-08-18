@@ -111,7 +111,7 @@ void test__f_signal_read__works(void **state) {
 
     const f_status_t status = f_signal_read(signal, 0, &information);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(signal.id, -1);
   }
 

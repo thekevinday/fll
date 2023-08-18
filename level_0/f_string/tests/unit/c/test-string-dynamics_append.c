@@ -13,7 +13,7 @@ void test__f_string_dynamics_append__works(void **state) {
   {
     const f_status_t status = f_string_dynamics_append(source, &destination);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(destination.used, 1);
     assert_int_equal(destination.array[0].used, source.used);
 

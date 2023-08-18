@@ -9,7 +9,7 @@ extern "C" {
 #if !defined(_di_f_account_by_name_) || !defined(_di_f_account_by_id_)
   f_status_t private_f_account_from_passwd(const struct passwd password, const f_number_unsigned_t password_length, f_account_t * const account) {
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     // Account UID and GID.
     account->id_user = password.pw_uid;
@@ -80,7 +80,7 @@ extern "C" {
     account->shell.string[string_length] = 0;
     account->shell.used = string_length;
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_account_by_name_) || !defined(_di_f_account_by_id_)
 

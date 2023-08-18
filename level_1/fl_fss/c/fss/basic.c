@@ -21,20 +21,20 @@ extern "C" {
     if (F_status_is_error(state->status)) return;
     if (state->status == F_data_not) return;
 
-    if (state->status == F_none_eol) {
+    if (state->status == F_okay_eol) {
       ++range->start;
       state->status = F_fss_found_content_not;
 
       return;
     }
 
-    if (state->status == F_none_eos) {
+    if (state->status == F_okay_eos) {
       state->status = F_data_not_eos;
 
       return;
     }
 
-    if (state->status == F_none_stop) {
+    if (state->status == F_okay_stop) {
       state->status = F_data_not_stop;
 
       return;
@@ -55,7 +55,7 @@ extern "C" {
       f_fss_skip_past_delimit(buffer, range, state);
       if (F_status_is_error(state->status)) break;
 
-      if (state->status == F_none_eos || state->status == F_none_stop) return;
+      if (state->status == F_okay_eos || state->status == F_okay_stop) return;
       if (buffer.string[range->start] == f_fss_basic_close_s.string[0]) break;
     } // for
 
@@ -82,7 +82,7 @@ extern "C" {
       }
     #endif // _di_level_1_parameter_checking_
 
-    state->status = F_none;
+    state->status = F_okay;
 
     f_fss_skip_past_delimit(content, range, state);
     if (F_status_is_error(state->status)) return;
@@ -114,7 +114,7 @@ extern "C" {
 
       if (content.string[range->start] == f_fss_eol_s.string[0]) {
         destination->used = destination_used;
-        state->status = F_status_set_error(F_none_eol);
+        state->status = F_status_set_error(F_okay_eol);
 
         return;
       }
@@ -144,8 +144,8 @@ extern "C" {
       destination->string[destination->used++] = f_fss_basic_close_s.string[0];
     }
 
-    if (range->start > range->stop) state->status = F_none_stop;
-    else state->status = F_none_eos;
+    if (range->start > range->stop) state->status = F_okay_stop;
+    else state->status = F_okay_eos;
   }
 #endif // _di_fl_fss_basic_content_write_
 
@@ -217,7 +217,7 @@ extern "C" {
     }
 
     if (complete == f_fss_complete_partial_e || complete == f_fss_complete_partial_trim_e || complete == f_fss_complete_full_e || complete == f_fss_complete_full_trim_e || complete == f_fss_complete_trim_e) {
-      if (state->status == F_none_stop || state->status == F_none_eos || state->status == F_data_not_stop || state->status == F_data_not_eos) {
+      if (state->status == F_okay_stop || state->status == F_okay_eos || state->status == F_data_not_stop || state->status == F_data_not_eos) {
         const f_status_t status_original = state->status;
 
         if (complete == f_fss_complete_full_trim_e || complete == f_fss_complete_trim_e) {

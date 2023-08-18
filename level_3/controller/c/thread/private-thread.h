@@ -37,7 +37,7 @@ extern "C" {
  *   The thread ID.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   Success from: f_thread_detach().
  *
@@ -111,7 +111,7 @@ extern "C" {
  *   The controller settings data.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_child on child process exiting.
  *
  *   F_failure (with error bit) on any failure.
@@ -130,7 +130,7 @@ extern "C" {
  *   The thread ID.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   Success from: f_thread_join().
  *

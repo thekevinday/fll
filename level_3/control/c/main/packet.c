@@ -44,7 +44,7 @@ extern "C" {
       if (F_status_is_error(main->setting.state.status)) return;
     }
 
-    f_state_t state = macro_f_state_t_initialize_1(control_allocation_large_d, control_allocation_small_d, F_none, 0, 0, 0, &fll_program_standard_signal_handle, 0, (void *) main, 0);
+    f_state_t state = macro_f_state_t_initialize_1(control_allocation_large_d, control_allocation_small_d, F_okay, 0, 0, 0, &fll_program_standard_signal_handle, 0, (void *) main, 0);
 
     f_string_static_t contents_array[main->setting.actions.used];
     f_string_statics_t contents = macro_f_string_statics_t_initialize_1(contents_array, 0, main->setting.actions.used);
@@ -124,7 +124,7 @@ extern "C" {
       main->cache.packet.string[4] = main->cache.packet.used & 0xffu;
     #endif // _is_F_endian_big
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
   }
 #endif // _di_control_packet_build_
 
@@ -163,7 +163,7 @@ extern "C" {
 
     header->action = 0;
     header->type = 0;
-    header->status = F_none;
+    header->status = F_okay;
     header->length = 0;
 
     f_number_unsigned_t i = 0;
@@ -220,7 +220,7 @@ extern "C" {
     }
 
     {
-      f_state_t state = macro_f_state_t_initialize_1(control_allocation_large_d, control_allocation_small_d, F_none, 0, 0, 0, &fll_program_standard_signal_handle, 0, (void *) main, 0);
+      f_state_t state = macro_f_state_t_initialize_1(control_allocation_large_d, control_allocation_small_d, F_okay, 0, 0, 0, &fll_program_standard_signal_handle, 0, (void *) main, 0);
       f_string_range_t range_packet = macro_f_string_range_t_initialize_2(main->cache.large.used);
 
       fll_fss_basic_list_read(main->cache.large, &range_packet, &main->cache.packet_objects, &main->cache.packet_contents, &main->cache.delimits, 0, 0, &state);
@@ -490,7 +490,7 @@ extern "C" {
       }
     }
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
   }
 #endif // _di_control_packet_receive_
 

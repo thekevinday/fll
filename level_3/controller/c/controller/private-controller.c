@@ -33,7 +33,7 @@ extern "C" {
 #ifndef _di_controller_file_load_
   f_status_t controller_file_load(const controller_global_t global, const bool required, const f_string_static_t path_prefix, const f_string_static_t path_name, const f_string_static_t path_suffix, controller_cache_t * const cache) {
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
     f_file_t file = f_file_t_initialize;
 
     cache->action.name_file.used = 0;
@@ -135,14 +135,14 @@ extern "C" {
 
     if (F_status_is_error(status)) return status;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_controller_file_load_
 
 #ifndef _di_controller_file_pid_create_
   f_status_t controller_file_pid_create(const pid_t pid, const f_string_static_t path) {
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     // The file exists, do not attempt to overwrite.
     if (f_file_exists(path, F_true) == F_true) {
@@ -182,7 +182,7 @@ extern "C" {
 
     if (F_status_is_error(status)) return status;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_controller_file_pid_create_
 
@@ -191,10 +191,10 @@ extern "C" {
 
     // Only delete if the file exists and there is no error while checking.
     if (f_file_exists(path, F_true) != F_true) {
-      return F_none;
+      return F_okay;
     }
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
     f_file_t pid_file = f_file_t_initialize;
 
     status = f_file_stream_open(path, f_file_open_mode_read_s, &pid_file);
@@ -315,7 +315,7 @@ extern "C" {
           return F_status_set_error(F_exist_not);
         }
 
-        return F_none;
+        return F_okay;
       }
 
       return status;
@@ -350,7 +350,7 @@ extern "C" {
           return F_status_set_error(F_exist_not);
         }
 
-        return F_none;
+        return F_okay;
       }
 
       return status;
@@ -394,7 +394,7 @@ extern "C" {
       }
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_controller_path_canonical_relative_
 
@@ -402,7 +402,7 @@ extern "C" {
   f_status_t controller_perform_ready(const controller_global_t * const global, controller_cache_t * const cache, const bool is_entry) {
 
     if (!is_entry) {
-      return F_none;
+      return F_okay;
     }
 
     if (global->main->parameters.array[controller_parameter_validate_e].result & f_console_result_found_e) {
@@ -421,10 +421,10 @@ extern "C" {
         controller_unlock_print_flush(global->main->output.to, global->thread);
       }
 
-      return F_none;
+      return F_okay;
     }
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     if (global->setting->entry.pid != controller_entry_pid_disable_e && !global->setting->path_pid.used) {
       status = controller_file_pid_create(global->main->pid, global->setting->path_pid);
@@ -466,7 +466,7 @@ extern "C" {
           controller_unlock_print_flush(global->main->warning.to, global->thread);
         }
 
-        status = F_none;
+        status = F_okay;
       }
       else {
         global->setting->flag |= controller_setting_flag_pid_created_e;
@@ -488,7 +488,7 @@ extern "C" {
 
       // Do not fail on non-memory errors related to creating the control socket.
       if (F_status_is_error(status) && F_status_set_fine(status) != F_memory) {
-        status = F_none;
+        status = F_okay;
       }
     }*/
 
@@ -499,7 +499,7 @@ extern "C" {
 #ifndef _di_controller_perform_ready_socket_
   f_status_t controller_perform_ready_socket(const controller_global_t * const global, controller_cache_t * const cache, const bool is_entry) {
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     if (global->setting->control.flag & controller_control_flag_readonly_e) {
       if (f_file_exists(global->setting->path_control, F_true) != F_true) {
@@ -672,7 +672,7 @@ extern "C" {
       }
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_controller_perform_ready_socket_
 
@@ -783,9 +783,9 @@ extern "C" {
 #ifndef _di_controller_validate_define_name_
   f_status_t controller_validate_environment_name(const f_string_static_t name) {
 
-    if (!name.used) return F_none;
+    if (!name.used) return F_okay;
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     if (name.string[0] != '_') {
       status = f_utf_is_alphabetic(name.string, name.used);
@@ -811,9 +811,9 @@ extern "C" {
 #ifndef _di_controller_validate_has_graph_
   f_status_t controller_validate_has_graph(const f_string_static_t name) {
 
-    if (!name.used) return F_none;
+    if (!name.used) return F_okay;
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     for (f_number_unsigned_t i = 0; i < name.used; i += macro_f_utf_byte_width(name.string[i])) {
 

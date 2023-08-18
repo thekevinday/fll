@@ -103,7 +103,7 @@ void test__fll_path_canonical__back_paths(void **state) {
 
     const f_status_t status = fl_path_canonical(contents[i], &path);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
 
     // Assert_string_equal() is NULL terminated, so ensure NULL termination at end of path.used.
     path.string[path.used] = 0;
@@ -162,7 +162,7 @@ void test__fll_path_canonical__empty_becomes_pwd(void **state) {
   {
     const f_status_t status = fl_path_canonical(f_string_empty_s, &path);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(pwd_length, path.used);
     assert_string_equal(pwd, path.string);
   } // for
@@ -229,7 +229,7 @@ void test__fll_path_canonical__present_paths(void **state) {
 
     const f_status_t status = fl_path_canonical(contents[i], &path);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
 
     // Assert_string_equal() is NULL terminated, so ensure NULL termination at end of path.used.
     path.string[path.used] = 0;
@@ -318,11 +318,11 @@ void test__fll_path_canonical__root_paths(void **state) {
     const f_status_t status = fl_path_canonical(contents[i], &path);
 
     // Assert_string_equal() is NULL terminated, so ensure NULL termination at end of path.used.
-    if (status == F_none) {
+    if (status == F_okay) {
       path.string[path.used] = 0;
     }
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(expected[i].used, path.used);
     assert_string_equal(expected[i].string, path.string);
   } // for
@@ -425,7 +425,7 @@ void test__fll_path_canonical__tilde_remains(void **state) {
 
     const f_status_t status = fl_path_canonical(contents[i], &path);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
 
     // Assert_string_equal() is NULL terminated, so ensure NULL termination at end of path.used.
     path.string[path.used] = 0;

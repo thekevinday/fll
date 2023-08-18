@@ -103,7 +103,7 @@ void test__f_print_character_safely__works(void **state) {
 
     const f_status_t status = f_print_character_safely((f_char_t) 0x7f, output);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 
   {
@@ -113,7 +113,7 @@ void test__f_print_character_safely__works(void **state) {
 
     const f_status_t status = f_print_character_safely((f_char_t) F_utf_byte_1_d, output);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 
   {
@@ -123,7 +123,7 @@ void test__f_print_character_safely__works(void **state) {
 
     const f_status_t status = f_print_character_safely(test.string[0], output);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 }
 

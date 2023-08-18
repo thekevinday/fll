@@ -52,7 +52,7 @@ void test__f_serialize_from_simple_get__works(void **state) {
 
     const f_status_t status = f_serialize_from_simple_get(source, i, &destination);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(destination.used, matchs[i].used);
 
     if (destination.used) {

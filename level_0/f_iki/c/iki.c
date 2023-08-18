@@ -341,13 +341,13 @@ extern "C" {
             data->content.array[data->content.used++].stop = range->start - 1;
 
             if (++range->start > range->stop) {
-              state->status = F_none_stop;
+              state->status = F_okay_stop;
             }
             else if (range->start >= buffer->used) {
-              state->status = F_none_eos;
+              state->status = F_okay_eos;
             }
             else {
-              state->status = F_none;
+              state->status = F_okay;
             }
 
             return;
@@ -414,13 +414,13 @@ extern "C" {
                   data->content.array[data->content.used++].stop = range->start - 1;
 
                   if (++range->start > range->stop) {
-                    state->status = F_none_stop;
+                    state->status = F_okay_stop;
                   }
                   else if (range->start >= buffer->used) {
-                    state->status = F_none_eos;
+                    state->status = F_okay_eos;
                   }
                   else {
-                    state->status = F_none;
+                    state->status = F_okay;
                   }
 
                   return;

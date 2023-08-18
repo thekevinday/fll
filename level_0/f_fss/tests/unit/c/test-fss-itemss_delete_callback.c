@@ -26,7 +26,7 @@ void test__f_fss_itemss_delete_callback__fails(void **state) {
 
   {
     will_return(__wrap_f_string_ranges_resize, false);
-    will_return(__wrap_f_string_ranges_resize, F_none);
+    will_return(__wrap_f_string_ranges_resize, F_okay);
 
     will_return(__wrap_f_memory_array_resize, true);
     will_return(__wrap_f_memory_array_resize, F_status_set_error(F_failure));
@@ -48,19 +48,19 @@ void test__f_fss_itemss_delete_callback__works(void **state) {
 
   {
     f_status_t status = f_memory_array_resize(length, sizeof(f_fss_items_t), (void **) &datass.array, &datass.used, &datass.size);
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
 
     status = f_memory_array_resize(1, sizeof(f_fss_item_t), (void **) &datass.array[0].array, &datass.array[0].used, &datass.array[0].size);
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
 
     status = f_string_ranges_resize(1, &datass.array[0].array[0].content);
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 
   {
     const f_status_t status = f_fss_itemss_delete_callback(0, length, (void *) datass.array);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(datass.array[0].size, 0);
   }
 

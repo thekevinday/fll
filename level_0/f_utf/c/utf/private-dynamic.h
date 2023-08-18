@@ -26,7 +26,7 @@ extern "C" {
  *   The string to adjust.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   Errors (with error bit) from: f_memory_adjust().
  *
@@ -56,7 +56,7 @@ extern "C" {
  *   The string to resize.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
  *
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -133,7 +133,7 @@ extern "C" {
  *   The string to resize.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   Errors (with error bit) from: f_memory_resize().
  *

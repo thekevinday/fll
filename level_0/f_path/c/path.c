@@ -21,7 +21,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_path_change_
 
@@ -45,7 +45,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_path_change_at_
 
@@ -87,7 +87,7 @@ extern "C" {
     path->string[length] = 0;
     path->used = length;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_path_current_
 
@@ -100,7 +100,7 @@ extern "C" {
     directory->used = 0;
 
     if (!argument.used) {
-      return F_none;
+      return F_okay;
     }
 
     // Ensure enough space is available for terminating slash and terminating NULL.
@@ -146,7 +146,7 @@ extern "C" {
 
     directory->string[directory->used] = 0;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _f_path_directory_cleanup_
 

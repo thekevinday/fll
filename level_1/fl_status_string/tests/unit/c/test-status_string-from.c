@@ -15,7 +15,7 @@ void test__fl_status_string_from__fails(void **state) {
 
   for (uint8_t i = 0; i < 3; ++i) {
 
-    f_status_t result = F_none;
+    f_status_t result = F_okay;
 
     const f_status_t status = fl_status_string_from(invalids[i], &result);
 
@@ -35,7 +35,7 @@ void test__fl_status_string_from__parameter_checking(void **state) {
 void test__fl_status_string_from__returns_data_not(void **state) {
 
   {
-    f_status_t result = F_none;
+    f_status_t result = F_okay;
 
     const f_status_t status = fl_status_string_from(f_string_empty_s, &result);
 
@@ -112,7 +112,15 @@ void test__fl_status_string_from__works(void **state) {
     F_signal_reserved_62,
     F_signal_reserved_63,
     F_signal_reserved_64,
-    F_none,
+    F_okay,
+    F_okay_block,
+    F_okay_eoa,
+    F_okay_eof,
+    F_okay_eol,
+    F_okay_eos,
+    F_okay_not,
+    F_okay_start,
+    F_okay_stop,
     F_abort,
     F_abort_not,
     F_absolute,
@@ -121,6 +129,8 @@ void test__fl_status_string_from__works(void **state) {
     F_address_not,
     F_again,
     F_again_not,
+    F_all,
+    F_all_not,
     F_ascii,
     F_ascii_not,
     F_atomic,
@@ -288,10 +298,10 @@ void test__fl_status_string_from__works(void **state) {
     F_nice_not,
     F_no,
     F_no_not,
+    F_none,
+    F_none_not,
     F_object,
     F_object_not,
-    F_okay,
-    F_okay_not,
     F_once,
     F_once_not,
     F_option,
@@ -367,6 +377,8 @@ void test__fl_status_string_from__works(void **state) {
     F_size_not,
     F_skip,
     F_skip_not,
+    F_some,
+    F_some_not,
     F_space,
     F_space_not,
     F_start,
@@ -512,13 +524,6 @@ void test__fl_status_string_from__works(void **state) {
     F_complete_not_utf_eos,
     F_complete_not_utf_start,
     F_complete_not_utf_stop,
-    F_none_block,
-    F_none_eoa,
-    F_none_eof,
-    F_none_eol,
-    F_none_eos,
-    F_none_start,
-    F_none_stop,
     F_data,
     F_data_not,
     F_data_not_block,
@@ -734,7 +739,15 @@ void test__fl_status_string_from__works(void **state) {
     f_status_signal_reserved_62_s,
     f_status_signal_reserved_63_s,
     f_status_signal_reserved_64_s,
-    f_status_none_s,
+    f_status_okay_s,
+    f_status_okay_block_s,
+    f_status_okay_eoa_s,
+    f_status_okay_eof_s,
+    f_status_okay_eol_s,
+    f_status_okay_eos_s,
+    f_status_okay_not_s,
+    f_status_okay_start_s,
+    f_status_okay_stop_s,
     f_status_abort_s,
     f_status_abort_not_s,
     f_status_absolute_s,
@@ -743,6 +756,8 @@ void test__fl_status_string_from__works(void **state) {
     f_status_address_not_s,
     f_status_again_s,
     f_status_again_not_s,
+    f_status_all_s,
+    f_status_all_not_s,
     f_status_ascii_s,
     f_status_ascii_not_s,
     f_status_atomic_s,
@@ -910,10 +925,10 @@ void test__fl_status_string_from__works(void **state) {
     f_status_nice_not_s,
     f_status_no_s,
     f_status_no_not_s,
+    f_status_none_s,
+    f_status_none_not_s,
     f_status_object_s,
     f_status_object_not_s,
-    f_status_okay_s,
-    f_status_okay_not_s,
     f_status_once_s,
     f_status_once_not_s,
     f_status_option_s,
@@ -989,6 +1004,8 @@ void test__fl_status_string_from__works(void **state) {
     f_status_size_not_s,
     f_status_skip_s,
     f_status_skip_not_s,
+    f_status_some_s,
+    f_status_some_not_s,
     f_status_space_s,
     f_status_space_not_s,
     f_status_start_s,
@@ -1134,13 +1151,6 @@ void test__fl_status_string_from__works(void **state) {
     f_status_complete_not_utf_eos_s,
     f_status_complete_not_utf_start_s,
     f_status_complete_not_utf_stop_s,
-    f_status_none_block_s,
-    f_status_none_eoa_s,
-    f_status_none_eof_s,
-    f_status_none_eol_s,
-    f_status_none_eos_s,
-    f_status_none_start_s,
-    f_status_none_stop_s,
     f_status_data_s,
     f_status_data_not_s,
     f_status_data_not_block_s,
@@ -1289,13 +1299,13 @@ void test__fl_status_string_from__works(void **state) {
     f_status_status_code_last_s,
   };
 
-  for (uint16_t i = 0; i < 619; ++i) {
+  for (uint16_t i = 0; i < 624; ++i) {
 
-    f_status_t result = F_none;
+    f_status_t result = F_okay;
 
     const f_status_t status = fl_status_string_from(status_strings[i], &result);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(result, statuss[i]);
   } // for
 }

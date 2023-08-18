@@ -273,7 +273,7 @@ extern "C" {
 
     if (F_status_is_error(main->setting.state.status)) return;
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
   }
 #endif // _di_fake_make_operate_process_buffer_escape_
 
@@ -416,7 +416,7 @@ extern "C" {
       fll_error_print(&data_make->error, F_status_set_fine(main->setting.state.status), macro_fake_f(f_string_dynamic_append), F_true);
     }
     else {
-      main->setting.state.status = F_none;
+      main->setting.state.status = F_okay;
     }
   }
 #endif // _di_fake_make_operate_process_return_

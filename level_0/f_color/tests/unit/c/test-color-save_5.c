@@ -29,7 +29,7 @@ void test__f_color_save_5_works(void **state) {
   const f_string_static_t color5 = macro_f_string_static_t_initialize_2("color5", 6);
 
   {
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     macro_f_color_context_t_new(status, context);
   }
@@ -37,7 +37,7 @@ void test__f_color_save_5_works(void **state) {
   {
     const f_status_t status = f_color_save_5(format, color1, color2, color3, color4, color5, &buffer);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_string_equal(buffer.string, "color1color2color3color4color5");
   }
 

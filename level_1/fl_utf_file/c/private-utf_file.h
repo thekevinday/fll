@@ -60,9 +60,9 @@ extern "C" {
  *   The total bytes written.
  *
  * @return
- *   F_none on success.
- *   F_none_eos on success but range.stop exceeded buffer.used (only wrote up to buffer.used).
- *   F_none_stop on success but no data was written (written == 0) (not an error and often happens if file type is not a regular file).
+ *   F_okay on success.
+ *   F_okay_eos on success but range.stop exceeded buffer.used (only wrote up to buffer.used).
+ *   F_okay_stop on success but no data was written (written == 0) (not an error and often happens if file type is not a regular file).
  *   F_complete_not_utf_stop if max write was reached but was unable to completely write a given UTF-8 block (incomplete UTF-8 is not written, not even partially).
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.

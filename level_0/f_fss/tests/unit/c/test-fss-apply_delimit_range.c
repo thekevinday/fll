@@ -137,7 +137,7 @@ void test__f_fss_apply_delimit_range__works(void **state) {
 
     f_fss_apply_delimit_range(delimitss[i], range, &tests[i], &state_data);
 
-    assert_int_equal(state_data.status, F_none);
+    assert_int_equal(state_data.status, F_okay);
     assert_int_equal(tests[i].used, expects[i].used);
 
     for (uint8_t j = 0; j < tests[i].used; ++j) {

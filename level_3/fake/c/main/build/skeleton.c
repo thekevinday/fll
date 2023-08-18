@@ -102,7 +102,7 @@ extern "C" {
 
       if (F_status_is_error(main->setting.state.status)) {
         if (F_status_set_fine(main->setting.state.status) == F_file_found) {
-          main->setting.state.status = F_none;
+          main->setting.state.status = F_okay;
 
           continue;
         }
@@ -120,7 +120,7 @@ extern "C" {
     fake_build_touch(data, file_stage);
 
     if (F_status_is_error_not(main->setting.state.status)) {
-      main->setting.state.status = F_none;
+      main->setting.state.status = F_okay;
     }
   }
 #endif // _di_fake_build_skeleton_

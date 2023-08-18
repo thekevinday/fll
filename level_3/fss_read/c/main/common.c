@@ -36,7 +36,7 @@ extern "C" {
       } // for
     }
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
   }
 #endif // _di_fss_read_ensure_quotes_length_
 
@@ -123,7 +123,7 @@ extern "C" {
       if (F_status_is_error(main->setting.state.status)) return;
 
       if (main->setting.state.status == F_done) {
-        main->setting.state.status = F_none;
+        main->setting.state.status = F_okay;
 
         return;
       }
@@ -495,7 +495,7 @@ extern "C" {
 
       main->setting.files.array[0].range.start = 0;
 
-      while (main->setting.state.status != F_none_eof) {
+      while (main->setting.state.status != F_okay_eof) {
 
         if (fss_read_signal_check(main)) break;
 
@@ -802,7 +802,7 @@ extern "C" {
       } // for
     } // for
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
   }
 #endif // _di_fss_read_setting_load_depth_
 

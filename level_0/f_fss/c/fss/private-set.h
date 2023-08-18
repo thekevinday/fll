@@ -26,7 +26,7 @@ extern "C" {
  *   The set to adjust.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   Errors (with error bit) from: f_string_ranges_adjust().
  *   Errors (with error bit) from: f_string_rangess_adjust().
@@ -52,7 +52,7 @@ extern "C" {
  *   The set to resize.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   Errors (with error bit) from: f_string_ranges_resize().
  *   Errors (with error bit) from: f_string_rangess_resize().

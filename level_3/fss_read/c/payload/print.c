@@ -12,7 +12,7 @@ extern "C" {
 
     fll_print_format("%r%[%QThe payload may only be specified last.%]%r", print->to, f_string_eol_s, print->set->error, print->prefix, print->set->error, f_string_eol_s);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fss_read_payload_print_error_payload_not_last_
 
@@ -48,7 +48,7 @@ extern "C" {
     f_file_stream_flush(print->to);
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fss_read_payload_print_help_
 
@@ -77,7 +77,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fss_read_payload_print_object_end_
 

@@ -19,7 +19,7 @@ extern "C" {
 
     if (global->thread->enabled != controller_thread_enabled_e) return 0;
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     if (status == F_child) {
 

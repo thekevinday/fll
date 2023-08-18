@@ -12,7 +12,7 @@ extern "C" {
 
     fll_error_print(print, F_status_set_fine(((fss_identify_main_t *) print->custom)->setting.state.status), function, fll_error_file_flag_fallback_e);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fss_identify_print_error_
 
@@ -26,7 +26,7 @@ extern "C" {
 
     fll_error_file_print(print, F_status_set_fine(main->setting.state.status), function, fll_error_file_flag_fallback_e, name, operation, type);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fss_identify_print_error_file_
 
@@ -38,7 +38,7 @@ extern "C" {
 
     fll_print_format("%[%QNo sources are specified, please pipe data or designate a file.%]%r", print->to, print->set->error, print->prefix, print->set->error, f_string_eol_s);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fss_identify_print_error_no_from_
 
@@ -58,7 +58,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fss_identify_print_error_parameter_file_name_empty_
 
@@ -80,7 +80,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fss_identify_print_error_parameter_file_name_invalid_
 

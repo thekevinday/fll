@@ -28,7 +28,7 @@ extern "C" {
  *   This will be NULL terminated at real->used + 1.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_directory (with error bit) if a supposed directory in path is not actually a directory.

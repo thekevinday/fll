@@ -29,7 +29,7 @@ extern "C" {
       }
     } // for
 
-    state->status = F_none;
+    state->status = F_okay;
   }
 #endif // _di_f_fss_apply_delimit_
 
@@ -58,7 +58,7 @@ extern "C" {
       }
     } // for
 
-    state->status = F_none;
+    state->status = F_okay;
   }
 #endif // _di_f_fss_apply_delimit_range_
 
@@ -87,7 +87,7 @@ extern "C" {
       }
     } // for
 
-    state->status = F_none;
+    state->status = F_okay;
   }
 #endif // _di_f_fss_count_lines_
 
@@ -116,7 +116,7 @@ extern "C" {
       }
     } // for
 
-    state->status = F_none;
+    state->status = F_okay;
   }
 #endif // _di_f_fss_count_lines_range_
 
@@ -293,13 +293,13 @@ extern "C" {
     for (;; ++range->start) {
 
       if (range->start >= buffer.used) {
-        state->status = F_none_eos;
+        state->status = F_okay_eos;
 
         return;
       }
 
       if (range->start > range->stop) {
-        state->status = F_none_stop;
+        state->status = F_okay_stop;
 
         return;
       }
@@ -307,7 +307,7 @@ extern "C" {
       if (buffer.string[range->start] == f_fss_eol_s.string[0]) break;
     } // for
 
-    state->status = F_none;
+    state->status = F_okay;
   }
 #endif // _di_f_fss_seek_to_eol_
 
@@ -332,13 +332,13 @@ extern "C" {
     for (;; ++range->start) {
 
       if (range->start >= buffer.used) {
-        state->status = F_none_eos;
+        state->status = F_okay_eos;
 
         return;
       }
 
       if (range->start > range->stop) {
-        state->status = F_none_stop;
+        state->status = F_okay_stop;
 
         return;
       }
@@ -346,7 +346,7 @@ extern "C" {
       if (buffer.string[range->start] != f_fss_placeholder_s.string[0]) break;
     } // for
 
-    state->status = F_none;
+    state->status = F_okay;
   }
 #endif // _di_f_fss_skip_past_delimit_
 
@@ -396,7 +396,7 @@ extern "C" {
       }
 
       if (buffer.string[range->start] == f_fss_eol_s.string[0]) {
-        state->status = F_none_eol;
+        state->status = F_okay_eol;
 
         return;
       }
@@ -455,19 +455,19 @@ extern "C" {
       range->start += width;
 
       if (range->start >= buffer.used) {
-        state->status = F_none_eos;
+        state->status = F_okay_eos;
 
         return;
       }
 
       if (range->start > range->stop) {
-        state->status = F_none_stop;
+        state->status = F_okay_stop;
 
         return;
       }
     } // for
 
-    state->status = F_none;
+    state->status = F_okay;
   }
 #endif // _di_f_fss_skip_past_space_
 

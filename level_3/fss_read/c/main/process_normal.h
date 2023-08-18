@@ -26,7 +26,7 @@ extern "C" {
  *   Must be of type fss_read_main_t.
  *
  *   This alters main.setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *
  *     Errors (with error bit) from: main.callback.process_at().
  *     Errors (with error bit) from: main.callback.process_at_line().
@@ -57,7 +57,7 @@ extern "C" {
  *   Must be of type fss_read_main_t.
  *
  *   This alters main.setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *
  *     Errors (with error bit) from: fss_read_signal_check().
  * @param names
@@ -88,7 +88,7 @@ extern "C" {
  *   This alters main.setting.range.
  *
  *   This alters main.setting.state.status:
- *     F_none on success but line not yet found.
+ *     F_okay on success but line not yet found.
  *     F_success on success and line is found and printed.
  *
  *     Errors (with error bit) from: f_string_dynamic_append_assure().
@@ -122,7 +122,7 @@ extern "C" {
  *   Must be of type fss_read_main_t.
  *
  *   This alters main.setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *
  *     Errors (with error bit) from: fss_read_signal_check().
  * @param names
@@ -145,7 +145,7 @@ extern "C" {
  *   Must be of type fss_read_main_t.
  *
  *   This alters main.setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *
  *     Errors (with error bit) from: fss_read_signal_check().
  * @param names
@@ -170,7 +170,7 @@ extern "C" {
  *   Must be of type fss_read_main_t.
  *
  *   This alters main.setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *
  *     Errors (with error bit) from: fss_read_signal_check().
  * @param names
@@ -195,7 +195,7 @@ extern "C" {
  *   Must be of type fss_read_main_t.
  *
  *   This alters main.setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *
  *     Errors (with error bit) from: fss_read_signal_check().
  * @param names

@@ -42,7 +42,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_directory_recurse_do_delete_
 
@@ -92,7 +92,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_directory_recurse_do_destroy_
 
@@ -101,7 +101,7 @@ extern "C" {
 
     {
       f_directory_recurse_do_t * const array = (f_directory_recurse_do_t *) void_array;
-      f_status_t status = F_none;
+      f_status_t status = F_okay;
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
 
@@ -137,7 +137,7 @@ extern "C" {
       } // for
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_directory_recurse_dos_delete_callback_
 
@@ -146,7 +146,7 @@ extern "C" {
 
     {
       f_directory_recurse_do_t * const array = (f_directory_recurse_do_t *) void_array;
-      f_status_t status = F_none;
+      f_status_t status = F_okay;
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
 
@@ -191,7 +191,7 @@ extern "C" {
       } // for
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_directory_recurse_dos_destroy_callback_
 
@@ -200,7 +200,7 @@ extern "C" {
 
     {
       f_directory_recurse_dos_t * const array = (f_directory_recurse_dos_t *) void_array;
-      f_status_t status = F_none;
+      f_status_t status = F_okay;
       f_number_unsigned_t j = 0;
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
@@ -245,7 +245,7 @@ extern "C" {
       } // for
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_directory_recurse_doss_delete_callback_
 
@@ -254,7 +254,7 @@ extern "C" {
 
     {
       f_directory_recurse_dos_t * const array = (f_directory_recurse_dos_t *) void_array;
-      f_status_t status = F_none;
+      f_status_t status = F_okay;
       f_number_unsigned_t j = 0;
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
@@ -308,7 +308,7 @@ extern "C" {
       } // for
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_directory_recurse_doss_destroy_callback_
 

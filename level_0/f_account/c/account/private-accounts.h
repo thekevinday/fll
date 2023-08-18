@@ -26,7 +26,7 @@ extern "C" {
  *   The destination lengths the source is appended onto.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   Errors (with error bit) from: f_memory_resize().
  *   Errors (with error bit) from: f_string_dynamic_append().

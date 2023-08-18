@@ -23,7 +23,7 @@ extern "C" {
       fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
     }
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
 
     if (main->setting.flag & (fss_write_main_flag_help_e | fss_write_main_flag_version_e | fss_write_main_flag_copyright_e)) {
       if (main->setting.flag & fss_write_main_flag_help_e) {
@@ -198,7 +198,7 @@ extern "C" {
       return;
     }
 
-    f_status_t status_pipe = F_none;
+    f_status_t status_pipe = F_okay;
 
     f_file_t input = f_file_t_initialize;
     input.id = F_type_descriptor_input_d;
@@ -228,7 +228,7 @@ extern "C" {
       }
 
       if (range.start > range.stop) {
-        if (status_pipe == F_none_eof) break;
+        if (status_pipe == F_okay_eof) break;
 
         main->setting.block.used = 0;
 
@@ -430,7 +430,7 @@ extern "C" {
     } // for
 
     // If the pipe ended before finishing, then attempt to wrap up.
-    if (F_status_is_error_not(main->setting.state.status) && status_pipe == F_none_eof && state) {
+    if (F_status_is_error_not(main->setting.state.status) && status_pipe == F_okay_eof && state) {
       main->callback.process_set(void_main);
 
       flag |= 0x1;
@@ -446,7 +446,7 @@ extern "C" {
     main->setting.contentss.used = used_contentss;
 
     if (F_status_is_error_not(main->setting.state.status)) {
-      main->setting.state.status = (flag & 0x1) ? F_none : F_data_not;
+      main->setting.state.status = (flag & 0x1) ? F_okay : F_data_not;
     }
   }
 #endif // _di_fss_write_process_pipe_

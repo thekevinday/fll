@@ -60,7 +60,7 @@ extern "C" {
         memcpy(*character, &unicode, sizeof(f_char_t) * macro_f_utf_char_t_width_is(unicode));
       #endif // __BYTE_ORDER == __LITTLE_ENDIAN*/
 
-      return F_none;
+      return F_okay;
     }
 
     memcpy(*character, &unicode, sizeof(f_char_t));
@@ -73,7 +73,7 @@ extern "C" {
       memcpy(*character, &unicode, sizeof(f_char_t));
     #endif // __BYTE_ORDER == __LITTLE_ENDIAN*/
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_utf_char_to_char_
 
@@ -124,7 +124,7 @@ extern "C" {
       *character |= 0xe0808080;
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_utf_character_unicode_from_
 
@@ -196,7 +196,7 @@ extern "C" {
 
     *codepoint = value;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_utf_character_unicode_string_to_
 
@@ -262,7 +262,7 @@ extern "C" {
       (*character)[3] = F_utf_byte_1_d | ((f_char_t) (codepoint & 0x3f));
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_utf_unicode_from_
 
@@ -342,7 +342,7 @@ extern "C" {
 
     *unicode = value;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_utf_unicode_string_to_
 

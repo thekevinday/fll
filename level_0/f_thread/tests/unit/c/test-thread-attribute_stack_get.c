@@ -56,7 +56,7 @@ void test__f_thread_attribute_stack_get__works(void **state) {
 
     const f_status_t status = f_thread_attribute_stack_get(attribute, &stack_size, (void *) &stack);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 }
 

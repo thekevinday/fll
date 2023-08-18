@@ -98,7 +98,7 @@ typedef struct {
  *   The program data.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   Status codes (with error bit) are returned on any problem.
  *

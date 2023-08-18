@@ -49,7 +49,7 @@ extern "C" {
  *   The main program settings.
  *
  *   This alters setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *     F_data_not on success, but nothing done.
  *
  *     F_interrupt (with error bit) on (exit) signal received.
@@ -77,7 +77,7 @@ extern "C" {
  *   The range within the buffer to process.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success, but nothing to print.
  *
  *   Status codes (with error bit) are returned on any problem.
@@ -99,7 +99,7 @@ extern "C" {
  *   The range within the buffer to process.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success, but nothing to print.
  *
  *   Status codes (with error bit) are returned on any problem.
@@ -117,7 +117,7 @@ extern "C" {
  *   The main program settings.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   Status codes (with error bit) are returned on any problem.
  */

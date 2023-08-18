@@ -32,7 +32,7 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -66,7 +66,7 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -95,7 +95,7 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -125,7 +125,7 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -157,7 +157,7 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   Errors (with error bit) from: f_string_dynamic_increase_by()
  *

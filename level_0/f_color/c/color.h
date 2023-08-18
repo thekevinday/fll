@@ -52,7 +52,7 @@ extern "C" {
  *   The context.mode is always set to the specified mode, even if it is not supported (except when there is an invalid parameter).
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success but mode is f_color_mode_none_e or not a supported mode.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -83,7 +83,7 @@ extern "C" {
  *   The buffer will become NULL terminated after the appended string length.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -116,7 +116,7 @@ extern "C" {
  *   The buffer will become NULL terminated after the appended string length.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -152,7 +152,7 @@ extern "C" {
  *   The buffer will become NULL terminated after the appended string length.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -191,7 +191,7 @@ extern "C" {
  *   The buffer will become NULL terminated after the appended string length.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -235,7 +235,7 @@ extern "C" {
  *   The buffer will become NULL terminated after the appended string length.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *

@@ -91,9 +91,9 @@ extern "C" {
  *   (For UTF-8 character of width 3, each step would be (3 * sizeof(uint8_t)).
  *
  * @return
- *   F_none on success.
- *   F_none_stop if the stop range is reached before all steps are completed.
- *   F_none_eos if the end of buffer is reached before all steps are completed.
+ *   F_okay on success.
+ *   F_okay_stop if the stop range is reached before all steps are completed.
+ *   F_okay_eos if the end of buffer is reached before all steps are completed.
  *   F_data_not if buffer is empty or out of range.
  *
  *   F_complete_not_utf_eos (with error bit) if the end of buffer is reached before the complete UTF-8 character can be processed.
@@ -123,9 +123,9 @@ extern "C" {
  *   (For UTF-8 character of width 3, each step would be (3 * sizeof(uint8_t)).
  *
  * @return
- *   F_none on success.
- *   F_none_stop if the stop range is reached before all steps are completed.
- *   F_none_eos if the end of buffer is reached before all steps are completed.
+ *   F_okay on success.
+ *   F_okay_stop if the stop range is reached before all steps are completed.
+ *   F_okay_eos if the end of buffer is reached before all steps are completed.
  *   F_data_not if buffer is empty or out of range.
  *
  *   F_complete_not_utf_stop (with error bit) if the stop range is reached before the complete UTF-8 character can be processed.

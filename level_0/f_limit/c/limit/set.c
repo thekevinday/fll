@@ -114,7 +114,7 @@ extern "C" {
 
     ++destination->used;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_limit_setss_append_
 
@@ -139,7 +139,7 @@ extern "C" {
       }
     } // for
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_limit_setss_append_all_
 

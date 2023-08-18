@@ -16,7 +16,7 @@ void test__f_utf_dynamic_mish_nulless__works(void **state) {
   {
     const f_status_t status = f_utf_string_dynamic_mish_nulless(glue, source, &destination);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(destination.used, expected1.used);
 
     for (f_number_unsigned_t i = 0; i < expected1.used; ++i) {
@@ -28,7 +28,7 @@ void test__f_utf_dynamic_mish_nulless__works(void **state) {
   {
     const f_status_t status = f_utf_string_dynamic_mish_nulless(glue, source, &destination);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(destination.used, expected2.used);
 
     for (f_number_unsigned_t i = 0; i < expected2.used; ++i) {

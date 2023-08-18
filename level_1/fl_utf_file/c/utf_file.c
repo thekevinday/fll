@@ -19,7 +19,7 @@ extern "C" {
       return F_status_set_error(F_file_closed);
     }
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     ssize_t size_read = 0;
     uint8_t width = 0;
@@ -49,7 +49,7 @@ extern "C" {
         return F_status_set_error(F_complete_not_utf_eof);
       }
 
-      return F_none_eof;
+      return F_okay_eof;
     }
     else if (size_read < 0) {
       if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
@@ -66,7 +66,7 @@ extern "C" {
       return F_status_set_error(F_complete_not_utf_stop);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fl_utf_file_read_
 
@@ -79,7 +79,7 @@ extern "C" {
     if (file.id < 0) return F_status_set_error(F_file);
     if (!file.id) return F_status_set_error(F_file_closed);
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     ssize_t size_read = 0;
     uint8_t width = 0;
@@ -108,7 +108,7 @@ extern "C" {
         return F_status_set_error(F_complete_not_utf_eof);
       }
 
-      return F_none_eof;
+      return F_okay_eof;
     }
     else if (size_read < 0) {
       if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
@@ -125,7 +125,7 @@ extern "C" {
       return F_status_set_error(F_complete_not_utf_stop);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fl_utf_file_read_block_
 
@@ -143,7 +143,7 @@ extern "C" {
       return F_status_set_error(F_file_closed);
     }
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     ssize_t size_read = 0;
     uint8_t width = 0;
@@ -180,7 +180,7 @@ extern "C" {
         return F_status_set_error(F_complete_not_utf_eof);
       }
 
-      return F_none_eof;
+      return F_okay_eof;
     }
     else if (size_read < 0) {
       if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
@@ -197,7 +197,7 @@ extern "C" {
       return F_status_set_error(F_complete_not_utf_stop);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fl_utf_file_read_until_
 
@@ -224,8 +224,8 @@ extern "C" {
     const f_status_t status = private_fl_utf_file_write_until(file, destination.string, destination.used, written);
     if (F_status_is_error(status)) return status;
 
-    if (status == F_none && *written == destination.used) {
-      return F_none_eos;
+    if (status == F_okay && *written == destination.used) {
+      return F_okay_eos;
     }
 
     return status;
@@ -261,8 +261,8 @@ extern "C" {
     const f_status_t status = private_fl_utf_file_write_until(file, destination.string, write_max, written);
     if (F_status_is_error(status)) return status;
 
-    if (status == F_none && *written == destination.used) {
-      return F_none_eos;
+    if (status == F_okay && *written == destination.used) {
+      return F_okay_eos;
     }
 
     return status;
@@ -298,8 +298,8 @@ extern "C" {
     const f_status_t status = private_fl_utf_file_write_until(file, destination.string, write_max, written);
     if (F_status_is_error(status)) return status;
 
-    if (status == F_none && *written == destination.used) {
-      return F_none_eos;
+    if (status == F_okay && *written == destination.used) {
+      return F_okay_eos;
     }
 
     return status;
@@ -337,13 +337,13 @@ extern "C" {
     const f_status_t status = private_fl_utf_file_write_until(file, destination.string + range.start, write_max, written);
     if (F_status_is_error(status)) return status;
 
-    if (status == F_none) {
+    if (status == F_okay) {
       if (range.start + *written == total) {
-        return F_none_stop;
+        return F_okay_stop;
       }
 
       if (range.start + *written == destination.used) {
-        return F_none_eos;
+        return F_okay_eos;
       }
     }
 

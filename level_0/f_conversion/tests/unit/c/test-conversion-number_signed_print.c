@@ -94,7 +94,7 @@ void test__f_conversion_number_signed_print__works(void **state) {
 
     const f_status_t status = f_conversion_number_signed_print(1, data, output);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 }
 
@@ -113,7 +113,7 @@ void test__f_conversion_number_signed_print__works_for_zero(void **state) {
 
     const f_status_t status = f_conversion_number_signed_print(0, data, output);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 }
 
@@ -126,7 +126,7 @@ void test__f_conversion_number_signed_print__works_for_zero_with_width_zero(void
 
     const f_status_t status = f_conversion_number_signed_print(0, data, output);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 }
 

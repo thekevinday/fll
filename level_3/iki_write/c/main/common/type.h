@@ -58,7 +58,7 @@ extern "C" {
   #define iki_write_setting_t_initialize \
     { \
       iki_write_main_flag_none_e, \
-      F_none, \
+      F_okay, \
       f_state_t_initialize, \
       f_string_static_t_initialize, \
       f_string_dynamic_t_initialize, \
@@ -110,7 +110,7 @@ extern "C" {
  *   This does not alter setting.state.status.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  */

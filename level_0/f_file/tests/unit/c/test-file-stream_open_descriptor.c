@@ -102,7 +102,7 @@ void test__f_file_stream_open_descriptor__works(void **state) {
 
     const f_status_t status = f_file_stream_open_descriptor(path, &file);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(file.id, id);
   }
 
@@ -114,7 +114,7 @@ void test__f_file_stream_open_descriptor__works(void **state) {
 
     const f_status_t status = f_file_stream_open_descriptor(f_string_empty_s, &file);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(file.id, id);
   }
 }

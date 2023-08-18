@@ -138,7 +138,7 @@ extern "C" {
  *   This value is only changed on success.
  *
  * @return
- *   F_none if character was converted to a binary.
+ *   F_okay if character was converted to a binary.
  *
  *   F_number (with error bit) if no conversion was made due to non-binary values being found.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -157,7 +157,7 @@ extern "C" {
  *   This value is only changed on success.
  *
  * @return
- *   F_none if character was converted to a decimal.
+ *   F_okay if character was converted to a decimal.
  *
  *   F_number (with error bit) if no conversion was made due to non-decimal values being found.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -176,7 +176,7 @@ extern "C" {
  *   This value is only changed on success.
  *
  * @return
- *   F_none if character was converted to a duodecimal.
+ *   F_okay if character was converted to a duodecimal.
  *
  *   F_number (with error bit) if no conversion was made due to non-duodecimal values being found.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -195,7 +195,7 @@ extern "C" {
  *   This value is only changed on success.
  *
  * @return
- *   F_none if character was converted to a hexidecimal.
+ *   F_okay if character was converted to a hexidecimal.
  *
  *   F_number (with error bit) if no conversion was made due to non-hexidecimal values being found.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -214,7 +214,7 @@ extern "C" {
  *   This value is only changed on success.
  *
  * @return
- *   F_none if character was converted to a hexidecimal.
+ *   F_okay if character was converted to a hexidecimal.
  *
  *   F_number (with error bit) if no conversion was made due to non-hexidecimal values being found.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -241,7 +241,7 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none if the number was converted to a string.
+ *   F_okay if the number was converted to a string.
  *
  *   F_block (with error bit) if file stream is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -274,7 +274,7 @@ extern "C" {
  *   The destination the converted string is saved into.
  *
  * @return
- *   F_none if the number was converted to a string.
+ *   F_okay if the number was converted to a string.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -306,7 +306,7 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none if the number was converted to a string.
+ *   F_okay if the number was converted to a string.
  *
  *   F_block (with error bit) if file stream is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -339,7 +339,7 @@ extern "C" {
  *   The destination the converted string is saved into.
  *
  * @return
- *   F_none if the number was converted to a string.
+ *   F_okay if the number was converted to a string.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *

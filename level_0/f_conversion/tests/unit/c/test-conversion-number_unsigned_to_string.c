@@ -34,7 +34,7 @@ void test__f_conversion_number_unsigned_to_string__works(void **state) {
 
     const f_status_t status = f_conversion_number_unsigned_to_string(1, data, &destination);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_string_equal(destination.string, "1");
   }
 
@@ -50,7 +50,7 @@ void test__f_conversion_number_unsigned_to_string__works_for_prepend(void **stat
 
     const f_status_t status = f_conversion_number_unsigned_to_string(1, data, &destination);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_string_equal(destination.string, "0b1");
   }
 
@@ -62,7 +62,7 @@ void test__f_conversion_number_unsigned_to_string__works_for_prepend(void **stat
 
     const f_status_t status = f_conversion_number_unsigned_to_string(1, data, &destination);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_string_equal(destination.string, "0B1");
   }
 
@@ -74,7 +74,7 @@ void test__f_conversion_number_unsigned_to_string__works_for_prepend(void **stat
 
     const f_status_t status = f_conversion_number_unsigned_to_string(1, data, &destination);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_string_equal(destination.string, "0o1");
   }
 
@@ -86,7 +86,7 @@ void test__f_conversion_number_unsigned_to_string__works_for_prepend(void **stat
 
     const f_status_t status = f_conversion_number_unsigned_to_string(1, data, &destination);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_string_equal(destination.string, "0O1");
   }
 
@@ -98,7 +98,7 @@ void test__f_conversion_number_unsigned_to_string__works_for_prepend(void **stat
 
     const f_status_t status = f_conversion_number_unsigned_to_string(1, data, &destination);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_string_equal(destination.string, "0t1");
   }
 
@@ -110,7 +110,7 @@ void test__f_conversion_number_unsigned_to_string__works_for_prepend(void **stat
 
     const f_status_t status = f_conversion_number_unsigned_to_string(1, data, &destination);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_string_equal(destination.string, "0T1");
   }
 
@@ -122,7 +122,7 @@ void test__f_conversion_number_unsigned_to_string__works_for_prepend(void **stat
 
     const f_status_t status = f_conversion_number_unsigned_to_string(1, data, &destination);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_string_equal(destination.string, "0d1");
   }
 
@@ -134,7 +134,7 @@ void test__f_conversion_number_unsigned_to_string__works_for_prepend(void **stat
 
     const f_status_t status = f_conversion_number_unsigned_to_string(1, data, &destination);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_string_equal(destination.string, "0D1");
   }
 
@@ -146,7 +146,7 @@ void test__f_conversion_number_unsigned_to_string__works_for_prepend(void **stat
 
     const f_status_t status = f_conversion_number_unsigned_to_string(1, data, &destination);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_string_equal(destination.string, "0x1");
   }
 
@@ -158,7 +158,7 @@ void test__f_conversion_number_unsigned_to_string__works_for_prepend(void **stat
 
     const f_status_t status = f_conversion_number_unsigned_to_string(1, data, &destination);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_string_equal(destination.string, "0X1");
   }
 
@@ -174,7 +174,7 @@ void test__f_conversion_number_unsigned_to_string__works_for_zero(void **state) 
 
     const f_status_t status = f_conversion_number_unsigned_to_string(0, data, &destination);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_string_equal(destination.string, "");
   }
 
@@ -186,7 +186,7 @@ void test__f_conversion_number_unsigned_to_string__works_for_zero(void **state) 
 
     const f_status_t status = f_conversion_number_unsigned_to_string(0, data, &destination);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_string_equal(destination.string, "0");
   }
 
@@ -198,7 +198,7 @@ void test__f_conversion_number_unsigned_to_string__works_for_zero(void **state) 
 
     const f_status_t status = f_conversion_number_unsigned_to_string(0, data, &destination);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_string_equal(destination.string, "0");
   }
 
@@ -210,7 +210,7 @@ void test__f_conversion_number_unsigned_to_string__works_for_zero(void **state) 
 
     const f_status_t status = f_conversion_number_unsigned_to_string(0, data, &destination);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_string_equal(destination.string, " 0");
   }
 
@@ -222,7 +222,7 @@ void test__f_conversion_number_unsigned_to_string__works_for_zero(void **state) 
 
     const f_status_t status = f_conversion_number_unsigned_to_string(0, data, &destination);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_string_equal(destination.string, "00");
   }
 
@@ -234,7 +234,7 @@ void test__f_conversion_number_unsigned_to_string__works_for_zero(void **state) 
 
     const f_status_t status = f_conversion_number_unsigned_to_string(0, data, &destination);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_string_equal(destination.string, "");
   }
 
@@ -246,7 +246,7 @@ void test__f_conversion_number_unsigned_to_string__works_for_zero(void **state) 
 
     const f_status_t status = f_conversion_number_unsigned_to_string(0, data, &destination);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_string_equal(destination.string, " 0");
   }
 
@@ -258,7 +258,7 @@ void test__f_conversion_number_unsigned_to_string__works_for_zero(void **state) 
 
     const f_status_t status = f_conversion_number_unsigned_to_string(0, data, &destination);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_string_equal(destination.string, "");
   }
 
@@ -270,7 +270,7 @@ void test__f_conversion_number_unsigned_to_string__works_for_zero(void **state) 
 
     const f_status_t status = f_conversion_number_unsigned_to_string(0, data, &destination);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_string_equal(destination.string, " 0");
   }
 
@@ -282,7 +282,7 @@ void test__f_conversion_number_unsigned_to_string__works_for_zero(void **state) 
 
     const f_status_t status = f_conversion_number_unsigned_to_string(0, data, &destination);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_string_equal(destination.string, " 00");
   }
 

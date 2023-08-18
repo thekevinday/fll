@@ -243,7 +243,7 @@ void test__f_file_role_change_at__works_for_dereference(void **state) {
 
     const f_status_t status = f_file_role_change_at(file, path, 0, 0, 0);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 
   {
@@ -252,7 +252,7 @@ void test__f_file_role_change_at__works_for_dereference(void **state) {
 
     const f_status_t status = f_file_role_change_at(file, path, -1, 0, 0);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 
   {
@@ -261,7 +261,7 @@ void test__f_file_role_change_at__works_for_dereference(void **state) {
 
     const f_status_t status = f_file_role_change_at(file, path, 0, -1, 0);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 }
 
@@ -279,7 +279,7 @@ void test__f_file_role_change_at__works_for_reference(void **state) {
 
     const f_status_t status = f_file_role_change_at(file, path, 0, 0, F_file_at_symlink_follow_no_d);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 
   {
@@ -288,7 +288,7 @@ void test__f_file_role_change_at__works_for_reference(void **state) {
 
     const f_status_t status = f_file_role_change_at(file, path, -1, 0, F_file_at_symlink_follow_no_d);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 
   {
@@ -297,7 +297,7 @@ void test__f_file_role_change_at__works_for_reference(void **state) {
 
     const f_status_t status = f_file_role_change_at(file, path, 0, -1, F_file_at_symlink_follow_no_d);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 }
 

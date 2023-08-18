@@ -20,7 +20,7 @@ extern "C" {
     status = f_memory_arrays_adjust(length, sizeof(f_uint8s_t), (void **) &set_quote->contents_quote.array, &set_quote->contents_quote.used, &set_quote->contents_quote.size, &f_uint8s_delete_callback);
     if (F_status_is_error(status)) return status;
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_fss_set_quote_adjust_) || !defined(_di_f_fss_set_quote_decimate_by_)
 
@@ -39,7 +39,7 @@ extern "C" {
     status = f_memory_arrays_resize(length, sizeof(f_uint8s_t), (void **) &set_quote->contents_quote.array, &set_quote->contents_quote.used, &set_quote->contents_quote.size, &f_uint8s_delete_callback);
     if (F_status_is_error(status)) return status;
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_fss_set_quote_decrease_by_) || !defined(_di_f_fss_set_quote_increase_) || !defined(_di_f_fss_set_quote_increase_by_) || !defined(_di_f_fss_set_quote_resize_)
 
@@ -47,7 +47,7 @@ extern "C" {
   f_status_t private_f_fss_set_quotes_adjust(const f_number_unsigned_t length, f_fss_set_quotes_t * const set_quotes) {
 
     {
-      f_status_t status = F_none;
+      f_status_t status = F_okay;
 
       for (f_number_unsigned_t i = length; i < set_quotes->size; ++i) {
 
@@ -73,7 +73,7 @@ extern "C" {
   f_status_t private_f_fss_set_quotes_resize(const f_number_unsigned_t length, f_fss_set_quotes_t * const set_quotes) {
 
     {
-      f_status_t status = F_none;
+      f_status_t status = F_okay;
 
       for (f_number_unsigned_t i = length; i < set_quotes->size; ++i) {
 

@@ -27,7 +27,7 @@ extern "C" {
 
     destination->array[destination->used++] = source;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_sockets_append_
 
@@ -119,7 +119,7 @@ extern "C" {
 
     ++destination->used;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_socketss_append_
 
@@ -144,7 +144,7 @@ extern "C" {
       }
     } // for
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_socketss_append_all_
 

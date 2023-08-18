@@ -26,7 +26,7 @@ extern "C" {
  *   This modifies data.main.cache_arguments.
  *
  *   This alters data.main->setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *
  *     Errors (with error bit) from: fll_execute_arguments_add()
  * @param data_build
@@ -54,7 +54,7 @@ extern "C" {
  *   This modifies data.main.cache_recurse_do.
  *
  *   This alters data.main->setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *
  *     F_interrupt (with error bit) on interrupt signal received.
  *
@@ -117,7 +117,7 @@ extern "C" {
  *   This modifies data.main.cache_arguments.
  *
  *   This alters data.main->setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *
  *     Errors (with error bit) from: f_string_dynamic_append_nulless()
  *     Errors (with error bit) from: f_string_dynamic_mash()
@@ -157,7 +157,7 @@ extern "C" {
  *   The program data.
  *
  *   This alters data.main->setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *
  *     Errors (with error bit) from: f_file_name_base()
  * @param path
@@ -181,7 +181,7 @@ extern "C" {
  *   This modifies data.main.cache_arguments.
  *
  *   This alters data.main->setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *
  *     Errors (with error bit) from: fll_execute_arguments_add()
  * @param data_build
@@ -209,7 +209,7 @@ extern "C" {
  *   This modifies data.main.cache_arguments.
  *
  *   This alters data.main->setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *
  *     F_interrupt (with error bit) on interrupt signal received.
  *
@@ -276,7 +276,7 @@ extern "C" {
  *   The program data.
  *
  *   This alters data.main->setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *
  *     F_interrupt (with error bit) on interrupt signal received.
  *
@@ -308,7 +308,7 @@ extern "C" {
  *   This modifies data.main.cache_arguments.
  *
  *   This alters data.main->setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *
  *     Errors (with error bit) from: fll_execute_arguments_add()
  * @param data_build
@@ -334,7 +334,7 @@ extern "C" {
  *   This modifies data.main.cache_arguments.
  *
  *   This alters data.main->setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *
  *     Errors (with error bit) from: fll_execute_arguments_add()
  * @param data_build
@@ -357,7 +357,7 @@ extern "C" {
  *   The program data.
  *
  *   This alters data.main->setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *
  *     F_interrupt (with error bit) on interrupt signal received.
  *

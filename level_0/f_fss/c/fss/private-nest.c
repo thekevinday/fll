@@ -10,7 +10,7 @@ extern "C" {
   f_status_t private_f_fss_nest_adjust(const f_number_unsigned_t length, f_fss_nest_t * const nest) {
 
     {
-      f_status_t status = F_none;
+      f_status_t status = F_okay;
 
       for (f_number_unsigned_t i = length; i < nest->size; ++i) {
 
@@ -27,7 +27,7 @@ extern "C" {
   f_status_t private_f_fss_nest_resize(const f_number_unsigned_t length, f_fss_nest_t * const nest) {
 
     {
-      f_status_t status = F_none;
+      f_status_t status = F_okay;
 
       for (f_number_unsigned_t i = length; i < nest->size; ++i) {
 
@@ -44,7 +44,7 @@ extern "C" {
   f_status_t private_f_fss_nests_adjust(const f_number_unsigned_t length, f_fss_nests_t *nests) {
 
     {
-      f_status_t status = F_none;
+      f_status_t status = F_okay;
 
       for (f_number_unsigned_t i = length; i < nests->size; ++i) {
 
@@ -61,7 +61,7 @@ extern "C" {
   f_status_t private_f_fss_nests_resize(const f_number_unsigned_t length, f_fss_nests_t * const nests) {
 
     {
-      f_status_t status = F_none;
+      f_status_t status = F_okay;
 
       for (f_number_unsigned_t i = length; i < nests->size; ++i) {
 

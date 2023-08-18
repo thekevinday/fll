@@ -33,7 +33,7 @@ extern "C" {
  *   The file structure containing the file descriptor to output to.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *   F_file_descriptor_not if file.id is -1.
  *
@@ -70,7 +70,7 @@ extern "C" {
  *   The file structure containing the file descriptor to output to.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *   F_file_descriptor_not if file.id is -1.
  *
@@ -111,7 +111,7 @@ extern "C" {
  *   The file structure containing the file descriptor to output to.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *   F_file_descriptor_not if file.id is -1.
  *
@@ -150,7 +150,7 @@ extern "C" {
  *   The file structure containing the file descriptor to output to.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *   F_file_descriptor_not if file.id is -1.
  *
@@ -191,7 +191,7 @@ extern "C" {
  *   The file structure containing the file descriptor to output to.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *   F_file_descriptor_not if file.id is -1.
  *
@@ -234,7 +234,7 @@ extern "C" {
  *   The file structure containing the file descriptor to output to.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *   F_file_descriptor_not if file.id is -1.
  *
@@ -282,7 +282,7 @@ extern "C" {
  *   The file structure containing the file descriptor to output to.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *   F_file_descriptor_not if file.id is -1.
  *
@@ -326,7 +326,7 @@ extern "C" {
  *   The file structure containing the file descriptor to output to.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *   F_file_descriptor_not if file.id is -1.
  *
@@ -368,7 +368,7 @@ extern "C" {
  *   F_file_descriptor_not if file.id is -1.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
@@ -413,7 +413,7 @@ extern "C" {
  *   The file structure containing the file descriptor to output to.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *   F_file_descriptor_not if file.id is -1.
  *
@@ -455,7 +455,7 @@ extern "C" {
  *   The file structure containing the file descriptor to output to.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *   F_file_descriptor_not if file.id is -1.
  *
@@ -502,7 +502,7 @@ extern "C" {
  *   The file structure containing the file descriptor to output to.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *   F_file_descriptor_not if file.id is -1.
  *
@@ -545,7 +545,7 @@ extern "C" {
  *   The file structure containing the file descriptor to output to.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *   F_file_descriptor_not if file.id is -1.
  *
@@ -590,7 +590,7 @@ extern "C" {
  *   The file structure containing the file descriptor to output to.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *   F_file_descriptor_not if file.id is -1.
  *
@@ -637,7 +637,7 @@ extern "C" {
  *   The file structure containing the file descriptor to output to.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *   F_file_descriptor_not if file.id is -1.
  *
@@ -689,7 +689,7 @@ extern "C" {
  *   The file structure containing the file descriptor to output to.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *   F_file_descriptor_not if file.id is -1.
  *
@@ -737,7 +737,7 @@ extern "C" {
  *   The array of locations is required/assumed to be in linear order.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *   F_file_descriptor_not if file.id is -1.
  *
@@ -782,7 +782,7 @@ extern "C" {
  *   The file structure containing the file descriptor to output to.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *   F_file_descriptor_not if file.id is -1.
  *
@@ -832,7 +832,7 @@ extern "C" {
  *   The file structure containing the file descriptor to output to.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *   F_file_descriptor_not if file.id is -1.
  *
@@ -878,7 +878,7 @@ extern "C" {
  *   The file structure containing the file descriptor to output to.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *   F_file_descriptor_not if file.id is -1.
  *
@@ -933,7 +933,7 @@ extern "C" {
  *   The file structure containing the file descriptor to output to.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *   F_file_descriptor_not if file.id is -1.
  *
@@ -982,7 +982,7 @@ extern "C" {
  *   The file structure containing the file descriptor to output to.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *   F_file_descriptor_not if file.id is -1.
  *
@@ -1033,7 +1033,7 @@ extern "C" {
  *   The file structure containing the file descriptor to output to.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *   F_file_descriptor_not if file.id is -1.
  *
@@ -1086,7 +1086,7 @@ extern "C" {
  *   The file structure containing the file descriptor to output to.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *   F_file_descriptor_not if file.id is -1.
  *
@@ -1139,7 +1139,7 @@ extern "C" {
  *   The file structure containing the file descriptor to output to.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *   F_file_descriptor_not if file.id is -1.
  *
@@ -1190,7 +1190,7 @@ extern "C" {
  *   The file structure containing the file descriptor to output to.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *   F_file_descriptor_not if file.id is -1.
  *
@@ -1243,7 +1243,7 @@ extern "C" {
  *   The file structure containing the file descriptor to output to.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *   F_file_descriptor_not if file.id is -1.
  *
@@ -1297,7 +1297,7 @@ extern "C" {
  *   The file structure containing the file descriptor to output to.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *   F_file_descriptor_not if file.id is -1.
  *
@@ -1349,7 +1349,7 @@ extern "C" {
  *   The file structure containing the file descriptor to output to.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *   F_file_descriptor_not if file.id is -1.
  *
@@ -1408,7 +1408,7 @@ extern "C" {
  *   The file structure containing the file descriptor to output to.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *   F_file_descriptor_not if file.id is -1.
  *
@@ -1468,7 +1468,7 @@ extern "C" {
  *   The file structure containing the file descriptor to output to.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *   F_file_descriptor_not if file.id is -1.
  *
@@ -1526,7 +1526,7 @@ extern "C" {
  *   The file structure containing the file descriptor to output to.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *   F_file_descriptor_not if file.id is -1.
  *
@@ -1577,7 +1577,7 @@ extern "C" {
  *   The file structure containing the file descriptor to output to.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *   F_file_descriptor_not if file.id is -1.
  *
@@ -1631,7 +1631,7 @@ extern "C" {
  *   The file structure containing the file descriptor to output to.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *   F_file_descriptor_not if file.id is -1.
  *
@@ -1681,7 +1681,7 @@ extern "C" {
  *   The file structure containing the file descriptor to output to.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *   F_file_descriptor_not if file.id is -1.
  *
@@ -1724,7 +1724,7 @@ extern "C" {
  *   The file structure containing the file descriptor to output to.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *   F_file_descriptor_not if file.id is -1.
  *
@@ -1772,7 +1772,7 @@ extern "C" {
  *   The file structure containing the file descriptor to output to.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *   F_file_descriptor_not if file.id is -1.
  *
@@ -1813,7 +1813,7 @@ extern "C" {
  *   The file structure containing the file descriptor to output to.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *   F_file_descriptor_not if file.id is -1.
  *
@@ -1857,7 +1857,7 @@ extern "C" {
  *   The file structure containing the file descriptor to output to.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *   F_file_descriptor_not if file.id is -1.
  *
@@ -1900,7 +1900,7 @@ extern "C" {
  *   The file structure containing the file descriptor to output to.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *   F_file_descriptor_not if file.id is -1.
  *
@@ -1942,7 +1942,7 @@ extern "C" {
  *   The file structure containing the file descriptor to output to.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if there is nothing to print.
  *   F_file_descriptor_not if file.id is -1.
  *

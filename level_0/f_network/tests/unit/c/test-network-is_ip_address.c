@@ -32,7 +32,7 @@ void test__f_network_is_ip_address__returns_false(void **state) {
 
   for (uint8_t i = 0; i < 7; ++i) {
 
-    state_data.status = F_none;
+    state_data.status = F_okay;
 
     f_network_is_ip_address(ips[i], 0, &state_data);
 
@@ -62,7 +62,7 @@ void test__f_network_is_ip_address__returns_network_version_four(void **state) {
 
   for (uint8_t i = 0; i < 4; ++i) {
 
-    state_data.status = F_none;
+    state_data.status = F_okay;
     port = 100000;
 
     f_network_is_ip_address(ips[i], &port, &state_data);
@@ -98,7 +98,7 @@ void test__f_network_is_ip_address__returns_network_version_four_not(void **stat
 
   for (uint8_t i = 0; i < 17; ++i) {
 
-    state_data.status = F_none;
+    state_data.status = F_okay;
 
     f_network_is_ip_address(ips[i], 0, &state_data);
 
@@ -213,7 +213,7 @@ void test__f_network_is_ip_address__returns_network_version_six_not(void **state
 
   for (uint8_t i = 0; i < 98; ++i) {
 
-    state_data.status = F_none;
+    state_data.status = F_okay;
 
     f_network_is_ip_address(ips[i], 0, &state_data);
 
@@ -319,7 +319,7 @@ void test__f_network_is_ip_address__returns_network_version_six(void **state) {
 
   for (uint8_t i = 0; i < 42; ++i) {
 
-    state_data.status = F_none;
+    state_data.status = F_okay;
     port = 100000;
 
     f_network_is_ip_address(ips[i], &port, &state_data);

@@ -77,7 +77,7 @@ extern "C" {
  *   This does not alter main.setting.state.status.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  */
 #ifndef _di_fss_read_extended_list_process_help_
@@ -96,7 +96,7 @@ extern "C" {
  *   Must be of type fss_read_main_t.
  *
  *   This alters main.setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *
  *     F_data_not_stop (with warning bit) on no valid FSS data found and reached stopping point.
  *     F_data_not_eos (with warning bit) on no valid FSS data found and reached end of string.

@@ -22,7 +22,7 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     if (destination->used + 1 > destination->size) {
       status = private_f_string_triples_resize(destination->used + F_memory_default_allocation_small_d, destination);
@@ -50,7 +50,7 @@ extern "C" {
 
     ++destination->used;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_string_triples_append_
 
@@ -62,7 +62,7 @@ extern "C" {
 
     if (!source.used) return F_data_not;
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     if (destination->used + source.used > destination->size) {
       status = private_f_string_triples_resize(destination->used + source.used, destination);
@@ -91,7 +91,7 @@ extern "C" {
       }
     } // for
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_string_triples_append_all_
 

@@ -36,7 +36,7 @@ extern "C" {
  *   The structure.size.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_array_too_large (with error bit) if the new array length is too large.
  *   F_memory_not (with error bit) on out of memory.
@@ -81,7 +81,7 @@ extern "C" {
  *   The structure.size destination.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_array_too_large (with error bit) if the new array length is too large.
  *   F_memory_not (with error bit) on out of memory.
@@ -133,7 +133,7 @@ extern "C" {
  *   The structure.size destination.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if amount is 0.
  *
  *   F_array_too_large (with error bit) if the new array length is too large.
@@ -168,7 +168,7 @@ extern "C" {
  *   The structure.size.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -201,7 +201,7 @@ extern "C" {
  *   The structure.size.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -234,7 +234,7 @@ extern "C" {
  *   The structure.size.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
  *
  *   F_array_too_large (with error bit) if the new array length is too large.
@@ -269,7 +269,7 @@ extern "C" {
  *   The structure.size.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
  *
  *   F_memory_not (with error bit) on out of memory.
@@ -300,7 +300,7 @@ extern "C" {
  *   The structure.size.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_array_too_large (with error bit) if the new array length is too large.
  *   F_memory_not (with error bit) on out of memory.

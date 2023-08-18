@@ -106,7 +106,7 @@ void test__f_directory_list__works(void **state) {
 
     const f_status_t status = f_directory_list(path, 0, 0, &names);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 
   f_string_dynamics_resize(0, &names);

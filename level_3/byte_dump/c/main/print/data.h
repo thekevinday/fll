@@ -73,7 +73,7 @@ extern "C" {
  *   If name.used is 0 then this is assumed to be the input pipe.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.
@@ -103,7 +103,7 @@ extern "C" {
  *   Will be reduced to 0 once used.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.

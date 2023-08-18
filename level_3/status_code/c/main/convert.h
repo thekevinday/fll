@@ -28,7 +28,7 @@ extern "C" {
  *   Will not be updated on error.
  *
  *   This alters setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *     F_data_not if string starts wth a null (length is 0).
  *     F_complete_not_utf (with error bit) if an incomplete UTF-8 fragment is found.
  *     F_number (with error bit) if parameter is not a number.

@@ -24,7 +24,7 @@ extern "C" {
  *   The print.verbosity is used to determine how much detail is printed (except for when _di_detailed_copyright_ is set).
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -48,7 +48,7 @@ extern "C" {
  *   This locks, uses, and unlocks the file stream.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -74,7 +74,7 @@ extern "C" {
  *   The name of the variable that is not defined or has a length of 0.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -108,7 +108,7 @@ extern "C" {
  *   The second parameter name.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -148,7 +148,7 @@ extern "C" {
  *   The first and second parameter must be specified the same amount of times without this parameter.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -182,7 +182,7 @@ extern "C" {
  *   The second parameter name.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -221,7 +221,7 @@ extern "C" {
  *   The third parameter name (the without parameter).
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -250,7 +250,7 @@ extern "C" {
  *   The parameter name.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -295,7 +295,7 @@ extern "C" {
  *   This represents the parameter that is an exclusive or with the second parameter.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -325,7 +325,7 @@ extern "C" {
  *   The parameter name.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -359,7 +359,7 @@ extern "C" {
  *   The string representing the number to not be less than.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -393,7 +393,7 @@ extern "C" {
  *   The string representing the number to not be less than.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -425,7 +425,7 @@ extern "C" {
  *   The value.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -457,7 +457,7 @@ extern "C" {
  *   The value.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -489,7 +489,7 @@ extern "C" {
  *   The value.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -519,7 +519,7 @@ extern "C" {
  *   The parameter name.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -551,7 +551,7 @@ extern "C" {
  *   A string representing the amount of missing parameters.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -581,7 +581,7 @@ extern "C" {
  *   The parameter name.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -613,7 +613,7 @@ extern "C" {
  *   The value.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -643,7 +643,7 @@ extern "C" {
  *   The parameter name.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -677,7 +677,7 @@ extern "C" {
  *   The range stop value.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -700,7 +700,7 @@ extern "C" {
  *   The parameter name.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -724,7 +724,7 @@ extern "C" {
  *   This locks, uses, and unlocks the file stream.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -748,7 +748,7 @@ extern "C" {
  *   This locks, uses, and unlocks the file stream.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -774,7 +774,7 @@ extern "C" {
  *   This locks, uses, and unlocks the file stream.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -802,7 +802,7 @@ extern "C" {
  *   The version number of the program.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -834,7 +834,7 @@ extern "C" {
  *   A desciption associated with the option.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -862,7 +862,7 @@ extern "C" {
  *   A desciption associated with the option.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -888,7 +888,7 @@ extern "C" {
  *   A desciption associated with the option.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -912,7 +912,7 @@ extern "C" {
  *   The color context.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -940,7 +940,7 @@ extern "C" {
  *   Set parameters.used to 0 to disable.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -965,7 +965,7 @@ extern "C" {
  *   The signal code received.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -989,7 +989,7 @@ extern "C" {
  *   The version number of the program.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_parameter (with error bit) if a parameter is invalid.

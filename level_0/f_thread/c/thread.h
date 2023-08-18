@@ -62,7 +62,7 @@ extern "C" {
  *   The function called after forking, for the child process.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_memory_not (with error bit) if out of memory.
@@ -86,7 +86,7 @@ extern "C" {
  *   The assigned affinity information.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -109,7 +109,7 @@ extern "C" {
  *   The thread attributes to update.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_memory_not (with error bit) if out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -132,7 +132,7 @@ extern "C" {
  *   The concurrency level.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_resource_not (with error bit) if the new level would cause the system to exceed available resources.
@@ -155,7 +155,7 @@ extern "C" {
  *   The concurrency level.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -175,7 +175,7 @@ extern "C" {
  *   Set to NULL to not use (in which case the default attribute is used).
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_memory_not (with error bit) if out of memory.
@@ -195,7 +195,7 @@ extern "C" {
  *   The thread attributes to process.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -214,7 +214,7 @@ extern "C" {
  *   The thread attributes to update.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_memory_not (with error bit) if out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -239,7 +239,7 @@ extern "C" {
  *   The thread attributes to delete.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -260,7 +260,7 @@ extern "C" {
  *   The currently assigned state.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -281,7 +281,7 @@ extern "C" {
  *   The thread attributes to update.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -302,7 +302,7 @@ extern "C" {
  *   The currently assigned guard size.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -323,7 +323,7 @@ extern "C" {
  *   The thread attributes to update.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -344,7 +344,7 @@ extern "C" {
  *   The currently assigned scheduler inherit state.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -365,7 +365,7 @@ extern "C" {
  *   The thread attributes to update.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -386,7 +386,7 @@ extern "C" {
  *   The currently assigned scheduler parameters.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -407,7 +407,7 @@ extern "C" {
  *   The thread attributes to update.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -428,7 +428,7 @@ extern "C" {
  *   The currently assigned scheduler policy state.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -449,7 +449,7 @@ extern "C" {
  *   The thread attributes to update.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -470,7 +470,7 @@ extern "C" {
  *   The currently assigned scheduler scope state.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -491,7 +491,7 @@ extern "C" {
  *   The thread attributes to update.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_support_not (with error bit) if the scope is not supported by the current OS (such as Linux not supporting PTHREAD_SCOPE_PROCESS).
@@ -515,7 +515,7 @@ extern "C" {
  *   The assigned stack.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_access_denied (with error bit) if the caller cannot both read and write to the stack address.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -539,7 +539,7 @@ extern "C" {
  *   The thread attributes to update.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_access_denied (with error bit) if the caller cannot both read and write to the stack address.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -561,7 +561,7 @@ extern "C" {
  *   The assigned size of the stack.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -582,7 +582,7 @@ extern "C" {
  *   The thread attributes to update.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -602,7 +602,7 @@ extern "C" {
  *   Set to NULL to not use (in which case the default attribute is used).
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_memory_not (with error bit) if out of memory.
@@ -627,7 +627,7 @@ extern "C" {
  *   The thread barrier_attributes to delete.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -648,7 +648,7 @@ extern "C" {
  *   The process shared attribute value.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -669,7 +669,7 @@ extern "C" {
  *   The barrier thread attribute.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -693,7 +693,7 @@ extern "C" {
  *   The barrier to set.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_busy (with error bit) if barrier is already in use (a re-initialization attempt).
  *   F_memory_not (with error bit) if out of memory.
@@ -720,7 +720,7 @@ extern "C" {
  *   The thread barriers to delete.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -742,7 +742,7 @@ extern "C" {
  *   Set to NULL to not use.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -771,7 +771,7 @@ extern "C" {
  *   The thread to cancel.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_found_not (with error bit) if no thread by the given ID was found.
  *
@@ -793,7 +793,7 @@ extern "C" {
  *   Set to NULL to not use.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -812,7 +812,7 @@ extern "C" {
  * If there is a pending thread cancel, the thread cancels and this function never returns.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  * @see pthread_testcancel()
  */
@@ -831,7 +831,7 @@ extern "C" {
  *   (Note: Linux allows this to be optional/NULL but POSIX does not explicitly defined this and there may be portability issues.)
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -852,7 +852,7 @@ extern "C" {
  *   The retrieved clock ID.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_found_not (with error bit) if no thread by the given ID was found.
  *   F_support_not (with error bit) if per-CPU clocks are not supported by the OS.
@@ -889,7 +889,7 @@ extern "C" {
  *   This assigns the default to the attribute.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -910,7 +910,7 @@ extern "C" {
  *   The clock ID.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -931,7 +931,7 @@ extern "C" {
  *   The thread condition attribute.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -953,7 +953,7 @@ extern "C" {
  *   The attribute to delete.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_busy (with error bit) if the attribute is busy.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -975,7 +975,7 @@ extern "C" {
  *   The process shared attribute value.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -996,7 +996,7 @@ extern "C" {
  *   The thread condition attribute.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -1018,7 +1018,7 @@ extern "C" {
  *   The condition to wait on.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -1040,7 +1040,7 @@ extern "C" {
  *   The condition to delete.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_busy (with error bit) if the condition is busy.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -1061,7 +1061,7 @@ extern "C" {
  *   The condition to broadcast the unblock signal to.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -1080,7 +1080,7 @@ extern "C" {
  *   The condition to broadcast the unblock signal to.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -1103,7 +1103,7 @@ extern "C" {
  *   The mutex to use for waiting on condition.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_dead (with error bit) if the owning thread terminated while holding the mutex lock (thread is dead).
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -1133,7 +1133,7 @@ extern "C" {
  *   The mutex to use for waiting on condition.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_time on success, and wait timeout was reached before condition was triggered.
  *
  *   F_dead (with error bit) if the owning thread terminated while holding the mutex lock (thread is dead).
@@ -1165,7 +1165,7 @@ extern "C" {
  *   Set to NULL to not pass an argument.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_prohibited (with error bit) if not allowed to set the scheduling policy and parameters specified in attribute.
@@ -1192,7 +1192,7 @@ extern "C" {
  *   The ID of the thread to detach.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_found_not (with error bit) if no thread by the given ID was found.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -1212,7 +1212,7 @@ extern "C" {
  *   The code returned by the exited thread.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -1235,7 +1235,7 @@ extern "C" {
  *   Set to NULL to not use.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_deadlock (with error bit) if operation would cause a deadlock.ead.
  *   F_found_not (with error bit) if no thread by the given ID was found.
@@ -1263,7 +1263,7 @@ extern "C" {
  *   Set to NULL to not use.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_busy on success, but thread could not be joined because it has not yet exited.
  *
  *   F_deadlock (with error bit) if operation would cause a deadlock.ead.
@@ -1296,7 +1296,7 @@ extern "C" {
  *   Set to NULL to not use.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_busy on success, but thread could not be joined because it has not yet exited.
  *   F_time on success, but thread could not be joined because it has not yet exited and the wait timeout was reached.
  *
@@ -1322,7 +1322,7 @@ extern "C" {
  *   The thread key.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_memory_not (with error bit) if out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -1346,7 +1346,7 @@ extern "C" {
  *   The key to delete.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -1367,7 +1367,7 @@ extern "C" {
  *   The assigned thread key value.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -1386,7 +1386,7 @@ extern "C" {
  *   The thread key value to assign.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -1405,7 +1405,7 @@ extern "C" {
  *   The lock attributes to create.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_busy (with error bit) if the lock is busy.
  *   F_memory_not (with error bit) if out of memory.
@@ -1431,7 +1431,7 @@ extern "C" {
  *   The attribute to delete.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_busy (with error bit) if the lock is busy.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -1453,7 +1453,7 @@ extern "C" {
  *   The lock shared attribute value.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -1474,7 +1474,7 @@ extern "C" {
  *   The lock shared attribute value.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -1495,7 +1495,7 @@ extern "C" {
  *   The lock to create.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_memory_not (with error bit) if out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -1519,7 +1519,7 @@ extern "C" {
  *   The lock to delete.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_busy (with error bit) if the lock is busy.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -1541,7 +1541,7 @@ extern "C" {
  *   The thread lock.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_deadlock (with error bit) if operation would cause a deadlock.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -1568,7 +1568,7 @@ extern "C" {
  *   The read/write lock.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_time if the timeout was reached before obtaining the lock.
  *
  *   F_deadlock (with error bit) if operation would cause a deadlock.
@@ -1594,7 +1594,7 @@ extern "C" {
  *   The thread lock.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_busy on success, but the lock is already locked.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -1617,7 +1617,7 @@ extern "C" {
  *   The thread lock.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_deadlock (with error bit) if operation would cause a deadlock.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -1644,7 +1644,7 @@ extern "C" {
  *   The read/write lock.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_time if the timeout was reached before obtaining the lock.
  *
  *   F_deadlock (with error bit) if operation would cause a deadlock.
@@ -1669,7 +1669,7 @@ extern "C" {
  *   The thread lock.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_busy on success, but the lock is already locked.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -1690,7 +1690,7 @@ extern "C" {
  *   The mutex attributes to create.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_busy (with error bit) if the mutex is busy.
  *   F_memory_not (with error bit) if out of memory.
@@ -1715,7 +1715,7 @@ extern "C" {
  *   The attribute to delete.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_busy (with error bit) if the mutex is busy.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -1736,7 +1736,7 @@ extern "C" {
  *   The priority ceiling.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_prohibited (with error bit) if not allowed to perform the operation.
@@ -1756,7 +1756,7 @@ extern "C" {
  *   The thread mutex attribute.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_prohibited (with error bit) if not allowed to perform the operation.
@@ -1776,7 +1776,7 @@ extern "C" {
  *   The protocol.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_prohibited (with error bit) if not allowed to perform the operation.
@@ -1798,7 +1798,7 @@ extern "C" {
  *   The thread mutex attribute.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_prohibited (with error bit) if not allowed to perform the operation.
@@ -1821,7 +1821,7 @@ extern "C" {
  *   The mutex shared attribute value.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -1842,7 +1842,7 @@ extern "C" {
  *   The mutex shared attribute value.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -1863,7 +1863,7 @@ extern "C" {
  *   The type.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -1884,7 +1884,7 @@ extern "C" {
  *   The mutex attribute.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -1906,7 +1906,7 @@ extern "C" {
  *   The mutex to create.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_busy (with error bit) if the mutex is busy.
  *   F_memory_not (with error bit) if out of memory.
@@ -1932,7 +1932,7 @@ extern "C" {
  *   The mutex to delete.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_busy (with error bit) if the mutex is busy.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -1954,7 +1954,7 @@ extern "C" {
  *   The priority ceiling.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_prohibited (with error bit) if not allowed to perform the operation.
@@ -1979,7 +1979,7 @@ extern "C" {
  *   Set to NULL to not use.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_deadlock (with error bit) if operation would cause a deadlock.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -2003,7 +2003,7 @@ extern "C" {
  *   The thread mutex.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_prohibited (with error bit) if not allowed to perform the operation (possibly because mutex is not owned by current thread).
@@ -2026,7 +2026,7 @@ extern "C" {
  *   The thread mutex.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_deadlock (with error bit) if operation would cause a deadlock.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -2053,7 +2053,7 @@ extern "C" {
  *   The thread mutex.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_time if the timeout was reached before obtaining the lock.
  *
  *   F_deadlock (with error bit) if operation would cause a deadlock.
@@ -2082,7 +2082,7 @@ extern "C" {
  *   The thread mutex.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_busy on success, but the mutex is already locked.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -2105,7 +2105,7 @@ extern "C" {
  *   The once variable designating that the given routine will be called only once.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -2128,7 +2128,7 @@ extern "C" {
  *   The scheduler parameter
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_support_not (with error bit) if the policy or scheduling parameter is invalid.
@@ -2152,7 +2152,7 @@ extern "C" {
  *   The scheduler parameter
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_prohibited (with error bit) if insufficient privileges or scheduler (or policy) does not allow operation.
@@ -2174,7 +2174,7 @@ extern "C" {
  *   The scheduler priority.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_found_not (with error bit) no thread by the given ID was found.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -2201,7 +2201,7 @@ extern "C" {
  *   The semaphore to create.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_support_not (with error bit) if the system does not support the process shared semaphore (shared == true).
@@ -2224,7 +2224,7 @@ extern "C" {
  *   The semaphore to delete.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_busy (with error bit) if the semaphore is busy.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -2246,7 +2246,7 @@ extern "C" {
  *   The semaphore to delete.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -2269,7 +2269,7 @@ extern "C" {
  *   The semaphore name to delete.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_file_found_not the named file was not found.
  *
  *   F_access_denied (with error bit) on access denied.
@@ -2308,7 +2308,7 @@ extern "C" {
  *   The thread semaphore.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_file_descriptor_max (with error bit) if max file descrriptors was reached.
@@ -2339,7 +2339,7 @@ extern "C" {
  *   The thread semaphore.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_interrupt (with error bit) if returned due to an interrupt signal.
@@ -2365,7 +2365,7 @@ extern "C" {
  *   The thread semaphore.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_time if the timeout was reached before obtaining the lock.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -2390,7 +2390,7 @@ extern "C" {
  *   The thread semaphore.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_interrupt (with error bit) if returned due to an interrupt signal.
@@ -2413,7 +2413,7 @@ extern "C" {
  *   The thread semaphore.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_number_overflow (with error bit) if max semaphore value is reached.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -2435,7 +2435,7 @@ extern "C" {
  *   The semaphore's value.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -2463,7 +2463,7 @@ extern "C" {
  *   Set to NULL to not use.
  *
  * @return
- *   F_none on success but no signal found.
+ *   F_okay on success but no signal found.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -2486,7 +2486,7 @@ extern "C" {
  *   The signal value to send.
  *
  * @return
- *   F_none on success but no signal found.
+ *   F_okay on success but no signal found.
  *
  *   F_found_not (with error bit) if no thread by the given ID was found.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -2511,7 +2511,7 @@ extern "C" {
  *   If 0 is used instead of a valid signal, then instead check to see if the thread exists.
  *
  * @return
- *   F_none on success and signal is not 0.
+ *   F_okay on success and signal is not 0.
  *   F_found on success, signal is 0, and the thread by the given ID does exist.
  *
  *   F_found_not on success, signal is 0, and the thread by the given ID does not exist.
@@ -2533,7 +2533,7 @@ extern "C" {
  *   The spin to create.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_memory_not (with error bit) if out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -2557,7 +2557,7 @@ extern "C" {
  *   The spin to delete.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_busy (with error bit) if the spin is busy.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -2579,7 +2579,7 @@ extern "C" {
  *   The thread spin.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_deadlock (with error bit) if operation would cause a deadlock.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -2604,7 +2604,7 @@ extern "C" {
  *   The thread spin.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_busy on success, but the spin is already locked.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -2625,7 +2625,7 @@ extern "C" {
  *   The thread spin.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_prohibited (with error bit) if not allowed to perform the operation (possibly because spin is not owned by current thread).
@@ -2646,7 +2646,7 @@ extern "C" {
  *   The thread lock.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_prohibited (with error bit) if not allowed to perform the operation (possibly because lock is not owned by current thread).

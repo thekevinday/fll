@@ -293,7 +293,7 @@ extern "C" {
       f_fss_set_delete(&settings);
     }
 
-    data_make->main->setting.state.status = F_none;
+    data_make->main->setting.state.status = F_okay;
   }
 #endif // _di_fake_make_load_fakefile_
 
@@ -421,7 +421,7 @@ extern "C" {
 
     if (F_status_is_error(data_make->main->setting.state.status)) return;
 
-    data_make->main->setting.state.status = F_none;
+    data_make->main->setting.state.status = F_okay;
   }
 #endif // _di_fake_make_load_fakefile_setting_define_and_parameter_
 
@@ -507,7 +507,7 @@ extern "C" {
 
     if (F_status_is_error(data_make->main->setting.state.status)) return;
 
-    data_make->main->setting.state.status = F_none;
+    data_make->main->setting.state.status = F_okay;
   }
 #endif // _di_fake_make_load_fakefile_setting_environment_
 
@@ -597,7 +597,7 @@ extern "C" {
       fake_make_print_warning_setting_content_empty(&data_make->main->program.warning, data_make->data->file_data_build_fakefile, data_make->main->buffer, *object, fake_make_setting_return_s);
     }
 
-    data_make->main->setting.state.status = F_none;
+    data_make->main->setting.state.status = F_okay;
   }
 #endif // _di_fake_make_load_fakefile_setting_parameter_
 

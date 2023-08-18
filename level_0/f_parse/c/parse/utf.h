@@ -26,9 +26,9 @@ extern "C" {
  *   A single-width character.
  *
  * @return
- *   F_none on success.
- *   F_none_eol on success, but stopped at EOL.
- *   F_none_eos on success, but stopped at end of buffer.
+ *   F_okay on success.
+ *   F_okay_eol on success, but stopped at EOL.
+ *   F_okay_eos on success, but stopped at end of buffer.
  *   F_data_not if buffer length is 0.
  *   F_data_not_stop if range.start > range.stop.
  *
@@ -50,9 +50,9 @@ extern "C" {
  *   A UTF-8 character representing a placeholder to ignore (may be NULL).
  *
  * @return
- *   F_none on success.
- *   F_none_eol on success, but stopped at EOL.
- *   F_none_eos on success, but stopped at end of buffer.
+ *   F_okay on success.
+ *   F_okay_eol on success, but stopped at EOL.
+ *   F_okay_eos on success, but stopped at end of buffer.
  *   F_data_not if buffer length is 0.
  *   F_data_not_stop if range.start > range.stop.
  *
@@ -78,10 +78,10 @@ extern "C" {
  *   A single-width character representing a placeholder to ignore (may be NULL).
  *
  * @return
- *   F_none on success.
- *   F_none_eol on success, but stopped at EOL.
- *   F_none_eos on success, but stopped at end of buffer.
- *   F_none_stop on success, but stopped stop location.
+ *   F_okay on success.
+ *   F_okay_eol on success, but stopped at EOL.
+ *   F_okay_eos on success, but stopped at end of buffer.
+ *   F_okay_stop on success, but stopped stop location.
  *   F_data_not if buffer length is 0.
  *   F_data_not_stop if range.start > range.stop.
  *
@@ -108,9 +108,9 @@ extern "C" {
  *   A single-width non-UTF-8 character.
  *
  * @return
- *   F_none on success.
- *   F_none_eos on success, but stopped at end of buffer.
- *   F_none_stop on success, but stopped stop location.
+ *   F_okay on success.
+ *   F_okay_eos on success, but stopped at end of buffer.
+ *   F_okay_stop on success, but stopped stop location.
  *   F_data_not if buffer length is 0.
  *   F_data_not_stop if range.start > range.stop.
  *
@@ -133,9 +133,9 @@ extern "C" {
  *   A single-width character.
  *
  * @return
- *   F_none on success.
- *   F_none_eol on success, but stopped at EOL.
- *   F_none_eos on success, but stopped at end of buffer.
+ *   F_okay on success.
+ *   F_okay_eol on success, but stopped at EOL.
+ *   F_okay_eos on success, but stopped at end of buffer.
  *   F_data_not_stop if range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -157,8 +157,8 @@ extern "C" {
  *   A UTF-8 character representing a placeholder to ignore (may be NULL).
  *
  * @return
- *   F_none on success.
- *   F_none_eol on success, but stopped at EOL.
+ *   F_okay on success.
+ *   F_okay_eol on success, but stopped at EOL.
  *   F_data_not_stop if range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -184,9 +184,9 @@ extern "C" {
  *   A UTF-8 character representing a placeholder to ignore (may be NULL).
  *
  * @return
- *   F_none on success.
- *   F_none_eol on success, but stopped at EOL.
- *   F_none_stop on success, but stopped stop location.
+ *   F_okay on success.
+ *   F_okay_eol on success, but stopped at EOL.
+ *   F_okay_stop on success, but stopped stop location.
  *   F_data_not_stop if range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -212,9 +212,9 @@ extern "C" {
  *   A single-width non-UTF-8 character.
  *
  * @return
- *   F_none on success.
- *   F_none_eos on success, but stopped at end of buffer.
- *   F_none_stop on success, but stopped stop location.
+ *   F_okay on success.
+ *   F_okay_eos on success, but stopped at end of buffer.
+ *   F_okay_stop on success, but stopped stop location.
  *   F_data_not_stop if range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.

@@ -19,14 +19,14 @@ void test__f_string_dynamicss_append__works(void **state) {
   {
     f_status_t status = f_string_dynamics_resize(length_inner, &source);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(source.size, length_inner);
 
     for (; source.used < length_inner; ++source.used) {
 
       status = f_string_dynamic_append(test_names[source.used], &source.array[source.used]);
 
-      assert_int_equal(status, F_none);
+      assert_int_equal(status, F_okay);
       assert_string_equal(source.array[source.used].string, test_names[source.used].string);
       assert_int_equal(source.array[source.used].used, test_names[source.used].used);
     } // for
@@ -35,7 +35,7 @@ void test__f_string_dynamicss_append__works(void **state) {
   {
     const f_status_t status = f_string_dynamicss_append(source, &destination);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(destination.array[0].used, length_inner);
 
     for (f_number_unsigned_t i = 0; i < length_inner; ++i) {
@@ -69,7 +69,7 @@ void test__f_string_dynamicss_append__returns_data_not(void **state) {
   {
     const f_status_t status = f_string_dynamics_resize(length, &source);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(source.used, 0);
     assert_int_equal(source.size, length);
   }

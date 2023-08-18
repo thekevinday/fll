@@ -13,7 +13,7 @@ extern "C" {
     fll_print_dynamic_raw(f_string_eol_s, print->to);
     fake_print_context_important_simple(print, "Compiling shared library");
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_build_print_compile_library_shared_
 
@@ -26,7 +26,7 @@ extern "C" {
     fll_print_dynamic_raw(f_string_eol_s, print->to);
     fake_print_context_important_simple(print, "Compiling static library");
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_build_print_compile_library_static_
 
@@ -39,7 +39,7 @@ extern "C" {
     fll_print_dynamic_raw(f_string_eol_s, print->to);
     fake_print_context_important_simple(print, "Compiling shared object");
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_build_print_compile_object_shared_
 
@@ -52,7 +52,7 @@ extern "C" {
     fll_print_dynamic_raw(f_string_eol_s, print->to);
     fake_print_context_important_simple(print, "Compiling static object");
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_build_print_compile_object_static_
 
@@ -65,7 +65,7 @@ extern "C" {
     fll_print_dynamic_raw(f_string_eol_s, print->to);
     fake_print_context_important_simple(print, "Compiling objects for static library");
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_build_print_compile_object_static_library_
 
@@ -78,7 +78,7 @@ extern "C" {
     fll_print_dynamic_raw(f_string_eol_s, print->to);
     fake_print_context_important_simple(print, "Compiling shared program");
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_build_print_compile_program_shared_
 
@@ -91,7 +91,7 @@ extern "C" {
     fll_print_dynamic_raw(f_string_eol_s, print->to);
     fake_print_context_important_simple(print, "Compiling static program");
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_build_print_compile_program_static_
 

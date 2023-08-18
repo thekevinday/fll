@@ -23,7 +23,7 @@ extern "C" {
  *   The program data.
  *
  *   This alters data.main->setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *
  *     Errors (with error bit) from: f_string_dynamic_append_nulless().
  *     Errors (with error bit) from: fake_path_generate_string_dynamic().
@@ -45,7 +45,7 @@ extern "C" {
  *   The program data.
  *
  *   This alters data.main->setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *
  *     Errors (with error bit) from: f_string_dynamic_append_nulless().
  *

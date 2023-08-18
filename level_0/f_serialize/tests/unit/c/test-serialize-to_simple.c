@@ -41,14 +41,14 @@ void test__f_serialize_to_simple__works(void **state) {
   {
     const f_status_t status = f_serialize_to_simple(source, &destination);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_string_equal(destination.string, source.string);
   }
 
   {
     const f_status_t status = f_serialize_to_simple(source, &destination);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_string_equal(destination.string, multiple.string);
   }
 

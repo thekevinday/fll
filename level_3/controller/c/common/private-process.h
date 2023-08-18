@@ -179,7 +179,7 @@ extern "C" {
  *   The pid array to resize.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success, but there is no reason to increase size (used + controller_common_allocation_small_d <= size).
  *
  *   F_array_too_large (with error bit) if the new array length is too large.
@@ -201,7 +201,7 @@ extern "C" {
  *   The pid array to resize.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -248,7 +248,7 @@ extern "C" {
  *   The process array to resize.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success, but there is no reason to increase size (used + controller_common_allocation_small_d <= size).
  *
  *   F_array_too_large (with error bit) if the new array length is too large.
@@ -270,7 +270,7 @@ extern "C" {
  *   The process array to resize.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   Errors (with error bit) from: controller_process_delete_simple().
  *   Errors (with error bit) from: f_memory_resize().

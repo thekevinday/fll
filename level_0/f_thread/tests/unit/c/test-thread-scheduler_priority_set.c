@@ -45,7 +45,7 @@ void test__f_thread_scheduler_priority_set__works(void **state) {
 
     const f_status_t status = f_thread_scheduler_priority_set(id, priority);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 }
 

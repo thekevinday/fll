@@ -16,7 +16,7 @@ extern "C" {
       return;
     }
 
-    data_make->main->setting.state.status = F_none;
+    data_make->main->setting.state.status = F_okay;
 
     if (state_process->operation == fake_make_operation_type_break_e) {
       fake_make_operate_validate_type_break(data_make);

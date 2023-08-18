@@ -12,7 +12,7 @@ extern "C" {
 
     fll_error_print(print, F_status_set_fine(((fss_read_main_t *) print->custom)->setting.state.status), function, fll_error_file_flag_fallback_e);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fss_read_print_error_
 
@@ -24,7 +24,7 @@ extern "C" {
 
     fll_error_file_print(print, F_status_set_fine(((fss_read_main_t *) print->custom)->setting.state.status), function, fll_error_file_flag_fallback_e, name, operation, type);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fss_read_print_error_file_
 
@@ -42,7 +42,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fss_read_print_error_parameter_requires_message_
 
@@ -64,7 +64,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fss_read_print_error_parameter_value_before_value_number_
 
@@ -84,7 +84,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fss_read_print_error_parameter_value_once_only_number_
 
@@ -102,7 +102,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fss_read_print_error_one_content_only_
 
@@ -124,7 +124,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fss_read_print_error_unsupported_eol_
 

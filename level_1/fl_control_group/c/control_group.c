@@ -22,7 +22,7 @@ extern "C" {
     }
 
     f_file_t file = macro_f_file_t_initialize_2(0, -1, F_file_flag_write_only_d);
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
     f_string_static_t path = f_string_static_t_initialize;
 
     for (f_number_unsigned_t i = 0; i < control_group.groups.used; ++i) {
@@ -56,7 +56,7 @@ extern "C" {
 
     if (F_status_is_error(status)) return status;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fl_control_group_apply_
 

@@ -34,7 +34,7 @@ extern "C" {
  *   The main program data.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if "values" parameters were expected but not found.
  *
  *   F_memory_not (with error bit) on out of memory.
@@ -71,7 +71,7 @@ extern "C" {
  *   A desciption associated with the option.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  * @see f_print_terminated()
  * @see fl_print_format()

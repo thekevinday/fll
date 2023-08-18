@@ -15,7 +15,7 @@ void test__f_socket_name_host__allocates_default(void **state) {
 
     const f_status_t status = f_socket_name_host(&socket, &name);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(name.size, F_socket_default_name_max_d);
   }
 
@@ -103,7 +103,7 @@ void test__f_socket_name_host__works(void **state) {
 
     const f_status_t status = f_socket_name_host(&socket, &name);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 }
 

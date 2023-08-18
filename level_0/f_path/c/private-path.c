@@ -42,7 +42,7 @@ extern "C" {
     real->string[length] = 0;
     real->used = length;
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_path_current_) || !defined(_di_f_path_real_)
 

@@ -302,7 +302,7 @@ extern "C" {
  *   The entry item actions to resize.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_array_too_large (with error bit) if the resulting new size is bigger than the max array length.
  *
  *   Errors (with error bit) from: f_memory_resize().
@@ -349,7 +349,7 @@ extern "C" {
  *   The entry items to resize.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_array_too_large (with error bit) if the resulting new size is bigger than the max array length.
  *
  *   Errors (with error bit) from: f_memory_resize().

@@ -176,7 +176,7 @@ extern "C" {
     if (!objects.used) return F_data_not;
     if (!contents.used) return F_data_not;
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     f_number_unsigned_t i = 0;
     f_number_unsigned_t j = 0;
@@ -213,7 +213,7 @@ extern "C" {
       } // for
     } // for
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fll_fss_snatch_
 
@@ -229,7 +229,7 @@ extern "C" {
     if (!objects.used) return F_data_not;
     if (!contents.used) return F_data_not;
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
     f_string_ranges_t *content = 0;
 
     f_number_unsigned_t i = 0;
@@ -279,7 +279,7 @@ extern "C" {
       } // for
     } // for
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fll_fss_snatch_apart_
 
@@ -295,7 +295,7 @@ extern "C" {
     if (!objects.used) return F_data_not;
     if (!contents.used) return F_data_not;
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
     f_string_dynamic_t name = f_string_dynamic_t_initialize;
 
     f_number_unsigned_t i = 0;
@@ -422,7 +422,7 @@ extern "C" {
 
     f_string_dynamic_resize(0, &name);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fll_fss_snatch_map_
 
@@ -438,7 +438,7 @@ extern "C" {
     if (!objects.used) return F_data_not;
     if (!contents.used) return F_data_not;
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     f_number_unsigned_t i = 0;
     f_number_unsigned_t j = 0;
@@ -496,7 +496,7 @@ extern "C" {
       } // for
     } // for
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fll_fss_snatch_map_apart_
 
@@ -512,7 +512,7 @@ extern "C" {
     if (!objects.used) return F_data_not;
     if (!contents.used) return F_data_not;
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     f_number_unsigned_t i = 0;
     f_number_unsigned_t j = 0;
@@ -565,7 +565,7 @@ extern "C" {
       } // for
     } // for
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fll_fss_snatch_map_mash_
 
@@ -581,7 +581,7 @@ extern "C" {
     if (!objects.used) return F_data_not;
     if (!contents.used) return F_data_not;
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
     f_string_dynamic_t name = f_string_dynamic_t_initialize;
 
     f_number_unsigned_t i = 0;
@@ -682,7 +682,7 @@ extern "C" {
 
     f_string_dynamic_resize(0, &name);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fll_fss_snatch_map_mash_apart_
 
@@ -698,7 +698,7 @@ extern "C" {
     if (!objects.used) return F_data_not;
     if (!contents.used) return F_data_not;
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
     f_string_dynamic_t name = f_string_dynamic_t_initialize;
 
     f_number_unsigned_t i = 0;
@@ -796,7 +796,7 @@ extern "C" {
 
     f_string_dynamic_resize(0, &name);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fll_fss_snatch_map_together_
 
@@ -812,7 +812,7 @@ extern "C" {
     if (!objects.used) return F_data_not;
     if (!contents.used) return F_data_not;
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     f_number_unsigned_t i = 0;
     f_number_unsigned_t j = 0;
@@ -851,7 +851,7 @@ extern "C" {
       } // for
     } // for
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fll_fss_snatch_mash_
 
@@ -867,7 +867,7 @@ extern "C" {
     if (!objects.used) return F_data_not;
     if (!contents.used) return F_data_not;
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     f_number_unsigned_t i = 0;
     f_number_unsigned_t j = 0;
@@ -909,7 +909,7 @@ extern "C" {
       } // for
     } // for
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fll_fss_snatch_mash_apart_
 
@@ -925,7 +925,7 @@ extern "C" {
     if (!objects.used) return F_data_not;
     if (!contents.used) return F_data_not;
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     f_number_unsigned_t i = 0;
     f_number_unsigned_t j = 0;
@@ -956,7 +956,7 @@ extern "C" {
       } // for
     } // for
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fll_fss_snatch_together_
 

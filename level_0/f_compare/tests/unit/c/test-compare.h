@@ -122,7 +122,7 @@ extern int main(void);
  *   The UTF destination string.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   Errors (with error bit) from: f_utf_char_to_character().
  *   Errors (with error bit) from: f_utf_string_dynamic_resize().

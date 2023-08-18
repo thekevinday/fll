@@ -67,7 +67,7 @@ void test__f_serialize_from_simple_range__works(void **state) {
 
     const f_status_t status = f_serialize_from_simple_range(sources[i], &ranges);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(ranges.used, expecteds[i].used);
 
     for (uint8_t j = 0; j < ranges.used; ++j) {

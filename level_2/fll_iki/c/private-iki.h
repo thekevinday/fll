@@ -32,7 +32,7 @@ extern "C" {
  *   The escaped string data is appended to this, so set the escaped.used = 0 if "replace" behavior is desired.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -63,7 +63,7 @@ extern "C" {
  *   The unescaped string data is appended to this, so set the unescaped.used = 0 if "replace" behavior is desired.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_syntax (with error bit) if the given string is invalid, such as having an undelimited quote.

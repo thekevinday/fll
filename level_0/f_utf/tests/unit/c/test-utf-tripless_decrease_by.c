@@ -13,7 +13,7 @@ void test__f_utf_tripless_decrease_by__works(void **state) {
   {
     const f_status_t status = f_utf_string_tripless_resize(length, &data);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(data.used, 0);
     assert_int_equal(data.size, length);
   }
@@ -21,7 +21,7 @@ void test__f_utf_tripless_decrease_by__works(void **state) {
   {
     const f_status_t status = f_utf_string_tripless_decrease_by(length, &data);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(data.used, 0);
     assert_int_equal(data.size, 0);
   }

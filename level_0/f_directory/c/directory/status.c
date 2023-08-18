@@ -15,7 +15,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_directory_status_delete_
 
@@ -32,7 +32,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_directory_status_destroy_
 
@@ -41,7 +41,7 @@ extern "C" {
 
     {
       f_directory_status_t * const array = (f_directory_status_t *) void_array;
-      f_status_t status = F_none;
+      f_status_t status = F_okay;
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
 
@@ -50,7 +50,7 @@ extern "C" {
       } // for
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_directory_statuss_delete_callback_
 
@@ -59,18 +59,18 @@ extern "C" {
 
     {
       f_directory_status_t * const array = (f_directory_status_t *) void_array;
-      f_status_t status = F_none;
+      f_status_t status = F_okay;
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
 
-        array[i].status = F_none;
+        array[i].status = F_okay;
 
         status = f_string_dynamic_adjust(0, &array[i].path);
         if (F_status_is_error(status)) return status;
       } // for
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_directory_statuss_destroy_callback_
 
@@ -79,7 +79,7 @@ extern "C" {
 
     {
       f_directory_statuss_t * const array = (f_directory_statuss_t *) void_array;
-      f_status_t status = F_none;
+      f_status_t status = F_okay;
       f_number_unsigned_t j = 0;
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
@@ -97,7 +97,7 @@ extern "C" {
       } // for
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_directory_statusss_delete_callback_
 
@@ -106,14 +106,14 @@ extern "C" {
 
     {
       f_directory_statuss_t * const array = (f_directory_statuss_t *) void_array;
-      f_status_t status = F_none;
+      f_status_t status = F_okay;
       f_number_unsigned_t j = 0;
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
 
         for (j = 0; j < array[i].size; ++j) {
 
-          array[i].array[j].status = F_none;
+          array[i].array[j].status = F_okay;
 
           status = f_string_dynamic_adjust(0, &array[i].array[j].path);
           if (F_status_is_error(status)) return status;
@@ -126,7 +126,7 @@ extern "C" {
       } // for
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_directory_statusss_destroy_callback_
 

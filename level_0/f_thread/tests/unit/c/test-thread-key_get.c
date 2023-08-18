@@ -28,7 +28,7 @@ void test__f_thread_key_get__works(void **state) {
 
     const f_status_t status = f_thread_key_get(key, (void *) &value_ptr);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(value_ptr, &expect);
   }
 }

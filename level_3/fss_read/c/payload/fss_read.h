@@ -78,7 +78,7 @@ extern "C" {
  *   This does not alter main.setting.state.status.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  */
 #ifndef _di_fss_read_payload_process_help_
@@ -97,7 +97,7 @@ extern "C" {
  *   Must be of type fss_read_main_t.
  *
  *   This alters main.setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *
  *     F_data_not_stop (with warning bit) on no valid FSS data found and reached stopping point.
  *     F_data_not_eos (with warning bit) on no valid FSS data found and reached end of string.
@@ -125,7 +125,7 @@ extern "C" {
  *   Must be of type fss_read_main_t.
  *
  *   This alters main.setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  */
 #ifndef _di_fss_read_payload_process_set_
   extern void fss_read_payload_process_set(void * const main);
@@ -146,12 +146,12 @@ extern "C" {
  *   The main program settings.
  *
  *   This alters setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *
  *     F_parameter (with error bit) on parameter error.
  *
  *   This alters setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *     F_data_not on success but nothing was provided to operate with.
  *
  * @see fss_read_setting_load()

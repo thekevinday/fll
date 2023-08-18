@@ -12,7 +12,7 @@ extern "C" {
 
     fake_print_context_wrapped_variable(print, "The build directory ", path, " exists but is not a directory");
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_print_warning_build_directory_not_directory_
 
@@ -24,7 +24,7 @@ extern "C" {
 
     fake_print_context_wrapped_variable(print, "The path ", path, " exists but is not a directory");
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_print_warning_path_exists_not_directory_
 

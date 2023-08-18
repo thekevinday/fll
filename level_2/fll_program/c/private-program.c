@@ -10,7 +10,7 @@ extern "C" {
 
     {
       if (choices.used) {
-        f_status_t status = F_none;
+        f_status_t status = F_okay;
         f_number_unsigned_t choice = 0;
 
         if (right) {
@@ -63,7 +63,7 @@ extern "C" {
       private_fll_program_parameter_process_empty(&main->context, sets);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_fll_program_parameter_process_context_) || !defined(_di_fll_program_parameter_process_context_standard_)
 
@@ -73,7 +73,7 @@ extern "C" {
     fl_print_format("  %Q%[%Q%]", print->to, symbol_short, print->set->standout, option_short, print->set->standout);
     fl_print_format(", %Q%[%Q%]  %S%r", print->to, symbol_long, print->set->standout, option_long, print->set->standout, description, f_string_eol_s);
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_fll_program_print_help_option_) || !defined(_di_fll_program_print_help_option_standard_)
 

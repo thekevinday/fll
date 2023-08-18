@@ -26,7 +26,7 @@ void test__f_fss_sets_destroy_callback__fails(void **state) {
 
   {
     will_return(__wrap_f_string_ranges_adjust, false);
-    will_return(__wrap_f_string_ranges_adjust, F_none);
+    will_return(__wrap_f_string_ranges_adjust, F_okay);
 
     will_return(__wrap_f_string_rangess_adjust, true);
     will_return(__wrap_f_string_rangess_adjust, F_status_set_error(F_failure));
@@ -50,14 +50,14 @@ void test__f_fss_sets_destroy_callback__works(void **state) {
 
   {
     will_return(__wrap_f_string_ranges_adjust, false);
-    will_return(__wrap_f_string_ranges_adjust, F_none);
+    will_return(__wrap_f_string_ranges_adjust, F_okay);
 
     will_return(__wrap_f_string_rangess_adjust, false);
-    will_return(__wrap_f_string_rangess_adjust, F_none);
+    will_return(__wrap_f_string_rangess_adjust, F_okay);
 
     const f_status_t status = f_fss_sets_destroy_callback(0, length, (void *) datas_array);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 }
 

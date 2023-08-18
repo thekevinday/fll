@@ -41,7 +41,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_print_message_building_
 
@@ -55,7 +55,7 @@ extern "C" {
 
     fake_print_context_important_simple_variable(print, "Deleting all files within build directory ", main->setting.build, 0);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_print_message_delete_all_files_
 
@@ -67,7 +67,7 @@ extern "C" {
 
     fake_print_context_important_simple(print, "Generating skeleton structure");
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_print_message_generating_skeleton_
 
@@ -142,7 +142,7 @@ extern "C" {
     f_file_stream_flush(print->to);
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_print_message_help_
 

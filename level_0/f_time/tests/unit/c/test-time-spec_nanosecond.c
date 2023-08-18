@@ -98,7 +98,7 @@ void test__f_time_spec_nanosecond__works(void **state) {
 
       const f_status_t status = f_time_spec_nanosecond(seconds[i], nanoseconds[i], &time);
 
-      assert_int_equal(status, F_none);
+      assert_int_equal(status, F_okay);
       assert_int_equal(time.tv_sec, seconds[i]);
       assert_int_equal(time.tv_nsec, nanoseconds[i]);
     } // for
@@ -119,7 +119,7 @@ void test__f_time_spec_nanosecond__works(void **state) {
 
       const f_status_t status = f_time_spec_nanosecond(seconds[i], nanoseconds[i], &time);
 
-      assert_int_equal(status, F_none);
+      assert_int_equal(status, F_okay);
       assert_int_equal(time.tv_sec, seconds[i] + 1);
       assert_int_equal(time.tv_nsec, (nanoseconds[i] - 1000000000));
     } // for

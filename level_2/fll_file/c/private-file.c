@@ -8,7 +8,7 @@ extern "C" {
 #if !defined(_di_fll_file_mode_set_all_)
   f_status_t private_fll_file_mode_set_all(const f_string_static_t path, const bool dereference, const mode_t mode, const f_number_unsigned_t depth_max, const f_number_unsigned_t depth) {
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     status = f_directory_is(path);
     if (F_status_is_error(status)) return status;
@@ -25,7 +25,7 @@ extern "C" {
       return status;
     }
 
-    status = F_none;
+    status = F_okay;
 
     {
       f_string_dynamics_t * const list[] = {
@@ -107,7 +107,7 @@ extern "C" {
 #if !defined(_di_fll_file_role_change_all_)
   f_status_t private_fll_file_role_change_all(const f_string_static_t path, const uid_t uid, const gid_t gid, const bool dereference, const f_number_unsigned_t depth_max, const f_number_unsigned_t depth) {
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     status = f_directory_is(path);
     if (F_status_is_error(status)) return status;
@@ -124,7 +124,7 @@ extern "C" {
       return status;
     }
 
-    status = F_none;
+    status = F_okay;
 
     {
       f_string_dynamics_t * const list[] = {

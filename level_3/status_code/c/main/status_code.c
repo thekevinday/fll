@@ -39,7 +39,7 @@ extern "C" {
       return;
     }
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
 
     if (main->setting.flag & (status_code_main_flag_help_e | status_code_main_flag_version_e | status_code_main_flag_copyright_e)) {
       if (main->setting.flag & status_code_main_flag_help_e) {
@@ -59,7 +59,7 @@ extern "C" {
       return;
     }
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     if (main->setting.flag & status_code_main_flag_number_e) {
       if (main->setting.flag & status_code_main_flag_pipe_e) {

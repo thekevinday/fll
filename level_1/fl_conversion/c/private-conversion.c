@@ -16,7 +16,7 @@ extern "C" {
 
       if (string[i] == f_string_ascii_period_s.string[0]) return F_status_set_error(F_number_decimal);
 
-      if (f_conversion_character_to_binary(string[i], &digit) == F_none) {
+      if (f_conversion_character_to_binary(string[i], &digit) == F_okay) {
         if (digits) {
           ++digits;
 
@@ -77,7 +77,7 @@ extern "C" {
 
     *number = converted;
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_fl_conversion_dynamic_partial_to_binary_signed_) || !defined(_di_fl_conversion_dynamic_partial_to_signed_detect_) || !defined(_di_fl_conversion_dynamic_to_binary_signed_) || !defined(_di_fl_conversion_dynamic_to_signed_detect_)
 
@@ -92,7 +92,7 @@ extern "C" {
 
       if (string[i] == f_string_ascii_period_s.string[0]) return F_status_set_error(F_number_decimal);
 
-      if (f_conversion_character_to_binary(string[i], &digit) == F_none) {
+      if (f_conversion_character_to_binary(string[i], &digit) == F_okay) {
         if (digits) {
           ++digits;
 
@@ -126,7 +126,7 @@ extern "C" {
 
     *number = converted;
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_fl_conversion_dynamic_partial_to_binary_unsigned_) || !defined(_di_fl_conversion_dynamic_partial_to_unsigned_detect_) || !defined(_di_fl_conversion_dynamic_to_binary_unsigned_) || !defined(_di_fl_conversion_dynamic_to_unsigned_detect_)
 
@@ -156,7 +156,7 @@ extern "C" {
 
       if (string[i] == f_string_ascii_period_s.string[0]) return F_status_set_error(F_number_decimal);
 
-      if (character_to_digit(string[i], &digit) == F_none) {
+      if (character_to_digit(string[i], &digit) == F_okay) {
         if (digits) {
           ++digits;
 
@@ -205,7 +205,7 @@ extern "C" {
                 | macro_f_utf_char_t_from_char_3_le(macro_f_utf_char_t_to_char_3_be(converted))
                 | macro_f_utf_char_t_from_char_4_le(macro_f_utf_char_t_to_char_4_be(converted));
 
-        return F_none;
+        return F_okay;
       }
     #else
       if (data.flag & fl_conversion_data_flag_endian_big_e) {
@@ -214,13 +214,13 @@ extern "C" {
                 | macro_f_utf_char_t_from_char_3_be(macro_f_utf_char_t_to_char_3_le(converted))
                 | macro_f_utf_char_t_from_char_4_be(macro_f_utf_char_t_to_char_4_le(converted));
 
-        return F_none;
+        return F_okay;
       }
     #endif // _is_F_endian_big
 
     *number = converted;
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_fl_conversion_dynamic_partial_to_decimal_signed_) || !defined(_di_fl_conversion_dynamic_partial_to_signed_detect_) || !defined(_di_fl_conversion_dynamic_to_decimal_signed_) || !defined(_di_fl_conversion_dynamic_to_signed_detect_)
 
@@ -250,7 +250,7 @@ extern "C" {
 
       if (string[i] == f_string_ascii_period_s.string[0]) return F_status_set_error(F_number_decimal);
 
-      if (character_to_digit(string[i], &digit) == F_none) {
+      if (character_to_digit(string[i], &digit) == F_okay) {
         if (digits) {
           ++digits;
 
@@ -281,7 +281,7 @@ extern "C" {
                 | macro_f_utf_char_t_from_char_3_le(macro_f_utf_char_t_to_char_3_be(converted))
                 | macro_f_utf_char_t_from_char_4_le(macro_f_utf_char_t_to_char_4_be(converted));
 
-        return F_none;
+        return F_okay;
       }
     #else
       if (data.flag & fl_conversion_data_flag_endian_big_e) {
@@ -290,13 +290,13 @@ extern "C" {
                 | macro_f_utf_char_t_from_char_3_be(macro_f_utf_char_t_to_char_3_le(converted))
                 | macro_f_utf_char_t_from_char_4_be(macro_f_utf_char_t_to_char_4_le(converted));
 
-        return F_none;
+        return F_okay;
       }
     #endif // _is_F_endian_big
 
     *number = converted;
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_fl_conversion_dynamic_partial_to_decimal_unsigned_) || !defined(_di_fl_conversion_dynamic_partial_to_unsigned_detect_) || !defined(_di_fl_conversion_dynamic_to_decimal_unsigned_) || !defined(_di_fl_conversion_dynamic_to_unsigned_detect_)
 
@@ -309,7 +309,7 @@ extern "C" {
     int8_t vector = 0; // 0 for assumed positive, 1 for explicit positive, -1 for negative.
     f_number_unsigned_t j = 0;
     f_number_unsigned_t offset = 0;
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     for (f_number_unsigned_t i = 0; i < length; ++i) {
 
@@ -361,7 +361,7 @@ extern "C" {
         if (j >= length) {
           *number = 0;
 
-          return F_none;
+          return F_okay;
         }
 
         if (string[j] > f_string_ascii_slash_backward_s.string[0] && string[j] < f_string_ascii_colon_s.string[0]) {
@@ -459,7 +459,7 @@ extern "C" {
     uint8_t mode = 0;
     f_number_unsigned_t j = 0;
     f_number_unsigned_t offset = 0;
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
     int8_t sign_found = 0;
 
     for (f_number_unsigned_t i = 0; i < length; ++i) {
@@ -512,7 +512,7 @@ extern "C" {
         if (j >= length) {
           *number = 0;
 
-          return F_none;
+          return F_okay;
         }
         else if (string[j] > f_string_ascii_slash_backward_s.string[0] && string[j] < f_string_ascii_colon_s.string[0]) {
           mode = 10;
@@ -594,7 +594,7 @@ extern "C" {
 
     // The +/- signs are not allowed.
     if (sign_found) {
-      if (status == F_none) return (sign_found == -1) ? F_number_negative : F_number_positive;
+      if (status == F_okay) return (sign_found == -1) ? F_number_negative : F_number_positive;
 
       return F_status_set_error(F_number);
     }

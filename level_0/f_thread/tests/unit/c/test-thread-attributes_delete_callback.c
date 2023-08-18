@@ -46,7 +46,7 @@ void test__f_thread_attributes_delete_callback__works(void **state) {
 
     const f_status_t status = f_thread_attributes_delete_callback(0, length, (void *) datass_array);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 }
 

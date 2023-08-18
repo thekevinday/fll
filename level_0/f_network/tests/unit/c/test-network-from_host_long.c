@@ -24,7 +24,7 @@ void test__f_network_from_host_long__works(void **state) {
 
     const f_status_t status = f_network_from_host_long(0, &to);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(to, expect);
   }
 }

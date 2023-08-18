@@ -30,7 +30,7 @@ extern "C" {
  *   This assumes that all strings in account have their used set to the desired length, such as 0.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   Errors (with error bit) from: f_string_dynamic_increase_by().
  *

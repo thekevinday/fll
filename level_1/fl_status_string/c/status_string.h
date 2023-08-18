@@ -38,7 +38,7 @@ extern "C" {
  *   The status code a matched string represents.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if string is empty.
  *
  *   F_data (with error bit) if not found.

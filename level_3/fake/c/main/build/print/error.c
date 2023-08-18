@@ -12,7 +12,7 @@ extern "C" {
 
     fake_print_context_wrapped_variable(print, "The path ", path, " could not be created, a parent directory is invalid or does not exist");
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_build_print_error_cannot_create_due_to_parent_
 
@@ -24,7 +24,7 @@ extern "C" {
 
     fake_print_context_wrapped_variable(print, "The path ", path, " exists but is not a directory");
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_build_print_error_exist_not_directory_
 
@@ -36,7 +36,7 @@ extern "C" {
 
     fake_print_context_wrapped_variables(print, "The setting ", name, " is required but is not specified in the settings file ", path, 0);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_build_print_error_missing_required_setting_
 
@@ -48,7 +48,7 @@ extern "C" {
 
     fake_print_context_wrapped_variables(print, "The specified mode ", mode, " in the settings file ", path, " is not a valid mode");
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_build_print_error_mode_invalid_
 
@@ -60,7 +60,7 @@ extern "C" {
 
     fake_print_context_wrapped_variable(print, "A setting in the settings file ", path, " is too long");
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_build_print_error_setting_too_long_
 
@@ -72,7 +72,7 @@ extern "C" {
 
     fake_print_context_wrapped_variables(print, "The values for the setting ", name, " of the setting file ", path, " is too long");
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_build_print_error_setting_value_too_long_
 

@@ -44,7 +44,7 @@ extern "C" {
     // It has been deallocated, so reset the pointer.
     *pointer = 0;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_memory_delete_
 
@@ -69,7 +69,7 @@ extern "C" {
     // It has been deallocated, so reset the pointer.
     *pointer = 0;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_memory_destroy_
 
@@ -83,7 +83,7 @@ extern "C" {
     // Prevent double-allocations and unnecessary frees.
     if (*pointer || !length) return F_data_not;
 
-    if ((*pointer = calloc(length, size))) return F_none;
+    if ((*pointer = calloc(length, size))) return F_okay;
 
     return F_status_set_error(F_memory_not);
   }
@@ -124,7 +124,7 @@ extern "C" {
 
     memset(*pointer, 0, length);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_memory_new_aligned_
 

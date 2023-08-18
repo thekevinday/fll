@@ -26,7 +26,7 @@ extern "C" {
  *   The flag with the console type bits determined by this function.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not the input string is empty.
  *
  *

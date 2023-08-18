@@ -48,7 +48,7 @@ void test__f_thread_semaphore_file_close__works(void **state) {
 
     const f_status_t status = f_thread_semaphore_file_close(&semaphore);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 }
 

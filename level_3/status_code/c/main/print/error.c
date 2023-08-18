@@ -12,7 +12,7 @@ extern "C" {
 
     fll_error_print(print, F_status_set_fine(((status_code_main_t *) print->custom)->setting.state.status), function, fll_error_file_flag_fallback_e);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_status_code_print_error_
 
@@ -34,7 +34,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_status_code_print_error_cannot_error_warning_number_
 
@@ -46,7 +46,7 @@ extern "C" {
 
     fll_print_format("%[No status code is specified.%]%r", print->to, print->context, print->context, f_string_eol_s);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_status_code_print_error_no_status_codes_
 
@@ -64,7 +64,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_status_code_print_error_invalid_callback_
 

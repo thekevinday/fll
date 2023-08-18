@@ -88,7 +88,7 @@ void test__f_file_size__works(void **state) {
 
     const f_status_t status = f_file_size(path, F_true, &size);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(size, statistics.st_size);
   }
 }

@@ -24,7 +24,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_fss_set_quote_delete_
 
@@ -48,7 +48,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_fss_set_quote_destroy_
 
@@ -57,7 +57,7 @@ extern "C" {
 
     {
       f_fss_set_quote_t * const array = (f_fss_set_quote_t *) void_array;
-      f_status_t status = F_none;
+      f_status_t status = F_okay;
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
 
@@ -75,7 +75,7 @@ extern "C" {
       } // for
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_fss_set_quotes_delete_callback_
 
@@ -84,7 +84,7 @@ extern "C" {
 
     {
       f_fss_set_quote_t * const array = (f_fss_set_quote_t *) void_array;
-      f_status_t status = F_none;
+      f_status_t status = F_okay;
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
 
@@ -102,7 +102,7 @@ extern "C" {
       } // for
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_fss_set_quotes_destroy_callback_
 
@@ -111,7 +111,7 @@ extern "C" {
 
     {
       f_fss_set_quotes_t * const array = (f_fss_set_quotes_t *) void_array;
-      f_status_t status = F_none;
+      f_status_t status = F_okay;
       f_number_unsigned_t j = 0;
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
@@ -138,7 +138,7 @@ extern "C" {
       } // for
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_fss_set_quotess_delete_callback_
 
@@ -147,7 +147,7 @@ extern "C" {
 
     {
       f_fss_set_quotes_t * const array = (f_fss_set_quotes_t *) void_array;
-      f_status_t status = F_none;
+      f_status_t status = F_okay;
       f_number_unsigned_t j = 0;
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
@@ -174,7 +174,7 @@ extern "C" {
       } // for
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_fss_set_quotess_destroy_callback_
 

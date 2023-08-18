@@ -37,7 +37,7 @@ extern "C" {
  * Delete all environment variables.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_failure (with error bit) on failure.
  *
  * @see clearenv()
@@ -86,7 +86,7 @@ extern "C" {
  *   The value is be appended (set value->used to 0 before calling this to fully replace).
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if name.used is 0.
  *   F_exist_not if name does not exist.
  *
@@ -111,7 +111,7 @@ extern "C" {
  *   An array of maps containing all available environment variable name and value pairs.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -173,7 +173,7 @@ extern "C" {
  *   Set to FALSE to not replace value if name already exists.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if name.used is 0.
  *
  *   F_memory_not (with error bit) on out of memory.
@@ -196,7 +196,7 @@ extern "C" {
  *   The name must be NULL terminated.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if name.used is 0.
  *
  *   F_memory_not (with error bit) on out of memory.

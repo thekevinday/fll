@@ -18,7 +18,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_control_print_warning_packet_header_duplicate_object_
 
@@ -38,7 +38,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_control_print_warning_packet_process_string_to_failed_
 
@@ -56,7 +56,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_control_print_warning_packet_response_busy_
 

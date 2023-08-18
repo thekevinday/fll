@@ -25,7 +25,7 @@ extern "C" {
  *   The program and settings data.
  *
  *   This alters setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *     F_utf_not on invalid UTF-8 (which is still "success" when verifying).
  *
  *     F_utf_not (with error bit) if not verifying and the Unicode value is invalid.
@@ -51,7 +51,7 @@ extern "C" {
  *   The program and settings data.
  *
  *   This alters setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *     F_valid_not on invalid raw (which is still "success" when verifying).
  *
  *     F_valid_not (with error bit) if not verifying and the raw value is invalid.
@@ -75,7 +75,7 @@ extern "C" {
  *   The program and settings data.
  *
  *   This alters setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *     F_next on success, but should not be processed (it is white space or NULL).
  *     F_space on success, but the character is whitespace.
  *

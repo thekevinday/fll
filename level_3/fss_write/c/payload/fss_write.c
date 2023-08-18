@@ -21,7 +21,7 @@ extern "C" {
 
     fss_write_main_t * const main = (fss_write_main_t *) void_main;
 
-    f_status_t status_pipe = F_none;
+    f_status_t status_pipe = F_okay;
     f_file_t input = f_file_t_initialize;
     input.id = F_type_descriptor_input_d;
     input.size_read = fss_write_allocation_large_d;
@@ -99,7 +99,7 @@ extern "C" {
       }
 
       if (range.start > range.stop) {
-        if (status_pipe == F_none_eof) break;
+        if (status_pipe == F_okay_eof) break;
 
         main->setting.block.used = 0;
 
@@ -117,7 +117,7 @@ extern "C" {
 
         range.start = 0;
         range.stop = main->setting.block.used - 1;
-        status_pipe = F_none;
+        status_pipe = F_okay;
       }
 
       // Start Object.
@@ -342,7 +342,7 @@ extern "C" {
     } // for
 
     // If the pipe ended before finishing, then attempt to wrap up.
-    if (F_status_is_error_not(main->setting.state.status) && status_pipe == F_none_eof && state) {
+    if (F_status_is_error_not(main->setting.state.status) && status_pipe == F_okay_eof && state) {
       fss_write_payload_process_set(void_main);
 
       flag |= 0x1;
@@ -363,7 +363,7 @@ extern "C" {
           main->setting.state.status = F_payload;
         }
         else {
-          main->setting.state.status = F_none;
+          main->setting.state.status = F_okay;
         }
       }
       else {
@@ -407,7 +407,7 @@ extern "C" {
           &main->setting.state
         );
 
-        if (F_status_set_fine(main->setting.state.status) == F_none_eol) {
+        if (F_status_set_fine(main->setting.state.status) == F_okay_eol) {
           main->setting.state.status = F_status_set_error(F_support_not);
 
           fss_write_print_error_unsupported_eol(&main->program.error);
@@ -446,7 +446,7 @@ extern "C" {
             &main->setting.state
           );
 
-          if (F_status_set_fine(main->setting.state.status) == F_none_eol) {
+          if (F_status_set_fine(main->setting.state.status) == F_okay_eol) {
             main->setting.state.status = F_status_set_error(F_support_not);
 
             fss_write_print_error_unsupported_eol(&main->program.error);
@@ -535,7 +535,7 @@ extern "C" {
     fll_print_dynamic(main->setting.buffer, main->program.output.to);
 
     main->setting.buffer.used = 0;
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
   }
 #endif // _di_fss_write_payload_process_set_
 

@@ -27,7 +27,7 @@ extern "C" {
     f_string_dynamics_resize(0, &setting->objects);
     f_string_dynamicss_resize(0, &setting->contentss);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fss_write_setting_delete_
 

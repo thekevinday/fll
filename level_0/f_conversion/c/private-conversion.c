@@ -80,7 +80,7 @@ extern "C" {
       }
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_conversion_number_signed_print_) || !defined(_di_f_conversion_number_unsigned_print_)
 
@@ -136,7 +136,7 @@ extern "C" {
         }
       } // while
 
-      return F_none;
+      return F_okay;
     }
 
     f_char_t c = 0;
@@ -171,7 +171,7 @@ extern "C" {
       } // while
     } // for
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_conversion_number_signed_print_) || !defined(_di_f_conversion_number_unsigned_print_)
 
@@ -189,7 +189,7 @@ extern "C" {
       } // while
     } // for
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_conversion_number_signed_print_) || !defined(_di_f_conversion_number_unsigned_print_)
 
@@ -277,7 +277,7 @@ extern "C" {
       }
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_conversion_number_signed_print_) || !defined(_di_f_conversion_number_unsigned_print_)
 
@@ -337,7 +337,7 @@ extern "C" {
       destination->string[destination->used++] = f_string_ascii_0_s.string[0];
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_conversion_number_signed_to_string_) || !defined(_di_f_conversion_number_unsigned_to_string_)
 

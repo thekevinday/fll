@@ -111,7 +111,7 @@ void test__f_file_write__works(void **state) {
 
     const f_status_t status = f_file_write(file, path, 0);
 
-    assert_int_equal(status, F_none_eos);
+    assert_int_equal(status, F_okay_eos);
   }
 
   {
@@ -127,7 +127,7 @@ void test__f_file_write__works(void **state) {
 
     const f_status_t status = f_file_write(file, path, 0);
 
-    assert_int_equal(status, F_none_eos);
+    assert_int_equal(status, F_okay_eos);
   }
 }
 

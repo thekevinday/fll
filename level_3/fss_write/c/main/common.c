@@ -92,7 +92,7 @@ extern "C" {
       if (F_status_is_error(main->setting.state.status)) return;
 
       if (main->setting.state.status == F_done) {
-        main->setting.state.status = F_none;
+        main->setting.state.status = F_okay;
 
         return;
       }

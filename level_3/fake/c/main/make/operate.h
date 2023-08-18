@@ -26,7 +26,7 @@ extern "C" {
  *   The program data.
  *
  *   This alters data.main->setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *     F_data_not on success but fakefile is empty.
  *
  *     F_interrupt (with error bit) on interrupt signal received.
@@ -63,7 +63,7 @@ extern "C" {
  *   All make related setting data, including data from the fakefile and the build settings file.
  *
  *   This alters data_make.main->setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *     F_data_not on success but fakefile is empty.
  *
  *     F_interrupt (with error bit) on interrupt signal received.
@@ -195,7 +195,7 @@ extern "C" {
  *   All make related setting data, including data from the fakefile and the build settings file.
  *
  *   This alters data_make.main->setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *     F_child on child process exiting.
  *     F_signal_abort on abort signal received.
  *     F_signal_quit on quit signal received.

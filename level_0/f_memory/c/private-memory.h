@@ -32,7 +32,7 @@ extern "C" {
  *   The pointer to the memory to delete.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success, but there is nothing to do (length_old = length_new).
  *
  *   F_memory_not (with error bit) on allocation error.
@@ -65,7 +65,7 @@ extern "C" {
  *   The pointer to the memory to delete.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success, but there is nothing to do (length_old = length_new).
  *
  *   F_memory_not (with error bit) on allocation error.

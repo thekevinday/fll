@@ -52,7 +52,7 @@ extern "C" {
       main->setting.state.status = F_utf_not;
     }
     else {
-      main->setting.state.status = F_none;
+      main->setting.state.status = F_okay;
     }
   }
 #endif // _di_utf8_convert_bytesequence_
@@ -75,13 +75,13 @@ extern "C" {
     do {
       main->setting.state.status = f_file_stream_read_block(file, &main->setting.buffer);
 
-      if (main->setting.state.status == F_none_eof && !main->setting.buffer.used) break;
+      if (main->setting.state.status == F_okay_eof && !main->setting.buffer.used) break;
 
       for (i = 0; F_status_is_error_not(main->setting.state.status) && i < main->setting.buffer.used; ) {
 
         if (utf8_signal_check(main)) return;
 
-        main->setting.state.status = F_none;
+        main->setting.state.status = F_okay;
 
         // Get the current width only when processing a new block.
         if (next) {

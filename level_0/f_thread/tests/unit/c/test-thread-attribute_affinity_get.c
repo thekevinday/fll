@@ -69,7 +69,7 @@ void test__f_thread_attribute_affinity_get__works(void **state) {
 
       const f_status_t status = f_thread_attribute_affinity_get(attribute, 0, &cpu_set);
 
-      assert_int_equal(status, F_none);
+      assert_int_equal(status, F_okay);
     }
   #endif // defined(_pthread_attr_unsupported_)
 }

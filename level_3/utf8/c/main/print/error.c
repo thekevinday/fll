@@ -12,7 +12,7 @@ extern "C" {
 
     fll_error_print(print, F_status_set_fine(((utf8_main_t *) print->custom)->setting.state.status), function, fll_error_file_flag_fallback_e);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_utf8_print_error_
 
@@ -53,7 +53,7 @@ extern "C" {
       fl_print_format("%[.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_utf8_print_error_decode_
 
@@ -79,7 +79,7 @@ extern "C" {
       fl_print_format("%[.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_utf8_print_error_encode_
 
@@ -93,7 +93,7 @@ extern "C" {
 
     fll_error_file_print(print, F_status_set_fine(main->setting.state.status), function, fll_error_file_flag_fallback_e, name, operation, type);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_utf8_print_error_file_
 
@@ -105,7 +105,7 @@ extern "C" {
 
     fll_print_format("%[%QNo from sources are specified, please pipe data, designate a file, or add parameters.%]%r", print->to, print->set->error, print->prefix, print->set->error, f_string_eol_s);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_utf8_print_error_no_from_
 
@@ -123,7 +123,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_utf8_print_error_parameter_file_name_empty_
 
@@ -141,7 +141,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_utf8_print_error_parameter_file_not_found_
 
@@ -153,7 +153,7 @@ extern "C" {
 
     fll_print_format("%[%QToo many '%r' files specified, there may only be one '%r' file.%]%r", print->to, print->set->error, print->prefix, utf8_string_to_s, utf8_string_to_s, print->set->error, f_string_eol_s);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_utf8_print_error_parameter_file_to_too_many_
 

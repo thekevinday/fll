@@ -12,7 +12,7 @@ extern "C" {
 
     fll_error_print(print, F_status_set_fine(((fss_write_main_t *) print->custom)->setting.state.status), function, fll_error_file_flag_fallback_e);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fss_write_print_error_
 
@@ -24,7 +24,7 @@ extern "C" {
 
     fll_error_file_print(print, F_status_set_fine(((fss_write_main_t *) print->custom)->setting.state.status), function, fll_error_file_flag_fallback_e, name, operation, type);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fss_write_print_error_file_
 
@@ -46,7 +46,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fss_write_print_error_parameter_same_times_at_least_
 
@@ -64,7 +64,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fss_write_print_error_one_content_only_
 
@@ -82,7 +82,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _fss_write_print_error_prepend_only_whitespace_
 
@@ -104,7 +104,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fss_write_print_error_unsupported_eol_
 

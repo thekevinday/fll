@@ -33,7 +33,7 @@ extern "C" {
  *   This value may be cleared, even on error.
  *
  * @return
- *   F_none if conversion was successful.
+ *   F_okay if conversion was successful.
  *
  *   F_complete_not_utf (with error bit) if character is an incomplete UTF-8 sequence.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -87,7 +87,7 @@ extern "C" {
  *   Does not need to be interpretted like UTF-8, this is a number from 0 onto max supported Unicode integer value (U+10FFFF).
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_failure (with error bit) if width is not long enough to convert.
  *   F_parameter (with error bit) if a parameter is invalid.

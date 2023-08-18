@@ -14,7 +14,7 @@ void test__f_color_context_destroy__frees_memory(void **state) {
   {
     const f_status_t status = f_string_dynamic_resize(size, &context.reset);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_not_equal(context.reset.size, 0);
     assert_non_null(context.reset.string);
   }
@@ -22,7 +22,7 @@ void test__f_color_context_destroy__frees_memory(void **state) {
   {
     const f_status_t status = f_string_dynamic_resize(size, &context.warning);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_not_equal(context.warning.size, 0);
     assert_non_null(context.warning.string);
   }
@@ -30,7 +30,7 @@ void test__f_color_context_destroy__frees_memory(void **state) {
   {
     const f_status_t status = f_string_dynamic_resize(size, &context.error);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_not_equal(context.error.size, 0);
     assert_non_null(context.error.string);
   }
@@ -38,7 +38,7 @@ void test__f_color_context_destroy__frees_memory(void **state) {
   {
     const f_status_t status = f_string_dynamic_resize(size, &context.title);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_not_equal(context.title.size, 0);
     assert_non_null(context.title.string);
   }
@@ -46,7 +46,7 @@ void test__f_color_context_destroy__frees_memory(void **state) {
   {
     const f_status_t status = f_string_dynamic_resize(size, &context.notable);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_not_equal(context.notable.size, 0);
     assert_non_null(context.notable.string);
   }
@@ -54,7 +54,7 @@ void test__f_color_context_destroy__frees_memory(void **state) {
   {
     const f_status_t status = f_string_dynamic_resize(size, &context.important);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_not_equal(context.important.size, 0);
     assert_non_null(context.important.string);
   }
@@ -62,7 +62,7 @@ void test__f_color_context_destroy__frees_memory(void **state) {
   {
     const f_status_t status = f_string_dynamic_resize(size, &context.standout);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_not_equal(context.standout.size, 0);
     assert_non_null(context.standout.string);
   }
@@ -70,7 +70,7 @@ void test__f_color_context_destroy__frees_memory(void **state) {
   {
     const f_status_t status = f_string_dynamic_resize(size, &context.success);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_not_equal(context.success.size, 0);
     assert_non_null(context.success.string);
   }
@@ -78,7 +78,7 @@ void test__f_color_context_destroy__frees_memory(void **state) {
   {
     const f_status_t status = f_string_dynamic_resize(size, &context.normal);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_not_equal(context.normal.size, 0);
     assert_non_null(context.normal.string);
   }
@@ -86,7 +86,7 @@ void test__f_color_context_destroy__frees_memory(void **state) {
   {
     const f_status_t status = f_string_dynamic_resize(size, &context.normal_reset);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_not_equal(context.normal_reset.size, 0);
     assert_non_null(context.normal_reset.string);
   }
@@ -94,7 +94,7 @@ void test__f_color_context_destroy__frees_memory(void **state) {
   {
     const f_status_t status = f_color_context_destroy(&context);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(context.reset.size, 0);
     assert_int_equal(context.warning.size, 0);
     assert_int_equal(context.error.size, 0);

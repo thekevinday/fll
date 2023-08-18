@@ -120,7 +120,7 @@ void test__f_file_read_until__works(void **state) {
     f_string_dynamic_increase_by(1, &buffer);
     buffer.string[buffer.used] = 0;
 
-    assert_int_equal(status, F_none_stop);
+    assert_int_equal(status, F_okay_stop);
     assert_int_equal(buffer.used, 6);
     assert_string_equal(buffer.string, "abcdef");
   }
@@ -144,7 +144,7 @@ void test__f_file_read_until__works(void **state) {
     f_string_dynamic_increase_by(1, &buffer);
     buffer.string[buffer.used] = 0;
 
-    assert_int_equal(status, F_none_eof);
+    assert_int_equal(status, F_okay_eof);
     assert_int_equal(buffer.used, 4);
     assert_string_equal(buffer.string, "abcd");
   }

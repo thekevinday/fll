@@ -73,7 +73,7 @@ extern "C" {
  *   The parameters passed to the process.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_interrupt (with error bit) on receiving a process signal, such as an interrupt signal.
  *

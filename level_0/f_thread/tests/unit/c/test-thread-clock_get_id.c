@@ -58,7 +58,7 @@ void test__f_thread_clock_get_id__works(void **state) {
 
     const f_status_t status = f_thread_clock_get_id(id_thread, &id_clock);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 }
 

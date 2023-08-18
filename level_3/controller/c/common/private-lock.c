@@ -12,7 +12,7 @@ extern "C" {
 
     if (F_status_is_error(status)) {
       if (F_status_set_fine(status) == F_busy) {
-        if (f_thread_mutex_delete(mutex) == F_none) {
+        if (f_thread_mutex_delete(mutex) == F_okay) {
           mutex = 0;
         }
       }
@@ -30,7 +30,7 @@ extern "C" {
 
     if (F_status_is_error(status)) {
       if (F_status_set_fine(status) == F_busy) {
-        if (f_thread_lock_delete(lock) == F_none) {
+        if (f_thread_lock_delete(lock) == F_okay) {
           lock = 0;
         }
       }

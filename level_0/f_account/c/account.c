@@ -206,7 +206,7 @@ extern "C" {
 
         *id = group_data.gr_gid;
 
-        return F_none;
+        return F_okay;
       }
     }
 
@@ -231,7 +231,7 @@ extern "C" {
 
     *id = group_data.gr_gid;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_account_group_id_by_name_
 
@@ -243,7 +243,7 @@ extern "C" {
 
     name->used = 0;
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     const size_t length_max = sysconf(_SC_GETPW_R_SIZE_MAX);
 
@@ -294,7 +294,7 @@ extern "C" {
         name->string[name_length] = 0;
         name->used = name_length;
 
-        return F_none;
+        return F_okay;
       }
     }
 
@@ -329,7 +329,7 @@ extern "C" {
     name->string[name_length] = 0;
     name->used = name_length;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_account_group_name_by_id_
 
@@ -378,7 +378,7 @@ extern "C" {
 
         *id = password.pw_uid;
 
-        return F_none;
+        return F_okay;
       }
     }
 
@@ -403,7 +403,7 @@ extern "C" {
 
     *id = password.pw_uid;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_account_id_by_name_
 
@@ -415,7 +415,7 @@ extern "C" {
 
     name->used = 0;
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     const size_t length_max = sysconf(_SC_GETPW_R_SIZE_MAX);
 
@@ -466,7 +466,7 @@ extern "C" {
         name->string[name_length] = 0;
         name->used = name_length;
 
-        return F_none;
+        return F_okay;
       }
     }
 
@@ -501,7 +501,7 @@ extern "C" {
     name->string[name_length] = 0;
     name->used = name_length;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_account_name_by_id_
 

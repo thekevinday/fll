@@ -47,7 +47,7 @@ extern "C" {
     f_file_stream_flush(print->to);
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_status_code_print_message_help_
 
@@ -70,7 +70,7 @@ extern "C" {
     fl_print_format("  Each code will be printed on its own line.%r", print->to, print->set->notable, print->set->notable, f_string_eol_s);
     fl_print_format("  Errors regarding each code may be printed on its own line.%r", print->to, f_string_eol_s);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_status_code_print_message_help_detail_
 

@@ -23,7 +23,7 @@ extern "C" {
  *   The main program data.
  *
  *   This alters main.setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *
  *     Errors (with error bit) from: f_memory_array_resize().
  *     Errors (with error bit) from: f_memory_arrays_resize().
@@ -52,7 +52,7 @@ extern "C" {
  *   This alters main.setting.range.
  *
  *   This alters main.setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *     F_data_not on success but nothing was provided to operate with.
  *
  *     F_interrupt (with error bit) on interrupt signal received.
@@ -68,7 +68,7 @@ extern "C" {
  *     Errors (with error bit) from: fss_read_signal_check()
  * @param callback
  *   (optional) Designate a function to call after performing the initial processing, but before printing help.
- *   If the function returns F_done, then this function immediately returns, resetting status to F_none.
+ *   If the function returns F_done, then this function immediately returns, resetting status to F_okay.
  *   Set to NULL to disable.
  *
  * @see f_console_parameter_process()
@@ -102,7 +102,7 @@ extern "C" {
  *   Must be of type fss_read_main_t.
  *
  *   This alters main.setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *
  *     F_interrupt (with error bit) on interrupt signal received.
  *     F_parameter (with error bit) on parameter error.

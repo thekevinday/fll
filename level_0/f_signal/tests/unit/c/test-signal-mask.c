@@ -58,7 +58,7 @@ void test__f_signal_mask__works(void **state) {
 
     const f_status_t status = f_signal_mask(0, &next, &current);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 }
 

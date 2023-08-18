@@ -67,7 +67,7 @@ void test__f_file_name_directory__works(void **state) {
 
     const f_status_t status = f_file_name_directory(paths[i], &buffer);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(buffer.used, bases[i].used);
     assert_string_equal(buffer.string, bases[i].string);
   } // for

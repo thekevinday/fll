@@ -36,7 +36,7 @@ void test__f_string_map_multiss_append_all__works(void **state) {
   {
     f_status_t status = f_string_map_multiss_resize(length_outer, &source);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(source.used, 0);
     assert_int_equal(source.size, length_outer);
 
@@ -46,7 +46,7 @@ void test__f_string_map_multiss_append_all__works(void **state) {
 
       status = f_string_map_multis_resize(length_inner, &source.array[source.used]);
 
-      assert_int_equal(status, F_none);
+      assert_int_equal(status, F_okay);
       assert_int_equal(source.array[source.used].used, 0);
       assert_int_equal(source.array[source.used].size, length_inner);
 
@@ -54,13 +54,13 @@ void test__f_string_map_multiss_append_all__works(void **state) {
 
         status = f_string_dynamic_append(test_names[i], &source.array[source.used].array[i].name);
 
-        assert_int_equal(status, F_none);
+        assert_int_equal(status, F_okay);
         assert_int_equal(source.array[source.used].array[i].name.used, test_names[i].used);
         assert_string_equal(source.array[source.used].array[i].name.string, test_names[i].string);
 
         status = f_string_dynamics_append_all(test_values[i], &source.array[source.used].array[i].value);
 
-        assert_int_equal(status, F_none);
+        assert_int_equal(status, F_okay);
         assert_int_equal(source.array[source.used].array[i].value.used, test_values[i].used);
         assert_int_equal(source.array[source.used].array[i].value.array[0].used, test_values[i].array[0].used);
         assert_int_equal(source.array[source.used].array[i].value.array[1].used, test_values[i].array[1].used);
@@ -76,7 +76,7 @@ void test__f_string_map_multiss_append_all__works(void **state) {
   {
     const f_status_t status = f_string_map_multiss_append_all(source, &destination);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(destination.used, source.used);
 
     for (f_number_unsigned_t j = 0; j < length_outer; ++j) {
@@ -134,7 +134,7 @@ void test__f_string_map_multiss_append_all__returns_data_not(void **state) {
   {
     const f_status_t status = f_string_map_multiss_resize(length, &source);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(source.used, 0);
     assert_int_equal(source.size, length);
   }

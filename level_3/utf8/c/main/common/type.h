@@ -68,7 +68,7 @@ extern "C" {
     { \
       utf8_mode_from_bytesequence_e | utf8_mode_to_codepoint_e, \
       utf8_main_flag_none_e, \
-      F_none, \
+      F_okay, \
       f_state_t_initialize, \
       f_color_set_t_initialize, \
       f_color_set_t_initialize, \
@@ -123,7 +123,7 @@ extern "C" {
  *   This does not alter setting.state.status.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  */

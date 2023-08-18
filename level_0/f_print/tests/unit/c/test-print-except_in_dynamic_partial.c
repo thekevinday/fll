@@ -69,7 +69,7 @@ void test__f_print_except_in_dynamic_partial__works(void **state) {
 
     const f_status_t status = f_print_except_in_dynamic_partial(test, partial, except, range, output);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 
   {
@@ -86,7 +86,7 @@ void test__f_print_except_in_dynamic_partial__works(void **state) {
 
     const f_status_t status = f_print_except_in_dynamic_partial(test, partial, except, range, output);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 }
 

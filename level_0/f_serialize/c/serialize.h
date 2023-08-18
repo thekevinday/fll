@@ -47,7 +47,7 @@ extern "C" {
  *   All deserialized values are appended to the destination.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_complete_not_utf_eos if an incomplete UTF-8 character is found at the end of the source.
  *   F_data_not on success and source.used is 0.
  *
@@ -82,8 +82,8 @@ extern "C" {
  *   This string is NULL terminated after destination.used on success.
  *
  * @return
- *   F_none on success.
- *   F_none_eos on success at end of string.
+ *   F_okay on success.
+ *   F_okay_eos on success at end of string.
  *   F_data_not_eos if end of string reached before index was reached (dynamic->used is set to 0).
  *   F_data_not on success and source.used is 0.
  *
@@ -115,7 +115,7 @@ extern "C" {
  *   All deserialized ranges are appended to the destination.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_complete_not_utf_eos if an incomplete UTF-8 character is found at the end of the source.
  *   F_data_not on success and source.used is 0.
  *
@@ -147,8 +147,8 @@ extern "C" {
  *   A range within the serialized string representing the string at the given index.
  *
  * @return
- *   F_none on success.
- *   F_none_eos on success at end of string.
+ *   F_okay on success.
+ *   F_okay_eos on success at end of string.
  *   F_data_not on success and source.used is 0.
  *   F_data_not_eos if end of string reached before index was reached.
  *
@@ -177,7 +177,7 @@ extern "C" {
  *   All serialized values are appended to the destination.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success and source.used is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.

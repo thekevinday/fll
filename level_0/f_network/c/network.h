@@ -38,7 +38,7 @@ extern "C" {
  *   The converted long integer in network byte order.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -57,7 +57,7 @@ extern "C" {
  *   The converted short integer in network byte order.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -82,7 +82,7 @@ extern "C" {
  *   The converted IP host entity.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success but there is nothing to convert (to.type is f_network_family_none_e).
  *
  *   F_again (with error bit) Resolver temporarily failed, try again.
@@ -112,7 +112,7 @@ extern "C" {
  *   The converted IP host entity.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success but there is nothing to convert (from.used is 0).
  *
  *   F_again (with error bit) Resolver temporarily failed, try again.
@@ -138,7 +138,7 @@ extern "C" {
  *   The converted IP version 4 or version 6 family integer.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success but there is nothing to convert (to.type is f_network_family_none_e or from.used is 0).
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -201,7 +201,7 @@ extern "C" {
  *   The converted long integer in host byte order.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -220,7 +220,7 @@ extern "C" {
  *   The converted short integer in host byte order.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -241,7 +241,7 @@ extern "C" {
  *   The converted human-friendly IP address string.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success but there is nothing to convert (from.type is f_network_family_none_e).
  *
  *   F_parameter (with error bit) if a parameter is invalid.

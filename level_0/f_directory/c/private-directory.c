@@ -27,7 +27,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_directory_create_) || !defined(_di_f_directory_touch_)
 
@@ -54,7 +54,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_directory_create_at_) || !defined(_di_f_directory_touch_at_)
 

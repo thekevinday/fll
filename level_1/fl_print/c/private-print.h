@@ -36,7 +36,7 @@ extern "C" {
  *
  *   The status parameter will be set as follows:
  *
- *     F_none on success.
+ *     F_okay on success.
  *
  *     F_eos (with error bit) on failure because end of string found and cannot process further.
  *     F_output (with error bit) on failure to print to the output file.
@@ -96,7 +96,7 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success but there is nothing to print.
  *
  *   F_complete_not_utf_stop (with error bit) if character is an incomplete UTF-8 fragment at end of the string.
@@ -145,7 +145,7 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success but there is nothing to print.
  *
  *   F_output (with error bit) on failure to print to the output file.
@@ -192,7 +192,7 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success but there is nothing to print.
  *
  *   F_output (with error bit) on failure to print to the output file.
@@ -240,7 +240,7 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success but there is nothing to print.
  *
  *   F_output (with error bit) on failure to print to the output file.
@@ -280,7 +280,7 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success but there is nothing to print.
  *
  *   F_complete_not_utf_stop (with error bit) if character is an incomplete UTF-8 fragment at end of the string.
@@ -318,7 +318,7 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success but there is nothing to print.
  *
  *   F_output (with error bit) on failure to print to the output file.
@@ -354,7 +354,7 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success but there is nothing to print.
  *
  *   F_output (with error bit) on failure to print to the output file.
@@ -391,7 +391,7 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success but there is nothing to print.
  *
  *   F_output (with error bit) on failure to print to the output file.

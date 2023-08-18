@@ -41,7 +41,7 @@ extern "C" {
 
     time->tv_sec += (time_t) second;
 
-    return time->tv_sec < (time_t) second ? F_status_set_error(F_number_overflow) : F_none;
+    return time->tv_sec < (time_t) second ? F_status_set_error(F_number_overflow) : F_okay;
   }
 #endif // _di_f_time_spec_millisecond_
 
@@ -77,7 +77,7 @@ extern "C" {
       if (time->tv_sec < (time_t) second) return F_status_set_error(F_number_overflow);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_time_spec_nanosecond_
 

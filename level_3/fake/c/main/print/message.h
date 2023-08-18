@@ -32,7 +32,7 @@ extern "C" {
  *   The build setting data.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  * @see f_file_stream_lock()
@@ -54,7 +54,7 @@ extern "C" {
  *   This does not alter print.custom.setting.state.status.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  * @see fake_print_common_simple_variable()
@@ -74,7 +74,7 @@ extern "C" {
  *   This does not alter print.custom.setting.state.status.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  * @see fake_print_common_simple()
@@ -94,7 +94,7 @@ extern "C" {
  *   This does not alter print.custom.setting.state.status.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
  *
  *   F_output_not (with error bit) if setting is NULL.

@@ -30,7 +30,7 @@ extern "C" {
     f_file_stream_flush(print->to);
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fss_read_embedded_list_print_help_
 
@@ -58,7 +58,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fss_read_embedded_list_print_object_end_
 
@@ -74,7 +74,7 @@ extern "C" {
       f_print_dynamic_raw(f_fss_embedded_list_close_end_s, print->to);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fss_read_embedded_list_print_set_end_
 

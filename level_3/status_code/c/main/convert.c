@@ -28,7 +28,7 @@ extern "C" {
       }
     }
     else {
-      main->setting.state.status = F_none;
+      main->setting.state.status = F_okay;
     }
   }
 #endif // _di_status_code_convert_number_

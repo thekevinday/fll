@@ -80,7 +80,7 @@ extern "C" {
  *   Must be of type fss_write_main_t.
  *
  *   This alters main.custom.setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *     F_true on success when performing verification and verify passed.
  *     F_false on success when performing verification and verify failed.
  *     F_interrupt on (exit) signal received.
@@ -121,7 +121,7 @@ extern "C" {
  *   Must be of type fss_write_main_t.
  *
  *   This alters main.custom.setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *     F_interrupt on (exit) signal received.
  *
  *     F_parameter (with error bit) if main is NULL or setting is NULL.
@@ -140,7 +140,7 @@ extern "C" {
  *   Must be of type fss_write_main_t.
  *
  *   This alters main.setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *     F_data_not on success but pipe contained no relevant data.
  *     F_basic on success and the basic has been printed.
  *     F_interrupt on (exit) signal received.
@@ -161,7 +161,7 @@ extern "C" {
  *   Must be of type fss_write_main_t.
  *
  *   This alters main.setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *     F_interrupt on (exit) signal received.
  *
  *     F_parameter (with error bit) if main is NULL or setting is NULL.

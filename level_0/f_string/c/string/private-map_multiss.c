@@ -11,7 +11,7 @@ extern "C" {
 #if !defined(_di_f_string_map_multiss_adjust_) || !defined(_di_f_string_map_multiss_decimate_by_)
   f_status_t private_f_string_map_multiss_adjust(const f_number_unsigned_t length, f_string_map_multiss_t * const structure) {
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     for (f_number_unsigned_t i = length; i < structure->size; ++i) {
 
@@ -26,7 +26,7 @@ extern "C" {
 #if !defined(_di_f_string_map_multiss_decrease_by_) || !defined(_di_f_string_map_multiss_increase_) || !defined(_di_f_string_map_multiss_increase_by_)
   f_status_t private_f_string_map_multiss_resize(const f_number_unsigned_t length, f_string_map_multiss_t * const structure) {
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     for (f_number_unsigned_t i = length; i < structure->size; ++i) {
 

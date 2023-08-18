@@ -68,7 +68,7 @@ extern "C" {
  *   The array of string arguments intended to pass to the execute functions.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   Errors (with error bit) from: f_string_dynamic_append().
  *   Errors (with error bit) from: f_string_dynamic_resize().
@@ -104,7 +104,7 @@ extern "C" {
  *   The array of string arguments intended to pass to the execute functions.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   Errors (with error bit) from: f_string_append().
  *   Errors (with error bit) from: f_string_dynamic_resize().
@@ -142,7 +142,7 @@ extern "C" {
  *   The array of string arguments intended to pass to the execute functions.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   Errors (with error bit) from: f_string_append().
  *   Errors (with error bit) from: f_string_dynamic_resize().
@@ -170,7 +170,7 @@ extern "C" {
  *   The array of string arguments intended to pass to the execute functions.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   Errors (with error bit) from: f_string_append().
  *   Errors (with error bit) from: f_string_dynamic_resize().
@@ -215,7 +215,7 @@ extern "C" {
  *   The code returned after finishing execution of program.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_failure (with error bit) on execution failure.
  *
@@ -287,7 +287,7 @@ extern "C" {
  *   Set to NULL to not use.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_child on success and this is the child thread.
  *   F_parent on success and this is the parent thread (only happens when FL_execute_parameter_option_return_d is passed).
  *

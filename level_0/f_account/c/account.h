@@ -43,7 +43,7 @@ extern "C" {
  *   All strings will be NULL terminated.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_buffer_too_small (with error bit) if the buffer is too small to store the account data.
  *   F_file_descriptor_max (with error bit) if max file descriptors is reached.
@@ -76,7 +76,7 @@ extern "C" {
  *   All strings will be NULL terminated.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_buffer_too_small (with error bit) if the buffer is too small to store the account data.
  *   F_file_descriptor_max (with error bit) if max file descriptors is reached.
@@ -107,7 +107,7 @@ extern "C" {
  *   The id associated with the given name.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_buffer_too_small (with error bit) if the buffer is too small to store the account data.
  *   F_file_descriptor_max (with error bit) if max file descriptors is reached.
@@ -134,7 +134,7 @@ extern "C" {
  *   The name will be NULL terminated after the name.used.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_buffer_too_small (with error bit) if the buffer is too small to store the account data.
  *   F_file_descriptor_max (with error bit) if max file descriptors is reached.
@@ -165,7 +165,7 @@ extern "C" {
  *   The id associated with the given name.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_buffer_too_small (with error bit) if the buffer is too small to store the account data.
  *   F_file_descriptor_max (with error bit) if max file descriptors is reached.
@@ -192,7 +192,7 @@ extern "C" {
  *   The name will be NULL terminated after the name.used.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_buffer_too_small (with error bit) if the buffer is too small to store the account data.
  *   F_file_descriptor_max (with error bit) if max file descriptors is reached.

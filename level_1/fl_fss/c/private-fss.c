@@ -8,7 +8,7 @@ extern "C" {
 #if !defined(_di_fl_fss_basic_list_content_write_) || !defined(_di_fl_fss_extended_list_content_write_) || !defined(_di_fl_fss_embedded_list_content_write_)
   void private_fl_fss_basic_list_write_add_until_end(const f_string_static_t buffer, f_string_range_t * const range, f_string_dynamic_t * const destination, f_state_t * const state) {
 
-    state->status = F_none;
+    state->status = F_okay;
 
     for (; range->start <= range->stop && range->start < buffer.used; ++range->start) {
 
@@ -35,7 +35,7 @@ extern "C" {
     f_number_unsigned_t i = 0;
     uint8_t width = 0;
 
-    state->status = F_none;
+    state->status = F_okay;
 
     for (; destination_range.start < destination->used; ++destination_range.start) {
 
@@ -106,7 +106,7 @@ extern "C" {
       }
     }
 
-    state->status = F_none;
+    state->status = F_okay;
   }
 #endif // !defined(_di_fl_fss_basic_list_object_write_) || !defined(_di_fl_fss_extended_list_object_write_)
 
@@ -117,7 +117,7 @@ extern "C" {
     if (F_status_is_error(state->status)) return;
     if (state->status == F_data_not) return;
 
-    if (state->status == F_none_eol) {
+    if (state->status == F_okay_eol) {
 
       // Move the start position to after the EOL.
       ++range->start;
@@ -126,13 +126,13 @@ extern "C" {
       return;
     }
 
-    if (state->status == F_none_eos) {
+    if (state->status == F_okay_eos) {
       state->status = F_data_not_eos;
 
       return;
     }
 
-    if (state->status == F_none_stop) {
+    if (state->status == F_okay_stop) {
       state->status = F_data_not_stop;
 
       return;
@@ -243,14 +243,14 @@ extern "C" {
 
       if (range->start >= buffer.used) {
         found->stop = buffer.used - 1;
-        state->status = F_none_eos;
+        state->status = F_okay_eos;
 
         return;
       }
 
       if (range->start > range->stop) {
         found->stop = range->stop;
-        state->status = F_none_stop;
+        state->status = F_okay_stop;
 
         return;
       }
@@ -410,13 +410,13 @@ extern "C" {
                   }
 
                   if (++range->start >= buffer.used) {
-                    state->status = F_none_eos;
+                    state->status = F_okay_eos;
 
                     return;
                   }
 
                   if (range->start > range->stop) {
-                    state->status = F_none_stop;
+                    state->status = F_okay_stop;
 
                     return;
                   }
@@ -625,14 +625,14 @@ extern "C" {
 
             if (range->start >= buffer.used) {
               found->stop = buffer.used - 1;
-              state->status = F_none_eos;
+              state->status = F_okay_eos;
 
               return;
             }
 
             if (range->start > range->stop) {
               found->stop = range->stop;
-              state->status = F_none_stop;
+              state->status = F_okay_stop;
 
               return;
             }
@@ -674,7 +674,7 @@ extern "C" {
       }
     }
     else {
-      state->status = F_none;
+      state->status = F_okay;
 
       while (range->start <= range->stop && range->start < buffer.used) {
 
@@ -734,20 +734,20 @@ extern "C" {
     if (F_status_is_error(state->status)) return;
     if (state->status == F_data_not) return;
 
-    if (state->status == F_none_eos) {
+    if (state->status == F_okay_eos) {
       state->status = F_data_not_eos;
 
       return;
     }
 
-    if (state->status == F_none_stop) {
+    if (state->status == F_okay_stop) {
       state->status = F_data_not_stop;
 
       return;
     }
 
-    if (state->status == F_none_eol) {
-      state->status = F_status_set_error(F_none_eol);
+    if (state->status == F_okay_eol) {
+      state->status = F_status_set_error(F_okay_eol);
 
       return;
     }
@@ -841,7 +841,7 @@ extern "C" {
         }
 
         if (object.string[range->start] == f_fss_eol_s.string[0]) {
-          state->status = F_status_set_error(F_none_eol);
+          state->status = F_status_set_error(F_okay_eol);
 
           break;
         }
@@ -872,7 +872,7 @@ extern "C" {
           }
           else {
             if (object.string[range->start] == f_fss_eol_s.string[0]) {
-              state->status = F_status_set_error(F_none_eol);
+              state->status = F_status_set_error(F_okay_eol);
 
               break;
             }
@@ -934,7 +934,7 @@ extern "C" {
           }
           else {
             if (object.string[range->start] == f_fss_eol_s.string[0]) {
-              state->status = F_status_set_error(F_none_eol);
+              state->status = F_status_set_error(F_okay_eol);
 
               break;
             }
@@ -997,7 +997,7 @@ extern "C" {
         }
         else {
           if (object.string[range->start] == f_fss_eol_s.string[0]) {
-            state->status = F_status_set_error(F_none_eol);
+            state->status = F_status_set_error(F_okay_eol);
 
             break;
           }
@@ -1024,7 +1024,7 @@ extern "C" {
         } // for
       }
       else if (object.string[range->start] == f_fss_eol_s.string[0]) {
-        state->status = F_status_set_error(F_none_eol);
+        state->status = F_status_set_error(F_okay_eol);
 
         break;
       }
@@ -1107,7 +1107,7 @@ extern "C" {
             if (object.string[i] == f_fss_eol_s.string[0]) {
               destination->used = used_start;
 
-              state->status = F_status_set_error(F_none_eol);
+              state->status = F_status_set_error(F_okay_eol);
 
               return;
             }
@@ -1119,8 +1119,8 @@ extern "C" {
       destination->string[used_start] = f_fss_slash_s.string[0];
     }
 
-    if (range->start > range->stop) state->status = F_none_stop;
-    else state->status = F_none_eos;
+    if (range->start > range->stop) state->status = F_okay_stop;
+    else state->status = F_okay_eos;
   }
 #endif // !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_extended_object_write_) || !defined(_di_fl_fss_extended_content_write_)
 
@@ -1272,7 +1272,7 @@ extern "C" {
       }
     }
 
-    state->status = F_none;
+    state->status = F_okay;
   }
 #endif // !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_extended_object_write_)
 

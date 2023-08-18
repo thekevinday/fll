@@ -73,7 +73,7 @@ extern "C" {
       return;
     }
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
   }
 #endif // _di_fss_read_payload_process_load_
 
@@ -84,7 +84,7 @@ extern "C" {
 
     fss_read_main_t * const main = (fss_read_main_t *) void_main;
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
   }
 #endif // _di_fss_read_payload_process_set_
 

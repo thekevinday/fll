@@ -41,7 +41,7 @@ extern "C" {
       }
     } // for
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_print_) || !defined(_di_f_print_dynamic_) || !defined(_di_f_print_dynamic_partial_)
 
@@ -123,7 +123,7 @@ extern "C" {
       }
     } // while
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_print_except_) || !defined(_di_f_print_except_dynamic_) || !defined(_di_f_print_except_dynamic_partial_)
 
@@ -212,7 +212,7 @@ extern "C" {
       }
     } // while
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_print_except_in_) || !defined(_di_f_print_except_in_dynamic_) || !defined(_di_f_print_except_in_dynamic_partial_)
 
@@ -299,7 +299,7 @@ extern "C" {
       }
     } // while
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_print_except_in_raw_) || !defined(_di_f_print_except_in_dynamic_raw_) || !defined(_di_f_print_except_in_dynamic_partial_raw_)
 
@@ -431,7 +431,7 @@ extern "C" {
       } while (count < total);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_print_except_in_raw_safely_) || !defined(_di_f_print_except_in_dynamic_raw_safely_) || !defined(_di_f_print_except_in_dynamic_partial_raw_safely_)
 
@@ -576,7 +576,7 @@ extern "C" {
       } while (count < total);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_print_except_in_safely_) || !defined(_di_f_print_except_in_dynamic_safely_) || !defined(_di_f_print_except_in_dynamic_partial_safely_)
 
@@ -647,7 +647,7 @@ extern "C" {
       } while (count < total);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_print_except_raw_) || !defined(_di_f_print_except_dynamic_raw_) || !defined(_di_f_print_except_dynamic_partial_raw_)
 
@@ -753,7 +753,7 @@ extern "C" {
       } while (count < total);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_print_except_raw_safely_) || !defined(_di_f_print_except_dynamic_raw_) || !defined(_di_f_print_except_dynamic_partial_raw_)
 
@@ -872,7 +872,7 @@ extern "C" {
       } while (count < total);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_print_except_safely_) || !defined(_di_f_print_except_dynamic_safely_) || !defined(_di_f_print_except_dynamic_partial_safely_)
 
@@ -918,7 +918,7 @@ extern "C" {
       } // for
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_print_dynamic_partial_raw_) || !defined(_di_f_print_dynamic_partial_raw_safely_) || !defined(_di_f_print_dynamic_raw_) || !defined(_di_f_print_dynamic_raw_safely_) || !defined(_di_f_print_raw_) || !defined(_di_f_print_raw_safely_)
 
@@ -1001,7 +1001,7 @@ extern "C" {
       } while (count < total);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_print_dynamic_partial_raw_safely_) || !defined(_di_f_print_dynamic_raw_safely_) || !defined(_di_f_print_raw_safely_)
 
@@ -1097,7 +1097,7 @@ extern "C" {
       } while (count < total);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_print_dynamic_partial_safely_) || !defined(_di_f_print_dynamic_safely_) || !defined(_di_f_print_safely_)
 
@@ -1134,7 +1134,7 @@ extern "C" {
 
     } while (count < length);
 
-    return F_none;
+    return F_okay;
   }
 #endif // !defined(_di_f_print_terminated_) || !defined(_di_f_print_raw_terminated_)
 

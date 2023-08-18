@@ -19,7 +19,7 @@ extern "C" {
  *   The lock to allocate.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   Errors (with error bit) from: f_thread_lock_delete().
  *   Errors (with error bit) from: f_thread_mutex_delete().
@@ -45,7 +45,7 @@ extern "C" {
  *   The r/w lock to obtain a read lock on.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_interrupt (with error bit set) on (exit) signal received, lock will not be set when this is returned.
  *
@@ -121,7 +121,7 @@ extern "C" {
  *   The r/w lock to obtain a write lock on.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_interrupt (with error bit set) on (exit) signal received, lock will not be set when this is returned.
  *

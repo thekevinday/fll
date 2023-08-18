@@ -69,7 +69,7 @@ void test__f_print_raw__works(void **state) {
 
     const f_status_t status = f_print_raw(test.string, test.used, output);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 }
 

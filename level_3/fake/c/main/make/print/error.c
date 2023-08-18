@@ -12,7 +12,7 @@ extern "C" {
 
     fake_print_context_wrapped_variable(print, "The argument ", name, " is not a valid section name");
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_make_print_error_argument_invalid_section_
 
@@ -24,7 +24,7 @@ extern "C" {
 
     fake_print_context_wrapped_variable(print, "No compiler has been specified, cannot perform ", action, " section operation");
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_make_print_error_compiler_not_specified_
 
@@ -42,7 +42,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_make_print_error_content_not_directory_
 
@@ -54,7 +54,7 @@ extern "C" {
 
     fake_print_context_simple(print, "Define name must not be an empty string");
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_make_print_error_define_name_empty_
 
@@ -66,7 +66,7 @@ extern "C" {
 
     fake_print_context_wrapped_variable(print, "Invalid characters in the define name ", name, ", only alpha-numeric ASCII characters and underscore (without a leading digit) are allowed");
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_make_print_error_define_invalid_character_
 
@@ -86,7 +86,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_make_print_error_fakefile_section_missing_
 
@@ -98,7 +98,7 @@ extern "C" {
 
     fake_print_context_simple(print, "File name argument must not be an empty string");
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_make_print_error_file_name_empty_
 
@@ -116,7 +116,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_make_print_error_file_type_
 
@@ -128,7 +128,7 @@ extern "C" {
 
     fake_print_context_wrapped_variable(print, "No indexer has been specified, cannot perform ", action, " section operation");
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_make_print_error_indexer_not_specified_
 
@@ -150,7 +150,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_make_print_error_after_condition_
 
@@ -162,7 +162,7 @@ extern "C" {
 
     fake_make_print_error_after_condition(print, "May only be used immediately after");
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_make_print_error_after_condition_may_only_
 
@@ -174,7 +174,7 @@ extern "C" {
 
     fake_make_print_error_after_condition(print, "Must not be used immediately after");
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_make_print_error_after_condition_must_not_
 
@@ -186,7 +186,7 @@ extern "C" {
 
     fake_make_print_error_after_condition(print, "Has no preceding");
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_make_print_error_after_condition_no_preceding_
 
@@ -217,7 +217,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_make_print_error_operation_incomplete_
 
@@ -235,7 +235,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_make_print_error_operation_recursion_
 
@@ -247,7 +247,7 @@ extern "C" {
 
     fake_print_context_wrapped_variable(print, "No operation section named ", name, " is found");
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_make_print_error_operation_section_not_found_
 
@@ -265,7 +265,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_make_print_error_out_of_range_number_
 
@@ -277,7 +277,7 @@ extern "C" {
 
     fake_print_context_simple(print, "Must not attempt to pop project root off of path stack");
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_make_print_error_pop_last_path_
 
@@ -295,7 +295,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_make_print_error_program_failed_
 
@@ -307,7 +307,7 @@ extern "C" {
 
     fake_print_context_wrapped_variable(print, "Failed to find program ", program, " for executing");
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_make_print_error_program_not_found_
 
@@ -319,7 +319,7 @@ extern "C" {
 
     fake_print_context_wrapped_variable(print, "Cannot assign a value to the parameter name ", name, " because it is a reserved parameter name");
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_make_print_error_reserved_parameter_name_
 
@@ -331,7 +331,7 @@ extern "C" {
 
     fake_print_context_simple(print, "Target file name argument must not be an empty string");
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_make_print_error_target_file_name_empty_
 
@@ -343,7 +343,7 @@ extern "C" {
 
     fake_print_context_wrapped_variable(print, "Invalid or unsupported number provided ", number, 0);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_make_print_error_unsupported_number_
 
@@ -361,7 +361,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_make_print_error_unsupported_type_
 

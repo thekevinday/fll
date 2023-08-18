@@ -146,7 +146,7 @@ extern "C" {
     if (!path.used) return F_data_not;
 
     struct dirent **listing = 0;
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     const size_t length = scandir(path.string, &listing, filter, sort);
 
@@ -209,7 +209,7 @@ extern "C" {
     if (F_status_is_error(status)) return status;
     if (!length) return F_directory_empty;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_directory_list_
 
@@ -248,7 +248,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_directory_open_
 
@@ -288,7 +288,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_directory_open_at_
 
@@ -312,7 +312,7 @@ extern "C" {
     else {
 
       // Not recursively deleting and the path is requested to be preserved, so there is nothing to delete.
-      if (preserve) return F_none;
+      if (preserve) return F_okay;
 
       result = remove(path.string);
     }
@@ -338,7 +338,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_directory_remove_
 
@@ -362,7 +362,7 @@ extern "C" {
     else {
 
       // Not recursively deleting and the path is requested to be preserved, so there is nothing to delete.
-      if (preserve) return F_none;
+      if (preserve) return F_okay;
 
       result = remove(path.string);
     }
@@ -388,7 +388,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_directory_remove_custom_
 
@@ -430,7 +430,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_directory_touch_
 
@@ -473,7 +473,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_directory_touch_at_
 

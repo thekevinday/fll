@@ -90,7 +90,7 @@ extern "C" {
             main->setting.state.status = F_status_set_error(F_exist_not);
           }
           else {
-            main->setting.state.status = F_none;
+            main->setting.state.status = F_okay;
           }
         }
       }
@@ -139,7 +139,7 @@ extern "C" {
       }
     }
     else {
-      main->setting.state.status = F_none;
+      main->setting.state.status = F_okay;
     }
   }
 #endif // _di_fake_make_get_id_mode_
@@ -154,7 +154,7 @@ extern "C" {
     fake_string_dynamic_reset(&main->cache_argument);
 
     if (!path.used || path.used == data_make->path.stack.array[0].used) {
-      main->setting.state.status = F_none;
+      main->setting.state.status = F_okay;
 
       return;
     }
@@ -176,7 +176,7 @@ extern "C" {
     main->setting.state.status = f_string_dynamic_terminate(&main->cache_argument);
     if (F_status_is_error(main->setting.state.status)) return;
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
   }
 #endif // _di_fake_make_path_relative_
 

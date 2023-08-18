@@ -161,7 +161,7 @@ extern "C" {
  *   The main program and setting data.
  *
  *   This alters main.setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *     F_child if this is a child process returning.
  *
  *     F_interrupt (with error bit) on interrupt signal received.
@@ -196,7 +196,7 @@ extern "C" {
  *   The program data.
  *
  *   This alters setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *     F_child if this is a child process returning.
  *
  *     F_interrupt (with error bit) on interrupt signal received.
@@ -227,7 +227,7 @@ extern "C" {
  *   The program data.
  *
  *   This alters data.main->setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *     F_false on file not found and file is not required.
  *
  *     F_file_found_not (with error bit) if file is not found and file is required.
@@ -264,7 +264,7 @@ extern "C" {
  *   The program data.
  *
  *   This alters data.main->setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *
  *     F_interrupt (with error bit) on interrupt signal received.
  *
@@ -290,7 +290,7 @@ extern "C" {
  *   The program data.
  *
  *   This alters data.main->setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *
  *     F_interrupt (with error bit) on interrupt signal received.
  *

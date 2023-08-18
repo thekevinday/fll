@@ -31,7 +31,7 @@ extern "C" {
       context->set.title = f_color_set_empty_s;
       context->set.warning = f_color_set_empty_s;
 
-      f_status_t status = F_none;
+      f_status_t status = F_okay;
 
       if (context->error.size) {
         status = f_string_dynamic_resize(0, &context->error);
@@ -113,7 +113,7 @@ extern "C" {
         context->warning.used = 0;
       }
 
-      return F_none;
+      return F_okay;
     }
 
     if (mode != f_color_mode_dark_e && mode != f_color_mode_light_e) return F_data_not;
@@ -206,7 +206,7 @@ extern "C" {
       context->set.warning.before = &context->warning;
       context->set.warning.after = &context->reset;
 
-      status = F_none;
+      status = F_okay;
     }
 
     return status;
@@ -282,7 +282,7 @@ extern "C" {
 
     buffer->string[buffer->used] = 0;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_color_save_3_
 
@@ -347,7 +347,7 @@ extern "C" {
 
     buffer->string[buffer->used] = 0;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_color_save_4_
 
@@ -430,7 +430,7 @@ extern "C" {
 
     buffer->string[buffer->used] = 0;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_color_save_5_
 

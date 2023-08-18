@@ -105,7 +105,7 @@ void test__f_account_by_id__works(void **state) {
 
     const f_status_t status = f_account_by_id(uid, &account);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(account.id_user, password.pw_uid);
     assert_int_equal(account.id_group, password.pw_gid);
     assert_string_equal(account.home.string, password.pw_dir);

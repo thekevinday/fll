@@ -30,7 +30,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fll_program_print_copyright_
 
@@ -48,7 +48,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fll_program_print_error_missing_file_
 
@@ -70,7 +70,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fll_program_print_error_missing_variable_not_zero_
 
@@ -92,7 +92,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fll_program_print_error_parameter_both_specified_same_amount_
 
@@ -116,7 +116,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fll_program_print_error_parameter_both_specified_same_amount_without_
 
@@ -138,7 +138,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fll_program_print_error_parameter_cannot_use_with_
 
@@ -162,7 +162,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fll_program_print_error_parameter_cannot_use_with_without_
 
@@ -182,7 +182,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fll_program_print_error_parameter_cannot_use_with_pipe_
 
@@ -206,7 +206,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fll_program_print_error_parameter_cannot_use_with_xor_
 
@@ -226,7 +226,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fll_program_print_error_parameter_empty_value_
 
@@ -250,7 +250,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fll_program_print_error_parameter_integer_less_than_
 
@@ -274,7 +274,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fll_program_print_error_parameter_integer_more_than_
 
@@ -296,7 +296,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fll_program_print_error_parameter_integer_not_
 
@@ -318,7 +318,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fll_program_print_error_parameter_integer_not_negative_
 
@@ -340,7 +340,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fll_program_print_error_parameter_integer_not_positive_
 
@@ -360,7 +360,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fll_program_print_error_parameter_missing_value_
 
@@ -382,7 +382,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fll_program_print_error_parameter_missing_value_requires_amount_
 
@@ -402,7 +402,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fll_program_print_error_parameter_must_specify_once_
 
@@ -424,7 +424,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fll_program_print_error_parameter_must_specify_once_value_
 
@@ -444,7 +444,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fll_program_print_error_parameter_process_
 
@@ -468,7 +468,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fll_program_print_error_parameter_range_start_before_stop_
 
@@ -488,7 +488,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fll_program_print_error_parameter_value_too_long_
 
@@ -506,7 +506,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fll_program_print_error_pipe_invalid_form_feed_
 
@@ -524,7 +524,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fll_program_print_error_pipe_missing_content_
 
@@ -542,7 +542,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fll_program_print_error_pipe_object_without_content_
 
@@ -557,7 +557,7 @@ extern "C" {
 
     fl_print_format(" %[Available Options:%] %r", print->to, print->set->important, print->set->important, f_string_eol_s);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fll_program_print_help_header_
 
@@ -591,7 +591,7 @@ extern "C" {
     private_fll_program_print_help_option(print, f_console_standard_short_line_first_no_s, f_console_standard_long_line_first_no_s, f_console_symbol_short_inverse_s, f_console_symbol_long_inverse_s, "Disable printing of first line.");
     private_fll_program_print_help_option(print, f_console_standard_short_line_last_no_s, f_console_standard_long_line_last_no_s, f_console_symbol_short_inverse_s, f_console_symbol_long_inverse_s, " Disable printing of last line.");
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fll_program_print_help_option_standard_
 
@@ -603,7 +603,7 @@ extern "C" {
 
     fl_print_format("      %Q%[%Q%]  %S%r", print->to, symbol_long, print->set->standout, option_long, print->set->standout, description, f_string_eol_s);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fll_program_print_help_option_long_
 
@@ -615,7 +615,7 @@ extern "C" {
 
     fl_print_format("  %[%Q%]  %S%r", print->to, print->set->standout, option_other, print->set->standout, description, f_string_eol_s);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fll_program_print_help_option_other_
 
@@ -636,7 +636,7 @@ extern "C" {
 
     f_print_dynamic_raw(f_string_eol_s, print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fll_program_print_help_usage_
 
@@ -661,7 +661,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fll_program_print_signal_received_
 
@@ -678,7 +678,7 @@ extern "C" {
 
     f_file_stream_unlock(print->to);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fll_program_print_version_
 

@@ -100,7 +100,7 @@ extern "C" {
   #define byte_dump_setting_t_initialize \
     { \
       byte_dump_main_flag_none_e, \
-      F_none, \
+      F_okay, \
       f_state_t_initialize, \
       0, \
       0, \
@@ -152,7 +152,7 @@ extern "C" {
  *   This does not alter setting.state.status.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  */

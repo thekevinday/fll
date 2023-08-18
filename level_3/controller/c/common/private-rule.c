@@ -166,7 +166,7 @@ extern "C" {
       ons->used = length;
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_controller_rule_ons_resize_
 
@@ -214,7 +214,7 @@ extern "C" {
       rules->used = length;
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_controller_rules_resize_
 

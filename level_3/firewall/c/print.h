@@ -23,7 +23,7 @@ extern "C" {
  *   The output structure to print to.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  */
 #ifndef _di_firewall_print_help_
   extern f_status_t firewall_print_help(firewall_setting_t * const setting, const fl_print_t print);

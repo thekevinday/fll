@@ -62,20 +62,20 @@ extern "C" {
         if (buffer.string[2] || buffer.string[3] || !buffer.string[4]) return F_partial;
         if (buffer.string[1] < F_fss_simple_packet_block_header_size_d) return F_status_set_error(F_valid_not);
 
-        return (buffer.string[1] == F_fss_simple_packet_block_header_size_d) ? F_none : F_partial;
+        return (buffer.string[1] == F_fss_simple_packet_block_header_size_d) ? F_okay : F_partial;
       }
 
       // Little endian.
       if (!buffer.string[1] || buffer.string[2] || buffer.string[3]) return F_partial;
       if (buffer.string[4] < F_fss_simple_packet_block_header_size_d) return F_status_set_error(F_valid_not);
 
-      return (buffer.string[4] == F_fss_simple_packet_block_header_size_d) ? F_none : F_partial;
+      return (buffer.string[4] == F_fss_simple_packet_block_header_size_d) ? F_okay : F_partial;
     }
 
     range->payload.start = F_fss_simple_packet_block_header_size_d;
     range->payload.stop = (buffer.used - F_fss_simple_packet_block_header_size_d < F_fss_simple_packet_block_payload_size_d) ? buffer.used - 1 : F_fss_simple_packet_block_payload_size_d - 1;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_fss_simple_packet_identify_
 
@@ -84,7 +84,7 @@ extern "C" {
 
     {
       f_fss_simple_packet_t * const array = (f_fss_simple_packet_t *) void_array;
-      f_status_t status = F_none;
+      f_status_t status = F_okay;
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
 
@@ -93,7 +93,7 @@ extern "C" {
       } // for
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_fss_simple_packets_delete_callback_
 
@@ -102,7 +102,7 @@ extern "C" {
 
     {
       f_fss_simple_packet_t * const array = (f_fss_simple_packet_t *) void_array;
-      f_status_t status = F_none;
+      f_status_t status = F_okay;
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
 
@@ -114,7 +114,7 @@ extern "C" {
       } // for
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_fss_simple_packets_destroy_callback_
 
@@ -123,7 +123,7 @@ extern "C" {
 
     {
       f_fss_simple_packets_t * const array = (f_fss_simple_packets_t *) void_array;
-      f_status_t status = F_none;
+      f_status_t status = F_okay;
       f_number_unsigned_t j = 0;
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
@@ -141,7 +141,7 @@ extern "C" {
       } // for
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_fss_simple_packetss_delete_callback_
 
@@ -150,7 +150,7 @@ extern "C" {
 
     {
       f_fss_simple_packets_t * const array = (f_fss_simple_packets_t *) void_array;
-      f_status_t status = F_none;
+      f_status_t status = F_okay;
       f_number_unsigned_t j = 0;
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
@@ -171,7 +171,7 @@ extern "C" {
       } // for
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_fss_simple_packetss_destroy_callback_
 

@@ -17,7 +17,7 @@ extern "C" {
     status = private_fll_execute_arguments_add(source, arguments);
     if (F_status_is_error(status)) return status;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fll_execute_arguments_add_
 
@@ -33,7 +33,7 @@ extern "C" {
     status = private_fll_execute_arguments_add_parameter(prefix, name, value, arguments);
     if (F_status_is_error(status)) return status;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fll_execute_arguments_add_parameter_
 
@@ -108,7 +108,7 @@ extern "C" {
       f_string_dynamics_t paths = f_string_dynamics_t_initialize;
       f_string_dynamic_t *found = 0;
 
-      f_status_t status = F_none;
+      f_status_t status = F_okay;
 
       if (last_slash) {
         status = f_file_exists(program.used ? program : arguments.array[0], F_true);
@@ -128,7 +128,7 @@ extern "C" {
 
           // Do not consider PATH is not available (or not valid?) to be an error.
           if (F_status_set_fine(status) == F_valid_not || F_status_set_fine(status) == F_failure) {
-            status = F_none;
+            status = F_okay;
           }
         }
         else {
@@ -263,7 +263,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fll_execute_into_
 
@@ -306,7 +306,7 @@ extern "C" {
       f_string_dynamics_t paths = f_string_dynamics_t_initialize;
       f_string_dynamic_t *found = 0;
 
-      f_status_t status = F_none;
+      f_status_t status = F_okay;
 
       if (last_slash) {
         status = f_file_exists(program.used ? program : arguments.array[0], F_true);
@@ -328,7 +328,7 @@ extern "C" {
 
           // Do not consider PATH to be not available (or not valid?) to be an error.
           if (F_status_set_fine(status) == F_valid_not || F_status_set_fine(status) == F_failure) {
-            status = F_none;
+            status = F_okay;
           }
         }
         else {

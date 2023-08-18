@@ -32,7 +32,7 @@ extern "C" {
  *   This is then updated to represent the max bytes used if enough space is available.
  *
  * @return
- *   F_none if conversion was successful.
+ *   F_okay if conversion was successful.
  *
  *   F_failure (with error bit) if width is not long enough to convert.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -56,7 +56,7 @@ extern "C" {
  *   The Unicode number.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
@@ -81,7 +81,7 @@ extern "C" {
  *   The (UTF-8) character.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
@@ -108,7 +108,7 @@ extern "C" {
  *   Does not need to be interpretted like UTF-8, this is a number from 0 onto max supported Unicode integer value (U+10FFFF).
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_failure (with error bit) if width_max is not long enough to convert.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -132,7 +132,7 @@ extern "C" {
  *   This value may be cleared, even on error.
  *
  * @return
- *   F_none if conversion was successful.
+ *   F_okay if conversion was successful.
  *
  *   F_failure (with error bit) if width is not long enough to convert.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -159,7 +159,7 @@ extern "C" {
  *   The caller is expected to ensure this.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_failure (with error bit) if width_max is not long enough to convert.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -185,7 +185,7 @@ extern "C" {
  *   Does not need to be interpretted like UTF-8, this is a number from 0 onto max supported Unicode integer value (U+10FFFF).
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_failure (with error bit) if width is not long enough to convert.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -215,7 +215,7 @@ extern "C" {
  *   Does not need to be interpretted like UTF-8, this is a number from 0 onto max supported Unicode integer value (U+10FFFF).
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_failure (with error bit) if width_max is not long enough to convert.
  *   F_parameter (with error bit) if a parameter is invalid.

@@ -18,7 +18,7 @@
 extern void test__f_utf_seek_line__returns_data_not_stop(void **state);
 
 /**
- * Test that the function returns F_none_stop stopped after end of range because no newline is found.
+ * Test that the function returns F_okay_stop stopped after end of range because no newline is found.
  *
  * @see f_utf_string_seek_line()
  */

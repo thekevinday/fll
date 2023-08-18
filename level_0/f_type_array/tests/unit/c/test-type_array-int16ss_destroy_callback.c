@@ -36,16 +36,16 @@ void test__f_type_array_int16ss_destroy_callback__works(void **state) {
 
   {
     f_status_t status = f_memory_array_adjust(length, sizeof(f_int16s_t), (void **) &datass.array, &datass.used, &datass.size);
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
 
     status = f_memory_array_adjust(1, sizeof(int16_t), (void **) &datass.array[0].array, &datass.array[0].used, &datass.array[0].size);
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 
   {
     const f_status_t status = f_int16ss_destroy_callback(0, length, (void *) datass.array);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(datass.array[0].size, 0);
   }
 

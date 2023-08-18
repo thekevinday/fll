@@ -25,7 +25,7 @@ extern "C" {
       } // for
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_barriers_delete_callback_
 
@@ -49,7 +49,7 @@ extern "C" {
       } // for
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_barriers_destroy_callback_
 
@@ -82,7 +82,7 @@ extern "C" {
       } // for
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_barrierss_delete_callback_
 
@@ -115,7 +115,7 @@ extern "C" {
       } // for
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_thread_barrierss_destroy_callback_
 

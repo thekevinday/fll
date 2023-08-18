@@ -29,7 +29,7 @@ extern "C" {
  *   The buffer will become NULL terminated after the appended string length.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   Errors (with error bit) from: f_string_dynamic_increase_by()
  *
@@ -58,7 +58,7 @@ extern "C" {
  *   The buffer will become NULL terminated after the appended string length.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   Errors (with error bit) from: f_string_dynamic_increase_by()
  *

@@ -57,7 +57,7 @@ void test__f_thread_signal_mask__parameter_checking(void **state) {
 
     const f_status_t status = f_thread_signal_mask(how, &next, 0);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 
   {
@@ -65,7 +65,7 @@ void test__f_thread_signal_mask__parameter_checking(void **state) {
 
     const f_status_t status = f_thread_signal_mask(how, 0, &current);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 }
 
@@ -83,7 +83,7 @@ void test__f_thread_signal_mask__works(void **state) {
 
     const f_status_t status = f_thread_signal_mask(how, &next, &current);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
   }
 }
 

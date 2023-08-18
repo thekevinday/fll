@@ -24,7 +24,7 @@ void test__f_file_umask_get__works(void **state) {
 
     const mode_t status = f_file_umask_get(&mode);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(mode, F_file_mode_all_rw_d);
   }
 }

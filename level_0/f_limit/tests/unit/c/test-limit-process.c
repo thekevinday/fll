@@ -57,7 +57,7 @@ void test__f_limit_process__works(void **state) {
 
     const f_status_t status = f_limit_process(1, 1, &value, &destination);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(destination.rlim_cur, value.rlim_cur);
     assert_int_equal(destination.rlim_max, value.rlim_max);
   }

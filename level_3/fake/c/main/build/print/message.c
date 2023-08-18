@@ -13,7 +13,7 @@ extern "C" {
     fll_print_dynamic_raw(f_string_eol_s, print->to);
     fake_print_context_important_simple_variable(print, "Copying ", path, 0);
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_build_print_message_copying_
 
@@ -26,7 +26,7 @@ extern "C" {
     fll_print_dynamic_raw(f_string_eol_s, print->to);
     fake_print_context_important_simple(print, "Creating base build directories");
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_fake_build_print_message_skeleton_build_base_
 

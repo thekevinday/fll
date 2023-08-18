@@ -26,7 +26,7 @@ extern "C" {
  *   The destination lengths the source is appended onto.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   Errors (with error bit) from: f_memory_array_increase().
  *
@@ -50,7 +50,7 @@ extern "C" {
  *   The destination lengths the source is appended onto.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   Errors (with error bit) from: f_memory_array_increase_by().
  *
@@ -75,7 +75,7 @@ extern "C" {
  *   The setss array to adjust.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
  *
  *   F_array_too_large (with error bit) if new length is larger than max array length.
@@ -104,7 +104,7 @@ extern "C" {
  *   The setss array to resize.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
  *
  *   F_array_too_large (with error bit) if new length is larger than max array length.

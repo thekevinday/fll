@@ -60,7 +60,7 @@ extern "C" {
  *   The destination string the source is appended onto.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if source length is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -87,7 +87,7 @@ extern "C" {
  *   The destination string the source is appended onto.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if source length is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -115,7 +115,7 @@ extern "C" {
  *   The destination string the source is appended onto.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if source length is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -142,7 +142,7 @@ extern "C" {
  *   The destination string the source is appended onto.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if source length is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -173,7 +173,7 @@ extern "C" {
  *   The destination string the source and glue are appended onto.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if source length is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -206,7 +206,7 @@ extern "C" {
  *   The destination string the source and glue are appended onto.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if source length is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -237,7 +237,7 @@ extern "C" {
  *   The destination string the source and glue are appended onto.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if source length is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -270,7 +270,7 @@ extern "C" {
  *   The destination string the source and glue are appended onto.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if source length is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -297,7 +297,7 @@ extern "C" {
  *   The destination string the source is prepended onto.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if source length is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -326,7 +326,7 @@ extern "C" {
  *   The destination string the source is prepended onto.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if source length is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -356,7 +356,7 @@ extern "C" {
  *   The destination string the source is prepended onto.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if source length is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -386,7 +386,7 @@ extern "C" {
  *   The destination string the source is prepended onto.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_data_not if source length is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -410,8 +410,8 @@ extern "C" {
  *   The start location will be incremented by seek.
  *
  * @return
- *   F_none on success.
- *   F_none_stop on success, but stopped at end of range.
+ *   F_okay on success.
+ *   F_okay_stop on success, but stopped at end of range.
  *   F_data_not_stop on success, but the range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -436,9 +436,9 @@ extern "C" {
  *   The start location will be incremented by seek.
  *
  * @return
- *   F_none on success.
- *   F_none_eol on success, but stopped at EOL.
- *   F_none_stop on success, but stopped at the stop location.
+ *   F_okay on success.
+ *   F_okay_eol on success, but stopped at EOL.
+ *   F_okay_stop on success, but stopped at the stop location.
  *   F_data_not_stop if range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -459,8 +459,8 @@ extern "C" {
  *   The start location will be incremented by seek.
  *
  * @return
- *   F_none on success.
- *   F_none_stop on success, but stopped at the stop location.
+ *   F_okay on success.
+ *   F_okay_stop on success, but stopped at the stop location.
  *   F_data_not_stop if range.start > range.stop.
  *
  *   F_complete_not_utf (with error bit) if character is an incomplete UTF-8 fragment.

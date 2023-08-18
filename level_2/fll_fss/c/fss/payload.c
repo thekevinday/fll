@@ -16,7 +16,7 @@ extern "C" {
       }
     #endif // _di_level_2_parameter_checking_
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
     f_number_unsigned_t initial_used = objects->used;
 
     bool found_data = F_false;
@@ -67,7 +67,7 @@ extern "C" {
           }
 
           if (found_data) {
-            state->status = F_status_set_error((range->start >= buffer.used) ? F_none_eos : F_none_stop);
+            state->status = F_status_set_error((range->start >= buffer.used) ? F_okay_eos : F_okay_stop);
           }
           else {
             state->status = F_status_set_error((range->start >= buffer.used) ? F_data_not_eos : F_data_not_stop);
@@ -96,12 +96,12 @@ extern "C" {
             if (buffer.used > range->stop) {
               contents->array[contents->used].array[0].stop = range->stop;
               range->start = range->stop + 1;
-              state->status = F_none_stop;
+              state->status = F_okay_stop;
             }
             else {
               contents->array[contents->used].array[0].stop = buffer.used - 1;
               range->start = buffer.used;
-              state->status = F_none_eos;
+              state->status = F_okay_eos;
             }
 
             ++objects->used;
@@ -141,7 +141,7 @@ extern "C" {
             }
 
             contents->array[contents->used++].used = 0;
-            state->status = F_none;
+            state->status = F_okay;
 
             return;
           }
@@ -150,7 +150,7 @@ extern "C" {
         }
       } while (state->status == F_fss_found_object_not);
 
-      if (state->status == F_none_eos || state->status == F_none_stop) {
+      if (state->status == F_okay_eos || state->status == F_okay_stop) {
         ++contents->array[contents->used].used;
         ++objects->used;
         ++contents->used;
@@ -163,11 +163,11 @@ extern "C" {
 
       if (state->status == F_data_not || state->status == F_data_not_eos || state->status == F_data_not_stop) {
 
-        // If at least some valid object was found, then return F_none equivalents.
+        // If at least some valid object was found, then return F_okay equivalents.
         if (objects->used > initial_used) {
 
           // Returning without a "payload" is an error.
-          state->status = (state->status == F_data_not_eos) ? F_status_set_error(F_none_eos) : F_status_set_error(F_none_stop);
+          state->status = (state->status == F_data_not_eos) ? F_status_set_error(F_okay_eos) : F_status_set_error(F_okay_stop);
         }
         else {
           state->status = F_status_set_error(state->status);
@@ -194,7 +194,7 @@ extern "C" {
         }
 
         // Returning without a "payload" is an error.
-        state->status = F_status_set_error((range->start >= buffer.used) ? F_none_eos : F_none_stop);
+        state->status = F_status_set_error((range->start >= buffer.used) ? F_okay_eos : F_okay_stop);
 
         return;
       }
@@ -232,7 +232,7 @@ extern "C" {
       return;
     }
 
-    if (state->status == F_none || state->status == F_none_stop || state->status == F_none_eos || state->status == F_none_eol) {
+    if (state->status == F_okay || state->status == F_okay_stop || state->status == F_okay_eos || state->status == F_okay_eol) {
       if (f_compare_dynamic(f_fss_payload_s, object) == F_equal_to) {
         state->status = f_string_dynamic_increase_by(content.used, destination);
         if (F_status_is_error(state->status)) return;

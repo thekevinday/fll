@@ -31,7 +31,7 @@ extern "C" {
  *   This modifies data.main.cache_arguments.
  *
  *   This alters data.main->settings.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *
  *     Errors (with error bit) from: f_directory_create().
  *     Errors (with error bit) from: f_directory_exists().

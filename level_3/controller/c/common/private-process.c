@@ -38,7 +38,7 @@ extern "C" {
       pids->used = length;
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_controller_pids_resize_
 
@@ -99,7 +99,7 @@ extern "C" {
 #ifndef _di_controller_processs_resize_
   f_status_t controller_processs_resize(const f_number_unsigned_t length, controller_processs_t * const processs) {
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
 
     for (f_number_unsigned_t i = length; i < processs->size; ++i) {
 
@@ -157,7 +157,7 @@ extern "C" {
       }
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_controller_processs_resize_
 

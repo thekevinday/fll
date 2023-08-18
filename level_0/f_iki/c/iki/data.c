@@ -26,7 +26,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_iki_data_delete_
 
@@ -50,7 +50,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_iki_data_destroy_
 
@@ -93,7 +93,7 @@ extern "C" {
 
     ++destination->used;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_iki_datas_append_
 
@@ -114,7 +114,7 @@ extern "C" {
 
     {
       f_iki_data_t * const array = (f_iki_data_t *) void_array;
-      f_status_t status = F_none;
+      f_status_t status = F_okay;
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
 
@@ -132,7 +132,7 @@ extern "C" {
       } // for
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_iki_datas_delete_callback_
 
@@ -141,7 +141,7 @@ extern "C" {
 
     {
       f_iki_data_t * const array = (f_iki_data_t *) void_array;
-      f_status_t status = F_none;
+      f_status_t status = F_okay;
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
 
@@ -159,7 +159,7 @@ extern "C" {
       } // for
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_iki_datas_destroy_callback_
 
@@ -179,7 +179,7 @@ extern "C" {
 
     ++destination->used;
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_iki_datass_append_
 
@@ -204,7 +204,7 @@ extern "C" {
       }
     } // for
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_iki_datass_append_all_
 
@@ -213,7 +213,7 @@ extern "C" {
 
     {
       f_iki_datas_t * const array = (f_iki_datas_t *) void_array;
-      f_status_t status = F_none;
+      f_status_t status = F_okay;
       f_number_unsigned_t j = 0;
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
@@ -240,7 +240,7 @@ extern "C" {
       } // for
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_iki_datass_delete_callback_
 
@@ -249,7 +249,7 @@ extern "C" {
 
     {
       f_iki_datas_t * const array = (f_iki_datas_t *) void_array;
-      f_status_t status = F_none;
+      f_status_t status = F_okay;
       f_number_unsigned_t j = 0;
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
@@ -276,7 +276,7 @@ extern "C" {
       } // for
     }
 
-    return F_none;
+    return F_okay;
   }
 #endif // _di_f_iki_datass_destroy_callback_
 

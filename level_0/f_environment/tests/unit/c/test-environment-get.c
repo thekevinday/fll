@@ -57,7 +57,7 @@ void test__f_environment_get__works(void **state) {
 
     const f_status_t status = f_environment_get(path, &buffer);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(buffer.used, path.used);
     assert_string_equal(buffer.string, path.string);
   }
@@ -69,7 +69,7 @@ void test__f_environment_get__works(void **state) {
 
     const f_status_t status = f_environment_get(path, &buffer);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(status, F_okay);
     assert_int_equal(buffer.used, f_string_empty_s.used);
     assert_string_equal(buffer.string, f_string_empty_s.string);
   }

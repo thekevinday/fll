@@ -103,7 +103,7 @@ extern "C" {
       f_string_range_t range = f_string_range_t_initialize;
       f_number_unsigned_t index = 0;
 
-      main->setting.state.status = F_none;
+      main->setting.state.status = F_okay;
 
       // Validate the remaining parameters.
       for (i = 0; i < main->program.parameters.remaining.used; ++i) {
@@ -211,7 +211,7 @@ extern "C" {
     fake_make_data_delete(&data_make);
 
     if (F_status_is_error_not(main->setting.state.status)) {
-      main->setting.state.status = F_none;
+      main->setting.state.status = F_okay;
     }
   }
 #endif // _di_fake_make_operate_
@@ -1192,7 +1192,7 @@ extern "C" {
 
     fake_main_t * const main = data_make->main;
 
-    main->setting.state.status = F_none;
+    main->setting.state.status = F_okay;
 
     fake_string_dynamic_reset(&main->cache_1);
     fake_string_dynamic_reset(&main->cache_2);
@@ -1349,7 +1349,7 @@ extern "C" {
     f_number_unsigned_t i = 0;
     f_number_unsigned_t j = 0;
 
-    for (i = 0; i < section->objects.used; ++i, main->setting.state.status = F_none) {
+    for (i = 0; i < section->objects.used; ++i, main->setting.state.status = F_okay) {
 
       fake_string_dynamics_reset(&main->cache_arguments);
 
@@ -1453,7 +1453,7 @@ extern "C" {
 
         // F_signal_quit is used by the exit section operation.
         if (!section_stack->used) {
-          main->setting.state.status = F_none;
+          main->setting.state.status = F_okay;
         }
 
         break;
@@ -1461,8 +1461,8 @@ extern "C" {
       else if (main->setting.state.status == F_failure) {
 
         // When F_failure (without the error bit) is returned, an error occured but the exit mode is not set to exit.
-        // Record the success state and set the status to F_none.
-        main->setting.state.status = F_none;
+        // Record the success state and set the status to F_okay.
+        main->setting.state.status = F_okay;
         state_process.success = F_false;
       }
       else {

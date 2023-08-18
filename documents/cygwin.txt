@@ -57,7 +57,7 @@ Cygwin:
         return F_status_set_error(F_failure);
       }
 
-      return F_none;
+      return F_okay;
     "
   to\:
     block:"

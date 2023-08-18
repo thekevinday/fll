@@ -28,8 +28,8 @@ extern "C" {
  *   A range within the serialize string representing the string at the given index.
  *
  * @return
- *   F_none on success.
- *   F_none_eos on success at end of string.
+ *   F_okay on success.
+ *   F_okay_eos on success at end of string.
  *   F_data_not_eos if end of string reached before index was reached.
  *
  *   F_complete_not_utf_eos (with error bit) if end of string is reached before a complete UTF-8 character can be processed.

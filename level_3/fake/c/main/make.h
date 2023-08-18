@@ -47,7 +47,7 @@ extern "C" {
  *   The data_make.cache_path will be updated to reflect the full path to this file.
  *
  *   This alters data_make.main->setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *
  *     F_failure (with error bit) on any error.
  *     F_exist_not (with error bit) if there is no owner or group by the given name.
@@ -84,7 +84,7 @@ extern "C" {
  *   The data_make.cache_path will be updated to reflect the full path to this file.
  *
  *   This alters data_make.main->setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *
  *     F_failure (with error bit) on any error.
  *     F_parameter (with error bit) on invalid parameter.
@@ -113,7 +113,7 @@ extern "C" {
  *   The relative path is stored in data_make.cache_path.
  *
  *   This alters data_make.main->setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *
  *     F_failure (with error bit) on any error.
  *     F_parameter (with error bit) on invalid parameter.

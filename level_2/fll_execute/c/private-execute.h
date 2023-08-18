@@ -26,7 +26,7 @@ extern "C" {
  *   The array of string arguments intended to pass to the execute functions.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   Errors (with error bit) from: f_string_dynamic_increase_by().
  *   Errors (with error bit) from: f_string_dynamic_resize().
@@ -55,7 +55,7 @@ extern "C" {
  *   The array of string arguments intended to pass to the execute functions.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   Errors (with error bit) from: f_string_append().
  *   Errors (with error bit) from: f_string_dynamic_resize().
@@ -89,7 +89,7 @@ extern "C" {
  *   The code returned after finishing execution of program.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_capability (with error bit) on failure to set capabilities.
  *   F_group (with error bit) on failure to set GID.
@@ -130,7 +130,7 @@ extern "C" {
  *   A string representing the return code ('0' for success, '1' for failure).
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  *   F_control_group (with error bit) on failure to set control group.
  *   F_limit (with error bit) on failure to set a resource limit.
@@ -193,7 +193,7 @@ extern "C" {
  *   Set to NULL to not use.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_child on success and this is the child thread.
  *   F_parent on success and this is the parent thread (only happens when FL_execute_parameter_option_return_d is passed).
  *
@@ -269,7 +269,7 @@ extern "C" {
  *   Set to NULL to not use.
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *   F_child on success and this is the child thread.
  *   F_parent on success and this is the parent thread (only happens when FL_execute_parameter_option_return_d is passed).
  *
@@ -326,7 +326,7 @@ extern "C" {
  *   This is a array of simple strings intended to be eventually directly passed to functions like exec().
  *
  * @return
- *   F_none on success.
+ *   F_okay on success.
  *
  * @see fll_execute_program()
  */

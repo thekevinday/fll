@@ -51,7 +51,7 @@ extern "C" {
  *   The main program data.
  *
  *   This alters main.setting.state.status:
- *     F_none on success.
+ *     F_okay on success.
  *
  *     F_parameter (with error bit) on parameter validation/verification failure.
  */

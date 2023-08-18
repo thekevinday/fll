@@ -16,7 +16,7 @@ extern "C" {
       }
     #endif // _di_level_2_parameter_checking_
 
-    f_status_t status = F_none;
+    f_status_t status = F_okay;
     f_number_unsigned_t initial_used = objects->used;
 
     bool found_data = F_false;
@@ -81,7 +81,7 @@ extern "C" {
           if (state->status == F_data_not) return;
 
           if (found_data) {
-            state->status = (range->start >= buffer.used) ? F_none_eos : F_none_stop;
+            state->status = (range->start >= buffer.used) ? F_okay_eos : F_okay_stop;
           }
           else {
             state->status = (range->start >= buffer.used) ? F_data_not_eos : F_data_not_stop;
@@ -117,7 +117,7 @@ extern "C" {
 
       } while (state->status == F_fss_found_object_not);
 
-      if (state->status == F_none_eos || state->status == F_none_stop) {
+      if (state->status == F_okay_eos || state->status == F_okay_stop) {
         ++contents->array[contents->used++].used;
         ++objects->used;
 
@@ -135,9 +135,9 @@ extern "C" {
 
       if (state->status == F_data_not || state->status == F_data_not_eos || state->status == F_data_not_stop || state->status == F_end_not_group_eos || state->status == F_end_not_group_stop) {
 
-        // If at least some valid object was found, then return F_none equivelents.
+        // If at least some valid object was found, then return F_okay equivelents.
         if (objects->used > initial_used) {
-          state->status = (state->status == F_data_not_eos) ? F_none_eos : F_none_stop;
+          state->status = (state->status == F_data_not_eos) ? F_okay_eos : F_okay_stop;
         }
 
         return;
@@ -169,12 +169,12 @@ extern "C" {
         }
 
         if (range->start >= buffer.used) {
-          state->status = (state->status == F_end_not_group) ? F_end_not_group_eos : F_none_eos;
+          state->status = (state->status == F_end_not_group) ? F_end_not_group_eos : F_okay_eos;
 
           return;
         }
 
-        state->status = (state->status == F_end_not_group) ? F_end_not_group_stop : F_none_stop;
+        state->status = (state->status == F_end_not_group) ? F_end_not_group_stop : F_okay_stop;
 
         return;
       }
@@ -214,7 +214,7 @@ extern "C" {
       return;
     }
 
-    if (state->status == F_none || state->status == F_none_stop || state->status == F_none_eos || state->status == F_none_eol) {
+    if (state->status == F_okay || state->status == F_okay_stop || state->status == F_okay_eos || state->status == F_okay_eol) {
       uint8_t complete = f_fss_complete_next_e;
 
       for (f_number_unsigned_t i = 0; i < contents.used; ++i) {
