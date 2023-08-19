@@ -20,7 +20,8 @@ build_language c
 build_libraries -lc
 build_libraries-individual -lf_memory
 
-build_sources_library limit.c limit/set.c limit/value.c limit/private-set.c limit/private-value.c ../../tests/unit/c/mock-limit.c
+build_sources_library limit.c limit/set.c limit/value.c
+build_sources_library ../../tests/unit/c/mock-limit.c
 
 build_sources_headers limit.h limit/set.h limit/value.h
 
@@ -51,4 +52,6 @@ flags-coverage --coverage -fprofile-abs-path -fprofile-dir=build/coverage/
 flags_library -fPIC
 
 # Inject mocks.
+flags -Wl,--wrap=f_memory_array_adjust
+flags -Wl,--wrap=f_memory_array_resize
 flags -Wl,--wrap=prlimit

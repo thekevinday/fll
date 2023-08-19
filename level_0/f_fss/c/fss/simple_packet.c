@@ -20,9 +20,6 @@ extern "C" {
       if (!packet) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    packet->control = 0;
-    packet->size = 0;
-
     return f_string_dynamic_adjust(0, &packet->payload);
   }
 #endif // _di_f_fss_simple_packet_destroy_
@@ -106,9 +103,6 @@ extern "C" {
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
 
-        array[i].control = 0;
-        array[i].size = 0;
-
         status = f_string_dynamic_adjust(0, &array[i].payload);
         if (F_status_is_error(status)) return status;
       } // for
@@ -156,9 +150,6 @@ extern "C" {
       for (f_number_unsigned_t i = start; i < stop; ++i) {
 
         for (j = 0; j < array[i].size; ++j) {
-
-          array[i].array[j].control = 0;
-          array[i].array[j].size = 0;
 
           status = f_string_dynamic_adjust(0, &array[i].array[j].payload);
           if (F_status_is_error(status)) return status;

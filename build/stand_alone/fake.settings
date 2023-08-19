@@ -45,7 +45,7 @@ build_sources_program fll/level_0/execute.c
 build_sources_program fll/level_0/file.c fll/level_0/private-file.c fll/level_0/file/common.c fll/level_0/file/stream.c
 build_sources_program fll/level_0/fss.c fll/level_0/fss/common.c fll/level_0/fss/item.c fll/level_0/fss/named.c fll/level_0/fss/nest.c fll/level_0/fss/quote.c fll/level_0/fss/set.c fll/level_0/fss/set_quote.c fll/level_0/fss/simple_packet.c
 build_sources_program fll/level_0/iki.c fll/level_0/private-iki.c fll/level_0/iki/common.c fll/level_0/iki/private-data.c fll/level_0/iki/data.c
-build_sources_program fll/level_0/limit.c fll/level_0/limit/set.c fll/level_0/limit/value.c fll/level_0/limit/private-set.c fll/level_0/limit/private-value.c
+build_sources_program fll/level_0/limit.c fll/level_0/limit/set.c fll/level_0/limit/value.c
 build_sources_program fll/level_0/memory.c fll/level_0/memory/array.c fll/level_0/memory/arrays.c
 build_sources_program fll/level_0/private-memory.c fll/level_0/memory/private-array.c
 build_sources_program fll/level_0/parse.c fll/level_0/parse/utf.c

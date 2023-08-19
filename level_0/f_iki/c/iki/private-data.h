@@ -40,7 +40,7 @@ extern "C" {
  * @see f_iki_datass_append_all()
  */
 #if !defined(_di_f_iki_datas_append_) || !defined(_di_f_iki_datas_append_all_) || !defined(_di_f_iki_datass_append_all_)
-  extern f_status_t private_f_iki_datas_append_all(const f_iki_datas_t source, f_iki_datas_t *destination) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_iki_datas_append_all(const f_iki_datas_t source, f_iki_datas_t * const destination) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_iki_datas_append_) || !defined(_di_f_iki_datas_append_all_) || !defined(_di_f_iki_datass_append_all_)
 
 #ifdef __cplusplus

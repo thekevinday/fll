@@ -24,6 +24,8 @@ extern "C" {
  *
  * The inner array can be a more complex structure because the callback is expected to know the type.
  *
+ * Use f_memory_array_adjust() instead if a callback is not needed.
+ *
  * @param length
  *   The new size to use.
  * @param width
@@ -69,6 +71,8 @@ extern "C" {
  * If the simple type that is "array" requires additional memory manipulation on allocation or de-allocation, then do not use this function.
  *
  * The inner array can be a more complex structure because the callback is expected to know the type.
+ *
+ * Use f_memory_array_resize() instead if a callback is not needed.
  *
  * @param length
  *   The new size to use.

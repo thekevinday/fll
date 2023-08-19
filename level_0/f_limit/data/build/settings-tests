@@ -26,10 +26,8 @@ build_libraries -lc -lcmocka
 build_libraries-individual -lf_memory -lf_string -lf_type_array -lf_utf -lf_limit
 
 build_sources_program test-limit-process.c
-build_sources_program test-limit-sets_adjust.c test-limit-sets_append.c test-limit-sets_append_all.c test-limit-sets_decimate_by.c test-limit-sets_decrease_by.c test-limit-sets_increase.c test-limit-sets_increase_by.c test-limit-sets_resize.c
-build_sources_program test-limit-setss_adjust.c test-limit-setss_append.c test-limit-setss_append_all.c test-limit-setss_decimate_by.c test-limit-setss_decrease_by.c test-limit-setss_increase.c test-limit-setss_increase_by.c test-limit-setss_resize.c
-build_sources_program test-limit-values_adjust.c test-limit-values_append.c test-limit-values_append_all.c test-limit-values_decimate_by.c test-limit-values_decrease_by.c test-limit-values_increase.c test-limit-values_increase_by.c test-limit-values_resize.c
-build_sources_program test-limit-valuess_adjust.c test-limit-valuess_append.c test-limit-valuess_append_all.c test-limit-valuess_decimate_by.c test-limit-valuess_decrease_by.c test-limit-valuess_increase.c test-limit-valuess_increase_by.c test-limit-valuess_resize.c
+build_sources_program test-limit-setss_delete_callback.c test-limit-setss_destroy_callback.c
+build_sources_program test-limit-valuess_delete_callback.c test-limit-valuess_destroy_callback.c
 build_sources_program test-limit.c
 
 build_script no

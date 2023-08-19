@@ -30,9 +30,10 @@ build_language c
 build_libraries -lc
 build_libraries-individual -lf_memory -lf_string
 
-build_sources_library socket.c socket/socket.c socket/private-socket.c ../../tests/unit/c/mock-socket.c
+build_sources_library socket.c socket/address.c socket/socket.c
+build_sources_library ../../tests/unit/c/mock-socket.c
 
-build_sources_headers socket.h socket/socket.h socket/common.h
+build_sources_headers socket.h socket/address.h socket/socket.h socket/common.h
 
 build_script yes
 build_shared yes
@@ -61,6 +62,8 @@ flags-coverage --coverage -fprofile-abs-path -fprofile-dir=build/coverage/
 flags_library -fPIC
 
 # Inject mocks.
+flags -Wl,--wrap=f_memory_array_adjust
+flags -Wl,--wrap=f_memory_array_resize
 flags -Wl,--wrap=accept
 flags -Wl,--wrap=bind
 flags -Wl,--wrap=close

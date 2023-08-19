@@ -47,7 +47,7 @@ build_sources_library execute.c
 build_sources_library file.c private-file.c file/common.c file/stream.c
 build_sources_library fss.c fss/common.c fss/item.c fss/named.c fss/nest.c fss/quote.c fss/set.c fss/set_quote.c fss/simple_packet.c
 build_sources_library iki.c iki/common.c iki/data.c private-iki.c iki/private-data.c
-build_sources_library limit.c limit/set.c limit/value.c limit/private-set.c limit/private-value.c
+build_sources_library limit.c limit/set.c limit/value.c
 build_sources_library memory.c memory/array.c memory/arrays.c
 build_sources_library private-memory.c memory/private-array.c
 build_sources_library network.c
@@ -58,7 +58,7 @@ build_sources_library print.c private-print.c print/common.c print/to.c print/pr
 build_sources_library rip.c rip/utf.c private-rip.c rip/private-utf.c
 build_sources_library serialize.c private-serialize.c serialize/common.c
 build_sources_library signal.c
-build_sources_library socket.c socket/socket.c socket/private-socket.c
+build_sources_library socket.c socket/address.c socket/socket.c
 build_sources_library status_string.c
 build_sources_library string.c
 build_sources_library private-string.c string/common.c
@@ -116,7 +116,7 @@ build_sources_headers print.h print/to.h print/common.h
 build_sources_headers rip.h rip/utf.h
 build_sources_headers serialize.h serialize/common.h
 build_sources_headers signal.h signal/common.h
-build_sources_headers socket.h socket/socket.h socket/common.h
+build_sources_headers socket.h socket/address.h socket/socket.h socket/common.h
 build_sources_headers status.h
 build_sources_headers status_string.h
 build_sources_headers string.h string/common.h

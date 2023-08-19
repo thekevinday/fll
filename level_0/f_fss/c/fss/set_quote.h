@@ -147,7 +147,7 @@ extern "C" {
 #endif // _di_f_fss_set_quote_destroy_
 
 /**
- * A callback intended to be passed to f_memory_arrays_resize() for an f_set_quotes_t structure.
+ * A callback intended to be passed to f_memory_arrays_resize() for an f_fss_set_quotes_t structure.
  *
  * This is only called when shrinking the array and generally should perform deallocations.
  *
@@ -181,7 +181,7 @@ extern "C" {
 #endif // _di_f_fss_set_quotes_delete_callback_
 
 /**
- * A callback intended to be passed to f_memory_arrays_adjust() for an f_set_quotes_t structure.
+ * A callback intended to be passed to f_memory_arrays_adjust() for an f_fss_set_quotes_t structure.
  *
  * This is only called when shrinking the array and generally should perform deallocations.
  *
@@ -215,7 +215,7 @@ extern "C" {
 #endif // _di_f_fss_set_quotes_destroy_callback_
 
 /**
- * A callback intended to be passed to f_memory_arrays_resize() for an f_set_quotess_t structure.
+ * A callback intended to be passed to f_memory_arrays_resize() for an f_fss_set_quotess_t structure.
  *
  * This is only called when shrinking the array and generally should perform deallocations.
  *
@@ -249,7 +249,7 @@ extern "C" {
 #endif // _di_f_fss_set_quotess_delete_callback_
 
 /**
- * A callback intended to be passed to f_memory_arrays_adjust() for an f_set_quotess_t structure.
+ * A callback intended to be passed to f_memory_arrays_adjust() for an f_fss_set_quotess_t structure.
  *
  * This is only called when shrinking the array and generally should perform deallocations.
  *

@@ -132,7 +132,7 @@ extern "C" {
 #endif // _di_f_fss_set_destroy_
 
 /**
- * A callback intended to be passed to f_memory_arrays_resize() for an f_sets_t structure.
+ * A callback intended to be passed to f_memory_arrays_resize() for an f_fss_sets_t structure.
  *
  * This is only called when shrinking the array and generally should perform deallocations.
  *
@@ -160,7 +160,7 @@ extern "C" {
 #endif // _di_f_fss_sets_delete_callback_
 
 /**
- * A callback intended to be passed to f_memory_arrays_adjust() for an f_sets_t structure.
+ * A callback intended to be passed to f_memory_arrays_adjust() for an f_fss_sets_t structure.
  *
  * This is only called when shrinking the array and generally should perform deallocations.
  *
@@ -188,7 +188,7 @@ extern "C" {
 #endif // _di_f_fss_sets_destroy_callback_
 
 /**
- * A callback intended to be passed to f_memory_arrays_resize() for an f_setss_t structure.
+ * A callback intended to be passed to f_memory_arrays_resize() for an f_fss_setss_t structure.
  *
  * This is only called when shrinking the array and generally should perform deallocations.
  *
@@ -216,7 +216,7 @@ extern "C" {
 #endif // _di_f_fss_setss_delete_callback_
 
 /**
- * A callback intended to be passed to f_memory_arrays_adjust() for an f_setss_t structure.
+ * A callback intended to be passed to f_memory_arrays_adjust() for an f_fss_setss_t structure.
  *
  * This is only called when shrinking the array and generally should perform deallocations.
  *
@@ -241,7 +241,7 @@ extern "C" {
  */
 #ifndef _di_f_fss_setss_destroy_callback_
   extern f_status_t f_fss_setss_destroy_callback(const f_number_unsigned_t start, const f_number_unsigned_t stop, void * const array);
-#endif // _di_f_fss_sets_sdestroy_callback_
+#endif // _di_f_fss_setss_destroy_callback_
 
 #ifdef __cplusplus
 } // extern "C"

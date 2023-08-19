@@ -101,9 +101,6 @@ extern "C" {
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
 
-        array[i].id_user = 0;
-        array[i].id_group = 0;
-
         status = f_string_dynamic_adjust(0, &array[i].home);
         if (F_status_is_error(status)) return status;
 

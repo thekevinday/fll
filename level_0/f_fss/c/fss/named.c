@@ -31,9 +31,6 @@ extern "C" {
       if (!named) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    named->name.start = 1;
-    named->name.stop = 0;
-
     {
       f_status_t status = f_string_ranges_adjust(0, &named->objects);
       if (F_status_is_error(status)) return status;
@@ -81,9 +78,6 @@ extern "C" {
       f_status_t status = F_okay;
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
-
-        array[i].name.start = 1;
-        array[i].name.stop = 0;
 
         status = f_string_ranges_adjust(0, &array[i].objects);
         if (F_status_is_error(status)) return status;
@@ -144,9 +138,6 @@ extern "C" {
       for (f_number_unsigned_t i = start; i < stop; ++i) {
 
         for (j = 0; j < array[i].size; ++j) {
-
-          array[i].array[j].name.start = 1;
-          array[i].array[j].name.stop = 0;
 
           status = f_string_ranges_adjust(0, &array[i].array[j].objects);
           if (F_status_is_error(status)) return status;

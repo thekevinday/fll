@@ -47,10 +47,6 @@ extern "C" {
 
         for (j = 0; j < nest->depth[i].size; ++j) {
 
-          nest->depth[i].array[j].object.start = 1;
-          nest->depth[i].array[j].object.stop = 0;
-          nest->depth[i].array[j].parent = 0;
-
           status = f_string_ranges_adjust(0, &nest->depth[i].array[j].content);
           if (F_status_is_error(status)) return status;
         } // for
@@ -116,10 +112,6 @@ extern "C" {
         for (j = 0; j < array[i].size; ++j) {
 
           for (k = 0; k < array[i].depth[j].size; ++k) {
-
-            array[i].depth[j].array[k].object.start = 1;
-            array[i].depth[j].array[k].object.stop = 0;
-            array[i].depth[j].array[k].parent = 0;
 
             status = f_string_ranges_adjust(0, &array[i].depth[j].array[k].content);
             if (F_status_is_error(status)) return status;
@@ -204,10 +196,6 @@ extern "C" {
           for (k = 0; k < array[i].array[j].size; ++k) {
 
             for (l = 0; l < array[i].array[j].depth[k].size; ++l) {
-
-              array[i].array[j].depth[k].array[l].object.start = 1;
-              array[i].array[j].depth[k].array[l].object.stop = 0;
-              array[i].array[j].depth[k].array[l].parent = 0;
 
               status = f_string_ranges_adjust(0, &array[i].array[j].depth[k].array[l].content);
               if (F_status_is_error(status)) return status;

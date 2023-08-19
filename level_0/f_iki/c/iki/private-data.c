@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #if !defined(_di_f_iki_datas_append_) || !defined(_di_f_iki_datas_append_all_) || !defined(_di_f_iki_datass_append_all_)
-  extern f_status_t private_f_iki_datas_append_all(const f_iki_datas_t source, f_iki_datas_t *destination) {
+  extern f_status_t private_f_iki_datas_append_all(const f_iki_datas_t source, f_iki_datas_t * const destination) {
 
     f_status_t status = f_memory_array_increase_by(source.used, sizeof(f_iki_data_t), (void **) &destination->array, &destination->used, &destination->size);
     if (F_status_is_error(status)) return status;

@@ -47,7 +47,7 @@ build_sources_library level_0/execute.c
 build_sources_library level_0/file.c level_0/private-file.c level_0/file/common.c level_0/file/stream.c
 build_sources_library level_0/fss.c level_0/fss/common.c level_0/fss/item.c level_0/fss/named.c level_0/fss/nest.c level_0/fss/quote.c level_0/fss/set.c level_0/fss/set_quote.c level_0/fss/simple_packet.c
 build_sources_library level_0/iki.c level_0/iki/common.c level_0/iki/data.c level_0/private-iki.c level_0/iki/private-data.c
-build_sources_library level_0/limit.c level_0/limit/set.c level_0/limit/value.c level_0/limit/private-set.c level_0/limit/private-value.c
+build_sources_library level_0/limit.c level_0/limit/set.c level_0/limit/value.c
 build_sources_library level_0/memory.c level_0/memory/array.c level_0/memory/arrays.c
 build_sources_library level_0/private-memory.c level_0/memory/private-array.c
 build_sources_library level_0/network.c
@@ -58,7 +58,7 @@ build_sources_library level_0/print.c level_0/private-print.c level_0/print/comm
 build_sources_library level_0/rip.c level_0/rip/utf.c level_0/private-rip.c level_0/rip/private-utf.c
 build_sources_library level_0/serialize.c level_0/private-serialize.c level_0/serialize/common.c
 build_sources_library level_0/signal.c
-build_sources_library level_0/socket.c level_0/socket/socket.c level_0/socket/private-socket.c
+build_sources_library level_0/socket.c level_0/socket/address.c level_0/socket/socket.c
 build_sources_library level_0/status_string.c
 build_sources_library level_0/string.c
 build_sources_library level_0/private-string.c level_0/string/common.c
@@ -137,7 +137,7 @@ build_sources_headers level_0/print.h level_0/print/to.h level_0/print/common.h
 build_sources_headers level_0/rip.h level_0/rip/utf.h
 build_sources_headers level_0/serialize.h level_0/serialize/common.h
 build_sources_headers level_0/signal.h level_0/signal/common.h
-build_sources_headers level_0/socket.h level_0/socket/socket.h level_0/socket/common.h
+build_sources_headers level_0/socket.h level_0/socket/address.h level_0/socket/socket.h level_0/socket/common.h
 build_sources_headers level_0/status.h
 build_sources_headers level_0/status_string.h
 build_sources_headers level_0/string.h level_0/string/common.h

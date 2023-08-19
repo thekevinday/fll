@@ -20,10 +20,6 @@ extern "C" {
       if (!item) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    item->object.start = 1;
-    item->object.stop = 0;
-    item->parent = 0;
-
     return f_string_ranges_adjust(0, &item->content);
   }
 #endif // _di_f_fss_item_destroy_
@@ -54,10 +50,6 @@ extern "C" {
       f_status_t status = F_okay;
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
-
-        array[i].object.start = 1;
-        array[i].object.stop = 0;
-        array[i].parent = 0;
 
         status = f_string_ranges_adjust(0, &array[i].content);
         if (F_status_is_error(status)) return status;
@@ -106,10 +98,6 @@ extern "C" {
       for (f_number_unsigned_t i = start; i < stop; ++i) {
 
         for (j = 0; j < array[i].size; ++j) {
-
-          array[i].array[j].object.start = 1;
-          array[i].array[j].object.stop = 0;
-          array[i].array[j].parent = 0;
 
           status = f_string_ranges_adjust(0, &array[i].array[j].content);
           if (F_status_is_error(status)) return status;

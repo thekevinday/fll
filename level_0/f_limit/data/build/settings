@@ -32,7 +32,7 @@ build_language c
 build_libraries -lc
 build_libraries-individual -lf_memory
 
-build_sources_library limit.c limit/set.c limit/value.c limit/private-set.c limit/private-value.c
+build_sources_library limit.c limit/set.c limit/value.c
 
 build_sources_headers limit.h limit/set.h limit/value.h
 

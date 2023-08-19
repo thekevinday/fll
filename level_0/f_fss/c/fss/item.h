@@ -154,7 +154,7 @@ extern "C" {
 #endif // _di_f_fss_item_destroy_
 
 /**
- * A callback intended to be passed to f_memory_arrays_resize() for an f_items_t structure.
+ * A callback intended to be passed to f_memory_arrays_resize() for an f_fss_items_t structure.
  *
  * This is only called when shrinking the array and generally should perform deallocations.
  *
@@ -182,7 +182,7 @@ extern "C" {
 #endif // _di_f_fss_items_delete_callback_
 
 /**
- * A callback intended to be passed to f_memory_arrays_adjust() for an f_items_t structure.
+ * A callback intended to be passed to f_memory_arrays_adjust() for an f_fss_items_t structure.
  *
  * This is only called when shrinking the array and generally should perform deallocations.
  *
@@ -210,7 +210,7 @@ extern "C" {
 #endif // _di_f_fss_items_destroy_callback_
 
 /**
- * A callback intended to be passed to f_memory_arrays_resize() for an f_itemss_t structure.
+ * A callback intended to be passed to f_memory_arrays_resize() for an f_fss_itemss_t structure.
  *
  * This is only called when shrinking the array and generally should perform deallocations.
  *
@@ -238,7 +238,7 @@ extern "C" {
 #endif // _di_f_fss_itemss_delete_callback_
 
 /**
- * A callback intended to be passed to f_memory_arrays_adjust() for an f_itemss_t structure.
+ * A callback intended to be passed to f_memory_arrays_adjust() for an f_fss_itemss_t structure.
  *
  * This is only called when shrinking the array and generally should perform deallocations.
  *

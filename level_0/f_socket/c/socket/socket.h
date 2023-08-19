@@ -17,390 +17,231 @@ extern "C" {
 #endif
 
 /**
- * Resize the string sockets array.
+ * Commonly used socket related properties, loosely based off of f_file_t.
  *
- * @param length
- *   The new size to use.
- * @param sockets
- *   The string sockets array to resize.
+ * Properties:
+ *   - id:       Socket file descriptor, used for binding and listening.
+ *   - id_data:  Data file descriptor, used for reading and writing data from or to the socket.
+ *   - domain:   The socket domain (protocol family, such as f_socket_protocol_family_local_e).
+ *   - protocol: The socket protocol (such as f_socket_protocol_tcp_e).
+ *   - type:     The socket type (address family, such as f_socket_address_family_local_e).
  *
- * @return
- *   Success from f_memory_array_adjust().
+ *   - size_read:  The default number of 1-byte characters to read at a time and is often used for the read buffer size.
+ *   - size_write: The default number of 1-byte characters to read at a time and is often used for the write buffer size.
  *
- *   F_parameter (with error bit) if a parameter is invalid.
+ *   - address: The socket address.
+ *   - length:  The length of the socket.
  *
- *   Errors (with error bit) from: f_memory_array_adjust().
+ *   - name: The name of the socket, if a name is given (for UNIX sockets this represents the path) (Must be a NULL terminated string).
  *
- * @see f_memory_array_adjust()
+ * The clear and reset macros do not clear or reset the address (type f_socket_address_t) because the struct sockaddr is defined outside of the FLL project.
  */
-#ifndef _di_f_sockets_adjust_
-  extern f_status_t f_sockets_adjust(const f_number_unsigned_t length, f_sockets_t * const sockets);
-#endif // _di_f_sockets_adjust_
+#ifndef _di_f_socket_t_
+  typedef struct {
+    int id;
+    int id_data;
+    int domain;
+    int protocol;
+    int type;
+
+    size_t size_read;
+    size_t size_write;
+
+    f_socket_address_t address;
+    socklen_t length;
+
+    f_string_static_t name;
+  } f_socket_t;
+
+  #define f_socket_t_initialize { -1, -1, 0, 0, 0, F_socket_default_read_size_d, F_socket_default_write_size_d, f_socket_address_t_initialize, 0, f_string_static_t_initialize }
+
+  #define macro_f_socket_t_initialize_1(address, length) { \
+    -1, \
+    -1, \
+    0, \
+    0, \
+    0, \
+    F_socket_default_read_size_d, \
+    F_socket_default_write_size_d, \
+    address, \
+    length, \
+    f_string_empty_s \
+  }
+
+  #define macro_f_socket_t_initialize_2(address, length, name) { \
+    -1, \
+    -1, \
+    0, \
+    0, \
+    0, \
+    F_socket_default_read_size_d, \
+    F_socket_default_write_size_d, \
+    address, \
+    length, \
+    name \
+  }
+
+  #define macro_f_socket_t_initialize_3(id, domain, protocol, type, address, length, name) { \
+    id, \
+    -1, \
+    domain, \
+    protocol, \
+    type, \
+    F_socket_default_read_size_d, \
+    F_socket_default_write_size_d, \
+    address, \
+    length, \
+    name \
+  }
+
+  #define macro_f_socket_t_initialize_4(id, domain, protocol, type, size_read, size_write, address, length, name) { \
+    id, \
+    -1, \
+    domain, \
+    protocol, \
+    type, \
+    size_read, \
+    size_write, \
+    address, \
+    length, \
+    name \
+  }
+
+  #define macro_f_socket_t_initialize_5(id, id_data, domain, protocol, type, size_read, size_write, address, length, name) { \
+    id, \
+    id_data, \
+    domain, \
+    protocol, \
+    type, \
+    size_read, \
+    size_write, \
+    address, \
+    length, \
+    name \
+  }
+
+  #define macro_f_socket_t_clear(file) \
+    file.id = -1; \
+    file.id_data = -1; \
+    file.domain = 0; \
+    file.protocol = 0; \
+    file.type = 0; \
+    file.size_read = 0; \
+    file.size_write = 0; \
+    file.length = 0; \
+    macro_f_string_static_t_clear(file);
+
+  #define macro_f_socket_t_reset(file) \
+    file.id = -1; \
+    file.id_data = -1; \
+    file.domain = 0; \
+    file.protocol = 0; \
+    file.type = 0; \
+    file.size_read = F_socket_default_read_size_d; \
+    file.size_write = F_socket_default_write_size_d; \
+    file.length = 0; \
+    macro_f_string_static_t_clear(file);
+#endif // _di_f_socket_t_
 
 /**
- * Append the single source socket onto the destination.
+ * An array of f_socket_t.
  *
- * @param source
- *   The source socket to append.
- * @param destination
- *   The destination sockets the source is appended onto.
- *
- * @return
- *   F_okay on success.
- *   F_data_not on success, but there is nothing to append (size == 0).
- *
- *   Success from f_memory_array_resize().
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: f_memory_array_increase().
- *
- * @see f_memory_array_increase()
+ * Properties:
+ *   - array: The array of f_socket_t.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
  */
-#ifndef _di_f_sockets_append_
-  extern f_status_t f_sockets_append(const f_socket_t source, f_sockets_t * const destination);
-#endif // _di_f_sockets_append_
+#ifndef _di_f_sockets_t_
+  typedef struct {
+    f_socket_t *array;
+
+    f_number_unsigned_t size;
+    f_number_unsigned_t used;
+  } f_sockets_t;
+
+  #define f_sockets_t_initialize { 0, 0, 0 }
+
+  #define macro_f_sockets_t_initialize_1(array, size, used) { array, size, used }
+  #define macro_f_sockets_t_initialize_2(array, length) { array, length, length }
+#endif // _di_f_sockets_t_
 
 /**
- * Append the source sockets onto the destination.
+ * This holds an array of f_sockets_t.
  *
- * @param source
- *   The source sockets to append.
- * @param destination
- *   The destination sockets the source is appended onto.
- *
- * @return
- *   F_okay on success.
- *   F_data_not on success, but there is nothing to append (size == 0).
- *
- *   Success from f_memory_array_resize().
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: f_memory_array_increase_by().
- *
- * @see f_memory_array_increase_by()
+ * Properties:
+ *   - array: The array of f_socket_t arrays.
+ *   - size:  Total amount of allocated space.
+ *   - used:  Total number of allocated spaces used.
  */
-#ifndef _di_f_sockets_append_all_
-  extern f_status_t f_sockets_append_all(const f_sockets_t source, f_sockets_t * const destination);
-#endif // _di_f_sockets_append_all_
+#ifndef _di_f_socketss_t_
+  typedef struct {
+    f_sockets_t *array;
+
+    f_number_unsigned_t size;
+    f_number_unsigned_t used;
+  } f_socketss_t;
+
+  #define f_socketss_t_initialize { 0, 0, 0 }
+
+  #define macro_f_socketss_t_initialize_1(array, size, used) { array, size, used }
+  #define macro_f_socketss_t_initialize_2(array, length) { array, length, length }
+#endif // _di_f_socketss_t_
 
 /**
- * Resize the string sockets array to a smaller size.
+ * A callback intended to be passed to f_memory_arrays_resize() for an f_socketss_t structure.
  *
- * This will resize making the array smaller based on (size - given length).
- * If the given length is too small, then the resize will fail.
- * This will not shrink the size to les than 0.
+ * This is only called when shrinking the array and generally should perform deallocations.
  *
- * @param amount
- *   A positive number representing how much to decimate the size by.
- * @param sockets
- *   The string sockets array to resize.
+ * This does not do parameter checking.
  *
- * @return
- *   Success from f_memory_array_decimate_by().
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: f_memory_array_decimate_by().
- *
- * @see f_memory_array_decimate_by()
- */
-#ifndef _di_f_sockets_decimate_by_
-  extern f_status_t f_sockets_decimate_by(const f_number_unsigned_t amount, f_sockets_t * const sockets);
-#endif // _di_f_sockets_decimate_by_
-
-/**
- * Resize the string sockets array to a smaller size.
- *
- * This will resize making the array smaller based on (size - given length).
- * If the given length is too small, then the resize will fail.
- * This will not shrink the size to les than 0.
- *
- * @param amount
- *   A positive number representing how much to decrease the size by.
- * @param sockets
- *   The string sockets array to resize.
- *
- * @return
- *   Success from f_memory_array_decrease_by().
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: f_memory_array_decrease_by().
- *
- * @see f_memory_array_decrease_by()
- */
-#ifndef _di_f_sockets_decrease_by_
-  extern f_status_t f_sockets_decrease_by(const f_number_unsigned_t amount, f_sockets_t * const sockets);
-#endif // _di_f_sockets_decrease_by_
-
-/**
- * Increase the size of the string sockets array, but only if necesary.
- *
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
- * If already set to the maximum buffer size, then the resize will fail.
- *
- * @param step
- *   The allocation step to use.
- *   Must be greater than 0.
- * @param sockets
- *   The string sockets array to resize.
- *
- * @return
- *   Success from f_memory_array_increase().
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: f_memory_array_increase().
- *
- * @see f_memory_array_increase()
- */
-#ifndef _di_f_sockets_increase_
-  extern f_status_t f_sockets_increase(const f_number_unsigned_t step, f_sockets_t * const sockets);
-#endif // _di_f_sockets_increase_
-
-/**
- * Resize the string sockets array to a larger size.
- *
- * This will resize making the array larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
- * If already set to the maximum buffer size, then the resize will fail.
- *
- * @param amount
- *   A positive number representing how much to increase the size by.
- * @param sockets
- *   The string sockets array to resize.
- *
- * @return
- *   Success from f_memory_array_increase_by().
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: f_memory_array_increase_by().
- *
- * @see f_memory_array_increase_by()
- */
-#ifndef _di_f_sockets_increase_by_
-  extern f_status_t f_sockets_increase_by(const f_number_unsigned_t amount, f_sockets_t * const sockets);
-#endif // _di_f_sockets_increase_by_
-
-/**
- * Resize the string sockets array.
- *
- * @param length
- *   The new size to use.
- * @param sockets
- *   The string sockets array to adjust.
- *
- * @return
- *   Success from f_memory_array_resize().
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: f_memory_array_resize().
- *
- * @see f_memory_array_resize()
- */
-#ifndef _di_f_sockets_resize_
-  extern f_status_t f_sockets_resize(const f_number_unsigned_t length, f_sockets_t * const sockets);
-#endif // _di_f_sockets_resize_
-
-/**
- * Resize the string socketss array.
- *
- * @param length
- *   The new size to use.
- * @param socketss
- *   The string socketss array to resize.
+ * @param start
+ *   The inclusive start position in the array to start deleting.
+ * @param stop
+ *   The exclusive stop position in the array to stop deleting.
+ * @param array
+ *   The array structure to delete all values of.
+ *   Must not be NULL.
  *
  * @return
  *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_array_adjust().
+ *   Errors (with error bit) from: f_string_dynamics_resize().
  *
- * @see f_memory_array_adjust()
+ * @see f_string_dynamics_resize()
  */
-#ifndef _di_f_socketss_adjust_
-  extern f_status_t f_socketss_adjust(const f_number_unsigned_t length, f_socketss_t * const socketss);
-#endif // _di_f_socketss_adjust_
+#ifndef _di_f_socketss_delete_callback_
+  extern f_status_t f_socketss_delete_callback(const f_number_unsigned_t start, const f_number_unsigned_t stop, void * const array);
+#endif // _di_f_socketss_delete_callback_
 
 /**
- * Append the single source sockets onto the destination.
+ * A callback intended to be passed to f_memory_arrays_adjust() for an f_socketss_t structure.
  *
- * @param source
- *   The source sockets to append.
- * @param destination
- *   The destination ranges the source is appended onto.
+ * This is only called when shrinking the array and generally should perform deallocations.
+ *
+ * This does not do parameter checking.
+ *
+ * @param start
+ *   The inclusive start position in the array to start deleting.
+ * @param stop
+ *   The exclusive stop position in the array to stop deleting.
+ * @param array
+ *   The array structure to delete all values of.
+ *   Must not be NULL.
  *
  * @return
  *   F_okay on success.
- *   F_data_not on success, but there is nothing to append (size == 0).
- *
- *   Success from f_memory_array_resize().
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_array_increase().
- *   Errors (with error bit) from: f_memory_array_increase_by().
+ *   Errors (with error bit) from: f_string_dynamics_adjust().
  *
- * @see f_memory_array_increase()
- * @see f_memory_array_increase_by()
+ * @see f_string_dynamics_adjust()
  */
-#ifndef _di_f_socketss_append_
-  extern f_status_t f_socketss_append(const f_sockets_t source, f_socketss_t * const destination);
-#endif // _di_f_socketss_append_
-
-/**
- * Append the source socketss onto the destination.
- *
- * @param source
- *   The source socketss to append.
- * @param destination
- *   The destination ranges the source is appended onto.
- *
- * @return
- *   F_okay on success.
- *   F_data_not on success, but there is nothing to append (size == 0).
- *
- *   Success from f_memory_array_resize().
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: f_memory_array_increase_by().
- *
- * @see f_memory_array_increase_by()
- */
-#ifndef _di_f_socketss_append_all_
-  extern f_status_t f_socketss_append_all(const f_socketss_t source, f_socketss_t * const destination);
-#endif // _di_f_socketss_append_all_
-
-/**
- * Resize the string socketss array to a smaller size.
- *
- * This will resize making the array smaller based on (size - given length).
- * If the given length is too small, then the resize will fail.
- * This will not shrink the size to less than 0.
- *
- * @param amount
- *   A positive number representing how much to decimate the size by.
- * @param socketss
- *   The string socketss array to resize.
- *
- * @return
- *   F_data_not on success, but the amount to decrease by is 0.
- *
- *   Success from f_memory_array_decimate_by().
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: f_memory_array_decimate_by().
- *
- * @see f_memory_array_decimate_by()
- */
-#ifndef _di_f_socketss_decimate_by_
-  extern f_status_t f_socketss_decimate_by(const f_number_unsigned_t amount, f_socketss_t * const socketss);
-#endif // _di_f_socketss_decimate_by_
-
-/**
- * Resize the string socketss array to a smaller size.
- *
- * This will resize making the array smaller based on (size - given length).
- * If the given length is too small, then the resize will fail.
- * This will not shrink the size to less than 0.
- *
- * @param amount
- *   A positive number representing how much to decrease the size by.
- * @param socketss
- *   The string socketss array to resize.
- *
- * @return
- *   F_data_not on success, but the amount to decrease by is 0.
- *
- *   Success from f_memory_array_decrease_by().
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: f_memory_array_decrease_by().
- *
- * @see f_memory_array_decrease_by()
- */
-#ifndef _di_f_socketss_decrease_by_
-  extern f_status_t f_socketss_decrease_by(const f_number_unsigned_t amount, f_socketss_t * const socketss);
-#endif // _di_f_socketss_decrease_by_
-
-/**
- * Increase the size of the string socketss array, but only if necessary.
- *
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
- * If already set to the maximum buffer size, then the resize will fail.
- *
- * @param step
- *   The allocation step to use.
- *   Must be greater than 0.
- * @param socketss
- *   The string socketss array to resize.
- *
- * @return
- *   Success from f_memory_array_increase().
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: f_memory_array_increase().
- *
- * @see f_memory_array_increase()
- */
-#ifndef _di_f_socketss_increase_
-  extern f_status_t f_socketss_increase(const f_number_unsigned_t step, f_socketss_t * const socketss);
-#endif // _di_f_socketss_increase_
-
-/**
- * Resize the string socketss array to a larger size.
- *
- * This will resize making the array larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
- * If already set to the maximum buffer size, then the resize will fail.
- *
- * @param amount
- *   A positive number representing how much to increase the size by.
- * @param socketss
- *   The string socketss array to resize.
- *
- * @return
- *   Success from f_memory_array_increase_by().
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: f_memory_array_increase_by().
- *
- * @see f_memory_array_increase_by()
- */
-#ifndef _di_f_socketss_increase_by_
-  extern f_status_t f_socketss_increase_by(const f_number_unsigned_t amount, f_socketss_t * const socketss);
-#endif // _di_f_socketss_increase_by_
-
-/**
- * Resize the string socketss array.
- *
- * @param length
- *   The new size to use.
- * @param socketss
- *   The string socketss array to adjust.
- *
- * @return
- *   Success from f_memory_array_resize().
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: f_memory_array_resize().
- *
- * @see f_memory_array_resize()
- */
-#ifndef _di_f_socketss_resize_
-  extern f_status_t f_socketss_resize(const f_number_unsigned_t length, f_socketss_t * const socketss);
-#endif // _di_f_socketss_resize_
+#ifndef _di_f_socketss_destroy_callback_
+  extern f_status_t f_socketss_destroy_callback(const f_number_unsigned_t start, const f_number_unsigned_t stop, void * const array);
+#endif // _di_f_socketss_destroy_callback_
 
 #ifdef __cplusplus
 } // extern "C"

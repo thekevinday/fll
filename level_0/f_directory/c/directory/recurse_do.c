@@ -52,14 +52,6 @@ extern "C" {
       if (!recurse) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    recurse->depth = 0;
-    recurse->depth_max = 0;
-    recurse->flag = 0;
-    recurse->path_top = 0;
-
-    macro_f_state_t_clear(recurse->state);
-    memset((void *) &recurse->mode, 0, sizeof(f_mode_t));
-
     {
       f_status_t status = f_string_dynamic_adjust(0, &recurse->path);
       if (F_status_is_error(status)) return status;
@@ -149,15 +141,6 @@ extern "C" {
       f_status_t status = F_okay;
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
-
-        array[i].depth = 0;
-        array[i].depth_max = 0;
-        array[i].flag = 0;
-        array[i].path_top = 0;
-
-        macro_f_state_t_clear(array[i].state);
-
-        memset((void *) &array[i].mode, 0, sizeof(f_mode_t));
 
         status = f_string_dynamic_adjust(0, &array[i].path);
         if (F_status_is_error(status)) return status;
@@ -260,15 +243,6 @@ extern "C" {
       for (f_number_unsigned_t i = start; i < stop; ++i) {
 
         for (j = 0; j < array[i].size; ++j) {
-
-          array[i].array[j].depth = 0;
-          array[i].array[j].depth_max = 0;
-          array[i].array[j].flag = 0;
-          array[i].array[j].path_top = 0;
-
-          macro_f_state_t_clear(array[i].array[j].state);
-
-          memset((void *) &array[i].array[j].mode, 0, sizeof(f_mode_t));
 
           status = f_string_dynamic_adjust(0, &array[i].array[j].path);
           if (F_status_is_error(status)) return status;

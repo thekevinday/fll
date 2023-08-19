@@ -34,7 +34,7 @@ extern "C" {
  * @see f_string_ranges_resize()
  */
 #ifndef _di_f_iki_data_delete_
-  extern f_status_t f_iki_data_delete(f_iki_data_t *data);
+  extern f_status_t f_iki_data_delete(f_iki_data_t * const data);
 #endif // _di_f_iki_data_delete_
 
 /**
@@ -55,7 +55,7 @@ extern "C" {
  * @see f_string_ranges_adjust()
  */
 #ifndef _di_f_iki_data_destroy_
-  extern f_status_t f_iki_data_destroy(f_iki_data_t *data);
+  extern f_status_t f_iki_data_destroy(f_iki_data_t * const data);
 #endif // _di_f_iki_data_destroy_
 
 /**
@@ -81,7 +81,7 @@ extern "C" {
  * @see f_string_ranges_append_all()
  */
 #ifndef _di_f_iki_datas_append_
-  extern f_status_t f_iki_datas_append(const f_iki_data_t source, f_iki_datas_t *destination);
+  extern f_status_t f_iki_datas_append(const f_iki_data_t source, f_iki_datas_t * const destination);
 #endif // _di_f_iki_datas_append_
 
 /**
@@ -107,7 +107,7 @@ extern "C" {
  * @see f_string_ranges_append_all()
  */
 #ifndef _di_f_iki_datas_append_all_
-  extern f_status_t f_iki_datas_append_all(const f_iki_datas_t source, f_iki_datas_t *destination);
+  extern f_status_t f_iki_datas_append_all(const f_iki_datas_t source, f_iki_datas_t * const destination);
 #endif // _di_f_iki_datas_append_all_
 
 /**
@@ -191,7 +191,7 @@ extern "C" {
  * @see f_string_ranges_resize()
  */
 #ifndef _di_f_iki_datass_append_
-  extern f_status_t f_iki_datass_append(const f_iki_datas_t source, f_iki_datass_t *destination);
+  extern f_status_t f_iki_datass_append(const f_iki_datas_t source, f_iki_datass_t * const destination);
 #endif // _di_f_iki_datass_append_
 
 /**
@@ -217,7 +217,7 @@ extern "C" {
  * @see f_string_ranges_resize()
  */
 #ifndef _di_f_iki_datass_append_all_
-  extern f_status_t f_iki_datass_append_all(const f_iki_datass_t source, f_iki_datass_t *destination);
+  extern f_status_t f_iki_datass_append_all(const f_iki_datass_t source, f_iki_datass_t * const destination);
 #endif // _di_f_iki_datass_append_all_
 
 /**

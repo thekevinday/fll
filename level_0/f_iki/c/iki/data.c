@@ -7,7 +7,7 @@ extern "C" {
 #endif
 
 #ifndef _di_f_iki_data_delete_
-  f_status_t f_iki_data_delete(f_iki_data_t *data) {
+  f_status_t f_iki_data_delete(f_iki_data_t * const data) {
     #ifndef _di_level_0_parameter_checking_
       if (!data) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -31,7 +31,7 @@ extern "C" {
 #endif // _di_f_iki_data_delete_
 
 #ifndef _di_f_iki_data_destroy_
-  f_status_t f_iki_data_destroy(f_iki_data_t *data) {
+  f_status_t f_iki_data_destroy(f_iki_data_t * const data) {
     #ifndef _di_level_0_parameter_checking_
       if (!data) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -55,7 +55,7 @@ extern "C" {
 #endif // _di_f_iki_data_destroy_
 
 #ifndef _di_f_iki_datas_append_
-  f_status_t f_iki_datas_append(const f_iki_data_t source, f_iki_datas_t *destination) {
+  f_status_t f_iki_datas_append(const f_iki_data_t source, f_iki_datas_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -98,7 +98,7 @@ extern "C" {
 #endif // _di_f_iki_datas_append_
 
 #ifndef _di_f_iki_datas_append_all_
-  f_status_t f_iki_datas_append_all(const f_iki_datas_t source, f_iki_datas_t *destination) {
+  f_status_t f_iki_datas_append_all(const f_iki_datas_t source, f_iki_datas_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -164,7 +164,7 @@ extern "C" {
 #endif // _di_f_iki_datas_destroy_callback_
 
 #ifndef _di_f_iki_datass_append_
-  f_status_t f_iki_datass_append(const f_iki_datas_t source, f_iki_datass_t *destination) {
+  f_status_t f_iki_datass_append(const f_iki_datas_t source, f_iki_datass_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -184,7 +184,7 @@ extern "C" {
 #endif // _di_f_iki_datass_append_
 
 #ifndef _di_f_iki_datass_append_all_
-  f_status_t f_iki_datass_append_all(const f_iki_datass_t source, f_iki_datass_t *destination) {
+  f_status_t f_iki_datass_append_all(const f_iki_datass_t source, f_iki_datass_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_

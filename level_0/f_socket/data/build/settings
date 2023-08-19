@@ -32,9 +32,9 @@ build_language c
 build_libraries -lc
 build_libraries-individual -lf_memory -lf_string
 
-build_sources_library socket.c socket/socket.c socket/private-socket.c
+build_sources_library socket.c socket/address.c socket/socket.c
 
-build_sources_headers socket.h socket/socket.h socket/common.h
+build_sources_headers socket.h socket/address.h socket/socket.h socket/common.h
 
 build_script yes
 build_shared yes

@@ -253,7 +253,7 @@ extern "C" {
 #endif // _di_f_fss_simple_packet_identify_
 
 /**
- * A callback intended to be passed to f_memory_arrays_resize() for an f_simple_packets_t structure.
+ * A callback intended to be passed to f_memory_arrays_resize() for an f_fss_simple_packets_t structure.
  *
  * This is only called when shrinking the array and generally should perform deallocations.
  *
@@ -281,7 +281,7 @@ extern "C" {
 #endif // _di_f_fss_simple_packets_delete_callback_
 
 /**
- * A callback intended to be passed to f_memory_arrays_adjust() for an f_simple_packets_t structure.
+ * A callback intended to be passed to f_memory_arrays_adjust() for an f_fss_simple_packets_t structure.
  *
  * This is only called when shrinking the array and generally should perform deallocations.
  *
@@ -309,7 +309,7 @@ extern "C" {
 #endif // _di_f_fss_simple_packets_destroy_callback_
 
 /**
- * A callback intended to be passed to f_memory_arrays_resize() for an f_simple_packetss_t structure.
+ * A callback intended to be passed to f_memory_arrays_resize() for an f_fss_simple_packetss_t structure.
  *
  * This is only called when shrinking the array and generally should perform deallocations.
  *
@@ -337,7 +337,7 @@ extern "C" {
 #endif // _di_f_fss_simple_packetss_delete_callback_
 
 /**
- * A callback intended to be passed to f_memory_arrays_adjust() for an f_simple_packetss_t structure.
+ * A callback intended to be passed to f_memory_arrays_adjust() for an f_fss_simple_packetss_t structure.
  *
  * This is only called when shrinking the array and generally should perform deallocations.
  *

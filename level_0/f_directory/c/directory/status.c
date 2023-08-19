@@ -25,8 +25,6 @@ extern "C" {
       if (!directory_status) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    directory_status->status = 0;
-
     {
       const f_status_t status = f_string_dynamic_adjust(0, &directory_status->path);
       if (F_status_is_error(status)) return status;
@@ -62,8 +60,6 @@ extern "C" {
       f_status_t status = F_okay;
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
-
-        array[i].status = F_okay;
 
         status = f_string_dynamic_adjust(0, &array[i].path);
         if (F_status_is_error(status)) return status;
@@ -112,8 +108,6 @@ extern "C" {
       for (f_number_unsigned_t i = start; i < stop; ++i) {
 
         for (j = 0; j < array[i].size; ++j) {
-
-          array[i].array[j].status = F_okay;
 
           status = f_string_dynamic_adjust(0, &array[i].array[j].path);
           if (F_status_is_error(status)) return status;
