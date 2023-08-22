@@ -13,14 +13,14 @@ extern "C" {
     fake_main_t * const main = data_make->main;
 
     if (main->program.context.mode != f_color_mode_none_e) {
-      main->setting.state.status = f_string_dynamics_increase_by(fake_allocation_small_d, &data_make->parameter.color);
+      main->setting.state.status = f_memory_array_increase_by(fake_allocation_small_d, sizeof(f_string_dynamic_t), (void **) &data_make->parameter.color.array, &data_make->parameter.color.used, &data_make->parameter.color.size);
 
       if (F_status_is_error_not(main->setting.state.status)) {
-        main->setting.state.status = f_string_dynamics_increase_by(fake_allocation_small_d, &data_make->parameter_option.color);
+        main->setting.state.status = f_memory_array_increase_by(fake_allocation_small_d, sizeof(f_string_dynamic_t), (void **) &data_make->parameter_option.color.array, &data_make->parameter_option.color.used, &data_make->parameter_option.color.size);
       }
 
       if (F_status_is_error(main->setting.state.status)) {
-        fake_print_error(&main->program.error, macro_fake_f(f_string_dynamics_increase_by));
+        fake_print_error(&main->program.error, macro_fake_f(f_memory_array_increase_by));
 
         return;
       }
@@ -77,14 +77,14 @@ extern "C" {
     }
 
     if (main->program.error.verbosity != f_console_verbosity_normal_e) {
-      main->setting.state.status = f_string_dynamics_increase_by(fake_allocation_small_d, &data_make->parameter.verbosity);
+      main->setting.state.status = f_memory_array_increase_by(fake_allocation_small_d, sizeof(f_string_dynamic_t), (void **) &data_make->parameter.verbosity.array, &data_make->parameter.verbosity.used, &data_make->parameter.verbosity.size);
 
       if (F_status_is_error_not(main->setting.state.status)) {
-        main->setting.state.status = f_string_dynamics_increase_by(fake_allocation_small_d, &data_make->parameter_option.verbosity);
+        main->setting.state.status = f_memory_array_increase_by(fake_allocation_small_d, sizeof(f_string_dynamic_t), (void **) &data_make->parameter_option.verbosity.array, &data_make->parameter_option.verbosity.used, &data_make->parameter_option.verbosity.size);
       }
 
       if (F_status_is_error(main->setting.state.status)) {
-        fake_print_error(&main->program.error, macro_fake_f(f_string_dynamics_increase_by));
+        fake_print_error(&main->program.error, macro_fake_f(f_memory_array_increase_by));
 
         return;
       }
@@ -192,23 +192,23 @@ extern "C" {
         for (j = 0; j < source[i].used; ++j) {
 
           if (destination[i]->used + 2 > destination[i]->size) {
-            main->setting.state.status = f_string_dynamics_increase_by(fake_allocation_small_d, destination[i]);
+            main->setting.state.status = f_memory_array_increase_by(fake_allocation_small_d, sizeof(f_string_dynamic_t), (void **) &destination[i]->array, &destination[i]->used, &destination[i]->size);
 
             if (F_status_is_error(main->setting.state.status)) {
-              fake_print_error(&main->program.error, macro_fake_f(f_string_dynamics_increase_by));
+              fake_print_error(&main->program.error, macro_fake_f(f_memory_array_increase_by));
 
               return;
             }
           }
 
-          main->setting.state.status = f_string_dynamics_increase(fake_allocation_small_d, destination_option[i]);
+          main->setting.state.status = f_memory_array_increase(fake_allocation_small_d, sizeof(f_string_dynamic_t), (void **) &destination_option[i]->array, &destination_option[i]->used, &destination_option[i]->size);
 
           if (F_status_is_error_not(main->setting.state.status)) {
-            main->setting.state.status = f_string_dynamics_increase(fake_allocation_small_d, destination_value[i]);
+            main->setting.state.status = f_memory_array_increase(fake_allocation_small_d, sizeof(f_string_dynamic_t), (void **) &destination_value[i]->array, &destination_value[i]->used, &destination_value[i]->size);
           }
 
           if (F_status_is_error(main->setting.state.status)) {
-            fake_print_error(&main->program.error, macro_fake_f(f_string_dynamics_increase));
+            fake_print_error(&main->program.error, macro_fake_f(f_memory_array_increase));
 
             return;
           }
@@ -237,10 +237,10 @@ extern "C" {
           ++destination[i]->used;
           ++destination_option[i]->used;
 
-          main->setting.state.status = f_string_dynamics_increase_by(fake_allocation_small_d, destination[i]);
+          main->setting.state.status = f_memory_array_increase_by(fake_allocation_small_d, sizeof(f_string_dynamic_t), (void **) &destination[i]->array, &destination[i]->used, &destination[i]->size);
 
           if (F_status_is_error(main->setting.state.status)) {
-            fake_print_error(&main->program.error, macro_fake_f(f_string_dynamics_increase_by));
+            fake_print_error(&main->program.error, macro_fake_f(f_memory_array_increase_by));
 
             return;
           }
@@ -341,23 +341,23 @@ extern "C" {
         if (!(console[i]->result & f_console_result_found_e)) continue;
 
         if (destination[i]->used + 2 > destination[i]->size) {
-          main->setting.state.status = f_string_dynamics_increase_by(fake_allocation_small_d, destination[i]);
+          main->setting.state.status = f_memory_array_increase_by(fake_allocation_small_d, sizeof(f_string_dynamic_t), (void **) &destination[i]->array, &destination[i]->used, &destination[i]->size);
 
           if (F_status_is_error(main->setting.state.status)) {
-            fake_print_error(&main->program.error, macro_fake_f(f_string_dynamics_increase_by));
+            fake_print_error(&main->program.error, macro_fake_f(f_memory_array_increase_by));
 
             return;
           }
         }
 
-        main->setting.state.status = f_string_dynamics_increase(fake_allocation_small_d, destination_option[i]);
+        main->setting.state.status = f_memory_array_increase(fake_allocation_small_d, sizeof(f_string_dynamic_t), (void **) &destination_option[i]->array, &destination_option[i]->used, &destination_option[i]->size);
 
         if (F_status_is_error_not(main->setting.state.status)) {
-          main->setting.state.status = f_string_dynamics_increase(fake_allocation_small_d, destination_value[i]);
+          main->setting.state.status = f_memory_array_increase(fake_allocation_small_d, sizeof(f_string_dynamic_t), (void **) &destination_value[i]->array, &destination_value[i]->used, &destination_value[i]->size);
         }
 
         if (F_status_is_error(main->setting.state.status)) {
-          fake_print_error(&main->program.error, macro_fake_f(f_string_dynamics_increase));
+          fake_print_error(&main->program.error, macro_fake_f(f_memory_array_increase));
 
           return;
         }
@@ -386,10 +386,10 @@ extern "C" {
         ++destination[i]->used;
         ++destination_option[i]->used;
 
-        main->setting.state.status = f_string_dynamics_increase_by(fake_allocation_small_d, destination[i]);
+        main->setting.state.status = f_memory_array_increase_by(fake_allocation_small_d, sizeof(f_string_dynamic_t), (void **) &destination[i]->array, &destination[i]->used, &destination[i]->size);
 
         if (F_status_is_error(main->setting.state.status)) {
-          fake_print_error(&main->program.error, macro_fake_f(f_string_dynamics_increase_by));
+          fake_print_error(&main->program.error, macro_fake_f(f_memory_array_increase_by));
 
           return;
         }

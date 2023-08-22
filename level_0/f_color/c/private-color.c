@@ -9,7 +9,7 @@ extern "C" {
   f_status_t private_f_color_save_1(const f_color_format_t format, const f_string_static_t color1, f_string_dynamic_t * const buffer) {
 
     {
-      const f_status_t status = f_string_dynamic_increase_by(format.begin.used + format.end.used + color1.used + 1, buffer);
+      const f_status_t status = f_memory_array_increase_by(format.begin.used + format.end.used + color1.used + 1, sizeof(f_char_t), (void **) &buffer->string, &buffer->used, &buffer->size);
       if (F_status_is_error(status)) return status;
     }
 
@@ -41,7 +41,7 @@ extern "C" {
   f_status_t private_f_color_save_2(const f_color_format_t format, const f_string_static_t color1, const f_string_static_t color2, f_string_dynamic_t * const buffer) {
 
     {
-      const f_status_t status = f_string_dynamic_increase_by(format.begin.used + format.medium.used + format.end.used + color1.used + color2.used + 1, buffer);
+      const f_status_t status = f_memory_array_increase_by(format.begin.used + format.medium.used + format.end.used + color1.used + color2.used + 1, sizeof(f_char_t), (void **) &buffer->string, &buffer->used, &buffer->size);
       if (F_status_is_error(status)) return status;
     }
 

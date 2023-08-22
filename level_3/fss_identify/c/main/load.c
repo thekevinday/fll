@@ -21,10 +21,10 @@ extern "C" {
     do {
       if (fss_identify_signal_check(main)) return;
 
-      main->setting.state.status = f_string_dynamic_increase_by(main->setting.file.size_read, &main->setting.buffer);
+      main->setting.state.status = f_memory_array_increase_by(main->setting.file.size_read, sizeof(f_char_t), (void **) &main->setting.buffer.string, &main->setting.buffer.used, &main->setting.buffer.size);
 
       if (F_status_is_error(main->setting.state.status)) {
-        fss_identify_print_error_file(&main->program.error, macro_fss_identify_f(f_string_dynamic_increase_by), name.used ? name : f_string_ascii_minus_s, f_file_operation_read_s, name.used ? fll_error_file_type_file_e : fll_error_file_type_pipe_e);
+        fss_identify_print_error_file(&main->program.error, macro_fss_identify_f(f_memory_array_increase_by), name.used ? name : f_string_ascii_minus_s, f_file_operation_read_s, name.used ? fll_error_file_type_file_e : fll_error_file_type_pipe_e);
 
         return;
       }

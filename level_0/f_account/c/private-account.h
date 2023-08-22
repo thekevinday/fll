@@ -32,9 +32,9 @@ extern "C" {
  * @return
  *   F_okay on success.
  *
- *   Errors (with error bit) from: f_string_dynamic_increase_by().
+ *   Errors (with error bit) from: f_memory_array_increase_by().
  *
- * @see f_string_dynamic_increase_by()
+ * @see f_memory_array_increase_by()
  */
 #if !defined(_di_f_account_by_name_) || !defined(_di_f_account_by_id_)
   extern f_status_t private_f_account_from_passwd(const struct passwd password, const f_number_unsigned_t password_length, f_account_t * const account) F_attribute_visibility_internal_d;

@@ -90,16 +90,15 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_array_increase().
  *   Errors (with error bit) from: f_memory_array_increase_by().
  *   Errors (with error bit) from: f_string_dynamic_partial_append_nulless().
- *   Errors (with error bit) from: f_string_dynamics_increase().
- *   Errors (with error bit) from: f_string_dynamics_increase_by().
+ *   Errors (with error bit) from: f_memory_array_increase().
  *   Errors (with error bit) from: fl_iki_read().
  *
  * @see f_fss_count_lines()
  * @see f_memory_array_increase()
  * @see f_memory_array_increase_by()
  * @see f_string_dynamic_partial_append_nulless()
- * @see f_string_dynamics_increase()
- * @see f_string_dynamics_increase_by()
+ * @see f_memory_array_increase()
+ * @see f_memory_array_increase_by()
  * @see fl_iki_read()
  */
 #ifndef _di_controller_rule_parameters_read_
@@ -704,18 +703,18 @@ extern "C" {
  *
  *    F_valid_not (with error bit) on success but there were one or more invalid settings encountered.
  *
- *   Errors (with error bit) from: f_string_dynamic_partial_append_nulless().
+ *   Errors (with error bit) from: f_memory_array_increase().
  *   Errors (with error bit) from: f_rip_dynamic_partial_nulless().
- *   Errors (with error bit) from: f_string_dynamics_increase().
+ *   Errors (with error bit) from: f_string_dynamic_partial_append_nulless().
  *   Errors (with error bit) from: f_string_maps_increase().
  *   Errors (with error bit) from: fll_fss_extended_read().
  *
  *   Errors (with error bit) from: controller_path_canonical_relative().
  *
- * @see f_string_dynamic_partial_append_nulless()
- * @see f_string_dynamics_increase()
- * @see f_string_maps_increase()
+ * @see f_memory_array_increase()
  * @see f_rip_dynamic_partial_nulless()
+ * @see f_string_dynamic_partial_append_nulless()
+ * @see f_string_maps_increase()
  * @see fll_fss_extended_read()
  *
  * @see controller_path_canonical_relative()

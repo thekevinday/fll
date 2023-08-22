@@ -1681,10 +1681,10 @@ extern "C" {
     if (found) {
       for (f_number_unsigned_t j = 0; j < data_make->setting_make.parameter.array[i].value.size; ++j) {
 
-        main->setting.state.status = f_string_dynamic_resize(0, &data_make->setting_make.parameter.array[i].value.array[j]);
+        main->setting.state.status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &data_make->setting_make.parameter.array[i].value.array[j].string, &data_make->setting_make.parameter.array[i].value.array[j].used, &data_make->setting_make.parameter.array[i].value.array[j].size);
 
         if (F_status_is_error(main->setting.state.status)) {
-          fake_print_error(&main->program.error, macro_fake_f(f_string_dynamic_resize));
+          fake_print_error(&main->program.error, macro_fake_f(f_memory_array_resize));
 
           main->setting.state.status = F_status_set_error(F_failure);
 
@@ -1693,10 +1693,10 @@ extern "C" {
       } // for
 
       if (data_make->setting_make.parameter.array[i].value.size) {
-        main->setting.state.status = f_string_dynamics_resize(0, &data_make->setting_make.parameter.array[i].value);
+        main->setting.state.status = f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &data_make->setting_make.parameter.array[i].value.array, &data_make->setting_make.parameter.array[i].value.used, &data_make->setting_make.parameter.array[i].value.size, &f_string_dynamics_delete_callback);
 
         if (F_status_is_error(main->setting.state.status)) {
-          fake_print_error(&main->program.error, macro_fake_f(f_string_dynamics_resize));
+          fake_print_error(&main->program.error, macro_fake_f(f_memory_array_resize));
 
           main->setting.state.status = F_status_set_error(F_failure);
         }
@@ -1729,10 +1729,10 @@ extern "C" {
     data_make->setting_make.parameter.array[i].value.used = 0;
 
     if (main->cache_arguments.used > 1) {
-      main->setting.state.status = f_string_dynamics_resize(main->cache_arguments.used - 1, &data_make->setting_make.parameter.array[i].value);
+      main->setting.state.status = f_memory_arrays_resize(main->cache_arguments.used - 1, sizeof(f_string_dynamic_t), (void **) &data_make->setting_make.parameter.array[i].value.array, &data_make->setting_make.parameter.array[i].value.used, &data_make->setting_make.parameter.array[i].value.size, &f_string_dynamics_delete_callback);
 
       if (F_status_is_error(main->setting.state.status)) {
-        fake_print_error(&main->program.error, macro_fake_f(f_string_dynamics_resize));
+        fake_print_error(&main->program.error, macro_fake_f(f_memory_arrays_resize));
 
         main->setting.state.status = F_status_set_error(F_failure);
 
@@ -1766,7 +1766,7 @@ extern "C" {
 
     f_string_dynamic_t *argument = &data_make->path.stack.array[data_make->path.stack.used - 1];
 
-    f_string_dynamic_resize(0, argument);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &argument->string, &argument->used, &argument->size);
 
     --data_make->path.stack.used;
 
@@ -1821,7 +1821,7 @@ extern "C" {
           total += main->cache_arguments.array[i].used;
         } // for
 
-        main->setting.state.status = f_string_dynamic_increase_by(total, &main->cache_1);
+        main->setting.state.status = f_memory_array_increase_by(total, sizeof(f_char_t), (void **) &main->cache_1.string, &main->cache_1.used, &main->cache_1.size);
 
         if (F_status_is_error(main->setting.state.status)) {
           fake_print_error(&main->program.error, macro_fake_f(f_file_stream_open));
@@ -1910,18 +1910,18 @@ extern "C" {
       fake_print_error_operation_path_stack_max(&data_make->error, macro_fake_f(f_path_change), main->cache_arguments.array[0]);
     }
     else {
-      main->setting.state.status = f_string_dynamics_increase_by(fake_allocation_small_d, &data_make->path.stack);
+      main->setting.state.status = f_memory_array_increase_by(fake_allocation_small_d, sizeof(f_string_dynamic_t), (void **) &data_make->path.stack.array, &data_make->path.stack.used, &data_make->path.stack.size);
 
       if (F_status_is_error(main->setting.state.status)) {
         if (F_status_set_fine(main->setting.state.status) == F_array_too_large) {
-          fake_print_error_operation_path_stack_max(&data_make->error, macro_fake_f(f_string_dynamics_increase_by), fake_common_file_path_stack_s);
+          fake_print_error_operation_path_stack_max(&data_make->error, macro_fake_f(f_memory_array_increase_by), fake_common_file_path_stack_s);
 
           main->setting.state.status = F_status_set_error(F_failure);
 
           return;
         }
 
-        fake_print_error(&main->program.error, macro_fake_f(f_string_dynamics_increase_by));
+        fake_print_error(&main->program.error, macro_fake_f(f_memory_array_increase_by));
 
         main->setting.state.status = F_status_set_error(F_failure);
 
@@ -1985,7 +1985,7 @@ extern "C" {
 
     // Clear stack, except for the project root.
     for (f_number_unsigned_t i = 1; i < data_make->path.stack.used; ++i) {
-      f_string_dynamic_resize(0, &data_make->path.stack.array[i]);
+      f_memory_array_resize(0, sizeof(f_char_t), (void **) &data_make->path.stack.array[i].string, &data_make->path.stack.array[i].used, &data_make->path.stack.array[i].size);
     } // for
 
     data_make->path.stack.used = 1;

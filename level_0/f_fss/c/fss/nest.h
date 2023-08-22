@@ -152,9 +152,9 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_string_dynamics_resize().
+ *   Errors (with error bit) from: f_memory_array_resize().
  *
- * @see f_string_dynamics_resize()
+ * @see f_memory_array_resize()
  */
 #ifndef _di_f_fss_nests_delete_callback_
   extern f_status_t f_fss_nests_delete_callback(const f_number_unsigned_t start, const f_number_unsigned_t stop, void * const array);
@@ -180,9 +180,9 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_string_dynamics_adjust().
+ *   Errors (with error bit) from: f_memory_array_adjust().
  *
- * @see f_string_dynamics_adjust()
+ * @see f_memory_array_adjust()
  */
 #ifndef _di_f_fss_nests_destroy_callback_
   extern f_status_t f_fss_nests_destroy_callback(const f_number_unsigned_t start, const f_number_unsigned_t stop, void * const array);
@@ -208,9 +208,9 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_string_dynamics_resize().
+ *   Errors (with error bit) from: f_memory_array_resize().
  *
- * @see f_string_dynamics_resize()
+ * @see f_memory_array_resize()
  */
 #ifndef _di_f_fss_nestss_delete_callback_
   extern f_status_t f_fss_nestss_delete_callback(const f_number_unsigned_t start, const f_number_unsigned_t stop, void * const array);
@@ -236,9 +236,9 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_string_dynamics_adjust().
+ *   Errors (with error bit) from: f_memory_array_adjust().
  *
- * @see f_string_dynamics_adjust()
+ * @see f_memory_array_adjust()
  */
 #ifndef _di_f_fss_nestss_destroy_callback_
   extern f_status_t f_fss_nestss_destroy_callback(const f_number_unsigned_t start, const f_number_unsigned_t stop, void * const array);

@@ -234,7 +234,7 @@ extern "C" {
 
     if (state->status == F_okay || state->status == F_okay_stop || state->status == F_okay_eos || state->status == F_okay_eol) {
       if (f_compare_dynamic(f_fss_payload_s, object) == F_equal_to) {
-        state->status = f_string_dynamic_increase_by(content.used, destination);
+        state->status = f_memory_array_increase_by(content.used, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
         if (F_status_is_error(state->status)) return;
 
         f_number_unsigned_t i = 0;

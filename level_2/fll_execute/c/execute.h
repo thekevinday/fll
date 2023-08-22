@@ -71,12 +71,12 @@ extern "C" {
  *   F_okay on success.
  *
  *   Errors (with error bit) from: f_string_dynamic_append().
- *   Errors (with error bit) from: f_string_dynamic_resize().
- *   Errors (with error bit) from: f_string_dynamics_increase().
+ *   Errors (with error bit) from: f_memory_array_resize().
+ *   Errors (with error bit) from: f_memory_array_increase().
  *
  * @see f_string_dynamic_append()
- * @see f_string_dynamic_resize()
- * @see f_string_dynamics_increase()
+ * @see f_memory_array_resize()
+ * @see f_memory_array_increase()
  */
 #ifndef _di_fll_execute_arguments_add_
   extern f_status_t fll_execute_arguments_add(const f_string_static_t source, f_string_dynamics_t * const arguments);
@@ -107,12 +107,12 @@ extern "C" {
  *   F_okay on success.
  *
  *   Errors (with error bit) from: f_string_append().
- *   Errors (with error bit) from: f_string_dynamic_resize().
- *   Errors (with error bit) from: f_string_dynamics_increase().
+ *   Errors (with error bit) from: f_memory_array_resize().
+ *   Errors (with error bit) from: f_memory_array_increase().
  *
  * @see f_string_append()
- * @see f_string_dynamic_resize()
- * @see f_string_dynamics_increase()
+ * @see f_memory_array_resize()
+ * @see f_memory_array_increase()
  */
 #ifndef _di_fll_execute_arguments_add_parameter_
   extern f_status_t fll_execute_arguments_add_parameter(const f_string_static_t prefix, const f_string_static_t name, const f_string_static_t value, f_string_dynamics_t * const arguments);
@@ -145,12 +145,12 @@ extern "C" {
  *   F_okay on success.
  *
  *   Errors (with error bit) from: f_string_append().
- *   Errors (with error bit) from: f_string_dynamic_resize().
- *   Errors (with error bit) from: f_string_dynamics_increase().
+ *   Errors (with error bit) from: f_memory_array_increase().
+ *   Errors (with error bit) from: f_memory_array_resize().
  *
  * @see f_string_append()
- * @see f_string_dynamic_resize()
- * @see f_string_dynamics_increase()
+ * @see f_memory_array_increase()
+ * @see f_memory_array_resize()
  */
 #ifndef _di_fll_execute_arguments_add_parameter_set_
   extern f_status_t fll_execute_arguments_add_parameter_set(const f_string_static_t prefix[], const f_string_static_t name[], const f_string_static_t value[], const f_number_unsigned_t size, f_string_dynamics_t * const arguments);
@@ -173,12 +173,12 @@ extern "C" {
  *   F_okay on success.
  *
  *   Errors (with error bit) from: f_string_append().
- *   Errors (with error bit) from: f_string_dynamic_resize().
- *   Errors (with error bit) from: f_string_dynamics_increase().
+ *   Errors (with error bit) from: f_memory_array_increase().
+ *   Errors (with error bit) from: f_memory_array_resize().
  *
  * @see f_string_append()
- * @see f_string_dynamic_resize()
- * @see f_string_dynamics_increase()
+ * @see f_memory_array_increase()
+ * @see f_memory_array_resize()
  */
 #ifndef _di_fll_execute_arguments_add_set_
   extern f_status_t fll_execute_arguments_add_set(const f_string_static_t source[], const f_number_unsigned_t size, f_string_dynamics_t *arguments);
@@ -310,8 +310,7 @@ extern "C" {
  *   Errors (with error bit) from: f_limit_process().
  *   Errors (with error bit) from: f_signal_mask().
  *   Errors (with error bit) from: f_string_append().
- *   Errors (with error bit) from: f_string_dynamic_resize().
- *   Errors (with error bit) from: f_string_dynamics_resize().
+ *   Errors (with error bit) from: f_memory_array_resize().
  *   Errors (with error bit) from: f_thread_signal_mask().
  *   Errors (with error bit) from: fl_environment_path_explode().
  *
@@ -341,7 +340,7 @@ extern "C" {
  * @see f_limit_process()
  * @see f_signal_mask()
  * @see f_string_dynamic_append()
- * @see f_string_dynamics_resize()
+ * @see f_memory_array_resize()
  * @see f_thread_signal_mask()
  * @see fl_control_group_apply()
  * @see fl_environment_path_explode()

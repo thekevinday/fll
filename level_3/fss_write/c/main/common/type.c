@@ -19,13 +19,13 @@ extern "C" {
 
     if (!setting) return F_status_set_error(F_parameter);
 
-    f_string_dynamic_resize(0, &setting->block);
-    f_string_dynamic_resize(0, &setting->buffer);
-    f_string_dynamic_resize(0, &setting->prepend);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &setting->block.string, &setting->block.used, &setting->block.size);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &setting->buffer.string, &setting->buffer.used, &setting->buffer.size);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &setting->prepend.string, &setting->prepend.used, &setting->prepend.size);
 
-    f_string_rangess_resize(0, &setting->ignoress);
-    f_string_dynamics_resize(0, &setting->objects);
-    f_string_dynamicss_resize(0, &setting->contentss);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &setting->ignoress.array, &setting->ignoress.used, &setting->ignoress.size, &f_string_dynamics_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &setting->objects.array, &setting->objects.used, &setting->objects.size, &f_string_dynamics_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &setting->contentss.array, &setting->contentss.used, &setting->contentss.size, &f_string_dynamics_delete_callback);
 
     return F_okay;
   }

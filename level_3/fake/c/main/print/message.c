@@ -15,9 +15,9 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[Building%] ", print->to, print->set->important, print->set->important);
-    fl_print_format("%[%Q%]", print->to, print->set->notable, setting_build->build_name, print->set->notable);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->set->notable, setting_build->build_name, print->set->notable);
     fl_print_format("%[ using '%]", print->to, print->set->important, print->set->important);
-    fl_print_format("%[%Q%]", print->to, print->set->notable, build_arguments && build_arguments->used ? build_arguments->array[0] : main->setting.settings, print->set->notable);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->set->notable, build_arguments && build_arguments->used ? build_arguments->array[0] : main->setting.settings, print->set->notable);
 
     fl_print_format("%[' with modes '%]", print->to, print->set->important, print->set->important);
 
@@ -30,14 +30,14 @@ extern "C" {
 
     for (f_number_unsigned_t i = build_arguments && build_arguments->used > 1 ? 1 : 0; i < modes->used; ) {
 
-      fl_print_format("%[%Q%]", print->to, print->set->notable, modes->array[i], print->set->notable);
+      fl_print_format(f_string_format_Q_single_s.string, print->to, print->set->notable, modes->array[i], print->set->notable);
 
       if (++i < modes->used) {
         fl_print_format("%[', '%]", print->to, print->set->important, print->set->important);
       }
     } // for
 
-    fl_print_format("%['.%]%r", print->to, print->set->important, print->set->important, f_string_eol_s);
+    fl_print_format(f_string_format_sentence_end_quote_s.string, print->to, print->set->important, print->set->important, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
 

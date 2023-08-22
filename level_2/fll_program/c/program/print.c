@@ -63,10 +63,10 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QThe%] ", print->to, print->set->error, print->prefix, print->set->error);
-    fl_print_format("%[%Q%]", print->to, print->set->notable, variable, print->set->notable);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->set->notable, variable, print->set->notable);
     fl_print_format("%[ is missing or has a length of%] ", print->to, print->set->error, print->set->error);
     fl_print_format("%[0%]", print->to, print->set->notable, print->set->notable);
-    fl_print_format("%[.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
+    fl_print_format(f_string_format_sentence_end_s.string, print->to, print->set->error, print->set->error, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
 
@@ -241,12 +241,12 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QThe value '%]", print->to, print->set->error, print->prefix, print->set->error);
-    fl_print_format("%[%Q%]", print->to, print->set->notable, value, print->set->notable);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->set->notable, value, print->set->notable);
     fl_print_format("%[' for the parameter '%]", print->to, print->set->error, print->set->error);
     fl_print_format("%[%Q%Q%]", print->to, print->set->notable, symbol, name, print->set->notable);
     fl_print_format("%[' must not be less than %]", print->to, print->set->error, print->set->error);
-    fl_print_format("%[%Q%]", print->to, print->set->notable, than, print->set->notable);
-    fl_print_format("%[.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->set->notable, than, print->set->notable);
+    fl_print_format(f_string_format_sentence_end_s.string, print->to, print->set->error, print->set->error, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
 
@@ -265,12 +265,12 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QThe value '%]", print->to, print->set->error, print->prefix, print->set->error);
-    fl_print_format("%[%Q%]", print->to, print->set->notable, value, print->set->notable);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->set->notable, value, print->set->notable);
     fl_print_format("%[' for the parameter '%]", print->to, print->set->error, print->set->error);
     fl_print_format("%[%Q%Q%]", print->to, print->set->notable, symbol, name, print->set->notable);
     fl_print_format("%[' must not be more than %]", print->to, print->set->error, print->set->error);
-    fl_print_format("%[%Q%]", print->to, print->set->notable, than, print->set->notable);
-    fl_print_format("%[.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->set->notable, than, print->set->notable);
+    fl_print_format(f_string_format_sentence_end_s.string, print->to, print->set->error, print->set->error, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
 
@@ -289,7 +289,7 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QThe value '%]", print->to, print->set->error, print->prefix, print->set->error);
-    fl_print_format("%[%Q%]", print->to, print->set->notable, value, print->set->notable);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->set->notable, value, print->set->notable);
     fl_print_format("%[' for the parameter '%]", print->to, print->set->error, print->set->error);
     fl_print_format("%[%Q%Q%]", print->to, print->set->notable, symbol, name, print->set->notable);
     fl_print_format("%[' is not a valid integer.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
@@ -311,7 +311,7 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QThe value '%]", print->to, print->set->error, print->prefix, print->set->error);
-    fl_print_format("%[%Q%]", print->to, print->set->notable, value, print->set->notable);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->set->notable, value, print->set->notable);
     fl_print_format("%[' for the parameter '%]", print->to, print->set->error, print->set->error);
     fl_print_format("%[%Q%Q%]", print->to, print->set->notable, symbol, name, print->set->notable);
     fl_print_format("%[' is not a valid negative integer.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
@@ -333,7 +333,7 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QThe value '%]", print->to, print->set->error, print->prefix, print->set->error);
-    fl_print_format("%[%Q%]", print->to, print->set->notable, value, print->set->notable);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->set->notable, value, print->set->notable);
     fl_print_format("%[' for the parameter '%]", print->to, print->set->error, print->set->error);
     fl_print_format("%[%Q%Q%]", print->to, print->set->notable, symbol, name, print->set->notable);
     fl_print_format("%[' is not a valid positive integer.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
@@ -377,7 +377,7 @@ extern "C" {
     fl_print_format("%[%QThe parameter%] ", print->to, print->set->error, print->prefix, print->set->error);
     fl_print_format("%[%Q%Q%]", print->to, print->set->notable, symbol, name, print->set->notable);
     fl_print_format("%[ is specified, but%] ", print->to, print->set->error, print->set->error);
-    fl_print_format("%[%Q%]", print->to, print->set->notable, amount, print->set->notable);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->set->notable, amount, print->set->notable);
     fl_print_format(" %[values are not given.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
@@ -420,7 +420,7 @@ extern "C" {
     fl_print_format("%[%Q%Q%]", print->to, print->set->notable, symbol, value, print->set->notable);
     fl_print_format("%[' may only be specified once for the parameter '%]", print->to, print->set->error, print->set->error);
     fl_print_format("%[%Q%Q%]", print->to, print->set->notable, symbol, name, print->set->notable);
-    fl_print_format("%['.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
+    fl_print_format(f_string_format_sentence_end_quote_s.string, print->to, print->set->error, print->set->error, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
 
@@ -440,7 +440,7 @@ extern "C" {
 
     fl_print_format("%[%QFailure while processing the parameter '%]", print->to, print->set->error, print->prefix, print->set->error);
     fl_print_format("%[%Q%Q%]", print->to, print->set->notable, symbol, name, print->set->notable);
-    fl_print_format("%['.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
+    fl_print_format(f_string_format_sentence_end_quote_s.string, print->to, print->set->error, print->set->error, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
 
@@ -459,12 +459,12 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QThe start range value '%]", print->to, print->set->error, print->prefix, print->set->error);
-    fl_print_format("%[%Q%]", print->to, print->set->notable, value_start, print->set->notable);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->set->notable, value_start, print->set->notable);
     fl_print_format("%[' may not be greater than the stop value '%]", print->to, print->set->error, print->set->error);
-    fl_print_format("%[%Q%]", print->to, print->set->notable, value_stop, print->set->notable);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->set->notable, value_stop, print->set->notable);
     fl_print_format("%[' for the parameter '%]", print->to, print->set->error, print->set->error);
     fl_print_format("%[%Q%Q%]", print->to, print->set->notable, symbol, name, print->set->notable);
-    fl_print_format("%['.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
+    fl_print_format(f_string_format_sentence_end_quote_s.string, print->to, print->set->error, print->set->error, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
 
@@ -657,7 +657,7 @@ extern "C" {
 
     fl_print_format("%]%[Received signal code %]", print->to, print->set->reset, print->set->warning, print->set->warning);
     fl_print_format("%[%u%]", print->to, print->set->notable, signal, print->set->notable);
-    fl_print_format("%[.%]%r", print->to, print->set->warning, print->set->warning, f_string_eol_s);
+    fl_print_format(f_string_format_sentence_end_s.string, print->to, print->set->warning, print->set->warning, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
 

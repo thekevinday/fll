@@ -10,11 +10,13 @@ extern "C" {
 
     arguments->array[arguments->used].used = 0;
 
-    f_status_t status = f_string_dynamic_increase_by(source.used + 1, &arguments->array[arguments->used]);
-    if (F_status_is_error(status)) return status;
+    {
+      f_status_t status = f_memory_array_increase_by(source.used + 1, sizeof(f_char_t), (void **) &arguments->array[arguments->used].string, &arguments->array[arguments->used].used, &arguments->array[arguments->used].size);
+      if (F_status_is_error(status)) return status;
 
-    status = f_string_dynamic_append(source, &arguments->array[arguments->used]);
-    if (F_status_is_error(status)) return status;
+      status = f_string_dynamic_append(source, &arguments->array[arguments->used]);
+      if (F_status_is_error(status)) return status;
+    }
 
     ++arguments->used;
 
@@ -27,24 +29,26 @@ extern "C" {
 
     arguments->array[arguments->used].used = 0;
 
-    f_status_t status = f_string_dynamic_increase_by(prefix.used + name.used + 1, &arguments->array[arguments->used]);
-    if (F_status_is_error(status)) return status;
+    {
+      f_status_t status = f_memory_array_increase_by(prefix.used + name.used + 1, sizeof(f_char_t), (void **) &arguments->array[arguments->used].string, &arguments->array[arguments->used].used, &arguments->array[arguments->used].size);
+      if (F_status_is_error(status)) return status;
 
-    status = f_string_dynamic_append(prefix, &arguments->array[arguments->used]);
-    if (F_status_is_error(status)) return status;
+      status = f_string_dynamic_append(prefix, &arguments->array[arguments->used]);
+      if (F_status_is_error(status)) return status;
 
-    ++arguments->used;
+      ++arguments->used;
 
-    status = f_string_dynamics_increase(F_memory_default_allocation_small_d, arguments);
-    if (F_status_is_error(status)) return status;
+      status = f_memory_array_increase(F_memory_default_allocation_small_d, sizeof(f_string_dynamic_t), (void **) &arguments->array, &arguments->used, &arguments->size);
+      if (F_status_is_error(status)) return status;
 
-    arguments->array[arguments->used].used = 0;
+      arguments->array[arguments->used].used = 0;
 
-    status = f_string_dynamic_increase_by(value.used + 1, &arguments->array[arguments->used]);
-    if (F_status_is_error(status)) return status;
+      status = f_memory_array_increase_by(value.used + 1, sizeof(f_char_t), (void **) &arguments->array[arguments->used].string, &arguments->array[arguments->used].used, &arguments->array[arguments->used].size);
+      if (F_status_is_error(status)) return status;
 
-    status = f_string_dynamic_append(value, &arguments->array[arguments->used]);
-    if (F_status_is_error(status)) return status;
+      status = f_string_dynamic_append(value, &arguments->array[arguments->used]);
+      if (F_status_is_error(status)) return status;
+    }
 
     ++arguments->used;
 
@@ -272,7 +276,7 @@ extern "C" {
       f_file_read_block(file, &response);
 
       if (!response.used || response.string[0] == f_string_ascii_1_s.string[0]) {
-        f_string_dynamic_resize(0, &response);
+        f_memory_array_resize(0, sizeof(f_char_t), (void **) &response.string, &response.used, &response.size);
 
         close(descriptors[0]);
 
@@ -289,7 +293,7 @@ extern "C" {
         return F_child;
       }
 
-      f_string_dynamic_resize(0, &response);
+      f_memory_array_resize(0, sizeof(f_char_t), (void **) &response.string, &response.used, &response.size);
     }
 
     if (parameter && parameter->signals) {
@@ -454,7 +458,7 @@ extern "C" {
       f_file_read_block(file, &response);
 
       if (!response.used || response.string[0] == f_string_ascii_1_s.string[0]) {
-        f_string_dynamic_resize(0, &response);
+        f_memory_array_resize(0, sizeof(f_char_t), (void **) &response.string, &response.used, &response.size);
 
         close(descriptors[0]);
 
@@ -471,7 +475,7 @@ extern "C" {
         return F_child;
       }
 
-      f_string_dynamic_resize(0, &response);
+      f_memory_array_resize(0, sizeof(f_char_t), (void **) &response.string, &response.used, &response.size);
     }
 
     if (parameter && parameter->signals) {

@@ -60,11 +60,11 @@ extern "C" {
           status = f_file_mode_set(path_sub, mode);
         } // for
 
-        f_string_dynamics_resize(0, list[i]);
+        f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &list[i]->array, &list[i]->used, &list[i]->size, &f_string_dynamics_delete_callback);
       } // for
     }
 
-    f_string_dynamics_resize(0, &listing.unknown);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &listing.unknown.array, &listing.unknown.used, &listing.unknown.size, &f_string_dynamics_delete_callback);
 
     f_string_static_t path_sub = f_string_static_t_initialize;
 
@@ -159,7 +159,7 @@ extern "C" {
           status = f_file_role_change(path_sub, uid, gid, dereference);
         } // for
 
-        f_string_dynamics_resize(0, list[i]);
+        f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &list[i]->array, &list[i]->used, &list[i]->size, &f_string_dynamics_delete_callback);
       } // for
     }
 

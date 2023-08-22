@@ -272,7 +272,7 @@ extern "C" {
  * @param action
  *   The action to deallocate.
  *
- * @see f_string_dynamics_resize()
+ * @see f_memory_arrays_resize()
  */
 #ifndef _di_controller_entry_action_delete_simple_
   extern void controller_entry_action_delete_simple(controller_entry_action_t * const action) F_attribute_visibility_internal_d;
@@ -319,7 +319,7 @@ extern "C" {
  * @param item
  *   The item to deallocate.
  *
- * @see f_string_dynamic_resize()
+ * @see f_memory_array_resize()
  */
 #ifndef _di_controller_entry_item_delete_simple_
   extern void controller_entry_item_delete_simple(controller_entry_item_t * const item) F_attribute_visibility_internal_d;

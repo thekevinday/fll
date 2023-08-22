@@ -188,14 +188,14 @@ extern "C" {
       status = private_f_file_link_read(source, source_stat.st_size, &target);
 
       if (F_status_is_error(status)) {
-        f_string_dynamic_resize(0, &target);
+        f_memory_array_resize(0, sizeof(f_char_t), (void **) &target.string, &target.used, &target.size);
 
         return status;
       }
 
       status = private_f_file_link(target, destination);
 
-      f_string_dynamic_resize(0, &target);
+      f_memory_array_resize(0, sizeof(f_char_t), (void **) &target.string, &target.used, &target.size);
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) != F_file_found || flag & f_file_stat_flag_exclusive_e) {
@@ -1495,8 +1495,10 @@ extern "C" {
 
     const f_number_unsigned_t size = strnlen(path_to_name, path.used);
 
-    const f_status_t status = f_string_dynamic_increase_by(size + 1, name_base);
-    if (F_status_is_error(status)) return status;
+    {
+      const f_status_t status = f_memory_array_increase_by(size + 1, sizeof(f_char_t), (void **) &name_base->string, &name_base->used, &name_base->size);
+      if (F_status_is_error(status)) return status;
+    }
 
     memcpy(name_base->string + name_base->used, path_to_name, sizeof(f_char_t) * size);
     name_base->used += size;
@@ -1525,7 +1527,7 @@ extern "C" {
     const f_number_unsigned_t size = strnlen(path_to_name, path.used);
 
     {
-      const f_status_t status = f_string_dynamic_increase_by(size + 1, name_directory);
+      const f_status_t status = f_memory_array_increase_by(size + 1, sizeof(f_char_t), (void **) &name_directory->string, &name_directory->used, &name_directory->size);
       if (F_status_is_error(status)) return status;
     }
 
@@ -1623,7 +1625,7 @@ extern "C" {
     ssize_t size_read = 0;
 
     do {
-      status = f_string_dynamic_increase_by(file.size_read, buffer);
+      status = f_memory_array_increase_by(file.size_read, sizeof(f_char_t), (void **) &buffer->string, &buffer->used, &buffer->size);
       if (F_status_is_error(status)) return status;
 
       size_read = read(file.id, buffer->string + buffer->used, file.size_read);
@@ -1660,7 +1662,7 @@ extern "C" {
     ssize_t size_read = 0;
 
     {
-      const f_status_t status = f_string_dynamic_increase_by(file.size_read, buffer);
+      const f_status_t status = f_memory_array_increase_by(file.size_read, sizeof(f_char_t), (void **) &buffer->string, &buffer->used, &buffer->size);
       if (F_status_is_error(status)) return status;
     }
 
@@ -1710,7 +1712,7 @@ extern "C" {
         buffer_size = total - buffer_count;
       }
 
-      status = f_string_dynamic_increase_by(buffer_size, buffer);
+      status = f_memory_array_increase_by(buffer_size, sizeof(f_char_t), (void **) &buffer->string, &buffer->used, &buffer->size);
       if (F_status_is_error(status)) return status;
 
       size_read = read(file.id, buffer->string + buffer->used, buffer_size);

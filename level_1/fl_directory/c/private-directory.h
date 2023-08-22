@@ -28,9 +28,9 @@ extern "C" {
  *
  *     F_interrupt (with error bit) if stopping due to an interrupt.
  *
+ *     Errors (with error bit) from: f_memory_array_increase_by().
  *     Errors (with error bit) from: f_string_dynamic_append_assure().
  *     Errors (with error bit) from: f_string_dynamic_append_nulless().
- *     Errors (with error bit) from: f_string_dynamic_increase_by().
  *     Errors (with error bit) from: fl_directory_list().
  *
  *     Errors (with error bit) from: private_fl_directory_list().
@@ -39,9 +39,9 @@ extern "C" {
  *     Errors (with error bit) from: recurse.action().
  *     Errors (with error bit) from: recurse.handle().
  *
+ * @see f_memory_array_increase_by()
  * @see f_string_dynamic_append_assure()
  * @see f_string_dynamic_append_nulless()
- * @see f_string_dynamic_increase_by()
  * @see fl_directory_do()
  *
  * @see private_fl_directory_list()
@@ -116,10 +116,10 @@ extern "C" {
  *   F_string_too_large (with error bit) if appended string length is too large to store in the buffer.
  *
  *   Errors (with error bit) from: f_file_stat_at().
- *   Errors (with error bit) from: f_string_dynamics_increase_by().
+ *   Errors (with error bit) from: f_memory_array_increase_by().
  *
  * @see f_file_stat_at()
- * @see f_string_dynamics_increase_by()
+ * @see f_memory_array_increase_by()
  *
  * @see fl_directory_do()
  * @see fl_directory_list()

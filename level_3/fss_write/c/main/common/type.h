@@ -74,6 +74,7 @@ extern "C" {
  * objects:   An array of objects passed as values to the "--object" parameter or via the input pipe.
  * contentss: An array of content sets passed as values to the "--content" parameter or via the input pipe.
  *
+ * ignores:  A pointer to a specific Ignores used during processing.
  * object:   A pointer to a specific Object used during processing.
  * content:  A pointer to a specific Content used during processing.
  * contents: A pointer to a specific set of Content used during processing.

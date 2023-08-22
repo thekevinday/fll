@@ -37,16 +37,10 @@ extern "C" {
   #define macro_f_string_maps_t_initialize_1(array, size, used) { array, size, used }
   #define macro_f_string_maps_t_initialize_2(array, length) { array, length, length }
 
-  #define macro_f_string_maps_t_resize(status, maps, length) status = f_string_maps_resize(length, &maps);
-  #define macro_f_string_maps_t_adjust(status, maps, length) status = f_string_maps_adjust(length, &maps);
-
-  #define macro_f_string_maps_t_delete_simple(maps)  f_string_maps_resize(0, &maps);
-  #define macro_f_string_maps_t_destroy_simple(maps) f_string_maps_adjust(0, &maps);
-
-  #define macro_f_string_maps_t_increase(status, step, maps)      status = f_string_maps_increase(step, maps);
-  #define macro_f_string_maps_t_increase_by(status, maps, amount) status = f_string_maps_increase_by(amount, maps);
-  #define macro_f_string_maps_t_decrease_by(status, maps, amount) status = f_string_maps_decrease_by(amount, maps);
-  #define macro_f_string_maps_t_decimate_by(status, maps, amount) status = f_string_maps_decimate_by(amount, maps);
+  #define macro_f_string_maps_t_clear(maps) \
+    maps.array = 0; \
+    maps.size = 0; \
+    maps.used = 0;
 #endif // _di_f_string_maps_t_
 
 /**

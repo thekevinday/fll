@@ -115,7 +115,7 @@ extern "C" {
     for (f_number_unsigned_t i = 0; i < values.used; ++i) {
 
       if (arguments[values.array[i]].used) {
-        status = f_string_dynamics_increase(F_memory_default_allocation_small_d, destination);
+        status = f_memory_array_increase(F_memory_default_allocation_small_d, sizeof(f_string_dynamic_t), (void **) &destination->array, &destination->used, &destination->size);
         if (F_status_is_error(status)) break;
 
         destination->array[destination->used].used = 0;
@@ -175,7 +175,7 @@ extern "C" {
     for (f_number_unsigned_t i = 0; i < values.used; ++i) {
 
       if (arguments[values.array[i]].used) {
-        status = f_string_dynamics_increase(F_memory_default_allocation_small_d, destination);
+        status = f_memory_array_increase(F_memory_default_allocation_small_d, sizeof(f_string_dynamic_t), (void **) &destination->array, &destination->used, &destination->size);
         if (F_status_is_error(status)) break;
 
         destination->array[destination->used].used = 0;
@@ -224,7 +224,7 @@ extern "C" {
       }
     } // for
 
-    f_string_dynamic_resize(0, &ripped);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &ripped.string, &ripped.used, &ripped.size);
 
     if (F_status_is_error(status)) return status;
     if (start == destination->used) return F_data_not;

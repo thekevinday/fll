@@ -31,8 +31,8 @@ extern "C" {
  *
  *     Errors (with error bit) from: f_console_parameter_process().
  *     Errors (with error bit) from: f_memory_array_increase_by().
+ *     Errors (with error bit) from: f_memory_array_resize().
  *     Errors (with error bit) from: f_path_directory_cleanup().
- *     Errors (with error bit) from: f_string_dynamic_resize().
  *     Errors (with error bit) from: f_utf_is_word_dash_plus().
  *     Errors (with error bit) from: fll_program_parameter_additional_rip().
  *     Errors (with error bit) from: fll_program_parameter_process_context().
@@ -40,8 +40,8 @@ extern "C" {
  *
  * @see f_console_parameter_process()
  * @see f_memory_array_increase_by()
+ * @see f_memory_array_resize()
  * @see f_path_directory_cleanup()
- * @see f_string_dynamic_resize()
  * @see f_utf_is_word_dash_plus()
  * @see fll_program_parameter_additional_rip()
  * @see fll_program_parameter_process_context()
@@ -89,7 +89,7 @@ extern "C" {
  * @param dynamic
  *   The string to shrink.
  *
- * @see f_string_dynamic_resize()
+ * @see f_memory_array_resize()
  */
 #ifndef _di_fake_string_dynamic_reset_
   extern void fake_string_dynamic_reset(f_string_dynamic_t * const dynamic);
@@ -103,7 +103,7 @@ extern "C" {
  * @param dynamic
  *   The string to shrink.
  *
- * @see f_string_dynamic_resize()
+ * @see f_memory_array_resize()
  */
 #ifndef _di_fake_string_dynamics_reset_
   extern void fake_string_dynamics_reset(f_string_dynamics_t * const dynamics);

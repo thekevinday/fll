@@ -199,8 +199,9 @@ extern "C" {
         }
 
         if (F_status_is_error_not(data_make->main->setting.state.status)) {
-          function_name = macro_fake_f(f_string_dynamics_resize);
-          data_make->main->setting.state.status = f_string_dynamics_resize(1, &data_make->setting_make.parameter.array[0].value);
+          function_name = macro_fake_f(f_memory_arrays_resize);
+
+          data_make->main->setting.state.status = f_memory_arrays_resize(1, sizeof(f_string_dynamic_t), (void **) &data_make->setting_make.parameter.array[0].value.array, &data_make->setting_make.parameter.array[0].value.used, &data_make->setting_make.parameter.array[0].value.size, &f_string_dynamics_delete_callback);
         }
 
         if (F_status_is_error(data_make->main->setting.state.status)) {
@@ -414,7 +415,7 @@ extern "C" {
         }
       } // for
 
-      f_string_dynamic_resize(0, &combined);
+      f_memory_array_resize(0, sizeof(f_char_t), (void **) &combined.string, &combined.used, &combined.size);
     }
 
     f_string_map_multis_resize(0, &define);
@@ -454,20 +455,20 @@ extern "C" {
         } // for
 
         if (j == data_make->setting_build.environment.used) {
-          data_make->main->setting.state.status = f_string_dynamics_increase(fake_allocation_small_d, &data_make->setting_build.environment);
+          data_make->main->setting.state.status = f_memory_array_increase(fake_allocation_small_d, sizeof(f_string_dynamic_t), (void **) &data_make->setting_build.environment.array, &data_make->setting_build.environment.used, &data_make->setting_build.environment.size);
 
           if (F_status_is_error(data_make->main->setting.state.status)) {
-            fake_print_error(&data_make->main->program.error, macro_fake_f(f_string_dynamics_increase));
+            fake_print_error(&data_make->main->program.error, macro_fake_f(f_memory_array_increase));
 
             break;
           }
 
           data_make->setting_build.environment.array[j].used = 0;
 
-          data_make->main->setting.state.status = f_string_dynamic_increase_by(name_define.used + 1, &data_make->setting_build.environment.array[j]);
+          data_make->main->setting.state.status = f_memory_array_increase_by(name_define.used + 1, sizeof(f_char_t), (void **) &data_make->setting_build.environment.array[j].string, &data_make->setting_build.environment.array[j].used, &data_make->setting_build.environment.array[j].size);
 
           if (F_status_is_error(data_make->main->setting.state.status)) {
-            fake_print_error(&data_make->main->program.error, macro_fake_f(f_string_dynamic_increase_by));
+            fake_print_error(&data_make->main->program.error, macro_fake_f(f_memory_array_increase_by));
 
             break;
           }
@@ -503,7 +504,7 @@ extern "C" {
       name_define.used = 0;
     } // for
 
-    f_string_dynamic_resize(0, &name_define);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &name_define.string, &name_define.used, &name_define.size);
 
     if (F_status_is_error(data_make->main->setting.state.status)) return;
 

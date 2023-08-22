@@ -455,7 +455,7 @@ extern "C" {
     if (!(from.type == f_network_family_ip_4_e || from.type == f_network_family_ip_6_e)) return F_data_not;
 
     {
-      const f_status_t status = f_string_dynamic_increase_by((from.type == f_network_family_ip_4_e ? INET_ADDRSTRLEN : INET6_ADDRSTRLEN) + 1, to);
+      const f_status_t status = f_memory_array_increase_by((from.type == f_network_family_ip_4_e ? INET_ADDRSTRLEN : INET6_ADDRSTRLEN) + 1, sizeof(f_char_t), (void **) &to->string, &to->used, &to->size);
       if (F_status_is_error(status)) return status;
     }
 

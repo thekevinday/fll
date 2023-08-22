@@ -59,19 +59,19 @@ extern "C" {
  *   F_okay on success.
  *
  *   Errors (with error bit) from: controller_entry_actions_increase_by().
- *   Errors (with error bit) from: f_fss_count_lines().
  *   Errors (with error bit) from: f_fss_apply_delimit().
- *   Errors (with error bit) from: f_string_dynamic_partial_append_nulless().
+ *   Errors (with error bit) from: f_fss_count_lines().
+ *   Errors (with error bit) from: f_memory_array_increase_by().
  *   Errors (with error bit) from: f_rip_dynamic_partial_nulless().
- *   Errors (with error bit) from: f_string_dynamics_increase_by().
+ *   Errors (with error bit) from: f_string_dynamic_partial_append_nulless().
  *   Errors (with error bit) from: fll_fss_extended_read().
  *
  * @see controller_entry_actions_increase_by()
- * @see f_fss_count_lines()
- * @see f_string_dynamic_partial_append_nulless()
- * @see f_string_dynamics_increase_by()
  * @see f_fss_apply_delimit()
+ * @see f_fss_count_lines()
+ * @see f_memory_array_increase_by()
  * @see f_rip_dynamic_partial_nulless()
+ * @see f_string_dynamic_partial_append_nulless()
  * @see fll_fss_extended_read()
  */
 #ifndef _di_controller_entry_actions_read_

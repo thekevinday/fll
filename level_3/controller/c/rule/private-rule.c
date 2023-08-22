@@ -69,14 +69,14 @@ extern "C" {
 
     if (object && object->start <= object->stop) {
       if (content) {
-        status = f_string_dynamics_increase_by(content->used + 1, &action->parameters);
+        status = f_memory_array_increase_by(content->used + 1, sizeof(f_string_dynamic_t), (void **) &action->parameters.array, &action->parameters.used, &action->parameters.size);
       }
       else {
-        status = f_string_dynamics_increase(controller_common_allocation_small_d, &action->parameters);
+        status = f_memory_array_increase(controller_common_allocation_small_d, sizeof(f_string_dynamic_t), (void **) &action->parameters.array, &action->parameters.used, &action->parameters.size);
       }
 
       if (F_status_is_error(status)) {
-        controller_print_error(global.thread, global.main->error, F_status_set_fine(status), content ? "f_string_dynamics_increase_by" : "f_string_dynamics_increase", F_true);
+        controller_print_error(global.thread, global.main->error, F_status_set_fine(status), content ? "f_memory_array_increase_by" : "f_memory_array_increase", F_true);
 
         return status;
       }
@@ -113,10 +113,10 @@ extern "C" {
     }
 
     if (content && content->used) {
-      status = f_string_dynamics_increase_by(content->used, &action->parameters);
+      status = f_memory_array_increase_by(content->used, sizeof(f_string_dynamic_t), (void **) &action->parameters.array, &action->parameters.used, &action->parameters.size);
 
       if (F_status_is_error(status)) {
-        controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_string_dynamics_increase_by", F_true);
+        controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_memory_array_increase_by", F_true);
 
         return status;
       }
@@ -268,10 +268,10 @@ extern "C" {
         if (item->type == controller_rule_item_type_script_e || item->type == controller_rule_item_type_utility_e) {
           actions->array[actions->used].parameters.used = 0;
 
-          status = f_string_dynamics_increase(controller_common_allocation_small_d, &actions->array[actions->used].parameters);
+          status = f_memory_array_increase(controller_common_allocation_small_d, sizeof(f_string_dynamic_t), (void **) &actions->array[actions->used].parameters.array, &actions->array[actions->used].parameters.used, &actions->array[actions->used].parameters.size);
 
           if (F_status_is_error(status)) {
-            controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_string_dynamics_increase", F_true);
+            controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_memory_array_increase", F_true);
 
             return status;
           }
@@ -452,7 +452,7 @@ extern "C" {
               fl_print_format("%[%r%]%[', '%]", global.main->error.to, global.main->error.notable, controller_start_s, global.main->error.notable, global.main->error.context, global.main->error.context);
               fl_print_format("%[%r%]%[', or '%]", global.main->error.to, global.main->error.notable, controller_stop_s, global.main->error.notable, global.main->error.context, global.main->error.context);
               fl_print_format("%[%r%]", global.main->error.to, global.main->error.notable, controller_thaw_s, global.main->error.notable, global.main->error.context);
-              fl_print_format("%['.%]%r", global.main->error.to, global.main->error.context, global.main->error.context, f_string_eol_s);
+              fl_print_format(f_string_format_sentence_end_quote_s.string, global.main->error.to, global.main->error.context, global.main->error.context, f_string_eol_s);
 
               controller_rule_print_error_cache(global.main->error, cache->action, F_true);
 
@@ -485,7 +485,7 @@ extern "C" {
               fl_print_format("%[' as the second value, only the following are allowed: '%]", global.main->error.to, global.main->error.context, global.main->error.context);
               fl_print_format("%[%r%]%[' or '%]", global.main->error.to, global.main->error.notable, controller_stop_s, global.main->error.notable, global.main->error.context, global.main->error.context);
               fl_print_format("%[%r%]", global.main->error.to, global.main->error.notable, controller_thaw_s, global.main->error.notable, global.main->error.context);
-              fl_print_format("%['.%]%r", global.main->error.to, global.main->error.context, global.main->error.context, f_string_eol_s);
+              fl_print_format(f_string_format_sentence_end_quote_s.string, global.main->error.to, global.main->error.context, global.main->error.context, f_string_eol_s);
 
               controller_rule_print_error_cache(global.main->error, cache->action, F_true);
 
@@ -514,7 +514,7 @@ extern "C" {
                 fl_print_format("%[%r%]", global.main->error.to, global.main->error.notable, controller_rerun_s, global.main->error.notable);
                 fl_print_format("%[' has an unknown value '%]", global.main->error.to, global.main->error.context, global.main->error.context);
                 fl_print_format("%[%/Q%]", global.main->error.to, global.main->error.notable, cache->buffer_item, cache->content_action.array[i], global.main->error.notable);
-                fl_print_format("%['.%]%r", global.main->error.to, global.main->error.context, global.main->error.context, f_string_eol_s);
+                fl_print_format(f_string_format_sentence_end_quote_s.string, global.main->error.to, global.main->error.context, global.main->error.context, f_string_eol_s);
 
                 controller_rule_print_error_cache(global.main->error, cache->action, F_true);
 
@@ -554,7 +554,7 @@ extern "C" {
                 fl_print_format("%r%[%QUnknown value '%]", global.main->error.to, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
                 fl_print_format("%[%/Q%]", global.main->error.to, global.main->error.notable, cache->buffer_item, cache->content_action.array[i], global.main->error.notable);
                 fl_print_format("%[' for rule item action '%]%[%r%]", global.main->error.to, global.main->error.context, global.main->error.context, global.main->error.notable, controller_with_s, global.main->error.notable);
-                fl_print_format("%['.%]%r", global.main->error.to, global.main->error.context, global.main->error.context, f_string_eol_s);
+                fl_print_format(f_string_format_sentence_end_quote_s.string, global.main->error.to, global.main->error.context, global.main->error.context, f_string_eol_s);
 
                 controller_rule_print_error_cache(global.main->error, cache->action, F_true);
 
@@ -568,10 +568,10 @@ extern "C" {
           } // for
         }
         else if (item->type == controller_rule_item_type_script_e || item->type == controller_rule_item_type_utility_e) {
-          status = f_string_dynamics_increase(controller_common_allocation_small_d, &actions->array[actions->used].parameters);
+          status = f_memory_array_increase(controller_common_allocation_small_d, sizeof(f_string_dynamic_t), (void **) &actions->array[actions->used].parameters.array, &actions->array[actions->used].parameters.used, &actions->array[actions->used].parameters.size);
 
           if (F_status_is_error(status)) {
-            controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_string_dynamics_increase", F_true);
+            controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_memory_array_increase", F_true);
 
             return status;
           }
@@ -695,7 +695,7 @@ extern "C" {
         status = F_status_set_fine(status);
 
         if (status != F_valid_not && status != F_number && status != F_number_decimal && status != F_number_overflow && status != F_number_underflow && status != F_number_negative) {
-          controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_string_dynamics_increase", F_true);
+          controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "fl_conversion_dynamic_partial_to_signed_detect", F_true);
         }
         else {
           controller_lock_print(global.main->error.to, global.thread);
@@ -1626,10 +1626,10 @@ extern "C" {
       return status;
     }
 
-    status = f_string_dynamics_increase(controller_common_allocation_small_d, &process->path_pids);
+    status = f_memory_array_increase(controller_common_allocation_small_d, sizeof(f_string_dynamic_t), (void **) &process->path_pids.array, &process->path_pids.used, &process->path_pids.size);
 
     if (F_status_is_error(status)) {
-      controller_print_error(thread, main->error, F_status_set_fine(status), "f_string_dynamics_increase", F_true);
+      controller_print_error(thread, main->error, F_status_set_fine(status), "f_memory_array_increase", F_true);
 
       return status;
     }
@@ -1939,7 +1939,7 @@ extern "C" {
       return F_okay;
     }
 
-    f_status_t status = f_string_dynamics_increase_by(action.parameters.used, &process->cache.expanded);
+    f_status_t status = f_memory_array_increase_by(action.parameters.used, sizeof(f_string_dynamic_t), (void **) &process->cache.expanded.array, &process->cache.expanded.used, &process->cache.expanded.size);
     if (F_status_is_error(status)) return status;
 
     f_number_unsigned_t i = 0;
@@ -1958,7 +1958,7 @@ extern "C" {
         iki_data = &action.ikis.array[process->cache.expanded.used];
 
         // Allocate enough room plus an extra buffer to help reduce reallocations.
-        status = f_string_dynamic_increase_by(action.parameters.array[process->cache.expanded.used].used + controller_common_allocation_large_d, buffer);
+        status = f_memory_array_increase_by(action.parameters.array[process->cache.expanded.used].used + controller_common_allocation_large_d, sizeof(f_char_t), (void **) &buffer->string, &buffer->used, &buffer->size);
 
         // Apply the IKI delimits.
         for (i = 0; i < iki_data->delimits.used; ++i) {
@@ -2220,7 +2220,7 @@ extern "C" {
             if (parameters->array[codes[i]].result & f_console_result_value_e) {
               const f_number_unsigned_t index = parameters->array[codes[i]].values.array[parameters->array[codes[i]].values.used - 1];
 
-              status = f_string_dynamic_increase_by(symbols[i].used + expands[i].used + f_string_ascii_space_s.used + argv[index].used + 1, destination);
+              status = f_memory_array_increase_by(symbols[i].used + expands[i].used + f_string_ascii_space_s.used + argv[index].used + 1, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
               if (F_status_is_error(status)) return status;
 
               status = f_string_dynamic_append(symbols[i], destination);
@@ -2238,7 +2238,7 @@ extern "C" {
           }
           else {
             if (parameters->array[codes[i]].result & f_console_result_found_e) {
-              status = f_string_dynamic_increase_by(symbols[i].used + expands[i].used + 1, destination);
+              status = f_memory_array_increase_by(symbols[i].used + expands[i].used + 1, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
               if (F_status_is_error(status)) return status;
 
               status = f_string_dynamic_append(symbols[i], destination);
@@ -2264,7 +2264,7 @@ extern "C" {
 
           if (f_compare_dynamic_partial_string(buffer.string, source, buffer.used, content) == F_equal_to) {
             if (values[i] && parameters->array[codes[i]].result & f_console_result_value_e || !values[i] && (parameters->array[codes[i]].result & f_console_result_found_e)) {
-              status = f_string_dynamic_increase_by(symbols[i].used + expands[i].used + 1, destination);
+              status = f_memory_array_increase_by(symbols[i].used + expands[i].used + 1, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
               if (F_status_is_error(status)) return status;
 
               status = f_string_dynamic_append(symbols[i], destination);
@@ -2475,8 +2475,8 @@ extern "C" {
           controller_lock_print(global.main->warning.to, global.thread);
 
           fl_print_format("%r%[%QUnknown rule item action '%]", global.main->warning.to, f_string_eol_s, global.main->warning.context, global.main->warning.prefix, global.main->warning.context);
-          fl_print_format("%[%Q%]", global.main->warning.to, global.main->warning.notable, cache->action.name_action, global.main->warning.notable);
-          fl_print_format("%['.%]%r", global.main->warning.to, global.main->warning.context, global.main->warning.context, f_string_eol_s);
+          fl_print_format(f_string_format_Q_single_s.string, global.main->warning.to, global.main->warning.notable, cache->action.name_action, global.main->warning.notable);
+          fl_print_format(f_string_format_sentence_end_quote_s.string, global.main->warning.to, global.main->warning.context, global.main->warning.context, f_string_eol_s);
 
           controller_rule_print_error_cache(global.main->warning, cache->action, F_true);
 
@@ -2493,8 +2493,8 @@ extern "C" {
             controller_lock_print(global.main->error.to, global.thread);
 
             fl_print_format("%r%[%QFSS Extended List is not allowed for the rule item action '%]", global.main->error.to, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
-            fl_print_format("%[%Q%]", global.main->error.to, global.main->error.notable, cache->action.name_action, global.main->error.notable);
-            fl_print_format("%['.%]%r", global.main->error.to, global.main->error.context, global.main->error.context, f_string_eol_s);
+            fl_print_format(f_string_format_Q_single_s.string, global.main->error.to, global.main->error.notable, cache->action.name_action, global.main->error.notable);
+            fl_print_format(f_string_format_sentence_end_quote_s.string, global.main->error.to, global.main->error.context, global.main->error.context, f_string_eol_s);
 
             controller_unlock_print_flush(global.main->error.to, global.thread);
           }
@@ -2989,14 +2989,14 @@ extern "C" {
 
             if (process->rule.items.used) {
               fl_print_format("%r%[%QThe rule '%]", global.main->error.to, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
-              fl_print_format("%[%Q%]", global.main->error.to, global.main->error.notable, process->rule.name, global.main->error.notable);
+              fl_print_format(f_string_format_Q_single_s.string, global.main->error.to, global.main->error.notable, process->rule.name, global.main->error.notable);
               fl_print_format("%[' has no '%]", global.main->error.to, global.main->error.context, global.main->error.context);
               fl_print_format("%[%r%]", global.main->error.to, global.main->error.notable, controller_rule_action_type_name(process->action), global.main->error.notable);
               fl_print_format("%[' action to execute.%]%r", global.main->error.to, global.main->error.context, global.main->error.context, f_string_eol_s);
             }
             else {
               fl_print_format("%r%[%QThe rule '%]", global.main->error.to, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
-              fl_print_format("%[%Q%]", global.main->error.to, global.main->error.notable, process->rule.name, global.main->error.notable);
+              fl_print_format(f_string_format_Q_single_s.string, global.main->error.to, global.main->error.notable, process->rule.name, global.main->error.notable);
               fl_print_format("%[ has no known '%]", global.main->error.to, global.main->error.context, global.main->error.context);
               fl_print_format("%[%r %r%]", global.main->error.to, global.main->error.notable, controller_rule_s, controller_type_s, global.main->error.notable);
               fl_print_format("%[' (such as '%]", global.main->error.to, global.main->error.context, global.main->error.context);
@@ -3444,7 +3444,7 @@ extern "C" {
               controller_lock_print(global.main->error.to, global.thread);
 
               fl_print_format("%r%[%QThe rule '%]", global.main->error.to, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
-              fl_print_format("%[%Q%]", global.main->error.to, global.main->error.notable, process->rule.alias, global.main->error.notable);
+              fl_print_format(f_string_format_Q_single_s.string, global.main->error.to, global.main->error.notable, process->rule.alias, global.main->error.notable);
               fl_print_format("%[' is already on the execution dependency stack, this recursion is prohibited.%]%r", global.main->error.to, global.main->error.context, global.main->error.context, f_string_eol_s);
 
               controller_rule_print_error_cache(global.main->error, process->cache.action, F_true);
@@ -3882,8 +3882,8 @@ extern "C" {
               controller_lock_print(global.main->warning.to, global.thread);
 
               fl_print_format("%r%[%QUnknown rule item '%]", global.main->warning.to, f_string_eol_s, global.main->warning.context, global.main->warning.prefix, global.main->warning.context);
-              fl_print_format("%[%Q%]", global.main->warning.to, global.main->warning.notable, cache->action.name_item, global.main->warning.notable);
-              fl_print_format("%['.%]%r", global.main->warning.to, global.main->warning.context, global.main->warning.context, f_string_eol_s);
+              fl_print_format(f_string_format_Q_single_s.string, global.main->warning.to, global.main->warning.notable, cache->action.name_item, global.main->warning.notable);
+              fl_print_format(f_string_format_sentence_end_quote_s.string, global.main->warning.to, global.main->warning.context, global.main->warning.context, f_string_eol_s);
 
               controller_rule_print_error_cache(global.main->warning, cache->action, F_true);
 
@@ -4079,8 +4079,8 @@ extern "C" {
           controller_lock_print(global.main->warning.to, global.thread);
 
           fl_print_format("%r%[%QUnknown rule setting '%]", global.main->warning.to, f_string_eol_s, global.main->warning.context, global.main->warning.prefix, global.main->warning.context);
-          fl_print_format("%[%Q%]", global.main->warning.to, global.main->warning.notable, cache->action.name_item, global.main->warning.notable);
-          fl_print_format("%['.%]%r", global.main->warning.to, global.main->warning.context, global.main->warning.context, f_string_eol_s);
+          fl_print_format(f_string_format_Q_single_s.string, global.main->warning.to, global.main->warning.notable, cache->action.name_item, global.main->warning.notable);
+          fl_print_format(f_string_format_sentence_end_quote_s.string, global.main->warning.to, global.main->warning.context, global.main->warning.context, f_string_eol_s);
 
           controller_rule_print_error_cache(global.main->warning, cache->action, F_false);
 
@@ -4364,10 +4364,10 @@ extern "C" {
 
           for (j = 1; j < cache->content_actions.array[i].used; ++j) {
 
-            status = f_string_dynamics_increase(controller_common_allocation_small_d, &rule->cgroup.groups);
+            status = f_memory_array_increase(controller_common_allocation_small_d, sizeof(f_string_dynamic_t), (void **) &rule->cgroup.groups.array, &rule->cgroup.groups.used, &rule->cgroup.groups.size);
 
             if (F_status_is_error(status)) {
-              controller_rule_print_error(global.thread, global.main->error, cache->action, F_status_set_fine(status), "f_string_dynamics_increase", F_true, F_false);
+              controller_rule_print_error(global.thread, global.main->error, cache->action, F_status_set_fine(status), "f_memory_array_increase", F_true, F_false);
 
               break;
             }
@@ -4487,8 +4487,8 @@ extern "C" {
             controller_lock_print(global.main->error.to, global.thread);
 
             fl_print_format("%r%[%QUnknown resource limit type '%]", global.main->error.to, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
-            fl_print_format("%[%Q%]", global.main->error.to, global.main->error.notable, cache->action.name_action, global.main->error.notable);
-            fl_print_format("%['.%]%r", global.main->error.to, global.main->error.context, global.main->error.context, f_string_eol_s);
+            fl_print_format(f_string_format_Q_single_s.string, global.main->error.to, global.main->error.notable, cache->action.name_action, global.main->error.notable);
+            fl_print_format(f_string_format_sentence_end_quote_s.string, global.main->error.to, global.main->error.context, global.main->error.context, f_string_eol_s);
 
             controller_rule_print_error_cache(global.main->error, cache->action, F_true);
 
@@ -4652,7 +4652,7 @@ extern "C" {
             rule->engine_arguments.used = 0;
 
             if (cache->content_actions.array[i].used > 1) {
-              status = f_string_dynamics_increase_by(cache->content_actions.array[i].used - 1, &rule->engine_arguments);
+              status = f_memory_array_increase_by(cache->content_actions.array[i].used - 1, sizeof(f_string_dynamic_t), (void **) &rule->engine_arguments.array, &rule->engine_arguments.used, &rule->engine_arguments.size);
 
               for (j = 1; F_status_is_error_not(status) && j < cache->content_actions.array[i].used; ++j, ++rule->engine_arguments.used) {
 
@@ -4708,7 +4708,7 @@ extern "C" {
                 controller_lock_print(global.main->error.to, global.thread);
 
                 fl_print_format("%r%[%QRule setting has an invalid name '%]", global.main->error.to, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
-                fl_print_format("%[%Q%]", global.main->error.to, global.main->error.notable, *setting_value, global.main->error.notable);
+                fl_print_format(f_string_format_Q_single_s.string, global.main->error.to, global.main->error.notable, *setting_value, global.main->error.notable);
                 fl_print_format("%[', there must be at least 1 graph character.%]%r", global.main->error.to, global.main->error.context, global.main->error.context, f_string_eol_s);
 
                 controller_rule_print_error_cache(global.main->error, cache->action, F_false);
@@ -5339,10 +5339,10 @@ extern "C" {
 
         for (j = 0; j < cache->content_actions.array[i].used; ++j) {
 
-          status = f_string_dynamics_increase(controller_common_allocation_small_d, setting_values);
+          status = f_memory_array_increase(controller_common_allocation_small_d, sizeof(f_string_dynamic_t), (void **) &setting_values.array, &setting_values.used, &setting_values.size);
 
           if (F_status_is_error(status)) {
-            controller_rule_print_error(global.thread, global.main->error, cache->action, F_status_set_fine(status), "f_string_dynamics_increase", F_true, F_false);
+            controller_rule_print_error(global.thread, global.main->error, cache->action, F_status_set_fine(status), "f_memory_array_increase", F_true, F_false);
 
             if (F_status_set_fine(status) == F_memory_not) {
               status_return = status;
@@ -5410,8 +5410,8 @@ extern "C" {
                 controller_lock_print(global.main->error.to, global.thread);
 
                 fl_print_format("%r%[%QRule setting has an invalid environment variable name '%]", global.main->error.to, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
-                fl_print_format("%[%Q%]", global.main->error.to, global.main->error.notable, setting_values->array[setting_values->used], global.main->error.notable);
-                fl_print_format("%['.%]%r", global.main->error.to, global.main->error.context, global.main->error.context, f_string_eol_s);
+                fl_print_format(f_string_format_Q_single_s.string, global.main->error.to, global.main->error.notable, setting_values->array[setting_values->used], global.main->error.notable);
+                fl_print_format(f_string_format_sentence_end_quote_s.string, global.main->error.to, global.main->error.context, global.main->error.context, f_string_eol_s);
 
                 controller_rule_print_error_cache(global.main->error, cache->action, F_false);
 
@@ -5576,10 +5576,10 @@ extern "C" {
           continue;
         }
 
-        status = f_string_dynamics_increase_by(controller_common_allocation_small_d, setting_values);
+        status = f_memory_array_increase_by(controller_common_allocation_small_d, sizeof(f_string_dynamic_t), (void **) &setting_values->array, &setting_values->used, &setting_values->size);
 
         if (F_status_is_error(status)) {
-          controller_rule_print_error(global.thread, global.main->error, cache->action, F_status_set_fine(status), "f_string_dynamics_increase_by", F_true, F_false);
+          controller_rule_print_error(global.thread, global.main->error, cache->action, F_status_set_fine(status), "f_memory_array_increase_by", F_true, F_false);
         }
       }
 

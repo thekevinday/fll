@@ -84,7 +84,7 @@ extern "C" {
 
     if (cache.name_action.used) {
       fl_print_format("action '%]", output.to, output.context);
-      fl_print_format("%[%Q%]", output.to, output.notable, cache.name_action, output.notable);
+      fl_print_format(f_string_format_Q_single_s.string, output.to, output.notable, cache.name_action, output.notable);
       fl_print_format("%[' on line%] ", output.to, output.context, output.context);
       fl_print_format("%[%un%]", output.to, output.notable, cache.line_action, output.notable);
       fl_print_format("%[ for ", output.to, output.context);
@@ -92,7 +92,7 @@ extern "C" {
 
     if (cache.name_item.used) {
       fl_print_format("%r item '%]", output.to, is_entry ? controller_entry_s : controller_exit_s, output.context);
-      fl_print_format("%[%Q%]", output.to, output.notable, cache.name_item, output.notable);
+      fl_print_format(f_string_format_Q_single_s.string, output.to, output.notable, cache.name_item, output.notable);
       fl_print_format("%[' on line%] ", output.to, output.context, output.context);
       fl_print_format("%[%un%]", output.to, output.notable, cache.line_item, output.notable);
       fl_print_format("%[ for ", output.to, output.context);
@@ -151,7 +151,7 @@ extern "C" {
     controller_lock_print(global.main->warning.to, global.thread);
 
     fl_print_format("%r%[%QThe %Q item setting '%]", global.main->warning.to, f_string_eol_s, global.main->warning.context, global.main->warning.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->warning.context);
-    fl_print_format("%[%Q%]", global.main->warning.to, global.main->warning.notable, cache.action.name_action, global.main->warning.notable);
+    fl_print_format(f_string_format_Q_single_s.string, global.main->warning.to, global.main->warning.notable, cache.action.name_action, global.main->warning.notable);
     fl_print_format("%[' is being ignored.%]%r", global.main->warning.to, global.main->warning.context, global.main->warning.context, f_string_eol_s);
 
     controller_entry_print_error_cache(is_entry, global.main->warning, cache.action);
@@ -168,7 +168,7 @@ extern "C" {
     controller_lock_print(global.main->error.to, global.thread);
 
     fl_print_format("%r%[%QThe %Q item setting '%]", global.main->error.to, f_string_eol_s, global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context);
-    fl_print_format("%[%Q%]", global.main->error.to, global.main->error.notable, cache.action.name_action, global.main->error.notable);
+    fl_print_format(f_string_format_Q_single_s.string, global.main->error.to, global.main->error.notable, cache.action.name_action, global.main->error.notable);
     fl_print_format("%[' requires at least %]", global.main->error.to, global.main->error.context, global.main->error.context);
     fl_print_format("%[%un%]", global.main->error.to, global.main->error.notable, minimum, global.main->error.notable);
     fl_print_format("%[ and at most %]", global.main->error.to, global.main->error.context, global.main->error.context);
@@ -189,7 +189,7 @@ extern "C" {
     controller_lock_print(global.main->error.to, global.thread);
 
     fl_print_format("%r%[%QThe %Q item setting '%]", global.main->error.to, f_string_eol_s, global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context);
-    fl_print_format("%[%Q%]", global.main->error.to, global.main->error.notable, cache.action.name_action, global.main->error.notable);
+    fl_print_format(f_string_format_Q_single_s.string, global.main->error.to, global.main->error.notable, cache.action.name_action, global.main->error.notable);
     fl_print_format("%[' requires exactly %]", global.main->error.to, global.main->error.context, global.main->error.context);
     fl_print_format("%[%un%]", global.main->error.to, global.main->error.notable, total, global.main->error.notable);
     fl_print_format("%[ Content.%]%r", global.main->error.to, global.main->error.context, global.main->error.context, f_string_eol_s);
@@ -208,8 +208,8 @@ extern "C" {
     controller_lock_print(global.main->warning.to, global.thread);
 
     fl_print_format("%r%[%QUnknown %r item setting '%]", global.main->warning.to, f_string_eol_s, global.main->warning.context, global.main->warning.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->warning.context);
-    fl_print_format("%[%Q%]", global.main->warning.to, global.main->warning.notable, cache.action.name_action, global.main->warning.notable);
-    fl_print_format("%['.%]%r", global.main->warning.to, global.main->warning.context, global.main->warning.context, f_string_eol_s);
+    fl_print_format(f_string_format_Q_single_s.string, global.main->warning.to, global.main->warning.notable, cache.action.name_action, global.main->warning.notable);
+    fl_print_format(f_string_format_sentence_end_quote_s.string, global.main->warning.to, global.main->warning.context, global.main->warning.context, f_string_eol_s);
 
     controller_entry_print_error_cache(is_entry, global.main->warning, cache.action);
 
@@ -225,10 +225,10 @@ extern "C" {
     controller_lock_print(global.main->warning.to, global.thread);
 
     fl_print_format("%r%[%QThe %Q item setting '%]", global.main->warning.to, f_string_eol_s, global.main->warning.context, global.main->warning.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->warning.context);
-    fl_print_format("%[%Q%]", global.main->warning.to, global.main->warning.notable, cache.action.name_action, global.main->warning.notable);
+    fl_print_format(f_string_format_Q_single_s.string, global.main->warning.to, global.main->warning.notable, cache.action.name_action, global.main->warning.notable);
     fl_print_format("%[' has an unknown value '%]", global.main->warning.to, global.main->warning.context, global.main->warning.context);
     fl_print_format("%[%/Q%]", global.main->warning.to, global.main->warning.notable, cache.buffer_file, cache.content_actions.array[index].array[0], global.main->warning.notable);
-    fl_print_format("%['.%]%r", global.main->warning.to, global.main->warning.context, global.main->warning.context, f_string_eol_s);
+    fl_print_format(f_string_format_sentence_end_quote_s.string, global.main->warning.to, global.main->warning.context, global.main->warning.context, f_string_eol_s);
 
     controller_entry_print_error_cache(is_entry, global.main->warning, cache.action);
 

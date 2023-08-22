@@ -9,7 +9,7 @@ extern "C" {
 
     if (!depth) return;
 
-    f_string_dynamic_resize(0, &depth->value_name);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &depth->value_name.string, &depth->value_name.used, &depth->value_name.size);
   }
 #endif // _di_fss_read_depth_delete_
 
@@ -75,7 +75,7 @@ extern "C" {
     fss_read_files_resize(0, &setting->files);
     fss_read_depths_resize(0, &setting->depths);
 
-    f_string_dynamic_resize(0, &setting->buffer);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &setting->buffer.string, &setting->buffer.used, &setting->buffer.size);
 
     f_string_ranges_resize(0, &setting->objects);
     f_string_ranges_resize(0, &setting->comments);

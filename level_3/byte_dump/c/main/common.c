@@ -335,14 +335,14 @@ extern "C" {
     }
 
     if (main->program.parameters.remaining.used) {
-      main->setting.state.status = f_string_dynamics_increase_by(main->program.parameters.remaining.used, &main->setting.files);
+      main->setting.state.status = f_memory_array_increase_by(main->program.parameters.remaining.used, sizeof(f_string_dynamic_t), (void **) &main->setting.files.array, &main->setting.files.used, &main->setting.files.size);
 
       if (F_status_is_error(main->setting.state.status)) {
         if ((main->setting.flag & byte_dump_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
           fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
         }
 
-        byte_dump_print_error(&main->program.error, macro_byte_dump_f(f_string_dynamics_increase_by));
+        byte_dump_print_error(&main->program.error, macro_byte_dump_f(f_memory_array_increase_by));
 
         return;
       }

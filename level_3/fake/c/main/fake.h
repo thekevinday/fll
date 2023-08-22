@@ -237,7 +237,7 @@ extern "C" {
  *     Errors (with error bit) from: f_file_size()
  *     Errors (with error bit) from: f_file_stream_open()
  *     Errors (with error bit) from: f_file_stream_read()
- *     Errors (with error bit) from: f_string_dynamic_increase_by()
+ *     Errors (with error bit) from: f_memory_array_increase_by()
  * @param path_file
  *   The path to the file to load.
  * @param required
@@ -250,7 +250,7 @@ extern "C" {
  * @see f_file_size()
  * @see f_file_stream_open()
  * @see f_file_stream_read()
- * @see f_string_dynamic_increase_by()
+ * @see f_memory_array_increase_by()
  * @see fll_program_standard_signal_received()
  */
 #ifndef _di_fake_file_buffer_
@@ -269,12 +269,12 @@ extern "C" {
  *     F_interrupt (with error bit) on interrupt signal received.
  *
  *     Errors (with error bit) from: f_file_stream_read_block()
- *     Errors (with error bit) from: f_string_dynamic_increase_by()
+ *     Errors (with error bit) from: f_memory_array_increase_by()
  * @param buffer
  *   A buffer containing the contents of the file.
  *
  * @see f_file_stream_read_block()
- * @see f_string_dynamic_increase_by()
+ * @see f_memory_array_increase_by()
  * @see fll_program_standard_signal_received()
  */
 #ifndef _di_fake_pipe_buffer_

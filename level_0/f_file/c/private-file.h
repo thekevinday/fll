@@ -497,7 +497,7 @@ extern "C" {
  *
  * @see f_file_copy()
  * @see f_file_link_read()
- * @see f_string_dynamic_increase_by()
+ * @see f_memory_array_increase_by()
  * @see f_string_dynamic_terminate_after()
  */
 #if !defined(_di_f_file_link_read_) || !defined(_di_f_file_copy_)
@@ -538,7 +538,7 @@ extern "C" {
  * @see readlinkat()
  *
  * @see f_file_link_read_at()
- * @see f_string_dynamic_increase_by()
+ * @see f_memory_array_increase_by()
  * @see f_string_dynamic_terminate_after()
  */
 #if !defined(_di_f_file_link_read_at_)

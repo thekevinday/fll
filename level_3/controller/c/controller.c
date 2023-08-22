@@ -256,7 +256,7 @@ extern "C" {
           fl_print_format("%r%[%QThe parameter '%]", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
           fl_print_format("%[' must not be specified with the parameter '%]", main->error.to, main->error.context, main->error.context);
           fl_print_format("%[%r%r%]", main->error.to, main->context.set.notable, f_console_symbol_long_normal_s, controller_long_daemon_s, main->context.set.notable);
-          fl_print_format("%['.%]%r", main->error.to, main->error.context, main->error.context, f_string_eol_s);
+          fl_print_format(f_string_format_sentence_end_quote_s.string, main->error.to, main->error.context, main->error.context, f_string_eol_s);
 
           controller_unlock_print_flush(main->error.to, 0);
         }
@@ -345,7 +345,7 @@ extern "C" {
           controller_lock_print(main->warning.to, 0);
 
           fl_print_format("%r%[%QThe pid file '%]", main->warning.to, f_string_eol_s, main->warning.context, main->warning.prefix, main->warning.context);
-          fl_print_format("%[%Q%]", main->warning.to, main->warning.notable, setting.path_pid, main->warning.notable);
+          fl_print_format(f_string_format_Q_single_s.string, main->warning.to, main->warning.notable, setting.path_pid, main->warning.notable);
           fl_print_format("%[' must not be specified with the parameter '%]", main->warning.to, main->warning.context, main->warning.context);
           fl_print_format("%[%i%]", main->warning.to, main->warning.notable, main->pid, main->warning.notable);
           fl_print_format("%[' doesn't contain the expected number, not deleting file.%]%r", main->warning.to, main->warning.context, main->warning.context, f_string_eol_s);

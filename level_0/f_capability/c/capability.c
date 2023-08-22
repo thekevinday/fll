@@ -1056,12 +1056,14 @@ extern "C" {
             return F_status_set_error(F_string_too_large);
           }
 
-          const f_status_t status = f_string_dynamic_resize(name->used + length + 1, name);
+          {
+            const f_status_t status = f_memory_array_resize(name->used + length + 1, sizeof(f_char_t), (void **) &name->string, &name->used, &name->size);
 
-          if (F_status_is_error(status)) {
-            cap_free(result);
+            if (F_status_is_error(status)) {
+              cap_free(result);
 
-            return status;
+              return status;
+            }
           }
         }
 
@@ -1097,12 +1099,14 @@ extern "C" {
             return F_status_set_error(F_string_too_large);
           }
 
-          const f_status_t status = f_string_dynamic_resize(text->used + length + 1, text);
+          {
+            const f_status_t status = f_memory_array_resize(text->used + length + 1, sizeof(f_char_t), (void **) &text->string, &text->used, &text->size);
 
-          if (F_status_is_error(status)) {
-            cap_free(result);
+            if (F_status_is_error(status)) {
+              cap_free(result);
 
-            return status;
+              return status;
+            }
           }
         }
 

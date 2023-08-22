@@ -159,7 +159,7 @@ extern "C" {
  * @return
  *   F_okay on success.
  *
- *   Errors (with error bit) from: f_string_dynamic_increase_by()
+ *   Errors (with error bit) from: f_memory_array_increase_by()
  *
  * @see f_conversion_number_signed_to_string()
  * @see f_conversion_number_unsigned_to_string()

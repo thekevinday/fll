@@ -68,7 +68,7 @@ extern "C" {
       if (flag & f_directory_recurse_do_flag_directory_e) {
 
         // Push the directory name on the path stack (the destination path is expected to be pre-populated).
-        recurse->state.status = f_string_dynamic_increase_by(f_path_separator_s.used + name.used + 1, &recurse->path_cache);
+        recurse->state.status = f_memory_array_increase_by(f_path_separator_s.used + name.used + 1, sizeof(f_char_t), (void **) &recurse->path_cache.string, &recurse->path_cache.used, &recurse->path_cache.size);
 
         if (F_status_is_error_not(recurse->state.status)) {
           recurse->state.status = f_string_dynamic_append_assure(f_path_separator_s, &recurse->path_cache);
@@ -124,7 +124,7 @@ extern "C" {
 
     fake_string_dynamic_reset(&map->value);
 
-    recurse->state.status = f_string_dynamic_increase_by(recurse->path_cache.used + f_path_separator_s.used + name.used + 1, &map->value);
+    recurse->state.status = f_memory_array_increase_by(recurse->path_cache.used + f_path_separator_s.used + name.used + 1, sizeof(f_char_t), (void **) &map->value.string, &map->value.used, &map->value.size);
 
     if (F_status_is_error_not(recurse->state.status)) {
       recurse->state.status = f_string_dynamic_append_nulless(recurse->path_cache, &map->value);

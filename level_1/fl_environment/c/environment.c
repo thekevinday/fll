@@ -90,7 +90,7 @@ extern "C" {
 
       // When PATH is "", this is actually a valid search path for PWD.
       // Therefore append an equivalent representation of PWD (string used length is 0).
-      status = f_string_dynamics_increase(F_memory_default_allocation_small_d, paths);
+      status = f_memory_array_increase(F_memory_default_allocation_small_d, sizeof(f_string_dynamic_t), (void **) &paths->array, &paths->used, &paths->size);
       if (F_status_is_error(status)) return status;
 
       paths->array[paths->used++].used = 0;
@@ -114,7 +114,7 @@ extern "C" {
     #endif // _en_kevux_path_architecture_bits_
 
     if (total) {
-      status = f_string_dynamics_increase_by(total, paths);
+      status = f_memory_array_increase_by(total, sizeof(f_string_dynamic_t), (void **) &paths->array, &paths->used, &paths->size);
       if (F_status_is_error(status)) return status;
 
       total = 0;
@@ -132,7 +132,7 @@ extern "C" {
         status = f_string_dynamic_append_assure(f_path_separator_s, &architecture_bits);
 
         if (F_status_is_error(status)) {
-          f_string_dynamic_resize(0, &architecture_bits);
+          f_memory_array_resize(0, sizeof(f_char_t), (void **) &architecture_bits.string, &architecture_bits.used, &architecture_bits.size);
 
           return status;
         }
@@ -148,15 +148,15 @@ extern "C" {
       if (i == path.used || path.string[i] == f_path_separator_variable_s.string[0]) {
         #ifdef _en_kevux_path_architecture_bits_
           if (paths->used + 3 > paths->size) {
-            status = f_string_dynamics_increase(F_memory_default_allocation_small_d + 2, paths);
+            status = f_memory_array_increase(F_memory_default_allocation_small_d + 2, sizeof(f_string_dynamic_t), (void **) &paths->array, &paths->used, &paths->size);
           }
         #else
-          status = f_string_dynamics_increase(F_memory_default_allocation_small_d, paths);
+          status = f_memory_array_increase(F_memory_default_allocation_small_d, sizeof(f_string_dynamic_t), (void **) &paths->array, &paths->used, &paths->size);
         #endif // _en_kevux_path_architecture_bits_
 
         if (F_status_is_error(status)) {
           #ifdef _en_kevux_path_architecture_bits_
-            f_string_dynamic_resize(0, &architecture_bits);
+            f_memory_array_resize(0, sizeof(f_char_t), (void **) &architecture_bits.string, &architecture_bits.used, &architecture_bits.size);
           #endif // _en_kevux_path_architecture_bits_
 
           return status;
@@ -190,11 +190,11 @@ extern "C" {
 
           #ifdef _en_kevux_path_architecture_bits_
             if (f_path_architecture_bits_s.used) {
-              status = f_string_dynamic_increase_by(k + f_path_architecture_bits_s.used, &paths->array[paths->used]);
+              status = f_memory_array_increase_by(k + f_path_architecture_bits_s.used, sizeof(f_char_t), (void **) &paths->array[paths->used].string, &paths->array[paths->used].used, &paths->array[paths->used].size);
 
               if (F_status_is_error(status)) {
                 #ifdef _en_kevux_path_architecture_bits_
-                  f_string_dynamic_resize(0, &architecture_bits);
+                  f_memory_array_resize(0, sizeof(f_char_t), (void **) &architecture_bits.string, &architecture_bits.used, &architecture_bits.size);
                 #endif // _en_kevux_path_architecture_bits_
 
                 return status;
@@ -207,11 +207,11 @@ extern "C" {
             }
 
             if (f_path_architecture_bits_scripts_s.used) {
-              status = f_string_dynamic_increase_by(k + f_path_architecture_bits_scripts_s.used, &paths->array[paths->used]);
+              status = f_memory_array_increase_by(k + f_path_architecture_bits_scripts_s.used, sizeof(f_char_t), (void **) &paths->array[paths->used].string, &paths->array[paths->used].used, &paths->array[paths->used].size);
 
               if (F_status_is_error(status)) {
                 #ifdef _en_kevux_path_architecture_bits_
-                  f_string_dynamic_resize(0, &architecture_bits);
+                  f_memory_array_resize(0, sizeof(f_char_t), (void **) &architecture_bits.string, &architecture_bits.used, &architecture_bits.size);
                 #endif // _en_kevux_path_architecture_bits_
 
                 return status;
@@ -224,11 +224,11 @@ extern "C" {
             }
           #endif // _en_kevux_path_architecture_bits_
 
-          status = f_string_dynamic_increase_by(k, &paths->array[paths->used]);
+          status = f_memory_array_increase_by(k, sizeof(f_char_t), (void **) &paths->array[paths->used].string, &paths->array[paths->used].used, &paths->array[paths->used].size);
 
           if (F_status_is_error(status)) {
             #ifdef _en_kevux_path_architecture_bits_
-              f_string_dynamic_resize(0, &architecture_bits);
+              f_memory_array_resize(0, sizeof(f_char_t), (void **) &architecture_bits.string, &architecture_bits.used, &architecture_bits.size);
             #endif // _en_kevux_path_architecture_bits_
 
             return status;
@@ -247,7 +247,8 @@ extern "C" {
     } // for
 
     #ifdef _en_kevux_path_architecture_bits_
-      f_string_dynamic_resize(0, &architecture_bits);
+      status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &architecture_bits.string, &architecture_bits.used, &architecture_bits.size);
+      if (F_status_is_error(status)) return status;
     #endif // _en_kevux_path_architecture_bits_
 
     return F_okay;
@@ -266,7 +267,7 @@ extern "C" {
 
       // When PATH is "", this is actually a valid search path for PWD.
       // Therefore append an equivalent representation of PWD (string used length is 0).
-      status = f_string_dynamics_increase(F_memory_default_allocation_small_d, paths);
+      status = f_memory_array_increase(F_memory_default_allocation_small_d, sizeof(f_string_dynamic_t), (void **) &paths->array, &paths->used, &paths->size);
       if (F_status_is_error(status)) return status;
 
       paths->array[paths->used++].used = 0;
@@ -291,7 +292,7 @@ extern "C" {
     #endif // _en_kevux_path_architecture_bits_
 
     if (total) {
-      status = f_string_dynamics_increase_by(total, paths);
+      status = f_memory_array_increase_by(total, sizeof(f_string_dynamic_t), (void **) &paths->array, &paths->used, &paths->size);
       if (F_status_is_error(status)) return status;
 
       total = 0;
@@ -309,7 +310,7 @@ extern "C" {
         status = f_string_dynamic_append_assure(f_path_separator_s, &architecture_bits);
 
         if (F_status_is_error(status)) {
-          f_string_dynamic_resize(0, &architecture_bits);
+          f_memory_array_resize(0, sizeof(f_char_t), (void **) &architecture_bits.string, &architecture_bits.used, &architecture_bits.size);
 
           return status;
         }
@@ -325,15 +326,15 @@ extern "C" {
       if (i == path.used || path.string[r] == f_path_separator_variable_s.string[0]) {
         #ifdef _en_kevux_path_architecture_bits_
           if (paths->used + 3 > paths->size) {
-            status = f_string_dynamics_increase(F_memory_default_allocation_small_d + 2, paths);
+            status = f_memory_array_increase(F_memory_default_allocation_small_d + 2, sizeof(f_string_dynamic_t), (void **) &paths->array, &paths->used, &paths->size);
           }
         #else
-          status = f_string_dynamics_increase(F_memory_default_allocation_small_d, paths);
+          status = f_memory_array_increase(F_memory_default_allocation_small_d, sizeof(f_string_dynamic_t), (void **) &paths->array, &paths->used, &paths->size);
         #endif // _en_kevux_path_architecture_bits_
 
         if (F_status_is_error(status)) {
           #ifdef _en_kevux_path_architecture_bits_
-            f_string_dynamic_resize(0, &architecture_bits);
+            f_memory_array_resize(0, sizeof(f_char_t), (void **) &architecture_bits.string, &architecture_bits.used, &architecture_bits.size);
           #endif // _en_kevux_path_architecture_bits_
 
           return status;
@@ -367,11 +368,11 @@ extern "C" {
 
           #ifdef _en_kevux_path_architecture_bits_
             if (f_path_architecture_bits_s.used) {
-              status = f_string_dynamic_increase_by(k + f_path_architecture_bits_s.used, &paths->array[paths->used]);
+              status = f_memory_array_increase_by(k + f_path_architecture_bits_s.used, sizeof(f_char_t), (void **) &paths->array[paths->used].string, &paths->array[paths->used].used, &paths->array[paths->used].size);
 
               if (F_status_is_error(status)) {
                 #ifdef _en_kevux_path_architecture_bits_
-                  f_string_dynamic_resize(0, &architecture_bits);
+                  f_memory_array_resize(0, sizeof(f_char_t), (void **) &architecture_bits.string, &architecture_bits.used, &architecture_bits.size);
                 #endif // _en_kevux_path_architecture_bits_
 
                 return status;
@@ -384,11 +385,11 @@ extern "C" {
             }
 
             if (f_path_architecture_bits_scripts_s.used) {
-              status = f_string_dynamic_increase_by(k + f_path_architecture_bits_scripts_s.used, &paths->array[paths->used]);
+              status = f_memory_array_increase_by(k + f_path_architecture_bits_scripts_s.used, sizeof(f_char_t), (void **) &paths->array[paths->used].string, &paths->array[paths->used].used, &paths->array[paths->used].size);
 
               if (F_status_is_error(status)) {
                 #ifdef _en_kevux_path_architecture_bits_
-                  f_string_dynamic_resize(0, &architecture_bits);
+                  f_memory_array_resize(0, sizeof(f_char_t), (void **) &architecture_bits.string, &architecture_bits.used, &architecture_bits.size);
                 #endif // _en_kevux_path_architecture_bits_
 
                 return status;
@@ -401,11 +402,11 @@ extern "C" {
             }
           #endif // _en_kevux_path_architecture_bits_
 
-          status = f_string_dynamic_increase_by(k, &paths->array[paths->used]);
+          status = f_memory_array_increase_by(k, sizeof(f_char_t), (void **) &paths->array[paths->used].string, &paths->array[paths->used].used, &paths->array[paths->used].size);
 
           if (F_status_is_error(status)) {
             #ifdef _en_kevux_path_architecture_bits_
-              f_string_dynamic_resize(0, &architecture_bits);
+              f_memory_array_resize(0, sizeof(f_char_t), (void **) &architecture_bits.string, &architecture_bits.used, &architecture_bits.size);
             #endif // _en_kevux_path_architecture_bits_
 
             return status;
@@ -424,7 +425,8 @@ extern "C" {
     } // for
 
     #ifdef _en_kevux_path_architecture_bits_
-      f_string_dynamic_resize(0, &architecture_bits);
+      status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &architecture_bits.string, &architecture_bits.used, &architecture_bits.size);
+      if (F_status_is_error(status)) return status;
     #endif // _en_kevux_path_architecture_bits_
 
     return F_okay;

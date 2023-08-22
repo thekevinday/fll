@@ -8,13 +8,13 @@ extern "C" {
 #ifndef _di_controller_setting_delete_simple_
   void controller_setting_delete_simple(controller_setting_t * const setting) {
 
-    f_string_dynamic_resize(0, &setting->name_entry);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &setting->name_entry.string, &setting->name_entry.used, &setting->name_entry.size);
 
-    f_string_dynamic_resize(0, &setting->path_cgroup);
-    f_string_dynamic_resize(0, &setting->path_control);
-    f_string_dynamic_resize(0, &setting->path_current);
-    f_string_dynamic_resize(0, &setting->path_pid);
-    f_string_dynamic_resize(0, &setting->path_setting);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &setting->path_cgroup.string, &setting->path_cgroup.used, &setting->path_cgroup.size);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &setting->path_control.string, &setting->path_control.used, &setting->path_control.size);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &setting->path_current.string, &setting->path_current.used, &setting->path_current.size);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &setting->path_pid.string, &setting->path_pid.used, &setting->path_pid.size);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &setting->path_setting.string, &setting->path_setting.used, &setting->path_setting.size);
 
     controller_control_delete_simple(&setting->control);
 

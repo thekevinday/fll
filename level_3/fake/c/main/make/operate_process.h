@@ -136,7 +136,7 @@ extern "C" {
  *     F_okay on success.
  *     F_data_not if source.used is 0.
  *
- *     Errors (with error bit) from: f_string_dynamic_increase_by().
+ *     Errors (with error bit) from: f_memory_array_increase_by().
  *     Errors (with error bit) from: f_utf_unicode_from().
  *     Errors (with error bit) from: f_utf_unicode_string_to().
  * @param source
@@ -145,7 +145,7 @@ extern "C" {
  *   The processed and escaped string.
  *   This is appended to.
  *
- * @see f_string_dynamic_increase_by()
+ * @see f_memory_array_increase_by()
  * @see f_utf_unicode_from()
  * @see f_utf_unicode_string_to()
  */

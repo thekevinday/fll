@@ -219,8 +219,8 @@ extern "C" {
 
     macro_f_color_context_t_delete_simple(main->program.context);
 
-    f_string_dynamic_resize(0, &main->program.path_pid);
-    f_string_dynamic_resize(0, &main->program.path_setting);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &main->program.path_pid.string, &main->program.path_pid.used, &main->program.path_pid.size);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &main->program.path_setting.string, &main->program.path_setting.used, &main->program.path_setting.size);
 
     return F_okay;
   }

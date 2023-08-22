@@ -27,9 +27,9 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_string_dynamic_resize().
+ *   Errors (with error bit) from: f_memory_array_resize().
  *
- * @see f_string_dynamic_resize()
+ * @see f_memory_array_resize()
  */
 #ifndef _di_f_account_delete_
   extern f_status_t f_account_delete(f_account_t * const account);
@@ -46,9 +46,9 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_string_dynamic_adjust().
+ *   Errors (with error bit) from: f_memory_array_adjust().
  *
- * @see f_string_dynamic_adjust()
+ * @see f_memory_array_adjust()
  */
 #ifndef _di_f_account_destroy_
   extern f_status_t f_account_destroy(f_account_t * const account);
@@ -74,9 +74,9 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_string_dynamic_resize().
+ *   Errors (with error bit) from: f_memory_array_resize().
  *
- * @see f_string_dynamic_resize()
+ * @see f_memory_array_resize()
  */
 #ifndef _di_f_accounts_delete_callback_
   extern f_status_t f_accounts_delete_callback(const f_number_unsigned_t start, const f_number_unsigned_t stop, void * const array);
@@ -102,9 +102,9 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_string_dynamic_adjust().
+ *   Errors (with error bit) from: f_memory_array_adjust().
  *
- * @see f_string_dynamic_adjust()
+ * @see f_memory_array_adjust()
  */
 #ifndef _di_f_accounts_destroy_callback_
   extern f_status_t f_accounts_destroy_callback(const f_number_unsigned_t start, const f_number_unsigned_t stop, void * const array);
@@ -131,10 +131,10 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_array_resize().
- *   Errors (with error bit) from: f_string_dynamic_resize().
+ *   Errors (with error bit) from: f_memory_array_resize().
  *
  * @see f_memory_array_resize()
- * @see f_string_dynamic_resize()
+ * @see f_memory_array_resize()
  */
 #ifndef _di_f_accountss_delete_callback_
   extern f_status_t f_accountss_delete_callback(const f_number_unsigned_t start, const f_number_unsigned_t stop, void * const array);
@@ -161,10 +161,8 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_array_adjust().
- *   Errors (with error bit) from: f_string_dynamic_adjust().
  *
  * @see f_memory_array_adjust()
- * @see f_string_dynamic_adjust()
  */
 #ifndef _di_f_accountss_destroy_callback_
   extern f_status_t f_accountss_destroy_callback(const f_number_unsigned_t start, const f_number_unsigned_t stop, void * const array);

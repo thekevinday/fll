@@ -338,13 +338,8 @@ extern "C" {
     if (F_status_is_error(status)) return status;
 
     if (status == F_okay) {
-      if (range.start + *written == total) {
-        return F_okay_stop;
-      }
-
-      if (range.start + *written == destination.used) {
-        return F_okay_eos;
-      }
+      if (range.start + *written == total) return F_okay_stop;
+      if (range.start + *written == destination.used) return F_okay_eos;
     }
 
     return status;

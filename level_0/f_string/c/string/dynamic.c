@@ -5,16 +5,6 @@
 extern "C" {
 #endif
 
-#ifndef _di_f_string_dynamic_adjust_
-  f_status_t f_string_dynamic_adjust(const f_number_unsigned_t length, f_string_dynamic_t * const structure) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!structure) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return f_memory_array_adjust(length, sizeof(f_char_t), (void **) &structure->string, &structure->used, &structure->size);
-  }
-#endif // _di_f_string_dynamic_adjust_
-
 #ifndef _di_f_string_dynamic_append_
   f_status_t f_string_dynamic_append(const f_string_static_t source, f_string_dynamic_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
@@ -102,46 +92,6 @@ extern "C" {
     return private_f_string_append_nulless(source.string, source.used, destination);
   }
 #endif // _di_f_string_dynamic_append_nulless_
-
-#ifndef _di_f_string_dynamic_decimate_by_
-  f_status_t f_string_dynamic_decimate_by(const f_number_unsigned_t amount, f_string_dynamic_t * const structure) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!structure) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return f_memory_array_decimate_by(amount, sizeof(f_char_t), (void **) &structure->string, &structure->used, &structure->size);
-  }
-#endif // _di_f_string_dynamic_decimate_by_
-
-#ifndef _di_f_string_dynamic_decrease_by_
-  f_status_t f_string_dynamic_decrease_by(const f_number_unsigned_t amount, f_string_dynamic_t * const structure) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!structure) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return f_memory_array_decrease_by(amount, sizeof(f_char_t), (void **) &structure->string, &structure->used, &structure->size);
-  }
-#endif // _di_f_string_dynamic_decrease_by_
-
-#ifndef _di_f_string_dynamic_increase_
-  f_status_t f_string_dynamic_increase(const f_number_unsigned_t step, f_string_dynamic_t * const structure) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!structure) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return f_memory_array_increase(step, sizeof(f_char_t), (void **) &structure->string, &structure->used, &structure->size);
-  }
-#endif // _di_f_string_dynamic_increase_
-
-#ifndef _di_f_string_dynamic_increase_by_
-  f_status_t f_string_dynamic_increase_by(const f_number_unsigned_t amount, f_string_dynamic_t * const structure) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!structure) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return f_memory_array_increase_by(amount, sizeof(f_char_t), (void **) &structure->string, &structure->used, &structure->size);
-  }
-#endif // _di_f_string_dynamic_increase_by_
 
 #ifndef _di_f_string_dynamic_mash_
   f_status_t f_string_dynamic_mash(const f_string_static_t glue, const f_string_static_t source, f_string_dynamic_t * const destination) {
@@ -606,16 +556,6 @@ extern "C" {
     return private_f_string_prepend_nulless(source.string, source.used, destination);
   }
 #endif // _di_f_string_dynamic_prepend_nulless_
-
-#ifndef _di_f_string_dynamic_resize_
-  f_status_t f_string_dynamic_resize(const f_number_unsigned_t length, f_string_dynamic_t * const structure) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!structure) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return f_memory_array_resize(length, sizeof(f_char_t), (void **) &structure->string, &structure->used, &structure->size);
-  }
-#endif // _di_f_string_dynamic_resize_
 
 #ifndef _di_f_string_dynamic_seek_line_
   f_status_t f_string_dynamic_seek_line(const f_string_static_t structure, f_string_range_t * const range) {

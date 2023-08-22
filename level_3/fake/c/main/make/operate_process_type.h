@@ -626,11 +626,11 @@ extern "C" {
  *
  *     F_failure (with error bit) on any error.
  *
- *     Errors (with error bit) from: f_string_dynamic_resize()
+ *     Errors (with error bit) from: f_memory_array_resize()
  *     Errors (with error bit) from: f_string_dynamics_resize()
  *     Errors (with error bit) from: f_string_map_multis_resize()
  *
- * @see f_string_dynamic_resize()
+ * @see f_memory_array_resize()
  * @see f_string_dynamics_resize()
  * @see f_string_map_multis_resize()
  */
@@ -655,11 +655,11 @@ extern "C" {
  *     F_interrupt (with error bit) on interrupt signal received.
  *
  *     Errors (with error bit) from: f_path_change()
- *     Errors (with error bit) from: f_string_dynamic_resize()
+ *     Errors (with error bit) from: f_memory_array_resize()
  *     Errors (with error bit) from: fake_make_path_relative()
  *
  * @see f_path_change()
- * @see f_string_dynamic_resize()
+ * @see f_memory_array_resize()
  *
  * @see fake_make_path_relative()
  */
@@ -679,14 +679,14 @@ extern "C" {
  *
  *     F_failure (with error bit) on any error.
  *
+ *     Errors (with error bit) from: f_memory_array_increase_by()
  *     Errors (with error bit) from: f_string_dynamic_append()
- *     Errors (with error bit) from: f_string_dynamic_increase_by()
  *     Errors (with error bit) from: fake_make_operate_process_buffer_escape()
  * @param arguments
  *   The arguments for print operation.
  *
+ * @see f_memory_array_increase_by()
  * @see f_string_dynamic_append()
- * @see f_string_dynamic_increase_by()
  *
  * @see fake_make_operate_process_buffer_escape()
  */
@@ -728,15 +728,15 @@ extern "C" {
  *
  *     F_failure (with error bit) on any error.
  *
+ *     Errors (with error bit) from: f_memory_array_increase_by()
  *     Errors (with error bit) from: f_path_change()
  *     Errors (with error bit) from: f_string_dynamic_append()
- *     Errors (with error bit) from: f_string_dynamics_increase_by()
  *     Errors (with error bit) from: fake_make_assure_inside_project()
  *     Errors (with error bit) from: fake_make_path_relative()
  *
+ * @see f_memory_array_increase_by()
  * @see f_path_change()
  * @see f_string_dynamic_append()
- * @see f_string_dynamics_increase_by()
  *
  * @see fake_make_assure_inside_project()
  * @see fake_make_path_relative()
@@ -759,10 +759,10 @@ extern "C" {
  *     F_interrupt (with error bit) on interrupt signal received.
  *
  *     Errors (with error bit) from: f_path_change_at()
- *     Errors (with error bit) from: f_string_dynamic_resize()
+ *     Errors (with error bit) from: f_memory_array_resize()
  *
  * @see f_path_change_at()
- * @see f_string_dynamic_resize()
+ * @see f_memory_array_resize()
  */
 #ifndef _di_fake_make_operate_process_type_top_
   extern void fake_make_operate_process_type_top(fake_make_data_t * const data_make);

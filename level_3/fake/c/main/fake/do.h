@@ -36,9 +36,9 @@ extern "C" {
  *
  *     Errors (with error bit) from: f_file_clone().
  *     Errors (with error bit) from: f_file_copy().
+ *     Errors (with error bit) from: f_memory_array_increase_by().
  *     Errors (with error bit) from: f_string_dynamic_append_assure().
  *     Errors (with error bit) from: f_string_dynamic_append_nulless().
- *     Errors (with error bit) from: f_string_dynamic_increase_by().
  * @param name
  *   The directory name currently being process based on the flag.
  * @param flag
@@ -46,9 +46,9 @@ extern "C" {
  *
  * @see f_file_clone()
  * @see f_file_copy()
+ * @see f_memory_array_increase_by()
  * @see f_string_dynamic_append_assure()
  * @see f_string_dynamic_append_nulless()
- * @see f_string_dynamic_increase_by()
  *
  * @see fake_build_copy()
  */

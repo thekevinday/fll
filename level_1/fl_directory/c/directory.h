@@ -131,12 +131,10 @@ extern "C" {
  *     Errors (with error bit) from: f_file_role_change().
  *     Errors (with error bit) from: f_file_stat().
  *     Errors (with error bit) from: f_file_stat_at().
+ *     Errors (with error bit) from: f_memory_array_increase_by().
+ *     Errors (with error bit) from: f_memory_array_resize().
  *     Errors (with error bit) from: f_string_dynamic_append_assure().
  *     Errors (with error bit) from: f_string_dynamic_append_nulless().
- *     Errors (with error bit) from: f_string_dynamic_increase_by().
- *     Errors (with error bit) from: f_string_dynamic_resize().
- *     Errors (with error bit) from: f_string_dynamics_increase_by().
- *     Errors (with error bit) from: f_string_dynamics_resize().
  *
  *     Errors (with error bit) from: recurse.action().
  *     Errors (with error bit) from: recurse.handle().
@@ -152,12 +150,10 @@ extern "C" {
  * @see f_file_role_change()
  * @see f_file_stat()
  * @see f_file_stat_at()
+ * @see f_memory_array_increase_by()
+ * @see f_memory_array_resize()
  * @see f_string_dynamic_append_assure()
  * @see f_string_dynamic_append_nulless()
- * @see f_string_dynamic_increase_by()
- * @see f_string_dynamic_resize()
- * @see f_string_dynamics_increase_by()
- * @see f_string_dynamics_resize()
  *
  * @see recurse.action()
  * @see recurse.handle()
@@ -203,7 +199,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if appended string length is too large to store in the buffer.
  *
  *   Errors (with error bit) from: f_file_stat_at().
- *   Errors (with error bit) from: f_string_dynamics_increase_by().
+ *   Errors (with error bit) from: f_memory_array_increase_by().
  *
  * @see alphasort()
  * @see opendir()
@@ -211,7 +207,7 @@ extern "C" {
  * @see versionsort()
  *
  * @see f_file_stat_at()
- * @see f_string_dynamics_increase_by()
+ * @see f_memory_array_increase_by()
  */
 #ifndef _di_fl_directory_list_
   extern f_status_t fl_directory_list(const f_string_static_t path, int (*filter)(const struct dirent *), int (*sort)(const struct dirent **, const struct dirent **), const bool dereference, f_directory_listing_t * const listing);

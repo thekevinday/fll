@@ -10,7 +10,7 @@ extern "C" {
       if (!packet) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return f_string_dynamic_resize(0, &packet->payload);
+    return f_memory_array_resize(0, sizeof(f_char_t), (void **) &packet->payload.string, &packet->payload.used, &packet->payload.size);
   }
 #endif // _di_f_fss_simple_packet_delete_
 
@@ -20,7 +20,7 @@ extern "C" {
       if (!packet) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return f_string_dynamic_adjust(0, &packet->payload);
+    return f_memory_array_adjust(0, sizeof(f_char_t), (void **) &packet->payload.string, &packet->payload.used, &packet->payload.size);
   }
 #endif // _di_f_fss_simple_packet_destroy_
 
@@ -85,7 +85,7 @@ extern "C" {
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
 
-        status = f_string_dynamic_resize(0, &array[i].payload);
+        status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &array[i].payload.string, &array[i].payload.used, &array[i].payload.size);
         if (F_status_is_error(status)) return status;
       } // for
     }
@@ -103,7 +103,7 @@ extern "C" {
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
 
-        status = f_string_dynamic_adjust(0, &array[i].payload);
+        status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &array[i].payload.string, &array[i].payload.used, &array[i].payload.size);
         if (F_status_is_error(status)) return status;
       } // for
     }
@@ -124,7 +124,7 @@ extern "C" {
 
         for (j = 0; j < array[i].size; ++j) {
 
-          status = f_string_dynamic_resize(0, &array[i].array[j].payload);
+          status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &array[i].array[j].payload.string, &array[i].array[j].payload.used, &array[i].array[j].payload.size);
           if (F_status_is_error(status)) return status;
         } // for
 
@@ -151,7 +151,7 @@ extern "C" {
 
         for (j = 0; j < array[i].size; ++j) {
 
-          status = f_string_dynamic_adjust(0, &array[i].array[j].payload);
+          status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &array[i].array[j].payload.string, &array[i].array[j].payload.used, &array[i].array[j].payload.size);
           if (F_status_is_error(status)) return status;
         } // for
 

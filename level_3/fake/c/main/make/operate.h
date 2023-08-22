@@ -32,18 +32,18 @@ extern "C" {
  *     F_interrupt (with error bit) on interrupt signal received.
  *
  *     Errors (with error bit) from: f_directory_open()
+ *     Errors (with error bit) from: f_memory_array_increase()
  *     Errors (with error bit) from: f_path_change_at()
  *     Errors (with error bit) from: f_path_current()
- *     Errors (with error bit) from: f_string_dynamics_increase()
  *
  *     Errors (with error bit) from: fake_make_load_fakefile()
  *     Errors (with error bit) from: fake_make_load_parameters()
  *     Errors (with error bit) from: fake_make_operate_section()
  *
  * @see f_directory_open()
+ * @see f_memory_array_increase()
  * @see f_path_change_at()
  * @see f_path_current()
- * @see f_string_dynamics_increase()
  * @see fll_program_print_signal_received()
  *
  * @see fake_make_load_fakefile()
@@ -68,15 +68,14 @@ extern "C" {
  *
  *     F_interrupt (with error bit) on interrupt signal received.
  *
+ *     Errors (with error bit) from: f_compare_dynamic_partial_string()
+ *     Errors (with error bit) from: f_memory_array_increase()
+ *     Errors (with error bit) from: f_memory_array_increase_by()
  *     Errors (with error bit) from: f_string_dynamic_append()
  *     Errors (with error bit) from: f_string_dynamic_append_assure()
  *     Errors (with error bit) from: f_string_dynamic_append_nulless()
- *     Errors (with error bit) from: f_string_dynamic_increase_by()
  *     Errors (with error bit) from: f_string_dynamic_partial_append_nulless()
- *     Errors (with error bit) from: f_string_dynamics_increase()
- *     Errors (with error bit) from: f_string_dynamics_increase_by()
  *     Errors (with error bit) from: fl_iki_read()
- *     Errors (with error bit) from: f_compare_dynamic_partial_string()
  *
  *     Errors (with error bit) from: fake_make_operate_expand_build()
  *     Errors (with error bit) from: fake_make_operate_expand_context()
@@ -88,15 +87,14 @@ extern "C" {
  * @param quotes
  *   The array of quotes associated with the content.
  *
+ * @see f_compare_dynamic_partial_string()
+ * @see f_memory_array_increase()
+ * @see f_memory_array_increase_by()
  * @see f_string_dynamic_append()
  * @see f_string_dynamic_append_assure()
  * @see f_string_dynamic_append_nulless()
- * @see f_string_dynamic_increase_by()
  * @see f_string_dynamic_partial_append_nulless()
- * @see f_string_dynamics_increase()
- * @see f_string_dynamics_increase_by()
  * @see fl_iki_read()
- * @see f_compare_dynamic_partial_string()
  *
  * @see fake_make_operate_expand_build()
  * @see fake_make_operate_expand_context()
@@ -117,17 +115,17 @@ extern "C" {
  *     F_true on success and match expanded.
  *     F_false on no matches to expand.
  *
+ *     Errors (with error bit) from: f_memory_array_increase()
  *     Errors (with error bit) from: f_string_dynamic_append_nulless()
  *     Errors (with error bit) from: f_string_dynamic_mash()
- *     Errors (with error bit) from: f_string_dynamics_increase()
  * @param quote
  *   The quote associated with the content.
  * @param range_name
  *   The range representing the variable content name string within the data_make.main.buffer.
  *
+ * @see f_memory_array_increase()
  * @see f_string_dynamic_append_nulless()
  * @see f_string_dynamic_mash()
- * @see f_string_dynamics_increase()
  */
 #ifndef _di_fake_make_operate_expand_build_
   extern void fake_make_operate_expand_build(fake_make_data_t * const data_make, const uint8_t quote, const f_string_range_t range_name);
@@ -169,20 +167,20 @@ extern "C" {
  *     F_false on no matches to expand.
  *
  *     Errors (with error bit) from: f_environment_get().
+ *     Errors (with error bit) from: f_memory_array_increase().
+ *     Errors (with error bit) from: f_memory_array_increase_by().
  *     Errors (with error bit) from: f_string_dynamic_append_nulless().
  *     Errors (with error bit) from: f_string_dynamic_partial_append_nulless().
- *     Errors (with error bit) from: f_string_dynamic_increase_by().
- *     Errors (with error bit) from: f_string_dynamics_increase().
  * @param quote
  *   The quote associated with the content.
  * @param range_name
  *   The range representing the variable content name string within the data_make.main.buffer.
  *
  * @see f_environment_get()
+ * @see f_memory_array_increase()
+ * @see f_memory_array_increase_by()
  * @see f_string_dynamic_append_nulless()
  * @see f_string_dynamic_partial_append_nulless()
- * @see f_string_dynamic_increase_by()
- * @see f_string_dynamics_increase()
  */
 #ifndef _di_fake_make_operate_expand_environment_
   extern void fake_make_operate_expand_environment(fake_make_data_t * const data_make, const uint8_t quote, const f_string_range_t range_name);

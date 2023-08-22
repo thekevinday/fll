@@ -218,7 +218,7 @@ extern "C" {
  * @param process
  *   The process to deallocate.
  *
- * @see f_string_dynamic_resize()
+ * @see f_memory_array_resize()
  * @see f_thread_condition_delete()
  * @see f_thread_mutex_delete()
  */

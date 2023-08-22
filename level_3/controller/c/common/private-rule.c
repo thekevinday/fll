@@ -13,7 +13,8 @@ extern "C" {
 #ifndef _di_controller_rule_action_delete_simple_
   void controller_rule_action_delete_simple(controller_rule_action_t * const action) {
 
-    f_string_dynamics_resize(0, &action->parameters);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &action->parameters.array, &action->parameters.used, &action->parameters.size, &f_string_dynamics_delete_callback);
+
     f_memory_array_resize(0, sizeof(f_iki_data_t), (void **) &action->ikis.array, &action->ikis.used, &action->ikis.size);
   }
 #endif // _di_controller_rule_action_delete_simple_
@@ -58,16 +59,15 @@ extern "C" {
 #ifndef _di_controller_rule_delete_simple_
   void controller_rule_delete_simple(controller_rule_t * const rule) {
 
-    f_string_dynamic_resize(0, &rule->alias);
-    f_string_dynamic_resize(0, &rule->engine);
-    f_string_dynamic_resize(0, &rule->name);
-    f_string_dynamic_resize(0, &rule->path);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &rule->engine.string, &rule->engine.used, &rule->engine.size);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &rule->name.string, &rule->name.used, &rule->name.size);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &rule->path.string, &rule->path.used, &rule->path.size);
 
     f_string_maps_resize(0, &rule->define);
     f_string_maps_resize(0, &rule->parameter);
 
-    f_string_dynamics_resize(0, &rule->engine_arguments);
-    f_string_dynamics_resize(0, &rule->environment);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &rule->engine_arguments.array, &rule->engine_arguments.used, &rule->engine_arguments.size, &f_string_dynamics_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &rule->environment.array, &rule->environment.used, &rule->environment.size, &f_string_dynamics_delete_callback);
 
     macro_f_int32s_t_delete_simple(rule->affinity)
     macro_f_control_group_t_delete_simple(rule->cgroup)
@@ -86,7 +86,7 @@ extern "C" {
 #ifndef _di_controller_rule_item_delete_simple_
   void controller_rule_item_delete_simple(controller_rule_item_t * const item) {
 
-    f_string_dynamic_resize(0, &item->pid_file);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &item->pid_file.string, &item->pid_file.used, &item->pid_file.size);
 
     controller_rule_actions_delete_simple(&item->actions);
   }
@@ -109,9 +109,9 @@ extern "C" {
 #ifndef _di_controller_rule_on_delete_simple_
   void controller_rule_on_delete_simple(controller_rule_on_t * const on) {
 
-    f_string_dynamics_resize(0, &on->need);
-    f_string_dynamics_resize(0, &on->want);
-    f_string_dynamics_resize(0, &on->wish);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &on->need.array, &on->need.used, &on->need.size, &f_string_dynamics_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &on->want.array, &on->want.used, &on->want.size, &f_string_dynamics_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &on->wish.array, &on->wish.used, &on->wish.size, &f_string_dynamics_delete_callback);
   }
 #endif // _di_controller_rule_on_delete_simple_
 

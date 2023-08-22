@@ -135,7 +135,8 @@ extern "C" {
           // Deallocate the PID files.
           if (process->path_pids.used) {
             process->path_pids.used = 0;
-            f_string_dynamics_resize(0, &process->path_pids);
+
+            f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &process->path_pids.array, &process->path_pids.used, &process->path_pids.size, &f_string_dynamics_delete_callback);
           }
 
           // Deallocate any rules in the space that is declared to be unused.
@@ -238,7 +239,7 @@ extern "C" {
             controller_lock_print(main->error.to, &thread);
 
             fl_print_format("%r%[%QThe pid file '%]", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-            fl_print_format("%[%Q%]", main->error.to, main->error.notable, setting->path_pid, main->error.notable);
+            fl_print_format(f_string_format_Q_single_s.string, main->error.to, main->error.notable, setting->path_pid, main->error.notable);
             fl_print_format("%[' must not already exist.%]%r", main->error.to, main->error.context, main->error.context, f_string_eol_s);
 
             controller_unlock_print_flush(main->error.to, &thread);

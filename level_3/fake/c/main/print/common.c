@@ -39,9 +39,9 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%S'", print->to, before);
-    fl_print_format("%[%Q%]", print->to, print->notable, first, print->notable);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->notable, first, print->notable);
     fl_print_format("'%S'", print->to, between);
-    fl_print_format("%[%Q%]", print->to, print->notable, second, print->notable);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->notable, second, print->notable);
     fl_print_format("'%S.%r", print->to, after, f_string_eol_s);
 
     f_file_stream_unlock(print->to);

@@ -151,17 +151,17 @@ extern "C" {
  *     Errors (with error bit) from: f_fss_is_graph().
  *     Errors (with error bit) from: f_fss_skip_past_delimit().
  *     Errors (with error bit) from: f_fss_skip_past_space().
+ *     Errors (with error bit) from: f_memory_array_increase().
  *     Errors (with error bit) from: f_string_dynamic_append().
- *     Errors (with error bit) from: f_string_dynamic_increase().
- *     Errors (with error bit) from: f_string_dynamic_increase_by().
+ *     Errors (with error bit) from: f_memory_array_increase_by().
  *     Errors (with error bit) from: f_utf_buffer_increment().
  *
  * @see f_fss_is_graph()
  * @see f_fss_skip_past_delimit()
  * @see f_fss_skip_past_space()
+ * @see f_memory_array_increase()
  * @see f_string_dynamic_append()
- * @see f_string_dynamic_increase()
- * @see f_string_dynamic_increase_by()
+ * @see f_memory_array_increase_by()
  * @see f_utf_buffer_increment()
  */
 #ifndef _di_fl_fss_embedded_list_content_write_
@@ -276,15 +276,15 @@ extern "C" {
  *     Errors (with error bit) from: f_fss_is_graph().
  *     Errors (with error bit) from: f_fss_is_space().
  *     Errors (with error bit) from: f_fss_skip_past_delimit().
- *     Errors (with error bit) from: f_string_dynamic_increase().
- *     Errors (with error bit) from: f_string_dynamic_increase_by().
+ *     Errors (with error bit) from: f_memory_array_increase().
+ *     Errors (with error bit) from: f_memory_array_increase_by().
  *     Errors (with error bit) from: f_utf_buffer_increment().
  *
  * @see f_fss_is_graph()
  * @see f_fss_is_space()
  * @see f_fss_skip_past_delimit()
- * @see f_string_dynamic_increase()
- * @see f_string_dynamic_increase_by()
+ * @see f_memoy_array_increase()
+ * @see f_memory_array_increase_by()
  * @see f_utf_buffer_increment()
  */
 #ifndef _di_fl_fss_embedded_list_object_write_

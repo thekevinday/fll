@@ -8,12 +8,12 @@ extern "C" {
 #ifndef _di_controller_control_delete_simple_
   void controller_control_delete_simple(controller_control_t * const control) {
 
-    f_string_dynamic_resize(0, &control->cache_1);
-    f_string_dynamic_resize(0, &control->cache_2);
-    f_string_dynamic_resize(0, &control->cache_3);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &control->cache_1.string, &control->cache_1.used, &control->cache_1.size);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &control->cache_2.string, &control->cache_2.used, &control->cache_2.size);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &control->cache_3.string, &control->cache_3.used, &control->cache_3.size);
 
-    f_string_dynamic_resize(0, &control->input);
-    f_string_dynamic_resize(0, &control->output);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &control->input.string, &control->input.used, &control->input.size);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &control->output.string, &control->output.used, &control->output.size);
   }
 #endif // _di_controller_control_delete_simple_
 

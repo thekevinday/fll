@@ -145,14 +145,14 @@ extern "C" {
     if (main->program.parameters.array[fss_identify_parameter_name_e].result & f_console_result_value_e) {
       main->setting.names.used = 0;
 
-      main->setting.state.status = f_string_dynamics_increase_by(main->program.parameters.array[fss_identify_parameter_name_e].values.used, &main->setting.names);
+      main->setting.state.status = f_memory_array_increase_by(main->program.parameters.array[fss_identify_parameter_name_e].values.used, sizeof(f_string_dynamic_t), (void **) &main->setting.names.array, &main->setting.names.used, &main->setting.names.size);
 
       if (F_status_is_error(main->setting.state.status)) {
         if ((main->setting.flag & fss_identify_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
           fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
         }
 
-        fss_identify_print_error(&main->program.error, macro_fss_identify_f(f_string_dynamics_increase_by));
+        fss_identify_print_error(&main->program.error, macro_fss_identify_f(f_memory_array_increase_by));
 
         return;
       }
@@ -259,14 +259,14 @@ extern "C" {
     if (main->program.parameters.remaining.used) {
       main->setting.files.used = 0;
 
-      main->setting.state.status = f_string_dynamics_increase_by(main->program.parameters.remaining.used, &main->setting.files);
+      main->setting.state.status = f_memory_array_increase_by(main->program.parameters.remaining.used, sizeof(f_string_dynamic_t), (void **) &main->setting.files.array, &main->setting.files.used, &main->setting.files.size);
 
       if (F_status_is_error(main->setting.state.status)) {
         if ((main->setting.flag & fss_identify_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
           fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
         }
 
-        fss_identify_print_error(&main->program.error, macro_fss_identify_f(f_string_dynamics_increase_by));
+        fss_identify_print_error(&main->program.error, macro_fss_identify_f(f_memory_array_increase_by));
 
         return;
       }

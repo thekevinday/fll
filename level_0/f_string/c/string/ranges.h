@@ -37,16 +37,10 @@ extern "C" {
   #define macro_f_string_ranges_t_initialize_1(array, size, used) { array, size, used }
   #define macro_f_string_ranges_t_initialize_2(array, length) { array, length, length }
 
-  #define macro_f_string_ranges_t_resize(status, ranges, length) status = f_string_ranges_resize(length, &ranges);
-  #define macro_f_string_ranges_t_adjust(status, ranges, length) status = f_string_ranges_adjust(length, &ranges);
-
-  #define macro_f_string_ranges_t_delete_simple(ranges)  f_string_ranges_resize(0, &ranges);
-  #define macro_f_string_ranges_t_destroy_simple(ranges) f_string_ranges_adjust(0, &ranges);
-
-  #define macro_f_string_ranges_t_increase(status, step, ranges)      status = f_string_ranges_increase(step, &ranges);
-  #define macro_f_string_ranges_t_increase_by(status, ranges, amount) status = f_string_ranges_increase_by(amount, &ranges);
-  #define macro_f_string_ranges_t_decrease_by(status, ranges, amount) status = f_string_ranges_decrease_by(amount, &ranges);
-  #define macro_f_string_ranges_t_decimate_by(status, ranges, amount) status = f_string_ranges_decimate_by(amount, &ranges);
+  #define macro_f_string_ranges_t_clear(ranges) \
+    ranges.array = 0; \
+    ranges.size = 0; \
+    ranges.used = 0;
 #endif // _di_f_string_ranges_t_
 
 /**

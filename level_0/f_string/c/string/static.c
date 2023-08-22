@@ -146,6 +146,13 @@ extern "C" {
   const f_string_static_t f_string_ascii_transmission_block_end_s = macro_f_string_static_t_initialize_1(F_string_ascii_transmission_block_end_s, 0, F_string_ascii_transmission_block_end_s_length);
 #endif // _di_f_string_ascii_s_
 
+#ifndef _di_f_string_format_s_
+  const f_string_static_t f_string_format_Q_double_s           = macro_f_string_static_t_initialize_1(F_string_format_Q_double_s, 0, F_string_format_Q_double_s_length);
+  const f_string_static_t f_string_format_Q_single_s           = macro_f_string_static_t_initialize_1(F_string_format_Q_single_s, 0, F_string_format_Q_single_s_length);
+  const f_string_static_t f_string_format_sentence_end_s       = macro_f_string_static_t_initialize_1(F_string_format_sentence_end_s, 0, F_string_format_sentence_end_s_length);
+  const f_string_static_t f_string_format_sentence_end_quote_s = macro_f_string_static_t_initialize_1(F_string_format_sentence_end_quote_s, 0, F_string_format_sentence_end_quote_s_length);
+#endif // _di_f_string_format_s_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

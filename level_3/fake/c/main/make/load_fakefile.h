@@ -150,19 +150,19 @@ extern "C" {
  *   This alters data_make.main->setting.state.status:
  *     F_okay on success.
  *
+ *     Errors (with error bit) from: f_memory_array_increase().
+ *     Errors (with error bit) from: f_memory_array_increase_by().
  *     Errors (with error bit) from: f_string_dynamic_append().
  *     Errors (with error bit) from: f_string_dynamic_append_nulless().
- *     Errors (with error bit) from: f_string_dynamic_increase_by().
  *     Errors (with error bit) from: f_string_dynamic_partial_append_nulless().
- *     Errors (with error bit) from: f_string_dynamics_increase().
  * @param content
  *   The setting content.
  *
+ * @see f_memory_array_increase()
+ * @see f_memory_array_increase_by()
  * @see f_string_dynamic_append()
  * @see f_string_dynamic_append_nulless()
- * @see f_string_dynamic_increase_by()
  * @see f_string_dynamic_partial_append_nulless()
- * @see f_string_dynamics_increase()
  */
 #ifndef _di_fake_make_load_fakefile_setting_environment_
   extern void fake_make_load_fakefile_setting_environment(fake_make_data_t * const data_make, f_string_ranges_t * const content);

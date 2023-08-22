@@ -19,7 +19,7 @@ extern "C" {
 
     if (!setting) return F_status_set_error(F_parameter);
 
-    f_string_dynamics_resize(0, &setting->files);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &setting->files.array, &setting->files.used, &setting->files.size, &f_string_dynamics_delete_callback);
 
     return F_okay;
   }

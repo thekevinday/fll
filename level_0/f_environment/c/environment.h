@@ -92,11 +92,11 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_string_dynamic_increase_by().
+ *   Errors (with error bit) from: f_memory_array_increase_by().
  *
  * @see getenv()
  *
- * @see f_string_dynamic_increase_by()
+ * @see f_memory_array_increase_by()
  */
 #ifndef _di_f_environment_get_
   extern f_status_t f_environment_get(const f_string_static_t name, f_string_dynamic_t * const value);

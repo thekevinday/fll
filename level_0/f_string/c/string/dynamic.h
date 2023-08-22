@@ -39,36 +39,7 @@ extern "C" {
   #define macro_f_string_dynamic_t_initialize_2(array, length) { array, length, length }
 
   #define macro_f_string_dynamic_t_clear(dynamic) macro_f_string_static_t_clear(dynamic)
-
-  #define macro_f_string_dynamic_t_resize(status, dynamic, length) status = f_string_dynamic_resize(length, &dynamic);
-  #define macro_f_string_dynamic_t_adjust(status, dynamic, length) status = f_string_dynamic_adjust(length, &dynamic);
-
-  #define macro_f_string_dynamic_t_delete_simple(dynamic)  f_string_dynamic_resize(0, &dynamic);
-  #define macro_f_string_dynamic_t_destroy_simple(dynamic) f_string_dynamic_adjust(0, &dynamic);
-
-  #define macro_f_string_dynamic_t_increase(status, step, dynamic)      status = f_string_dynamic_increase(step, &dynamic);
-  #define macro_f_string_dynamic_t_increase_by(status, dynamic, amount) status = f_string_dynamic_increase_by(amount, &dynamic);
-  #define macro_f_string_dynamic_t_decrease_by(status, dynamic, amount) status = f_string_dynamic_decrease_by(amount, &dynamic);
-  #define macro_f_string_dynamic_t_decimate_by(status, dynamic, amount) status = f_string_dynamic_decimate_by(amount, &dynamic);
 #endif // _di_f_string_dynamic_t_
-
-/**
- * Resize the dynamic string.
- *
- * @param length
- *   The new size to use.
- * @param structure
- *   The string to resize.
- *
- * @return
- *   F_okay on success.
- *
- *   F_memory_not (with error bit) on out of memory.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_f_string_dynamic_adjust_
-  extern f_status_t f_string_dynamic_adjust(const f_number_unsigned_t length, f_string_dynamic_t * const structure);
-#endif // _di_f_string_dynamic_adjust_
 
 /**
  * Append the source string onto the destination.
@@ -157,107 +128,6 @@ extern "C" {
 #ifndef _di_f_string_dynamic_append_nulless_
   extern f_status_t f_string_dynamic_append_nulless(const f_string_static_t source, f_string_dynamic_t * const destination);
 #endif // _di_f_string_dynamic_append_nulless_
-
-/**
- * Resize the dynamic string to a smaller size.
- *
- * This will resize making the string smaller based on (size - given length).
- * If the given length is too small, then the resize will fail.
- * This will not shrink the size to less than 0.
- *
- * @param amount
- *   A positive number representing how much to decrease the size by.
- * @param structure
- *   The string to resize.
- *
- * @return
- *   F_okay on success.
- *   F_data_not if amount is 0.
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *   F_string_too_large (with error bit) if the combined string is too large.
- *
- *   Errors (with error bit) from: f_memory_resize().
- */
-#ifndef _di_f_string_dynamic_decimate_by_
-  extern f_status_t f_string_dynamic_decimate_by(const f_number_unsigned_t amount, f_string_dynamic_t * const structure);
-#endif // _di_f_string_dynamic_decimate_by_
-
-/**
- * Resize the dynamic string to a smaller size.
- *
- * This will resize making the string smaller based on (size - given length).
- * If the given length is too small, then the resize will fail.
- * This will not shrink the size to less than 0.
- *
- * @param amount
- *   A positive number representing how much to decrease the size by.
- * @param structure
- *   The string to resize.
- *
- * @return
- *   F_okay on success.
- *   F_data_not if amount is 0.
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *   F_string_too_large (with error bit) if the combined string is too large.
- *
- *   Errors (with error bit) from: f_memory_resize().
- */
-#ifndef _di_f_string_dynamic_decrease_by_
-  extern f_status_t f_string_dynamic_decrease_by(const f_number_unsigned_t amount, f_string_dynamic_t * const structure);
-#endif // _di_f_string_dynamic_decrease_by_
-
-/**
- * Resize the dynamic string to a larger size.
- *
- * This will resize making the array larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
- * If already set to the maximum buffer size, then the resize will fail.
- *
- * @param step
- *   The allocation step to use.
- *   Must be greater than 0.
- * @param structure
- *   The string to resize.
- *
- * @return
- *   F_okay on success.
- *   F_data_not on success, but there is no reason to increase size (used + 1 <= size) (or step is 0).
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *   F_string_too_large (with error bit) if the combined string is too large.
- *
- *   Errors (with error bit) from: f_memory_resize().
- */
-#ifndef _di_f_string_dynamic_increase_
-  extern f_status_t f_string_dynamic_increase(const f_number_unsigned_t step, f_string_dynamic_t * const structure);
-#endif // _di_f_string_dynamic_increase_
-
-/**
- * Resize the dynamic string to a larger size.
- *
- * This will resize making the array larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
- * If already set to the maximum buffer size, then the resize will fail.
- *
- * @param amount
- *   A positive number representing how much to increase the size by.
- * @param structure
- *   The string to resize.
- *
- * @return
- *   F_okay on success.
- *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *   F_string_too_large (with error bit) if the combined string is too large.
- *
- *   Errors (with error bit) from: f_memory_resize().
- */
-#ifndef _di_f_string_dynamic_increase_by_
-  extern f_status_t f_string_dynamic_increase_by(const f_number_unsigned_t amount, f_string_dynamic_t * const structure);
-#endif // _di_f_string_dynamic_increase_by_
 
 /**
  * Append the source string onto the destination with the glue in between.
@@ -794,25 +664,6 @@ extern "C" {
 #ifndef _di_f_string_dynamic_prepend_nulless_
   extern f_status_t f_string_dynamic_prepend_nulless(const f_string_static_t source, f_string_dynamic_t * const destination);
 #endif // _di_f_string_dynamic_prepend_nulless_
-
-/**
- * Resize the dynamic string.
- *
- * @param length
- *   The new size to use.
- * @param structure
- *   The string to resize.
- *
- * @return
- *   F_okay on success.
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: f_memory_resize().
- */
-#ifndef _di_f_string_dynamic_resize_
-  extern f_status_t f_string_dynamic_resize(const f_number_unsigned_t length, f_string_dynamic_t * const structure);
-#endif // _di_f_string_dynamic_resize_
 
 /**
  * Seek the buffer location forward until EOL is reached.

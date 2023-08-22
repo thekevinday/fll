@@ -31,11 +31,11 @@ extern "C" {
  * @return
  *   F_okay on success.
  *
- *   Errors (with error bit) from: f_string_dynamic_increase_by()
+ *   Errors (with error bit) from: f_memory_array_increase_by()
  *
  * @see memcpy()
  *
- * @see f_string_dynamic_increase_by()
+ * @see f_memory_array_increase_by()
  *
  * @see f_color_load_context()
  * @see f_color_save_1()
@@ -60,11 +60,11 @@ extern "C" {
  * @return
  *   F_okay on success.
  *
- *   Errors (with error bit) from: f_string_dynamic_increase_by()
+ *   Errors (with error bit) from: f_memory_array_increase_by()
  *
  * @see memcpy()
  *
- * @see f_string_dynamic_increase_by()
+ * @see f_memory_array_increase_by()
  *
  * @see f_color_load_context()
  * @see f_color_save_2()

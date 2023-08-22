@@ -12,9 +12,9 @@ extern "C" {
     fll_program_data_delete(&main->program);
     control_setting_delete(&main->setting);
 
-    f_string_dynamic_resize(0, &main->cache.large);
-    f_string_dynamic_resize(0, &main->cache.small);
-    f_string_dynamic_resize(0, &main->cache.packet);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &main->cache.large.string, &main->cache.large.used, &main->cache.large.size);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &main->cache.small.string, &main->cache.small.used, &main->cache.small.size);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &main->cache.packet.string, &main->cache.packet.used, &main->cache.packet.size);
 
     f_string_ranges_resize(0, &main->cache.objects);
     f_string_rangess_resize(0, &main->cache.contents);
@@ -34,11 +34,11 @@ extern "C" {
 
     if (!setting) return F_status_set_error(F_parameter);
 
-    f_string_dynamic_resize(0, &setting->name_socket);
-    f_string_dynamic_resize(0, &setting->path_settings);
-    f_string_dynamic_resize(0, &setting->path_socket);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &setting->name_socket.string, &setting->name_socket.used, &setting->name_socket.size);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &setting->path_settings.string, &setting->path_settings.used, &setting->path_settings.size);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &setting->path_socket.string, &setting->path_socket.used, &setting->path_socket.size);
 
-    f_string_dynamics_resize(0, &setting->actions);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &setting->actions.array, &setting->actions.used, &setting->actions.size, &f_string_dynamics_delete_callback);
 
     return F_okay;
   }

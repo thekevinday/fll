@@ -203,7 +203,7 @@ extern "C" {
     size_t size_read = 0;
 
     do {
-      status = f_string_dynamic_increase_by(file.size_read, buffer);
+      status = f_memory_array_increase_by(file.size_read, sizeof(f_char_t), (void **) &buffer->string, &buffer->used, &buffer->size);
 
       if (F_status_is_error(status)) {
         funlockfile(file.stream);
@@ -253,7 +253,7 @@ extern "C" {
     }
 
     {
-      const f_status_t status = f_string_dynamic_increase_by(file.size_read, buffer);
+      const f_status_t status = f_memory_array_increase_by(file.size_read, sizeof(f_char_t), (void **) &buffer->string, &buffer->used, &buffer->size);
 
       if (F_status_is_error(status)) {
         funlockfile(file.stream);
@@ -311,7 +311,7 @@ extern "C" {
     }
 
     {
-      const f_status_t status = f_string_dynamic_increase_by(total, buffer);
+      const f_status_t status = f_memory_array_increase_by(total, sizeof(f_char_t), (void **) &buffer->string, &buffer->used, &buffer->size);
 
       if (F_status_is_error(status)) {
         funlockfile(file.stream);

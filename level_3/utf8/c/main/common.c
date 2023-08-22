@@ -196,14 +196,14 @@ extern "C" {
       if (main->program.parameters.arguments.array[main->program.parameters.array[utf8_parameter_to_file_e].values.array[0]].used) {
         main->setting.path_files_to.used = 0;
 
-        main->setting.state.status = f_string_dynamics_increase_by(1, &main->setting.path_files_to);
+        main->setting.state.status = f_memory_array_increase_by(1, sizeof(f_string_dynamic_t), (void **) &main->setting.path_files_to.array, &main->setting.path_files_to.used, &main->setting.path_files_to.size);
 
         if (F_status_is_error(main->setting.state.status)) {
           if ((main->setting.flag & utf8_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
             fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
           }
 
-          utf8_print_error(&main->program.error, macro_utf8_f(f_string_dynamics_increase_by));
+          utf8_print_error(&main->program.error, macro_utf8_f(f_memory_array_increase_by));
 
           return;
         }
@@ -269,14 +269,14 @@ extern "C" {
     if (main->program.parameters.array[utf8_parameter_from_file_e].result & f_console_result_value_e) {
       main->setting.path_files_from.used = 0;
 
-      main->setting.state.status = f_string_dynamics_increase_by(main->program.parameters.array[utf8_parameter_from_file_e].values.used, &main->setting.path_files_from);
+      main->setting.state.status = f_memory_array_increase_by(main->program.parameters.array[utf8_parameter_from_file_e].values.used, sizeof(f_string_dynamic_t), (void **) &main->setting.path_files_from.array, &main->setting.path_files_from.used, &main->setting.path_files_from.size);
 
       if (F_status_is_error(main->setting.state.status)) {
         if ((main->setting.flag & utf8_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
           fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
         }
 
-        utf8_print_error(&main->program.error, macro_utf8_f(f_string_dynamics_increase_by));
+        utf8_print_error(&main->program.error, macro_utf8_f(f_memory_array_increase_by));
 
         return;
       }
@@ -291,7 +291,7 @@ extern "C" {
         index = main->program.parameters.array[utf8_parameter_from_file_e].values.array[i];
         main->setting.path_files_from.array[i].used = 0;
 
-        main->setting.state.status = f_string_dynamic_append_nulless(main->program.parameters.arguments.array[index], &main->setting.path_files_from.array[i]);
+        main->setting.state.status = f_string_dynamic_append(main->program.parameters.arguments.array[index], &main->setting.path_files_from.array[i]);
 
         if (F_status_is_error(main->setting.state.status)) {
           if ((main->setting.flag & utf8_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
@@ -349,14 +349,14 @@ extern "C" {
     if (main->program.parameters.remaining.used) {
       main->setting.remaining.used = 0;
 
-      main->setting.state.status = f_string_dynamics_increase_by(main->program.parameters.remaining.used, &main->setting.remaining);
+      main->setting.state.status = f_memory_array_increase_by(main->program.parameters.remaining.used, sizeof(f_string_dynamic_t), (void **) &main->setting.remaining.array, &main->setting.remaining.used, &main->setting.remaining.size);
 
       if (F_status_is_error(main->setting.state.status)) {
         if ((main->setting.flag & utf8_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
           fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
         }
 
-        utf8_print_error(&main->program.error, macro_utf8_f(f_string_dynamics_increase_by));
+        utf8_print_error(&main->program.error, macro_utf8_f(f_memory_array_increase_by));
 
         return;
       }

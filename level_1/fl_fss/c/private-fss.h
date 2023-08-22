@@ -39,9 +39,9 @@ extern "C" {
  *
  *     F_interrupt (with error bit) if stopping due to an interrupt.
  *
- *     Errors (with error bit) from: f_string_dynamic_increase().
+ *     Errors (with error bit) from: f_memory_array_increase().
  *
- * @see f_string_dynamic_increase()
+ * @see f_memory_array_increase()
  * @see fl_fss_basic_list_content_write()
  * @see fl_fss_embedded_list_content_write()
  * @see fl_fss_extended_list_content_write()
@@ -206,15 +206,15 @@ extern "C" {
  *     Errors (with error bit) from: f_fss_is_space().
  *     Errors (with error bit) from: f_fss_skip_past_delimit().
  *     Errors (with error bit) from: f_fss_skip_past_space().
- *     Errors (with error bit) from: f_string_dynamic_increase().
- *     Errors (with error bit) from: f_string_dynamic_increase_by().
+ *     Errors (with error bit) from: f_memory_array_increase().
+ *     Errors (with error bit) from: f_memory_array_increase_by().
  *     Errors (with error bit) from: f_utf_buffer_increment().
  *
  * @see f_fss_is_space()
  * @see f_fss_skip_past_delimit()
  * @see f_fss_skip_past_space()
- * @see f_string_dynamic_increase()
- * @see f_string_dynamic_increase_by()
+ * @see f_memory_array_increase()
+ * @see f_memory_array_increase_by()
  * @see f_utf_buffer_increment()
  * @see fl_fss_basic_object_write()
  * @see fl_fss_extended_object_write()

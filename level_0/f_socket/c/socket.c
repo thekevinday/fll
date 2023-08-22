@@ -380,7 +380,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (!name->size) {
-      const f_status_t status = f_string_dynamic_resize(F_socket_default_name_max_d, name);
+      const f_status_t status = f_memory_array_resize(F_socket_default_name_max_d, sizeof(f_char_t), (void **) &name->string, &name->used, &name->size);
       if (F_status_is_error(status)) return status;
     }
 

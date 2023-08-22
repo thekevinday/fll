@@ -150,14 +150,14 @@ extern "C" {
 
       main->setting.objects.used = 0;
 
-      main->setting.state.status = f_string_dynamics_resize(values->used, &main->setting.objects);
+      main->setting.state.status = f_memory_arrays_resize(values->used, sizeof(f_string_dynamic_t), (void **) &main->setting.objects.array, &main->setting.objects.used, &main->setting.objects.size, &f_string_dynamics_delete_callback);
 
       if (F_status_is_error(main->setting.state.status)) {
         if ((main->setting.flag & fss_write_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
           fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
         }
 
-        fss_write_print_error(&main->program.error, macro_fss_write_f(f_string_dynamics_resize));
+        fss_write_print_error(&main->program.error, macro_fss_write_f(f_memory_arrays_resize));
 
         return;
       }
@@ -214,14 +214,14 @@ extern "C" {
 
       main->setting.contentss.used = 0;
 
-      main->setting.state.status = f_string_dynamicss_increase_by(values_object->used, &main->setting.contentss);
+      main->setting.state.status = f_memory_arrays_resize(values_object->used, sizeof(f_string_dynamic_t), (void **) &main->setting.contentss.array, &main->setting.contentss.used, &main->setting.contentss.size, &f_string_dynamics_delete_callback);
 
       if (F_status_is_error(main->setting.state.status)) {
         if ((main->setting.flag & fss_write_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
           fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
         }
 
-        fss_write_print_error(&main->program.error, macro_fss_write_f(f_string_dynamicss_increase_by));
+        fss_write_print_error(&main->program.error, macro_fss_write_f(f_memory_arrays_resize));
 
         return;
       }
@@ -249,14 +249,14 @@ extern "C" {
           break;
         }
 
-        main->setting.state.status = f_string_dynamics_increase_by(total, &main->setting.contentss.array[j]);
+        main->setting.state.status = f_memory_array_increase_by(total, sizeof(f_string_dynamic_t), (void **) &main->setting.contentss.array[j].array, &main->setting.contentss.array[j].used, &main->setting.contentss.array[j].size);
 
         if (F_status_is_error(main->setting.state.status)) {
           if ((main->setting.flag & fss_write_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
             fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
           }
 
-          fss_write_print_error(&main->program.error, macro_fss_write_f(f_string_dynamics_increase_by));
+          fss_write_print_error(&main->program.error, macro_fss_write_f(f_memory_array_increase_by));
 
           return;
         }

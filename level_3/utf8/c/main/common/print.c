@@ -9,6 +9,7 @@ extern "C" {
     "f_console_parameter_prioritize_right",
     "f_console_parameter_process",
     "f_file_stream_open",
+    "f_memory_array_increase_by",
     "f_string_dynamic_append_nulless",
     "f_string_dynamics_increase_by",
     "f_thread_create",

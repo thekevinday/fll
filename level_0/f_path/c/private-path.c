@@ -30,10 +30,10 @@ extern "C" {
 
     const f_number_unsigned_t length = strnlen(buffer, F_path_length_max_d);
 
-    {
-      real->used = 0;
+    real->used = 0;
 
-      const f_status_t status = f_string_dynamic_increase_by(length + 1, real);
+    {
+      const f_status_t status = f_memory_array_increase_by(length + 1, sizeof(f_char_t), (void **) &real->string, &real->used, &real->size);
       if (F_status_is_error(status)) return status;
     }
 

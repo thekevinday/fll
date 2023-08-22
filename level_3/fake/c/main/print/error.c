@@ -43,7 +43,7 @@ extern "C" {
         f_file_stream_lock(print->to);
 
         fl_print_format("%[%QFailed to find '%]", print->to, print->context, print->prefix, print->context);
-        fl_print_format("%[%Q%]", print->to, print->notable, source, print->notable);
+        fl_print_format(f_string_format_Q_single_s.string, print->to, print->notable, source, print->notable);
         fl_print_format("%[' ", print->to, print->context);
 
         fake_print_error_build_operation_file_partial(print, operation, source, destination, how);
@@ -61,7 +61,7 @@ extern "C" {
         f_file_stream_lock(print->to);
 
         fl_print_format("%[%QInvalid parameter when calling '%]", print->to, print->context, print->prefix, print->context);
-        fl_print_format("%[%Q%]", print->to, print->notable, function, print->notable);
+        fl_print_format(f_string_format_Q_single_s.string, print->to, print->notable, function, print->notable);
         fl_print_format("%[() ", print->to, print->context);
 
         fake_print_error_build_operation_file_partial(print, operation, source, destination, how);
@@ -81,15 +81,15 @@ extern "C" {
         fl_print_format("%[%QInvalid name for '%]", print->to, print->context, print->prefix, print->context);
 
         if (source.used) {
-          fl_print_format("%[%Q%]", print->to, print->notable, source, print->notable);
+          fl_print_format(f_string_format_Q_single_s.string, print->to, print->notable, source, print->notable);
         }
 
         if (destination.used) {
           fl_print_format("%[' or '%]", print->to, print->context, print->context);
-          fl_print_format("%[%Q%]", print->to, print->notable, destination, print->notable);
+          fl_print_format(f_string_format_Q_single_s.string, print->to, print->notable, destination, print->notable);
         }
 
-        fl_print_format("%['.%]%r", print->to, print->context, print->context, f_string_eol_s);
+        fl_print_format(f_string_format_sentence_end_quote_s.string, print->to, print->context, print->context, f_string_eol_s);
 
         f_file_stream_unlock(print->to);
       }
@@ -209,11 +209,11 @@ extern "C" {
     if (print->verbosity < f_console_verbosity_error_e || !source.used) return;
 
     fl_print_format("%[while trying to %Q '%]", print->to, print->context, operation, print->context);
-    fl_print_format("%[%Q%]", print->to, print->notable, source, print->notable);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->notable, source, print->notable);
 
     if (destination.used) {
       fl_print_format("%[' %Q '%]", print->to, print->context, how, print->context);
-      fl_print_format("%[%Q%]", print->to, print->notable, destination, print->notable);
+      fl_print_format(f_string_format_Q_single_s.string, print->to, print->notable, destination, print->notable);
     }
 
     fl_print_format("%['", print->to, print->context);
@@ -362,7 +362,7 @@ extern "C" {
         fl_print_format("%[%QOccurred on invalid UTF-8 character at %s (at '%]", print->to, print->context, print->prefix, main->setting.state.status == F_complete_not_utf_eos ? "end of string" : "stop point of string", print->context);
         fl_print_format("%[%un%]", print->to, print->notable, range.start, print->notable);
         fl_print_format("%[ of the setting file '%]", print->to, print->context, print->context);
-        fl_print_format("%[%Q%]", print->to, print->notable, path_file, print->notable);
+        fl_print_format(f_string_format_Q_single_s.string, print->to, print->notable, path_file, print->notable);
         fl_print_format("%[').%]%r", print->to, print->context, print->context, f_string_eol_s);
 
         f_file_stream_unlock(print->to);
@@ -404,7 +404,7 @@ extern "C" {
     fl_print_format("%[%S%Q%S(%]", print->to, print->context, prefix, print->prefix, before, print->context);
     fl_print_format("%[%un%]", print->to, print->notable, number, print->notable);
     fl_print_format("%[)%S'%]", print->to, print->context, middle, print->context);
-    fl_print_format("%[%Q%]", print->to, print->notable, variable, print->notable);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->notable, variable, print->notable);
     fl_print_format("%[%S.%]%r", print->to, print->context, after, print->context, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
@@ -489,12 +489,12 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QThe argument '%]", print->to, print->context, print->prefix, print->context);
-    fl_print_format("%[%Q%]", print->to, print->notable, argument, print->notable);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->notable, argument, print->notable);
     fl_print_format("%[' is not not valid and may only be one of either '%]", print->to, print->context, print->context);
     fl_print_format("%[%r%]", print->to, print->notable, fake_make_operation_argument_force_s, print->notable);
     fl_print_format("%[' or '%]", print->to, print->context, print->context);
     fl_print_format("%[%r%]", print->to, print->notable, fake_make_operation_argument_strict_s, print->notable);
-    fl_print_format("%['.%]%r", print->to, print->context, print->context, f_string_eol_s);
+    fl_print_format(f_string_format_sentence_end_quote_s.string, print->to, print->context, print->context, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
 
@@ -557,7 +557,7 @@ extern "C" {
       f_file_stream_lock(print->to);
 
       fl_print_format("%[%QMaximum stack size reached while processing path '%]", print->to, print->context, print->prefix, print->context);
-      fl_print_format("%[%Q%]", print->to, print->notable, path, print->notable);
+      fl_print_format(f_string_format_Q_single_s.string, print->to, print->notable, path, print->notable);
       fl_print_format("%['", print->to, print->context);
 
       if (function) {
@@ -676,7 +676,7 @@ extern "C" {
     fl_print_format("%[%QThe '%]", print->to, print->context, print->prefix, print->context);
     fl_print_format("%[%Q%Q%]", print->to, print->notable, symbol, name, print->notable);
     fl_print_format("%[' parameter value '%]", print->to, print->context, print->context);
-    fl_print_format("%[%Q%]", print->to, print->notable, value, print->notable);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->notable, value, print->notable);
     fl_print_format("%[' contains non-word, non-dash, and non-plus characters.%]%r", print->to, print->context, print->context, f_string_eol_s);
 
     f_file_stream_unlock(print->to);

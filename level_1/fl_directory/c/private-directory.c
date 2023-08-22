@@ -35,7 +35,7 @@ extern "C" {
 
       // Only the directory is to be freed because all others are preserved between recursions.
       if (F_status_is_error(recurse->state.status)) {
-        f_string_dynamics_resize(0, &recurse->listing.directory);
+        f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &recurse->listing.directory.array, &recurse->listing.directory.used, &recurse->listing.directory.size, &f_string_dynamics_delete_callback);
 
         recurse->listing.directory.array = directories_original.array;
         recurse->listing.directory.used = directories_original.used;
@@ -102,7 +102,7 @@ extern "C" {
 
           recurse->path.used = used_original;
 
-          recurse->state.status = f_string_dynamic_increase_by(f_path_separator_s.used + list[k]->array[i].used + 1, &recurse->path);
+          recurse->state.status = f_memory_array_increase_by(f_path_separator_s.used + list[k]->array[i].used + 1, sizeof(f_char_t), (void **) &recurse->path.string, &recurse->path.used, &recurse->path.size);
 
           if (F_status_is_error_not(recurse->state.status)) {
             recurse->state.status = f_string_dynamic_append_assure(f_path_separator_s, &recurse->path);
@@ -159,7 +159,7 @@ extern "C" {
 
         recurse->path.used = used_original;
 
-        recurse->state.status = f_string_dynamic_increase_by(f_path_separator_s.used + recurse->listing.directory.array[i].used + 1, &recurse->path);
+        recurse->state.status = f_memory_array_increase_by(f_path_separator_s.used + recurse->listing.directory.array[i].used + 1, sizeof(f_char_t), (void **) &recurse->path.string, &recurse->path.used, &recurse->path.size);
 
         if (F_status_is_error_not(recurse->state.status)) {
           recurse->state.status = f_string_dynamic_append_assure(f_path_separator_s, &recurse->path);
@@ -239,7 +239,7 @@ extern "C" {
     recurse->path.used = used_original;
 
     // Only the directory is to be freed because all others are preserved between recursions.
-    f_string_dynamics_resize(0, &recurse->listing.directory);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &recurse->listing.directory.array, &recurse->listing.directory.used, &recurse->listing.directory.size, &f_string_dynamics_delete_callback);
 
     recurse->listing.directory.array = directories_original.array;
     recurse->listing.directory.used = directories_original.used;
@@ -338,14 +338,12 @@ extern "C" {
         names = &listing->unknown;
       }
 
-      if (names->used == names->size) {
-        status = f_string_dynamics_increase_by(F_memory_default_allocation_small_d, names);
-        if (F_status_is_error(status)) break;
-      }
+      status = f_memory_array_increase(F_memory_default_allocation_small_d, sizeof(f_string_dynamic_t), (void **) &names->array, &names->used, &names->size);
+      if (F_status_is_error(status)) break;
 
       names->array[names->used].used = 0;
 
-      status = f_string_dynamic_increase_by(name_directory.used + 1, &names->array[names->used]);
+      status = f_memory_array_increase_by(name_directory.used + 1, sizeof(f_char_t), (void **) &names->array[names->used].string, &names->array[names->used].used, &names->array[names->used].size);
       if (F_status_is_error(status)) break;
 
       memcpy(names->array[names->used].string, name_directory.string, sizeof(f_char_t) * name_directory.used);
@@ -551,7 +549,7 @@ extern "C" {
           return F_status_set_error(F_string_too_large);
         }
 
-        status = f_string_dynamic_resize(destination->used + total, destination);
+        status = f_memory_array_resize(destination->used + total, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
         if (F_status_is_error(status)) return status;
       }
     }

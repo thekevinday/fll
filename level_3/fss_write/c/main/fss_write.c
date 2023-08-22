@@ -164,27 +164,27 @@ extern "C" {
     uint8_t state = 0;
 
     // This is processed in a single set, so there is only ever one Object added.
-    main->setting.state.status = f_string_dynamics_increase(main->setting.state.step_small, &main->setting.objects);
+    main->setting.state.status = f_memory_array_increase(main->setting.state.step_small, sizeof(f_string_dynamic_t), (void **) &main->setting.objects.array, &main->setting.objects.used, &main->setting.objects.size);
 
     if (F_status_is_error(main->setting.state.status)) {
-      fss_write_print_error(&main->program.error, macro_fss_write_f(f_string_dynamics_increase));
+      fss_write_print_error(&main->program.error, macro_fss_write_f(f_memory_array_increase));
 
       return;
     }
 
     // This is processed in a single set, so there is only ever one Content added.
-    main->setting.state.status = f_string_dynamicss_increase(main->setting.state.step_small, &main->setting.contentss);
+    main->setting.state.status = f_memory_array_increase(main->setting.state.step_small, sizeof(f_string_dynamics_t), (void **) &main->setting.contentss.array, &main->setting.contentss.used, &main->setting.contentss.size);
 
     if (F_status_is_error(main->setting.state.status)) {
-      fss_write_print_error(&main->program.error, macro_fss_write_f(f_string_dynamicss_increase));
+      fss_write_print_error(&main->program.error, macro_fss_write_f(f_memory_array_increase));
 
       return;
     }
 
-    main->setting.state.status = f_string_dynamics_increase(main->setting.state.step_small, main->setting.contents);
+    main->setting.state.status = f_memory_array_increase(main->setting.state.step_small, sizeof(f_string_dynamic_t), (void **) &main->setting.contents->array, &main->setting.contents->used, &main->setting.contents->size);
 
     if (F_status_is_error(main->setting.state.status)) {
-      fss_write_print_error(&main->program.error, macro_fss_write_f(f_string_dynamics_increase));
+      fss_write_print_error(&main->program.error, macro_fss_write_f(f_memory_array_increase));
 
       return;
     }
@@ -260,10 +260,10 @@ extern "C" {
         flag -= flag | 0x4;
         main->setting.contents->used = 0;
 
-        main->setting.state.status = f_string_dynamic_increase_by(main->setting.block.used, main->setting.object);
+        main->setting.state.status = f_memory_array_increase_by(main->setting.block.used, sizeof(f_char_t), (void **) &main->setting.object->string, &main->setting.object->used, &main->setting.object->size);
 
         if (F_status_is_error(main->setting.state.status)) {
-          fss_write_print_error(&main->program.error, macro_fss_write_f(f_string_dynamic_increase_by));
+          fss_write_print_error(&main->program.error, macro_fss_write_f(f_memory_array_increase_by));
 
           break;
         }
@@ -326,10 +326,10 @@ extern "C" {
             break;
           }
 
-          main->setting.state.status = f_string_dynamics_increase(main->setting.state.step_small, main->setting.contents);
+          main->setting.state.status = f_memory_array_increase(main->setting.state.step_small, sizeof(f_string_dynamic_t), (void **) &main->setting.contents->array, &main->setting.contents->used, &main->setting.contents->size);
 
           if (F_status_is_error(main->setting.state.status)) {
-            fss_write_print_error(&main->program.error, macro_fss_write_f(f_string_dynamics_increase));
+            fss_write_print_error(&main->program.error, macro_fss_write_f(f_memory_array_increase));
 
             break;
           }
@@ -343,10 +343,10 @@ extern "C" {
         }
 
         if (total) {
-          main->setting.state.status = f_string_dynamic_increase_by(total, &main->setting.contents->array[main->setting.contents->used]);
+          main->setting.state.status = f_memory_array_increase_by(total, sizeof(f_char_t), (void **) &main->setting.contents->array[main->setting.contents->used].string, &main->setting.contents->array[main->setting.contents->used].used, &main->setting.contents->array[main->setting.contents->used].size);
 
           if (F_status_is_error(main->setting.state.status)) {
-            fss_write_print_error(&main->program.error, macro_fss_write_f(f_string_dynamic_increase_by));
+            fss_write_print_error(&main->program.error, macro_fss_write_f(f_memory_array_increase_by));
 
             break;
           }

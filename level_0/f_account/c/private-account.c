@@ -20,7 +20,7 @@ extern "C" {
 
     account->home.used = 0;
 
-    status = f_string_dynamic_increase_by(string_length + 1, &account->home);
+    status = f_memory_array_increase_by(string_length + 1, sizeof(f_char_t), (void **) &account->home.string, &account->home.used, &account->home.size);
     if (F_status_is_error(status)) return status;
 
     memcpy(account->home.string, password.pw_dir, sizeof(f_char_t) * string_length);
@@ -33,7 +33,7 @@ extern "C" {
 
     account->label.used = 0;
 
-    status = f_string_dynamic_increase_by(string_length + 1, &account->label);
+    status = f_memory_array_increase_by(string_length + 1, sizeof(f_char_t), (void **) &account->label.string, &account->label.used, &account->label.size);
     if (F_status_is_error(status)) return status;
 
     memcpy(account->label.string, password.pw_gecos, sizeof(f_char_t) * string_length);
@@ -46,7 +46,7 @@ extern "C" {
 
     account->name.used = 0;
 
-    status = f_string_dynamic_increase_by(string_length + 1, &account->name);
+    status = f_memory_array_increase_by(string_length + 1, sizeof(f_char_t), (void **) &account->name.string, &account->name.used, &account->name.size);
     if (F_status_is_error(status)) return status;
 
     memcpy(account->name.string, password.pw_name, sizeof(f_char_t) * string_length);
@@ -59,7 +59,7 @@ extern "C" {
 
     account->password.used = 0;
 
-    status = f_string_dynamic_increase_by(string_length + 1, &account->password);
+    status = f_memory_array_increase_by(string_length + 1, sizeof(f_char_t), (void **) &account->password.string, &account->password.used, &account->password.size);
     if (F_status_is_error(status)) return status;
 
     memcpy(account->password.string, password.pw_passwd, sizeof(f_char_t) * string_length);
@@ -72,7 +72,7 @@ extern "C" {
 
     account->shell.used = 0;
 
-    status = f_string_dynamic_increase_by(string_length + 1, &account->shell);
+    status = f_memory_array_increase_by(string_length + 1, sizeof(f_char_t), (void **) &account->shell.string, &account->shell.used, &account->shell.size);
     if (F_status_is_error(status)) return status;
 
     memcpy(account->shell.string, password.pw_shell, sizeof(f_char_t) * string_length);

@@ -41,9 +41,9 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QReceived error response for " CONTROL_action_s " '%]", print->to, print->set->error, print->prefix, print->set->error);
-    fl_print_format("%[%q%]", print->to, print->set->notable, control_action_type_name(header.action), print->set->notable);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->set->notable, control_action_type_name(header.action), print->set->notable);
     fl_print_format("%[' with status '%]", print->to, print->set->error, print->set->error);
-    fl_print_format("%[%Q%]", print->to, print->set->notable, string_status, print->set->notable);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->set->notable, string_status, print->set->notable);
     fl_print_format("%[' (%]", print->to, print->set->error, print->set->error);
     fl_print_format("%[%ui%]", print->to, print->set->notable, header.status, print->set->notable);
 
@@ -71,9 +71,9 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QThe action '%]", print->to, print->set->error, print->prefix, print->set->error);
-    fl_print_format("%[%Q%]", print->to, print->set->notable, control_action_type_name(header.action), print->set->notable);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->set->notable, control_action_type_name(header.action), print->set->notable);
     fl_print_format("%[' failed with status '%]", print->to, print->set->error, print->set->error);
-    fl_print_format("%[%Q%]", print->to, print->set->notable, string_status, print->set->notable);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->set->notable, string_status, print->set->notable);
     fl_print_format("%[' (%]", print->to, print->set->error, print->set->error);
     fl_print_format("%[%ui%]", print->to, print->set->notable, header.status, print->set->notable);
 
@@ -111,7 +111,7 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QThe parameter '%]", print->to, print->set->error, print->prefix, print->set->error);
-    fl_print_format("%[%Q%]", print->to, print->set->notable, action, print->set->notable);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->set->notable, action, print->set->notable);
     fl_print_format("%[' is not a known controller action.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
@@ -129,7 +129,7 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QThe action parameter '%]", print->to, print->set->error, print->prefix, print->set->error);
-    fl_print_format("%[%Q%]", print->to, print->set->notable, action, print->set->notable);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->set->notable, action, print->set->notable);
     fl_print_format("%[' a rule base name cannot be an empty string.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
@@ -147,7 +147,7 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QThe action parameter '%]", print->to, print->set->error, print->prefix, print->set->error);
-    fl_print_format("%[%Q%]", print->to, print->set->notable, action, print->set->notable);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->set->notable, action, print->set->notable);
     fl_print_format("%[' a rule directory path cannot be an empty string.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
@@ -165,7 +165,7 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QThe action parameter '%]", print->to, print->set->error, print->prefix, print->set->error);
-    fl_print_format("%[%Q%]", print->to, print->set->notable, action, print->set->notable);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->set->notable, action, print->set->notable);
     fl_print_format("%[' a rule name cannot be an empty string.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
@@ -183,7 +183,7 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QThe action parameter '%]", print->to, print->set->error, print->prefix, print->set->error);
-    fl_print_format("%[%Q%]", print->to, print->set->notable, action, print->set->notable);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->set->notable, action, print->set->notable);
     fl_print_format("%[' requires either a full rule name or a rule directory path along with the rule base name.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
@@ -201,7 +201,7 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QThe action parameter '%]", print->to, print->set->error, print->prefix, print->set->error);
-    fl_print_format("%[%Q%]", print->to, print->set->notable, action, print->set->notable);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->set->notable, action, print->set->notable);
     fl_print_format("%[' has too few arguments.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
@@ -219,9 +219,9 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QThe action parameter '%]", print->to, print->set->error, print->prefix, print->set->error);
-    fl_print_format("%[%Q%]", print->to, print->set->notable, action, print->set->notable);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->set->notable, action, print->set->notable);
     fl_print_format("%[' when used with '%]", print->to, print->set->error, print->set->error, f_string_eol_s);
-    fl_print_format("%[%Q%]", print->to, print->set->notable, with, print->set->notable);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->set->notable, with, print->set->notable);
     fl_print_format("%[' has too few arguments.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
@@ -239,7 +239,7 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QThe action parameter '%]", print->to, print->set->error, print->prefix, print->set->error);
-    fl_print_format("%[%Q%]", print->to, print->set->notable, action, print->set->notable);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->set->notable, action, print->set->notable);
     fl_print_format("%[' has too many arguments.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
@@ -257,9 +257,9 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QThe action parameter '%]", print->to, print->set->error, print->prefix, print->set->error);
-    fl_print_format("%[%Q%]", print->to, print->set->notable, action, print->set->notable);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->set->notable, action, print->set->notable);
     fl_print_format("%[' when used with '%]", print->to, print->set->error, print->set->error, f_string_eol_s);
-    fl_print_format("%[%Q%]", print->to, print->set->notable, with, print->set->notable);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->set->notable, with, print->set->notable);
     fl_print_format("%[' has too many arguments.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
@@ -277,10 +277,10 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QThe action parameter '%]", print->to, print->set->error, print->prefix, print->set->error);
-    fl_print_format("%[%Q%]", print->to, print->set->notable, action, print->set->notable);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->set->notable, action, print->set->notable);
     fl_print_format("%[' does not know the argument '%]", print->to, print->set->error, print->set->error, f_string_eol_s);
-    fl_print_format("%[%Q%]", print->to, print->set->notable, with, print->set->notable);
-    fl_print_format("%['.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->set->notable, with, print->set->notable);
+    fl_print_format(f_string_format_sentence_end_quote_s.string, print->to, print->set->error, print->set->error, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
 
@@ -369,8 +369,8 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QFailed to connect to the socket file '%]", print->to, print->set->error, print->prefix, print->set->error);
-    fl_print_format("%[%Q%]", print->to, print->set->notable, path_socket, print->set->notable);
-    fl_print_format("%['.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->set->notable, path_socket, print->set->notable);
+    fl_print_format(f_string_format_sentence_end_quote_s.string, print->to, print->set->error, print->set->error, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
 
@@ -387,7 +387,7 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QThe controller socket file '%]", print->to, print->set->error, print->prefix, print->set->error);
-    fl_print_format("%[%Q%]", print->to, print->set->notable, path_socket, print->set->notable);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->set->notable, path_socket, print->set->notable);
     fl_print_format("%[' could not be found and is required.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
@@ -405,7 +405,7 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QThe controller socket file '%]", print->to, print->set->error, print->prefix, print->set->error);
-    fl_print_format("%[%Q%]", print->to, print->set->notable, path_socket, print->set->notable);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->set->notable, path_socket, print->set->notable);
     fl_print_format("%[' is not a socket file.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
 
     f_file_stream_unlock(print->to);

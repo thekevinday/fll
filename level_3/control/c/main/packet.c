@@ -40,7 +40,7 @@ extern "C" {
         return;
       }
 
-      main->setting.state.status = f_string_dynamic_resize(length, &main->cache.packet);
+      main->setting.state.status = f_memory_array_resize(length, sizeof(f_char_t), (void **) &main->cache.packet.string, &main->cache.packet.used, &main->cache.packet.size);
       if (F_status_is_error(main->setting.state.status)) return;
     }
 
@@ -200,7 +200,7 @@ extern "C" {
         return;
       }
 
-      main->setting.state.status = f_string_dynamic_increase_by(length, &main->cache.large);
+      main->setting.state.status = f_memory_array_increase_by(length, sizeof(f_char_t), (void **) &main->cache.large.string, &main->cache.large.used, &main->cache.large.size);
       if (F_status_is_error(main->setting.state.status)) return;
 
       main->setting.state.status = f_socket_read(&main->setting.socket, f_socket_flag_wait_all_e, (void *) head, &length);

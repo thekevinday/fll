@@ -36,14 +36,6 @@ extern "C" {
   #define macro_f_string_map_t_clear(map) \
     macro_f_string_dynamic_t_clear(map.name) \
     macro_f_string_dynamic_t_clear(map.value)
-
-  #define macro_f_string_map_t_delete_simple(map) \
-    macro_f_string_dynamic_t_delete_simple(map.name) \
-    macro_f_string_dynamic_t_delete_simple(map.value)
-
-  #define macro_f_string_map_t_destroy_simple(map) \
-    macro_f_string_dynamic_t_destroy_simple(map.name) \
-    macro_f_string_dynamic_t_destroy_simple(map.value)
 #endif // _di_f_string_map_t_
 
 #ifdef __cplusplus

@@ -249,11 +249,11 @@ extern "C" {
  *   F_support_not (with error bit) if an invalid address family type is passed to inet_ntop().
  *   F_failure (with error bit) on any other error.
  *
- *   Errors (with error bit) from: f_string_dynamic_increase_by()
+ *   Errors (with error bit) from: f_memory_array_increase_by()
  *
  * @see inet_ntop()
  *
- * @see f_string_dynamic_increase_by()
+ * @see f_memory_array_increase_by()
  */
 #ifndef _di_f_network_to_ip_string_
   extern f_status_t f_network_to_ip_string(const f_network_family_ip_t from, f_string_dynamic_t * const to);

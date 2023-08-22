@@ -52,8 +52,10 @@ extern char **environ;
     const f_number_unsigned_t size = strnlen(result, f_environment_max_length_d);
 
     if (size) {
-      const f_status_t status = f_string_dynamic_increase_by(size + 1, value);
-      if (F_status_is_error(status)) return status;
+      {
+        const f_status_t status = f_memory_array_increase_by(size + 1, sizeof(f_char_t), (void **) &value->string, &value->used, &value->size);
+        if (F_status_is_error(status)) return status;
+      }
 
       memcpy(value->string + value->used, result, sizeof(char) * size);
 
@@ -61,8 +63,10 @@ extern char **environ;
       value->string[value->used] = 0;
     }
     else {
-      const f_status_t status = f_string_dynamic_increase_by(1, value);
-      if (F_status_is_error(status)) return status;
+      {
+        const f_status_t status = f_memory_array_increase_by(1, sizeof(f_char_t), (void **) &value->string, &value->used, &value->size);
+        if (F_status_is_error(status)) return status;
+      }
 
       value->string[0] = 0;
       value->used = 0;

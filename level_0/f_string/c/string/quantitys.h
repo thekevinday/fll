@@ -37,16 +37,10 @@ extern "C" {
   #define macro_f_string_quantitys_t_initialize_1(array, size, used) { array, size, used }
   #define macro_f_string_quantitys_t_initialize_2(array, length) { array, length, length }
 
-  #define macro_f_string_quantitys_t_resize(status, quantitys, length) status = f_string_quantitys_resize(length, &quantitys);
-  #define macro_f_string_quantitys_t_adjust(status, quantitys, length) status = f_string_quantitys_adjust(length, &quantitys);
-
-  #define macro_f_string_quantitys_t_delete_simple(quantitys)  f_string_quantitys_resize(0, &quantitys);
-  #define macro_f_string_quantitys_t_destroy_simple(quantitys) f_string_quantitys_adjust(0, &quantitys);
-
-  #define macro_f_string_quantitys_t_increase(status, step, quantitys)      status = f_string_quantitys_increase(step, &quantitys);
-  #define macro_f_string_quantitys_t_increase_by(status, quantitys, amount) status = f_string_quantitys_increase_by(amount, &quantitys);
-  #define macro_f_string_quantitys_t_decrease_by(status, quantitys, amount) status = f_string_quantitys_decrease_by(amount, &quantitys);
-  #define macro_f_string_quantitys_t_decimate_by(status, quantitys, amount) status = f_string_quantitys_decimate_by(amount, &quantitys);
+  #define macro_f_string_quantitys_t_clear(quantitys) \
+    quantitys.array = 0; \
+    quantitys.size = 0; \
+    quantitys.used = 0;
 #endif // _di_f_string_quantitys_t_
 
 /**

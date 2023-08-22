@@ -309,12 +309,12 @@ extern "C" {
           size_file = fake_max_initial_buffer_d;
         }
 
-        main->setting.state.status = f_string_dynamic_increase_by(size_file, buffer);
+        main->setting.state.status = f_memory_array_increase_by(size_file, sizeof(f_char_t), (void **) &buffer->string, &buffer->used, &buffer->size);
 
         if (F_status_is_error(main->setting.state.status)) {
           const f_string_static_t message = macro_f_string_static_t_initialize_1("allocate buffer size for", 0, 24);
 
-          fake_print_error_file(&main->program.error, macro_fake_f(f_string_dynamic_increase_by), path_file, message, fll_error_file_type_file_e);
+          fake_print_error_file(&main->program.error, macro_fake_f(f_memory_array_increase_by), path_file, message, fll_error_file_type_file_e);
 
           return;
         }
@@ -367,11 +367,11 @@ extern "C" {
     file.stream = F_type_input_d;
     file.size_read = fake_allocation_pipe_d;
 
-    main->setting.state.status = f_string_dynamic_increase_by(fake_max_initial_buffer_d, buffer);
+    main->setting.state.status = f_memory_array_increase_by(fake_max_initial_buffer_d, sizeof(f_char_t), (void **) &buffer->string, &buffer->used, &buffer->size);
 
     if (F_status_is_error(main->setting.state.status)) {
       const f_string_static_t message = macro_f_string_static_t_initialize_1("allocate buffer size for", 0, 24);
-      fake_print_error_file(&main->program.error, macro_fake_f(f_string_dynamic_increase_by), f_string_ascii_minus_s, message, fll_error_file_type_file_e);
+      fake_print_error_file(&main->program.error, macro_fake_f(f_memory_array_increase_by), f_string_ascii_minus_s, message, fll_error_file_type_file_e);
 
       return;
     }

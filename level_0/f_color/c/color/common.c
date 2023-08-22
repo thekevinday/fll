@@ -192,42 +192,42 @@ extern "C" {
 
     f_status_t status = F_okay;
 
-    status = f_string_dynamic_resize(0, &context->error);
+    status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &context->error.string, &context->error.used, &context->error.size);
 
     if (F_status_is_error_not(status)) {
-      status = f_string_dynamic_resize(0, &context->important);
+      status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &context->important.string, &context->important.used, &context->important.size);
     }
 
     if (F_status_is_error_not(status)) {
-      status = f_string_dynamic_resize(0, &context->normal);
+      status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &context->normal.string, &context->normal.used, &context->normal.size);
     }
 
     if (F_status_is_error_not(status)) {
-      status = f_string_dynamic_resize(0, &context->normal_reset);
+      status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &context->normal_reset.string, &context->normal_reset.used, &context->normal_reset.size);
     }
 
     if (F_status_is_error_not(status)) {
-      status = f_string_dynamic_resize(0, &context->notable);
+      status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &context->notable.string, &context->notable.used, &context->notable.size);
     }
 
     if (F_status_is_error_not(status)) {
-      status = f_string_dynamic_resize(0, &context->reset);
+      status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &context->reset.string, &context->reset.used, &context->reset.size);
     }
 
     if (F_status_is_error_not(status)) {
-      status = f_string_dynamic_resize(0, &context->standout);
+      status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &context->standout.string, &context->standout.used, &context->standout.size);
     }
 
     if (F_status_is_error_not(status)) {
-      status = f_string_dynamic_resize(0, &context->success);
+      status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &context->success.string, &context->success.used, &context->success.size);
     }
 
     if (F_status_is_error_not(status)) {
-      status = f_string_dynamic_resize(0, &context->title);
+      status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &context->title.string, &context->title.used, &context->title.size);
     }
 
     if (F_status_is_error_not(status)) {
-      status = f_string_dynamic_resize(0, &context->warning);
+      status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &context->warning.string, &context->warning.used, &context->warning.size);
     }
 
     if (F_status_is_error(status)) return status;
@@ -246,42 +246,42 @@ extern "C" {
 
     f_status_t status = F_okay;
 
-    status = f_string_dynamic_adjust(0, &context->error);
+    status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &context->error.string, &context->error.used, &context->error.size);
 
     if (F_status_is_error_not(status)) {
-      status = f_string_dynamic_adjust(0, &context->important);
+      status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &context->important.string, &context->important.used, &context->important.size);
     }
 
     if (F_status_is_error_not(status)) {
-      status = f_string_dynamic_adjust(0, &context->normal);
+      status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &context->normal.string, &context->normal.used, &context->normal.size);
     }
 
     if (F_status_is_error_not(status)) {
-      status = f_string_dynamic_adjust(0, &context->normal_reset);
+      status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &context->normal_reset.string, &context->normal_reset.used, &context->normal_reset.size);
     }
 
     if (F_status_is_error_not(status)) {
-      status = f_string_dynamic_adjust(0, &context->notable);
+      status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &context->notable.string, &context->notable.used, &context->notable.size);
     }
 
     if (F_status_is_error_not(status)) {
-      status = f_string_dynamic_adjust(0, &context->reset);
+      status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &context->reset.string, &context->reset.used, &context->reset.size);
     }
 
     if (F_status_is_error_not(status)) {
-      status = f_string_dynamic_adjust(0, &context->standout);
+      status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &context->standout.string, &context->standout.used, &context->standout.size);
     }
 
     if (F_status_is_error_not(status)) {
-      status = f_string_dynamic_adjust(0, &context->success);
+      status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &context->success.string, &context->success.used, &context->success.size);
     }
 
     if (F_status_is_error_not(status)) {
-      status = f_string_dynamic_adjust(0, &context->title);
+      status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &context->title.string, &context->title.used, &context->title.size);
     }
 
     if (F_status_is_error_not(status)) {
-      status = f_string_dynamic_adjust(0, &context->warning);
+      status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &context->warning.string, &context->warning.used, &context->warning.size);
     }
 
     if (F_status_is_error(status)) return status;

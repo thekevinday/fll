@@ -12,19 +12,19 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     {
-      f_status_t status = f_string_dynamic_resize(0, &account->home);
+      f_status_t status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &account->home.string, &account->home.used, &account->home.size);
       if (F_status_is_error(status)) return status;
 
-      status = f_string_dynamic_resize(0, &account->label);
+      status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &account->label.string, &account->label.used, &account->label.size);
       if (F_status_is_error(status)) return status;
 
-      status = f_string_dynamic_resize(0, &account->name);
+      status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &account->name.string, &account->name.used, &account->name.size);
       if (F_status_is_error(status)) return status;
 
-      status = f_string_dynamic_resize(0, &account->password);
+      status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &account->password.string, &account->password.used, &account->password.size);
       if (F_status_is_error(status)) return status;
 
-      status = f_string_dynamic_resize(0, &account->shell);
+      status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &account->shell.string, &account->shell.used, &account->shell.size);
       if (F_status_is_error(status)) return status;
     }
 
@@ -38,23 +38,20 @@ extern "C" {
       if (!account) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    account->id_user = 0;
-    account->id_group = 0;
-
     {
-      f_status_t status = f_string_dynamic_adjust(0, &account->home);
+      f_status_t status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &account->home.string, &account->home.used, &account->home.size);
       if (F_status_is_error(status)) return status;
 
-      status = f_string_dynamic_adjust(0, &account->label);
+      status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &account->label.string, &account->label.used, &account->label.size);
       if (F_status_is_error(status)) return status;
 
-      status = f_string_dynamic_adjust(0, &account->name);
+      status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &account->name.string, &account->name.used, &account->name.size);
       if (F_status_is_error(status)) return status;
 
-      status = f_string_dynamic_adjust(0, &account->password);
+      status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &account->password.string, &account->password.used, &account->password.size);
       if (F_status_is_error(status)) return status;
 
-      status = f_string_dynamic_adjust(0, &account->shell);
+      status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &account->shell.string, &account->shell.used, &account->shell.size);
       if (F_status_is_error(status)) return status;
     }
 
@@ -71,19 +68,19 @@ extern "C" {
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
 
-        status = f_string_dynamic_resize(0, &array[i].home);
+        status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &array[i].home.string, &array[i].home.used, &array[i].home.size);
         if (F_status_is_error(status)) return status;
 
-        status = f_string_dynamic_resize(0, &array[i].label);
+        status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &array[i].label.string, &array[i].label.used, &array[i].label.size);
         if (F_status_is_error(status)) return status;
 
-        status = f_string_dynamic_resize(0, &array[i].name);
+        status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &array[i].name.string, &array[i].name.used, &array[i].name.size);
         if (F_status_is_error(status)) return status;
 
-        status = f_string_dynamic_resize(0, &array[i].password);
+        status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &array[i].password.string, &array[i].password.used, &array[i].password.size);
         if (F_status_is_error(status)) return status;
 
-        status = f_string_dynamic_resize(0, &array[i].shell);
+        status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &array[i].shell.string, &array[i].shell.used, &array[i].shell.size);
         if (F_status_is_error(status)) return status;
       } // for
     }
@@ -101,19 +98,19 @@ extern "C" {
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
 
-        status = f_string_dynamic_adjust(0, &array[i].home);
+        status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &array[i].home.string, &array[i].home.used, &array[i].home.size);
         if (F_status_is_error(status)) return status;
 
-        status = f_string_dynamic_adjust(0, &array[i].label);
+        status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &array[i].label.string, &array[i].label.used, &array[i].label.size);
         if (F_status_is_error(status)) return status;
 
-        status = f_string_dynamic_adjust(0, &array[i].name);
+        status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &array[i].name.string, &array[i].name.used, &array[i].name.size);
         if (F_status_is_error(status)) return status;
 
-        status = f_string_dynamic_adjust(0, &array[i].password);
+        status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &array[i].password.string, &array[i].password.used, &array[i].password.size);
         if (F_status_is_error(status)) return status;
 
-        status = f_string_dynamic_adjust(0, &array[i].shell);
+        status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &array[i].shell.string, &array[i].shell.used, &array[i].shell.size);
         if (F_status_is_error(status)) return status;
       } // for
     }
@@ -134,19 +131,19 @@ extern "C" {
 
         for (j = 0; j < array[i].size; ++j) {
 
-          status = f_string_dynamic_resize(0, &array[i].array[j].home);
+          status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &array[i].array[j].home.string, &array[i].array[j].home.used, &array[i].array[j].home.size);
           if (F_status_is_error(status)) return status;
 
-          status = f_string_dynamic_resize(0, &array[i].array[j].label);
+          status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &array[i].array[j].label.string, &array[i].array[j].label.used, &array[i].array[j].label.size);
           if (F_status_is_error(status)) return status;
 
-          status = f_string_dynamic_resize(0, &array[i].array[j].name);
+          status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &array[i].array[j].name.string, &array[i].array[j].name.used, &array[i].array[j].name.size);
           if (F_status_is_error(status)) return status;
 
-          status = f_string_dynamic_resize(0, &array[i].array[j].password);
+          status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &array[i].array[j].password.string, &array[i].array[j].password.used, &array[i].array[j].password.size);
           if (F_status_is_error(status)) return status;
 
-          status = f_string_dynamic_resize(0, &array[i].array[j].shell);
+          status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &array[i].array[j].shell.string, &array[i].array[j].shell.used, &array[i].array[j].shell.size);
           if (F_status_is_error(status)) return status;
         } // for
 
@@ -173,19 +170,19 @@ extern "C" {
 
         for (j = 0; j < array[i].size; ++j) {
 
-          status = f_string_dynamic_adjust(0, &array[i].array[j].home);
+          status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &array[i].array[j].home.string, &array[i].array[j].home.used, &array[i].array[j].home.size);
           if (F_status_is_error(status)) return status;
 
-          status = f_string_dynamic_adjust(0, &array[i].array[j].label);
+          status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &array[i].array[j].label.string, &array[i].array[j].label.used, &array[i].array[j].label.size);
           if (F_status_is_error(status)) return status;
 
-          status = f_string_dynamic_adjust(0, &array[i].array[j].name);
+          status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &array[i].array[j].name.string, &array[i].array[j].name.used, &array[i].array[j].name.size);
           if (F_status_is_error(status)) return status;
 
-          status = f_string_dynamic_adjust(0, &array[i].array[j].password);
+          status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &array[i].array[j].password.string, &array[i].array[j].password.used, &array[i].array[j].password.size);
           if (F_status_is_error(status)) return status;
 
-          status = f_string_dynamic_adjust(0, &array[i].array[j].shell);
+          status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &array[i].array[j].shell.string, &array[i].array[j].shell.used, &array[i].array[j].shell.size);
           if (F_status_is_error(status)) return status;
         } // for
 

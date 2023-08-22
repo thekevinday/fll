@@ -306,7 +306,7 @@ extern "C" {
         max += data.width;
       }
 
-      const f_status_t status = f_string_dynamic_increase_by(max, destination);
+      const f_status_t status = f_memory_array_increase_by(max, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
       if (F_status_is_error(status)) return status;
     }
 

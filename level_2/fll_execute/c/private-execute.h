@@ -28,13 +28,13 @@ extern "C" {
  * @return
  *   F_okay on success.
  *
- *   Errors (with error bit) from: f_string_dynamic_increase_by().
- *   Errors (with error bit) from: f_string_dynamic_resize().
- *   Errors (with error bit) from: f_string_dynamics_increase().
+ *   Errors (with error bit) from: f_memory_array_increase().
+ *   Errors (with error bit) from: f_memory_array_increase_by().
+ *   Errors (with error bit) from: f_memory_array_resize().
  *
- * @see f_string_dynamic_increase_by()
- * @see f_string_dynamic_resize()
- * @see f_string_dynamics_increase()
+ * @see f_memory_array_increase()
+ * @see f_memory_array_increase_by()
+ * @see f_memory_array_resize()
  */
 #if !defined(_di_fll_execute_arguments_add_) || !defined(_di_fll_execute_arguments_add_set_)
   extern f_status_t private_fll_execute_arguments_add(const f_string_static_t source, f_string_dynamics_t * const arguments) F_attribute_visibility_internal_d;
@@ -58,12 +58,12 @@ extern "C" {
  *   F_okay on success.
  *
  *   Errors (with error bit) from: f_string_append().
- *   Errors (with error bit) from: f_string_dynamic_resize().
- *   Errors (with error bit) from: f_string_dynamics_increase().
+ *   Errors (with error bit) from: f_memory_array_increase().
+ *   Errors (with error bit) from: f_memory_array_resize().
  *
  * @see f_string_append()
- * @see f_string_dynamic_resize()
- * @see f_string_dynamics_increase()
+ * @see f_memory_array_increase()
+ * @see f_memory_array_resize()
  * @see fll_execute_arguments_add_parameter()
  * @see fll_execute_arguments_add_parameter_set()
  * @see fll_execute_arguments_dynamic_add_parameter()

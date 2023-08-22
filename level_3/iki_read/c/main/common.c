@@ -192,14 +192,14 @@ extern "C" {
     if (main->program.parameters.array[iki_read_parameter_name_e].result & f_console_result_value_e) {
       main->setting.names.used = 0;
 
-      main->setting.state.status = f_string_dynamics_increase_by(main->program.parameters.array[iki_read_parameter_name_e].values.used, &main->setting.names);
+      main->setting.state.status = f_memory_array_increase_by(main->program.parameters.array[iki_read_parameter_name_e].values.used, sizeof(f_string_dynamic_t), (void **) &main->setting.names.array, &main->setting.names.used, &main->setting.names.size);
 
       if (F_status_is_error(main->setting.state.status)) {
         if ((main->setting.flag & iki_read_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
           fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
         }
 
-        iki_read_print_error(&main->program.error, macro_iki_read_f(f_string_dynamics_increase_by));
+        iki_read_print_error(&main->program.error, macro_iki_read_f(f_memory_array_increase_by));
 
         return;
       }
@@ -301,11 +301,11 @@ extern "C" {
 
         // Static strings are being used, so if a dynamic string exists (size > 0), then de-allocate it.
         if (main->setting.replace.array[at].name.size) {
-          main->setting.state.status = f_string_dynamic_resize(0, &main->setting.replace.array[at].name);
+          main->setting.state.status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &main->setting.replace.array[at].name.string, &main->setting.replace.array[at].name.used, &main->setting.replace.array[at].name.size);
         }
 
         if (F_status_is_error_not(main->setting.state.status) && main->setting.replace.array[at].value.size) {
-          main->setting.state.status = f_string_dynamic_resize(0, &main->setting.replace.array[at].value);
+          main->setting.state.status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &main->setting.replace.array[at].value.string, &main->setting.replace.array[at].value.used, &main->setting.replace.array[at].value.size);
         }
 
         if (F_status_is_error(main->setting.state.status)) {
@@ -313,7 +313,7 @@ extern "C" {
             fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
           }
 
-          iki_read_print_error(&main->program.error, macro_iki_read_f(f_string_dynamic_resize));
+          iki_read_print_error(&main->program.error, macro_iki_read_f(f_memory_array_resize));
 
           return;
         }
@@ -396,15 +396,15 @@ extern "C" {
 
         // Static strings are being used, so if a dynamic string exists (size > 0), then de-allocate it.
         if (main->setting.wrap.array[at].a.size) {
-          main->setting.state.status = f_string_dynamic_resize(0, &main->setting.wrap.array[at].a);
+          main->setting.state.status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &main->setting.wrap.array[at].a.string, &main->setting.wrap.array[at].a.used, &main->setting.wrap.array[at].a.size);
         }
 
         if (F_status_is_error_not(main->setting.state.status) && main->setting.wrap.array[at].b.size) {
-          main->setting.state.status = f_string_dynamic_resize(0, &main->setting.wrap.array[at].b);
+          main->setting.state.status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &main->setting.wrap.array[at].b.string, &main->setting.wrap.array[at].b.used, &main->setting.wrap.array[at].b.size);
         }
 
         if (F_status_is_error_not(main->setting.state.status) && main->setting.wrap.array[at].c.size) {
-          main->setting.state.status = f_string_dynamic_resize(0, &main->setting.wrap.array[at].c);
+          main->setting.state.status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &main->setting.wrap.array[at].c.string, &main->setting.wrap.array[at].c.used, &main->setting.wrap.array[at].c.size);
         }
 
         if (F_status_is_error(main->setting.state.status)) {
@@ -412,7 +412,7 @@ extern "C" {
             fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
           }
 
-          iki_read_print_error(&main->program.error, macro_iki_read_f(f_string_dynamic_resize));
+          iki_read_print_error(&main->program.error, macro_iki_read_f(f_memory_array_resize));
 
           return;
         }
@@ -542,14 +542,14 @@ extern "C" {
     if (main->program.parameters.remaining.used) {
       main->setting.files.used = 0;
 
-      main->setting.state.status = f_string_dynamics_resize(main->program.parameters.remaining.used, &main->setting.files);
+      main->setting.state.status = f_memory_arrays_resize(main->program.parameters.remaining.used, sizeof(f_string_dynamic_t), (void **) &main->setting.files.array, &main->setting.files.used, &main->setting.files.size, &f_string_dynamics_delete_callback);
 
       if (F_status_is_error(main->setting.state.status)) {
         if ((main->setting.flag & iki_read_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
           fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
         }
 
-        iki_read_print_error(&main->program.error, macro_iki_read_f(f_string_dynamics_resize));
+        iki_read_print_error(&main->program.error, macro_iki_read_f(f_memory_arrays_resize));
 
         return;
       }
@@ -560,14 +560,14 @@ extern "C" {
 
         // Static strings are being used, so if a dynamic string exists (size > 0), then de-allocate it.
         if (main->setting.files.array[main->setting.files.used].size) {
-          main->setting.state.status = f_string_dynamic_resize(0, &main->setting.files.array[main->setting.files.used]);
+          main->setting.state.status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &main->setting.files.array[main->setting.files.used].string, &main->setting.files.array[main->setting.files.used].used, &main->setting.files.array[main->setting.files.used].size);
 
           if (F_status_is_error(main->setting.state.status)) {
             if ((main->setting.flag & iki_read_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
               fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
             }
 
-            iki_read_print_error(&main->program.error, macro_iki_read_f(f_string_dynamic_resize));
+            iki_read_print_error(&main->program.error, macro_iki_read_f(f_memory_array_resize));
 
             return;
           }
@@ -649,15 +649,15 @@ extern "C" {
 
       // Static strings are being used, so if a dynamic string exists (size > 0), then de-allocate it.
       if (triple->array[at].a.size) {
-        main->setting.state.status = f_string_dynamic_resize(0, &triple->array[at].a);
+        main->setting.state.status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &triple->array[at].a.string, &triple->array[at].a.used, &triple->array[at].a.size);
       }
 
       if (F_status_is_error_not(main->setting.state.status) && triple->array[at].b.size) {
-        main->setting.state.status = f_string_dynamic_resize(0, &triple->array[at].b);
+        main->setting.state.status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &triple->array[at].b.string, &triple->array[at].b.used, &triple->array[at].b.size);
       }
 
       if (F_status_is_error_not(main->setting.state.status) && triple->array[at].c.size) {
-        main->setting.state.status = f_string_dynamic_resize(0, &triple->array[at].c);
+        main->setting.state.status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &triple->array[at].c.string, &triple->array[at].c.used, &triple->array[at].c.size);
       }
 
       if (F_status_is_error(main->setting.state.status)) {
@@ -665,7 +665,7 @@ extern "C" {
           fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
         }
 
-        iki_read_print_error(&main->program.error, macro_iki_read_f(f_string_dynamic_resize));
+        iki_read_print_error(&main->program.error, macro_iki_read_f(f_memory_array_resize));
 
         return F_false;
       }

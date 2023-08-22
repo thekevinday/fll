@@ -174,7 +174,7 @@ extern "C" {
         continue;
       }
 
-      status = f_string_dynamics_increase(F_memory_default_allocation_small_d, names);
+      status = f_memory_array_increase(F_memory_default_allocation_small_d, sizeof(f_string_dynamic_t), (void **) &names->array, &names->used, &names->size);
 
       if (F_status_is_error(status)) {
         for (; i < length; ++i) {
@@ -186,7 +186,7 @@ extern "C" {
 
       names->array[names->used].used = 0;
 
-      status = f_string_dynamic_increase_by(size + 1, &names->array[names->used]);
+      status = f_memory_array_increase_by(size + 1, sizeof(f_char_t), (void **) &names->array[names->used].string, &names->array[names->used].used, &names->array[names->used].size);
 
       if (F_status_is_error(status)) {
         for (; i < length; ++i) {

@@ -117,11 +117,11 @@ extern "C" {
  *
  *     F_parameter (with error bit) if a parameter is invalid.
  *
- *     Errors (with error bit) from: f_string_dynamic_increase().
+ *     Errors (with error bit) from: f_memory_array_increase().
  *     Errors (with error bit) from: fl_fss_basic_content_write().
  *     Errors (with error bit) from: fl_fss_basic_object_write().
  *
- * @see f_string_dynamic_increase()
+ * @see f_memory_array_increase()
  * @see fl_fss_basic_content_write()
  * @see fl_fss_basic_object_write()
  */

@@ -8,21 +8,21 @@ extern "C" {
 #ifndef _di_controller_entry_action_delete_simple_
   void controller_entry_action_delete_simple(controller_entry_action_t * const action) {
 
-    f_string_dynamics_resize(0, &action->parameters);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &action->parameters.array, &action->parameters.used, &action->parameters.size, &f_string_dynamics_delete_callback);
   }
 #endif // _di_controller_entry_action_delete_simple_
 
 #ifndef _di_controller_entry_actions_delete_simple_
   void controller_entry_actions_delete_simple(controller_entry_actions_t * const actions) {
 
+    // @todo Determine if this should be replaced with a resize callback strategy.
     actions->used = actions->size;
 
     while (actions->used) {
       controller_entry_action_delete_simple(&actions->array[--actions->used]);
     } // while
 
-    f_memory_delete(actions->size, sizeof(controller_entry_action_t), (void **) & actions->array);
-    actions->size = 0;
+    f_memory_array_resize(0, sizeof(controller_entry_action_t), (void **) &actions->array, &actions->used, &actions->size);
   }
 #endif // _di_controller_entry_actions_delete_simple_
 
@@ -52,7 +52,7 @@ extern "C" {
 #ifndef _di_controller_entry_item_delete_simple_
   void controller_entry_item_delete_simple(controller_entry_item_t * const item) {
 
-    f_string_dynamic_resize(0, &item->name);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &item->name.string, &item->name.used, &item->name.size);
 
     controller_entry_actions_delete_simple(&item->actions);
   }
@@ -61,14 +61,14 @@ extern "C" {
 #ifndef _di_controller_entry_items_delete_simple_
   void controller_entry_items_delete_simple(controller_entry_items_t * const items) {
 
+    // @todo Determine if this should be replaced with a resize callback strategy.
     items->used = items->size;
 
     while (items->used) {
       controller_entry_item_delete_simple(&items->array[--items->used]);
     } // while
 
-    f_memory_delete(items->size, sizeof(controller_entry_item_t), (void **) & items->array);
-    items->size = 0;
+    f_memory_array_resize(0, sizeof(controller_entry_item_t), (void **) &items->array, &items->used, &items->size);
   }
 #endif // _di_controller_entry_items_delete_simple_
 

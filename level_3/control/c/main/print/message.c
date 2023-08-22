@@ -55,7 +55,7 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("The action '", print->to);
-    fl_print_format("%[%q%]", print->to, print->set->notable, control_action_type_name(header.action), print->set->notable);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->set->notable, control_action_type_name(header.action), print->set->notable);
 
     if (header.status == F_done) {
       fl_print_format("' is performed", print->to);

@@ -12,7 +12,7 @@ extern "C" {
 
     // Ensure escaped is at least the same size as content.
     if (content.used > escaped->size) {
-      status = f_string_dynamic_resize(content.used, escaped);
+      status = f_memory_array_resize(content.used, sizeof(f_char_t), (void **) &escaped->string, &escaped->used, &escaped->size);
       if (F_status_is_error(status)) return status;
     }
 
@@ -24,7 +24,7 @@ extern "C" {
 
       if (content.string[i] == quote) {
         if (escaped->used + delimits + 2 > escaped->size) {
-          status = f_string_dynamic_increase_by(delimits + 2, escaped);
+          status = f_memory_array_increase_by(delimits + 2, sizeof(f_char_t), (void **) &escaped->string, &escaped->used, &escaped->size);
           if (F_status_is_error(status)) return status;
         }
 
@@ -39,7 +39,7 @@ extern "C" {
       }
       else if (content.string[i]) {
         if (escaped->used + 1 > escaped->size) {
-          status = f_string_dynamic_increase_by(F_memory_default_allocation_small_d, escaped);
+          status = f_memory_array_increase_by(F_memory_default_allocation_small_d, sizeof(f_char_t), (void **) &escaped->string, &escaped->used, &escaped->size);
           if (F_status_is_error(status)) return status;
         }
 
@@ -57,7 +57,7 @@ extern "C" {
     // Delimits found at the end must be escaped to prevent escaping the end quote.
     if (delimits) {
       if (escaped->used + delimits > escaped->size) {
-        status = f_string_dynamic_increase_by(delimits, escaped);
+        status = f_memory_array_increase_by(delimits, sizeof(f_char_t), (void **) &escaped->string, &escaped->used, &escaped->size);
         if (F_status_is_error(status)) return status;
       }
 
@@ -77,7 +77,7 @@ extern "C" {
 
     // Ensure escaped is at least the same size as content.
     if (content.used > unescaped->size) {
-      status = f_string_dynamic_resize(content.used, unescaped);
+      status = f_memory_array_resize(content.used, sizeof(f_char_t), (void **) &unescaped->string, &unescaped->used, &unescaped->size);
       if (F_status_is_error(status)) return status;
     }
 
@@ -115,7 +115,7 @@ extern "C" {
               delimits /= 2;
 
               if (unescaped->used + delimits + 1 > unescaped->size) {
-                status = f_string_dynamic_increase_by(delimits + 1, unescaped);
+                status = f_memory_array_increase_by(delimits + 1, sizeof(f_char_t), (void **) &unescaped->string, &unescaped->used, &unescaped->size);
                 if (F_status_is_error(status)) return status;
               }
 
@@ -132,7 +132,7 @@ extern "C" {
             }
             else if (content.string[j]) {
               if (unescaped->used + (j - i) + 1 > unescaped->size) {
-                status = f_string_dynamic_increase_by((j - i) + 1, unescaped);
+                status = f_memory_array_increase_by((j - i) + 1, sizeof(f_char_t), (void **) &unescaped->string, &unescaped->used, &unescaped->size);
                 if (F_status_is_error(status)) return status;
               }
 
@@ -162,7 +162,7 @@ extern "C" {
           delimits /= 2;
 
           if (unescaped->used + delimits > unescaped->size) {
-            status = f_string_dynamic_increase_by(delimits, unescaped);
+            status = f_memory_array_increase_by(delimits, sizeof(f_char_t), (void **) &unescaped->string, &unescaped->used, &unescaped->size);
             if (F_status_is_error(status)) return status;
           }
 
@@ -175,7 +175,7 @@ extern "C" {
       }
       else if (content.string[i]) {
         if (unescaped->used + 1 > unescaped->size) {
-          status = f_string_dynamic_increase_by(F_memory_default_allocation_small_d, unescaped);
+          status = f_memory_array_increase_by(F_memory_default_allocation_small_d, sizeof(f_char_t), (void **) &unescaped->string, &unescaped->used, &unescaped->size);
           if (F_status_is_error(status)) return status;
         }
 

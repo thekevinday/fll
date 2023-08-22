@@ -278,7 +278,7 @@ extern "C" {
     flockfile(print->to.stream);
 
     fl_print_format("%[%QUnable to %Q %Q '%]", print->to, print->context, print->prefix, operation, type, print->context);
-    fl_print_format("%[%Q%]", print->to, print->notable, name, print->notable);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->notable, name, print->notable);
     fl_print_format("%['%S%S.%]%r", print->to, print->context, message ? ", " : "", message ? message : "", print->context, f_string_eol_s);
 
     funlockfile(print->to.stream);

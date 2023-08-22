@@ -62,7 +62,7 @@ extern "C" {
     controller_pids_resize(0, &process->childs);
     controller_rule_delete_simple(&process->rule);
 
-    f_string_dynamics_resize(0, &process->path_pids);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &process->path_pids.array, &process->path_pids.used, &process->path_pids.size, &f_string_dynamics_delete_callback);
 
     f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &process->stack.array, &process->stack.used, &process->stack.size);
   }

@@ -27,15 +27,15 @@ extern "C" {
  *
  *   F_too_large (with error bit) If the message is too large for the packet format to transmit.
  *
+ *   Errors (with error bit) from: f_memory_array_resize().
  *   Errors (with error bit) from: f_string_append().
  *   Errors (with error bit) from: f_string_dynamic_append().
- *   Errors (with error bit) from: f_string_dynamic_resize().
  *   Errors (with error bit) from: fll_fss_extended_write().
  *   Errors (with error bit) from: fll_fss_payload_write().
  *
+ * @see f_memory_array_resize()
  * @see f_string_append()
  * @see f_string_dynamic_append()
- * @see f_string_dynamic_resize()
  */
 #ifndef _di_control_packet_build_
   extern void control_packet_build(control_main_t * const main);
@@ -90,16 +90,16 @@ extern "C" {
  *     F_too_large (with error bit) If the received packet specifies a size that is too large or the actual size is larger than the specified size.
  *     F_too_small (with error bit) If the received packet actual size is smaller than the specified size.
  *
+ *     Errors (with error bit) from: f_memory_array_increase_by().
  *     Errors (with error bit) from: f_socket_read().
- *     Errors (with error bit) from: f_string_dynamic_increase_by().
  *     Errors (with error bit) from: fl_conversion_dynamic_partial_to_unsigned_detect().
  *     Errors (with error bit) from: fll_fss_extended_read().
  *     Errors (with error bit) from: fll_fss_basic_list_read().
  * @param header
  *   The control payload packet header data.
  *
+ * @see f_memory_array_increase_by()
  * @see f_socket_read()
- * @see f_string_dynamic_increase_by()
  * @see fl_conversion_dynamic_partial_to_unsigned_detect()
  * @see f_fss_apply_delimit()
  * @see fl_status_string_from()

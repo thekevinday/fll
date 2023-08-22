@@ -256,7 +256,7 @@ extern "C" {
             return F_status_set_error(F_array_too_large);
           }
 
-          status = f_string_dynamics_increase_by(content->used, values[j]);
+          status = f_memory_array_increase_by(content->used, sizeof(f_string_dynamic_t), (void **) &values[j]->array, &values[j]->used, &values[j]->size);
           if (F_status_is_error(status)) return status;
 
           if (indexs) {
@@ -320,7 +320,7 @@ extern "C" {
         status = f_string_dynamic_partial_append_nulless(buffer, contents.array[i].array[0], &name);
 
         if (F_status_is_error(status)) {
-          f_string_dynamic_resize(0, &name);
+          f_memory_array_resize(0, sizeof(f_char_t), (void **) &name.string, &name.used, &name.size);
 
           return status;
         }
@@ -332,7 +332,7 @@ extern "C" {
           status = f_compare_dynamic_partial_trim_string(values[j]->array[k].name.string, buffer, values[j]->array[k].name.used, contents.array[i].array[0]);
 
           if (F_status_is_error(status)) {
-            f_string_dynamic_resize(0, &name);
+            f_memory_array_resize(0, sizeof(f_char_t), (void **) &name.string, &name.used, &name.size);
 
             return status;
           }
@@ -344,7 +344,7 @@ extern "C" {
               matches[j] = F_true;
             }
 
-            f_string_dynamic_resize(0, &name);
+            f_memory_array_resize(0, sizeof(f_char_t), (void **) &name.string, &name.used, &name.size);
 
             break;
           }
@@ -357,39 +357,16 @@ extern "C" {
         }
 
         if (values[j]->used == values[j]->size) {
-          if (values[j]->used + F_fss_default_allocation_step_d > F_number_t_size_unsigned_d) {
-            if (values[j]->used == F_number_t_size_unsigned_d) {
-              f_string_dynamic_resize(0, &name);
+          status = f_memory_array_increase(F_fss_default_allocation_step_d, sizeof(f_string_map_t), (void **) &values[j]->array, &values[j]->used, &values[j]->size);
 
-              return F_status_set_error(F_array_too_large);
-            }
-
-            macro_f_string_maps_t_resize(status, (*values[j]), values[j]->used + 1);
-
-            if (F_status_is_error(status)) {
-              f_string_dynamic_resize(0, &name);
-
-              return status;
-            }
-
-            if (indexs) {
-              status = f_memory_array_resize(indexs[j]->used + 1, sizeof(f_number_unsigned_t), (void **) &indexs[j]->array, &indexs[j]->used, &indexs[j]->size);
-              if (F_status_is_error(status)) return status;
-            }
+          if (F_status_is_error_not(status)) {
+            status = f_memory_array_increase(F_fss_default_allocation_step_d, sizeof(f_number_unsigned_t), (void **) &indexs[j]->array, &indexs[j]->used, &indexs[j]->size);
           }
-          else {
-            macro_f_string_maps_t_resize(status, (*values[j]), values[j]->used + F_fss_default_allocation_step_d);
 
-            if (F_status_is_error(status)) {
-              f_string_dynamic_resize(0, &name);
+          if (F_status_is_error(status)) {
+            f_memory_array_resize(0, sizeof(f_char_t), (void **) &name.string, &name.used, &name.size);
 
-              return status;
-            }
-
-            if (indexs) {
-              status = f_memory_array_increase(F_fss_default_allocation_step_d, sizeof(f_number_unsigned_t), (void **) &indexs[j]->array, &indexs[j]->used, &indexs[j]->size);
-              if (F_status_is_error(status)) return status;
-            }
+            return status;
           }
         }
 
@@ -399,7 +376,7 @@ extern "C" {
           status = f_string_dynamic_partial_append_nulless(buffer, contents.array[i].array[1], &map->value);
 
           if (F_status_is_error(status)) {
-            f_string_dynamic_resize(0, &name);
+            f_memory_array_resize(0, sizeof(f_char_t), (void **) &name.string, &name.used, &name.size);
 
             return status;
           }
@@ -420,7 +397,7 @@ extern "C" {
       } // for
     } // for
 
-    f_string_dynamic_resize(0, &name);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &name.string, &name.used, &name.size);
 
     return F_okay;
   }
@@ -482,7 +459,7 @@ extern "C" {
         }
 
         if (contents.array[i].used > 1) {
-          status = f_string_dynamics_increase_by(contents.array[i].used - 1, &map_multi->value);
+          status = f_memory_array_increase_by(contents.array[i].used - 1, sizeof(f_string_dynamic_t), (void **) &map_multi->value.array, &map_multi->value.used, &map_multi->value.size);
           if (F_status_is_error(status)) return status;
 
           for (k = 1; k < contents.array[i].used; ++k) {
@@ -610,7 +587,7 @@ extern "C" {
         status = f_string_dynamic_partial_append_nulless(buffer, contents.array[i].array[0], &name);
 
         if (F_status_is_error(status)) {
-          f_string_dynamic_resize(0, &name);
+          f_memory_array_resize(0, sizeof(f_char_t), (void **) &name.string, &name.used, &name.size);
 
           return status;
         }
@@ -622,7 +599,7 @@ extern "C" {
           status = f_compare_dynamic_partial_trim_string(values[j]->array[k].name.string, buffer, values[j]->array[k].name.used, contents.array[i].array[0]);
 
           if (F_status_is_error(status)) {
-            f_string_dynamic_resize(0, &name);
+            f_memory_array_resize(0, sizeof(f_char_t), (void **) &name.string, &name.used, &name.size);
 
             return status;
           }
@@ -667,7 +644,7 @@ extern "C" {
           if (contents.array[i].used == 1) continue;
         }
 
-        status = f_string_dynamics_increase(F_fss_default_allocation_step_small_d, &map_multi->value);
+        status = f_memory_array_increase(F_fss_default_allocation_step_small_d, sizeof(f_string_dynamic_t), (void **) &map_multi->value.array, &map_multi->value.used, &map_multi->value.size);
         if (F_status_is_error(status)) return status;
 
         for (k = 1; k < contents.array[i].used; ++k) {
@@ -680,7 +657,7 @@ extern "C" {
       } // for
     } // for
 
-    f_string_dynamic_resize(0, &name);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &name.string, &name.used, &name.size);
 
     return F_okay;
   }
@@ -727,7 +704,7 @@ extern "C" {
         status = f_string_dynamic_partial_append_nulless(buffer, contents.array[i].array[0], &name);
 
         if (F_status_is_error(status)) {
-          f_string_dynamic_resize(0, &name);
+          f_memory_array_resize(0, sizeof(f_char_t), (void **) &name.string, &name.used, &name.size);
 
           return status;
         }
@@ -739,7 +716,7 @@ extern "C" {
           status = f_compare_dynamic_partial_trim_string(values[j]->array[k].name.string, buffer, values[j]->array[k].name.used, contents.array[i].array[0]);
 
           if (F_status_is_error(status)) {
-            f_string_dynamic_resize(0, &name);
+            f_memory_array_resize(0, sizeof(f_char_t), (void **) &name.string, &name.used, &name.size);
 
             return status;
           }
@@ -747,7 +724,7 @@ extern "C" {
           if (status == F_equal_to) {
             matched = F_true;
 
-            f_string_dynamic_resize(0, &name);
+            f_memory_array_resize(0, sizeof(f_char_t), (void **) &name.string, &name.used, &name.size);
             break;
           }
         } // for
@@ -786,7 +763,7 @@ extern "C" {
           status = f_string_dynamic_partial_mash_nulless(glue, buffer, contents.array[i].array[1], &map->value);
 
           if (F_status_is_error(status)) {
-            f_string_dynamic_resize(0, &name);
+            f_memory_array_resize(0, sizeof(f_char_t), (void **) &name.string, &name.used, &name.size);
 
             return status;
           }
@@ -794,7 +771,7 @@ extern "C" {
       } // for
     } // for
 
-    f_string_dynamic_resize(0, &name);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &name.string, &name.used, &name.size);
 
     return F_okay;
   }
@@ -886,7 +863,7 @@ extern "C" {
           matches[j] = F_true;
         }
 
-        status = f_string_dynamics_increase(F_fss_default_allocation_step_small_d, values[j]);
+        status = f_memory_array_increase(F_fss_default_allocation_step_small_d, sizeof(f_string_dynamic_t), (void **) &values[j]->array, &values[j]->used, &values[j]->size);
         if (F_status_is_error(status)) return status;
 
         if (indexs) {

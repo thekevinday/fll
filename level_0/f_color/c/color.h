@@ -57,11 +57,11 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_string_dynamic_increase_by()
+ *   Errors (with error bit) from: f_memory_array_increase_by()
  *
  * @see memcpy()
  *
- * @see f_string_dynamic_increase_by()
+ * @see f_memory_array_increase_by()
  */
 #ifndef _di_f_color_load_context_
   extern f_status_t f_color_load_context(const uint8_t mode, f_color_context_t * const context);
@@ -87,11 +87,11 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_string_dynamic_increase_by()
+ *   Errors (with error bit) from: f_memory_array_increase_by()
  *
  * @see memcpy()
  *
- * @see f_string_dynamic_increase_by()
+ * @see f_memory_array_increase_by()
  */
 #ifndef _di_f_color_save_1_
   extern f_status_t f_color_save_1(const f_color_format_t format, const f_string_static_t color1, f_string_dynamic_t * const buffer);
@@ -120,11 +120,11 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_string_dynamic_increase_by()
+ *   Errors (with error bit) from: f_memory_array_increase_by()
  *
  * @see memcpy()
  *
- * @see f_string_dynamic_increase_by()
+ * @see f_memory_array_increase_by()
  */
 #ifndef _di_f_color_save_2_
   extern f_status_t f_color_save_2(const f_color_format_t format, const f_string_static_t color1, const f_string_static_t color2, f_string_dynamic_t * const buffer);
@@ -156,11 +156,11 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_string_dynamic_increase_by()
+ *   Errors (with error bit) from: f_memory_array_increase_by()
  *
  * @see memcpy()
  *
- * @see f_string_dynamic_increase_by()
+ * @see f_memory_array_increase_by()
  */
 #ifndef _di_f_color_save_3_
   extern f_status_t f_color_save_3(const f_color_format_t format, const f_string_static_t color1, const f_string_static_t color2, const f_string_static_t color3, f_string_dynamic_t * const buffer);
@@ -195,11 +195,11 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_string_dynamic_increase_by()
+ *   Errors (with error bit) from: f_memory_array_increase_by()
  *
  * @see memcpy()
  *
- * @see f_string_dynamic_increase_by()
+ * @see f_memory_array_increase_by()
  */
 #ifndef _di_f_color_save_4_
   extern f_status_t f_color_save_4(const f_color_format_t format, const f_string_static_t color1, const f_string_static_t color2, const f_string_static_t color3, const f_string_static_t color4, f_string_dynamic_t * const buffer);
@@ -239,11 +239,11 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_string_dynamic_increase_by()
+ *   Errors (with error bit) from: f_memory_array_increase_by()
  *
  * @see memcpy()
  *
- * @see f_string_dynamic_increase_by()
+ * @see f_memory_array_increase_by()
  */
 #ifndef _di_f_color_save_5_
   extern f_status_t f_color_save_5(const f_color_format_t format, const f_string_static_t color1, const f_string_static_t color2, const f_string_static_t color3, const f_string_static_t color4, const f_string_static_t color5, f_string_dynamic_t * const buffer);

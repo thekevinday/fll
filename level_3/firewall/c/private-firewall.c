@@ -63,10 +63,11 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
 
     if (!((++data->main->signal_check) % firewall_signal_check_d)) {
       if (firewall_signal_received(data)) {
-        f_string_dynamic_resize(0, &ip_list);
+        f_memory_array_resize(0, sizeof(f_char_t), (void **) &ip_list.string, &ip_list.used, &ip_list.size);
+        f_memory_array_resize(0, sizeof(f_char_t), (void **) &device.string, &device.used, &device.size);
+        f_memory_array_resize(0, sizeof(f_char_t), (void **) &protocol.string, &protocol.used, &protocol.size);
+
         f_string_dynamics_resize(0, &arguments);
-        f_string_dynamic_resize(0, &device);
-        f_string_dynamic_resize(0, &protocol);
 
         return F_status_set_error(F_interrupt);
       }
@@ -155,23 +156,21 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
         invalid = F_true;
       }
       else if (f_compare_dynamic_string(local->buffer.string + local->rule_contents.array[i].array[0].start, firewall_device_all_s, length) == F_equal_to) {
-        f_string_dynamic_resize(0, &device);
+        f_memory_array_resize(0, sizeof(f_char_t), (void **) &device.string, &device.used, &device.size);
 
         continue;
       }
       else if (f_compare_dynamic_string(local->buffer.string + local->rule_contents.array[i].array[0].start, firewall_device_this_s, length) == F_equal_to) {
         if (data->devices.array[local->device].used) {
-          if (data->devices.array[local->device].used > device.size) {
-            status = f_string_dynamic_resize(data->devices.array[local->device].used, &device);
-            if (F_status_is_error(status)) break;
-          }
+          status = f_memory_array_increase_by(data->devices.array[local->device].used, sizeof(f_char_t), (void **) &device.string, &device.used, &device.size);
+          if (F_status_is_error(status)) break;
 
           memcpy(device.string, data->devices.array[local->device].string, sizeof(f_char_t) * data->devices.array[local->device].used);
 
           device.used = data->devices.array[local->device].used;
         }
         else {
-          f_string_dynamic_resize(0, &device);
+          f_memory_array_resize(0, sizeof(f_char_t), (void **) &device.string, &device.used, &device.size);
         }
 
         continue;
@@ -317,7 +316,7 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
         fl_print_format("%[%/Q%]", data->main->warning.to, data->main->warning.notable, local->buffer, local->rule_objects.array[i], data->main->warning.notable);
         fl_print_format("%[' has invalid content '%]", data->main->warning.to, data->main->warning.context, data->main->warning.context);
         fl_print_format("%[%/Q%]", data->main->warning.to, data->main->warning.notable, local->buffer, local->rule_contents.array[i].array[0], data->main->warning.notable);
-        fl_print_format("%['.%]%r", data->main->warning.to, data->main->warning.context, data->main->warning.context, f_string_eol_s);
+        fl_print_format(f_string_format_sentence_end_quote_s.string, data->main->warning.to, data->main->warning.context, data->main->warning.context, f_string_eol_s);
 
         f_file_stream_unlock(data->main->warning.to);
       }
@@ -333,7 +332,7 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
       arguments.used = 0;
 
       // First add the program name.
-      status = f_string_dynamics_increase(F_memory_default_allocation_small_d, &arguments);
+      status = f_memory_array_increase(F_memory_default_allocation_small_d, sizeof(f_string_dynamic_t), (void **) &arguments.array, &arguments.used, &arguments.size);
       if (F_status_is_error(status)) break;
 
       if (tool == firewall_program_ip46tables_e) {
@@ -347,7 +346,7 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
 
       // Process the action when a non-none chain is specified.
       if (chain != firewall_chain_none_id_e && action != firewall_action_none_id_e) {
-        status = f_string_dynamics_increase(firewall_default_allocation_step_d, &arguments);
+        status = f_memory_array_increase(firewall_default_allocation_step_d, sizeof(f_string_dynamic_t), (void **) &arguments.array, &arguments.used, &arguments.size);
         if (F_status_is_error(status)) break;
 
         arguments.array[arguments.used].used = 0;
@@ -367,7 +366,7 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
         if (action == firewall_action_append_id_e || action == firewall_action_insert_id_e || action == firewall_action_policy_id_e) {
           ++arguments.used;
 
-          status = f_string_dynamics_increase(firewall_default_allocation_step_d, &arguments);
+          status = f_memory_array_increase(firewall_default_allocation_step_d, sizeof(f_string_dynamic_t), (void **) &arguments.array, &arguments.used, &arguments.size);
           if (F_status_is_error(status)) break;
 
           arguments.array[arguments.used].used = 0;
@@ -408,7 +407,7 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
       if (device.used && (direction == firewall_direction_input_id_e || direction == firewall_direction_output_id_e)) {
         if (f_compare_dynamic_string(local->buffer.string + local->rule_contents.array[i].array[0].start, firewall_device_all_s, length) == F_equal_to_not) {
 
-          status = f_string_dynamics_increase(firewall_default_allocation_step_d, &arguments);
+          status = f_memory_array_increase(firewall_default_allocation_step_d, sizeof(f_string_dynamic_t), (void **) &arguments.array, &arguments.used, &arguments.size);
           if (F_status_is_error(status)) break;
 
           arguments.array[arguments.used].used = 0;
@@ -431,7 +430,7 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
 
         // Add the device.
         if (device.used) {
-          status = f_string_dynamics_increase(firewall_default_allocation_step_d, &arguments);
+          status = f_memory_array_increase(firewall_default_allocation_step_d, sizeof(f_string_dynamic_t), (void **) &arguments.array, &arguments.used, &arguments.size);
           if (F_status_is_error(status)) break;
 
           arguments.array[arguments.used].used = 0;
@@ -445,7 +444,7 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
       }
 
       if (use_protocol) {
-        status = f_string_dynamics_increase(firewall_default_allocation_step_d, &arguments);
+        status = f_memory_array_increase(firewall_default_allocation_step_d, sizeof(f_string_dynamic_t), (void **) &arguments.array, &arguments.used, &arguments.size);
         if (F_status_is_error(status)) break;
 
         arguments.array[arguments.used].used = 0;
@@ -457,7 +456,7 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
         ++arguments.used;
 
         if (protocol.used) {
-          status = f_string_dynamics_increase(firewall_default_allocation_step_d, &arguments);
+          status = f_memory_array_increase(firewall_default_allocation_step_d, sizeof(f_string_dynamic_t), (void **) &arguments.array, &arguments.used, &arguments.size);
           if (F_status_is_error(status)) break;
 
           arguments.array[arguments.used].used = 0;
@@ -497,7 +496,7 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
           }
         }
 
-        status = f_string_dynamics_increase_by(local->rule_contents.array[i].used, &arguments);
+        status = f_memory_array_increase_by(local->rule_contents.array[i].used, sizeof(f_string_dynamic_t), (void **) &arguments.array, &arguments.used, &arguments.size);
         if (F_status_is_error(status)) break;
 
         for (; subcounter < local->rule_contents.array[i].used; ++subcounter) {
@@ -648,7 +647,7 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
               }
 
               if (F_status_is_error_not(status)) {
-                status = f_string_dynamics_increase_by(2, &arguments);
+                status = f_memory_array_increase_by(2, sizeof(f_string_dynamic_t), (void **) &arguments.array, &arguments.used, &arguments.size);
 
                 if (F_status_is_error_not(status)) {
                   arguments.array[arguments.used].used = 0;
@@ -685,11 +684,11 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
 
                   if (status == F_child) {
                     f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &delimits.array, &delimits.used, &delimits.size);
+                    f_memory_array_resize(0, sizeof(f_char_t), (void **) &ip_list.string, &ip_list.used, &ip_list.size);
+                    f_memory_array_resize(0, sizeof(f_char_t), (void **) &device.string, &device.used, &device.size);
+                    f_memory_array_resize(0, sizeof(f_char_t), (void **) &protocol.string, &protocol.used, &protocol.size);
 
-                    f_string_dynamic_resize(0, &ip_list);
                     f_string_dynamics_resize(0, &arguments);
-                    f_string_dynamic_resize(0, &device);
-                    f_string_dynamic_resize(0, &protocol);
 
                     data->main->child = return_code;
 
@@ -722,8 +721,8 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
             }
           }
 
-          f_string_dynamic_resize(0, &local_buffer);
-          f_string_dynamic_resize(0, &path_file);
+          f_memory_array_resize(0, sizeof(f_char_t), (void **) &local_buffer.string, &local_buffer.used, &local_buffer.size);
+          f_memory_array_resize(0, sizeof(f_char_t), (void **) &path_file.string, &path_file.used, &path_file.size);
 
           f_string_ranges_resize(0, &basic_objects);
           f_string_rangess_resize(0, &basic_contents);
@@ -736,10 +735,11 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
           status = fll_execute_program(current_tool, arguments, 0, 0, (void *) &return_code);
 
           if (status == F_child) {
-            f_string_dynamic_resize(0, &ip_list);
+            f_memory_array_resize(0, sizeof(f_char_t), (void **) &ip_list.string, &ip_list.used, &ip_list.size);
+            f_memory_array_resize(0, sizeof(f_char_t), (void **) &device.string, &device.used, &device.size);
+            f_memory_array_resize(0, sizeof(f_char_t), (void **) &protocol.string, &protocol.used, &protocol.size);
+
             f_string_dynamics_resize(0, &arguments);
-            f_string_dynamic_resize(0, &device);
-            f_string_dynamic_resize(0, &protocol);
 
             data->main->child = return_code;
 
@@ -770,10 +770,11 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
     }
   }
 
-  f_string_dynamic_resize(0, &ip_list);
+  f_memory_array_resize(0, sizeof(f_char_t), (void **) &ip_list.string, &ip_list.used, &ip_list.size);
+  f_memory_array_resize(0, sizeof(f_char_t), (void **) &device.string, &device.used, &device.size);
+  f_memory_array_resize(0, sizeof(f_char_t), (void **) &protocol.string, &protocol.used, &protocol.size);
+
   f_string_dynamics_resize(0, &arguments);
-  f_string_dynamic_resize(0, &device);
-  f_string_dynamic_resize(0, &protocol);
 
   return status;
 }
@@ -808,7 +809,7 @@ f_status_t firewall_create_custom_chains(firewall_data_t * const data, firewall_
   status = f_string_dynamic_append(firewall_chain_create_command_s, &arguments.array[0]);
 
   if (F_status_is_error_not(status)) {
-    status = f_string_dynamic_increase(F_memory_default_allocation_small_d, &arguments.array[1]);
+    status = f_memory_array_increase(F_memory_default_allocation_small_d, sizeof(f_char_t), (void **) &arguments.array[1].string, &arguments.array[1].used, &arguments.array[1].size);
   }
   else {
     f_string_dynamics_resize(0, &arguments);
@@ -870,7 +871,7 @@ f_status_t firewall_create_custom_chains(firewall_data_t * const data, firewall_
     }
 
     if (new_chain) {
-      status = f_string_dynamics_increase(firewall_default_allocation_step_d, &data->chains);
+      status = f_memory_array_increase(firewall_default_allocation_step_d, sizeof(f_string_dynamic_t), (void **) &data->chains.array, &data->chains.used, &data->chains.size);
       if (F_status_is_error(status)) break;
 
       create_chain = F_true;
@@ -878,10 +879,10 @@ f_status_t firewall_create_custom_chains(firewall_data_t * const data, firewall_
 
       arguments.array[1].used = 0;
 
-      status = f_string_dynamic_increase_by(length + 1, &arguments.array[1]);
+      status = f_memory_array_increase_by(length + 1, sizeof(f_char_t), (void **) &arguments.array[1].string, &arguments.array[1].used, &arguments.array[1].size);
       if (F_status_is_error(status)) break;
 
-      status = f_string_dynamic_increase_by(length + 1, &data->chains.array[data->chains.used]);
+      status = f_memory_array_increase_by(length + 1, sizeof(f_char_t), (void **) &data->chains.array[data->chains.used].string, &data->chains.array[data->chains.used].used, &data->chains.array[data->chains.used].size);
       if (F_status_is_error(status)) break;
 
       data->chains.array[data->chains.used].used = 0;
@@ -1297,7 +1298,7 @@ f_status_t firewall_delete_local_data(firewall_local_data_t * const local) {
   local->device = 0;
   local->chain = 0;
 
-  f_string_dynamic_resize(0, &local->buffer);
+  f_memory_array_resize(0, sizeof(f_char_t), (void **) &local->buffer.string, &local->buffer.used, &local->buffer.size);
   f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &local->chain_ids.array, &local->chain_ids.used, &local->chain_ids.size);
 
   f_string_ranges_resize(0, &local->chain_objects);

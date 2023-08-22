@@ -512,11 +512,11 @@ extern "C" {
  *
  *   F_failure (with error bit) for any other error.
  *
- *   Errors (with error bit) from: f_string_dynamic_resize()
+ *   Errors (with error bit) from: f_memory_array_resize()
  *
  * @see gethostname()
  *
- * @see f_string_dynamic_resize()
+ * @see f_memory_array_resize()
  */
 #ifndef _di_f_socket_name_host_
   extern f_status_t f_socket_name_host(f_socket_t * const socket, f_string_dynamic_t * const name);

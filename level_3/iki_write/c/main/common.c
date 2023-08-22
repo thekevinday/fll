@@ -142,14 +142,14 @@ extern "C" {
 
       main->setting.objects.used = 0;
 
-      main->setting.state.status = f_string_dynamics_resize(values->used, &main->setting.objects);
+      main->setting.state.status = f_memory_arrays_resize(values->used, sizeof(f_string_dynamic_t), (void **) &main->setting.objects.array, &main->setting.objects.used, &main->setting.objects.size, &f_string_dynamics_delete_callback);
 
       if (F_status_is_error(main->setting.state.status)) {
         if ((main->setting.flag & iki_write_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
           fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
         }
 
-        iki_write_print_error(&main->program.error, macro_iki_write_f(f_string_dynamics_resize));
+        iki_write_print_error(&main->program.error, macro_iki_write_f(f_memory_arrays_resize));
 
         return;
       }
@@ -183,14 +183,14 @@ extern "C" {
 
       main->setting.contents.used = 0;
 
-      main->setting.state.status = f_string_dynamics_resize(values->used, &main->setting.contents);
+      main->setting.state.status = f_memory_arrays_resize(values->used, sizeof(f_string_dynamic_t), (void **) &main->setting.contents.array, &main->setting.contents.used, &main->setting.contents.size, &f_string_dynamics_delete_callback);
 
       if (F_status_is_error(main->setting.state.status)) {
         if ((main->setting.flag & iki_write_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
           fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
         }
 
-        iki_write_print_error(&main->program.error, macro_iki_write_f(f_string_dynamics_resize));
+        iki_write_print_error(&main->program.error, macro_iki_write_f(f_memory_arrays_resize));
 
         return;
       }

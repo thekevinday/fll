@@ -75,10 +75,10 @@ extern "C" {
 
     const f_number_unsigned_t length = strnlen(buffer, F_path_length_max_d);
 
-    {
-      path->used = 0;
+    path->used = 0;
 
-      const f_status_t status = f_string_dynamic_increase_by(length + 1, path);
+    {
+      const f_status_t status = f_memory_array_increase_by(length + 1, sizeof(f_char_t), (void **) &path->string, &path->used, &path->size);
       if (F_status_is_error(status)) return status;
     }
 
@@ -104,12 +104,8 @@ extern "C" {
     }
 
     // Ensure enough space is available for terminating slash and terminating NULL.
-    if (argument.string[argument.used - 1] == f_path_separator_s.string[0]) {
-      const f_status_t status = f_string_dynamic_increase_by(argument.used + 1, directory);
-      if (F_status_is_error(status)) return status;
-    }
-    else {
-      const f_status_t status = f_string_dynamic_increase_by(argument.used + 2, directory);
+    {
+      const f_status_t status = f_memory_array_increase_by(argument.used + ((argument.string[argument.used - 1] == f_path_separator_s.string[0]) ? 1 : 2), sizeof(f_char_t), (void **) &directory->string, &directory->used, &directory->size);
       if (F_status_is_error(status)) return status;
     }
 

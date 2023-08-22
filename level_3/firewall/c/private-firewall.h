@@ -27,15 +27,15 @@ extern "C" {
  *   F_interrupt (with error bit) on receiving a process signal, such as an interrupt signal.
  *   F_parameter (with error bit) on invalid parameter passed.
  *
+ *   Errors (with error bit) from: f_memory_array_increase().
+ *   Errors (with error bit) from: f_memory_array_increase_by().
  *   Errors (with error bit) from: f_string_dynamic_append().
  *   Errors (with error bit) from: f_string_dynamic_partial_append().
- *   Errors (with error bit) from: f_string_dynamics_increase().
- *   Errors (with error bit) from: f_string_dynamics_increase_by().
  *
+ * @see f_memory_array_increase()
+ * @see f_memory_array_increase_by()
  * @see f_string_dynamic_append()
  * @see f_string_dynamic_partial_append()
- * @see f_string_dynamics_increase()
- * @see f_string_dynamics_increase_by()
  */
 extern f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_local_data_t * const local) F_attribute_visibility_internal_d;
 

@@ -171,7 +171,7 @@ extern "C" {
 
     process.state = state;
 
-    state->status = f_string_dynamics_increase_by(arguments.argc, &parameters->arguments);
+    state->status = f_memory_array_increase_by(arguments.argc, sizeof(f_string_dynamic_t), (void **) &parameters->arguments.array, &parameters->arguments.used, &parameters->arguments.size);
     if (F_status_is_error(state->status)) return;
 
     state->status = f_memory_array_increase(state->step_small, sizeof(f_number_unsigned_t), (void **) &process.needs.array, &process.needs.used, &process.needs.size);

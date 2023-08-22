@@ -197,7 +197,7 @@ extern "C" {
         if (F_status_is_error(state->status)) return;
       }
       else {
-        state->status = f_string_dynamic_increase(state->step_small, destination);
+        state->status = f_memory_array_increase(state->step_small, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
         if (F_status_is_error(state->status)) return;
 
         destination->string[destination->used++] = f_string_eol_s.string[0];

@@ -112,12 +112,12 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_environment_get() (only when _en_kevux_path_architecture_bits_ is defined).
- *   Errors (with error bit) from: f_string_dynamics_increase().
- *   Errors (with error bit) from: f_string_dynamics_increase_by().
+ *   Errors (with error bit) from: f_memory_array_increase().
+ *   Errors (with error bit) from: f_memory_array_increase_by().
  *
  * @see f_environment_get()
- * @see f_string_dynamics_increase()
- * @see f_string_dynamics_increase_by()
+ * @see f_memory_array_increase()
+ * @see f_memory_array_increase_by()
  */
 #ifndef _di_fl_environment_path_explode_
   extern f_status_t fl_environment_path_explode(const f_string_static_t path, f_string_dynamics_t * const paths);
@@ -146,12 +146,12 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_environment_get() (only when _en_kevux_path_architecture_bits_ is defined).
- *   Errors (with error bit) from: f_string_dynamics_increase().
- *   Errors (with error bit) from: f_string_dynamics_increase_by().
+ *   Errors (with error bit) from: f_memory_array_increase().
+ *   Errors (with error bit) from: f_memory_array_increase_by().
  *
  * @see f_environment_get()
- * @see f_string_dynamics_increase()
- * @see f_string_dynamics_increase_by()
+ * @see f_memory_array_increase()
+ * @see f_memory_array_increase_by()
  */
 #ifndef _di_fl_environment_path_explode_reverse_
   extern f_status_t fl_environment_path_explode_reverse(const f_string_static_t path, f_string_dynamics_t * const paths);

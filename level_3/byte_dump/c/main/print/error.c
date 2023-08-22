@@ -39,8 +39,8 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%r%[Invalid UTF-8 codes were detected for file '%]", print->to, f_string_eol_s, print->set->error, print->set->error);
-    fl_print_format("%[%Q%]", print->to, print->set->notable, name.used ? name : f_string_ascii_minus_s, print->set->notable);
-    fl_print_format("%['.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->set->notable, name.used ? name : f_string_ascii_minus_s, print->set->notable);
+    fl_print_format(f_string_format_sentence_end_quote_s.string, print->to, print->set->error, print->set->error, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
 
@@ -69,7 +69,7 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%Qread() failed for '%]", print->to, print->set->error, print->prefix, print->set->error);
-    fl_print_format("%[%Q%]", print->to, print->set->notable, name.used ? name : f_string_ascii_minus_s, print->set->notable);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->set->notable, name.used ? name : f_string_ascii_minus_s, print->set->notable);
     fl_print_format("%['.%]%r%r", print->to, print->set->error, print->set->error, f_string_eol_s, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
@@ -96,7 +96,7 @@ extern "C" {
     fl_print_format("%[%ul%]", print->to, print->set->notable, main->setting.last, print->set->notable);
     fl_print_format("%[' for the parameter '%]", print->to, print->set->error, print->set->error);
     fl_print_format("%[%r%r%]", print->to, print->set->notable, f_console_symbol_long_normal_s, byte_dump_long_last_s, print->set->notable);
-    fl_print_format("%['.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
+    fl_print_format(f_string_format_sentence_end_quote_s.string, print->to, print->set->error, print->set->error, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
 
@@ -113,14 +113,14 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QThe value '%]", print->to, print->set->error, print->prefix, print->set->error);
-    fl_print_format("%[%Q%]", print->to, print->set->notable, number, print->set->notable);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->set->notable, number, print->set->notable);
     fl_print_format("%[' for the parameter '%]", print->to, print->set->error, print->set->error);
     fl_print_format("%[%r%Q%]", print->to, print->set->notable, f_console_symbol_long_normal_s, name, print->set->notable);
     fl_print_format("%[' can only be a number (inclusively) between %]", print->to, print->set->error, print->set->error);
     fl_print_format("%[ul%]", print->to, print->set->notable, minimum, print->set->notable);
     fl_print_format(" %[and%] ", print->to, print->set->error, print->set->error);
     fl_print_format("%[ul%]", print->to, print->set->notable, maximum, print->set->notable);
-    fl_print_format("%[.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
+    fl_print_format(f_string_format_sentence_end_s.string, print->to, print->set->error, print->set->error, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
 

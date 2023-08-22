@@ -337,7 +337,7 @@ extern "C" {
         if (F_status_is_error(main->setting.state.status)) {
           iki_read_print_error(&main->program.error, macro_iki_read_f(f_string_dynamic_append_nulless));
 
-          f_string_dynamic_resize(0, &name);
+          f_memory_array_resize(0, sizeof(f_char_t), (void **) &name.string, &name.used, &name.size);
 
           return;
         }
@@ -352,7 +352,7 @@ extern "C" {
         } // for
       } // for
 
-      f_string_dynamic_resize(0, &name);
+      f_memory_array_resize(0, sizeof(f_char_t), (void **) &name.string, &name.used, &name.size);
     }
     else {
       total = main->setting.data.variable.used;

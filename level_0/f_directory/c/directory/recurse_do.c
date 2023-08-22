@@ -11,34 +11,34 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     {
-      f_status_t status = f_string_dynamic_resize(0, &recurse->path);
+      f_status_t status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &recurse->path.string, &recurse->path.used, &recurse->path.size);
       if (F_status_is_error(status)) return status;
 
-      status = f_string_dynamic_resize(0, &recurse->path_cache);
+      status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &recurse->path_cache.string, &recurse->path_cache.used, &recurse->path_cache.size);
       if (F_status_is_error(status)) return status;
 
-      status = f_string_dynamics_resize(0, &recurse->listing.block);
+      status = f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &recurse->listing.block.array, &recurse->listing.block.used, &recurse->listing.block.size, &f_string_dynamics_delete_callback);
       if (F_status_is_error(status)) return status;
 
-      status = f_string_dynamics_resize(0, &recurse->listing.character);
+      status = f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &recurse->listing.character.array, &recurse->listing.character.used, &recurse->listing.character.size, &f_string_dynamics_delete_callback);
       if (F_status_is_error(status)) return status;
 
-      status = f_string_dynamics_resize(0, &recurse->listing.directory);
+      status = f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &recurse->listing.directory.array, &recurse->listing.directory.used, &recurse->listing.directory.size, &f_string_dynamics_delete_callback);
       if (F_status_is_error(status)) return status;
 
-      status = f_string_dynamics_resize(0, &recurse->listing.regular);
+      status = f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &recurse->listing.regular.array, &recurse->listing.regular.used, &recurse->listing.regular.size, &f_string_dynamics_delete_callback);
       if (F_status_is_error(status)) return status;
 
-      status = f_string_dynamics_resize(0, &recurse->listing.link);
+      status = f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &recurse->listing.link.array, &recurse->listing.link.used, &recurse->listing.link.size, &f_string_dynamics_delete_callback);
       if (F_status_is_error(status)) return status;
 
-      status = f_string_dynamics_resize(0, &recurse->listing.fifo);
+      status = f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &recurse->listing.fifo.array, &recurse->listing.fifo.used, &recurse->listing.fifo.size, &f_string_dynamics_delete_callback);
       if (F_status_is_error(status)) return status;
 
-      status = f_string_dynamics_resize(0, &recurse->listing.socket);
+      status = f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &recurse->listing.socket.array, &recurse->listing.socket.used, &recurse->listing.socket.size, &f_string_dynamics_delete_callback);
       if (F_status_is_error(status)) return status;
 
-      status = f_string_dynamics_resize(0, &recurse->listing.unknown);
+      status = f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &recurse->listing.unknown.array, &recurse->listing.unknown.used, &recurse->listing.unknown.size, &f_string_dynamics_delete_callback);
       if (F_status_is_error(status)) return status;
     }
 
@@ -53,34 +53,34 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     {
-      f_status_t status = f_string_dynamic_adjust(0, &recurse->path);
+      f_status_t status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &recurse->path.string, &recurse->path.used, &recurse->path.size);
       if (F_status_is_error(status)) return status;
 
-      status = f_string_dynamic_adjust(0, &recurse->path_cache);
+      status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &recurse->path_cache.string, &recurse->path_cache.used, &recurse->path_cache.size);
       if (F_status_is_error(status)) return status;
 
-      status = f_string_dynamics_adjust(0, &recurse->listing.block);
+      status = f_memory_arrays_adjust(0, sizeof(f_string_dynamic_t), (void **) &recurse->listing.block.array, &recurse->listing.block.used, &recurse->listing.block.size, &f_string_dynamics_destroy_callback);
       if (F_status_is_error(status)) return status;
 
-      status = f_string_dynamics_adjust(0, &recurse->listing.character);
+      status = f_memory_arrays_adjust(0, sizeof(f_string_dynamic_t), (void **) &recurse->listing.character.array, &recurse->listing.character.used, &recurse->listing.character.size, &f_string_dynamics_destroy_callback);
       if (F_status_is_error(status)) return status;
 
-      status = f_string_dynamics_adjust(0, &recurse->listing.directory);
+      status = f_memory_arrays_adjust(0, sizeof(f_string_dynamic_t), (void **) &recurse->listing.directory.array, &recurse->listing.directory.used, &recurse->listing.directory.size, &f_string_dynamics_destroy_callback);
       if (F_status_is_error(status)) return status;
 
-      status = f_string_dynamics_adjust(0, &recurse->listing.regular);
+      status = f_memory_arrays_adjust(0, sizeof(f_string_dynamic_t), (void **) &recurse->listing.regular.array, &recurse->listing.regular.used, &recurse->listing.regular.size, &f_string_dynamics_destroy_callback);
       if (F_status_is_error(status)) return status;
 
-      status = f_string_dynamics_adjust(0, &recurse->listing.link);
+      status = f_memory_arrays_adjust(0, sizeof(f_string_dynamic_t), (void **) &recurse->listing.link.array, &recurse->listing.link.used, &recurse->listing.link.size, &f_string_dynamics_destroy_callback);
       if (F_status_is_error(status)) return status;
 
-      status = f_string_dynamics_adjust(0, &recurse->listing.fifo);
+      status = f_memory_arrays_adjust(0, sizeof(f_string_dynamic_t), (void **) &recurse->listing.fifo.array, &recurse->listing.fifo.used, &recurse->listing.fifo.size, &f_string_dynamics_destroy_callback);
       if (F_status_is_error(status)) return status;
 
-      status = f_string_dynamics_adjust(0, &recurse->listing.socket);
+      status = f_memory_arrays_adjust(0, sizeof(f_string_dynamic_t), (void **) &recurse->listing.socket.array, &recurse->listing.socket.used, &recurse->listing.socket.size, &f_string_dynamics_destroy_callback);
       if (F_status_is_error(status)) return status;
 
-      status = f_string_dynamics_adjust(0, &recurse->listing.unknown);
+      status = f_memory_arrays_adjust(0, sizeof(f_string_dynamic_t), (void **) &recurse->listing.unknown.array, &recurse->listing.unknown.used, &recurse->listing.unknown.size, &f_string_dynamics_destroy_callback);
       if (F_status_is_error(status)) return status;
     }
 
@@ -97,34 +97,34 @@ extern "C" {
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
 
-        status = f_string_dynamic_resize(0, &array[i].path);
+        status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &array[i].path.string, &array[i].path.used, &array[i].path.size);
         if (F_status_is_error(status)) return status;
 
-        status = f_string_dynamic_resize(0, &array[i].path_cache);
+        status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &array[i].path_cache.string, &array[i].path_cache.used, &array[i].path_cache.size);
         if (F_status_is_error(status)) return status;
 
-        status = f_string_dynamics_resize(0, &array[i].listing.block);
+        status = f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &array[i].listing.block.array, &array[i].listing.block.used, &array[i].listing.block.size, &f_string_dynamics_delete_callback);
         if (F_status_is_error(status)) return status;
 
-        status = f_string_dynamics_resize(0, &array[i].listing.character);
+        status = f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &array[i].listing.character.array, &array[i].listing.character.used, &array[i].listing.character.size, &f_string_dynamics_delete_callback);
         if (F_status_is_error(status)) return status;
 
-        status = f_string_dynamics_resize(0, &array[i].listing.directory);
+        status = f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &array[i].listing.directory.array, &array[i].listing.directory.used, &array[i].listing.directory.size, &f_string_dynamics_delete_callback);
         if (F_status_is_error(status)) return status;
 
-        status = f_string_dynamics_resize(0, &array[i].listing.regular);
+        status = f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &array[i].listing.regular.array, &array[i].listing.regular.used, &array[i].listing.regular.size, &f_string_dynamics_delete_callback);
         if (F_status_is_error(status)) return status;
 
-        status = f_string_dynamics_resize(0, &array[i].listing.link);
+        status = f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &array[i].listing.link.array, &array[i].listing.link.used, &array[i].listing.link.size, &f_string_dynamics_delete_callback);
         if (F_status_is_error(status)) return status;
 
-        status = f_string_dynamics_resize(0, &array[i].listing.fifo);
+        status = f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &array[i].listing.fifo.array, &array[i].listing.fifo.used, &array[i].listing.fifo.size, &f_string_dynamics_delete_callback);
         if (F_status_is_error(status)) return status;
 
-        status = f_string_dynamics_resize(0, &array[i].listing.socket);
+        status = f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &array[i].listing.socket.array, &array[i].listing.socket.used, &array[i].listing.socket.size, &f_string_dynamics_delete_callback);
         if (F_status_is_error(status)) return status;
 
-        status = f_string_dynamics_resize(0, &array[i].listing.unknown);
+        status = f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &array[i].listing.unknown.array, &array[i].listing.unknown.used, &array[i].listing.unknown.size, &f_string_dynamics_delete_callback);
         if (F_status_is_error(status)) return status;
       } // for
     }
@@ -142,34 +142,34 @@ extern "C" {
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
 
-        status = f_string_dynamic_adjust(0, &array[i].path);
+        status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &array[i].path.string, &array[i].path.used, &array[i].path.size);
         if (F_status_is_error(status)) return status;
 
-        status = f_string_dynamic_adjust(0, &array[i].path_cache);
+        status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &array[i].path_cache.string, &array[i].path_cache.used, &array[i].path_cache.size);
         if (F_status_is_error(status)) return status;
 
-        status = f_string_dynamics_adjust(0, &array[i].listing.block);
+        status = f_memory_arrays_adjust(0, sizeof(f_string_dynamic_t), (void **) &array[i].listing.block.array, &array[i].listing.block.used, &array[i].listing.block.size, &f_string_dynamics_destroy_callback);
         if (F_status_is_error(status)) return status;
 
-        status = f_string_dynamics_adjust(0, &array[i].listing.character);
+        status = f_memory_arrays_adjust(0, sizeof(f_string_dynamic_t), (void **) &array[i].listing.character.array, &array[i].listing.character.used, &array[i].listing.character.size, &f_string_dynamics_destroy_callback);
         if (F_status_is_error(status)) return status;
 
-        status = f_string_dynamics_adjust(0, &array[i].listing.directory);
+        status = f_memory_arrays_adjust(0, sizeof(f_string_dynamic_t), (void **) &array[i].listing.directory.array, &array[i].listing.directory.used, &array[i].listing.directory.size, &f_string_dynamics_destroy_callback);
         if (F_status_is_error(status)) return status;
 
-        status = f_string_dynamics_adjust(0, &array[i].listing.regular);
+        status = f_memory_arrays_adjust(0, sizeof(f_string_dynamic_t), (void **) &array[i].listing.regular.array, &array[i].listing.regular.used, &array[i].listing.regular.size, &f_string_dynamics_destroy_callback);
         if (F_status_is_error(status)) return status;
 
-        status = f_string_dynamics_adjust(0, &array[i].listing.link);
+        status = f_memory_arrays_adjust(0, sizeof(f_string_dynamic_t), (void **) &array[i].listing.link.array, &array[i].listing.link.used, &array[i].listing.link.size, &f_string_dynamics_destroy_callback);
         if (F_status_is_error(status)) return status;
 
-        status = f_string_dynamics_adjust(0, &array[i].listing.fifo);
+        status = f_memory_arrays_adjust(0, sizeof(f_string_dynamic_t), (void **) &array[i].listing.fifo.array, &array[i].listing.fifo.used, &array[i].listing.fifo.size, &f_string_dynamics_destroy_callback);
         if (F_status_is_error(status)) return status;
 
-        status = f_string_dynamics_adjust(0, &array[i].listing.socket);
+        status = f_memory_arrays_adjust(0, sizeof(f_string_dynamic_t), (void **) &array[i].listing.socket.array, &array[i].listing.socket.used, &array[i].listing.socket.size, &f_string_dynamics_destroy_callback);
         if (F_status_is_error(status)) return status;
 
-        status = f_string_dynamics_adjust(0, &array[i].listing.unknown);
+        status = f_memory_arrays_adjust(0, sizeof(f_string_dynamic_t), (void **) &array[i].listing.unknown.array, &array[i].listing.unknown.used, &array[i].listing.unknown.size, &f_string_dynamics_destroy_callback);
         if (F_status_is_error(status)) return status;
       } // for
     }
@@ -190,34 +190,34 @@ extern "C" {
 
         for (j = 0; j < array[i].size; ++j) {
 
-          status = f_string_dynamic_resize(0, &array[i].array[j].path);
+          status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &array[i].array[j].path.string, &array[i].array[j].path.used, &array[i].array[j].path.size);
           if (F_status_is_error(status)) return status;
 
-          status = f_string_dynamic_resize(0, &array[i].array[j].path_cache);
+          status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &array[i].array[j].path_cache.string, &array[i].array[j].path_cache.used, &array[i].array[j].path_cache.size);
           if (F_status_is_error(status)) return status;
 
-          status = f_string_dynamics_resize(0, &array[i].array[j].listing.block);
+          status = f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &array[i].array[j].listing.block.array, &array[i].array[j].listing.block.used, &array[i].array[j].listing.block.size, &f_string_dynamics_delete_callback);
           if (F_status_is_error(status)) return status;
 
-          status = f_string_dynamics_resize(0, &array[i].array[j].listing.character);
+          status = f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &array[i].array[j].listing.character.array, &array[i].array[j].listing.character.used, &array[i].array[j].listing.character.size, &f_string_dynamics_delete_callback);
           if (F_status_is_error(status)) return status;
 
-          status = f_string_dynamics_resize(0, &array[i].array[j].listing.directory);
+          status = f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &array[i].array[j].listing.directory.array, &array[i].array[j].listing.directory.used, &array[i].array[j].listing.directory.size, &f_string_dynamics_delete_callback);
           if (F_status_is_error(status)) return status;
 
-          status = f_string_dynamics_resize(0, &array[i].array[j].listing.regular);
+          status = f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &array[i].array[j].listing.regular.array, &array[i].array[j].listing.regular.used, &array[i].array[j].listing.regular.size, &f_string_dynamics_delete_callback);
           if (F_status_is_error(status)) return status;
 
-          status = f_string_dynamics_resize(0, &array[i].array[j].listing.link);
+          status = f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &array[i].array[j].listing.link.array, &array[i].array[j].listing.link.used, &array[i].array[j].listing.link.size, &f_string_dynamics_delete_callback);
           if (F_status_is_error(status)) return status;
 
-          status = f_string_dynamics_resize(0, &array[i].array[j].listing.fifo);
+          status = f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &array[i].array[j].listing.fifo.array, &array[i].array[j].listing.fifo.used, &array[i].array[j].listing.fifo.size, &f_string_dynamics_delete_callback);
           if (F_status_is_error(status)) return status;
 
-          status = f_string_dynamics_resize(0, &array[i].array[j].listing.socket);
+          status = f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &array[i].array[j].listing.socket.array, &array[i].array[j].listing.socket.used, &array[i].array[j].listing.socket.size, &f_string_dynamics_delete_callback);
           if (F_status_is_error(status)) return status;
 
-          status = f_string_dynamics_resize(0, &array[i].array[j].listing.unknown);
+          status = f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &array[i].array[j].listing.unknown.array, &array[i].array[j].listing.unknown.used, &array[i].array[j].listing.unknown.size, &f_string_dynamics_delete_callback);
           if (F_status_is_error(status)) return status;
         } // for
 
@@ -244,34 +244,34 @@ extern "C" {
 
         for (j = 0; j < array[i].size; ++j) {
 
-          status = f_string_dynamic_adjust(0, &array[i].array[j].path);
+          status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &array[i].array[j].path.string, &array[i].array[j].path.used, &array[i].array[j].path.size);
           if (F_status_is_error(status)) return status;
 
-          status = f_string_dynamic_adjust(0, &array[i].array[j].path_cache);
+          status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &array[i].array[j].path_cache.string, &array[i].array[j].path_cache.used, &array[i].array[j].path_cache.size);
           if (F_status_is_error(status)) return status;
 
-          status = f_string_dynamics_adjust(0, &array[i].array[j].listing.block);
+          status = f_memory_arrays_adjust(0, sizeof(f_string_dynamic_t), (void **) &array[i].array[j].listing.block.array, &array[i].array[j].listing.block.used, &array[i].array[j].listing.block.size, &f_string_dynamics_destroy_callback);
           if (F_status_is_error(status)) return status;
 
-          status = f_string_dynamics_adjust(0, &array[i].array[j].listing.character);
+          status = f_memory_arrays_adjust(0, sizeof(f_string_dynamic_t), (void **) &array[i].array[j].listing.character.array, &array[i].array[j].listing.character.used, &array[i].array[j].listing.character.size, &f_string_dynamics_destroy_callback);
           if (F_status_is_error(status)) return status;
 
-          status = f_string_dynamics_adjust(0, &array[i].array[j].listing.directory);
+          status = f_memory_arrays_adjust(0, sizeof(f_string_dynamic_t), (void **) &array[i].array[j].listing.directory.array, &array[i].array[j].listing.directory.used, &array[i].array[j].listing.directory.size, &f_string_dynamics_destroy_callback);
           if (F_status_is_error(status)) return status;
 
-          status = f_string_dynamics_adjust(0, &array[i].array[j].listing.regular);
+          status = f_memory_arrays_adjust(0, sizeof(f_string_dynamic_t), (void **) &array[i].array[j].listing.regular.array, &array[i].array[j].listing.regular.used, &array[i].array[j].listing.regular.size, &f_string_dynamics_destroy_callback);
           if (F_status_is_error(status)) return status;
 
-          status = f_string_dynamics_adjust(0, &array[i].array[j].listing.link);
+          status = f_memory_arrays_adjust(0, sizeof(f_string_dynamic_t), (void **) &array[i].array[j].listing.link.array, &array[i].array[j].listing.link.used, &array[i].array[j].listing.link.size, &f_string_dynamics_destroy_callback);
           if (F_status_is_error(status)) return status;
 
-          status = f_string_dynamics_adjust(0, &array[i].array[j].listing.fifo);
+          status = f_memory_arrays_adjust(0, sizeof(f_string_dynamic_t), (void **) &array[i].array[j].listing.fifo.array, &array[i].array[j].listing.fifo.used, &array[i].array[j].listing.fifo.size, &f_string_dynamics_destroy_callback);
           if (F_status_is_error(status)) return status;
 
-          status = f_string_dynamics_adjust(0, &array[i].array[j].listing.socket);
+          status = f_memory_arrays_adjust(0, sizeof(f_string_dynamic_t), (void **) &array[i].array[j].listing.socket.array, &array[i].array[j].listing.socket.used, &array[i].array[j].listing.socket.size, &f_string_dynamics_destroy_callback);
           if (F_status_is_error(status)) return status;
 
-          status = f_string_dynamics_adjust(0, &array[i].array[j].listing.unknown);
+          status = f_memory_arrays_adjust(0, sizeof(f_string_dynamic_t), (void **) &array[i].array[j].listing.unknown.array, &array[i].array[j].listing.unknown.used, &array[i].array[j].listing.unknown.size, &f_string_dynamics_destroy_callback);
           if (F_status_is_error(status)) return status;
         } // for
 

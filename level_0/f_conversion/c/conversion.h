@@ -278,9 +278,9 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_string_dynamic_increase_by()
+ *   Errors (with error bit) from: f_memory_array_increase_by()
  *
- * @see f_string_dynamic_increase_by()
+ * @see f_memory_array_increase_by()
  */
 #ifndef _di_f_conversion_number_signed_to_string_
   extern f_status_t f_conversion_number_signed_to_string(const f_number_signed_t number, const f_conversion_data_t data, f_string_dynamic_t * const destination);
@@ -343,9 +343,9 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_string_dynamic_increase_by()
+ *   Errors (with error bit) from: f_memory_array_increase_by()
  *
- * @see f_string_dynamic_increase_by()
+ * @see f_memory_array_increase_by()
  */
 #ifndef _di_f_conversion_number_unsigned_to_string_
   extern f_status_t f_conversion_number_unsigned_to_string(const f_number_unsigned_t number, const f_conversion_data_t data, f_string_dynamic_t * const destination);

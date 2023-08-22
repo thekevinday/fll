@@ -62,7 +62,7 @@ build_sources_library level_0/socket.c level_0/socket/address.c level_0/socket/s
 build_sources_library level_0/status_string.c
 build_sources_library level_0/string.c
 build_sources_library level_0/private-string.c level_0/string/common.c
-build_sources_library level_0/string/private-dynamics.c level_0/string/private-dynamicss.c
+build_sources_library level_0/string/private-dynamics.c
 build_sources_library level_0/string/private-maps.c level_0/string/private-mapss.c
 build_sources_library level_0/string/private-map_multis.c level_0/string/private-map_multiss.c
 build_sources_library level_0/string/private-quantitys.c level_0/string/private-quantityss.c

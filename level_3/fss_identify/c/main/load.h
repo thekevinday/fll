@@ -22,7 +22,7 @@
  *     F_okay on success.
  *
  *     Errors (with error bit) from: f_file_stream_read_block().
- *     Errors (with error bit) from: f_string_dynamic_resize().
+ *     Errors (with error bit) from: f_memory_array_resize().
  *
  * @param main
  *   The main program data.
@@ -31,7 +31,7 @@
  *   file_name.used to 0 to designate that this is a pipe.
  *
  * @see f_file_stream_read_block()
- * @see f_string_dynamic_resize()
+ * @see f_memory_array_resize()
  */
 #ifndef _di_fss_identify_load_line_
   extern void fss_identify_load_line(fss_identify_main_t * const main, const f_string_static_t name);

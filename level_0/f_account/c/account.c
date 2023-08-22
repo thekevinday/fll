@@ -286,7 +286,7 @@ extern "C" {
 
         name->used = 0;
 
-        status = f_string_dynamic_increase_by(name_length + 1, name);
+        status = f_memory_array_increase_by(name_length + 1, sizeof(f_char_t), (void **) &name->string, &name->used, &name->size);
         if (F_status_is_error(status)) return status;
 
         memcpy(name->string, group_data.gr_name, sizeof(f_char_t) * name_length);
@@ -321,7 +321,7 @@ extern "C" {
 
     name->used = 0;
 
-    status = f_string_dynamic_increase_by(name_length + 1, name);
+    status = f_memory_array_increase_by(name_length + 1, sizeof(f_char_t), (void **) &name->string, &name->used, &name->size);
     if (F_status_is_error(status)) return status;
 
     memcpy(name->string, group_data.gr_name, sizeof(f_char_t) * name_length);
@@ -458,7 +458,7 @@ extern "C" {
 
         name->used = 0;
 
-        status = f_string_dynamic_increase_by(name_length + 1, name);
+        status = f_memory_array_increase_by(name_length + 1, sizeof(f_char_t), (void **) &name->string, &name->used, &name->size);
         if (F_status_is_error(status)) return status;
 
         memcpy(name->string, password.pw_name, sizeof(f_char_t) * name_length);
@@ -493,7 +493,7 @@ extern "C" {
 
     name->used = 0;
 
-    status = f_string_dynamic_increase_by(name_length + 1, name);
+    status = f_memory_array_increase_by(name_length + 1, sizeof(f_char_t), (void **) &name->string, &name->used, &name->size);
     if (F_status_is_error(status)) return status;
 
     memcpy(name->string, password.pw_name, sizeof(f_char_t) * name_length);

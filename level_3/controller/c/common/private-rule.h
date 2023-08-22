@@ -460,7 +460,7 @@ extern "C" {
  * @param action
  *   The action to deallocate.
  *
- * @see f_string_dynamics_resize()
+ * @see f_memory_arrays_resize()
  */
 #ifndef _di_controller_rule_action_delete_simple_
   extern void controller_rule_action_delete_simple(controller_rule_action_t * const action) F_attribute_visibility_internal_d;
@@ -515,7 +515,7 @@ extern "C" {
  *
  * @see controller_rule_items_delete_simple()
  * @see f_capability_delete()
- * @see f_string_dynamic_resize()
+ * @see f_memory_array_resize()
  */
 #ifndef _di_controller_rule_delete_simple_
   extern void controller_rule_delete_simple(controller_rule_t * const rule) F_attribute_visibility_internal_d;
@@ -527,7 +527,7 @@ extern "C" {
  * @param item
  *   The item to deallocate.
  *
- * @see f_string_dynamic_resize()
+ * @see f_memory_array_resize()
  */
 #ifndef _di_controller_rule_item_delete_simple_
   extern void controller_rule_item_delete_simple(controller_rule_item_t * const item) F_attribute_visibility_internal_d;
@@ -552,7 +552,7 @@ extern "C" {
  * @param on
  *   The on to deallocate.
  *
- * @see f_string_dynamic_resize()
+ * @see f_memory_array_resize()
  */
 #ifndef _di_controller_rule_on_delete_simple_
   extern void controller_rule_on_delete_simple(controller_rule_on_t * const on) F_attribute_visibility_internal_d;

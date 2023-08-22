@@ -14,10 +14,8 @@ extern "C" {
     bool valid_not = F_false;
 
     if (*mode != utf8_codepoint_mode_end_e) {
-      if (main->setting.text.used + unicode.used >= main->setting.text.size) {
-        main->setting.state.status = f_string_dynamic_increase_by(utf8_allocation_small_d, &main->setting.text);
-        if (F_status_is_error(main->setting.state.status)) return;
-      }
+      main->setting.state.status = f_memory_array_increase_by(unicode.used, sizeof(f_char_t), (void **) &main->setting.text.string, &main->setting.text.used, &main->setting.text.size);
+      if (F_status_is_error(main->setting.state.status)) return;
 
       for (f_number_unsigned_t i = 0; i < unicode.used; ++i) {
         main->setting.text.string[main->setting.text.used++] = unicode.string[i];
@@ -107,10 +105,8 @@ extern "C" {
     bool valid_not = F_false;
 
     if (*mode != utf8_codepoint_mode_raw_end_e) {
-      if (main->setting.text.used + hex.used >= main->setting.text.size) {
-        main->setting.state.status = f_string_dynamic_increase_by(utf8_allocation_small_d, &main->setting.text);
-        if (F_status_is_error(main->setting.state.status)) return;
-      }
+      main->setting.state.status = f_memory_array_increase_by(hex.used, sizeof(f_char_t), (void **) &main->setting.text.string, &main->setting.text.used, &main->setting.text.size);
+      if (F_status_is_error(main->setting.state.status)) return;
 
       for (f_number_unsigned_t i = 0; i < hex.used; ++i) {
         main->setting.text.string[main->setting.text.used++] = hex.string[i];

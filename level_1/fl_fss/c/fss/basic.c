@@ -92,7 +92,7 @@ extern "C" {
 
       // Content should be terminated, even if empty.
       if (complete == f_fss_complete_full_e || complete == f_fss_complete_full_trim_e || complete == f_fss_complete_end_e) {
-        state->status = f_string_dynamic_increase(state->step_large, destination);
+        state->status = f_memory_array_increase(state->step_large, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
         if (F_status_is_error(state->status)) return;
 
         destination->string[destination->used++] = f_fss_basic_close_s.string[0];
@@ -121,7 +121,7 @@ extern "C" {
 
       if (content.string[range->start] == f_fss_placeholder_s.string[0]) continue;
 
-      state->status = f_string_dynamic_increase(state->step_large, destination);
+      state->status = f_memory_array_increase(state->step_large, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
 
       if (F_status_is_error(state->status)) {
         destination->used = destination_used;
@@ -133,7 +133,7 @@ extern "C" {
     } // for
 
     if (complete == f_fss_complete_full_e || complete == f_fss_complete_full_trim_e || complete == f_fss_complete_end_e) {
-      state->status = f_string_dynamic_increase(state->step_large, destination);
+      state->status = f_memory_array_increase(state->step_large, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
 
       if (F_status_is_error(state->status)) {
         destination->used = destination_used;
@@ -202,7 +202,7 @@ extern "C" {
 
       // Objects cannot be empty, so write a quote empty string.
       {
-        const f_status_t status = f_string_dynamic_increase_by(state->step_small + 2, destination);
+        const f_status_t status = f_memory_array_increase_by(state->step_small + 2, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
 
         if (F_status_is_error(status)) {
           destination->used = destination_used;
@@ -231,7 +231,7 @@ extern "C" {
         }
 
         if (complete != f_fss_complete_trim_e) {
-          state->status = f_string_dynamic_increase(state->step_large, destination);
+          state->status = f_memory_array_increase(state->step_large, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
 
           if (F_status_is_error(state->status)) {
             destination->used = destination_used;

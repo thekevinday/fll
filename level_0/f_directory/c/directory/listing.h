@@ -123,9 +123,9 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_string_dynamics_resize().
+ *   Errors (with error bit) from: f_memory_array_resize().
  *
- * @see f_string_dynamics_resize()
+ * @see f_memory_array_resize()
  */
 #ifndef _di_f_directory_listing_delete_
   extern f_status_t f_directory_listing_delete(f_directory_listing_t * const listing);
@@ -142,9 +142,9 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_string_dynamics_adjust().
+ *   Errors (with error bit) from: f_memory_array_adjust().
  *
- * @see f_string_dynamics_adjust()
+ * @see f_memory_array_adjust()
  */
 #ifndef _di_f_directory_listing_destroy_
   extern f_status_t f_directory_listing_destroy(f_directory_listing_t * const listing);
@@ -170,9 +170,9 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_string_dynamics_resize().
+ *   Errors (with error bit) from: f_memory_array_resize().
  *
- * @see f_string_dynamics_resize()
+ * @see f_memory_array_resize()
  */
 #ifndef _di_f_directory_listings_delete_callback_
   extern f_status_t f_directory_listings_delete_callback(const f_number_unsigned_t start, const f_number_unsigned_t stop, void * const array);
@@ -198,9 +198,9 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_string_dynamics_adjust().
+ *   Errors (with error bit) from: f_memory_array_adjust().
  *
- * @see f_string_dynamics_adjust()
+ * @see f_memory_array_adjust()
  */
 #ifndef _di_f_directory_listings_destroy_callback_
   extern f_status_t f_directory_listings_destroy_callback(const f_number_unsigned_t start, const f_number_unsigned_t stop, void * const array);
@@ -226,9 +226,9 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_string_dynamics_resize().
+ *   Errors (with error bit) from: f_memory_array_resize().
  *
- * @see f_string_dynamics_resize()
+ * @see f_memory_array_resize()
  */
 #ifndef _di_f_directory_listingss_delete_callback_
   extern f_status_t f_directory_listingss_delete_callback(const f_number_unsigned_t start, const f_number_unsigned_t stop, void * const array);
@@ -254,9 +254,9 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_string_dynamics_adjust().
+ *   Errors (with error bit) from: f_memory_array_adjust().
  *
- * @see f_string_dynamics_adjust()
+ * @see f_memory_array_adjust()
  */
 #ifndef _di_f_directory_listingss_destroy_callback_
   extern f_status_t f_directory_listingss_destroy_callback(const f_number_unsigned_t start, const f_number_unsigned_t stop, void * const array);

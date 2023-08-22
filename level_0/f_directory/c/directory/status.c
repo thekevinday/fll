@@ -11,7 +11,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     {
-      const f_status_t status = f_string_dynamic_resize(0, &directory_status->path);
+      const f_status_t status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &directory_status->path.string, &directory_status->path.used, &directory_status->path.size);
       if (F_status_is_error(status)) return status;
     }
 
@@ -26,7 +26,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     {
-      const f_status_t status = f_string_dynamic_adjust(0, &directory_status->path);
+      const f_status_t status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &directory_status->path.string, &directory_status->path.used, &directory_status->path.size);
       if (F_status_is_error(status)) return status;
     }
 
@@ -43,7 +43,7 @@ extern "C" {
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
 
-        status = f_string_dynamic_resize(0, &array[i].path);
+        status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &array[i].path.string, &array[i].path.used, &array[i].path.size);
         if (F_status_is_error(status)) return status;
       } // for
     }
@@ -61,7 +61,7 @@ extern "C" {
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
 
-        status = f_string_dynamic_adjust(0, &array[i].path);
+        status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &array[i].path.string, &array[i].path.used, &array[i].path.size);
         if (F_status_is_error(status)) return status;
       } // for
     }
@@ -82,7 +82,7 @@ extern "C" {
 
         for (j = 0; j < array[i].size; ++j) {
 
-          status = f_string_dynamic_resize(0, &array[i].array[j].path);
+          status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &array[i].array[j].path.string, &array[i].array[j].path.used, &array[i].array[j].path.size);
           if (F_status_is_error(status)) return status;
         } // for
 
@@ -109,7 +109,7 @@ extern "C" {
 
         for (j = 0; j < array[i].size; ++j) {
 
-          status = f_string_dynamic_adjust(0, &array[i].array[j].path);
+          status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &array[i].array[j].path.string, &array[i].array[j].path.used, &array[i].array[j].path.size);
           if (F_status_is_error(status)) return status;
         } // for
 

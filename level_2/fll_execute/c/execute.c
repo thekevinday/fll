@@ -11,11 +11,13 @@ extern "C" {
       if (!arguments) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
-    f_status_t status = f_string_dynamics_increase(F_memory_default_allocation_small_d, arguments);
-    if (F_status_is_error(status)) return status;
+    {
+      f_status_t status = f_memory_array_increase(F_memory_default_allocation_small_d, sizeof(f_string_dynamic_t), (void **) &arguments->array, &arguments->used, &arguments->size);
+      if (F_status_is_error(status)) return status;
 
-    status = private_fll_execute_arguments_add(source, arguments);
-    if (F_status_is_error(status)) return status;
+      status = private_fll_execute_arguments_add(source, arguments);
+      if (F_status_is_error(status)) return status;
+    }
 
     return F_okay;
   }
@@ -27,11 +29,13 @@ extern "C" {
       if (!arguments) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
-    f_status_t status = f_string_dynamics_increase(F_memory_default_allocation_small_d, arguments);
-    if (F_status_is_error(status)) return status;
+    {
+      f_status_t status = f_memory_array_increase(F_memory_default_allocation_small_d, sizeof(f_string_dynamic_t), (void **) &arguments->array, &arguments->used, &arguments->size);
+      if (F_status_is_error(status)) return status;
 
-    status = private_fll_execute_arguments_add_parameter(prefix, name, value, arguments);
-    if (F_status_is_error(status)) return status;
+      status = private_fll_execute_arguments_add_parameter(prefix, name, value, arguments);
+      if (F_status_is_error(status)) return status;
+    }
 
     return F_okay;
   }
@@ -43,7 +47,7 @@ extern "C" {
       if (!arguments) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
-    f_status_t status = f_string_dynamics_increase_by(size, arguments);
+    f_status_t status = f_memory_array_increase_by(size, sizeof(f_string_dynamic_t), (void **) &arguments->array, &arguments->used, &arguments->size);
 
     for (f_number_unsigned_t i = 0; F_status_is_error_not(status) && i < size; ++i) {
 
@@ -60,7 +64,7 @@ extern "C" {
       if (!arguments) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
-    f_status_t status = f_string_dynamics_increase_by(size, arguments);
+    f_status_t status = f_memory_array_increase_by(size, sizeof(f_string_dynamic_t), (void **) &arguments->array, &arguments->used, &arguments->size);
 
     for (f_number_unsigned_t i = 0; F_status_is_error_not(status) && i < size; ++i) {
 
@@ -135,10 +139,10 @@ extern "C" {
           status = fl_environment_path_explode(path, &paths);
         }
 
-        f_string_dynamic_resize(0, &path);
+        f_memory_array_resize(0, sizeof(f_char_t), (void **) &path.string, &path.used, &path.size);
 
         if (F_status_is_error(status)) {
-          f_string_dynamics_resize(0, &paths);
+          f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &paths.array, &paths.used, &paths.size, &f_string_dynamics_delete_callback);
 
           return status;
         }
@@ -174,14 +178,14 @@ extern "C" {
           }
 
           if (F_status_is_error(status)) {
-            f_string_dynamics_resize(0, &paths);
+            f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &paths.array, &paths.used, &paths.size, &f_string_dynamics_delete_callback);
 
             return status;
           }
         } // for
 
         if (!found) {
-          f_string_dynamics_resize(0, &paths);
+          f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &paths.array, &paths.used, &paths.size, &f_string_dynamics_delete_callback);
 
           return F_status_set_error(F_file_found_not);
         }
@@ -192,7 +196,7 @@ extern "C" {
 
       memcpy(&program_path, found->string, sizeof(f_char_t) * found->used);
 
-      f_string_dynamics_resize(0, &paths);
+      f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &paths.array, &paths.used, &paths.size, &f_string_dynamics_delete_callback);
 
       fixed_arguments[0] = program_path;
 
@@ -312,7 +316,7 @@ extern "C" {
         status = f_file_exists(program.used ? program : arguments.array[0], F_true);
 
         if (status != F_true) {
-          f_string_dynamics_resize(0, &paths);
+          f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &paths.array, &paths.used, &paths.size, &f_string_dynamics_delete_callback);
 
           return F_status_set_error(F_file_found_not);
         }
@@ -335,10 +339,10 @@ extern "C" {
           status = fl_environment_path_explode(path, &paths);
         }
 
-        f_string_dynamic_resize(0, &path);
+        f_memory_array_resize(0, sizeof(f_char_t), (void **) &path.string, &path.used, &path.size);
 
         if (F_status_is_error(status)) {
-          f_string_dynamics_resize(0, &paths);
+          f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &paths.array, &paths.used, &paths.size, &f_string_dynamics_delete_callback);
 
           return status;
         }
@@ -374,14 +378,14 @@ extern "C" {
           }
 
           if (F_status_is_error(status)) {
-            f_string_dynamics_resize(0, &paths);
+            f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &paths.array, &paths.used, &paths.size, &f_string_dynamics_delete_callback);
 
             return status;
           }
         } // for
 
         if (!found) {
-          f_string_dynamics_resize(0, &paths);
+          f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &paths.array, &paths.used, &paths.size, &f_string_dynamics_delete_callback);
 
           return F_status_set_error(F_file_found_not);
         }
@@ -395,7 +399,7 @@ extern "C" {
       program_name.string = program_path;
       program_name.used = found->used;
 
-      f_string_dynamics_resize(0, &paths);
+      f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &paths.array, &paths.used, &paths.size, &f_string_dynamics_delete_callback);
 
       if (parameter && (parameter->option & FL_execute_parameter_option_path_d)) {
         fixed_arguments[0] = program_path;

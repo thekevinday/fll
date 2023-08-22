@@ -62,9 +62,6 @@ extern "C" {
   #define macro_f_string_t_resize(status, string, length_old, length_new) status = f_memory_resize(length_old, length_new, 1, (void **) & string);
   #define macro_f_string_t_adjust(status, string, length_old, length_new) status = f_memory_adjust(length_old, length_new, 1, (void **) & string);
 
-  #define macro_f_string_t_delete_simple(string, length)  f_memory_resize(length, 0, 1, (void **) & string);
-  #define macro_f_string_t_destroy_simple(string, length) f_memory_adjust(length, 0, 1, (void **) & string);
-
   #define F_string_t_size_d F_number_t_size_positive_d
 #endif // _di_f_string_t_
 

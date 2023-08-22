@@ -250,7 +250,7 @@ extern "C" {
     if (range->start > range->stop || range->start >= content.used) {
       if (complete == f_fss_complete_full_e || complete == f_fss_complete_full_trim_e || complete == f_fss_complete_end_e) {
         {
-          const f_status_t status = f_string_dynamic_increase_by(state->step_small + 2, destination);
+          const f_status_t status = f_memory_array_increase_by(state->step_small + 2, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
 
           if (F_status_is_error(status)) {
             state->status = status;
@@ -267,7 +267,7 @@ extern "C" {
     }
 
     // Ensure that there is room for a slash delimit and possibly the end of content characters.
-    state->status = f_string_dynamic_increase_by(state->step_small + 4, destination);
+    state->status = f_memory_array_increase_by(state->step_small + 4, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
     if (F_status_is_error(state->status)) return;
 
     const f_number_unsigned_t destination_used = destination->used;
@@ -295,7 +295,7 @@ extern "C" {
         slash_count = 1;
 
         if (do_prepend) {
-          state->status = f_string_dynamic_increase_by(state->step_small + prepend->used, destination);
+          state->status = f_memory_array_increase_by(state->step_small + prepend->used, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
           if (F_status_is_error(state->status)) break;
 
           state->status = f_string_dynamic_append(*prepend, destination);
@@ -304,7 +304,7 @@ extern "C" {
           do_prepend = F_false;
         }
         else {
-          state->status = f_string_dynamic_increase(state->step_large, destination);
+          state->status = f_memory_array_increase(state->step_large, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
           if (F_status_is_error(state->status)) break;
         }
 
@@ -324,7 +324,7 @@ extern "C" {
           if (content.string[range->start] == f_fss_placeholder_s.string[0]) continue;
           if (content.string[range->start] != f_fss_slash_s.string[0]) break;
 
-          state->status = f_string_dynamic_increase(state->step_large, destination);
+          state->status = f_memory_array_increase(state->step_large, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
 
           if (F_status_is_error(state->status)) {
             destination->used = destination_used;
@@ -346,7 +346,7 @@ extern "C" {
             // Do nothing.
           }
           else if (content.string[range->start] == f_fss_eol_s.string[0] || range->start >= content.used || range->start > range->stop) {
-            state->status = f_string_dynamic_increase_by(state->step_small + 2, destination);
+            state->status = f_memory_array_increase_by(state->step_small + 2, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
             if (F_status_is_error(state->status)) break;
 
             destination->string[destination->used++] = f_fss_slash_s.string[0];
@@ -365,7 +365,7 @@ extern "C" {
           }
 
           // Increase by character at "start" and possible newline.
-          state->status = f_string_dynamic_increase_by(state->step_small + 2, destination);
+          state->status = f_memory_array_increase_by(state->step_small + 2, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
           if (F_status_is_error(state->status)) break;
 
           destination->string[destination->used++] = content.string[start];
@@ -415,7 +415,7 @@ extern "C" {
             } // for
 
             if (r < ignore->used) {
-              state->status = f_string_dynamic_increase(state->step_large, destination);
+              state->status = f_memory_array_increase(state->step_large, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
               if (F_status_is_error(state->status)) break;
 
               destination->string[destination->used++] = content.string[start];
@@ -426,7 +426,7 @@ extern "C" {
           }
 
           // Increase by slash and extended list close.
-          state->status = f_string_dynamic_increase_by(state->step_small + 2, destination);
+          state->status = f_memory_array_increase_by(state->step_small + 2, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
           if (F_status_is_error(state->status)) break;
 
           destination->string[destination->used++] = f_fss_slash_s.string[0];
@@ -440,7 +440,7 @@ extern "C" {
           continue;
         }
 
-        state->status = f_string_dynamic_increase(state->step_large, destination);
+        state->status = f_memory_array_increase(state->step_large, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
         if (F_status_is_error(state->status)) break;
 
         destination->string[destination->used++] = content.string[start];
@@ -480,7 +480,7 @@ extern "C" {
 
         width = macro_f_utf_byte_width(content.string[range->start]);
 
-        state->status = f_string_dynamic_increase_by(width, destination);
+        state->status = f_memory_array_increase_by(width, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
         if (F_status_is_error(state->status)) break;
 
         for (i = 0; i < width; ++i) {
@@ -499,7 +499,8 @@ extern "C" {
     }
 
     if (complete == f_fss_complete_full_e || complete == f_fss_complete_full_trim_e || complete == f_fss_complete_end_e) {
-      state->status = f_string_dynamic_increase_by(state->step_small + 3, destination);
+      state->status = f_memory_array_increase_by(state->step_small + 3, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
+
       if (F_status_is_error(state->status)) {
         destination->used = destination_used;
 
@@ -893,7 +894,7 @@ extern "C" {
     if (state->status == F_data_not_stop || state->status == F_data_not_eos) {
       if (complete == f_fss_complete_partial_e || complete == f_fss_complete_partial_trim_e || complete == f_fss_complete_full_e || complete == f_fss_complete_full_trim_e) {
         {
-          const f_status_t status = f_string_dynamic_increase_by(state->step_small + 2, destination);
+          const f_status_t status = f_memory_array_increase_by(state->step_small + 2, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
 
           if (F_status_is_error(status)) {
             state->status = status;
@@ -913,7 +914,7 @@ extern "C" {
     }
 
     // Ensure that there is room for a slash delimit, the object open character, and the end of line character.
-    state->status = f_string_dynamic_increase_by(state->step_small + 4, destination);
+    state->status = f_memory_array_increase_by(state->step_small + 4, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
     if (F_status_is_error(state->status)) return;
 
     const f_number_unsigned_t destination_used = destination->used;
@@ -936,7 +937,7 @@ extern "C" {
       if (object.string[range->start] == f_fss_comment_s.string[0]) {
 
         // When a comment is found, escape it.
-        state->status = f_string_dynamic_increase(state->step_large, destination);
+        state->status = f_memory_array_increase(state->step_large, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
         if (F_status_is_error(state->status)) break;
 
         destination->string[destination->used++] = f_fss_slash_s.string[0];
@@ -971,7 +972,7 @@ extern "C" {
 
           width = macro_f_utf_byte_width(object.string[range->start]);
 
-          state->status = f_string_dynamic_increase_by(width, destination);
+          state->status = f_memory_array_increase_by(width, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
           if (F_status_is_error(state->status)) break;
 
           for (i = 0; i < width; ++i) {
@@ -1024,7 +1025,7 @@ extern "C" {
           slash_count *= 2;
         }
 
-        state->status = f_string_dynamic_increase_by(slash_count, destination);
+        state->status = f_memory_array_increase_by(slash_count, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
         if (F_status_is_error(state->status)) break;
 
         while (--slash_count) {
@@ -1060,7 +1061,7 @@ extern "C" {
 
         width = macro_f_utf_byte_width(object.string[range->start]);
 
-        state->status = f_string_dynamic_increase_by(width, destination);
+        state->status = f_memory_array_increase_by(width, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
         if (F_status_is_error(state->status)) break;
 
         for (i = 0; i < width; ++i) {
@@ -1093,7 +1094,7 @@ extern "C" {
       }
 
       if (complete != f_fss_complete_trim_e) {
-        state->status = f_string_dynamic_increase_by(state->step_small + 3, destination);
+        state->status = f_memory_array_increase_by(state->step_small + 3, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
 
         if (F_status_is_error(state->status)) {
           destination->used = destination_used;

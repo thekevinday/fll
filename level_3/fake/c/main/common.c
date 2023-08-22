@@ -290,14 +290,14 @@ extern "C" {
 
                 // De-allocate memory before replacing it with a statically allocated string.
                 if (variable[i]->size) {
-                  main->setting.state.status = f_string_dynamic_resize(0, variable[i]);
+                  main->setting.state.status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &variable[i]->string, &variable[i]->used, &variable[i]->size);
 
                   if (F_status_is_error(main->setting.state.status)) {
                     if ((main->setting.flag & fake_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
                       fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
                     }
 
-                    fake_print_error(&main->program.error, macro_fake_f(f_string_dynamic_resize));
+                    fake_print_error(&main->program.error, macro_fake_f(f_memory_array_resize));
 
                     return;
                   }
@@ -327,14 +327,14 @@ extern "C" {
 
             // De-allocate memory before replacing it with a statically allocated string.
             if (variable[i]->size) {
-              main->setting.state.status = f_string_dynamic_resize(0, variable[i]);
+              main->setting.state.status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &variable[i]->string, &variable[i]->used, &variable[i]->size);
 
               if (F_status_is_error(main->setting.state.status)) {
                 if ((main->setting.flag & fake_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
                   fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
                 }
 
-                fake_print_error(&main->program.error, macro_fake_f(f_string_dynamic_resize));
+                fake_print_error(&main->program.error, macro_fake_f(f_memory_array_resize));
 
                 return;
               }
@@ -525,7 +525,7 @@ extern "C" {
 
     // Shrink an overly long string.
     if (dynamic->size > fake_max_over_string_d) {
-      f_string_dynamic_resize(fake_allocation_large_d, dynamic);
+      f_memory_array_resize(fake_allocation_large_d, sizeof(f_char_t), (void **) &dynamic->string, &dynamic->used, &dynamic->size);
     }
 
     dynamic->used = 0;
@@ -539,7 +539,7 @@ extern "C" {
 
     // Shrink an overly long array.
     if (dynamics->size > fake_max_over_array_d) {
-      f_string_dynamics_resize(fake_allocation_large_d, dynamics);
+      f_memory_arrays_resize(fake_allocation_large_d, sizeof(f_string_dynamic_t), (void **) &dynamics->array, &dynamics->used, &dynamics->size, &f_string_dynamics_delete_callback);
     }
 
     while (dynamics->used) {

@@ -127,7 +127,7 @@ extern "C" {
 
     fake_main_t * const main = data_make->main;
 
-    main->setting.state.status = f_string_dynamic_increase_by(source.used, destination);
+    main->setting.state.status = f_memory_array_increase_by(source.used, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
     if (F_status_is_error(main->setting.state.status)) return;
 
     for (f_number_unsigned_t i = 0; i < source.used; ++i) {
@@ -140,7 +140,7 @@ extern "C" {
         // A slash by itself at the end of the string is invalid.
         if (++i >= source.used) break;
 
-        main->setting.state.status = f_string_dynamic_increase_by(F_memory_default_allocation_small_d, destination);
+        main->setting.state.status = f_memory_array_increase_by(F_memory_default_allocation_small_d, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
         if (F_status_is_error(main->setting.state.status)) return;
 
         if (source.string[i] == f_string_ascii_slash_backward_s.string[0]) {
@@ -221,7 +221,7 @@ extern "C" {
               else {
 
                 // Reserve 4-bytes (the max size of a Unicode UTF-8 sequence).
-                main->setting.state.status = f_string_dynamic_increase_by(4, destination);
+                main->setting.state.status = f_memory_array_increase_by(4, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
                 if (F_status_is_error(main->setting.state.status)) return;
 
                 if (!codepoint) {
@@ -264,7 +264,7 @@ extern "C" {
         }
       }
       else {
-        main->setting.state.status = f_string_dynamic_increase_by(F_memory_default_allocation_small_d, destination);
+        main->setting.state.status = f_memory_array_increase_by(F_memory_default_allocation_small_d, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
         if (F_status_is_error(main->setting.state.status)) return;
 
         destination->string[destination->used++] = source.string[i];
@@ -383,14 +383,14 @@ extern "C" {
       if (F_status_is_error(main->setting.state.status)) {
         fake_print_error(&main->program.error, macro_fake_f(f_conversion_number_signed_to_string));
 
-        f_string_dynamic_resize(0, &number);
+        f_memory_array_resize(0, sizeof(f_char_t), (void **) &number.string, &number.used, &number.size);
 
         return;
       }
 
       main->setting.state.status = f_string_dynamic_append(number, &data_make->setting_make.parameter.array[0].value.array[0]);
 
-      f_string_dynamic_resize(0, &number);
+      f_memory_array_resize(0, sizeof(f_char_t), (void **) &number.string, &number.used, &number.size);
 
       if (F_status_is_error(main->setting.state.status)) {
         fake_print_error(&main->program.error, macro_fake_f(f_string_dynamic_append));

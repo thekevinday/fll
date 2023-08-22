@@ -182,7 +182,6 @@ extern "C" {
  *   This does not alter main.setting.state.status.
  *
  * @see f_memory_array_resize()
- * @see f_string_dynamic_resize()
  * @see f_string_ranges_resize()
  * @see f_string_rangess_resize()
  * @see fll_program_data_delete()
@@ -204,8 +203,8 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see f_string_dynamic_resize()
- * @see f_string_dynamics_resize()
+ * @see f_memory_array_resize()
+ * @see f_memory_arrays_resize()
  */
 #ifndef _di_control_setting_delete_
   extern f_status_t control_setting_delete(control_setting_t * const setting);

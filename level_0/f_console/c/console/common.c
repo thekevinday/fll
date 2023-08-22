@@ -184,7 +184,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     } // for
 
-    status = f_string_dynamics_resize(0, &parameters->arguments);
+    status = f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &parameters->arguments.array, &parameters->arguments.used, &parameters->arguments.size, &f_string_dynamics_delete_callback);
     if (F_status_is_error(status)) return status;
 
     status = f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &parameters->remaining.array, &parameters->remaining.used, &parameters->remaining.size);
@@ -215,7 +215,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     } // for
 
-    status = f_string_dynamics_adjust(0, &parameters->arguments);
+    status = f_memory_arrays_adjust(0, sizeof(f_string_dynamic_t), (void **) &parameters->arguments.array, &parameters->arguments.used, &parameters->arguments.size, &f_string_dynamics_destroy_callback);
     if (F_status_is_error(status)) return status;
 
     status = f_memory_array_adjust(0, sizeof(f_number_unsigned_t), (void **) &parameters->remaining.array, &parameters->remaining.used, &parameters->remaining.size);

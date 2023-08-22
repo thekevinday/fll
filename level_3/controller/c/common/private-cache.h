@@ -125,7 +125,7 @@ extern "C" {
  * @param cache
  *   The cache to deallocate.
  *
- * @see f_string_dynamic_resize()
+ * @see f_memory_array_resize()
  */
 #ifndef _di_controller_cache_action_delete_simple_
   extern void controller_cache_action_delete_simple(controller_cache_action_t * const cache) F_attribute_visibility_internal_d;
@@ -140,7 +140,6 @@ extern "C" {
  * @see controller_cache_action_delete_simple()
  *
  * @see f_memory_array_resize()
- * @see f_string_dynamic_resize()
  * @see f_string_ranges_resize()
  * @see f_string_rangess_resize()
  */

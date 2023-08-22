@@ -307,7 +307,7 @@ extern "C" {
  *   F_file_read (with error bit) on file read error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_string_dynamic_increase_by().
+ *   Errors (with error bit) from: f_memory_array_increase_by().
  *
  * @see feof_unlocked()
  * @see ferror_unlocked()
@@ -315,7 +315,7 @@ extern "C" {
  * @see fread_unlocked()
  * @see funlockfile()
  *
- * @see f_string_dynamic_increase_by()
+ * @see f_memory_array_increase_by()
  */
 #ifndef _di_f_file_stream_read_until_
   extern f_status_t f_file_stream_read_until(const f_file_t file, const f_number_unsigned_t total, f_string_dynamic_t * const buffer);

@@ -37,16 +37,10 @@ extern "C" {
   #define macro_f_string_triples_t_initialize_1(array, size, used) { array, size, used }
   #define macro_f_string_triples_t_initialize_2(array, length) { array, length, length }
 
-  #define macro_f_string_triples_t_resize(status, triples, length) status = f_string_triples_resize(length, &triples);
-  #define macro_f_string_triples_t_adjust(status, triples, length) status = f_string_triples_adjust(length, &triples);
-
-  #define macro_f_string_triples_t_delete_simple(triples)  f_string_triples_resize(0, &triples);
-  #define macro_f_string_triples_t_destroy_simple(triples) f_string_triples_adjust(0, &triples);
-
-  #define macro_f_string_triples_t_increase(status, step, triples)      status = f_string_triples_increase(step, triples);
-  #define macro_f_string_triples_t_increase_by(status, triples, amount) status = f_string_triples_increase_by(amount, triples);
-  #define macro_f_string_triples_t_decrease_by(status, triples, amount) status = f_string_triples_decrease_by(amount, triples);
-  #define macro_f_string_triples_t_decimate_by(status, triples, amount) status = f_string_triples_decimate_by(amount, triples);
+  #define macro_f_string_triples_t_clear(triples) \
+    triples.array = 0; \
+    triples.size = 0; \
+    triples.used = 0;
 #endif // _di_f_string_triples_t_
 
 /**

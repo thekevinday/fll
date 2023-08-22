@@ -1012,14 +1012,14 @@ extern "C" {
  *   F_string_too_large (with error bit) if link target path is too large for string buffer size.
  *   F_failure (with error bit) for any other error.
  *
- *   Errors (with error bit) from: f_string_dynamic_increase_by()
+ *   Errors (with error bit) from: f_memory_array_increase_by()
  *   Errors (with error bit) from: f_string_dynamic_terminate_after()
  *
  * @see lstat()
  * @see readlink()
  * @see stat()
  *
- * @see f_string_dynamic_increase_by()
+ * @see f_memory_array_increase_by()
  * @see f_string_dynamic_terminate_after()
  */
 #ifndef _di_f_file_link_read_
@@ -1060,13 +1060,13 @@ extern "C" {
  *   F_string_too_large (with error bit) if link target path is too large for string buffer size.
  *   F_failure (with error bit) for any other error.
  *
- *   Errors (with error bit) from: f_string_dynamic_increase_by()
+ *   Errors (with error bit) from: f_memory_array_increase_by()
  *   Errors (with error bit) from: f_string_dynamic_terminate_after()
  *
  * @see fstatat()
  * @see readlinkat()
  *
- * @see f_string_dynamic_increase_by()
+ * @see f_memory_array_increase_by()
  * @see f_string_dynamic_terminate_after()
  */
 #ifndef _di_f_file_link_read_at_
@@ -1415,11 +1415,11 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if string is too large to store in the buffer.
  *
- *   Errors (with error bit) from: f_string_dynamic_increase_by().
+ *   Errors (with error bit) from: f_memory_array_increase_by().
  *
  * @see basename()
  *
- * @see f_string_dynamic_increase_by()
+ * @see f_memory_array_increase_by()
  */
 #ifndef _di_f_file_name_base_
   extern f_status_t f_file_name_base(const f_string_static_t path, f_string_dynamic_t * const name_base);
@@ -1446,12 +1446,12 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if string is too large to store in the buffer.
  *
- *   Errors (with error bit) from: f_string_dynamic_increase_by().
+ *   Errors (with error bit) from: f_memory_array_increase_by().
  *   Errors (with error bit) from: f_string_dynamic_terminate_after().
  *
  * @see dirname()
  *
- * @see f_string_dynamic_increase_by()
+ * @see f_memory_array_increase_by()
  * @see f_string_dynamic_terminate_after()
  */
 #ifndef _di_f_file_name_directory_
@@ -1628,11 +1628,11 @@ extern "C" {
  *   F_interrupt (with error bit) if interrupt is received.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_string_dynamic_increase_by().
+ *   Errors (with error bit) from: f_memory_array_increase_by().
  *
  * @see read()
  *
- * @see f_string_dynamic_increase_by()
+ * @see f_memory_array_increase_by()
  */
 #ifndef _di_f_file_read_
   extern f_status_t f_file_read(const f_file_t file, f_string_dynamic_t * const buffer);

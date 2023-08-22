@@ -314,7 +314,7 @@ extern "C" {
 
     target->used = 0;
 
-    f_status_t status = f_string_dynamic_increase_by(size + 1, target);
+    f_status_t status = f_memory_array_increase_by(size + 1, sizeof(f_char_t), (void **) &target->string, &target->used, &target->size);
     if (F_status_is_error(status)) return status;
 
     if (size) {
@@ -347,7 +347,7 @@ extern "C" {
 
     target->used = 0;
 
-    f_status_t status = f_string_dynamic_increase_by(size + 1, target);
+    f_status_t status = f_memory_array_increase_by(size + 1, sizeof(f_char_t), (void **) &target->string, &target->used, &target->size);
     if (F_status_is_error(status)) return status;
 
     if (size) {

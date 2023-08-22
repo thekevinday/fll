@@ -37,16 +37,10 @@ extern "C" {
   #define macro_f_string_map_multis_t_initialize_1(array, size, used) { array, size, used }
   #define macro_f_string_map_multis_t_initialize_2(array, length) { array, length, length }
 
-  #define macro_f_string_map_multis_t_resize(status, map_multis, length) status = f_string_map_multis_resize(length, &map_multis);
-  #define macro_f_string_map_multis_t_adjust(status, map_multis, length) status = f_string_map_multis_adjust(length, &map_multis);
-
-  #define macro_f_string_map_multis_t_delete_simple(map_multis)  f_string_map_multis_resize(0, &map_multis);
-  #define macro_f_string_map_multis_t_destroy_simple(map_multis) f_string_map_multis_adjust(0, &map_multis);
-
-  #define macro_f_string_map_multis_t_increase(status, step, map_multis)      status = f_string_map_multis_increase(step, &map_multis);
-  #define macro_f_string_map_multis_t_increase_by(status, map_multis, amount) status = f_string_map_multis_increase_by(amount, &map_multis);
-  #define macro_f_string_map_multis_t_decrease_by(status, map_multis, amount) status = f_string_map_multis_decrease_by(amount, &map_multis);
-  #define macro_f_string_map_multis_t_decimate_by(status, map_multis, amount) status = f_string_map_multis_decimate_by(amount, &map_multis);
+  #define macro_f_string_map_multis_t_clear(map_multis) \
+    map_multis.array = 0; \
+    map_multis.size = 0; \
+    map_multis.used = 0;
 #endif // _di_f_string_map_multis_t_
 
 /**

@@ -410,9 +410,9 @@ extern "C" {
         } // for
 
         if (F_status_is_error(main->setting.state.status)) {
-          fake_print_error(&main->program.error, macro_fake_f(f_string_dynamic_mash));
+          f_memory_array_resize(0, sizeof(f_char_t), (void **) &defines.string, &defines.used, &defines.size);
 
-          f_string_dynamic_resize(0, &defines);
+          fake_print_error(&main->program.error, macro_fake_f(f_string_dynamic_mash));
 
           return 0;
         }
@@ -456,7 +456,7 @@ extern "C" {
 
       main->setting.state.status = fll_execute_arguments_add_parameter_set(prefixs, names, values, 9, &main->cache_arguments);
 
-      f_string_dynamic_resize(0, &defines);
+      f_memory_array_resize(0, sizeof(f_char_t), (void **) &defines.string, &defines.used, &defines.size);
 
       if (F_status_is_error(main->setting.state.status)) {
         fake_print_error(&main->program.error, macro_fake_f(fll_execute_arguments_add_parameter_set));

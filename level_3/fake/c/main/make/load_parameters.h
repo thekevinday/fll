@@ -25,15 +25,15 @@ extern "C" {
  *   This alters data_make.main->setting.state.status:
  *     F_okay on success.
  *
+ *     Errors (with error bit) from: f_memory_array_increase().
+ *     Errors (with error bit) from: f_memory_array_increase_by().
  *     Errors (with error bit) from: f_string_dynamic_append().
  *     Errors (with error bit) from: f_string_dynamic_append_nulless().
- *     Errors (with error bit) from: f_string_dynamics_increase().
- *     Errors (with error bit) from: f_string_dynamics_increase_by().
  *
+ * @see f_memory_array_increase()
+ * @see f_memory_array_increase_by()
  * @see f_string_dynamic_append()
  * @see f_string_dynamic_append_nulless()
- * @see f_string_dynamics_increase()
- * @see f_string_dynamics_increase_by()
  */
 #ifndef _di_fake_make_load_parameters_
   extern void fake_make_load_parameters(fake_make_data_t * const data_make);

@@ -172,10 +172,10 @@ extern "C" {
         f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &delimits.array, &delimits.used, &delimits.size);
       }
 
-      f_string_dynamic_resize(0, &buffer);
+      f_memory_array_resize(0, sizeof(f_char_t), (void **) &buffer.string, &buffer.used, &buffer.size);
 
-      macro_f_string_ranges_t_delete_simple(objects);
-      macro_f_string_rangess_t_delete_simple(contents);
+      f_string_ranges_resize(0, &objects);
+      f_string_rangess_resize(0, &contents);
     }
 
     // Error when required settings are not specified.
@@ -590,10 +590,10 @@ extern "C" {
 
           settings_mode_names[j].used = 0;
 
-          main->setting.state.status = f_string_dynamic_increase_by(settings_value[j]->used + f_string_ascii_minus_s.used + modes->array[i].used, &settings_mode_names[j]);
+          main->setting.state.status = f_memory_array_increase_by(settings_value[j]->used + f_string_ascii_minus_s.used + modes->array[i].used, sizeof(f_char_t), (void **) &settings_mode_names[j].string, &settings_mode_names[j].used, &settings_mode_names[j].size);
 
           if (F_status_is_error(main->setting.state.status)) {
-            function = macro_fake_f(f_string_dynamic_increase_by);
+            function = macro_fake_f(f_memory_array_increase_by);
 
             break;
           }
@@ -627,7 +627,7 @@ extern "C" {
       } // for
 
       for (j = 0; j < fake_build_setting_total_d; ++j) {
-        f_string_dynamic_resize(0, &settings_mode_names[j]);
+        f_memory_array_resize(0, sizeof(f_char_t), (void **) &settings_mode_names[j].string, &settings_mode_names[j].used, &settings_mode_names[j].size);
       } // for
 
       // The string "build_libraries" is appended after all modes to help assist with static linker file issues.
@@ -1176,10 +1176,10 @@ extern "C" {
             }
           }
           else {
-            main->setting.state.status = f_string_dynamic_increase_by(settings_single_source[i]->array[settings_single_source[i]->used - 1].used + 1, settings_single_destination[i]);
+            main->setting.state.status = f_memory_array_increase_by(settings_single_source[i]->array[settings_single_source[i]->used - 1].used + 1, sizeof(f_char_t), (void **) &settings_single_destination[i]->string, &settings_single_destination[i]->used, &settings_single_destination[i]->size);
 
             if (F_status_is_error(main->setting.state.status)) {
-              fake_print_error(&main->program.error, macro_fake_f(f_string_dynamic_increase_by));
+              fake_print_error(&main->program.error, macro_fake_f(f_memory_array_increase_by));
 
               break;
             }
@@ -1210,46 +1210,46 @@ extern "C" {
       }
     }
 
-    f_string_dynamics_resize(0, &build_compiler);
-    f_string_dynamics_resize(0, &build_indexer);
-    f_string_dynamics_resize(0, &build_language);
-    f_string_dynamics_resize(0, &build_name);
-    f_string_dynamics_resize(0, &build_script);
-    f_string_dynamics_resize(0, &build_shared);
-    f_string_dynamics_resize(0, &build_sources_object);
-    f_string_dynamics_resize(0, &build_sources_object_shared);
-    f_string_dynamics_resize(0, &build_sources_object_static);
-    f_string_dynamics_resize(0, &build_static);
-    f_string_dynamics_resize(0, &has_path_standard);
-    f_string_dynamics_resize(0, &path_headers);
-    f_string_dynamics_resize(0, &path_language);
-    f_string_dynamics_resize(0, &path_library_script);
-    f_string_dynamics_resize(0, &path_library_shared);
-    f_string_dynamics_resize(0, &path_library_static);
-    f_string_dynamics_resize(0, &path_object_script);
-    f_string_dynamics_resize(0, &path_object_shared);
-    f_string_dynamics_resize(0, &path_object_static);
-    f_string_dynamics_resize(0, &path_program_script);
-    f_string_dynamics_resize(0, &path_program_shared);
-    f_string_dynamics_resize(0, &path_program_static);
-    f_string_dynamics_resize(0, &path_sources);
-    f_string_dynamics_resize(0, &path_sources_object);
-    f_string_dynamics_resize(0, &preserve_path_headers);
-    f_string_dynamics_resize(0, &process_post);
-    f_string_dynamics_resize(0, &process_pre);
-    f_string_dynamics_resize(0, &search_exclusive);
-    f_string_dynamics_resize(0, &search_shared);
-    f_string_dynamics_resize(0, &search_static);
-    f_string_dynamics_resize(0, &version_file);
-    f_string_dynamics_resize(0, &version_major);
-    f_string_dynamics_resize(0, &version_major_prefix);
-    f_string_dynamics_resize(0, &version_micro);
-    f_string_dynamics_resize(0, &version_micro_prefix);
-    f_string_dynamics_resize(0, &version_minor);
-    f_string_dynamics_resize(0, &version_minor_prefix);
-    f_string_dynamics_resize(0, &version_nano);
-    f_string_dynamics_resize(0, &version_nano_prefix);
-    f_string_dynamics_resize(0, &version_target);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &build_compiler.array, &build_compiler.used, &build_compiler.size, &f_string_dynamics_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &build_indexer.array, &build_indexer.used, &build_indexer.size, &f_string_dynamics_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &build_language.array, &build_language.used, &build_language.size, &f_string_dynamics_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &build_name.array, &build_name.used, &build_name.size, &f_string_dynamics_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &build_script.array, &build_script.used, &build_script.size, &f_string_dynamics_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &build_shared.array, &build_shared.used, &build_shared.size, &f_string_dynamics_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &build_sources_object.array, &build_sources_object.used, &build_sources_object.size, &f_string_dynamics_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &build_sources_object_shared.array, &build_sources_object_shared.used, &build_sources_object_shared.size, &f_string_dynamics_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &build_sources_object_static.array, &build_sources_object_static.used, &build_sources_object_static.size, &f_string_dynamics_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &build_static.array, &build_static.used, &build_static.size, &f_string_dynamics_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &has_path_standard.array, &has_path_standard.used, &has_path_standard.size, &f_string_dynamics_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &path_headers.array, &path_headers.used, &path_headers.size, &f_string_dynamics_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &path_language.array, &path_language.used, &path_language.size, &f_string_dynamics_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &path_library_script.array, &path_library_script.used, &path_library_script.size, &f_string_dynamics_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &path_library_shared.array, &path_library_shared.used, &path_library_shared.size, &f_string_dynamics_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &path_library_static.array, &path_library_static.used, &path_library_static.size, &f_string_dynamics_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &path_object_script.array, &path_object_script.used, &path_object_script.size, &f_string_dynamics_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &path_object_shared.array, &path_object_shared.used, &path_object_shared.size, &f_string_dynamics_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &path_object_static.array, &path_object_static.used, &path_object_static.size, &f_string_dynamics_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &path_program_script.array, &path_program_script.used, &path_program_script.size, &f_string_dynamics_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &path_program_shared.array, &path_program_shared.used, &path_program_shared.size, &f_string_dynamics_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &path_program_static.array, &path_program_static.used, &path_program_static.size, &f_string_dynamics_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &path_sources.array, &path_sources.used, &path_sources.size, &f_string_dynamics_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &path_sources_object.array, &path_sources_object.used, &path_sources_object.size, &f_string_dynamics_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &preserve_path_headers.array, &preserve_path_headers.used, &preserve_path_headers.size, &f_string_dynamics_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &process_post.array, &process_post.used, &process_post.size, &f_string_dynamics_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &process_pre.array, &process_pre.used, &process_pre.size, &f_string_dynamics_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &search_exclusive.array, &search_exclusive.used, &search_exclusive.size, &f_string_dynamics_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &search_shared.array, &search_shared.used, &search_shared.size, &f_string_dynamics_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &search_static.array, &search_static.used, &search_static.size, &f_string_dynamics_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &version_file.array, &version_file.used, &version_file.size, &f_string_dynamics_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &version_major.array, &version_major.used, &version_major.size, &f_string_dynamics_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &version_major_prefix.array, &version_major_prefix.used, &version_major_prefix.size, &f_string_dynamics_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &version_micro.array, &version_micro.used, &version_micro.size, &f_string_dynamics_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &version_micro_prefix.array, &version_micro_prefix.used, &version_micro_prefix.size, &f_string_dynamics_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &version_minor.array, &version_minor.used, &version_minor.size, &f_string_dynamics_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &version_minor_prefix.array, &version_minor_prefix.used, &version_minor_prefix.size, &f_string_dynamics_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &version_nano.array, &version_nano.used, &version_nano.size, &f_string_dynamics_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &version_nano_prefix.array, &version_nano_prefix.used, &version_nano_prefix.size, &f_string_dynamics_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &version_target.array, &version_target.used, &version_target.size, &f_string_dynamics_delete_callback);
   }
 #endif // _di_fake_build_load_setting_process_
 
@@ -1430,7 +1430,7 @@ extern "C" {
       }
     } // for
 
-    f_string_dynamic_resize(0, &settings_file_base);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &settings_file_base.string, &settings_file_base.used, &settings_file_base.size);
   }
 #endif // _di_fake_build_load_stage_
 

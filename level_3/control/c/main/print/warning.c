@@ -13,7 +13,7 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QThe received response header '%]", print->to, print->set->warning, print->prefix, print->set->warning);
-    fl_print_format("%[%Q%]", print->to, print->set->notable, response_header, print->set->notable);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->set->notable, response_header, print->set->notable);
     fl_print_format("%[' is repeated.%]%r", print->to, print->set->warning, print->set->warning, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
@@ -34,7 +34,7 @@ extern "C" {
     fl_print_format("%[%ui%]", print->to, print->set->notable, status_of, print->set->notable);
     fl_print_format("%[, failing with status code%] ", print->to, print->set->warning, status_error, print->set->warning);
     fl_print_format("%[%ui%]", print->to, print->set->notable, status_error, print->set->notable);
-    fl_print_format("%[.%]%r", print->to, print->set->warning, print->set->warning, f_string_eol_s);
+    fl_print_format(f_string_format_sentence_end_s.string, print->to, print->set->warning, print->set->warning, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
 
@@ -51,7 +51,7 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QThe action '%]", print->to, print->set->warning, print->prefix, print->set->warning);
-    fl_print_format("%[%q%]", print->to, print->set->notable, control_action_type_name(header.action), print->set->notable);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->set->notable, control_action_type_name(header.action), print->set->notable);
     fl_print_format("%[' could not be performed because the service is busy.%]%r", print->to, print->set->warning, print->set->warning, f_string_eol_s);
 
     f_file_stream_unlock(print->to);

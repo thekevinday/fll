@@ -170,7 +170,7 @@ extern "C" {
                   f_file_stream_lock(main->warning.to);
 
                   fl_print_format("%r%[%Q'%]", main->warning.to, f_string_eol_s, main->warning.context, main->warning.prefix, main->warning.context);
-                  fl_print_format("%[%Q%]", main->warning.to, main->warning.notable, data.argv[index], main->warning.notable);
+                  fl_print_format(f_string_format_Q_single_s.string, main->warning.to, main->warning.notable, data.argv[index], main->warning.notable);
                   fl_print_format("%[' is not a valid show option.%]%r", main->warning.to, main->warning.context, main->warning.context, f_string_eol_s);
 
                   f_file_stream_unlock(main->warning.to);
@@ -522,7 +522,7 @@ extern "C" {
             path_file.used = 0;
             local.device = i;
 
-            status = f_string_dynamic_increase_by(firewall_network_path_s.used + data.devices.array[i].used + firewall_file_suffix_s.used + 1, &path_file);
+            status = f_memory_array_increase_by(firewall_network_path_s.used + data.devices.array[i].used + firewall_file_suffix_s.used + 1, sizeof(f_char_t), (void **) &path_file.string, &path_file.used, &path_file.size);
 
             if (F_status_is_error_not(status)) {
               status = f_string_dynamic_append(firewall_network_path_s, &path_file);
@@ -551,7 +551,7 @@ extern "C" {
               firewall_delete_local_data(&local);
               firewall_data_delete(&data);
 
-              f_string_dynamic_resize(0, &path_file);
+              f_memory_array_resize(0, sizeof(f_char_t), (void **) &path_file.string, &path_file.used, &path_file.size);
 
               return status;
             }
@@ -567,7 +567,7 @@ extern "C" {
                 continue;
               }
 
-              f_string_dynamic_resize(0, &path_file);
+              f_memory_array_resize(0, sizeof(f_char_t), (void **) &path_file.string, &path_file.used, &path_file.size);
               firewall_data_delete(&data);
 
               return F_status_set_error(status);
@@ -597,7 +597,7 @@ extern "C" {
               status = firewall_process_rules(&data, &input, &local);
 
               if (F_status_is_error(status) || command == firewall_parameter_command_stop_e || status == F_child) {
-                f_string_dynamic_resize(0, &path_file);
+                f_memory_array_resize(0, sizeof(f_char_t), (void **) &path_file.string, &path_file.used, &path_file.size);
 
                 firewall_delete_local_data(&local);
                 firewall_data_delete(&data);
@@ -622,7 +622,7 @@ extern "C" {
           }
 
           if (F_status_is_error(status) || status == F_child) {
-            f_string_dynamic_resize(0, &path_file);
+            f_memory_array_resize(0, sizeof(f_char_t), (void **) &path_file.string, &path_file.used, &path_file.size);
 
             firewall_delete_local_data(&local);
             firewall_data_delete(&data);
@@ -633,7 +633,7 @@ extern "C" {
           status = firewall_create_custom_chains(&data, &reserved, &local);
 
           if (F_status_is_error(status) || status == F_child) {
-            f_string_dynamic_resize(0, &path_file);
+            f_memory_array_resize(0, sizeof(f_char_t), (void **) &path_file.string, &path_file.used, &path_file.size);
 
             firewall_delete_local_data(&local);
             firewall_data_delete(&data);
@@ -658,7 +658,7 @@ extern "C" {
             status = firewall_process_rules(&data, &input, &local);
 
             if (F_status_is_error(status) || command == firewall_parameter_command_stop_e || status == F_child) {
-              f_string_dynamic_resize(0, &path_file);
+              f_memory_array_resize(0, sizeof(f_char_t), (void **) &path_file.string, &path_file.used, &path_file.size);
 
               firewall_delete_local_data(&local);
               firewall_data_delete(&data);
@@ -669,7 +669,7 @@ extern "C" {
             ++i;
           } // while
 
-          f_string_dynamic_resize(0, &path_file);
+          f_memory_array_resize(0, sizeof(f_char_t), (void **) &path_file.string, &path_file.used, &path_file.size);
         }
       }
 

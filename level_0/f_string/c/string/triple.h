@@ -33,6 +33,8 @@ extern "C" {
 
   #define f_string_triple_t_initialize { f_string_dynamic_t_initialize, f_string_dynamic_t_initialize, f_string_dynamic_t_initialize }
 
+  #define macro_f_string_triple_t_initialize_1(a, b, c) { a, b, c }
+
   #define macro_f_string_triple_t_clear(triple) \
     triple.a.array = 0; \
     triple.a.size = 0; \
@@ -43,18 +45,6 @@ extern "C" {
     triple.c.array = 0; \
     triple.c.size = 0; \
     triple.c.used = 0;
-
-  #define macro_f_string_triple_t_initialize_1(a, b, c) { a, b, c }
-
-  #define macro_f_string_triple_t_delete_simple(triple) \
-    macro_f_string_dynamic_t_delete_simple(triple.a) \
-    macro_f_string_dynamic_t_delete_simple(triple.b) \
-    macro_f_string_dynamic_t_delete_simple(triple.c)
-
-  #define macro_f_string_triple_t_destroy_simple(triple) \
-    macro_f_string_dynamic_t_destroy_simple(triple.a) \
-    macro_f_string_dynamic_t_destroy_simple(triple.b) \
-    macro_f_string_dynamic_t_destroy_simple(triple.c)
 #endif // _di_f_string_triple_t_
 
 #ifdef __cplusplus

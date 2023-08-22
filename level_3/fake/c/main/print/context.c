@@ -49,7 +49,7 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%Q%S'%]", print->to, print->context, print->prefix, before, print->context);
-    fl_print_format("%[%Q%]", print->to, print->notable, variable, print->notable);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->notable, variable, print->notable);
     fl_print_format("%['%S.%]%r", print->to, print->context, after, print->context, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
@@ -96,7 +96,7 @@ extern "C" {
     fl_print_format("%[%Q%S'%]", print->to, print->context, print->prefix, before, print->context);
     fl_print_format("%[%Q%Q%]", print->to, print->notable, symbol, name, print->notable);
     fl_print_format("%['%S'%]%r", print->to, print->context, between, print->context);
-    fl_print_format("%[%Q%]", print->to, print->notable, value, print->notable);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->notable, value, print->notable);
     fl_print_format("%['%S.%]%r", print->to, print->context, after, print->context, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
@@ -130,7 +130,7 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%Q%S'%]", print->to, print->context, print->prefix, before, print->context);
-    fl_print_format("%[%Q%]", print->to, print->notable, variable, print->notable);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->notable, variable, print->notable);
     fl_print_format("%['%S.%]%r", print->to, print->context, after, print->context, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
@@ -145,9 +145,9 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%Q%S'%]", print->to, print->context, print->prefix, before, print->context);
-    fl_print_format("%[%Q%]", print->to, print->notable, first, print->notable);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->notable, first, print->notable);
     fl_print_format("%['%S'%]", print->to, print->context, between, print->context);
-    fl_print_format("%[%Q%]", print->to, print->notable, second, print->notable);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->notable, second, print->notable);
     fl_print_format("%['%S.%]%r", print->to, print->context, after, print->context, f_string_eol_s);
 
     f_file_stream_unlock(print->to);

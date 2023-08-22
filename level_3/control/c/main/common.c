@@ -442,28 +442,28 @@ extern "C" {
     main->cache.large.used = 0;
 
     if (main->cache.large.size > control_default_buffer_limit_soft_large_d) {
-      main->setting.state.status = f_string_dynamic_resize(control_default_buffer_limit_soft_large_d, &main->cache.large);
+      main->setting.state.status = f_memory_array_resize(control_default_buffer_limit_soft_large_d, sizeof(f_char_t), (void **) &main->cache.large.string, &main->cache.large.used, &main->cache.large.size);
 
       if (F_status_is_error(main->setting.state.status)) {
         if ((main->setting.flag & control_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
           fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
         }
 
-        control_print_error(&main->program.error, macro_control_f(f_string_dynamic_resize));
+        control_print_error(&main->program.error, macro_control_f(f_memory_array_resize));
 
         return;
       }
     }
 
     if (main->program.parameters.remaining.used) {
-      main->setting.state.status = f_string_dynamics_increase_by(main->program.parameters.remaining.used, &main->setting.actions);
+      main->setting.state.status = f_memory_array_increase_by(main->program.parameters.remaining.used, sizeof(f_string_dynamic_t), (void **) &main->setting.actions.array, &main->setting.actions.used, &main->setting.actions.size);
 
       if (F_status_is_error(main->setting.state.status)) {
         if ((main->setting.flag & control_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
           fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
         }
 
-        control_print_error(&main->program.error, macro_control_f(f_string_dynamics_increase_by));
+        control_print_error(&main->program.error, macro_control_f(f_memory_array_increase_by));
 
         return;
       }

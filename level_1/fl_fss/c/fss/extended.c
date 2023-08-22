@@ -165,7 +165,7 @@ extern "C" {
     if (state->status == F_data_not_stop || state->status == F_data_not_eos) {
 
       // Content that is empty must be represented by a quote empty string.
-      status = f_string_dynamic_increase_by(state->step_small + 4, destination);
+      status = f_memory_array_increase_by(state->step_small + 4, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
 
       if (F_status_is_error(status)) {
         state->status = status;
@@ -189,7 +189,7 @@ extern "C" {
     }
 
     // Ensure that there is room, including the slash delimit and possibly the end of content characters.
-    status = f_string_dynamic_increase_by(state->step_small + 2, destination);
+    status = f_memory_array_increase_by(state->step_small + 2, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
 
     if (F_status_is_error(status)) {
       state->status = status;
@@ -263,7 +263,7 @@ void fl_fss_extended_object_write(const f_string_static_t object, const uint8_t 
     if (state->status == F_data_not_stop || state->status == F_data_not_eos) {
 
       // Objects cannot be empty, so write a quote empty string.
-      status = f_string_dynamic_increase_by(state->step_small + 2, destination);
+      status = f_memory_array_increase_by(state->step_small + 2, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
 
       if (F_status_is_error(status)) {
         destination->used = destination_used;
@@ -292,7 +292,7 @@ void fl_fss_extended_object_write(const f_string_static_t object, const uint8_t 
         }
 
         if (complete != f_fss_complete_trim_e) {
-          status = f_string_dynamic_increase(state->step_large, destination);
+          status = f_memory_array_increase(state->step_large, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
 
           if (F_status_is_error(status)) {
             destination->used = destination_used;

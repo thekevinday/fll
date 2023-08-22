@@ -20,7 +20,7 @@ extern "C" {
       if (buffer.string[range->start] == f_fss_placeholder_s.string[0]) continue;
       if (buffer.string[range->start] == f_fss_eol_s.string[0]) break;
 
-      state->status = f_string_dynamic_increase(state->step_large, destination);
+      state->status = f_memory_array_increase(state->step_large, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
       if (F_status_is_error(state->status)) break;
 
       destination->string[destination->used++] = buffer.string[range->start];
@@ -753,7 +753,7 @@ extern "C" {
     }
 
     // Ensure that there is room for the potential start and stop quotes, a potential delimit at start, and the potential object open character.
-    state->status = f_string_dynamic_increase_by(state->step_small + 5, destination);
+    state->status = f_memory_array_increase_by(state->step_small + 5, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
     if (F_status_is_error(state->status)) return;
 
     const f_number_unsigned_t input_start = range->start;
@@ -815,13 +815,13 @@ extern "C" {
 
             // If this is the first quote, then only a single delimit slash is needed.
             if (item_first == input_start) {
-              state->status = f_string_dynamic_increase(state->step_large, destination);
+              state->status = f_memory_array_increase(state->step_large, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
               if (F_status_is_error(state->status)) break;
 
               destination->string[destination->used++] = f_fss_slash_s.string[0];
             }
             else {
-              state->status = f_string_dynamic_increase_by(item_total, destination);
+              state->status = f_memory_array_increase_by(item_total, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
               if (F_status_is_error(state->status)) break;
 
               for (i = 0; i < item_total; ++i) {
@@ -830,7 +830,7 @@ extern "C" {
             }
           }
 
-          state->status = f_string_dynamic_increase_by(item_total, destination);
+          state->status = f_memory_array_increase_by(item_total, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
           if (F_status_is_error(state->status)) break;
 
           for (i = 0; i < item_total; ++i) {
@@ -854,7 +854,7 @@ extern "C" {
 
           if (range->start > range->stop || range->start >= object.used) {
 
-            state->status = f_string_dynamic_increase_by(item_total + 1, destination);
+            state->status = f_memory_array_increase_by(item_total + 1, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
             if (F_status_is_error(state->status)) break;
 
             for (i = 0; i < item_total; ++i) {
@@ -879,7 +879,7 @@ extern "C" {
 
             quoted_is = F_true;
 
-            state->status = f_string_dynamic_increase_by(item_total + 1, destination);
+            state->status = f_memory_array_increase_by(item_total + 1, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
             if (F_status_is_error(state->status)) break;
 
             // Add the slashes that delimit the slashes.
@@ -895,7 +895,7 @@ extern "C" {
 
           width = macro_f_utf_byte_width(object.string[range->start]);
 
-          state->status = f_string_dynamic_increase_by(item_total + width + 1, destination);
+          state->status = f_memory_array_increase_by(item_total + width + 1, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
           if (F_status_is_error(state->status)) break;
 
           for (i = 0; i < item_total; ++i) {
@@ -915,7 +915,7 @@ extern "C" {
             commented = F_true;
           }
 
-          state->status = f_string_dynamic_increase_by(item_total + 1, destination);
+          state->status = f_memory_array_increase_by(item_total + 1, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
           if (F_status_is_error(state->status)) break;
 
           for (i = 0; i < item_total; ++i) {
@@ -944,7 +944,7 @@ extern "C" {
 
           width = macro_f_utf_byte_width(object.string[range->start]);
 
-          state->status = f_string_dynamic_increase_by(item_total + width, destination);
+          state->status = f_memory_array_increase_by(item_total + width, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
           if (F_status_is_error(state->status)) break;
 
           // There is nothing to delimit, so all slashes should be printed as is.
@@ -962,7 +962,7 @@ extern "C" {
 
         // The very first quote, must be escaped, when quoting is disabled.
         if (item_first == input_start) {
-          state->status = f_string_dynamic_increase(state->step_large, destination);
+          state->status = f_memory_array_increase(state->step_large, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
           if (F_status_is_error(state->status)) break;
 
           destination->string[used_start + 1] = f_fss_slash_s.string[0];
@@ -973,7 +973,7 @@ extern "C" {
 
         if (range->start > range->stop || range->start >= object.used) {
 
-          state->status = f_string_dynamic_increase(state->step_large, destination);
+          state->status = f_memory_array_increase(state->step_large, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
           if (F_status_is_error(state->status)) break;
 
           destination->string[destination->used++] = quote_char;
@@ -982,7 +982,7 @@ extern "C" {
         }
 
         if (object.string[range->start] == quote_char) {
-          state->status = f_string_dynamic_increase(state->step_large, destination);
+          state->status = f_memory_array_increase(state->step_large, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
           if (F_status_is_error(state->status)) break;
 
           destination->string[destination->used++] = quote_char;
@@ -1003,7 +1003,7 @@ extern "C" {
           }
 
           if (item_first != input_start) {
-            state->status = f_string_dynamic_increase(state->step_large, destination);
+            state->status = f_memory_array_increase(state->step_large, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
             if (F_status_is_error(state->status)) break;
 
             destination->string[destination->used++] = f_fss_slash_s.string[0];
@@ -1014,7 +1014,7 @@ extern "C" {
 
         width = macro_f_utf_byte_width(object.string[range->start]);
 
-        state->status = f_string_dynamic_increase_by(width + 1, destination);
+        state->status = f_memory_array_increase_by(width + 1, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
         if (F_status_is_error(state->status)) break;
 
         destination->string[destination->used++] = quote_char;
@@ -1040,7 +1040,7 @@ extern "C" {
 
         width = macro_f_utf_byte_width(object.string[range->start]);
 
-        state->status = f_string_dynamic_increase_by(width, destination);
+        state->status = f_memory_array_increase_by(width, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
         if (F_status_is_error(state->status)) break;
 
         for (i = 0; i < width; ++i) {
@@ -1059,7 +1059,7 @@ extern "C" {
     }
 
     if (quoted_is) {
-      f_string_dynamic_increase_by(state->step_small + 2, destination);
+      state->status = f_memory_array_increase_by(state->step_small + 2, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
 
       if (F_status_is_error(state->status)) {
         destination->used = used_start;

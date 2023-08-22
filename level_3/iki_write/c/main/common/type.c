@@ -19,13 +19,13 @@ extern "C" {
 
     if (!setting) return F_status_set_error(F_parameter);
 
-    f_string_dynamic_resize(0, &setting->escaped);
-    f_string_dynamic_resize(0, &setting->buffer);
-    f_string_dynamic_resize(0, &setting->object);
-    f_string_dynamic_resize(0, &setting->content);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &setting->escaped.string, &setting->escaped.used, &setting->escaped.size);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &setting->buffer.string, &setting->buffer.used, &setting->buffer.size);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &setting->object.string, &setting->object.used, &setting->object.size);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &setting->content.string, &setting->content.used, &setting->content.size);
 
-    f_string_dynamics_resize(0, &setting->objects);
-    f_string_dynamics_resize(0, &setting->contents);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &setting->objects.array, &setting->objects.used, &setting->objects.size, &f_string_dynamics_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &setting->contents.array, &setting->contents.used, &setting->contents.size, &f_string_dynamics_delete_callback);
 
     return F_okay;
   }

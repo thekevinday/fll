@@ -116,10 +116,10 @@ extern "C" {
         }
 
         // Pre-allocate entire file buffer plus space for the terminating NULL.
-        main->setting.state.status = f_string_dynamic_increase_by(size_file + 1, &main->setting.buffer);
+        main->setting.state.status = f_memory_array_increase_by(size_file + 1, sizeof(f_char_t), (void **) &main->setting.buffer.string, &main->setting.buffer.used, &main->setting.buffer.size);
 
         if (F_status_is_error(main->setting.state.status)) {
-          iki_read_print_error_file(&main->program.error, macro_iki_read_f(f_string_dynamic_increase_by), main->setting.files.array[i], f_file_operation_process_s, fll_error_file_type_file_e);
+          iki_read_print_error_file(&main->program.error, macro_iki_read_f(f_memory_array_increase_by), main->setting.files.array[i], f_file_operation_process_s, fll_error_file_type_file_e);
 
           break;
         }

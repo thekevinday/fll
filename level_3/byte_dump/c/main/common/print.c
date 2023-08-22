@@ -10,7 +10,7 @@ extern "C" {
     "f_console_parameter_process",
     "f_file_exists",
     "f_file_stream_open",
-    "f_string_dynamics_increase_by",
+    "f_memory_array_increase_by",
     "f_thread_create",
     "fl_conversion_dynamic_to_unsigned_detect",
     "fll_program_parameter_process_context_standard",

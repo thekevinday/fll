@@ -176,11 +176,9 @@ extern "C" {
  *   Set to NULL to not use.
  *
  *   Errors (with error bit) from: f_memory_array_increase_by().
- *   Errors (with error bit) from: f_string_dynamics_increase_by().
  *   Errors (with error bit) from: f_utf_char_to_character().
  *
  * @see f_memory_array_increase_by()
- * @see f_string_dynamics_increase_by()
  * @see f_utf_char_to_character()
  */
 #ifndef _di_f_console_parameter_process_

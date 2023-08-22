@@ -925,12 +925,12 @@ extern "C" {
  *
  *   F_failure (with error bit) on any other failure.
  *
- *   Errors (with error bit) from: f_string_dynamic_resize().
+ *   Errors (with error bit) from: f_memory_array_resize().
  *
  * @see cap_free()
  * @see cap_to_name()
  *
- * @see f_string_dynamic_resize()
+ * @see f_memory_array_resize()
  */
 #ifndef _di_f_capability_to_name_
   extern f_status_t f_capability_to_name(const f_capability_value_t code, f_string_dynamic_t * const name);
@@ -957,12 +957,12 @@ extern "C" {
  *
  *   F_failure (with error bit) on any other failure.
  *
- *   Errors (with error bit) from: f_string_dynamic_resize().
+ *   Errors (with error bit) from: f_memory_array_resize().
  *
  * @see cap_free()
  * @see cap_to_text()
  *
- * @see f_string_dynamic_resize()
+ * @see f_memory_array_resize()
  */
 #ifndef _di_f_capability_to_text_
   extern f_status_t f_capability_to_text(const f_capability_t capability, f_string_dynamic_t * const text);

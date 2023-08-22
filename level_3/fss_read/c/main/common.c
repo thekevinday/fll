@@ -586,14 +586,14 @@ extern "C" {
           }
 
           // Pre-allocate entire file buffer plus space for the terminating NULL.
-          f_string_dynamic_increase_by(size_file + 1, &main->setting.buffer);
+          main->setting.state.status = f_memory_array_increase_by(size_file + 1, sizeof(f_char_t), (void **) &main->setting.buffer.string, &main->setting.buffer.used, &main->setting.buffer.size);
 
           if (F_status_is_error(main->setting.state.status)) {
             if ((main->setting.flag & fss_read_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
               fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
             }
 
-            fll_error_file_print(&main->program.error, F_status_set_fine(main->setting.state.status), macro_fss_read_f(f_string_dynamic_increase_by), fll_error_file_flag_fallback_e, parameters->arguments.array[index], f_file_operation_process_s, fll_error_file_type_file_e);
+            fll_error_file_print(&main->program.error, F_status_set_fine(main->setting.state.status), macro_fss_read_f(f_memory_array_increase_by), fll_error_file_flag_fallback_e, parameters->arguments.array[index], f_file_operation_process_s, fll_error_file_type_file_e);
 
             break;
           }

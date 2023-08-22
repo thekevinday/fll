@@ -37,16 +37,10 @@ extern "C" {
   #define macro_f_string_tripless_t_initialize_1(array, size, used) { array, size, used }
   #define macro_f_string_tripless_t_initialize_2(array, length) { array, length, length }
 
-  #define macro_f_string_tripless_t_resize(status, tripless, length) status = f_string_tripless_resize(length, &tripless);
-  #define macro_f_string_tripless_t_adjust(status, tripless, length) status = f_string_tripless_adjust(length, &tripless);
-
-  #define macro_f_string_tripless_t_delete_simple(tripless)  f_string_tripless_resize(0, &tripless);
-  #define macro_f_string_tripless_t_destroy_simple(tripless) f_string_tripless_adjust(0, &tripless);
-
-  #define macro_f_string_tripless_t_increase(status, step, tripless)      status = f_string_tripless_increase(step, tripless);
-  #define macro_f_string_tripless_t_increase_by(status, tripless, amount) status = f_string_tripless_increase_by(amount, tripless);
-  #define macro_f_string_tripless_t_decrease_by(status, tripless, amount) status = f_string_tripless_decrease_by(amount, tripless);
-  #define macro_f_string_tripless_t_decimate_by(status, tripless, amount) status = f_string_tripless_decimate_by(amount, tripless);
+  #define macro_f_string_tripless_t_clear(tripless) \
+    tripless.array = 0; \
+    tripless.size = 0; \
+    tripless.used = 0;
 #endif // _di_f_string_tripless_t_
 
 /**

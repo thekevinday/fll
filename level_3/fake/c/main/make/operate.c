@@ -20,10 +20,10 @@ extern "C" {
     data_make.data = data;
     data_make.main = main;
 
-    main->setting.state.status = f_string_dynamics_increase(main->setting.state.step_small, &data_make.path.stack);
+    main->setting.state.status = f_memory_array_increase(main->setting.state.step_small, sizeof(f_string_dynamic_t), (void **) &data_make.path.stack.array, &data_make.path.stack.used, &data_make.path.stack.size);
 
     if (F_status_is_error(main->setting.state.status)) {
-      fake_print_error(&data_make.main->program.error, macro_fake_f(f_string_dynamics_increase));
+      fake_print_error(&data_make.main->program.error, macro_fake_f(f_memory_array_increase));
 
       return;
     }
@@ -226,10 +226,10 @@ extern "C" {
     fake_main_t * const main = data_make->main;
 
     // Pre-allocate the known arguments size.
-    main->setting.state.status = f_string_dynamics_increase_by(content.used, &main->cache_arguments);
+    main->setting.state.status = f_memory_array_increase_by(content.used, sizeof(f_string_dynamic_t), (void **) &main->cache_arguments.array, &main->cache_arguments.used, &main->cache_arguments.size);
 
     if (F_status_is_error(main->setting.state.status) || main->setting.state.status == F_string_too_large) {
-      fake_print_error(&main->program.error, macro_fake_f(f_string_dynamics_increase_by));
+      fake_print_error(&main->program.error, macro_fake_f(f_memory_array_increase_by));
 
       return;
     }
@@ -347,10 +347,10 @@ extern "C" {
     main->setting.state.handle = 0;
     main->setting.state.data = 0;
 
-    main->setting.state.status = f_string_dynamics_increase(main->setting.state.step_small, &main->cache_arguments);
+    main->setting.state.status = f_memory_array_increase(main->setting.state.step_small, sizeof(f_string_dynamic_t), (void **) &main->cache_arguments.array, &main->cache_arguments.used, &main->cache_arguments.size);
 
     if (F_status_is_error(main->setting.state.status)) {
-      fake_print_error(&main->program.error, macro_fake_f(f_string_dynamics_increase));
+      fake_print_error(&main->program.error, macro_fake_f(f_memory_array_increase));
 
       return;
     }
@@ -366,10 +366,10 @@ extern "C" {
         if (quotes.array[i]) {
           ++main->cache_arguments.used;
 
-          main->setting.state.status = f_string_dynamics_increase(main->setting.state.step_small, &main->cache_arguments);
+          main->setting.state.status = f_memory_array_increase(main->setting.state.step_small, sizeof(f_string_dynamic_t), (void **) &main->cache_arguments.array, &main->cache_arguments.used, &main->cache_arguments.size);
 
           if (F_status_is_error(main->setting.state.status)) {
-            fake_print_error(&main->program.error, macro_fake_f(f_string_dynamics_increase));
+            fake_print_error(&main->program.error, macro_fake_f(f_memory_array_increase));
 
             break;
           }
@@ -478,10 +478,10 @@ extern "C" {
             else if (f_compare_dynamic_partial_string(fake_make_parameter_variable_top_s.string, main->buffer, fake_make_parameter_variable_top_s.used, iki_data->content.array[j]) == F_equal_to) {
 
               if (data_make->path.stack.used) {
-                main->setting.state.status = f_string_dynamic_increase_by(data_make->path.stack.array[0].used + f_path_separator_s.used + 1, &main->cache_arguments.array[main->cache_arguments.used]);
+                main->setting.state.status = f_memory_array_increase_by(data_make->path.stack.array[0].used + f_path_separator_s.used + 1, sizeof(f_char_t), (void **) &main->cache_arguments.array[main->cache_arguments.used].string, &main->cache_arguments.array[main->cache_arguments.used].used, &main->cache_arguments.array[main->cache_arguments.used].size);
 
                 if (F_status_is_error(main->setting.state.status)) {
-                  fake_print_error(&main->program.error, macro_fake_f(f_string_dynamic_increase_by));
+                  fake_print_error(&main->program.error, macro_fake_f(f_memory_array_increase_by));
 
                   break;
                 }
@@ -509,10 +509,10 @@ extern "C" {
             else if (f_compare_dynamic_partial_string(fake_make_parameter_variable_current_s.string, main->buffer, fake_make_parameter_variable_current_s.used, iki_data->content.array[j]) == F_equal_to) {
 
               if (data_make->path.stack.used) {
-                main->setting.state.status = f_string_dynamic_increase_by(data_make->path.stack.array[data_make->path.stack.used - 1].used + f_path_separator_s.used + 1, &main->cache_arguments.array[main->cache_arguments.used]);
+                main->setting.state.status = f_memory_array_increase_by(data_make->path.stack.array[data_make->path.stack.used - 1].used + f_path_separator_s.used + 1, sizeof(f_char_t), (void **) &main->cache_arguments.array[main->cache_arguments.used].string, &main->cache_arguments.array[main->cache_arguments.used].used, &main->cache_arguments.array[main->cache_arguments.used].size);
 
                 if (F_status_is_error(main->setting.state.status)) {
-                  fake_print_error(&main->program.error, macro_fake_f(f_string_dynamic_increase_by));
+                  fake_print_error(&main->program.error, macro_fake_f(f_memory_array_increase_by));
 
                   break;
                 }
@@ -560,10 +560,10 @@ extern "C" {
                     } // for
                   } // for
 
-                  main->setting.state.status = f_string_dynamic_increase_by(l + f_string_space_s.used + 1, &main->cache_arguments.array[main->cache_arguments.used]);
+                  main->setting.state.status = f_memory_array_increase_by(l + f_string_space_s.used + 1, sizeof(f_char_t), (void **) &main->cache_arguments.array[main->cache_arguments.used].string, &main->cache_arguments.array[main->cache_arguments.used].used, &main->cache_arguments.array[main->cache_arguments.used].size);
 
                   if (F_status_is_error(main->setting.state.status)) {
-                    fake_print_error(&main->program.error, macro_fake_f(f_string_dynamic_increase_by));
+                    fake_print_error(&main->program.error, macro_fake_f(f_memory_array_increase_by));
 
                     break;
                   }
@@ -605,10 +605,10 @@ extern "C" {
                     if (separate) {
                       ++main->cache_arguments.used;
 
-                      main->setting.state.status = f_string_dynamics_increase(main->setting.state.step_small, &main->cache_arguments);
+                      main->setting.state.status = f_memory_array_increase(main->setting.state.step_small, sizeof(f_string_dynamic_t), (void **) &main->cache_arguments.array, &main->cache_arguments.used, &main->cache_arguments.size);
 
                       if (F_status_is_error(main->setting.state.status)) {
-                        fake_print_error(&main->program.error, macro_fake_f(f_string_dynamics_increase));
+                        fake_print_error(&main->program.error, macro_fake_f(f_memory_array_increase));
 
                         break;
                       }
@@ -658,10 +658,10 @@ extern "C" {
                       } // for
                     } // for
 
-                    main->setting.state.status = f_string_dynamic_increase_by(l + f_string_space_s.used + 1, &main->cache_arguments.array[main->cache_arguments.used]);
+                    main->setting.state.status = f_memory_array_increase_by(l + f_string_space_s.used + 1, sizeof(f_char_t), (void **) &main->cache_arguments.array[main->cache_arguments.used].string, &main->cache_arguments.array[main->cache_arguments.used].used, &main->cache_arguments.array[main->cache_arguments.used].size);
 
                     if (F_status_is_error(main->setting.state.status)) {
-                      fake_print_error(&main->program.error, macro_fake_f(f_string_dynamic_increase_by));
+                      fake_print_error(&main->program.error, macro_fake_f(f_memory_array_increase_by));
 
                       break;
                     }
@@ -686,10 +686,10 @@ extern "C" {
                       else {
                         ++main->cache_arguments.used;
 
-                        main->setting.state.status = f_string_dynamics_increase(main->setting.state.step_small, &main->cache_arguments);
+                        main->setting.state.status = f_memory_array_increase(main->setting.state.step_small, sizeof(f_string_dynamic_t), (void **) &main->cache_arguments.array, &main->cache_arguments.used, &main->cache_arguments.size);
 
                         if (F_status_is_error(main->setting.state.status)) {
-                          fake_print_error(&main->program.error, macro_fake_f(f_string_dynamics_increase));
+                          fake_print_error(&main->program.error, macro_fake_f(f_memory_array_increase));
 
                           break;
                         }
@@ -793,10 +793,10 @@ extern "C" {
         if (!(content.array[i].start == iki_data->variable.array[0].start && content.array[i].stop == iki_data->variable.array[0].stop && !quotes.array[i]) || (iki_type & 0xb) && !quotes.array[i] || i && content.used > 1 && i + 1 == content.used) {
           ++main->cache_arguments.used;
 
-          main->setting.state.status = f_string_dynamics_increase(main->setting.state.step_small, &main->cache_arguments);
+          main->setting.state.status = f_memory_array_increase(main->setting.state.step_small, sizeof(f_string_dynamic_t), (void **) &main->cache_arguments.array, &main->cache_arguments.used, &main->cache_arguments.size);
 
           if (F_status_is_error(main->setting.state.status)) {
-            fake_print_error(&main->program.error, macro_fake_f(f_string_dynamics_increase));
+            fake_print_error(&main->program.error, macro_fake_f(f_memory_array_increase));
 
             break;
           }
@@ -815,10 +815,10 @@ extern "C" {
 
         ++main->cache_arguments.used;
 
-        main->setting.state.status = f_string_dynamics_increase(main->setting.state.step_small, &main->cache_arguments);
+        main->setting.state.status = f_memory_array_increase(main->setting.state.step_small, sizeof(f_string_dynamic_t), (void **) &main->cache_arguments.array, &main->cache_arguments.used, &main->cache_arguments.size);
 
         if (F_status_is_error(main->setting.state.status)) {
-          fake_print_error(&main->program.error, macro_fake_f(f_string_dynamics_increase));
+          fake_print_error(&main->program.error, macro_fake_f(f_memory_array_increase));
 
           break;
         }
@@ -1119,7 +1119,7 @@ extern "C" {
     if (F_status_is_error_not(main->setting.state.status) && !quote) {
       ++main->cache_arguments.used;
 
-      main->setting.state.status = f_string_dynamics_increase(main->setting.state.step_small, &main->cache_arguments);
+      main->setting.state.status = f_memory_array_increase(main->setting.state.step_small, sizeof(f_string_dynamic_t), (void **) &main->cache_arguments.array, &main->cache_arguments.used, &main->cache_arguments.size);
     }
 
     if (F_status_is_error(main->setting.state.status)) return;
@@ -1197,7 +1197,7 @@ extern "C" {
     fake_string_dynamic_reset(&main->cache_1);
     fake_string_dynamic_reset(&main->cache_2);
 
-    main->setting.state.status = f_string_dynamic_increase_by((range_name.stop - range_name.start) + 2, &main->cache_1);
+    main->setting.state.status = f_memory_array_increase_by((range_name.stop - range_name.start) + 2, sizeof(f_char_t), (void **) &main->cache_1.string, &main->cache_1.used, &main->cache_1.size);
 
     if (F_status_is_error_not(main->setting.state.status)) {
       main->setting.state.status = f_string_dynamic_partial_append_nulless(main->buffer, range_name, &main->cache_1);
@@ -1215,10 +1215,10 @@ extern "C" {
       return;
     }
 
-    main->setting.state.status = f_string_dynamics_increase(main->setting.state.step_small, &main->cache_arguments);
+    main->setting.state.status = f_memory_array_increase(main->setting.state.step_small, sizeof(f_string_dynamic_t), (void **) &main->cache_arguments.array, &main->cache_arguments.used, &main->cache_arguments.size);
 
     if (F_status_is_error_not(main->setting.state.status)) {
-      main->setting.state.status = f_string_dynamic_increase_by(main->cache_2.used + 1, &main->cache_arguments.array[main->cache_arguments.used]);
+      main->setting.state.status = f_memory_array_increase_by(main->cache_2.used + 1, sizeof(f_char_t), (void **) &main->cache_arguments.array[main->cache_arguments.used].string, &main->cache_arguments.array[main->cache_arguments.used].used, &main->cache_arguments.array[main->cache_arguments.used].size);
     }
 
     if (F_status_is_error_not(main->setting.state.status)) {

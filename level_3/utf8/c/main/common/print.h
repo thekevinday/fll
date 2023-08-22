@@ -42,6 +42,7 @@ extern "C" {
     utf8_f_f_console_parameter_prioritize_right_e,
     utf8_f_f_console_parameter_process_e,
     utf8_f_f_file_stream_open_e,
+    utf8_f_f_memory_array_increase_by_e,
     utf8_f_f_string_dynamic_append_nulless_e,
     utf8_f_f_string_dynamics_increase_by_e,
     utf8_f_f_thread_create_e,

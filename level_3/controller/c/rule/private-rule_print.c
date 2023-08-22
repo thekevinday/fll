@@ -38,7 +38,7 @@ extern "C" {
 
     if (cache.name_action.used) {
       fl_print_format("%r '%]", print.to, item ? controller_action_s : controller_value_s, print.context);
-      fl_print_format("%[%Q%]", print.to, print.notable, cache.name_action, print.notable);
+      fl_print_format(f_string_format_Q_single_s.string, print.to, print.notable, cache.name_action, print.notable);
       fl_print_format("%[' on line%] ", print.to, print.context, print.context);
       fl_print_format("%[%un%]", print.to, print.notable, cache.line_action, print.notable);
       fl_print_format("%[ for ", print.to, print.context);
@@ -46,7 +46,7 @@ extern "C" {
 
     if (cache.name_item.used) {
       fl_print_format("rule %r '%]", print.to, item ? controller_item_s : controller_settings_s, print.context);
-      fl_print_format("%[%Q%]", print.to, print.notable, cache.name_item, print.notable);
+      fl_print_format(f_string_format_Q_single_s.string, print.to, print.notable, cache.name_item, print.notable);
       fl_print_format("%[' on line%] ", print.to, print.context, print.context);
       fl_print_format("%[%un%]", print.to, print.notable, cache.line_item, print.notable);
       fl_print_format("%[ for ", print.to, print.context);
@@ -86,7 +86,7 @@ extern "C" {
       controller_lock_print(print->to, (controller_thread_t *) process->main_thread);
 
       fl_print_format("%r%[%QThe %r '%]", print->to, f_string_eol_s, print->context, print->prefix, script_is ? controller_engine_s : controller_program_s, print->context);
-      fl_print_format("%[%Q%]", print->to, print->notable, name, print->notable);
+      fl_print_format(f_string_format_Q_single_s.string, print->to, print->notable, name, print->notable);
 
       if (status == F_control_group || status == F_limit || status == F_processor || status == F_schedule) {
         fl_print_format("%[' failed to setup the '%]%[", print->to, print->context, print->context, print->notable);
@@ -316,7 +316,7 @@ extern "C" {
         else {
           fl_print_format("%[' failed with the execute error code %]", print->to, print->context, print->context);
           fl_print_format("%[%i%]", print->to, print->notable, code, print->notable);
-          fl_print_format("%[.%]%r", print->to, print->context, print->context, f_string_eol_s);
+          fl_print_format(f_string_format_sentence_end_s.string, print->to, print->context, print->context, f_string_eol_s);
         }
       }
       else {
@@ -334,7 +334,7 @@ extern "C" {
     if (print.verbosity == f_console_verbosity_quiet_e) return;
 
     fl_print_format("%r%[%QThe rule '%]", print.to, f_string_eol_s, print.context, print.prefix, print.context);
-    fl_print_format("%[%Q%]", print.to, print.notable, alias, print.notable);
+    fl_print_format(f_string_format_Q_single_s.string, print.to, print.notable, alias, print.notable);
     fl_print_format("%[' is not designating a pid file.%]%r", print.to, print.context, print.context, f_string_eol_s);
   }
 #endif // _di_controller_rule_action_print_error_missing_pid_
@@ -345,7 +345,7 @@ extern "C" {
     if (print.verbosity == f_console_verbosity_quiet_e) return;
 
     fl_print_format("%r%[%QThe %r rule '%]", print.to, f_string_eol_s, print.context, print.prefix, need_want_wish, print.context);
-    fl_print_format("%[%Q%]", print.to, print.notable, value, print.notable);
+    fl_print_format(f_string_format_Q_single_s.string, print.to, print.notable, value, print.notable);
     fl_print_format("%[' %S.%]%r", print.to, print.context, why, print.context, f_string_eol_s);
   }
 #endif // _di_controller_rule_item_print_error_need_want_wish_
@@ -356,7 +356,7 @@ extern "C" {
     if (print.verbosity == f_console_verbosity_quiet_e) return;
 
     fl_print_format("%r%[%QThe rule '%]", print.to, f_string_eol_s, print.context, print.prefix, print.context);
-    fl_print_format("%[%Q%]", print.to, print.notable, alias, print.notable);
+    fl_print_format(f_string_format_Q_single_s.string, print.to, print.notable, alias, print.notable);
     fl_print_format("%[' is no longer loaded.%]%r", print.to, print.context, print.context, f_string_eol_s);
   }
 #endif // _di_controller_rule_item_print_error_rule_not_loaded_

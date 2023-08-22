@@ -54,12 +54,12 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_failure (with error bit) on any other error.
  *
- *   Errors (with error bit) from: f_string_dynamic_increase_by().
+ *   Errors (with error bit) from: f_memory_array_increase_by().
  *
  * @see getpwuid_r()
  * @see sysconf()
  *
- * @see f_string_dynamic_increase_by()
+ * @see f_memory_array_increase_by()
  */
 #ifndef _di_f_account_by_id_
   extern f_status_t f_account_by_id(const uid_t id, f_account_t * const account);
@@ -87,11 +87,11 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_failure (with error bit) on any other error.
  *
- *   Errors (with error bit) from: f_string_dynamic_increase_by().
+ *   Errors (with error bit) from: f_memory_array_increase_by().
  *
  * @see getpwnam_r()
  *
- * @see f_string_dynamic_increase_by()
+ * @see f_memory_array_increase_by()
  */
 #ifndef _di_f_account_by_name_
   extern f_status_t f_account_by_name(const f_string_static_t name, f_account_t * const account);
@@ -145,11 +145,11 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_failure (with error bit) on any other error.
  *
- *   Errors (with error bit) from: f_string_dynamic_increase_by().
+ *   Errors (with error bit) from: f_memory_array_increase_by().
  *
  * @see getgrgid_r()
  *
- * @see f_string_dynamic_increase_by()
+ * @see f_memory_array_increase_by()
  */
 #ifndef _di_f_account_group_name_by_id_
   extern f_status_t f_account_group_name_by_id(const gid_t id, f_string_dynamic_t * const name);
@@ -203,11 +203,11 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_failure (with error bit) on any other error.
  *
- *   Errors (with error bit) from: f_string_dynamic_increase_by().
+ *   Errors (with error bit) from: f_memory_array_increase_by().
  *
  * @see getpwuid_r()
  *
- * @see f_string_dynamic_increase_by()
+ * @see f_memory_array_increase_by()
  */
 #ifndef _di_f_account_name_by_id_
   extern f_status_t f_account_name_by_id(const uid_t id, f_string_dynamic_t * const name);

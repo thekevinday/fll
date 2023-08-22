@@ -34,7 +34,7 @@ extern "C" {
       f_status_t status = F_okay;
 
       if (context->error.size) {
-        status = f_string_dynamic_resize(0, &context->error);
+        status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &context->error.string, &context->error.used, &context->error.size);
         if (F_status_is_error(status)) return status;
       }
       else {
@@ -42,7 +42,7 @@ extern "C" {
       }
 
       if (context->important.size) {
-        status = f_string_dynamic_resize(0, &context->important);
+        status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &context->important.string, &context->important.used, &context->important.size);
         if (F_status_is_error(status)) return status;
       }
       else {
@@ -50,7 +50,7 @@ extern "C" {
       }
 
       if (context->normal.size) {
-        status = f_string_dynamic_resize(0, &context->normal);
+        status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &context->normal.string, &context->normal.used, &context->normal.size);
         if (F_status_is_error(status)) return status;
       }
       else {
@@ -58,7 +58,7 @@ extern "C" {
       }
 
       if (context->normal_reset.size) {
-        status = f_string_dynamic_resize(0, &context->normal_reset);
+        status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &context->normal_reset.string, &context->normal_reset.used, &context->normal_reset.size);
         if (F_status_is_error(status)) return status;
       }
       else {
@@ -66,7 +66,7 @@ extern "C" {
       }
 
       if (context->notable.size) {
-        status = f_string_dynamic_resize(0, &context->notable);
+        status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &context->notable.string, &context->notable.used, &context->notable.size);
         if (F_status_is_error(status)) return status;
       }
       else {
@@ -74,7 +74,7 @@ extern "C" {
       }
 
       if (context->reset.size) {
-        status = f_string_dynamic_resize(0, &context->reset);
+        status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &context->reset.string, &context->reset.used, &context->reset.size);
         if (F_status_is_error(status)) return status;
       }
       else {
@@ -82,7 +82,7 @@ extern "C" {
       }
 
       if (context->standout.size) {
-        status = f_string_dynamic_resize(0, &context->standout);
+        status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &context->standout.string, &context->standout.used, &context->standout.size);
         if (F_status_is_error(status)) return status;
       }
       else {
@@ -90,7 +90,7 @@ extern "C" {
       }
 
       if (context->success.size) {
-        status = f_string_dynamic_resize(0, &context->success);
+        status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &context->success.string, &context->success.used, &context->success.size);
         if (F_status_is_error(status)) return status;
       }
       else {
@@ -98,7 +98,7 @@ extern "C" {
       }
 
       if (context->title.size) {
-        status = f_string_dynamic_resize(0, &context->title);
+        status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &context->title.string, &context->title.used, &context->title.size);
         if (F_status_is_error(status)) return status;
       }
       else {
@@ -106,7 +106,7 @@ extern "C" {
       }
 
       if (context->warning.size) {
-        status = f_string_dynamic_resize(0, &context->warning);
+        status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &context->warning.string, &context->warning.used, &context->warning.size);
         if (F_status_is_error(status)) return status;
       }
       else {
@@ -240,7 +240,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     {
-      const f_status_t status = f_string_dynamic_increase_by(format.begin.used + (format.medium.used * 2) + format.end.used + color1.used + color2.used + color3.used + 1, buffer);
+      const f_status_t status = f_memory_array_increase_by(format.begin.used + (format.medium.used * 2) + format.end.used + color1.used + color2.used + color3.used + 1, sizeof(f_char_t), (void **) &buffer->string, &buffer->used, &buffer->size);
       if (F_status_is_error(status)) return status;
     }
 
@@ -293,7 +293,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     {
-      const f_status_t status = f_string_dynamic_increase_by(format.begin.used + (format.medium.used * 3) + format.end.used + color1.used + color2.used + color3.used + color4.used + 1, buffer);
+      const f_status_t status = f_memory_array_increase_by(format.begin.used + (format.medium.used * 3) + format.end.used + color1.used + color2.used + color3.used + color4.used + 1, sizeof(f_char_t), (void **) &buffer->string, &buffer->used, &buffer->size);
       if (F_status_is_error(status)) return status;
     }
 
@@ -358,7 +358,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     {
-      const f_status_t status = f_string_dynamic_increase_by(format.begin.used + (format.medium.used * 4) + format.end.used + color1.used + color2.used + color3.used + color4.used + color5.used + 1, buffer);
+      const f_status_t status = f_memory_array_increase_by(format.begin.used + (format.medium.used * 4) + format.end.used + color1.used + color2.used + color3.used + color4.used + color5.used + 1, sizeof(f_char_t), (void **) &buffer->string, &buffer->used, &buffer->size);
       if (F_status_is_error(status)) return status;
     }
 

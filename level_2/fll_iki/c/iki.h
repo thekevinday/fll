@@ -52,11 +52,11 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_string_dynamic_resize().
- *   Errors (with error bit) from: f_string_dynamic_increase_by().
+ *   Errors (with error bit) from: f_memory_array_increase_by().
+ *   Errors (with error bit) from: f_memory_array_resize().
  *
- * @see f_string_dynamic_resize()
- * @see f_string_dynamic_increase_by()
+ * @see f_memory_array_increase_by()
+ * @see f_memory_array_resize()
  */
 #ifndef _di_fll_iki_content_escape_
   extern f_status_t fll_iki_content_escape(const f_string_static_t content, const f_string_static_t quote, f_string_dynamic_t * const escaped);
@@ -83,11 +83,11 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_string_dynamic_resize().
- *   Errors (with error bit) from: f_string_dynamic_increase_by().
+ *   Errors (with error bit) from: f_memory_array_increase_by().
+ *   Errors (with error bit) from: f_memory_array_resize().
  *
- * @see f_string_dynamic_resize()
- * @see f_string_dynamic_increase_by()
+ * @see f_memory_array_increase_by()
+ * @see f_memory_array_resize()
  */
 #ifndef _di_fll_iki_content_partial_escape_
   extern f_status_t fll_iki_content_partial_escape(const f_string_static_t content, const f_string_range_t range, const f_string_static_t quote, f_string_dynamic_t * const escaped);
@@ -115,11 +115,11 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_syntax (with error bit) if the given string is invalid, such as having an undelimited quote.
  *
- *   Errors (with error bit) from: f_string_dynamic_resize().
- *   Errors (with error bit) from: f_string_dynamic_increase_by().
+ *   Errors (with error bit) from: f_memory_array_increase_by().
+ *   Errors (with error bit) from: f_memory_array_resize().
  *
- * @see f_string_dynamic_resize()
- * @see f_string_dynamic_increase_by()
+ * @see f_memory_array_increase_by()
+ * @see f_memory_array_resize()
  */
 #ifndef _di_fll_iki_content_partial_unescape_
   extern f_status_t fll_iki_content_partial_unescape(const f_string_static_t content, const f_string_range_t range, const f_string_static_t quote, f_string_dynamic_t * const unescaped);
@@ -145,11 +145,11 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_syntax (with error bit) if the given string is invalid, such as having an undelimited quote.
  *
- *   Errors (with error bit) from: f_string_dynamic_resize().
- *   Errors (with error bit) from: f_string_dynamic_increase_by().
+ *   Errors (with error bit) from: f_memory_array_increase_by().
+ *   Errors (with error bit) from: f_memory_array_resize().
  *
- * @see f_string_dynamic_resize()
- * @see f_string_dynamic_increase_by()
+ * @see f_memory_array_increase_by()
+ * @see f_memory_array_resize()
  */
 #ifndef _di_fll_iki_content_unescape_
   extern f_status_t fll_iki_content_unescape(const f_string_static_t content, const f_string_static_t quote, f_string_dynamic_t * const unescaped);

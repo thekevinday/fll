@@ -43,7 +43,7 @@ extern "C" {
     byte_dump_f_f_console_parameter_process_e,
     byte_dump_f_f_file_exists_e,
     byte_dump_f_f_file_stream_open_e,
-    byte_dump_f_f_string_dynamics_increase_by_e,
+    byte_dump_f_f_memory_array_increase_by_e,
     byte_dump_f_f_thread_create_e,
     byte_dump_f_fl_conversion_dynamic_to_unsigned_detect_e,
     byte_dump_f_fll_program_parameter_process_context_standard_e,

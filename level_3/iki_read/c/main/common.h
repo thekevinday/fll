@@ -33,8 +33,8 @@ extern "C" {
  *
  *     Errors (with error bit) from: f_console_parameter_process().
  *     Errors (with error bit) from: f_file_exists().
+ *     Errors (with error bit) from: f_memory_array_resize().
  *     Errors (with error bit) from: f_string_dynamic_append().
- *     Errors (with error bit) from: f_string_dynamic_resize().
  *     Errors (with error bit) from: f_string_maps_resize().
  *     Errors (with error bit) from: f_string_triples_resize().
  *     Errors (with error bit) from: fll_program_parameter_process_context().
@@ -42,8 +42,8 @@ extern "C" {
  *
  * @see f_console_parameter_process()
  * @see f_file_exists()
+ * @see f_memory_array_resize()
  * @see f_string_dynamic_append()
- * @see f_string_dynamic_resize()
  * @see f_string_maps_resize()
  * @see f_string_triples_resize()
  * @see fll_program_parameter_process_context()
@@ -64,7 +64,7 @@ extern "C" {
  *   This alters main.setting.state.status:
  *     F_okay on success.
  *
- *     Errors (with error bit) from: f_string_dynamic_resize().
+ *     Errors (with error bit) from: f_memory_array_resize().
  *     Errors (with error bit) from: f_string_triples_resize().
  * @param name
  *   The name of the parameter.
@@ -76,7 +76,7 @@ extern "C" {
  *   F_true if found and processed.
  *   F_false if not found or not processed.
  *
- * @see f_string_dynamic_resize()
+ * @see f_memory_array_resize()
  * @see f_string_triples_resize()
  */
 #ifndef _di_iki_read_setting_load_parameter_substitution_
