@@ -33,19 +33,13 @@ extern int mock_unwrap_f_memory;
 
 extern f_status_t __real_f_memory_array_adjust(const f_number_unsigned_t length, const size_t width, void ** const array, f_number_unsigned_t * const used, f_number_unsigned_t * const size);
 extern f_status_t __real_f_memory_array_resize(const f_number_unsigned_t length, const size_t width, void ** const array, f_number_unsigned_t * const used, f_number_unsigned_t * const size);
-
-extern f_status_t __real_f_string_dynamic_adjust(const f_number_unsigned_t length, f_string_dynamic_t * const structure);
-extern f_status_t __real_f_string_dynamic_resize(const f_number_unsigned_t length, f_string_dynamic_t * const structure);
-extern f_status_t __real_f_string_dynamics_adjust(const f_number_unsigned_t length, f_string_dynamics_t * const structure);
-extern f_status_t __real_f_string_dynamics_resize(const f_number_unsigned_t length, f_string_dynamics_t * const structure);
+extern f_status_t __real_f_memory_arrays_adjust(const f_number_unsigned_t length, const size_t width, void ** const array, f_number_unsigned_t * const used, f_number_unsigned_t * const size, f_status_t (*callback)(const f_number_unsigned_t start, const f_number_unsigned_t size, void * const array));
+extern f_status_t __real_f_memory_arrays_resize(const f_number_unsigned_t length, const size_t width, void ** const array, f_number_unsigned_t * const used, f_number_unsigned_t * const size, f_status_t (*callback)(const f_number_unsigned_t start, const f_number_unsigned_t size, void * const array));
 
 extern f_status_t __wrap_f_memory_array_adjust(const f_number_unsigned_t length, const size_t width, void ** const array, f_number_unsigned_t * const used, f_number_unsigned_t * const size);
 extern f_status_t __wrap_f_memory_array_resize(const f_number_unsigned_t length, const size_t width, void ** const array, f_number_unsigned_t * const used, f_number_unsigned_t * const size);
-
-extern f_status_t __wrap_f_string_dynamic_adjust(const f_number_unsigned_t length, f_string_dynamic_t * const structure);
-extern f_status_t __wrap_f_string_dynamic_resize(const f_number_unsigned_t length, f_string_dynamic_t * const structure);
-extern f_status_t __wrap_f_string_dynamics_adjust(const f_number_unsigned_t length, f_string_dynamics_t * const structure);
-extern f_status_t __wrap_f_string_dynamics_resize(const f_number_unsigned_t length, f_string_dynamics_t * const structure);
+extern f_status_t __wrap_f_memory_arrays_adjust(const f_number_unsigned_t length, const size_t width, void ** const array, f_number_unsigned_t * const used, f_number_unsigned_t * const size, f_status_t (*callback)(const f_number_unsigned_t start, const f_number_unsigned_t size, void * const array));
+extern f_status_t __wrap_f_memory_arrays_resize(const f_number_unsigned_t length, const size_t width, void ** const array, f_number_unsigned_t * const used, f_number_unsigned_t * const size, f_status_t (*callback)(const f_number_unsigned_t start, const f_number_unsigned_t size, void * const array));
 
 extern int __wrap_alphasort(const struct dirent **a, const struct dirent **b);
 extern int __wrap_fstatat(int dirfd, const char *pathname, struct stat *statbuf, int flags);

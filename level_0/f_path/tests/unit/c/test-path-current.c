@@ -84,7 +84,7 @@ void test__f_path_current__fails(void **state) {
     } // for
   }
 
-  f_string_dynamic_resize(0, &destination);
+  free((void *) destination.string);
 }
 
 void test__f_path_current__parameter_checking(void **state) {
@@ -130,7 +130,7 @@ void test__f_path_current__works(void **state) {
     assert_string_equal(destination.string, path_real.string);
   }
 
-  f_string_dynamic_resize(0, &destination);
+  free((void *) destination.string);
 }
 
 #ifdef __cplusplus

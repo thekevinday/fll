@@ -8,14 +8,14 @@ extern "C" {
 void test__f_accounts_destroy_callback__fails(void **state) {
 
   mock_unwrap = 0;
-  mock_unwrap_f_memory = 1;
+  mock_unwrap_f_memory = 0;
 
   f_account_t data = f_account_t_initialize;
   f_account_t data_array[] = { data };
 
   {
-    will_return(__wrap_f_string_dynamic_adjust, true);
-    will_return(__wrap_f_string_dynamic_adjust, F_status_set_error(F_failure));
+    will_return(__wrap_f_memory_array_adjust, true);
+    will_return(__wrap_f_memory_array_adjust, F_status_set_error(F_failure));
 
     const f_status_t status = f_accounts_destroy_callback(0, 1, (void *) data_array);
 
@@ -23,26 +23,11 @@ void test__f_accounts_destroy_callback__fails(void **state) {
   }
 
   {
-    will_return(__wrap_f_string_dynamic_adjust, false);
-    will_return(__wrap_f_string_dynamic_adjust, F_okay);
+    will_return(__wrap_f_memory_array_adjust, false);
+    will_return(__wrap_f_memory_array_adjust, F_okay);
 
-    will_return(__wrap_f_string_dynamic_adjust, true);
-    will_return(__wrap_f_string_dynamic_adjust, F_status_set_error(F_failure));
-
-    const f_status_t status = f_accounts_destroy_callback(0, 1, (void *) data_array);
-
-    assert_int_equal(status, F_status_set_error(F_failure));
-  }
-
-  {
-    will_return(__wrap_f_string_dynamic_adjust, false);
-    will_return(__wrap_f_string_dynamic_adjust, F_okay);
-
-    will_return(__wrap_f_string_dynamic_adjust, false);
-    will_return(__wrap_f_string_dynamic_adjust, F_okay);
-
-    will_return(__wrap_f_string_dynamic_adjust, true);
-    will_return(__wrap_f_string_dynamic_adjust, F_status_set_error(F_failure));
+    will_return(__wrap_f_memory_array_adjust, true);
+    will_return(__wrap_f_memory_array_adjust, F_status_set_error(F_failure));
 
     const f_status_t status = f_accounts_destroy_callback(0, 1, (void *) data_array);
 
@@ -50,17 +35,14 @@ void test__f_accounts_destroy_callback__fails(void **state) {
   }
 
   {
-    will_return(__wrap_f_string_dynamic_adjust, false);
-    will_return(__wrap_f_string_dynamic_adjust, F_okay);
+    will_return(__wrap_f_memory_array_adjust, false);
+    will_return(__wrap_f_memory_array_adjust, F_okay);
 
-    will_return(__wrap_f_string_dynamic_adjust, false);
-    will_return(__wrap_f_string_dynamic_adjust, F_okay);
+    will_return(__wrap_f_memory_array_adjust, false);
+    will_return(__wrap_f_memory_array_adjust, F_okay);
 
-    will_return(__wrap_f_string_dynamic_adjust, false);
-    will_return(__wrap_f_string_dynamic_adjust, F_okay);
-
-    will_return(__wrap_f_string_dynamic_adjust, true);
-    will_return(__wrap_f_string_dynamic_adjust, F_status_set_error(F_failure));
+    will_return(__wrap_f_memory_array_adjust, true);
+    will_return(__wrap_f_memory_array_adjust, F_status_set_error(F_failure));
 
     const f_status_t status = f_accounts_destroy_callback(0, 1, (void *) data_array);
 
@@ -68,20 +50,38 @@ void test__f_accounts_destroy_callback__fails(void **state) {
   }
 
   {
-    will_return(__wrap_f_string_dynamic_adjust, false);
-    will_return(__wrap_f_string_dynamic_adjust, F_okay);
+    will_return(__wrap_f_memory_array_adjust, false);
+    will_return(__wrap_f_memory_array_adjust, F_okay);
 
-    will_return(__wrap_f_string_dynamic_adjust, false);
-    will_return(__wrap_f_string_dynamic_adjust, F_okay);
+    will_return(__wrap_f_memory_array_adjust, false);
+    will_return(__wrap_f_memory_array_adjust, F_okay);
 
-    will_return(__wrap_f_string_dynamic_adjust, false);
-    will_return(__wrap_f_string_dynamic_adjust, F_okay);
+    will_return(__wrap_f_memory_array_adjust, false);
+    will_return(__wrap_f_memory_array_adjust, F_okay);
 
-    will_return(__wrap_f_string_dynamic_adjust, false);
-    will_return(__wrap_f_string_dynamic_adjust, F_okay);
+    will_return(__wrap_f_memory_array_adjust, true);
+    will_return(__wrap_f_memory_array_adjust, F_status_set_error(F_failure));
 
-    will_return(__wrap_f_string_dynamic_adjust, true);
-    will_return(__wrap_f_string_dynamic_adjust, F_status_set_error(F_failure));
+    const f_status_t status = f_accounts_destroy_callback(0, 1, (void *) data_array);
+
+    assert_int_equal(status, F_status_set_error(F_failure));
+  }
+
+  {
+    will_return(__wrap_f_memory_array_adjust, false);
+    will_return(__wrap_f_memory_array_adjust, F_okay);
+
+    will_return(__wrap_f_memory_array_adjust, false);
+    will_return(__wrap_f_memory_array_adjust, F_okay);
+
+    will_return(__wrap_f_memory_array_adjust, false);
+    will_return(__wrap_f_memory_array_adjust, F_okay);
+
+    will_return(__wrap_f_memory_array_adjust, false);
+    will_return(__wrap_f_memory_array_adjust, F_okay);
+
+    will_return(__wrap_f_memory_array_adjust, true);
+    will_return(__wrap_f_memory_array_adjust, F_status_set_error(F_failure));
 
     const f_status_t status = f_accounts_destroy_callback(0, 1, (void *) data_array);
 
@@ -91,7 +91,7 @@ void test__f_accounts_destroy_callback__fails(void **state) {
 
 void test__f_accounts_destroy_callback__works(void **state) {
 
-  mock_unwrap = 1;
+  mock_unwrap = 0;
   mock_unwrap_f_memory = 1;
 
   const f_number_unsigned_t length = 1;
@@ -102,19 +102,19 @@ void test__f_accounts_destroy_callback__works(void **state) {
     f_status_t status = f_memory_array_resize(length, sizeof(f_account_t), (void **) &datas.array, &datas.used, &datas.size);
     assert_int_equal(status, F_okay);
 
-    status = f_string_dynamic_resize(1, &datas.array[0].home);
+    status = f_memory_array_resize(1, sizeof(f_char_t), (void **) &datas.array[0].home.string, &datas.array[0].home.used, &datas.array[0].home.size);
     assert_int_equal(status, F_okay);
 
-    status = f_string_dynamic_resize(1, &datas.array[0].label);
+    status = f_memory_array_resize(1, sizeof(f_char_t), (void **) &datas.array[0].label.string, &datas.array[0].label.used, &datas.array[0].label.size);
     assert_int_equal(status, F_okay);
 
-    status = f_string_dynamic_resize(1, &datas.array[0].name);
+    status = f_memory_array_resize(1, sizeof(f_char_t), (void **) &datas.array[0].name.string, &datas.array[0].name.used, &datas.array[0].name.size);
     assert_int_equal(status, F_okay);
 
-    status = f_string_dynamic_resize(1, &datas.array[0].password);
+    status = f_memory_array_resize(1, sizeof(f_char_t), (void **) &datas.array[0].password.string, &datas.array[0].password.used, &datas.array[0].password.size);
     assert_int_equal(status, F_okay);
 
-    status = f_string_dynamic_resize(1, &datas.array[0].shell);
+    status = f_memory_array_resize(1, sizeof(f_char_t), (void **) &datas.array[0].shell.string, &datas.array[0].shell.used, &datas.array[0].shell.size);
     assert_int_equal(status, F_okay);
   }
 

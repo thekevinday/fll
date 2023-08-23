@@ -28,7 +28,7 @@ void test__f_serialize_to_simple__returns_data_not(void **state) {
     assert_int_equal(status, F_data_not);
   }
 
-  f_string_dynamic_resize(0, &destination);
+  free((void *) destination.string);
 }
 
 void test__f_serialize_to_simple__works(void **state) {
@@ -52,7 +52,7 @@ void test__f_serialize_to_simple__works(void **state) {
     assert_string_equal(destination.string, multiple.string);
   }
 
-  f_string_dynamic_resize(0, &destination);
+  free((void *) destination.string);
 }
 
 #ifdef __cplusplus

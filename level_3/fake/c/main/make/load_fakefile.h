@@ -32,7 +32,6 @@ extern "C" {
  *     Errors (with error bit) from: f_fss_apply_delimit().
  *     Errors (with error bit) from: f_string_dynamic_append().
  *     Errors (with error bit) from: f_string_dynamic_partial_append().
- *     Errors (with error bit) from: f_string_dynamics_resize().
  *     Errors (with error bit) from: f_string_map_multis_resize().
  *     Errors (with error bit) from: fll_fss_basic_list_read().
  *     Errors (with error bit) from: fll_fss_extended_read().
@@ -55,7 +54,6 @@ extern "C" {
  * @see f_fss_apply_delimit()
  * @see f_string_dynamic_append()
  * @see f_string_dynamic_partial_append()
- * @see f_string_dynamics_resize()
  * @see f_string_map_multis_resize()
  * @see fll_fss_basic_list_read()
  * @see fll_fss_extended_read()

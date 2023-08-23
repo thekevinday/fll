@@ -38,7 +38,7 @@ void test__f_conversion_number_unsigned_to_string__works(void **state) {
     assert_string_equal(destination.string, "1");
   }
 
-  f_string_dynamic_resize(0, &destination);
+  free((void *) destination.string);
 }
 
 void test__f_conversion_number_unsigned_to_string__works_for_prepend(void **state) {
@@ -162,7 +162,7 @@ void test__f_conversion_number_unsigned_to_string__works_for_prepend(void **stat
     assert_string_equal(destination.string, "0X1");
   }
 
-  f_string_dynamic_resize(0, &destination);
+  free((void *) destination.string);
 }
 
 void test__f_conversion_number_unsigned_to_string__works_for_zero(void **state) {
@@ -286,7 +286,7 @@ void test__f_conversion_number_unsigned_to_string__works_for_zero(void **state) 
     assert_string_equal(destination.string, " 00");
   }
 
-  f_string_dynamic_resize(0, &destination);
+  free((void *) destination.string);
 }
 
 #ifdef __cplusplus

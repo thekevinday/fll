@@ -16,8 +16,8 @@ void test__f_fss_simple_packets_destroy_callback__fails(void **state) {
   f_fss_simple_packets_t datas_array[] = { datas };
 
   {
-    will_return(__wrap_f_string_dynamic_adjust, true);
-    will_return(__wrap_f_string_dynamic_adjust, F_status_set_error(F_failure));
+    will_return(__wrap_f_memory_array_adjust, true);
+    will_return(__wrap_f_memory_array_adjust, F_status_set_error(F_failure));
 
     const f_status_t status = f_fss_simple_packets_destroy_callback(0, 1, (void *) datas_array);
 
@@ -28,22 +28,28 @@ void test__f_fss_simple_packets_destroy_callback__fails(void **state) {
 void test__f_fss_simple_packets_destroy_callback__works(void **state) {
 
   mock_unwrap = 0;
-  mock_unwrap_f_memory = 0;
+  mock_unwrap_f_memory = 1;
 
-  f_fss_simple_packet_t data = { .payload = f_string_empty_s, .control = 0, .size = 0 };
-  f_fss_simple_packet_t data_array[] = { data };
-  f_fss_simple_packets_t datas = { .array = data_array, .used = 1, .size = 1 };
-  f_fss_simple_packets_t datas_array[] = { datas };
   const f_number_unsigned_t length = 1;
 
+  f_fss_simple_packets_t datas = f_fss_simple_packets_t_initialize;
+
   {
-    will_return(__wrap_f_string_dynamic_adjust, false);
-    will_return(__wrap_f_string_dynamic_adjust, F_okay);
+    f_status_t status = f_memory_array_resize(1, sizeof(f_fss_simple_packet_t), (void **) &datas.array, &datas.used, &datas.size);
+    assert_int_equal(status, F_okay);
 
-    const f_status_t status = f_fss_simple_packets_destroy_callback(0, length, (void *) datas_array);
-
+    status = f_memory_array_resize(1, sizeof(f_char_t), (void **) &datas.array[0].payload, &datas.array[0].payload.used, &datas.array[0].payload.size);
     assert_int_equal(status, F_okay);
   }
+
+  {
+    const f_status_t status = f_fss_simple_packets_destroy_callback(0, length, (void *) datas.array);
+
+    assert_int_equal(status, F_okay);
+    assert_int_equal(datas.array[0].payload.size, 0);
+  }
+
+  free((void *) datas.array);
 }
 
 #ifdef __cplusplus

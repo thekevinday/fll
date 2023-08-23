@@ -8,8 +8,8 @@ extern "C" {
 #ifndef _di_firewall_data_delete_
   f_status_t firewall_data_delete(firewall_data_t * const data) {
 
-    f_string_dynamics_resize(0, &data->chains);
-    f_string_dynamics_resize(0, &data->devices);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &data->chains.string, &data->chains.used, &data->chains.size, &f_string_dynamics_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &data->devices.string, &data->devices.used, &data->devices.size, &f_string_dynamics_delete_callback);
 
     return F_okay;
   }

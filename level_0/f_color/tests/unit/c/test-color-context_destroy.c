@@ -12,7 +12,7 @@ void test__f_color_context_destroy__frees_memory(void **state) {
   f_color_context_t context = f_color_context_t_initialize;
 
   {
-    const f_status_t status = f_string_dynamic_resize(size, &context.reset);
+    const f_status_t status = f_memory_array_resize(size, sizeof(f_char_t), (void **) &context.reset.string, &context.reset.used, &context.reset.size);
 
     assert_int_equal(status, F_okay);
     assert_int_not_equal(context.reset.size, 0);
@@ -20,7 +20,7 @@ void test__f_color_context_destroy__frees_memory(void **state) {
   }
 
   {
-    const f_status_t status = f_string_dynamic_resize(size, &context.warning);
+    const f_status_t status = f_memory_array_resize(size, sizeof(f_char_t), (void **) &context.warning.string, &context.warning.used, &context.warning.size);
 
     assert_int_equal(status, F_okay);
     assert_int_not_equal(context.warning.size, 0);
@@ -28,7 +28,7 @@ void test__f_color_context_destroy__frees_memory(void **state) {
   }
 
   {
-    const f_status_t status = f_string_dynamic_resize(size, &context.error);
+    const f_status_t status = f_memory_array_resize(size, sizeof(f_char_t), (void **) &context.error.string, &context.error.used, &context.error.size);
 
     assert_int_equal(status, F_okay);
     assert_int_not_equal(context.error.size, 0);
@@ -36,7 +36,7 @@ void test__f_color_context_destroy__frees_memory(void **state) {
   }
 
   {
-    const f_status_t status = f_string_dynamic_resize(size, &context.title);
+    const f_status_t status = f_memory_array_resize(size, sizeof(f_char_t), (void **) &context.title.string, &context.title.used, &context.title.size);
 
     assert_int_equal(status, F_okay);
     assert_int_not_equal(context.title.size, 0);
@@ -44,7 +44,7 @@ void test__f_color_context_destroy__frees_memory(void **state) {
   }
 
   {
-    const f_status_t status = f_string_dynamic_resize(size, &context.notable);
+    const f_status_t status = f_memory_array_resize(size, sizeof(f_char_t), (void **) &context.notable.string, &context.notable.used, &context.notable.size);
 
     assert_int_equal(status, F_okay);
     assert_int_not_equal(context.notable.size, 0);
@@ -52,7 +52,7 @@ void test__f_color_context_destroy__frees_memory(void **state) {
   }
 
   {
-    const f_status_t status = f_string_dynamic_resize(size, &context.important);
+    const f_status_t status = f_memory_array_resize(size, sizeof(f_char_t), (void **) &context.important.string, &context.important.used, &context.important.size);
 
     assert_int_equal(status, F_okay);
     assert_int_not_equal(context.important.size, 0);
@@ -60,7 +60,7 @@ void test__f_color_context_destroy__frees_memory(void **state) {
   }
 
   {
-    const f_status_t status = f_string_dynamic_resize(size, &context.standout);
+    const f_status_t status = f_memory_array_resize(size, sizeof(f_char_t), (void **) &context.standout.string, &context.standout.used, &context.standout.size);
 
     assert_int_equal(status, F_okay);
     assert_int_not_equal(context.standout.size, 0);
@@ -68,7 +68,7 @@ void test__f_color_context_destroy__frees_memory(void **state) {
   }
 
   {
-    const f_status_t status = f_string_dynamic_resize(size, &context.success);
+    const f_status_t status = f_memory_array_resize(size, sizeof(f_char_t), (void **) &context.success.string, &context.success.used, &context.success.size);
 
     assert_int_equal(status, F_okay);
     assert_int_not_equal(context.success.size, 0);
@@ -76,7 +76,7 @@ void test__f_color_context_destroy__frees_memory(void **state) {
   }
 
   {
-    const f_status_t status = f_string_dynamic_resize(size, &context.normal);
+    const f_status_t status = f_memory_array_resize(size, sizeof(f_char_t), (void **) &context.normal.string, &context.normal.used, &context.normal.size);
 
     assert_int_equal(status, F_okay);
     assert_int_not_equal(context.normal.size, 0);
@@ -84,7 +84,7 @@ void test__f_color_context_destroy__frees_memory(void **state) {
   }
 
   {
-    const f_status_t status = f_string_dynamic_resize(size, &context.normal_reset);
+    const f_status_t status = f_memory_array_resize(size, sizeof(f_char_t), (void **) &context.normal_reset.string, &context.normal_reset.used, &context.normal_reset.size);
 
     assert_int_equal(status, F_okay);
     assert_int_not_equal(context.normal_reset.size, 0);

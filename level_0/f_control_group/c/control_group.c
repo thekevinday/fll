@@ -14,16 +14,18 @@ extern "C" {
     destination->path.used = 0;
     destination->groups.used = 0;
 
-    f_status_t status = F_okay;
+    {
+      f_status_t status = F_okay;
 
-    if (source.path.used) {
-      status = f_string_dynamic_append(source.path, &destination->path);
-      if (F_status_is_error(status)) return status;
-    }
+      if (source.path.used) {
+        status = f_string_dynamic_append(source.path, &destination->path);
+        if (F_status_is_error(status)) return status;
+      }
 
-    if (source.groups.used) {
-      status = f_string_dynamics_append_all(source.groups, &destination->groups);
-      if (F_status_is_error(status)) return status;
+      if (source.groups.used) {
+        status = f_string_dynamics_append_all(source.groups, &destination->groups);
+        if (F_status_is_error(status)) return status;
+      }
     }
 
     return F_okay;

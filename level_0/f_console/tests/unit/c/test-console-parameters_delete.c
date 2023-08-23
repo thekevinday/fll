@@ -17,7 +17,7 @@ void test__f_console_parameters_delete__frees_memory(void **state) {
   parameters.used = 1;
 
   {
-    const f_status_t status = f_string_dynamics_resize(size, &parameters.arguments);
+    const f_status_t status = f_memory_arrays_resize(size, sizeof(f_string_dynamic_t), (void **) &parameters.arguments.array, &parameters.arguments.used, &parameters.arguments.size, &f_string_dynamics_delete_callback);
 
     assert_int_equal(status, F_okay);
     assert_int_not_equal(parameters.arguments.size, 0);

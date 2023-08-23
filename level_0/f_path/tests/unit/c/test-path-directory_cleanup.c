@@ -70,10 +70,14 @@ void test__f_path_directory_cleanup__works(void **state) {
     }
 
     // De-allocate each pass to ensure that the NULL termination check is accurate.
-    f_string_dynamic_resize(0, &destination);
-  } // for
+    if (destination.size && destination.string) {
+      free((void *) destination.string);
 
-  f_string_dynamic_resize(0, &destination);
+      destination.string = 0;
+      destination.used = 0;
+      destination.size = 0;
+    }
+  } // for
 }
 
 #ifdef __cplusplus

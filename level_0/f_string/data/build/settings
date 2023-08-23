@@ -34,7 +34,7 @@ build_libraries-individual -lf_memory
 
 build_sources_library string.c
 build_sources_library private-string.c string/common.c
-build_sources_library string/private-dynamics.c string/private-dynamicss.c
+build_sources_library string/private-dynamics.c
 build_sources_library string/private-maps.c string/private-mapss.c
 build_sources_library string/private-map_multis.c string/private-map_multiss.c
 build_sources_library string/private-quantitys.c string/private-quantityss.c

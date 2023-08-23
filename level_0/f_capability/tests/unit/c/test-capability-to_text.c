@@ -74,7 +74,7 @@ void test__f_capability_to_text__works(void **state) {
     #endif // defined(_di_libcap_)
   }
 
-  f_string_dynamic_resize(0, &text);
+  free((void *) text.string);
 }
 
 #ifdef __cplusplus

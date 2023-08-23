@@ -217,7 +217,16 @@ extern "C" {
 
     f_console_parameters_delete(&main->program.parameters);
 
-    macro_f_color_context_t_delete_simple(main->program.context);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &main->program.reset.string, &main->program.reset.used, &main->program.reset.size);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &main->program.error.string, &main->program.error.used, &main->program.error.size);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &main->program.important.string, &main->program.important.used, &main->program.important.size);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &main->program.normal.string, &main->program.normal.used, &main->program.normal.size);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &main->program.normal_reset.string, &main->program.normal_reset.used, &main->program.normal_reset.size);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &main->program.notable.string, &main->program.notable.used, &main->program.notable.size);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &main->program.standout.string, &main->program.standout.used, &main->program.standout.size);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &main->program.success.string, &main->program.success.used, &main->program.success.size);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &main->program.title.string, &main->program.title.used, &main->program.title.size);
+    f_memory_array_resize(, sizeof(f_char_t), (void **) &main->program.warning.string, &main->program.warning.used, &main->program.warning.size0);
 
     f_memory_array_resize(0, sizeof(f_char_t), (void **) &main->program.path_pid.string, &main->program.path_pid.used, &main->program.path_pid.size);
     f_memory_array_resize(0, sizeof(f_char_t), (void **) &main->program.path_setting.string, &main->program.path_setting.used, &main->program.path_setting.size);

@@ -29,7 +29,8 @@ void test__f_control_group_copy__works(void **state) {
 
     assert_int_equal(status, F_okay);
 
-    macro_f_control_group_t_delete_simple(destination);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &destination.path.string, &destination.path.used, &destination.path.size);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &destination.groups.array, &destination.groups.used, &destination.groups.size, &f_string_dynamics_delete_callback);
 
     assert_int_equal(destination.as_new, source.as_new);
 
@@ -60,7 +61,8 @@ void test__f_control_group_copy__works(void **state) {
     assert_null(destination.groups.array);
     assert_int_equal(destination.groups.used, 0);
 
-    macro_f_control_group_t_delete_simple(destination);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &destination.path.string, &destination.path.used, &destination.path.size);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &destination.groups.array, &destination.groups.used, &destination.groups.size, &f_string_dynamics_delete_callback);
   }
 
   {
@@ -106,7 +108,8 @@ void test__f_control_group_copy__works(void **state) {
     assert_int_equal(destination.groups.array[0].used, source.groups.array[0].used);
     assert_int_equal(destination.groups.array[1].used, source.groups.array[1].used);
 
-    macro_f_control_group_t_delete_simple(destination);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &destination.path.string, &destination.path.used, &destination.path.size);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &destination.groups.array, &destination.groups.used, &destination.groups.size, &f_string_dynamics_delete_callback);
   }
 
   {
@@ -159,7 +162,8 @@ void test__f_control_group_copy__works(void **state) {
     assert_int_equal(destination.groups.array[1].used, source.groups.array[1].used);
     assert_int_equal(destination.groups.array[2].used, source.groups.array[2].used);
 
-    macro_f_control_group_t_delete_simple(destination);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &destination.path.string, &destination.path.used, &destination.path.size);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &destination.groups.array, &destination.groups.used, &destination.groups.size, &f_string_dynamics_delete_callback);
   }
 }
 

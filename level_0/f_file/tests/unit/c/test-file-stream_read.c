@@ -24,7 +24,7 @@ void test__f_file_stream_read__fails(void **state) {
     assert_int_equal(status, F_status_set_error(F_file_read));
   }
 
-  f_string_dynamic_resize(0, &buffer);
+  free((void *) buffer.string);
 }
 
 void test__f_file_stream_read__parameter_checking(void **state) {
@@ -65,7 +65,7 @@ void test__f_file_stream_read__returns_stream_not(void **state) {
     assert_int_equal(F_status_set_fine(status), F_stream_not);
   }
 
-  f_string_dynamic_resize(0, &buffer);
+  free((void *) buffer.string);
 }
 
 void test__f_file_stream_read__works(void **state) {
@@ -91,7 +91,7 @@ void test__f_file_stream_read__works(void **state) {
     assert_int_equal(status, F_okay_eof);
   }
 
-  f_string_dynamic_resize(0, &buffer);
+  free((void *) buffer.string);
 }
 
 #ifdef __cplusplus

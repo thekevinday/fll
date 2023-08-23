@@ -28,7 +28,7 @@ void test__f_serialize_from_simple__returns_data_not(void **state) {
     assert_int_equal(status, F_data_not);
   }
 
-  f_string_dynamics_resize(0, &destination);
+  f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &destination.array, &destination.used, &destination.size, &f_string_dynamics_delete_callback);
 }
 
 void test__f_serialize_from_simple__works(void **state) {
@@ -112,7 +112,7 @@ void test__f_serialize_from_simple__works(void **state) {
     } // for
   }
 
-  f_string_dynamics_resize(0, &destination);
+  f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &destination.array, &destination.used, &destination.size, &f_string_dynamics_delete_callback);
 }
 
 #ifdef __cplusplus

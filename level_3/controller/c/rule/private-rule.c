@@ -742,7 +742,9 @@ extern "C" {
   f_status_t controller_rule_copy(const controller_rule_t source, controller_rule_t *destination) {
 
     // Delete the third party structures.
-    macro_f_control_group_t_delete_simple(destination->cgroup)
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &destination->cgroup.path.string, &destination->cgroup.path.used, &destination->cgroup.path.size);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &destination->cgroup.groups.array, &destination->cgroup.groups.used, &destination->cgroup.groups.size, &f_string_dynamics_delete_callback);
+
     f_capability_delete(&destination->capability);
 
     f_number_unsigned_t i = 0;

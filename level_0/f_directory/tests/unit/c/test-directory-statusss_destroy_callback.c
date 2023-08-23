@@ -16,8 +16,8 @@ void test__f_directory_statusss_destroy_callback__fails(void **state) {
   f_directory_statuss_t datass_array[] = { datas };
 
   {
-    will_return(__wrap_f_string_dynamic_adjust, true);
-    will_return(__wrap_f_string_dynamic_adjust, F_status_set_error(F_failure));
+    will_return(__wrap_f_memory_array_adjust, true);
+    will_return(__wrap_f_memory_array_adjust, F_status_set_error(F_failure));
 
     const f_status_t status = f_directory_statusss_destroy_callback(0, 1, (void *) datass_array);
 
@@ -25,8 +25,8 @@ void test__f_directory_statusss_destroy_callback__fails(void **state) {
   }
 
   {
-    will_return(__wrap_f_string_dynamic_adjust, false);
-    will_return(__wrap_f_string_dynamic_adjust, F_okay);
+    will_return(__wrap_f_memory_array_adjust, false);
+    will_return(__wrap_f_memory_array_adjust, F_okay);
 
     will_return(__wrap_f_memory_array_adjust, true);
     will_return(__wrap_f_memory_array_adjust, F_status_set_error(F_failure));
@@ -39,7 +39,7 @@ void test__f_directory_statusss_destroy_callback__fails(void **state) {
 
 void test__f_directory_statusss_destroy_callback__works(void **state) {
 
-  mock_unwrap = 1;
+  mock_unwrap = 0;
   mock_unwrap_f_memory = 1;
 
   const f_number_unsigned_t length = 1;
@@ -53,7 +53,7 @@ void test__f_directory_statusss_destroy_callback__works(void **state) {
     status = f_memory_array_adjust(1, sizeof(f_directory_status_t), (void **) &datass.array[0].array, &datass.array[0].used, &datass.array[0].size);
     assert_int_equal(status, F_okay);
 
-    status = f_string_dynamic_adjust(1, &datass.array[0].array[0].path);
+    status = f_memory_array_adjust(1, sizeof(f_char_t), (void **) &datass.array[0].array[0].path.string, &datass.array[0].array[0].path.used, &datass.array[0].array[0].path.size);
     assert_int_equal(status, F_okay);
   }
 

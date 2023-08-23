@@ -42,7 +42,7 @@ void test__f_account_group_name_by_id__fails(void **state) {
     assert_int_equal(status, F_status_set_error(statuss[i]));
   } // for
 
-  f_string_dynamic_resize(0, &name);
+  free((void *) name.string);
 }
 
 void test__f_account_group_name_by_id__not_found(void **state) {
@@ -63,7 +63,7 @@ void test__f_account_group_name_by_id__not_found(void **state) {
     assert_int_equal(status, F_exist_not);
   }
 
-  f_string_dynamic_resize(0, &name);
+  free((void *) name.string);
 }
 
 void test__f_account_group_name_by_id__parameter_checking(void **state) {
@@ -103,7 +103,7 @@ void test__f_account_group_name_by_id__works(void **state) {
     assert_string_equal(name.string, group_data.gr_name);
   }
 
-  f_string_dynamic_resize(0, &name);
+  free((void *) name.string);
 }
 
 #ifdef __cplusplus

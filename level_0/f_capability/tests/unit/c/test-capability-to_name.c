@@ -73,7 +73,7 @@ void test__f_capability_to_name__works(void **state) {
     #endif // defined(_di_libcap_)
   }
 
-  f_string_dynamic_resize(0, &name);
+  free((void *) name.string);
 }
 
 #ifdef __cplusplus

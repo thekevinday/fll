@@ -19,7 +19,7 @@ void test__f_environment_get__fails(void **state) {
     assert_int_equal(status, F_exist_not);
   }
 
-  f_string_dynamic_resize(0, &buffer);
+  free((void *) buffer.string);
 }
 
 void test__f_environment_get__parameter_checking(void **state) {
@@ -43,7 +43,7 @@ void test__f_environment_get__returns_data_not(void **state) {
     assert_int_equal(status, F_data_not);
   }
 
-  f_string_dynamic_resize(0, &buffer);
+  free((void *) buffer.string);
 }
 
 void test__f_environment_get__works(void **state) {
@@ -74,7 +74,7 @@ void test__f_environment_get__works(void **state) {
     assert_string_equal(buffer.string, f_string_empty_s.string);
   }
 
-  f_string_dynamic_resize(0, &buffer);
+  free((void *) buffer.string);
 }
 
 #ifdef __cplusplus

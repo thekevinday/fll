@@ -627,11 +627,9 @@ extern "C" {
  *     F_failure (with error bit) on any error.
  *
  *     Errors (with error bit) from: f_memory_array_resize()
- *     Errors (with error bit) from: f_string_dynamics_resize()
  *     Errors (with error bit) from: f_string_map_multis_resize()
  *
  * @see f_memory_array_resize()
- * @see f_string_dynamics_resize()
  * @see f_string_map_multis_resize()
  */
 #ifndef _di_fake_make_operate_process_type_parameter_

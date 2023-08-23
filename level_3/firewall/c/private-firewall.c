@@ -67,7 +67,7 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
         f_memory_array_resize(0, sizeof(f_char_t), (void **) &device.string, &device.used, &device.size);
         f_memory_array_resize(0, sizeof(f_char_t), (void **) &protocol.string, &protocol.used, &protocol.size);
 
-        f_string_dynamics_resize(0, &arguments);
+        f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &arguments.string, &arguments.used, &arguments.size, &f_string_dynamics_delete_callback);
 
         return F_status_set_error(F_interrupt);
       }
@@ -688,7 +688,7 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
                     f_memory_array_resize(0, sizeof(f_char_t), (void **) &device.string, &device.used, &device.size);
                     f_memory_array_resize(0, sizeof(f_char_t), (void **) &protocol.string, &protocol.used, &protocol.size);
 
-                    f_string_dynamics_resize(0, &arguments);
+                    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &arguments.string, &arguments.used, &arguments.size, &f_string_dynamics_delete_callback);
 
                     data->main->child = return_code;
 
@@ -739,7 +739,7 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
             f_memory_array_resize(0, sizeof(f_char_t), (void **) &device.string, &device.used, &device.size);
             f_memory_array_resize(0, sizeof(f_char_t), (void **) &protocol.string, &protocol.used, &protocol.size);
 
-            f_string_dynamics_resize(0, &arguments);
+            f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &arguments.string, &arguments.used, &arguments.size, &f_string_dynamics_delete_callback);
 
             data->main->child = return_code;
 
@@ -774,7 +774,7 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
   f_memory_array_resize(0, sizeof(f_char_t), (void **) &device.string, &device.used, &device.size);
   f_memory_array_resize(0, sizeof(f_char_t), (void **) &protocol.string, &protocol.used, &protocol.size);
 
-  f_string_dynamics_resize(0, &arguments);
+  f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &arguments.string, &arguments.used, &arguments.size, &f_string_dynamics_delete_callback);
 
   return status;
 }
@@ -798,7 +798,7 @@ f_status_t firewall_create_custom_chains(firewall_data_t * const data, firewall_
 
   local->chain_ids.used = local->chain_objects.used;
 
-  status = f_string_dynamics_resize(2, &arguments);
+  status = f_memory_arrays_resize(2, sizeof(f_string_dynamic_t), (void **) &arguments.string, &arguments.used, &arguments.size, &f_string_dynamics_delete_callback);
   if (F_status_is_error(status)) return status;
 
   status = f_memory_array_increase_by(local->chain_objects.used, sizeof(f_number_unsigned_t), (void **) &local->chain_ids.array, &local->chain_ids.used, &local->chain_ids.size);
@@ -812,7 +812,7 @@ f_status_t firewall_create_custom_chains(firewall_data_t * const data, firewall_
     status = f_memory_array_increase(F_memory_default_allocation_small_d, sizeof(f_char_t), (void **) &arguments.array[1].string, &arguments.array[1].used, &arguments.array[1].size);
   }
   else {
-    f_string_dynamics_resize(0, &arguments);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &arguments.string, &arguments.used, &arguments.size, &f_string_dynamics_delete_callback);
 
     return status;
   }
@@ -966,7 +966,7 @@ f_status_t firewall_create_custom_chains(firewall_data_t * const data, firewall_
     }
   } // for
 
-  f_string_dynamics_resize(0, &arguments);
+  f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &arguments.string, &arguments.used, &arguments.size, &f_string_dynamics_delete_callback);
 
   return status;
 }

@@ -28,9 +28,18 @@ void test__f_color_save_4_works(void **state) {
   const f_string_static_t color4 = macro_f_string_static_t_initialize_2("color4", 6);
 
   {
-    f_status_t status = F_okay;
+    f_status_t status = f_memory_array_resize(F_color_max_size_terminated_d, sizeof(f_char_t), (void **) &context.reset.string, &context.reset.used, &context.reset.size);
 
-    macro_f_color_context_t_new(status, context);
+    if (F_status_is_error_not(status)) status = f_memory_array_resize(F_color_max_size_terminated_d, sizeof(f_char_t), (void **) &context.reset.string, &context.reset.used, &context.reset.size);
+    if (F_status_is_error_not(status)) status = f_memory_array_resize(F_color_max_size_terminated_d, sizeof(f_char_t), (void **) &context.error.string, &context.error.used, &context.error.size);
+    if (F_status_is_error_not(status)) status = f_memory_array_resize(F_color_max_size_terminated_d, sizeof(f_char_t), (void **) &context.important.string, &context.important.used, &context.important.size);
+    if (F_status_is_error_not(status)) status = f_memory_array_resize(F_color_max_size_terminated_d, sizeof(f_char_t), (void **) &context.normal.string, &context.normal.used, &context.normal.size);
+    if (F_status_is_error_not(status)) status = f_memory_array_resize(F_color_max_size_terminated_d, sizeof(f_char_t), (void **) &context.normal_reset.string, &context.normal_reset.used, &context.normal_reset.size);
+    if (F_status_is_error_not(status)) status = f_memory_array_resize(F_color_max_size_terminated_d, sizeof(f_char_t), (void **) &context.notable.string, &context.notable.used, &context.notable.size);
+    if (F_status_is_error_not(status)) status = f_memory_array_resize(F_color_max_size_terminated_d, sizeof(f_char_t), (void **) &context.standout.string, &context.standout.used, &context.standout.size);
+    if (F_status_is_error_not(status)) status = f_memory_array_resize(F_color_max_size_terminated_d, sizeof(f_char_t), (void **) &context.success.string, &context.success.used, &context.success.size);
+    if (F_status_is_error_not(status)) status = f_memory_array_resize(F_color_max_size_terminated_d, sizeof(f_char_t), (void **) &context.title.string, &context.title.used, &context.title.size);
+    if (F_status_is_error_not(status)) status = f_memory_array_resize(F_color_max_size_terminated_d, sizeof(f_char_t), (void **) &context.warning.string, &context.warning.used, &context.warning.size);
   }
 
   {
@@ -40,9 +49,18 @@ void test__f_color_save_4_works(void **state) {
     assert_string_equal(buffer.string, "color1color2color3color4");
   }
 
-  macro_f_color_context_t_delete_simple(context);
+  f_memory_array_resize(0, sizeof(f_char_t), (void **) &context.reset.string, &context.reset.used, &context.reset.size);
+  f_memory_array_resize(0, sizeof(f_char_t), (void **) &context.error.string, &context.error.used, &context.error.size);
+  f_memory_array_resize(0, sizeof(f_char_t), (void **) &context.important.string, &context.important.used, &context.important.size);
+  f_memory_array_resize(0, sizeof(f_char_t), (void **) &context.normal.string, &context.normal.used, &context.normal.size);
+  f_memory_array_resize(0, sizeof(f_char_t), (void **) &context.normal_reset.string, &context.normal_reset.used, &context.normal_reset.size);
+  f_memory_array_resize(0, sizeof(f_char_t), (void **) &context.notable.string, &context.notable.used, &context.notable.size);
+  f_memory_array_resize(0, sizeof(f_char_t), (void **) &context.standout.string, &context.standout.used, &context.standout.size);
+  f_memory_array_resize(0, sizeof(f_char_t), (void **) &context.success.string, &context.success.used, &context.success.size);
+  f_memory_array_resize(0, sizeof(f_char_t), (void **) &context.title.string, &context.title.used, &context.title.size);
+  f_memory_array_resize(0, sizeof(f_char_t), (void **) &context.warning.string, &context.warning.used, &context.warning.size);
 
-  f_string_dynamic_resize(0, &buffer);
+  free((void *) buffer.string);
 }
 
 #ifdef __cplusplus

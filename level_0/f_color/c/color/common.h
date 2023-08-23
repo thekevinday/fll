@@ -966,45 +966,6 @@ extern "C" {
     macro_f_string_dynamic_t_clear(context.success) \
     macro_f_string_dynamic_t_clear(context.title) \
     macro_f_string_dynamic_t_clear(context.warning)
-
-  #define macro_f_color_context_t_new(status, context) \
-    macro_f_string_dynamic_t_resize(status, context.reset, F_color_max_size_terminated_d) \
-    if (F_status_is_error_not(status)) macro_f_string_dynamic_t_resize(status, context.error, F_color_max_size_terminated_d) \
-    if (F_status_is_error_not(status)) macro_f_string_dynamic_t_resize(status, context.important, F_color_max_size_terminated_d) \
-    if (F_status_is_error_not(status)) macro_f_string_dynamic_t_resize(status, context.normal, F_color_max_size_terminated_d) \
-    if (F_status_is_error_not(status)) macro_f_string_dynamic_t_resize(status, context.normal_reset, F_color_max_size_terminated_d) \
-    if (F_status_is_error_not(status)) macro_f_string_dynamic_t_resize(status, context.notable, F_color_max_size_terminated_d) \
-    if (F_status_is_error_not(status)) macro_f_string_dynamic_t_resize(status, context.reset, F_color_max_size_terminated_d) \
-    if (F_status_is_error_not(status)) macro_f_string_dynamic_t_resize(status, context.standout, F_color_max_size_terminated_d) \
-    if (F_status_is_error_not(status)) macro_f_string_dynamic_t_resize(status, context.success, F_color_max_size_terminated_d) \
-    if (F_status_is_error_not(status)) macro_f_string_dynamic_t_resize(status, context.title, F_color_max_size_terminated_d) \
-    if (F_status_is_error_not(status)) macro_f_string_dynamic_t_resize(status, context.warning, F_color_max_size_terminated_d)
-
-  #define macro_f_color_context_t_delete_simple(context) \
-    macro_f_string_dynamic_t_delete_simple(context.error) \
-    macro_f_string_dynamic_t_delete_simple(context.important) \
-    macro_f_string_dynamic_t_delete_simple(context.normal) \
-    macro_f_string_dynamic_t_delete_simple(context.normal_reset) \
-    macro_f_string_dynamic_t_delete_simple(context.notable) \
-    macro_f_string_dynamic_t_delete_simple(context.reset) \
-    macro_f_string_dynamic_t_delete_simple(context.standout) \
-    macro_f_string_dynamic_t_delete_simple(context.success) \
-    macro_f_string_dynamic_t_delete_simple(context.title) \
-    macro_f_string_dynamic_t_delete_simple(context.warning) \
-    macro_f_color_context_t_clear(context)
-
-  #define macro_f_color_context_t_destroy_simple(context, size) \
-    macro_f_string_dynamic_t_destroy_simple(context.error, size) \
-    macro_f_string_dynamic_t_destroy_simple(context.important, size) \
-    macro_f_string_dynamic_t_destroy_simple(context.normal) \
-    macro_f_string_dynamic_t_destroy_simple(context.normal_reset) \
-    macro_f_string_dynamic_t_destroy_simple(context.notable, size) \
-    macro_f_string_dynamic_t_destroy_simple(context.reset) \
-    macro_f_string_dynamic_t_destroy_simple(context.standout, size) \
-    macro_f_string_dynamic_t_destroy_simple(context.success, size) \
-    macro_f_string_dynamic_t_destroy_simple(context.title, size) \
-    macro_f_string_dynamic_t_destroy_simple(context.warning, size) \
-    macro_f_color_context_t_clear(context)
 #endif // _di_f_color_context_t_
 
 /**

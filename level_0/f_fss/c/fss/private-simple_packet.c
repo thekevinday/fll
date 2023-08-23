@@ -120,7 +120,7 @@ extern "C" {
 
       for (f_number_unsigned_t i = length; i < packets->size; ++i) {
 
-        status = f_string_dynamic_resize(0, &packets->array[i].payload);
+        status = f_memory_array(0, sizeof(f_char_t), (void **) &packets->array[i].payload.string, &packets->array[i].payload.used, &packets->array[i].payload.size);
         if (F_status_is_error(status)) return status;
       } // for
     }

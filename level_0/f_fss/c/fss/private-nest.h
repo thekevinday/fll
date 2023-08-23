@@ -59,10 +59,8 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_array_resize().
- *   Errors (with error bit) from: f_string_dynamic_resize().
  *
  * @see f_memory_array_resize()
- * @see f_string_dynamic_resize()
  *
  * @see f_fss_nests_decrease_by()
  * @see f_fss_nests_resize()
@@ -115,10 +113,8 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_array_resize().
- *   Errors (with error bit) from: f_string_dynamic_resize().
  *
  * @see f_memory_array_resize()
- * @see f_string_dynamic_resize()
  *
  * @see f_fss_nests_decrease_by()
  * @see f_fss_nests_increase()

@@ -17,7 +17,7 @@ void test__f_string_dynamicss_append__works(void **state) {
   };
 
   {
-    f_status_t status = f_string_dynamics_resize(length_inner, &source);
+    f_status_t status = f_memory_arrays_resize(length_inner, sizeof(f_string_dynamic_t), (void **) &source.array, &source.used, &source.size, &f_string_dynamics_delete_callback);
 
     assert_int_equal(status, F_okay);
     assert_int_equal(source.size, length_inner);
@@ -67,7 +67,7 @@ void test__f_string_dynamicss_append__returns_data_not(void **state) {
   f_string_dynamicss_t destination = f_string_dynamicss_t_initialize;
 
   {
-    const f_status_t status = f_string_dynamics_resize(length, &source);
+    const f_status_t status = f_memory_arrays_resize(length, sizeof(f_string_dynamic_t), (void **) &source.array, &source.used, &source.size, &f_string_dynamics_delete_callback);
 
     assert_int_equal(status, F_okay);
     assert_int_equal(source.used, 0);

@@ -26,7 +26,7 @@ void test__f_serialize_from_simple_get__returns_data_not(void **state) {
     assert_int_equal(status, F_data_not);
   }
 
-  f_string_dynamic_resize(0, &destination);
+  free((void *) destination.string);
 }
 
 void test__f_serialize_from_simple_get__works(void **state) {
@@ -60,7 +60,7 @@ void test__f_serialize_from_simple_get__works(void **state) {
     }
   } // for
 
-  f_string_dynamic_resize(0, &destination);
+  free((void *) destination.string);
 }
 
 #ifdef __cplusplus

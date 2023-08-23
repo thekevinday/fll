@@ -72,14 +72,6 @@ extern "C" {
     control.as_new = F_false; \
     macro_f_string_dynamic_t_clear(control.path); \
     macro_f_string_dynamics_t_clear(control.groups);
-
-  #define macro_f_control_group_t_delete_simple(control) \
-    macro_f_string_dynamic_t_delete_simple(control.path); \
-    macro_f_string_dynamics_t_delete_simple(control.groups);
-
-  #define macro_f_control_group_t_destroy_simple(control) \
-    macro_f_string_dynamic_t_destroy_simple(control.path); \
-    macro_f_string_dynamics_t_destroy_simple(control.groups);
 #endif // _di_f_control_group_t_
 
 #ifdef __cplusplus

@@ -27,7 +27,7 @@ void test__f_socket_addressss_destroy_callback__fails(void **state) {
 
 void test__f_socket_addressss_destroy_callback__works(void **state) {
 
-  mock_unwrap = 1;
+  mock_unwrap = 0;
   mock_unwrap_f_memory = 1;
 
   const f_number_unsigned_t length = 1;

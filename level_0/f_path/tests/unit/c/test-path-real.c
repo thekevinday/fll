@@ -45,7 +45,7 @@ void test__f_path_real__fails(void **state) {
     assert_int_equal(status, F_status_set_error(statuss[i]));
   } // for
 
-  f_string_dynamic_resize(0, &destination);
+  free((void *) destination.string);
 }
 
 void test__f_path_real__parameter_checking(void **state) {
@@ -77,7 +77,7 @@ void test__f_path_real__works(void **state) {
     assert_string_equal(destination.string, path_real.string);
   }
 
-  f_string_dynamic_resize(0, &destination);
+  free((void *) destination.string);
 }
 
 #ifdef __cplusplus

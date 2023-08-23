@@ -60,7 +60,6 @@ extern "C" {
  *
  *     Errors (with error bit) from: f_console_parameter_process().
  *     Errors (with error bit) from: f_file_stream_open().
- *     Errors (with error bit) from: f_string_dynamics_resize().
  *     Errors (with error bit) from: fll_program_parameter_process_context().
  *     Errors (with error bit) from: fll_program_parameter_process_verbosity_standard().
  *
@@ -73,7 +72,6 @@ extern "C" {
  *
  * @see f_console_parameter_process()
  * @see f_file_stream_open()
- * @see f_string_dynamics_resize()
  * @see fll_program_parameter_process_context()
  * @see fll_program_parameter_process_verbosity_standard()
  *

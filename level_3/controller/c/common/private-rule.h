@@ -505,17 +505,10 @@ extern "C" {
  * @param rule
  *   The rule to deallocate.
  *
- * @see macro_f_control_group_t_delete_simple()
- * @see macro_f_int32s_t_delete_simple()
- * @see macro_f_limit_sets_t_delete_simple()
- * @see macro_f_string_dynamics_t_delete_simple()
- * @see macro_f_string_maps_t_delete_simple()
- * @see macro_f_thread_condition_t_delete_simple()
- * @see macro_f_thread_mutex_t_delete_simple()
- *
  * @see controller_rule_items_delete_simple()
  * @see f_capability_delete()
  * @see f_memory_array_resize()
+ * @see f_memory_arrays_resize()
  */
 #ifndef _di_controller_rule_delete_simple_
   extern void controller_rule_delete_simple(controller_rule_t * const rule) F_attribute_visibility_internal_d;

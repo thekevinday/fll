@@ -12,7 +12,7 @@ void test__f_string_dynamic_terminate__appends_null(void **state) {
 
   // Put some value in the unused section at the end so that it gets overridden.
   {
-    const f_status_t status = f_string_dynamic_resize(length, &data);
+    const f_status_t status = f_memory_array_resize(length, sizeof(f_char_t), (void **) &data.string, &data.used, &data.size);
 
     assert_int_equal(status, F_okay);
 
@@ -37,7 +37,7 @@ void test__f_string_dynamic_terminate__doesnt_append_null(void **state) {
 
   // Ensure a NULL already exists so that the test can confirm that another NULL is not appended.
   {
-    const f_status_t status = f_string_dynamic_resize(length, &data);
+    const f_status_t status = f_memory_array_resize(length, sizeof(f_char_t), (void **) &data.string, &data.used, &data.size);
 
     assert_int_equal(status, F_okay);
 

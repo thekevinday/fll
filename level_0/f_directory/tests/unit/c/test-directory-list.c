@@ -34,7 +34,7 @@ void test__f_directory_list__fails(void **state) {
     } // for
   }
 
-  f_string_dynamics_resize(0, &names);
+  f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &names.array, &names.used, &names.size, &f_string_dynamics_delete_callback);
 }
 
 void test__f_directory_list__parameter_checking(void **state) {
@@ -58,7 +58,7 @@ void test__f_directory_list__returns_data_not(void **state) {
     assert_int_equal(status, F_data_not);
   }
 
-  f_string_dynamics_resize(0, &names);
+  f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &names.array, &names.used, &names.size, &f_string_dynamics_delete_callback);
 }
 
 void test__f_directory_list__returns_directory_empty(void **state) {
@@ -81,7 +81,7 @@ void test__f_directory_list__returns_directory_empty(void **state) {
     assert_int_equal(status, F_directory_empty);
   }
 
-  f_string_dynamics_resize(0, &names);
+  f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &names.array, &names.used, &names.size, &f_string_dynamics_delete_callback);
 }
 
 void test__f_directory_list__works(void **state) {
@@ -109,7 +109,7 @@ void test__f_directory_list__works(void **state) {
     assert_int_equal(status, F_okay);
   }
 
-  f_string_dynamics_resize(0, &names);
+  f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &names.array, &names.used, &names.size, &f_string_dynamics_delete_callback);
 }
 
 #ifdef __cplusplus

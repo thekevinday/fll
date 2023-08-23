@@ -31,7 +31,6 @@ extern "C" {
  *     F_okay on success.
  *
  *     Errors (with error bit) from: f_file_link()
- *     Errors (with error bit) from: f_string_dynamics_resize()
  *     Errors (with error bit) from: fll_execute_arguments_add()
  *
  *     Errors (with error bit) from: fake_execute()
@@ -51,7 +50,6 @@ extern "C" {
  *   This generally is only needed when F_child is returned, where this holds the return status of the child process.
  *
  * @see f_file_link()
- * @see f_string_dynamics_resize()
  * @see fll_execute_arguments_add()
  *
  * @see fake_execute()

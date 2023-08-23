@@ -60,7 +60,7 @@ void test__f_file_link_read_at__fails(void **state) {
     assert_int_equal(status, F_status_set_error(statuss[i]));
   } // for
 
-  f_string_dynamic_resize(0, &buffer);
+  free((void *) buffer.string);
 }
 
 void test__f_file_link_read_at__parameter_checking(void **state) {
@@ -74,7 +74,7 @@ void test__f_file_link_read_at__parameter_checking(void **state) {
     assert_int_equal(status, F_status_set_error(F_parameter));
   }
 
-  f_string_dynamic_resize(0, &buffer);
+  free((void *) buffer.string);
 }
 
 void test__f_file_link_read_at__returns_data_not(void **state) {
@@ -88,7 +88,7 @@ void test__f_file_link_read_at__returns_data_not(void **state) {
     assert_int_equal(status, F_data_not);
   }
 
-  f_string_dynamic_resize(0, &buffer);
+  free((void *) buffer.string);
 }
 
 void test__f_file_link_read_at__returns_file_descriptor_not(void **state) {
@@ -102,7 +102,7 @@ void test__f_file_link_read_at__returns_file_descriptor_not(void **state) {
     assert_int_equal(status, F_file_descriptor_not);
   }
 
-  f_string_dynamic_resize(0, &buffer);
+  free((void *) buffer.string);
 }
 
 void test__f_file_link_read_at__works(void **state) {
@@ -134,7 +134,7 @@ void test__f_file_link_read_at__works(void **state) {
     assert_int_equal(status, F_okay);
   }
 
-  f_string_dynamic_resize(0, &buffer);
+  free((void *) buffer.string);
 }
 
 #ifdef __cplusplus
