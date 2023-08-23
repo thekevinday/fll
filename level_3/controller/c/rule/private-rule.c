@@ -695,7 +695,7 @@ extern "C" {
         status = F_status_set_fine(status);
 
         if (status != F_valid_not && status != F_number && status != F_number_decimal && status != F_number_overflow && status != F_number_underflow && status != F_number_negative) {
-          controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_string_dynamics_increase", F_true);
+          controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "fl_conversion_dynamic_partial_to_signed_detect", F_true);
         }
         else {
           controller_lock_print(global.main->error.to, global.thread);
