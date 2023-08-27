@@ -15,56 +15,6 @@
 extern "C" {
 #endif
 
-/**
- * Private implementation for resizing.
- *
- * Intended to be shared to each of the different implementation variations.
- *
- * @param length
- *   The new size to use.
- * @param structure
- *   The tripless to adjust.
- *
- * @return
- *   F_okay on success.
- *
- *   F_array_too_large (with error bit) if the combined array is too large.
- *
- *   Errors (with error bit) from: f_memory_adjust().
- *
- * @see f_memory_adjust()
- * @see f_utf_string_tripless_adjust()
- */
-#if !defined(_di_f_utf_string_tripless_adjust_) || !defined(_di_f_utf_string_tripless_decimate_by_)
-  extern f_status_t private_f_utf_string_tripless_adjust(const f_number_unsigned_t length, f_utf_string_tripless_t * const structure) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_utf_string_tripless_adjust_) || !defined(_di_f_utf_string_tripless_decimate_by_)
-
-/**
- * Private implementation for resizing.
- *
- * Intended to be shared to each of the different implementation variations.
- *
- * @param length
- *   The new size to use.
- * @param structure
- *   The tripless to resize.
- *
- * @return
- *   F_okay on success.
- *
- *   F_array_too_large (with error bit) if the combined array is too large.
- *
- *   Errors (with error bit) from: f_memory_resize().
- *
- * @see f_memory_resize()
- * @see f_utf_string_tripless_decrease_by()
- * @see f_utf_string_tripless_increase()
- * @see f_utf_string_tripless_increase_by()
- */
-#if !defined(_di_f_utf_string_tripless_decrease_by_) || !defined(_di_f_utf_string_tripless_increase_) || !defined(_di_f_utf_string_tripless_increase_by_)
-  extern f_status_t private_f_utf_string_tripless_resize(const f_number_unsigned_t length, f_utf_string_tripless_t * const structure) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_utf_string_tripless_decrease_by_) || !defined(_di_f_utf_string_tripless_increase_) || !defined(_di_f_utf_string_tripless_increase_by_)
-
 #ifdef __cplusplus
 } // extern "C"
 #endif

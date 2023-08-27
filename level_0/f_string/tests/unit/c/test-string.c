@@ -156,32 +156,55 @@ int main(void) {
     cmocka_unit_test(test__f_string_seek_to__returns_none_stop),
     cmocka_unit_test(test__f_string_seek_to__works),
 
+    cmocka_unit_test(test__f_string_dynamics_delete_callback__fails),
+    cmocka_unit_test(test__f_string_dynamics_destroy_callback__fails),
+    cmocka_unit_test(test__f_string_dynamics_delete_callback__works),
+    cmocka_unit_test(test__f_string_dynamics_destroy_callback__works),
+
     cmocka_unit_test(test__f_string_dynamicss_delete_callback__fails),
     cmocka_unit_test(test__f_string_dynamicss_destroy_callback__fails),
+    cmocka_unit_test(test__f_string_dynamicss_delete_callback__works),
+    cmocka_unit_test(test__f_string_dynamicss_destroy_callback__works),
 
     cmocka_unit_test(test__f_string_map_multis_delete_callback__fails),
     cmocka_unit_test(test__f_string_map_multis_destroy_callback__fails),
+    cmocka_unit_test(test__f_string_map_multis_delete_callback__works),
+    cmocka_unit_test(test__f_string_map_multis_destroy_callback__works),
 
     cmocka_unit_test(test__f_string_map_multiss_delete_callback__fails),
     cmocka_unit_test(test__f_string_map_multiss_destroy_callback__fails),
+    cmocka_unit_test(test__f_string_map_multiss_delete_callback__works),
+    cmocka_unit_test(test__f_string_map_multiss_destroy_callback__works),
 
     cmocka_unit_test(test__f_string_maps_delete_callback__fails),
     cmocka_unit_test(test__f_string_maps_destroy_callback__fails),
+    cmocka_unit_test(test__f_string_maps_delete_callback__works),
+    cmocka_unit_test(test__f_string_maps_destroy_callback__works),
 
     cmocka_unit_test(test__f_string_mapss_delete_callback__fails),
     cmocka_unit_test(test__f_string_mapss_destroy_callback__fails),
+    cmocka_unit_test(test__f_string_mapss_delete_callback__works),
+    cmocka_unit_test(test__f_string_mapss_destroy_callback__works),
 
     cmocka_unit_test(test__f_string_quantityss_delete_callback__fails),
     cmocka_unit_test(test__f_string_quantityss_destroy_callback__fails),
+    cmocka_unit_test(test__f_string_quantityss_delete_callback__works),
+    cmocka_unit_test(test__f_string_quantityss_destroy_callback__works),
 
     cmocka_unit_test(test__f_string_rangess_delete_callback__fails),
     cmocka_unit_test(test__f_string_rangess_destroy_callback__fails),
+    cmocka_unit_test(test__f_string_rangess_delete_callback__works),
+    cmocka_unit_test(test__f_string_rangess_destroy_callback__works),
 
     cmocka_unit_test(test__f_string_triples_delete_callback__fails),
     cmocka_unit_test(test__f_string_triples_destroy_callback__fails),
+    cmocka_unit_test(test__f_string_triples_delete_callback__works),
+    cmocka_unit_test(test__f_string_triples_destroy_callback__works),
 
     cmocka_unit_test(test__f_string_tripless_delete_callback__fails),
     cmocka_unit_test(test__f_string_tripless_destroy_callback__fails),
+    cmocka_unit_test(test__f_string_tripless_delete_callback__works),
+    cmocka_unit_test(test__f_string_tripless_destroy_callback__works),
 
     #ifndef _di_level_0_parameter_checking_
       cmocka_unit_test(test__f_string_append__parameter_checking),
@@ -274,6 +297,9 @@ int main(void) {
       cmocka_unit_test(test__f_string_seek_line_to__parameter_checking),
 
       cmocka_unit_test(test__f_string_seek_to__parameter_checking),
+
+      // f_string_dynamics_delete_callback() doesn't use parameter checking.
+      // f_string_dynamics_destroy_callback() doesn't use parameter checking.
 
       // f_string_dynamicss_delete_callback() doesn't use parameter checking.
       // f_string_dynamicss_destroy_callback() doesn't use parameter checking.

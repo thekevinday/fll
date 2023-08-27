@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-void test__f_utf_dynamic_seek_to__after_newline(void **state) {
+void test__f_utf_string_dynamic_seek_to__after_newline(void **state) {
 
   const f_utf_string_static_t to = macro_f_utf_string_static_t_initialize_1((f_utf_string_t) "\0\0\0X", 0, 1);
   const f_utf_string_static_t source = macro_f_utf_string_static_t_initialize_1((f_utf_string_t) "\0\0\0t\0\0\0e\0\0\0\n\0\0\0X\0\0\0s\0\0\0t", 0, 6);
@@ -22,7 +22,7 @@ void test__f_utf_dynamic_seek_to__after_newline(void **state) {
   }
 }
 
-void test__f_utf_dynamic_seek_to__before_newline(void **state) {
+void test__f_utf_string_dynamic_seek_to__before_newline(void **state) {
 
   const f_utf_string_static_t to = macro_f_utf_string_static_t_initialize_1((f_utf_string_t) "\0\0\0X", 0, 1);
   const f_utf_string_static_t source = macro_f_utf_string_static_t_initialize_1((f_utf_string_t) "\0\0\0t\0\0\0e\0\0\0X\0\0\0\n\0\0\0s\0\0\0t", 0, 6);
@@ -39,7 +39,7 @@ void test__f_utf_dynamic_seek_to__before_newline(void **state) {
   }
 }
 
-void test__f_utf_dynamic_seek_to__returns_data_not_stop(void **state) {
+void test__f_utf_string_dynamic_seek_to__returns_data_not_stop(void **state) {
 
   const f_utf_string_static_t to = macro_f_utf_string_static_t_initialize_1((f_utf_string_t) "\0\0\0X", 0, 1);
   const f_utf_string_static_t source = macro_f_utf_string_static_t_initialize_1((f_utf_string_t) "\0\0\0t\0\0\0e\0\0\0s\0\0\0t\0\0\0\n\0\0\0a\0\0\0f\0\0\0t\0\0\0e\0\0\0r", 0, 10);
@@ -53,7 +53,7 @@ void test__f_utf_dynamic_seek_to__returns_data_not_stop(void **state) {
   }
 }
 
-void test__f_utf_dynamic_seek_to__returns_none_eos(void **state) {
+void test__f_utf_string_dynamic_seek_to__returns_none_eos(void **state) {
 
   const f_utf_string_static_t to = macro_f_utf_string_static_t_initialize_1((f_utf_string_t) "\0\0\0X", 0, 1);
   const f_utf_string_static_t source = macro_f_utf_string_static_t_initialize_1((f_utf_string_t) "\0\0\0t\0\0\0e\0\0\0s\0\0\0t\0\0\0\n\0\0\0a\0\0\0f\0\0\0t\0\0\0e\0\0\0r", 0, 10);
@@ -70,7 +70,7 @@ void test__f_utf_dynamic_seek_to__returns_none_eos(void **state) {
   }
 }
 
-void test__f_utf_dynamic_seek_to__returns_none_stop(void **state) {
+void test__f_utf_string_dynamic_seek_to__returns_none_stop(void **state) {
 
   const f_utf_string_static_t to = macro_f_utf_string_static_t_initialize_1((f_utf_string_t) "\0\0\0X", 0, 1);
   const f_utf_string_static_t source = macro_f_utf_string_static_t_initialize_1((f_utf_string_t) "\0\0\0t\0\0\0e\0\0\0s\0\0\0t\0\0\0\n\0\0\0a\0\0\0f\0\0\0t\0\0\0e\0\0\0r", 0, 10);
@@ -87,7 +87,7 @@ void test__f_utf_dynamic_seek_to__returns_none_stop(void **state) {
   }
 }
 
-void test__f_utf_dynamic_seek_to__works(void **state) {
+void test__f_utf_string_dynamic_seek_to__works(void **state) {
 
   const f_utf_string_static_t to = macro_f_utf_string_static_t_initialize_1((f_utf_string_t) "\0\0\0X", 0, 1);
 
@@ -118,7 +118,7 @@ void test__f_utf_dynamic_seek_to__works(void **state) {
   }
 }
 
-void test__f_utf_dynamic_seek_to__parameter_checking(void **state) {
+void test__f_utf_string_dynamic_seek_to__parameter_checking(void **state) {
 
   const f_utf_string_static_t to = macro_f_utf_string_static_t_initialize_1((f_utf_string_t) "\0\0\0X", 0, 1);
   const f_utf_string_static_t source = macro_f_utf_string_static_t_initialize_1((f_utf_string_t) "\0\0\0t\0\0\0e\0\0\0X\0\0\0\n\0\0\0s\0\0\0t", 0, 6);

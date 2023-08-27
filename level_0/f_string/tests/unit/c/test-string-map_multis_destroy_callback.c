@@ -89,11 +89,11 @@ void test__f_string_map_multis_destroy_callback__works(void **state) {
     const f_status_t status = f_string_map_multis_destroy_callback(0, length, (void *) datas.array);
 
     assert_int_equal(status, F_okay);
-    assert_int_equal(datas.size, 0);
+    assert_int_equal(datas.array[0].name.size, 0);
+    assert_int_equal(datas.array[0].value.size, 0);
   }
 
   free((void *) datas.array[0].name.string);
-  free((void *) datas.array[0].value.array[0].string);
   free((void *) datas.array[0].value.array);
   free((void *) datas.array);
 }

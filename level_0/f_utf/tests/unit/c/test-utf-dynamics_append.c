@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-void test__f_utf_dynamics_append__works(void **state) {
+void test__f_utf_string_dynamics_append__works(void **state) {
 
   const f_utf_string_static_t source = macro_f_utf_string_static_t_initialize_1((f_utf_string_t) "\0\0\0t\0\0\0e\0\0\0\0\0\0\0s\0\0\0t", 0, 5);
   f_utf_string_dynamics_t destination = f_utf_string_dynamics_t_initialize;
@@ -26,7 +26,7 @@ void test__f_utf_dynamics_append__works(void **state) {
   free((void *) destination.array);
 }
 
-void test__f_utf_dynamics_append__parameter_checking(void **state) {
+void test__f_utf_string_dynamics_append__parameter_checking(void **state) {
 
   const f_utf_string_dynamic_t data = f_utf_string_dynamic_t_initialize;
 

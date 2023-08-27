@@ -11,47 +11,37 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (file.id < 0) {
-      return F_status_set_error(F_file);
-    }
-
-    if (!file.id) {
-      return F_status_set_error(F_file_closed);
-    }
-
-    f_status_t status = F_okay;
+    if (file.id < 0) return F_status_set_error(F_file);
+    if (!file.id) return F_status_set_error(F_file_closed);
 
     ssize_t size_read = 0;
     uint8_t width = 0;
-    int8_t width_last = -1;
 
-    f_char_t buffer_read[file.size_read];
-    f_char_t buffer_char[4] = { 0, 0, 0, 0 };
+    {
+      int8_t width_last = -1;
+      f_status_t status = F_okay;
 
-    memset(&buffer_read, 0, sizeof(file.size_read));
+      f_char_t buffer_read[file.size_read];
+      f_char_t buffer_char[4] = { 0, 0, 0, 0 };
 
-    while ((size_read = read(file.id, buffer_read, file.size_read)) > 0) {
+      memset(&buffer_read, 0, sizeof(file.size_read));
 
-      if (destination->used + size_read > destination->size) {
-        if (destination->size + size_read > F_string_t_size_d) {
-          return F_status_set_error(F_string_too_large);
-        }
+      while ((size_read = read(file.id, buffer_read, file.size_read)) > 0) {
 
-        macro_f_utf_string_dynamic_t_resize(status, (*destination), destination->size + size_read);
+        status = f_memory_array_increase_by(size_read, sizeof(f_utf_char_t), (void **) &destination->string, &destination->used, &destination->size);
         if (F_status_is_error(status)) return status;
-      }
 
-      private_fl_utf_file_process_read_buffer(buffer_read, size_read, destination, buffer_char, &width, &width_last);
-    } // while
+        private_fl_utf_file_process_read_buffer(buffer_read, size_read, destination, buffer_char, &width, &width_last);
+      } // while
+    }
 
     if (!size_read) {
-      if (width != 0) {
-        return F_status_set_error(F_complete_not_utf_eof);
-      }
+      if (width != 0) return F_status_set_error(F_complete_not_utf_eof);
 
       return F_okay_eof;
     }
-    else if (size_read < 0) {
+
+    if (size_read < 0) {
       if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
       if (errno == EBADF) return F_status_set_error(F_file_descriptor);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
@@ -62,9 +52,8 @@ extern "C" {
 
       return F_status_set_error(F_failure);
     }
-    else if (width != 0) {
-      return F_status_set_error(F_complete_not_utf_stop);
-    }
+
+    if (width != 0) return F_status_set_error(F_complete_not_utf_stop);
 
     return F_okay;
   }
@@ -91,26 +80,19 @@ extern "C" {
     memset(&buffer_read, 0, sizeof(file.size_read));
 
     if ((size_read = read(file.id, buffer_read, file.size_read)) > 0) {
-      if (destination->used + size_read > destination->size) {
-        if (destination->size + size_read > F_string_t_size_d) {
-          return F_status_set_error(F_string_too_large);
-        }
-
-        macro_f_utf_string_dynamic_t_resize(status, (*destination), destination->size + size_read);
-        if (F_status_is_error(status)) return status;
-      }
+      status = f_memory_array_increase_by(size_read, sizeof(f_utf_char_t), (void **) &destination->string, &destination->used, &destination->size);
+      if (F_status_is_error(status)) return status;
 
       private_fl_utf_file_process_read_buffer(buffer_read, size_read, destination, buffer_char, &width, &width_last);
     }
 
     if (!size_read) {
-      if (width) {
-        return F_status_set_error(F_complete_not_utf_eof);
-      }
+      if (width) return F_status_set_error(F_complete_not_utf_eof);
 
       return F_okay_eof;
     }
-    else if (size_read < 0) {
+
+    if (size_read < 0) {
       if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
       if (errno == EBADF) return F_status_set_error(F_file_descriptor);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
@@ -121,9 +103,8 @@ extern "C" {
 
       return F_status_set_error(F_failure);
     }
-    else if (width != 0) {
-      return F_status_set_error(F_complete_not_utf_stop);
-    }
+
+    if (width != 0) return F_status_set_error(F_complete_not_utf_stop);
 
     return F_okay;
   }
@@ -135,13 +116,8 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (file.id < 0) {
-      return F_status_set_error(F_file);
-    }
-
-    if (!file.id) {
-      return F_status_set_error(F_file_closed);
-    }
+    if (file.id < 0) return F_status_set_error(F_file);
+    if (!file.id) return F_status_set_error(F_file_closed);
 
     f_status_t status = F_okay;
 
@@ -163,26 +139,19 @@ extern "C" {
 
     while (buffer_count < total && (size_read = read(file.id, buffer_read, buffer_size)) > 0) {
 
-      if (destination->used + size_read > destination->size) {
-        if (destination->size + size_read > F_string_t_size_d) {
-          return F_status_set_error(F_string_too_large);
-        }
-
-        macro_f_utf_string_dynamic_t_resize(status, (*destination), destination->size + size_read);
-        if (F_status_is_error(status)) return status;
-      }
+      status = f_memory_array_increase_by(size_read, sizeof(f_utf_char_t), (void **) &destination->string, &destination->used, &destination->size);
+      if (F_status_is_error(status)) return status;
 
       private_fl_utf_file_process_read_buffer(buffer_read, size_read, destination, buffer_char, &width, &width_last);
     } // while
 
     if (!size_read) {
-      if (width != 0) {
-        return F_status_set_error(F_complete_not_utf_eof);
-      }
+      if (width != 0) return F_status_set_error(F_complete_not_utf_eof);
 
       return F_okay_eof;
     }
-    else if (size_read < 0) {
+
+    if (size_read < 0) {
       if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
       if (errno == EBADF) return F_status_set_error(F_file_descriptor);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
@@ -193,9 +162,8 @@ extern "C" {
 
       return F_status_set_error(F_failure);
     }
-    else if (width != 0) {
-      return F_status_set_error(F_complete_not_utf_stop);
-    }
+
+    if (width != 0) return F_status_set_error(F_complete_not_utf_stop);
 
     return F_okay;
   }
@@ -207,13 +175,8 @@ extern "C" {
       if (!file.size_write) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (file.id < 0) {
-      return F_status_set_error(F_file);
-    }
-
-    if (!file.id) {
-      return F_status_set_error(F_file_closed);
-    }
+    if (file.id < 0) return F_status_set_error(F_file);
+    if (!file.id) return F_status_set_error(F_file_closed);
 
     if (!destination.used) {
       *written = 0;
@@ -224,9 +187,7 @@ extern "C" {
     const f_status_t status = private_fl_utf_file_write_until(file, destination.string, destination.used, written);
     if (F_status_is_error(status)) return status;
 
-    if (status == F_okay && *written == destination.used) {
-      return F_okay_eos;
-    }
+    if (status == F_okay && *written == destination.used) return F_okay_eos;
 
     return status;
   }
@@ -238,13 +199,8 @@ extern "C" {
       if (!file.size_write) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (file.id < 0) {
-      return F_status_set_error(F_file);
-    }
-
-    if (!file.id) {
-      return F_status_set_error(F_file_closed);
-    }
+    if (file.id < 0) return F_status_set_error(F_file);
+    if (!file.id) return F_status_set_error(F_file_closed);
 
     if (!destination.used) {
       *written = 0;
@@ -261,9 +217,7 @@ extern "C" {
     const f_status_t status = private_fl_utf_file_write_until(file, destination.string, write_max, written);
     if (F_status_is_error(status)) return status;
 
-    if (status == F_okay && *written == destination.used) {
-      return F_okay_eos;
-    }
+    if (status == F_okay && *written == destination.used) return F_okay_eos;
 
     return status;
   }
@@ -275,13 +229,8 @@ extern "C" {
       if (!file.size_write) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (file.id < 0) {
-      return F_status_set_error(F_file);
-    }
-
-    if (!file.id) {
-      return F_status_set_error(F_file_closed);
-    }
+    if (file.id < 0) return F_status_set_error(F_file);
+    if (!file.id) return F_status_set_error(F_file_closed);
 
     if (!destination.used || !total) {
       *written = 0;
@@ -298,9 +247,7 @@ extern "C" {
     const f_status_t status = private_fl_utf_file_write_until(file, destination.string, write_max, written);
     if (F_status_is_error(status)) return status;
 
-    if (status == F_okay && *written == destination.used) {
-      return F_okay_eos;
-    }
+    if (status == F_okay && *written == destination.used) return F_okay_eos;
 
     return status;
   }
@@ -313,13 +260,8 @@ extern "C" {
       if (range.start >= destination.used) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (file.id < 0) {
-      return F_status_set_error(F_file);
-    }
-
-    if (!file.id) {
-      return F_status_set_error(F_file_closed);
-    }
+    if (file.id < 0) return F_status_set_error(F_file);
+    if (!file.id) return F_status_set_error(F_file_closed);
 
     if (!destination.used) {
       *written = 0;

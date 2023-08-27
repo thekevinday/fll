@@ -1,6 +1,5 @@
 #include "../utf.h"
 #include "../private-utf.h"
-#include "private-dynamic.h"
 #include "private-dynamics.h"
 #include "private-map_multis.h"
 #include "private-string.h"
@@ -9,40 +8,28 @@
 extern "C" {
 #endif
 
-#ifndef _di_f_utf_string_map_multis_adjust_
-  f_status_t f_utf_string_map_multis_adjust(const f_number_unsigned_t length, f_utf_string_map_multis_t * const structure) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!structure) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return private_f_utf_string_map_multis_adjust(length, structure);
-  }
-#endif // _di_f_utf_string_map_multis_adjust_
-
 #ifndef _di_f_utf_string_map_multis_append_
   f_status_t f_utf_string_map_multis_append(const f_utf_string_map_multi_t source, f_utf_string_map_multis_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    f_status_t status = F_okay;
-
-    if (destination->used + 1 > destination->size) {
-      status = private_f_utf_string_map_multis_resize(destination->used + F_memory_default_allocation_small_d, destination);
+    {
+      f_status_t status = f_memory_array_increase(F_memory_default_allocation_small_d, sizeof(f_utf_string_map_multi_t), (void **) &destination->array, &destination->used, &destination->size);
       if (F_status_is_error(status)) return status;
-    }
 
-    destination->array[destination->used].name.used = 0;
-    destination->array[destination->used].value.used = 0;
+      destination->array[destination->used].name.used = 0;
+      destination->array[destination->used].value.used = 0;
 
-    if (source.name.used) {
-      status = private_f_utf_string_append(source.name.string, source.name.used, &destination->array[destination->used].name);
-      if (F_status_is_error(status)) return status;
-    }
+      if (source.name.used) {
+        status = private_f_utf_string_append(source.name.string, source.name.used, &destination->array[destination->used].name);
+        if (F_status_is_error(status)) return status;
+      }
 
-    if (source.value.used) {
-      status = private_f_utf_string_dynamics_append_all(source.value, &destination->array[destination->used].value);
-      if (F_status_is_error(status)) return status;
+      if (source.value.used) {
+        status = private_f_utf_string_dynamics_append_all(source.value, &destination->array[destination->used].value);
+        if (F_status_is_error(status)) return status;
+      }
     }
 
     ++destination->used;
@@ -63,83 +50,69 @@ extern "C" {
   }
 #endif // _di_f_utf_string_map_multis_append_all_
 
-#ifndef _di_f_utf_string_map_multis_decimate_by_
-  f_status_t f_utf_string_map_multis_decimate_by(const f_number_unsigned_t amount, f_utf_string_map_multis_t * const structure) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!structure) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+#ifndef _di_f_utf_string_map_multis_delete_callback_
+  f_status_t f_utf_string_map_multis_delete_callback(const f_number_unsigned_t start, const f_number_unsigned_t stop, void * const void_array) {
 
-    if (!amount) return F_data_not;
+    {
+      f_utf_string_map_multi_t * const array = (f_utf_string_map_multi_t *) void_array;
+      f_status_t status = F_okay;
+      f_number_unsigned_t j = 0;
 
-    return private_f_utf_string_map_multis_adjust((structure->size > amount) ? structure->size - amount : 0, structure);
-  }
-#endif // _di_f_utf_string_map_multis_decimate_by_
+      for (f_number_unsigned_t i = start; i < stop; ++i) {
 
-#ifndef _di_f_utf_string_map_multis_decrease_by_
-  f_status_t f_utf_string_map_multis_decrease_by(const f_number_unsigned_t amount, f_utf_string_map_multis_t * const structure) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!structure) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+        if (array[i].name.size) {
+          status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &array[i].name.string, &array[i].name.used, &array[i].name.size);
+          if (F_status_is_error(status)) return status;
+        }
 
-    if (!amount) return F_data_not;
+        if (array[i].value.size) {
+          for (j = 0; j < array[i].value.size; ++j) {
 
-    return private_f_utf_string_map_multis_resize((structure->size > amount) ? structure->size - amount : 0, structure);
-  }
-#endif // _di_f_utf_string_map_multis_decrease_by_
+            status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &array[i].value.array[j].string, &array[i].value.array[j].used, &array[i].value.array[j].size);
+            if (F_status_is_error(status)) return status;
+          } // for
 
-#ifndef _di_f_utf_string_map_multis_increase_
-  f_status_t f_utf_string_map_multis_increase(const f_number_unsigned_t step, f_utf_string_map_multis_t * const structure) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!structure) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (step && structure->used + 1 > structure->size) {
-      f_number_unsigned_t length = structure->used + step;
-
-      if (length > F_number_t_size_unsigned_d) {
-        if (structure->used + 1 > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
-
-        length = F_number_t_size_unsigned_d;
-      }
-
-      return private_f_utf_string_map_multis_resize(length, structure);
+          status = f_memory_array_resize(0, sizeof(f_utf_string_dynamic_t), (void **) &array[i].value.array, &array[i].value.used, &array[i].value.size);
+          if (F_status_is_error(status)) return status;
+        }
+      } // for
     }
 
-    return F_data_not;
+    return F_okay;
   }
-#endif // _di_f_utf_string_map_multis_increase_
+#endif // _di_f_utf_string_map_multis_delete_callback_
 
-#ifndef _di_f_utf_string_map_multis_increase_by_
-  f_status_t f_utf_string_map_multis_increase_by(const f_number_unsigned_t amount, f_utf_string_map_multis_t * const structure) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!structure) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+#ifndef _di_f_utf_string_map_multis_destroy_callback_
+  f_status_t f_utf_string_map_multis_destroy_callback(const f_number_unsigned_t start, const f_number_unsigned_t stop, void * const void_array) {
 
-    if (amount) {
-      if (structure->used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+    {
+      f_utf_string_map_multi_t * const array = (f_utf_string_map_multi_t *) void_array;
+      f_status_t status = F_okay;
+      f_number_unsigned_t j = 0;
 
-      const f_number_unsigned_t length = structure->used + amount;
+      for (f_number_unsigned_t i = start; i < stop; ++i) {
 
-      if (length > structure->size) {
-        if (length > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+        if (array[i].name.size) {
+          status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &array[i].name.string, &array[i].name.used, &array[i].name.size);
+          if (F_status_is_error(status)) return status;
+        }
 
-        return private_f_utf_string_map_multis_resize(length, structure);
-      }
+        if (array[i].value.size) {
+          for (j = 0; j < array[i].value.size; ++j) {
+
+            status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &array[i].value.array[j].string, &array[i].value.array[j].used, &array[i].value.array[j].size);
+            if (F_status_is_error(status)) return status;
+          } // for
+
+          status = f_memory_array_adjust(0, sizeof(f_utf_string_dynamic_t), (void **) &array[i].value.array, &array[i].value.used, &array[i].value.size);
+          if (F_status_is_error(status)) return status;
+        }
+      } // for
     }
 
-    return F_data_not;
+    return F_okay;
   }
-#endif // _di_f_utf_string_map_multis_increase_by_
-
-#ifndef _di_f_utf_string_map_multis_resize_
-  f_status_t f_utf_string_map_multis_resize(const f_number_unsigned_t length, f_utf_string_map_multis_t * const structure) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!structure) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return private_f_utf_string_map_multis_resize(length, structure);
-  }
-#endif // _di_f_utf_string_map_multis_resize_
+#endif // _di_f_utf_string_map_multis_destroy_callback_
 
 #ifdef __cplusplus
 } // extern "C"

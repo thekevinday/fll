@@ -122,9 +122,7 @@ extern "C" {
           width = macro_f_utf_char_t_width(string[*written + i]);
           width_written = width;
 
-          if (*written + width > write_max) {
-            return F_complete_not_utf_stop;
-          }
+          if (*written + width > write_max) return F_complete_not_utf_stop;
 
           buffer_write[used] = macro_f_utf_char_t_to_char_1(string[*written + i]);
 
@@ -132,6 +130,7 @@ extern "C" {
             if (used == write_size) {
               width_written = 1;
               used += 1;
+
               break;
             }
 
@@ -141,6 +140,7 @@ extern "C" {
               if (used + 2 > write_size) {
                 width_written = 2;
                 used += 2;
+
                 break;
               }
 
@@ -150,6 +150,7 @@ extern "C" {
                 if (used + 3 > write_size) {
                   width_written = 3;
                   used += 3;
+
                   break;
                 }
 
@@ -161,10 +162,7 @@ extern "C" {
       } // for
 
       size_write = write(file.id, buffer_write, used);
-
-      if (!size_write) {
-        return F_okay_stop;
-      }
+      if (!size_write) return F_okay_stop;
 
       if (size_write < 0) {
         if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);

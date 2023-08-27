@@ -1,5 +1,4 @@
 #include "../utf.h"
-#include "private-dynamic.h"
 #include "private-string.h"
 
 #ifdef __cplusplus
@@ -27,30 +26,32 @@ extern "C" {
     if (!length) return F_data_not;
     if (destination->used < length) return private_f_utf_string_append(source, length, destination);
 
-    f_number_unsigned_t i = 1;
-    f_number_unsigned_t j = 1;
+    {
+      f_number_unsigned_t i = 1;
+      f_number_unsigned_t j = 1;
 
-    while (i <= length && j <= destination->used) {
+      while (i <= length && j <= destination->used) {
 
-      if (!source[length - i]) {
+        if (!source[length - i]) {
+          ++i;
+
+          continue;
+        }
+
+        if (!destination->string[destination->used - j]) {
+          ++j;
+
+          continue;
+        }
+
+        if (source[length - i] != destination->string[destination->used - j]) {
+          return private_f_utf_string_append(source, length, destination);
+        }
+
         ++i;
-
-        continue;
-      }
-
-      if (!destination->string[destination->used - j]) {
         ++j;
-
-        continue;
-      }
-
-      if (source[length - i] != destination->string[destination->used - j]) {
-        return private_f_utf_string_append(source, length, destination);
-      }
-
-      ++i;
-      ++j;
-    } // while
+      } // while
+    }
 
     return F_okay;
   }
@@ -65,30 +66,32 @@ extern "C" {
     if (!length) return F_data_not;
     if (!destination->used) return private_f_utf_string_append_nulless(source, length, destination);
 
-    f_number_unsigned_t i = 1;
-    f_number_unsigned_t j = 1;
+    {
+      f_number_unsigned_t i = 1;
+      f_number_unsigned_t j = 1;
 
-    while (i <= length && j <= destination->used) {
+      while (i <= length && j <= destination->used) {
 
-      if (!source[length - i]) {
+        if (!source[length - i]) {
+          ++i;
+
+          continue;
+        }
+
+        if (!destination->string[destination->used - j]) {
+          ++j;
+
+          continue;
+        }
+
+        if (source[length - i] != destination->string[destination->used - j]) {
+          return private_f_utf_string_append_nulless(source, length, destination);
+        }
+
         ++i;
-
-        continue;
-      }
-
-      if (!destination->string[destination->used - j]) {
         ++j;
-
-        continue;
-      }
-
-      if (source[length - i] != destination->string[destination->used - j]) {
-        return private_f_utf_string_append_nulless(source, length, destination);
-      }
-
-      ++i;
-      ++j;
-    } // while
+      } // while
+    }
 
     return F_okay;
   }
@@ -115,7 +118,7 @@ extern "C" {
     if (!length) return F_data_not;
 
     if (glue_length && destination->used) {
-      f_status_t status = private_f_utf_string_append(glue, glue_length, destination);
+      const f_status_t status = private_f_utf_string_append(glue, glue_length, destination);
       if (F_status_is_error(status)) return status;
     }
 
@@ -132,7 +135,7 @@ extern "C" {
     if (!length) return F_data_not;
 
     if (glue_length && destination->used) {
-      f_status_t status = private_f_utf_string_append_nulless(glue, glue_length, destination);
+      const f_status_t status = private_f_utf_string_append_nulless(glue, glue_length, destination);
       if (F_status_is_error(status)) return status;
     }
 
@@ -149,7 +152,7 @@ extern "C" {
     if (!length) return F_data_not;
 
     if (glue_length && destination->used) {
-      f_status_t status = private_f_utf_string_prepend(glue, glue_length, destination);
+      const f_status_t status = private_f_utf_string_prepend(glue, glue_length, destination);
       if (F_status_is_error(status)) return status;
     }
 
@@ -166,7 +169,7 @@ extern "C" {
     if (!length) return F_data_not;
 
     if (glue_length && destination->used) {
-      f_status_t status = private_f_utf_string_prepend_nulless(glue, glue_length, destination);
+      const f_status_t status = private_f_utf_string_prepend_nulless(glue, glue_length, destination);
       if (F_status_is_error(status)) return status;
     }
 
@@ -195,30 +198,32 @@ extern "C" {
     if (!length) return F_data_not;
     if (destination->used < length) return private_f_utf_string_prepend(source, length, destination);
 
-    f_number_unsigned_t i = 0;
-    f_number_unsigned_t j = 0;
+    {
+      f_number_unsigned_t i = 0;
+      f_number_unsigned_t j = 0;
 
-    while (i < length && j < destination->used) {
+      while (i < length && j < destination->used) {
 
-      if (!source[i]) {
+        if (!source[i]) {
+          ++i;
+
+          continue;
+        }
+
+        if (!destination->string[j]) {
+          ++j;
+
+          continue;
+        }
+
+        if (source[i] != destination->string[j]) {
+          return private_f_utf_string_prepend(source, length, destination);
+        }
+
         ++i;
-
-        continue;
-      }
-
-      if (!destination->string[j]) {
         ++j;
-
-        continue;
-      }
-
-      if (source[i] != destination->string[j]) {
-        return private_f_utf_string_prepend(source, length, destination);
-      }
-
-      ++i;
-      ++j;
-    } // while
+      } // while
+    }
 
     return F_okay;
   }
@@ -233,30 +238,32 @@ extern "C" {
     if (!length) return F_data_not;
     if (!destination->used) return private_f_utf_string_prepend_nulless(source, length, destination);
 
-    f_number_unsigned_t i = 0;
-    f_number_unsigned_t j = 0;
+    {
+      f_number_unsigned_t i = 0;
+      f_number_unsigned_t j = 0;
 
-    while (i < length && j < destination->used) {
+      while (i < length && j < destination->used) {
 
-      if (!source[i]) {
+        if (!source[i]) {
+          ++i;
+
+          continue;
+        }
+
+        if (!destination->string[j]) {
+          ++j;
+
+          continue;
+        }
+
+        if (source[i] != destination->string[j]) {
+          return private_f_utf_string_prepend_nulless(source, length, destination);
+        }
+
         ++i;
-
-        continue;
-      }
-
-      if (!destination->string[j]) {
         ++j;
-
-        continue;
-      }
-
-      if (source[i] != destination->string[j]) {
-        return private_f_utf_string_prepend_nulless(source, length, destination);
-      }
-
-      ++i;
-      ++j;
-    } // while
+      } // while
+    }
 
     return F_okay;
   }

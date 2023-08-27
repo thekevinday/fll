@@ -1,22 +1,11 @@
 #include "../utf.h"
 #include "../private-utf.h"
 #include "static.h"
-#include "private-dynamic.h"
 #include "private-string.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-#ifndef _di_f_utf_string_dynamic_adjust_
-  f_status_t f_utf_string_dynamic_adjust(const f_number_unsigned_t length, f_utf_string_dynamic_t * const dynamic) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!dynamic) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return private_f_utf_string_dynamic_adjust(length, dynamic);
-  }
-#endif // _di_f_utf_string_dynamic_adjust_
 
 #ifndef _di_f_utf_string_dynamic_append_
   f_status_t f_utf_string_dynamic_append(const f_utf_string_static_t source, f_utf_string_dynamic_t * const destination) {
@@ -71,30 +60,32 @@ extern "C" {
       return private_f_utf_string_append_nulless(source.string, source.used, destination);
     }
 
-    f_number_unsigned_t i = 1;
-    f_number_unsigned_t j = 1;
+    {
+      f_number_unsigned_t i = 1;
+      f_number_unsigned_t j = 1;
 
-    while (i <= source.used && j <= destination->used) {
+      while (i <= source.used && j <= destination->used) {
 
-      if (!source.string[source.used - i]) {
+        if (!source.string[source.used - i]) {
+          ++i;
+
+          continue;
+        }
+
+        if (!destination->string[destination->used - j]) {
+          ++j;
+
+          continue;
+        }
+
+        if (source.string[source.used - i] != destination->string[destination->used - j]) {
+          return private_f_utf_string_append_nulless(source.string, source.used, destination);
+        }
+
         ++i;
-
-        continue;
-      }
-
-      if (!destination->string[destination->used - j]) {
         ++j;
-
-        continue;
-      }
-
-      if (source.string[source.used - i] != destination->string[destination->used - j]) {
-        return private_f_utf_string_append_nulless(source.string, source.used, destination);
-      }
-
-      ++i;
-      ++j;
-    } // while
+      } // while
+    }
 
     return F_okay;
   }
@@ -111,74 +102,6 @@ extern "C" {
     return private_f_utf_string_append_nulless(source.string, source.used, destination);
   }
 #endif // _di_f_utf_string_dynamic_append_nulless_
-
-#ifndef _di_f_utf_string_dynamic_decimate_by_
-  f_status_t f_utf_string_dynamic_decimate_by(const f_number_unsigned_t amount, f_utf_string_dynamic_t * const dynamic) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!dynamic) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (!amount) return F_data_not;
-
-    if (dynamic->size > amount) {
-      return private_f_utf_string_dynamic_adjust(dynamic->size - amount, dynamic);
-    }
-
-    return private_f_utf_string_dynamic_adjust(0, dynamic);
-  }
-#endif // _di_f_utf_string_dynamic_decimate_by_
-
-#ifndef _di_f_utf_string_dynamic_decrease_by_
-  f_status_t f_utf_string_dynamic_decrease_by(const f_number_unsigned_t amount, f_utf_string_dynamic_t * const dynamic) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!dynamic) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (!amount) return F_data_not;
-
-    if (dynamic->size > amount) {
-      return private_f_utf_string_dynamic_resize(dynamic->size - amount, dynamic);
-    }
-
-    return private_f_utf_string_dynamic_resize(0, dynamic);
-  }
-#endif // _di_f_utf_string_dynamic_decrease_by_
-
-#ifndef _di_f_utf_string_dynamic_increase_
-  f_status_t f_utf_string_dynamic_increase(const f_number_unsigned_t step, f_utf_string_dynamic_t * const dynamic) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!dynamic) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (step && dynamic->used + 1 > dynamic->size) {
-      f_number_unsigned_t length = dynamic->used + step;
-
-      if (length > F_string_t_size_d) {
-        if (dynamic->used + 1 > F_string_t_size_d) {
-          return F_status_set_error(F_string_too_large);
-        }
-
-        length = F_string_t_size_d;
-      }
-
-      return private_f_utf_string_dynamic_resize(length, dynamic);
-    }
-
-    return F_data_not;
-  }
-#endif // _di_f_utf_string_dynamic_increase_
-
-#ifndef _di_f_utf_string_dynamic_increase_by_
-  f_status_t f_utf_string_dynamic_increase_by(const f_number_unsigned_t amount, f_utf_string_dynamic_t * const dynamic) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!dynamic) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (!amount) return F_data_not;
-
-    return private_f_utf_string_dynamic_increase_by(amount, dynamic);
-  }
-#endif // _di_f_utf_string_dynamic_increase_by_
 
 #ifndef _di_f_utf_string_dynamic_mash_
   f_status_t f_utf_string_dynamic_mash(const f_utf_string_static_t glue, const f_utf_string_static_t source, f_utf_string_dynamic_t * const destination) {
@@ -276,25 +199,27 @@ extern "C" {
     if (range.start > range.stop) return F_data_not_stop;
     if (range.start >= source.used) return F_data_not_eos;
 
-    const f_number_unsigned_t length = range.stop >= source.used ? source.used - range.start : (range.stop - range.start) + 1;
+    {
+      const f_number_unsigned_t length = range.stop >= source.used ? source.used - range.start : (range.stop - range.start) + 1;
 
-    if (destination->used < length) {
-      return private_f_utf_string_append(source.string + range.start, length, destination);
-    }
-
-    const f_number_unsigned_t stop = range.stop >= source.used ? source.used : range.stop + 1;
-    f_number_unsigned_t i = 1;
-    f_number_unsigned_t j = 1;
-
-    while (i <= length && j <= destination->used) {
-
-      if (source.string[stop - i] != destination->string[destination->used - j]) {
+      if (destination->used < length) {
         return private_f_utf_string_append(source.string + range.start, length, destination);
       }
 
-      ++i;
-      ++j;
-    } // while
+      const f_number_unsigned_t stop = range.stop >= source.used ? source.used : range.stop + 1;
+      f_number_unsigned_t i = 1;
+      f_number_unsigned_t j = 1;
+
+      while (i <= length && j <= destination->used) {
+
+        if (source.string[stop - i] != destination->string[destination->used - j]) {
+          return private_f_utf_string_append(source.string + range.start, length, destination);
+        }
+
+        ++i;
+        ++j;
+      } // while
+    }
 
     return F_okay;
   }
@@ -310,37 +235,39 @@ extern "C" {
     if (range.start > range.stop) return F_data_not_stop;
     if (range.start >= source.used) return F_data_not_eos;
 
-    const f_number_unsigned_t length = range.stop >= source.used ? source.used - range.start : (range.stop - range.start) + 1;
+    {
+      const f_number_unsigned_t length = range.stop >= source.used ? source.used - range.start : (range.stop - range.start) + 1;
 
-    if (!destination->used) {
-      return private_f_utf_string_append_nulless(source.string + range.start, length, destination);
-    }
-
-    const f_number_unsigned_t stop = range.stop >= source.used ? source.used : range.stop + 1;
-    f_number_unsigned_t i = 1;
-    f_number_unsigned_t j = 1;
-
-    while (i <= length && j <= destination->used) {
-
-      if (!source.string[stop - i]) {
-        ++i;
-
-        continue;
-      }
-
-      if (!destination->string[destination->used - j]) {
-        ++j;
-
-        continue;
-      }
-
-      if (source.string[stop - i] != destination->string[destination->used - j]) {
+      if (!destination->used) {
         return private_f_utf_string_append_nulless(source.string + range.start, length, destination);
       }
 
-      ++i;
-      ++j;
-    } // while
+      const f_number_unsigned_t stop = range.stop >= source.used ? source.used : range.stop + 1;
+      f_number_unsigned_t i = 1;
+      f_number_unsigned_t j = 1;
+
+      while (i <= length && j <= destination->used) {
+
+        if (!source.string[stop - i]) {
+          ++i;
+
+          continue;
+        }
+
+        if (!destination->string[destination->used - j]) {
+          ++j;
+
+          continue;
+        }
+
+        if (source.string[stop - i] != destination->string[destination->used - j]) {
+          return private_f_utf_string_append_nulless(source.string + range.start, length, destination);
+        }
+
+        ++i;
+        ++j;
+      } // while
+    }
 
     return F_okay;
   }
@@ -484,24 +411,26 @@ extern "C" {
     if (range.start > range.stop) return F_data_not_stop;
     if (range.start >= source.used) return F_data_not_eos;
 
-    const f_number_unsigned_t length = range.stop >= source.used ? source.used - range.start : (range.stop - range.start) + 1;
+    {
+      const f_number_unsigned_t length = range.stop >= source.used ? source.used - range.start : (range.stop - range.start) + 1;
 
-    if (destination->used < length) {
-      return private_f_utf_string_prepend(source.string + range.start, length, destination);
-    }
-
-    f_number_unsigned_t i = 0;
-    f_number_unsigned_t j = 0;
-
-    while (i < length && j < destination->used) {
-
-      if (source.string[i + range.start] != destination->string[j]) {
+      if (destination->used < length) {
         return private_f_utf_string_prepend(source.string + range.start, length, destination);
       }
 
-      ++i;
-      ++j;
-    } // while
+      f_number_unsigned_t i = 0;
+      f_number_unsigned_t j = 0;
+
+      while (i < length && j < destination->used) {
+
+        if (source.string[i + range.start] != destination->string[j]) {
+          return private_f_utf_string_prepend(source.string + range.start, length, destination);
+        }
+
+        ++i;
+        ++j;
+      } // while
+    }
 
     return F_okay;
   }
@@ -517,36 +446,38 @@ extern "C" {
     if (range.start > range.stop) return F_data_not_stop;
     if (range.start >= source.used) return F_data_not_eos;
 
-    const f_number_unsigned_t length = range.stop >= source.used ? source.used - range.start : (range.stop - range.start) + 1;
+    {
+      const f_number_unsigned_t length = range.stop >= source.used ? source.used - range.start : (range.stop - range.start) + 1;
 
-    if (!destination->used) {
-      return private_f_utf_string_prepend_nulless(source.string + range.start, length, destination);
-    }
-
-    f_number_unsigned_t i = 0;
-    f_number_unsigned_t j = 0;
-
-    while (i < length && j < destination->used) {
-
-      if (!source.string[i + range.start]) {
-        ++i;
-
-        continue;
-      }
-
-      if (!destination->string[j]) {
-        ++j;
-
-        continue;
-      }
-
-      if (source.string[i + range.start] != destination->string[j]) {
+      if (!destination->used) {
         return private_f_utf_string_prepend_nulless(source.string + range.start, length, destination);
       }
 
-      ++i;
-      ++j;
-    } // while
+      f_number_unsigned_t i = 0;
+      f_number_unsigned_t j = 0;
+
+      while (i < length && j < destination->used) {
+
+        if (!source.string[i + range.start]) {
+          ++i;
+
+          continue;
+        }
+
+        if (!destination->string[j]) {
+          ++j;
+
+          continue;
+        }
+
+        if (source.string[i + range.start] != destination->string[j]) {
+          return private_f_utf_string_prepend_nulless(source.string + range.start, length, destination);
+        }
+
+        ++i;
+        ++j;
+      } // while
+    }
 
     return F_okay;
   }
@@ -590,18 +521,17 @@ extern "C" {
       return private_f_utf_string_prepend(source.string, source.used, destination);
     }
 
-    f_number_unsigned_t i = 0;
-    f_number_unsigned_t j = 0;
+    {
+      f_number_unsigned_t i = 0;
+      f_number_unsigned_t j = 0;
 
-    while (i < source.used && j < destination->used) {
+      for (; i < source.used && j < destination->used; ++i, ++j) {
 
-      if (source.string[i] != destination->string[j]) {
-        return private_f_utf_string_prepend(source.string, source.used, destination);
-      }
-
-      ++i;
-      ++j;
-    } // while
+        if (source.string[i] != destination->string[j]) {
+          return private_f_utf_string_prepend(source.string, source.used, destination);
+        }
+      } // for
+    }
 
     return F_okay;
   }
@@ -660,16 +590,6 @@ extern "C" {
   }
 #endif // _di_f_utf_string_dynamic_prepend_nulless_
 
-#ifndef _di_f_utf_string_dynamic_resize_
-  f_status_t f_utf_string_dynamic_resize(const f_number_unsigned_t length, f_utf_string_dynamic_t * const buffer) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!buffer) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return private_f_utf_string_dynamic_resize(length, buffer);
-  }
-#endif // _di_f_utf_string_dynamic_resize_
-
 #ifndef _di_f_utf_string_dynamic_seek_line_
   f_status_t f_utf_string_dynamic_seek_line(const f_utf_string_static_t buffer, f_string_range_t * const range) {
     #ifndef _di_level_0_parameter_checking_
@@ -681,9 +601,7 @@ extern "C" {
 
     while (buffer.string[range->start] != f_utf_char_eol_s) {
 
-      if (macro_f_utf_char_t_width_is(buffer.string[range->start]) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
+      if (macro_f_utf_char_t_width_is(buffer.string[range->start]) == 1) return F_status_set_error(F_utf_fragment);
 
       ++range->start;
 
@@ -706,10 +624,7 @@ extern "C" {
 
     while (buffer.string[range->start] != seek_to_this) {
 
-      if (macro_f_utf_char_t_width_is(buffer.string[range->start]) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
-
+      if (macro_f_utf_char_t_width_is(buffer.string[range->start]) == 1) return F_status_set_error(F_utf_fragment);
       if (buffer.string[range->start] == f_utf_char_eol_s) return F_okay_eol;
 
       ++range->start;
@@ -733,9 +648,7 @@ extern "C" {
 
     while (buffer.string[range->start] != seek_to_this) {
 
-      if (macro_f_utf_char_t_width_is(buffer.string[range->start]) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
+      if (macro_f_utf_char_t_width_is(buffer.string[range->start]) == 1) return F_status_set_error(F_utf_fragment);
 
       ++range->start;
 
@@ -753,16 +666,11 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (destination->used && !destination->string[destination->used - 1]) {
-      return F_okay;
-    }
+    if (destination->used && !destination->string[destination->used - 1]) return F_okay;
+    if (destination->used == F_string_t_size_d) return F_status_set_error(F_string_too_large);
 
-    if (destination->used == F_string_t_size_d) {
-      return F_status_set_error(F_string_too_large);
-    }
-
-    if (destination->used + 1 > destination->size) {
-      const f_status_t status = private_f_utf_string_dynamic_resize(destination->used + (destination->used + 1 == F_string_t_size_d ? 1 : F_memory_default_allocation_small_d), destination);
+    {
+      const f_status_t status = f_memory_array_increase(F_memory_default_allocation_small_d, sizeof(f_utf_char_t), (void **) &destination->string, &destination->used, &destination->size);
       if (F_status_is_error(status)) return status;
     }
 
@@ -778,18 +686,11 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (destination->used < destination->size) {
-      if (!destination->string[destination->used]) {
-        return F_okay;
-      }
-    }
+    if (destination->used < destination->size && !destination->string[destination->used]) return F_okay;
+    if (destination->used == F_string_t_size_d) return F_status_set_error(F_string_too_large);
 
-    if (destination->used == F_string_t_size_d) {
-      return F_status_set_error(F_string_too_large);
-    }
-
-    if (destination->used + 1 > destination->size) {
-      const f_status_t status = private_f_utf_string_dynamic_resize(destination->used + (destination->used + 1 == F_string_t_size_d ? 1 : F_memory_default_allocation_small_d), destination);
+    {
+      const f_status_t status = f_memory_array_increase(F_memory_default_allocation_small_d, sizeof(f_utf_char_t), (void **) &destination->string, &destination->used, &destination->size);
       if (F_status_is_error(status)) return status;
     }
 

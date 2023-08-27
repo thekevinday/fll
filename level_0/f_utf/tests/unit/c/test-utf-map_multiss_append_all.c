@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-void test__f_utf_map_multiss_append_all__works(void **state) {
+void test__f_utf_string_map_multiss_append_all__works(void **state) {
 
   const int length_values = 2;
   const int length_inner = 2;
@@ -34,7 +34,7 @@ void test__f_utf_map_multiss_append_all__works(void **state) {
   };
 
   {
-    f_status_t status = f_utf_string_map_multiss_resize(length_outer, &source);
+    f_status_t status = f_memory_array_increase_by(length_outer, sizeof(f_utf_string_map_multis_t), (void **) &source.array, &source.used, &source.size);
 
     assert_int_equal(status, F_okay);
     assert_int_equal(source.used, 0);
@@ -44,7 +44,7 @@ void test__f_utf_map_multiss_append_all__works(void **state) {
 
     for (; source.used < length_outer; ++source.used) {
 
-      status = f_utf_string_map_multis_resize(length_inner, &source.array[source.used]);
+      status = f_memory_array_increase_by(length_inner, sizeof(f_utf_string_map_multi_t), (void **) &source.array[source.used].array, &source.array[source.used].used, &source.array[source.used].size);
 
       assert_int_equal(status, F_okay);
       assert_int_equal(source.array[source.used].used, 0);
@@ -125,14 +125,14 @@ void test__f_utf_map_multiss_append_all__works(void **state) {
   free((void *) destination.array);
 }
 
-void test__f_utf_map_multiss_append_all__returns_data_not(void **state) {
+void test__f_utf_string_map_multiss_append_all__returns_data_not(void **state) {
 
   const int length = 5;
   f_utf_string_map_multiss_t source = f_utf_string_map_multiss_t_initialize;
   f_utf_string_map_multiss_t destination = f_utf_string_map_multiss_t_initialize;
 
   {
-    const f_status_t status = f_utf_string_map_multiss_resize(length, &source);
+    const f_status_t status = f_memory_array_increase_by(length, sizeof(f_utf_string_map_multis_t), (void **) &source.array, &source.used, &source.size);
 
     assert_int_equal(status, F_okay);
     assert_int_equal(source.used, 0);
@@ -151,7 +151,7 @@ void test__f_utf_map_multiss_append_all__returns_data_not(void **state) {
   free((void *) source.array);
 }
 
-void test__f_utf_map_multiss_append_all__parameter_checking(void **state) {
+void test__f_utf_string_map_multiss_append_all__parameter_checking(void **state) {
 
   const f_utf_string_map_multiss_t data = f_utf_string_map_multiss_t_initialize;
 

@@ -15,13 +15,13 @@
  *
  * @see f_utf_string_triples_append()
  */
-extern void test__f_utf_triples_append__works(void **state);
+extern void test__f_utf_string_triples_append__works(void **state);
 
 /**
  * Test that the function correctly fails on invalid parameter.
  *
  * @see f_utf_string_triples_append()
  */
-extern void test__f_utf_triples_append__parameter_checking(void **state);
+extern void test__f_utf_string_triples_append__parameter_checking(void **state);
 
 #endif // _TEST__F_utf_triples_append_h

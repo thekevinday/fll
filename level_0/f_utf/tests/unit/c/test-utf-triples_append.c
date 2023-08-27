@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-void test__f_utf_triples_append__works(void **state) {
+void test__f_utf_string_triples_append__works(void **state) {
 
   const f_utf_string_static_t test_a = macro_f_utf_string_static_t_initialize_1((f_utf_string_t) "\0\0\0a", 0, 1);
   const f_utf_string_static_t test_b = macro_f_utf_string_static_t_initialize_1((f_utf_string_t) "\0\0\0b", 0, 1);
@@ -34,7 +34,7 @@ void test__f_utf_triples_append__works(void **state) {
   free((void *) destination.array);
 }
 
-void test__f_utf_triples_append__parameter_checking(void **state) {
+void test__f_utf_string_triples_append__parameter_checking(void **state) {
 
   const f_utf_string_triple_t data = f_utf_string_triple_t_initialize;
 

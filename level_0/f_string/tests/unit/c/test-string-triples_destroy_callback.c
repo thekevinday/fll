@@ -88,7 +88,9 @@ void test__f_string_triples_destroy_callback__works(void **state) {
     const f_status_t status = f_string_triples_destroy_callback(0, length, (void *) datas.array);
 
     assert_int_equal(status, F_okay);
-    assert_int_equal(datas.size, 0);
+    assert_int_equal(datas.array[0].a.size, 0);
+    assert_int_equal(datas.array[0].b.size, 0);
+    assert_int_equal(datas.array[0].c.size, 0);
   }
 
   free((void *) datas.array[0].a.string);

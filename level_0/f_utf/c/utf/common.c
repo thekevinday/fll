@@ -6,11 +6,11 @@ extern "C" {
 
 #ifndef _di_f_utf_space_s_
   #ifndef _di_f_utf_space_em_s_
-    const f_char_t f_utf_space_em_s[F_utf_space_em_s_length]                     = { 0xe2, 0x80, 0x83 };
+    const f_char_t f_utf_space_em_s[F_utf_space_em_s_length] = { 0xe2, 0x80, 0x83 };
   #endif // _di_f_f_utf_space_em_s_
 
   #ifndef _di_f_utf_space_em_quad_s_
-    const f_char_t f_utf_space_em_quad_s[F_utf_space_em_quad_s_length]           = { 0xe2, 0x80, 0x81 };
+    const f_char_t f_utf_space_em_quad_s[F_utf_space_em_quad_s_length] = { 0xe2, 0x80, 0x81 };
   #endif // _di_f_f_utf_space_em_quad_s_
 
   #ifndef _di_f_utf_space_em_per_three_s_
@@ -18,15 +18,15 @@ extern "C" {
   #endif // _di_f_f_utf_space_em_per_three_s_
 
   #ifndef _di_f_utf_space_em_per_four_s_
-    const f_char_t f_utf_space_em_per_four_s[F_utf_space_em_per_four_s_length]   = { 0xe2, 0x80, 0x85 };
+    const f_char_t f_utf_space_em_per_four_s[F_utf_space_em_per_four_s_length] = { 0xe2, 0x80, 0x85 };
   #endif // _di_f_f_utf_space_em_per_four_s_
 
   #ifndef _di_f_utf_space_em_per_six_s_
-    const f_char_t f_utf_space_em_per_six_s[F_utf_space_em_per_six_s_length]     = { 0xe2, 0x80, 0x86 };
+    const f_char_t f_utf_space_em_per_six_s[F_utf_space_em_per_six_s_length] = { 0xe2, 0x80, 0x86 };
   #endif // _di_f_f_utf_space_em_per_six_s_
 
   #ifndef _di_f_utf_space_en_s_
-    const f_char_t f_utf_space_en_s[F_utf_space_en_s_length]           = { 0xe2, 0x80, 0x82 };
+    const f_char_t f_utf_space_en_s[F_utf_space_en_s_length] = { 0xe2, 0x80, 0x82 };
   #endif // _di_f_f_utf_space_en_s_
 
   #ifndef _di_f_utf_space_en_quad_s_
@@ -38,7 +38,7 @@ extern "C" {
   #endif // _di_f_f_utf_space_line_feed_reverse_s_
 
   #ifndef _di_f_utf_space_line_next_s_
-    const f_char_t f_utf_space_line_next_s[F_utf_space_line_next_s_length]                 = { 0xc2, 0x85 };
+    const f_char_t f_utf_space_line_next_s[F_utf_space_line_next_s_length] = { 0xc2, 0x85 };
   #endif // _di_f_f_utf_space_line_next_s_
 
   #ifndef _di_f_utf_space_medium_mathematical_s_
@@ -46,7 +46,7 @@ extern "C" {
   #endif // _di_f_f_utf_space_medium_mathematical_s_
 
   #ifndef _di_f_utf_space_no_break_s_
-    const f_char_t f_utf_space_no_break_s[F_utf_space_no_break_s_length]               = { 0xc2, 0xa0 };
+    const f_char_t f_utf_space_no_break_s[F_utf_space_no_break_s_length] = { 0xc2, 0xa0 };
   #endif // _di_f_f_utf_space_no_break_s_
 
   #ifndef _di_f_utf_space_no_break_narrow_s_
@@ -54,11 +54,11 @@ extern "C" {
   #endif // _di_f_f_utf_space_no_break_narrow_s_
 
   #ifndef _di_f_utf_space_ogham_s_
-    const f_char_t f_utf_space_ogham_s[F_utf_space_ogham_s_length]             = { 0xe1, 0x9a, 0x80 };
+    const f_char_t f_utf_space_ogham_s[F_utf_space_ogham_s_length] = { 0xe1, 0x9a, 0x80 };
   #endif // _di_f_f_utf_space_ogham_s_
 
   #ifndef _di_f_utf_space_figure_s_
-    const f_char_t f_utf_space_figure_s[F_utf_space_figure_s_length]           = { 0xe2, 0x80, 0x87 };
+    const f_char_t f_utf_space_figure_s[F_utf_space_figure_s_length] = { 0xe2, 0x80, 0x87 };
   #endif // _di_f_f_utf_space_figure_s_
 
   #ifndef _di_f_utf_space_punctuation_s_
@@ -66,11 +66,11 @@ extern "C" {
   #endif // _di_f_f_utf_space_punctuation_s_
 
   #ifndef _di_f_utf_space_thin_s_
-    const f_char_t f_utf_space_thin_s[F_utf_space_thin_s_length]               = { 0xe2, 0x80, 0x89 };
+    const f_char_t f_utf_space_thin_s[F_utf_space_thin_s_length] = { 0xe2, 0x80, 0x89 };
   #endif // _di_f_f_utf_space_thin_s_
 
   #ifndef _di_f_utf_space_hair_s_
-    const f_char_t f_utf_space_hair_s[F_utf_space_hair_s_length]               = { 0xe2, 0x80, 0x8a };
+    const f_char_t f_utf_space_hair_s[F_utf_space_hair_s_length] = { 0xe2, 0x80, 0x8a };
   #endif // _di_f_f_utf_space_hair_s_
 
   #ifndef _di_f_utf_space_ideographic_s_
@@ -78,7 +78,7 @@ extern "C" {
   #endif // _di_f_f_utf_space_ideographic_s_
 
   #ifndef _di_f_utf_space_separator_line_s_
-    const f_char_t f_utf_space_separator_line_s[F_utf_space_separator_line_s_length]           = { 0xe2, 0x80, 0xa8 };
+    const f_char_t f_utf_space_separator_line_s[F_utf_space_separator_line_s_length] = { 0xe2, 0x80, 0xa8 };
   #endif // _di_f_f_utf_space_separator_line_s_
 
   #ifndef _di_f_utf_space_separator_paragraph_s_
@@ -100,7 +100,7 @@ extern "C" {
   #endif // _di_f_f_utf_substitute_middle_dot_s_
 
   #ifndef _di_f_utf_substitute_open_box_s_
-    const f_char_t f_utf_substitute_open_box_s[F_utf_substitute_open_box_s_length]                       = { 0xe2, 0x90, 0xa3 };
+    const f_char_t f_utf_substitute_open_box_s[F_utf_substitute_open_box_s_length] = { 0xe2, 0x90, 0xa3 };
   #endif // _di_f_f_utf_substitute_open_box_s_
 
   #ifndef _di_f_utf_substitute_open_box_shouldered_s_

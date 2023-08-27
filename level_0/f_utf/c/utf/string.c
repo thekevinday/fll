@@ -1,5 +1,4 @@
 #include "../utf.h"
-#include "private-dynamic.h"
 #include "private-string.h"
 
 #ifdef __cplusplus
@@ -30,30 +29,32 @@ extern "C" {
       return private_f_utf_string_append(source, length, destination);
     }
 
-    f_number_unsigned_t i = 1;
-    f_number_unsigned_t j = 1;
+    {
+      f_number_unsigned_t i = 1;
+      f_number_unsigned_t j = 1;
 
-    while (i <= length && j <= destination->used) {
+      while (i <= length && j <= destination->used) {
 
-      if (!source[length - i]) {
+        if (!source[length - i]) {
+          ++i;
+
+          continue;
+        }
+
+        if (!destination->string[destination->used - j]) {
+          ++j;
+
+          continue;
+        }
+
+        if (source[length - i] != destination->string[destination->used - j]) {
+          return private_f_utf_string_append(source, length, destination);
+        }
+
         ++i;
-
-        continue;
-      }
-
-      if (!destination->string[destination->used - j]) {
         ++j;
-
-        continue;
-      }
-
-      if (source[length - i] != destination->string[destination->used - j]) {
-        return private_f_utf_string_append(source, length, destination);
-      }
-
-      ++i;
-      ++j;
-    } // while
+      } // while
+    }
 
     return F_okay;
   }
@@ -71,30 +72,32 @@ extern "C" {
       return private_f_utf_string_append_nulless(source, length, destination);
     }
 
-    f_number_unsigned_t i = 1;
-    f_number_unsigned_t j = 1;
+    {
+      f_number_unsigned_t i = 1;
+      f_number_unsigned_t j = 1;
 
-    while (i <= length && j <= destination->used) {
+      while (i <= length && j <= destination->used) {
 
-      if (!source[length - i]) {
+        if (!source[length - i]) {
+          ++i;
+
+          continue;
+        }
+
+        if (!destination->string[destination->used - j]) {
+          ++j;
+
+          continue;
+        }
+
+        if (source[length - i] != destination->string[destination->used - j]) {
+          return private_f_utf_string_append_nulless(source, length, destination);
+        }
+
         ++i;
-
-        continue;
-      }
-
-      if (!destination->string[destination->used - j]) {
         ++j;
-
-        continue;
-      }
-
-      if (source[length - i] != destination->string[destination->used - j]) {
-        return private_f_utf_string_append_nulless(source, length, destination);
-      }
-
-      ++i;
-      ++j;
-    } // while
+      } // while
+    }
 
     return F_okay;
   }
@@ -118,12 +121,10 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!length) {
-      return F_data_not;
-    }
+    if (!length) return F_data_not;
 
     if (glue_length && destination->used) {
-      f_status_t status = private_f_utf_string_append(glue, glue_length, destination);
+      const f_status_t status = private_f_utf_string_append(glue, glue_length, destination);
       if (F_status_is_error(status)) return status;
     }
 
@@ -140,7 +141,7 @@ extern "C" {
     if (!length) return F_data_not;
 
     if (glue_length && destination->used) {
-      f_status_t status = private_f_utf_string_append_nulless(glue, glue_length, destination);
+      const f_status_t status = private_f_utf_string_append_nulless(glue, glue_length, destination);
       if (F_status_is_error(status)) return status;
     }
 
@@ -157,7 +158,7 @@ extern "C" {
     if (!length) return F_data_not;
 
     if (glue_length && destination->used) {
-      f_status_t status = private_f_utf_string_prepend(glue, glue_length, destination);
+      const f_status_t status = private_f_utf_string_prepend(glue, glue_length, destination);
       if (F_status_is_error(status)) return status;
     }
 
@@ -174,7 +175,7 @@ extern "C" {
     if (!length) return F_data_not;
 
     if (glue_length && destination->used) {
-      f_status_t status = private_f_utf_string_prepend_nulless(glue, glue_length, destination);
+      const f_status_t status = private_f_utf_string_prepend_nulless(glue, glue_length, destination);
       if (F_status_is_error(status)) return status;
     }
 
@@ -206,30 +207,32 @@ extern "C" {
       return private_f_utf_string_prepend(source, length, destination);
     }
 
-    f_number_unsigned_t i = 0;
-    f_number_unsigned_t j = 0;
+    {
+      f_number_unsigned_t i = 0;
+      f_number_unsigned_t j = 0;
 
-    while (i < length && j < destination->used) {
+      while (i < length && j < destination->used) {
 
-      if (!source[i]) {
+        if (!source[i]) {
+          ++i;
+
+          continue;
+        }
+
+        if (!destination->string[j]) {
+          ++j;
+
+          continue;
+        }
+
+        if (source[i] != destination->string[j]) {
+          return private_f_utf_string_prepend(source, length, destination);
+        }
+
         ++i;
-
-        continue;
-      }
-
-      if (!destination->string[j]) {
         ++j;
-
-        continue;
-      }
-
-      if (source[i] != destination->string[j]) {
-        return private_f_utf_string_prepend(source, length, destination);
-      }
-
-      ++i;
-      ++j;
-    } // while
+      } // while
+    }
 
     return F_okay;
   }
@@ -247,30 +250,32 @@ extern "C" {
       return private_f_utf_string_prepend_nulless(source, length, destination);
     }
 
-    f_number_unsigned_t i = 0;
-    f_number_unsigned_t j = 0;
+    {
+      f_number_unsigned_t i = 0;
+      f_number_unsigned_t j = 0;
 
-    while (i < length && j < destination->used) {
+      while (i < length && j < destination->used) {
 
-      if (!source[i]) {
+        if (!source[i]) {
+          ++i;
+
+          continue;
+        }
+
+        if (!destination->string[j]) {
+          ++j;
+
+          continue;
+        }
+
+        if (source[i] != destination->string[j]) {
+          return private_f_utf_string_prepend_nulless(source, length, destination);
+        }
+
         ++i;
-
-        continue;
-      }
-
-      if (!destination->string[j]) {
         ++j;
-
-        continue;
-      }
-
-      if (source[i] != destination->string[j]) {
-        return private_f_utf_string_prepend_nulless(source, length, destination);
-      }
-
-      ++i;
-      ++j;
-    } // while
+      } // while
+    }
 
     return F_okay;
   }
@@ -294,21 +299,15 @@ extern "C" {
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (range->start > range->stop) {
-      return F_data_not_stop;
-    }
+    if (range->start > range->stop) return F_data_not_stop;
 
     while (string[range->start] != f_utf_char_eol_s) {
 
-      if (macro_f_utf_char_t_width_is(string[range->start]) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
+      if (macro_f_utf_char_t_width_is(string[range->start]) == 1) return F_status_set_error(F_utf_fragment);
 
       ++range->start;
 
-      if (range->start > range->stop) {
-        return F_okay_stop;
-      }
+      if (range->start > range->stop) return F_okay_stop;
     } // while
 
     return F_okay;
@@ -321,21 +320,15 @@ extern "C" {
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (range->start > range->stop) {
-      return F_data_not_stop;
-    }
+    if (range->start > range->stop) return F_data_not_stop;
 
     while (string[range->start] != seek_to) {
 
-      if (string[range->start] == f_utf_char_eol_s) {
-        return F_okay_eol;
-      }
+      if (string[range->start] == f_utf_char_eol_s) return F_okay_eol;
 
       ++range->start;
 
-      if (range->start > range->stop) {
-        return F_okay_stop;
-      }
+      if (range->start > range->stop) return F_okay_stop;
     } // while
 
     return F_okay;
@@ -348,17 +341,13 @@ extern "C" {
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (range->start > range->stop) {
-      return F_data_not_stop;
-    }
+    if (range->start > range->stop) return F_data_not_stop;
 
     while (string[range->start] != seek_to) {
 
       ++range->start;
 
-      if (range->start > range->stop) {
-        return F_okay_stop;
-      }
+      if (range->start > range->stop) return F_okay_stop;
     } // while
 
     return F_okay;

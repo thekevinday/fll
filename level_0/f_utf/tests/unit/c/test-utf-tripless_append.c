@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-void test__f_utf_tripless_append__works(void **state) {
+void test__f_utf_string_tripless_append__works(void **state) {
 
   const int length_sources = 2;
 
@@ -54,14 +54,14 @@ void test__f_utf_tripless_append__works(void **state) {
   free((void *) destination.array);
 }
 
-void test__f_utf_tripless_append__returns_data_not(void **state) {
+void test__f_utf_string_tripless_append__returns_data_not(void **state) {
 
   const int length = 5;
   f_utf_string_triples_t source = f_utf_string_tripless_t_initialize;
   f_utf_string_tripless_t destination = f_utf_string_tripless_t_initialize;
 
   {
-    const f_status_t status = f_utf_string_triples_resize(length, &source);
+    const f_status_t status = f_memory_array_increase_by(length, sizeof(f_utf_string_triples_t), (void **) &source.array, &source.used, &source.size);
 
     assert_int_equal(status, F_okay);
     assert_int_equal(source.used, 0);
@@ -80,7 +80,7 @@ void test__f_utf_tripless_append__returns_data_not(void **state) {
   free((void *) source.array);
 }
 
-void test__f_utf_tripless_append__parameter_checking(void **state) {
+void test__f_utf_string_tripless_append__parameter_checking(void **state) {
 
   f_utf_string_triples_t data = f_utf_string_triples_t_initialize;
 

@@ -4,14 +4,14 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-void test__f_utf_dynamic_terminate_after__appends_null(void **state) {
+void test__f_utf_string_dynamic_terminate_after__appends_null(void **state) {
 
   const f_number_unsigned_t length = 2;
   f_utf_string_dynamic_t data = f_utf_string_dynamic_t_initialize;
 
   // Put some value in the unused section at the end so that it gets overridden.
   {
-    const f_status_t status = f_utf_string_dynamic_resize(length, &data);
+    const f_status_t status = f_memory_array_increase_by(length, sizeof(f_utf_char_t), (void **) &data.string, &data.used, &data.size);
 
     assert_int_equal(status, F_okay);
 
@@ -31,14 +31,14 @@ void test__f_utf_dynamic_terminate_after__appends_null(void **state) {
   free((void *) data.string);
 }
 
-void test__f_utf_dynamic_terminate_after__doesnt_append_null(void **state) {
+void test__f_utf_string_dynamic_terminate_after__doesnt_append_null(void **state) {
 
   const f_number_unsigned_t length = 2;
   f_utf_string_dynamic_t data = f_utf_string_dynamic_t_initialize;
 
   // Ensure a NULL already exists so that the test can confirm that another NULL is not appended.
   {
-    const f_status_t status = f_utf_string_dynamic_resize(length, &data);
+    const f_status_t status = f_memory_array_increase_by(length, sizeof(f_utf_char_t), (void **) &data.string, &data.used, &data.size);
 
     assert_int_equal(status, F_okay);
     assert_in_range(data.size, length, length + F_memory_default_allocation_small_d);
@@ -59,7 +59,7 @@ void test__f_utf_dynamic_terminate_after__doesnt_append_null(void **state) {
   free((void *) data.string);
 }
 
-void test__f_utf_dynamic_terminate_after__parameter_checking(void **state) {
+void test__f_utf_string_dynamic_terminate_after__parameter_checking(void **state) {
 
   {
     const f_status_t status = f_utf_string_dynamic_terminate_after(0);

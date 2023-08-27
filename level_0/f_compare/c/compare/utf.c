@@ -246,7 +246,7 @@ extern "C" {
         : range2.stop + 1
       );
   }
-#endif // _di_f_compare_utf_utf_dynamic_partial_trim_
+#endif // _di_f_compare_utf_utf_string_dynamic_partial_trim_
 
 #ifndef _di_f_compare_utf_dynamic_partial_trim_dynamic_
   f_status_t f_compare_utf_dynamic_partial_trim_dynamic(const f_utf_string_static_t string1, const f_utf_string_static_t string2, const f_string_range_t range2) {

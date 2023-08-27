@@ -61,6 +61,8 @@
 #include "test-string-dynamic_terminate_after.h"
 #include "test-string-dynamics_append.h"
 #include "test-string-dynamics_append_all.h"
+#include "test-string-dynamics_delete_callback.h"
+#include "test-string-dynamics_destroy_callback.h"
 #include "test-string-dynamicss_append.h"
 #include "test-string-dynamicss_append_all.h"
 #include "test-string-dynamicss_delete_callback.h"

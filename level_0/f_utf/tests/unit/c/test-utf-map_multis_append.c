@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-void test__f_utf_map_multis_append__works(void **state) {
+void test__f_utf_string_map_multis_append__works(void **state) {
 
   const int length_values = 2;
   f_utf_string_map_multi_t source = f_utf_string_map_multi_t_initialize;
@@ -85,7 +85,7 @@ void test__f_utf_map_multis_append__works(void **state) {
   free((void *) destination.array);
 }
 
-void test__f_utf_map_multis_append__parameter_checking(void **state) {
+void test__f_utf_string_map_multis_append__parameter_checking(void **state) {
 
   const f_utf_string_map_multi_t data = f_utf_string_map_multi_t_initialize;
 

@@ -36,36 +36,7 @@ extern "C" {
 
   #define macro_f_utf_string_tripless_t_initialize_1(array, size, used) { array, size, used }
   #define macro_f_utf_string_tripless_t_initialize_2(array, length) { array, length, length }
-
-  #define macro_f_utf_string_tripless_t_resize(status, tripless, length) status = f_utf_string_tripless_resize(length, &tripless);
-  #define macro_f_utf_string_tripless_t_adjust(status, tripless, length) status = f_utf_string_tripless_adjust(length, &tripless);
-
-  #define macro_f_utf_string_tripless_t_delete_simple(tripless)  f_utf_string_tripless_resize(0, &tripless);
-  #define macro_f_utf_string_tripless_t_destroy_simple(tripless) f_utf_string_tripless_adjust(0, &tripless);
-
-  #define macro_f_utf_string_tripless_t_increase(status, step, tripless)      status = f_utf_string_tripless_increase(step, tripless);
-  #define macro_f_utf_string_tripless_t_increase_by(status, tripless, amount) status = f_utf_string_tripless_increase_by(amount, tripless);
-  #define macro_f_utf_string_tripless_t_decrease_by(status, tripless, amount) status = f_utf_string_tripless_decrease_by(amount, tripless);
-  #define macro_f_utf_string_tripless_t_decimate_by(status, tripless, amount) status = f_utf_string_tripless_decimate_by(amount, tripless);
 #endif // _di_f_utf_string_tripless_t_
-
-/**
- * Resize the string tripless array.
- *
- * @param length
- *   The new size to use.
- * @param structure
- *   The string tripless array to resize.
- *
- * @return
- *   F_okay on success.
- *
- *   F_memory_not (with error bit) on out of memory.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_f_utf_string_tripless_adjust_
-  extern f_status_t f_utf_string_tripless_adjust(const f_number_unsigned_t length, f_utf_string_tripless_t * const structure);
-#endif // _di_f_utf_string_tripless_adjust_
 
 /**
  * Append the single source triples onto the destination.
@@ -110,121 +81,60 @@ extern "C" {
 #endif // _di_f_utf_string_tripless_append_all_
 
 /**
- * Resize the string tripless array to a smaller size.
+ * A callback intended to be passed to f_memory_arrayss_resize() for an f_utf_string_tripless_t structure.
  *
- * This will resize making the array smaller based on (size - given length).
- * If the given length is too small, then the resize will fail.
- * This will not shrink the size to less than 0.
+ * This is only called when shrinking the array and generally should perform deallocations.
  *
- * @param amount
- *   A positive number representing how much to decimate the size by.
- * @param structure
- *   The string tripless array to resize.
+ * This does not do parameter checking.
+ *
+ * @param start
+ *   The inclusive start position in the array to start deleting.
+ * @param stop
+ *   The exclusive stop position in the array to stop deleting.
+ * @param array
+ *   The array structure to delete all values of.
+ *   Must not be NULL.
  *
  * @return
  *   F_okay on success.
- *   F_data_not if amount is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_resize().
+ *
+ * @see f_memory_array_resize()
  */
-#ifndef _di_f_utf_string_tripless_decimate_by_
-  extern f_status_t f_utf_string_tripless_decimate_by(const f_number_unsigned_t amount, f_utf_string_tripless_t * const structure);
-#endif // _di_f_utf_string_tripless_decimate_by_
+#ifndef _di_f_utf_string_tripless_delete_callback_
+  extern f_status_t f_utf_string_tripless_delete_callback(const f_number_unsigned_t start, const f_number_unsigned_t stop, void * const array);
+#endif // _di_f_utf_string_tripless_delete_callback_
 
 /**
- * Resize the string tripless array to a smaller size.
+ * A callback intended to be passed to f_memory_arrayss_adjust() for an f_utf_string_tripless_t structure.
  *
- * This will resize making the array smaller based on (size - given length).
- * If the given length is too small, then the resize will fail.
- * This will not shrink the size to less than 0.
+ * This is only called when shrinking the array and generally should perform deallocations.
  *
- * @param amount
- *   A positive number representing how much to decrease the size by.
- * @param structure
- *   The string tripless array to resize.
+ * This does not do parameter checking.
  *
- * @return
- *   F_okay on success.
- *   F_data_not if amount is 0.
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: f_memory_resize().
- */
-#ifndef _di_f_utf_string_tripless_decrease_by_
-  extern f_status_t f_utf_string_tripless_decrease_by(const f_number_unsigned_t amount, f_utf_string_tripless_t * const structure);
-#endif // _di_f_utf_string_tripless_decrease_by_
-
-/**
- * Increase the size of the string tripless array, but only if necessary.
- *
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
- * If already set to the maximum buffer size, then the resize will fail.
- *
- * @param step
- *   The allocation step to use.
- *   Must be greater than 0.
- * @param structure
- *   The string tripless array to resize.
- *
- * @return
- *   F_okay on success.
- *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
- *
- *   F_array_too_large (with error bit) if the new array length is too large.
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: f_memory_resize().
- */
-#ifndef _di_f_utf_string_tripless_increase_
-  extern f_status_t f_utf_string_tripless_increase(const f_number_unsigned_t step, f_utf_string_tripless_t * const structure);
-#endif // _di_f_utf_string_tripless_increase_
-
-/**
- * Resize the string tripless array to a larger size.
- *
- * This will resize making the array larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (F_number_t_size_unsigned_d).
- * If already set to the maximum buffer size, then the resize will fail.
- *
- * @param amount
- *   A positive number representing how much to increase the size by.
- * @param structure
- *   The string tripless array to resize.
- *
- * @return
- *   F_okay on success.
- *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
- *
- *   F_array_too_large (with error bit) if the new array length is too large.
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: f_memory_resize().
- */
-#ifndef _di_f_utf_string_tripless_increase_by_
-  extern f_status_t f_utf_string_tripless_increase_by(const f_number_unsigned_t amount, f_utf_string_tripless_t * const structure);
-#endif // _di_f_utf_string_tripless_increase_by_
-
-/**
- * Resize the string tripless array.
- *
- * @param length
- *   The new size to use.
- * @param structure
- *   The string tripless array to adjust.
+ * @param start
+ *   The inclusive start position in the array to start deleting.
+ * @param stop
+ *   The exclusive stop position in the array to stop deleting.
+ * @param array
+ *   The array structure to delete all values of.
+ *   Must not be NULL.
  *
  * @return
  *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_memory_array_adjust().
+ *
+ * @see f_memory_array_adjust()
  */
-#ifndef _di_f_utf_string_tripless_resize_
-  extern f_status_t f_utf_string_tripless_resize(const f_number_unsigned_t length, f_utf_string_tripless_t * const structure);
-#endif // _di_f_utf_string_tripless_resize_
+#ifndef _di_f_utf_string_tripless_destroy_callback_
+  extern f_status_t f_utf_string_tripless_destroy_callback(const f_number_unsigned_t start, const f_number_unsigned_t stop, void * const array);
+#endif // _di_f_utf_string_tripless_destroy_callback_
 
 #ifdef __cplusplus
 } // extern "C"

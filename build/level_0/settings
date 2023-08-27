@@ -79,11 +79,7 @@ build_sources_library utf/map.c utf/maps.c utf/mapss.c
 build_sources_library utf/map_multi.c utf/map_multis.c utf/map_multiss.c
 build_sources_library utf/static.c utf/statics.c utf/staticss.c
 build_sources_library utf/string.c utf/triple.c utf/triples.c utf/tripless.c
-build_sources_library utf/private-dynamic.c utf/private-dynamics.c utf/private-dynamicss.c
-build_sources_library utf/private-map_multis.c utf/private-map_multiss.c
-build_sources_library utf/private-maps.c utf/private-mapss.c
-build_sources_library utf/private-string.c
-build_sources_library utf/private-triples.c utf/private-tripless.c
+build_sources_library utf/private-dynamics.c utf/private-maps.c utf/private-map_multis.c utf/private-string.c utf/private-triples.c
 
 build_sources_library-thread thread.c thread/attribute.c thread/barrier.c thread/barrier_attribute.c thread/condition.c thread/condition_attribute.c thread/id.c thread/key.c thread/lock.c thread/lock_attribute.c thread/mutex.c thread/mutex_attribute.c thread/once.c thread/semaphore.c thread/set.c thread/spin.c
 

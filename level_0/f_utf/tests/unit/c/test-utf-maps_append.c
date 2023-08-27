@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-void test__f_utf_maps_append__works(void **state) {
+void test__f_utf_string_maps_append__works(void **state) {
 
   f_utf_string_map_t source = f_utf_string_map_t_initialize;
   f_utf_string_maps_t destination = f_utf_string_maps_t_initialize;
@@ -47,7 +47,7 @@ void test__f_utf_maps_append__works(void **state) {
   free((void *) destination.array);
 }
 
-void test__f_utf_maps_append__parameter_checking(void **state) {
+void test__f_utf_string_maps_append__parameter_checking(void **state) {
 
   const f_utf_string_map_t data = f_utf_string_map_t_initialize;
 

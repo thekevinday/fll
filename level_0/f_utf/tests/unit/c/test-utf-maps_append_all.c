@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-void test__f_utf_maps_append_all__works(void **state) {
+void test__f_utf_string_maps_append_all__works(void **state) {
 
   const int length_inner = 2;
   f_utf_string_maps_t source = f_utf_string_maps_t_initialize;
@@ -15,7 +15,7 @@ void test__f_utf_maps_append_all__works(void **state) {
   const f_utf_string_static_t test_value = macro_f_utf_string_static_t_initialize_1((f_utf_string_t) "\0\0\0t\0\0\0e\0\0\0s\0\0\0t\0\0\0_\0\0\0v\0\0\0a\0\0\0l\0\0\0u\0\0\0e", 0, 10);
 
   {
-    f_status_t status = f_utf_string_maps_resize(length_inner, &source);
+    f_status_t status = f_memory_array_increase_by(length_inner, sizeof(f_utf_string_map_t), (void **) &source.array, &source.used, &source.size);
 
     assert_int_equal(status, F_okay);
     assert_int_equal(source.size, length_inner);
@@ -69,14 +69,14 @@ void test__f_utf_maps_append_all__works(void **state) {
   free((void *) destination.array);
 }
 
-void test__f_utf_maps_append_all__returns_data_not(void **state) {
+void test__f_utf_string_maps_append_all__returns_data_not(void **state) {
 
   const int length = 5;
   f_utf_string_maps_t source = f_utf_string_maps_t_initialize;
   f_utf_string_maps_t destination = f_utf_string_maps_t_initialize;
 
   {
-    const f_status_t status = f_utf_string_maps_resize(length, &source);
+    const f_status_t status = f_memory_array_increase_by(length, sizeof(f_utf_string_map_t), (void **) &source.array, &source.used, &source.size);
 
     assert_int_equal(status, F_okay);
     assert_int_equal(source.used, 0);
@@ -95,7 +95,7 @@ void test__f_utf_maps_append_all__returns_data_not(void **state) {
   free((void *) source.array);
 }
 
-void test__f_utf_maps_append_all__parameter_checking(void **state) {
+void test__f_utf_string_maps_append_all__parameter_checking(void **state) {
 
   const f_utf_string_maps_t data = f_utf_string_maps_t_initialize;
 

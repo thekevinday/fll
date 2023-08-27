@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-void test__f_utf_dynamic_mish_nulless__works(void **state) {
+void test__f_utf_string_dynamic_mish_nulless__works(void **state) {
 
   const f_utf_string_static_t glue = macro_f_utf_string_static_t_initialize_1((f_utf_string_t) "\0\0\0:", 0, 1);
   const f_utf_string_static_t source = macro_f_utf_string_static_t_initialize_1((f_utf_string_t) "\0\0\0t\0\0\0e\0\0\0\0\0\0\0s\0\0\0t", 0, 5);
@@ -39,7 +39,7 @@ void test__f_utf_dynamic_mish_nulless__works(void **state) {
   free((void *) destination.string);
 }
 
-void test__f_utf_dynamic_mish_nulless__parameter_checking(void **state) {
+void test__f_utf_string_dynamic_mish_nulless__parameter_checking(void **state) {
 
   const f_utf_string_static_t glue = macro_f_utf_string_static_t_initialize_1((f_utf_string_t) "\0\0\0:", 0, 1);
   const f_utf_string_static_t source = macro_f_utf_string_static_t_initialize_1((f_utf_string_t) "\0\0\0t\0\0\0e\0\0\0\0\0\0\0s\0\0\0t", 0, 5);

@@ -1,0 +1,68 @@
+# fss-0001
+#
+# Build the project with appropriate mocks linked in via the dynamic linker's "--wrap" functionality.
+#
+# The -Wl,--wrap does not work across shared files.
+# Therefore, this file is a work-around to inject the mocks into the library for testing purposes.
+# This should exactly match the "settings" file, except for the additional "-Wl,--wrap" parts and the additional mock source file.
+#
+# The flags -o0 must be passed to prevent the compiler from optimizing away any functions being mocked (which results in the mock not happening and a real function being called).
+# Alternatively, figure out which optimization that is disabled by -o0 and have that specific optimization disabled.
+#
+
+build_name f_utf
+
+version_major 0
+version_minor 7
+version_micro 0
+version_file micro
+version_target minor
+
+modes individual clang test coverage
+modes_default individual test
+
+build_compiler gcc
+build_compiler-clang clang
+build_indexer ar
+build_indexer_arguments rcs
+build_language c
+
+build_libraries -lc
+build_libraries-individual -lf_memory -lf_string
+
+build_sources_library utf.c private-utf.c private-utf_alphabetic.c private-utf_combining.c private-utf_control.c private-utf_digit.c private-utf_emoji.c private-utf_numeric.c private-utf_phonetic.c private-utf_private.c private-utf_punctuation.c private-utf_subscript.c private-utf_superscript.c private-utf_symbol.c private-utf_unassigned.c private-utf_valid.c private-utf_whitespace.c private-utf_wide.c private-utf_word.c private-utf_zero_width.c
+build_sources_library utf/common.c utf/convert.c utf/dynamic.c utf/dynamics.c utf/dynamicss.c utf/is.c utf/is_character.c utf/map.c utf/maps.c utf/mapss.c utf/map_multi.c utf/map_multis.c utf/map_multiss.c utf/static.c utf/statics.c utf/staticss.c utf/string.c utf/triple.c utf/triples.c utf/tripless.c
+build_sources_library utf/private-dynamics.c utf/private-maps.c utf/private-map_multis.c utf/private-string.c utf/private-triples.c
+build_sources_library ../../tests/unit/c/mock-utf.c
+
+build_sources_headers utf.h utf/common.h utf/convert.h utf/dynamic.h utf/dynamics.h utf/dynamicss.h utf/is.h utf/is_character.h utf/map.h utf/maps.h utf/mapss.h utf/map_multi.h utf/map_multis.h utf/map_multiss.h utf/static.h utf/statics.h utf/staticss.h utf/string.h utf/triple.h utf/triples.h utf/tripless.h
+
+build_script yes
+build_shared yes
+build_static no
+
+path_headers fll/level_0
+path_library_script script
+path_library_shared shared
+path_library_static static
+
+has_path_standard yes
+preserve_path_headers yes
+
+search_exclusive yes
+search_shared yes
+search_static yes
+
+environment PATH LD_LIBRARY_PATH
+environment LANG LC_ALL LC_COLLATE LC_CTYPE LC_FASTMSG LC_MESSAGES LC_MONETARY LC_NUMERIC LC_TIME LOCPATH NLSPATH
+
+flags -O2 -z now -g -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-parentheses
+flags-clang -Wno-logical-op-parentheses
+flags-test -O0 -fstack-protector -Wall
+flags-coverage -O0 --coverage -fprofile-abs-path -fprofile-dir=build/coverage/
+
+flags_library -fPIC
+
+# Inject mocks.
+flags -Wl,--wrap=f_memory_array_adjust
+flags -Wl,--wrap=f_memory_array_resize

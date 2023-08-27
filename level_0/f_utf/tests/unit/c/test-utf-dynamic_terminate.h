@@ -15,20 +15,20 @@
  *
  * @see f_utf_string_dynamic_terminate()
  */
-extern void test__f_utf_dynamic_terminate__appends_null(void **state);
+extern void test__f_utf_string_dynamic_terminate__appends_null(void **state);
 
 /**
  * Test that the function does not append a NULL.
  *
  * @see f_utf_string_dynamic_terminate()
  */
-extern void test__f_utf_dynamic_terminate__doesnt_append_null(void **state);
+extern void test__f_utf_string_dynamic_terminate__doesnt_append_null(void **state);
 
 /**
  * Test that the function correctly fails on invalid parameter.
  *
  * @see f_utf_string_dynamic_terminate()
  */
-extern void test__f_utf_dynamic_terminate__parameter_checking(void **state);
+extern void test__f_utf_string_dynamic_terminate__parameter_checking(void **state);
 
 #endif // _TEST__F_utf_dynamic_terminate_h

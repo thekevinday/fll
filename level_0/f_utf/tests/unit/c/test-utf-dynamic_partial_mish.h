@@ -15,12 +15,12 @@
  *
  * @see f_utf_string_dynamic_partial_mish()
  */
-extern void test__f_utf_dynamic_partial_mish__works(void **state);
+extern void test__f_utf_string_dynamic_partial_mish__works(void **state);
 /**
  * Test that the function correctly fails on invalid parameter.
  *
  * @see f_utf_string_dynamic_partial_mish()
  */
-extern void test__f_utf_dynamic_partial_mish__parameter_checking(void **state);
+extern void test__f_utf_string_dynamic_partial_mish__parameter_checking(void **state);
 
 #endif // _TEST__F_utf_dynamic_partial_mish_h

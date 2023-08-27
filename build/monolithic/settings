@@ -79,11 +79,7 @@ build_sources_library level_0/utf/map.c level_0/utf/maps.c level_0/utf/mapss.c
 build_sources_library level_0/utf/map_multi.c level_0/utf/map_multis.c level_0/utf/map_multiss.c
 build_sources_library level_0/utf/static.c level_0/utf/statics.c level_0/utf/staticss.c
 build_sources_library level_0/utf/string.c level_0/utf/triple.c level_0/utf/triples.c level_0/utf/tripless.c
-build_sources_library level_0/utf/private-dynamic.c level_0/utf/private-dynamics.c level_0/utf/private-dynamicss.c
-build_sources_library level_0/utf/private-maps.c level_0/utf/private-mapss.c
-build_sources_library level_0/utf/private-map_multis.c level_0/utf/private-map_multiss.c
-build_sources_library level_0/utf/private-string.c
-build_sources_library level_0/utf/private-triples.c level_0/utf/private-tripless.c
+build_sources_library level_0/utf/private-dynamics.c level_0/utf/private-maps.c level_0/utf/private-map_multis.c level_0/utf/private-string.c level_0/utf/private-triples.c
 
 build_sources_library level_1/control_group.c
 build_sources_library level_1/conversion.c level_1/private-conversion.c level_1/conversion/common.c

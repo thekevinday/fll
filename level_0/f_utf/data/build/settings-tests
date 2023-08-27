@@ -50,8 +50,7 @@ build_sources_program test-utf-character_is_word.c test-utf-is_word.c
 build_sources_program test-utf-character_is_word_dash.c test-utf-is_word_dash.c
 build_sources_program test-utf-character_is_word_dash_plus.c test-utf-is_word_dash_plus.c
 build_sources_program test-utf-character_is_zero_width.c test-utf-is_zero_width.c
-build_sources_program test-utf-dynamic_adjust.c test-utf-dynamic_append.c test-utf-dynamic_append_assure.c test-utf-dynamic_append_assure_nulless.c test-utf-dynamic_append_nulless.c
-build_sources_program test-utf-dynamic_decimate_by.c test-utf-dynamic_decrease_by.c test-utf-dynamic_increase.c test-utf-dynamic_increase_by.c
+build_sources_program test-utf-dynamic_append.c test-utf-dynamic_append_assure.c test-utf-dynamic_append_assure_nulless.c test-utf-dynamic_append_nulless.c
 build_sources_program test-utf-dynamic_mash.c test-utf-dynamic_mash_nulless.c
 build_sources_program test-utf-dynamic_mish.c test-utf-dynamic_mish_nulless.c
 build_sources_program test-utf-dynamic_partial_append.c test-utf-dynamic_partial_append_assure.c test-utf-dynamic_partial_append_assure_nulless.c test-utf-dynamic_partial_append_nulless.c
@@ -59,17 +58,23 @@ build_sources_program test-utf-dynamic_partial_mash.c test-utf-dynamic_partial_m
 build_sources_program test-utf-dynamic_partial_mish.c test-utf-dynamic_partial_mish_nulless.c
 build_sources_program test-utf-dynamic_partial_prepend.c test-utf-dynamic_partial_prepend_assure.c test-utf-dynamic_partial_prepend_assure_nulless.c test-utf-dynamic_partial_prepend_nulless.c
 build_sources_program test-utf-dynamic_prepend.c test-utf-dynamic_prepend_assure.c test-utf-dynamic_prepend_assure_nulless.c test-utf-dynamic_prepend_nulless.c
-build_sources_program test-utf-dynamic_resize.c
 build_sources_program test-utf-dynamic_seek_line.c test-utf-dynamic_seek_line_to.c test-utf-dynamic_seek_to.c
 build_sources_program test-utf-dynamic_terminate.c test-utf-dynamic_terminate_after.c
-build_sources_program test-utf-dynamics_adjust.c test-utf-dynamics_append.c test-utf-dynamics_append_all.c test-utf-dynamics_decimate_by.c test-utf-dynamics_decrease_by.c test-utf-dynamics_increase.c test-utf-dynamics_increase_by.c test-utf-dynamics_resize.c test-utf-dynamicss_adjust.c test-utf-dynamicss_append.c test-utf-dynamicss_append_all.c test-utf-dynamicss_decimate_by.c test-utf-dynamicss_decrease_by.c test-utf-dynamicss_increase.c test-utf-dynamicss_increase_by.c test-utf-dynamicss_resize.c
-build_sources_program test-utf-map_multis_adjust.c test-utf-map_multis_append.c test-utf-map_multis_append_all.c test-utf-map_multis_decimate_by.c test-utf-map_multis_decrease_by.c test-utf-map_multis_increase.c test-utf-map_multis_increase_by.c test-utf-map_multis_resize.c test-utf-map_multiss_adjust.c test-utf-map_multiss_append.c test-utf-map_multiss_append_all.c test-utf-map_multiss_decimate_by.c test-utf-map_multiss_decrease_by.c test-utf-map_multiss_increase.c test-utf-map_multiss_increase_by.c test-utf-map_multiss_resize.c
-build_sources_program test-utf-maps_adjust.c test-utf-maps_append.c test-utf-maps_append_all.c test-utf-maps_decimate_by.c test-utf-maps_decrease_by.c test-utf-maps_increase.c test-utf-maps_increase_by.c test-utf-maps_resize.c test-utf-mapss_adjust.c test-utf-mapss_append.c test-utf-mapss_append_all.c test-utf-mapss_decimate_by.c test-utf-mapss_decrease_by.c test-utf-mapss_increase.c test-utf-mapss_increase_by.c test-utf-mapss_resize.c
+build_sources_program test-utf-dynamics_append.c test-utf-dynamics_append_all.c test-utf-dynamicss_append.c test-utf-dynamicss_append_all.c
+build_sources_program test-utf-dynamicss_delete_callback.c test-utf-dynamicss_destroy_callback.c
+build_sources_program test-utf-maps_append.c test-utf-maps_append_all.c test-utf-mapss_append.c test-utf-mapss_append_all.c
+build_sources_program test-utf-maps_delete_callback.c test-utf-maps_destroy_callback.c
+build_sources_program test-utf-mapss_delete_callback.c test-utf-mapss_destroy_callback.c
+build_sources_program test-utf-map_multis_append.c test-utf-map_multis_append_all.c test-utf-map_multiss_append.c test-utf-map_multiss_append_all.c
+build_sources_program test-utf-map_multis_delete_callback.c test-utf-map_multis_destroy_callback.c
+build_sources_program test-utf-map_multiss_delete_callback.c test-utf-map_multiss_destroy_callback.c
 build_sources_program test-utf-mash.c test-utf-mash_nulless.c
 build_sources_program test-utf-mish.c test-utf-mish_nulless.c
 build_sources_program test-utf-prepend.c test-utf-prepend_assure.c test-utf-prepend_assure_nulless.c test-utf-prepend_nulless.c
 build_sources_program test-utf-seek_line.c test-utf-seek_line_to.c test-utf-seek_to.c
-build_sources_program test-utf-triples_adjust.c test-utf-triples_append.c test-utf-triples_append_all.c test-utf-triples_decimate_by.c test-utf-triples_decrease_by.c test-utf-triples_increase.c test-utf-triples_increase_by.c test-utf-triples_resize.c test-utf-tripless_adjust.c test-utf-tripless_append.c test-utf-tripless_append_all.c test-utf-tripless_decimate_by.c test-utf-tripless_decrease_by.c test-utf-tripless_increase.c test-utf-tripless_increase_by.c test-utf-tripless_resize.c
+build_sources_program test-utf-triples_append.c test-utf-triples_append_all.c test-utf-tripless_append.c test-utf-tripless_append_all.c
+build_sources_program test-utf-triples_delete_callback.c test-utf-triples_destroy_callback.c
+build_sources_program test-utf-tripless_delete_callback.c test-utf-tripless_destroy_callback.c
 build_sources_program test-utf.c data-utf.c
 
 build_script no

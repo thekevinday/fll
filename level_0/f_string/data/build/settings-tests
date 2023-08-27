@@ -37,6 +37,7 @@ build_sources_program test-string-dynamic_prepend.c test-string-dynamic_prepend_
 build_sources_program test-string-dynamic_seek_line.c test-string-dynamic_seek_line_to.c test-string-dynamic_seek_to.c
 build_sources_program test-string-dynamic_terminate.c test-string-dynamic_terminate_after.c
 build_sources_program test-string-dynamics_append.c test-string-dynamics_append_all.c test-string-dynamicss_append.c test-string-dynamicss_append_all.c
+build_sources_program test-string-dynamics_delete_callback.c test-string-dynamics_destroy_callback.c
 build_sources_program test-string-dynamicss_delete_callback.c test-string-dynamicss_destroy_callback.c
 build_sources_program test-string-map_multis_append.c test-string-map_multis_append_all.c test-string-map_multiss_append.c test-string-map_multiss_append_all.c
 build_sources_program test-string-map_multis_delete_callback.c test-string-map_multis_destroy_callback.c

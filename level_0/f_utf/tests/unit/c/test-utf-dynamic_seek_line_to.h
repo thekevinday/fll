@@ -15,41 +15,41 @@
  *
  * @see f_utf_string_dynamic_seek_line_to()
  */
-extern void test__f_utf_dynamic_seek_line_to__after_newline(void **state);
+extern void test__f_utf_string_dynamic_seek_line_to__after_newline(void **state);
 
 /**
  * Test that the function works where seek target is before a newline.
  *
  * @see f_utf_string_dynamic_seek_line_to()
  */
-extern void test__f_utf_dynamic_seek_line_to__before_newline(void **state);
+extern void test__f_utf_string_dynamic_seek_line_to__before_newline(void **state);
 
 /**
  * Test that the function returns F_data_not_stop because range is an empty range (range.start > range.stop).
  *
  * @see f_utf_string_dynamic_seek_line_to()
  */
-extern void test__f_utf_dynamic_seek_line_to__returns_data_not_stop(void **state);
+extern void test__f_utf_string_dynamic_seek_line_to__returns_data_not_stop(void **state);
 
 /**
  * Test that the function returns F_okay_eos stopped after end of string because no newline is found.
  *
  * @see f_utf_string_dynamic_seek_line_to()
  */
-extern void test__f_utf_dynamic_seek_line_to__returns_none_eos(void **state);
+extern void test__f_utf_string_dynamic_seek_line_to__returns_none_eos(void **state);
 
 /**
  * Test that the function returns F_okay_stop stopped after end of range because no newline is found.
  *
  * @see f_utf_string_dynamic_seek_line_to()
  */
-extern void test__f_utf_dynamic_seek_line_to__returns_none_stop(void **state);
+extern void test__f_utf_string_dynamic_seek_line_to__returns_none_stop(void **state);
 
 /**
  * Test that the function correctly fails on invalid parameter.
  *
  * @see f_utf_string_dynamic_seek_line_to()
  */
-extern void test__f_utf_dynamic_seek_line_to__parameter_checking(void **state);
+extern void test__f_utf_string_dynamic_seek_line_to__parameter_checking(void **state);
 
 #endif // _TEST__F_utf_dynamic_seek_line_to_h
