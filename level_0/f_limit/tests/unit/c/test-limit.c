@@ -22,14 +22,14 @@ int main(void) {
     cmocka_unit_test(test__f_limit_process__fails),
     cmocka_unit_test(test__f_limit_process__works),
 
-    cmocka_unit_test(test__f_limit_setss_destroy_callback__fails),
     cmocka_unit_test(test__f_limit_setss_delete_callback__fails),
+    cmocka_unit_test(test__f_limit_setss_destroy_callback__fails),
 
     cmocka_unit_test(test__f_limit_setss_delete_callback__works),
     cmocka_unit_test(test__f_limit_setss_destroy_callback__works),
 
-    cmocka_unit_test(test__f_limit_valuess_destroy_callback__fails),
     cmocka_unit_test(test__f_limit_valuess_delete_callback__fails),
+    cmocka_unit_test(test__f_limit_valuess_destroy_callback__fails),
 
     cmocka_unit_test(test__f_limit_valuess_delete_callback__works),
     cmocka_unit_test(test__f_limit_valuess_destroy_callback__works),
@@ -37,11 +37,11 @@ int main(void) {
     #ifndef _di_level_0_parameter_checking_
       cmocka_unit_test(test__f_limit_process__parameter_checking),
 
-      // f_limit_setss_destroy_callback() doesn't use parameter checking.
       // f_limit_setss_delete_callback() doesn't use parameter checking.
+      // f_limit_setss_destroy_callback() doesn't use parameter checking.
 
-      // f_limit_valuess_destroy_callback() doesn't use parameter checking.
       // f_limit_valuess_delete_callback() doesn't use parameter checking.
+      // f_limit_valuess_destroy_callback() doesn't use parameter checking.
     #endif // _di_level_0_parameter_checking_
   };
 

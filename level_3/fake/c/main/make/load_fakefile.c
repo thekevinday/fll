@@ -59,11 +59,11 @@ extern "C" {
         delimits.used = 0;
       }
 
-      f_string_ranges_resize(0, &comments);
+      f_memory_array_resize(0, sizeof(f_string_range_t), (void **) &comments.array, &comments.used, &comments.size);
 
       if (F_status_is_error(data_make->main->setting.state.status)) {
-        f_string_ranges_resize(0, &list_objects);
-        f_string_rangess_resize(0, &list_contents);
+        f_memory_array_resize(0, sizeof(f_string_range_t), (void **) &list_objects.array, &list_objects.used, &list_objects.size);
+        f_memory_arrays_resize(0, sizeof(f_string_ranges_t), (void **) &list_contents.array, &list_contents.used, &list_contents.size, &f_string_rangess_delete_callback);
         f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &delimits.array, &delimits.used, &delimits.size);
 
         return;
@@ -84,8 +84,8 @@ extern "C" {
         fake_print_error(&data_make->main->program.error, macro_fake_f(f_memory_array_resize));
 
         f_fss_set_delete(&settings);
-        f_string_ranges_resize(0, &list_objects);
-        f_string_rangess_resize(0, &list_contents);
+        f_memory_array_resize(0, sizeof(f_string_range_t), (void **) &list_objects.array, &list_objects.used, &list_objects.size);
+        f_memory_arrays_resize(0, sizeof(f_string_ranges_t), (void **) &list_contents.array, &list_contents.used, &list_contents.size, &f_string_rangess_delete_callback);
         f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &delimits.array, &delimits.used, &delimits.size);
 
         return;
@@ -170,8 +170,8 @@ extern "C" {
         } // for
       }
 
-      f_string_ranges_resize(0, &list_objects);
-      f_string_rangess_resize(0, &list_contents);
+      f_memory_array_resize(0, sizeof(f_string_range_t), (void **) &list_objects.array, &list_objects.used, &list_objects.size);
+      f_memory_arrays_resize(0, sizeof(f_string_ranges_t), (void **) &list_contents.array, &list_contents.used, &list_contents.size, &f_string_rangess_delete_callback);
       f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &delimits.array, &delimits.used, &delimits.size);
 
       if (F_status_is_error(data_make->main->setting.state.status)) {
@@ -189,7 +189,7 @@ extern "C" {
       {
         f_string_t function_name = macro_fake_f(macro_f_string_map_multis_t_resize);
 
-        data_make->main->setting.state.status = f_string_map_multis_resize(data_make->main->setting.state.step_small, &data_make->setting_make.parameter);
+        data_make->main->setting.state.status = f_memory_arrays_resize(data_make->main->setting.state.step_small, sizeof(f_string_map_multi_t), (void **) &data_make->setting_make.parameter.array, &data_make->setting_make.parameter.used, &data_make->setting_make.parameter.size, &f_string_map_multis_delete_callback);
 
         if (F_status_is_error_not(data_make->main->setting.state.status)) {
           data_make->setting_make.parameter.used = 1;
@@ -368,7 +368,7 @@ extern "C" {
       if (F_status_is_error(data_make->main->setting.state.status)) {
         fake_print_error(&data_make->main->program.error, macro_fake_f(fll_fss_snatch_map_apart));
 
-        f_string_map_multis_resize(0, &define);
+        f_memory_arrays_resize(0, sizeof(f_string_map_multi_t), (void **) &define.array, &define.used, &define.size, &f_string_map_multis_delete_callback);
 
         return;
       }
@@ -418,7 +418,7 @@ extern "C" {
       f_memory_array_resize(0, sizeof(f_char_t), (void **) &combined.string, &combined.used, &combined.size);
     }
 
-    f_string_map_multis_resize(0, &define);
+    f_memory_arrays_resize(0, sizeof(f_string_map_multi_t), (void **) &define.array, &define.used, &define.size, &f_string_map_multis_delete_callback);
 
     if (F_status_is_error(data_make->main->setting.state.status)) return;
 

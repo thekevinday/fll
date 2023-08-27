@@ -122,7 +122,7 @@ void test__f_file_read__works(void **state) {
     const f_status_t status = f_file_read(file, &buffer);
 
     // Ensure string ends in NULL so that assert_string_equal() can be used.
-    f_string_dynamic_increase_by(1, &buffer);
+    f_memory_array_increase_by(1, sizeof(f_char_t), (void **) &buffer.string, &buffer.used, &buffer.size);
     buffer.string[buffer.used] = 0;
 
     assert_int_equal(status, F_okay_eof);

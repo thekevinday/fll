@@ -22,7 +22,7 @@ void test__f_iki_datass_append__works(void **state) {
 
     for (f_number_unsigned_t j = 0; j < length_outer; ++j) {
 
-      status = f_string_ranges_resize(length, &source.array[j].content);
+      status = f_memory_array_resize(length, sizeof(f_string_range_t), (void **) &source.array[j].content.array, &source.array[j].content.used, &source.array[j].content.size);
 
       assert_int_equal(status, F_okay);
       assert_int_equal(source.array[j].content.size, length);
@@ -32,12 +32,12 @@ void test__f_iki_datass_append__works(void **state) {
       assert_int_equal(status, F_okay);
       assert_int_equal(source.array[j].delimits.size, length);
 
-      status = f_string_ranges_resize(length, &source.array[j].variable);
+      status = f_memory_array_resize(length, sizeof(f_string_range_t), (void **) &source.array[j].variable.array, &source.array[j].variable.used, &source.array[j].variable.size);
 
       assert_int_equal(status, F_okay);
       assert_int_equal(source.array[j].variable.size, length);
 
-      status = f_string_ranges_resize(length, &source.array[j].vocabulary);
+      status = f_memory_array_resize(length, sizeof(f_string_range_t), (void **) &source.array[j].vocabulary.array, &source.array[j].vocabulary.used, &source.array[j].vocabulary.size);
 
       assert_int_equal(status, F_okay);
       assert_int_equal(source.array[j].vocabulary.size, length);

@@ -74,20 +74,18 @@ extern "C" {
  *     F_interrupt (with error bit) if stopping due to an interrupt.
  *     F_parameter (with error bit) if a parameter is invalid.
  *
- *     Errors (with error bit) from: f_memory_array_increase().
- *     Errors (with error bit) from: f_memory_array_increase_by().
  *     Errors (with error bit) from: f_fss_is_space().
  *     Errors (with error bit) from: f_fss_seek_to_eol().
  *     Errors (with error bit) from: f_fss_skip_past_delimit().
- *     Errors (with error bit) from: f_string_ranges_increase().
+ *     Errors (with error bit) from: f_memory_array_increase().
+ *     Errors (with error bit) from: f_memory_array_increase_by().
  *     Errors (with error bit) from: f_utf_buffer_increment().
  *
- * @see f_memory_array_increase()
- * @see f_memory_array_increase_by()
  * @see f_fss_is_space()
  * @see f_fss_seek_to_eol()
  * @see f_fss_skip_past_delimit()
- * @see f_string_ranges_increase()
+ * @see f_memory_array_increase()
+ * @see f_memory_array_increase_by()
  * @see f_utf_buffer_increment()
  */
 #ifndef _di_fl_fss_basic_list_content_read_

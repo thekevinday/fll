@@ -37,15 +37,24 @@ build_sources_program test-string-dynamic_prepend.c test-string-dynamic_prepend_
 build_sources_program test-string-dynamic_seek_line.c test-string-dynamic_seek_line_to.c test-string-dynamic_seek_to.c
 build_sources_program test-string-dynamic_terminate.c test-string-dynamic_terminate_after.c
 build_sources_program test-string-dynamics_append.c test-string-dynamics_append_all.c test-string-dynamicss_append.c test-string-dynamicss_append_all.c
-build_sources_program test-string-map_multis_adjust.c test-string-map_multis_append.c test-string-map_multis_append_all.c test-string-map_multis_decimate_by.c test-string-map_multis_decrease_by.c test-string-map_multis_increase.c test-string-map_multis_increase_by.c test-string-map_multis_resize.c test-string-map_multiss_adjust.c test-string-map_multiss_append.c test-string-map_multiss_append_all.c test-string-map_multiss_decimate_by.c test-string-map_multiss_decrease_by.c test-string-map_multiss_increase.c test-string-map_multiss_increase_by.c test-string-map_multiss_resize.c
-build_sources_program test-string-maps_adjust.c test-string-maps_append.c test-string-maps_append_all.c test-string-maps_decimate_by.c test-string-maps_decrease_by.c test-string-maps_increase.c test-string-maps_increase_by.c test-string-maps_resize.c test-string-mapss_adjust.c test-string-mapss_append.c test-string-mapss_append_all.c test-string-mapss_decimate_by.c test-string-mapss_decrease_by.c test-string-mapss_increase.c test-string-mapss_increase_by.c test-string-mapss_resize.c
+build_sources_program test-string-dynamicss_delete_callback.c test-string-dynamicss_destroy_callback.c
+build_sources_program test-string-map_multis_append.c test-string-map_multis_append_all.c test-string-map_multiss_append.c test-string-map_multiss_append_all.c
+build_sources_program test-string-map_multis_delete_callback.c test-string-map_multis_destroy_callback.c
+build_sources_program test-string-map_multiss_delete_callback.c test-string-map_multiss_destroy_callback.c
+build_sources_program test-string-maps_append.c test-string-maps_append_all.c test-string-mapss_append.c test-string-mapss_append_all.c
+build_sources_program test-string-maps_delete_callback.c test-string-maps_destroy_callback.c
+build_sources_program test-string-mapss_delete_callback.c test-string-mapss_destroy_callback.c
 build_sources_program test-string-mash.c test-string-mash_nulless.c
 build_sources_program test-string-mish.c test-string-mish_nulless.c
 build_sources_program test-string-prepend.c test-string-prepend_assure.c test-string-prepend_assure_nulless.c test-string-prepend_nulless.c
-build_sources_program test-string-quantitys_adjust.c test-string-quantitys_append.c test-string-quantitys_append_all.c test-string-quantitys_decimate_by.c test-string-quantitys_decrease_by.c test-string-quantitys_increase.c test-string-quantitys_increase_by.c test-string-quantitys_resize.c test-string-quantityss_adjust.c test-string-quantityss_append.c test-string-quantityss_append_all.c test-string-quantityss_decimate_by.c test-string-quantityss_decrease_by.c test-string-quantityss_increase.c test-string-quantityss_increase_by.c test-string-quantityss_resize.c
-build_sources_program test-string-ranges_adjust.c test-string-ranges_append.c test-string-ranges_append_all.c test-string-ranges_decimate_by.c test-string-ranges_decrease_by.c test-string-ranges_increase.c test-string-ranges_increase_by.c test-string-ranges_resize.c test-string-rangess_adjust.c test-string-rangess_append.c test-string-rangess_append_all.c test-string-rangess_decimate_by.c test-string-rangess_decrease_by.c test-string-rangess_increase.c test-string-rangess_increase_by.c test-string-rangess_resize.c
+build_sources_program test-string-quantitys_append.c test-string-quantitys_append_all.c test-string-quantityss_append.c test-string-quantityss_append_all.c
+build_sources_program test-string-quantityss_delete_callback.c test-string-quantityss_destroy_callback.c
+build_sources_program test-string-ranges_append.c test-string-ranges_append_all.c test-string-rangess_append.c test-string-rangess_append_all.c
+build_sources_program test-string-rangess_delete_callback.c test-string-rangess_destroy_callback.c
 build_sources_program test-string-seek_line.c test-string-seek_line_to.c test-string-seek_to.c
-build_sources_program test-string-triples_adjust.c test-string-triples_append.c test-string-triples_append_all.c test-string-triples_decimate_by.c test-string-triples_decrease_by.c test-string-triples_increase.c test-string-triples_increase_by.c test-string-triples_resize.c test-string-tripless_adjust.c test-string-tripless_append.c test-string-tripless_append_all.c test-string-tripless_decimate_by.c test-string-tripless_decrease_by.c test-string-tripless_increase.c test-string-tripless_increase_by.c test-string-tripless_resize.c
+build_sources_program test-string-triples_append.c test-string-triples_append_all.c test-string-tripless_append.c test-string-tripless_append_all.c
+build_sources_program test-string-triples_delete_callback.c test-string-triples_destroy_callback.c
+build_sources_program test-string-tripless_delete_callback.c test-string-tripless_destroy_callback.c
 build_sources_program test-string.c
 
 build_script no

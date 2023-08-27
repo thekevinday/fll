@@ -95,7 +95,6 @@ extern "C" {
     fake_f_f_string_dynamic_partial_append_e,
     fake_f_f_string_dynamic_partial_append_nulless_e,
     fake_f_f_string_dynamic_prepend_e,
-    fake_f_f_string_map_multis_resize_e,
     fake_f_f_thread_create_e,
     fake_f_f_utf_is_word_dash_plus_e,
     fake_f_fl_conversion_dynamic_to_unsigned_detect_e,

@@ -55,7 +55,7 @@ extern "C" {
       private_fl_fss_basic_read(buffer, F_false, range, &content_partial, &quote, delimits, state);
 
       if (state->status == F_fss_found_object || F_status_set_fine(state->status) == F_fss_found_object_content_not) {
-        status = f_string_ranges_increase(state->step_small, found);
+        status = f_memory_array_increase(state->step_small, sizeof(f_string_range_t), (void **) &found->array, &found->used, &found->size);
 
         // The private function sets the error bit on unterminated quoted Object.
         if (state->status == F_status_set_error(F_fss_found_object_content_not)) {

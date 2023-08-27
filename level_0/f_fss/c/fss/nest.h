@@ -103,9 +103,9 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_string_ranges_resize().
+ *   Errors (with error bit) from: f_memory_array_resize().
  *
- * @see f_string_ranges_resize()
+ * @see f_memory_array_resize()
  */
 #ifndef _di_f_fss_nest_delete_
   extern f_status_t f_fss_nest_delete(f_fss_nest_t * const nest);
@@ -122,11 +122,9 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_array_resize().
- *   Errors (with error bit) from: f_string_ranges_resize().
+ *   Errors (with error bit) from: f_memory_array_adjust().
  *
- * @see f_memory_array_resize()
- * @see f_string_ranges_resize()
+ * @see f_memory_array_adjust()
  */
 #ifndef _di_f_fss_nest_destroy_
   extern f_status_t f_fss_nest_destroy(f_fss_nest_t * const nest);

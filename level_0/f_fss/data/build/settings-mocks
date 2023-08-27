@@ -30,7 +30,8 @@ build_language c
 build_libraries -lc
 build_libraries-individual -lf_memory -lf_string -lf_type_array -lf_utf
 
-build_sources_library fss.c fss/common.c fss/item.c fss/named.c fss/nest.c fss/quote.c fss/set.c fss/set_quote.c fss/simple_packet.c ../../tests/unit/c/mock-fss.c
+build_sources_library fss.c fss/common.c fss/item.c fss/named.c fss/nest.c fss/quote.c fss/set.c fss/set_quote.c fss/simple_packet.c
+build_sources_library ../../tests/unit/c/mock-fss.c
 
 build_sources_headers fss.h fss/common.h fss/item.h fss/named.h fss/nest.h fss/quote.h fss/set.h fss/set_quote.h fss/simple_packet.h
 
@@ -65,7 +66,3 @@ flags -Wl,--wrap=f_memory_array_adjust
 flags -Wl,--wrap=f_memory_array_resize
 flags -Wl,--wrap=f_memory_arrays_adjust
 flags -Wl,--wrap=f_memory_arrays_resize
-flags -Wl,--wrap=f_string_ranges_adjust
-flags -Wl,--wrap=f_string_ranges_resize
-flags -Wl,--wrap=f_string_rangess_adjust
-flags -Wl,--wrap=f_string_rangess_resize

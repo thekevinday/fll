@@ -10,7 +10,8 @@ extern "C" {
     if (!build_data) return;
 
     fake_build_setting_delete(&build_data->setting);
-    f_string_maps_resize(0, &build_data->environment);
+
+    f_memory_arrays_resize(0, sizeof(f_string_map_t), (void **) &build_data->environment.array, &build_data->environment.used, &build_data->environment.size, &f_string_maps_delete_callback);
   }
 #endif // _di_fake_build_data_delete_
 
@@ -36,6 +37,7 @@ extern "C" {
     f_memory_array_resize(0, sizeof(f_char_t), (void **) &build_setting->path_program_script.string, &build_setting->path_program_script.used, &build_setting->path_program_script.size);
     f_memory_array_resize(0, sizeof(f_char_t), (void **) &build_setting->path_program_shared.string, &build_setting->path_program_shared.used, &build_setting->path_program_shared.size);
     f_memory_array_resize(0, sizeof(f_char_t), (void **) &build_setting->path_program_static.string, &build_setting->path_program_static.used, &build_setting->path_program_static.size);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &build_setting->path_sources.string, &build_setting->path_sources.used, &build_setting->path_sources.size);
     f_memory_array_resize(0, sizeof(f_char_t), (void **) &build_setting->path_sources_object.string, &build_setting->path_sources_object.used, &build_setting->path_sources_object.size);
     f_memory_array_resize(0, sizeof(f_char_t), (void **) &build_setting->process_post.string, &build_setting->process_post.used, &build_setting->process_post.size);
     f_memory_array_resize(0, sizeof(f_char_t), (void **) &build_setting->process_pre.string, &build_setting->process_pre.used, &build_setting->process_pre.size);
@@ -109,6 +111,7 @@ extern "C" {
     f_memory_array_resize(0, sizeof(f_char_t), (void **) &build_stage->file_library_shared.string, &build_stage->file_library_shared.used, &build_stage->file_library_shared.size);
     f_memory_array_resize(0, sizeof(f_char_t), (void **) &build_stage->file_library_static.string, &build_stage->file_library_static.used, &build_stage->file_library_static.size);
     f_memory_array_resize(0, sizeof(f_char_t), (void **) &build_stage->file_object_script.string, &build_stage->file_object_script.used, &build_stage->file_object_script.size);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &build_stage->file_object_shared.string, &build_stage->file_object_shared.used, &build_stage->file_object_shared.size);
     f_memory_array_resize(0, sizeof(f_char_t), (void **) &build_stage->file_object_static.string, &build_stage->file_object_static.used, &build_stage->file_object_static.size);
     f_memory_array_resize(0, sizeof(f_char_t), (void **) &build_stage->file_objects_static.string, &build_stage->file_objects_static.used, &build_stage->file_objects_static.size);
     f_memory_array_resize(0, sizeof(f_char_t), (void **) &build_stage->file_process_post.string, &build_stage->file_process_post.used, &build_stage->file_process_post.size);
@@ -137,6 +140,7 @@ extern "C" {
     f_memory_array_resize(0, sizeof(f_char_t), (void **) &data->path_build_libraries_script.string, &data->path_build_libraries_script.used, &data->path_build_libraries_script.size);
     f_memory_array_resize(0, sizeof(f_char_t), (void **) &data->path_build_libraries_shared.string, &data->path_build_libraries_shared.used, &data->path_build_libraries_shared.size);
     f_memory_array_resize(0, sizeof(f_char_t), (void **) &data->path_build_libraries_static.string, &data->path_build_libraries_static.used, &data->path_build_libraries_static.size);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &data->path_build_objects.string, &data->path_build_objects.used, &data->path_build_objects.size);
     f_memory_array_resize(0, sizeof(f_char_t), (void **) &data->path_build_objects_script.string, &data->path_build_objects_script.used, &data->path_build_objects_script.size);
     f_memory_array_resize(0, sizeof(f_char_t), (void **) &data->path_build_objects_shared.string, &data->path_build_objects_shared.used, &data->path_build_objects_shared.size);
     f_memory_array_resize(0, sizeof(f_char_t), (void **) &data->path_build_objects_static.string, &data->path_build_objects_static.used, &data->path_build_objects_static.size);
@@ -208,7 +212,7 @@ extern "C" {
     fake_build_setting_delete(&data_make->setting_build);
     fake_make_setting_delete(&data_make->setting_make);
 
-    f_string_maps_resize(0, &data_make->environment);
+    f_memory_arrays_resize(0, sizeof(f_string_map_t), (void **) &data_make->environment.array, &data_make->environment.used, &data_make->environment.size, &f_string_maps_delete_callback);
 
     f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &data_make->parameter.build.array, &data_make->parameter.build.used, &data_make->parameter.build.size, &f_string_dynamics_delete_callback);
     f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &data_make->parameter.color.array, &data_make->parameter.color.used, &data_make->parameter.color.size, &f_string_dynamics_delete_callback);
@@ -261,7 +265,7 @@ extern "C" {
 #ifndef _di_fake_make_setting_delete_
   void fake_make_setting_delete(fake_make_setting_t * const setting_make) {
 
-    f_string_map_multis_resize(0, &setting_make->parameter);
+    f_memory_arrays_resize(0, sizeof(f_string_map_multi_t), (void **) &setting_make->parameter.array, &setting_make->parameter.used, &setting_make->parameter.size, &f_string_map_multis_delete_callback);
   }
 #endif // _di_fake_make_setting_delete_
 

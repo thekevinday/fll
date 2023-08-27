@@ -16,14 +16,14 @@ extern "C" {
     f_memory_array_resize(0, sizeof(f_char_t), (void **) &main->cache.small.string, &main->cache.small.used, &main->cache.small.size);
     f_memory_array_resize(0, sizeof(f_char_t), (void **) &main->cache.packet.string, &main->cache.packet.used, &main->cache.packet.size);
 
-    f_string_ranges_resize(0, &main->cache.objects);
-    f_string_rangess_resize(0, &main->cache.contents);
+    f_memory_array_resize(0, sizeof(f_string_range_t), (void **) &main->cache.objects.array, &main->cache.objects.used, &main->cache.objects.size);
+    f_memory_arrays_resize(0, sizeof(f_string_ranges_t), (void **) &main->cache.contents.array, &main->cache.contents.used, &main->cache.contents.size, &f_string_rangess_delete_callback);
 
-    f_string_ranges_resize(0, &main->cache.packet_objects);
-    f_string_rangess_resize(0, &main->cache.packet_contents);
+    f_memory_array_resize(0, sizeof(f_string_range_t), (void **) &main->cache.packet_objects.array, &main->cache.packet_objects.used, &main->cache.packet_objects.size);
+    f_memory_arrays_resize(0, sizeof(f_string_ranges_t), (void **) &main->cache.packet_contents.array, &main->cache.packet_contents.used, &main->cache.packet_contents.size, &f_string_rangess_delete_callback);
 
-    f_string_ranges_resize(0, &main->cache.header_objects);
-    f_string_rangess_resize(0, &main->cache.header_contents);
+    f_memory_array_resize(0, sizeof(f_string_range_t), (void **) &main->cache.header_objects.array, &main->cache.header_objects.used, &main->cache.header_objects.size);
+    f_memory_arrays_resize(0, sizeof(f_string_ranges_t), (void **) &main->cache.header_contents.array, &main->cache.header_contents.used, &main->cache.header_contents.size, &f_string_rangess_delete_callback);
 
     f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &main->cache.delimits.array, &main->cache.delimits.used, &main->cache.delimits.size);
   }

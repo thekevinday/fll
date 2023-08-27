@@ -121,9 +121,9 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_string_ranges_increase()
+ *   Errors (with error bit) from: f_memory_array_increase()
  *
- * @see f_string_ranges_increase()
+ * @see f_memory_array_increase()
  */
 #ifndef _di_f_serialize_from_simple_range_
   extern f_status_t f_serialize_from_simple_range(const f_string_static_t source, f_string_ranges_t * const ranges);

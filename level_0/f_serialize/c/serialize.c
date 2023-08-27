@@ -131,7 +131,7 @@ extern "C" {
       if (i + width > source.used) {
         total = i - start;
 
-        status = f_string_ranges_increase(F_memory_default_allocation_small_d, ranges);
+        status = f_memory_array_increase(F_memory_default_allocation_small_d, sizeof(f_string_range_t), (void **) &ranges->array, &ranges->used, &ranges->size);
         if (F_status_is_error(status)) return status;
 
         if (total) {
@@ -149,7 +149,7 @@ extern "C" {
       if (source.string[i] == f_serialize_to_simple_splitter_s.string[0]) {
         total = i - start;
 
-        status = f_string_ranges_increase(F_memory_default_allocation_small_d, ranges);
+        status = f_memory_array_increase(F_memory_default_allocation_small_d, sizeof(f_string_range_t), (void **) &ranges->array, &ranges->used, &ranges->size);
         if (F_status_is_error(status)) return status;
 
         if (total) {
@@ -165,7 +165,7 @@ extern "C" {
 
         // Handle case when splitter as at the end of the string, creating a new empty string.
         if (start == source.used) {
-          status = f_string_ranges_increase(F_memory_default_allocation_small_d, ranges);
+          status = f_memory_array_increase(F_memory_default_allocation_small_d, sizeof(f_string_range_t), (void **) &ranges->array, &ranges->used, &ranges->size);
           if (F_status_is_error(status)) return status;
 
           ranges->array[ranges->used].start = 1;
@@ -180,7 +180,7 @@ extern "C" {
     if (start < source.used) {
       total = source.used - start;
 
-      status = f_string_ranges_increase(F_memory_default_allocation_small_d, ranges);
+      status = f_memory_array_increase(F_memory_default_allocation_small_d, sizeof(f_string_range_t), (void **) &ranges->array, &ranges->used, &ranges->size);
       if (F_status_is_error(status)) return status;
 
       if (total) {

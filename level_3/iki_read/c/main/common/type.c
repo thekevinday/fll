@@ -24,10 +24,11 @@ extern "C" {
     f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &setting->names.array, &setting->names.used, &setting->names.size, &f_string_dynamics_delete_callback);
     f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &setting->files.array, &setting->files.used, &setting->files.size, &f_string_dynamics_delete_callback);
 
-    f_string_maps_resize(0, &setting->replace);
-    f_string_triples_resize(0, &setting->reassign);
-    f_string_triples_resize(0, &setting->substitute);
-    f_string_triples_resize(0, &setting->wrap);
+    f_memory_arrays_resize(0, sizeof(f_string_map_t), (void **) &setting->replace.array, &setting->replace.used, &setting->replace.size, &f_string_maps_delete_callback);
+
+    f_memory_arrays_resize(0, sizeof(f_string_triple_t), (void **) &setting->reassign.array, &setting->reassign.used, &setting->reassign.size, &f_string_triples_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_triple_t), (void **) &setting->substitute.array, &setting->substitute.used, &setting->substitute.size, &f_string_triples_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_triple_t), (void **) &setting->wrap.array, &setting->wrap.used, &setting->wrap.size, &f_string_triples_delete_callback);
 
     f_iki_data_delete(&setting->data);
 

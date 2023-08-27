@@ -1703,10 +1703,10 @@ extern "C" {
       }
     }
     else {
-      main->setting.state.status = f_string_map_multis_resize(fake_allocation_small_d, &data_make->setting_make.parameter);
+      main->setting.state.status = f_memory_arrays_resize(fake_allocation_small_d, sizeof(f_string_map_multi_t), (void **) &data_make->setting_make.parameter.array, &data_make->setting_make.parameter.used, &data_make->setting_make.parameter.size, &f_string_map_multis_delete_callback);
 
       if (F_status_is_error(main->setting.state.status)) {
-        fake_print_error(&main->program.error, macro_fake_f(f_string_map_multis_resize));
+        fake_print_error(&main->program.error, macro_fake_f(f_memory_arrays_resize));
 
         main->setting.state.status = F_status_set_error(F_failure);
 

@@ -24,10 +24,10 @@ extern "C" {
     uint8_t *quoted_object = 0;
 
     do {
-      state->status = f_string_ranges_increase(state->step_small, objects);
+      state->status = f_memory_array_increase(state->step_small, sizeof(f_string_range_t), (void **) &objects->array, &objects->used, &objects->size);
       if (F_status_is_error(state->status)) return;
 
-      state->status = f_string_rangess_increase(state->step_small, contents);
+      state->status = f_memory_array_increase(state->step_small, sizeof(f_string_ranges_t), (void **) &contents->array, &contents->used, &contents->size);
       if (F_status_is_error(state->status)) return;
 
       contents->array[contents->used].used = 0;
@@ -53,7 +53,8 @@ extern "C" {
               ++objects_quoted->used;
             }
 
-            status = f_string_ranges_increase(state->step_small, &contents->array[contents->used]);
+            status = f_memory_array_increase(state->step_small, sizeof(f_string_range_t), (void **) &contents->array[contents->used].array, &contents->array[contents->used].used, &contents->array[contents->used].size);
+
             if (F_status_is_error(status)) {
               state->status = status;
 
@@ -92,7 +93,7 @@ extern "C" {
         if (state->status == F_fss_found_object_content_not) {
           found_data = F_true;
 
-          status = f_string_ranges_increase(state->step_small, &contents->array[contents->used]);
+          status = f_memory_array_increase(state->step_small, sizeof(f_string_range_t), (void **) &contents->array[contents->used].array, &contents->array[contents->used].used, &contents->array[contents->used].size);
 
           if (F_status_is_error(status)) {
             state->status = status;

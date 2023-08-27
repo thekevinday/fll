@@ -706,7 +706,6 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_array_increase().
  *   Errors (with error bit) from: f_rip_dynamic_partial_nulless().
  *   Errors (with error bit) from: f_string_dynamic_partial_append_nulless().
- *   Errors (with error bit) from: f_string_maps_increase().
  *   Errors (with error bit) from: fll_fss_extended_read().
  *
  *   Errors (with error bit) from: controller_path_canonical_relative().
@@ -714,7 +713,6 @@ extern "C" {
  * @see f_memory_array_increase()
  * @see f_rip_dynamic_partial_nulless()
  * @see f_string_dynamic_partial_append_nulless()
- * @see f_string_maps_increase()
  * @see fll_fss_extended_read()
  *
  * @see controller_path_canonical_relative()

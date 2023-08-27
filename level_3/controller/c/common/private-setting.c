@@ -18,11 +18,11 @@ extern "C" {
 
     controller_control_delete_simple(&setting->control);
 
-    f_string_maps_resize(0, &setting->entry.define);
-    f_string_maps_resize(0, &setting->entry.parameter);
+    status = f_memory_arrays_resize(0, sizeof(f_string_map_t), (void **) &setting->entry.define.array, &setting->entry.define.used, &setting->entry.define.size, &f_string_maps_delete_callback);
+    status = f_memory_arrays_resize(0, sizeof(f_string_map_t), (void **) &setting->entry.parameter.array, &setting->entry.parameter.used, &setting->entry.parameter.size, &f_string_maps_delete_callback);
 
-    f_string_maps_resize(0, &setting->exit.define);
-    f_string_maps_resize(0, &setting->exit.parameter);
+    status = f_memory_arrays_resize(0, sizeof(f_string_map_t), (void **) &setting->exit.define.array, &setting->exit.define.used, &setting->exit.define.size, &f_string_maps_delete_callback);
+    status = f_memory_arrays_resize(0, sizeof(f_string_map_t), (void **) &setting->exit.parameter.array, &setting->exit.parameter.used, &setting->exit.parameter.size, &f_string_maps_delete_callback);
 
     controller_entry_items_delete_simple(&setting->entry.items);
     controller_entry_items_delete_simple(&setting->exit.items);

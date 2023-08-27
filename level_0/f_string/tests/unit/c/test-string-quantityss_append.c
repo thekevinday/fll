@@ -41,7 +41,7 @@ void test__f_string_quantityss_append__returns_data_not(void **state) {
   f_string_quantityss_t destination = f_string_quantityss_t_initialize;
 
   {
-    const f_status_t status = f_string_quantitys_resize(length, &source);
+    const f_status_t status = f_memory_array_resize(length, sizeof(f_string_quantity_t), (void **) &source.array, &source.used, &source.size);
 
     assert_int_equal(status, F_okay);
     assert_int_equal(source.used, 0);

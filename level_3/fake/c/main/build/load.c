@@ -174,8 +174,8 @@ extern "C" {
 
       f_memory_array_resize(0, sizeof(f_char_t), (void **) &buffer.string, &buffer.used, &buffer.size);
 
-      f_string_ranges_resize(0, &objects);
-      f_string_rangess_resize(0, &contents);
+      f_memory_array_resize(0, sizeof(f_string_range_t), (void **) &objects.array, &objects.used, &objects.size);
+      f_memory_arrays_resize(0, sizeof(f_string_ranges_t), (void **) &contents.array, &contents.used, &contents.size, &f_string_rangess_delete_callback);
     }
 
     // Error when required settings are not specified.

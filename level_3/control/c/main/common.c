@@ -385,8 +385,8 @@ extern "C" {
       return;
     }
 
-    f_string_ranges_resize(0, &main->cache.objects);
-    f_string_rangess_resize(0, &main->cache.contents);
+    f_memory_array_resize(0, sizeof(f_string_range_t), (void **) &main->cache.objects.array, &main->cache.objects.used, &main->cache.objects.size);
+    f_memory_arrays_resize(0, sizeof(f_string_ranges_t), (void **) &main->cache.contents.array, &main->cache.contents.used, &main->cache.contents.size, &f_string_rangess_delete_callback);
     f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &main->cache.delimits.array, &main->cache.delimits.used, &main->cache.delimits.size);
 
     {

@@ -343,10 +343,8 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
- *   Errors (with error bit) from: f_string_ranges_resize().
  *
  * @see f_memory_resize()
- * @see f_string_ranges_resize()
  */
 #ifndef _di_fss_read_files_resize_
   extern f_status_t fss_read_files_resize(const f_number_unsigned_t length, fss_read_files_t * const files);

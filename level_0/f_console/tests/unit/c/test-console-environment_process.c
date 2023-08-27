@@ -23,7 +23,7 @@ void test__f_console_environment_process__data_not(void **state) {
       assert_int_equal(status, F_data_not);
     }
 
-    f_string_maps_resize(0, &maps);
+    f_memory_arrays_resize(0, sizeof(f_string_map_t), (void **) &maps.array, &maps.used, &maps.size, &f_string_maps_delete_callback);
   } // for
 }
 
@@ -112,7 +112,7 @@ void test__f_console_environment_process__works(void **state) {
     } // for
   }
 
-  f_string_maps_resize(0, &maps);
+  f_memory_arrays_resize(0, sizeof(f_string_map_t), (void **) &maps.array, &maps.used, &maps.size, &f_string_maps_delete_callback);
 }
 
 #ifdef __cplusplus

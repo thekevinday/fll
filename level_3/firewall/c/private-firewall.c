@@ -724,8 +724,8 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
           f_memory_array_resize(0, sizeof(f_char_t), (void **) &local_buffer.string, &local_buffer.used, &local_buffer.size);
           f_memory_array_resize(0, sizeof(f_char_t), (void **) &path_file.string, &path_file.used, &path_file.size);
 
-          f_string_ranges_resize(0, &basic_objects);
-          f_string_rangess_resize(0, &basic_contents);
+          f_memory_array_resize(0, sizeof(f_string_range_t), (void **) &basic_objects.array, &basic_objects.used, &basic_objects.size);
+          f_memory_arrays_resize(0, sizeof(f_string_ranges_t), (void **) &basic_contents.array, &basic_contents.used, &basic_contents.size, &f_string_rangess_delete_callback);
 
           if (F_status_set_fine(status) == F_failure || F_status_set_fine(status) == F_parameter) break;
         }
@@ -1280,8 +1280,8 @@ f_status_t firewall_process_rules(firewall_data_t * const data, f_string_range_t
     }
   }
 
-  f_string_ranges_resize(0, &local->rule_objects);
-  f_string_rangess_resize(0, &local->rule_contents);
+  f_memory_array_resize(0, sizeof(f_string_range_t), (void **) &local->rule_objects.array, &local->rule_objects.used, &local->rule_objects.size);
+  f_memory_arrays_resize(0, sizeof(f_string_ranges_t), (void **) &local->rule_contents.array, &local->rule_contents.used, &local->rule_contents.size, &f_string_rangess_delete_callback);
 
   return status;
 }
@@ -1301,11 +1301,11 @@ f_status_t firewall_delete_local_data(firewall_local_data_t * const local) {
   f_memory_array_resize(0, sizeof(f_char_t), (void **) &local->buffer.string, &local->buffer.used, &local->buffer.size);
   f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &local->chain_ids.array, &local->chain_ids.used, &local->chain_ids.size);
 
-  f_string_ranges_resize(0, &local->chain_objects);
-  f_string_rangess_resize(0, &local->chain_contents);
+  f_memory_array_resize(0, sizeof(f_string_range_t), (void **) &local->chain_objects.array, &local->chain_objects.used, &local->chain_objects.size);
+  f_memory_arrays_resize(0, sizeof(f_string_ranges_t), (void **) &local->chain_contents.array, &local->chain_contents.used, &local->chain_contents.size, &f_string_rangess_delete_callback);
 
-  f_string_ranges_resize(0, &local->rule_objects);
-  f_string_rangess_resize(0, &local->rule_contents);
+  f_memory_array_resize(0, sizeof(f_string_range_t), (void **) &local->rule_objects.array, &local->rule_objects.used, &local->rule_objects.size);
+  f_memory_arrays_resize(0, sizeof(f_string_ranges_t), (void **) &local->rule_contents.array, &local->rule_contents.used, &local->rule_contents.size, &f_string_rangess_delete_callback);
 
   return F_okay;
 }

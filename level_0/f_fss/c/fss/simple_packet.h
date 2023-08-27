@@ -193,10 +193,10 @@ extern "C" {
 #endif // _di_f_fss_simple_packet_rangess_t_
 
 /**
- * Delete a simple packet.
+ * Delete a FSS-000F (Simple Packet).
  *
- * @param packet
- *   The simple packet to delete.
+ * @param simple_packet
+ *   The FSS-000F (Simple Packet) to delete.
  *
  * @return
  *   F_okay on success.
@@ -204,18 +204,20 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_array_resize().
+ *   Errors (with error bit) from: f_memory_arrays_resize().
  *
  * @see f_memory_array_resize()
+ * @see f_memory_arrays_resize()
  */
 #ifndef _di_f_fss_simple_packet_delete_
-  extern f_status_t f_fss_simple_packet_delete(f_fss_simple_packet_t * const packet);
+  extern f_status_t f_fss_simple_packet_delete(f_fss_simple_packet_t * const simple_packet);
 #endif // _di_f_fss_simple_packet_delete_
 
 /**
- * Destroy a simple packet.
+ * Destroy a FSS-000F (Simple Packet).
  *
- * @param packet
- *   The simple packet to destroy.
+ * @param simple_packet
+ *   The FSS-000F (Simple Packet) to destroy.
  *
  * @return
  *   F_okay on success.
@@ -223,11 +225,13 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_array_adjust().
+ *   Errors (with error bit) from: f_memory_arrays_adjust().
  *
  * @see f_memory_array_adjust()
+ * @see f_memory_arrays_adjust()
  */
 #ifndef _di_f_fss_simple_packet_destroy_
-  extern f_status_t f_fss_simple_packet_destroy(f_fss_simple_packet_t * const packet);
+  extern f_status_t f_fss_simple_packet_destroy(f_fss_simple_packet_t * const simple_packet);
 #endif // _di_f_fss_simple_packet_destroy_
 
 /**

@@ -71,12 +71,12 @@ extern "C" {
  *
  *     Errors (with error bit) from: f_fss_skip_past_delimit().
  *     Errors (with error bit) from: f_fss_skip_past_space().
- *     Errors (with error bit) from: f_string_ranges_increase().
+ *     Errors (with error bit) from: f_memory_array_increase().
  *     Errors (with error bit) from: f_utf_buffer_increment().
  *
  * @see f_fss_skip_past_delimit()
  * @see f_fss_skip_past_space()
- * @see f_string_ranges_increase()
+ * @see f_memory_array_increase()
  * @see f_utf_buffer_increment()
  */
 #ifndef _di_fl_fss_basic_content_read_

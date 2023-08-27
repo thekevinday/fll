@@ -5,22 +5,32 @@ extern "C" {
 #endif
 
 #ifndef _di_f_fss_simple_packet_delete_
-  f_status_t f_fss_simple_packet_delete(f_fss_simple_packet_t * const packet) {
+  f_status_t f_fss_simple_packet_delete(f_fss_simple_packet_t * const simple_packet) {
     #ifndef _di_level_0_parameter_checking_
-      if (!packet) return F_status_set_error(F_parameter);
+      if (!simple_packet) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return f_memory_array_resize(0, sizeof(f_char_t), (void **) &packet->payload.string, &packet->payload.used, &packet->payload.size);
+    {
+      const f_status_t status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &simple_packet->payload.string, &simple_packet->payload.used, &simple_packet->payload.size);
+      if (F_status_is_error(status)) return status;
+    }
+
+    return F_okay;
   }
 #endif // _di_f_fss_simple_packet_delete_
 
 #ifndef _di_f_fss_simple_packet_destroy_
-  f_status_t f_fss_simple_packet_destroy(f_fss_simple_packet_t * const packet) {
+  f_status_t f_fss_simple_packet_destroy(f_fss_simple_packet_t * const simple_packet) {
     #ifndef _di_level_0_parameter_checking_
-      if (!packet) return F_status_set_error(F_parameter);
+      if (!simple_packet) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return f_memory_array_adjust(0, sizeof(f_char_t), (void **) &packet->payload.string, &packet->payload.used, &packet->payload.size);
+    {
+      const f_status_t status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &simple_packet->payload.string, &simple_packet->payload.used, &simple_packet->payload.size);
+      if (F_status_is_error(status)) return status;
+    }
+
+    return F_okay;
   }
 #endif // _di_f_fss_simple_packet_destroy_
 

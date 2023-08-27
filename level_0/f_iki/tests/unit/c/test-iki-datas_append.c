@@ -14,7 +14,7 @@ void test__f_iki_datas_append__works(void **state) {
   {
     f_number_unsigned_t i = 1;
 
-    f_status_t status = f_string_ranges_resize(length, &source.content);
+    f_status_t status = f_memory_array_resize(length, sizeof(f_string_range_t), (void **) &source.content.array, &source.content.used, &source.content.size);
 
     assert_int_equal(status, F_okay);
     assert_int_equal(source.content.size, length);
@@ -24,12 +24,12 @@ void test__f_iki_datas_append__works(void **state) {
     assert_int_equal(status, F_okay);
     assert_int_equal(source.delimits.size, length);
 
-    status = f_string_ranges_resize(length, &source.variable);
+    status = f_memory_array_resize(length, sizeof(f_string_range_t), (void **) &source.variable.array, &source.variable.used, &source.variable.size);
 
     assert_int_equal(status, F_okay);
     assert_int_equal(source.variable.size, length);
 
-    status = f_string_ranges_resize(length, &source.vocabulary);
+    status = f_memory_array_resize(length, sizeof(f_string_range_t), (void **) &source.vocabulary.array, &source.vocabulary.used, &source.vocabulary.size);
 
     assert_int_equal(status, F_okay);
     assert_int_equal(source.vocabulary.size, length);

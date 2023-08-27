@@ -1,20 +1,9 @@
 #include "../string.h"
 #include "../private-string.h"
-#include "private-ranges.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-#ifndef _di_f_string_ranges_adjust_
-  f_status_t f_string_ranges_adjust(const f_number_unsigned_t length, f_string_ranges_t * const structure) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!structure) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return f_memory_array_adjust(length, sizeof(f_string_range_t), (void **) &structure->array, &structure->used, &structure->size);
-  }
-#endif // _di_f_string_ranges_adjust_
 
 #ifndef _di_f_string_ranges_append_
   f_status_t f_string_ranges_append(const f_string_range_t source, f_string_ranges_t * const destination) {
@@ -56,58 +45,6 @@ extern "C" {
     return F_okay;
   }
 #endif // _di_f_string_ranges_append_all_
-
-#ifndef _di_f_string_ranges_decimate_by_
-  f_status_t f_string_ranges_decimate_by(const f_number_unsigned_t amount, f_string_ranges_t * const structure) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!structure) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (!amount) return F_data_not;
-
-    return f_memory_array_decimate_by(amount, sizeof(f_string_range_t), (void **) &structure->array, &structure->used, &structure->size);
-  }
-#endif // _di_f_string_ranges_decimate_by_
-
-#ifndef _di_f_string_ranges_decrease_by_
-  f_status_t f_string_ranges_decrease_by(const f_number_unsigned_t amount, f_string_ranges_t * const structure) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!structure) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return f_memory_array_decrease_by(amount, sizeof(f_string_range_t), (void **) &structure->array, &structure->used, &structure->size);
-  }
-#endif // _di_f_string_ranges_decrease_by_
-
-#ifndef _di_f_string_ranges_increase_
-  f_status_t f_string_ranges_increase(const f_number_unsigned_t step, f_string_ranges_t * const structure) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!structure) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return f_memory_array_increase(step, sizeof(f_string_range_t), (void **) &structure->array, &structure->used, &structure->size);
-  }
-#endif // _di_f_string_ranges_increase_
-
-#ifndef _di_f_string_ranges_increase_by_
-  f_status_t f_string_ranges_increase_by(const f_number_unsigned_t amount, f_string_ranges_t * const structure) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!structure) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return f_memory_array_increase_by(amount, sizeof(f_string_range_t), (void **) &structure->array, &structure->used, &structure->size);
-  }
-#endif // _di_f_string_ranges_increase_by_
-
-#ifndef _di_f_string_ranges_resize_
-  f_status_t f_string_ranges_resize(const f_number_unsigned_t length, f_string_ranges_t * const structure) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!structure) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return f_memory_array_resize(length, sizeof(f_string_range_t), (void **) &structure->array, &structure->used, &structure->size);
-  }
-#endif // _di_f_string_ranges_resize_
 
 #ifdef __cplusplus
 } // extern "C"

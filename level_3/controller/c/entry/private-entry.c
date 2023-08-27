@@ -2327,17 +2327,19 @@ extern "C" {
 #ifndef _di_controller_entry_settings_read_map_
   f_status_t controller_entry_settings_read_map(const f_string_static_t buffer, const f_string_ranges_t ranges, f_string_maps_t *setting_maps) {
 
-    f_status_t status = f_string_maps_increase(controller_common_allocation_small_d, setting_maps);
-    if (F_status_is_error(status)) return status;
+    {
+      f_status_t status = f_memory_array_increase(controller_common_allocation_small_d, sizeof(f_string_map_t), (void **) &setting_maps->array, &setting_maps->used, &setting_maps->size);
+      if (F_status_is_error(status)) return status;
 
-    setting_maps->array[setting_maps->used].name.used = 0;
-    setting_maps->array[setting_maps->used].value.used = 0;
+      setting_maps->array[setting_maps->used].name.used = 0;
+      setting_maps->array[setting_maps->used].value.used = 0;
 
-    status = f_string_dynamic_partial_append_nulless(buffer, ranges.array[0], &setting_maps->array[setting_maps->used].name);
-    if (F_status_is_error(status)) return status;
+      status = f_string_dynamic_partial_append_nulless(buffer, ranges.array[0], &setting_maps->array[setting_maps->used].name);
+      if (F_status_is_error(status)) return status;
 
-    status = f_string_dynamic_partial_append_nulless(buffer, ranges.array[1], &setting_maps->array[setting_maps->used].value);
-    if (F_status_is_error(status)) return status;
+      status = f_string_dynamic_partial_append_nulless(buffer, ranges.array[1], &setting_maps->array[setting_maps->used].value);
+      if (F_status_is_error(status)) return status;
+    }
 
     ++setting_maps->used;
 

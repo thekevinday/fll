@@ -34,7 +34,7 @@ void test__f_environment_get_all__works(void **state) {
     assert_string_equal(environment.array[0].value.string, value.string);
   }
 
-  f_string_maps_resize(0, &environment);
+  f_memory_arrays_resize(0, sizeof(f_string_map_t), (void **) &environment.array, &environment.used, &environment.size, &f_string_maps_delete_callback);
 }
 
 #ifdef __cplusplus

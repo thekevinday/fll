@@ -28,13 +28,13 @@ extern "C" {
     f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &cache->stack.array, &cache->stack.used, &cache->stack.size);
     f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &cache->delimits.array, &cache->delimits.used, &cache->delimits.size);
 
-    f_string_ranges_resize(0, &cache->comments);
-    f_string_ranges_resize(0, &cache->content_action);
-    f_string_ranges_resize(0, &cache->object_actions);
-    f_string_ranges_resize(0, &cache->object_items);
+    f_memory_array_resize(0, sizeof(f_string_range_t), (void **) &cache->comments.array, &cache->comments.used, &cache->comments.size);
+    f_memory_array_resize(0, sizeof(f_string_range_t), (void **) &cache->content_action.array, &cache->content_action.used, &cache->content_action.size);
+    f_memory_array_resize(0, sizeof(f_string_range_t), (void **) &cache->object_actions.array, &cache->object_actions.used, &cache->object_actions.size);
+    f_memory_array_resize(0, sizeof(f_string_range_t), (void **) &cache->object_items.array, &cache->object_items.used, &cache->object_items.size);
 
-    f_string_rangess_resize(0, &cache->content_actions);
-    f_string_rangess_resize(0, &cache->content_items);
+    f_memory_arrays_resize(0, sizeof(f_string_ranges_t), (void **) &cache->content_actions.array, &cache->content_actions.used, &cache->content_actions.size, &f_string_rangess_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_ranges_t), (void **) &cache->content_items.array, &cache->content_items.used, &cache->content_items.size, &f_string_rangess_delete_callback);
 
     controller_cache_action_delete_simple(&cache->action);
   }

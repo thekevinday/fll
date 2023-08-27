@@ -16,8 +16,8 @@ void test__f_fss_set_quotess_delete_callback__fails(void **state) {
   f_fss_set_quotes_t datas_array[] = { datas };
 
   {
-    will_return(__wrap_f_string_ranges_resize, true);
-    will_return(__wrap_f_string_ranges_resize, F_status_set_error(F_failure));
+    will_return(__wrap_f_memory_array_resize, true);
+    will_return(__wrap_f_memory_array_resize, F_status_set_error(F_failure));
 
     const f_status_t status = f_fss_set_quotess_delete_callback(0, 1, (void *) datas_array);
 
@@ -25,11 +25,11 @@ void test__f_fss_set_quotess_delete_callback__fails(void **state) {
   }
 
   {
-    will_return(__wrap_f_string_ranges_resize, false);
-    will_return(__wrap_f_string_ranges_resize, F_okay);
+    will_return(__wrap_f_memory_array_resize, false);
+    will_return(__wrap_f_memory_array_resize, F_okay);
 
-    will_return(__wrap_f_string_rangess_resize, true);
-    will_return(__wrap_f_string_rangess_resize, F_status_set_error(F_failure));
+    will_return(__wrap_f_memory_arrays_resize, true);
+    will_return(__wrap_f_memory_arrays_resize, F_status_set_error(F_failure));
 
     const f_status_t status = f_fss_set_quotess_delete_callback(0, 1, (void *) datas_array);
 
@@ -37,11 +37,11 @@ void test__f_fss_set_quotess_delete_callback__fails(void **state) {
   }
 
   {
-    will_return(__wrap_f_string_ranges_resize, false);
-    will_return(__wrap_f_string_ranges_resize, F_okay);
+    will_return(__wrap_f_memory_array_resize, false);
+    will_return(__wrap_f_memory_array_resize, F_okay);
 
-    will_return(__wrap_f_string_rangess_resize, false);
-    will_return(__wrap_f_string_rangess_resize, F_okay);
+    will_return(__wrap_f_memory_arrays_resize, false);
+    will_return(__wrap_f_memory_arrays_resize, F_okay);
 
     will_return(__wrap_f_memory_array_resize, true);
     will_return(__wrap_f_memory_array_resize, F_status_set_error(F_failure));
@@ -52,11 +52,11 @@ void test__f_fss_set_quotess_delete_callback__fails(void **state) {
   }
 
   {
-    will_return(__wrap_f_string_ranges_resize, false);
-    will_return(__wrap_f_string_ranges_resize, F_okay);
+    will_return(__wrap_f_memory_array_resize, false);
+    will_return(__wrap_f_memory_array_resize, F_okay);
 
-    will_return(__wrap_f_string_rangess_resize, false);
-    will_return(__wrap_f_string_rangess_resize, F_okay);
+    will_return(__wrap_f_memory_arrays_resize, false);
+    will_return(__wrap_f_memory_arrays_resize, F_okay);
 
     will_return(__wrap_f_memory_array_resize, false);
     will_return(__wrap_f_memory_array_resize, F_okay);
@@ -72,7 +72,7 @@ void test__f_fss_set_quotess_delete_callback__fails(void **state) {
 
 void test__f_fss_set_quotess_delete_callback__works(void **state) {
 
-  mock_unwrap = 1;
+  mock_unwrap = 0;
   mock_unwrap_f_memory = 1;
 
   const f_number_unsigned_t length = 1;
@@ -86,16 +86,16 @@ void test__f_fss_set_quotess_delete_callback__works(void **state) {
     status = f_memory_array_resize(1, sizeof(f_fss_set_quote_t), (void **) &datass.array[0].array, &datass.array[0].used, &datass.array[0].size);
     assert_int_equal(status, F_okay);
 
-    status = f_string_ranges_resize(1, &datass.array[0].array[0].objects);
+    status = f_memory_array_resize(1, sizeof(f_string_range_t), (void **) &datass.array[0].array[0].objects.array, &datass.array[0].array[0].objects.used, &datass.array[0].array[0].objects.size);
     assert_int_equal(status, F_okay);
 
-    status = f_string_rangess_resize(1, &datass.array[0].array[0].contents);
+    status = f_memory_array_resize(1, sizeof(f_string_range_t), (void **) &datass.array[0].array[0].contents.array, &datass.array[0].array[0].contents.used, &datass.array[0].array[0].contents.size);
     assert_int_equal(status, F_okay);
 
     status = f_memory_array_resize(1, sizeof(uint8_t), (void **) &datass.array[0].array[0].objects_quote.array, &datass.array[0].array[0].objects_quote.used, &datass.array[0].array[0].objects_quote.size);
     assert_int_equal(status, F_okay);
 
-    status = f_memory_arrays_adjust(1, sizeof(f_uint8s_t), (void **) &datass.array[0].array[0].contents_quote.array, &datass.array[0].array[0].contents_quote.used, &datass.array[0].array[0].contents_quote.size, &f_uint8ss_destroy_callback);
+    status = f_memory_array_resize(1, sizeof(f_uint8s_t), (void **) &datass.array[0].array[0].contents_quote.array, &datass.array[0].array[0].contents_quote.used, &datass.array[0].array[0].contents_quote.size);
     assert_int_equal(status, F_okay);
   }
 

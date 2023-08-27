@@ -26,13 +26,18 @@ build_libraries -lc -lcmocka
 build_libraries-individual -lf_memory -lf_string -lf_type_array -lf_utf -lf_fss
 
 build_sources_program test-fss-apply_delimit.c test-fss-apply_delimit_range.c test-fss-count_lines.c test-fss-count_lines_range.c test-fss-fail_utf.c test-fss-fail_utf_to_false.c test-fss-is_combining.c test-fss-is_graph.c test-fss-is_space.c test-fss-is_zero_width.c test-fss-seek_to_eol.c test-fss-skip_past_delimit.c test-fss-skip_past_space.c
-
-build_sources_program test-fss-items_destroy_callback.c test-fss-items_delete_callback.c test-fss-itemss_destroy_callback.c test-fss-itemss_delete_callback.c
-build_sources_program test-fss-nameds_destroy_callback.c test-fss-nameds_delete_callback.c test-fss-namedss_destroy_callback.c test-fss-namedss_delete_callback.c
-build_sources_program test-fss-nests_destroy_callback.c test-fss-nests_delete_callback.c test-fss-nestss_destroy_callback.c test-fss-nestss_delete_callback.c
-build_sources_program test-fss-sets_destroy_callback.c test-fss-sets_delete_callback.c test-fss-setss_destroy_callback.c test-fss-setss_delete_callback.c
-build_sources_program test-fss-set_quotes_destroy_callback.c test-fss-set_quotes_delete_callback.c test-fss-set_quotess_destroy_callback.c test-fss-set_quotess_delete_callback.c
-build_sources_program test-fss-simple_packets_destroy_callback.c test-fss-simple_packets_delete_callback.c test-fss-simple_packetss_destroy_callback.c test-fss-simple_packetss_delete_callback.c
+build_sources_program test-fss-item_delete.c test-fss-item_destroy.c
+build_sources_program test-fss-items_delete_callback.c test-fss-items_destroy_callback.c test-fss-itemss_delete_callback.c test-fss-itemss_destroy_callback.c
+build_sources_program test-fss-named_delete.c test-fss-named_destroy.c
+build_sources_program test-fss-nameds_delete_callback.c test-fss-nameds_destroy_callback.c test-fss-namedss_delete_callback.c test-fss-namedss_destroy_callback.c
+build_sources_program test-fss-nest_delete.c test-fss-nest_destroy.c
+build_sources_program test-fss-nests_delete_callback.c test-fss-nests_destroy_callback.c test-fss-nestss_delete_callback.c test-fss-nestss_destroy_callback.c
+build_sources_program test-fss-set_delete.c test-fss-set_destroy.c
+build_sources_program test-fss-sets_delete_callback.c test-fss-sets_destroy_callback.c test-fss-setss_delete_callback.c test-fss-setss_destroy_callback.c
+build_sources_program test-fss-set_quote_delete.c test-fss-set_quote_destroy.c
+build_sources_program test-fss-set_quotes_delete_callback.c test-fss-set_quotes_destroy_callback.c test-fss-set_quotess_delete_callback.c test-fss-set_quotess_destroy_callback.c
+build_sources_program test-fss-simple_packet_delete.c test-fss-simple_packet_destroy.c
+build_sources_program test-fss-simple_packets_delete_callback.c test-fss-simple_packets_destroy_callback.c test-fss-simple_packetss_delete_callback.c test-fss-simple_packetss_destroy_callback.c
 
 build_sources_program test-fss.c
 

@@ -10,27 +10,27 @@ extern "C" {
       if (!environment) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (!name.used) {
-      return F_data_not;
-    }
+    if (!name.used) return F_data_not;
 
-    f_status_t status = f_string_maps_increase(F_memory_default_allocation_small_d, environment);
-    if (F_status_is_error(status)) return status;
+    {
+      f_status_t status = f_memory_array_increase(F_memory_default_allocation_small_d, sizeof(f_string_map_t), (void **) &environment->array, &environment->used, &environment->size);
+      if (F_status_is_error(status)) return status;
 
-    environment->array[environment->used].name.used = 0;
-    environment->array[environment->used].value.used = 0;
-
-    status = f_string_dynamic_append_nulless(name, &environment->array[environment->used].name);
-
-    if (F_status_is_error_not(status)) {
-      status = f_environment_get(name, &environment->array[environment->used].value);
-    }
-
-    if (F_status_is_error(status) || status == F_data_not || status == F_exist_not) {
       environment->array[environment->used].name.used = 0;
       environment->array[environment->used].value.used = 0;
 
-      return status;
+      status = f_string_dynamic_append_nulless(name, &environment->array[environment->used].name);
+
+      if (F_status_is_error_not(status)) {
+        status = f_environment_get(name, &environment->array[environment->used].value);
+      }
+
+      if (F_status_is_error(status) || status == F_data_not || status == F_exist_not) {
+        environment->array[environment->used].name.used = 0;
+        environment->array[environment->used].value.used = 0;
+
+        return status;
+      }
     }
 
     ++environment->used;
@@ -49,7 +49,7 @@ extern "C" {
       return F_data_not;
     }
 
-    f_status_t status = f_string_maps_increase_by(names.used, environment);
+    f_status_t status = f_memory_array_increase_by(names.used, sizeof(f_string_map_t), (void **) &environment->array, &environment->used, &environment->size);
     if (F_status_is_error(status)) return status;
 
     for (f_number_unsigned_t i = 0; i < names.used; ++i) {

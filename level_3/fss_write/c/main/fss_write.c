@@ -190,10 +190,10 @@ extern "C" {
     }
 
     // This is processed in a single set, so there is only ever one Ignores added.
-    main->setting.state.status = f_string_rangess_increase(main->setting.state.step_small, &main->setting.ignoress);
+    main->setting.state.status = f_memory_array_increase(main->setting.state.step_small, sizeof(f_string_ranges_t), (void **) &main->setting.ignoress.array, &main->setting.ignoress.used, &main->setting.ignoress.size);
 
     if (F_status_is_error(main->setting.state.status)) {
-      fss_write_print_error(&main->program.error, macro_fss_write_f(f_string_rangess_increase));
+      fss_write_print_error(&main->program.error, macro_fss_write_f(f_memory_array_increase));
 
       return;
     }
@@ -377,10 +377,10 @@ extern "C" {
 
               // Ignore is enabled.
               if (flag & 0x2) {
-                main->setting.state.status = f_string_ranges_increase(main->setting.state.step_small, main->setting.ignores);
+                main->setting.state.status = f_memory_array_increase(main->setting.state.step_small, sizeof(f_string_range_t), (void **) &main->setting.ignores->array, &main->setting.ignores->used, &main->setting.ignores->size);
 
                 if (F_status_is_error(main->setting.state.status)) {
-                  fss_write_print_error(&main->program.error, macro_fss_write_f(f_string_ranges_increase));
+                  fss_write_print_error(&main->program.error, macro_fss_write_f(f_memory_array_increase));
 
                   break;
                 }

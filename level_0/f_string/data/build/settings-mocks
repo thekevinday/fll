@@ -1,0 +1,71 @@
+# fss-0001
+
+build_name f_string
+
+version_major 0
+version_minor 7
+version_micro 0
+version_file micro
+version_target minor
+
+modes individual clang test coverage
+modes_default individual test
+
+build_compiler gcc
+build_compiler-clang clang
+build_indexer ar
+build_indexer_arguments rcs
+build_language c
+
+build_libraries -lc
+build_libraries-individual -lf_memory
+
+build_sources_library string.c
+build_sources_library private-string.c string/common.c
+build_sources_library string/dynamic.c string/dynamics.c string/dynamicss.c
+build_sources_library string/map.c string/maps.c string/mapss.c
+build_sources_library string/map_multi.c string/map_multis.c string/map_multiss.c
+build_sources_library string/quantity.c string/quantitys.c string/quantityss.c
+build_sources_library string/range.c string/ranges.c string/rangess.c
+build_sources_library string/static.c string/statics.c string/staticss.c
+build_sources_library string/triple.c string/triples.c string/tripless.c
+build_sources_library ../../tests/unit/c/mock-string.c
+
+build_sources_headers string.h string/common.h
+build_sources_headers string/dynamic.h string/dynamics.h string/dynamicss.h
+build_sources_headers string/map.h string/maps.h string/mapss.h
+build_sources_headers string/map_multi.h string/map_multis.h string/map_multiss.h
+build_sources_headers string/quantity.h string/quantitys.h string/quantityss.h
+build_sources_headers string/range.h string/ranges.h string/rangess.h
+build_sources_headers string/static.h string/statics.h string/staticss.h
+build_sources_headers string/triple.h string/triples.h string/tripless.h
+
+build_script yes
+build_shared yes
+build_static no
+
+path_headers fll/level_0
+path_library_script script
+path_library_shared shared
+path_library_static static
+
+has_path_standard yes
+preserve_path_headers yes
+
+search_exclusive yes
+search_shared yes
+search_static yes
+
+environment PATH LD_LIBRARY_PATH
+environment LANG LC_ALL LC_COLLATE LC_CTYPE LC_FASTMSG LC_MESSAGES LC_MONETARY LC_NUMERIC LC_TIME LOCPATH NLSPATH
+
+flags -O0 -z now -g -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-parentheses
+flags-clang -Wno-logical-op-parentheses
+flags-test -fstack-protector -Wall
+flags-coverage --coverage -fprofile-abs-path -fprofile-dir=build/coverage/
+
+flags_library -fPIC
+
+# Inject mocks.
+flags -Wl,--wrap=f_memory_array_adjust
+flags -Wl,--wrap=f_memory_array_resize

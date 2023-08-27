@@ -20,8 +20,8 @@ void test__f_fss_nestss_delete_callback__fails(void **state) {
   f_fss_nests_t datas_array[] = { datas };
 
   {
-    will_return(__wrap_f_string_ranges_resize, true);
-    will_return(__wrap_f_string_ranges_resize, F_status_set_error(F_failure));
+    will_return(__wrap_f_memory_array_resize, true);
+    will_return(__wrap_f_memory_array_resize, F_status_set_error(F_failure));
 
     const f_status_t status = f_fss_nestss_delete_callback(0, 1, (void *) datas_array);
 
@@ -29,8 +29,8 @@ void test__f_fss_nestss_delete_callback__fails(void **state) {
   }
 
   {
-    will_return(__wrap_f_string_ranges_resize, false);
-    will_return(__wrap_f_string_ranges_resize, F_okay);
+    will_return(__wrap_f_memory_array_resize, false);
+    will_return(__wrap_f_memory_array_resize, F_okay);
 
     will_return(__wrap_f_memory_array_resize, true);
     will_return(__wrap_f_memory_array_resize, F_status_set_error(F_failure));
@@ -43,7 +43,7 @@ void test__f_fss_nestss_delete_callback__fails(void **state) {
 
 void test__f_fss_nestss_delete_callback__works(void **state) {
 
-  mock_unwrap = 1;
+  mock_unwrap = 0;
   mock_unwrap_f_memory = 1;
 
   const f_number_unsigned_t length = 1;
@@ -63,7 +63,7 @@ void test__f_fss_nestss_delete_callback__works(void **state) {
     status = f_memory_array_resize(1, sizeof(f_fss_item_t), (void **) &datass.array[0].array[0].depth[0].array, &datass.array[0].array[0].depth[0].used, &datass.array[0].array[0].depth[0].size);
     assert_int_equal(status, F_okay);
 
-    status = f_string_ranges_resize(1, &datass.array[0].array[0].depth[0].array[0].content);
+    status = f_memory_array_resize(1, sizeof(f_string_range_t), (void **) &datass.array[0].array[0].depth[0].array[0].content.array, &datass.array[0].array[0].depth[0].array[0].content.used, &datass.array[0].array[0].depth[0].array[0].content.size);
     assert_int_equal(status, F_okay);
   }
 

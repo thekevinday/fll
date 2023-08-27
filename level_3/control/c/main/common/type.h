@@ -182,8 +182,7 @@ extern "C" {
  *   This does not alter main.setting.state.status.
  *
  * @see f_memory_array_resize()
- * @see f_string_ranges_resize()
- * @see f_string_rangess_resize()
+ * @see f_memory_arrays_resize()
  * @see fll_program_data_delete()
  */
 #ifndef _di_control_main_delete_

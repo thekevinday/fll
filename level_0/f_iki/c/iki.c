@@ -322,13 +322,13 @@ extern "C" {
           }
 
           if (buffer->string[range->start] == quote) {
-            state->status = f_string_ranges_increase(state->step_small, &data->variable);
+            state->status = f_memory_array_increase(state->step_small, sizeof(f_string_range_t), (void **) &data->variable.array, &data->variable.used, &data->variable.size);
             if (F_status_is_error(state->status)) break;
 
-            state->status = f_string_ranges_increase(state->step_small, &data->vocabulary);
+            state->status = f_memory_array_increase(state->step_small, sizeof(f_string_range_t), (void **) &data->vocabulary.array, &data->vocabulary.used, &data->vocabulary.size);
             if (F_status_is_error(state->status)) break;
 
-            state->status = f_string_ranges_increase(state->step_small, &data->content);
+            state->status = f_memory_array_increase(state->step_small, sizeof(f_string_range_t), (void **) &data->content.array, &data->content.used, &data->content.size);
             if (F_status_is_error(state->status)) break;
 
             data->variable.array[data->variable.used].start = found_vocabulary.start;
@@ -395,13 +395,13 @@ extern "C" {
 
                 // Valid content's ending quote is not delimited, save and return.
                 if (content_slash_total % 2 == 0) {
-                  state->status = f_string_ranges_increase(state->step_small, &data->variable);
+                  state->status = f_memory_array_increase(state->step_small, sizeof(f_string_range_t), (void **) &data->variable.array, &data->variable.used, &data->variable.size);
                   if (F_status_is_error(state->status)) break;
 
-                  state->status = f_string_ranges_increase(state->step_small, &data->vocabulary);
+                  state->status = f_memory_array_increase(state->step_small, sizeof(f_string_range_t), (void **) &data->vocabulary.array, &data->vocabulary.used, &data->vocabulary.size);
                   if (F_status_is_error(state->status)) break;
 
-                  state->status = f_string_ranges_increase(state->step_small, &data->content);
+                  state->status = f_memory_array_increase(state->step_small, sizeof(f_string_range_t), (void **) &data->content.array, &data->content.used, &data->content.size);
                   if (F_status_is_error(state->status)) break;
 
                   data->variable.array[data->variable.used].start = found_vocabulary.start;

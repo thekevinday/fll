@@ -1,21 +1,9 @@
 #include "../string.h"
 #include "../private-string.h"
-#include "private-maps.h"
-#include "private-mapss.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-#ifndef _di_f_string_mapss_adjust_
-  f_status_t f_string_mapss_adjust(const f_number_unsigned_t length, f_string_mapss_t * const structure) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!structure) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return private_f_string_mapss_adjust(length, structure);
-  }
-#endif // _di_f_string_mapss_adjust_
 
 #ifndef _di_f_string_mapss_append_
   f_status_t f_string_mapss_append(const f_string_maps_t source, f_string_mapss_t * const destination) {
@@ -25,18 +13,34 @@ extern "C" {
 
     if (!source.used) return F_data_not;
 
-    f_status_t status = F_okay;
-
-    if (destination->used + 1 > destination->size) {
-      status = private_f_string_mapss_resize(destination->used + F_memory_default_allocation_small_d, destination);
+    {
+      f_status_t status = f_memory_array_increase(F_memory_default_allocation_small_d, sizeof(f_string_maps_t), (void **) &destination->array, &destination->used, &destination->size);
       if (F_status_is_error(status)) return status;
-    }
 
-    destination->array[destination->used].used = 0;
+      f_string_maps_t * const destination_inner = &destination->array[destination->used];
 
-    if (source.used) {
-      status = private_f_string_maps_append_all(source, &destination->array[destination->used]);
-      if (F_status_is_error(status)) return status;
+      destination_inner->used = 0;
+
+      if (source.used) {
+        status = f_memory_array_increase_by(source.used, sizeof(f_string_map_t), (void **) &destination_inner->array, &destination_inner->used, &destination_inner->size);
+        if (F_status_is_error(status)) return status;
+
+        for (f_number_unsigned_t i = 0; i < source.used; ++i, ++destination_inner->used) {
+
+          destination_inner->array[destination_inner->used].name.used = 0;
+          destination_inner->array[destination_inner->used].value.used = 0;
+
+          if (source.array[i].name.used) {
+            status = private_f_string_append(source.array[i].name.string, source.array[i].name.used, &destination_inner->array[destination_inner->used].name);
+            if (F_status_is_error(status)) return status;
+          }
+
+          if (source.array[i].value.used) {
+            status = private_f_string_append(source.array[i].value.string, source.array[i].value.used, &destination_inner->array[destination_inner->used].value);
+            if (F_status_is_error(status)) return status;
+          }
+        } // for
+      }
     }
 
     ++destination->used;
@@ -53,104 +57,112 @@ extern "C" {
 
     if (!source.used) return F_data_not;
 
-    f_status_t status = F_okay;
-
-    if (destination->used + source.used > destination->size) {
-      status = private_f_string_mapss_resize(destination->used + source.used, destination);
+    {
+      f_status_t status = f_memory_array_increase_by(source.used, sizeof(f_string_maps_t), (void **) &destination->array, &destination->used, &destination->size);
       if (F_status_is_error(status)) return status;
+
+      f_number_unsigned_t j = 0;
+      f_string_maps_t * destination_inner = 0;
+
+      for (f_number_unsigned_t i = 0; i < source.used; ++i, ++destination->used) {
+
+        destination_inner = &destination->array[destination->used];
+        destination_inner->used = 0;
+
+        if (source.array[i].used) {
+          status = f_memory_array_increase_by(source.array[i].used, sizeof(f_string_map_t), (void **) &destination_inner->array, &destination_inner->used, &destination_inner->size);
+          if (F_status_is_error(status)) return status;
+
+          for (j = 0; j < source.array[i].used; ++j, ++destination_inner->used) {
+
+            destination_inner->array[destination_inner->used].name.used = 0;
+            destination_inner->array[destination_inner->used].value.used = 0;
+
+            if (source.array[i].array[j].name.used) {
+              status = private_f_string_append(source.array[i].array[j].name.string, source.array[i].array[j].name.used, &destination_inner->array[destination_inner->used].name);
+              if (F_status_is_error(status)) return status;
+            }
+
+            if (source.array[i].array[j].value.used) {
+              status = private_f_string_append(source.array[i].array[j].value.string, source.array[i].array[j].value.used, &destination_inner->array[destination_inner->used].value);
+              if (F_status_is_error(status)) return status;
+            }
+          } // for
+        }
+      } // for
     }
-
-    for (f_number_unsigned_t i = 0; i < source.used; ++i, ++destination->used) {
-
-      destination->array[destination->used].used = 0;
-
-      if (source.array[i].used) {
-        status = private_f_string_maps_append_all(source.array[i], &destination->array[destination->used]);
-        if (F_status_is_error(status)) return status;
-      }
-    } // for
 
     return F_okay;
   }
 #endif // _di_f_string_mapss_append_all_
 
-#ifndef _di_f_string_mapss_decimate_by_
-  f_status_t f_string_mapss_decimate_by(const f_number_unsigned_t amount, f_string_mapss_t * const structure) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!structure) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+#ifndef _di_f_string_mapss_delete_callback_
+  f_status_t f_string_mapss_delete_callback(const f_number_unsigned_t start, const f_number_unsigned_t stop, void * const void_array) {
 
-    if (!amount) return F_data_not;
+    {
+      f_string_maps_t * const array = (f_string_maps_t *) void_array;
+      f_status_t status = F_okay;
+      f_number_unsigned_t j = 0;
 
-    return private_f_string_mapss_adjust((structure->size > amount) ? structure->size - amount : 0, structure);
-  }
-#endif // _di_f_string_mapss_decimate_by_
+      for (f_number_unsigned_t i = start; i < stop; ++i) {
 
-#ifndef _di_f_string_mapss_decrease_by_
-  f_status_t f_string_mapss_decrease_by(const f_number_unsigned_t amount, f_string_mapss_t * const structure) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!structure) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+        if (array[i].size) {
+          for (j = 0; j < array[i].size; ++j) {
 
-    if (!amount) return F_data_not;
+            if (array[i].array[j].name.size) {
+              status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &array[i].array[j].name.string, &array[i].array[j].name.used, &array[i].array[j].name.size);
+              if (F_status_is_error(status)) return status;
+            }
 
-    return private_f_string_mapss_resize((structure->size > amount) ? structure->size - amount : 0, structure);
-  }
-#endif // _di_f_string_mapss_decrease_by_
+            if (array[i].array[j].value.size) {
+              status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &array[i].array[j].value.string, &array[i].array[j].value.used, &array[i].array[j].value.size);
+              if (F_status_is_error(status)) return status;
+            }
+          } // for
 
-#ifndef _di_f_string_mapss_increase_
-  f_status_t f_string_mapss_increase(const f_number_unsigned_t step, f_string_mapss_t * const structure) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!structure) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (step && structure->used + 1 > structure->size) {
-      f_number_unsigned_t length = structure->used + step;
-
-      if (length > F_number_t_size_unsigned_d) {
-        if (structure->used + 1 > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
-
-        length = F_number_t_size_unsigned_d;
-      }
-
-      return private_f_string_mapss_resize(length, structure);
+          status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &array[i].array, &array[i].used, &array[i].size);
+          if (F_status_is_error(status)) return status;
+        }
+      } // for
     }
 
-    return F_data_not;
+    return F_okay;
   }
-#endif // _di_f_string_mapss_increase_
+#endif // _di_f_string_mapss_delete_callback_
 
-#ifndef _di_f_string_mapss_increase_by_
-  f_status_t f_string_mapss_increase_by(const f_number_unsigned_t amount, f_string_mapss_t * const structure) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!structure) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+#ifndef _di_f_string_mapss_destroy_callback_
+  f_status_t f_string_mapss_destroy_callback(const f_number_unsigned_t start, const f_number_unsigned_t stop, void * const void_array) {
 
-    if (amount) {
-      if (structure->used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+    {
+      f_string_maps_t * const array = (f_string_maps_t *) void_array;
+      f_status_t status = F_okay;
+      f_number_unsigned_t j = 0;
 
-      const f_number_unsigned_t length = structure->used + amount;
+      for (f_number_unsigned_t i = start; i < stop; ++i) {
 
-      if (length > structure->size) {
-        if (length > F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+        if (array[i].size) {
+          for (j = 0; j < array[i].size; ++j) {
 
-        return private_f_string_mapss_resize(length, structure);
-      }
+            if (array[i].array[j].name.size) {
+              status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &array[i].array[j].name.string, &array[i].array[j].name.used, &array[i].array[j].name.size);
+              if (F_status_is_error(status)) return status;
+            }
+
+            if (array[i].array[j].value.size) {
+              status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &array[i].array[j].value.string, &array[i].array[j].value.used, &array[i].array[j].value.size);
+              if (F_status_is_error(status)) return status;
+            }
+          } // for
+
+          status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &array[i].array, &array[i].used, &array[i].size);
+          if (F_status_is_error(status)) return status;
+        }
+      } // for
     }
 
-    return F_data_not;
+    return F_okay;
   }
-#endif // _di_f_string_mapss_increase_by_
-
-#ifndef _di_f_string_mapss_resize_
-  f_status_t f_string_mapss_resize(const f_number_unsigned_t length, f_string_mapss_t * const structure) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!structure) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return private_f_string_mapss_resize(length, structure);
-  }
-#endif // _di_f_string_mapss_resize_
+#endif // _di_f_string_mapss_destroy_callback_
 
 #ifdef __cplusplus
 } // extern "C"

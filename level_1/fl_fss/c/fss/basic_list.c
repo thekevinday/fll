@@ -40,7 +40,7 @@ extern "C" {
       return;
     }
 
-    state->status = f_string_ranges_increase(state->step_small, found);
+    state->status = f_memory_array_increase(state->step_small, sizeof(f_string_range_t), (void **) &found->array, &found->used, &found->size);
     if (F_status_is_error(state->status)) return;
 
     found->array[found->used].start = range->start;
@@ -236,7 +236,7 @@ extern "C" {
         f_fss_seek_to_eol(buffer, range, state);
         if (F_status_is_error(state->status)) break;
 
-        state->status = f_string_ranges_increase(state->step_small, comments);
+        state->status = f_memory_array_increase(state->step_small, sizeof(f_string_range_t), (void **) &comments->array, &comments->used, &comments->size);
         if (F_status_is_error(state->status)) break;
 
         if (range->start > range->stop || range->start >= buffer.used) {

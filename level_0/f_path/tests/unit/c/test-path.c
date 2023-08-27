@@ -25,7 +25,6 @@ int main(void) {
     cmocka_unit_test(test__f_path_change_at__fails),
     cmocka_unit_test(test__f_path_change_at__works),
 
-    // test__f_path_directory_cleanup__fails test isn't needed yet as f_string_dynamic_increase_by() aren't tested at this time.
     cmocka_unit_test(test__f_path_directory_cleanup__works),
 
     cmocka_unit_test(test__f_path_is__returns_false),

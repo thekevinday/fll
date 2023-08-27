@@ -1,6 +1,5 @@
 #include "../string.h"
 #include "../private-string.h"
-#include "private-dynamics.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -18,11 +17,22 @@ extern "C" {
       f_status_t status = f_memory_array_increase(F_memory_default_allocation_small_d, sizeof(f_string_dynamics_t), (void **) &destination->array, &destination->used, &destination->size);
       if (F_status_is_error(status)) return status;
 
-      destination->array[destination->used].used = 0;
+      f_string_dynamics_t * const destination_inner = &destination->array[destination->used];
+      destination_inner->used = 0;
 
       if (source.used) {
-        status = private_f_string_dynamics_append_all(source, &destination->array[destination->used]);
+        status = f_memory_array_increase_by(source.used, sizeof(f_string_dynamic_t), (void **) &destination_inner->array, &destination_inner->used, &destination_inner->size);
         if (F_status_is_error(status)) return status;
+
+        for (f_number_unsigned_t j = 0; j < source.used; ++j, ++destination_inner->used) {
+
+          destination_inner->array[destination_inner->used].used = 0;
+
+          if (source.array[j].used) {
+            status = private_f_string_append(source.array[j].string, source.array[j].used, &destination_inner->array[destination_inner->used]);
+            if (F_status_is_error(status)) return status;
+          }
+        } // for
       }
     }
 
@@ -49,8 +59,18 @@ extern "C" {
         destination->array[destination->used].used = 0;
 
         if (source.array[i].used) {
-          status = private_f_string_dynamics_append_all(source.array[i], &destination->array[destination->used]);
+          status = f_memory_array_increase_by(source.array[i].used, sizeof(f_string_dynamic_t), (void **) &destination->array[destination->used].array, &destination->array[destination->used].used, &destination->array[destination->used].size);
           if (F_status_is_error(status)) return status;
+
+          for (f_number_unsigned_t j = 0; j < source.array[i].used; ++j, ++destination->array[destination->used].used) {
+
+            destination->array[destination->used].array[destination->array[destination->used].used].used = 0;
+
+            if (source.array[i].array[j].used) {
+              status = private_f_string_append(source.array[i].array[j].string, source.array[i].array[j].used, &destination->array[destination->used].array[destination->array[destination->used].used]);
+              if (F_status_is_error(status)) return status;
+            }
+          } // for
         }
       } // for
     }

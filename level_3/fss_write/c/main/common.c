@@ -371,14 +371,14 @@ extern "C" {
 
         main->setting.ignoress.used = 0;
 
-        main->setting.state.status = f_string_rangess_increase_by(values_data->used, &main->setting.ignoress);
+        main->setting.state.status = f_memory_array_increase_by(values_data->used, sizeof(f_string_ranges_t), (void **) &main->setting.ignoress.array, &main->setting.ignoress.used, &main->setting.ignoress.size);
 
         if (F_status_is_error(main->setting.state.status)) {
           if ((main->setting.flag & fss_write_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
             fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
           }
 
-          fss_write_print_error(&main->program.error, macro_fss_write_f(f_string_rangess_increase_by));
+          fss_write_print_error(&main->program.error, macro_fss_write_f(f_memory_array_increase_by));
 
           return;
         }
@@ -405,14 +405,14 @@ extern "C" {
             break;
           }
 
-          main->setting.state.status = f_string_ranges_increase_by(total, &main->setting.ignoress.array[j]);
+          main->setting.state.status = f_memory_array_increase_by(total, sizeof(f_string_range_t), (void **) &main->setting.ignoress.array[j].array, &main->setting.ignoress.array[j].used, &main->setting.ignoress.array[j].size);
 
           if (F_status_is_error(main->setting.state.status)) {
             if ((main->setting.flag & fss_write_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
               fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
             }
 
-            fss_write_print_error(&main->program.error, macro_fss_write_f(f_string_ranges_increase_by));
+            fss_write_print_error(&main->program.error, macro_fss_write_f(f_memory_array_increase_by));
 
             return;
           }

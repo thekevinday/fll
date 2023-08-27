@@ -268,14 +268,14 @@ extern "C" {
 
       main->setting.replace.used = 0;
 
-      main->setting.state.status = f_string_maps_increase_by(main->program.parameters.array[iki_read_parameter_replace_e].values.used / 2, &main->setting.replace);
+      main->setting.state.status = f_memory_array_increase_by(main->program.parameters.array[iki_read_parameter_replace_e].values.used / 2, sizeof(f_string_map_t), (void **) &main->setting.replace.array, &main->setting.replace.used, &main->setting.replace.size);
 
       if (F_status_is_error(main->setting.state.status)) {
         if ((main->setting.flag & iki_read_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
           fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
         }
 
-        iki_read_print_error(&main->program.error, macro_iki_read_f(f_string_maps_increase_by));
+        iki_read_print_error(&main->program.error, macro_iki_read_f(f_memory_array_increase_by));
 
         return;
       }
@@ -363,14 +363,14 @@ extern "C" {
 
       main->setting.wrap.used = 0;
 
-      main->setting.state.status = f_string_triples_increase_by(main->program.parameters.array[iki_read_parameter_wrap_e].values.used / 3, &main->setting.wrap);
+      main->setting.state.status = f_memory_array_increase_by(main->program.parameters.array[iki_read_parameter_wrap_e].values.used / 3, sizeof(f_string_triple_t), (void **) &main->setting.wrap.array, &main->setting.wrap.used, &main->setting.wrap.size);
 
       if (F_status_is_error(main->setting.state.status)) {
         if ((main->setting.flag & iki_read_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
           fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
         }
 
-        iki_read_print_error(&main->program.error, macro_iki_read_f(f_string_triples_increase_by));
+        iki_read_print_error(&main->program.error, macro_iki_read_f(f_memory_array_increase_by));
 
         return;
       }
@@ -614,14 +614,14 @@ extern "C" {
 
     triple->used = 0;
 
-    main->setting.state.status = f_string_triples_increase_by(parameter.values.used / 3, triple);
+    main->setting.state.status = f_memory_array_increase_by(parameter.values.used / 3, sizeof(f_string_triple_t), (void **) &triple->array, &triple->used, &triple->size);
 
     if (F_status_is_error(main->setting.state.status)) {
       if ((main->setting.flag & iki_read_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
         fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
       }
 
-      iki_read_print_error(&main->program.error, macro_iki_read_f(f_string_triples_increase_by));
+      iki_read_print_error(&main->program.error, macro_iki_read_f(f_memory_array_increase_by));
 
       return F_false;
     }

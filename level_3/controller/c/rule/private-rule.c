@@ -4240,10 +4240,10 @@ extern "C" {
           setting_maps = &rule->parameter;
         }
 
-        status = f_string_maps_increase(controller_common_allocation_small_d, setting_maps);
+        status = f_memory_array_increase(controller_common_allocation_small_d, sizeof(f_string_map_t), (void **) &setting_maps->array, &setting_maps->used, &setting_maps->size);
 
         if (F_status_is_error(status)) {
-          controller_rule_print_error(global.thread, global.main->error, cache->action, F_status_set_fine(status), "f_string_maps_increase", F_true, F_false);
+          controller_rule_print_error(global.thread, global.main->error, cache->action, F_status_set_fine(status), "f_memory_array_increase", F_true, F_false);
 
           if (F_status_set_fine(status) == F_memory_not) {
             status_return = status;

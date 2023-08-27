@@ -62,12 +62,6 @@ build_sources_library socket.c socket/address.c socket/socket.c
 build_sources_library status_string.c
 build_sources_library string.c
 build_sources_library private-string.c string/common.c
-build_sources_library string/private-dynamics.c
-build_sources_library string/private-maps.c string/private-mapss.c
-build_sources_library string/private-map_multis.c string/private-map_multiss.c
-build_sources_library string/private-quantitys.c string/private-quantityss.c
-build_sources_library string/private-ranges.c string/private-rangess.c
-build_sources_library string/private-triples.c string/private-tripless.c
 build_sources_library string/dynamic.c string/dynamics.c string/dynamicss.c
 build_sources_library string/map.c string/maps.c string/mapss.c
 build_sources_library string/map_multi.c string/map_multis.c string/map_multiss.c
@@ -86,8 +80,8 @@ build_sources_library utf/map_multi.c utf/map_multis.c utf/map_multiss.c
 build_sources_library utf/static.c utf/statics.c utf/staticss.c
 build_sources_library utf/string.c utf/triple.c utf/triples.c utf/tripless.c
 build_sources_library utf/private-dynamic.c utf/private-dynamics.c utf/private-dynamicss.c
-build_sources_library utf/private-maps.c utf/private-mapss.c
 build_sources_library utf/private-map_multis.c utf/private-map_multiss.c
+build_sources_library utf/private-maps.c utf/private-mapss.c
 build_sources_library utf/private-string.c
 build_sources_library utf/private-triples.c utf/private-tripless.c
 

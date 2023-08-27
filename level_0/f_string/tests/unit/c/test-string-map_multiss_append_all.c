@@ -34,7 +34,7 @@ void test__f_string_map_multiss_append_all__works(void **state) {
   };
 
   {
-    f_status_t status = f_string_map_multiss_resize(length_outer, &source);
+    f_status_t status = f_memory_arrays_resize(length_outer, sizeof(f_string_map_multis_t), (void **) &source.array, &source.used, &source.size, &f_string_map_multiss_delete_callback);
 
     assert_int_equal(status, F_okay);
     assert_int_equal(source.used, 0);
@@ -44,7 +44,7 @@ void test__f_string_map_multiss_append_all__works(void **state) {
 
     for (; source.used < length_outer; ++source.used) {
 
-      status = f_string_map_multis_resize(length_inner, &source.array[source.used]);
+      status = f_memory_arrays_resize(length_inner, sizeof(f_string_map_multi_t), (void **) &source.array[source.used].array, &source.array[source.used].used, &source.array[source.used].size, &f_string_map_multis_delete_callback);
 
       assert_int_equal(status, F_okay);
       assert_int_equal(source.array[source.used].used, 0);
@@ -132,7 +132,7 @@ void test__f_string_map_multiss_append_all__returns_data_not(void **state) {
   f_string_map_multiss_t destination = f_string_map_multiss_t_initialize;
 
   {
-    const f_status_t status = f_string_map_multiss_resize(length, &source);
+    const f_status_t status = f_memory_arrays_resize(length, sizeof(f_string_map_multis_t), (void **) &source.array, &source.used, &source.size, &f_string_map_multiss_delete_callback);
 
     assert_int_equal(status, F_okay);
     assert_int_equal(source.used, 0);

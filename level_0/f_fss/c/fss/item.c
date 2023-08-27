@@ -10,7 +10,7 @@ extern "C" {
       if (!item) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return f_string_ranges_resize(0, &item->content);
+    return f_memory_array_resize(0, sizeof(f_string_range_t), (void **) &item->content.array, &item->content.used, &item->content.size);
   }
 #endif // _di_f_fss_item_delete_
 
@@ -20,7 +20,7 @@ extern "C" {
       if (!item) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return f_string_ranges_adjust(0, &item->content);
+    return f_memory_array_adjust(0, sizeof(f_string_range_t), (void **) &item->content.array, &item->content.used, &item->content.size);
   }
 #endif // _di_f_fss_item_destroy_
 
@@ -33,7 +33,7 @@ extern "C" {
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
 
-        status = f_string_ranges_resize(0, &array[i].content);
+        status = f_memory_array_resize(0, sizeof(f_string_range_t), (void **) &array[i].content.array, &array[i].content.used, &array[i].content.size);
         if (F_status_is_error(status)) return status;
       } // for
     }
@@ -51,7 +51,7 @@ extern "C" {
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
 
-        status = f_string_ranges_adjust(0, &array[i].content);
+        status = f_memory_array_adjust(0, sizeof(f_string_range_t), (void **) &array[i].content.array, &array[i].content.used, &array[i].content.size);
         if (F_status_is_error(status)) return status;
       } // for
     }
@@ -72,7 +72,7 @@ extern "C" {
 
         for (j = 0; j < array[i].size; ++j) {
 
-          status = f_string_ranges_resize(0, &array[i].array[j].content);
+          status = f_memory_array_resize(0, sizeof(f_string_range_t), (void **) &array[i].array[j].content.array, &array[i].array[j].content.used, &array[i].array[j].content.size);
           if (F_status_is_error(status)) return status;
         } // for
 
@@ -99,7 +99,7 @@ extern "C" {
 
         for (j = 0; j < array[i].size; ++j) {
 
-          status = f_string_ranges_adjust(0, &array[i].array[j].content);
+          status = f_memory_array_adjust(0, sizeof(f_string_range_t), (void **) &array[i].array[j].content.array, &array[i].array[j].content.used, &array[i].array[j].content.size);
           if (F_status_is_error(status)) return status;
         } // for
 

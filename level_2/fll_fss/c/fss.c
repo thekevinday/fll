@@ -438,7 +438,7 @@ extern "C" {
           matches[j] = F_true;
         }
 
-        status = f_string_map_multis_increase(F_fss_default_allocation_step_small_d, values[j]);
+        status = f_memory_array_increase(F_fss_default_allocation_step_small_d, sizeof(f_string_map_multi_t), (void **) &values[j]->array, &values[j]->used, &values[j]->size);
         if (F_status_is_error(status)) return status;
 
         if (indexs) {
@@ -512,7 +512,7 @@ extern "C" {
           matches[j] = F_true;
         }
 
-        status = f_string_maps_increase(F_fss_default_allocation_step_small_d, values[j]);
+        status = f_memory_array_increase(F_fss_default_allocation_step_small_d, sizeof(f_string_map_t), (void **) &values[j]->array, &values[j]->used, &values[j]->size);
         if (F_status_is_error(status)) return status;
 
         if (indexs) {
@@ -619,7 +619,7 @@ extern "C" {
           map_multi = &values[j]->array[k];
         }
         else {
-          status = f_string_map_multis_increase(F_fss_default_allocation_step_small_d, values[j]);
+          status = f_memory_array_increase(F_fss_default_allocation_step_small_d, sizeof(f_string_map_multi_t), (void **) &values[j]->array, &values[j]->used, &values[j]->size);
           if (F_status_is_error(status)) return status;
 
           if (indexs) {
@@ -735,7 +735,7 @@ extern "C" {
           map = &values[j]->array[k];
         }
         else {
-          status = f_string_maps_increase(F_fss_default_allocation_step_small_d, values[j]);
+          status = f_memory_array_increase(F_fss_default_allocation_step_small_d, sizeof(f_string_map_t), (void **) &values[j]->array, &values[j]->used, &values[j]->size);
           if (F_status_is_error(status)) return status;
 
           if (indexs) {

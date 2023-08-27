@@ -22,7 +22,7 @@ extern "C" {
     if (!total) return F_data_not;
 
     {
-      const f_status_t status = f_string_maps_increase_by(total, environment);
+      const f_status_t status = f_memory_array_increase_by(total, sizeof(f_string_map_t), (void **) &environment->array, &environment->used, &environment->size);
       if (F_status_is_error(status)) return status;
     }
 

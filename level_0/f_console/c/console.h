@@ -44,9 +44,9 @@ extern "C" {
  *   F_okay on success.
  *   F_data_not if the arguments.envp pointer is NULL or there are no environment variables in arguments.envp.
  *
- *   Errors (with error bit) from: f_string_maps_increase_by().
+ *   Errors (with error bit) from: f_memory_array_increase_by().
  *
- * @see f_string_maps_increase_by()
+ * @see f_memory_array_increase_by()
  */
 #ifndef _di_f_console_environment_process_
   extern f_status_t f_console_environment_process(const f_console_arguments_t arguments, f_string_maps_t * const environment);

@@ -62,7 +62,6 @@ extern "C" {
     "f_string_dynamic_partial_append",
     "f_string_dynamic_partial_append_nulless",
     "f_string_dynamic_prepend",
-    "f_string_map_multis_resize",
     "f_thread_create",
     "f_utf_is_word_dash_plus",
     "fl_conversion_dynamic_to_unsigned_detect",

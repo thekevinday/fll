@@ -30,9 +30,9 @@ extern "C" {
  *     F_interrupt (with error bit) on interrupt signal received.
  *
  *     Errors (with error bit) from: f_fss_apply_delimit().
+ *     Errors (with error bit) from: f_memory_array_resize().
  *     Errors (with error bit) from: f_string_dynamic_append().
  *     Errors (with error bit) from: f_string_dynamic_partial_append().
- *     Errors (with error bit) from: f_string_map_multis_resize().
  *     Errors (with error bit) from: fll_fss_basic_list_read().
  *     Errors (with error bit) from: fll_fss_extended_read().
  *     Errors (with error bit) from: fll_program_standard_signal_received().
@@ -52,9 +52,9 @@ extern "C" {
  *   If FALSE, then ignore the program input pipe.
  *
  * @see f_fss_apply_delimit()
+ * @see f_memory_array_resize()
  * @see f_string_dynamic_append()
  * @see f_string_dynamic_partial_append()
- * @see f_string_map_multis_resize()
  * @see fll_fss_basic_list_read()
  * @see fll_fss_extended_read()
  * @see fll_program_standard_signal_received()

@@ -63,8 +63,8 @@ extern "C" {
     f_memory_array_resize(0, sizeof(f_char_t), (void **) &rule->name.string, &rule->name.used, &rule->name.size);
     f_memory_array_resize(0, sizeof(f_char_t), (void **) &rule->path.string, &rule->path.used, &rule->path.size);
 
-    f_string_maps_resize(0, &rule->define);
-    f_string_maps_resize(0, &rule->parameter);
+    f_memory_arrays_resize(0, sizeof(f_string_map_t), (void **) &rule->define.array, &rule->define.used, &rule->define.size, &f_string_maps_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_map_t), (void **) &rule->parameter.array, &rule->parameter.used, &rule->parameter.size, &f_string_maps_delete_callback);
 
     f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &rule->engine_arguments.array, &rule->engine_arguments.used, &rule->engine_arguments.size, &f_string_dynamics_delete_callback);
     f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &rule->environment.array, &rule->environment.used, &rule->environment.size, &f_string_dynamics_delete_callback);

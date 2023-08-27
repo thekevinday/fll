@@ -26,45 +26,47 @@ extern "C" {
 
     if (destination->used >= F_string_t_size_d) return F_status_set_error(F_string_too_large);
 
-    f_status_t status = F_okay;
-    f_number_unsigned_t i = 0;
-    f_number_unsigned_t size = 0;
+    {
+      f_status_t status = F_okay;
+      f_number_unsigned_t i = 0;
+      f_number_unsigned_t size = 0;
 
-    // Count all of the NULLs and subtract them from the total size.
-    for (; i < length; ++i) {
-      if (source[i]) ++size;
-    } // for
+      // Count all of the NULLs and subtract them from the total size.
+      for (; i < length; ++i) {
+        if (source[i]) ++size;
+      } // for
 
-    if (size + 1 > F_string_t_size_d) return F_status_set_error(F_string_too_large);
+      if (size + 1 > F_string_t_size_d) return F_status_set_error(F_string_too_large);
 
-    status = f_memory_array_increase_by(size + 1, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
-    if (F_status_is_error(status)) return status;
+      status = f_memory_array_increase_by(size + 1, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
+      if (F_status_is_error(status)) return status;
 
-    f_number_unsigned_t first = 0;
+      f_number_unsigned_t first = 0;
 
-    for (i = 0, size = 0; i < length; ++i) {
+      for (i = 0, size = 0; i < length; ++i) {
 
-      if (source[i]) continue;
+        if (source[i]) continue;
 
-      if (i && i > first) {
+        if (i && i > first) {
+          size = i - first;
+
+          memcpy(destination->string + destination->used, source + first, sizeof(f_char_t) * size);
+          destination->used += size;
+        }
+
+        while (i + 1 < length && !source[i + 1]) {
+          ++i;
+        } // while
+
+        first = i + 1;
+      } // for
+
+      if (i > first) {
         size = i - first;
 
         memcpy(destination->string + destination->used, source + first, sizeof(f_char_t) * size);
         destination->used += size;
       }
-
-      while (i + 1 < length && !source[i + 1]) {
-        ++i;
-      } // while
-
-      first = i + 1;
-    } // for
-
-    if (i > first) {
-      size = i - first;
-
-      memcpy(destination->string + destination->used, source + first, sizeof(f_char_t) * size);
-      destination->used += size;
     }
 
     destination->string[destination->used] = 0;

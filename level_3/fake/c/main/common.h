@@ -118,7 +118,6 @@ extern "C" {
  *   The iki data to shrink.
  *
  * @see f_memory_array_resize()
- * @see f_string_ranges_resize()
  */
 #ifndef _di_fake_iki_data_reset_
   extern void fake_iki_data_reset(f_iki_data_t * const iki_data);

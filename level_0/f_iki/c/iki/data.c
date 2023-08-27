@@ -13,16 +13,16 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     {
-      f_status_t status = f_string_ranges_resize(0, &data->content);
+      f_status_t status = f_memory_array_resize(0, sizeof(f_string_range_t), (void **) &data->content.array, &data->content.used, &data->content.size);
       if (F_status_is_error(status)) return status;
 
       status = f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &data->delimits.array, &data->delimits.used, &data->delimits.size);
       if (F_status_is_error(status)) return status;
 
-      status = f_string_ranges_resize(0, &data->variable);
+      status = f_memory_array_resize(0, sizeof(f_string_range_t), (void **) &data->variable.array, &data->variable.used, &data->variable.size);
       if (F_status_is_error(status)) return status;
 
-      status = f_string_ranges_resize(0, &data->vocabulary);
+      status = f_memory_array_resize(0, sizeof(f_string_range_t), (void **) &data->vocabulary.array, &data->vocabulary.used, &data->vocabulary.size);
       if (F_status_is_error(status)) return status;
     }
 
@@ -37,16 +37,16 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     {
-      f_status_t status = f_string_ranges_adjust(0, &data->content);
+      f_status_t status = f_memory_array_adjust(0, sizeof(f_string_range_t), (void **) &data->content.array, &data->content.used, &data->content.size);
       if (F_status_is_error(status)) return status;
 
       status = f_memory_array_adjust(0, sizeof(f_number_unsigned_t), (void **) &data->delimits.array, &data->delimits.used, &data->delimits.size);
       if (F_status_is_error(status)) return status;
 
-      status = f_string_ranges_adjust(0, &data->variable);
+      status = f_memory_array_adjust(0, sizeof(f_string_range_t), (void **) &data->variable.array, &data->variable.used, &data->variable.size);
       if (F_status_is_error(status)) return status;
 
-      status = f_string_ranges_adjust(0, &data->vocabulary);
+      status = f_memory_array_adjust(0, sizeof(f_string_range_t), (void **) &data->vocabulary.array, &data->vocabulary.used, &data->vocabulary.size);
       if (F_status_is_error(status)) return status;
     }
 
@@ -118,16 +118,16 @@ extern "C" {
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
 
-        status = f_string_ranges_resize(0, &array[i].content);
+        status = f_memory_array_resize(0, sizeof(f_string_range_t), (void **) &array[i].content.array, &array[i].content.used, &array[i].content.size);
         if (F_status_is_error(status)) return status;
 
         status = f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &array[i].delimits.array, &array[i].delimits.used, &array[i].delimits.size);
         if (F_status_is_error(status)) return status;
 
-        status = f_string_ranges_resize(0, &array[i].variable);
+        status = f_memory_array_resize(0, sizeof(f_string_range_t), (void **) &array[i].variable.array, &array[i].variable.used, &array[i].variable.size);
         if (F_status_is_error(status)) return status;
 
-        status = f_string_ranges_resize(0, &array[i].vocabulary);
+        status = f_memory_array_resize(0, sizeof(f_string_range_t), (void **) &array[i].vocabulary.array, &array[i].vocabulary.used, &array[i].vocabulary.size);
         if (F_status_is_error(status)) return status;
       } // for
     }
@@ -145,16 +145,16 @@ extern "C" {
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
 
-        status = f_string_ranges_adjust(0, &array[i].content);
+        status = f_memory_array_adjust(0, sizeof(f_string_range_t), (void **) &array[i].content.array, &array[i].content.used, &array[i].content.size);
         if (F_status_is_error(status)) return status;
 
         status = f_memory_array_adjust(0, sizeof(f_number_unsigned_t), (void **) &array[i].delimits.array, &array[i].delimits.used, &array[i].delimits.size);
         if (F_status_is_error(status)) return status;
 
-        status = f_string_ranges_adjust(0, &array[i].variable);
+        status = f_memory_array_adjust(0, sizeof(f_string_range_t), (void **) &array[i].variable.array, &array[i].variable.used, &array[i].variable.size);
         if (F_status_is_error(status)) return status;
 
-        status = f_string_ranges_adjust(0, &array[i].vocabulary);
+        status = f_memory_array_adjust(0, sizeof(f_string_range_t), (void **) &array[i].vocabulary.array, &array[i].vocabulary.used, &array[i].vocabulary.size);
         if (F_status_is_error(status)) return status;
       } // for
     }
@@ -171,11 +171,13 @@ extern "C" {
 
     if (!source.used) return F_data_not;
 
-    f_status_t status = f_memory_array_increase(F_memory_default_allocation_small_d, sizeof(f_iki_datas_t), (void **) &destination->array, &destination->used, &destination->size);
-    if (F_status_is_error(status)) return status;
+    {
+      f_status_t status = f_memory_array_increase(F_memory_default_allocation_small_d, sizeof(f_iki_datas_t), (void **) &destination->array, &destination->used, &destination->size);
+      if (F_status_is_error(status)) return status;
 
-    status = private_f_iki_datas_append_all(source, &destination->array[destination->used]);
-    if (F_status_is_error(status)) return status;
+      status = private_f_iki_datas_append_all(source, &destination->array[destination->used]);
+      if (F_status_is_error(status)) return status;
+    }
 
     ++destination->used;
 
@@ -191,18 +193,20 @@ extern "C" {
 
     if (!source.used) return F_data_not;
 
-    f_status_t status = f_memory_array_increase_by(source.used, sizeof(f_iki_datas_t), (void **) &destination->array, &destination->used, &destination->size);
-    if (F_status_is_error(status)) return status;
+    {
+      f_status_t status = f_memory_array_increase_by(source.used, sizeof(f_iki_datas_t), (void **) &destination->array, &destination->used, &destination->size);
+      if (F_status_is_error(status)) return status;
 
-    for (f_number_unsigned_t i = 0; i < source.used; ++i, ++destination->used) {
+      for (f_number_unsigned_t i = 0; i < source.used; ++i, ++destination->used) {
 
-      destination->array[destination->used].used = 0;
+        destination->array[destination->used].used = 0;
 
-      if (source.array[i].used) {
-        status = private_f_iki_datas_append_all(source.array[i], &destination->array[destination->used]);
-        if (F_status_is_error(status)) return status;
-      }
-    } // for
+        if (source.array[i].used) {
+          status = private_f_iki_datas_append_all(source.array[i], &destination->array[destination->used]);
+          if (F_status_is_error(status)) return status;
+        }
+      } // for
+    }
 
     return F_okay;
   }
@@ -220,16 +224,16 @@ extern "C" {
 
         for (j = 0; j < array[i].size; ++j) {
 
-          status = f_string_ranges_resize(0, &array[i].array[j].content);
+          status = f_memory_array_resize(0, sizeof(f_string_range_t), (void **) &array[i].array[j].content.array, &array[i].array[j].content.used, &array[i].array[j].content.size);
           if (F_status_is_error(status)) return status;
 
           status = f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &array[i].array[j].delimits.array, &array[i].array[j].delimits.used, &array[i].array[j].delimits.size);
           if (F_status_is_error(status)) return status;
 
-          status = f_string_ranges_resize(0, &array[i].array[j].variable);
+          status = f_memory_array_resize(0, sizeof(f_string_range_t), (void **) &array[i].array[j].variable.array, &array[i].array[j].variable.used, &array[i].array[j].variable.size);
           if (F_status_is_error(status)) return status;
 
-          status = f_string_ranges_resize(0, &array[i].array[j].vocabulary);
+          status = f_memory_array_resize(0, sizeof(f_string_range_t), (void **) &array[i].array[j].vocabulary.array, &array[i].array[j].vocabulary.used, &array[i].array[j].vocabulary.size);
           if (F_status_is_error(status)) return status;
         } // for
 
@@ -256,16 +260,16 @@ extern "C" {
 
         for (j = 0; j < array[i].size; ++j) {
 
-          status = f_string_ranges_adjust(0, &array[i].array[j].content);
+          status = f_memory_array_adjust(0, sizeof(f_string_range_t), (void **) &array[i].array[j].content.array, &array[i].array[j].content.used, &array[i].array[j].content.size);
           if (F_status_is_error(status)) return status;
 
           status = f_memory_array_adjust(0, sizeof(f_number_unsigned_t), (void **) &array[i].array[j].delimits.array, &array[i].array[j].delimits.used, &array[i].array[j].delimits.size);
           if (F_status_is_error(status)) return status;
 
-          status = f_string_ranges_adjust(0, &array[i].array[j].variable);
+          status = f_memory_array_adjust(0, sizeof(f_string_range_t), (void **) &array[i].array[j].variable.array, &array[i].array[j].variable.used, &array[i].array[j].variable.size);
           if (F_status_is_error(status)) return status;
 
-          status = f_string_ranges_adjust(0, &array[i].array[j].vocabulary);
+          status = f_memory_array_adjust(0, sizeof(f_string_range_t), (void **) &array[i].array[j].vocabulary.array, &array[i].array[j].vocabulary.used, &array[i].array[j].vocabulary.size);
           if (F_status_is_error(status)) return status;
         } // for
 

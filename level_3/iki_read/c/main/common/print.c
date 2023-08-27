@@ -18,8 +18,6 @@ extern "C" {
     "f_memory_arrays_resize",
     "f_string_dynamic_append_nulless",
     "f_string_dynamics_append",
-    "f_string_maps_increase_by",
-    "f_string_triples_increase_by",
     "f_thread_create",
     "fl_iki_read",
     "fll_program_parameter_process_context_standard",

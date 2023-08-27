@@ -224,11 +224,11 @@ extern "C" {
  *   The map to load the settings into.
  *
  * @return
+ *   Errors (with error bit) from: f_memory_aray_increase().
  *   Errors (with error bit) from: f_string_dynamic_partial_append_nulless().
- *   Errors (with error bit) from: f_string_maps_increase().
  *
+ * @see f_memory_aray_increase()
  * @see f_string_dynamic_partial_append_nulless()
- * @see f_string_maps_increase()
  */
 #ifndef _di_controller_entry_settings_read_map_
   f_status_t controller_entry_settings_read_map(const f_string_static_t buffer, const f_string_ranges_t ranges, f_string_maps_t *setting_maps) F_attribute_visibility_internal_d;

@@ -35,8 +35,6 @@ extern "C" {
  *     Errors (with error bit) from: f_file_exists().
  *     Errors (with error bit) from: f_memory_array_resize().
  *     Errors (with error bit) from: f_string_dynamic_append().
- *     Errors (with error bit) from: f_string_maps_resize().
- *     Errors (with error bit) from: f_string_triples_resize().
  *     Errors (with error bit) from: fll_program_parameter_process_context().
  *     Errors (with error bit) from: fll_program_parameter_process_verbosity_standard().
  *
@@ -44,8 +42,6 @@ extern "C" {
  * @see f_file_exists()
  * @see f_memory_array_resize()
  * @see f_string_dynamic_append()
- * @see f_string_maps_resize()
- * @see f_string_triples_resize()
  * @see fll_program_parameter_process_context()
  * @see fll_program_parameter_process_verbosity_standard()
  */
@@ -65,7 +61,6 @@ extern "C" {
  *     F_okay on success.
  *
  *     Errors (with error bit) from: f_memory_array_resize().
- *     Errors (with error bit) from: f_string_triples_resize().
  * @param name
  *   The name of the parameter.
  *   This is used for printing error messages.
@@ -77,7 +72,6 @@ extern "C" {
  *   F_false if not found or not processed.
  *
  * @see f_memory_array_resize()
- * @see f_string_triples_resize()
  */
 #ifndef _di_iki_read_setting_load_parameter_substitution_
   extern f_status_t iki_read_setting_load_parameter_substitution(iki_read_main_t * const main, const f_console_parameter_t parameter, const f_string_static_t name, f_string_triples_t *triple);

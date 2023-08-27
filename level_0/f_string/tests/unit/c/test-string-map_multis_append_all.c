@@ -21,7 +21,7 @@ void test__f_string_map_multis_append_all__works(void **state) {
   const f_string_statics_t test_value = macro_f_string_statics_t_initialize_1(test_value_array, 0, length_values);
 
   {
-    f_status_t status = f_string_map_multis_resize(length_inner, &source);
+    f_status_t status = f_memory_arrays_resize(length_inner, sizeof(f_string_map_multi_t), (void **) &source.array, &source.used, &source.size, &f_string_map_multis_delete_callback);
 
     assert_int_equal(status, F_okay);
     assert_int_equal(source.size, length_inner);
@@ -91,7 +91,7 @@ void test__f_string_map_multis_append_all__returns_data_not(void **state) {
   f_string_map_multis_t destination = f_string_map_multis_t_initialize;
 
   {
-    const f_status_t status = f_string_map_multis_resize(length, &source);
+    const f_status_t status = f_memory_arrays_resize(length, sizeof(f_string_map_multi_t), (void **) &source.array, &source.used, &source.size, &f_string_map_multis_delete_callback);
 
     assert_int_equal(status, F_okay);
     assert_int_equal(source.used, 0);

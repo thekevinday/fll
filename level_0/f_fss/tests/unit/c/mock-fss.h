@@ -36,20 +36,10 @@ extern f_status_t __real_f_memory_array_resize(const f_number_unsigned_t length,
 extern f_status_t __real_f_memory_arrays_adjust(const f_number_unsigned_t length, const size_t width, void ** const array, f_number_unsigned_t * const used, f_number_unsigned_t * const size, f_status_t (*callback)(const f_number_unsigned_t start, const f_number_unsigned_t size, void * const array));
 extern f_status_t __real_f_memory_arrays_resize(const f_number_unsigned_t length, const size_t width, void ** const array, f_number_unsigned_t * const used, f_number_unsigned_t * const size, f_status_t (*callback)(const f_number_unsigned_t start, const f_number_unsigned_t size, void * const array));
 
-extern f_status_t __real_f_string_ranges_adjust(const f_number_unsigned_t length, f_string_ranges_t * const structure);
-extern f_status_t __real_f_string_ranges_resize(const f_number_unsigned_t length, f_string_ranges_t * const structure);
-extern f_status_t __real_f_string_rangess_adjust(const f_number_unsigned_t length, f_string_ranges_t * const structure);
-extern f_status_t __real_f_string_rangess_resize(const f_number_unsigned_t length, f_string_ranges_t * const structure);
-
 extern f_status_t __wrap_f_memory_array_adjust(const f_number_unsigned_t length, const size_t width, void ** const array, f_number_unsigned_t * const used, f_number_unsigned_t * const size);
 extern f_status_t __wrap_f_memory_array_resize(const f_number_unsigned_t length, const size_t width, void ** const array, f_number_unsigned_t * const used, f_number_unsigned_t * const size);
 extern f_status_t __wrap_f_memory_arrays_adjust(const f_number_unsigned_t length, const size_t width, void ** const array, f_number_unsigned_t * const used, f_number_unsigned_t * const size, f_status_t (*callback)(const f_number_unsigned_t start, const f_number_unsigned_t size, void * const array));
 extern f_status_t __wrap_f_memory_arrays_resize(const f_number_unsigned_t length, const size_t width, void ** const array, f_number_unsigned_t * const used, f_number_unsigned_t * const size, f_status_t (*callback)(const f_number_unsigned_t start, const f_number_unsigned_t size, void * const array));
-
-extern f_status_t __wrap_f_string_ranges_adjust(const f_number_unsigned_t length, f_string_ranges_t * const structure);
-extern f_status_t __wrap_f_string_ranges_resize(const f_number_unsigned_t length, f_string_ranges_t * const structure);
-extern f_status_t __wrap_f_string_rangess_adjust(const f_number_unsigned_t length, f_string_ranges_t * const structure);
-extern f_status_t __wrap_f_string_rangess_resize(const f_number_unsigned_t length, f_string_ranges_t * const structure);
 
 //extern long __wrap_sysconf(int name);
 

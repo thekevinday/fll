@@ -40,6 +40,7 @@ extern "C" {
   #define f_fss_named_t_initialize { f_string_range_t_initialize, f_string_ranges_t_initialize, f_string_rangess_t_initialize, f_uint8ss_t_initialize }
 
   #define macro_f_fss_named_t_initialize_1(name, objects, contents, quotess) macro_f_number_unsigneds_t_initialize_1(name, objects, contents, quotess)
+  #define macro_f_fss_named_t_initialize_2(name) macro_f_number_unsigneds_t_initialize_1(name, f_string_ranges_t_initialize, f_string_rangess_t_initialize, f_uint8ss_t_initialize)
 
   #define macro_f_fss_named_t_clear(named) \
     macro_f_string_range_t_clear(named.name) \
@@ -107,12 +108,10 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_string_ranges_resize().
- *   Errors (with error bit) from: f_string_rangess_resize().
+ *   Errors (with error bit) from: f_memory_array_resize().
  *   Errors (with error bit) from: f_memory_arrays_resize().
  *
- * @see f_string_ranges_resize()
- * @see f_string_rangess_resize()
+ * @see f_memory_array_resize()
  * @see f_memory_arrays_resize()
  */
 #ifndef _di_f_fss_named_delete_
@@ -130,12 +129,10 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_string_ranges_adjust().
- *   Errors (with error bit) from: f_string_rangess_adjust().
+ *   Errors (with error bit) from: f_memory_array_adjust().
  *   Errors (with error bit) from: f_memory_arrays_adjust().
  *
- * @see f_string_ranges_adjust()
- * @see f_string_rangess_adjust()
+ * @see f_memory_array_adjust()
  * @see f_memory_arrays_adjust()
  */
 #ifndef _di_f_fss_named_destroy_
@@ -162,12 +159,10 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_string_ranges_resize().
- *   Errors (with error bit) from: f_string_rangess_resize().
+ *   Errors (with error bit) from: f_memory_array_resize().
  *   Errors (with error bit) from: f_memory_arrays_resize().
  *
- * @see f_string_ranges_resize()
- * @see f_string_rangess_resize()
+ * @see f_memory_arrays_resize()
  * @see f_memory_arrays_resize()
  */
 #ifndef _di_f_fss_nameds_delete_callback_
@@ -194,12 +189,10 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_string_ranges_adjust().
- *   Errors (with error bit) from: f_string_rangess_adjust().
+ *   Errors (with error bit) from: f_memory_array_adjust().
  *   Errors (with error bit) from: f_memory_arrays_adjust().
  *
- * @see f_string_ranges_adjust()
- * @see f_string_rangess_adjust()
+ * @see f_memory_array_adjust()
  * @see f_memory_arrays_adjust()
  */
 #ifndef _di_f_fss_nameds_destroy_callback_
@@ -226,12 +219,10 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_string_ranges_resize().
- *   Errors (with error bit) from: f_string_rangess_resize().
+ *   Errors (with error bit) from: f_memory_array_resize().
  *   Errors (with error bit) from: f_memory_arrays_resize().
  *
- * @see f_string_ranges_resize()
- * @see f_string_rangess_resize()
+ * @see f_memory_array_resize()
  * @see f_memory_arrays_resize()
  */
 #ifndef _di_f_fss_namedss_delete_callback_
@@ -258,12 +249,10 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_string_ranges_adjust().
- *   Errors (with error bit) from: f_string_rangess_adjust().
+ *   Errors (with error bit) from: f_memory_array_adjust().
  *   Errors (with error bit) from: f_memory_arrays_adjust().
  *
- * @see f_string_ranges_adjust()
- * @see f_string_rangess_adjust()
+ * @see f_memory_array_adjust()
  * @see f_memory_arrays_adjust()
  */
 #ifndef _di_f_fss_namedss_destroy_callback_

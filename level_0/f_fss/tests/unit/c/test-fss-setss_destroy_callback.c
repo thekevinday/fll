@@ -16,8 +16,8 @@ void test__f_fss_setss_destroy_callback__fails(void **state) {
   f_fss_sets_t datas_array[] = { datas };
 
   {
-    will_return(__wrap_f_string_ranges_adjust, true);
-    will_return(__wrap_f_string_ranges_adjust, F_status_set_error(F_failure));
+    will_return(__wrap_f_memory_array_adjust, true);
+    will_return(__wrap_f_memory_array_adjust, F_status_set_error(F_failure));
 
     const f_status_t status = f_fss_setss_destroy_callback(0, 1, (void *) datas_array);
 
@@ -25,11 +25,11 @@ void test__f_fss_setss_destroy_callback__fails(void **state) {
   }
 
   {
-    will_return(__wrap_f_string_ranges_adjust, false);
-    will_return(__wrap_f_string_ranges_adjust, F_okay);
+    will_return(__wrap_f_memory_array_adjust, false);
+    will_return(__wrap_f_memory_array_adjust, F_okay);
 
-    will_return(__wrap_f_string_rangess_adjust, true);
-    will_return(__wrap_f_string_rangess_adjust, F_status_set_error(F_failure));
+    will_return(__wrap_f_memory_arrays_adjust, true);
+    will_return(__wrap_f_memory_arrays_adjust, F_status_set_error(F_failure));
 
     const f_status_t status = f_fss_setss_destroy_callback(0, 1, (void *) datas_array);
 
@@ -39,7 +39,7 @@ void test__f_fss_setss_destroy_callback__fails(void **state) {
 
 void test__f_fss_setss_destroy_callback__works(void **state) {
 
-  mock_unwrap = 1;
+  mock_unwrap = 0;
   mock_unwrap_f_memory = 1;
 
   const f_number_unsigned_t length = 1;
@@ -47,16 +47,16 @@ void test__f_fss_setss_destroy_callback__works(void **state) {
   f_fss_setss_t datass = f_fss_setss_t_initialize;
 
   {
-    f_status_t status = f_memory_array_adjust(length, sizeof(f_fss_sets_t), (void **) &datass.array, &datass.used, &datass.size);
+    f_status_t status = f_memory_array_resize(length, sizeof(f_fss_sets_t), (void **) &datass.array, &datass.used, &datass.size);
     assert_int_equal(status, F_okay);
 
-    status = f_memory_array_adjust(1, sizeof(f_fss_set_t), (void **) &datass.array[0].array, &datass.array[0].used, &datass.array[0].size);
+    status = f_memory_array_resize(1, sizeof(f_fss_set_t), (void **) &datass.array[0].array, &datass.array[0].used, &datass.array[0].size);
     assert_int_equal(status, F_okay);
 
-    status = f_string_ranges_adjust(1, &datass.array[0].array[0].objects);
+    status = f_memory_array_resize(1, sizeof(f_string_range_t), (void **) &datass.array[0].array[0].objects.array, &datass.array[0].array[0].objects.used, &datass.array[0].array[0].objects.size);
     assert_int_equal(status, F_okay);
 
-    status = f_string_rangess_adjust(1, &datass.array[0].array[0].contents);
+    status = f_memory_array_resize(1, sizeof(f_string_ranges_t), (void **) &datass.array[0].array[0].contents.array, &datass.array[0].array[0].contents.used, &datass.array[0].array[0].contents.size);
     assert_int_equal(status, F_okay);
   }
 

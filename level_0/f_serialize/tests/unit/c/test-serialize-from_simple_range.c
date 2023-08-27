@@ -28,7 +28,7 @@ void test__f_serialize_from_simple_range__returns_data_not(void **state) {
     assert_int_equal(status, F_data_not);
   }
 
-  f_string_ranges_resize(0, &ranges);
+  free((void *) ranges.array);
 }
 
 void test__f_serialize_from_simple_range__works(void **state) {
@@ -98,7 +98,7 @@ void test__f_serialize_from_simple_range__works(void **state) {
     } // for
   }
 
-  f_string_ranges_resize(0, &ranges);
+  free((void *) ranges.array);
 }
 
 #ifdef __cplusplus
