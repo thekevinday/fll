@@ -136,7 +136,7 @@ int main(void) {
 
 f_status_t test_convert_dynamic_to_utf(const f_string_static_t dynamic, f_utf_string_dynamic_t * const utf) {
 
-  f_status_t status = f_utf_string_dynamic_resize(dynamic.used, utf);
+  f_status_t status = f_memory_array_resize(dynamic.used, sizeof(f_utf_char_t), (void **) &utf->string, &utf->used, &utf->size);
   if (F_status_is_error(status)) return status;
 
   utf->used = 0;

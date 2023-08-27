@@ -117,8 +117,8 @@ void test__f_compare_utf_dynamic_trim_string__trims(void **state) {
     assert_int_equal(status, F_equal_to);
   } // for
 
-  f_utf_string_dynamic_resize(0, &utf_string_1);
-  f_utf_string_dynamic_resize(0, &utf_string_2);
+  free((void *) utf_string_1.string);
+  free((void *) utf_string_2.string);
 }
 
 void test__f_compare_utf_dynamic_trim_string__something_misses_nothing(void **state) {
@@ -151,7 +151,7 @@ void test__f_compare_utf_dynamic_trim_string__something_misses_nothing(void **st
     assert_int_equal(status, F_equal_to_not);
   } // for
 
-  f_utf_string_dynamic_resize(0, &utf_string_1);
+  free((void *) utf_string_1.string);
 }
 
 void test__f_compare_utf_dynamic_trim_string__works(void **state) {
@@ -425,8 +425,8 @@ void test__f_compare_utf_dynamic_trim_string__works(void **state) {
     assert_int_equal(status, expects[i]);
   } // for
 
-  f_utf_string_dynamic_resize(0, &utf_string_1);
-  f_utf_string_dynamic_resize(0, &utf_string_2);
+  free((void *) utf_string_1.string);
+  free((void *) utf_string_2.string);
 }
 
 #ifdef __cplusplus

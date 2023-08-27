@@ -324,8 +324,8 @@ void test__f_compare_utf_dynamic_partial_trim_dynamic__works(void **state) {
     assert_int_equal(status, expects[i]);
   } // for
 
-  f_utf_string_dynamic_resize(0, &utf_string_1);
-  f_utf_string_dynamic_resize(0, &utf_string_2);
+  free((void *) utf_string_1.string);
+  free((void *) utf_string_2.string);
 }
 
 #ifdef __cplusplus

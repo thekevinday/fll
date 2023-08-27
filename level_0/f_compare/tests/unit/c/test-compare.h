@@ -124,11 +124,11 @@ extern int main(void);
  * @return
  *   F_okay on success.
  *
+ *   Errors (with error bit) from: f_memory_array_resize().
  *   Errors (with error bit) from: f_utf_char_to_character().
- *   Errors (with error bit) from: f_utf_string_dynamic_resize().
  *
+ * @see f_memory_array_resize()
  * @see f_utf_char_to_character()
- * @see f_utf_string_dynamic_resize()
  */
 extern f_status_t test_convert_dynamic_to_utf(const f_string_static_t dynamic, f_utf_string_dynamic_t * const utf);
 
