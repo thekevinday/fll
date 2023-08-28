@@ -1352,6 +1352,7 @@ extern "C" {
         fake_make_parameter_variable_process_s,
         fake_make_parameter_variable_settings_s,
         fake_make_parameter_variable_sources_s,
+        fake_make_parameter_variable_under_s,
         fake_make_parameter_variable_verbosity_s,
         fake_make_parameter_variable_work_s,
         fake_make_parameter_variable_option_build_s,
@@ -1363,6 +1364,7 @@ extern "C" {
         fake_make_parameter_variable_option_process_s,
         fake_make_parameter_variable_option_settings_s,
         fake_make_parameter_variable_option_sources_s,
+        fake_make_parameter_variable_option_under_s,
         fake_make_parameter_variable_option_verbosity_s,
         fake_make_parameter_variable_option_work_s,
         fake_make_parameter_variable_value_build_s,
@@ -1374,13 +1376,14 @@ extern "C" {
         fake_make_parameter_variable_value_process_s,
         fake_make_parameter_variable_value_settings_s,
         fake_make_parameter_variable_value_sources_s,
+        fake_make_parameter_variable_value_under_s,
         fake_make_parameter_variable_value_verbosity_s,
         fake_make_parameter_variable_value_work_s,
       };
 
       f_status_t status = F_none;
 
-      for (f_array_length_t i = 0; i < 33; ++i) {
+      for (f_array_length_t i = 0; i < 36; ++i) {
 
         if (fl_string_dynamic_compare(reserved_name[i], data_make->cache_arguments.array[0]) == F_equal_to) {
           if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to.stream) {

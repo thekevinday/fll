@@ -650,6 +650,7 @@ const f_string_static_t fake_build_documentation_files_s = macro_f_string_static
         f_console_symbol_short_enable_s,
         f_console_symbol_short_enable_s,
         f_console_symbol_short_enable_s,
+        f_console_symbol_short_enable_s,
       };
 
       const f_string_static_t parameters_name[] = {
@@ -659,6 +660,7 @@ const f_string_static_t fake_build_documentation_files_s = macro_f_string_static
         fake_short_path_build_s,
         fake_short_path_data_s,
         fake_short_path_sources_s,
+        fake_short_path_under_s,
         fake_short_path_work_s,
       };
 
@@ -669,10 +671,11 @@ const f_string_static_t fake_build_documentation_files_s = macro_f_string_static
         data->path_build,
         data->path_data,
         data_build->setting.path_sources,
+        data->path_under,
         data->path_work,
       };
 
-      *status = fll_execute_arguments_add_parameter_set(parameters_prefix, parameters_name, parameters_value, 7, &arguments);
+      *status = fll_execute_arguments_add_parameter_set(parameters_prefix, parameters_name, parameters_value, 8, &arguments);
 
       f_string_dynamic_resize(0, &defines);
 

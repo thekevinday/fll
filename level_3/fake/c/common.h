@@ -283,6 +283,7 @@ extern "C" {
   #define FAKE_short_path_build_s   "b"
   #define FAKE_short_path_data_s    "D"
   #define FAKE_short_path_sources_s "S"
+  #define FAKE_short_path_under_s   "U"
   #define FAKE_short_path_work_s    "w"
 
   #define FAKE_long_define_s   "define"
@@ -294,6 +295,7 @@ extern "C" {
   #define FAKE_long_path_build_s   "build"
   #define FAKE_long_path_data_s    "data"
   #define FAKE_long_path_sources_s "sources"
+  #define FAKE_long_path_under_s   "under"
   #define FAKE_long_path_work_s    "work"
 
   // These special parameters are provided in such a way that they mimic the traditional ./configure script.
@@ -318,6 +320,7 @@ extern "C" {
   #define FAKE_short_path_build_s_length   1
   #define FAKE_short_path_data_s_length    1
   #define FAKE_short_path_sources_s_length 1
+  #define FAKE_short_path_under_s_length   1
   #define FAKE_short_path_work_s_length    1
 
   #define FAKE_long_define_s_length   6
@@ -329,6 +332,7 @@ extern "C" {
   #define FAKE_long_path_build_s_length   5
   #define FAKE_long_path_data_s_length    4
   #define FAKE_long_path_sources_s_length 7
+  #define FAKE_long_path_under_s_length   5
   #define FAKE_long_path_work_s_length    4
 
   #define FAKE_long_documents_disabled_s_length 11
@@ -352,6 +356,7 @@ extern "C" {
   extern const f_string_static_t fake_short_path_build_s;
   extern const f_string_static_t fake_short_path_data_s;
   extern const f_string_static_t fake_short_path_sources_s;
+  extern const f_string_static_t fake_short_path_under_s;
   extern const f_string_static_t fake_short_path_work_s;
 
   extern const f_string_static_t fake_long_define_s;
@@ -363,6 +368,7 @@ extern "C" {
   extern const f_string_static_t fake_long_path_build_s;
   extern const f_string_static_t fake_long_path_data_s;
   extern const f_string_static_t fake_long_path_sources_s;
+  extern const f_string_static_t fake_long_path_under_s;
   extern const f_string_static_t fake_long_path_work_s;
 
   extern const f_string_static_t fake_long_documents_disabled_s;
@@ -399,6 +405,7 @@ extern "C" {
     fake_parameter_path_build_e,
     fake_parameter_path_data_e,
     fake_parameter_path_sources_e,
+    fake_parameter_path_under_e,
     fake_parameter_path_work_e,
 
     fake_parameter_documents_disabled_e,
@@ -435,6 +442,7 @@ extern "C" {
       macro_f_console_parameter_t_initialize(fake_short_path_build_s.string, fake_long_path_build_s.string, 0, 1, f_console_type_normal_e), \
       macro_f_console_parameter_t_initialize(fake_short_path_data_s.string, fake_long_path_data_s.string, 0, 1, f_console_type_normal_e), \
       macro_f_console_parameter_t_initialize(fake_short_path_sources_s.string, fake_long_path_sources_s.string, 0, 1, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(fake_short_path_under_s.string, fake_long_path_under_s.string, 0, 1, f_console_type_normal_e), \
       macro_f_console_parameter_t_initialize(fake_short_path_work_s.string, fake_long_path_work_s.string, 0, 1, f_console_type_normal_e), \
       macro_f_console_parameter_t_initialize(0, fake_long_documents_disabled_s.string, 0, 0, f_console_type_normal_e), \
       macro_f_console_parameter_t_initialize(0, fake_long_documents_enabled_s.string, 0, 0, f_console_type_normal_e), \
@@ -448,7 +456,7 @@ extern "C" {
       macro_f_console_parameter_t_initialize(0, 0, fake_other_operation_skeleton_s.string, 0, f_console_type_other_e), \
     }
 
-  #define fake_total_parameters_d 30
+  #define fake_total_parameters_d 31
 #endif // _di_fake_parameters_
 
 #ifdef __cplusplus

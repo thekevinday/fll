@@ -265,6 +265,7 @@ extern "C" {
   const f_string_static_t fake_make_parameter_variable_settings_s = macro_f_string_static_t_initialize(FAKE_make_parameter_variable_settings_s, 0, FAKE_make_parameter_variable_settings_s_length);
   const f_string_static_t fake_make_parameter_variable_sources_s = macro_f_string_static_t_initialize(FAKE_make_parameter_variable_sources_s, 0, FAKE_make_parameter_variable_sources_s_length);
   const f_string_static_t fake_make_parameter_variable_top_s = macro_f_string_static_t_initialize(FAKE_make_parameter_variable_top_s, 0, FAKE_make_parameter_variable_top_s_length);
+  const f_string_static_t fake_make_parameter_variable_under_s = macro_f_string_static_t_initialize(FAKE_make_parameter_variable_under_s, 0, FAKE_make_parameter_variable_under_s_length);
   const f_string_static_t fake_make_parameter_variable_verbosity_s = macro_f_string_static_t_initialize(FAKE_make_parameter_variable_verbosity_s, 0, FAKE_make_parameter_variable_verbosity_s_length);
   const f_string_static_t fake_make_parameter_variable_work_s = macro_f_string_static_t_initialize(FAKE_make_parameter_variable_work_s, 0, FAKE_make_parameter_variable_work_s_length);
 
@@ -277,6 +278,7 @@ extern "C" {
   const f_string_static_t fake_make_parameter_variable_option_process_s = macro_f_string_static_t_initialize(FAKE_make_parameter_variable_option_process_s, 0, FAKE_make_parameter_variable_option_process_s_length);
   const f_string_static_t fake_make_parameter_variable_option_settings_s = macro_f_string_static_t_initialize(FAKE_make_parameter_variable_option_settings_s, 0, FAKE_make_parameter_variable_option_settings_s_length);
   const f_string_static_t fake_make_parameter_variable_option_sources_s = macro_f_string_static_t_initialize(FAKE_make_parameter_variable_option_sources_s, 0, FAKE_make_parameter_variable_option_sources_s_length);
+  const f_string_static_t fake_make_parameter_variable_option_under_s = macro_f_string_static_t_initialize(FAKE_make_parameter_variable_option_under_s, 0, FAKE_make_parameter_variable_option_under_s_length);
   const f_string_static_t fake_make_parameter_variable_option_verbosity_s = macro_f_string_static_t_initialize(FAKE_make_parameter_variable_option_verbosity_s, 0, FAKE_make_parameter_variable_option_verbosity_s_length);
   const f_string_static_t fake_make_parameter_variable_option_work_s = macro_f_string_static_t_initialize(FAKE_make_parameter_variable_option_work_s, 0, FAKE_make_parameter_variable_option_work_s_length);
 
@@ -289,6 +291,7 @@ extern "C" {
   const f_string_static_t fake_make_parameter_variable_value_process_s = macro_f_string_static_t_initialize(FAKE_make_parameter_variable_value_process_s, 0, FAKE_make_parameter_variable_value_process_s_length);
   const f_string_static_t fake_make_parameter_variable_value_settings_s = macro_f_string_static_t_initialize(FAKE_make_parameter_variable_value_settings_s, 0, FAKE_make_parameter_variable_value_settings_s_length);
   const f_string_static_t fake_make_parameter_variable_value_sources_s = macro_f_string_static_t_initialize(FAKE_make_parameter_variable_value_sources_s, 0, FAKE_make_parameter_variable_value_sources_s_length);
+  const f_string_static_t fake_make_parameter_variable_value_under_s = macro_f_string_static_t_initialize(FAKE_make_parameter_variable_value_under_s, 0, FAKE_make_parameter_variable_value_under_s_length);
   const f_string_static_t fake_make_parameter_variable_value_verbosity_s = macro_f_string_static_t_initialize(FAKE_make_parameter_variable_value_verbosity_s, 0, FAKE_make_parameter_variable_value_verbosity_s_length);
   const f_string_static_t fake_make_parameter_variable_value_work_s = macro_f_string_static_t_initialize(FAKE_make_parameter_variable_value_work_s, 0, FAKE_make_parameter_variable_value_work_s_length);
 #endif // _di_fake_make_parameter_t_
@@ -346,7 +349,6 @@ extern "C" {
     f_string_dynamic_resize(0, &data->path_build_programs_static);
     f_string_dynamic_resize(0, &data->path_build_settings);
     f_string_dynamic_resize(0, &data->path_build_stage);
-    f_string_dynamic_resize(0, &data->path_work);
 
     f_string_dynamic_resize(0, &data->path_data);
     f_string_dynamic_resize(0, &data->path_data_build);
@@ -354,10 +356,9 @@ extern "C" {
     f_string_dynamic_resize(0, &data->path_data_settings);
 
     f_string_dynamic_resize(0, &data->path_documents);
-
     f_string_dynamic_resize(0, &data->path_licenses);
-
     f_string_dynamic_resize(0, &data->path_sources);
+    f_string_dynamic_resize(0, &data->path_under);
 
     f_string_dynamic_resize(0, &data->path_work);
     f_string_dynamic_resize(0, &data->path_work_includes);

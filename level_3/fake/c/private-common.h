@@ -54,7 +54,8 @@ extern "C" {
  *
  * path_documents: The documents path.
  * path_licenses:  The licenses path.
- * path_sources:   The sources path.
+ * path_sources:   The sources path
+ * path_under:     The under path (used to construct the "build" part of the path_data_build).
  *
  * path_work:                  The work path.
  * path_work_includes:         The includes work path.
@@ -120,10 +121,9 @@ extern "C" {
     f_string_dynamic_t path_data_settings;
 
     f_string_dynamic_t path_documents;
-
     f_string_dynamic_t path_licenses;
-
     f_string_dynamic_t path_sources;
+    f_string_dynamic_t path_under;
 
     f_string_dynamic_t path_work;
     f_string_dynamic_t path_work_includes;
@@ -155,6 +155,7 @@ extern "C" {
       0, \
       0, \
       0, \
+      f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \
@@ -1517,6 +1518,7 @@ extern "C" {
   #define FAKE_make_parameter_variable_settings_s  "settings"
   #define FAKE_make_parameter_variable_sources_s   "sources"
   #define FAKE_make_parameter_variable_top_s       "top"
+  #define FAKE_make_parameter_variable_under_s     "under"
   #define FAKE_make_parameter_variable_verbosity_s "verbosity"
   #define FAKE_make_parameter_variable_work_s      "work"
 
@@ -1529,6 +1531,7 @@ extern "C" {
   #define FAKE_make_parameter_variable_option_process_s   FAKE_make_parameter_variable_process_s FAKE_make_parameter_iki_option_s
   #define FAKE_make_parameter_variable_option_settings_s  FAKE_make_parameter_variable_settings_s FAKE_make_parameter_iki_option_s
   #define FAKE_make_parameter_variable_option_sources_s   FAKE_make_parameter_variable_sources_s FAKE_make_parameter_iki_option_s
+  #define FAKE_make_parameter_variable_option_under_s     FAKE_make_parameter_variable_under_s FAKE_make_parameter_iki_option_s
   #define FAKE_make_parameter_variable_option_verbosity_s FAKE_make_parameter_variable_verbosity_s FAKE_make_parameter_iki_option_s
   #define FAKE_make_parameter_variable_option_work_s      FAKE_make_parameter_variable_work_s FAKE_make_parameter_iki_option_s
 
@@ -1541,6 +1544,7 @@ extern "C" {
   #define FAKE_make_parameter_variable_value_process_s   FAKE_make_parameter_variable_process_s FAKE_make_parameter_iki_value_s
   #define FAKE_make_parameter_variable_value_settings_s  FAKE_make_parameter_variable_settings_s FAKE_make_parameter_iki_value_s
   #define FAKE_make_parameter_variable_value_sources_s   FAKE_make_parameter_variable_sources_s FAKE_make_parameter_iki_value_s
+  #define FAKE_make_parameter_variable_value_under_s     FAKE_make_parameter_variable_under_s FAKE_make_parameter_iki_value_s
   #define FAKE_make_parameter_variable_value_verbosity_s FAKE_make_parameter_variable_verbosity_s FAKE_make_parameter_iki_value_s
   #define FAKE_make_parameter_variable_value_work_s      FAKE_make_parameter_variable_work_s FAKE_make_parameter_iki_value_s
 
@@ -1559,6 +1563,7 @@ extern "C" {
   #define FAKE_make_parameter_variable_settings_s_length  8
   #define FAKE_make_parameter_variable_sources_s_length   7
   #define FAKE_make_parameter_variable_top_s_length       3
+  #define FAKE_make_parameter_variable_under_s_length     5
   #define FAKE_make_parameter_variable_verbosity_s_length 9
   #define FAKE_make_parameter_variable_work_s_length      4
 
@@ -1571,6 +1576,7 @@ extern "C" {
   #define FAKE_make_parameter_variable_option_process_s_length   FAKE_make_parameter_variable_process_s_length + FAKE_make_parameter_iki_option_s_length
   #define FAKE_make_parameter_variable_option_settings_s_length  FAKE_make_parameter_variable_settings_s_length + FAKE_make_parameter_iki_option_s_length
   #define FAKE_make_parameter_variable_option_sources_s_length   FAKE_make_parameter_variable_sources_s_length + FAKE_make_parameter_iki_option_s_length
+  #define FAKE_make_parameter_variable_option_under_s_length     FAKE_make_parameter_variable_under_s_length + FAKE_make_parameter_iki_option_s_length
   #define FAKE_make_parameter_variable_option_verbosity_s_length FAKE_make_parameter_variable_verbosity_s_length + FAKE_make_parameter_iki_option_s_length
   #define FAKE_make_parameter_variable_option_work_s_length      FAKE_make_parameter_variable_work_s_length + FAKE_make_parameter_iki_option_s_length
 
@@ -1583,6 +1589,7 @@ extern "C" {
   #define FAKE_make_parameter_variable_value_process_s_length   FAKE_make_parameter_variable_process_s_length + FAKE_make_parameter_iki_value_s_length
   #define FAKE_make_parameter_variable_value_settings_s_length  FAKE_make_parameter_variable_settings_s_length + FAKE_make_parameter_iki_value_s_length
   #define FAKE_make_parameter_variable_value_sources_s_length   FAKE_make_parameter_variable_sources_s_length + FAKE_make_parameter_iki_value_s_length
+  #define FAKE_make_parameter_variable_value_under_s_length     FAKE_make_parameter_variable_under_s_length + FAKE_make_parameter_iki_value_s_length
   #define FAKE_make_parameter_variable_value_verbosity_s_length FAKE_make_parameter_variable_verbosity_s_length + FAKE_make_parameter_iki_value_s_length
   #define FAKE_make_parameter_variable_value_work_s_length      FAKE_make_parameter_variable_work_s_length + FAKE_make_parameter_iki_value_s_length
 
@@ -1601,6 +1608,7 @@ extern "C" {
   extern const f_string_static_t fake_make_parameter_variable_settings_s;
   extern const f_string_static_t fake_make_parameter_variable_sources_s;
   extern const f_string_static_t fake_make_parameter_variable_top_s;
+  extern const f_string_static_t fake_make_parameter_variable_under_s;
   extern const f_string_static_t fake_make_parameter_variable_verbosity_s;
   extern const f_string_static_t fake_make_parameter_variable_work_s;
 
@@ -1613,6 +1621,7 @@ extern "C" {
   extern const f_string_static_t fake_make_parameter_variable_option_process_s;
   extern const f_string_static_t fake_make_parameter_variable_option_settings_s;
   extern const f_string_static_t fake_make_parameter_variable_option_sources_s;
+  extern const f_string_static_t fake_make_parameter_variable_option_under_s;
   extern const f_string_static_t fake_make_parameter_variable_option_verbosity_s;
   extern const f_string_static_t fake_make_parameter_variable_option_work_s;
 
@@ -1625,6 +1634,7 @@ extern "C" {
   extern const f_string_static_t fake_make_parameter_variable_value_process_s;
   extern const f_string_static_t fake_make_parameter_variable_value_settings_s;
   extern const f_string_static_t fake_make_parameter_variable_value_sources_s;
+  extern const f_string_static_t fake_make_parameter_variable_value_under_s;
   extern const f_string_static_t fake_make_parameter_variable_value_verbosity_s;
   extern const f_string_static_t fake_make_parameter_variable_value_work_s;
 
@@ -1638,11 +1648,13 @@ extern "C" {
     f_string_dynamics_t process;
     f_string_dynamics_t settings;
     f_string_dynamics_t sources;
+    f_string_dynamics_t under;
     f_string_dynamics_t verbosity;
     f_string_dynamics_t work;
   } fake_make_parameter_t;
 
   #define fake_make_parameter_t_initialize { \
+    f_string_dynamics_t_initialize, \
     f_string_dynamics_t_initialize, \
     f_string_dynamics_t_initialize, \
     f_string_dynamics_t_initialize, \
@@ -1666,6 +1678,7 @@ extern "C" {
     macro_f_string_dynamics_t_delete_simple(parameter.process) \
     macro_f_string_dynamics_t_delete_simple(parameter.settings) \
     macro_f_string_dynamics_t_delete_simple(parameter.sources) \
+    macro_f_string_dynamics_t_delete_simple(parameter.under) \
     macro_f_string_dynamics_t_delete_simple(parameter.verbosity) \
     macro_f_string_dynamics_t_delete_simple(parameter.work)
 #endif // _di_fake_make_parameter_t_

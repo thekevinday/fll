@@ -124,6 +124,6 @@ Fakefile Specification:
       - code:"<="
 
   The code:"if" bold:"Section Operation" condition code:"parameter"\:
-    The following reserved words are available for parameter names: code:"build", code:"color", code:"current", code:"data", code:"documents", code:"define", code:"fakefile", code:"licenses", code:"mode", code:"process", code:"return", code:"settings", code:"sources", code:"top", code:"verbosity", and code:"work".
+    The following reserved words are available for parameter names: code:"build", code:"color", code:"current", code:"data", code:"documents", code:"define", code:"fakefile", code:"licenses", code:"mode", code:"process", code:"return", code:"settings", code:"sources", code:"top", code:"under", code:"verbosity", and code:"work".
     The reserved words code:"documents" and code:"licenses" are neither implemented nor supported by Featureless Make 0.6.x and earlier)
     Each of the reserved words supports having code:":option" and code:":value" appended, such as: code:"work:value".

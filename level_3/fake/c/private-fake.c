@@ -368,6 +368,7 @@ extern "C" {
         fake_parameter_path_build_e,
         fake_parameter_path_data_e,
         fake_parameter_path_sources_e,
+        fake_parameter_path_under_e,
         fake_parameter_path_work_e,
       };
 
@@ -375,6 +376,7 @@ extern "C" {
         fake_long_path_build_s,
         fake_long_path_data_s,
         fake_long_path_sources_s,
+        fake_long_path_under_s,
         fake_long_path_work_s,
       };
 
@@ -382,6 +384,7 @@ extern "C" {
         fake_default_path_build_s,
         fake_default_path_data_s,
         fake_default_path_sources_s,
+        fake_path_part_build_s,
         fake_default_path_work_s,
       };
 
@@ -389,10 +392,11 @@ extern "C" {
         &data->path_build,
         &data->path_data,
         &data->path_sources,
+        &data->path_under,
         &data->path_work,
       };
 
-      for (uint8_t i = 0; i < 4; ++i) {
+      for (uint8_t i = 0; i < 5; ++i) {
 
         if (data->main->parameters.array[parameters_id[i]].result == f_console_result_found_e) {
           fake_print_error_parameter_missing_value(data, parameters_name[i]);
