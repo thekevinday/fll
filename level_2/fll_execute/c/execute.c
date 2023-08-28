@@ -43,14 +43,15 @@ extern "C" {
       if (!arguments) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
-    f_status_t status = f_string_dynamics_increase_by(size, arguments);
+    f_status_t status = f_string_dynamics_increase_by(size * 2, arguments);
 
-    for (f_array_length_t i = 0; F_status_is_error_not(status) && i < size; ++i) {
+    for (f_array_length_t i = 0; i < size; ++i) {
 
       status = private_fll_execute_arguments_add_parameter(prefix[i], name[i], value[i], arguments);
+      if (F_status_is_error(status)) return status;
     } // for
 
-    return status;
+    return F_none;
   }
 #endif // _di_fll_execute_arguments_add_parameter_set_
 
@@ -62,12 +63,13 @@ extern "C" {
 
     f_status_t status = f_string_dynamics_increase_by(size, arguments);
 
-    for (f_array_length_t i = 0; F_status_is_error_not(status) && i < size; ++i) {
+    for (f_array_length_t i = 0; i < size; ++i) {
 
       status = private_fll_execute_arguments_add(source[i], arguments);
+      if (F_status_is_error(status)) return status;
     } // for
 
-    return status;
+    return F_none;
   }
 #endif // _di_fll_execute_arguments_add_set_
 
