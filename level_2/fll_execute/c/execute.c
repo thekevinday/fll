@@ -47,14 +47,17 @@ extern "C" {
       if (!arguments) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
-    f_status_t status = f_memory_array_increase_by(size, sizeof(f_string_dynamic_t), (void **) &arguments->array, &arguments->used, &arguments->size);
+    {
+      f_status_t status = f_memory_array_increase_by(size * 2, sizeof(f_string_dynamic_t), (void **) &arguments->array, &arguments->used, &arguments->size);
 
-    for (f_number_unsigned_t i = 0; F_status_is_error_not(status) && i < size; ++i) {
+      for (f_number_unsigned_t i = 0; i < size; ++i) {
 
-      status = private_fll_execute_arguments_add_parameter(prefix[i], name[i], value[i], arguments);
-    } // for
+        status = private_fll_execute_arguments_add_parameter(prefix[i], name[i], value[i], arguments);
+        if (F_status_is_error(status)) return status;
+      } // for
+    }
 
-    return status;
+    return F_okay;
   }
 #endif // _di_fll_execute_arguments_add_parameter_set_
 
@@ -64,14 +67,17 @@ extern "C" {
       if (!arguments) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
-    f_status_t status = f_memory_array_increase_by(size, sizeof(f_string_dynamic_t), (void **) &arguments->array, &arguments->used, &arguments->size);
+    {
+      f_status_t status = f_memory_array_increase_by(size, sizeof(f_string_dynamic_t), (void **) &arguments->array, &arguments->used, &arguments->size);
 
-    for (f_number_unsigned_t i = 0; F_status_is_error_not(status) && i < size; ++i) {
+      for (f_number_unsigned_t i = 0; i < size; ++i) {
 
-      status = private_fll_execute_arguments_add(source[i], arguments);
-    } // for
+        status = private_fll_execute_arguments_add(source[i], arguments);
+        if (F_status_is_error(status)) return status;
+      } // for
+    }
 
-    return status;
+    return F_okay;
   }
 #endif // _di_fll_execute_arguments_add_set_
 
