@@ -71,6 +71,7 @@ extern "C" {
  *   - process:  The process name.
  *   - settings: The settings file path.
  *   - sources:  The sources directory.
+ *   - under:    The under directory.
  *   - work:     The work directory.
 
  *   - defines: The define data.
@@ -93,6 +94,7 @@ extern "C" {
     f_string_dynamic_t process;
     f_string_dynamic_t settings;
     f_string_dynamic_t sources;
+    f_string_dynamic_t under;
     f_string_dynamic_t work;
 
     f_string_dynamics_t defines;
@@ -106,6 +108,7 @@ extern "C" {
       0, \
       F_okay, \
       f_state_t_initialize, \
+      f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \
@@ -774,6 +777,7 @@ extern "C" {
  *   - process:   The process parameters.
  *   - settings:  The setting parameters.
  *   - sources:   The source parameters.
+ *   - under:     The under parameters.
  *   - verbosity: The verbosity parameters.
  *   - work:      The work parameters.
  */
@@ -790,11 +794,13 @@ extern "C" {
     f_string_dynamics_t process;
     f_string_dynamics_t settings;
     f_string_dynamics_t sources;
+    f_string_dynamics_t under;
     f_string_dynamics_t verbosity;
     f_string_dynamics_t work;
   } fake_make_parameter_t;
 
   #define fake_make_parameter_t_initialize { \
+    f_string_dynamics_t_initialize, \
     f_string_dynamics_t_initialize, \
     f_string_dynamics_t_initialize, \
     f_string_dynamics_t_initialize, \

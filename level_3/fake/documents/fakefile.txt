@@ -345,6 +345,7 @@ Fakefile Documentation:
             - code:"settings": Associated with code:"-s/--settings" parameter.
             - code:"sources": Associated with code:"-S/--sources" parameter.
             - code:"top": The absolute path to the code:"top" directory, which is the base project directory (Always has a trailing forward slash).
+            - code:"under": Associated with code:"-U/--under" parameter.
             - code:"verbosity": Associated with code:"+Q/++quiet", code:"+E/++error", code:"+N/++normal", code:"+V/++verbose", and code:"+D/++debug" parameters.
             - code:"work": Associated with code:"-w/--work" parameter.
 
@@ -609,6 +610,10 @@ Fakefile Documentation:
 
     - code:"sources"\:
       This variable holds the code:"sources" program parameters, such as code:"-S sources/".
+      This supports both code:":option" and code:":value".
+
+    - code:"under"\:
+      This variable holds the code:"under" program parameters, such as code:"-U under/".
       This supports both code:":option" and code:":value".
 
     - code:"verbosity"\:

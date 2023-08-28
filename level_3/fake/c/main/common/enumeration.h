@@ -31,6 +31,7 @@ extern "C" {
     fake_parameter_process_e,
     fake_parameter_settings_e,
     fake_parameter_sources_e,
+    fake_parameter_under_e,
     fake_parameter_work_e,
 
     fake_parameter_documents_disable_e,
@@ -60,6 +61,7 @@ extern "C" {
       macro_f_console_parameter_t_initialize_3(fake_short_process_s,   fake_long_process_s,   1, f_console_flag_normal_e), \
       macro_f_console_parameter_t_initialize_3(fake_short_settings_s,  fake_long_settings_s,  1, f_console_flag_normal_e), \
       macro_f_console_parameter_t_initialize_3(fake_short_sources_s,   fake_long_sources_s,   1, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(fake_short_under_s,     fake_long_under_s,     1, f_console_flag_normal_e), \
       macro_f_console_parameter_t_initialize_3(fake_short_work_s,      fake_long_work_s,      1, f_console_flag_normal_e), \
       \
       macro_f_console_parameter_t_initialize_5(fake_long_documents_disabled_s, 0, f_console_flag_normal_e), \
@@ -75,7 +77,7 @@ extern "C" {
       macro_f_console_parameter_t_initialize_6(fake_other_operation_skeleton_s, 0, f_console_flag_simple_e), \
     }
 
-  #define fake_parameter_total_d 34
+  #define fake_parameter_total_d 35
 #endif // _di_fake_parameter_e_
 
 /**

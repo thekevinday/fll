@@ -77,7 +77,7 @@ extern "C" {
         fake_path_part_programs_s,
         fake_path_part_settings_s,
         fake_path_part_stage_s,
-        fake_path_part_build_s,
+        main->setting.under,
         fake_path_part_documentation_s,
         fake_path_part_settings_s,
         fake_path_part_documents_s,

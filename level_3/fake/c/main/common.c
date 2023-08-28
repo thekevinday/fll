@@ -155,6 +155,7 @@ extern "C" {
           fake_parameter_process_e,
           fake_parameter_settings_e,
           fake_parameter_sources_e,
+          fake_parameter_under_e,
           fake_parameter_work_e,
         };
 
@@ -167,6 +168,7 @@ extern "C" {
           fake_long_process_s,
           fake_long_settings_s,
           fake_long_sources_s,
+          fake_long_under_s,
           fake_long_work_s,
         };
 
@@ -179,6 +181,7 @@ extern "C" {
           &main->setting.process,
           &main->setting.settings,
           &main->setting.sources,
+          &main->setting.under,
           &main->setting.work,
         };
 
@@ -190,6 +193,7 @@ extern "C" {
         main->setting.process.used = 0;
         main->setting.settings.used = 0;
         main->setting.sources.used = 0;
+        main->setting.under.used = 0;
         main->setting.work.used = 0;
 
         const f_string_static_t defaults[] = {
@@ -201,6 +205,7 @@ extern "C" {
           fake_default_process_s,
           fake_default_settings_s,
           fake_default_sources_s,
+          fake_path_part_build_s,
           fake_default_work_s,
         };
 
@@ -213,10 +218,11 @@ extern "C" {
           F_false, // fake_parameter_process_e
           F_false, // fake_parameter_settings_e
           F_false, // fake_parameter_sources_e
+          F_false, // fake_parameter_under_e
           F_true,  // fake_parameter_work_e
         };
 
-        for (i = 0; i < 9; ++i) {
+        for (i = 0; i < 10; ++i) {
 
           if ((main->program.parameters.array[parameters[i]].result & f_console_result_found_e) && !(main->program.parameters.array[parameters[i]].result & f_console_result_value_e)) {
             main->setting.state.status = F_status_set_error(F_parameter);

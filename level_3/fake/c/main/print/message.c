@@ -97,6 +97,7 @@ extern "C" {
     fll_program_print_help_option(print, fake_short_documents_s, fake_long_documents_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "Specify a custom path to the documents files.");
     fll_program_print_help_option(print, fake_short_licenses_s, fake_long_licenses_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, " Specify a custom path to the licenses files.");
     fll_program_print_help_option(print, fake_short_sources_s, fake_long_sources_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "  Specify a custom path to the source files.");
+    fll_program_print_help_option(print, fake_short_under_s, fake_long_under_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "    Specify a custom path the data build files are under.");
     fll_program_print_help_option(print, fake_short_work_s, fake_long_work_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "     Use includes/libraries/programs from this directory instead of system.");
 
     fl_print_format("%r %[Special Options:%]%r", print->to, f_string_eol_s, print->set->important, print->set->important, f_string_eol_s);

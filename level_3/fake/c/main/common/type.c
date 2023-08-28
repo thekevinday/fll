@@ -225,6 +225,7 @@ extern "C" {
     f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &data_make->parameter.process.array, &data_make->parameter.process.used, &data_make->parameter.process.size, &f_string_dynamics_delete_callback);
     f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &data_make->parameter.settings.array, &data_make->parameter.settings.used, &data_make->parameter.settings.size, &f_string_dynamics_delete_callback);
     f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &data_make->parameter.sources.array, &data_make->parameter.sources.used, &data_make->parameter.sources.size, &f_string_dynamics_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &data_make->parameter.under.array, &data_make->parameter.under.used, &data_make->parameter.under.size, &f_string_dynamics_delete_callback);
     f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &data_make->parameter.verbosity.array, &data_make->parameter.verbosity.used, &data_make->parameter.verbosity.size, &f_string_dynamics_delete_callback);
     f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &data_make->parameter.work.array, &data_make->parameter.work.used, &data_make->parameter.work.size, &f_string_dynamics_delete_callback);
 
@@ -239,6 +240,7 @@ extern "C" {
     f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &data_make->parameter_option.process.array, &data_make->parameter_option.process.used, &data_make->parameter_option.process.size, &f_string_dynamics_delete_callback);
     f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &data_make->parameter_option.settings.array, &data_make->parameter_option.settings.used, &data_make->parameter_option.settings.size, &f_string_dynamics_delete_callback);
     f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &data_make->parameter_option.sources.array, &data_make->parameter_option.sources.used, &data_make->parameter_option.sources.size, &f_string_dynamics_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &data_make->parameter_option.under.array, &data_make->parameter_option.under.used, &data_make->parameter_option.under.size, &f_string_dynamics_delete_callback);
     f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &data_make->parameter_option.verbosity.array, &data_make->parameter_option.verbosity.used, &data_make->parameter_option.verbosity.size, &f_string_dynamics_delete_callback);
     f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &data_make->parameter_option.work.array, &data_make->parameter_option.work.used, &data_make->parameter_option.work.size, &f_string_dynamics_delete_callback);
 
@@ -253,6 +255,7 @@ extern "C" {
     f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &data_make->parameter_value.process.array, &data_make->parameter_value.process.used, &data_make->parameter_value.process.size, &f_string_dynamics_delete_callback);
     f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &data_make->parameter_value.settings.array, &data_make->parameter_value.settings.used, &data_make->parameter_value.settings.size, &f_string_dynamics_delete_callback);
     f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &data_make->parameter_value.sources.array, &data_make->parameter_value.sources.used, &data_make->parameter_value.sources.size, &f_string_dynamics_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &data_make->parameter_value.under.array, &data_make->parameter_value.under.used, &data_make->parameter_value.under.size, &f_string_dynamics_delete_callback);
     f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &data_make->parameter_value.verbosity.array, &data_make->parameter_value.verbosity.used, &data_make->parameter_value.verbosity.size, &f_string_dynamics_delete_callback);
     f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &data_make->parameter_value.work.array, &data_make->parameter_value.work.used, &data_make->parameter_value.work.size, &f_string_dynamics_delete_callback);
 
@@ -282,6 +285,7 @@ extern "C" {
     f_memory_array_resize(0, sizeof(f_char_t), (void **) &setting->process.string, &setting->process.used, &setting->process.size);
     f_memory_array_resize(0, sizeof(f_char_t), (void **) &setting->settings.string, &setting->settings.used, &setting->settings.size);
     f_memory_array_resize(0, sizeof(f_char_t), (void **) &setting->sources.string, &setting->sources.used, &setting->sources.size);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &setting->under.string, &setting->under.used, &setting->under.size);
     f_memory_array_resize(0, sizeof(f_char_t), (void **) &setting->work.string, &setting->work.used, &setting->work.size);
 
     f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &setting->defines.array, &setting->defines.used, &setting->defines.size, &f_string_dynamics_delete_callback);

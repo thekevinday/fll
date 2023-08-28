@@ -1199,6 +1199,7 @@ extern "C" {
       fake_make_parameter_variable_process_s,
       fake_make_parameter_variable_settings_s,
       fake_make_parameter_variable_sources_s,
+      fake_make_parameter_variable_under_s,
       fake_make_parameter_variable_verbosity_s,
       fake_make_parameter_variable_work_s,
       fake_make_parameter_variable_option_build_s,
@@ -1210,6 +1211,7 @@ extern "C" {
       fake_make_parameter_variable_option_process_s,
       fake_make_parameter_variable_option_settings_s,
       fake_make_parameter_variable_option_sources_s,
+      fake_make_parameter_variable_option_under_s,
       fake_make_parameter_variable_option_verbosity_s,
       fake_make_parameter_variable_option_work_s,
       fake_make_parameter_variable_value_build_s,
@@ -1221,6 +1223,7 @@ extern "C" {
       fake_make_parameter_variable_value_process_s,
       fake_make_parameter_variable_value_settings_s,
       fake_make_parameter_variable_value_sources_s,
+      fake_make_parameter_variable_value_under_s,
       fake_make_parameter_variable_value_verbosity_s,
       fake_make_parameter_variable_value_work_s,
     };
@@ -1235,6 +1238,7 @@ extern "C" {
       main->setting.process.used,
       main->setting.settings.used,
       main->setting.sources.used,
+      main->setting.under.used,
       F_true,
       main->setting.work.used,
       main->program.parameters.array[fake_parameter_build_e].result & f_console_result_value_e,
@@ -1246,6 +1250,7 @@ extern "C" {
       main->program.parameters.array[fake_parameter_process_e].result & f_console_result_value_e,
       main->program.parameters.array[fake_parameter_settings_e].result & f_console_result_value_e,
       main->program.parameters.array[fake_parameter_sources_e].result & f_console_result_value_e,
+      main->program.parameters.array[fake_parameter_under_e].result & f_console_result_value_e,
       (main->program.parameters.array[f_console_standard_parameter_verbosity_quiet_e].result & f_console_result_found_e) || (main->program.parameters.array[f_console_standard_parameter_verbosity_normal_e].result & f_console_result_found_e) || (main->program.parameters.array[f_console_standard_parameter_verbosity_verbose_e].result & f_console_result_found_e) || (main->program.parameters.array[f_console_standard_parameter_verbosity_debug_e].result & f_console_result_found_e),
       main->program.parameters.array[fake_parameter_work_e].result & f_console_result_value_e,
       data_make->parameter_value.build.used,
@@ -1257,6 +1262,7 @@ extern "C" {
       data_make->parameter_value.process.used,
       data_make->parameter_value.settings.used,
       data_make->parameter_value.sources.used,
+      data_make->parameter_value.under.used,
       data_make->parameter_value.verbosity.used,
       data_make->parameter_value.work.used,
     };
@@ -1272,7 +1278,7 @@ extern "C" {
     // Multiple properties may pass and so if any of them fail, then they all fail.
     for (; i < main->cache_arguments.used && !result; ++i) {
 
-      for (j = 0; j < 33; ++j) {
+      for (j = 0; j < 36; ++j) {
 
         if (f_compare_dynamic(reserved_name[j], main->cache_arguments.array[i]) == F_equal_to) {
           result = reserved_parameter[j] ? 2 : 1;
