@@ -117,20 +117,20 @@ extern "C" {
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
 
-        if (array[i].size) {
+        if (array[i].size && array[i].array) {
           for (j = 0; j < array[i].size; ++j) {
 
-            if (array[i].array[j].a.size) {
+            if (array[i].array[j].a.size && array[i].array[j].a.string) {
               status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &array[i].array[j].a.string, &array[i].array[j].a.used, &array[i].array[j].a.size);
               if (F_status_is_error(status)) return status;
             }
 
-            if (array[i].array[j].b.size) {
+            if (array[i].array[j].b.size && array[i].array[j].b.string) {
               status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &array[i].array[j].b.string, &array[i].array[j].b.used, &array[i].array[j].b.size);
               if (F_status_is_error(status)) return status;
             }
 
-            if (array[i].array[j].c.size) {
+            if (array[i].array[j].c.size && array[i].array[j].c.string) {
               status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &array[i].array[j].c.string, &array[i].array[j].c.used, &array[i].array[j].c.size);
               if (F_status_is_error(status)) return status;
             }
@@ -156,20 +156,20 @@ extern "C" {
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
 
-        if (array[i].size) {
+        if (array[i].size && array[i].array) {
           for (j = 0; j < array[i].size; ++j) {
 
-            if (array[i].array[j].a.size) {
+            if (array[i].array[j].a.size && array[i].array[j].a.string) {
               status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &array[i].array[j].a.string, &array[i].array[j].a.used, &array[i].array[j].a.size);
               if (F_status_is_error(status)) return status;
             }
 
-            if (array[i].array[j].b.size) {
+            if (array[i].array[j].b.size && array[i].array[j].b.string) {
               status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &array[i].array[j].b.string, &array[i].array[j].b.used, &array[i].array[j].b.size);
               if (F_status_is_error(status)) return status;
             }
 
-            if (array[i].array[j].c.size) {
+            if (array[i].array[j].c.size && array[i].array[j].c.string) {
               status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &array[i].array[j].c.string, &array[i].array[j].c.used, &array[i].array[j].c.size);
               if (F_status_is_error(status)) return status;
             }

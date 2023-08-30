@@ -48,7 +48,7 @@ extern "C" {
           if (sem_destroy(&array[i].array[j]) == -1) return (errno == EINVAL) ? F_status_set_error(F_parameter) : F_status_set_error(F_failure);
         } // for
 
-        if (array[i].size) {
+        if (array[i].size && array[i].array) {
           const f_status_t status = f_memory_array_resize(0, sizeof(f_thread_semaphore_t), (void **) &array[i].array, &array[i].used, &array[i].size);
           if (F_status_is_error(status)) return status;
         }
@@ -72,7 +72,7 @@ extern "C" {
           if (sem_destroy(&array[i].array[j]) == -1) return (errno == EINVAL) ? F_status_set_error(F_parameter) : F_status_set_error(F_failure);
         } // for
 
-        if (array[i].size) {
+        if (array[i].size && array[i].array) {
           const f_status_t status = f_memory_array_resize(0, sizeof(f_thread_semaphore_t), (void **) &array[i].array, &array[i].used, &array[i].size);
           if (F_status_is_error(status)) return status;
         }

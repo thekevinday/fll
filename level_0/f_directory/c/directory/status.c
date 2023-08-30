@@ -43,8 +43,10 @@ extern "C" {
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
 
-        status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &array[i].path.string, &array[i].path.used, &array[i].path.size);
-        if (F_status_is_error(status)) return status;
+        if (array[i].path.size && array[i].path.string) {
+          status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &array[i].path.string, &array[i].path.used, &array[i].path.size);
+          if (F_status_is_error(status)) return status;
+        }
       } // for
     }
 
@@ -61,8 +63,10 @@ extern "C" {
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
 
-        status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &array[i].path.string, &array[i].path.used, &array[i].path.size);
-        if (F_status_is_error(status)) return status;
+        if (array[i].path.size && array[i].path.string) {
+          status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &array[i].path.string, &array[i].path.used, &array[i].path.size);
+          if (F_status_is_error(status)) return status;
+        }
       } // for
     }
 
@@ -82,11 +86,13 @@ extern "C" {
 
         for (j = 0; j < array[i].size; ++j) {
 
-          status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &array[i].array[j].path.string, &array[i].array[j].path.used, &array[i].array[j].path.size);
-          if (F_status_is_error(status)) return status;
+          if (array[i].array[j].path.size && array[i].array[j].path.string) {
+            status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &array[i].array[j].path.string, &array[i].array[j].path.used, &array[i].array[j].path.size);
+            if (F_status_is_error(status)) return status;
+          }
         } // for
 
-        if (array[i].size) {
+        if (array[i].size && array[i].array) {
           status = f_memory_array_resize(0, sizeof(f_directory_status_t), (void **) &array[i].array, &array[i].used, &array[i].size);
           if (F_status_is_error(status)) return status;
         }
@@ -109,11 +115,13 @@ extern "C" {
 
         for (j = 0; j < array[i].size; ++j) {
 
-          status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &array[i].array[j].path.string, &array[i].array[j].path.used, &array[i].array[j].path.size);
-          if (F_status_is_error(status)) return status;
+          if (array[i].array[j].path.size && array[i].array[j].path.string) {
+            status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &array[i].array[j].path.string, &array[i].array[j].path.used, &array[i].array[j].path.size);
+            if (F_status_is_error(status)) return status;
+          }
         } // for
 
-        if (array[i].size) {
+        if (array[i].size && array[i].array) {
           status = f_memory_array_adjust(0, sizeof(f_directory_status_t), (void **) &array[i].array, &array[i].used, &array[i].size);
           if (F_status_is_error(status)) return status;
         }

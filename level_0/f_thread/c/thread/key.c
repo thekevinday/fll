@@ -57,7 +57,7 @@ extern "C" {
           array[i].array[j] = 0;
         } // for
 
-        if (array[i].size) {
+        if (array[i].size && array[i].array) {
           const f_status_t status = f_memory_array_resize(0, sizeof(f_thread_key_t), (void **) &array[i].array, &array[i].used, &array[i].size);
           if (F_status_is_error(status)) return status;
         }
@@ -84,7 +84,7 @@ extern "C" {
           array[i].array[j] = 0;
         } // for
 
-        if (array[i].size) {
+        if (array[i].size && array[i].array) {
           const f_status_t status = f_memory_array_adjust(0, sizeof(f_thread_key_t), (void **) &array[i].array, &array[i].used, &array[i].size);
           if (F_status_is_error(status)) return status;
         }

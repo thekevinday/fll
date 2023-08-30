@@ -116,6 +116,7 @@ extern "C" {
 
   #define macro_f_fss_simple_packetss_t_clear(simple_packetss) macro_f_memory_structures_clear(simple_packetss)
 #endif // _di_f_fss_simple_packetss_t_
+
 /**
  * A set of string ranges intending to designate the different ranges for a Simple Packet representing each Block.
  *

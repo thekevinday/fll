@@ -57,12 +57,12 @@ extern "C" {
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
 
-        if (array[i].name.size) {
+        if (array[i].name.size && array[i].name.string) {
           status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &array[i].name.string, &array[i].name.used, &array[i].name.size);
           if (F_status_is_error(status)) return status;
         }
 
-        if (array[i].value.size) {
+        if (array[i].value.size && array[i].value.string) {
           status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &array[i].value.string, &array[i].value.used, &array[i].value.size);
           if (F_status_is_error(status)) return status;
         }
@@ -82,12 +82,12 @@ extern "C" {
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
 
-        if (array[i].name.size) {
+        if (array[i].name.size && array[i].name.string) {
           status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &array[i].name.string, &array[i].name.used, &array[i].name.size);
           if (F_status_is_error(status)) return status;
         }
 
-        if (array[i].value.size) {
+        if (array[i].value.size && array[i].value.string) {
           status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &array[i].value.string, &array[i].value.used, &array[i].value.size);
           if (F_status_is_error(status)) return status;
         }

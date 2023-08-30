@@ -10,7 +10,7 @@ extern "C" {
       if (!simple_packet) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    {
+    if (simple_packet->payload.size && simple_packet->payload.string) {
       const f_status_t status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &simple_packet->payload.string, &simple_packet->payload.used, &simple_packet->payload.size);
       if (F_status_is_error(status)) return status;
     }
@@ -25,7 +25,7 @@ extern "C" {
       if (!simple_packet) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    {
+    if (simple_packet->payload.size && simple_packet->payload.string) {
       const f_status_t status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &simple_packet->payload.string, &simple_packet->payload.used, &simple_packet->payload.size);
       if (F_status_is_error(status)) return status;
     }
@@ -95,8 +95,10 @@ extern "C" {
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
 
-        status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &array[i].payload.string, &array[i].payload.used, &array[i].payload.size);
-        if (F_status_is_error(status)) return status;
+        if (array[i].payload.size && array[i].payload.string) {
+          status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &array[i].payload.string, &array[i].payload.used, &array[i].payload.size);
+          if (F_status_is_error(status)) return status;
+        }
       } // for
     }
 
@@ -113,8 +115,10 @@ extern "C" {
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
 
-        status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &array[i].payload.string, &array[i].payload.used, &array[i].payload.size);
-        if (F_status_is_error(status)) return status;
+        if (array[i].payload.size && array[i].payload.string) {
+          status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &array[i].payload.string, &array[i].payload.used, &array[i].payload.size);
+          if (F_status_is_error(status)) return status;
+        }
       } // for
     }
 
@@ -134,11 +138,13 @@ extern "C" {
 
         for (j = 0; j < array[i].size; ++j) {
 
-          status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &array[i].array[j].payload.string, &array[i].array[j].payload.used, &array[i].array[j].payload.size);
-          if (F_status_is_error(status)) return status;
+          if (array[i].array[j].payload.size && array[i].array[j].payload.string) {
+            status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &array[i].array[j].payload.string, &array[i].array[j].payload.used, &array[i].array[j].payload.size);
+            if (F_status_is_error(status)) return status;
+          }
         } // for
 
-        if (array[i].size) {
+        if (array[i].size && array[i].array) {
           status = f_memory_array_resize(0, sizeof(f_fss_simple_packet_t), (void **) &array[i].array, &array[i].used, &array[i].size);
           if (F_status_is_error(status)) return status;
         }
@@ -161,11 +167,13 @@ extern "C" {
 
         for (j = 0; j < array[i].size; ++j) {
 
-          status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &array[i].array[j].payload.string, &array[i].array[j].payload.used, &array[i].array[j].payload.size);
-          if (F_status_is_error(status)) return status;
+          if (array[i].array[j].payload.size && array[i].array[j].payload.string) {
+            status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &array[i].array[j].payload.string, &array[i].array[j].payload.used, &array[i].array[j].payload.size);
+            if (F_status_is_error(status)) return status;
+          }
         } // for
 
-        if (array[i].size) {
+        if (array[i].size && array[i].array) {
           status = f_memory_array_adjust(0, sizeof(f_fss_simple_packet_t), (void **) &array[i].array, &array[i].used, &array[i].size);
           if (F_status_is_error(status)) return status;
         }

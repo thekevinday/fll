@@ -70,15 +70,15 @@ extern "C" {
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
 
-        if (array[i].size) {
+        if (array[i].size && array[i].array) {
           for (j = 0; j < array[i].size; ++j) {
 
-            if (array[i].array[j].name.size) {
+            if (array[i].array[j].name.size && array[i].array[j].name.string) {
               status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &array[i].array[j].name.string, &array[i].array[j].name.used, &array[i].array[j].name.size);
               if (F_status_is_error(status)) return status;
             }
 
-            if (array[i].array[j].value.size) {
+            if (array[i].array[j].value.size && array[i].array[j].value.string) {
               status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &array[i].array[j].value.string, &array[i].array[j].value.used, &array[i].array[j].value.size);
               if (F_status_is_error(status)) return status;
             }
@@ -104,15 +104,15 @@ extern "C" {
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
 
-        if (array[i].size) {
+        if (array[i].size && array[i].array) {
           for (j = 0; j < array[i].size; ++j) {
 
-            if (array[i].array[j].name.size) {
+            if (array[i].array[j].name.size && array[i].array[j].name.string) {
               status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &array[i].array[j].name.string, &array[i].array[j].name.used, &array[i].array[j].name.size);
               if (F_status_is_error(status)) return status;
             }
 
-            if (array[i].array[j].value.size) {
+            if (array[i].array[j].value.size && array[i].array[j].value.string) {
               status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &array[i].array[j].value.string, &array[i].array[j].value.used, &array[i].array[j].value.size);
               if (F_status_is_error(status)) return status;
             }

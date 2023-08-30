@@ -91,17 +91,17 @@ extern "C" {
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
 
-        if (array[i].a.size) {
+        if (array[i].a.size && array[i].a.string) {
           status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &array[i].a.string, &array[i].a.used, &array[i].a.size);
           if (F_status_is_error(status)) return status;
         }
 
-        if (array[i].b.size) {
+        if (array[i].b.size && array[i].b.string) {
           status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &array[i].b.string, &array[i].b.used, &array[i].b.size);
           if (F_status_is_error(status)) return status;
         }
 
-        if (array[i].c.size) {
+        if (array[i].c.size && array[i].c.string) {
           status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &array[i].c.string, &array[i].c.used, &array[i].c.size);
           if (F_status_is_error(status)) return status;
         }
@@ -121,17 +121,17 @@ extern "C" {
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
 
-        if (array[i].a.size) {
+        if (array[i].a.size && array[i].a.string) {
           status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &array[i].a.string, &array[i].a.used, &array[i].a.size);
           if (F_status_is_error(status)) return status;
         }
 
-        if (array[i].b.size) {
+        if (array[i].b.size && array[i].b.string) {
           status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &array[i].b.string, &array[i].b.used, &array[i].b.size);
           if (F_status_is_error(status)) return status;
         }
 
-        if (array[i].c.size) {
+        if (array[i].c.size && array[i].c.string) {
           status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &array[i].c.string, &array[i].c.used, &array[i].c.size);
           if (F_status_is_error(status)) return status;
         }

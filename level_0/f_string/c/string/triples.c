@@ -19,17 +19,17 @@ extern "C" {
       destination->array[destination->used].b.used = 0;
       destination->array[destination->used].c.used = 0;
 
-      if (source.a.used) {
+      if (source.a.used && source.a.string) {
         status = private_f_string_append(source.a.string, source.a.used, &destination->array[destination->used].a);
         if (F_status_is_error(status)) return status;
       }
 
-      if (source.b.used) {
+      if (source.b.used && source.b.string) {
         status = private_f_string_append(source.b.string, source.b.used, &destination->array[destination->used].b);
         if (F_status_is_error(status)) return status;
       }
 
-      if (source.c.used) {
+      if (source.c.used && source.c.string) {
         status = private_f_string_append(source.c.string, source.c.used, &destination->array[destination->used].c);
         if (F_status_is_error(status)) return status;
       }
@@ -59,17 +59,17 @@ extern "C" {
         destination->array[destination->used].b.used = 0;
         destination->array[destination->used].c.used = 0;
 
-        if (source.array[i].a.used) {
+        if (source.array[i].a.used && source.array[i].a.string) {
           status = private_f_string_append(source.array[i].a.string, source.array[i].a.used, &destination->array[destination->used].a);
           if (F_status_is_error(status)) return status;
         }
 
-        if (source.array[i].b.used) {
+        if (source.array[i].b.used && source.array[i].b.string) {
           status = private_f_string_append(source.array[i].b.string, source.array[i].b.used, &destination->array[destination->used].b);
           if (F_status_is_error(status)) return status;
         }
 
-        if (source.array[i].c.used) {
+        if (source.array[i].c.used && source.array[i].c.string) {
           status = private_f_string_append(source.array[i].c.string, source.array[i].c.used, &destination->array[destination->used].c);
           if (F_status_is_error(status)) return status;
         }
@@ -89,17 +89,17 @@ extern "C" {
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
 
-        if (array[i].a.size) {
+        if (array[i].a.size && array[i].a.string) {
           status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &array[i].a.string, &array[i].a.used, &array[i].a.size);
           if (F_status_is_error(status)) return status;
         }
 
-        if (array[i].b.size) {
+        if (array[i].b.size && array[i].b.string) {
           status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &array[i].b.string, &array[i].b.used, &array[i].b.size);
           if (F_status_is_error(status)) return status;
         }
 
-        if (array[i].c.size) {
+        if (array[i].c.size && array[i].c.string) {
           status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &array[i].c.string, &array[i].c.used, &array[i].c.size);
           if (F_status_is_error(status)) return status;
         }
@@ -119,17 +119,17 @@ extern "C" {
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
 
-        if (array[i].a.size) {
+        if (array[i].a.size && array[i].a.string) {
           status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &array[i].a.string, &array[i].a.used, &array[i].a.size);
           if (F_status_is_error(status)) return status;
         }
 
-        if (array[i].b.size) {
+        if (array[i].b.size && array[i].b.string) {
           status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &array[i].b.string, &array[i].b.used, &array[i].b.size);
           if (F_status_is_error(status)) return status;
         }
 
-        if (array[i].c.size) {
+        if (array[i].c.size && array[i].c.string) {
           status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &array[i].c.string, &array[i].c.used, &array[i].c.size);
           if (F_status_is_error(status)) return status;
         }

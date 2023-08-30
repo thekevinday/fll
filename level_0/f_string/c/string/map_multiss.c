@@ -136,17 +136,19 @@ extern "C" {
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
 
-        if (array[i].size) {
+        if (array[i].size && array[i].array) {
           if (array[i].array[j].name.size) {
             status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &array[i].array[j].name.string, &array[i].array[j].name.used, &array[i].array[j].name.size);
             if (F_status_is_error(status)) return status;
           }
 
-          if (array[i].array[j].value.size) {
+          if (array[i].array[j].value.size && array[i].array[j].value.array) {
             for (k = 0; k < array[i].array[j].value.size; ++k) {
 
-              status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &array[i].array[j].value.array[k].string, &array[i].array[j].value.array[k].used, &array[i].array[j].value.array[k].size);
-              if (F_status_is_error(status)) return status;
+              if (array[i].array[j].value.array[k].size && array[i].array[j].value.array[k].string) {
+                status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &array[i].array[j].value.array[k].string, &array[i].array[j].value.array[k].used, &array[i].array[j].value.array[k].size);
+                if (F_status_is_error(status)) return status;
+              }
             } // for
 
             status = f_memory_array_resize(0, sizeof(f_string_dynamic_t), (void **) &array[i].array[j].value.array, &array[i].array[j].value.used, &array[i].array[j].value.size);
@@ -174,17 +176,19 @@ extern "C" {
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
 
-        if (array[i].size) {
-          if (array[i].array[j].name.size) {
+        if (array[i].size && array[i].array) {
+          if (array[i].array[j].name.size && array[i].array[j].name.string) {
             status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &array[i].array[j].name.string, &array[i].array[j].name.used, &array[i].array[j].name.size);
             if (F_status_is_error(status)) return status;
           }
 
-          if (array[i].array[j].value.size) {
+          if (array[i].array[j].value.size && array[i].array[j].value.array) {
             for (k = 0; k < array[i].array[j].value.size; ++k) {
 
-              status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &array[i].array[j].value.array[k].string, &array[i].array[j].value.array[k].used, &array[i].array[j].value.array[k].size);
-              if (F_status_is_error(status)) return status;
+              if (array[i].array[j].value.array[k].size && array[i].array[j].value.array[k].string) {
+                status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &array[i].array[j].value.array[k].string, &array[i].array[j].value.array[k].used, &array[i].array[j].value.array[k].size);
+                if (F_status_is_error(status)) return status;
+              }
             } // for
 
             status = f_memory_array_adjust(0, sizeof(f_string_dynamic_t), (void **) &array[i].array[j].value.array, &array[i].array[j].value.used, &array[i].array[j].value.size);
