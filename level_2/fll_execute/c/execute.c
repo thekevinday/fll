@@ -48,6 +48,7 @@ extern "C" {
     #endif // _di_level_2_parameter_checking_
 
     {
+      // Allocate "size * 2" to ensure space for both th name and value are available.
       f_status_t status = f_memory_array_increase_by(size * 2, sizeof(f_string_dynamic_t), (void **) &arguments->array, &arguments->used, &arguments->size);
 
       for (f_number_unsigned_t i = 0; i < size; ++i) {
