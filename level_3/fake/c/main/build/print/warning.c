@@ -23,15 +23,15 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%r%[%QThe setting '%]", print->to, f_string_eol_s, print->context, print->prefix, print->context);
-    fl_print_format("%[%r%]", print->to, print->notable, name, print->notable);
+    fl_print_format(f_string_format_r_single_s.string, print->to, print->notable, name, print->notable);
     fl_print_format("%[' in the file '%]", print->to, print->context, print->context);
     fl_print_format("%[%Q%]", print->to, print->notable, path, print->notable);
     fl_print_format("%[' may be either '%]", print->to, print->context, print->context);
-    fl_print_format("%[%r%]", print->to, print->notable, fake_common_setting_bool_yes_s, print->notable);
+    fl_print_format(f_string_format_r_single_s.string, print->to, print->notable, fake_common_setting_bool_yes_s, print->notable);
     fl_print_format("%[' or '%]", print->to, print->context, print->context);
-    fl_print_format("%[%r%]", print->to, print->notable, fake_common_setting_bool_no_s, print->notable);
+    fl_print_format(f_string_format_r_single_s.string, print->to, print->notable, fake_common_setting_bool_no_s, print->notable);
     fl_print_format("%[', defaulting to '%]", print->to, print->context, print->context);
-    fl_print_format("%[%r%]", print->to, print->notable, default_to, print->notable);
+    fl_print_format(f_string_format_r_single_s.string, print->to, print->notable, default_to, print->notable);
     fl_print_format("%['.%]%r", print->to, print->context, print->context, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
@@ -63,13 +63,13 @@ extern "C" {
     fl_print_format("%[' in the file '%]", print->to, print->context, print->context);
     fl_print_format("%[%Q%]", print->to, print->notable, path, print->notable);
     fl_print_format("%[' may only be one of '%]", print->to, print->context, print->context);
-    fl_print_format("%[%r%]", print->to, print->notable, fake_build_language_bash_s, print->notable);
+    fl_print_format(f_string_format_r_single_s.string, print->to, print->notable, fake_build_language_bash_s, print->notable);
     fl_print_format("%[', '%]", print->to, print->context, print->context);
-    fl_print_format("%[%r%]", print->to, print->notable, fake_build_language_c_s, print->notable);
+    fl_print_format(f_string_format_r_single_s.string, print->to, print->notable, fake_build_language_c_s, print->notable);
     fl_print_format("%[', or '%]", print->to, print->context, print->context);
-    fl_print_format("%[%r%]", print->to, print->notable, fake_build_language_cpp_s, print->notable);
+    fl_print_format(f_string_format_r_single_s.string, print->to, print->notable, fake_build_language_cpp_s, print->notable);
     fl_print_format("%[', defaulting to '%]", print->to, print->context, print->context);
-    fl_print_format("%[%r%]", print->to, print->notable, default_to, print->notable);
+    fl_print_format(f_string_format_r_single_s.string, print->to, print->notable, default_to, print->notable);
     fl_print_format("%['.%]%r", print->to, print->context, print->context, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
@@ -108,19 +108,19 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QThe setting '%]", print->to, f_string_eol_s, print->context, print->prefix, print->context);
-    fl_print_format("%[%r%]", print->to, print->notable, name, print->notable);
+    fl_print_format(f_string_format_r_single_s.string, print->to, print->notable, name, print->notable);
     fl_print_format("%[' in the file '%]", print->to, print->context, print->context);
     fl_print_format("%[%Q%]", print->to, print->notable, path, print->notable);
     fl_print_format("%[' may only be one of '%]", print->to, print->context, print->context);
-    fl_print_format("%[%r%]", print->to, print->notable, fake_build_version_major_s, print->notable);
+    fl_print_format(f_string_format_r_single_s.string, print->to, print->notable, fake_build_version_major_s, print->notable);
     fl_print_format("%[', '%]", print->to, print->context, print->context);
-    fl_print_format("%[%r%]", print->to, print->notable, fake_build_version_minor_s, print->notable);
+    fl_print_format(f_string_format_r_single_s.string, print->to, print->notable, fake_build_version_minor_s, print->notable);
     fl_print_format("%[', '%]", print->to, print->context, print->context);
-    fl_print_format("%[%r%]", print->to, print->notable, fake_build_version_micro_s, print->notable);
+    fl_print_format(f_string_format_r_single_s.string, print->to, print->notable, fake_build_version_micro_s, print->notable);
     fl_print_format("%[', or '%]", print->to, print->context, print->context);
-    fl_print_format("%[%r%]", print->to, print->notable, fake_build_version_nano_s, print->notable);
+    fl_print_format(f_string_format_r_single_s.string, print->to, print->notable, fake_build_version_nano_s, print->notable);
     fl_print_format("%[', defaulting to '%]", print->to, print->context, print->context);
-    fl_print_format("%[%r%]", print->to, print->notable, default_to, print->notable);
+    fl_print_format(f_string_format_r_single_s.string, print->to, print->notable, default_to, print->notable);
     fl_print_format("%['.%]%r", print->to, print->context, print->context, f_string_eol_s);
 
     f_file_stream_unlock(print->to);

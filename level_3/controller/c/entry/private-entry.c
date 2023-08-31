@@ -456,11 +456,11 @@ extern "C" {
                   f_file_stream_lock(global.main->error.to);
 
                   fl_print_format("%r%[%QThe %r item action third parameter (and beyond) must be one of '%]", global.main->error.to, f_string_eol_s, global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context);
-                  fl_print_format("%[%r%]", global.main->error.to, global.main->error.notable, controller_asynchronous_s, global.main->error.notable);
+                  fl_print_format(f_string_format_r_single_s.string, global.main->error.to, global.main->error.notable, controller_asynchronous_s, global.main->error.notable);
                   fl_print_format("%[', '%]", global.main->error.to, global.main->error.context, global.main->error.context);
-                  fl_print_format("%[%r%]", global.main->error.to, global.main->error.notable, controller_require_s, global.main->error.notable);
+                  fl_print_format(f_string_format_r_single_s.string, global.main->error.to, global.main->error.notable, controller_require_s, global.main->error.notable);
                   fl_print_format("%[', or '%]", global.main->error.to, global.main->error.context, global.main->error.context);
-                  fl_print_format("%[%r%]", global.main->error.to, global.main->error.notable, controller_wait_s, global.main->error.notable);
+                  fl_print_format(f_string_format_r_single_s.string, global.main->error.to, global.main->error.notable, controller_wait_s, global.main->error.notable);
                   fl_print_format("%[' but instead has '%]", global.main->error.to, global.main->error.context, global.main->error.context);
                   fl_print_format(f_string_format_Q_single_s.string, global.main->error.to, global.main->error.notable, action->parameters.array[j], global.main->error.notable);
                   fl_print_format("%['.%]", global.main->error.to, global.main->error.context, global.main->error.context, f_string_eol_s);
@@ -482,7 +482,7 @@ extern "C" {
                 f_file_stream_lock(global.main->error.to);
 
                 fl_print_format("%r%[%QThe %r item action may not specify the reserved item '%]", global.main->error.to, f_string_eol_s, global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context);
-                fl_print_format("%[%r%]", global.main->error.to, global.main->error.notable, controller_main_s, global.main->error.notable);
+                fl_print_format(f_string_format_r_single_s.string, global.main->error.to, global.main->error.notable, controller_main_s, global.main->error.notable);
                 fl_print_format("%['.%]", global.main->error.to, global.main->error.context, global.main->error.context, f_string_eol_s);
 
                 f_file_stream_unlock(global.main->error.to);
@@ -511,11 +511,11 @@ extern "C" {
                 f_file_stream_lock(global.main->error.to);
 
                 fl_print_format("%r%[%QThe %r item action must have one of '%]", global.main->error.to, f_string_eol_s, global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context);
-                fl_print_format("%[%r%]", global.main->error.to, global.main->error.notable, controller_kill_s, global.main->error.notable);
+                fl_print_format(f_string_format_r_single_s.string, global.main->error.to, global.main->error.notable, controller_kill_s, global.main->error.notable);
                 fl_print_format("%[', '%]", global.main->error.to, global.main->error.context, global.main->error.context);
-                fl_print_format("%[%r%]", global.main->error.to, global.main->error.notable, controller_start_s, global.main->error.notable);
+                fl_print_format(f_string_format_r_single_s.string, global.main->error.to, global.main->error.notable, controller_start_s, global.main->error.notable);
                 fl_print_format("%[', or '%]", global.main->error.to, global.main->error.context, global.main->error.context);
-                fl_print_format("%[%r%]", global.main->error.to, global.main->error.notable, controller_stop_s, global.main->error.notable);
+                fl_print_format(f_string_format_r_single_s.string, global.main->error.to, global.main->error.notable, controller_stop_s, global.main->error.notable);
                 fl_print_format("%[' but instead has '%]", global.main->error.to, global.main->error.context, global.main->error.context);
                 fl_print_format(f_string_format_Q_single_s.string, global.main->error.to, global.main->error.notable, action->parameters.array[0], global.main->error.notable);
                 fl_print_format("%['.%]", global.main->error.to, global.main->error.context, global.main->error.context, f_string_eol_s);
@@ -578,7 +578,7 @@ extern "C" {
                   f_file_stream_lock(global.main->error.to);
 
                   fl_print_format("%r%[%QThe %r item action may only have '%]", global.main->error.to, f_string_eol_s, global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context);
-                  fl_print_format("%[%r%]", global.main->error.to, global.main->error.notable, controller_wait_s, global.main->error.notable);
+                  fl_print_format(f_string_format_r_single_s.string, global.main->error.to, global.main->error.notable, controller_wait_s, global.main->error.notable);
                   fl_print_format("%[' but instead has '%]", global.main->error.to, global.main->error.context, global.main->error.context);
                   fl_print_format(f_string_format_Q_single_s.string, global.main->error.to, global.main->error.notable, action->parameters.array[0], global.main->error.notable);
                   fl_print_format("%['.%]", global.main->error.to, global.main->error.context, global.main->error.context, f_string_eol_s);
@@ -677,7 +677,7 @@ extern "C" {
               controller_lock_print(global.main->warning.to, global.thread);
 
               fl_print_format("%r%[%QMultiple '%]", global.main->warning.to, f_string_eol_s, global.main->warning.context, global.main->warning.prefix, global.main->warning.context);
-              fl_print_format("%[%r%]", global.main->warning.to, global.main->warning.notable, controller_ready_s, global.main->warning.notable);
+              fl_print_format(f_string_format_r_single_s.string, global.main->warning.to, global.main->warning.notable, controller_ready_s, global.main->warning.notable);
               fl_print_format("%[' %r item actions detected; only the first will be used.%]%r", global.main->warning.to, global.main->warning.context, is_entry ? controller_entry_s : controller_exit_s, global.main->warning.context, f_string_eol_s);
 
               controller_entry_print_error_cache(is_entry, global.main->warning, cache->action);
@@ -1008,7 +1008,7 @@ extern "C" {
                 controller_lock_print(global->main->output.to, global->thread);
 
                 fl_print_format("%rWaiting before processing %r item action '", global->main->output.to, f_string_eol_s, is_entry ? controller_entry_s : controller_exit_s);
-                fl_print_format("%[%r%]", global->main->output.to, global->main->context.set.title, controller_ready_s, global->main->context.set.title);
+                fl_print_format(f_string_format_r_single_s.string, global->main->output.to, global->main->context.set.title, controller_ready_s, global->main->context.set.title);
                 fl_print_format("'.%r", global->main->output.to, f_string_eol_s);
 
                 controller_unlock_print_flush(global->main->output.to, global->thread);
@@ -1027,7 +1027,7 @@ extern "C" {
                 controller_lock_print(global->main->output.to, global->thread);
 
                 fl_print_format("%rIgnoring %r item action '", global->main->output.to, f_string_eol_s, is_entry ? controller_entry_s : controller_exit_s);
-                fl_print_format("%[%r%]", global->main->output.to, global->main->context.set.title, controller_ready_s, global->main->context.set.title);
+                fl_print_format(f_string_format_r_single_s.string, global->main->output.to, global->main->context.set.title, controller_ready_s, global->main->context.set.title);
                 fl_print_format("', state already is ready.%r", global->main->output.to, f_string_eol_s);
 
                 controller_unlock_print_flush(global->main->output.to, global->thread);
@@ -1496,7 +1496,7 @@ extern "C" {
       controller_lock_print(global->main->output.to, global->thread);
 
       fl_print_format("%rDone processing %r item '", global->main->output.to, f_string_eol_s, is_entry ? controller_entry_s : controller_exit_s);
-      fl_print_format("%[%r%]", global->main->output.to, global->main->context.set.title, controller_main_s, global->main->context.set.title);
+      fl_print_format(f_string_format_r_single_s.string, global->main->output.to, global->main->context.set.title, controller_main_s, global->main->context.set.title);
       fl_print_format("'.%r", global->main->output.to, f_string_eol_s);
 
       // failsafe should not print the extra newline because the failure exit from controller_main should handle this.
@@ -1767,7 +1767,7 @@ extern "C" {
               controller_lock_print(global.main->error.to, global.thread);
 
               fl_print_format("%r%[%QThe required %r item '%]", global.main->error.to, f_string_eol_s, global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context);
-              fl_print_format("%[%r%]", global.main->error.to, global.main->error.notable, controller_main_s, global.main->error.notable);
+              fl_print_format(f_string_format_r_single_s.string, global.main->error.to, global.main->error.notable, controller_main_s, global.main->error.notable);
               fl_print_format("%[' is not found.%]%r", global.main->error.to, global.main->error.context, global.main->error.context, f_string_eol_s);
 
               controller_unlock_print_flush(global.main->error.to, global.thread);

@@ -674,7 +674,7 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QThe '%]", print->to, print->context, print->prefix, print->context);
-    fl_print_format("%[%Q%Q%]", print->to, print->notable, symbol, name, print->notable);
+    fl_print_format(f_string_format_QQ_single_s.string, print->to, print->notable, symbol, name, print->notable);
     fl_print_format("%[' parameter value '%]", print->to, print->context, print->context);
     fl_print_format(f_string_format_Q_single_s.string, print->to, print->notable, value, print->notable);
     fl_print_format("%[' contains non-word, non-dash, and non-plus characters.%]%r", print->to, print->context, print->context, f_string_eol_s);

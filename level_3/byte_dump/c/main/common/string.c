@@ -24,8 +24,6 @@ extern "C" {
   const f_string_static_t byte_dump_character_placeholder_s = macro_f_string_static_t_initialize_1(BYTE_DUMP_character_placeholder_s, 0, BYTE_DUMP_character_placeholder_s_length);
   const f_string_static_t byte_dump_character_incomplete_s = macro_f_string_static_t_initialize_1(BYTE_DUMP_character_incomplete_s, 0, BYTE_DUMP_character_incomplete_s_length);
   const f_string_static_t byte_dump_character_unused_s = macro_f_string_static_t_initialize_1(BYTE_DUMP_character_unused_s, 0, BYTE_DUMP_character_unused_s_length);
-
-  const f_string_static_t byte_dump_format_raw_context_s = macro_f_string_static_t_initialize_1(BYTE_DUMP_format_raw_context_s, 0, BYTE_DUMP_format_raw_context_s_length);
 #endif // _di_byte_dump_s_
 
 #ifndef _di_byte_dump_padding_s_

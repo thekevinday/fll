@@ -126,13 +126,13 @@ extern "C" {
     f_print_terminated("Set failure state to '", print->to);
 
     if (fail == fake_make_operation_fail_exit_e) {
-      fl_print_format("%[%r%]", print->to, print->set->notable, fake_make_operation_argument_exit_s, print->set->notable);
+      fl_print_format(f_string_format_r_single_s.string, print->to, print->set->notable, fake_make_operation_argument_exit_s, print->set->notable);
     }
     else if (fail == fake_make_operation_fail_warn_e) {
-      fl_print_format("%[%r%]", print->to, print->set->notable, fake_make_operation_argument_warn_s, print->set->notable);
+      fl_print_format(f_string_format_r_single_s.string, print->to, print->set->notable, fake_make_operation_argument_warn_s, print->set->notable);
     }
     else {
-      fl_print_format("%[%r%]", print->to, print->set->notable, fake_make_operation_argument_ignore_s, print->set->notable);
+      fl_print_format(f_string_format_r_single_s.string, print->to, print->set->notable, fake_make_operation_argument_ignore_s, print->set->notable);
     }
 
     fl_print_format("'.%r", print->to, f_string_eol_s);

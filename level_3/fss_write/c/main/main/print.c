@@ -22,7 +22,7 @@ extern "C" {
     fl_print_format("%[%QThe format '%]", print->to, print->set->error, print->prefix, print->set->error);
     fl_print_format(f_string_format_Q_single_s.string, print->to, print->set->notable, value, print->set->notable);
     fl_print_format("%[' is not known for the parameter%] ", print->to, print->set->error, print->set->error);
-    fl_print_format("%[%Q%Q%]", print->to, print->set->notable, f_console_symbol_long_normal_s, fss_write_long_as_s, print->set->notable);
+    fl_print_format(f_string_format_QQ_single_s.string, print->to, print->set->notable, f_console_symbol_long_normal_s, fss_write_long_as_s, print->set->notable);
     fl_print_format(f_string_format_sentence_end_s.string, print->to, print->set->error, print->set->error, f_string_eol_s);
 
     f_file_stream_unlock(print->to);

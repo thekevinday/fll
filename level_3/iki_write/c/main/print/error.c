@@ -39,9 +39,9 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QNo main provided, either pipe the main data or use the '%]", print->to, print->set->error, print->prefix, print->set->error);
-    fl_print_format("%[%r%r%]", print->to, print->set->notable, f_console_symbol_long_normal_s, iki_write_long_object_s, print->set->notable);
+    fl_print_format(f_string_format_rr_single_s.string, print->to, print->set->notable, f_console_symbol_long_normal_s, iki_write_long_object_s, print->set->notable);
     fl_print_format("%[' and the '%]", print->to, print->set->error, print->set->error);
-    fl_print_format("%[%r%r%]", print->to, print->set->notable, f_console_symbol_long_normal_s, iki_write_long_content_s, print->set->notable);
+    fl_print_format(f_string_format_rr_single_s.string, print->to, print->set->notable, f_console_symbol_long_normal_s, iki_write_long_content_s, print->set->notable);
     fl_print_format("%[' parameters.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
 
     f_file_stream_unlock(print->to);

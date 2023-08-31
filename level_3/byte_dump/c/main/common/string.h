@@ -74,8 +74,6 @@ extern "C" {
   #define BYTE_DUMP_character_incomplete_s  "�"
   #define BYTE_DUMP_character_unused_s      "�"
 
-  #define BYTE_DUMP_format_raw_context_s "%[%r%]"
-
   #define BYTE_DUMP_hexidecimal_s_length 11
   #define BYTE_DUMP_duodecimal_s_length  10
   #define BYTE_DUMP_octal_s_length       5
@@ -87,8 +85,6 @@ extern "C" {
   #define BYTE_DUMP_character_incomplete_s_length  3
   #define BYTE_DUMP_character_unused_s_length      3
 
-  #define BYTE_DUMP_format_raw_context_s_length 6
-
   extern const f_string_static_t byte_dump_hexidecimal_s;
   extern const f_string_static_t byte_dump_duodecimal_s;
   extern const f_string_static_t byte_dump_octal_s;
@@ -99,8 +95,6 @@ extern "C" {
   extern const f_string_static_t byte_dump_character_placeholder_s;
   extern const f_string_static_t byte_dump_character_incomplete_s;
   extern const f_string_static_t byte_dump_character_unused_s;
-
-  extern const f_string_static_t byte_dump_format_raw_context_s;
 #endif // _di_byte_dump_s_
 
 /**

@@ -37,11 +37,11 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QMust specify the '%]", print->to, print->context, print->prefix, print->context);
-    fl_print_format("%[%r%r%]", print->to, print->notable, f_console_symbol_long_normal_s, fss_write_long_content_s, print->notable);
+    fl_print_format(f_string_format_rr_single_s.string, print->to, print->notable, f_console_symbol_long_normal_s, fss_write_long_content_s, print->notable);
     fl_print_format("%[' parameter at least the same number of times as the '%]", print->to, print->context, print->context);
-    fl_print_format("%[%r%r%]", print->to, print->notable, f_console_symbol_long_normal_s, fss_write_long_object_s, print->notable);
+    fl_print_format(f_string_format_rr_single_s.string, print->to, print->notable, f_console_symbol_long_normal_s, fss_write_long_object_s, print->notable);
     fl_print_format("%[' parameter when not specifying the '%]", print->to, print->context, print->context);
-    fl_print_format("%[%r%r%]", print->to, print->notable, f_console_symbol_long_normal_s, fss_write_long_partial_s, print->notable);
+    fl_print_format(f_string_format_rr_single_s.string, print->to, print->notable, f_console_symbol_long_normal_s, fss_write_long_partial_s, print->notable);
     fl_print_format("%[' parameter.%]%r", print->to, print->context, print->context, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
@@ -59,7 +59,7 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QThe%] ", print->to, print->context, print->prefix, print->context);
-    fl_print_format("%[%r%]", print->to, print->notable, ((fss_write_main_t *) print->custom)->setting.standard, print->notable);
+    fl_print_format(f_string_format_r_single_s.string, print->to, print->notable, ((fss_write_main_t *) print->custom)->setting.standard, print->notable);
     fl_print_format(" %[standard only supports one Content per Object.%]%r", print->to, print->context, print->context, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
@@ -77,7 +77,7 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QThe value for the parameter '%]", print->to, print->set->error, print->prefix, print->set->error);
-    fl_print_format("%[%r%r%]", print->to, print->set->notable, f_console_symbol_long_normal_s, fss_write_long_prepend_s, print->set->notable);
+    fl_print_format(f_string_format_rr_single_s.string, print->to, print->set->notable, f_console_symbol_long_normal_s, fss_write_long_prepend_s, print->set->notable);
     fl_print_format("%[' must only contain white space.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
@@ -95,7 +95,7 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QThe%] ", print->to, print->context, print->prefix, print->context);
-    fl_print_format("%[%r%]", print->to, print->notable, ((fss_write_main_t *) print->custom)->setting.standard, print->notable);
+    fl_print_format(f_string_format_r_single_s.string, print->to, print->notable, ((fss_write_main_t *) print->custom)->setting.standard, print->notable);
     fl_print_format(" %[standard does not support end of line character '%]", print->to, print->context, print->context);
     fl_print_format("%[\\n%]", print->to, print->set->notable, print->set->notable);
     fl_print_format("%[' (%]", print->to, print->set->error, print->set->error);

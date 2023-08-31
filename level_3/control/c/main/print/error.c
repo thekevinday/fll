@@ -297,7 +297,7 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QThe value for the parameter '%]", print->to, print->set->error, print->prefix, print->set->error);
-    fl_print_format("%[%r%r%]", print->to, print->set->notable, f_console_symbol_long_normal_s, parameter, print->set->notable);
+    fl_print_format(f_string_format_rr_single_s.string, print->to, print->set->notable, f_console_symbol_long_normal_s, parameter, print->set->notable);
     fl_print_format("%[' must not be an empty string.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
@@ -315,7 +315,7 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QThe parameter '%]", print->to, print->set->error, print->prefix, print->set->error);
-    fl_print_format("%[%r%r%]", print->to, print->set->notable, f_console_symbol_long_normal_s, parameter, print->set->notable);
+    fl_print_format(f_string_format_rr_single_s.string, print->to, print->set->notable, f_console_symbol_long_normal_s, parameter, print->set->notable);
     fl_print_format("%[' is specified, but no value is given.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
 
     f_file_stream_unlock(print->to);

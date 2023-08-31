@@ -141,11 +141,11 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%Q%S '%]", print->to, print->context, print->prefix, message, print->context);
-    fl_print_format("%[%r%]", print->to, print->notable, fake_make_operation_if_s, print->notable);
+    fl_print_format(f_string_format_r_single_s.string, print->to, print->notable, fake_make_operation_if_s, print->notable);
     fl_print_format("%[', '%]", print->to, print->context, print->context);
-    fl_print_format("%[%r%]", print->to, print->notable, fake_make_operation_and_s, print->notable);
+    fl_print_format(f_string_format_r_single_s.string, print->to, print->notable, fake_make_operation_and_s, print->notable);
     fl_print_format("%[', or '%]", print->to, print->context, print->context);
-    fl_print_format("%[%r%]", print->to, print->notable, fake_make_operation_or_s, print->notable);
+    fl_print_format(f_string_format_r_single_s.string, print->to, print->notable, fake_make_operation_or_s, print->notable);
     fl_print_format("%[' section operation.%]%r", print->to, print->context, print->context, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
@@ -201,16 +201,16 @@ extern "C" {
     fl_print_format("%[%QIncomplete '%]", print->to, print->context, print->prefix, print->context);
 
     if (operation == fake_make_operation_type_and_e) {
-      fl_print_format("%[%r%]", print->to, print->notable, fake_make_operation_and_s, print->notable);
+      fl_print_format(f_string_format_r_single_s.string, print->to, print->notable, fake_make_operation_and_s, print->notable);
     }
     else if (operation == fake_make_operation_type_else_e) {
-      fl_print_format("%[%r%]", print->to, print->notable, fake_make_operation_else_s, print->notable);
+      fl_print_format(f_string_format_r_single_s.string, print->to, print->notable, fake_make_operation_else_s, print->notable);
     }
     else if (operation == fake_make_operation_type_if_e) {
-      fl_print_format("%[%r%]", print->to, print->notable, fake_make_operation_if_s, print->notable);
+      fl_print_format(f_string_format_r_single_s.string, print->to, print->notable, fake_make_operation_if_s, print->notable);
     }
     else {
-      fl_print_format("%[%r%]", print->to, print->notable, fake_make_operation_or_s, print->notable);
+      fl_print_format(f_string_format_r_single_s.string, print->to, print->notable, fake_make_operation_or_s, print->notable);
     }
 
     fl_print_format("%[' at end of the section.%]%r", print->to, print->context, print->context, f_string_eol_s);

@@ -25,11 +25,11 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QCannot specify the '%]", print->to, print->context, print->prefix, print->context);
-    fl_print_format("%[%r%r%]", print->to, print->notable, f_console_symbol_long_normal_s, status_code_long_error_s, print->notable);
+    fl_print_format(f_string_format_rr_single_s.string, print->to, print->notable, f_console_symbol_long_normal_s, status_code_long_error_s, print->notable);
     fl_print_format("%[' parameter with the '%]", print->to, print->context, print->context);
-    fl_print_format("%[%r%r%]", print->to, print->notable, f_console_symbol_long_normal_s, status_code_long_warning_s, print->notable);
+    fl_print_format(f_string_format_rr_single_s.string, print->to, print->notable, f_console_symbol_long_normal_s, status_code_long_warning_s, print->notable);
     fl_print_format("%[' parameter when not also specifying the '%]", print->to, print->context, print->context);
-    fl_print_format("%[%r%r%]", print->to, print->notable, f_console_symbol_long_normal_s, status_code_long_number_s, print->notable);
+    fl_print_format(f_string_format_rr_single_s.string, print->to, print->notable, f_console_symbol_long_normal_s, status_code_long_number_s, print->notable);
     fl_print_format("%[' parameter.%]%r", print->to, print->context, print->context, f_string_eol_s);
 
     f_file_stream_unlock(print->to);

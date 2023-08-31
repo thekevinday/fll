@@ -85,9 +85,9 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QThe '%]", print->to, print->set->error, print->prefix, print->set->error);
-    fl_print_format("%[%Q%Q%]", print->to, print->set->notable, symbol_1, name_1, print->set->notable);
+    fl_print_format(f_string_format_QQ_single_s.string, print->to, print->set->notable, symbol_1, name_1, print->set->notable);
     fl_print_format("%[' parameter and the '%]", print->to, print->set->error, print->set->error);
-    fl_print_format("%[%Q%Q%]", print->to, print->set->notable, symbol_2, name_2, print->set->notable);
+    fl_print_format(f_string_format_QQ_single_s.string, print->to, print->set->notable, symbol_2, name_2, print->set->notable);
     fl_print_format("%[' parameter must be specified the same number of times.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
@@ -107,11 +107,11 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QThe '%]", print->to, print->set->error, print->prefix, print->set->error);
-    fl_print_format("%[%Q%Q%]", print->to, print->set->notable, symbol_1, name_1, print->set->notable);
+    fl_print_format(f_string_format_QQ_single_s.string, print->to, print->set->notable, symbol_1, name_1, print->set->notable);
     fl_print_format("%[' parameter and the '%]", print->to, print->set->error, print->set->error);
-    fl_print_format("%[%Q%Q%]", print->to, print->set->notable, symbol_2, name_2, print->set->notable);
+    fl_print_format(f_string_format_QQ_single_s.string, print->to, print->set->notable, symbol_2, name_2, print->set->notable);
     fl_print_format("%[' parameter must be specified the same number of times when not specifying the '%]", print->to, print->set->error, print->set->error);
-    fl_print_format("%[%Q%Q%]", print->to, print->set->notable, symbol_3, name_3, print->set->notable);
+    fl_print_format(f_string_format_QQ_single_s.string, print->to, print->set->notable, symbol_3, name_3, print->set->notable);
     fl_print_format("%[' parameter.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
@@ -131,9 +131,9 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QCannot specify the '%]", print->to, print->set->error, print->prefix, print->set->error);
-    fl_print_format("%[%Q%Q%]", print->to, print->set->notable, symbol_1, name_1, print->set->notable);
+    fl_print_format(f_string_format_QQ_single_s.string, print->to, print->set->notable, symbol_1, name_1, print->set->notable);
     fl_print_format("%[' parameter with the '%]", print->to, print->set->error, print->set->error);
-    fl_print_format("%[%Q%Q%]", print->to, print->set->notable, symbol_2, name_2, print->set->notable);
+    fl_print_format(f_string_format_QQ_single_s.string, print->to, print->set->notable, symbol_2, name_2, print->set->notable);
     fl_print_format("%[' parameter.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
@@ -153,11 +153,11 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QCannot specify the '%]", print->to, print->set->error, print->prefix, print->set->error);
-    fl_print_format("%[%Q%Q%]", print->to, print->set->notable, symbol_1, name_1, print->set->notable);
+    fl_print_format(f_string_format_QQ_single_s.string, print->to, print->set->notable, symbol_1, name_1, print->set->notable);
     fl_print_format("%[' parameter with the '%]", print->to, print->set->error, print->set->error);
-    fl_print_format("%[%Q%Q%]", print->to, print->set->notable, symbol_2, name_2, print->set->notable);
+    fl_print_format(f_string_format_QQ_single_s.string, print->to, print->set->notable, symbol_2, name_2, print->set->notable);
     fl_print_format("%[' parameter without the '%]", print->to, print->set->error, print->set->error);
-    fl_print_format("%[%Q%Q%]", print->to, print->set->notable, symbol_3, name_3, print->set->notable);
+    fl_print_format(f_string_format_QQ_single_s.string, print->to, print->set->notable, symbol_3, name_3, print->set->notable);
     fl_print_format("%[' parameter.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
@@ -177,7 +177,7 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QCannot specify the '%]", print->to, print->set->error, print->prefix, print->set->error);
-    fl_print_format("%[%Q%Q%]", print->to, print->set->notable, symbol, parameter, print->set->notable);
+    fl_print_format(f_string_format_QQ_single_s.string, print->to, print->set->notable, symbol, parameter, print->set->notable);
     fl_print_format("%[' when processing a pipe.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
@@ -197,11 +197,11 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QThe '%]", print->to, print->set->error, print->prefix, print->set->error);
-    fl_print_format("%[%Q%Q%]", print->to, print->set->notable, symbol_1, name_1, print->set->notable);
+    fl_print_format(f_string_format_QQ_single_s.string, print->to, print->set->notable, symbol_1, name_1, print->set->notable);
     fl_print_format("%[' parameter only allows either the '%]", print->to, print->set->error, print->set->error);
-    fl_print_format("%[%Q%Q%]", print->to, print->set->notable, symbol_2, name_2, print->set->notable);
+    fl_print_format(f_string_format_QQ_single_s.string, print->to, print->set->notable, symbol_2, name_2, print->set->notable);
     fl_print_format("%[' parameter or the '%]", print->to, print->set->error, print->set->error);
-    fl_print_format("%[%Q%Q%]", print->to, print->set->notable, symbol_3, name_3, print->set->notable);
+    fl_print_format(f_string_format_QQ_single_s.string, print->to, print->set->notable, symbol_3, name_3, print->set->notable);
     fl_print_format("%[' parameter, but not both.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
@@ -221,7 +221,7 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QThe parameter%] ", print->to, print->set->error, print->prefix, print->set->error);
-    fl_print_format("%[%Q%Q%]", print->to, print->set->notable, symbol, name, print->set->notable);
+    fl_print_format(f_string_format_QQ_single_s.string, print->to, print->set->notable, symbol, name, print->set->notable);
     fl_print_format(" %[is specified as an empty string, but an empty string is not allowed.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
@@ -243,7 +243,7 @@ extern "C" {
     fl_print_format("%[%QThe value '%]", print->to, print->set->error, print->prefix, print->set->error);
     fl_print_format(f_string_format_Q_single_s.string, print->to, print->set->notable, value, print->set->notable);
     fl_print_format("%[' for the parameter '%]", print->to, print->set->error, print->set->error);
-    fl_print_format("%[%Q%Q%]", print->to, print->set->notable, symbol, name, print->set->notable);
+    fl_print_format(f_string_format_QQ_single_s.string, print->to, print->set->notable, symbol, name, print->set->notable);
     fl_print_format("%[' must not be less than %]", print->to, print->set->error, print->set->error);
     fl_print_format(f_string_format_Q_single_s.string, print->to, print->set->notable, than, print->set->notable);
     fl_print_format(f_string_format_sentence_end_s.string, print->to, print->set->error, print->set->error, f_string_eol_s);
@@ -267,7 +267,7 @@ extern "C" {
     fl_print_format("%[%QThe value '%]", print->to, print->set->error, print->prefix, print->set->error);
     fl_print_format(f_string_format_Q_single_s.string, print->to, print->set->notable, value, print->set->notable);
     fl_print_format("%[' for the parameter '%]", print->to, print->set->error, print->set->error);
-    fl_print_format("%[%Q%Q%]", print->to, print->set->notable, symbol, name, print->set->notable);
+    fl_print_format(f_string_format_QQ_single_s.string, print->to, print->set->notable, symbol, name, print->set->notable);
     fl_print_format("%[' must not be more than %]", print->to, print->set->error, print->set->error);
     fl_print_format(f_string_format_Q_single_s.string, print->to, print->set->notable, than, print->set->notable);
     fl_print_format(f_string_format_sentence_end_s.string, print->to, print->set->error, print->set->error, f_string_eol_s);
@@ -291,7 +291,7 @@ extern "C" {
     fl_print_format("%[%QThe value '%]", print->to, print->set->error, print->prefix, print->set->error);
     fl_print_format(f_string_format_Q_single_s.string, print->to, print->set->notable, value, print->set->notable);
     fl_print_format("%[' for the parameter '%]", print->to, print->set->error, print->set->error);
-    fl_print_format("%[%Q%Q%]", print->to, print->set->notable, symbol, name, print->set->notable);
+    fl_print_format(f_string_format_QQ_single_s.string, print->to, print->set->notable, symbol, name, print->set->notable);
     fl_print_format("%[' is not a valid integer.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
@@ -313,7 +313,7 @@ extern "C" {
     fl_print_format("%[%QThe value '%]", print->to, print->set->error, print->prefix, print->set->error);
     fl_print_format(f_string_format_Q_single_s.string, print->to, print->set->notable, value, print->set->notable);
     fl_print_format("%[' for the parameter '%]", print->to, print->set->error, print->set->error);
-    fl_print_format("%[%Q%Q%]", print->to, print->set->notable, symbol, name, print->set->notable);
+    fl_print_format(f_string_format_QQ_single_s.string, print->to, print->set->notable, symbol, name, print->set->notable);
     fl_print_format("%[' is not a valid negative integer.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
@@ -335,7 +335,7 @@ extern "C" {
     fl_print_format("%[%QThe value '%]", print->to, print->set->error, print->prefix, print->set->error);
     fl_print_format(f_string_format_Q_single_s.string, print->to, print->set->notable, value, print->set->notable);
     fl_print_format("%[' for the parameter '%]", print->to, print->set->error, print->set->error);
-    fl_print_format("%[%Q%Q%]", print->to, print->set->notable, symbol, name, print->set->notable);
+    fl_print_format(f_string_format_QQ_single_s.string, print->to, print->set->notable, symbol, name, print->set->notable);
     fl_print_format("%[' is not a valid positive integer.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
@@ -355,7 +355,7 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QThe parameter%] ", print->to, print->set->error, print->prefix, print->set->error);
-    fl_print_format("%[%Q%Q%]", print->to, print->set->notable, symbol, name, print->set->notable);
+    fl_print_format(f_string_format_QQ_single_s.string, print->to, print->set->notable, symbol, name, print->set->notable);
     fl_print_format(" %[is specified, but no value is given.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
@@ -375,7 +375,7 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QThe parameter%] ", print->to, print->set->error, print->prefix, print->set->error);
-    fl_print_format("%[%Q%Q%]", print->to, print->set->notable, symbol, name, print->set->notable);
+    fl_print_format(f_string_format_QQ_single_s.string, print->to, print->set->notable, symbol, name, print->set->notable);
     fl_print_format("%[ is specified, but%] ", print->to, print->set->error, print->set->error);
     fl_print_format(f_string_format_Q_single_s.string, print->to, print->set->notable, amount, print->set->notable);
     fl_print_format(" %[values are not given.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
@@ -397,7 +397,7 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QThe parameter '%]", print->to, print->set->error, print->prefix, print->set->error);
-    fl_print_format("%[%Q%Q%]", print->to, print->set->notable, symbol, name, print->set->notable);
+    fl_print_format(f_string_format_QQ_single_s.string, print->to, print->set->notable, symbol, name, print->set->notable);
     fl_print_format("%[' may only be specified once.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
@@ -417,9 +417,9 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%%[%QThe value '%]", print->to, print->set->error, print->prefix, print->set->error);
-    fl_print_format("%[%Q%Q%]", print->to, print->set->notable, symbol, value, print->set->notable);
+    fl_print_format(f_string_format_QQ_single_s.string, print->to, print->set->notable, symbol, value, print->set->notable);
     fl_print_format("%[' may only be specified once for the parameter '%]", print->to, print->set->error, print->set->error);
-    fl_print_format("%[%Q%Q%]", print->to, print->set->notable, symbol, name, print->set->notable);
+    fl_print_format(f_string_format_QQ_single_s.string, print->to, print->set->notable, symbol, name, print->set->notable);
     fl_print_format(f_string_format_sentence_end_quote_s.string, print->to, print->set->error, print->set->error, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
@@ -439,7 +439,7 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QFailure while processing the parameter '%]", print->to, print->set->error, print->prefix, print->set->error);
-    fl_print_format("%[%Q%Q%]", print->to, print->set->notable, symbol, name, print->set->notable);
+    fl_print_format(f_string_format_QQ_single_s.string, print->to, print->set->notable, symbol, name, print->set->notable);
     fl_print_format(f_string_format_sentence_end_quote_s.string, print->to, print->set->error, print->set->error, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
@@ -463,7 +463,7 @@ extern "C" {
     fl_print_format("%[' may not be greater than the stop value '%]", print->to, print->set->error, print->set->error);
     fl_print_format(f_string_format_Q_single_s.string, print->to, print->set->notable, value_stop, print->set->notable);
     fl_print_format("%[' for the parameter '%]", print->to, print->set->error, print->set->error);
-    fl_print_format("%[%Q%Q%]", print->to, print->set->notable, symbol, name, print->set->notable);
+    fl_print_format(f_string_format_QQ_single_s.string, print->to, print->set->notable, symbol, name, print->set->notable);
     fl_print_format(f_string_format_sentence_end_quote_s.string, print->to, print->set->error, print->set->error, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
@@ -483,7 +483,7 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QThe value for the parameter '%]", print->to, print->set->error, print->prefix, print->set->error);
-    fl_print_format("%[%Q%Q%]", print->to, print->notable, symbol, name, print->notable);
+    fl_print_format(f_string_format_QQ_single_s.string, print->to, print->notable, symbol, name, print->notable);
     fl_print_format("%[' is too long.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
