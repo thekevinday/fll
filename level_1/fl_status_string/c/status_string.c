@@ -1605,6 +1605,30 @@ extern "C" {
       return F_okay;
     }
 
+    if (f_compare_dynamic(name, f_status_packet_too_large_s) == F_equal_to) {
+      *code = F_packet_too_large;
+
+      return F_okay;
+    }
+
+    if (f_compare_dynamic(name, f_status_packet_too_large_not_s) == F_equal_to) {
+      *code = F_packet_too_large_not;
+
+      return F_okay;
+    }
+
+    if (f_compare_dynamic(name, f_status_packet_too_small_s) == F_equal_to) {
+      *code = F_packet_too_small;
+
+      return F_okay;
+    }
+
+    if (f_compare_dynamic(name, f_status_packet_too_small_not_s) == F_equal_to) {
+      *code = F_packet_too_small_not;
+
+      return F_okay;
+    }
+
     if (f_compare_dynamic(name, f_status_parameter_s) == F_equal_to) {
       *code = F_parameter;
 
@@ -1649,6 +1673,30 @@ extern "C" {
 
     if (f_compare_dynamic(name, f_status_payload_not_s) == F_equal_to) {
       *code = F_payload_not;
+
+      return F_okay;
+    }
+
+    if (f_compare_dynamic(name, f_status_payload_too_large_s) == F_equal_to) {
+      *code = F_payload_too_large;
+
+      return F_okay;
+    }
+
+    if (f_compare_dynamic(name, f_status_payload_too_large_not_s) == F_equal_to) {
+      *code = F_payload_too_large_not;
+
+      return F_okay;
+    }
+
+    if (f_compare_dynamic(name, f_status_payload_too_small_s) == F_equal_to) {
+      *code = F_payload_too_small;
+
+      return F_okay;
+    }
+
+    if (f_compare_dynamic(name, f_status_payload_too_small_not_s) == F_equal_to) {
+      *code = F_payload_too_small_not;
 
       return F_okay;
     }

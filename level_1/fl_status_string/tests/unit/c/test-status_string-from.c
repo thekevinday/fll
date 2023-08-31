@@ -310,6 +310,10 @@ void test__fl_status_string_from__works(void **state) {
     F_output_not,
     F_packet,
     F_packet_not,
+    F_packet_too_large,
+    F_packet_too_large_not,
+    F_packet_too_small,
+    F_packet_too_small_not,
     F_parameter,
     F_parameter_not,
     F_parent,
@@ -318,6 +322,10 @@ void test__fl_status_string_from__works(void **state) {
     F_partial_not,
     F_payload,
     F_payload_not,
+    F_payload_too_large,
+    F_payload_too_large_not,
+    F_payload_too_small,
+    F_payload_too_small_not,
     F_pipe,
     F_pipe_not,
     F_port,
@@ -937,6 +945,10 @@ void test__fl_status_string_from__works(void **state) {
     f_status_output_not_s,
     f_status_packet_s,
     f_status_packet_not_s,
+    f_status_packet_too_large_s,
+    f_status_packet_too_large_not_s,
+    f_status_packet_too_small_s,
+    f_status_packet_too_small_not_s,
     f_status_parameter_s,
     f_status_parameter_not_s,
     f_status_parent_s,
@@ -945,6 +957,10 @@ void test__fl_status_string_from__works(void **state) {
     f_status_partial_not_s,
     f_status_payload_s,
     f_status_payload_not_s,
+    f_status_payload_too_large_s,
+    f_status_payload_too_large_not_s,
+    f_status_payload_too_small_s,
+    f_status_payload_too_small_not_s,
     f_status_pipe_s,
     f_status_pipe_not_s,
     f_status_port_s,
@@ -1299,7 +1315,7 @@ void test__fl_status_string_from__works(void **state) {
     f_status_status_code_last_s,
   };
 
-  for (uint16_t i = 0; i < 624; ++i) {
+  for (uint16_t i = 0; i < 632; ++i) {
 
     f_status_t result = F_okay;
 
