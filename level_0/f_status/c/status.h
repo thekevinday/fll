@@ -201,8 +201,8 @@ extern "C" {
     F_signal_reserved_64,
 
     // Basic.
-    // Start at 197 to allow compatibility with the reserved bash return codes (keep in mind fss return codes can be larger than 255).
-    F_okay = 197,
+    // Start at 200 to allow compatibility with the reserved bash return codes (keep in mind FSS return codes can be larger than 255).
+    F_okay = 200,
     F_okay_block,
     F_okay_eoa,
     F_okay_eof,
