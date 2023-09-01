@@ -2055,6 +2055,26 @@ extern "C" {
 
         break;
 
+      case F_payload_too_large:
+        *name = f_status_payload_too_large_s;
+
+        break;
+
+      case F_payload_too_large_not:
+        *name = f_status_payload_too_large_not_s;
+
+        break;
+
+      case F_payload_too_small:
+        *name = f_status_payload_too_small_s;
+
+        break;
+
+      case F_payload_too_small_not:
+        *name = f_status_payload_too_small_not_s;
+
+        break;
+
       case F_pipe:
         *name = f_status_pipe_s;
 
