@@ -10,7 +10,9 @@ void test__f_fss_simple_packet_delete__fails(void **state) {
   mock_unwrap = 0;
   mock_unwrap_f_memory = 0;
 
-  f_fss_simple_packet_t data = f_fss_simple_packet_t_initialize;
+  f_string_static_t base = macro_f_string_static_t_initialize_1(F_string_empty_s, 1, 0);
+
+  f_fss_simple_packet_t data = { .payload = base };
 
   {
     will_return(__wrap_f_memory_array_resize, true);

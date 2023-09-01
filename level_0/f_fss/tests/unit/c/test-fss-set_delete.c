@@ -10,7 +10,13 @@ void test__f_fss_set_delete__fails(void **state) {
   mock_unwrap = 0;
   mock_unwrap_f_memory = 0;
 
-  f_fss_set_t data = f_fss_set_t_initialize;
+  f_string_range_t base = f_string_range_t_initialize;
+  f_string_range_t base_array[] = { base };
+  f_string_ranges_t objects = { .array = base_array, .used = 0, .size = 1 };
+  f_string_ranges_t objects_array[] = { objects };
+  f_string_rangess_t contents = { .array = objects_array, .used = 0, .size = 1 };
+
+  f_fss_set_t data = { .objects = objects, .contents = contents };
 
   {
     will_return(__wrap_f_memory_array_resize, true);

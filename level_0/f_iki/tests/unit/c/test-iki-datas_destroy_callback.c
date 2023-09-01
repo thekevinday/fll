@@ -10,24 +10,33 @@ void test__f_iki_datas_destroy_callback__fails(void **state) {
   mock_unwrap = 0;
   mock_unwrap_f_memory = 0;
 
-  f_string_ranges_t content = f_string_ranges_t_initialize;
-  f_number_unsigneds_t delimits = f_number_unsigneds_t_initialize;
-  f_string_ranges_t variable = f_string_ranges_t_initialize;
-  f_string_ranges_t vocabulary = f_string_ranges_t_initialize;
+  f_string_range_t base = macro_f_string_range_t_initialize_1(1, 0);
+  f_string_range_t base_array[] = { base };
+  f_string_ranges_t bases = { .array = base_array, .used = 0, .size = 1 };
+
+  f_string_ranges_t content = bases;
+  f_number_unsigned_t delimit_array[] = { 0 };
+  f_number_unsigneds_t delimits = { .array = delimit_array, .used = 0, .size = 1 };
+  f_string_ranges_t variable = bases;
+  f_string_ranges_t vocabulary = bases;
+
   f_iki_data_t data = { .content = content, .delimits = delimits, .variable = variable, .vocabulary = vocabulary };
   f_iki_data_t data_array[] = { data };
-  f_iki_datas_t datas = { .array = data_array, .used = 1, .size = 1 };
-  f_iki_datas_t datas_array[] = { datas };
 
   {
     will_return(__wrap_f_memory_array_adjust, true);
     will_return(__wrap_f_memory_array_adjust, F_status_set_error(F_failure));
 
-    const f_status_t status = f_iki_datas_destroy_callback(0, 1, (void *) datas_array);
+    const f_status_t status = f_iki_datas_destroy_callback(0, 1, (void *) data_array);
 
     assert_int_equal(status, F_status_set_error(F_failure));
   }
 
+  data_array[0].content = content;
+  data_array[0].delimits = delimits;
+  data_array[0].variable = variable;
+  data_array[0].vocabulary = vocabulary;
+
   {
     will_return(__wrap_f_memory_array_adjust, false);
     will_return(__wrap_f_memory_array_adjust, F_okay);
@@ -35,11 +44,16 @@ void test__f_iki_datas_destroy_callback__fails(void **state) {
     will_return(__wrap_f_memory_array_adjust, true);
     will_return(__wrap_f_memory_array_adjust, F_status_set_error(F_failure));
 
-    const f_status_t status = f_iki_datas_destroy_callback(0, 1, (void *) datas_array);
+    const f_status_t status = f_iki_datas_destroy_callback(0, 1, (void *) data_array);
 
     assert_int_equal(status, F_status_set_error(F_failure));
   }
 
+  data_array[0].content = content;
+  data_array[0].delimits = delimits;
+  data_array[0].variable = variable;
+  data_array[0].vocabulary = vocabulary;
+
   {
     will_return(__wrap_f_memory_array_adjust, false);
     will_return(__wrap_f_memory_array_adjust, F_okay);
@@ -50,11 +64,16 @@ void test__f_iki_datas_destroy_callback__fails(void **state) {
     will_return(__wrap_f_memory_array_adjust, true);
     will_return(__wrap_f_memory_array_adjust, F_status_set_error(F_failure));
 
-    const f_status_t status = f_iki_datas_destroy_callback(0, 1, (void *) datas_array);
+    const f_status_t status = f_iki_datas_destroy_callback(0, 1, (void *) data_array);
 
     assert_int_equal(status, F_status_set_error(F_failure));
   }
 
+  data_array[0].content = content;
+  data_array[0].delimits = delimits;
+  data_array[0].variable = variable;
+  data_array[0].vocabulary = vocabulary;
+
   {
     will_return(__wrap_f_memory_array_adjust, false);
     will_return(__wrap_f_memory_array_adjust, F_okay);
@@ -68,7 +87,7 @@ void test__f_iki_datas_destroy_callback__fails(void **state) {
     will_return(__wrap_f_memory_array_adjust, true);
     will_return(__wrap_f_memory_array_adjust, F_status_set_error(F_failure));
 
-    const f_status_t status = f_iki_datas_destroy_callback(0, 1, (void *) datas_array);
+    const f_status_t status = f_iki_datas_destroy_callback(0, 1, (void *) data_array);
 
     assert_int_equal(status, F_status_set_error(F_failure));
   }

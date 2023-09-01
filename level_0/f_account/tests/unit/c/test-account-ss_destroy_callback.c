@@ -10,7 +10,18 @@ void test__f_accountss_destroy_callback__fails(void **state) {
   mock_unwrap = 0;
   mock_unwrap_f_memory = 0;
 
-  f_account_t data = f_account_t_initialize;
+  f_string_static_t base = macro_f_string_static_t_initialize_1(F_string_empty_s, 1, 0);
+
+  f_account_t data = {
+    .id_user = 0,
+    .id_group = 0,
+    .home = base,
+    .label = base,
+    .name = base,
+    .password = base,
+    .shell = base,
+  };
+
   f_account_t data_array[] = { data };
   f_accounts_t datas = { .array = data_array, .used = 1, .size = 1 };
   f_accounts_t datas_array[] = { datas };
@@ -24,6 +35,12 @@ void test__f_accountss_destroy_callback__fails(void **state) {
     assert_int_equal(status, F_status_set_error(F_failure));
   }
 
+  datas_array[0].array[0].home = base;
+  datas_array[0].array[0].label = base;
+  datas_array[0].array[0].name = base;
+  datas_array[0].array[0].password = base;
+  datas_array[0].array[0].shell = base;
+
   {
     will_return(__wrap_f_memory_array_adjust, false);
     will_return(__wrap_f_memory_array_adjust, F_okay);
@@ -36,46 +53,13 @@ void test__f_accountss_destroy_callback__fails(void **state) {
     assert_int_equal(status, F_status_set_error(F_failure));
   }
 
-  {
-    will_return(__wrap_f_memory_array_adjust, false);
-    will_return(__wrap_f_memory_array_adjust, F_okay);
-
-    will_return(__wrap_f_memory_array_adjust, false);
-    will_return(__wrap_f_memory_array_adjust, F_okay);
-
-    will_return(__wrap_f_memory_array_adjust, true);
-    will_return(__wrap_f_memory_array_adjust, F_status_set_error(F_failure));
-
-    const f_status_t status = f_accountss_destroy_callback(0, 1, (void *) datas_array);
-
-    assert_int_equal(status, F_status_set_error(F_failure));
-  }
+  datas_array[0].array[0].home = base;
+  datas_array[0].array[0].label = base;
+  datas_array[0].array[0].name = base;
+  datas_array[0].array[0].password = base;
+  datas_array[0].array[0].shell = base;
 
   {
-    will_return(__wrap_f_memory_array_adjust, false);
-    will_return(__wrap_f_memory_array_adjust, F_okay);
-
-    will_return(__wrap_f_memory_array_adjust, false);
-    will_return(__wrap_f_memory_array_adjust, F_okay);
-
-    will_return(__wrap_f_memory_array_adjust, false);
-    will_return(__wrap_f_memory_array_adjust, F_okay);
-
-    will_return(__wrap_f_memory_array_adjust, true);
-    will_return(__wrap_f_memory_array_adjust, F_status_set_error(F_failure));
-
-    const f_status_t status = f_accountss_destroy_callback(0, 1, (void *) datas_array);
-
-    assert_int_equal(status, F_status_set_error(F_failure));
-  }
-
-  {
-    will_return(__wrap_f_memory_array_adjust, false);
-    will_return(__wrap_f_memory_array_adjust, F_okay);
-
-    will_return(__wrap_f_memory_array_adjust, false);
-    will_return(__wrap_f_memory_array_adjust, F_okay);
-
     will_return(__wrap_f_memory_array_adjust, false);
     will_return(__wrap_f_memory_array_adjust, F_okay);
 
@@ -89,6 +73,63 @@ void test__f_accountss_destroy_callback__fails(void **state) {
 
     assert_int_equal(status, F_status_set_error(F_failure));
   }
+
+  datas_array[0].array[0].home = base;
+  datas_array[0].array[0].label = base;
+  datas_array[0].array[0].name = base;
+  datas_array[0].array[0].password = base;
+  datas_array[0].array[0].shell = base;
+
+  {
+    will_return(__wrap_f_memory_array_adjust, false);
+    will_return(__wrap_f_memory_array_adjust, F_okay);
+
+    will_return(__wrap_f_memory_array_adjust, false);
+    will_return(__wrap_f_memory_array_adjust, F_okay);
+
+    will_return(__wrap_f_memory_array_adjust, false);
+    will_return(__wrap_f_memory_array_adjust, F_okay);
+
+    will_return(__wrap_f_memory_array_adjust, true);
+    will_return(__wrap_f_memory_array_adjust, F_status_set_error(F_failure));
+
+    const f_status_t status = f_accountss_destroy_callback(0, 1, (void *) datas_array);
+
+    assert_int_equal(status, F_status_set_error(F_failure));
+  }
+
+  datas_array[0].array[0].home = base;
+  datas_array[0].array[0].label = base;
+  datas_array[0].array[0].name = base;
+  datas_array[0].array[0].password = base;
+  datas_array[0].array[0].shell = base;
+
+  {
+    will_return(__wrap_f_memory_array_adjust, false);
+    will_return(__wrap_f_memory_array_adjust, F_okay);
+
+    will_return(__wrap_f_memory_array_adjust, false);
+    will_return(__wrap_f_memory_array_adjust, F_okay);
+
+    will_return(__wrap_f_memory_array_adjust, false);
+    will_return(__wrap_f_memory_array_adjust, F_okay);
+
+    will_return(__wrap_f_memory_array_adjust, false);
+    will_return(__wrap_f_memory_array_adjust, F_okay);
+
+    will_return(__wrap_f_memory_array_adjust, true);
+    will_return(__wrap_f_memory_array_adjust, F_status_set_error(F_failure));
+
+    const f_status_t status = f_accountss_destroy_callback(0, 1, (void *) datas_array);
+
+    assert_int_equal(status, F_status_set_error(F_failure));
+  }
+
+  datas_array[0].array[0].home = base;
+  datas_array[0].array[0].label = base;
+  datas_array[0].array[0].name = base;
+  datas_array[0].array[0].password = base;
+  datas_array[0].array[0].shell = base;
 
   {
     will_return(__wrap_f_memory_array_adjust, false);

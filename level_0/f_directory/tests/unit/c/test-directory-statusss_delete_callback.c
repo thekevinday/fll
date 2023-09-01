@@ -10,19 +10,24 @@ void test__f_directory_statusss_delete_callback__fails(void **state) {
   mock_unwrap = 0;
   mock_unwrap_f_memory = 0;
 
-  f_directory_status_t data = f_directory_status_t_initialize;
+  f_string_static_t base = macro_f_string_static_t_initialize_1(F_string_empty_s, 1, 0);
+
+  f_directory_status_t data = { .path = base };
   f_directory_status_t data_array[] = { data };
-  f_directory_statuss_t datas = { .array = data_array, .used = 1, .size = 1 };
-  f_directory_statuss_t datass_array[] = { datas };
+  f_directory_statuss_t datas = { .array = data_array, .used = 0, .size = 1 };
+  f_directory_statuss_t datas_array[] = { datas };
 
   {
     will_return(__wrap_f_memory_array_resize, true);
     will_return(__wrap_f_memory_array_resize, F_status_set_error(F_failure));
 
-    const f_status_t status = f_directory_statusss_delete_callback(0, 1, (void *) datass_array);
+    const f_status_t status = f_directory_statusss_delete_callback(0, 1, (void *) datas_array);
 
     assert_int_equal(status, F_status_set_error(F_failure));
   }
+
+  datas_array[0] = datas;
+  datas_array[0].array[0].path = base;
 
   {
     will_return(__wrap_f_memory_array_resize, false);
@@ -31,7 +36,7 @@ void test__f_directory_statusss_delete_callback__fails(void **state) {
     will_return(__wrap_f_memory_array_resize, true);
     will_return(__wrap_f_memory_array_resize, F_status_set_error(F_failure));
 
-    const f_status_t status = f_directory_statusss_delete_callback(0, 1, (void *) datass_array);
+    const f_status_t status = f_directory_statusss_delete_callback(0, 1, (void *) datas_array);
 
     assert_int_equal(status, F_status_set_error(F_failure));
   }

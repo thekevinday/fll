@@ -16,7 +16,7 @@ void test__f_fss_nestss_destroy_callback__fails(void **state) {
   f_fss_items_t items_array[] = { items };
   f_fss_nest_t data = { .depth = items_array, .used = 1, .size = 1 };
   f_fss_nest_t data_array[] = { data };
-  f_fss_nests_t datas = { .array = data_array, .used = 1, .size = 1 };
+  f_fss_nests_t datas = { .array = data_array, .used = 0, .size = 1 };
   f_fss_nests_t datas_array[] = { datas };
 
   {

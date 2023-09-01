@@ -10,7 +10,18 @@ void test__f_accounts_delete_callback__fails(void **state) {
   mock_unwrap = 0;
   mock_unwrap_f_memory = 0;
 
-  f_account_t data = f_account_t_initialize;
+  f_string_static_t base = macro_f_string_static_t_initialize_1(F_string_empty_s, 1, 0);
+
+  f_account_t data = {
+    .id_user = 0,
+    .id_group = 0,
+    .home = base,
+    .label = base,
+    .name = base,
+    .password = base,
+    .shell = base,
+  };
+
   f_account_t data_array[] = { data };
 
   {
@@ -22,6 +33,12 @@ void test__f_accounts_delete_callback__fails(void **state) {
     assert_int_equal(status, F_status_set_error(F_failure));
   }
 
+  data_array[0].home = base;
+  data_array[0].label = base;
+  data_array[0].name = base;
+  data_array[0].password = base;
+  data_array[0].shell = base;
+
   {
     will_return(__wrap_f_memory_array_resize, false);
     will_return(__wrap_f_memory_array_resize, F_okay);
@@ -34,6 +51,12 @@ void test__f_accounts_delete_callback__fails(void **state) {
     assert_int_equal(status, F_status_set_error(F_failure));
   }
 
+  data_array[0].home = base;
+  data_array[0].label = base;
+  data_array[0].name = base;
+  data_array[0].password = base;
+  data_array[0].shell = base;
+
   {
     will_return(__wrap_f_memory_array_resize, false);
     will_return(__wrap_f_memory_array_resize, F_okay);
@@ -49,6 +72,12 @@ void test__f_accounts_delete_callback__fails(void **state) {
     assert_int_equal(status, F_status_set_error(F_failure));
   }
 
+  data_array[0].home = base;
+  data_array[0].label = base;
+  data_array[0].name = base;
+  data_array[0].password = base;
+  data_array[0].shell = base;
+
   {
     will_return(__wrap_f_memory_array_resize, false);
     will_return(__wrap_f_memory_array_resize, F_okay);
@@ -66,6 +95,12 @@ void test__f_accounts_delete_callback__fails(void **state) {
 
     assert_int_equal(status, F_status_set_error(F_failure));
   }
+
+  data_array[0].home = base;
+  data_array[0].label = base;
+  data_array[0].name = base;
+  data_array[0].password = base;
+  data_array[0].shell = base;
 
   {
     will_return(__wrap_f_memory_array_resize, false);

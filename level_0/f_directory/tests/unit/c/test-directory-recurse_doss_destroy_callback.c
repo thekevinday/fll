@@ -10,19 +10,51 @@ void test__f_directory_recurse_doss_destroy_callback__fails(void **state) {
   mock_unwrap = 0;
   mock_unwrap_f_memory = 0;
 
-  f_directory_recurse_do_t data = f_directory_recurse_do_t_initialize;
+  f_string_static_t base = macro_f_string_static_t_initialize_1(F_string_empty_s, 1, 0);
+  f_string_static_t base_array[] = { base };
+  f_string_statics_t bases = macro_f_string_statics_t_initialize_1(base_array, 1, 0);
+
+  f_directory_listing_t listing = {
+    .block = bases,
+    .character = bases,
+    .directory = bases,
+    .regular = bases,
+    .link = bases,
+    .fifo = bases,
+    .socket = bases,
+    .unknown = bases,
+  };
+
+  f_directory_recurse_do_t data = {
+    .listing = listing,
+    .path = base,
+    .path_cache = base,
+  };
+
   f_directory_recurse_do_t data_array[] = { data };
-  f_directory_recurse_dos_t datas = { .array = data_array, .used = 1, .size = 1 };
-  f_directory_recurse_dos_t datass_array[] = { datas };
+  f_directory_recurse_dos_t datas = { .array = data_array, .used = 0, .size = 1 };
+  f_directory_recurse_dos_t datas_array[] = { datas };
 
   {
     will_return(__wrap_f_memory_array_adjust, true);
     will_return(__wrap_f_memory_array_adjust, F_status_set_error(F_failure));
 
-    const f_status_t status = f_directory_recurse_doss_destroy_callback(0, 1, (void *) datass_array);
+    const f_status_t status = f_directory_recurse_doss_destroy_callback(0, 1, (void *) datas_array);
 
     assert_int_equal(status, F_status_set_error(F_failure));
   }
+
+  datas_array[0] = datas;
+  datas_array[0].array[0].listing.block = bases;
+  datas_array[0].array[0].listing.character = bases;
+  datas_array[0].array[0].listing.directory = bases;
+  datas_array[0].array[0].listing.regular = bases;
+  datas_array[0].array[0].listing.link = bases;
+  datas_array[0].array[0].listing.fifo = bases;
+  datas_array[0].array[0].listing.socket = bases;
+  datas_array[0].array[0].listing.unknown = bases;
+  datas_array[0].array[0].path = base;
+  datas_array[0].array[0].path_cache = base;
 
   {
     will_return(__wrap_f_memory_array_adjust, false);
@@ -31,10 +63,22 @@ void test__f_directory_recurse_doss_destroy_callback__fails(void **state) {
     will_return(__wrap_f_memory_array_adjust, true);
     will_return(__wrap_f_memory_array_adjust, F_status_set_error(F_failure));
 
-    const f_status_t status = f_directory_recurse_doss_destroy_callback(0, 1, (void *) datass_array);
+    const f_status_t status = f_directory_recurse_doss_destroy_callback(0, 1, (void *) datas_array);
 
     assert_int_equal(status, F_status_set_error(F_failure));
   }
+
+  datas_array[0] = datas;
+  datas_array[0].array[0].listing.block = bases;
+  datas_array[0].array[0].listing.character = bases;
+  datas_array[0].array[0].listing.directory = bases;
+  datas_array[0].array[0].listing.regular = bases;
+  datas_array[0].array[0].listing.link = bases;
+  datas_array[0].array[0].listing.fifo = bases;
+  datas_array[0].array[0].listing.socket = bases;
+  datas_array[0].array[0].listing.unknown = bases;
+  datas_array[0].array[0].path = base;
+  datas_array[0].array[0].path_cache = base;
 
   {
     will_return(__wrap_f_memory_array_adjust, false);
@@ -46,10 +90,22 @@ void test__f_directory_recurse_doss_destroy_callback__fails(void **state) {
     will_return(__wrap_f_memory_arrays_adjust, true);
     will_return(__wrap_f_memory_arrays_adjust, F_status_set_error(F_failure));
 
-    const f_status_t status = f_directory_recurse_doss_destroy_callback(0, 1, (void *) datass_array);
+    const f_status_t status = f_directory_recurse_doss_destroy_callback(0, 1, (void *) datas_array);
 
     assert_int_equal(status, F_status_set_error(F_failure));
   }
+
+  datas_array[0] = datas;
+  datas_array[0].array[0].listing.block = bases;
+  datas_array[0].array[0].listing.character = bases;
+  datas_array[0].array[0].listing.directory = bases;
+  datas_array[0].array[0].listing.regular = bases;
+  datas_array[0].array[0].listing.link = bases;
+  datas_array[0].array[0].listing.fifo = bases;
+  datas_array[0].array[0].listing.socket = bases;
+  datas_array[0].array[0].listing.unknown = bases;
+  datas_array[0].array[0].path = base;
+  datas_array[0].array[0].path_cache = base;
 
   {
     will_return(__wrap_f_memory_array_adjust, false);
@@ -64,55 +120,22 @@ void test__f_directory_recurse_doss_destroy_callback__fails(void **state) {
     will_return(__wrap_f_memory_arrays_adjust, true);
     will_return(__wrap_f_memory_arrays_adjust, F_status_set_error(F_failure));
 
-    const f_status_t status = f_directory_recurse_doss_destroy_callback(0, 1, (void *) datass_array);
+    const f_status_t status = f_directory_recurse_doss_destroy_callback(0, 1, (void *) datas_array);
 
     assert_int_equal(status, F_status_set_error(F_failure));
   }
 
-  {
-    will_return(__wrap_f_memory_array_adjust, false);
-    will_return(__wrap_f_memory_array_adjust, F_okay);
-
-    will_return(__wrap_f_memory_array_adjust, false);
-    will_return(__wrap_f_memory_array_adjust, F_okay);
-
-    will_return(__wrap_f_memory_arrays_adjust, false);
-    will_return(__wrap_f_memory_arrays_adjust, F_okay);
-
-    will_return(__wrap_f_memory_arrays_adjust, false);
-    will_return(__wrap_f_memory_arrays_adjust, F_okay);
-
-    will_return(__wrap_f_memory_arrays_adjust, true);
-    will_return(__wrap_f_memory_arrays_adjust, F_status_set_error(F_failure));
-
-    const f_status_t status = f_directory_recurse_doss_destroy_callback(0, 1, (void *) datass_array);
-
-    assert_int_equal(status, F_status_set_error(F_failure));
-  }
-
-  {
-    will_return(__wrap_f_memory_array_adjust, false);
-    will_return(__wrap_f_memory_array_adjust, F_okay);
-
-    will_return(__wrap_f_memory_array_adjust, false);
-    will_return(__wrap_f_memory_array_adjust, F_okay);
-
-    will_return(__wrap_f_memory_arrays_adjust, false);
-    will_return(__wrap_f_memory_arrays_adjust, F_okay);
-
-    will_return(__wrap_f_memory_arrays_adjust, false);
-    will_return(__wrap_f_memory_arrays_adjust, F_okay);
-
-    will_return(__wrap_f_memory_arrays_adjust, false);
-    will_return(__wrap_f_memory_arrays_adjust, F_okay);
-
-    will_return(__wrap_f_memory_arrays_adjust, true);
-    will_return(__wrap_f_memory_arrays_adjust, F_status_set_error(F_failure));
-
-    const f_status_t status = f_directory_recurse_doss_destroy_callback(0, 1, (void *) datass_array);
-
-    assert_int_equal(status, F_status_set_error(F_failure));
-  }
+  datas_array[0] = datas;
+  datas_array[0].array[0].listing.block = bases;
+  datas_array[0].array[0].listing.character = bases;
+  datas_array[0].array[0].listing.directory = bases;
+  datas_array[0].array[0].listing.regular = bases;
+  datas_array[0].array[0].listing.link = bases;
+  datas_array[0].array[0].listing.fifo = bases;
+  datas_array[0].array[0].listing.socket = bases;
+  datas_array[0].array[0].listing.unknown = bases;
+  datas_array[0].array[0].path = base;
+  datas_array[0].array[0].path_cache = base;
 
   {
     will_return(__wrap_f_memory_array_adjust, false);
@@ -127,49 +150,25 @@ void test__f_directory_recurse_doss_destroy_callback__fails(void **state) {
     will_return(__wrap_f_memory_arrays_adjust, false);
     will_return(__wrap_f_memory_arrays_adjust, F_okay);
 
-    will_return(__wrap_f_memory_arrays_adjust, false);
-    will_return(__wrap_f_memory_arrays_adjust, F_okay);
-
-    will_return(__wrap_f_memory_arrays_adjust, false);
-    will_return(__wrap_f_memory_arrays_adjust, F_okay);
-
     will_return(__wrap_f_memory_arrays_adjust, true);
     will_return(__wrap_f_memory_arrays_adjust, F_status_set_error(F_failure));
 
-    const f_status_t status = f_directory_recurse_doss_destroy_callback(0, 1, (void *) datass_array);
+    const f_status_t status = f_directory_recurse_doss_destroy_callback(0, 1, (void *) datas_array);
 
     assert_int_equal(status, F_status_set_error(F_failure));
   }
 
-  {
-    will_return(__wrap_f_memory_array_adjust, false);
-    will_return(__wrap_f_memory_array_adjust, F_okay);
-
-    will_return(__wrap_f_memory_array_adjust, false);
-    will_return(__wrap_f_memory_array_adjust, F_okay);
-
-    will_return(__wrap_f_memory_arrays_adjust, false);
-    will_return(__wrap_f_memory_arrays_adjust, F_okay);
-
-    will_return(__wrap_f_memory_arrays_adjust, false);
-    will_return(__wrap_f_memory_arrays_adjust, F_okay);
-
-    will_return(__wrap_f_memory_arrays_adjust, false);
-    will_return(__wrap_f_memory_arrays_adjust, F_okay);
-
-    will_return(__wrap_f_memory_arrays_adjust, false);
-    will_return(__wrap_f_memory_arrays_adjust, F_okay);
-
-    will_return(__wrap_f_memory_arrays_adjust, false);
-    will_return(__wrap_f_memory_arrays_adjust, F_okay);
-
-    will_return(__wrap_f_memory_arrays_adjust, true);
-    will_return(__wrap_f_memory_arrays_adjust, F_status_set_error(F_failure));
-
-    const f_status_t status = f_directory_recurse_doss_destroy_callback(0, 1, (void *) datass_array);
-
-    assert_int_equal(status, F_status_set_error(F_failure));
-  }
+  datas_array[0] = datas;
+  datas_array[0].array[0].listing.block = bases;
+  datas_array[0].array[0].listing.character = bases;
+  datas_array[0].array[0].listing.directory = bases;
+  datas_array[0].array[0].listing.regular = bases;
+  datas_array[0].array[0].listing.link = bases;
+  datas_array[0].array[0].listing.fifo = bases;
+  datas_array[0].array[0].listing.socket = bases;
+  datas_array[0].array[0].listing.unknown = bases;
+  datas_array[0].array[0].path = base;
+  datas_array[0].array[0].path_cache = base;
 
   {
     will_return(__wrap_f_memory_array_adjust, false);
@@ -187,22 +186,25 @@ void test__f_directory_recurse_doss_destroy_callback__fails(void **state) {
     will_return(__wrap_f_memory_arrays_adjust, false);
     will_return(__wrap_f_memory_arrays_adjust, F_okay);
 
-    will_return(__wrap_f_memory_arrays_adjust, false);
-    will_return(__wrap_f_memory_arrays_adjust, F_okay);
-
-    will_return(__wrap_f_memory_arrays_adjust, false);
-    will_return(__wrap_f_memory_arrays_adjust, F_okay);
-
-    will_return(__wrap_f_memory_arrays_adjust, false);
-    will_return(__wrap_f_memory_arrays_adjust, F_okay);
-
     will_return(__wrap_f_memory_arrays_adjust, true);
     will_return(__wrap_f_memory_arrays_adjust, F_status_set_error(F_failure));
 
-    const f_status_t status = f_directory_recurse_doss_destroy_callback(0, 1, (void *) datass_array);
+    const f_status_t status = f_directory_recurse_doss_destroy_callback(0, 1, (void *) datas_array);
 
     assert_int_equal(status, F_status_set_error(F_failure));
   }
+
+  datas_array[0] = datas;
+  datas_array[0].array[0].listing.block = bases;
+  datas_array[0].array[0].listing.character = bases;
+  datas_array[0].array[0].listing.directory = bases;
+  datas_array[0].array[0].listing.regular = bases;
+  datas_array[0].array[0].listing.link = bases;
+  datas_array[0].array[0].listing.fifo = bases;
+  datas_array[0].array[0].listing.socket = bases;
+  datas_array[0].array[0].listing.unknown = bases;
+  datas_array[0].array[0].path = base;
+  datas_array[0].array[0].path_cache = base;
 
   {
     will_return(__wrap_f_memory_array_adjust, false);
@@ -223,6 +225,39 @@ void test__f_directory_recurse_doss_destroy_callback__fails(void **state) {
     will_return(__wrap_f_memory_arrays_adjust, false);
     will_return(__wrap_f_memory_arrays_adjust, F_okay);
 
+    will_return(__wrap_f_memory_arrays_adjust, true);
+    will_return(__wrap_f_memory_arrays_adjust, F_status_set_error(F_failure));
+
+    const f_status_t status = f_directory_recurse_doss_destroy_callback(0, 1, (void *) datas_array);
+
+    assert_int_equal(status, F_status_set_error(F_failure));
+  }
+
+  datas_array[0] = datas;
+  datas_array[0].array[0].listing.block = bases;
+  datas_array[0].array[0].listing.character = bases;
+  datas_array[0].array[0].listing.directory = bases;
+  datas_array[0].array[0].listing.regular = bases;
+  datas_array[0].array[0].listing.link = bases;
+  datas_array[0].array[0].listing.fifo = bases;
+  datas_array[0].array[0].listing.socket = bases;
+  datas_array[0].array[0].listing.unknown = bases;
+  datas_array[0].array[0].path = base;
+  datas_array[0].array[0].path_cache = base;
+
+  {
+    will_return(__wrap_f_memory_array_adjust, false);
+    will_return(__wrap_f_memory_array_adjust, F_okay);
+
+    will_return(__wrap_f_memory_array_adjust, false);
+    will_return(__wrap_f_memory_array_adjust, F_okay);
+
+    will_return(__wrap_f_memory_arrays_adjust, false);
+    will_return(__wrap_f_memory_arrays_adjust, F_okay);
+
+    will_return(__wrap_f_memory_arrays_adjust, false);
+    will_return(__wrap_f_memory_arrays_adjust, F_okay);
+
     will_return(__wrap_f_memory_arrays_adjust, false);
     will_return(__wrap_f_memory_arrays_adjust, F_okay);
 
@@ -235,10 +270,115 @@ void test__f_directory_recurse_doss_destroy_callback__fails(void **state) {
     will_return(__wrap_f_memory_arrays_adjust, true);
     will_return(__wrap_f_memory_arrays_adjust, F_status_set_error(F_failure));
 
-    const f_status_t status = f_directory_recurse_doss_destroy_callback(0, 1, (void *) datass_array);
+    const f_status_t status = f_directory_recurse_doss_destroy_callback(0, 1, (void *) datas_array);
 
     assert_int_equal(status, F_status_set_error(F_failure));
   }
+
+  datas_array[0] = datas;
+  datas_array[0].array[0].listing.block = bases;
+  datas_array[0].array[0].listing.character = bases;
+  datas_array[0].array[0].listing.directory = bases;
+  datas_array[0].array[0].listing.regular = bases;
+  datas_array[0].array[0].listing.link = bases;
+  datas_array[0].array[0].listing.fifo = bases;
+  datas_array[0].array[0].listing.socket = bases;
+  datas_array[0].array[0].listing.unknown = bases;
+  datas_array[0].array[0].path = base;
+  datas_array[0].array[0].path_cache = base;
+
+  {
+    will_return(__wrap_f_memory_array_adjust, false);
+    will_return(__wrap_f_memory_array_adjust, F_okay);
+
+    will_return(__wrap_f_memory_array_adjust, false);
+    will_return(__wrap_f_memory_array_adjust, F_okay);
+
+    will_return(__wrap_f_memory_arrays_adjust, false);
+    will_return(__wrap_f_memory_arrays_adjust, F_okay);
+
+    will_return(__wrap_f_memory_arrays_adjust, false);
+    will_return(__wrap_f_memory_arrays_adjust, F_okay);
+
+    will_return(__wrap_f_memory_arrays_adjust, false);
+    will_return(__wrap_f_memory_arrays_adjust, F_okay);
+
+    will_return(__wrap_f_memory_arrays_adjust, false);
+    will_return(__wrap_f_memory_arrays_adjust, F_okay);
+
+    will_return(__wrap_f_memory_arrays_adjust, false);
+    will_return(__wrap_f_memory_arrays_adjust, F_okay);
+
+    will_return(__wrap_f_memory_arrays_adjust, false);
+    will_return(__wrap_f_memory_arrays_adjust, F_okay);
+
+    will_return(__wrap_f_memory_arrays_adjust, true);
+    will_return(__wrap_f_memory_arrays_adjust, F_status_set_error(F_failure));
+
+    const f_status_t status = f_directory_recurse_doss_destroy_callback(0, 1, (void *) datas_array);
+
+    assert_int_equal(status, F_status_set_error(F_failure));
+  }
+
+  datas_array[0] = datas;
+  datas_array[0].array[0].listing.block = bases;
+  datas_array[0].array[0].listing.character = bases;
+  datas_array[0].array[0].listing.directory = bases;
+  datas_array[0].array[0].listing.regular = bases;
+  datas_array[0].array[0].listing.link = bases;
+  datas_array[0].array[0].listing.fifo = bases;
+  datas_array[0].array[0].listing.socket = bases;
+  datas_array[0].array[0].listing.unknown = bases;
+  datas_array[0].array[0].path = base;
+  datas_array[0].array[0].path_cache = base;
+
+  {
+    will_return(__wrap_f_memory_array_adjust, false);
+    will_return(__wrap_f_memory_array_adjust, F_okay);
+
+    will_return(__wrap_f_memory_array_adjust, false);
+    will_return(__wrap_f_memory_array_adjust, F_okay);
+
+    will_return(__wrap_f_memory_arrays_adjust, false);
+    will_return(__wrap_f_memory_arrays_adjust, F_okay);
+
+    will_return(__wrap_f_memory_arrays_adjust, false);
+    will_return(__wrap_f_memory_arrays_adjust, F_okay);
+
+    will_return(__wrap_f_memory_arrays_adjust, false);
+    will_return(__wrap_f_memory_arrays_adjust, F_okay);
+
+    will_return(__wrap_f_memory_arrays_adjust, false);
+    will_return(__wrap_f_memory_arrays_adjust, F_okay);
+
+    will_return(__wrap_f_memory_arrays_adjust, false);
+    will_return(__wrap_f_memory_arrays_adjust, F_okay);
+
+    will_return(__wrap_f_memory_arrays_adjust, false);
+    will_return(__wrap_f_memory_arrays_adjust, F_okay);
+
+    will_return(__wrap_f_memory_arrays_adjust, false);
+    will_return(__wrap_f_memory_arrays_adjust, F_okay);
+
+    will_return(__wrap_f_memory_arrays_adjust, true);
+    will_return(__wrap_f_memory_arrays_adjust, F_status_set_error(F_failure));
+
+    const f_status_t status = f_directory_recurse_doss_destroy_callback(0, 1, (void *) datas_array);
+
+    assert_int_equal(status, F_status_set_error(F_failure));
+  }
+
+  datas_array[0] = datas;
+  datas_array[0].array[0].listing.block = bases;
+  datas_array[0].array[0].listing.character = bases;
+  datas_array[0].array[0].listing.directory = bases;
+  datas_array[0].array[0].listing.regular = bases;
+  datas_array[0].array[0].listing.link = bases;
+  datas_array[0].array[0].listing.fifo = bases;
+  datas_array[0].array[0].listing.socket = bases;
+  datas_array[0].array[0].listing.unknown = bases;
+  datas_array[0].array[0].path = base;
+  datas_array[0].array[0].path_cache = base;
 
   {
     will_return(__wrap_f_memory_array_adjust, false);
@@ -274,7 +414,7 @@ void test__f_directory_recurse_doss_destroy_callback__fails(void **state) {
     will_return(__wrap_f_memory_array_adjust, true);
     will_return(__wrap_f_memory_array_adjust, F_status_set_error(F_failure));
 
-    const f_status_t status = f_directory_recurse_doss_destroy_callback(0, 1, (void *) datass_array);
+    const f_status_t status = f_directory_recurse_doss_destroy_callback(0, 1, (void *) datas_array);
 
     assert_int_equal(status, F_status_set_error(F_failure));
   }

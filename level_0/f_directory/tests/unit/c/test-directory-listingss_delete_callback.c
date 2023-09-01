@@ -10,9 +10,23 @@ void test__f_directory_listingss_delete_callback__fails(void **state) {
   mock_unwrap = 0;
   mock_unwrap_f_memory = 0;
 
-  f_directory_listing_t data = f_directory_listing_t_initialize;
+  f_string_static_t base = macro_f_string_static_t_initialize_1(F_string_empty_s, 1, 0);
+  f_string_static_t base_array[] = { base };
+  f_string_statics_t bases = macro_f_string_statics_t_initialize_1(base_array, 1, 0);
+
+  f_directory_listing_t data = {
+    .block = bases,
+    .character = bases,
+    .directory = bases,
+    .regular = bases,
+    .link = bases,
+    .fifo = bases,
+    .socket = bases,
+    .unknown = bases,
+  };
+
   f_directory_listing_t data_array[] = { data };
-  f_directory_listings_t datas = { .array = data_array, .used = 1, .size = 1 };
+  f_directory_listings_t datas = { .array = data_array, .used = 0, .size = 1 };
   f_directory_listings_t datas_array[] = { datas };
 
   {
@@ -24,6 +38,16 @@ void test__f_directory_listingss_delete_callback__fails(void **state) {
     assert_int_equal(status, F_status_set_error(F_failure));
   }
 
+  datas_array[0] = datas;
+  datas_array[0].array[0].block = bases;
+  datas_array[0].array[0].character = bases;
+  datas_array[0].array[0].directory = bases;
+  datas_array[0].array[0].regular = bases;
+  datas_array[0].array[0].link = bases;
+  datas_array[0].array[0].fifo = bases;
+  datas_array[0].array[0].socket = bases;
+  datas_array[0].array[0].unknown = bases;
+
   {
     will_return(__wrap_f_memory_arrays_resize, false);
     will_return(__wrap_f_memory_arrays_resize, F_okay);
@@ -36,46 +60,17 @@ void test__f_directory_listingss_delete_callback__fails(void **state) {
     assert_int_equal(status, F_status_set_error(F_failure));
   }
 
-  {
-    will_return(__wrap_f_memory_arrays_resize, false);
-    will_return(__wrap_f_memory_arrays_resize, F_okay);
-
-    will_return(__wrap_f_memory_arrays_resize, false);
-    will_return(__wrap_f_memory_arrays_resize, F_okay);
-
-    will_return(__wrap_f_memory_arrays_resize, true);
-    will_return(__wrap_f_memory_arrays_resize, F_status_set_error(F_failure));
-
-    const f_status_t status = f_directory_listingss_delete_callback(0, 1, (void *) datas_array);
-
-    assert_int_equal(status, F_status_set_error(F_failure));
-  }
+  datas_array[0] = datas;
+  datas_array[0].array[0].block = bases;
+  datas_array[0].array[0].character = bases;
+  datas_array[0].array[0].directory = bases;
+  datas_array[0].array[0].regular = bases;
+  datas_array[0].array[0].link = bases;
+  datas_array[0].array[0].fifo = bases;
+  datas_array[0].array[0].socket = bases;
+  datas_array[0].array[0].unknown = bases;
 
   {
-    will_return(__wrap_f_memory_arrays_resize, false);
-    will_return(__wrap_f_memory_arrays_resize, F_okay);
-
-    will_return(__wrap_f_memory_arrays_resize, false);
-    will_return(__wrap_f_memory_arrays_resize, F_okay);
-
-    will_return(__wrap_f_memory_arrays_resize, false);
-    will_return(__wrap_f_memory_arrays_resize, F_okay);
-
-    will_return(__wrap_f_memory_arrays_resize, true);
-    will_return(__wrap_f_memory_arrays_resize, F_status_set_error(F_failure));
-
-    const f_status_t status = f_directory_listingss_delete_callback(0, 1, (void *) datas_array);
-
-    assert_int_equal(status, F_status_set_error(F_failure));
-  }
-
-  {
-    will_return(__wrap_f_memory_arrays_resize, false);
-    will_return(__wrap_f_memory_arrays_resize, F_okay);
-
-    will_return(__wrap_f_memory_arrays_resize, false);
-    will_return(__wrap_f_memory_arrays_resize, F_okay);
-
     will_return(__wrap_f_memory_arrays_resize, false);
     will_return(__wrap_f_memory_arrays_resize, F_okay);
 
@@ -90,13 +85,17 @@ void test__f_directory_listingss_delete_callback__fails(void **state) {
     assert_int_equal(status, F_status_set_error(F_failure));
   }
 
+  datas_array[0] = datas;
+  datas_array[0].array[0].block = bases;
+  datas_array[0].array[0].character = bases;
+  datas_array[0].array[0].directory = bases;
+  datas_array[0].array[0].regular = bases;
+  datas_array[0].array[0].link = bases;
+  datas_array[0].array[0].fifo = bases;
+  datas_array[0].array[0].socket = bases;
+  datas_array[0].array[0].unknown = bases;
+
   {
-    will_return(__wrap_f_memory_arrays_resize, false);
-    will_return(__wrap_f_memory_arrays_resize, F_okay);
-
-    will_return(__wrap_f_memory_arrays_resize, false);
-    will_return(__wrap_f_memory_arrays_resize, F_okay);
-
     will_return(__wrap_f_memory_arrays_resize, false);
     will_return(__wrap_f_memory_arrays_resize, F_okay);
 
@@ -114,13 +113,17 @@ void test__f_directory_listingss_delete_callback__fails(void **state) {
     assert_int_equal(status, F_status_set_error(F_failure));
   }
 
+  datas_array[0] = datas;
+  datas_array[0].array[0].block = bases;
+  datas_array[0].array[0].character = bases;
+  datas_array[0].array[0].directory = bases;
+  datas_array[0].array[0].regular = bases;
+  datas_array[0].array[0].link = bases;
+  datas_array[0].array[0].fifo = bases;
+  datas_array[0].array[0].socket = bases;
+  datas_array[0].array[0].unknown = bases;
+
   {
-    will_return(__wrap_f_memory_arrays_resize, false);
-    will_return(__wrap_f_memory_arrays_resize, F_okay);
-
-    will_return(__wrap_f_memory_arrays_resize, false);
-    will_return(__wrap_f_memory_arrays_resize, F_okay);
-
     will_return(__wrap_f_memory_arrays_resize, false);
     will_return(__wrap_f_memory_arrays_resize, F_okay);
 
@@ -141,6 +144,84 @@ void test__f_directory_listingss_delete_callback__fails(void **state) {
     assert_int_equal(status, F_status_set_error(F_failure));
   }
 
+  datas_array[0].array[0].block = bases;
+  datas_array[0].array[0].character = bases;
+  datas_array[0].array[0].directory = bases;
+  datas_array[0].array[0].regular = bases;
+  datas_array[0].array[0].link = bases;
+  datas_array[0].array[0].fifo = bases;
+  datas_array[0].array[0].socket = bases;
+  datas_array[0].array[0].unknown = bases;
+
+  {
+    will_return(__wrap_f_memory_arrays_resize, false);
+    will_return(__wrap_f_memory_arrays_resize, F_okay);
+
+    will_return(__wrap_f_memory_arrays_resize, false);
+    will_return(__wrap_f_memory_arrays_resize, F_okay);
+
+    will_return(__wrap_f_memory_arrays_resize, false);
+    will_return(__wrap_f_memory_arrays_resize, F_okay);
+
+    will_return(__wrap_f_memory_arrays_resize, false);
+    will_return(__wrap_f_memory_arrays_resize, F_okay);
+
+    will_return(__wrap_f_memory_arrays_resize, false);
+    will_return(__wrap_f_memory_arrays_resize, F_okay);
+
+    will_return(__wrap_f_memory_arrays_resize, true);
+    will_return(__wrap_f_memory_arrays_resize, F_status_set_error(F_failure));
+
+    const f_status_t status = f_directory_listingss_delete_callback(0, 1, (void *) datas_array);
+
+    assert_int_equal(status, F_status_set_error(F_failure));
+  }
+
+  datas_array[0].array[0].block = bases;
+  datas_array[0].array[0].character = bases;
+  datas_array[0].array[0].directory = bases;
+  datas_array[0].array[0].regular = bases;
+  datas_array[0].array[0].link = bases;
+  datas_array[0].array[0].fifo = bases;
+  datas_array[0].array[0].socket = bases;
+  datas_array[0].array[0].unknown = bases;
+
+  {
+    will_return(__wrap_f_memory_arrays_resize, false);
+    will_return(__wrap_f_memory_arrays_resize, F_okay);
+
+    will_return(__wrap_f_memory_arrays_resize, false);
+    will_return(__wrap_f_memory_arrays_resize, F_okay);
+
+    will_return(__wrap_f_memory_arrays_resize, false);
+    will_return(__wrap_f_memory_arrays_resize, F_okay);
+
+    will_return(__wrap_f_memory_arrays_resize, false);
+    will_return(__wrap_f_memory_arrays_resize, F_okay);
+
+    will_return(__wrap_f_memory_arrays_resize, false);
+    will_return(__wrap_f_memory_arrays_resize, F_okay);
+
+    will_return(__wrap_f_memory_arrays_resize, false);
+    will_return(__wrap_f_memory_arrays_resize, F_okay);
+
+    will_return(__wrap_f_memory_arrays_resize, true);
+    will_return(__wrap_f_memory_arrays_resize, F_status_set_error(F_failure));
+
+    const f_status_t status = f_directory_listingss_delete_callback(0, 1, (void *) datas_array);
+
+    assert_int_equal(status, F_status_set_error(F_failure));
+  }
+
+  datas_array[0].array[0].block = bases;
+  datas_array[0].array[0].character = bases;
+  datas_array[0].array[0].directory = bases;
+  datas_array[0].array[0].regular = bases;
+  datas_array[0].array[0].link = bases;
+  datas_array[0].array[0].fifo = bases;
+  datas_array[0].array[0].socket = bases;
+  datas_array[0].array[0].unknown = bases;
+
   {
     will_return(__wrap_f_memory_arrays_resize, false);
     will_return(__wrap_f_memory_arrays_resize, F_okay);
@@ -170,6 +251,15 @@ void test__f_directory_listingss_delete_callback__fails(void **state) {
 
     assert_int_equal(status, F_status_set_error(F_failure));
   }
+
+  datas_array[0].array[0].block = bases;
+  datas_array[0].array[0].character = bases;
+  datas_array[0].array[0].directory = bases;
+  datas_array[0].array[0].regular = bases;
+  datas_array[0].array[0].link = bases;
+  datas_array[0].array[0].fifo = bases;
+  datas_array[0].array[0].socket = bases;
+  datas_array[0].array[0].unknown = bases;
 
   {
     will_return(__wrap_f_memory_arrays_resize, false);
