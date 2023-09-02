@@ -28,7 +28,7 @@ Featureless Settings Specification: 000f - Simple Packet:
   Control Block Structure\:
     code:"
     [ Endianness Bit ] [ String / Binary Bit ] [ Remaining 6 bits (unused) ]
-    [ 0b0            ] [ 0b0                 ] [ 0b000000                  ]
+    [ size: 2^1      ] [ size: 2^1           ] [ size: 2^6                 ]
     "
 
   The endianness bit designates whether or not the packet is in big endian or little endian format.
@@ -48,8 +48,8 @@ Featureless Settings Specification: 000f - Simple Packet:
 
   Size Block Structure\:
     code:"
-    [ Endianness Bit ] [ String / Binary Bit ] [ Remaining 6 bits (unused) ]
-    [ 0b0            ] [ 0b0                 ] [ 0b000000                  ]
+    [ Size Block ]
+    [ size: 2^4  ]
     "
 
   The bold:"Size Block" is an unsigned 32-bit integer representing the size of the entire packet, including the bold:"Control Block" and bold:"Size Block".
