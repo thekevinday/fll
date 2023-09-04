@@ -34,57 +34,100 @@ extern "C" {
   }
 #endif // _di_f_fss_simple_packet_destroy_
 
-#ifndef _di_f_fss_simple_packet_identify_
-  f_status_t f_fss_simple_packet_identify(const f_string_static_t buffer, f_fss_simple_packet_range_t * const range) {
+#ifndef _di_f_fss_simple_packet_extract_
+  f_status_t f_fss_simple_packet_extract(const f_string_static_t buffer, f_fss_simple_packet_t * const packet) {
     #ifndef _di_level_0_parameter_checking_
-      if (!range) return F_status_set_error(F_parameter);
+      if (!packet) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.used) return F_data_not;
+    if (buffer.used < F_fss_simple_packet_block_header_size_d) return F_packet_too_small;
 
-    range->control.start = 1;
-    range->control.stop = 0;
+    packet->control = (uint8_t) buffer.string[0];
 
-    range->size.start = 1;
-    range->size.stop = 0;
-
-    range->payload.start = 1;
-    range->payload.stop = 0;
-
-    if (buffer.used < F_fss_simple_packet_block_control_size_d) return F_partial;
-
-    range->control.start = 0;
-    range->control.stop = 0;
-
-    if (buffer.used < F_fss_simple_packet_block_header_size_d) return F_partial;
-
-    range->size.start = 1;
-    range->size.stop = F_fss_simple_packet_block_size_size_d;
-
-    // The Payload Block can be NULL and if it is, then all values of the Size Block must be of size F_fss_simple_packet_block_header_size_d.
-    if (buffer.used == F_fss_simple_packet_block_size_size_d) {
-
-      // Big endian.
-      if (buffer.string[0] & F_fss_simple_packet_endian_d) {
-        if (buffer.string[2] || buffer.string[3] || !buffer.string[4]) return F_partial;
-        if (buffer.string[1] < F_fss_simple_packet_block_header_size_d) return F_status_set_error(F_valid_not);
-
-        return (buffer.string[1] == F_fss_simple_packet_block_header_size_d) ? F_okay : F_partial;
+    #ifdef _is_F_endian_little
+      // Big Endian.
+      if (packet->control & F_fss_simple_packet_endian_d) {
+        packet->size = ((uint8_t) buffer.string[1]);
+        packet->size += ((uint8_t) buffer.string[2]) << 8;
+        packet->size += ((uint8_t) buffer.string[3]) << 16;
+        packet->size += ((uint8_t) buffer.string[4]) << 24;
       }
-
-      // Little endian.
-      if (!buffer.string[1] || buffer.string[2] || buffer.string[3]) return F_partial;
-      if (buffer.string[4] < F_fss_simple_packet_block_header_size_d) return F_status_set_error(F_valid_not);
-
-      return (buffer.string[4] == F_fss_simple_packet_block_header_size_d) ? F_okay : F_partial;
-    }
-
-    range->payload.start = F_fss_simple_packet_block_header_size_d;
-    range->payload.stop = (buffer.used - F_fss_simple_packet_block_header_size_d < F_fss_simple_packet_block_payload_size_d) ? buffer.used - 1 : F_fss_simple_packet_block_payload_size_d - 1;
+      // Little Endian.
+      else {
+        packet->size = ((uint8_t) buffer.string[1]) << 24;
+        packet->size += ((uint8_t) buffer.string[2]) << 16;
+        packet->size += ((uint8_t) buffer.string[3]) << 8;
+        packet->size += ((uint8_t) buffer.string[4]);
+      }
+    #else
+      // Big Endian.
+      if (packet->control & F_fss_simple_packet_endian_d) {
+        packet->size = ((uint8_t) buffer.string[1]) << 24;
+        packet->size += ((uint8_t) buffer.string[2]) << 16;
+        packet->size += ((uint8_t) buffer.string[3]) << 8;
+        packet->size += ((uint8_t) buffer.string[4]);
+      }
+      // Little Endian.
+      else {
+        packet->size = ((uint8_t) buffer.string[1]);
+        packet->size += ((uint8_t) buffer.string[2]) << 8;
+        packet->size += ((uint8_t) buffer.string[3]) << 16;
+        packet->size += ((uint8_t) buffer.string[4]) << 24;
+      }
+    #endif // _is_F_endian_little
 
     return F_okay;
   }
-#endif // _di_f_fss_simple_packet_identify_
+#endif // _di_f_fss_simple_packet_extract_
+
+#ifndef _di_f_fss_simple_packet_extract_range_
+  f_status_t f_fss_simple_packet_extract_range(const f_string_static_t buffer, f_fss_simple_packet_range_t * const packet) {
+    #ifndef _di_f_fss_simple_packet_extract_range_
+      if (!packet) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (buffer.used < F_fss_simple_packet_block_header_size_d) return F_packet_too_small;
+
+    packet->control = (uint8_t) buffer.string[0];
+
+    #ifdef _is_F_endian_little
+      // Big Endian.
+      if (packet->control & F_fss_simple_packet_endian_d) {
+        packet->size = ((uint8_t) buffer.string[1]);
+        packet->size += ((uint8_t) buffer.string[2]) << 8;
+        packet->size += ((uint8_t) buffer.string[3]) << 16;
+        packet->size += ((uint8_t) buffer.string[4]) << 24;
+      }
+      // Little Endian.
+      else {
+        packet->size = ((uint8_t) buffer.string[1]) << 24;
+        packet->size += ((uint8_t) buffer.string[2]) << 16;
+        packet->size += ((uint8_t) buffer.string[3]) << 8;
+        packet->size += ((uint8_t) buffer.string[4]);
+      }
+    #else
+      // Big Endian.
+      if (packet->control & F_fss_simple_packet_endian_d) {
+        packet->size = ((uint8_t) buffer.string[1]) << 24;
+        packet->size += ((uint8_t) buffer.string[2]) << 16;
+        packet->size += ((uint8_t) buffer.string[3]) << 8;
+        packet->size += ((uint8_t) buffer.string[4]);
+      }
+      // Little Endian.
+      else {
+        packet->size = ((uint8_t) buffer.string[1]);
+        packet->size += ((uint8_t) buffer.string[2]) << 8;
+        packet->size += ((uint8_t) buffer.string[3]) << 16;
+        packet->size += ((uint8_t) buffer.string[4]) << 24;
+      }
+    #endif // _is_F_endian_little
+
+    packet->payload.start = F_fss_simple_packet_block_header_size_d;
+    packet->payload.stop = (buffer.used - F_fss_simple_packet_block_header_size_d < F_fss_simple_packet_block_payload_size_d) ? buffer.used - 1 : F_fss_simple_packet_block_payload_size_d - 1;
+
+    return F_okay;
+  }
+#endif // _di_f_fss_simple_packet_extract_range_
 
 #ifndef _di_f_fss_simple_packets_delete_callback_
   f_status_t f_fss_simple_packets_delete_callback(const f_number_unsigned_t start, const f_number_unsigned_t stop, void * const void_array) {

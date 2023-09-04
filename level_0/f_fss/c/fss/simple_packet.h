@@ -94,7 +94,7 @@ extern "C" {
 #endif // _di_f_fss_simple_packets_t_
 
 /**
- * This holds an array of f_fss_simple_packets_t.
+ * A packet header, where the payload is stored as a string.
  *
  * Properties:
  *   - array: An array of f_fss_simple_packets_t.
@@ -118,7 +118,7 @@ extern "C" {
 #endif // _di_f_fss_simple_packetss_t_
 
 /**
- * A set of string ranges intending to designate the different ranges for a Simple Packet representing each Block.
+ * A packet header, where the payload is represented by a range.
  *
  * Properties:
  *   - control: The Control Block, which is 1 byte long.
@@ -127,20 +127,26 @@ extern "C" {
  */
 #ifndef _di_f_fss_simple_packet_range_t_
   typedef struct {
-    f_string_range_t control;
-    f_string_range_t size;
+    uint8_t control;
+    uint32_t size;
     f_string_range_t payload;
   } f_fss_simple_packet_range_t;
 
   #define f_fss_simple_packet_range_t_initialize { \
-    f_string_range_t_initialize, \
-    f_string_range_t_initialize, \
+    0, \
+    0, \
     f_string_range_t_initialize, \
   }
 
   #define macro_f_fss_simple_packet_range_t_initialize_1(control, size, payload) { \
     control, \
     size, \
+    payload, \
+  }
+
+  #define macro_f_fss_simple_packet_range_t_initialize_2(payload) { \
+    0, \
+    0, \
     payload, \
   }
 #endif // _di_f_fss_simple_packet_range_t_
@@ -236,26 +242,49 @@ extern "C" {
 #endif // _di_f_fss_simple_packet_destroy_
 
 /**
- * Identify the ranges representing the different parts of the FSS-000F (Simple Packet).
+ * Extract the different parts of the FSS-000F (Simple Packet) string into a packet structure.
+ *
+ * The buffer is processed as binary data, therefore, NULL and other control data are considered valid data and are not ignored.
  *
  * @param buffer
  *   The string buffer to identify the packet ranges of.
  *   This buffer is considered binary data and so any NULL found within is treated as a valid part of the buffer.
- * @param range
- *   The set of blocks, each representing a range within the buffer.
- *   If the buffer is too small (including when F_data_not is returned), then the ranges are all set to the out of range values as appropriate.
+ * @param packet
+ *   The packet extracted from the given buffer, without doing anything to the payload.
+ *   The caller can allocate the payload and extract it at any time by just selecting the string from F_fss_simple_packet_block_header_size_d until at most F_fss_simple_packet_block_payload_size_d.
  *
  * @return
  *   F_okay on success (The end of the Payload Block is assumed to be the remainder of the buffer or F_fss_simple_packet_block_payload_size_d, whichever is smaller).
- *   F_partial on success but not all blocks are identified.
- *   F_data_not if buffer.used is 0.
+ *   F_packet_too_small if the buffer.used is smaller than the minimum size of the packet.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_valid_not (with error bit) if the data is invalid, which generally only happens when the value of the Size block is less than 5 (and when not returning F_partial).
  */
-#ifndef _di_f_fss_simple_packet_identify_
-  extern f_status_t f_fss_simple_packet_identify(const f_string_static_t buffer, f_fss_simple_packet_range_t * const range);
-#endif // _di_f_fss_simple_packet_identify_
+#ifndef _di_f_fss_simple_packet_extract_
+  extern f_status_t f_fss_simple_packet_extract(const f_string_static_t buffer, f_fss_simple_packet_t * const packet);
+#endif // _di_f_fss_simple_packet_extract_
+
+/**
+ * Extract the different parts of the FSS-000F (Simple Packet) string into a packet range structure.
+ *
+ * The buffer is processed as binary data, therefore, NULL and other control data are considered valid data and are not ignored.
+ *
+ * @param buffer
+ *   The string buffer to identify the packet ranges of.
+ *   This buffer is considered binary data and so any NULL found within is treated as a valid part of the buffer.
+ * @param packet
+ *   The packet range extracted from the given buffer, with the payload being represented by a range.
+ *
+ * @return
+ *   F_okay on success (The end of the Payload Block is assumed to be the remainder of the buffer or F_fss_simple_packet_block_payload_size_d, whichever is smaller).
+ *   F_packet_too_small if the buffer.used is smaller than the minimum size of the packet.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_valid_not (with error bit) if the data is invalid, which generally only happens when the value of the Size block is less than 5 (and when not returning F_partial).
+ */
+#ifndef _di_f_fss_simple_packet_extract_range_
+  extern f_status_t f_fss_simple_packet_extract_range(const f_string_static_t buffer, f_fss_simple_packet_range_t * const packet);
+#endif // _di_f_fss_simple_packet_extract_range_
 
 /**
  * A callback intended to be passed to f_memory_arrays_resize() for an f_fss_simple_packets_t structure.

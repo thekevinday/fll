@@ -5,7 +5,7 @@
  * API Version: 0.7
  * Licenses: lgpl-2.1-or-later
  *
- * Test the array types in the type project.
+ * Test the array types in the FSS project.
  */
 #ifndef _TEST__F_fss__simple_packetss_delete_callback
 #define _TEST__F_fss__simple_packetss_delete_callback

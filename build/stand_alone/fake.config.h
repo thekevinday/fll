@@ -586,7 +586,8 @@
 #define _di_f_fss_simple_packet_d_
 #define _di_f_fss_simple_packet_delete_
 #define _di_f_fss_simple_packet_destroy_
-#define _di_f_fss_simple_packet_identify_
+#define _di_f_fss_simple_packet_extract_
+#define _di_f_fss_simple_packet_extract_range_
 #define _di_f_fss_simple_packet_ranges_append_
 #define _di_f_fss_simple_packet_ranges_append_all_
 #define _di_f_fss_simple_packet_rangess_append_

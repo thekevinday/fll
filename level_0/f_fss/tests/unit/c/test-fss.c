@@ -129,6 +129,15 @@ int main(void) {
     cmocka_unit_test(test__f_fss_simple_packetss_delete_callback__works),
     cmocka_unit_test(test__f_fss_simple_packetss_destroy_callback__works),
 
+    cmocka_unit_test(test__f_fss_simple_packet_extract__works_little_endian),
+    cmocka_unit_test(test__f_fss_simple_packet_extract_range__works_little_endian),
+
+    cmocka_unit_test(test__f_fss_simple_packet_extract__works_big_endian),
+    cmocka_unit_test(test__f_fss_simple_packet_extract_range__works_big_endian),
+
+    cmocka_unit_test(test__f_fss_simple_packet_extract__returns_packet_too_small),
+    cmocka_unit_test(test__f_fss_simple_packet_extract_range__returns_packet_too_small),
+
     #ifndef _di_level_0_parameter_checking_
       cmocka_unit_test(test__f_fss_apply_delimit__parameter_checking),
       cmocka_unit_test(test__f_fss_apply_delimit_range__parameter_checking),
@@ -161,6 +170,8 @@ int main(void) {
 
       cmocka_unit_test(test__f_fss_simple_packet_delete__parameter_checking),
       cmocka_unit_test(test__f_fss_simple_packet_destroy__parameter_checking),
+      cmocka_unit_test(test__f_fss_simple_packet_extract__parameter_checking),
+      cmocka_unit_test(test__f_fss_simple_packet_extract_range__parameter_checking),
 
       // f_fss_items_delete_callback() doesn't use parameter checking.
       // f_fss_items_destroy_callback() doesn't use parameter checking.
