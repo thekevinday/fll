@@ -668,8 +668,8 @@ extern "C" {
           return F_true;
         }
 
-        // Vedic Extensions: U+1CD4 to U+1CD2.
-        if (sequence >= 0xe1b39400 && sequence <= 0xe1b39200) {
+        // Vedic Extensions: U+1CD2 to U+1CD4.
+        if (sequence >= 0xe1b39200 && sequence <= 0xe1b39400) {
           return F_true;
         }
 
@@ -688,8 +688,8 @@ extern "C" {
           return F_true;
         }
 
-        // Vedic Extensions: U+1DC0 to U+1CE8.
-        if (sequence >= 0xe1b78000 && sequence <= 0xe1b3a800) {
+        // Vedic Extensions: U+1CE8 to U+1DC0.
+        if (sequence >= 0xe1b3a800 && sequence <= 0xe1b78000) {
           return F_true;
         }
 
