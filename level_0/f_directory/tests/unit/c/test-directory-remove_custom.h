@@ -25,7 +25,7 @@ extern void test__f_directory_remove_custom__fails(void **state);
 extern void test__f_directory_remove_custom__parameter_checking(void **state);
 
 /**
- * Test that function works but the path is empty.
+ * Test that the function returns F_data_not.
  *
  * @see f_directory_remove_custom()
  */
