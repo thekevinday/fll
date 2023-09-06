@@ -82,7 +82,6 @@ extern "C" {
       write_size = write_max;
     }
 
-    f_number_unsigned_t last = 0;
     f_number_unsigned_t used = 0;
 
     ssize_t size_write = 0;
@@ -177,7 +176,6 @@ extern "C" {
       }
 
       *written += i;
-      last += used;
 
       if (*written + write_size > write_max) {
         write_size = write_max - *written;
