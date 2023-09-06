@@ -157,6 +157,17 @@ void test__f_socket_disconnect__parameter_checking(void **state) {
   }
 }
 
+void test__f_socket_disconnect__returns_file_descriptor_not(void **state) {
+
+  {
+    f_socket_t socket = f_socket_t_initialize;
+
+    const f_status_t status = f_socket_disconnect(&socket, 0);
+
+    assert_int_equal(status, F_file_descriptor_not);
+  }
+}
+
 void test__f_socket_disconnect__works_for_close_fast(void **state) {
 
   f_socket_t socket = f_socket_t_initialize;

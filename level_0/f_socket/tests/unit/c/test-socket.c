@@ -47,6 +47,9 @@ int main(void) {
     cmocka_unit_test(test__f_socket_disconnect__fails_for_close_read),
     cmocka_unit_test(test__f_socket_disconnect__fails_for_close_unknown),
     cmocka_unit_test(test__f_socket_disconnect__fails_for_close_write),
+
+    cmocka_unit_test(test__f_socket_disconnect__returns_file_descriptor_not),
+
     cmocka_unit_test(test__f_socket_disconnect__works_for_close_fast),
     cmocka_unit_test(test__f_socket_disconnect__works_for_close_read),
     cmocka_unit_test(test__f_socket_disconnect__works_for_close_write),

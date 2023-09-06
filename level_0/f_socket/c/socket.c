@@ -265,6 +265,8 @@ extern "C" {
       if (!socket) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
+    if (socket->id == -1) return F_file_descriptor_not;
+
     int result = 0;
 
     if (action == f_socket_close_fast_e) {

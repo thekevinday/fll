@@ -46,6 +46,13 @@ extern void test__f_socket_disconnect__fails_for_close_write(void **state);
 extern void test__f_socket_disconnect__parameter_checking(void **state);
 
 /**
+ * Test that the function returns F_file_descriptor_not.
+ *
+ * @see f_socket_disconnect()
+ */
+extern void test__f_socket_disconnect__returns_file_descriptor_not(void **state);
+
+/**
  * Test that function works for f_socket_close_fast_e.
  *
  * @see f_socket_disconnect()

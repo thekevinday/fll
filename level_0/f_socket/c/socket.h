@@ -376,6 +376,7 @@ extern "C" {
  * @return
  *   F_okay on success.
  *   F_connect_not if the socket is not connected.
+ *   F_file_descriptor_not if socket.id is -1.
  *
  *   F_busy_address (with error bit) if address is already in use (therefore unavailable).
  *   F_file_descriptor (with error bit) if id is an invalid descriptor.
