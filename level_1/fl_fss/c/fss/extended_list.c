@@ -976,7 +976,9 @@ extern "C" {
         status = f_fss_is_space(state, object, *range);
         if (F_status_is_error(status)) break;
 
-        if (ends_on_space = (status == F_true)) {
+        ends_on_space = (status == F_true);
+
+        if (ends_on_space) {
           if (object.string[range->start] == f_fss_eol_s.string[0]) {
             status = F_status_set_error(F_none_eol);
 
