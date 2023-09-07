@@ -22,7 +22,7 @@ extern "C" {
 #ifndef _di_byte_dump_program_version_
   #define BYTE_DUMP_program_version_major_s F_string_ascii_0_s
   #define BYTE_DUMP_program_version_minor_s F_string_ascii_6_s
-  #define BYTE_DUMP_program_version_micro_s F_string_ascii_7_s
+  #define BYTE_DUMP_program_version_micro_s F_string_ascii_8_s
 
   #define BYTE_DUMP_program_version_major_s_length F_string_ascii_0_s_length
   #define BYTE_DUMP_program_version_minor_s_length F_string_ascii_6_s_length
