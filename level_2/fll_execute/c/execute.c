@@ -43,6 +43,7 @@ extern "C" {
       if (!arguments) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
+    // Allocate "size * 2" to ensure space for both the name and value are available.
     f_status_t status = f_string_dynamics_increase_by(size * 2, arguments);
 
     for (f_array_length_t i = 0; i < size; ++i) {
