@@ -288,7 +288,7 @@ extern "C" {
     f_string_range_t range_payload = f_string_range_t_initialize;
 
     {
-      f_array_length_t length = 5;
+      size_t length = 5;
       uint8_t head[length];
 
       memset(head, 0, sizeof(uint8_t) * length);
@@ -302,13 +302,13 @@ extern "C" {
         return F_status_set_error(F_packet_not);
       }
 
-      length = control_packet_header_length(head[0] & control_packet_flag_endian_big_d, head);
+      length = (size_t) control_packet_header_length(head[0] & control_packet_flag_endian_big_d, head);
 
       if (length > 0xffffffffu) {
         return F_status_set_error(F_too_large);
       }
 
-      status = f_string_dynamic_increase_by(length, &data->cache.large);
+      status = f_string_dynamic_increase_by((f_array_length_t) length, &data->cache.large);
       if (F_status_is_error(status)) return status;
 
       status = f_socket_read(&data->socket, f_socket_flag_wait_all_d, (void *) head, &length);
