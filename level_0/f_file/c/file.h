@@ -1467,7 +1467,7 @@ extern "C" {
  * @param path
  *   The path file name.
  * @param mode
- *   The file mode to open in.
+ *   The file mode permission to open in (such as F_file_mode_all_rwx_d).
  * @param file
  *   The data related to the file being opened.
  *   This will be updated with the file descriptor.

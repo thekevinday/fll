@@ -35,6 +35,7 @@ int main(void) {
     cmocka_unit_test(test__f_socket_bind_local__works),
 
     cmocka_unit_test(test__f_socket_connect__fails),
+    cmocka_unit_test(test__f_socket_connect__returns_file_descriptor),
     cmocka_unit_test(test__f_socket_connect__works),
 
     cmocka_unit_test(test__f_socket_create__fails),

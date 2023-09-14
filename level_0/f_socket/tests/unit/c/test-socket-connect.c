@@ -62,6 +62,18 @@ void test__f_socket_connect__fails(void **state) {
   } // for
 }
 
+void test__f_socket_connect__returns_file_descriptor(void **state) {
+
+  {
+    f_socket_t socket = f_socket_t_initialize;
+    socket.id = 1;
+
+    const f_status_t status = f_socket_connect(socket);
+
+    assert_int_equal(status, F_file_descriptor);
+  }
+}
+
 void test__f_socket_connect__works(void **state) {
 
   f_socket_t socket = f_socket_t_initialize;

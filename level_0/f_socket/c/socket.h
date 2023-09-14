@@ -251,6 +251,7 @@ extern "C" {
  *
  * @return
  *   F_okay on success.
+ *   F_file_descriptor if socket file descriptor is already connected (socket.id != -1).
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_available_not_address (with error bit) if address is unavailable (is non-existent or not local).

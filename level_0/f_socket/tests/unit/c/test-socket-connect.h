@@ -18,6 +18,13 @@
 extern void test__f_socket_connect__fails(void **state);
 
 /**
+ * Test that the function returns F_file_descriptor_not.
+ *
+ * @see f_socket_connect()
+ */
+extern void test__f_socket_connect__returns_file_descriptor(void **state);
+
+/**
  * Test that function works.
  *
  * @see f_socket_connect()
