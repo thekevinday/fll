@@ -19,7 +19,7 @@
 
 // FLL-0 includes.
 #include <fll/level_0/type.h>
-#include <fll/level_0/type_file.h>
+#include <fll/level_0/type/file.h>
 #include <fll/level_0/status.h>
 
 // FLL-0 signal includes.

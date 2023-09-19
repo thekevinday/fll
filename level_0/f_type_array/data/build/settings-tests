@@ -31,6 +31,7 @@ build_sources_program test-type_array-int16ss_delete_callback.c test-type_array-
 build_sources_program test-type_array-int32ss_delete_callback.c test-type_array-int32ss_destroy_callback.c
 build_sources_program test-type_array-int64ss_delete_callback.c test-type_array-int64ss_destroy_callback.c
 build_sources_program test-type_array-int128ss_delete_callback.c test-type_array-int128ss_destroy_callback.c
+build_sources_program test-type_array-number_signedss_delete_callback.c test-type_array-number_signedss_destroy_callback.c
 build_sources_program test-type_array-number_unsignedss_delete_callback.c test-type_array-number_unsignedss_destroy_callback.c
 build_sources_program test-type_array-pollss_delete_callback.c test-type_array-pollss_destroy_callback.c
 build_sources_program test-type_array-statess_delete_callback.c test-type_array-statess_destroy_callback.c

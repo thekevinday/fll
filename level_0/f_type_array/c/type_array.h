@@ -26,6 +26,7 @@
 #include <fll/level_0/type_array/int32.h>
 #include <fll/level_0/type_array/int64.h>
 #include <fll/level_0/type_array/int128.h>
+#include <fll/level_0/type_array/number_signed.h>
 #include <fll/level_0/type_array/number_unsigned.h>
 #include <fll/level_0/type_array/state.h>
 #include <fll/level_0/type_array/status.h>

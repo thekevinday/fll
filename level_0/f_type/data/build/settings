@@ -31,7 +31,7 @@ build_language c
 
 build_libraries -lc
 
-build_sources_headers type.h type_file.h
+build_sources_headers type.h type/cell.h type/file.h type/fll.h type/mode.h type/number.h type/state.h type/status.h type/time.h
 
 build_script yes
 build_shared yes

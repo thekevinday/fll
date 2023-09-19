@@ -65,6 +65,12 @@ int main(void) {
     cmocka_unit_test(test__f_type_array_int128ss_destroy_callback__fails),
     cmocka_unit_test(test__f_type_array_int128ss_destroy_callback__works),
 
+    cmocka_unit_test(test__f_type_array_number_signedss_delete_callback__fails),
+    cmocka_unit_test(test__f_type_array_number_signedss_delete_callback__works),
+
+    cmocka_unit_test(test__f_type_array_number_signedss_destroy_callback__fails),
+    cmocka_unit_test(test__f_type_array_number_signedss_destroy_callback__works),
+
     cmocka_unit_test(test__f_type_array_number_unsignedss_delete_callback__fails),
     cmocka_unit_test(test__f_type_array_number_unsignedss_delete_callback__works),
 
@@ -143,6 +149,9 @@ int main(void) {
 
       // f_int128ss_destroy_callback() doesn't use parameter checking.
       // f_int128ss_delete_callback() doesn't use parameter checking.
+
+      // f_number_signedss_destroy_callback() doesn't use parameter checking.
+      // f_number_signedss_delete_callback() doesn't use parameter checking.
 
       // f_number_unsignedss_destroy_callback() doesn't use parameter checking.
       // f_number_unsignedss_delete_callback() doesn't use parameter checking.

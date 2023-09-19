@@ -21,7 +21,7 @@
 
 // fll-0 includes.
 #include <fll/level_0/type.h>
-#include <fll/level_0/type_file.h>
+#include <fll/level_0/type/file.h>
 #include <fll/level_0/memory.h>
 #include <fll/level_0/type_array.h>
 #include <fll/level_0/type_array_file.h>
@@ -46,6 +46,8 @@
 #include "test-type_array-int64ss_destroy_callback.h"
 #include "test-type_array-int128ss_delete_callback.h"
 #include "test-type_array-int128ss_destroy_callback.h"
+#include "test-type_array-number_signedss_delete_callback.h"
+#include "test-type_array-number_signedss_destroy_callback.h"
 #include "test-type_array-number_unsignedss_delete_callback.h"
 #include "test-type_array-number_unsignedss_destroy_callback.h"
 #include "test-type_array-pollss_delete_callback.h"

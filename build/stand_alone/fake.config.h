@@ -1028,6 +1028,10 @@
 #define _di_f_network_to_host_long_
 #define _di_f_network_to_host_short_
 #define _di_f_network_to_ip_string_
+#define _di_f_number_signedss_delete_callback_
+#define _di_f_number_signedss_destroy_callback_
+#define _di_f_number_signedss_t_
+#define _di_f_number_signeds_t_
 #define _di_f_number_unsignedss_delete_callback_
 #define _di_f_number_unsignedss_destroy_callback_
 #define _di_f_number_unsignedss_t_
