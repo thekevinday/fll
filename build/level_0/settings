@@ -33,6 +33,7 @@ build_language c
 
 build_libraries -lc -lcap
 
+build_sources_library abstruse.c abstruse/abstruse.c abstruse/map.c abstruse/private-abstruse.c
 build_sources_library account.c private-account.c account/accounts.c
 build_sources_library capability.c
 build_sources_library color.c private-color.c color/common.c
@@ -83,6 +84,7 @@ build_sources_library utf/private-dynamics.c utf/private-maps.c utf/private-map_
 
 build_sources_library-thread thread.c thread/attribute.c thread/barrier.c thread/barrier_attribute.c thread/condition.c thread/condition_attribute.c thread/id.c thread/key.c thread/lock.c thread/lock_attribute.c thread/mutex.c thread/mutex_attribute.c thread/once.c thread/semaphore.c thread/set.c thread/spin.c
 
+build_sources_headers abstruse.h abstruse/abstruse.h abstruse/enum.h abstruse/map.h abstruse/type.h
 build_sources_headers account.h account/accounts.h account/common.h
 build_sources_headers capability.h capability/common.h
 build_sources_headers color.h color/common.h

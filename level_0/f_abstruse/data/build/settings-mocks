@@ -1,0 +1,69 @@
+# fss-0001
+#
+# Build the project with appropriate mocks linked in via the dynamic linker's "--wrap" functionality.
+#
+# The -Wl,--wrap does not work across shared files.
+# Therefore, this file is a work-around to inject the mocks into the library for testing purposes.
+# This should exactly match the "settings" file, except for the additional "-Wl,--wrap" parts and the additional mock source file.
+#
+# The flags -o0 must be passed to prevent the compiler from optimizing away any functions being mocked (which results in the mock not happening and a real function being called).
+# Alternatively, figure out which optimization that is disabled by -o0 and have that specific optimization disabled.
+#
+
+build_name f_abstruse
+
+version_major 0
+version_minor 7
+version_micro 0
+version_file micro
+version_target minor
+
+modes individual clang test coverage
+modes_default individual test
+
+build_compiler gcc
+build_compiler-clang clang
+build_indexer ar
+build_indexer_arguments rcs
+build_language c
+
+build_libraries -lc
+build_libraries-individual -lf_memory -lf_string
+
+build_sources_library abstruse.c abstruse/abstruse.c abstruse/map.c abstruse/private-abstruse.c
+build_sources_library ../../tests/unit/c/mock-abstruse.c
+
+build_sources_headers abstruse.h abstruse/abstruse.h abstruse/enum.h abstruse/map.h abstruse/type.h
+
+build_script yes
+build_shared yes
+build_static no
+
+path_headers fll/level_0
+path_library_script script
+path_library_shared shared
+path_library_static static
+
+has_path_standard yes
+preserve_path_headers yes
+
+search_exclusive yes
+search_shared yes
+search_static yes
+
+environment PATH LD_LIBRARY_PATH
+environment LANG LC_ALL LC_COLLATE LC_CTYPE LC_FASTMSG LC_MESSAGES LC_MONETARY LC_NUMERIC LC_TIME LOCPATH NLSPATH
+
+#defines -D_pthread_attr_unsupported_ -D_pthread_sigqueue_unsupported_
+defines -D_pthread_sigqueue_unsupported_
+
+flags -O0 -z now -g -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-parentheses
+flags-clang -Wno-logical-op-parentheses
+flags-test -fstack-protector -Wall
+flags-coverage --coverage -fprofile-abs-path -fprofile-dir=build/coverage/
+
+flags_library -fPIC
+
+# Inject mocks.
+flags -Wl,--wrap=f_memory_array_adjust
+flags -Wl,--wrap=f_memory_array_resize

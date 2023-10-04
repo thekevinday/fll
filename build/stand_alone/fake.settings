@@ -31,6 +31,7 @@ build_language c
 
 build_libraries -lc -lcap
 
+build_sources_program fll/level_0/abstruse.c fll/level_0/abstruse/abstruse.c fll/level_0/abstruse/map.c fll/level_0/abstruse/private-abstruse.c
 build_sources_program fll/level_0/account.c fll/level_0/private-account.c fll/level_0/account/accounts.c
 build_sources_program fll/level_0/capability.c
 build_sources_program fll/level_0/color.c fll/level_0/private-color.c fll/level_0/color/common.c

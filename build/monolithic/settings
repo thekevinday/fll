@@ -33,6 +33,7 @@ build_language c
 
 build_libraries -lc -lcap
 
+build_sources_library level_0/abstruse.c level_0/abstruse/abstruse.c level_0/abstruse/map.c level_0/abstruse/private-abstruse.c
 build_sources_library level_0/account.c level_0/private-account.c level_0/account/accounts.c
 build_sources_library level_0/capability.c
 build_sources_library level_0/color.c level_0/private-color.c level_0/color/common.c
@@ -104,6 +105,7 @@ build_sources_library level_2/program.c level_2/program/common.c level_2/program
 
 build_sources_library-thread level_0/thread.c level_0/thread/attribute.c level_0/thread/barrier.c level_0/thread/barrier_attribute.c level_0/thread/condition.c level_0/thread/condition_attribute.c level_0/thread/id.c level_0/thread/key.c level_0/thread/lock.c level_0/thread/lock_attribute.c level_0/thread/mutex.c level_0/thread/mutex_attribute.c level_0/thread/once.c level_0/thread/semaphore.c level_0/thread/set.c level_0/thread/spin.c
 
+build_sources_headers level_0/abstruse.h level_0/abstruse/abstruse.h level_0/abstruse/enum.h level_0/abstruse/map.h level_0/abstruse/type.h
 build_sources_headers level_0/account.h level_0/account/accounts.h level_0/account/common.h
 build_sources_headers level_0/capability.h level_0/capability/common.h
 build_sources_headers level_0/color.h level_0/color/common.h
