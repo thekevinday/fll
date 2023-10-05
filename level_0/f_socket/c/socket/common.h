@@ -129,13 +129,14 @@ extern "C" {
     f_socket_address_family_wanpipe_e     = AF_WANPIPE,
     f_socket_address_family_x25_e         = AF_X25,
     f_socket_address_family_max_e         = AF_MAX,
-  };
+  }; // enum
 #endif // _di_f_socket_address_family_e_
 
 /**
  * Socket Closes.
  *
  * f_socket_close_*:
+ *   - None:       No value set.
  *   - fast:       Fast Socket close, as in close().
  *   - read:       Read close, as in shutdown(, SHUT_RD).
  *   - read_write: Read/Write close, as in shutdown(, SHUT_RDWR).
@@ -143,11 +144,12 @@ extern "C" {
  */
 #ifndef _di_f_socket_close_e_
   enum {
-    f_socket_close_fast_e = 1,
+    f_socket_close_none_e = 0,
+    f_socket_close_fast_e,
     f_socket_close_read_e,
     f_socket_close_write_e,
     f_socket_close_read_write_e,
-  };
+  }; // enum
 #endif // _di_f_socket_close_e_
 
 /**
@@ -183,7 +185,7 @@ extern "C" {
     f_socket_flag_truncate_e      = MSG_TRUNC,
     f_socket_flag_wait_all_e      = MSG_WAITALL,
     f_socket_flag_wait_not_e      = MSG_DONTWAIT,
-  };
+  }; // enum
 #endif // _di_f_socket_flag_e_
 
 /**
@@ -241,7 +243,7 @@ extern "C" {
     f_socket_level_tipc_e      = SOL_TIPC,
     f_socket_level_tls_e       = SOL_TLS,
     f_socket_level_x25_e       = SOL_X25,
-  };
+  }; // enum
 #endif // _di_f_socket_level_e_
 
 /**
@@ -263,7 +265,7 @@ extern "C" {
     f_socket_message_flag_record_end_e       = MSG_EOR,
     f_socket_message_flag_truncate_e         = MSG_TRUNC,
     f_socket_message_flag_truncate_control_e = MSG_CTRUNC,
-  };
+  }; // enum
 #endif // _di_f_socket_message_flag_e_
 
 /**
@@ -399,7 +401,7 @@ extern "C" {
     f_socket_option_type_e                     = SO_TYPE,
     f_socket_option_wifi_status_e              = SO_WIFI_STATUS,
     f_socket_option_zero_copy_e                = SO_ZEROCOPY,
-  };
+  }; // enum
 #endif // _di_f_socket_option_e_
 
 /**
@@ -521,7 +523,7 @@ extern "C" {
     f_socket_protocol_wesp_e            = 141,
     f_socket_protocol_xns_idp_e         = 22,
     f_socket_protocol_xtp_e             = 36,
-  };
+  }; // enum
 #endif // _di_f_socket_protocol_e_
 
 /**
@@ -621,7 +623,7 @@ extern "C" {
     f_socket_protocol_family_wanpipe_e     = PF_WANPIPE,
     f_socket_protocol_family_x25_e         = PF_X25,
     f_socket_protocol_family_max_e         = PF_MAX,
-  };
+  }; // enum
 #endif // _di_f_socket_protocol_family_e_
 
 /**
@@ -645,7 +647,7 @@ extern "C" {
     f_socket_type_nonblocking_e       = SOCK_NONBLOCK,
     f_socket_type_raw_e               = SOCK_RAW,
     f_socket_type_stream_e            = SOCK_STREAM,
-  };
+  }; // enum
 #endif // _di_f_socket_type_e_
 
 #ifdef __cplusplus

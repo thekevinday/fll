@@ -382,7 +382,7 @@ extern "C" {
  */
 #ifndef _di_f_utf_width_e_
   enum {
-    F_utf_width_none_e,
+    F_utf_width_none_e = 0,
     F_utf_width_ambiguous_e,
     F_utf_width_full_e,
     F_utf_width_half_e,

@@ -276,7 +276,7 @@ extern "C" {
     #else
       f_poll_hang_up_read_e = 0x2000,
     #endif // POLLRDHUP
-  };
+  }; // enum
 #endif // _di_f_poll_e_
 
 /**

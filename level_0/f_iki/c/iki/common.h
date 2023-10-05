@@ -45,7 +45,7 @@ extern "C" {
  */
 #ifndef _di_f_iki_state_flag_e_
   enum {
-    f_iki_state_flag_none_e                  = 0,
+    f_iki_state_flag_none_e                  = 0x0,
     f_iki_state_flag_utf_fail_on_valid_not_e = 0x1,
   }; // enum
 #endif // _di_f_iki_state_flag_e_

@@ -322,6 +322,7 @@ extern "C" {
  * Provide type format flags.
  *
  * f_print_format_type_*:
+ *   - none:                                   No type set.
  *   - character:                "c",          Type is a 1-byte unsigned character.
  *   - character_safe:           "C",          Type is a 1-byte unsigned character, where control characters and invalid UTF-8 are replaced.
  *   - color_after:              "]",          Type is a f_color_set_t such that the f_color_set_t.after is used.
@@ -352,7 +353,8 @@ extern "C" {
  */
 #ifndef _di_f_print_format_type_e_
   enum {
-    f_print_format_type_character_e = 1,
+    f_print_format_type_none_e = 0,
+    f_print_format_type_character_e,
     f_print_format_type_character_safe_e,
     f_print_format_type_color_after_e,
     f_print_format_type_color_before_e,

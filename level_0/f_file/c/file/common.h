@@ -362,7 +362,7 @@ extern "C" {
  */
 #ifndef _di_f_file_stat_flags_e_
   enum {
-    f_file_stat_flag_none_e      = 0,
+    f_file_stat_flag_none_e      = 0x0,
     f_file_stat_flag_exclusive_e = 0x1,
     f_file_stat_flag_group_e     = 0x2,
     f_file_stat_flag_owner_e     = 0x4,

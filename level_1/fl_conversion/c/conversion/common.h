@@ -94,7 +94,7 @@ extern "C" {
     fl_conversion_data_flag_endian_big_e    = 0x1,
     fl_conversion_data_flag_endian_little_e = 0x2,
     fl_conversion_data_flag_negative_e      = 0x4,
-  };
+  }; // enum
 #endif // _di_fl_conversion_data_flag_e_
 
 #ifdef __cplusplus
