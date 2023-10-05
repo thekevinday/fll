@@ -15,6 +15,22 @@
 //   echo "#define _di_private_inline_f_print_to_error_" >> /tmp/sorted.txt
 //   echo "#define _di_private_inline_private_f_print_to_error_" >> /tmp/sorted.txt
 
+#define _di_f_abstruse_e_
+#define _di_f_abstruse_maps_delete_callback_
+#define _di_f_abstruse_maps_destroy_callback_
+#define _di_f_abstruse_mapss_delete_callback_
+#define _di_f_abstruse_mapss_destroy_callback_
+#define _di_f_abstruse_mapss_t_
+#define _di_f_abstruse_maps_t_
+#define _di_f_abstruse_map_t_
+#define _di_f_abstruses_delete_callback_
+#define _di_f_abstruses_destroy_callback_
+#define _di_f_abstrusess_delete_callback_
+#define _di_f_abstrusess_destroy_callback_
+#define _di_f_abstrusess_t_
+#define _di_f_abstruses_t_
+#define _di_f_abstruse_t_
+#define _di_f_abstruse_type_t_
 #define _di_f_account_by_id_
 #define _di_f_account_by_name_
 //#define _di_f_account_d_
@@ -304,7 +320,6 @@
 #define _di_f_directory_listings_t_
 //#define _di_f_directory_listing_t_
 //#define _di_f_directory_max_d_
-#define _di_f_directory_mode_
 //#define _di_f_directory_open_
 #define _di_f_directory_open_at_
 //#define _di_f_directory_recurse_do_delete_
@@ -528,12 +543,8 @@
 //#define _di_f_fss_is_zero_width_
 #define _di_f_fss_item_delete_
 #define _di_f_fss_item_destroy_
-#define _di_f_fss_items_adjust_
-#define _di_f_fss_items_decimate_by_
-#define _di_f_fss_items_decrease_by_
 #define _di_f_fss_items_delete_callback_
 #define _di_f_fss_items_destroy_callback_
-#define _di_f_fss_items_resize_
 #define _di_f_fss_itemss_delete_callback_
 #define _di_f_fss_itemss_destroy_callback_
 #define _di_f_fss_itemss_t_
@@ -557,14 +568,16 @@
 #define _di_f_fss_nestss_t_
 #define _di_f_fss_nests_t_
 #define _di_f_fss_nest_t_
+#define _di_f_fss_payload_comment_header_s_
+#define _di_f_fss_payload_object_header_s_
+#define _di_f_fss_payload_object_payload_s_
+#define _di_f_fss_payload_object_signature_s_
 #define _di_f_fss_payload_s_
+#define _di_f_fss_payload_write_e_
 //#define _di_f_fss_placeholder_s_
 //#define _di_f_fss_quote_type_e_
 #define _di_f_fss_s_
 //#define _di_f_fss_seek_to_eol_
-#define _di_f_fss_set_adjust_
-#define _di_f_fss_set_decimate_by_
-#define _di_f_fss_set_decrease_by_
 //#define _di_f_fss_set_delete_
 #define _di_f_fss_set_destroy_
 #define _di_f_fss_set_quote_delete_
@@ -588,19 +601,11 @@
 #define _di_f_fss_simple_packet_destroy_
 #define _di_f_fss_simple_packet_extract_
 #define _di_f_fss_simple_packet_extract_range_
-#define _di_f_fss_simple_packet_ranges_append_
-#define _di_f_fss_simple_packet_ranges_append_all_
-#define _di_f_fss_simple_packet_rangess_append_
-#define _di_f_fss_simple_packet_rangess_append_all_
 #define _di_f_fss_simple_packet_rangess_t_
 #define _di_f_fss_simple_packet_ranges_t_
 #define _di_f_fss_simple_packet_range_t_
-#define _di_f_fss_simple_packets_append_
-#define _di_f_fss_simple_packets_append_all_
 #define _di_f_fss_simple_packets_delete_callback_
 #define _di_f_fss_simple_packets_destroy_callback_
-#define _di_f_fss_simple_packetss_append_
-#define _di_f_fss_simple_packetss_append_all_
 #define _di_f_fss_simple_packetss_delete_callback_
 #define _di_f_fss_simple_packetss_destroy_callback_
 #define _di_f_fss_simple_packetss_t_
@@ -764,6 +769,7 @@
 #define _di_fl_fss_extended_list_object_write_
 //#define _di_fl_fss_extended_object_read_
 #define _di_fl_fss_extended_object_write_
+#define _di_fl_fss_payload_header_write_
 //#define _di_fl_iki_read_
 //#define _di_f_limit_process_
 #define _di_f_limit_setss_delete_callback_
@@ -1464,7 +1470,6 @@
 #define _di_f_string_triples_append_all_
 #define _di_f_string_triples_delete_callback_
 #define _di_f_string_triples_destroy_callback_
-#define _di_f_string_tripless_adjust_
 #define _di_f_string_tripless_append_
 #define _di_f_string_tripless_append_all_
 #define _di_f_string_tripless_delete_callback_
@@ -1800,7 +1805,6 @@
 #define _di_f_utf_string_append_
 #define _di_f_utf_string_append_assure_
 #define _di_f_utf_string_append_assure_nulless_
-#define _di_f_utf_string_append_mash_
 #define _di_f_utf_string_append_nulless_
 #define _di_f_utf_string_dynamic_append_
 #define _di_f_utf_string_dynamic_append_assure_
@@ -1830,11 +1834,11 @@
 #define _di_f_utf_string_dynamic_prepend_nulless_
 #define _di_f_utf_string_dynamics_append_
 #define _di_f_utf_string_dynamics_append_all_
+#define _di_f_utf_string_dynamics_delete_callback_
+#define _di_f_utf_string_dynamics_destroy_callback_
 #define _di_f_utf_string_dynamic_seek_line_
 #define _di_f_utf_string_dynamic_seek_line_to_
 #define _di_f_utf_string_dynamic_seek_to_
-#define _di_f_utf_string_dynamics_delete_callback_
-#define _di_f_utf_string_dynamics_destroy_callback_
 #define _di_f_utf_string_dynamicss_append_
 #define _di_f_utf_string_dynamicss_append_all_
 #define _di_f_utf_string_dynamicss_delete_callback_

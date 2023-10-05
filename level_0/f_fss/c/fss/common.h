@@ -134,6 +134,7 @@ extern "C" {
  * Codes for every known FSS standard.
  *
  * f_fss_*_e:
+ *   - none:                     No type set.
  *   - basic:                    FSS-0000: Basic.
  *   - extended:                 FSS-0001: Extended.
  *   - basic_list:               FSS-0002: Basic List.
@@ -150,10 +151,12 @@ extern "C" {
  *   - basic_rule:               FSS-000D: Basic Rule.
  *   - payload:                  FSS-000E: Payload.
  *   - simple_packet:            FSS-000F: Simple Packet.
+ *   - encrypted_simple_packet:  FSS-0010: Encrypted Simple Packet.
  */
 #ifndef _di_f_fss_e_
   enum {
-    f_fss_basic_e = 1,
+    f_fss_none_e = 0,
+    f_fss_basic_e,
     f_fss_extended_e,
     f_fss_basic_list_e,
     f_fss_extended_list_e,
@@ -169,6 +172,7 @@ extern "C" {
     f_fss_basic_rule_e,
     f_fss_payload_e,
     f_fss_simple_packet_e,
+    f_fss_encrypted_simple_packet_e,
   }; // enum
 #endif // _di_f_fss_e_
 
@@ -192,7 +196,7 @@ extern "C" {
  */
 #ifndef _di_f_fss_complete_e_
   enum {
-    f_fss_complete_none_e = 1,
+    f_fss_complete_none_e = 0,
     f_fss_complete_end_e,
     f_fss_complete_full_e,
     f_fss_complete_full_trim_e,
@@ -269,7 +273,7 @@ enum {
  */
 #ifndef _di_f_fss_state_flag_e_
   enum {
-    f_fss_state_flag_none_e                  = 0,
+    f_fss_state_flag_none_e                  = 0x0,
     f_fss_state_flag_utf_fail_on_valid_not_e = 0x1,
   }; // enum
 #endif // _di_f_fss_state_flag_e_

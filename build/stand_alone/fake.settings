@@ -44,7 +44,7 @@ build_sources_library fll/level_0/private-directory.c
 build_sources_program fll/level_0/environment.c
 build_sources_program fll/level_0/execute.c
 build_sources_program fll/level_0/file.c fll/level_0/private-file.c fll/level_0/file/common.c fll/level_0/file/stream.c
-build_sources_program fll/level_0/fss.c fll/level_0/fss/common.c fll/level_0/fss/item.c fll/level_0/fss/named.c fll/level_0/fss/nest.c fll/level_0/fss/quote.c fll/level_0/fss/set.c fll/level_0/fss/set_quote.c fll/level_0/fss/simple_packet.c
+build_sources_program fll/level_0/fss.c fll/level_0/fss/common.c fll/level_0/fss/item.c fll/level_0/fss/named.c fll/level_0/fss/nest.c fll/level_0/fss/payload.c fll/level_0/fss/quote.c fll/level_0/fss/set.c fll/level_0/fss/set_quote.c fll/level_0/fss/simple_packet.c
 build_sources_program fll/level_0/iki.c fll/level_0/private-iki.c fll/level_0/iki/common.c fll/level_0/iki/private-data.c fll/level_0/iki/data.c
 build_sources_program fll/level_0/limit.c fll/level_0/limit/set.c fll/level_0/limit/value.c
 build_sources_program fll/level_0/memory.c fll/level_0/memory/array.c fll/level_0/memory/arrays.c
@@ -68,7 +68,7 @@ build_sources_program fll/level_1/control_group.c
 build_sources_program fll/level_1/conversion.c fll/level_1/private-conversion.c fll/level_1/conversion/common.c
 build_sources_program fll/level_1/directory.c fll/level_1/private-directory.c
 build_sources_program fll/level_1/environment.c
-build_sources_program fll/level_1/private-fss.c fll/level_1/fss/basic.c fll/level_1/fss/basic_list.c fll/level_1/fss/embedded_list.c fll/level_1/fss/extended.c fll/level_1/fss/extended_list.c
+build_sources_program fll/level_1/private-fss.c fll/level_1/fss/basic.c fll/level_1/fss/basic_list.c fll/level_1/fss/embedded_list.c fll/level_1/fss/extended.c fll/level_1/fss/extended_list.c fll/level_1/fss/payload.c
 build_sources_program fll/level_1/iki.c
 build_sources_program fll/level_1/path.c
 build_sources_program fll/level_1/print.c fll/level_1/private-print.c fll/level_1/print/common.c

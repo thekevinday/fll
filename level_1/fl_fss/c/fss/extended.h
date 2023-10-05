@@ -58,6 +58,8 @@ extern "C" {
  *   Error bit designates an error but must be passed along with F_interrupt.
  *   All other statuses are ignored.
  *
+ *   Must not be NULL.
+ *
  *   This alters state.status:
  *     F_fss_found_content on success and content was found (start location is at end of content).
  *     F_fss_found_content_not on success and no content was found (start location is after character designating this is not a content).
@@ -126,6 +128,8 @@ extern "C" {
  *   Error bit designates an error but must be passed along with F_interrupt.
  *   All other statuses are ignored.
  *
+ *   Must not be NULL.
+ *
  *   This alters state.status:
  *     F_okay on success.
  *     F_okay_eos on success after reaching the end of the buffer.
@@ -187,6 +191,8 @@ extern "C" {
  *   When state.interrupt() returns, only F_interrupt and F_interrupt_not are processed.
  *   Error bit designates an error but must be passed along with F_interrupt.
  *   All other statuses are ignored.
+ *
+ *   Must not be NULL.
  *
  *   This alters state.status:
  *     F_fss_found_object on success and object was found (start location is at end of object).
@@ -257,6 +263,8 @@ extern "C" {
  *   When state.interrupt() returns, only F_interrupt and F_interrupt_not are processed.
  *   Error bit designates an error but must be passed along with F_interrupt.
  *   All other statuses are ignored.
+ *
+ *   Must not be NULL.
  *
  *   This alters state.status:
  *     F_okay on success.

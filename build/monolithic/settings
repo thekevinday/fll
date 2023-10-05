@@ -46,7 +46,7 @@ build_sources_library level_0/private-directory.c
 build_sources_library level_0/environment.c
 build_sources_library level_0/execute.c
 build_sources_library level_0/file.c level_0/private-file.c level_0/file/common.c level_0/file/stream.c
-build_sources_library level_0/fss.c level_0/fss/common.c level_0/fss/item.c level_0/fss/named.c level_0/fss/nest.c level_0/fss/quote.c level_0/fss/set.c level_0/fss/set_quote.c level_0/fss/simple_packet.c
+build_sources_library level_0/fss.c level_0/fss/common.c level_0/fss/item.c level_0/fss/named.c level_0/fss/nest.c level_0/fss/payload.c level_0/fss/quote.c level_0/fss/set.c level_0/fss/set_quote.c level_0/fss/simple_packet.c
 build_sources_library level_0/iki.c level_0/iki/common.c level_0/iki/data.c level_0/private-iki.c level_0/iki/private-data.c
 build_sources_library level_0/limit.c level_0/limit/set.c level_0/limit/value.c
 build_sources_library level_0/memory.c level_0/memory/array.c level_0/memory/arrays.c
@@ -86,7 +86,7 @@ build_sources_library level_1/control_group.c
 build_sources_library level_1/conversion.c level_1/private-conversion.c level_1/conversion/common.c
 build_sources_library level_1/directory.c level_1/private-directory.c
 build_sources_library level_1/environment.c
-build_sources_library level_1/private-fss.c level_1/fss/basic.c level_1/fss/basic_list.c level_1/fss/embedded_list.c level_1/fss/extended.c level_1/fss/extended_list.c
+build_sources_library level_1/private-fss.c level_1/fss/basic.c level_1/fss/basic_list.c level_1/fss/embedded_list.c level_1/fss/extended.c level_1/fss/extended_list.c level_1/fss/payload.c
 build_sources_library level_1/iki.c
 build_sources_library level_1/path.c
 build_sources_library level_1/print.c level_1/private-print.c level_1/print/common.c
@@ -117,7 +117,7 @@ build_sources_headers level_0/directory.h level_0/directory/common.h level_0/dir
 build_sources_headers level_0/environment.h level_0/environment/common.h
 build_sources_headers level_0/execute.h level_0/execute/common.h
 build_sources_headers level_0/file.h level_0/file/common.h level_0/file/stream.h
-build_sources_headers level_0/fss.h level_0/fss/common.h level_0/fss/item.h level_0/fss/named.h level_0/fss/nest.h level_0/fss/quote.h level_0/fss/set.h level_0/fss/set_quote.h level_0/fss/simple_packet.h
+build_sources_headers level_0/fss.h level_0/fss/common.h level_0/fss/item.h level_0/fss/named.h level_0/fss/nest.h level_0/fss/payload.h level_0/fss/quote.h level_0/fss/set.h level_0/fss/set_quote.h level_0/fss/simple_packet.h
 build_sources_headers level_0/iki.h level_0/iki/common.h level_0/iki/data.h
 build_sources_headers level_0/limit.h level_0/limit/set.h level_0/limit/value.h
 build_sources_headers level_0/memory.h level_0/memory/array.h level_0/memory/arrays.h level_0/memory/common.h
@@ -150,7 +150,7 @@ build_sources_headers level_1/conversion.h level_1/conversion/common.h
 build_sources_headers level_1/directory.h level_1/directory/common.h
 build_sources_headers level_1/environment.h
 build_sources_headers level_1/execute.h level_1/execute/common.h
-build_sources_headers level_1/fss.h level_1/fss/basic.h level_1/fss/basic_list.h level_1/fss/embedded_list.h level_1/fss/extended.h level_1/fss/extended_list.h
+build_sources_headers level_1/fss.h level_1/fss/basic.h level_1/fss/basic_list.h level_1/fss/embedded_list.h level_1/fss/extended.h level_1/fss/extended_list.h level_1/fss/payload.h
 build_sources_headers level_1/iki.h
 build_sources_headers level_1/path.h
 build_sources_headers level_1/print.h level_1/print/common.h

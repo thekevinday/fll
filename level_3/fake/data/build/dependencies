@@ -6,6 +6,7 @@ f_memory
 f_type_array
 f_string
 f_utf
+f_abstruse
 f_account
 f_capability
 f_color

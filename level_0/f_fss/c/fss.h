@@ -30,6 +30,7 @@
 #include <fll/level_0/fss/set.h>
 #include <fll/level_0/fss/set_quote.h>
 #include <fll/level_0/fss/simple_packet.h>
+#include <fll/level_0/fss/payload.h>
 
 #ifdef __cplusplus
 extern "C" {
