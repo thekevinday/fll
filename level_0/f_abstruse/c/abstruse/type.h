@@ -26,27 +26,18 @@ extern "C" {
  */
 #ifndef _di_f_abstruse_type_t_
   typedef union {
-    uint8_t               a_u8;
     f_uint8s_t            a_u8s;
-    uint16_t              a_u16;
     f_uint16s_t           a_u16s;
-    uint32_t              a_u32;
     f_uint32s_t           a_u32s;
-    uint64_t              a_u64;
     f_uint64s_t           a_u64s;
-    int8_t                a_i8;
     f_int8s_t             a_i8s;
-    int16_t               a_i16;
     f_int16s_t            a_i16s;
-    int32_t               a_i32;
     f_int32s_t            a_i32s;
-    int64_t               a_i64;
     f_int64s_t            a_i64s;
     f_number_signed_t     a_signed;
     f_number_signeds_t    a_signeds;
     f_number_unsigned_t   a_unsigned;
     f_number_unsigneds_t  a_unsigneds;
-    f_char_t              a_char;
     f_string_t            a_string;
     f_string_t *          a_strings;
     f_string_dynamic_t    a_dynamic;
@@ -63,10 +54,6 @@ extern "C" {
     f_string_triples_t    a_triples;
     void *                a_void;
     void **               a_voids;
-    size_t                a_size;
-    size_t *              a_sizes;
-    ssize_t               a_ssize;
-    ssize_t *             a_ssizes;
   } f_abstruse_type_t;
 
   #define f_abstruse_type_t_initialize { 0 }

@@ -9,34 +9,6 @@ extern "C" {
   f_status_t private_f_abstruses_delete_switch(f_abstruse_t * const abstruse) {
 
     switch (abstruse->type) {
-      case f_abstruse_uint8_e:
-        if (abstruse->is.a_u8s.size) {
-          return f_memory_array_resize(0, sizeof(uint8_t), (void **) &abstruse->is.a_u8s.array, &abstruse->is.a_u8s.used, &abstruse->is.a_u8s.size);
-        }
-
-        break;
-
-      case f_abstruse_uint16s_e:
-        if (abstruse->is.a_u16s.size) {
-          return f_memory_array_resize(0, sizeof(uint16_t), (void **) &abstruse->is.a_u16s.array, &abstruse->is.a_u16s.used, &abstruse->is.a_u16s.size);
-        }
-
-        break;
-
-      case f_abstruse_uint32s_e:
-        if (abstruse->is.a_u32s.size) {
-          return f_memory_array_resize(0, sizeof(uint32_t), (void **) &abstruse->is.a_u32s.array, &abstruse->is.a_u32s.used, &abstruse->is.a_u32s.size);
-        }
-
-        break;
-
-      case f_abstruse_uint64s_e:
-        if (abstruse->is.a_u64s.size) {
-          return f_memory_array_resize(0, sizeof(uint64_t), (void **) &abstruse->is.a_u64s.array, &abstruse->is.a_u64s.used, &abstruse->is.a_u64s.size);
-        }
-
-        break;
-
       case f_abstruse_int8s_e:
         if (abstruse->is.a_i8s.size) {
           return f_memory_array_resize(0, sizeof(int8_t), (void **) &abstruse->is.a_i8s.array, &abstruse->is.a_i8s.used, &abstruse->is.a_i8s.size);
@@ -61,6 +33,34 @@ extern "C" {
       case f_abstruse_int64s_e:
         if (abstruse->is.a_i64s.size) {
           return f_memory_array_resize(0, sizeof(int64_t), (void **) &abstruse->is.a_i64s.array, &abstruse->is.a_i64s.used, &abstruse->is.a_i64s.size);
+        }
+
+        break;
+
+      case f_abstruse_uint8s_e:
+        if (abstruse->is.a_u8s.size) {
+          return f_memory_array_resize(0, sizeof(uint8_t), (void **) &abstruse->is.a_u8s.array, &abstruse->is.a_u8s.used, &abstruse->is.a_u8s.size);
+        }
+
+        break;
+
+      case f_abstruse_uint16s_e:
+        if (abstruse->is.a_u16s.size) {
+          return f_memory_array_resize(0, sizeof(uint16_t), (void **) &abstruse->is.a_u16s.array, &abstruse->is.a_u16s.used, &abstruse->is.a_u16s.size);
+        }
+
+        break;
+
+      case f_abstruse_uint32s_e:
+        if (abstruse->is.a_u32s.size) {
+          return f_memory_array_resize(0, sizeof(uint32_t), (void **) &abstruse->is.a_u32s.array, &abstruse->is.a_u32s.used, &abstruse->is.a_u32s.size);
+        }
+
+        break;
+
+      case f_abstruse_uint64s_e:
+        if (abstruse->is.a_u64s.size) {
+          return f_memory_array_resize(0, sizeof(uint64_t), (void **) &abstruse->is.a_u64s.array, &abstruse->is.a_u64s.used, &abstruse->is.a_u64s.size);
         }
 
         break;
@@ -177,7 +177,7 @@ extern "C" {
   f_status_t private_f_abstruses_destroy_switch(f_abstruse_t * const abstruse) {
 
     switch (abstruse->type) {
-      case f_abstruse_uint8_e:
+      case f_abstruse_uint8s_e:
         if (abstruse->is.a_u8s.size) {
           return f_memory_array_adjust(0, sizeof(uint8_t), (void **) &abstruse->is.a_u8s.array, &abstruse->is.a_u8s.used, &abstruse->is.a_u8s.size);
         }
