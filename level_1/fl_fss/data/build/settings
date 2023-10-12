@@ -30,7 +30,7 @@ build_indexer_arguments rcs
 build_language c
 
 build_libraries -lc
-build_libraries-individual -lf_abstruse -lf_file -lf_fss -lf_memory -lf_string -lf_type_array -lf_utf
+build_libraries-individual -lf_abstruse -lf_conversion -lf_file -lf_fss -lf_memory -lf_string -lf_type_array -lf_utf
 
 build_sources_library private-fss.c fss/basic.c fss/basic_list.c fss/embedded_list.c fss/extended.c fss/extended_list.c fss/payload.c
 

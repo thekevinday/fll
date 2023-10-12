@@ -6,5 +6,6 @@ f_memory
 f_string
 f_utf
 f_abstruse
+f_conversion
 f_file
 f_fss

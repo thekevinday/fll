@@ -209,6 +209,9 @@ extern "C" {
  *     Errors (with error bit) from: f_memory_array_increase().
  *     Errors (with error bit) from: f_memory_array_increase_by().
  *     Errors (with error bit) from: f_utf_buffer_increment().
+ * @param internal
+ *   (optional) Used by certain functions to pass local data to the interrupt() and similar callbacks.
+ *   Set to NULL to not use.
  *
  * @see f_fss_is_space()
  * @see f_fss_skip_past_delimit()
@@ -221,7 +224,7 @@ extern "C" {
  * @see fl_fss_extended_content_write()
  */
 #if !defined(fl_fss_basic_object_write) || !defined(fl_fss_extended_object_write) || !defined(_di_fl_fss_extended_content_write_)
-  extern void private_fl_fss_basic_write(const bool object_as, const f_string_static_t object, const uint8_t quote, f_string_range_t * const range, f_string_dynamic_t * const destination, f_state_t * const state) F_attribute_visibility_internal_d;
+  extern void private_fl_fss_basic_write(const bool object_as, const f_string_static_t object, const uint8_t quote, f_string_range_t * const range, f_string_dynamic_t * const destination, f_state_t * const state, void * const internal) F_attribute_visibility_internal_d;
 #endif // !defined(fl_fss_basic_object_write) || !defined(fl_fss_extended_object_write) || !defined(_di_fl_fss_extended_content_write_)
 
 /**

@@ -190,7 +190,7 @@ extern "C" {
 
     const f_number_unsigned_t destination_used = destination->used;
 
-    private_fl_fss_basic_write(F_true, object, quote ? quote : f_fss_quote_double_s.string[0], range, destination, state);
+    private_fl_fss_basic_write(F_true, object, quote ? quote : f_fss_quote_double_s.string[0], range, destination, state, 0);
 
     if (F_status_is_error(state->status)) {
       destination->used = destination_used;

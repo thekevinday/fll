@@ -21,6 +21,7 @@
 #include <fll/level_0/string.h>
 #include <fll/level_0/utf.h>
 #include <fll/level_0/abstruse.h>
+#include <fll/level_0/conversion.h>
 #include <fll/level_0/fss.h>
 
 // FLL-1 includes.
@@ -29,6 +30,90 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+/**
+ * An internal structure for the fss_payload_header_write() passed to callbacks.
+ *
+ * Properties:
+ *   - step:        The current step.
+ *   - i:           A counter used for the "headers" and "signatures" outer arrays.
+ *   - j:           A counter used for the inner loop or for pre-allocation counting.
+ *   - conversion:  The conversion data.
+ *   - destination: The destination string being written to.
+ *   - original:    The original destination used length.
+ */
+#ifndef _di_f_fss_payload_header_write_internal_t_
+  typedef struct {
+    uint16_t step;
+    f_number_unsigned_t i;
+    f_number_unsigned_t j;
+    f_string_range_t range;
+    f_conversion_data_t conversion;
+
+    f_string_dynamic_t * const destination;
+    const f_number_unsigned_t original;
+  } f_fss_payload_header_write_internal_t;
+
+  #define f_fss_payload_header_write_internal_t_initialize { \
+    0, \
+    0, \
+    0, \
+    f_string_range_t_initialize, \
+    f_conversion_data_base_10_c, \
+    0, \
+    0, \
+  }
+
+  #define macro_f_fss_payload_header_write_internal_t_initialize_1(step, i, j, range, conversion, destination, original) { \
+    step, \
+    i, \
+    j, \
+    range, \
+    conversion, \
+    destination, \
+    original, \
+  }
+
+  #define macro_f_fss_payload_header_write_internal_t_initialize_2(destination, original) { \
+    0, \
+    0, \
+    0, \
+    f_string_range_t_initialize, \
+    f_conversion_data_base_10_c, \
+    destination, \
+    original, \
+  }
+#endif // _di_f_fss_payload_header_write_internal_t_
+
+/**
+ * A state structure for passing data to fss_payload_header_write().
+ *
+ * Properties:
+ *   - conversion: The conversion data.
+ *   - cache:      A string cache to use (generally required to be not NULL).
+ */
+#ifndef _di_f_fss_payload_header_write_state_t_
+  typedef struct {
+    f_conversion_data_t conversion;
+
+    f_string_dynamic_t *cache;
+  } f_fss_payload_header_write_state_t;
+
+  #define f_fss_payload_header_write_state_t_initialize { \
+    f_conversion_data_base_10_c, \
+    0, \
+  }
+
+  #define macro_f_fss_payload_header_write_state_t_initialize_1(conversion, destination) { \
+    conversion, \
+    destination, \
+  }
+
+  #define macro_f_fss_payload_header_write_state_t_initialize_2(destination) { \
+    f_conversion_data_base_10_c, \
+    destination, \
+  }
+#endif // _di_f_fss_payload_header_write_state_t_
 
 // @todo fl_fss_payload_header_read() to build an array of f_abstruse for the headers?
 
@@ -52,15 +137,20 @@ extern "C" {
  *   The string in which the resulting header is appended to.
  *   Must not be NULL.
  * @param state
- *   @todo update this as appropriate after implementing this function.
  *   A state for providing flags and handling interrupts during long running operations.
- *   There is no state.handle().
+ *   The state.handle() is optionally allowed.
  *   There is no "callbacks" structure.
- *   There is no data structure passed to these functions.
+ *   The data is required and set to f_fss_payload_header_write_state_t.
+ *   The data.cache must not be NULL.
+ *
+ *   The optional state->handle() is called on error and the handler may alter the status to not have an error bit step to prevent returning except for when there is an invalid parameter passed to this function.
+ *   The second parameter is a f_fss_payload_header_write_internal_t.
+ *   The second parameter to state->handle() is NULL on invalid paramter passed to this function.
  *
  *   When state.interrupt() returns, only F_interrupt and F_interrupt_not are processed.
  *   Error bit designates an error but must be passed along with F_interrupt.
  *   All other statuses are ignored.
+ *   The second parameter is a f_fss_payload_header_write_internal_t.
  *
  *   Must not be NULL.
  *
