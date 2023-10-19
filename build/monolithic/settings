@@ -150,7 +150,7 @@ build_sources_headers level_1/conversion.h level_1/conversion/common.h
 build_sources_headers level_1/directory.h level_1/directory/common.h
 build_sources_headers level_1/environment.h
 build_sources_headers level_1/execute.h level_1/execute/common.h
-build_sources_headers level_1/fss.h level_1/fss/basic.h level_1/fss/basic_list.h level_1/fss/embedded_list.h level_1/fss/extended.h level_1/fss/extended_list.h level_1/fss/payload.h
+build_sources_headers level_1/fss.h level_1/fss/basic.h level_1/fss/basic_list.h level_1/fss/embedded_list.h level_1/fss/extended.h level_1/fss/extended_list.h level_1/fss/payload.h level_1/fss/payload/define.h level_1/fss/payload/type.h
 build_sources_headers level_1/iki.h
 build_sources_headers level_1/path.h
 build_sources_headers level_1/print.h level_1/print/common.h

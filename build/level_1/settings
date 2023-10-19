@@ -50,7 +50,7 @@ build_sources_headers conversion.h conversion/common.h
 build_sources_headers directory.h directory/common.h
 build_sources_headers environment.h
 build_sources_headers execute.h execute/common.h
-build_sources_headers fss.h fss/basic.h fss/basic_list.h fss/embedded_list.h fss/extended.h fss/extended_list.h fss/payload.h
+build_sources_headers fss.h fss/basic.h fss/basic_list.h fss/embedded_list.h fss/extended.h fss/extended_list.h fss/payload.h fss/payload/define.h fss/payload/type.h
 build_sources_headers iki.h
 build_sources_headers path.h
 build_sources_headers print.h print/common.h

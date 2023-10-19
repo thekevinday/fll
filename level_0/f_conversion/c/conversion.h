@@ -271,7 +271,7 @@ extern "C" {
  * @param data
  *   The settings designating how to perform the conversion.
  * @param destination
- *   The destination the converted string is saved into.
+ *   The destination the converted string is appended onto.
  *
  * @return
  *   F_okay if the number was converted to a string.
@@ -336,7 +336,7 @@ extern "C" {
  * @param data
  *   The settings designating how to perform the conversion.
  * @param destination
- *   The destination the converted string is saved into.
+ *   The destination the converted string is appended onto.
  *
  * @return
  *   F_okay if the number was converted to a string.
