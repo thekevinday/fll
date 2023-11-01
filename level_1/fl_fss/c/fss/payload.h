@@ -58,11 +58,9 @@ extern "C" {
  * @param headers
  *   An abstruse map representing individual headers.
  *   Ultimately, all headers are cast to a string or a binary representation (depending on implementation).
- * @param signatures
- *   (optional) An array whose indexes must match each index in the headers, where each value if set to F_true will result in the generation of a signature.
- *   Set to NULL to not use.
- * @param destination
- *   The string in which the resulting header is appended to.
+ * @param destinations
+ *   A map of strings representing the header names and values after being safely converted into the valid payload header format.
+ *   This built header names and values are appended onto this.
  *   Must not be NULL.
  * @param state
  *   A state for providing flags and handling interrupts during long running operations.
@@ -100,9 +98,9 @@ extern "C" {
  * @see f_memory_array_increase()
  * @see f_memory_array_increase_by()
  */
-#ifndef _di_fl_fss_payload_header_write_
-  extern void fl_fss_payload_header_write(const f_abstruse_maps_t headers, const f_uint8s_t * const signatures, f_string_dynamic_t * const destination, f_state_t * const state);
-#endif // _di_fl_fss_payload_header_write_
+#ifndef _di_fl_fss_payload_header_map_
+  extern void fl_fss_payload_header_map(const f_abstruse_maps_t headers, f_string_maps_t * const destinations, f_state_t * const state);
+#endif // _di_fl_fss_payload_header_map_
 
 #ifdef __cplusplus
 } // extern "C"
