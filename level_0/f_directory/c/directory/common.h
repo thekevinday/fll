@@ -97,6 +97,8 @@ extern "C" {
 
   #ifdef NAME_MAX
     #define F_directory_max_name_d NAME_MAX
+  #elif MAXNAMLEN
+    #define F_directory_max_name_d MAXNAMLEN
   #else
     #define F_directory_max_name_d 255
   #endif // NAME_MAX
