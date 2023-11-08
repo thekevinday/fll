@@ -82,30 +82,28 @@ extern "C" {
  *
  * Properties:
  *   - conversion: The conversion data.
- *   - cache_1:    A string cache to use reduce re-allocations on the destination strings (generally required to not be NULL).
+ *   - cache:      A string cache to use reduce re-allocations on the destination strings (generally required to not be NULL).
  */
 #ifndef _di_f_fss_payload_header_write_state_t_
   typedef struct {
     f_conversion_data_t conversion;
 
-    f_string_dynamic_t *cache_1;
+    f_string_dynamic_t *cache;
   } f_fss_payload_header_write_state_t;
 
   #define f_fss_payload_header_write_state_t_initialize { \
     f_conversion_data_base_10_c, \
     0, \
-    0, \
-    0, \
   }
 
-  #define macro_f_fss_payload_header_write_state_t_initialize_1(conversion, cache_1) { \
+  #define macro_f_fss_payload_header_write_state_t_initialize_1(conversion, cache) { \
     conversion, \
-    cache_1, \
+    cache, \
   }
 
-  #define macro_f_fss_payload_header_write_state_t_initialize_2(cache_1) { \
+  #define macro_f_fss_payload_header_write_state_t_initialize_2(cache) { \
     f_conversion_data_base_10_c, \
-    cache_1, \
+    cache, \
   }
 #endif // _di_f_fss_payload_header_write_state_t_
 

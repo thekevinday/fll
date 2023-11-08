@@ -27,7 +27,7 @@ extern "C" {
  *
  * macro_f_fss_payload_header_write_process_signed_numbers_d:
  *   Process the numbers array, converting it to a string.
- *   The data->cache_1 is reset and used (via private_inline_f_payload_header_write_number_signed()).
+ *   The data->cache is reset and used (via private_inline_f_payload_header_write_number_signed()).
  *   The destinations->used is incremented on non-error.
  *   This requires private_inline_f_payload_header_write_number_signed() from payload.c.
  *
@@ -73,7 +73,7 @@ extern "C" {
       \
       if (private_inline_f_payload_header_write_number_signed(data, state, &internal, (f_number_signed_t) numbers.array[internal.j])) break; \
       \
-      if (data->cache_1->used && internal.j + 1 < numbers.used) { \
+      if (data->cache->used && internal.j + 1 < numbers.used) { \
         state->status = f_string_dynamic_append(f_fss_extended_open_s, &destination); \
         if (F_status_is_error(state->status)) break; \
       } \
@@ -92,7 +92,7 @@ extern "C" {
       \
       if (private_inline_f_payload_header_write_number_unsigned(data, state, &internal, (f_number_unsigned_t) numbers.array[internal.j])) break; \
       \
-      if (data->cache_1->used && internal.j + 1 < numbers.used) { \
+      if (data->cache->used && internal.j + 1 < numbers.used) { \
         state->status = f_string_dynamic_append(f_fss_extended_open_s, &destination); \
         if (F_status_is_error(state->status)) break; \
       } \
@@ -106,15 +106,15 @@ extern "C" {
       internal.range.start = 0; \
       internal.range.stop = dynamic.used - 1; \
       \
-      private_fl_fss_basic_write(F_false, dynamic, 0, &internal.range, data->cache_1, state, (void * const) &internal); \
+      private_fl_fss_basic_write(F_false, dynamic, 0, &internal.range, data->cache, state, (void * const) &internal); \
     } \
     else { \
-      data->cache_1->string[data->cache_1->used++] = f_string_ascii_quote_double_s.string[0]; \
-      data->cache_1->string[data->cache_1->used++] = f_string_ascii_quote_double_s.string[0]; \
+      data->cache->string[data->cache->used++] = f_string_ascii_quote_double_s.string[0]; \
+      data->cache->string[data->cache->used++] = f_string_ascii_quote_double_s.string[0]; \
     } \
     \
     if (F_status_is_error_not(state->status)) { \
-      data->cache_1->string[data->cache_1->used++] = f_fss_extended_next_s.string[0]; \
+      data->cache->string[data->cache->used++] = f_fss_extended_next_s.string[0]; \
     }
 #endif // _di_f_fss_payload_header_write_d_
 
