@@ -52,7 +52,7 @@ Featureless Settings Specification: 000e - Payload:
 
   The recommended italic:"status" italic:"header" Object may be a string, such as code:"F_okay", or a positive whole number.
   What the status code represents is application specific (or specific to a sub-standard) but may often be used to represent FLL:"Featureless Linux Library" status code.
-  - The FLL:"Featureless Linux Library" status code is a 16-bit digit whose first two high-order bits represent italic:"error" and italic:"warning" ( representing italic:"signal").
+  - The FLL:"Featureless Linux Library" status code is a 16-bit digit whose first two high-order bits represent italic:"error" and italic:"warning" (representing italic:"signal").
   - The FLL:"Featureless Linux Library" status code as a number is binary sensitive and may not be portable across binaries or systems.
   - For best portability, consider using status as a name string to ensure cross-system or cross-binary compatibility.
 
