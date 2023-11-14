@@ -1,7 +1,7 @@
 # fss-0002 iki-0000
 #
 # license open-standard-license-1.0
-# version 2023/07/16
+# version 2023/11/14
 #
 # This file (assumed to be named fss-000f.txt) can be more easily read using the following iki_read commands:
 #   iki_read fss-000f.txt +Q -w -WWWW character "'" "'" code '"' '"' italic '"' '"' bold '"' '"'
@@ -27,8 +27,8 @@ Featureless Settings Specification: 000f - Simple Packet:
 
   Control Block Structure\:
     code:"
-    [ Endianness Bit ] [ String / Binary Bit ] [ Remaining 6 bits (unused) ]
-    [ size: 2^1      ] [ size: 2^1           ] [ size: 2^6                 ]
+    [ Endianness Bit ] [ String / Binary Bit ] [ Remaining 6 Bits (unused) ]
+    [ size: 1 bit    ] [ size: 1 bit         ] [ size: 6 bits              ]
     "
 
   The endianness bit designates whether or not the packet is in big endian or little endian format.
@@ -48,11 +48,11 @@ Featureless Settings Specification: 000f - Simple Packet:
 
   Size Block Structure\:
     code:"
-    [ Size Block ]
-    [ size: 2^4  ]
+    [ Size Block    ]
+    [ size: 32 bits ]
     "
 
-  The bold:"Size Block" is an unsigned 32-bit integer representing the size of the entire packet, including the bold:"Control Block" and bold:"Size Block".
+  The bold:"Size Block" is an unsigned 32-bit integer representing the size of the entire packet in bytes, including the bold:"Control Block" and bold:"Size Block".
   This size must exactly match the packet to be a valid packet.
   The size represents number of bytes in the file.
   The bold:"Control Block" is 1 byte long and the bold:"Size Block" is 4 bytes long, therefore the maximum available size of the entire bold:"Simple Packet" structure is code:"(2^32)-6".
@@ -61,8 +61,8 @@ Featureless Settings Specification: 000f - Simple Packet:
 
   Payload Block Structure\:
     code:"
-    [ Payload Block  ]
-    [ size: (2^32)-6 ]
+    [ Payload Block        ]
+    [ size: (2^32)-6 bytes ]
     "
 
   The bold:"Payload Block" is not defined by this standard other than that it exists and should be in code:"FSS-000e (Payload)" format.
