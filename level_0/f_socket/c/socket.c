@@ -176,7 +176,7 @@ extern "C" {
 #ifndef _di_f_socket_connect_
   f_status_t f_socket_connect(const f_socket_t socket) {
 
-    if (socket.id != -1) return F_file_descriptor;
+    if (socket.id == -1) return F_file_descriptor;
 
     if (connect(socket.id, (struct sockaddr *) &socket.address, socket.length) == -1) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);

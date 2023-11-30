@@ -245,13 +245,17 @@ extern "C" {
 /**
  * Connect to a socket.
  *
+ * This connects the socket against socket.id.
+ * Check the individual read/write socket functions to confirm or deny whether or not this socket.id or socket.id_data is to be used.
+ *
  * @param socket
  *   The socket structure.
  *   The socket.address may point to any valid structure, like "struct sockaddr", "struct sockaddr_un", or "struct sockaddr_in".
+ *   Only socket.id is used.
  *
  * @return
  *   F_okay on success.
- *   F_file_descriptor if socket file descriptor is already connected (socket.id != -1).
+ *   F_file_descriptor if socket file descriptor is not valid (socket.id == -1).
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_available_not_address (with error bit) if address is unavailable (is non-existent or not local).
