@@ -9,7 +9,7 @@ struct hostent *__wrap_gethostbyaddr(const void *addr, socklen_t len, int type) 
   const bool failure = mock_type(bool);
 
   if (failure) {
-    errno = mock_type(int);
+    h_errno = mock_type(int);
 
     return 0;
   }
@@ -22,7 +22,7 @@ struct hostent *__wrap_gethostbyname(const char *name) {
   const bool failure = mock_type(bool);
 
   if (failure) {
-    errno = mock_type(int);
+    h_errno = mock_type(int);
 
     return 0;
   }
@@ -81,7 +81,7 @@ int __wrap_inet_pton(int af, const char *src, void *dst) {
     return -1;
   }
 
-  return 0;
+  return mock_type(int);
 }
 
 #ifdef __cplusplus

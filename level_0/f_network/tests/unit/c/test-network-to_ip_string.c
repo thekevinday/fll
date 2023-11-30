@@ -22,14 +22,24 @@ void test__f_network_to_ip_string__fails(void **state) {
     F_failure,
   };
 
+  int types[] = {
+    f_network_family_ip_4_e,
+    f_network_family_ip_6_e,
+  };
+
   for (uint8_t i = 0; i < 3; ++i) {
 
-    will_return(__wrap_inet_pton, true);
-    will_return(__wrap_inet_pton, errnos[i]);
+    for (uint8_t j = 0; j < 2; ++j) {
 
-    const f_status_t status = f_network_to_ip_string(family, &ip);
+      family.type = types[j];
 
-    assert_int_equal(status, F_status_set_error(statuss[i]));
+      will_return(__wrap_inet_ntop, true);
+      will_return(__wrap_inet_ntop, errnos[i]);
+
+      const f_status_t status = f_network_to_ip_string(family, &ip);
+
+      assert_int_equal(status, F_status_set_error(statuss[i]));
+    } // for
   } // for
 
   free(ip.string);

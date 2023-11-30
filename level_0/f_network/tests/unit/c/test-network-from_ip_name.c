@@ -7,6 +7,8 @@ extern "C" {
 
 void test__f_network_from_ip_name__fails(void **state) {
 
+  const f_string_static_t ip = macro_f_string_static_t_initialize_1("localhost", 0, 9);
+
   int errnos[] = {
     HOST_NOT_FOUND,
     NO_DATA,
@@ -32,7 +34,7 @@ void test__f_network_from_ip_name__fails(void **state) {
     will_return(__wrap_gethostbyname, true);
     will_return(__wrap_gethostbyname, errnos[i]);
 
-    const f_status_t status = f_network_from_ip_name(f_string_empty_s, &host);
+    const f_status_t status = f_network_from_ip_name(ip, &host);
 
     assert_int_equal(status, F_status_set_error(statuss[i]));
   } // for

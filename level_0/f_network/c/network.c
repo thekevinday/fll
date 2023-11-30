@@ -92,13 +92,22 @@ extern "C" {
 
     if (!from.used || to->type == f_network_family_none_e) return F_data_not;
 
-    if (inet_pton(to->type == f_network_family_ip_4_e ? AF_INET : AF_INET6, from.string, (void *) & to->address) == -1) {
-      if (errno == EAFNOSUPPORT) return F_status_set_error(F_support_not);
+    {
+      const int result = (to->type == f_network_family_ip_4_e)
+        ? inet_pton(AF_INET, from.string, (void *) & to->address.v4)
+        : inet_pton(AF_INET6, from.string, (void *) & to->address.v6);
 
-      return F_status_set_error(F_failure);
+      if (result == -1) {
+        if (errno == EAFNOSUPPORT) return F_status_set_error(F_support_not);
+
+        return F_status_set_error(F_failure);
+      }
+      else if (result) {
+        return F_okay;
+      }
     }
 
-    return F_okay;
+    return F_status_set_error(F_address_not);
   }
 #endif // _di_f_network_from_ip_string_
 
@@ -459,11 +468,17 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     }
 
-    if (!inet_ntop(from.type == f_network_family_ip_4_e ? AF_INET : AF_INET6, (void *) & from.address, to->string + to->used, from.type == f_network_family_ip_4_e ? INET_ADDRSTRLEN : INET6_ADDRSTRLEN)) {
-      if (errno == EAFNOSUPPORT) return F_status_set_error(F_support_not);
-      if (errno == ENOSPC) return F_status_set_error(F_space_not);
+    {
+      const char * const result = (from.type == f_network_family_ip_4_e)
+        ? inet_ntop(AF_INET, (void *) & from.address.v4, to->string + to->used, INET_ADDRSTRLEN)
+        : inet_ntop(AF_INET6, (void *) & from.address.v6, to->string + to->used, INET6_ADDRSTRLEN);
 
-      return F_status_set_error(F_failure);
+      if (!result) {
+        if (errno == EAFNOSUPPORT) return F_status_set_error(F_support_not);
+        if (errno == ENOSPC) return F_status_set_error(F_space_not);
+
+        return F_status_set_error(F_failure);
+      }
     }
 
     while (to->used < to->size && to->string[to->used]) {

@@ -141,6 +141,7 @@ extern "C" {
  *   F_okay on success.
  *   F_data_not on success but there is nothing to convert (to.type is f_network_family_none_e or from.used is 0).
  *
+ *   F_address_not (with error bit) if from is not a valid address.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_space_not (with error bit) if not enough space is available in to.string.
  *   F_support_not (with error bit) if an invalid address family type is passed to inet_pton().

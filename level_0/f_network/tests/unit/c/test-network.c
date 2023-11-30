@@ -12,6 +12,7 @@ int setup(void **state) {
 int setdown(void **state) {
 
   errno = 0;
+  h_errno = 0;
 
   return 0;
 }
@@ -19,6 +20,11 @@ int setdown(void **state) {
 int main(void) {
 
   const struct CMUnitTest tests[] = {
+    cmocka_unit_test(test__f_network_from_ip_address__fails),
+    cmocka_unit_test(test__f_network_from_ip_name__fails),
+    cmocka_unit_test(test__f_network_from_ip_string__fails),
+    cmocka_unit_test(test__f_network_to_ip_string__fails),
+
     cmocka_unit_test(test__f_network_from_ip_address__returns_data_not),
     cmocka_unit_test(test__f_network_from_ip_name__returns_data_not),
     cmocka_unit_test(test__f_network_from_ip_string__returns_data_not),

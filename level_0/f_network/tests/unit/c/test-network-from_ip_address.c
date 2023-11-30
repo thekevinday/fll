@@ -27,16 +27,26 @@ void test__f_network_from_ip_address__fails(void **state) {
     F_failure,
   };
 
+  int types[] = {
+    f_network_family_ip_4_e,
+    f_network_family_ip_6_e,
+  };
+
   for (uint8_t i = 0; i < 6; ++i) {
 
-    struct hostent host;
+    for (uint8_t j = 0; j < 2; ++j) {
 
-    will_return(__wrap_gethostbyaddr, true);
-    will_return(__wrap_gethostbyaddr, errnos[i]);
+      family.type = types[j];
 
-    const f_status_t status = f_network_from_ip_address(family, &host);
+      struct hostent host;
 
-    assert_int_equal(status, F_status_set_error(statuss[i]));
+      will_return(__wrap_gethostbyaddr, true);
+      will_return(__wrap_gethostbyaddr, errnos[i]);
+
+      const f_status_t status = f_network_from_ip_address(family, &host);
+
+      assert_int_equal(status, F_status_set_error(statuss[i]));
+    } // for
   } // for
 }
 
