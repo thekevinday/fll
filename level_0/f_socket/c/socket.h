@@ -72,7 +72,7 @@ extern "C" {
  *   F_block (with error bit) if socket is blocked.
  *   F_buffer (with error bit) if the buffer is invalid.
  *   F_buffer_not (with error bit) if unable to create socket due to resource restrictions (maps to ENOBUFS).
- *   F_file_descriptor (with error bit) if id is an invalid descriptor.
+ *   F_file_descriptor (with error bit) if ID is an invalid descriptor.
  *   F_file_descriptor_max (with error bit) if max file descriptors is reached.
  *   F_file_open_max (with error bit) too many open files.
  *   F_interrupt (with error bit) if interrupt is received.
@@ -87,7 +87,7 @@ extern "C" {
  *   F_prohibited (with error bit) if the file system does not permit this operation.
  *   F_protocol (with error bit) if a protocol error occurred.
  *   F_protocol_not (with error bit) if the given protocol is unknown or is unsupported.
- *   F_socket_not (with error bit) if the id is not a socket descriptor.
+ *   F_socket_not (with error bit) if the ID is not a socket descriptor.
  *   F_stream_not (with error bit) the socket type is not a stream.
  *   F_support_not (with error bit) if this socket type is not supported.
  *   F_time_out (with error bit) if a timeout occurred.
@@ -123,7 +123,7 @@ extern "C" {
  *   F_memory_not (with error bit) if out of memory.
  *   F_name (with error bit) on path name error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_socket_not (with error bit) if the id is not a socket descriptor.
+ *   F_socket_not (with error bit) if the ID is not a socket descriptor.
  *   F_string_too_large (with error bit) if string is too large to store in the buffer.
  *
  *   F_failure (with error bit) for any other error.
@@ -158,7 +158,7 @@ extern "C" {
  *   F_memory_not (with error bit) if out of memory.
  *   F_name (with error bit) on path name error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_socket_not (with error bit) if the id is not a socket descriptor.
+ *   F_socket_not (with error bit) if the ID is not a socket descriptor.
  *   F_string_too_large (with error bit) if string is too large to store in the buffer.
  *
  *   F_failure (with error bit) for any other error.
@@ -193,7 +193,7 @@ extern "C" {
  *   F_memory_not (with error bit) if out of memory.
  *   F_name (with error bit) on path name error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_socket_not (with error bit) if the id is not a socket descriptor.
+ *   F_socket_not (with error bit) if the ID is not a socket descriptor.
  *   F_string_too_large (with error bit) if string is too large to store in the buffer.
  *
  *   F_failure (with error bit) for any other error.
@@ -230,7 +230,7 @@ extern "C" {
  *   F_memory_not (with error bit) if out of memory.
  *   F_name (with error bit) on path name error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_socket_not (with error bit) if the id is not a socket descriptor.
+ *   F_socket_not (with error bit) if the ID is not a socket descriptor.
  *   F_string_too_large (with error bit) if string is too large to store in the buffer.
  *
  *   F_failure (with error bit) for any other error.
@@ -265,13 +265,13 @@ extern "C" {
  *   F_connect (with error bit) if already connected.
  *   F_connect_refuse (with error bit) if connection is refused because there is nothing listening.
  *   F_domain_not (with error bit) if the given domain is unknown or is unsupported.
- *   F_file_descriptor (with error bit) if id is an invalid descriptor.
+ *   F_file_descriptor (with error bit) if ID is an invalid descriptor.
  *   F_interrupt (with error bit) if interrupt is received.
  *   F_network_reach_not (with error bit) if the network is unreachable.
  *   F_progress (with error bit) if if a non-blocking connection cannot be completed immediately.
  *   F_prohibited (with error bit) if the file system does not permit this operation.
  *   F_protocol_not (with error bit) if the given protocol is unknown or is unsupported.
- *   F_socket_not (with error bit) if the id is not a socket descriptor.
+ *   F_socket_not (with error bit) if the ID is not a socket descriptor.
  *   F_time_out (with error bit) if a timeout occurred.
  *
  *   F_failure (with error bit) for any other error.
@@ -384,12 +384,12 @@ extern "C" {
  *   F_file_descriptor_not if socket.id is -1.
  *
  *   F_busy_address (with error bit) if address is already in use (therefore unavailable).
- *   F_file_descriptor (with error bit) if id is an invalid descriptor.
+ *   F_file_descriptor (with error bit) if ID is an invalid descriptor.
  *   F_filesystem_quota_block (with error bit) if file system's disk blocks or inodes are exhausted.
  *   F_input_output (with error bit) if an I/O error occurred.
  *   F_interrupt (with error bit) when program received an interrupt signal, halting operation.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_socket_not (with error bit) if the id is not a socket descriptor.
+ *   F_socket_not (with error bit) if the ID is not a socket descriptor.
  *   F_space_not (with error bit) if file system is out of space (or file system quota is reached).
  *   F_support_not (with error bit) if this socket does not support the listen() operation.
  *
@@ -416,8 +416,8 @@ extern "C" {
  *   F_okay on success.
  *
  *   F_busy_address (with error bit) if address is already in use (therefore unavailable).
- *   F_file_descriptor (with error bit) if id is an invalid descriptor.
- *   F_socket_not (with error bit) if the id is not a socket descriptor.
+ *   F_file_descriptor (with error bit) if ID is an invalid descriptor.
+ *   F_socket_not (with error bit) if the ID is not a socket descriptor.
  *   F_support_not (with error bit) if this socket does not support the listen() operation.
  *
  *   F_failure (with error bit) for any other error.
@@ -448,9 +448,9 @@ extern "C" {
  *   F_okay on success.
  *
  *   F_buffer (with error bit) if the given value is out of scope.
- *   F_file_descriptor (with error bit) if id is an invalid descriptor.
+ *   F_file_descriptor (with error bit) if ID is an invalid descriptor.
  *   F_option_not (with error bit) if the type is not valid for the given level.
- *   F_socket_not (with error bit) if the id is not a socket descriptor.
+ *   F_socket_not (with error bit) if the ID is not a socket descriptor.
  *   F_value (with error bit) if either the value or the length is invalid.
  *
  *   F_failure (with error bit) for any other error.
@@ -481,9 +481,9 @@ extern "C" {
  *   F_okay on success.
  *
  *   F_buffer (with error bit) if the given value is out of scope.
- *   F_file_descriptor (with error bit) if id is an invalid descriptor.
+ *   F_file_descriptor (with error bit) if ID is an invalid descriptor.
  *   F_option_not (with error bit) if the type is not valid for the given level.
- *   F_socket_not (with error bit) if the id is not a socket descriptor.
+ *   F_socket_not (with error bit) if the ID is not a socket descriptor.
  *   F_value (with error bit) if either the value or the length is invalid.
  *
  *   F_failure (with error bit) for any other error.
@@ -543,12 +543,12 @@ extern "C" {
  * @return
  *   F_okay on success.
  *
- *   F_file_descriptor (with error bit) if id is an invalid descriptor.
+ *   F_file_descriptor (with error bit) if ID is an invalid descriptor.
  *   F_buffer (with error bit) if the buffer is invalid.
  *   F_buffer_not (with error bit) due to resource restrictions (maps to ENOBUFS).
  *   F_connect_not (with error bit) if the socket is not connected.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_socket_not (with error bit) if the id is not a socket descriptor.
+ *   F_socket_not (with error bit) if the ID is not a socket descriptor.
  *
  *   F_failure (with error bit) for any other error.
  *
@@ -589,14 +589,14 @@ extern "C" {
  *   F_connect_reset (with error bit) if connection is reset.
  *   F_block (with error bit) if socket is blocked.
  *   F_buffer (with error bit) if the buffer is invalid.
- *   F_file_descriptor (with error bit) if id is an invalid descriptor.
+ *   F_file_descriptor (with error bit) if ID is an invalid descriptor.
  *   F_interrupt (with error bit) if interrupt is received.
  *   F_memory_not (with error bit) if out of memory.
  *   F_option_not (with error bit) if a flag is not supported.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_pipe (with error bit) if the local end of a connection oriented socket is closed or SIGPIPE is received.
  *   F_prohibited (with error bit) if the insufficient privileges to perform read.
- *   F_socket_not (with error bit) if the id is not a socket descriptor.
+ *   F_socket_not (with error bit) if the ID is not a socket descriptor.
  *   F_time_out (with error bit) if a timeout occurred.
  *
  *   F_failure (with error bit) for any other error.
@@ -634,14 +634,14 @@ extern "C" {
  *   F_connect_reset (with error bit) if connection is reset.
  *   F_block (with error bit) if socket is blocked.
  *   F_buffer (with error bit) if the buffer is invalid.
- *   F_file_descriptor (with error bit) if id is an invalid descriptor.
+ *   F_file_descriptor (with error bit) if ID is an invalid descriptor.
  *   F_interrupt (with error bit) if interrupt is received.
  *   F_memory_not (with error bit) if out of memory.
  *   F_option_not (with error bit) if a flag is not supported.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_pipe (with error bit) if the local end of a connection oriented socket is closed or SIGPIPE is received.
  *   F_prohibited (with error bit) if the insufficient privileges to perform read.
- *   F_socket_not (with error bit) if the id is not a socket descriptor.
+ *   F_socket_not (with error bit) if the ID is not a socket descriptor.
  *   F_time_out (with error bit) if a timeout occurred.
  *
  *   F_failure (with error bit) for any other error.
@@ -683,14 +683,14 @@ extern "C" {
  *   F_connect_reset (with error bit) if connection is reset.
  *   F_block (with error bit) if socket is blocked.
  *   F_buffer (with error bit) if the buffer is invalid.
- *   F_file_descriptor (with error bit) if id is an invalid descriptor.
+ *   F_file_descriptor (with error bit) if ID is an invalid descriptor.
  *   F_interrupt (with error bit) if interrupt is received.
  *   F_memory_not (with error bit) if out of memory.
  *   F_option_not (with error bit) if a flag is not supported.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_pipe (with error bit) if the local end of a connection oriented socket is closed or SIGPIPE is received.
  *   F_prohibited (with error bit) if the insufficient privileges to perform read.
- *   F_socket_not (with error bit) if the id is not a socket descriptor.
+ *   F_socket_not (with error bit) if the ID is not a socket descriptor.
  *   F_time_out (with error bit) if a timeout occurred.
  *
  *   F_failure (with error bit) for any other error.
@@ -735,7 +735,7 @@ extern "C" {
  *   F_connect_reset (with error bit) if connection is reset.
  *   F_block (with error bit) if socket is blocked.
  *   F_buffer (with error bit) if the buffer is invalid.
- *   F_file_descriptor (with error bit) if id is an invalid descriptor.
+ *   F_file_descriptor (with error bit) if ID is an invalid descriptor.
  *   F_interrupt (with error bit) if interrupt is received.
  *   F_memory_not (with error bit) if out of memory.
  *   F_option_not (with error bit) if a flag is not supported.
@@ -743,7 +743,7 @@ extern "C" {
  *   F_pipe (with error bit) if the local end of a connection oriented socket is closed or SIGPIPE is received.
  *   F_prohibited (with error bit) if the insufficient privileges to perform send.
  *   F_size (with error bit) if size of message makes atomically sending message impossible on a socket type that requires this to be atomic.
- *   F_socket_not (with error bit) if the id is not a socket descriptor.
+ *   F_socket_not (with error bit) if the ID is not a socket descriptor.
  *   F_time_out (with error bit) if a timeout occurred.
  *
  *   F_failure (with error bit) for any other error.
@@ -784,7 +784,7 @@ extern "C" {
  *   F_connect_reset (with error bit) if connection is reset.
  *   F_block (with error bit) if socket is blocked.
  *   F_buffer (with error bit) if the buffer is invalid.
- *   F_file_descriptor (with error bit) if id is an invalid descriptor.
+ *   F_file_descriptor (with error bit) if ID is an invalid descriptor.
  *   F_interrupt (with error bit) if interrupt is received.
  *   F_memory_not (with error bit) if out of memory.
  *   F_option_not (with error bit) if a flag is not supported.
@@ -792,7 +792,7 @@ extern "C" {
  *   F_pipe (with error bit) if the local end of a connection oriented socket is closed or SIGPIPE is received.
  *   F_prohibited (with error bit) if the insufficient privileges to perform send.
  *   F_size (with error bit) if size of message makes atomically sending message impossible on a socket type that requires this to be atomic.
- *   F_socket_not (with error bit) if the id is not a socket descriptor.
+ *   F_socket_not (with error bit) if the ID is not a socket descriptor.
  *   F_time_out (with error bit) if a timeout occurred.
  *
  *   F_failure (with error bit) for any other error.
@@ -837,7 +837,7 @@ extern "C" {
  *   F_connect_reset (with error bit) if connection is reset.
  *   F_block (with error bit) if socket is blocked.
  *   F_buffer (with error bit) if the buffer is invalid.
- *   F_file_descriptor (with error bit) if id is an invalid descriptor.
+ *   F_file_descriptor (with error bit) if ID is an invalid descriptor.
  *   F_interrupt (with error bit) if interrupt is received.
  *   F_memory_not (with error bit) if out of memory.
  *   F_option_not (with error bit) if a flag is not supported.
@@ -845,7 +845,7 @@ extern "C" {
  *   F_pipe (with error bit) if the local end of a connection oriented socket is closed or SIGPIPE is received.
  *   F_prohibited (with error bit) if the insufficient privileges to perform send.
  *   F_size (with error bit) if size of message makes atomically sending message impossible on a socket type that requires this to be atomic.
- *   F_socket_not (with error bit) if the id is not a socket descriptor.
+ *   F_socket_not (with error bit) if the ID is not a socket descriptor.
  *   F_time_out (with error bit) if a timeout occurred.
  *
  *   F_failure (with error bit) for any other error.
