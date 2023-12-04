@@ -51,24 +51,28 @@ void test__f_network_is_ip_address__returns_network_version_four(void **state) {
     macro_f_string_static_t_initialize_1("127.0.0.1/24:80", 0, 15),
   };
 
-  const f_number_unsigned_t ports[] = {
+  const f_number_unsigned_t port_starts[] = {
     0,
     0,
     10,
     13,
   };
 
-  f_number_unsigned_t port = 0;
+  f_range_double_t where = f_range_double_t_initialize;
 
   for (uint8_t i = 0; i < 4; ++i) {
 
     state_data.status = F_okay;
-    port = 100000;
+    where.start_1 = 1;
+    where.start_2 = 1;
+    where.stop_1 = 0;
+    where.stop_2 = 0;
 
-    f_network_is_ip_address(ips[i], &port, &state_data);
+    f_network_is_ip_address(ips[i], &where, &state_data);
 
+    // @todo this needs to test start and stop of both address and port.
     assert_int_equal(state_data.status, F_network_version_four);
-    assert_int_equal(port, ports[i]);
+    assert_int_equal(where.start_2, (port_starts[i] ? port_starts[i] : 1));
   } // for
 }
 
@@ -270,7 +274,7 @@ void test__f_network_is_ip_address__returns_network_version_six(void **state) {
     macro_f_string_static_t_initialize_1("[2001:0DB8:0:CD30::123:4567:CDEF]:80", 0, 36),
   };
 
-  const f_number_unsigned_t ports[] = {
+  const f_number_unsigned_t port_starts[] = {
     0,
     0,
     6,
@@ -315,17 +319,21 @@ void test__f_network_is_ip_address__returns_network_version_six(void **state) {
     34,
   };
 
-  f_number_unsigned_t port = 0;
+  f_range_double_t where = f_range_double_t_initialize;
 
   for (uint8_t i = 0; i < 42; ++i) {
 
     state_data.status = F_okay;
-    port = 100000;
+    where.start_1 = 1;
+    where.start_2 = 1;
+    where.stop_1 = 0;
+    where.stop_2 = 0;
 
-    f_network_is_ip_address(ips[i], &port, &state_data);
+    f_network_is_ip_address(ips[i], &where, &state_data);
 
+    // @todo this needs to test start and stop of both address and port.
     assert_int_equal(state_data.status, F_network_version_six);
-    assert_int_equal(port, ports[i]);
+    assert_int_equal(where.start_2, (port_starts[i] ? port_starts[i] : 1));
   } // for
 }
 
