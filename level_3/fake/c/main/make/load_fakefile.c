@@ -36,13 +36,13 @@ extern "C" {
       return;
     }
 
-    f_string_ranges_t list_objects = f_string_ranges_t_initialize;
-    f_string_rangess_t list_contents = f_string_rangess_t_initialize;
+    f_ranges_t list_objects = f_ranges_t_initialize;
+    f_rangess_t list_contents = f_rangess_t_initialize;
     f_number_unsigneds_t delimits = f_number_unsigneds_t_initialize;
 
     {
-      f_string_range_t range = macro_f_string_range_t_initialize_2(data_make->main->buffer.used);
-      f_string_ranges_t comments = f_string_ranges_t_initialize;
+      f_range_t range = macro_f_range_t_initialize_2(data_make->main->buffer.used);
+      f_ranges_t comments = f_ranges_t_initialize;
 
       fll_fss_basic_list_read(data_make->main->buffer, &range, &list_objects, &list_contents, &delimits, 0, &comments, &data_make->main->setting.state);
 
@@ -59,11 +59,11 @@ extern "C" {
         delimits.used = 0;
       }
 
-      f_memory_array_resize(0, sizeof(f_string_range_t), (void **) &comments.array, &comments.used, &comments.size);
+      f_memory_array_resize(0, sizeof(f_range_t), (void **) &comments.array, &comments.used, &comments.size);
 
       if (F_status_is_error(data_make->main->setting.state.status)) {
-        f_memory_array_resize(0, sizeof(f_string_range_t), (void **) &list_objects.array, &list_objects.used, &list_objects.size);
-        f_memory_arrays_resize(0, sizeof(f_string_ranges_t), (void **) &list_contents.array, &list_contents.used, &list_contents.size, &f_string_rangess_delete_callback);
+        f_memory_array_resize(0, sizeof(f_range_t), (void **) &list_objects.array, &list_objects.used, &list_objects.size);
+        f_memory_arrays_resize(0, sizeof(f_ranges_t), (void **) &list_contents.array, &list_contents.used, &list_contents.size, &f_rangess_delete_callback);
         f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &delimits.array, &delimits.used, &delimits.size);
 
         return;
@@ -84,15 +84,15 @@ extern "C" {
         fake_print_error(&data_make->main->program.error, macro_fake_f(f_memory_array_resize));
 
         f_fss_set_delete(&settings);
-        f_memory_array_resize(0, sizeof(f_string_range_t), (void **) &list_objects.array, &list_objects.used, &list_objects.size);
-        f_memory_arrays_resize(0, sizeof(f_string_ranges_t), (void **) &list_contents.array, &list_contents.used, &list_contents.size, &f_string_rangess_delete_callback);
+        f_memory_array_resize(0, sizeof(f_range_t), (void **) &list_objects.array, &list_objects.used, &list_objects.size);
+        f_memory_arrays_resize(0, sizeof(f_ranges_t), (void **) &list_contents.array, &list_contents.used, &list_contents.size, &f_rangess_delete_callback);
         f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &delimits.array, &delimits.used, &delimits.size);
 
         return;
       }
 
       {
-        f_string_range_t content_range = f_string_range_t_initialize;
+        f_range_t content_range = f_range_t_initialize;
 
         for (f_number_unsigned_t i = 0; i < list_objects.used; ++i) {
 
@@ -170,8 +170,8 @@ extern "C" {
         } // for
       }
 
-      f_memory_array_resize(0, sizeof(f_string_range_t), (void **) &list_objects.array, &list_objects.used, &list_objects.size);
-      f_memory_arrays_resize(0, sizeof(f_string_ranges_t), (void **) &list_contents.array, &list_contents.used, &list_contents.size, &f_string_rangess_delete_callback);
+      f_memory_array_resize(0, sizeof(f_range_t), (void **) &list_objects.array, &list_objects.used, &list_objects.size);
+      f_memory_arrays_resize(0, sizeof(f_ranges_t), (void **) &list_contents.array, &list_contents.used, &list_contents.size, &f_rangess_delete_callback);
       f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &delimits.array, &delimits.used, &delimits.size);
 
       if (F_status_is_error(data_make->main->setting.state.status)) {
@@ -213,8 +213,8 @@ extern "C" {
         }
       }
 
-      f_string_range_t *range_compiler = 0;
-      f_string_range_t *range_indexer = 0;
+      f_range_t *range_compiler = 0;
+      f_range_t *range_indexer = 0;
 
       data_make->setting_make.parameter.array[0].value.used = 1;
       data_make->setting_make.load_build = F_false;
@@ -299,7 +299,7 @@ extern "C" {
 #endif // _di_fake_make_load_fakefile_
 
 #ifndef _di_fake_make_load_fakefile_setting_build_
-  void fake_make_load_fakefile_setting_build(fake_make_data_t * const data_make, f_string_range_t * const object, f_string_ranges_t * const content) {
+  void fake_make_load_fakefile_setting_build(fake_make_data_t * const data_make, f_range_t * const object, f_ranges_t * const content) {
 
     if (!data_make || !data_make->data || !data_make->main || !object || !content) return;
 
@@ -325,7 +325,7 @@ extern "C" {
 #endif // _di_fake_make_load_fakefile_setting_build_
 
 #ifndef _di_fake_make_load_fakefile_setting_compiler_
-  void fake_make_load_fakefile_setting_compiler(fake_make_data_t * const data_make, f_string_range_t * const object, f_string_ranges_t * const content, f_string_range_t **range_compiler) {
+  void fake_make_load_fakefile_setting_compiler(fake_make_data_t * const data_make, f_range_t * const object, f_ranges_t * const content, f_range_t **range_compiler) {
 
     if (!data_make || !data_make->data || !data_make->main || !object || !content || !range_compiler) return;
 
@@ -427,7 +427,7 @@ extern "C" {
 #endif // _di_fake_make_load_fakefile_setting_define_and_parameter_
 
 #ifndef _di_fake_make_load_fakefile_setting_environment_
-  void fake_make_load_fakefile_setting_environment(fake_make_data_t * const data_make, f_string_ranges_t * const content) {
+  void fake_make_load_fakefile_setting_environment(fake_make_data_t * const data_make, f_ranges_t * const content) {
 
     if (!data_make || !data_make->data || !data_make->data || !data_make->main || !content) return;
 
@@ -513,7 +513,7 @@ extern "C" {
 #endif // _di_fake_make_load_fakefile_setting_environment_
 
 #ifndef _di_fake_make_load_fakefile_setting_fail_
-  void fake_make_load_fakefile_setting_fail(fake_make_data_t * const data_make, f_string_range_t * const object, f_string_ranges_t * const content) {
+  void fake_make_load_fakefile_setting_fail(fake_make_data_t * const data_make, f_range_t * const object, f_ranges_t * const content) {
 
     if (!data_make || !data_make->data || !data_make->data || !data_make->main || !object || !content) return;
 
@@ -542,7 +542,7 @@ extern "C" {
 #endif // _di_fake_make_load_fakefile_setting_fail_
 
 #ifndef _di_fake_make_load_fakefile_setting_indexer_
-  void fake_make_load_fakefile_setting_indexer(fake_make_data_t * const data_make, f_string_range_t * const object, f_string_ranges_t * const content, f_string_range_t **range_indexer) {
+  void fake_make_load_fakefile_setting_indexer(fake_make_data_t * const data_make, f_range_t * const object, f_ranges_t * const content, f_range_t **range_indexer) {
 
     if (!data_make || !data_make->data || !data_make->data || !data_make->main || !object || !content || !range_indexer) return;
 
@@ -560,7 +560,7 @@ extern "C" {
 #endif // _di_fake_make_load_fakefile_setting_indexer_
 
 #ifndef _di_fake_make_load_fakefile_setting_parameter_
-  void fake_make_load_fakefile_setting_parameter(fake_make_data_t * const data_make, f_string_range_t * const object, f_string_ranges_t * const content) {
+  void fake_make_load_fakefile_setting_parameter(fake_make_data_t * const data_make, f_range_t * const object, f_ranges_t * const content) {
 
     if (!data_make || !data_make->data || !data_make->data || !data_make->main || !object || !content) return;
 

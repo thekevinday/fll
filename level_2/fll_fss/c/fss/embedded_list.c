@@ -5,7 +5,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fll_fss_embedded_list_read_
-  void fll_fss_embedded_list_read(const f_string_static_t buffer, f_string_range_t * const range, f_fss_nest_t * const nest, f_number_unsigneds_t * const objects_delimits, f_number_unsigneds_t * const contents_delimits, f_string_ranges_t * const comments, f_state_t * const state) {
+  void fll_fss_embedded_list_read(const f_string_static_t buffer, f_range_t * const range, f_fss_nest_t * const nest, f_number_unsigneds_t * const objects_delimits, f_number_unsigneds_t * const contents_delimits, f_ranges_t * const comments, f_state_t * const state) {
     #ifndef _di_level_2_parameter_checking_
       if (!state) return;
 
@@ -117,12 +117,12 @@ extern "C" {
 #endif // _di_fll_fss_embedded_list_read_
 
 #ifndef _di_fll_fss_embedded_list_write_
-  void fll_fss_embedded_list_write(const f_string_static_t object, const f_string_static_t content, const f_string_static_t *content_prepend, const f_string_ranges_t *ignore, f_string_dynamic_t * const destination, f_state_t * const state) {
+  void fll_fss_embedded_list_write(const f_string_static_t object, const f_string_static_t content, const f_string_static_t *content_prepend, const f_ranges_t *ignore, f_string_dynamic_t * const destination, f_state_t * const state) {
     #ifndef _di_level_2_parameter_checking_
       if (!state) return;
     #endif // _di_level_2_parameter_checking_
 
-    f_string_range_t range = macro_f_string_range_t_initialize_2(object.used);
+    f_range_t range = macro_f_range_t_initialize_2(object.used);
 
     fl_fss_embedded_list_object_write(object, f_fss_complete_full_e, &range, destination, state);
 

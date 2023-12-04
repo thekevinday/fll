@@ -167,8 +167,8 @@ extern "C" {
     header->length = 0;
 
     f_number_unsigned_t i = 0;
-    f_string_range_t range_header = f_string_range_t_initialize;
-    f_string_range_t range_payload = f_string_range_t_initialize;
+    f_range_t range_header = f_range_t_initialize;
+    f_range_t range_payload = f_range_t_initialize;
 
     {
       f_number_unsigned_t length = 5;
@@ -221,7 +221,7 @@ extern "C" {
 
     {
       f_state_t state = macro_f_state_t_initialize_1(control_allocation_large_d, control_allocation_small_d, F_okay, 0, 0, 0, &fll_program_standard_signal_handle, 0, (void *) main, 0);
-      f_string_range_t range_packet = macro_f_string_range_t_initialize_2(main->cache.large.used);
+      f_range_t range_packet = macro_f_range_t_initialize_2(main->cache.large.used);
 
       fll_fss_basic_list_read(main->cache.large, &range_packet, &main->cache.packet_objects, &main->cache.packet_contents, &main->cache.delimits, 0, 0, &state);
 
@@ -250,8 +250,8 @@ extern "C" {
       main->cache.delimits.used = 0;
 
       {
-        f_string_ranges_t *content_header = 0;
-        f_string_ranges_t *content_payload = 0;
+        f_ranges_t *content_header = 0;
+        f_ranges_t *content_payload = 0;
 
         for (; i < main->cache.packet_objects.used; ++i) {
 
@@ -315,7 +315,7 @@ extern "C" {
         // 0x1 = found action, 0x2 = found length, 0x4 = found status, 0x8 = found_type.
         uint8_t found = 0;
         f_number_unsigned_t number = 0;
-        f_string_range_t range = range_header;
+        f_range_t range = range_header;
 
         fll_fss_extended_read(main->cache.large, &range, &main->cache.header_objects, &main->cache.header_contents, 0, 0, &main->cache.delimits, 0, &state);
 

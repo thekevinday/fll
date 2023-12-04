@@ -11,9 +11,9 @@ extern "C" {
 #endif
 
 #ifndef _di_controller_range_after_number_sign_
-  f_string_range_t controller_range_after_number_sign(const f_string_static_t buffer, const f_string_range_t range) {
+  f_range_t controller_range_after_number_sign(const f_string_static_t buffer, const f_range_t range) {
 
-    f_string_range_t result = range;
+    f_range_t result = range;
 
     for (; result.start <= result.stop; ++result.start) {
 
@@ -214,7 +214,7 @@ extern "C" {
 
     if (F_status_is_error_not(status)) {
       f_number_unsigned_t number = 0;
-      f_string_range_t range = macro_f_string_range_t_initialize_2(pid_buffer.used);
+      f_range_t range = macro_f_range_t_initialize_2(pid_buffer.used);
 
       for (; range.start < pid_buffer.used; ++range.start) {
         if (!isspace(pid_buffer.string[range.start])) break;
@@ -271,7 +271,7 @@ extern "C" {
 
     if (F_status_is_error_not(status)) {
       f_number_unsigned_t number = 0;
-      f_string_range_t range = macro_f_string_range_t_initialize_2(pid_buffer.used);
+      f_range_t range = macro_f_range_t_initialize_2(pid_buffer.used);
 
       for (; range.start < pid_buffer.used; ++range.start) {
         if (!isspace(pid_buffer.string[range.start])) break;
@@ -295,7 +295,7 @@ extern "C" {
 #endif // _di_controller_file_pid_read_
 
 #ifndef _di_controller_get_id_user_
-  f_status_t controller_get_id_user(const f_string_static_t buffer, const f_string_range_t range, controller_cache_t * const cache, uid_t * const id) {
+  f_status_t controller_get_id_user(const f_string_static_t buffer, const f_range_t range, controller_cache_t * const cache, uid_t * const id) {
 
     f_number_unsigned_t number = 0;
 
@@ -330,7 +330,7 @@ extern "C" {
 #endif // _di_controller_get_id_user_
 
 #ifndef _di_controller_get_id_group_
-  f_status_t controller_get_id_group(const f_string_static_t buffer, const f_string_range_t range, controller_cache_t * const cache, gid_t * const id) {
+  f_status_t controller_get_id_group(const f_string_static_t buffer, const f_range_t range, controller_cache_t * const cache, gid_t * const id) {
 
     f_number_unsigned_t number = 0;
 
@@ -373,7 +373,7 @@ extern "C" {
     }
 
     if (destination->used >= setting->path_current.used) {
-      const f_string_range_t range = macro_f_string_range_t_initialize_2(setting->path_current.used);
+      const f_range_t range = macro_f_range_t_initialize_2(setting->path_current.used);
 
       if (f_compare_dynamic_partial_string(destination->string, setting->path_current, destination->used, range) == F_equal_to) {
         f_number_unsigned_t length = destination->used - setting->path_current.used;

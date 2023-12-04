@@ -58,7 +58,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_conversion_dynamic_partial_to_signed_
-  extern f_status_t fl_conversion_dynamic_partial_to_signed(const fl_conversion_data_t data, const f_string_static_t buffer, const f_string_range_t range, f_number_signed_t * const number);
+  extern f_status_t fl_conversion_dynamic_partial_to_signed(const fl_conversion_data_t data, const f_string_static_t buffer, const f_range_t range, f_number_signed_t * const number);
 #endif // _di_fl_conversion_dynamic_partial_to_signed_
 
 /**
@@ -106,7 +106,7 @@ extern "C" {
  * @see strtoll()
  */
 #ifndef _di_fl_conversion_dynamic_partial_to_signed_detect_
-  extern f_status_t fl_conversion_dynamic_partial_to_signed_detect(const fl_conversion_data_t data, const f_string_static_t buffer, const f_string_range_t range, f_number_signed_t * const number);
+  extern f_status_t fl_conversion_dynamic_partial_to_signed_detect(const fl_conversion_data_t data, const f_string_static_t buffer, const f_range_t range, f_number_signed_t * const number);
 #endif // _di_fl_conversion_dynamic_partial_to_signed_detect_
 
 /**
@@ -137,7 +137,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_conversion_dynamic_partial_to_unsigned_
-  extern f_status_t fl_conversion_dynamic_partial_to_unsigned(const fl_conversion_data_t data, const f_string_static_t buffer, const f_string_range_t range, f_number_unsigned_t * const number);
+  extern f_status_t fl_conversion_dynamic_partial_to_unsigned(const fl_conversion_data_t data, const f_string_static_t buffer, const f_range_t range, f_number_unsigned_t * const number);
 #endif // _di_fl_conversion_dynamic_partial_to_unsigned_
 
 /**
@@ -187,7 +187,7 @@ extern "C" {
  * @see strtoull()
  */
 #ifndef _di_fl_conversion_dynamic_partial_to_unsigned_detect_
-  extern f_status_t fl_conversion_dynamic_partial_to_unsigned_detect(const fl_conversion_data_t data, const f_string_static_t buffer, const f_string_range_t range, f_number_unsigned_t * const number);
+  extern f_status_t fl_conversion_dynamic_partial_to_unsigned_detect(const fl_conversion_data_t data, const f_string_static_t buffer, const f_range_t range, f_number_unsigned_t * const number);
 #endif // _di_fl_conversion_dynamic_partial_to_unsigned_detect_
 
 /**

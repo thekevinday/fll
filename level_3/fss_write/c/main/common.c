@@ -307,7 +307,7 @@ extern "C" {
       }
 
       if (main->program.parameters.arguments.array[index].used) {
-        f_string_range_t range = macro_f_string_range_t_initialize_2(main->program.parameters.arguments.array[index].used);
+        f_range_t range = macro_f_range_t_initialize_2(main->program.parameters.arguments.array[index].used);
 
         for (; range.start < main->program.parameters.arguments.array[index].used; range.start++) {
 
@@ -371,7 +371,7 @@ extern "C" {
 
         main->setting.ignoress.used = 0;
 
-        main->setting.state.status = f_memory_array_increase_by(values_data->used, sizeof(f_string_ranges_t), (void **) &main->setting.ignoress.array, &main->setting.ignoress.used, &main->setting.ignoress.size);
+        main->setting.state.status = f_memory_array_increase_by(values_data->used, sizeof(f_ranges_t), (void **) &main->setting.ignoress.array, &main->setting.ignoress.used, &main->setting.ignoress.size);
 
         if (F_status_is_error(main->setting.state.status)) {
           if ((main->setting.flag & fss_write_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
@@ -405,7 +405,7 @@ extern "C" {
             break;
           }
 
-          main->setting.state.status = f_memory_array_increase_by(total, sizeof(f_string_range_t), (void **) &main->setting.ignoress.array[j].array, &main->setting.ignoress.array[j].used, &main->setting.ignoress.array[j].size);
+          main->setting.state.status = f_memory_array_increase_by(total, sizeof(f_range_t), (void **) &main->setting.ignoress.array[j].array, &main->setting.ignoress.array[j].used, &main->setting.ignoress.array[j].size);
 
           if (F_status_is_error(main->setting.state.status)) {
             if ((main->setting.flag & fss_write_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
@@ -478,7 +478,7 @@ extern "C" {
         // Still validate the parameters, even if not being used.
         f_number_unsigned_t i = 0;
         f_number_unsigned_t index = 0;
-        f_string_range_t number = f_string_range_t_initialize;
+        f_range_t number = f_range_t_initialize;
 
         while (i < main->program.parameters.array[fss_write_parameter_ignore_e].values.used) {
 

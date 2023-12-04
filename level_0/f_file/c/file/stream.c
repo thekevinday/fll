@@ -527,7 +527,7 @@ extern "C" {
 #endif // _di_f_file_stream_write_until_
 
 #ifndef _di_f_file_stream_write_range_
-  f_status_t f_file_stream_write_range(const f_file_t file, const f_string_static_t buffer, const f_string_range_t range, f_number_unsigned_t * const written) {
+  f_status_t f_file_stream_write_range(const f_file_t file, const f_string_static_t buffer, const f_range_t range, f_number_unsigned_t * const written) {
 
     if (!file.stream || !buffer.used || range.start > range.stop || range.start >= buffer.used || !file.size_write) {
       if (written) {

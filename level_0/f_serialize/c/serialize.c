@@ -91,7 +91,7 @@ extern "C" {
 
     if (!source.used) return F_data_not;
 
-    f_string_range_t range = f_string_range_t_initialize;
+    f_range_t range = f_range_t_initialize;
 
     f_status_t status = private_f_serialize_from_simple_select(source, index, &range);
     if (F_status_is_error(status)) return status;
@@ -112,7 +112,7 @@ extern "C" {
 #endif // _di_f_serialize_from_simple_get_
 
 #ifndef _di_f_serialize_from_simple_range_
-  f_status_t f_serialize_from_simple_range(const f_string_static_t source, f_string_ranges_t * const ranges) {
+  f_status_t f_serialize_from_simple_range(const f_string_static_t source, f_ranges_t * const ranges) {
     #ifndef _di_level_0_parameter_checking_
       if (!ranges) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -131,7 +131,7 @@ extern "C" {
       if (i + width > source.used) {
         total = i - start;
 
-        status = f_memory_array_increase(F_memory_default_allocation_small_d, sizeof(f_string_range_t), (void **) &ranges->array, &ranges->used, &ranges->size);
+        status = f_memory_array_increase(F_memory_default_allocation_small_d, sizeof(f_range_t), (void **) &ranges->array, &ranges->used, &ranges->size);
         if (F_status_is_error(status)) return status;
 
         if (total) {
@@ -149,7 +149,7 @@ extern "C" {
       if (source.string[i] == f_serialize_to_simple_splitter_s.string[0]) {
         total = i - start;
 
-        status = f_memory_array_increase(F_memory_default_allocation_small_d, sizeof(f_string_range_t), (void **) &ranges->array, &ranges->used, &ranges->size);
+        status = f_memory_array_increase(F_memory_default_allocation_small_d, sizeof(f_range_t), (void **) &ranges->array, &ranges->used, &ranges->size);
         if (F_status_is_error(status)) return status;
 
         if (total) {
@@ -165,7 +165,7 @@ extern "C" {
 
         // Handle case when splitter as at the end of the string, creating a new empty string.
         if (start == source.used) {
-          status = f_memory_array_increase(F_memory_default_allocation_small_d, sizeof(f_string_range_t), (void **) &ranges->array, &ranges->used, &ranges->size);
+          status = f_memory_array_increase(F_memory_default_allocation_small_d, sizeof(f_range_t), (void **) &ranges->array, &ranges->used, &ranges->size);
           if (F_status_is_error(status)) return status;
 
           ranges->array[ranges->used].start = 1;
@@ -180,7 +180,7 @@ extern "C" {
     if (start < source.used) {
       total = source.used - start;
 
-      status = f_memory_array_increase(F_memory_default_allocation_small_d, sizeof(f_string_range_t), (void **) &ranges->array, &ranges->used, &ranges->size);
+      status = f_memory_array_increase(F_memory_default_allocation_small_d, sizeof(f_range_t), (void **) &ranges->array, &ranges->used, &ranges->size);
       if (F_status_is_error(status)) return status;
 
       if (total) {
@@ -198,7 +198,7 @@ extern "C" {
 #endif // _di_f_serialize_from_simple_range_
 
 #ifndef _di_f_serialize_from_simple_select_
-  f_status_t f_serialize_from_simple_select(const f_string_static_t source, const f_number_unsigned_t index, f_string_range_t * const range) {
+  f_status_t f_serialize_from_simple_select(const f_string_static_t source, const f_number_unsigned_t index, f_range_t * const range) {
     #ifndef _di_level_0_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_

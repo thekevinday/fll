@@ -11,7 +11,7 @@ void test__f_abstruse_maps_destroy_callback__fails(void **state) {
   mock_unwrap_f_memory = 0;
 
   f_string_t a_string = "example";
-  f_string_range_t a_range = macro_f_string_range_t_initialize_1(1, 2);
+  f_range_t a_range = macro_f_range_t_initialize_1(1, 2);
   f_string_static_t a_static = macro_f_string_static_t_initialize_1(a_string, 0, 7);
   f_string_dynamic_t a_dynamic = f_string_dynamic_t_initialize;
 
@@ -52,7 +52,7 @@ void test__f_abstruse_maps_destroy_callback__works(void **state) {
   mock_unwrap_f_memory = 1;
 
   f_string_t a_string = "example";
-  f_string_range_t a_range = macro_f_string_range_t_initialize_1(1, 2);
+  f_range_t a_range = macro_f_range_t_initialize_1(1, 2);
   f_string_static_t a_static = macro_f_string_static_t_initialize_1(a_string, 0, 7);
   f_string_dynamic_t a_dynamic = f_string_dynamic_t_initialize;
 

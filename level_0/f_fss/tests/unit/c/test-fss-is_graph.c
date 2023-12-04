@@ -41,7 +41,7 @@ void test__f_fss_is_graph__works(void **state) {
 
   for (f_number_unsigned_t i = 0; i < 12; ++i) {
 
-    const f_string_range_t range = macro_f_string_range_t_initialize_1(0, tests[i].used - 1);
+    const f_range_t range = macro_f_range_t_initialize_1(0, tests[i].used - 1);
 
     const f_status_t status = f_fss_is_graph(tests[i], range, &state_data);
 
@@ -49,7 +49,7 @@ void test__f_fss_is_graph__works(void **state) {
   } // for
 
   {
-    const f_string_range_t range = f_string_range_t_initialize;
+    const f_range_t range = f_range_t_initialize;
 
     const f_status_t status = f_fss_is_graph(f_string_empty_s, range, &state_data);
 
@@ -57,7 +57,7 @@ void test__f_fss_is_graph__works(void **state) {
   }
 
   {
-    const f_string_range_t range = macro_f_string_range_t_initialize_1(0, 2);
+    const f_range_t range = macro_f_range_t_initialize_1(0, 2);
 
     const f_status_t status = f_fss_is_graph(f_string_empty_s, range, &state_data);
 
@@ -66,7 +66,7 @@ void test__f_fss_is_graph__works(void **state) {
 
   {
     const f_string_static_t test = macro_f_string_static_t_initialize_1("test", 0, 4);
-    const f_string_range_t range = f_string_range_t_initialize;
+    const f_range_t range = f_range_t_initialize;
 
     const f_status_t status = f_fss_is_graph(test, range, &state_data);
 

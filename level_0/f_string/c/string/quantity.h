@@ -19,7 +19,7 @@ extern "C" {
 /**
  * Store string quantity.
  *
- * Similar to f_string_range_t, except total is relative to start and is not an absolute stop position.
+ * Similar to f_range_t, except total is relative to start and is not an absolute stop position.
  *
  * Two common uses for when total is 0 is:
  * 1) Exactly that, process a total of 0 strings bytes.

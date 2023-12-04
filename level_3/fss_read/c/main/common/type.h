@@ -82,13 +82,13 @@ extern "C" {
 #ifndef _di_fss_read_file_t_
   typedef struct {
     f_string_static_t name;
-    f_string_range_t range;
+    f_range_t range;
   } fss_read_file_t;
 
   #define fss_read_file_t_initialize \
     { \
       f_string_static_t_initialize, \
-      f_string_range_t_initialize, \
+      f_range_t_initialize, \
     }
 #endif // _di_fss_read_file_t_
 
@@ -151,7 +151,7 @@ extern "C" {
 
     f_status_t (*print_at)(fl_print_t * const print, const f_number_unsigned_t at, const f_number_unsigneds_t delimits_object, const f_number_unsigneds_t delimits_content);
     f_status_t (*print_object)(fl_print_t * const print, const f_number_unsigned_t at, const f_number_unsigneds_t delimits);
-    f_status_t (*print_content)(fl_print_t * const print, const f_string_range_t range, const uint8_t quote, const f_number_unsigneds_t delimits);
+    f_status_t (*print_content)(fl_print_t * const print, const f_range_t range, const uint8_t quote, const f_number_unsigneds_t delimits);
     f_status_t (*print_content_ignore)(fl_print_t * const print);
     f_status_t (*print_content_next)(fl_print_t * const print);
     f_status_t (*print_object_end)(fl_print_t * const print);
@@ -226,7 +226,7 @@ extern "C" {
     f_number_unsigned_t select;
     f_number_unsigned_t line;
 
-    f_string_range_t range;
+    f_range_t range;
 
     fss_read_files_t files;
     fss_read_depths_t depths;
@@ -234,12 +234,12 @@ extern "C" {
     f_string_static_t standard;
     f_string_dynamic_t buffer;
 
-    f_string_ranges_t comments;
-    f_string_rangess_t contents;
+    f_ranges_t comments;
+    f_rangess_t contents;
     f_number_unsigneds_t delimits_object;
     f_number_unsigneds_t delimits_content;
     f_fss_nest_t nest;
-    f_string_ranges_t objects;
+    f_ranges_t objects;
 
     f_uint8s_t quotes_object;
     f_uint8ss_t quotes_content;
@@ -254,17 +254,17 @@ extern "C" {
       0, \
       0, \
       0, \
-      f_string_range_t_initialize, \
+      f_range_t_initialize, \
       fss_read_files_t_initialize, \
       fss_read_depths_t_initialize, \
       f_string_static_t_initialize, \
       f_string_dynamic_t_initialize, \
-      f_string_ranges_t_initialize, \
-      f_string_rangess_t_initialize, \
+      f_ranges_t_initialize, \
+      f_rangess_t_initialize, \
       f_number_unsigneds_t_initialize, \
       f_number_unsigneds_t_initialize, \
       f_fss_nest_t_initialize, \
-      f_string_ranges_t_initialize, \
+      f_ranges_t_initialize, \
       f_uint8s_t_initialize, \
       f_uint8ss_t_initialize, \
     }

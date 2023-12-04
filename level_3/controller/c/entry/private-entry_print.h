@@ -175,7 +175,7 @@ extern "C" {
  * @see controller_entry_settings_read()
  */
 #ifndef _di_controller_entry_setting_read_print_error_with_range_
-  extern void controller_entry_setting_read_print_error_with_range(const bool is_entry, const fl_print_t print, const f_string_t before, const f_string_range_t range, const f_string_t after, controller_thread_t * const thread, controller_cache_t * const cache) F_attribute_visibility_internal_d;
+  extern void controller_entry_setting_read_print_error_with_range(const bool is_entry, const fl_print_t print, const f_string_t before, const f_range_t range, const f_string_t after, controller_thread_t * const thread, controller_cache_t * const cache) F_attribute_visibility_internal_d;
 #endif // _di_controller_entry_setting_read_print_error_with_range_
 
 /**

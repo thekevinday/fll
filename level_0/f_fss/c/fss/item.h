@@ -34,19 +34,19 @@ extern "C" {
  */
 #ifndef _di_f_fss_item_t_
   typedef struct {
-    f_string_range_t object;
-    f_string_ranges_t content;
+    f_range_t object;
+    f_ranges_t content;
 
     f_number_unsigned_t parent;
   } f_fss_item_t;
 
-  #define f_fss_item_t_initialize { f_string_range_t_initialize, f_string_ranges_t_initialize, 0 }
+  #define f_fss_item_t_initialize { f_range_t_initialize, f_ranges_t_initialize, 0 }
 
   #define macro_f_fss_item_t_initialize_1(object, content, parent) macro_f_number_unsigneds_t_initialize_1(object, content, parent)
 
   #define macro_f_fss_item_t_clear(item) \
-    macro_f_string_range_t_clear(item.object); \
-    macro_f_string_ranges_t_clear(item.content); \
+    macro_f_range_t_clear(item.object); \
+    macro_f_ranges_t_clear(item.content); \
     item.parent = 0;
 #endif // _di_f_fss_item_t_
 

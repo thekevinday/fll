@@ -14,12 +14,12 @@ extern "C" {
       f_status_t status = F_okay;
 
       if (set->objects.size && set->objects.array) {
-        status = f_memory_array_resize(0, sizeof(f_string_range_t), (void **) &set->objects.array, &set->objects.used, &set->objects.size);
+        status = f_memory_array_resize(0, sizeof(f_range_t), (void **) &set->objects.array, &set->objects.used, &set->objects.size);
         if (F_status_is_error(status)) return status;
       }
 
       if (set->contents.size && set->contents.array) {
-        status = f_memory_arrays_resize(0, sizeof(f_string_ranges_t), (void **) &set->contents.array, &set->contents.used, &set->contents.size, &f_string_rangess_delete_callback);
+        status = f_memory_arrays_resize(0, sizeof(f_ranges_t), (void **) &set->contents.array, &set->contents.used, &set->contents.size, &f_rangess_delete_callback);
         if (F_status_is_error(status)) return status;
       }
     }
@@ -38,12 +38,12 @@ extern "C" {
       f_status_t status = F_okay;
 
       if (set->objects.size && set->objects.array) {
-        status = f_memory_array_adjust(0, sizeof(f_string_range_t), (void **) &set->objects.array, &set->objects.used, &set->objects.size);
+        status = f_memory_array_adjust(0, sizeof(f_range_t), (void **) &set->objects.array, &set->objects.used, &set->objects.size);
         if (F_status_is_error(status)) return status;
       }
 
       if (set->contents.size && set->contents.array) {
-        status = f_memory_arrays_adjust(0, sizeof(f_string_ranges_t), (void **) &set->contents.array, &set->contents.used, &set->contents.size, &f_string_rangess_destroy_callback);
+        status = f_memory_arrays_adjust(0, sizeof(f_ranges_t), (void **) &set->contents.array, &set->contents.used, &set->contents.size, &f_rangess_destroy_callback);
         if (F_status_is_error(status)) return status;
       }
     }
@@ -62,12 +62,12 @@ extern "C" {
       for (f_number_unsigned_t i = start; i < stop; ++i) {
 
         if (array[i].objects.size && array[i].objects.array) {
-          status = f_memory_array_resize(0, sizeof(f_string_range_t), (void **) &array[i].objects.array, &array[i].objects.used, &array[i].objects.size);
+          status = f_memory_array_resize(0, sizeof(f_range_t), (void **) &array[i].objects.array, &array[i].objects.used, &array[i].objects.size);
           if (F_status_is_error(status)) return status;
         }
 
         if (array[i].contents.size && array[i].contents.array) {
-          status = f_memory_arrays_resize(0, sizeof(f_string_ranges_t), (void **) &array[i].contents.array, &array[i].contents.used, &array[i].contents.size, &f_string_rangess_delete_callback);
+          status = f_memory_arrays_resize(0, sizeof(f_ranges_t), (void **) &array[i].contents.array, &array[i].contents.used, &array[i].contents.size, &f_rangess_delete_callback);
           if (F_status_is_error(status)) return status;
         }
       } // for
@@ -87,12 +87,12 @@ extern "C" {
       for (f_number_unsigned_t i = start; i < stop; ++i) {
 
         if (array[i].objects.size && array[i].objects.array) {
-          status = f_memory_array_adjust(0, sizeof(f_string_range_t), (void **) &array[i].objects.array, &array[i].objects.used, &array[i].objects.size);
+          status = f_memory_array_adjust(0, sizeof(f_range_t), (void **) &array[i].objects.array, &array[i].objects.used, &array[i].objects.size);
           if (F_status_is_error(status)) return status;
         }
 
         if (array[i].contents.size && array[i].contents.array) {
-          status = f_memory_arrays_adjust(0, sizeof(f_string_ranges_t), (void **) &array[i].contents.array, &array[i].contents.used, &array[i].contents.size, &f_string_rangess_destroy_callback);
+          status = f_memory_arrays_adjust(0, sizeof(f_ranges_t), (void **) &array[i].contents.array, &array[i].contents.used, &array[i].contents.size, &f_rangess_destroy_callback);
           if (F_status_is_error(status)) return status;
         }
       } // for
@@ -115,12 +115,12 @@ extern "C" {
         for (j = 0; j < array[i].size; ++j) {
 
           if (array[i].array[j].objects.size && array[i].array[j].objects.array) {
-            status = f_memory_array_resize(0, sizeof(f_string_range_t), (void **) &array[i].array[j].objects.array, &array[i].array[j].objects.used, &array[i].array[j].objects.size);
+            status = f_memory_array_resize(0, sizeof(f_range_t), (void **) &array[i].array[j].objects.array, &array[i].array[j].objects.used, &array[i].array[j].objects.size);
             if (F_status_is_error(status)) return status;
           }
 
           if (array[i].array[j].contents.size && array[i].array[j].contents.array) {
-            status = f_memory_arrays_resize(0, sizeof(f_string_ranges_t), (void **) &array[i].array[j].contents.array, &array[i].array[j].contents.used, &array[i].array[j].contents.size, &f_string_rangess_delete_callback);
+            status = f_memory_arrays_resize(0, sizeof(f_ranges_t), (void **) &array[i].array[j].contents.array, &array[i].array[j].contents.used, &array[i].array[j].contents.size, &f_rangess_delete_callback);
             if (F_status_is_error(status)) return status;
           }
         } // for
@@ -149,12 +149,12 @@ extern "C" {
         for (j = 0; j < array[i].size; ++j) {
 
           if (array[i].array[j].objects.size && array[i].array[j].objects.array) {
-            status = f_memory_array_adjust(0, sizeof(f_string_range_t), (void **) &array[i].array[j].objects.array, &array[i].array[j].objects.used, &array[i].array[j].objects.size);
+            status = f_memory_array_adjust(0, sizeof(f_range_t), (void **) &array[i].array[j].objects.array, &array[i].array[j].objects.used, &array[i].array[j].objects.size);
             if (F_status_is_error(status)) return status;
           }
 
           if (array[i].array[j].contents.size && array[i].array[j].contents.array) {
-            status = f_memory_arrays_adjust(0, sizeof(f_string_ranges_t), (void **) &array[i].array[j].contents.array, &array[i].array[j].contents.used, &array[i].array[j].contents.size, &f_string_rangess_destroy_callback);
+            status = f_memory_arrays_adjust(0, sizeof(f_ranges_t), (void **) &array[i].array[j].contents.array, &array[i].array[j].contents.used, &array[i].array[j].contents.size, &f_rangess_destroy_callback);
             if (F_status_is_error(status)) return status;
           }
         } // for

@@ -76,19 +76,19 @@ extern "C" {
   typedef struct {
     f_time_spec_t timestamp;
 
-    f_string_range_t range_action;
+    f_range_t range_action;
 
     f_number_unsigneds_t ats;
     f_number_unsigneds_t stack;
 
-    f_string_ranges_t comments;
+    f_ranges_t comments;
     f_number_unsigneds_t delimits;
 
-    f_string_ranges_t content_action;
-    f_string_rangess_t content_actions;
-    f_string_rangess_t content_items;
-    f_string_ranges_t object_actions;
-    f_string_ranges_t object_items;
+    f_ranges_t content_action;
+    f_rangess_t content_actions;
+    f_rangess_t content_items;
+    f_ranges_t object_actions;
+    f_ranges_t object_items;
 
     f_string_dynamic_t buffer_file;
     f_string_dynamic_t buffer_item;
@@ -101,16 +101,16 @@ extern "C" {
 
   #define controller_cache_t_initialize { \
     f_time_spec_t_initialize, \
-    f_string_range_t_initialize, \
+    f_range_t_initialize, \
     f_number_unsigneds_t_initialize, \
     f_number_unsigneds_t_initialize, \
-    f_string_ranges_t_initialize, \
+    f_ranges_t_initialize, \
     f_number_unsigneds_t_initialize, \
-    f_string_ranges_t_initialize, \
-    f_string_rangess_t_initialize, \
-    f_string_rangess_t_initialize, \
-    f_string_ranges_t_initialize, \
-    f_string_ranges_t_initialize, \
+    f_ranges_t_initialize, \
+    f_rangess_t_initialize, \
+    f_rangess_t_initialize, \
+    f_ranges_t_initialize, \
+    f_ranges_t_initialize, \
     f_string_dynamic_t_initialize, \
     f_string_dynamic_t_initialize, \
     f_string_dynamic_t_initialize, \

@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fl_fss_extended_list_content_read_
-  void fl_fss_extended_list_content_read(const f_string_static_t buffer, f_string_range_t * const range, f_string_ranges_t * const found, f_number_unsigneds_t * const delimits, f_string_ranges_t * const comments, f_state_t * const state) {
+  void fl_fss_extended_list_content_read(const f_string_static_t buffer, f_range_t * const range, f_ranges_t * const found, f_number_unsigneds_t * const delimits, f_ranges_t * const comments, f_state_t * const state) {
     #ifndef _di_level_1_parameter_checking_
       if (!state) return;
 
@@ -40,7 +40,7 @@ extern "C" {
       return;
     }
 
-    state->status = f_memory_array_increase(state->step_small, sizeof(f_string_range_t), (void **) &found->array, &found->used, &found->size);
+    state->status = f_memory_array_increase(state->step_small, sizeof(f_range_t), (void **) &found->array, &found->used, &found->size);
     if (F_status_is_error(state->status)) return;
 
     found->array[found->used].start = range->start;
@@ -192,7 +192,7 @@ extern "C" {
         f_fss_seek_to_eol(buffer, range, state);
         if (F_status_is_error(state->status)) break;
 
-        state->status = f_memory_array_increase(state->step_small, sizeof(f_string_range_t), (void **) &comments->array, &comments->used, &comments->size);
+        state->status = f_memory_array_increase(state->step_small, sizeof(f_range_t), (void **) &comments->array, &comments->used, &comments->size);
         if (F_status_is_error(state->status)) break;
 
         if (range->start > range->stop || range->start >= buffer.used) {
@@ -225,7 +225,7 @@ extern "C" {
 #endif // _di_fl_fss_extended_list_content_read_
 
 #ifndef _di_fl_fss_extended_list_content_write_
-  void fl_fss_extended_list_content_write(const f_string_static_t content, const uint8_t complete, const f_string_static_t * const prepend, const f_string_ranges_t * const ignore, f_string_range_t * const range, f_string_dynamic_t * const destination, f_state_t * const state) {
+  void fl_fss_extended_list_content_write(const f_string_static_t content, const uint8_t complete, const f_string_static_t * const prepend, const f_ranges_t * const ignore, f_range_t * const range, f_string_dynamic_t * const destination, f_state_t * const state) {
     #ifndef _di_level_1_parameter_checking_
       if (!state) return;
 
@@ -528,7 +528,7 @@ extern "C" {
 #endif // _di_fl_fss_extended_list_content_write_
 
 #ifndef _di_fl_fss_extended_list_object_read_
-  void fl_fss_extended_list_object_read(const f_string_static_t buffer, f_string_range_t * const range, f_string_range_t * const found, f_number_unsigneds_t * const delimits, f_state_t * const state) {
+  void fl_fss_extended_list_object_read(const f_string_static_t buffer, f_range_t * const range, f_range_t * const found, f_number_unsigneds_t * const delimits, f_state_t * const state) {
     #ifndef _di_level_1_parameter_checking_
       if (!state) return;
 
@@ -869,7 +869,7 @@ extern "C" {
 #endif // _di_fl_fss_extended_list_object_read_
 
 #ifndef _di_fl_fss_extended_list_object_write_
-  void fl_fss_extended_list_object_write(const f_string_static_t object, const uint8_t complete, f_string_range_t * const range, f_string_dynamic_t * const destination, f_state_t * const state) {
+  void fl_fss_extended_list_object_write(const f_string_static_t object, const uint8_t complete, f_range_t * const range, f_string_dynamic_t * const destination, f_state_t * const state) {
     #ifndef _di_level_1_parameter_checking_
       if (!state) return;
 

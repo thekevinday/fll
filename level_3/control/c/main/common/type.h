@@ -41,15 +41,15 @@ extern "C" {
     f_string_dynamic_t small;
     f_string_dynamic_t packet;
 
-    f_string_ranges_t objects;
-    f_string_rangess_t contents;
+    f_ranges_t objects;
+    f_rangess_t contents;
     f_number_unsigneds_t delimits;
 
-    f_string_ranges_t packet_objects;
-    f_string_rangess_t packet_contents;
+    f_ranges_t packet_objects;
+    f_rangess_t packet_contents;
 
-    f_string_ranges_t header_objects;
-    f_string_rangess_t header_contents;
+    f_ranges_t header_objects;
+    f_rangess_t header_contents;
   } control_cache_t;
 
   #define control_cache_t_initialize \
@@ -57,13 +57,13 @@ extern "C" {
       f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \
-      f_string_ranges_t_initialize, \
-      f_string_rangess_t_initialize, \
+      f_ranges_t_initialize, \
+      f_rangess_t_initialize, \
       f_number_unsigneds_t_initialize, \
-      f_string_ranges_t_initialize, \
-      f_string_rangess_t_initialize, \
-      f_string_ranges_t_initialize, \
-      f_string_rangess_t_initialize, \
+      f_ranges_t_initialize, \
+      f_rangess_t_initialize, \
+      f_ranges_t_initialize, \
+      f_rangess_t_initialize, \
     }
 #endif // _di_control_cache_t_
 
@@ -125,7 +125,7 @@ extern "C" {
     f_status_t status_signal;
     f_state_t state;
 
-    f_string_range_t range;
+    f_range_t range;
     f_socket_t socket;
 
     f_string_dynamic_t name_socket;
@@ -141,7 +141,7 @@ extern "C" {
       0, \
       F_okay, \
       f_state_t_initialize, \
-      f_string_range_t_initialize, \
+      f_range_t_initialize, \
       f_socket_t_initialize, \
       f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \

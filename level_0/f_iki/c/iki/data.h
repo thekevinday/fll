@@ -70,11 +70,11 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_array_append().
  *   Errors (with error bit) from: f_memory_array_increase().
- *   Errors (with error bit) from: f_string_ranges_append_all().
+ *   Errors (with error bit) from: f_ranges_append_all().
  *
  * @see f_memory_array_append()
  * @see f_memory_array_increase()
- * @see f_string_ranges_append_all()
+ * @see f_ranges_append_all()
  */
 #ifndef _di_f_iki_datas_append_
   extern f_status_t f_iki_datas_append(const f_iki_data_t source, f_iki_datas_t * const destination);
@@ -96,11 +96,11 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_array_append().
  *   Errors (with error bit) from: f_memory_array_increase_by().
- *   Errors (with error bit) from: f_string_ranges_append_all().
+ *   Errors (with error bit) from: f_ranges_append_all().
  *
  * @see f_memory_array_append()
  * @see f_memory_array_increase_by()
- * @see f_string_ranges_append_all()
+ * @see f_ranges_append_all()
  */
 #ifndef _di_f_iki_datas_append_all_
   extern f_status_t f_iki_datas_append_all(const f_iki_datas_t source, f_iki_datas_t * const destination);

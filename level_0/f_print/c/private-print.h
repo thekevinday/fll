@@ -184,7 +184,7 @@ extern "C" {
  * @see f_print_except_in_dynamic_partial()
  */
 #if !defined(_di_f_print_except_in_) || !defined(_di_f_print_except_in_dynamic_) || !defined(_di_f_print_except_in_dynamic_partial_)
-  extern f_status_t private_f_print_except_in(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t stop, const f_number_unsigneds_t except_at, f_string_ranges_t except_in, const f_file_t file) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_print_except_in(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t stop, const f_number_unsigneds_t except_at, f_ranges_t except_in, const f_file_t file) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_print_except_in_) || !defined(_di_f_print_except_in_dynamic_) || !defined(_di_f_print_except_in_dynamic_partial_)
 
 /**
@@ -221,7 +221,7 @@ extern "C" {
  * @see f_print_except_in_dynamic_partial_raw()
  */
 #if !defined(_di_f_print_except_in_raw_) || !defined(_di_f_print_except_in_dynamic_raw_) || !defined(_di_f_print_except_in_dynamic_partial_raw_)
-  extern f_status_t private_f_print_except_in_raw(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t stop, const f_number_unsigneds_t except_at, f_string_ranges_t except_in, const f_file_t file) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_print_except_in_raw(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t stop, const f_number_unsigneds_t except_at, f_ranges_t except_in, const f_file_t file) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_print_except_in_raw_) || !defined(_di_f_print_except_in_dynamic_raw_) || !defined(_di_f_print_except_in_dynamic_partial_raw_)
 
 /**
@@ -258,7 +258,7 @@ extern "C" {
  * @see f_print_except_in_dynamic_partial_raw_safely()
  */
 #if !defined(_di_f_print_except_in_raw_safely_) || !defined(_di_f_print_except_in_dynamic_raw_safely_) || !defined(_di_f_print_except_in_dynamic_partial_raw_safely_)
-  extern f_status_t private_f_print_except_in_raw_safely(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t stop, const f_number_unsigneds_t except_at, f_string_ranges_t except_in, const f_file_t file) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_print_except_in_raw_safely(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t stop, const f_number_unsigneds_t except_at, f_ranges_t except_in, const f_file_t file) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_print_except_in_raw_safely_) || !defined(_di_f_print_except_in_dynamic_raw_safely_) || !defined(_di_f_print_except_in_dynamic_partial_raw_safely_)
 
 /**
@@ -295,7 +295,7 @@ extern "C" {
  * @see f_print_except_in_dynamic_partial_safely()
  */
 #if !defined(_di_f_print_except_in_safely_) || !defined(_di_f_print_except_in_dynamic_partial_safely_)
-  extern f_status_t private_f_print_except_in_safely(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t stop, const f_number_unsigneds_t except_at, f_string_ranges_t except_in, const f_file_t file) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_print_except_in_safely(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t stop, const f_number_unsigneds_t except_at, f_ranges_t except_in, const f_file_t file) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_print_except_in_safely_) || !defined(_di_f_print_except_in_dynamic_partial_safely_)
 
 /**

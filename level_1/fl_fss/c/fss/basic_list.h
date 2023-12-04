@@ -91,7 +91,7 @@ extern "C" {
  * @see f_utf_buffer_increment()
  */
 #ifndef _di_fl_fss_basic_list_content_read_
-  extern void fl_fss_basic_list_content_read(const f_string_static_t buffer, f_string_range_t * const range, f_string_ranges_t * const found, f_number_unsigneds_t * const delimits, f_string_ranges_t * const comments, f_state_t * const state);
+  extern void fl_fss_basic_list_content_read(const f_string_static_t buffer, f_range_t * const range, f_ranges_t * const found, f_number_unsigneds_t * const delimits, f_ranges_t * const comments, f_state_t * const state);
 #endif // _di_fl_fss_basic_list_content_read_
 
 /**
@@ -159,7 +159,7 @@ extern "C" {
  * @see f_utf_buffer_increment()
  */
 #ifndef _di_fl_fss_basic_list_content_write_
-  extern void fl_fss_basic_list_content_write(const f_string_static_t content, const uint8_t complete, const f_string_static_t * const prepend, f_string_range_t * const range, f_string_dynamic_t * const destination, f_state_t * const state);
+  extern void fl_fss_basic_list_content_write(const f_string_static_t content, const uint8_t complete, const f_string_static_t * const prepend, f_range_t * const range, f_string_dynamic_t * const destination, f_state_t * const state);
 #endif // _di_fl_fss_basic_list_content_write_
 
 /**
@@ -223,7 +223,7 @@ extern "C" {
  * @see f_utf_buffer_increment()
  */
 #ifndef _di_fl_fss_basic_list_object_read_
-  extern void fl_fss_basic_list_object_read(const f_string_static_t buffer, f_string_range_t * const range, f_string_range_t * const found, f_number_unsigneds_t * const delimits, f_state_t * const state);
+  extern void fl_fss_basic_list_object_read(const f_string_static_t buffer, f_range_t * const range, f_range_t * const found, f_number_unsigneds_t * const delimits, f_state_t * const state);
 #endif // _di_fl_fss_basic_list_object_read_
 
 /**
@@ -286,7 +286,7 @@ extern "C" {
  * @see f_utf_buffer_increment()
  */
 #ifndef _di_fl_fss_basic_list_object_write_
-  extern void fl_fss_basic_list_object_write(const f_string_static_t object, const uint8_t complete, f_string_range_t * const range, f_string_dynamic_t * const destination, f_state_t * const state);
+  extern void fl_fss_basic_list_object_write(const f_string_static_t object, const uint8_t complete, f_range_t * const range, f_string_dynamic_t * const destination, f_state_t * const state);
 #endif // _di_fl_fss_basic_list_object_write_
 
 #ifdef __cplusplus

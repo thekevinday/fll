@@ -104,7 +104,7 @@ extern "C" {
     f_number_unsigned_t i = 0;
     f_number_unsigned_t j = 0;
     f_number_unsigned_t number = 0;
-    f_string_range_t range = f_string_range_t_initialize;
+    f_range_t range = f_range_t_initialize;
 
     for (main->setting.state.status = F_equal_to_not; i < main->setting.names.used && main->setting.state.status == F_equal_to_not; ++i) {
 

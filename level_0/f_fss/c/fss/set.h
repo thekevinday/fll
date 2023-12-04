@@ -28,17 +28,17 @@ extern "C" {
  */
 #ifndef _di_f_fss_set_t_
   typedef struct {
-    f_string_ranges_t objects;
-    f_string_rangess_t contents;
+    f_ranges_t objects;
+    f_rangess_t contents;
   } f_fss_set_t;
 
-  #define f_fss_set_t_initialize { f_string_ranges_t_initialize, f_string_rangess_t_initialize }
+  #define f_fss_set_t_initialize { f_ranges_t_initialize, f_rangess_t_initialize }
 
   #define macro_f_fss_set_t_initialize_1(objects, contents) { objects, contents }
 
   #define macro_f_fss_set_t_clear(set) \
-    macro_f_string_ranges_t_clear(set.objects) \
-    macro_f_string_rangess_t_clear(set.contents)
+    macro_f_ranges_t_clear(set.objects) \
+    macro_f_rangess_t_clear(set.contents)
 #endif // _di_f_fss_set_t_
 
 /**

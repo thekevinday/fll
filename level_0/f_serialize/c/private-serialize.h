@@ -36,7 +36,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #if !defined(_di_f_serialize_from_simple_get_) || !defined(_di_f_serialize_from_simple_select_)
-  extern f_status_t private_f_serialize_from_simple_select(const f_string_static_t source, const f_number_unsigned_t index, f_string_range_t * const range) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_serialize_from_simple_select(const f_string_static_t source, const f_number_unsigned_t index, f_range_t * const range) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_serialize_from_simple_get_) || !defined(_di_f_serialize_from_simple_select_)
 
 #ifdef __cplusplus

@@ -81,7 +81,7 @@ extern "C" {
  * @see fl_fss_extended_list_object_read()
  */
 #ifndef _di_fll_fss_extended_list_read_
-  extern void fll_fss_extended_list_read(const f_string_static_t buffer, f_string_range_t * const range, f_string_ranges_t * const objects, f_string_rangess_t * const contents, f_number_unsigneds_t * const objects_delimits, f_number_unsigneds_t * const contents_delimits, f_string_ranges_t * const comments, f_state_t * const state);
+  extern void fll_fss_extended_list_read(const f_string_static_t buffer, f_range_t * const range, f_ranges_t * const objects, f_rangess_t * const contents, f_number_unsigneds_t * const objects_delimits, f_number_unsigneds_t * const contents_delimits, f_ranges_t * const comments, f_state_t * const state);
 #endif // _di_fll_fss_extended_list_read_
 
 /**
@@ -130,7 +130,7 @@ extern "C" {
  * @see fl_fss_extended_list_object_write()
  */
 #ifndef _di_fll_fss_extended_list_write_
-  extern void fll_fss_extended_list_write(const f_string_static_t object, const f_string_static_t content, const f_string_static_t *content_prepend, const f_string_ranges_t *ignore, f_string_dynamic_t * const destination, f_state_t * const state);
+  extern void fll_fss_extended_list_write(const f_string_static_t object, const f_string_static_t content, const f_string_static_t *content_prepend, const f_ranges_t *ignore, f_string_dynamic_t * const destination, f_state_t * const state);
 #endif // _di_fll_fss_extended_list_write_
 
 #ifdef __cplusplus

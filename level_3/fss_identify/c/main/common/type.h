@@ -47,7 +47,7 @@ extern "C" {
     f_number_unsigned_t line;
     f_number_unsigned_t total;
 
-    f_string_range_t range;
+    f_range_t range;
 
     f_status_t status_signal;
     f_state_t state;
@@ -66,7 +66,7 @@ extern "C" {
       0, \
       0, \
       0, \
-      f_string_range_t_initialize, \
+      f_range_t_initialize, \
       F_okay, \
       f_state_t_initialize, \
       f_file_t_initialize, \

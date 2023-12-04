@@ -57,7 +57,7 @@ extern "C" {
  * @see f_utf_char_to_character()
  */
 #ifndef _di_f_parse_dynamic_seek_line_to_utf_character_
-  extern f_status_t f_parse_dynamic_seek_line_to_utf_character(const f_string_static_t buffer, const f_utf_char_t seek_to_this, f_string_range_t * const range);
+  extern f_status_t f_parse_dynamic_seek_line_to_utf_character(const f_string_static_t buffer, const f_utf_char_t seek_to_this, f_range_t * const range);
 #endif // _di_f_parse_dynamic_seek_line_to_utf_character_
 
 /**
@@ -90,7 +90,7 @@ extern "C" {
  * @see f_utf_is_graph()
  */
 #ifndef _di_f_parse_dynamic_seek_line_until_graph_
-  extern f_status_t f_parse_dynamic_seek_line_until_graph(const f_string_static_t buffer, const uint8_t placeholder, f_string_range_t * const range);
+  extern f_status_t f_parse_dynamic_seek_line_until_graph(const f_string_static_t buffer, const uint8_t placeholder, f_range_t * const range);
 #endif // _di_f_parse_dynamic_seek_line_until_graph_
 
 /**
@@ -123,7 +123,7 @@ extern "C" {
  * @see f_utf_is_graph()
  */
 #ifndef _di_f_parse_dynamic_seek_line_until_graph_non_
-  extern f_status_t f_parse_dynamic_seek_line_until_graph_non(const f_string_static_t buffer, const uint8_t placeholder, f_string_range_t * const range);
+  extern f_status_t f_parse_dynamic_seek_line_until_graph_non(const f_string_static_t buffer, const uint8_t placeholder, f_range_t * const range);
 #endif // _di_f_parse_dynamic_seek_line_until_graph_non_
 
 /**
@@ -157,7 +157,7 @@ extern "C" {
  * @see f_utf_char_to_character()
  */
 #ifndef _di_f_parse_dynamic_seek_to_utf_character_
-  extern f_status_t f_parse_dynamic_seek_to_utf_character(const f_string_static_t buffer, const f_utf_char_t seek_to_this, f_string_range_t * const range);
+  extern f_status_t f_parse_dynamic_seek_to_utf_character(const f_string_static_t buffer, const f_utf_char_t seek_to_this, f_range_t * const range);
 #endif // _di_f_parse_dynamic_seek_to_utf_character_
 
 /**
@@ -213,7 +213,7 @@ extern "C" {
  * @see f_utf_is_word()
  */
 #ifndef _di_f_parse_dynamic_partial_fll_identify_
-  extern f_status_t f_parse_dynamic_partial_fll_identify(const f_string_static_t buffer, f_string_range_t * const range, f_fll_id_t * const id);
+  extern f_status_t f_parse_dynamic_partial_fll_identify(const f_string_static_t buffer, f_range_t * const range, f_fll_id_t * const id);
 #endif // _di_f_parse_dynamic_partial_fll_identify_
 
 /**
@@ -242,7 +242,7 @@ extern "C" {
  * @see f_utf_char_to_character()
  */
 #ifndef _di_f_parse_seek_line_to_utf_character_
-  extern f_status_t f_parse_seek_line_to_utf_character(const f_string_t string, const f_utf_char_t seek_to, f_string_range_t * const range);
+  extern f_status_t f_parse_seek_line_to_utf_character(const f_string_t string, const f_utf_char_t seek_to, f_range_t * const range);
 #endif // _di_f_parse_seek_line_to_utf_character_
 
 /**
@@ -271,7 +271,7 @@ extern "C" {
  * @see f_utf_is_graph()
  */
 #ifndef _di_f_parse_seek_line_until_graph_
-  extern f_status_t f_parse_seek_line_until_graph(const f_string_t string, const uint8_t placeholder, f_string_range_t * const range);
+  extern f_status_t f_parse_seek_line_until_graph(const f_string_t string, const uint8_t placeholder, f_range_t * const range);
 #endif // _di_f_parse_seek_line_until_graph_
 
 /**
@@ -303,7 +303,7 @@ extern "C" {
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_f_parse_seek_line_until_graph_non_
-  extern f_status_t f_parse_seek_line_until_graph_non(const f_string_t string, const uint8_t placeholder, f_string_range_t * const range);
+  extern f_status_t f_parse_seek_line_until_graph_non(const f_string_t string, const uint8_t placeholder, f_range_t * const range);
 #endif // _di_f_parse_seek_line_until_graph_non_
 
 /**
@@ -332,7 +332,7 @@ extern "C" {
  * @see f_utf_char_to_character()
  */
 #ifndef _di_f_parse_seek_to_utf_character_
-  extern f_status_t f_parse_seek_to_utf_character(const f_string_t string, const f_utf_char_t seek_to, f_string_range_t * const range);
+  extern f_status_t f_parse_seek_to_utf_character(const f_string_t string, const f_utf_char_t seek_to, f_range_t * const range);
 #endif // _di_f_parse_seek_to_utf_character_
 
 #ifdef __cplusplus

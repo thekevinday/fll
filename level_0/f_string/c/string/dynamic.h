@@ -257,7 +257,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamic_partial_append_
-  extern f_status_t f_string_dynamic_partial_append(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t * const destination);
+  extern f_status_t f_string_dynamic_partial_append(const f_string_static_t source, const f_range_t range, f_string_dynamic_t * const destination);
 #endif // _di_f_string_dynamic_partial_append_
 
 /**
@@ -282,7 +282,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamic_partial_append_assure_
-  extern f_status_t f_string_dynamic_partial_append_assure(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t * const destination);
+  extern f_status_t f_string_dynamic_partial_append_assure(const f_string_static_t source, const f_range_t range, f_string_dynamic_t * const destination);
 #endif // _di_f_string_dynamic_partial_append_assure_
 
 /**
@@ -311,7 +311,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamic_partial_append_assure_nulless_
-  extern f_status_t f_string_dynamic_partial_append_assure_nulless(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t * const destination);
+  extern f_status_t f_string_dynamic_partial_append_assure_nulless(const f_string_static_t source, const f_range_t range, f_string_dynamic_t * const destination);
 #endif // _di_f_string_dynamic_partial_append_assure_nulless_
 
 /**
@@ -338,7 +338,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamic_partial_append_nulless_
-  extern f_status_t f_string_dynamic_partial_append_nulless(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t * const destination);
+  extern f_status_t f_string_dynamic_partial_append_nulless(const f_string_static_t source, const f_range_t range, f_string_dynamic_t * const destination);
 #endif // _di_f_string_dynamic_partial_append_nulless_
 
 /**
@@ -367,7 +367,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamic_partial_mash_
-  extern f_status_t f_string_dynamic_partial_mash(const f_string_static_t glue, const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t * const destination);
+  extern f_status_t f_string_dynamic_partial_mash(const f_string_static_t glue, const f_string_static_t source, const f_range_t range, f_string_dynamic_t * const destination);
 #endif // _di_f_string_dynamic_partial_mash_
 
 /**
@@ -398,7 +398,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamic_partial_mash_nulless_
-  extern f_status_t f_string_dynamic_partial_mash_nulless(const f_string_static_t glue, const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t * const destination);
+  extern f_status_t f_string_dynamic_partial_mash_nulless(const f_string_static_t glue, const f_string_static_t source, const f_range_t range, f_string_dynamic_t * const destination);
 #endif // _di_f_string_dynamic_partial_mash_nulless_
 
 /**
@@ -427,7 +427,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamic_partial_mish_
-  extern f_status_t f_string_dynamic_partial_mish(const f_string_static_t glue, const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t * const destination);
+  extern f_status_t f_string_dynamic_partial_mish(const f_string_static_t glue, const f_string_static_t source, const f_range_t range, f_string_dynamic_t * const destination);
 #endif // _di_f_string_dynamic_partial_mish_
 
 /**
@@ -458,7 +458,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamic_partial_mish_nulless_
-  extern f_status_t f_string_dynamic_partial_mish_nulless(const f_string_static_t glue, const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t * const destination);
+  extern f_status_t f_string_dynamic_partial_mish_nulless(const f_string_static_t glue, const f_string_static_t source, const f_range_t range, f_string_dynamic_t * const destination);
 #endif // _di_f_string_dynamic_partial_mish_nulless_
 
 /**
@@ -485,7 +485,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamic_partial_prepend_
-  extern f_status_t f_string_dynamic_partial_prepend(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t * const destination);
+  extern f_status_t f_string_dynamic_partial_prepend(const f_string_static_t source, const f_range_t range, f_string_dynamic_t * const destination);
 #endif // _di_f_string_dynamic_partial_prepend_
 
 /**
@@ -512,7 +512,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamic_partial_prepend_assure_
-  extern f_status_t f_string_dynamic_partial_prepend_assure(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t * const destination);
+  extern f_status_t f_string_dynamic_partial_prepend_assure(const f_string_static_t source, const f_range_t range, f_string_dynamic_t * const destination);
 #endif // _di_f_string_dynamic_partial_prepend_assure_
 
 /**
@@ -541,7 +541,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamic_partial_prepend_assure_nulless_
-  extern f_status_t f_string_dynamic_partial_prepend_assure_nulless(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t * const destination);
+  extern f_status_t f_string_dynamic_partial_prepend_assure_nulless(const f_string_static_t source, const f_range_t range, f_string_dynamic_t * const destination);
 #endif // _di_f_string_dynamic_partial_prepend_assure_nulless_
 
 /**
@@ -568,7 +568,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamic_partial_prepend_nulless_
-  extern f_status_t f_string_dynamic_partial_prepend_nulless(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t * const destination);
+  extern f_status_t f_string_dynamic_partial_prepend_nulless(const f_string_static_t source, const f_range_t range, f_string_dynamic_t * const destination);
 #endif // _di_f_string_dynamic_partial_prepend_nulless_
 
 /**
@@ -686,7 +686,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamic_seek_line_
-  extern f_status_t f_string_dynamic_seek_line(const f_string_static_t structure, f_string_range_t * const range);
+  extern f_status_t f_string_dynamic_seek_line(const f_string_static_t structure, f_range_t * const range);
 #endif // _di_f_string_dynamic_seek_line_
 
 /**
@@ -712,7 +712,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamic_seek_line_to_
-  extern f_status_t f_string_dynamic_seek_line_to(const f_string_static_t structure, const f_char_t seek_to_this, f_string_range_t * const range);
+  extern f_status_t f_string_dynamic_seek_line_to(const f_string_static_t structure, const f_char_t seek_to_this, f_range_t * const range);
 #endif // _di_f_string_dynamic_seek_line_to_
 
 /**
@@ -738,7 +738,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamic_seek_to_
-  extern f_status_t f_string_dynamic_seek_to(const f_string_static_t structure, const f_char_t seek_to_this, f_string_range_t * const range);
+  extern f_status_t f_string_dynamic_seek_to(const f_string_static_t structure, const f_char_t seek_to_this, f_range_t * const range);
 #endif // _di_f_string_dynamic_seek_to_
 
 /**

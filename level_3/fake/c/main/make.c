@@ -22,7 +22,7 @@ extern "C" {
       return;
     }
 
-    const f_string_range_t range = macro_f_string_range_t_initialize_2(data_make->path.stack.array[0].used);
+    const f_range_t range = macro_f_range_t_initialize_2(data_make->path.stack.array[0].used);
 
     if (range.start <= range.stop) {
       main->setting.state.status = f_compare_dynamic_partial(data_make->path.stack.array[0], main->cache_argument, range, range);
@@ -165,7 +165,7 @@ extern "C" {
       return;
     }
 
-    f_string_range_t range = f_string_range_t_initialize;
+    f_range_t range = f_range_t_initialize;
 
     range.start = data_make->path.stack.array[0].used + 1;
     range.stop = range.start + (path.used - range.start) - 1;

@@ -186,8 +186,8 @@ void test__f_compare_utf_dynamic_partial_trim_string__works(void **state) {
     macro_f_string_static_t_initialize_1("aaone\0", 0, 6),
   };
 
-  f_string_range_t range_1 = macro_f_string_range_t_initialize_1(3, 9);
-  f_string_range_t range_2 = macro_f_string_range_t_initialize_1(2, 0);
+  f_range_t range_1 = macro_f_range_t_initialize_1(3, 9);
+  f_range_t range_2 = macro_f_range_t_initialize_1(2, 0);
 
   const f_status_t expects[] = {
 
@@ -291,7 +291,7 @@ void test__f_compare_utf_dynamic_partial_trim_string__works(void **state) {
     assert_int_equal(status, F_okay);
 
     if (i % 8 == 0) {
-      status = f_compare_utf_dynamic_partial_trim_string(utf_string_1.string, utf_string_2, 0, f_string_range_empty_c);
+      status = f_compare_utf_dynamic_partial_trim_string(utf_string_1.string, utf_string_2, 0, f_range_empty_c);
     }
     else {
       range_2.stop = string_2s[i].used - 1;
@@ -316,7 +316,7 @@ void test__f_compare_utf_dynamic_partial_trim_string__works(void **state) {
     range_1.stop = string_1s[i].used - 1;
 
     if (i % 8 == 0) {
-      status = f_compare_utf_dynamic_partial_trim_string(utf_string_1.string + range_1.start, utf_string_2, (range_1.stop - range_1.start) + 1, f_string_range_empty_c);
+      status = f_compare_utf_dynamic_partial_trim_string(utf_string_1.string + range_1.start, utf_string_2, (range_1.stop - range_1.start) + 1, f_range_empty_c);
     }
     else {
       range_2.stop = string_2s[i].used - 1;

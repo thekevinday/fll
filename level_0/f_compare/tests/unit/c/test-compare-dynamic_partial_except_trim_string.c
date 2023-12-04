@@ -186,8 +186,8 @@ void test__f_compare_dynamic_partial_except_trim_string__works(void **state) {
     macro_f_string_static_t_initialize_1("aaone\0", 0, 6),
   };
 
-  f_string_range_t range_1 = macro_f_string_range_t_initialize_1(3, 9);
-  f_string_range_t range_2 = macro_f_string_range_t_initialize_1(2, 0);
+  f_range_t range_1 = macro_f_range_t_initialize_1(3, 9);
+  f_range_t range_2 = macro_f_range_t_initialize_1(2, 0);
 
   const f_status_t expects[] = {
 
@@ -284,7 +284,7 @@ void test__f_compare_dynamic_partial_except_trim_string__works(void **state) {
   for (; i < 8; ++i) {
 
     if (i % 8 == 0) {
-      status = f_compare_dynamic_partial_except_trim_string(string_1s[i].string, string_2s[i], 0, f_string_range_empty_c, excepts_1, excepts_2);
+      status = f_compare_dynamic_partial_except_trim_string(string_1s[i].string, string_2s[i], 0, f_range_empty_c, excepts_1, excepts_2);
     }
     else {
       range_2.stop = string_2s[i].used - 1;
@@ -300,7 +300,7 @@ void test__f_compare_dynamic_partial_except_trim_string__works(void **state) {
     range_1.stop = string_1s[i].used - 1;
 
     if (i % 8 == 0) {
-      status = f_compare_dynamic_partial_except_trim_string(string_1s[i].string, string_2s[i], range_1.stop + 1, f_string_range_empty_c, excepts_1, excepts_2);
+      status = f_compare_dynamic_partial_except_trim_string(string_1s[i].string, string_2s[i], range_1.stop + 1, f_range_empty_c, excepts_1, excepts_2);
     }
     else {
       range_2.stop = string_2s[i].used - 1;

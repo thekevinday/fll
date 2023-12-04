@@ -11,7 +11,7 @@ void test__f_string_dynamic_partial_mish__works(void **state) {
   const f_string_static_t source = macro_f_string_static_t_initialize_1("_te\0st_", 0, 7);
   const f_string_static_t expected1 = macro_f_string_static_t_initialize_1("te\0st", 0, 5);
   const f_string_static_t expected2 = macro_f_string_static_t_initialize_1("te\0st:te\0st", 0, 11);
-  const f_string_range_t partial = macro_f_string_range_t_initialize_1(1, 5);
+  const f_range_t partial = macro_f_range_t_initialize_1(1, 5);
   f_string_dynamic_t destination = f_string_dynamic_t_initialize;
 
   {
@@ -43,7 +43,7 @@ void test__f_string_dynamic_partial_mish__parameter_checking(void **state) {
 
   const f_string_static_t glue = macro_f_string_static_t_initialize_1(":", 0, 1);
   const f_string_static_t source = macro_f_string_static_t_initialize_1("te\0st", 0, 5);
-  const f_string_range_t partial = f_string_range_t_initialize;
+  const f_range_t partial = f_range_t_initialize;
 
   {
     const f_status_t status = f_string_dynamic_partial_mish(glue, source, partial, 0);

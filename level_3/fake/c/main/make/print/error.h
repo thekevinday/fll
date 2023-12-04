@@ -343,7 +343,7 @@ extern "C" {
  *   F_output_not (with error bit) if setting is NULL.
  */
 #ifndef _di_fake_make_print_error_operation_recursion_
-  extern f_status_t fake_make_print_error_operation_recursion(fl_print_t * const print, const f_string_static_t buffer, const f_string_range_t range);
+  extern f_status_t fake_make_print_error_operation_recursion(fl_print_t * const print, const f_string_static_t buffer, const f_range_t range);
 #endif // _di_fake_make_print_error_operation_recursion_
 
 /**

@@ -63,7 +63,7 @@ void test__f_fss_nest_destroy__works(void **state) {
     status = f_memory_array_resize(1, sizeof(f_fss_item_t), (void **) &data.depth[0].array, &data.depth[0].used, &data.depth[0].size);
     assert_int_equal(status, F_okay);
 
-    status = f_memory_array_resize(1, sizeof(f_string_range_t), (void **) &data.depth[0].array[0].content.array, &data.depth[0].array[0].content.used, &data.depth[0].array[0].content.size);
+    status = f_memory_array_resize(1, sizeof(f_range_t), (void **) &data.depth[0].array[0].content.array, &data.depth[0].array[0].content.used, &data.depth[0].array[0].content.size);
     assert_int_equal(status, F_okay);
   }
 

@@ -500,7 +500,7 @@ extern "C" {
     fss_read_main_t * const main = (fss_read_main_t *) void_main;
 
     f_number_unsigned_t total = 0;
-    f_string_range_t range = f_string_range_t_initialize;
+    f_range_t range = f_range_t_initialize;
     f_number_unsigned_t i = 0;
     f_number_unsigned_t j = 0;
     f_number_unsigned_t k = 0;

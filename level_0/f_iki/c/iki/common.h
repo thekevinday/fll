@@ -202,26 +202,26 @@ extern "C" {
  */
 #ifndef _di_f_iki_data_t_
   typedef struct {
-    f_string_ranges_t content;
+    f_ranges_t content;
     f_number_unsigneds_t delimits;
-    f_string_ranges_t variable;
-    f_string_ranges_t vocabulary;
+    f_ranges_t variable;
+    f_ranges_t vocabulary;
   } f_iki_data_t;
 
   #define f_iki_data_t_initialize { \
-    f_string_ranges_t_initialize, \
+    f_ranges_t_initialize, \
     f_number_unsigneds_t_initialize, \
-    f_string_ranges_t_initialize, \
-    f_string_ranges_t_initialize, \
+    f_ranges_t_initialize, \
+    f_ranges_t_initialize, \
   }
 
   #define macro_f_iki_data_t_initialize_1(content, delimits, variable, vocabulary) { content, delimits, variable, vocabulary }
 
   #define macro_f_iki_data_t_clear(data) \
-    f_string_ranges_t_clear(data.content) \
+    f_ranges_t_clear(data.content) \
     f_number_unsigneds_t_clear(data.delimits) \
-    f_string_ranges_t_clear(data.variable) \
-    f_string_ranges_t_clear(data.vocabulary)
+    f_ranges_t_clear(data.variable) \
+    f_ranges_t_clear(data.vocabulary)
 #endif // _di_f_iki_data_t_
 
 /**

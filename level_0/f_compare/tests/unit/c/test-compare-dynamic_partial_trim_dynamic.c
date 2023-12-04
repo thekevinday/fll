@@ -186,7 +186,7 @@ void test__f_compare_dynamic_partial_trim_dynamic__works(void **state) {
     macro_f_string_static_t_initialize_1("aaone\0", 0, 6),
   };
 
-  f_string_range_t range_2 = macro_f_string_range_t_initialize_1(2, 0);
+  f_range_t range_2 = macro_f_range_t_initialize_1(2, 0);
 
   const f_status_t expects[] = {
 
@@ -278,7 +278,7 @@ void test__f_compare_dynamic_partial_trim_dynamic__works(void **state) {
   for (; i < 8; ++i) {
 
     if (i % 8 == 0) {
-      status = f_compare_dynamic_partial_trim_dynamic(string_1s[i], string_2s[i], f_string_range_empty_c);
+      status = f_compare_dynamic_partial_trim_dynamic(string_1s[i], string_2s[i], f_range_empty_c);
     }
     else {
       range_2.stop = string_2s[i].used - 1;
@@ -292,7 +292,7 @@ void test__f_compare_dynamic_partial_trim_dynamic__works(void **state) {
   for (; i < 64; ++i) {
 
     if (i % 8 == 0) {
-      status = f_compare_dynamic_partial_trim_dynamic(string_1s[i], string_2s[i], f_string_range_empty_c);
+      status = f_compare_dynamic_partial_trim_dynamic(string_1s[i], string_2s[i], f_range_empty_c);
     }
     else {
       range_2.stop = string_2s[i].used - 1;

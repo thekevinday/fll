@@ -133,7 +133,7 @@ extern "C" {
     if (found_command) {
       firewall_local_data_t local = firewall_local_data_t_initialize;
       firewall_reserved_chains_t reserved = firewall_reserved_chains_t_initialize;
-      f_string_range_t input = f_string_range_t_initialize;
+      f_range_t input = f_range_t_initialize;
 
       if (command == firewall_parameter_command_show_e) {
 

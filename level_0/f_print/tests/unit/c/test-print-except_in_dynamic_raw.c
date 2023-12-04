@@ -9,7 +9,7 @@ void test__f_print_except_in_dynamic_raw__fails(void **state) {
 
   const f_string_static_t test = macro_f_string_static_t_initialize_1("test", 0, 4);
   const f_number_unsigneds_t except = f_number_unsigneds_t_initialize;
-  const f_string_ranges_t range = f_string_ranges_t_initialize;
+  const f_ranges_t range = f_ranges_t_initialize;
   const f_file_t output = macro_f_file_t_initialize_2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
 
   {
@@ -26,7 +26,7 @@ void test__f_print_except_in_dynamic_raw__fails(void **state) {
 void test__f_print_except_in_dynamic_raw__returns_data_not(void **state) {
 
   const f_number_unsigneds_t except = f_number_unsigneds_t_initialize;
-  const f_string_ranges_t range = f_string_ranges_t_initialize;
+  const f_ranges_t range = f_ranges_t_initialize;
   const f_file_t output = macro_f_file_t_initialize_2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
 
   {
@@ -40,7 +40,7 @@ void test__f_print_except_in_dynamic_raw__returns_stream_not(void **state) {
 
   const f_string_static_t test = macro_f_string_static_t_initialize_1("test", 0, 4);
   const f_number_unsigneds_t except = f_number_unsigneds_t_initialize;
-  const f_string_ranges_t range = f_string_ranges_t_initialize;
+  const f_ranges_t range = f_ranges_t_initialize;
   const f_file_t output = macro_f_file_t_initialize_2(0, -1, F_file_flag_write_only_d);
 
   {
@@ -57,7 +57,7 @@ void test__f_print_except_in_dynamic_raw__works(void **state) {
 
   {
     const f_number_unsigneds_t except = f_number_unsigneds_t_initialize;
-    const f_string_ranges_t range = f_string_ranges_t_initialize;
+    const f_ranges_t range = f_ranges_t_initialize;
 
     will_return(__wrap_fwrite_unlocked, false);
     will_return(__wrap_fwrite_unlocked, test.used);
@@ -70,11 +70,11 @@ void test__f_print_except_in_dynamic_raw__works(void **state) {
 
   {
     f_number_unsigned_t lengths[] = { 3 };
-    f_string_range_t ranges[] = {
-      macro_f_string_range_t_initialize_1(0, 1),
+    f_range_t ranges[] = {
+      macro_f_range_t_initialize_1(0, 1),
     };
     const f_number_unsigneds_t except = macro_f_number_unsigneds_t_initialize_1(lengths, 0, 1);
-    const f_string_ranges_t range = macro_f_string_ranges_t_initialize_1(ranges, 0, 1);
+    const f_ranges_t range = macro_f_ranges_t_initialize_1(ranges, 0, 1);
 
     will_return(__wrap_fwrite_unlocked, false);
     will_return(__wrap_fwrite_unlocked, 1);

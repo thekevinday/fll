@@ -5,7 +5,7 @@ extern "C" {
 #endif
 
 #ifndef _di_f_parse_dynamic_seek_line_to_utf_character_
-  f_status_t f_parse_dynamic_seek_line_to_utf_character(const f_string_static_t buffer, const f_utf_char_t seek_to_this, f_string_range_t * const range) {
+  f_status_t f_parse_dynamic_seek_line_to_utf_character(const f_string_static_t buffer, const f_utf_char_t seek_to_this, f_range_t * const range) {
     #ifndef _di_level_0_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -60,7 +60,7 @@ extern "C" {
 #endif // _di_f_parse_dynamic_seek_line_to_utf_character_
 
 #ifndef _di_f_parse_dynamic_seek_line_until_graph_
-  f_status_t f_parse_dynamic_seek_line_until_graph(const f_string_static_t buffer, const uint8_t placeholder, f_string_range_t * const range) {
+  f_status_t f_parse_dynamic_seek_line_until_graph(const f_string_static_t buffer, const uint8_t placeholder, f_range_t * const range) {
     #ifndef _di_level_0_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -109,7 +109,7 @@ extern "C" {
 #endif // _di_f_parse_dynamic_seek_line_until_graph_
 
 #ifndef _di_f_parse_dynamic_seek_line_until_graph_non_
-  f_status_t f_parse_dynamic_seek_line_until_graph_non(const f_string_static_t buffer, const uint8_t placeholder, f_string_range_t * const range) {
+  f_status_t f_parse_dynamic_seek_line_until_graph_non(const f_string_static_t buffer, const uint8_t placeholder, f_range_t * const range) {
     #ifndef _di_level_0_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -158,7 +158,7 @@ extern "C" {
 #endif // _di_f_parse_dynamic_seek_line_until_graph_non_
 
 #ifndef _di_f_parse_dynamic_seek_to_utf_character_
-  f_status_t f_parse_dynamic_seek_to_utf_character(const f_string_static_t buffer, const f_utf_char_t seek_to_this, f_string_range_t * const range) {
+  f_status_t f_parse_dynamic_seek_to_utf_character(const f_string_static_t buffer, const f_utf_char_t seek_to_this, f_range_t * const range) {
     #ifndef _di_level_0_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -215,7 +215,7 @@ extern "C" {
 #endif // _di_f_parse_dynamic_seek_to_utf_character_
 
 #ifndef _di_f_parse_dynamic_partial_fll_identify_
-  f_status_t f_parse_dynamic_partial_fll_identify(const f_string_static_t buffer, f_string_range_t * const range, f_fll_id_t * const id) {
+  f_status_t f_parse_dynamic_partial_fll_identify(const f_string_static_t buffer, f_range_t * const range, f_fll_id_t * const id) {
     #ifndef _di_level_0_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -468,7 +468,7 @@ extern "C" {
 #endif // _di_f_parse_dynamic_partial_fll_identify_
 
 #ifndef _di_f_parse_seek_line_to_utf_character_
-  f_status_t f_parse_seek_line_to_utf_character(const f_string_t string, const f_utf_char_t seek_to, f_string_range_t * const range) {
+  f_status_t f_parse_seek_line_to_utf_character(const f_string_t string, const f_utf_char_t seek_to, f_range_t * const range) {
     #ifndef _di_level_0_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -516,7 +516,7 @@ extern "C" {
 #endif // _di_f_parse_seek_line_to_utf_character_
 
 #ifndef _di_f_parse_seek_line_until_graph_
-  f_status_t f_parse_seek_line_until_graph(const f_string_t string, const uint8_t placeholder, f_string_range_t * const range) {
+  f_status_t f_parse_seek_line_until_graph(const f_string_t string, const uint8_t placeholder, f_range_t * const range) {
     #ifndef _di_level_0_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -561,7 +561,7 @@ extern "C" {
 #endif // _di_f_parse_seek_line_until_graph_
 
 #ifndef _di_f_parse_seek_line_until_graph_non_
-  f_status_t f_parse_seek_line_until_graph_non(const f_string_t string, const uint8_t placeholder, f_string_range_t * const range) {
+  f_status_t f_parse_seek_line_until_graph_non(const f_string_t string, const uint8_t placeholder, f_range_t * const range) {
     #ifndef _di_level_0_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -607,7 +607,7 @@ extern "C" {
 #endif // _di_f_parse_seek_line_until_graph_non_
 
 #ifndef _di_f_parse_seek_to_utf_character_
-  f_status_t f_parse_seek_to_utf_character(const f_string_t string, const f_utf_char_t seek_to, f_string_range_t * const range) {
+  f_status_t f_parse_seek_to_utf_character(const f_string_t string, const f_utf_char_t seek_to, f_range_t * const range) {
     #ifndef _di_level_0_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_

@@ -41,7 +41,7 @@ void test__f_fss_item_delete__works(void **state) {
   f_fss_item_t data = f_fss_item_t_initialize;
 
   {
-    const f_status_t status = f_memory_array_resize(length, sizeof(f_string_range_t), (void **) &data.content.array, &data.content.used, &data.content.size);
+    const f_status_t status = f_memory_array_resize(length, sizeof(f_range_t), (void **) &data.content.array, &data.content.used, &data.content.size);
     assert_int_equal(status, F_okay);
   }
 

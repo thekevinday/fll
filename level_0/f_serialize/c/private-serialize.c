@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #if !defined(_di_f_serialize_from_simple_get_) || !defined(_di_f_serialize_from_simple_select_)
-  f_status_t private_f_serialize_from_simple_select(const f_string_static_t source, const f_number_unsigned_t index, f_string_range_t * const range) {
+  f_status_t private_f_serialize_from_simple_select(const f_string_static_t source, const f_number_unsigned_t index, f_range_t * const range) {
 
     f_number_unsigned_t start = 0;
     f_number_unsigned_t current = 0;

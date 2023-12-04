@@ -35,7 +35,7 @@ extern "C" {
  *   The range value to represent the --line values.
  */
 #ifndef _di_iki_read_process_line_
-  extern void iki_read_process_line(iki_read_main_t * const main, f_string_range_t *range);
+  extern void iki_read_process_line(iki_read_main_t * const main, f_range_t *range);
 #endif // _di_iki_read_process_line_
 
 /**
@@ -83,7 +83,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_iki_read_process_buffer_ranges_
-  extern void iki_read_process_buffer_ranges(iki_read_main_t * const main, f_string_range_t *buffer_range);
+  extern void iki_read_process_buffer_ranges(iki_read_main_t * const main, f_range_t *buffer_range);
 #endif // _di_iki_read_process_buffer_ranges_
 
 /**
@@ -105,7 +105,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_iki_read_process_buffer_ranges_whole_
-  extern void iki_read_process_buffer_ranges_whole(iki_read_main_t * const main, const f_string_range_t buffer_range);
+  extern void iki_read_process_buffer_ranges_whole(iki_read_main_t * const main, const f_range_t buffer_range);
 #endif // _di_iki_read_process_buffer_ranges_whole_
 
 /**

@@ -23,12 +23,6 @@
 
 // FLL-0 string includes.
 #include <fll/level_0/string/common.h>
-#include <fll/level_0/string/range.h>
-#include <fll/level_0/string/ranges.h>
-#include <fll/level_0/string/rangess.h>
-#include <fll/level_0/string/range_double.h>
-#include <fll/level_0/string/range_doubles.h>
-#include <fll/level_0/string/range_doubless.h>
 #include <fll/level_0/string/static.h>
 #include <fll/level_0/string/statics.h>
 #include <fll/level_0/string/staticss.h>
@@ -424,7 +418,7 @@ extern "C" {
  * @see f_memory_resize()
  */
 #ifndef _di_f_string_seek_line_
-  extern f_status_t f_string_seek_line(const f_string_t string, f_string_range_t * const range);
+  extern f_status_t f_string_seek_line(const f_string_t string, f_range_t * const range);
 #endif // _di_f_string_seek_line_
 
 /**
@@ -447,7 +441,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_string_seek_line_to_
-  extern f_status_t f_string_seek_line_to(const f_string_t string, const f_char_t seek_to, f_string_range_t * const range);
+  extern f_status_t f_string_seek_line_to(const f_string_t string, const f_char_t seek_to, f_range_t * const range);
 #endif // _di_f_string_seek_line_to_
 
 /**
@@ -471,7 +465,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_string_seek_to_
-  extern f_status_t f_string_seek_to(const f_string_t string, const f_char_t seek_to, f_string_range_t * const range);
+  extern f_status_t f_string_seek_to(const f_string_t string, const f_char_t seek_to, f_range_t * const range);
 #endif // _di_f_string_seek_to_
 
 #ifdef __cplusplus

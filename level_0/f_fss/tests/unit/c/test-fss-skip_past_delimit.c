@@ -23,7 +23,7 @@ void test__f_fss_skip_past_delimit__returns_data_not(void **state) {
   f_state_t state_data = f_state_t_initialize;
 
   {
-    f_string_range_t range = f_string_range_t_initialize;
+    f_range_t range = f_range_t_initialize;
 
     f_fss_skip_past_delimit(f_string_empty_s, &range, &state_data);
 
@@ -31,7 +31,7 @@ void test__f_fss_skip_past_delimit__returns_data_not(void **state) {
   }
 
   {
-    f_string_range_t range = f_string_range_t_initialize;
+    f_range_t range = f_range_t_initialize;
 
     f_fss_skip_past_delimit(test, &range, &state_data);
 
@@ -39,7 +39,7 @@ void test__f_fss_skip_past_delimit__returns_data_not(void **state) {
   }
 
   {
-    f_string_range_t range = macro_f_string_range_t_initialize_1(0, test.used - 1);
+    f_range_t range = macro_f_range_t_initialize_1(0, test.used - 1);
 
     f_fss_skip_past_delimit(f_string_empty_s, &range, &state_data);
 
@@ -47,7 +47,7 @@ void test__f_fss_skip_past_delimit__returns_data_not(void **state) {
   }
 
   {
-    f_string_range_t range = macro_f_string_range_t_initialize_1(test.used, test.used + 2);
+    f_range_t range = macro_f_range_t_initialize_1(test.used, test.used + 2);
 
     f_fss_skip_past_delimit(test, &range, &state_data);
 
@@ -75,7 +75,7 @@ void test__f_fss_skip_past_delimit__works(void **state) {
 
   for (uint8_t i = 0; i < 4; ++i) {
 
-    f_string_range_t range = macro_f_string_range_t_initialize_1(0, tests[i].used - 1);
+    f_range_t range = macro_f_range_t_initialize_1(0, tests[i].used - 1);
 
     f_fss_skip_past_delimit(tests[i], &range, &state_data);
 

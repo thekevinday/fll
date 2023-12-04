@@ -138,7 +138,7 @@ extern "C" {
 
       case f_abstruse_ranges_e:
         if (abstruse->is.a_quantitys.size) {
-          return f_memory_array_resize(0, sizeof(f_string_range_t), (void **) &abstruse->is.a_ranges.array, &abstruse->is.a_ranges.used, &abstruse->is.a_ranges.size);
+          return f_memory_array_resize(0, sizeof(f_range_t), (void **) &abstruse->is.a_ranges.array, &abstruse->is.a_ranges.used, &abstruse->is.a_ranges.size);
         }
 
         break;
@@ -306,7 +306,7 @@ extern "C" {
 
       case f_abstruse_ranges_e:
         if (abstruse->is.a_quantitys.size) {
-          return f_memory_array_adjust(0, sizeof(f_string_range_t), (void **) &abstruse->is.a_ranges.array, &abstruse->is.a_ranges.used, &abstruse->is.a_ranges.size);
+          return f_memory_array_adjust(0, sizeof(f_range_t), (void **) &abstruse->is.a_ranges.array, &abstruse->is.a_ranges.used, &abstruse->is.a_ranges.size);
         }
 
         break;

@@ -31,7 +31,7 @@ extern "C" {
 #endif // _di_f_rip_utf_
 
 #ifndef _di_f_rip_utf_dynamic_
-  f_status_t f_rip_utf_dynamic(const f_utf_string_static_t source, const f_string_range_t range, f_utf_string_dynamic_t * const destination) {
+  f_status_t f_rip_utf_dynamic(const f_utf_string_static_t source, const f_range_t range, f_utf_string_dynamic_t * const destination) {
     #ifndef _di_level_1_parameter_checking_
       if (source.used <= range.start) return F_status_set_error(F_parameter);
       if (source.used <= range.stop) return F_status_set_error(F_parameter);
@@ -46,7 +46,7 @@ extern "C" {
 #endif // _di_f_rip_utf_dynamic_
 
 #ifndef _di_f_rip_utf_dynamic_nulless_
-  f_status_t f_rip_utf_dynamic_nulless(const f_utf_string_static_t source, const f_string_range_t range, f_utf_string_dynamic_t * const destination) {
+  f_status_t f_rip_utf_dynamic_nulless(const f_utf_string_static_t source, const f_range_t range, f_utf_string_dynamic_t * const destination) {
     #ifndef _di_level_1_parameter_checking_
       if (source.used <= range.start) return F_status_set_error(F_parameter);
       if (source.used <= range.stop) return F_status_set_error(F_parameter);

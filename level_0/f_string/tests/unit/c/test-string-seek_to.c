@@ -11,7 +11,7 @@ void test__f_string_seek_to__returns_data_not_stop(void **state) {
   const f_string_static_t source = macro_f_string_static_t_initialize_1("test\nafter", 0, 10);
 
   {
-    f_string_range_t range = f_string_range_t_initialize;
+    f_range_t range = f_range_t_initialize;
 
     const f_status_t status = f_string_seek_to(source.string, to.string[0], &range);
 
@@ -25,7 +25,7 @@ void test__f_string_seek_to__returns_none_stop(void **state) {
   const f_string_static_t source = macro_f_string_static_t_initialize_1("test\nafter", 0, 10);
 
   {
-    f_string_range_t range = macro_f_string_range_t_initialize_1(0, source.used - 1);
+    f_range_t range = macro_f_range_t_initialize_1(0, source.used - 1);
 
     const f_status_t status = f_string_seek_to(source.string, to.string[0], &range);
 
@@ -42,7 +42,7 @@ void test__f_string_seek_to__works(void **state) {
   const f_string_static_t source = macro_f_string_static_t_initialize_1("te\nXst", 0, 6);
 
   {
-    f_string_range_t range = macro_f_string_range_t_initialize_1(0, source.used - 1);
+    f_range_t range = macro_f_range_t_initialize_1(0, source.used - 1);
 
     const f_status_t status = f_string_seek_to(source.string, to.string[0], &range);
 

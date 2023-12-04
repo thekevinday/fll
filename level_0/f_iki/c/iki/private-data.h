@@ -30,11 +30,11 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_array_append().
  *   Errors (with error bit) from: f_memory_array_increase_by().
- *   Errors (with error bit) from: f_string_ranges_append_all().
+ *   Errors (with error bit) from: f_ranges_append_all().
  *
  * @see f_memory_array_append()
  * @see f_memory_array_increase_by()
- * @see f_string_ranges_append_all()
+ * @see f_ranges_append_all()
  *
  * @see f_iki_datass_append()
  * @see f_iki_datass_append_all()

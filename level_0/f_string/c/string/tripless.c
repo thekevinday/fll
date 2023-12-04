@@ -14,7 +14,7 @@ extern "C" {
     if (!source.used) return F_data_not;
 
     {
-      f_status_t status = f_memory_array_increase(F_memory_default_allocation_small_d, sizeof(f_string_ranges_t), (void **) &destination->array, &destination->used, &destination->size);
+      f_status_t status = f_memory_array_increase(F_memory_default_allocation_small_d, sizeof(f_ranges_t), (void **) &destination->array, &destination->used, &destination->size);
       if (F_status_is_error(status)) return status;
 
       f_string_triples_t * const destination_inner = &destination->array[destination->used];

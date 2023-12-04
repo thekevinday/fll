@@ -75,7 +75,7 @@ extern "C" {
  * @see fll_fss_extended_read()
  */
 #ifndef _di_controller_entry_actions_read_
-  extern f_status_t controller_entry_actions_read(const controller_global_t global, const bool is_entry, const f_string_range_t content_range, controller_cache_t * const cache, controller_entry_actions_t *actions) F_attribute_visibility_internal_d;
+  extern f_status_t controller_entry_actions_read(const controller_global_t global, const bool is_entry, const f_range_t content_range, controller_cache_t * const cache, controller_entry_actions_t *actions) F_attribute_visibility_internal_d;
 #endif // _di_controller_entry_actions_read_
 
 /**
@@ -209,7 +209,7 @@ extern "C" {
  * @see controller_entry_print_error_file()
  */
 #ifndef _di_controller_entry_settings_read_
-  extern f_status_t controller_entry_settings_read(const controller_global_t global, const bool is_entry, const f_string_range_t content_range, controller_cache_t * const cache) F_attribute_visibility_internal_d;
+  extern f_status_t controller_entry_settings_read(const controller_global_t global, const bool is_entry, const f_range_t content_range, controller_cache_t * const cache) F_attribute_visibility_internal_d;
 #endif // _di_controller_entry_settings_read_
 
 /**
@@ -231,7 +231,7 @@ extern "C" {
  * @see f_string_dynamic_partial_append_nulless()
  */
 #ifndef _di_controller_entry_settings_read_map_
-  f_status_t controller_entry_settings_read_map(const f_string_static_t buffer, const f_string_ranges_t ranges, f_string_maps_t *setting_maps) F_attribute_visibility_internal_d;
+  f_status_t controller_entry_settings_read_map(const f_string_static_t buffer, const f_ranges_t ranges, f_string_maps_t *setting_maps) F_attribute_visibility_internal_d;
 #endif // _di_controller_entry_settings_read_map_
 
 /**

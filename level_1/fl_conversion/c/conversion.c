@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fl_conversion_dynamic_partial_to_signed_
-  f_status_t fl_conversion_dynamic_partial_to_signed(const fl_conversion_data_t data, const f_string_static_t buffer, const f_string_range_t range, f_number_signed_t * const number) {
+  f_status_t fl_conversion_dynamic_partial_to_signed(const fl_conversion_data_t data, const f_string_static_t buffer, const f_range_t range, f_number_signed_t * const number) {
     #ifndef _di_level_1_parameter_checking_
       if (!number) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -26,7 +26,7 @@ extern "C" {
 #endif // _di_fl_conversion_dynamic_partial_to_signed_
 
 #ifndef _di_fl_conversion_dynamic_partial_to_unsigned_
-  f_status_t fl_conversion_dynamic_partial_to_unsigned(const fl_conversion_data_t data, const f_string_static_t buffer, const f_string_range_t range, f_number_unsigned_t * const number) {
+  f_status_t fl_conversion_dynamic_partial_to_unsigned(const fl_conversion_data_t data, const f_string_static_t buffer, const f_range_t range, f_number_unsigned_t * const number) {
     #ifndef _di_level_1_parameter_checking_
       if (!number) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -46,7 +46,7 @@ extern "C" {
 #endif // _di_fl_conversion_dynamic_partial_to_unsigned_
 
 #ifndef _di_fl_conversion_dynamic_partial_to_signed_detect_
-  f_status_t fl_conversion_dynamic_partial_to_signed_detect(const fl_conversion_data_t data, const f_string_static_t buffer, const f_string_range_t range, f_number_signed_t * const number) {
+  f_status_t fl_conversion_dynamic_partial_to_signed_detect(const fl_conversion_data_t data, const f_string_static_t buffer, const f_range_t range, f_number_signed_t * const number) {
     #ifndef _di_level_1_parameter_checking_
       if (!number) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -58,7 +58,7 @@ extern "C" {
 #endif // _di_fl_conversion_dynamic_partial_to_signed_detect_
 
 #ifndef _di_fl_conversion_dynamic_partial_to_unsigned_detect_
-  f_status_t fl_conversion_dynamic_partial_to_unsigned_detect(const fl_conversion_data_t data, const f_string_static_t buffer, const f_string_range_t range, f_number_unsigned_t * const number) {
+  f_status_t fl_conversion_dynamic_partial_to_unsigned_detect(const fl_conversion_data_t data, const f_string_static_t buffer, const f_range_t range, f_number_unsigned_t * const number) {
     #ifndef _di_level_1_parameter_checking_
       if (!number) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_

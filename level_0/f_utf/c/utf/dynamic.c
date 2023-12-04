@@ -172,7 +172,7 @@ extern "C" {
 #endif // _di_f_utf_string_dynamic_mish_nulless_
 
 #ifndef _di_f_utf_string_dynamic_partial_append_
-  f_status_t f_utf_string_dynamic_partial_append(const f_utf_string_static_t source, const f_string_range_t range, f_utf_string_dynamic_t * const destination) {
+  f_status_t f_utf_string_dynamic_partial_append(const f_utf_string_static_t source, const f_range_t range, f_utf_string_dynamic_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -190,7 +190,7 @@ extern "C" {
 #endif // _di_f_utf_string_dynamic_partial_append_
 
 #ifndef _di_f_utf_string_dynamic_partial_append_assure_
-  f_status_t f_utf_string_dynamic_partial_append_assure(const f_utf_string_static_t source, const f_string_range_t range, f_utf_string_dynamic_t * const destination) {
+  f_status_t f_utf_string_dynamic_partial_append_assure(const f_utf_string_static_t source, const f_range_t range, f_utf_string_dynamic_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -226,7 +226,7 @@ extern "C" {
 #endif // _di_f_utf_string_dynamic_partial_append_assure_
 
 #ifndef _di_f_utf_string_dynamic_partial_append_assure_nulless_
-  f_status_t f_utf_string_dynamic_partial_append_assure_nulless(const f_utf_string_static_t source, const f_string_range_t range, f_utf_string_dynamic_t * const destination) {
+  f_status_t f_utf_string_dynamic_partial_append_assure_nulless(const f_utf_string_static_t source, const f_range_t range, f_utf_string_dynamic_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -274,7 +274,7 @@ extern "C" {
 #endif // _di_f_utf_string_dynamic_append_assure_nulless_
 
 #ifndef _di_f_utf_string_dynamic_partial_append_nulless_
-  f_status_t f_utf_string_dynamic_partial_append_nulless(const f_utf_string_static_t source, const f_string_range_t range, f_utf_string_dynamic_t * const destination) {
+  f_status_t f_utf_string_dynamic_partial_append_nulless(const f_utf_string_static_t source, const f_range_t range, f_utf_string_dynamic_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -292,7 +292,7 @@ extern "C" {
 #endif // _di_f_utf_string_dynamic_partial_append_nulless_
 
 #ifndef _di_f_utf_string_dynamic_partial_mash_
-  f_status_t f_utf_string_dynamic_partial_mash(const f_utf_string_static_t glue, const f_utf_string_static_t source, const f_string_range_t range, f_utf_string_dynamic_t * const destination) {
+  f_status_t f_utf_string_dynamic_partial_mash(const f_utf_string_static_t glue, const f_utf_string_static_t source, const f_range_t range, f_utf_string_dynamic_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -315,7 +315,7 @@ extern "C" {
 #endif // _di_f_utf_string_dynamic_partial_mash_
 
 #ifndef _di_f_utf_string_dynamic_partial_mash_nulless_
-  f_status_t f_utf_string_dynamic_partial_mash_nulless(const f_utf_string_static_t glue, const f_utf_string_static_t source, const f_string_range_t range, f_utf_string_dynamic_t * const destination) {
+  f_status_t f_utf_string_dynamic_partial_mash_nulless(const f_utf_string_static_t glue, const f_utf_string_static_t source, const f_range_t range, f_utf_string_dynamic_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -338,7 +338,7 @@ extern "C" {
 #endif // _di_f_utf_string_dynamic_partial_mash_nulless_
 
 #ifndef _di_f_utf_string_dynamic_partial_mish_
-  f_status_t f_utf_string_dynamic_partial_mish(const f_utf_string_static_t glue, const f_utf_string_static_t source, const f_string_range_t range, f_utf_string_dynamic_t * const destination) {
+  f_status_t f_utf_string_dynamic_partial_mish(const f_utf_string_static_t glue, const f_utf_string_static_t source, const f_range_t range, f_utf_string_dynamic_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -361,7 +361,7 @@ extern "C" {
 #endif // _di_f_utf_string_dynamic_partial_mish_
 
 #ifndef _di_f_utf_string_dynamic_partial_mish_nulless_
-  f_status_t f_utf_string_dynamic_partial_mish_nulless(const f_utf_string_static_t glue, const f_utf_string_static_t source, const f_string_range_t range, f_utf_string_dynamic_t * const destination) {
+  f_status_t f_utf_string_dynamic_partial_mish_nulless(const f_utf_string_static_t glue, const f_utf_string_static_t source, const f_range_t range, f_utf_string_dynamic_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -384,7 +384,7 @@ extern "C" {
 #endif // _di_f_utf_string_dynamic_partial_mish_nulless_
 
 #ifndef _di_f_utf_string_dynamic_partial_prepend_
-  f_status_t f_utf_string_dynamic_partial_prepend(const f_utf_string_static_t source, const f_string_range_t range, f_utf_string_dynamic_t * const destination) {
+  f_status_t f_utf_string_dynamic_partial_prepend(const f_utf_string_static_t source, const f_range_t range, f_utf_string_dynamic_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -402,7 +402,7 @@ extern "C" {
 #endif // _di_f_utf_string_dynamic_partial_prepend_
 
 #ifndef _di_f_utf_string_dynamic_partial_prepend_assure_
-  f_status_t f_utf_string_dynamic_partial_prepend_assure(const f_utf_string_static_t source, const f_string_range_t range, f_utf_string_dynamic_t * const destination) {
+  f_status_t f_utf_string_dynamic_partial_prepend_assure(const f_utf_string_static_t source, const f_range_t range, f_utf_string_dynamic_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -437,7 +437,7 @@ extern "C" {
 #endif // _di_f_utf_string_dynamic_partial_prepend_assure_
 
 #ifndef _di_f_utf_string_dynamic_partial_prepend_assure_nulless_
-  f_status_t f_utf_string_dynamic_partial_prepend_assure_nulless(const f_utf_string_static_t source, const f_string_range_t range, f_utf_string_dynamic_t * const destination) {
+  f_status_t f_utf_string_dynamic_partial_prepend_assure_nulless(const f_utf_string_static_t source, const f_range_t range, f_utf_string_dynamic_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -484,7 +484,7 @@ extern "C" {
 #endif // _di_f_utf_string_dynamic_partial_prepend_assure_nulless
 
 #ifndef _di_f_utf_string_dynamic_partial_prepend_nulless_
-  f_status_t f_utf_string_dynamic_partial_prepend_nulless(const f_utf_string_static_t source, const f_string_range_t range, f_utf_string_dynamic_t * const destination) {
+  f_status_t f_utf_string_dynamic_partial_prepend_nulless(const f_utf_string_static_t source, const f_range_t range, f_utf_string_dynamic_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -591,7 +591,7 @@ extern "C" {
 #endif // _di_f_utf_string_dynamic_prepend_nulless_
 
 #ifndef _di_f_utf_string_dynamic_seek_line_
-  f_status_t f_utf_string_dynamic_seek_line(const f_utf_string_static_t buffer, f_string_range_t * const range) {
+  f_status_t f_utf_string_dynamic_seek_line(const f_utf_string_static_t buffer, f_range_t * const range) {
     #ifndef _di_level_0_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -614,7 +614,7 @@ extern "C" {
 #endif // _di_f_utf_string_dynamic_seek_line_
 
 #ifndef _di_f_utf_string_dynamic_seek_line_to_
-  f_status_t f_utf_string_dynamic_seek_line_to(const f_utf_string_static_t buffer, const f_utf_char_t seek_to_this, f_string_range_t * const range) {
+  f_status_t f_utf_string_dynamic_seek_line_to(const f_utf_string_static_t buffer, const f_utf_char_t seek_to_this, f_range_t * const range) {
     #ifndef _di_level_0_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -638,7 +638,7 @@ extern "C" {
 #endif // _di_f_utf_string_dynamic_seek_line_to_
 
 #ifndef _di_f_utf_string_dynamic_seek_to_
-  f_status_t f_utf_string_dynamic_seek_to(const f_utf_string_static_t buffer, const f_utf_char_t seek_to_this, f_string_range_t * const range) {
+  f_status_t f_utf_string_dynamic_seek_to(const f_utf_string_static_t buffer, const f_utf_char_t seek_to_this, f_range_t * const range) {
     #ifndef _di_level_0_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_

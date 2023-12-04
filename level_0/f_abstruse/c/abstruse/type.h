@@ -38,6 +38,8 @@ extern "C" {
     f_number_signeds_t    a_signeds;
     f_number_unsigned_t   a_unsigned;
     f_number_unsigneds_t  a_unsigneds;
+    f_range_t             a_range;
+    f_ranges_t            a_ranges;
     f_string_t            a_string;
     f_string_t *          a_strings;
     f_string_dynamic_t    a_dynamic;
@@ -48,8 +50,6 @@ extern "C" {
     f_string_map_multis_t a_map_multis;
     f_string_quantity_t   a_quantity;
     f_string_quantitys_t  a_quantitys;
-    f_string_range_t      a_range;
-    f_string_ranges_t     a_ranges;
     f_string_triple_t     a_triple;
     f_string_triples_t    a_triples;
     void *                a_void;

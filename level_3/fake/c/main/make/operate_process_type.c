@@ -810,7 +810,7 @@ extern "C" {
 
     fake_main_t * const main = data_make->main;
 
-    f_string_range_t range = f_string_range_t_initialize;
+    f_range_t range = f_range_t_initialize;
     f_number_unsigned_t number_left = 0;
     f_number_unsigned_t number_right = 0;
 

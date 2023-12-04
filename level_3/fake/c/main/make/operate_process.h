@@ -103,7 +103,7 @@ extern "C" {
  * @see fake_make_operate_process_type_write()
  */
 #ifndef _di_fake_make_operate_process_
-  extern int fake_make_operate_process(fake_make_data_t * const data_make, const f_string_range_t section_name, fake_state_process_t * const state_process, f_number_unsigneds_t * const section_stack);
+  extern int fake_make_operate_process(fake_make_data_t * const data_make, const f_range_t section_name, fake_state_process_t * const state_process, f_number_unsigneds_t * const section_stack);
 #endif // _di_fake_make_operate_process_
 
 /**

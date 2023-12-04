@@ -65,7 +65,7 @@ extern "C" {
  * @see f_iki_read()
  */
 #ifndef _di_fl_iki_read_
-  extern void fl_iki_read(f_string_static_t * const buffer, f_string_range_t * const range, f_iki_data_t * const data, f_state_t * const state);
+  extern void fl_iki_read(f_string_static_t * const buffer, f_range_t * const range, f_iki_data_t * const data, f_state_t * const state);
 #endif // _di_fl_iki_read_
 
 #ifdef __cplusplus

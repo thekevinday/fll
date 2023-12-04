@@ -112,7 +112,7 @@ extern "C" {
 #endif // _di_f_network_from_ip_string_
 
 #ifndef _di_f_network_is_ip_address_
-  void f_network_is_ip_address(const f_string_static_t address, f_string_range_double_t * const where, f_state_t * const state) {
+  void f_network_is_ip_address(const f_string_static_t address, f_range_double_t * const where, f_state_t * const state) {
 
     if (!state) return;
 
@@ -126,7 +126,7 @@ extern "C" {
     uint8_t flag = 0x0; // 0x1 == is IPv6.
     uint8_t set = 0;
     uint8_t count = 0;
-    f_string_range_double_t at = f_string_range_double_t_initialize;
+    f_range_double_t at = f_range_double_t_initialize;
 
     for (; i < address.used; ++i) {
 

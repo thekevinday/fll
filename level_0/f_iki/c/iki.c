@@ -19,7 +19,7 @@ extern "C" {
 #endif // _di_f_iki_content_is_
 
 #ifndef _di_f_iki_content_partial_is_
-  f_status_t f_iki_content_partial_is(const f_string_static_t content, const f_string_range_t range, const f_string_static_t quote) {
+  f_status_t f_iki_content_partial_is(const f_string_static_t content, const f_range_t range, const f_string_static_t quote) {
     #ifndef _di_level_0_parameter_checking_
       if (!quote.used) return F_status_set_error(F_parameter);
       if (quote.string[0] != f_iki_syntax_quote_single_s.string[0] && quote.string[0] != f_iki_syntax_quote_double_s.string[0] && quote.string[0] != f_iki_syntax_quote_backtick_s.string[0]) return F_status_set_error(F_parameter);
@@ -43,7 +43,7 @@ extern "C" {
 #endif // _di_f_iki_object_is_
 
 #ifndef _di_f_iki_object_partial_is_
-  f_status_t f_iki_object_partial_is(const f_string_static_t object, const f_string_range_t range) {
+  f_status_t f_iki_object_partial_is(const f_string_static_t object, const f_range_t range) {
 
     if (!object.used) return F_data_not;
     if (range.start > range.stop) return F_data_not_stop;
@@ -54,7 +54,7 @@ extern "C" {
 #endif // _di_f_iki_object_partial_is_
 
 #ifndef _di_f_iki_read_
-  void f_iki_read(f_string_static_t * const buffer, f_string_range_t * const range, f_iki_data_t * const data, f_state_t * const state) {
+  void f_iki_read(f_string_static_t * const buffer, f_range_t * const range, f_iki_data_t * const data, f_state_t * const state) {
     #ifndef _di_level_0_parameter_checking_
       if (!state) return;
 
@@ -89,7 +89,7 @@ extern "C" {
       width_max = buffer->used - range->start;
     }
 
-    f_string_range_t found_vocabulary = f_string_range_t_initialize;
+    f_range_t found_vocabulary = f_range_t_initialize;
     f_number_unsigned_t found_content = 0;
     f_number_unsigned_t vocabulary_slash_first = 0;
     const f_number_unsigned_t delimits_used = data->delimits.used;
@@ -322,13 +322,13 @@ extern "C" {
           }
 
           if (buffer->string[range->start] == quote) {
-            state->status = f_memory_array_increase(state->step_small, sizeof(f_string_range_t), (void **) &data->variable.array, &data->variable.used, &data->variable.size);
+            state->status = f_memory_array_increase(state->step_small, sizeof(f_range_t), (void **) &data->variable.array, &data->variable.used, &data->variable.size);
             if (F_status_is_error(state->status)) break;
 
-            state->status = f_memory_array_increase(state->step_small, sizeof(f_string_range_t), (void **) &data->vocabulary.array, &data->vocabulary.used, &data->vocabulary.size);
+            state->status = f_memory_array_increase(state->step_small, sizeof(f_range_t), (void **) &data->vocabulary.array, &data->vocabulary.used, &data->vocabulary.size);
             if (F_status_is_error(state->status)) break;
 
-            state->status = f_memory_array_increase(state->step_small, sizeof(f_string_range_t), (void **) &data->content.array, &data->content.used, &data->content.size);
+            state->status = f_memory_array_increase(state->step_small, sizeof(f_range_t), (void **) &data->content.array, &data->content.used, &data->content.size);
             if (F_status_is_error(state->status)) break;
 
             data->variable.array[data->variable.used].start = found_vocabulary.start;
@@ -367,7 +367,7 @@ extern "C" {
 
               if (buffer->string[range->start] == quote) {
                 f_number_unsigned_t content_slash_delimits = content_slash_total / 2;
-                f_string_range_t content_range = f_string_range_t_initialize;
+                f_range_t content_range = f_range_t_initialize;
                 f_number_unsigned_t i = 0;
 
                 if (content_slash_total % 2) {
@@ -395,13 +395,13 @@ extern "C" {
 
                 // Valid content's ending quote is not delimited, save and return.
                 if (content_slash_total % 2 == 0) {
-                  state->status = f_memory_array_increase(state->step_small, sizeof(f_string_range_t), (void **) &data->variable.array, &data->variable.used, &data->variable.size);
+                  state->status = f_memory_array_increase(state->step_small, sizeof(f_range_t), (void **) &data->variable.array, &data->variable.used, &data->variable.size);
                   if (F_status_is_error(state->status)) break;
 
-                  state->status = f_memory_array_increase(state->step_small, sizeof(f_string_range_t), (void **) &data->vocabulary.array, &data->vocabulary.used, &data->vocabulary.size);
+                  state->status = f_memory_array_increase(state->step_small, sizeof(f_range_t), (void **) &data->vocabulary.array, &data->vocabulary.used, &data->vocabulary.size);
                   if (F_status_is_error(state->status)) break;
 
-                  state->status = f_memory_array_increase(state->step_small, sizeof(f_string_range_t), (void **) &data->content.array, &data->content.used, &data->content.size);
+                  state->status = f_memory_array_increase(state->step_small, sizeof(f_range_t), (void **) &data->content.array, &data->content.used, &data->content.size);
                   if (F_status_is_error(state->status)) break;
 
                   data->variable.array[data->variable.used].start = found_vocabulary.start;

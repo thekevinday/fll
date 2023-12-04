@@ -317,14 +317,14 @@ extern "C" {
               const f_string_static_t value = va_arg(apl, f_string_static_t);
 
               if (flag & F_print_format_flag_range_d) {
-                const f_string_range_t partial = va_arg(apl, f_string_range_t);
+                const f_range_t partial = va_arg(apl, f_range_t);
 
                 if (flag & F_print_format_flag_ignore_index_d) {
                   const f_number_unsigneds_t except_at = va_arg(apl, f_number_unsigneds_t);
-                  f_string_ranges_t except_in = f_string_ranges_t_initialize;
+                  f_ranges_t except_in = f_ranges_t_initialize;
 
                   if (flag & F_print_format_flag_ignore_range_d) {
-                    except_in = va_arg(apl, f_string_ranges_t);
+                    except_in = va_arg(apl, f_ranges_t);
                   }
 
                   if (partial.start > partial.stop || partial.start >= value.used) {
@@ -348,7 +348,7 @@ extern "C" {
                 }
                 else if (flag & F_print_format_flag_ignore_range_d) {
                   const f_number_unsigneds_t except_at = f_number_unsigneds_t_initialize;
-                  const f_string_ranges_t except_in = va_arg(apl, f_string_ranges_t);
+                  const f_ranges_t except_in = va_arg(apl, f_ranges_t);
 
                   if (partial.start > partial.stop || partial.start >= value.used) {
                     *status = F_data_not;
@@ -392,10 +392,10 @@ extern "C" {
               }
               else if (flag & F_print_format_flag_ignore_index_d) {
                 const f_number_unsigneds_t except_at = va_arg(apl, f_number_unsigneds_t);
-                f_string_ranges_t except_in = f_string_ranges_t_initialize;
+                f_ranges_t except_in = f_ranges_t_initialize;
 
                 if (flag & F_print_format_flag_ignore_range_d) {
-                  except_in = va_arg(apl, f_string_ranges_t);
+                  except_in = va_arg(apl, f_ranges_t);
                 }
 
                 if (flag & F_print_format_flag_trim_d) {
@@ -407,7 +407,7 @@ extern "C" {
               }
               else if (flag & F_print_format_flag_ignore_range_d) {
                 const f_number_unsigneds_t except_at = f_number_unsigneds_t_initialize;
-                const f_string_ranges_t except_in = va_arg(apl, f_string_ranges_t);
+                const f_ranges_t except_in = va_arg(apl, f_ranges_t);
 
                 if (flag & F_print_format_flag_trim_d) {
                   *status = private_fl_print_trim_except_in_safely(value.string, 0, value.used, except_at, except_in, file);
@@ -431,14 +431,14 @@ extern "C" {
               const f_string_static_t value = va_arg(apl, f_string_static_t);
 
               if (flag & F_print_format_flag_range_d) {
-                const f_string_range_t partial = va_arg(apl, f_string_range_t);
+                const f_range_t partial = va_arg(apl, f_range_t);
 
                 if (flag & F_print_format_flag_ignore_index_d) {
                   const f_number_unsigneds_t except_at = va_arg(apl, f_number_unsigneds_t);
-                  f_string_ranges_t except_in = f_string_ranges_t_initialize;
+                  f_ranges_t except_in = f_ranges_t_initialize;
 
                   if (flag & F_print_format_flag_ignore_range_d) {
-                    except_in = va_arg(apl, f_string_ranges_t);
+                    except_in = va_arg(apl, f_ranges_t);
                   }
 
                   if (partial.start > partial.stop || partial.start >= value.used) {
@@ -462,7 +462,7 @@ extern "C" {
                 }
                 else if (flag & F_print_format_flag_ignore_range_d) {
                   const f_number_unsigneds_t except_at = f_number_unsigneds_t_initialize;
-                  const f_string_ranges_t except_in = va_arg(apl, f_string_ranges_t);
+                  const f_ranges_t except_in = va_arg(apl, f_ranges_t);
 
                   if (partial.start > partial.stop || partial.start >= value.used) {
                     *status = F_data_not;
@@ -506,10 +506,10 @@ extern "C" {
               }
               else if (flag & F_print_format_flag_ignore_index_d) {
                 const f_number_unsigneds_t except_at = va_arg(apl, f_number_unsigneds_t);
-                f_string_ranges_t except_in = f_string_ranges_t_initialize;
+                f_ranges_t except_in = f_ranges_t_initialize;
 
                 if (flag & F_print_format_flag_ignore_range_d) {
-                  except_in = va_arg(apl, f_string_ranges_t);
+                  except_in = va_arg(apl, f_ranges_t);
                 }
 
                 if (flag & F_print_format_flag_trim_d) {
@@ -521,7 +521,7 @@ extern "C" {
               }
               else if (flag & F_print_format_flag_ignore_range_d) {
                 const f_number_unsigneds_t except_at = f_number_unsigneds_t_initialize;
-                const f_string_ranges_t except_in = va_arg(apl, f_string_ranges_t);
+                const f_ranges_t except_in = va_arg(apl, f_ranges_t);
 
                 if (flag & F_print_format_flag_trim_d) {
                   *status = private_fl_print_trim_except_in_raw_safely(value.string, 0, value.used, except_at, except_in, file);
@@ -709,14 +709,14 @@ extern "C" {
               const f_string_static_t value = va_arg(apl, f_string_static_t);
 
               if (flag & F_print_format_flag_range_d) {
-                const f_string_range_t partial = va_arg(apl, f_string_range_t);
+                const f_range_t partial = va_arg(apl, f_range_t);
 
                 if (flag & F_print_format_flag_ignore_index_d) {
                   const f_number_unsigneds_t except_at = va_arg(apl, f_number_unsigneds_t);
-                  f_string_ranges_t except_in = f_string_ranges_t_initialize;
+                  f_ranges_t except_in = f_ranges_t_initialize;
 
                   if (flag & F_print_format_flag_ignore_range_d) {
-                    except_in = va_arg(apl, f_string_ranges_t);
+                    except_in = va_arg(apl, f_ranges_t);
                   }
 
                   if (partial.start > partial.stop || partial.start >= value.used) {
@@ -740,7 +740,7 @@ extern "C" {
                 }
                 else if (flag & F_print_format_flag_ignore_range_d) {
                   const f_number_unsigneds_t except_at = f_number_unsigneds_t_initialize;
-                  const f_string_ranges_t except_in = va_arg(apl, f_string_ranges_t);
+                  const f_ranges_t except_in = va_arg(apl, f_ranges_t);
 
                   if (partial.start > partial.stop || partial.start >= value.used) {
                     *status = F_data_not;
@@ -784,10 +784,10 @@ extern "C" {
               }
               else if (flag & F_print_format_flag_ignore_index_d) {
                 const f_number_unsigneds_t except_at = va_arg(apl, f_number_unsigneds_t);
-                f_string_ranges_t except_in = f_string_ranges_t_initialize;
+                f_ranges_t except_in = f_ranges_t_initialize;
 
                 if (flag & F_print_format_flag_ignore_range_d) {
-                  except_in = va_arg(apl, f_string_ranges_t);
+                  except_in = va_arg(apl, f_ranges_t);
                 }
 
                 if (flag & F_print_format_flag_trim_d) {
@@ -799,7 +799,7 @@ extern "C" {
               }
               else if (flag & F_print_format_flag_ignore_range_d) {
                 const f_number_unsigneds_t except_at = f_number_unsigneds_t_initialize;
-                const f_string_ranges_t except_in = va_arg(apl, f_string_ranges_t);
+                const f_ranges_t except_in = va_arg(apl, f_ranges_t);
 
                 if (flag & F_print_format_flag_trim_d) {
                   *status = private_fl_print_trim_except_in(value.string, 0, value.used, except_at, except_in, file);
@@ -830,14 +830,14 @@ extern "C" {
               const f_string_static_t value = va_arg(apl, f_string_static_t);
 
               if (flag & F_print_format_flag_range_d) {
-                const f_string_range_t partial = va_arg(apl, f_string_range_t);
+                const f_range_t partial = va_arg(apl, f_range_t);
 
                 if (flag & F_print_format_flag_ignore_index_d) {
                   const f_number_unsigneds_t except_at = va_arg(apl, f_number_unsigneds_t);
-                  f_string_ranges_t except_in = f_string_ranges_t_initialize;
+                  f_ranges_t except_in = f_ranges_t_initialize;
 
                   if (flag & F_print_format_flag_ignore_range_d) {
-                    except_in = va_arg(apl, f_string_ranges_t);
+                    except_in = va_arg(apl, f_ranges_t);
                   }
 
                   if (partial.start > partial.stop || partial.start >= value.used) {
@@ -861,7 +861,7 @@ extern "C" {
                 }
                 else if (flag & F_print_format_flag_ignore_range_d) {
                   const f_number_unsigneds_t except_at = f_number_unsigneds_t_initialize;
-                  const f_string_ranges_t except_in = va_arg(apl, f_string_ranges_t);
+                  const f_ranges_t except_in = va_arg(apl, f_ranges_t);
 
                   if (partial.start > partial.stop || partial.start >= value.used) {
                     *status = F_data_not;
@@ -905,10 +905,10 @@ extern "C" {
               }
               else if (flag & F_print_format_flag_ignore_index_d) {
                 const f_number_unsigneds_t except_at = va_arg(apl, f_number_unsigneds_t);
-                f_string_ranges_t except_in = f_string_ranges_t_initialize;
+                f_ranges_t except_in = f_ranges_t_initialize;
 
                 if (flag & F_print_format_flag_ignore_range_d) {
-                  except_in = va_arg(apl, f_string_ranges_t);
+                  except_in = va_arg(apl, f_ranges_t);
                 }
 
                 if (flag & F_print_format_flag_trim_d) {
@@ -920,7 +920,7 @@ extern "C" {
               }
               else if (flag & F_print_format_flag_ignore_range_d) {
                 const f_number_unsigneds_t except_at = f_number_unsigneds_t_initialize;
-                const f_string_ranges_t except_in = va_arg(apl, f_string_ranges_t);
+                const f_ranges_t except_in = va_arg(apl, f_ranges_t);
 
                 if (flag & F_print_format_flag_trim_d) {
                   *status = private_fl_print_trim_except_in_raw(value.string, 0, value.used, except_at, except_in, file);
@@ -1193,7 +1193,7 @@ extern "C" {
 #endif // !defined(_di_fl_print_format_) || !defined(_di_fl_print_format_convert_)
 
 #if !defined(_di_fl_print_format_) || !defined(_di_fl_print_format_convert_) || !defined(_di_fl_print_trim_except_) || !defined(_di_fl_print_trim_except_dynamic_) || !defined(_di_fl_print_trim_except_dynamic_partial_) || !defined(_di_fl_print_trim_except_in_) || !defined(_di_fl_print_trim_except_in_dynamic_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_)
-  f_status_t private_fl_print_trim_except_in(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t stop, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
+  f_status_t private_fl_print_trim_except_in(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t stop, const f_number_unsigneds_t except_at, const f_ranges_t except_in, const f_file_t file) {
 
     f_number_unsigned_t i = offset;
     f_number_unsigned_t j = 0;
@@ -1462,7 +1462,7 @@ extern "C" {
 #endif // !defined(_di_fl_print_format_) || !defined(_di_fl_print_format_convert_) || !defined(_di_fl_print_trim_except_) || !defined(_di_fl_print_trim_except_dynamic_) || !defined(_di_fl_print_trim_except_dynamic_partial_) || !defined(_di_fl_print_trim_except_in_) || !defined(_di_fl_print_trim_except_in_dynamic_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_)
 
 #if !defined(_di_fl_print_format_) || !defined(_di_fl_print_format_convert_) || !defined(_di_fl_print_trim_except_raw_) || !defined(_di_fl_print_trim_except_dynamic_raw_) || !defined(_di_fl_print_trim_except_dynamic_partial_raw_) || !defined(_di_fl_print_trim_except_in_raw_) || !defined(_di_fl_print_trim_except_in_dynamic_raw_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_raw_)
-  f_status_t private_fl_print_trim_except_in_raw(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t stop, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
+  f_status_t private_fl_print_trim_except_in_raw(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t stop, const f_number_unsigneds_t except_at, const f_ranges_t except_in, const f_file_t file) {
 
     f_number_unsigned_t i = offset;
     f_number_unsigned_t j = 0;
@@ -1668,7 +1668,7 @@ extern "C" {
 #endif // !defined(_di_fl_print_format_) || !defined(_di_fl_print_format_convert_) || !defined(_di_fl_print_trim_except_raw_) || !defined(_di_fl_print_trim_except_dynamic_raw_) || !defined(_di_fl_print_trim_except_dynamic_partial_raw_) || !defined(_di_fl_print_trim_except_in_raw_) || !defined(_di_fl_print_trim_except_in_dynamic_raw_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_raw_)
 
 #if !defined(_di_fl_print_format_) || !defined(_di_fl_print_format_convert_) || !defined(_di_fl_print_trim_except_raw_safely_) || !defined(_di_fl_print_trim_except_dynamic_raw_safely_) || !defined(_di_fl_print_trim_except_dynamic_partial_raw_safely_) || !defined(_di_fl_print_trim_except_in_raw_safely_) || !defined(_di_fl_print_trim_except_in_dynamic_raw_safely_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_raw_safely_)
-  f_status_t private_fl_print_trim_except_in_raw_safely(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t stop, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
+  f_status_t private_fl_print_trim_except_in_raw_safely(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t stop, const f_number_unsigneds_t except_at, const f_ranges_t except_in, const f_file_t file) {
 
     f_number_unsigned_t i = offset;
     f_number_unsigned_t j = 0;
@@ -1929,7 +1929,7 @@ extern "C" {
 #endif // !defined(_di_fl_print_format_) || !defined(_di_fl_print_format_convert_) || !defined(_di_fl_print_trim_except_raw_safely_) || !defined(_di_fl_print_trim_except_dynamic_raw_safely_) || !defined(_di_fl_print_trim_except_dynamic_partial_raw_safely_) || !defined(_di_fl_print_trim_except_in_raw_safely_) || !defined(_di_fl_print_trim_except_in_dynamic_raw_safely_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_raw_safely_)
 
 #if !defined(_di_fl_print_format_) || !defined(_di_fl_print_format_convert_) || !defined(_di_fl_print_trim_except_dynamic_safely_) || !defined(_di_fl_print_trim_except_dynamic_partial_safely_) || !defined(_di_fl_print_trim_except_in_dynamic_safely_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_safely_) || !defined(_di_fl_print_trim_except_in_safely_) || !defined(_di_fl_print_trim_except_safely_)
-  f_status_t private_fl_print_trim_except_in_safely(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t stop, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
+  f_status_t private_fl_print_trim_except_in_safely(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t stop, const f_number_unsigneds_t except_at, const f_ranges_t except_in, const f_file_t file) {
 
     f_number_unsigned_t i = offset;
     f_number_unsigned_t j = 0;

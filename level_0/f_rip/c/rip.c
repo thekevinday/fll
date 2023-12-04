@@ -94,7 +94,7 @@ extern "C" {
 #endif // _di_f_rip_nulless_
 
 #ifndef _di_f_rip_dynamic_partial_
-  f_status_t f_rip_dynamic_partial(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t * const destination) {
+  f_status_t f_rip_dynamic_partial(const f_string_static_t source, const f_range_t range, f_string_dynamic_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -118,7 +118,7 @@ extern "C" {
 #endif // _di_f_rip_dynamic_partial_
 
 #ifndef _di_f_rip_dynamic_partial_nulless_
-  f_status_t f_rip_dynamic_partial_nulless(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t * const destination) {
+  f_status_t f_rip_dynamic_partial_nulless(const f_string_static_t source, const f_range_t range, f_string_dynamic_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_

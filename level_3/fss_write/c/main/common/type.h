@@ -86,7 +86,7 @@ extern "C" {
     f_status_t status_signal;
     f_state_t state;
 
-    f_string_range_t range;
+    f_range_t range;
 
     f_string_static_t quote;
     f_string_static_t standard;
@@ -95,11 +95,11 @@ extern "C" {
     f_string_dynamic_t buffer;
     f_string_dynamic_t prepend;
 
-    f_string_rangess_t ignoress;
+    f_rangess_t ignoress;
     f_string_dynamics_t objects;
     f_string_dynamicss_t contentss;
 
-    f_string_ranges_t *ignores;
+    f_ranges_t *ignores;
     f_string_static_t *object;
     f_string_static_t *content;
     f_string_statics_t *contents;
@@ -110,13 +110,13 @@ extern "C" {
       fss_write_main_flag_none_e, \
       F_okay, \
       macro_f_state_t_initialize_1(fss_write_allocation_large_d, fss_write_allocation_small_d, F_okay, 0, 0, &fll_program_standard_signal_handle, 0, 0, 0, 0), \
-      f_string_range_t_initialize, \
+      f_range_t_initialize, \
       f_string_static_t_initialize, \
       f_string_static_t_initialize, \
       f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \
-      f_string_rangess_t_initialize, \
+      f_rangess_t_initialize, \
       f_string_dynamics_t_initialize, \
       f_string_dynamicss_t_initialize, \
       0, \

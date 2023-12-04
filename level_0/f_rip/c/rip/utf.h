@@ -67,7 +67,7 @@ extern "C" {
  * @see f_utf_string_append()
  */
 #ifndef _di_f_rip_utf_dynamic_
-  extern f_status_t f_rip_utf_dynamic(const f_utf_string_static_t source, const f_string_range_t range, f_utf_string_dynamic_t * const destination);
+  extern f_status_t f_rip_utf_dynamic(const f_utf_string_static_t source, const f_range_t range, f_utf_string_dynamic_t * const destination);
 #endif // _di_f_rip_utf_dynamic_
 
 /**
@@ -97,7 +97,7 @@ extern "C" {
  * @see f_utf_string_append_nulless()
  */
 #ifndef _di_f_rip_utf_dynamic_nulless_
-  extern f_status_t f_rip_utf_dynamic_nulless(const f_utf_string_static_t source, const f_string_range_t range, f_utf_string_dynamic_t * const destination);
+  extern f_status_t f_rip_utf_dynamic_nulless(const f_utf_string_static_t source, const f_range_t range, f_utf_string_dynamic_t * const destination);
 #endif // _di_f_rip_utf_dynamic_nulless_
 
 /**

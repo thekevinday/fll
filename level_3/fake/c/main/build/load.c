@@ -129,8 +129,8 @@ extern "C" {
 
     {
       f_string_dynamic_t buffer = f_string_dynamic_t_initialize;
-      f_string_ranges_t objects = f_string_ranges_t_initialize;
-      f_string_rangess_t contents = f_string_rangess_t_initialize;
+      f_ranges_t objects = f_ranges_t_initialize;
+      f_rangess_t contents = f_rangess_t_initialize;
 
       if (process_pipe) {
         fake_pipe_buffer(data, &buffer);
@@ -150,7 +150,7 @@ extern "C" {
       }
 
       if (F_status_is_error_not(main->setting.state.status)) {
-        f_string_range_t range = macro_f_string_range_t_initialize_2(buffer.used);
+        f_range_t range = macro_f_range_t_initialize_2(buffer.used);
         f_number_unsigneds_t delimits = f_number_unsigneds_t_initialize;
 
         fll_fss_extended_read(buffer, &range, &objects, &contents, 0, 0, &delimits, 0, &main->setting.state);
@@ -174,8 +174,8 @@ extern "C" {
 
       f_memory_array_resize(0, sizeof(f_char_t), (void **) &buffer.string, &buffer.used, &buffer.size);
 
-      f_memory_array_resize(0, sizeof(f_string_range_t), (void **) &objects.array, &objects.used, &objects.size);
-      f_memory_arrays_resize(0, sizeof(f_string_ranges_t), (void **) &contents.array, &contents.used, &contents.size, &f_string_rangess_delete_callback);
+      f_memory_array_resize(0, sizeof(f_range_t), (void **) &objects.array, &objects.used, &objects.size);
+      f_memory_arrays_resize(0, sizeof(f_ranges_t), (void **) &contents.array, &contents.used, &contents.size, &f_rangess_delete_callback);
     }
 
     // Error when required settings are not specified.
@@ -213,7 +213,7 @@ extern "C" {
 #endif // _di_fake_build_load_setting_
 
 #ifndef _di_fake_build_load_setting_process_
-  void fake_build_load_setting_process(fake_data_t * const data, const bool checks, const f_string_static_t path_file, const f_string_statics_t * const modes_custom, const f_string_static_t buffer, const f_string_ranges_t objects, const f_string_rangess_t contents, fake_build_setting_t * const setting) {
+  void fake_build_load_setting_process(fake_data_t * const data, const bool checks, const f_string_static_t path_file, const f_string_statics_t * const modes_custom, const f_string_static_t buffer, const f_ranges_t objects, const f_rangess_t contents, fake_build_setting_t * const setting) {
 
     if (!data || !data->main || !setting) return;
     if (F_status_is_error(data->main->setting.state.status) && buffer.used) return;

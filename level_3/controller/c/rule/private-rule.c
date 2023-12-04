@@ -60,7 +60,7 @@ extern "C" {
 #endif // _di_controller_rule_find_
 
 #ifndef _di_controller_rule_parameters_read_
-  f_status_t controller_rule_parameters_read(const controller_global_t global, const f_string_static_t buffer, f_string_range_t * const object, f_string_ranges_t * const content, controller_rule_action_t * const action, f_state_t * const state) {
+  f_status_t controller_rule_parameters_read(const controller_global_t global, const f_string_static_t buffer, f_range_t * const object, f_ranges_t * const content, controller_rule_action_t * const action, f_state_t * const state) {
 
     f_status_t status = F_okay;
 
@@ -129,7 +129,7 @@ extern "C" {
         return status;
       }
 
-      f_string_range_t range = f_string_range_t_initialize;
+      f_range_t range = f_range_t_initialize;
 
       for (f_number_unsigned_t i = 0; i < content->used; ++i) {
 
@@ -217,7 +217,7 @@ extern "C" {
 #endif // _di_controller_rule_action_type_to_action_execute_type_
 
 #ifndef _di_controller_rule_action_read_
-  f_status_t controller_rule_action_read(const controller_global_t global, const bool is_normal, const uint8_t type, const uint8_t method, controller_cache_t * const cache, controller_rule_item_t *item, controller_rule_actions_t *actions, f_string_range_t *range) {
+  f_status_t controller_rule_action_read(const controller_global_t global, const bool is_normal, const uint8_t type, const uint8_t method, controller_cache_t * const cache, controller_rule_item_t *item, controller_rule_actions_t *actions, f_range_t *range) {
 
     f_status_t status = F_okay;
 
@@ -303,7 +303,7 @@ extern "C" {
             state.step_small = controller_common_allocation_iki_small_d;
             state.interrupt = &controller_thread_signal_state_iki;
 
-            f_string_range_t range_iki = macro_f_string_range_t_initialize_2(actions->array[actions->used].parameters.array[0].used);
+            f_range_t range_iki = macro_f_range_t_initialize_2(actions->array[actions->used].parameters.array[0].used);
 
             status = fl_iki_read(&actions->array[actions->used].parameters.array[0], &range_iki, &actions->array[actions->used].ikis.array[0], state);
 
@@ -608,7 +608,7 @@ extern "C" {
             state.step_small = controller_common_allocation_iki_small_d;
             state.interrupt = &controller_thread_signal_state_iki;
 
-            f_string_range_t range_iki = macro_f_string_range_t_initialize_2(actions->array[actions->used].parameters.array[0].used);
+            f_range_t range_iki = macro_f_range_t_initialize_2(actions->array[actions->used].parameters.array[0].used);
 
             status = fl_iki_read(&actions->array[actions->used].parameters.array[0], &range_iki, &actions->array[actions->used].ikis.array[0], state);
 
@@ -1946,7 +1946,7 @@ extern "C" {
 
     f_number_unsigned_t i = 0;
     f_number_unsigned_t first = 0;
-    f_string_range_t range = f_string_range_t_initialize;
+    f_range_t range = f_range_t_initialize;
 
     f_iki_data_t *iki_data = 0;
     f_string_dynamic_t *buffer = 0;
@@ -2016,7 +2016,7 @@ extern "C" {
 #endif // _di_controller_rule_expand_
 
 #ifndef _di_controller_rule_expand_iki_
-  f_status_t controller_rule_expand_iki(controller_process_t * const process, const f_string_static_t source, const f_string_range_t vocabulary, const f_string_range_t content, f_string_dynamic_t * const destination) {
+  f_status_t controller_rule_expand_iki(controller_process_t * const process, const f_string_static_t source, const f_range_t vocabulary, const f_range_t content, f_string_dynamic_t * const destination) {
 
     if (vocabulary.start > vocabulary.stop) return F_okay;
     if (content.start > content.stop) return F_okay;
@@ -2309,7 +2309,7 @@ extern "C" {
 #endif // _di_controller_rule_expand_iki_
 
 #ifndef _di_controller_rule_id_construct_
-  f_status_t controller_rule_id_construct(const controller_global_t global, const f_string_static_t source, const f_string_range_t directory, const f_string_range_t basename, f_string_dynamic_t * const alias) {
+  f_status_t controller_rule_id_construct(const controller_global_t global, const f_string_static_t source, const f_range_t directory, const f_range_t basename, f_string_dynamic_t * const alias) {
 
     f_status_t status = F_okay;
 
@@ -2363,7 +2363,7 @@ extern "C" {
     f_status_t status = F_okay;
     controller_state_interrupt_t custom = macro_controller_state_interrupt_t_initialize_1(is_normal, global.thread);
     f_state_t state = macro_f_state_t_initialize_1(controller_common_allocation_large_d, controller_common_allocation_small_d, F_okay, 0, 0, 0, &controller_thread_signal_state_fss, 0, (void *) &custom, 0);
-    f_string_range_t range = macro_f_string_range_t_initialize_2(cache->buffer_item.used);
+    f_range_t range = macro_f_range_t_initialize_2(cache->buffer_item.used);
     f_number_unsigned_t last = 0;
 
     uint8_t type = 0;
@@ -3212,7 +3212,7 @@ extern "C" {
     process->type = type;
 
     macro_f_time_spec_t_clear(process->cache.timestamp)
-    macro_f_string_range_t_clear(process->cache.range_action)
+    macro_f_range_t_clear(process->cache.range_action)
 
     process->cache.ats.used = 0;
     process->cache.stack.used = 0;
@@ -3790,7 +3790,7 @@ extern "C" {
       if (cache->buffer_file.used) {
         controller_state_interrupt_t custom = macro_controller_state_interrupt_t_initialize_1(is_normal, global.thread);
         f_state_t state = macro_f_state_t_initialize_1(controller_common_allocation_large_d, controller_common_allocation_small_d, F_okay, 0, 0, 0, &controller_thread_signal_state_fss, 0, (void *) &custom, 0);
-        f_string_range_t range = macro_f_string_range_t_initialize_2(cache->buffer_file.used);
+        f_range_t range = macro_f_range_t_initialize_2(cache->buffer_file.used);
 
         status = fll_fss_basic_list_read(cache->buffer_file, state, &range, &cache->object_items, &cache->content_items, &cache->delimits, 0, &cache->comments);
 
@@ -3951,8 +3951,8 @@ extern "C" {
     f_status_t status = F_okay;
     f_status_t status_return = F_okay;
 
-    f_string_range_t range = macro_f_string_range_t_initialize_2(cache->buffer_item.used);
-    f_string_range_t range2 = f_string_range_t_initialize;
+    f_range_t range = macro_f_range_t_initialize_2(cache->buffer_item.used);
+    f_range_t range2 = f_range_t_initialize;
 
     controller_state_interrupt_t custom = macro_controller_state_interrupt_t_initialize_1(is_normal, global.thread);
     f_state_t state = macro_f_state_t_initialize_1(controller_common_allocation_large_d, controller_common_allocation_small_d, F_okay, 0, 0, 0, &controller_thread_signal_state_fss, 0, (void *) &custom, 0);

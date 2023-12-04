@@ -5,7 +5,7 @@ extern "C" {
 #endif
 
 #ifndef _di_iki_read_process_line_
-  void iki_read_process_line(iki_read_main_t * const main, f_string_range_t *range) {
+  void iki_read_process_line(iki_read_main_t * const main, f_range_t *range) {
 
     if (!(main->setting.flag & iki_read_main_flag_line_e)) {
       main->setting.state.status = F_false;
@@ -50,7 +50,7 @@ extern "C" {
       return;
     }
 
-    f_string_range_t buffer_range = macro_f_string_range_t_initialize_2(main->setting.buffer.used);
+    f_range_t buffer_range = macro_f_range_t_initialize_2(main->setting.buffer.used);
 
     iki_read_process_line(main, &buffer_range);
 
@@ -81,7 +81,7 @@ extern "C" {
 #endif // _di_iki_read_process_buffer_
 
 #ifndef _di_iki_read_process_buffer_ranges_
-  void iki_read_process_buffer_ranges(iki_read_main_t * const main, f_string_range_t *buffer_range) {
+  void iki_read_process_buffer_ranges(iki_read_main_t * const main, f_range_t *buffer_range) {
 
     fl_iki_read(&main->setting.buffer, buffer_range, &main->setting.data, &main->setting.state);
 
@@ -188,9 +188,9 @@ extern "C" {
 #endif // _di_iki_read_process_buffer_ranges_
 
 #ifndef _di_iki_read_process_buffer_ranges_whole_
-  void iki_read_process_buffer_ranges_whole(iki_read_main_t * const main, const f_string_range_t buffer_range) {
+  void iki_read_process_buffer_ranges_whole(iki_read_main_t * const main, const f_range_t buffer_range) {
 
-    f_string_range_t range = buffer_range;
+    f_range_t range = buffer_range;
 
     fl_iki_read(&main->setting.buffer, &range, &main->setting.data, &main->setting.state);
 
@@ -281,7 +281,7 @@ extern "C" {
 #ifndef _di_iki_read_process_buffer_total_
   void iki_read_process_buffer_total(iki_read_main_t * const main) {
 
-    f_string_range_t range = macro_f_string_range_t_initialize_2(main->setting.buffer.used);
+    f_range_t range = macro_f_range_t_initialize_2(main->setting.buffer.used);
 
     iki_read_process_line(main, &range);
 

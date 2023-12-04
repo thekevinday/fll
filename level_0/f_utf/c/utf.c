@@ -7,7 +7,7 @@ extern "C" {
 #endif
 
 #ifndef _di_f_utf_buffer_decrement_
-  f_status_t f_utf_buffer_decrement(const f_string_static_t buffer, f_string_range_t *range, const f_number_unsigned_t step) {
+  f_status_t f_utf_buffer_decrement(const f_string_static_t buffer, f_range_t *range, const f_number_unsigned_t step) {
     #ifndef _di_level_0_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
       if (step < 1) return F_status_set_error(F_parameter);
@@ -41,7 +41,7 @@ extern "C" {
 #endif // _di_f_utf_buffer_decrement_
 
 #ifndef _di_f_utf_buffer_increment_
-  f_status_t f_utf_buffer_increment(const f_string_static_t buffer, f_string_range_t *range, const f_number_unsigned_t step) {
+  f_status_t f_utf_buffer_increment(const f_string_static_t buffer, f_range_t *range, const f_number_unsigned_t step) {
     #ifndef _di_level_0_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
       if (step < 1) return F_status_set_error(F_parameter);

@@ -98,8 +98,8 @@ extern "C" {
  *   - "-":        Use left-justification.
  *   - "#":        Use alternate form conversion (prefixing 0b/0B, 0o/0O, 0t/0T, 0d/0D, 0x/0X).
  *   - ";":        Ignore characters in the given positions from a f_number_unsigned_t (only applies to static/dynamic string arguments but not character arguments).
- *   - ":":        Ignore characters in the given ranges from a f_string_range_t (only applies to static/dynamic string arguments but not character arguments).
- *   - "/",        Print only the given range of a string, specified by f_string_range_t (only applies to static/dynamic string arguments but not character arguments).
+ *   - ":":        Ignore characters in the given ranges from a f_range_t (only applies to static/dynamic string arguments but not character arguments).
+ *   - "/",        Print only the given range of a string, specified by f_range_t (only applies to static/dynamic string arguments but not character arguments).
  *   - "+",        Always show the signs (+ or -).
  *   - " ",        Add a space where a sign would be if the sign is not displayed (this is the space character).
  *   - "=",        Trim leading and trailing whitespaces (only applies to static/dynamic string arguments but not character arguments).
@@ -719,7 +719,7 @@ extern "C" {
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_print_trim_dynamic_partial_
-  extern f_status_t fl_print_trim_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, const f_file_t file);
+  extern f_status_t fl_print_trim_dynamic_partial(const f_string_static_t buffer, const f_range_t range, const f_file_t file);
 #endif // _di_fl_print_trim_dynamic_partial_
 
 /**
@@ -764,7 +764,7 @@ extern "C" {
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_print_trim_dynamic_partial_raw_
-  extern f_status_t fl_print_trim_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, const f_file_t file);
+  extern f_status_t fl_print_trim_dynamic_partial_raw(const f_string_static_t buffer, const f_range_t range, const f_file_t file);
 #endif // _di_fl_print_trim_dynamic_partial_raw_
 
 /**
@@ -810,7 +810,7 @@ extern "C" {
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_print_trim_dynamic_partial_raw_safely_
-  extern f_status_t fl_print_trim_dynamic_partial_raw_safely(const f_string_static_t buffer, const f_string_range_t range, const f_file_t file);
+  extern f_status_t fl_print_trim_dynamic_partial_raw_safely(const f_string_static_t buffer, const f_range_t range, const f_file_t file);
 #endif // _di_fl_print_trim_dynamic_partial_raw_safely_
 
 /**
@@ -854,7 +854,7 @@ extern "C" {
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_print_trim_dynamic_partial_safely_
-  extern f_status_t fl_print_trim_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, const f_file_t file);
+  extern f_status_t fl_print_trim_dynamic_partial_safely(const f_string_static_t buffer, const f_range_t range, const f_file_t file);
 #endif // _di_fl_print_trim_dynamic_partial_safely_
 
 /**
@@ -1293,7 +1293,7 @@ extern "C" {
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_print_trim_except_in_
-  extern f_status_t fl_print_trim_except_in(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t length, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, const f_file_t file);
+  extern f_status_t fl_print_trim_except_in(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t length, const f_number_unsigneds_t except_at, const f_ranges_t except_in, const f_file_t file);
 #endif // _di_fl_print_trim_except_in_
 
 /**
@@ -1347,7 +1347,7 @@ extern "C" {
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_print_trim_except_in_raw_
-  extern f_status_t fl_print_trim_except_in_raw(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t length, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, const f_file_t file);
+  extern f_status_t fl_print_trim_except_in_raw(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t length, const f_number_unsigneds_t except_at, const f_ranges_t except_in, const f_file_t file);
 #endif // _di_fl_print_trim_except_in_raw_
 
 /**
@@ -1402,7 +1402,7 @@ extern "C" {
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_print_trim_except_in_raw_safely_
-  extern f_status_t fl_print_trim_except_in_raw_safely(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t length, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, const f_file_t file);
+  extern f_status_t fl_print_trim_except_in_raw_safely(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t length, const f_number_unsigneds_t except_at, const f_ranges_t except_in, const f_file_t file);
 #endif // _di_fl_print_trim_except_in_raw_safely_
 
 /**
@@ -1455,7 +1455,7 @@ extern "C" {
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_print_trim_except_in_safely_
-  extern f_status_t fl_print_trim_except_in_safely(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t length, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, const f_file_t file);
+  extern f_status_t fl_print_trim_except_in_safely(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t length, const f_number_unsigneds_t except_at, const f_ranges_t except_in, const f_file_t file);
 #endif // _di_fl_print_trim_except_in_safely_
 
 /**
@@ -1507,7 +1507,7 @@ extern "C" {
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_print_trim_except_in_dynamic_
-  extern f_status_t fl_print_trim_except_in_dynamic(const f_string_static_t buffer, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, const f_file_t file);
+  extern f_status_t fl_print_trim_except_in_dynamic(const f_string_static_t buffer, const f_number_unsigneds_t except_at, const f_ranges_t except_in, const f_file_t file);
 #endif // _di_fl_print_trim_except_in_dynamic_
 
 /**
@@ -1558,7 +1558,7 @@ extern "C" {
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_print_trim_except_in_dynamic_raw_
-  extern f_status_t fl_print_trim_except_in_dynamic_raw(const f_string_static_t buffer, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, const f_file_t file);
+  extern f_status_t fl_print_trim_except_in_dynamic_raw(const f_string_static_t buffer, const f_number_unsigneds_t except_at, const f_ranges_t except_in, const f_file_t file);
 #endif // _di_fl_print_trim_except_in_dynamic_raw_
 
 /**
@@ -1610,7 +1610,7 @@ extern "C" {
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_print_trim_except_in_dynamic_raw_safely_
-  extern f_status_t fl_print_trim_except_in_dynamic_raw_safely(const f_string_static_t buffer, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, const f_file_t file);
+  extern f_status_t fl_print_trim_except_in_dynamic_raw_safely(const f_string_static_t buffer, const f_number_unsigneds_t except_at, const f_ranges_t except_in, const f_file_t file);
 #endif // _di_fl_print_trim_except_in_dynamic_raw_safely_
 
 /**
@@ -1660,7 +1660,7 @@ extern "C" {
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_print_trim_except_in_dynamic_safely_
-  extern f_status_t fl_print_trim_except_in_dynamic_safely(const f_string_static_t buffer, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, const f_file_t file);
+  extern f_status_t fl_print_trim_except_in_dynamic_safely(const f_string_static_t buffer, const f_number_unsigneds_t except_at, const f_ranges_t except_in, const f_file_t file);
 #endif // _di_fl_print_trim_except_in_dynamic_safely_
 
 /**
@@ -1712,7 +1712,7 @@ extern "C" {
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_print_trim_except_in_dynamic_partial_
-  extern f_status_t fl_print_trim_except_in_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, const f_file_t file);
+  extern f_status_t fl_print_trim_except_in_dynamic_partial(const f_string_static_t buffer, const f_range_t range, const f_number_unsigneds_t except_at, const f_ranges_t except_in, const f_file_t file);
 #endif // _di_fl_print_trim_except_in_dynamic_partial_
 
 /**
@@ -1764,7 +1764,7 @@ extern "C" {
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_print_trim_except_in_dynamic_partial_raw_
-  extern f_status_t fl_print_trim_except_in_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, const f_file_t file);
+  extern f_status_t fl_print_trim_except_in_dynamic_partial_raw(const f_string_static_t buffer, const f_range_t range, const f_number_unsigneds_t except_at, const f_ranges_t except_in, const f_file_t file);
 #endif // _di_fl_print_trim_except_in_dynamic_partial_raw_
 
 /**
@@ -1818,7 +1818,7 @@ extern "C" {
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_print_trim_except_in_dynamic_partial_raw_safely_
-  extern f_status_t fl_print_trim_except_in_dynamic_partial_raw_safely(const f_string_static_t buffer, const f_string_range_t range, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, const f_file_t file);
+  extern f_status_t fl_print_trim_except_in_dynamic_partial_raw_safely(const f_string_static_t buffer, const f_range_t range, const f_number_unsigneds_t except_at, const f_ranges_t except_in, const f_file_t file);
 #endif // _di_fl_print_trim_except_in_dynamic_partial_raw_safely_
 
 /**
@@ -1870,7 +1870,7 @@ extern "C" {
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_print_trim_except_in_dynamic_partial_safely_
-  extern f_status_t fl_print_trim_except_in_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, const f_file_t file);
+  extern f_status_t fl_print_trim_except_in_dynamic_partial_safely(const f_string_static_t buffer, const f_range_t range, const f_number_unsigneds_t except_at, const f_ranges_t except_in, const f_file_t file);
 #endif // _di_fl_print_trim_except_in_dynamic_partial_safely_
 
 /**
@@ -1918,7 +1918,7 @@ extern "C" {
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_print_trim_except_dynamic_partial_
-  extern f_status_t fl_print_trim_except_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, const f_number_unsigneds_t except, const f_file_t file);
+  extern f_status_t fl_print_trim_except_dynamic_partial(const f_string_static_t buffer, const f_range_t range, const f_number_unsigneds_t except, const f_file_t file);
 #endif // _di_fl_print_trim_except_dynamic_partial_
 
 /**
@@ -1966,7 +1966,7 @@ extern "C" {
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_print_trim_except_dynamic_partial_raw_
-  extern f_status_t fl_print_trim_except_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, const f_number_unsigneds_t except, const f_file_t file);
+  extern f_status_t fl_print_trim_except_dynamic_partial_raw(const f_string_static_t buffer, const f_range_t range, const f_number_unsigneds_t except, const f_file_t file);
 #endif // _di_fl_print_trim_except_dynamic_partial_raw_
 
 /**
@@ -2016,7 +2016,7 @@ extern "C" {
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_print_trim_except_dynamic_partial_raw_safely_
-  extern f_status_t fl_print_trim_except_dynamic_partial_raw_safely(const f_string_static_t buffer, const f_string_range_t range, const f_number_unsigneds_t except, const f_file_t file);
+  extern f_status_t fl_print_trim_except_dynamic_partial_raw_safely(const f_string_static_t buffer, const f_range_t range, const f_number_unsigneds_t except, const f_file_t file);
 #endif // _di_fl_print_trim_except_dynamic_partial_raw_safely_
 
 /**
@@ -2064,7 +2064,7 @@ extern "C" {
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_print_trim_except_dynamic_partial_safely_
-  extern f_status_t fl_print_trim_except_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, const f_number_unsigneds_t except, const f_file_t file);
+  extern f_status_t fl_print_trim_except_dynamic_partial_safely(const f_string_static_t buffer, const f_range_t range, const f_number_unsigneds_t except, const f_file_t file);
 #endif // _di_fl_print_trim_except_dynamic_partial_safely_
 
 #ifdef __cplusplus

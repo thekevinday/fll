@@ -30,22 +30,22 @@ extern "C" {
  */
 #ifndef _di_f_fss_named_t_
   typedef struct {
-    f_string_range_t name;
+    f_range_t name;
 
-    f_string_ranges_t objects;
-    f_string_rangess_t contents;
+    f_ranges_t objects;
+    f_rangess_t contents;
     f_uint8ss_t quotess;
   } f_fss_named_t;
 
-  #define f_fss_named_t_initialize { f_string_range_t_initialize, f_string_ranges_t_initialize, f_string_rangess_t_initialize, f_uint8ss_t_initialize }
+  #define f_fss_named_t_initialize { f_range_t_initialize, f_ranges_t_initialize, f_rangess_t_initialize, f_uint8ss_t_initialize }
 
   #define macro_f_fss_named_t_initialize_1(name, objects, contents, quotess) macro_f_number_unsigneds_t_initialize_1(name, objects, contents, quotess)
-  #define macro_f_fss_named_t_initialize_2(name) macro_f_number_unsigneds_t_initialize_1(name, f_string_ranges_t_initialize, f_string_rangess_t_initialize, f_uint8ss_t_initialize)
+  #define macro_f_fss_named_t_initialize_2(name) macro_f_number_unsigneds_t_initialize_1(name, f_ranges_t_initialize, f_rangess_t_initialize, f_uint8ss_t_initialize)
 
   #define macro_f_fss_named_t_clear(named) \
-    macro_f_string_range_t_clear(named.name) \
-    macro_f_string_ranges_t_clear(named.objects) \
-    macro_f_string_rangess_t_clear(named.contents) \
+    macro_f_range_t_clear(named.name) \
+    macro_f_ranges_t_clear(named.objects) \
+    macro_f_rangess_t_clear(named.contents) \
     macro_f_uint8ss_t_clear(named.quotess)
 #endif // _di_f_fss_named_t_
 

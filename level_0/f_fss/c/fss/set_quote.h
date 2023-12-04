@@ -30,20 +30,20 @@ extern "C" {
  */
 #ifndef _di_f_fss_set_quote_t_
   typedef struct {
-    f_string_ranges_t objects;
-    f_string_rangess_t contents;
+    f_ranges_t objects;
+    f_rangess_t contents;
 
     f_uint8s_t objects_quote;
     f_uint8ss_t contents_quote;
   } f_fss_set_quote_t;
 
-  #define f_fss_set_quote_t_initialize { f_string_ranges_t_initialize, f_string_rangess_t_initialize, f_uint8s_t_initialize, f_uint8ss_t_initialize }
+  #define f_fss_set_quote_t_initialize { f_ranges_t_initialize, f_rangess_t_initialize, f_uint8s_t_initialize, f_uint8ss_t_initialize }
 
   #define macro_f_fss_set_quote_t_initialize_1(objects, contents, objects_quote, contents_quote) { objects, contents, objects_quote, contents_quote }
 
   #define macro_f_fss_set_quote_t_clear(set) \
-    macro_f_string_ranges_t_clear(set.objects) \
-    macro_f_string_rangess_t_clear(set.contents) \
+    macro_f_ranges_t_clear(set.objects) \
+    macro_f_rangess_t_clear(set.contents) \
     macro_f_uint8s_t_clear(set.objects_quote) \
     macro_f_uint8ss_t_clear(set.contents_quote)
 #endif // _di_f_fss_set_quote_t_

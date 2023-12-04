@@ -128,7 +128,7 @@ extern "C" {
 #endif // !defined(_di_f_print_except_) || !defined(_di_f_print_except_dynamic_) || !defined(_di_f_print_except_dynamic_partial_)
 
 #if !defined(_di_f_print_except_in_) || !defined(_di_f_print_except_in_dynamic_) || !defined(_di_f_print_except_in_dynamic_partial_)
-  f_status_t private_f_print_except_in(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t stop, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
+  f_status_t private_f_print_except_in(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t stop, const f_number_unsigneds_t except_at, const f_ranges_t except_in, const f_file_t file) {
 
     f_number_unsigned_t i = offset;
     f_number_unsigned_t at = 0;
@@ -217,7 +217,7 @@ extern "C" {
 #endif // !defined(_di_f_print_except_in_) || !defined(_di_f_print_except_in_dynamic_) || !defined(_di_f_print_except_in_dynamic_partial_)
 
 #if !defined(_di_f_print_except_in_raw_) || !defined(_di_f_print_except_in_dynamic_raw_) || !defined(_di_f_print_except_in_dynamic_partial_raw_)
-  f_status_t private_f_print_except_in_raw(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t stop, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
+  f_status_t private_f_print_except_in_raw(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t stop, const f_number_unsigneds_t except_at, const f_ranges_t except_in, const f_file_t file) {
 
     f_number_unsigned_t i = offset;
     f_number_unsigned_t at = 0;
@@ -304,7 +304,7 @@ extern "C" {
 #endif // !defined(_di_f_print_except_in_raw_) || !defined(_di_f_print_except_in_dynamic_raw_) || !defined(_di_f_print_except_in_dynamic_partial_raw_)
 
 #if !defined(_di_f_print_except_in_raw_safely_) || !defined(_di_f_print_except_in_dynamic_raw_safely_) || !defined(_di_f_print_except_in_dynamic_partial_raw_safely_)
-  f_status_t private_f_print_except_in_raw_safely(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t stop, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
+  f_status_t private_f_print_except_in_raw_safely(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t stop, const f_number_unsigneds_t except_at, const f_ranges_t except_in, const f_file_t file) {
 
     f_number_unsigned_t i = offset;
     f_number_unsigned_t at = 0;
@@ -436,7 +436,7 @@ extern "C" {
 #endif // !defined(_di_f_print_except_in_raw_safely_) || !defined(_di_f_print_except_in_dynamic_raw_safely_) || !defined(_di_f_print_except_in_dynamic_partial_raw_safely_)
 
 #if !defined(_di_f_print_except_in_safely_) || !defined(_di_f_print_except_in_dynamic_safely_) || !defined(_di_f_print_except_in_dynamic_partial_safely_)
-  f_status_t private_f_print_except_in_safely(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t stop, const f_number_unsigneds_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
+  f_status_t private_f_print_except_in_safely(const f_string_t string, const f_number_unsigned_t offset, const f_number_unsigned_t stop, const f_number_unsigneds_t except_at, const f_ranges_t except_in, const f_file_t file) {
 
     f_number_unsigned_t i = offset;
     f_number_unsigned_t at = 0;

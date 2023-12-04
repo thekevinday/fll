@@ -102,7 +102,7 @@ extern "C" {
  * @see fl_iki_read()
  */
 #ifndef _di_controller_rule_parameters_read_
-  extern f_status_t controller_rule_parameters_read(const controller_global_t global, const f_string_static_t buffer, f_string_range_t * const object, f_string_ranges_t * const content, controller_rule_action_t * const action, f_state_t * const state) F_attribute_visibility_internal_d;
+  extern f_status_t controller_rule_parameters_read(const controller_global_t global, const f_string_static_t buffer, f_range_t * const object, f_ranges_t * const content, controller_rule_action_t * const action, f_state_t * const state) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_parameters_read_
 
 /**
@@ -156,7 +156,7 @@ extern "C" {
  * @see f_fss_count_lines()
  */
 #ifndef _di_controller_rule_action_read_
-  extern f_status_t controller_rule_action_read(const controller_global_t global, const bool is_normal, const uint8_t type, const uint8_t method, controller_cache_t * const cache, controller_rule_item_t *item, controller_rule_actions_t *actions, f_string_range_t *range) F_attribute_visibility_internal_d;
+  extern f_status_t controller_rule_action_read(const controller_global_t global, const bool is_normal, const uint8_t type, const uint8_t method, controller_cache_t * const cache, controller_rule_item_t *item, controller_rule_actions_t *actions, f_range_t *range) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_action_read_
 
 /**
@@ -379,7 +379,7 @@ extern "C" {
  *   @see f_string_dynamic_append()
  */
 #ifndef _di_controller_rule_expand_iki_
-  extern f_status_t controller_rule_expand_iki(controller_process_t * const process, const f_string_static_t source, const f_string_range_t vocabulary, const f_string_range_t content, f_string_dynamic_t * const destination) F_attribute_visibility_internal_d;
+  extern f_status_t controller_rule_expand_iki(controller_process_t * const process, const f_string_static_t source, const f_range_t vocabulary, const f_range_t content, f_string_dynamic_t * const destination) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_expand_iki_
 
 /**
@@ -405,7 +405,7 @@ extern "C" {
  * @see f_string_dynamic_partial_append_nulless()
  */
 #ifndef _di_controller_rule_id_construct_
-  extern f_status_t controller_rule_id_construct(const controller_global_t global, const f_string_static_t source, const f_string_range_t directory, const f_string_range_t basename, f_string_dynamic_t * const alias) F_attribute_visibility_internal_d;
+  extern f_status_t controller_rule_id_construct(const controller_global_t global, const f_string_static_t source, const f_range_t directory, const f_range_t basename, f_string_dynamic_t * const alias) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_id_construct_
 
 /**

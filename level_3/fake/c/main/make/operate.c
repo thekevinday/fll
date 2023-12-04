@@ -100,7 +100,7 @@ extern "C" {
     if (main->program.parameters.remaining.used) {
       f_number_unsigned_t i = 0;
       f_number_unsigned_t j = 0;
-      f_string_range_t range = f_string_range_t_initialize;
+      f_range_t range = f_range_t_initialize;
       f_number_unsigned_t index = 0;
 
       main->setting.state.status = F_okay;
@@ -217,7 +217,7 @@ extern "C" {
 #endif // _di_fake_make_operate_
 
 #ifndef _di_fake_make_operate_expand_
-  void fake_make_operate_expand(fake_make_data_t * const data_make, const f_string_range_t section_name, const f_string_ranges_t content, const f_uint8s_t quotes) {
+  void fake_make_operate_expand(fake_make_data_t * const data_make, const f_range_t section_name, const f_ranges_t content, const f_uint8s_t quotes) {
 
     if (!data_make || !data_make->main) return;
     if (F_status_is_error(data_make->main->setting.state.status)) return;
@@ -240,7 +240,7 @@ extern "C" {
 
     f_iki_data_t *iki_data = &main->cache_iki;
 
-    f_string_range_t range = f_string_range_t_initialize;
+    f_range_t range = f_range_t_initialize;
     f_string_map_multis_t *parameter = &data_make->setting_make.parameter;
 
     // 1 = is parameter, 2 = is define, 3 = is context.
@@ -836,7 +836,7 @@ extern "C" {
 #endif // _di_fake_make_operate_expand_
 
 #ifndef _di_fake_make_operate_expand_build_
-  void fake_make_operate_expand_build(fake_make_data_t * const data_make, const uint8_t quote, const f_string_range_t range_name) {
+  void fake_make_operate_expand_build(fake_make_data_t * const data_make, const uint8_t quote, const f_range_t range_name) {
 
     if (!data_make || !data_make->main) return;
     if (F_status_is_error(data_make->main->setting.state.status)) return;
@@ -1141,7 +1141,7 @@ extern "C" {
 #endif // _di_fake_make_operate_expand_build_
 
 #ifndef _di_fake_make_operate_expand_context_
-  void fake_make_operate_expand_context(fake_make_data_t * const data_make, const uint8_t quote, const f_string_range_t range_name) {
+  void fake_make_operate_expand_context(fake_make_data_t * const data_make, const uint8_t quote, const f_range_t range_name) {
 
     if (!data_make || !data_make->main) return;
 
@@ -1192,7 +1192,7 @@ extern "C" {
 #endif // _di_fake_make_operate_expand_context_
 
 #ifndef _di_fake_make_operate_expand_environment_
-  void fake_make_operate_expand_environment(fake_make_data_t * const data_make, const uint8_t quote, const f_string_range_t range_name) {
+  void fake_make_operate_expand_environment(fake_make_data_t * const data_make, const uint8_t quote, const f_range_t range_name) {
 
     if (!data_make || !data_make->main) return;
 

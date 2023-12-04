@@ -28,6 +28,12 @@
 #include <fll/level_0/type_array/int128.h>
 #include <fll/level_0/type_array/number_signed.h>
 #include <fll/level_0/type_array/number_unsigned.h>
+#include <fll/level_0/type_array/range.h>
+#include <fll/level_0/type_array/ranges.h>
+#include <fll/level_0/type_array/rangess.h>
+#include <fll/level_0/type_array/range_double.h>
+#include <fll/level_0/type_array/range_doubles.h>
+#include <fll/level_0/type_array/range_doubless.h>
 #include <fll/level_0/type_array/state.h>
 #include <fll/level_0/type_array/status.h>
 #include <fll/level_0/type_array/uint8.h>

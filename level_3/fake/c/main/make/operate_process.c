@@ -5,7 +5,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fake_make_operate_process_
-  int fake_make_operate_process(fake_make_data_t * const data_make, const f_string_range_t section_name, fake_state_process_t * const state_process, f_number_unsigneds_t * const section_stack) {
+  int fake_make_operate_process(fake_make_data_t * const data_make, const f_range_t section_name, fake_state_process_t * const state_process, f_number_unsigneds_t * const section_stack) {
 
     if (!data_make || !data_make->main || !state_process || !section_stack) return 0;
     if (data_make->main->setting.state.status == F_child) return data_make->main->program.child;

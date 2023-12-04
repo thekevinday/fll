@@ -78,7 +78,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_iki_content_partial_is_
-  extern f_status_t f_iki_content_partial_is(const f_string_static_t content, const f_string_range_t range, const f_string_static_t quote);
+  extern f_status_t f_iki_content_partial_is(const f_string_static_t content, const f_range_t range, const f_string_static_t quote);
 #endif // _di_f_iki_content_partial_is_
 
 /**
@@ -120,7 +120,7 @@ extern "C" {
  *   Errors (with error bit) from: f_utf_is_word_dash_plus().
  */
 #ifndef _di_f_iki_object_partial_is_
-  extern f_status_t f_iki_object_partial_is(const f_string_static_t object, const f_string_range_t range);
+  extern f_status_t f_iki_object_partial_is(const f_string_static_t object, const f_range_t range);
 #endif // _di_f_iki_object_partial_is_
 
 /**
@@ -174,7 +174,7 @@ extern "C" {
  * @see f_memory_array_increase_by()
  */
 #ifndef _di_f_iki_read_
-  extern void f_iki_read(f_string_static_t * const buffer, f_string_range_t * const range, f_iki_data_t * const data, f_state_t * const state);
+  extern void f_iki_read(f_string_static_t * const buffer, f_range_t * const range, f_iki_data_t * const data, f_state_t * const state);
 #endif // _di_f_iki_read_
 
 #ifdef __cplusplus

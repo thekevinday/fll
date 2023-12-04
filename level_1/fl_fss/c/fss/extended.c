@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fl_fss_extended_content_read_
-  void fl_fss_extended_content_read(const f_string_static_t buffer, f_string_range_t * const range, f_string_ranges_t * const found, f_uint8s_t * const quotes, f_number_unsigneds_t * const delimits, f_state_t * const state) {
+  void fl_fss_extended_content_read(const f_string_static_t buffer, f_range_t * const range, f_ranges_t * const found, f_uint8s_t * const quotes, f_number_unsigneds_t * const delimits, f_state_t * const state) {
     #ifndef _di_level_1_parameter_checking_
       if (!state) return;
 
@@ -50,12 +50,12 @@ extern "C" {
 
     while (range->start <= range->stop && range->start < buffer.used) {
 
-      f_string_range_t content_partial = f_string_range_t_initialize;
+      f_range_t content_partial = f_range_t_initialize;
 
       private_fl_fss_basic_read(buffer, F_false, range, &content_partial, &quote, delimits, state);
 
       if (state->status == F_fss_found_object || F_status_set_fine(state->status) == F_fss_found_object_content_not) {
-        status = f_memory_array_increase(state->step_small, sizeof(f_string_range_t), (void **) &found->array, &found->used, &found->size);
+        status = f_memory_array_increase(state->step_small, sizeof(f_range_t), (void **) &found->array, &found->used, &found->size);
 
         // The private function sets the error bit on unterminated quoted Object.
         if (state->status == F_status_set_error(F_fss_found_object_content_not)) {
@@ -138,7 +138,7 @@ extern "C" {
 #endif // _di_fl_fss_extended_content_read_
 
 #ifndef _di_fl_fss_extended_content_write_
-  void fl_fss_extended_content_write(const f_string_static_t content, const uint8_t quote, const uint8_t complete, f_string_range_t * const range, f_string_dynamic_t * const destination, f_state_t * const state) {
+  void fl_fss_extended_content_write(const f_string_static_t content, const uint8_t quote, const uint8_t complete, f_range_t * const range, f_string_dynamic_t * const destination, f_state_t * const state) {
     #ifndef _di_level_1_parameter_checking_
       if (!state) return;
 
@@ -208,7 +208,7 @@ extern "C" {
 #endif // _di_fl_fss_extended_content_write_
 
 #ifndef _di_fl_fss_extended_object_read_
-  void fl_fss_extended_object_read(const f_string_static_t buffer, f_string_range_t * const range, f_string_range_t * const found, uint8_t * const quote, f_number_unsigneds_t * const delimits, f_state_t * const state) {
+  void fl_fss_extended_object_read(const f_string_static_t buffer, f_range_t * const range, f_range_t * const found, uint8_t * const quote, f_number_unsigneds_t * const delimits, f_state_t * const state) {
     #ifndef _di_level_1_parameter_checking_
       if (!state) return;
 
@@ -237,7 +237,7 @@ extern "C" {
 #endif // _di_fl_fss_extended_object_read_
 
 #ifndef _di_fl_fss_extended_object_write_
-void fl_fss_extended_object_write(const f_string_static_t object, const uint8_t quote, const uint8_t complete, f_string_range_t * const range, f_string_dynamic_t * const destination, f_state_t * const state) {
+void fl_fss_extended_object_write(const f_string_static_t object, const uint8_t quote, const uint8_t complete, f_range_t * const range, f_string_dynamic_t * const destination, f_state_t * const state) {
     #ifndef _di_level_1_parameter_checking_
       if (!state) return;
 

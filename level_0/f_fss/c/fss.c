@@ -34,7 +34,7 @@ extern "C" {
 #endif // _di_f_fss_apply_delimit_
 
 #ifndef _di_f_fss_apply_delimit_range_
-  void f_fss_apply_delimit_range(const f_number_unsigneds_t delimits, const f_string_range_t range, f_string_static_t * const buffer, f_state_t * const state) {
+  void f_fss_apply_delimit_range(const f_number_unsigneds_t delimits, const f_range_t range, f_string_static_t * const buffer, f_state_t * const state) {
     #ifndef _di_level_0_parameter_checking_
       if (!state) return;
 
@@ -92,7 +92,7 @@ extern "C" {
 #endif // _di_f_fss_count_lines_
 
 #ifndef _di_f_fss_count_lines_range_
-  void f_fss_count_lines_range(const f_string_static_t buffer, const f_string_range_t range, f_number_unsigned_t * const line, f_state_t * const state) {
+  void f_fss_count_lines_range(const f_string_static_t buffer, const f_range_t range, f_number_unsigned_t * const line, f_state_t * const state) {
     #ifndef _di_level_0_parameter_checking_
       if (!state) return;
 
@@ -153,7 +153,7 @@ extern "C" {
 #endif // _di_f_fss_fail_utf_to_false_
 
 #ifndef _di_f_fss_is_combining_
-  f_status_t f_fss_is_combining(const f_string_static_t buffer, const f_string_range_t range, f_state_t * const state) {
+  f_status_t f_fss_is_combining(const f_string_static_t buffer, const f_range_t range, f_state_t * const state) {
     #ifndef _di_level_0_parameter_checking_
       if (!state) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -180,7 +180,7 @@ extern "C" {
 #endif // _di_f_fss_is_combining_
 
 #ifndef _di_f_fss_is_graph_
-  f_status_t f_fss_is_graph(const f_string_static_t buffer, const f_string_range_t range, f_state_t * const state) {
+  f_status_t f_fss_is_graph(const f_string_static_t buffer, const f_range_t range, f_state_t * const state) {
     #ifndef _di_level_0_parameter_checking_
       if (!state) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -207,7 +207,7 @@ extern "C" {
 #endif // _di_f_fss_is_graph_
 
 #ifndef _di_f_fss_is_space_
-  f_status_t f_fss_is_space(const f_string_static_t buffer, const f_string_range_t range, f_state_t * const state) {
+  f_status_t f_fss_is_space(const f_string_static_t buffer, const f_range_t range, f_state_t * const state) {
     #ifndef _di_level_0_parameter_checking_
       if (!state) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -246,7 +246,7 @@ extern "C" {
 #endif // _di_f_fss_is_space_
 
 #ifndef _di_f_fss_is_zero_width_
-  f_status_t f_fss_is_zero_width(const f_string_static_t buffer, const f_string_range_t range, f_state_t * const state) {
+  f_status_t f_fss_is_zero_width(const f_string_static_t buffer, const f_range_t range, f_state_t * const state) {
     #ifndef _di_level_0_parameter_checking_
       if (!state) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -273,7 +273,7 @@ extern "C" {
 #endif // _di_f_fss_is_zero_width_
 
 #ifndef _di_f_fss_seek_to_eol_
-  void f_fss_seek_to_eol(const f_string_dynamic_t buffer, f_string_range_t * const range, f_state_t * const state) {
+  void f_fss_seek_to_eol(const f_string_dynamic_t buffer, f_range_t * const range, f_state_t * const state) {
     #ifndef _di_level_0_parameter_checking_
       if (!state) return;
 
@@ -312,7 +312,7 @@ extern "C" {
 #endif // _di_f_fss_seek_to_eol_
 
 #ifndef _di_f_fss_skip_past_delimit_
-  void f_fss_skip_past_delimit(const f_string_static_t buffer, f_string_range_t * const range, f_state_t * const state) {
+  void f_fss_skip_past_delimit(const f_string_static_t buffer, f_range_t * const range, f_state_t * const state) {
     #ifndef _di_level_0_parameter_checking_
       if (!state) return;
 
@@ -351,7 +351,7 @@ extern "C" {
 #endif // _di_f_fss_skip_past_delimit_
 
 #ifndef _di_f_fss_skip_past_space_
-  void f_fss_skip_past_space(const f_string_static_t buffer, f_string_range_t * const range, f_state_t * const state) {
+  void f_fss_skip_past_space(const f_string_static_t buffer, f_range_t * const range, f_state_t * const state) {
     #ifndef _di_level_0_parameter_checking_
       if (!state) return;
 

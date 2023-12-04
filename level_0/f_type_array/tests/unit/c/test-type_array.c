@@ -83,6 +83,20 @@ int main(void) {
     cmocka_unit_test(test__f_type_array_pollss_destroy_callback__fails),
     cmocka_unit_test(test__f_type_array_pollss_destroy_callback__works),
 
+    cmocka_unit_test(test__f_type_array_ranges_append__works),
+    cmocka_unit_test(test__f_type_array_ranges_append_all__works),
+    cmocka_unit_test(test__f_type_array_ranges_append_all__returns_data_not),
+
+    cmocka_unit_test(test__f_type_array_rangess_append__works),
+    cmocka_unit_test(test__f_type_array_rangess_append__returns_data_not),
+    cmocka_unit_test(test__f_type_array_rangess_append_all__works),
+    cmocka_unit_test(test__f_type_array_rangess_append_all__returns_data_not),
+
+    cmocka_unit_test(test__f_type_array_rangess_delete_callback__fails),
+    cmocka_unit_test(test__f_type_array_rangess_destroy_callback__fails),
+    cmocka_unit_test(test__f_type_array_rangess_delete_callback__works),
+    cmocka_unit_test(test__f_type_array_rangess_destroy_callback__works),
+
     cmocka_unit_test(test__f_type_array_statess_delete_callback__fails),
     cmocka_unit_test(test__f_type_array_statess_delete_callback__works),
 
@@ -158,6 +172,14 @@ int main(void) {
 
       // f_pollss_destroy_callback() doesn't use parameter checking.
       // f_pollss_delete_callback() doesn't use parameter checking.
+
+      cmocka_unit_test(test__f_type_array_ranges_append__parameter_checking),
+      cmocka_unit_test(test__f_type_array_ranges_append_all__parameter_checking),
+      cmocka_unit_test(test__f_type_array_rangess_append__parameter_checking),
+      cmocka_unit_test(test__f_type_array_rangess_append_all__parameter_checking),
+
+      // f_rangess_delete_callback() doesn't use parameter checking.
+      // f_rangess_destroy_callback() doesn't use parameter checking.
 
       // f_statess_destroy_callback() doesn't use parameter checking.
       // f_statess_delete_callback() doesn't use parameter checking.

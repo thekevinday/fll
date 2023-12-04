@@ -26,11 +26,13 @@
 // FLL-0 type includes.
 #include <fll/level_0/type/number.h>
 #include <fll/level_0/type/status.h>
-#include <fll/level_0/type/mode.h>
 #include <fll/level_0/type/cell.h>
 #include <fll/level_0/type/fll.h>
-#include <fll/level_0/type/time.h>
+#include <fll/level_0/type/mode.h>
+#include <fll/level_0/type/range.h>
+#include <fll/level_0/type/range_double.h>
 #include <fll/level_0/type/state.h>
+#include <fll/level_0/type/time.h>
 
 #ifdef __cplusplus
 extern "C" {

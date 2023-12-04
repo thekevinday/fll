@@ -205,7 +205,7 @@ extern "C" {
  *     F_interrupt (with or without error bit) if stopping due to an interrupt.
  */
 #ifndef _di_f_network_is_ip_address_
-  extern void f_network_is_ip_address(const f_string_static_t address, f_string_range_double_t * const where, f_state_t * const state);
+  extern void f_network_is_ip_address(const f_string_static_t address, f_range_double_t * const where, f_state_t * const state);
 #endif // _di_f_network_is_ip_address_
 
 /**

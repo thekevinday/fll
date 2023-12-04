@@ -63,7 +63,7 @@ extern "C" {
 #endif // _di_iki_read_identify_alteration_
 
 #ifndef _di_iki_read_identify_substitution_
-  f_number_unsigned_t iki_read_identify_substitution(iki_read_main_t * const main, const f_string_range_t name, const f_string_range_t value, f_string_triples_t *triple) {
+  f_number_unsigned_t iki_read_identify_substitution(iki_read_main_t * const main, const f_range_t name, const f_range_t value, f_string_triples_t *triple) {
 
     f_number_unsigned_t i = triple->used - 1;
 

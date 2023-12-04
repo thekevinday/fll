@@ -30,7 +30,7 @@ build_indexer_arguments rcs
 build_language c
 
 build_libraries -lc
-build_libraries-individual -lf_memory -lf_string -lf_utf
+build_libraries-individual -lf_memory -lf_string -lf_type_array -lf_utf
 
 build_sources_library compare.c compare/utf.c private-compare.c compare/private-utf.c
 

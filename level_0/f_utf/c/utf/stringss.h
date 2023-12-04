@@ -368,7 +368,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_seek_line_
-  extern f_status_t f_utf_string_seek_line(const f_utf_string_t string, f_string_range_t * const range);
+  extern f_status_t f_utf_string_seek_line(const f_utf_string_t string, f_range_t * const range);
 #endif // _di_f_utf_string_seek_line_
 
 /**
@@ -391,7 +391,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_utf_string_seek_line_to_
-  extern f_status_t f_utf_string_seek_line_to(const f_utf_string_t string, const f_utf_char_t seek_to, f_string_range_t * const range);
+  extern f_status_t f_utf_string_seek_line_to(const f_utf_string_t string, const f_utf_char_t seek_to, f_range_t * const range);
 #endif // _di_f_utf_string_seek_line_to_
 
 /**
@@ -415,7 +415,7 @@ extern "C" {
  *   F_utf_not (with error bit) if unicode is an invalid Unicode character.
  */
 #ifndef _di_f_utf_string_seek_to_
-  extern f_status_t f_utf_string_seek_to(const f_utf_string_t string, const f_utf_char_t seek_to, f_string_range_t * const range);
+  extern f_status_t f_utf_string_seek_to(const f_utf_string_t string, const f_utf_char_t seek_to, f_range_t * const range);
 #endif // _di_f_utf_string_seek_to_
 
 #ifdef __cplusplus

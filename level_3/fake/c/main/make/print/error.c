@@ -222,7 +222,7 @@ extern "C" {
 #endif // _di_fake_make_print_error_operation_incomplete_
 
 #ifndef _di_fake_make_print_error_operation_recursion_
-  f_status_t fake_make_print_error_operation_recursion(fl_print_t * const print, const f_string_static_t buffer, const f_string_range_t range) {
+  f_status_t fake_make_print_error_operation_recursion(fl_print_t * const print, const f_string_static_t buffer, const f_range_t range) {
 
     if (!print) return F_status_set_error(F_output_not);
     if (print->verbosity < f_console_verbosity_error_e) return F_output_not;

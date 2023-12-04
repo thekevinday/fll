@@ -47,7 +47,7 @@ extern "C" {
  * @see fl_fss_extended_list_content_write()
  */
 #if !defined(_di_fl_fss_basic_list_content_write_) || !defined(_di_fl_fss_extended_list_content_write_) || !defined(_di_fl_fss_embedded_list_content_write_)
-  extern void private_fl_fss_basic_list_write_add_until_end(const f_string_static_t buffer, f_string_range_t * const range, f_string_dynamic_t * const destination, f_state_t * const state) F_attribute_visibility_internal_d;
+  extern void private_fl_fss_basic_list_write_add_until_end(const f_string_static_t buffer, f_range_t * const range, f_string_dynamic_t * const destination, f_state_t * const state) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fl_fss_basic_list_content_write_) || !defined(_di_fl_fss_extended_list_content_write_) || !defined(_di_fl_fss_embedded_list_content_write_)
 
 /**
@@ -156,7 +156,7 @@ extern "C" {
  * @see fl_fss_extended_content_read()
  */
 #if !defined(_di_fl_fss_basic_object_read_) || !defined(_di_fl_fss_extended_object_read_) || !defined(_di_fl_fss_extended_content_read_)
-  extern void private_fl_fss_basic_read(const f_string_static_t buffer, const bool object_as, f_string_range_t * const range, f_string_range_t * const found, uint8_t * const quote, f_number_unsigneds_t * const delimits, f_state_t * const state) F_attribute_visibility_internal_d;
+  extern void private_fl_fss_basic_read(const f_string_static_t buffer, const bool object_as, f_range_t * const range, f_range_t * const found, uint8_t * const quote, f_number_unsigneds_t * const delimits, f_state_t * const state) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fl_fss_basic_object_read_) || !defined(_di_fl_fss_extended_object_read_) || !defined(_di_fl_fss_extended_content_read_)
 
 /**
@@ -224,7 +224,7 @@ extern "C" {
  * @see fl_fss_extended_content_write()
  */
 #if !defined(fl_fss_basic_object_write) || !defined(fl_fss_extended_object_write) || !defined(_di_fl_fss_extended_content_write_)
-  extern void private_fl_fss_basic_write(const bool object_as, const f_string_static_t object, const uint8_t quote, f_string_range_t * const range, f_string_dynamic_t * const destination, f_state_t * const state, void * const internal) F_attribute_visibility_internal_d;
+  extern void private_fl_fss_basic_write(const bool object_as, const f_string_static_t object, const uint8_t quote, f_range_t * const range, f_string_dynamic_t * const destination, f_state_t * const state, void * const internal) F_attribute_visibility_internal_d;
 #endif // !defined(fl_fss_basic_object_write) || !defined(fl_fss_extended_object_write) || !defined(_di_fl_fss_extended_content_write_)
 
 /**

@@ -194,7 +194,7 @@ extern "C" {
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_f_rip_dynamic_partial_
-  extern f_status_t f_rip_dynamic_partial(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t * const destination);
+  extern f_status_t f_rip_dynamic_partial(const f_string_static_t source, const f_range_t range, f_string_dynamic_t * const destination);
 #endif // _di_f_rip_dynamic_partial_
 
 /**
@@ -231,7 +231,7 @@ extern "C" {
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_f_rip_dynamic_partial_nulless_
-  extern f_status_t f_rip_dynamic_partial_nulless(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t * const destination);
+  extern f_status_t f_rip_dynamic_partial_nulless(const f_string_static_t source, const f_range_t range, f_string_dynamic_t * const destination);
 #endif // _di_f_rip_dynamic_partial_nulless_
 
 #ifdef __cplusplus

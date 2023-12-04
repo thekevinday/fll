@@ -67,12 +67,10 @@ build_sources_library string/dynamic.c string/dynamics.c string/dynamicss.c
 build_sources_library string/map.c string/maps.c string/mapss.c
 build_sources_library string/map_multi.c string/map_multis.c string/map_multiss.c
 build_sources_library string/quantity.c string/quantitys.c string/quantityss.c
-build_sources_library string/range.c string/ranges.c string/rangess.c
-build_sources_library string/range_double.c string/range_doubles.c string/range_doubless.c
 build_sources_library string/static.c string/statics.c string/staticss.c
 build_sources_library string/triple.c string/triples.c string/tripless.c
 build_sources_library time.c
-build_sources_library type_array/cell.c type_array/file.c type_array/fll_id.c type_array/int8.c type_array/int16.c type_array/int32.c type_array/int64.c type_array/int128.c type_array/number_signed.c type_array/number_unsigned.c type_array/poll.c type_array/state.c type_array/status.c type_array/uint8.c type_array/uint16.c type_array/uint32.c type_array/uint64.c type_array/uint128.c
+build_sources_library type_array/cell.c type_array/file.c type_array/fll_id.c type_array/int8.c type_array/int16.c type_array/int32.c type_array/int64.c type_array/int128.c type_array/number_signed.c type_array/number_unsigned.c type_array/poll.c type_array/range.c type_array/ranges.c type_array/rangess.c type_array/range_double.c type_array/range_doubles.c type_array/range_doubless.c type_array/state.c type_array/status.c type_array/uint8.c type_array/uint16.c type_array/uint32.c type_array/uint64.c type_array/uint128.c
 build_sources_library utf.c private-utf.c private-utf_alphabetic.c private-utf_combining.c private-utf_control.c private-utf_digit.c private-utf_emoji.c private-utf_numeric.c private-utf_phonetic.c private-utf_private.c private-utf_punctuation.c private-utf_subscript.c private-utf_superscript.c private-utf_symbol.c private-utf_unassigned.c private-utf_valid.c private-utf_whitespace.c private-utf_wide.c private-utf_word.c private-utf_zero_width.c
 build_sources_library utf/common.c utf/convert.c
 build_sources_library utf/dynamic.c utf/dynamics.c utf/dynamicss.c
@@ -117,13 +115,11 @@ build_sources_headers string/dynamic.h string/dynamics.h string/dynamicss.h
 build_sources_headers string/map.h string/maps.h string/mapss.h
 build_sources_headers string/map_multi.h string/map_multis.h string/map_multiss.h
 build_sources_headers string/quantity.h string/quantitys.h string/quantityss.h
-build_sources_headers string/range.h string/ranges.h string/rangess.h
-build_sources_headers string/range_double.h string/range_doubles.h string/range_doubless.h
 build_sources_headers string/static.h string/statics.h string/staticss.h
 build_sources_headers string/triple.h string/triples.h string/tripless.h
 build_sources_headers time.h
-build_sources_headers type.h type/cell.h type/file.h type/fll.h type/mode.h type/number.h type/state.h type/status.h type/time.h
-build_sources_headers type_array.h type_array_file.h type_array/common.h type_array/cell.h type_array/file.h type_array/fll_id.h type_array/int8.h type_array/int16.h type_array/int32.h type_array/int64.h type_array/int128.h type_array/number_signed.h type_array/number_unsigned.h type_array/poll.h type_array/state.h type_array/status.h type_array/uint8.h type_array/uint16.h type_array/uint32.h type_array/uint64.h type_array/uint128.h
+build_sources_headers type.h type/cell.h type/file.h type/fll.h type/mode.h type/number.h type/range.h type/range_double.h type/state.h type/status.h type/time.h
+build_sources_headers type_array.h type_array_file.h type_array/common.h type_array/cell.h type_array/file.h type_array/fll_id.h type_array/int8.h type_array/int16.h type_array/int32.h type_array/int64.h type_array/int128.h type_array/number_signed.h type_array/number_unsigned.h type_array/poll.h type_array/range.h type_array/ranges.h type_array/rangess.h type_array/range_double.h type_array/range_doubles.h type_array/range_doubless.h type_array/state.h type_array/status.h type_array/uint8.h type_array/uint16.h type_array/uint32.h type_array/uint64.h type_array/uint128.h
 build_sources_headers utf.h utf/common.h utf/convert.h utf/dynamic.h utf/dynamics.h utf/dynamicss.h utf/is.h utf/is_character.h utf/map.h utf/maps.h utf/mapss.h utf/map_multi.h utf/map_multis.h utf/map_multiss.h utf/static.h utf/statics.h utf/staticss.h utf/string.h utf/triple.h utf/triples.h utf/tripless.h
 
 build_sources_headers-thread thread.h thread/attribute.h thread/barrier.h thread/barrier_attribute.h thread/condition.h thread/condition_attribute.h thread/id.h thread/key.h thread/lock.h thread/lock_attribute.h thread/mutex.h thread/mutex_attribute.h thread/once.h thread/semaphore.h thread/set.h thread/spin.h

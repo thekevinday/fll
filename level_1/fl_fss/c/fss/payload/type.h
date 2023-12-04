@@ -22,6 +22,8 @@ extern "C" {
  *   - i:            A counter used for the "headers" outer arrays.
  *   - j:            A counter used for the inner loop or for pre-allocation counting.
  *   - k:            A number used for converting values but also made available for use as a counter if need be.
+ *   - l:            @todo
+ *   - range:        @todo
  *   - conversion:   The conversion data.
  *   - destinations: The destinations map being appended to.
  *   - original:     The original destination used length.
@@ -33,7 +35,7 @@ extern "C" {
     f_number_unsigned_t j;
     f_number_unsigned_t k;
     f_number_unsigned_t l;
-    f_string_range_t range;
+    f_range_t range;
     f_conversion_data_t conversion;
 
     f_string_maps_t * const destinations;
@@ -46,7 +48,7 @@ extern "C" {
     0, \
     0, \
     0, \
-    f_string_range_t_initialize, \
+    f_range_t_initialize, \
     f_conversion_data_base_10_c, \
     0, \
     0, \
@@ -70,7 +72,7 @@ extern "C" {
     0, \
     0, \
     0, \
-    f_string_range_t_initialize, \
+    f_range_t_initialize, \
     f_conversion_data_base_10_c, \
     destinations, \
     original, \

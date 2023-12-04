@@ -43,7 +43,7 @@ extern "C" {
  * @see f_memory_array_resize()
  */
 #if !defined(_di_fll_iki_content_escape_) || !defined(_di_fll_iki_content_partial_escape_)
-  extern f_status_t private_fll_iki_content_partial_escape(const f_string_static_t content, const f_string_range_t range, const f_char_t quote, f_string_dynamic_t * const escaped) F_attribute_visibility_internal_d;
+  extern f_status_t private_fll_iki_content_partial_escape(const f_string_static_t content, const f_range_t range, const f_char_t quote, f_string_dynamic_t * const escaped) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fll_iki_content_escape_) || !defined(_di_fll_iki_content_partial_escape_)
 
 /**
@@ -75,7 +75,7 @@ extern "C" {
  * @see f_memory_array_resize()
  */
 #if !defined(_di_fll_iki_content_unescape_) || !defined(_di_fll_iki_content_partial_unescape_)
-  extern f_status_t private_fll_iki_content_partial_unescape(const f_string_static_t content, const f_string_range_t range, const f_char_t quote, f_string_dynamic_t * const unescaped) F_attribute_visibility_internal_d;
+  extern f_status_t private_fll_iki_content_partial_unescape(const f_string_static_t content, const f_range_t range, const f_char_t quote, f_string_dynamic_t * const unescaped) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fll_iki_content_unescape_) || !defined(_di_fll_iki_content_partial_unescape_)
 
 #ifdef __cplusplus

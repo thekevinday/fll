@@ -10,11 +10,11 @@ void test__f_fss_sets_destroy_callback__fails(void **state) {
   mock_unwrap = 0;
   mock_unwrap_f_memory = 0;
 
-  f_string_range_t base = f_string_range_t_initialize;
-  f_string_range_t base_array[] = { base };
-  f_string_ranges_t objects = { .array = base_array, .used = 0, .size = 1 };
-  f_string_ranges_t objects_array[] = { objects };
-  f_string_rangess_t contents = { .array = objects_array, .used = 0, .size = 1 };
+  f_range_t base = f_range_t_initialize;
+  f_range_t base_array[] = { base };
+  f_ranges_t objects = { .array = base_array, .used = 0, .size = 1 };
+  f_ranges_t objects_array[] = { objects };
+  f_rangess_t contents = { .array = objects_array, .used = 0, .size = 1 };
 
   f_fss_set_t data = { .objects = objects, .contents = contents };
   f_fss_set_t data_array[] = { data };
@@ -57,13 +57,13 @@ void test__f_fss_sets_destroy_callback__works(void **state) {
     f_status_t status = f_memory_array_resize(length, sizeof(f_fss_set_t), (void **) &datas.array, &datas.used, &datas.size);
     assert_int_equal(status, F_okay);
 
-    status = f_memory_array_resize(1, sizeof(f_string_range_t), (void **) &datas.array[0].objects.array, &datas.array[0].objects.used, &datas.array[0].objects.size);
+    status = f_memory_array_resize(1, sizeof(f_range_t), (void **) &datas.array[0].objects.array, &datas.array[0].objects.used, &datas.array[0].objects.size);
     assert_int_equal(status, F_okay);
 
-    status = f_memory_array_resize(1, sizeof(f_string_ranges_t), (void **) &datas.array[0].contents.array, &datas.array[0].contents.used, &datas.array[0].contents.size);
+    status = f_memory_array_resize(1, sizeof(f_ranges_t), (void **) &datas.array[0].contents.array, &datas.array[0].contents.used, &datas.array[0].contents.size);
     assert_int_equal(status, F_okay);
 
-    status = f_memory_array_resize(1, sizeof(f_string_range_t), (void **) &datas.array[0].contents.array[0].array, &datas.array[0].contents.array[0].used, &datas.array[0].contents.array[0].size);
+    status = f_memory_array_resize(1, sizeof(f_range_t), (void **) &datas.array[0].contents.array[0].array, &datas.array[0].contents.array[0].used, &datas.array[0].contents.array[0].size);
     assert_int_equal(status, F_okay);
   }
 

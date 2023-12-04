@@ -90,7 +90,7 @@ extern "C" {
  * @see f_memory_array_resize()
  */
 #ifndef _di_fll_iki_content_partial_escape_
-  extern f_status_t fll_iki_content_partial_escape(const f_string_static_t content, const f_string_range_t range, const f_string_static_t quote, f_string_dynamic_t * const escaped);
+  extern f_status_t fll_iki_content_partial_escape(const f_string_static_t content, const f_range_t range, const f_string_static_t quote, f_string_dynamic_t * const escaped);
 #endif // _di_fll_iki_content_partial_escape_
 
 /**
@@ -122,7 +122,7 @@ extern "C" {
  * @see f_memory_array_resize()
  */
 #ifndef _di_fll_iki_content_partial_unescape_
-  extern f_status_t fll_iki_content_partial_unescape(const f_string_static_t content, const f_string_range_t range, const f_string_static_t quote, f_string_dynamic_t * const unescaped);
+  extern f_status_t fll_iki_content_partial_unescape(const f_string_static_t content, const f_range_t range, const f_string_static_t quote, f_string_dynamic_t * const unescaped);
 #endif // _di_fll_iki_content_partial_unescape_
 
 /**

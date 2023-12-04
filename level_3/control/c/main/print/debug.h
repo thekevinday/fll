@@ -37,7 +37,7 @@ extern "C" {
  *   F_output_not (with error bit) if setting is NULL.
  */
 #ifndef _di_control_print_debug_packet_header_object_and_content_
-  extern f_status_t control_print_debug_packet_header_object_and_content(fl_print_t * const print, const f_string_static_t object, const f_string_static_t content, const f_string_range_t content_range);
+  extern f_status_t control_print_debug_packet_header_object_and_content(fl_print_t * const print, const f_string_static_t object, const f_string_static_t content, const f_range_t content_range);
 #endif // _di_control_print_debug_packet_header_object_and_content_
 
 /**
@@ -69,7 +69,7 @@ extern "C" {
  *   F_output_not (with error bit) if setting is NULL.
  */
 #ifndef _di_control_print_debug_packet_message_
-  extern f_status_t control_print_debug_packet_message(fl_print_t * const print, const f_string_t message, const f_string_static_t *buffer, const f_string_range_t *range);
+  extern f_status_t control_print_debug_packet_message(fl_print_t * const print, const f_string_t message, const f_string_static_t *buffer, const f_range_t *range);
 #endif // _di_control_print_debug_packet_message_
 
 #ifdef __cplusplus

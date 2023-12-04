@@ -22,7 +22,7 @@ extern "C" {
         destination->array[destination->used].vocabulary.used = 0;
 
         if (source.array[i].content.used) {
-          status = f_string_ranges_append_all(source.array[i].content, &destination->array[destination->used].content);
+          status = f_ranges_append_all(source.array[i].content, &destination->array[destination->used].content);
           if (F_status_is_error(status)) return status;
         }
 
@@ -33,12 +33,12 @@ extern "C" {
         } // for
 
         if (source.array[i].variable.used) {
-          status = f_string_ranges_append_all(source.array[i].variable, &destination->array[destination->used].variable);
+          status = f_ranges_append_all(source.array[i].variable, &destination->array[destination->used].variable);
           if (F_status_is_error(status)) return status;
         }
 
         if (source.array[i].vocabulary.used) {
-          status = f_string_ranges_append_all(source.array[i].vocabulary, &destination->array[destination->used].vocabulary);
+          status = f_ranges_append_all(source.array[i].vocabulary, &destination->array[destination->used].vocabulary);
           if (F_status_is_error(status)) return status;
         }
       } // for

@@ -10,7 +10,7 @@ void test__f_utf_string_dynamic_seek_line__returns_data_not_stop(void **state) {
   const f_utf_string_static_t source = macro_f_utf_string_static_t_initialize_1((f_utf_string_t) "\0\0\0t\0\0\0e\0\0\0s\0\0\0t\0\0\0\n\0\0\0a\0\0\0f\0\0\0t\0\0\0e\0\0\0r", 0, 10);
 
   {
-    f_string_range_t range = f_string_range_t_initialize;
+    f_range_t range = f_range_t_initialize;
 
     const f_status_t status = f_utf_string_dynamic_seek_line(source, &range);
 
@@ -23,7 +23,7 @@ void test__f_utf_string_dynamic_seek_line__returns_none_eos(void **state) {
   const f_utf_string_static_t source = macro_f_utf_string_static_t_initialize_1((f_utf_string_t) "\0\0\0t\0\0\0e\0\0\0s\0\0\0t", 0, 4);
 
   {
-    f_string_range_t range = macro_f_string_range_t_initialize_1(0, source.used - 1);
+    f_range_t range = macro_f_range_t_initialize_1(0, source.used - 1);
 
     const f_status_t status = f_utf_string_dynamic_seek_line(source, &range);
 
@@ -39,7 +39,7 @@ void test__f_utf_string_dynamic_seek_line__returns_none_stop(void **state) {
   const f_utf_string_static_t source = macro_f_utf_string_static_t_initialize_1((f_utf_string_t) "\0\0\0t\0\0\0e\0\0\0s\0\0\0t", 0, 4);
 
   {
-    f_string_range_t range = macro_f_string_range_t_initialize_1(0, source.used - 2);
+    f_range_t range = macro_f_range_t_initialize_1(0, source.used - 2);
 
     const f_status_t status = f_utf_string_dynamic_seek_line(source, &range);
 
@@ -55,7 +55,7 @@ void test__f_utf_string_dynamic_seek_line__works(void **state) {
   const f_utf_string_static_t source = macro_f_utf_string_static_t_initialize_1((f_utf_string_t) "\0\0\0t\0\0\0e\0\0\0s\0\0\0t\0\0\0\n\0\0\0a\0\0\0f\0\0\0t\0\0\0e\0\0\0r", 0, 10);
 
   {
-    f_string_range_t range = macro_f_string_range_t_initialize_1(0, source.used - 1);
+    f_range_t range = macro_f_range_t_initialize_1(0, source.used - 1);
 
     const f_status_t status = f_utf_string_dynamic_seek_line(source, &range);
 

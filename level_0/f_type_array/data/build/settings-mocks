@@ -30,10 +30,10 @@ build_language c
 build_libraries -lc
 build_libraries-individual -lf_memory
 
-build_sources_library type_array/cell.c type_array/file.c type_array/fll_id.c type_array/int8.c type_array/int16.c type_array/int32.c type_array/int64.c type_array/int128.c type_array/number_signed.c type_array/number_unsigned.c type_array/poll.c type_array/state.c type_array/status.c type_array/uint8.c type_array/uint16.c type_array/uint32.c type_array/uint64.c type_array/uint128.c
+build_sources_library type_array/cell.c type_array/file.c type_array/fll_id.c type_array/int8.c type_array/int16.c type_array/int32.c type_array/int64.c type_array/int128.c type_array/number_signed.c type_array/number_unsigned.c type_array/poll.c type_array/range.c type_array/ranges.c type_array/rangess.c type_array/range_double.c type_array/range_doubles.c type_array/range_doubless.c type_array/state.c type_array/status.c type_array/uint8.c type_array/uint16.c type_array/uint32.c type_array/uint64.c type_array/uint128.c
 build_sources_library ../../tests/unit/c/mock-type_array.c
 
-build_sources_headers type_array.h type_array_file.h type_array/common.h type_array/cell.h type_array/file.h type_array/fll_id.h type_array/int8.h type_array/int16.h type_array/int32.h type_array/int64.h type_array/int128.h type_array/number_signed.h type_array/number_unsigned.h type_array/poll.h type_array/state.h type_array/status.h type_array/uint8.h type_array/uint16.h type_array/uint32.h type_array/uint64.h type_array/uint128.h
+build_sources_headers type_array.h type_array_file.h type_array/common.h type_array/cell.h type_array/file.h type_array/fll_id.h type_array/int8.h type_array/int16.h type_array/int32.h type_array/int64.h type_array/int128.h type_array/number_signed.h type_array/number_unsigned.h type_array/poll.h type_array/range.h type_array/ranges.h type_array/rangess.h type_array/range_double.h type_array/range_doubles.h type_array/range_doubless.h type_array/state.h type_array/status.h type_array/uint8.h type_array/uint16.h type_array/uint32.h type_array/uint64.h type_array/uint128.h
 
 build_script yes
 build_shared yes

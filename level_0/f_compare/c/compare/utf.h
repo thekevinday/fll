@@ -315,7 +315,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_compare_utf_dynamic_partial_
-  extern f_status_t f_compare_utf_dynamic_partial(const f_utf_string_static_t string1, const f_utf_string_static_t string2, const f_string_range_t range1, const f_string_range_t range2);
+  extern f_status_t f_compare_utf_dynamic_partial(const f_utf_string_static_t string1, const f_utf_string_static_t string2, const f_range_t range1, const f_range_t range2);
 #endif // _di_f_compare_utf_dynamic_partial_
 
 /**
@@ -338,7 +338,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_compare_utf_dynamic_partial_dynamic_
-  extern f_status_t f_compare_utf_dynamic_partial_dynamic(const f_utf_string_static_t string1, const f_utf_string_static_t string2, const f_string_range_t range2);
+  extern f_status_t f_compare_utf_dynamic_partial_dynamic(const f_utf_string_static_t string1, const f_utf_string_static_t string2, const f_range_t range2);
 #endif // _di_f_compare_utf_dynamic_partial_dynamic_
 
 /**
@@ -370,7 +370,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_compare_utf_dynamic_partial_except_
-  extern f_status_t f_compare_utf_dynamic_partial_except(const f_utf_string_static_t string1, const f_utf_string_static_t string2, const f_string_range_t range1, const f_string_range_t range2, const f_number_unsigneds_t except1, const f_number_unsigneds_t except2);
+  extern f_status_t f_compare_utf_dynamic_partial_except(const f_utf_string_static_t string1, const f_utf_string_static_t string2, const f_range_t range1, const f_range_t range2, const f_number_unsigneds_t except1, const f_number_unsigneds_t except2);
 #endif // _di_f_compare_utf_dynamic_partial_except_
 
 /**
@@ -400,7 +400,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_compare_utf_dynamic_partial_except_dynamic_
-  extern f_status_t f_compare_utf_dynamic_partial_except_dynamic(const f_utf_string_static_t string1, const f_utf_string_static_t string2, const f_string_range_t range2, const f_number_unsigneds_t except1, const f_number_unsigneds_t except2);
+  extern f_status_t f_compare_utf_dynamic_partial_except_dynamic(const f_utf_string_static_t string1, const f_utf_string_static_t string2, const f_range_t range2, const f_number_unsigneds_t except1, const f_number_unsigneds_t except2);
 #endif // _di_f_compare_utf_dynamic_partial_except_dynamic_
 
 /**
@@ -434,7 +434,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_compare_utf_dynamic_partial_except_string_
-  extern f_status_t f_compare_utf_dynamic_partial_except_string(const f_utf_string_t string1, const f_utf_string_static_t string2, const f_number_unsigned_t length1, const f_string_range_t range2, const f_number_unsigneds_t except1, const f_number_unsigneds_t except2);
+  extern f_status_t f_compare_utf_dynamic_partial_except_string(const f_utf_string_t string1, const f_utf_string_static_t string2, const f_number_unsigned_t length1, const f_range_t range2, const f_number_unsigneds_t except1, const f_number_unsigneds_t except2);
 #endif // _di_f_compare_utf_dynamic_partial_except_string_
 
 /**
@@ -473,7 +473,7 @@ extern "C" {
  * @see f_utf_character_is_whitespace()
  */
 #ifndef _di_f_compare_utf_dynamic_partial_except_trim_
-  extern f_status_t f_compare_utf_dynamic_partial_except_trim(const f_utf_string_static_t string1, const f_utf_string_static_t string2, const f_string_range_t range1, const f_string_range_t range2, const f_number_unsigneds_t except1, const f_number_unsigneds_t except2);
+  extern f_status_t f_compare_utf_dynamic_partial_except_trim(const f_utf_string_static_t string1, const f_utf_string_static_t string2, const f_range_t range1, const f_range_t range2, const f_number_unsigneds_t except1, const f_number_unsigneds_t except2);
 #endif // _di_f_compare_utf_dynamic_partial_except_trim_
 
 /**
@@ -510,7 +510,7 @@ extern "C" {
  * @see f_utf_character_is_whitespace()
  */
 #ifndef _di_f_compare_utf_dynamic_partial_except_trim_dynamic_
-  extern f_status_t f_compare_utf_dynamic_partial_except_trim_dynamic(const f_utf_string_static_t string1, const f_utf_string_static_t string2, const f_string_range_t range2, const f_number_unsigneds_t except1, const f_number_unsigneds_t except2);
+  extern f_status_t f_compare_utf_dynamic_partial_except_trim_dynamic(const f_utf_string_static_t string1, const f_utf_string_static_t string2, const f_range_t range2, const f_number_unsigneds_t except1, const f_number_unsigneds_t except2);
 #endif // _di_f_compare_utf_dynamic_partial_except_trim_dynamic_
 
 /**
@@ -551,7 +551,7 @@ extern "C" {
  * @see f_utf_character_is_whitespace()
  */
 #ifndef _di_f_compare_utf_dynamic_partial_except_trim_string_
-  extern f_status_t f_compare_utf_dynamic_partial_except_trim_string(const f_utf_string_t string1, const f_utf_string_static_t string2, const f_number_unsigned_t length1, const f_string_range_t range2, const f_number_unsigneds_t except1, const f_number_unsigneds_t except2);
+  extern f_status_t f_compare_utf_dynamic_partial_except_trim_string(const f_utf_string_t string1, const f_utf_string_static_t string2, const f_number_unsigned_t length1, const f_range_t range2, const f_number_unsigneds_t except1, const f_number_unsigneds_t except2);
 #endif // _di_f_compare_utf_dynamic_partial_except_trim_string_
 
 /**
@@ -578,7 +578,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_compare_utf_dynamic_partial_string_
-  extern f_status_t f_compare_utf_dynamic_partial_string(const f_utf_string_t string1, const f_utf_string_static_t string2, const f_number_unsigned_t length1, const f_string_range_t range2);
+  extern f_status_t f_compare_utf_dynamic_partial_string(const f_utf_string_t string1, const f_utf_string_static_t string2, const f_number_unsigned_t length1, const f_range_t range2);
 #endif // _di_f_compare_utf_dynamic_partial_string_
 
 /**
@@ -610,7 +610,7 @@ extern "C" {
  * @see f_utf_character_is_whitespace()
  */
 #ifndef _di_f_compare_utf_dynamic_partial_trim_
-  extern f_status_t f_compare_utf_dynamic_partial_trim(const f_utf_string_static_t string1, const f_utf_string_static_t string2, const f_string_range_t range1, const f_string_range_t range2);
+  extern f_status_t f_compare_utf_dynamic_partial_trim(const f_utf_string_static_t string1, const f_utf_string_static_t string2, const f_range_t range1, const f_range_t range2);
 #endif // _di_f_compare_utf_dynamic_partial_trim_
 
 /**
@@ -640,7 +640,7 @@ extern "C" {
  * @see f_utf_character_is_whitespace()
  */
 #ifndef _di_f_compare_utf_dynamic_partial_trim_dynamic_
-  extern f_status_t f_compare_utf_dynamic_partial_trim_dynamic(const f_utf_string_static_t string1, const f_utf_string_static_t string2, const f_string_range_t range2);
+  extern f_status_t f_compare_utf_dynamic_partial_trim_dynamic(const f_utf_string_static_t string1, const f_utf_string_static_t string2, const f_range_t range2);
 #endif // _di_f_compare_utf_dynamic_partial_trim_dynamic_
 
 /**
@@ -674,7 +674,7 @@ extern "C" {
  * @see f_utf_character_is_whitespace()
  */
 #ifndef _di_f_compare_utf_dynamic_partial_trim_string_
-  extern f_status_t f_compare_utf_dynamic_partial_trim_string(const f_utf_string_t string1, const f_utf_string_static_t string2, const f_number_unsigned_t length1, const f_string_range_t range2);
+  extern f_status_t f_compare_utf_dynamic_partial_trim_string(const f_utf_string_t string1, const f_utf_string_static_t string2, const f_number_unsigned_t length1, const f_range_t range2);
 #endif // _di_f_compare_utf_dynamic_partial_trim_string_
 
 /**

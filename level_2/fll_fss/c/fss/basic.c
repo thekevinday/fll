@@ -5,7 +5,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fll_fss_basic_read_
-  void fll_fss_basic_read(const f_string_static_t buffer, f_string_range_t * const range, f_string_ranges_t * const objects, f_string_rangess_t * const contents, f_uint8s_t * const objects_quoted, f_number_unsigneds_t * const objects_delimits, f_number_unsigneds_t * const contents_delimits, f_state_t * const state) {
+  void fll_fss_basic_read(const f_string_static_t buffer, f_range_t * const range, f_ranges_t * const objects, f_rangess_t * const contents, f_uint8s_t * const objects_quoted, f_number_unsigneds_t * const objects_delimits, f_number_unsigneds_t * const contents_delimits, f_state_t * const state) {
     #ifndef _di_level_2_parameter_checking_
       if (!state) return;
 
@@ -24,10 +24,10 @@ extern "C" {
     uint8_t *quoted_object = 0;
 
     do {
-      state->status = f_memory_array_increase(state->step_small, sizeof(f_string_range_t), (void **) &objects->array, &objects->used, &objects->size);
+      state->status = f_memory_array_increase(state->step_small, sizeof(f_range_t), (void **) &objects->array, &objects->used, &objects->size);
       if (F_status_is_error(state->status)) return;
 
-      state->status = f_memory_array_increase(state->step_small, sizeof(f_string_ranges_t), (void **) &contents->array, &contents->used, &contents->size);
+      state->status = f_memory_array_increase(state->step_small, sizeof(f_ranges_t), (void **) &contents->array, &contents->used, &contents->size);
       if (F_status_is_error(state->status)) return;
 
       contents->array[contents->used].used = 0;
@@ -53,7 +53,7 @@ extern "C" {
               ++objects_quoted->used;
             }
 
-            status = f_memory_array_increase(state->step_small, sizeof(f_string_range_t), (void **) &contents->array[contents->used].array, &contents->array[contents->used].used, &contents->array[contents->used].size);
+            status = f_memory_array_increase(state->step_small, sizeof(f_range_t), (void **) &contents->array[contents->used].array, &contents->array[contents->used].used, &contents->array[contents->used].size);
 
             if (F_status_is_error(status)) {
               state->status = status;
@@ -93,7 +93,7 @@ extern "C" {
         if (state->status == F_fss_found_object_content_not) {
           found_data = F_true;
 
-          status = f_memory_array_increase(state->step_small, sizeof(f_string_range_t), (void **) &contents->array[contents->used].array, &contents->array[contents->used].used, &contents->array[contents->used].size);
+          status = f_memory_array_increase(state->step_small, sizeof(f_range_t), (void **) &contents->array[contents->used].array, &contents->array[contents->used].used, &contents->array[contents->used].size);
 
           if (F_status_is_error(status)) {
             state->status = status;
@@ -181,7 +181,7 @@ extern "C" {
       }
     #endif // _di_level_2_parameter_checking_
 
-    f_string_range_t range = macro_f_string_range_t_initialize_2(object.used);
+    f_range_t range = macro_f_range_t_initialize_2(object.used);
 
     fl_fss_basic_object_write(object, quote, f_fss_complete_full_e, &range, destination, state);
 

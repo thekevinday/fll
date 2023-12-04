@@ -20,7 +20,7 @@ void test__f_serialize_from_simple_range__returns_data_not(void **state) {
 
   const f_string_static_t source = f_string_static_t_initialize;
 
-  f_string_ranges_t ranges = f_string_ranges_t_initialize;
+  f_ranges_t ranges = f_ranges_t_initialize;
 
   {
     const f_status_t status = f_serialize_from_simple_range(source, &ranges);
@@ -43,15 +43,15 @@ void test__f_serialize_from_simple_range__works(void **state) {
     macro_f_string_static_t_initialize_1("им:?", 0, 6),
   };
 
-  f_string_range_t expected_array_0[] = { { 0, 0 } };
-  f_string_range_t expected_array_1[] = { { 0, 4 } };
-  f_string_range_t expected_array_2[] = { { 0, 0 }, { 1, 0 } };
-  f_string_range_t expected_array_3[] = { { 1, 0 }, { 1, 2 } };
-  f_string_range_t expected_array_4[] = { { 0, 4 }, { 6, 6 }, { 1, 0 }, { 9, 11 } };
-  f_string_range_t expected_array_5[] = { { 0, 3 }, { 5, 7 } };
-  f_string_range_t expected_array_6[] = { { 0, 3 }, { 5, 5 } };
+  f_range_t expected_array_0[] = { { 0, 0 } };
+  f_range_t expected_array_1[] = { { 0, 4 } };
+  f_range_t expected_array_2[] = { { 0, 0 }, { 1, 0 } };
+  f_range_t expected_array_3[] = { { 1, 0 }, { 1, 2 } };
+  f_range_t expected_array_4[] = { { 0, 4 }, { 6, 6 }, { 1, 0 }, { 9, 11 } };
+  f_range_t expected_array_5[] = { { 0, 3 }, { 5, 7 } };
+  f_range_t expected_array_6[] = { { 0, 3 }, { 5, 5 } };
 
-  f_string_ranges_t expecteds[] = {
+  f_ranges_t expecteds[] = {
     macro_f_string_statics_t_initialize_1(expected_array_0, 0, 1),
     macro_f_string_statics_t_initialize_1(expected_array_1, 0, 1),
     macro_f_string_statics_t_initialize_1(expected_array_2, 0, 2),
@@ -61,7 +61,7 @@ void test__f_serialize_from_simple_range__works(void **state) {
     macro_f_string_statics_t_initialize_1(expected_array_6, 0, 2),
   };
 
-  f_string_ranges_t ranges = f_string_ranges_t_initialize;
+  f_ranges_t ranges = f_ranges_t_initialize;
 
   for (uint8_t i = 0; i < 7; ++i) {
 

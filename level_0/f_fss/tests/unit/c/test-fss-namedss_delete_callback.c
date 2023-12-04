@@ -10,11 +10,11 @@ void test__f_fss_namedss_delete_callback__fails(void **state) {
   mock_unwrap = 0;
   mock_unwrap_f_memory = 0;
 
-  f_string_range_t base = f_string_range_t_initialize;
-  f_string_range_t base_array[] = { base };
-  f_string_ranges_t objects = { .array = base_array, .used = 0, .size = 1 };
-  f_string_ranges_t objects_array[] = { objects };
-  f_string_rangess_t contents = { .array = objects_array, .used = 0, .size = 1 };
+  f_range_t base = f_range_t_initialize;
+  f_range_t base_array[] = { base };
+  f_ranges_t objects = { .array = base_array, .used = 0, .size = 1 };
+  f_ranges_t objects_array[] = { objects };
+  f_rangess_t contents = { .array = objects_array, .used = 0, .size = 1 };
 
   uint8_t quote_array[] = { 0 };
   f_uint8s_t quotes = { .array = quote_array, .used = 0, .size = 1 };
@@ -89,10 +89,10 @@ void test__f_fss_namedss_delete_callback__works(void **state) {
     status = f_memory_array_resize(1, sizeof(f_fss_named_t), (void **) &datass.array[0].array, &datass.array[0].used, &datass.array[0].size);
     assert_int_equal(status, F_okay);
 
-    status = f_memory_array_resize(1, sizeof(f_string_range_t), (void **) &datass.array[0].array[0].objects.array, &datass.array[0].array[0].objects.used, &datass.array[0].array[0].objects.size);
+    status = f_memory_array_resize(1, sizeof(f_range_t), (void **) &datass.array[0].array[0].objects.array, &datass.array[0].array[0].objects.used, &datass.array[0].array[0].objects.size);
     assert_int_equal(status, F_okay);
 
-    status = f_memory_array_resize(1, sizeof(f_string_ranges_t), (void **) &datass.array[0].array[0].contents.array, &datass.array[0].array[0].contents.used, &datass.array[0].array[0].contents.size);
+    status = f_memory_array_resize(1, sizeof(f_ranges_t), (void **) &datass.array[0].array[0].contents.array, &datass.array[0].array[0].contents.used, &datass.array[0].array[0].contents.size);
     assert_int_equal(status, F_okay);
 
     status = f_memory_array_resize(1, sizeof(f_uint8s_t), (void **) &datass.array[0].array[0].quotess.array, &datass.array[0].array[0].quotess.used, &datass.array[0].array[0].quotess.size);

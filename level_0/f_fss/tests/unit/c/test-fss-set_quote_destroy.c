@@ -10,11 +10,11 @@ void test__f_fss_set_quote_destroy__fails(void **state) {
   mock_unwrap = 0;
   mock_unwrap_f_memory = 0;
 
-  f_string_range_t base = f_string_range_t_initialize;
-  f_string_range_t base_array[] = { base };
-  f_string_ranges_t objects = { .array = base_array, .used = 0, .size = 1 };
-  f_string_ranges_t objects_array[] = { objects };
-  f_string_rangess_t contents = { .array = objects_array, .used = 0, .size = 1 };
+  f_range_t base = f_range_t_initialize;
+  f_range_t base_array[] = { base };
+  f_ranges_t objects = { .array = base_array, .used = 0, .size = 1 };
+  f_ranges_t objects_array[] = { objects };
+  f_rangess_t contents = { .array = objects_array, .used = 0, .size = 1 };
 
   uint8_t quote_array[] = { 0 };
   f_uint8s_t quotes = { .array = quote_array, .used = 0, .size = 1 };
@@ -52,13 +52,13 @@ void test__f_fss_set_quote_destroy__works(void **state) {
   f_fss_set_quote_t data = f_fss_set_quote_t_initialize;
 
   {
-    f_status_t status = f_memory_array_resize(length, sizeof(f_string_range_t), (void **) &data.objects.array, &data.objects.used, &data.objects.size);
+    f_status_t status = f_memory_array_resize(length, sizeof(f_range_t), (void **) &data.objects.array, &data.objects.used, &data.objects.size);
     assert_int_equal(status, F_okay);
 
-    status = f_memory_array_resize(1, sizeof(f_string_ranges_t), (void **) &data.contents.array, &data.contents.used, &data.contents.size);
+    status = f_memory_array_resize(1, sizeof(f_ranges_t), (void **) &data.contents.array, &data.contents.used, &data.contents.size);
     assert_int_equal(status, F_okay);
 
-    status = f_memory_array_resize(1, sizeof(f_string_range_t), (void **) &data.contents.array[0].array, &data.contents.array[0].used, &data.contents.array[0].size);
+    status = f_memory_array_resize(1, sizeof(f_range_t), (void **) &data.contents.array[0].array, &data.contents.array[0].used, &data.contents.array[0].size);
     assert_int_equal(status, F_okay);
 
     status = f_memory_array_resize(1, sizeof(uint8_t), (void **) &data.objects_quote.array, &data.objects_quote.used, &data.objects_quote.size);

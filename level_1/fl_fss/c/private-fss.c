@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #if !defined(_di_fl_fss_basic_list_content_write_) || !defined(_di_fl_fss_extended_list_content_write_) || !defined(_di_fl_fss_embedded_list_content_write_)
-  void private_fl_fss_basic_list_write_add_until_end(const f_string_static_t buffer, f_string_range_t * const range, f_string_dynamic_t * const destination, f_state_t * const state) {
+  void private_fl_fss_basic_list_write_add_until_end(const f_string_static_t buffer, f_range_t * const range, f_string_dynamic_t * const destination, f_state_t * const state) {
 
     state->status = F_okay;
 
@@ -31,7 +31,7 @@ extern "C" {
 #if !defined(_di_fl_fss_basic_list_object_write_) || !defined(_di_fl_fss_extended_list_object_write_)
   void private_fl_fss_basic_list_write_object_trim(const f_number_unsigned_t used_start, f_string_dynamic_t * const destination, f_state_t * const state) {
 
-    f_string_range_t destination_range = macro_f_string_range_t_initialize_2(destination->used);
+    f_range_t destination_range = macro_f_range_t_initialize_2(destination->used);
     f_number_unsigned_t i = 0;
     uint8_t width = 0;
 
@@ -111,7 +111,7 @@ extern "C" {
 #endif // !defined(_di_fl_fss_basic_list_object_write_) || !defined(_di_fl_fss_extended_list_object_write_)
 
 #if !defined(_di_fl_fss_basic_object_read_) || !defined(_di_fl_fss_extended_object_read_) || !defined(_di_fl_fss_extended_content_read_)
-  void private_fl_fss_basic_read(const f_string_static_t buffer, const bool object_as, f_string_range_t * const range, f_string_range_t * const found, uint8_t * const quote, f_number_unsigneds_t * const delimits, f_state_t * const state) {
+  void private_fl_fss_basic_read(const f_string_static_t buffer, const bool object_as, f_range_t * const range, f_range_t * const found, uint8_t * const quote, f_number_unsigneds_t * const delimits, f_state_t * const state) {
 
     f_fss_skip_past_space(buffer, range, state);
     if (F_status_is_error(state->status)) return;
@@ -728,7 +728,7 @@ extern "C" {
 #endif // !defined(_di_fl_fss_basic_object_read_) || !defined(_di_fl_fss_extended_object_read_)
 
 #if !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_extended_object_write_) || !defined(_di_fl_fss_extended_content_write_)
-  void private_fl_fss_basic_write(const bool object_as, const f_string_static_t object, const uint8_t quote, f_string_range_t *range, f_string_dynamic_t *destination, f_state_t * const state, void * const internal) {
+  void private_fl_fss_basic_write(const bool object_as, const f_string_static_t object, const uint8_t quote, f_range_t *range, f_string_dynamic_t *destination, f_state_t * const state, void * const internal) {
 
     f_fss_skip_past_space(object, range, state);
     if (F_status_is_error(state->status)) return;
@@ -1090,7 +1090,7 @@ extern "C" {
 
         // Only when followed by a space must the start quote be delimited.
         if (i <= range->stop && i < object.used) {
-          f_string_range_t range_i = *range;
+          f_range_t range_i = *range;
 
           range_i.start = i;
 
@@ -1127,7 +1127,7 @@ extern "C" {
 #if !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_extended_object_write_)
   void private_fl_fss_basic_write_object_trim(const uint8_t quote, const f_number_unsigned_t used_start, f_string_dynamic_t * const destination, f_state_t * const state) {
 
-    f_string_range_t destination_range = macro_f_string_range_t_initialize_2(destination->used);
+    f_range_t destination_range = macro_f_range_t_initialize_2(destination->used);
     f_number_unsigned_t i = 0;
 
     uint8_t width = 0;

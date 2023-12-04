@@ -167,7 +167,7 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_fake_make_print_warning_setting_content_empty_
-  extern f_status_t fake_make_print_warning_setting_content_empty(fl_print_t * const print, const f_string_static_t fakefile, const f_string_dynamic_t buffer, const f_string_range_t range, const f_string_static_t name);
+  extern f_status_t fake_make_print_warning_setting_content_empty(fl_print_t * const print, const f_string_static_t fakefile, const f_string_dynamic_t buffer, const f_range_t range, const f_string_static_t name);
 #endif // _di_fake_make_print_warning_setting_content_empty_
 
 /**
@@ -201,7 +201,7 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_fake_make_print_warning_setting_content_invalid_
-  extern f_status_t fake_make_print_warning_setting_content_invalid(fl_print_t * const print, const f_string_static_t fakefile, const f_string_dynamic_t buffer, const f_string_range_t object, const f_string_range_t content, const f_string_static_t name);
+  extern f_status_t fake_make_print_warning_setting_content_invalid(fl_print_t * const print, const f_string_static_t fakefile, const f_string_dynamic_t buffer, const f_range_t object, const f_range_t content, const f_string_static_t name);
 #endif // _di_fake_make_print_warning_setting_content_invalid_
 
 /**

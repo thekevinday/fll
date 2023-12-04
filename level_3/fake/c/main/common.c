@@ -561,7 +561,7 @@ extern "C" {
 
     // Shrink an overly long array.
     if (iki_data->content.used > fake_max_over_array_d) {
-      f_memory_array_resize(fake_allocation_large_d, sizeof(f_string_range_t), (void **) &iki_data->content.array, &iki_data->content.used, &iki_data->content.size);
+      f_memory_array_resize(fake_allocation_large_d, sizeof(f_range_t), (void **) &iki_data->content.array, &iki_data->content.used, &iki_data->content.size);
     }
 
     if (iki_data->delimits.used > fake_max_over_array_d) {
@@ -569,11 +569,11 @@ extern "C" {
     }
 
     if (iki_data->variable.used > fake_max_over_array_d) {
-      f_memory_array_resize(fake_allocation_large_d, sizeof(f_string_range_t), (void **) &iki_data->variable.array, &iki_data->variable.used, &iki_data->variable.size);
+      f_memory_array_resize(fake_allocation_large_d, sizeof(f_range_t), (void **) &iki_data->variable.array, &iki_data->variable.used, &iki_data->variable.size);
     }
 
     if (iki_data->vocabulary.used > fake_max_over_array_d) {
-      f_memory_array_resize(fake_allocation_large_d, sizeof(f_string_range_t), (void **) &iki_data->vocabulary.array, &iki_data->vocabulary.used, &iki_data->vocabulary.size);
+      f_memory_array_resize(fake_allocation_large_d, sizeof(f_range_t), (void **) &iki_data->vocabulary.array, &iki_data->vocabulary.used, &iki_data->vocabulary.size);
     }
 
     while (iki_data->content.used) {

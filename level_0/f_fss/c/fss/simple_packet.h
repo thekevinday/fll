@@ -129,13 +129,13 @@ extern "C" {
   typedef struct {
     uint8_t control;
     uint32_t size;
-    f_string_range_t payload;
+    f_range_t payload;
   } f_fss_simple_packet_range_t;
 
   #define f_fss_simple_packet_range_t_initialize { \
     0, \
     0, \
-    f_string_range_t_initialize, \
+    f_range_t_initialize, \
   }
 
   #define macro_f_fss_simple_packet_range_t_initialize_1(control, size, payload) { \

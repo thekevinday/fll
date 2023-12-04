@@ -101,7 +101,7 @@ extern "C" {
  * @see fake_make_operate_expand_environment()
  */
 #ifndef _di_fake_make_operate_expand_
-  extern void fake_make_operate_expand(fake_make_data_t * const data_make, const f_string_range_t section_name, const f_string_ranges_t content, const f_uint8s_t quotes);
+  extern void fake_make_operate_expand(fake_make_data_t * const data_make, const f_range_t section_name, const f_ranges_t content, const f_uint8s_t quotes);
 #endif // _di_fake_make_operate_expand_
 
 /**
@@ -128,7 +128,7 @@ extern "C" {
  * @see f_string_dynamic_mash()
  */
 #ifndef _di_fake_make_operate_expand_build_
-  extern void fake_make_operate_expand_build(fake_make_data_t * const data_make, const uint8_t quote, const f_string_range_t range_name);
+  extern void fake_make_operate_expand_build(fake_make_data_t * const data_make, const uint8_t quote, const f_range_t range_name);
 #endif // _di_fake_make_operate_expand_build_
 
 /**
@@ -152,7 +152,7 @@ extern "C" {
  * @see f_string_dynamic_append_nulless()
  */
 #ifndef _di_fake_make_operate_expand_context_
-  extern void fake_make_operate_expand_context(fake_make_data_t * const data_make, const uint8_t quote, const f_string_range_t range_name);
+  extern void fake_make_operate_expand_context(fake_make_data_t * const data_make, const uint8_t quote, const f_range_t range_name);
 #endif // _di_fake_make_operate_expand_context_
 
 /**
@@ -183,7 +183,7 @@ extern "C" {
  * @see f_string_dynamic_partial_append_nulless()
  */
 #ifndef _di_fake_make_operate_expand_environment_
-  extern void fake_make_operate_expand_environment(fake_make_data_t * const data_make, const uint8_t quote, const f_string_range_t range_name);
+  extern void fake_make_operate_expand_environment(fake_make_data_t * const data_make, const uint8_t quote, const f_range_t range_name);
 #endif // _di_fake_make_operate_expand_environment_
 
 /**

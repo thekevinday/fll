@@ -29,7 +29,7 @@ extern "C" {
  *   The start range will be past the stop range on overflow or on any failure.
  */
 #ifndef _di_controller_range_after_number_sign_
-  extern f_string_range_t controller_range_after_number_sign(const f_string_static_t buffer, const f_string_range_t range) F_attribute_visibility_internal_d;
+  extern f_range_t controller_range_after_number_sign(const f_string_static_t buffer, const f_range_t range) F_attribute_visibility_internal_d;
 #endif // _di_controller_range_after_number_sign_
 
 /**
@@ -165,7 +165,7 @@ extern "C" {
  * @see f_rip_dynamic_partial_nulless()
  */
 #ifndef _di_controller_get_id_user_
-  f_status_t controller_get_id_user(const f_string_static_t buffer, const f_string_range_t range, controller_cache_t * const cache, uid_t * const id) F_attribute_visibility_internal_d;
+  f_status_t controller_get_id_user(const f_string_static_t buffer, const f_range_t range, controller_cache_t * const cache, uid_t * const id) F_attribute_visibility_internal_d;
 #endif // _di_controller_get_id_user_
 
 /**
@@ -194,7 +194,7 @@ extern "C" {
  * @see f_rip_dynamic_partial_nulless()
  */
 #ifndef _di_controller_get_id_group_
-  f_status_t controller_get_id_group(const f_string_static_t buffer, const f_string_range_t range, controller_cache_t * const cache, gid_t * const id) F_attribute_visibility_internal_d;
+  f_status_t controller_get_id_group(const f_string_static_t buffer, const f_range_t range, controller_cache_t * const cache, gid_t * const id) F_attribute_visibility_internal_d;
 #endif // _di_controller_get_id_group_
 
 /**

@@ -128,7 +128,7 @@ extern f_status_t firewall_buffer_rules(firewall_data_t * const data, const f_st
  *
  *   Status codes (with error bit) are returned on any problem.
  */
-extern f_status_t firewall_process_rules(firewall_data_t * const data, f_string_range_t * const range, firewall_local_data_t * const local) F_attribute_visibility_internal_d;
+extern f_status_t firewall_process_rules(firewall_data_t * const data, f_range_t * const range, firewall_local_data_t * const local) F_attribute_visibility_internal_d;
 
 /**
  * Delete allocated local data.

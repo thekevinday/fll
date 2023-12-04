@@ -77,9 +77,9 @@ extern "C" {
 
     f_memory_array_resize(0, sizeof(f_char_t), (void **) &setting->buffer.string, &setting->buffer.used, &setting->buffer.size);
 
-    f_memory_array_resize(0, sizeof(f_string_range_t), (void **) &setting->objects.array, &setting->objects.used, &setting->objects.size);
-    f_memory_array_resize(0, sizeof(f_string_range_t), (void **) &setting->comments.array, &setting->comments.used, &setting->comments.size);
-    f_memory_arrays_resize(0, sizeof(f_string_ranges_t), (void **) &setting->contents.array, &setting->contents.used, &setting->contents.size, &f_string_rangess_delete_callback);
+    f_memory_array_resize(0, sizeof(f_range_t), (void **) &setting->objects.array, &setting->objects.used, &setting->objects.size);
+    f_memory_array_resize(0, sizeof(f_range_t), (void **) &setting->comments.array, &setting->comments.used, &setting->comments.size);
+    f_memory_arrays_resize(0, sizeof(f_ranges_t), (void **) &setting->contents.array, &setting->contents.used, &setting->contents.size, &f_rangess_delete_callback);
 
     f_fss_nest_delete(&setting->nest);
 

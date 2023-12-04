@@ -606,7 +606,7 @@ extern "C" {
           }
 
           f_status_t status = F_okay;
-          f_string_range_t range = f_string_range_t_initialize;
+          f_range_t range = f_range_t_initialize;
           f_number_unsigned_t number = 0;
 
           for (i = k; i < main->cache_arguments.used; ++i, main->setting.state.status = F_okay) {

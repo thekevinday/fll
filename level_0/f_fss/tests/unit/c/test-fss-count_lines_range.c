@@ -8,7 +8,7 @@ extern "C" {
 void test__f_fss_count_lines_range__parameter_checking(void **state) {
 
   f_state_t state_data = f_state_t_initialize;
-  const f_string_range_t range = f_string_range_t_initialize;
+  const f_range_t range = f_range_t_initialize;
 
   {
     f_fss_count_lines_range(f_string_empty_s, range, 0, &state_data);
@@ -24,7 +24,7 @@ void test__f_fss_count_lines_range__returns_data_not(void **state) {
 
   {
     f_number_unsigned_t line = 0;
-    f_string_range_t range = f_string_range_t_initialize;
+    f_range_t range = f_range_t_initialize;
 
     f_fss_count_lines_range(f_string_empty_s, range, &line, &state_data);
 
@@ -33,7 +33,7 @@ void test__f_fss_count_lines_range__returns_data_not(void **state) {
 
   {
     f_number_unsigned_t line = 0;
-    f_string_range_t range = f_string_range_t_initialize;
+    f_range_t range = f_range_t_initialize;
 
     f_fss_count_lines_range(test, range, &line, &state_data);
 
@@ -42,7 +42,7 @@ void test__f_fss_count_lines_range__returns_data_not(void **state) {
 
   {
     f_number_unsigned_t line = 0;
-    f_string_range_t range = macro_f_string_range_t_initialize_1(0, test.used - 1);
+    f_range_t range = macro_f_range_t_initialize_1(0, test.used - 1);
 
     f_fss_count_lines_range(f_string_empty_s, range, &line, &state_data);
 
@@ -67,7 +67,7 @@ void test__f_fss_count_lines_range__works(void **state) {
 
   for (uint8_t i = 0; i < 5; expect += ++i) {
 
-    f_string_range_t range = macro_f_string_range_t_initialize_1(0, buffers[i].used - 1);
+    f_range_t range = macro_f_range_t_initialize_1(0, buffers[i].used - 1);
 
     f_fss_count_lines_range(buffers[i], range, &line, &state_data);
 

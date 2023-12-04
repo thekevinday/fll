@@ -92,7 +92,7 @@ extern "C" {
  * @see fl_fss_extended_content_read()
  */
 #ifndef _di_fl_fss_extended_content_read_
-  extern void fl_fss_extended_content_read(const f_string_static_t buffer, f_string_range_t * const range, f_string_ranges_t * const found, f_uint8s_t * const quotes, f_number_unsigneds_t * const delimits, f_state_t * const state);
+  extern void fl_fss_extended_content_read(const f_string_static_t buffer, f_range_t * const range, f_ranges_t * const found, f_uint8s_t * const quotes, f_number_unsigneds_t * const delimits, f_state_t * const state);
 #endif // _di_fl_fss_extended_content_read_
 
 /**
@@ -160,7 +160,7 @@ extern "C" {
  * @see fl_fss_extended_content_write()
  */
 #ifndef _di_fl_fss_extended_content_write_
-  extern void fl_fss_extended_content_write(const f_string_static_t content, const uint8_t quote, const uint8_t complete, f_string_range_t * const range, f_string_dynamic_t * const destination, f_state_t * const state);
+  extern void fl_fss_extended_content_write(const f_string_static_t content, const uint8_t quote, const uint8_t complete, f_range_t * const range, f_string_dynamic_t * const destination, f_state_t * const state);
 #endif // _di_fl_fss_extended_content_write_
 
 /**
@@ -229,7 +229,7 @@ extern "C" {
  * @see fl_fss_extended_content_read()
  */
 #ifndef _di_fl_fss_extended_object_read_
-  extern void fl_fss_extended_object_read(const f_string_static_t buffer, f_string_range_t * const range, f_string_range_t * const found, uint8_t * const quote, f_number_unsigneds_t * const delimits, f_state_t * const state);
+  extern void fl_fss_extended_object_read(const f_string_static_t buffer, f_range_t * const range, f_range_t * const found, uint8_t * const quote, f_number_unsigneds_t * const delimits, f_state_t * const state);
 #endif // _di_fl_fss_extended_object_read_
 
 /**
@@ -291,7 +291,7 @@ extern "C" {
  * @see f_memory_array_increase_by()
  */
 #ifndef _di_fl_fss_extended_object_write_
-  extern void fl_fss_extended_object_write(const f_string_static_t object, const uint8_t quote, const uint8_t complete, f_string_range_t * const range, f_string_dynamic_t * const destination, f_state_t * const state);
+  extern void fl_fss_extended_object_write(const f_string_static_t object, const uint8_t quote, const uint8_t complete, f_range_t * const range, f_string_dynamic_t * const destination, f_state_t * const state);
 #endif // _di_fl_fss_extended_object_write_
 
 #ifdef __cplusplus

@@ -90,7 +90,7 @@ void test__f_compare_utf_dynamic_partial_except_dynamic__works(void **state) {
     macro_f_string_static_t_initialize_1("SKIPone\0", 0, 8),
   };
 
-  f_string_range_t range_2 = macro_f_string_range_t_initialize_1(2, 0);
+  f_range_t range_2 = macro_f_range_t_initialize_1(2, 0);
 
   const f_string_static_t string_2s[] = {
 
@@ -282,7 +282,7 @@ void test__f_compare_utf_dynamic_partial_except_dynamic__works(void **state) {
     assert_int_equal(status, F_okay);
 
     if (i % 8 == 0) {
-      status = f_compare_utf_dynamic_partial_except_dynamic(utf_string_1, utf_string_2, f_string_range_empty_c, excepts_1, excepts_2);
+      status = f_compare_utf_dynamic_partial_except_dynamic(utf_string_1, utf_string_2, f_range_empty_c, excepts_1, excepts_2);
     }
     else {
       range_2.stop = string_2s[i].used - 1;
@@ -305,7 +305,7 @@ void test__f_compare_utf_dynamic_partial_except_dynamic__works(void **state) {
     assert_int_equal(status, F_okay);
 
     if (i % 8 == 0) {
-      status = f_compare_utf_dynamic_partial_except_dynamic(utf_string_1, utf_string_2, f_string_range_empty_c, excepts_1, excepts_2);
+      status = f_compare_utf_dynamic_partial_except_dynamic(utf_string_1, utf_string_2, f_range_empty_c, excepts_1, excepts_2);
     }
     else {
       range_2.stop = string_2s[i].used - 1;

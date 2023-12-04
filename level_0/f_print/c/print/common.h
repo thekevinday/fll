@@ -284,10 +284,10 @@ extern "C" {
  *   - exponent_either:      Use either exponent or decimila for printing double values.
  *   - exponent_upper:       When using exponent, display the exponent 'e' as uppercase 'E'.
  *   - ignore_index:   ";",  Ignore characters in the given positions from a f_number_unsigned_t (only applies to static/dynamic string arguments but not character arguments).
- *   - ignore_range:   ":",  Ignore characters in the given ranges from a f_string_range_t (only applies to static/dynamic string arguments but not character arguments).
+ *   - ignore_range:   ":",  Ignore characters in the given ranges from a f_range_t (only applies to static/dynamic string arguments but not character arguments).
  *   - precision:      ".*", Designates that a precision is in use.
  *   - precision_value:      Designates that a precision is specified in the function value (parameter).
- *   - range:          "/",  Print only the given range of a string, specified by f_string_range_t (only applies to static/dynamic string arguments but not character arguments).
+ *   - range:          "/",  Print only the given range of a string, specified by f_range_t (only applies to static/dynamic string arguments but not character arguments).
  *   - sign_always:    "+",  Always show the signs (+ or -).
  *   - sign_pad:       " ",  Add a space where a sign would be if the sign is not displayed.
  *   - trim:           "=",  Trim leading and trailing whitespaces (only applies to static/dynamic string arguments but not character arguments).

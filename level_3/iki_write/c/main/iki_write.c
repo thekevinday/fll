@@ -47,7 +47,7 @@ extern "C" {
       bool object_ended = F_false;
 
       f_number_unsigned_t previous = 0;
-      f_string_range_t range = f_string_range_t_initialize;
+      f_range_t range = f_range_t_initialize;
       f_status_t status = F_okay;
       f_file_t pipe = f_file_t_initialize;
 

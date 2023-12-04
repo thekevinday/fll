@@ -36,7 +36,7 @@ extern "C" {
  *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
  */
 #ifndef _di_f_parse_utf_dynamic_seek_line_to_char_
-  extern f_status_t f_parse_utf_dynamic_seek_line_to_char(const f_utf_string_static_t buffer, f_string_range_t * const range, const f_char_t seek_to_this);
+  extern f_status_t f_parse_utf_dynamic_seek_line_to_char(const f_utf_string_static_t buffer, f_range_t * const range, const f_char_t seek_to_this);
 #endif // _di_f_parse_utf_dynamic_seek_line_to_char_
 
 /**
@@ -64,7 +64,7 @@ extern "C" {
  * @see f_utf_character_is_graph()
  */
 #ifndef _di_f_parse_utf_dynamic_seek_line_until_graph_
-  extern f_status_t f_parse_utf_dynamic_seek_line_until_graph(const f_utf_string_static_t buffer, f_string_range_t * const range, const f_utf_char_t placeholder);
+  extern f_status_t f_parse_utf_dynamic_seek_line_until_graph(const f_utf_string_static_t buffer, f_range_t * const range, const f_utf_char_t placeholder);
 #endif // _di_f_parse_utf_dynamic_seek_line_until_graph_
 
 /**
@@ -93,7 +93,7 @@ extern "C" {
  * @see f_utf_character_is_graph()
  */
 #ifndef _di_f_parse_utf_dynamic_seek_line_until_graph_non_
-  extern f_status_t f_parse_utf_dynamic_seek_line_until_graph_non(const f_utf_string_static_t buffer, f_string_range_t * const range, const f_utf_char_t placeholder);
+  extern f_status_t f_parse_utf_dynamic_seek_line_until_graph_non(const f_utf_string_static_t buffer, f_range_t * const range, const f_utf_char_t placeholder);
 #endif // _di_f_parse_utf_dynamic_seek_line_until_graph_non_
 
 /**
@@ -118,7 +118,7 @@ extern "C" {
  *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
  */
 #ifndef _di_f_parse_utf_dynamic_seek_to_char_
-  extern f_status_t f_parse_utf_dynamic_seek_to_char(const f_utf_string_static_t buffer, f_string_range_t * const range, const f_char_t seek_to_this);
+  extern f_status_t f_parse_utf_dynamic_seek_to_char(const f_utf_string_static_t buffer, f_range_t * const range, const f_char_t seek_to_this);
 #endif // _di_f_parse_utf_dynamic_seek_to_char_
 
 /**
@@ -142,7 +142,7 @@ extern "C" {
  *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
  */
 #ifndef _di_f_parse_utf_seek_line_to_char_
-  extern f_status_t f_parse_utf_seek_line_to_char(const f_utf_string_t string, f_string_range_t * const range, const f_char_t seek_to_this);
+  extern f_status_t f_parse_utf_seek_line_to_char(const f_utf_string_t string, f_range_t * const range, const f_char_t seek_to_this);
 #endif // _di_f_parse_utf_seek_line_to_char_
 
 /**
@@ -169,7 +169,7 @@ extern "C" {
  * @see f_utf_character_is_graph()
  */
 #ifndef _di_f_parse_utf_seek_line_until_graph_
-  extern f_status_t f_parse_utf_seek_line_until_graph(const f_utf_string_t string, f_string_range_t * const range, const f_utf_char_t placeholder);
+  extern f_status_t f_parse_utf_seek_line_until_graph(const f_utf_string_t string, f_range_t * const range, const f_utf_char_t placeholder);
 #endif // _di_f_parse_utf_seek_line_until_graph_
 
 /**
@@ -197,7 +197,7 @@ extern "C" {
  * @see f_utf_character_is_graph()
  */
 #ifndef _di_f_parse_utf_seek_line_until_graph_non_
-  extern f_status_t f_parse_utf_seek_line_until_graph_non(const f_utf_string_t string, f_string_range_t * const range, const f_utf_char_t placeholder);
+  extern f_status_t f_parse_utf_seek_line_until_graph_non(const f_utf_string_t string, f_range_t * const range, const f_utf_char_t placeholder);
 #endif // _di_f_parse_utf_seek_line_until_graph_non_
 
 /**
@@ -221,7 +221,7 @@ extern "C" {
  *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
  */
 #ifndef _di_f_parse_utf_seek_to_character_
-  extern f_status_t f_parse_utf_seek_to_char(const f_utf_string_t string, f_string_range_t * const range, const f_char_t seek_to_this);
+  extern f_status_t f_parse_utf_seek_to_char(const f_utf_string_t string, f_range_t * const range, const f_char_t seek_to_this);
 #endif // _di_fl_utf_string__seek_to_character_
 
 #ifdef __cplusplus

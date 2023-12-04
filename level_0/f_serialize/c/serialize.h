@@ -126,7 +126,7 @@ extern "C" {
  * @see f_memory_array_increase()
  */
 #ifndef _di_f_serialize_from_simple_range_
-  extern f_status_t f_serialize_from_simple_range(const f_string_static_t source, f_string_ranges_t * const ranges);
+  extern f_status_t f_serialize_from_simple_range(const f_string_static_t source, f_ranges_t * const ranges);
 #endif // _di_f_serialize_from_simple_range_
 
 /**
@@ -156,7 +156,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_serialize_from_simple_select_
-  extern f_status_t f_serialize_from_simple_select(const f_string_static_t source, const f_number_unsigned_t index, f_string_range_t * const range);
+  extern f_status_t f_serialize_from_simple_select(const f_string_static_t source, const f_number_unsigned_t index, f_range_t * const range);
 #endif // _di_f_serialize_from_simple_select_
 
 /**

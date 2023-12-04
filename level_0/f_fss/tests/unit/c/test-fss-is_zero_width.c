@@ -44,7 +44,7 @@ void test__f_fss_is_zero_width__works(void **state) {
   };
 
   // Use range to designate which part of a string is to be tested.
-  f_string_range_t ranges[] = {
+  f_range_t ranges[] = {
     { .start = 0, .stop = tests[0].used },
     { .start = 0, .stop = tests[1].used },
     { .start = 0, .stop = tests[2].used },
@@ -69,7 +69,7 @@ void test__f_fss_is_zero_width__works(void **state) {
   } // for
 
   {
-    const f_string_range_t range = f_string_range_t_initialize;
+    const f_range_t range = f_range_t_initialize;
 
     const f_status_t status = f_fss_is_zero_width(f_string_empty_s, range, &state_data);
 
@@ -77,7 +77,7 @@ void test__f_fss_is_zero_width__works(void **state) {
   }
 
   {
-    const f_string_range_t range = macro_f_string_range_t_initialize_1(0, 2);
+    const f_range_t range = macro_f_range_t_initialize_1(0, 2);
 
     const f_status_t status = f_fss_is_zero_width(f_string_empty_s, range, &state_data);
 
@@ -86,7 +86,7 @@ void test__f_fss_is_zero_width__works(void **state) {
 
   {
     const f_string_static_t test = macro_f_string_static_t_initialize_1("test", 0, 4);
-    const f_string_range_t range = f_string_range_t_initialize;
+    const f_range_t range = f_range_t_initialize;
 
     const f_status_t status = f_fss_is_zero_width(test, range, &state_data);
 

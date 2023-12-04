@@ -9,7 +9,7 @@ void test__f_fss_apply_delimit_range__parameter_checking(void **state) {
 
   const f_number_unsigneds_t delimits = f_number_unsigneds_t_initialize;
   f_state_t state_data = f_state_t_initialize;
-  const f_string_range_t range = f_string_range_t_initialize;
+  const f_range_t range = f_range_t_initialize;
 
   {
     f_fss_apply_delimit_range(delimits, range, 0, &state_data);
@@ -25,7 +25,7 @@ void test__f_fss_apply_delimit_range__returns_data_not(void **state) {
   f_state_t state_data = f_state_t_initialize;
 
   {
-    const f_string_range_t range = f_string_range_t_initialize;
+    const f_range_t range = f_range_t_initialize;
     f_string_static_t empty = f_string_static_t_initialize;
 
     f_fss_apply_delimit_range(delimits, range, &empty, &state_data);
@@ -34,7 +34,7 @@ void test__f_fss_apply_delimit_range__returns_data_not(void **state) {
   }
 
   {
-    const f_string_range_t range = f_string_range_t_initialize;
+    const f_range_t range = f_range_t_initialize;
 
     f_fss_apply_delimit_range(delimits, range, &test, &state_data);
 
@@ -42,7 +42,7 @@ void test__f_fss_apply_delimit_range__returns_data_not(void **state) {
   }
 
   {
-    const f_string_range_t range = macro_f_string_range_t_initialize_1(0, test.used - 1);
+    const f_range_t range = macro_f_range_t_initialize_1(0, test.used - 1);
     f_string_static_t empty = f_string_static_t_initialize;
 
     f_fss_apply_delimit_range(delimits, range, &empty, &state_data);
@@ -133,7 +133,7 @@ void test__f_fss_apply_delimit_range__works(void **state) {
 
   for (uint8_t i = 0; i < 7; ++i) {
 
-    const f_string_range_t range = macro_f_string_range_t_initialize_1(0, tests[i].used - 1);
+    const f_range_t range = macro_f_range_t_initialize_1(0, tests[i].used - 1);
 
     f_fss_apply_delimit_range(delimitss[i], range, &tests[i], &state_data);
 

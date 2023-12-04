@@ -75,7 +75,7 @@ extern "C" {
 #endif // _di_fake_make_print_warning_file_not_found_
 
 #ifndef _di_fake_make_print_warning_setting_content_empty_
-  f_status_t fake_make_print_warning_setting_content_empty(fl_print_t * const print, const f_string_static_t fakefile, const f_string_dynamic_t buffer, const f_string_range_t range, const f_string_static_t name) {
+  f_status_t fake_make_print_warning_setting_content_empty(fl_print_t * const print, const f_string_static_t fakefile, const f_string_dynamic_t buffer, const f_range_t range, const f_string_static_t name) {
 
     if (!print) return F_status_set_error(F_output_not);
     if (print->verbosity < f_console_verbosity_verbose_e) return F_output_not;
@@ -97,7 +97,7 @@ extern "C" {
 #endif // _di_fake_make_print_warning_setting_content_empty_
 
 #ifndef _di_fake_make_print_warning_setting_content_invalid_
-  f_status_t fake_make_print_warning_setting_content_invalid(fl_print_t * const print, const f_string_static_t fakefile, const f_string_dynamic_t buffer, const f_string_range_t object, const f_string_range_t content, const f_string_static_t name) {
+  f_status_t fake_make_print_warning_setting_content_invalid(fl_print_t * const print, const f_string_static_t fakefile, const f_string_dynamic_t buffer, const f_range_t object, const f_range_t content, const f_string_static_t name) {
 
     if (!print) return F_status_set_error(F_output_not);
     if (print->verbosity < f_console_verbosity_verbose_e) return F_output_not;
