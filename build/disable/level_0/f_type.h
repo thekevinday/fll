@@ -22,6 +22,8 @@
 #define _di_f_int8ss_t_
 #define _di_f_int8s_t_
 #define _di_f_mode_t_
+#define _di_f_number_signedss_t_
+#define _di_f_number_signeds_t_
 #define _di_f_number_unsignedss_t_
 #define _di_f_number_unsigneds_t_
 #define _di_f_poll_e_

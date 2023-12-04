@@ -123,3 +123,5 @@
 #define _di_f_print_to_safely_terminated_
 #define _di_f_print_to_terminated_
 #define _di_f_print_write_max_d_
+#define _di_private_inline_f_print_to_error_
+#define _di_private_inline_private_f_print_to_error_

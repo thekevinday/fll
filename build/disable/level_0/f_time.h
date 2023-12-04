@@ -1,0 +1,2 @@
+#define _di_f_time_spec_millisecond_
+#define _di_f_time_spec_nanosecond_

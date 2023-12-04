@@ -52,6 +52,8 @@ build_sources_program test-string-quantitys_append.c test-string-quantitys_appen
 build_sources_program test-string-quantityss_delete_callback.c test-string-quantityss_destroy_callback.c
 build_sources_program test-string-ranges_append.c test-string-ranges_append_all.c test-string-rangess_append.c test-string-rangess_append_all.c
 build_sources_program test-string-rangess_delete_callback.c test-string-rangess_destroy_callback.c
+build_sources_program test-string-range_doubles_append.c test-string-range_doubles_append_all.c test-string-range_doubless_append.c test-string-range_doubless_append_all.c
+build_sources_program test-string-range_doubless_delete_callback.c test-string-range_doubless_destroy_callback.c
 build_sources_program test-string-seek_line.c test-string-seek_line_to.c test-string-seek_to.c
 build_sources_program test-string-triples_append.c test-string-triples_append_all.c test-string-tripless_append.c test-string-tripless_append_all.c
 build_sources_program test-string-triples_delete_callback.c test-string-triples_destroy_callback.c

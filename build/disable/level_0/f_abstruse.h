@@ -1,0 +1,16 @@
+#define _di_f_abstruse_e_
+#define _di_f_abstruse_maps_delete_callback_
+#define _di_f_abstruse_maps_destroy_callback_
+#define _di_f_abstruse_mapss_delete_callback_
+#define _di_f_abstruse_mapss_destroy_callback_
+#define _di_f_abstruse_mapss_t_
+#define _di_f_abstruse_maps_t_
+#define _di_f_abstruse_map_t_
+#define _di_f_abstruses_delete_callback_
+#define _di_f_abstruses_destroy_callback_
+#define _di_f_abstrusess_delete_callback_
+#define _di_f_abstrusess_destroy_callback_
+#define _di_f_abstrusess_t_
+#define _di_f_abstruses_t_
+#define _di_f_abstruse_t_
+#define _di_f_abstruse_type_t_

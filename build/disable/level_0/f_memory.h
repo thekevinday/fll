@@ -1,10 +1,14 @@
 #define _di_f_memory_adjust_
 #define _di_f_memory_array_adjust_
+#define _di_f_memory_array_append_
+#define _di_f_memory_array_append_all_
 #define _di_f_memory_array_decimate_by_
 #define _di_f_memory_array_decrease_by_
 #define _di_f_memory_array_increase_
 #define _di_f_memory_array_increase_by_
 #define _di_f_memory_array_resize_
+#define _di_f_memory_arrays_adjust_
+#define _di_f_memory_arrays_resize_
 #define _di_f_memory_default_d_
 #define _di_f_memory_delete_
 #define _di_f_memory_destroy_

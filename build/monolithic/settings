@@ -68,6 +68,7 @@ build_sources_library level_0/string/map.c level_0/string/maps.c level_0/string/
 build_sources_library level_0/string/map_multi.c level_0/string/map_multis.c level_0/string/map_multiss.c
 build_sources_library level_0/string/quantity.c level_0/string/quantitys.c level_0/string/quantityss.c
 build_sources_library level_0/string/range.c level_0/string/ranges.c level_0/string/rangess.c
+build_sources_library level_0/string/range_double.c level_0/string/range_doubles.c level_0/string/range_doubless.c
 build_sources_library level_0/string/static.c level_0/string/statics.c level_0/string/staticss.c
 build_sources_library level_0/string/triple.c level_0/string/triples.c level_0/string/tripless.c
 build_sources_library level_0/time.c
@@ -138,6 +139,7 @@ build_sources_headers level_0/string/map.h level_0/string/maps.h level_0/string/
 build_sources_headers level_0/string/map_multi.h level_0/string/map_multis.h level_0/string/map_multiss.h
 build_sources_headers level_0/string/quantity.h level_0/string/quantitys.h level_0/string/quantityss.h
 build_sources_headers level_0/string/range.h level_0/string/ranges.h level_0/string/rangess.h
+build_sources_headers level_0/string/range_double.h level_0/string/range_doubles.h level_0/string/range_doubless.h
 build_sources_headers level_0/string/static.h level_0/string/statics.h level_0/string/staticss.h
 build_sources_headers level_0/string/triple.h level_0/string/triples.h level_0/string/tripless.h
 build_sources_headers level_0/time.h

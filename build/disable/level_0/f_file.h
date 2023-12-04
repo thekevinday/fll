@@ -4,6 +4,7 @@
 #define _di_f_file_at_d_
 #define _di_f_file_clone_
 #define _di_f_file_close_
+#define _di_f_file_close_id_
 #define _di_f_file_copy_
 #define _di_f_file_create_
 #define _di_f_file_create_at_
@@ -106,6 +107,7 @@
 #define _di_f_file_seek_
 #define _di_f_file_seeks_d_
 #define _di_f_file_select_
+#define _di_f_file_select_signal_
 #define _di_f_file_size_
 #define _di_f_file_size_at_
 #define _di_f_file_size_by_id_

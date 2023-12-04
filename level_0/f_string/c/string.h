@@ -26,6 +26,9 @@
 #include <fll/level_0/string/range.h>
 #include <fll/level_0/string/ranges.h>
 #include <fll/level_0/string/rangess.h>
+#include <fll/level_0/string/range_double.h>
+#include <fll/level_0/string/range_doubles.h>
+#include <fll/level_0/string/range_doubless.h>
 #include <fll/level_0/string/static.h>
 #include <fll/level_0/string/statics.h>
 #include <fll/level_0/string/staticss.h>
