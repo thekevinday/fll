@@ -136,6 +136,7 @@ extern "C" {
  *   The human-friendly IP address string.
  * @param to
  *   The converted IP version 4 or version 6 family integer.
+ *   For IPv6, the use of a port number requires the address to be encases in brackets, like: [::1]:80.
  *
  * @return
  *   F_okay on success.
@@ -161,12 +162,26 @@ extern "C" {
  *
  * For IPv6, this only accepts port numbers when the IPv6 address is wrapped in brackets ('[' (U+005B) and ']' (U+005D)).
  *
+ * This allows NULL characters to exist within the IP address, but the standard POSIX/libc does not.
+ * The address from this string should be sanitized to not have NULL characters before passing to a POSIX/libc function.
+ *
  * @param address
  *   The string to parse.
- * @param port
- *   (optional) This gets updated with the location where the first digit of the port number begins.
- *   This is set to 0 if there is no port number.
+ * @param where
+ *   (optional) This utilizes a strange range where the first set (start_1 to stop_1) represents the address range and the second set (start_2 to stop_2) represents the port range.
+ *   For IPv4, an address of '127.0.0.1:123' would have the first set represent '127.0.0.1' and the second set represent '123'.
+ *   For IPv6, an address of '[::1]:123' would have the first set represent '::1' and the second set represent '123'.
+ *
+ *   Notice that for IPv6, the address of '::1's does not include the open and close brackets.
+ *   Notice that for both the IPv4 and the IPv6, the address and port number do not include the colon separating the address from the port.
+ *
+ *   The goal here is to be able to present the strings to functions like inet_pton().
+ *
+ *   The start_1 to stop_1 range represents the address part.
+ *   The start_2 to stop_2 range represents the port part (start_2 will be greater than stop_2 if there is no port).
+ *
  *   On any error, this value is not changed.
+ *   If the given address is not valid, then this value is not changed.
  *
  *   Set to NULL to disable.
  * @param state
@@ -190,7 +205,7 @@ extern "C" {
  *     F_interrupt (with or without error bit) if stopping due to an interrupt.
  */
 #ifndef _di_f_network_is_ip_address_
-  extern void f_network_is_ip_address(const f_string_static_t address, f_number_unsigned_t * const port, f_state_t * const state);
+  extern void f_network_is_ip_address(const f_string_static_t address, f_string_range_double_t * const where, f_state_t * const state);
 #endif // _di_f_network_is_ip_address_
 
 /**
