@@ -196,7 +196,7 @@ extern "C" {
  *
  *   This alters state.status:
  *     F_data_not on success but there is nothing to process (address.used is 0).
- *     F_false on success, but this is not an IP Address.
+ *     F_false on success, but this is not an IP Address (could still look close to an IPv4 or IPv6 address).
  *     F_network_version_four_not on success, but this is not an IP Address but looks close to a IPv4 address.
  *     F_network_version_six_not on success, but this is not an IP Address but looks close to a IPv6 address.
  *     F_network_version_four on success and this is an IPv4 address.

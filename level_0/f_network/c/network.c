@@ -139,13 +139,11 @@ extern "C" {
 
       if (isxdigit(address.string[i])) {
         if (address.string[i] < f_string_ascii_0_s.string[0] || address.string[i] > f_string_ascii_9_s.string[0]) {
-          flag |= 0x1;
+          flag = 0x1;
         }
 
-        if (!where) {
-          if (at.start_1 > at.stop_1) {
-            at.start_1 = at.stop_1 = i;
-          }
+        if (at.start_1 > at.stop_1) {
+          at.start_1 = at.stop_1 = i;
         }
 
         ++count;
@@ -167,6 +165,12 @@ extern "C" {
 
       if (address.string[i] == f_string_ascii_colon_s.string[0]) {
         flag = 0x1;
+        count = 0;
+
+        // Reset position to allow proper counting of double quotes in later loop.
+        if (i) {
+          --i;
+        }
 
         break;
       }
@@ -178,7 +182,7 @@ extern "C" {
           return;
         }
 
-        flag |= 0x3;
+        flag = 0x3;
 
         break;
       }
@@ -188,26 +192,21 @@ extern "C" {
       return;
     } // for
 
-    if (i >= address.used) {
+    if (i >= address.used || (flag & 0x2) && i + 1 >= address.used) {
       state->status = F_false;
 
       return;
     }
 
-    at.start_1 = i;
+    at.stop_1 = i;
 
     if (flag & 0x1) {
+      state->status = F_network_version_six_not;
 
       // IPv6 flag additions: 0x2 == has bracket open, 0x4 == has forward slash, 0x8 = has double-colon, 0x10 = has no leading digit and no bracket open.
       if (flag & 0x2) {
-        ++i;
-      }
-
-      state->status = F_network_version_six_not;
-
-      if (count > 4 || i == address.used) return;
-
-      if (!count) {
+        at.start_1 = ++i;
+        count = 0;
 
         // Skip past NULL characters.
         for (; i < address.used && !address.string[i]; ++i) {
@@ -222,10 +221,14 @@ extern "C" {
         } // for
 
         if (i == address.used) return;
-        if (!(flag & 0x2)) flag |= 0x10;
 
-        at.start_1 = i;
+        at.stop_1 = i;
       }
+      else if (!count) {
+        flag |= 0x10;
+      }
+
+      if (count > 4 || i == address.used) return;
 
       // Process address, counting all sets.
       for (; i < address.used; ++i) {
@@ -250,7 +253,6 @@ extern "C" {
         else if (address.string[i] == f_string_ascii_colon_s.string[0]) {
           if (flag & 0x4) return;
 
-          at.stop_1 = i;
           at.start_2 = i + 1;
 
           if (at.start_2 < address.used) {
@@ -275,7 +277,7 @@ extern "C" {
               flag |= 0x8;
 
               // Skip past NULL characters.
-              for (; at.start_2 < address.used && !address.string[at.start_2]; ++at.start_2) {
+              for (++at.start_2; at.start_2 < address.used && !address.string[at.start_2]; ++at.start_2) {
 
                 if (state->interrupt) {
                   state->interrupt((void *) state, 0);
@@ -293,7 +295,16 @@ extern "C" {
             // Colons must be followed by a hexidecimal digit.
             if (!isxdigit(address.string[at.start_2])) return;
 
-            i = at.stop_1 = at.start_2;
+            // When double-colons lead, then set the start position at this digit.
+            if (!count && !set) {
+              at.start_1 = at.stop_1 = at.start_2;
+            }
+            else {
+              at.stop_1 = at.start_2;
+            }
+
+            // Reset before the digit so that the outer loop properly handles digit.
+            i = at.start_2 - 1;
           }
           else {
 
@@ -301,9 +312,17 @@ extern "C" {
             return;
           }
 
-          if (++set > 7) return;
+          if (set) {
+            if (++set > 7) return;
+          }
+          else {
+
+            // When set is first defined, be sure to include the first set to the left of the colon.
+            set = 2;
+          }
 
           count = 0;
+          at.start_2 = 1;
         }
         else if (address.string[i] == f_string_ascii_slash_forward_s.string[0]) {
           if (flag & 0x4) return;
@@ -313,9 +332,7 @@ extern "C" {
         else if (address.string[i] == f_string_ascii_bracket_close_s.string[0]) {
           if (!(flag & 0x2)) return;
 
-          if (!where) {
-            at.stop_1 = i - 1;
-          }
+          at.stop_1 = i - 1;
 
           // Skip past NULL characters.
           for (at.start_2 = i + 1; at.start_2 < address.used && !address.string[at.start_2]; ++at.start_2) {
@@ -360,14 +377,20 @@ extern "C" {
               } // for
 
               // The double colon either must exist when set is smaller than 7 or the double colon must not exist at all.
-              if (set < 7 && !(flag & 0x8) || set == 7 && (flag & 0x8)) return;
+              if (flag & 0x8) {
+                if (set == 7) return;
+              }
+              else if (set < 7) return;
 
               state->status = F_network_version_six;
-            }
-            else {
 
-              // Only a colon (and port number) may follow a valid close bracket.
-              return;
+              if (where) {
+                if (at.stop_2 == address.used) {
+                  at.stop_2 = address.used - 1;
+                }
+
+                *where = at;
+              }
             }
           }
           else if (count || set) {
@@ -395,14 +418,20 @@ extern "C" {
       // The double colon either must exist when set is smaller than 7 or the double colon must not exist at all.
       if (set < 7 && !(flag & 0x8) || set == 7 && (flag & 0x8)) return;
 
-      // A close bracket must exist if there is an open bracket.
+      // A close bracket must exist if there is an open bracket and this line should not be reached if a valid close bracket is found.
       if (flag & 0x2) return;
 
       if (!(flag & 0x10) || set || count) {
         state->status = F_network_version_six;
 
-        at.start_2 = 1;
-        at.stop_2 = 0;
+        // When there is no port, then the address end is at the end of the string.
+        if (at.start_2 > at.stop_2) {
+          at.stop_1 = i - 1;
+        }
+        else {
+          at.start_2 = 1;
+          at.stop_2 = 0;
+        }
 
         if (where) {
           *where = at;
@@ -452,6 +481,9 @@ extern "C" {
       else if (address.string[i] == f_string_ascii_colon_s.string[0]) {
         if (set != 3 || (flag & 0x2)) return;
 
+        // The address ends before the colon.
+        at.stop_1 = i - 1;
+
         if (flag & 0x4) {
           flag |= 0x8;
         }
@@ -470,7 +502,9 @@ extern "C" {
         if (i == address.used) return;
 
         flag |= 0x2;
-        at.start_2 = i + 1; // Save the position that might represent the start of the port number.
+
+         // Save the position that might represent the start of the port number.
+        at.start_2 = i + 1;
       }
       else if (address.string[i] == f_string_ascii_slash_forward_s.string[0]) {
         if ((flag & 0x4) || set != 3) return;
@@ -484,6 +518,12 @@ extern "C" {
     } // for
 
     if (set == 3) {
+
+      // When there is no port, then the address end is at the end of the string.
+      if (at.start_2 > at.stop_2) {
+        at.stop_1 = i - 1;
+      }
+
       if (where) {
         *where = at;
       }
