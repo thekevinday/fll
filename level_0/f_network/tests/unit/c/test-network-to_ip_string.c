@@ -96,6 +96,7 @@ void test__f_network_to_ip_string__works(void **state) {
 
   family.type = f_network_family_ip_6_e;
   ip.used = 0;
+  ip.size = 0;
 
   {
     will_return(__wrap_inet_ntop, false);
