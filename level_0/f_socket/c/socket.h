@@ -268,6 +268,7 @@ extern "C" {
  *   F_file_descriptor (with error bit) if ID is an invalid descriptor.
  *   F_interrupt (with error bit) if interrupt is received.
  *   F_network_reach_not (with error bit) if the network is unreachable.
+ *   F_parameter (with error bit) if a parameter is invalid.
  *   F_progress (with error bit) if if a non-blocking connection cannot be completed immediately.
  *   F_prohibited (with error bit) if the file system does not permit this operation.
  *   F_protocol_not (with error bit) if the given protocol is unknown or is unsupported.
