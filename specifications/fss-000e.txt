@@ -1,7 +1,7 @@
 # fss-0002 iki-0000
 #
 # license open-standard-license-1.0
-# version 2023/11/14
+# version 2023/12/07
 #
 # This file (assumed to be named fss-000e.txt) can be more easily read using the following iki_read commands:
 #   iki_read fss-000e.txt +Q -w -rr EOF EOF FLL FLL -WWW character "'" "'" code '"' '"' italic '"' '"'
@@ -14,7 +14,7 @@ Featureless Settings Specification: 000e - Payload:
   This is a code:"FSS-0002 (Basic List)" with two required objects and one optional object\:
   1) italic:"header".
   2) italic:"signature" (optional).
-  3) italic:"payload".
+  3) italic:"payload" (optional).
 
   The italic:"header"\:
   - The italic:"header"'s Content is of type code:"FSS-0001 (Extended)".
@@ -38,10 +38,10 @@ Featureless Settings Specification: 000e - Payload:
 
   The italic:"payload"\:
   - The italic:"payload"'s Content may contain anything, including raw binary data.
-  - The italic:"payload" is italic:"required" to be the last list Object in the file.
+  - The italic:"payload" is italic:"required" to be the last list Object in the file, if present.
   - The italic:"payload" is recommended to have its size designated in some manner in the italic:"header" (such as with the recommended italic:"length").
   - The italic:"payload" is terminated by the EOF:"End of File" character or by the recommended italic:"length" header.
-  - The italic:"payload" may be empty (length may be zero), but the list Object italic:"payload" must still exist.
+  - The italic:"payload" may be empty (length may be zero).
   - Nothing in the italic:"payload" may be considered a valid list Object by the outer code:"FSS-0002 (Basic List)" and therefore escaping is unnecessary (No further processing by the outer code:"FSS-0002 (Basic List)" is allowed at this point).
   - Comments in the italic:"payload" are not considered comments and are instead considered part of the payload, as-is.
   - Essentially, the italic:"payload" should be treated as binary data embedded in a text file.
