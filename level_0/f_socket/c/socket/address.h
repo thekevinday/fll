@@ -17,6 +17,71 @@ extern "C" {
 #endif
 
 /**
+ * Socket address forms.
+ *
+ * These are specific to the f_socket_address_t below for designating which form of sockaddr is being used.
+ *
+ * f_socket_address_form_*_e:
+ *   - arp:     Arp.
+ *   - at:      At.
+ *   - ax25:    Ax25.
+ *   - dl:      Dl.
+ *   - eon:     Eon.
+ *   - inet4:   Ipv4 internet network socket.
+ *   - inet6:   Ipv6 internet network socket..
+ *   - ipx:     Ipx.
+ *   - iso:     Iso.
+ *   - local:   Local (aka: Unix) socket (socket file or localhost).
+ *   - ns:      Ns.
+ *   - generic: None specified, does not use extra fields and should be considered the fallback / failsafe (see AF_UNSPEC).
+ *   - x25:     X25.
+ */
+#ifndef _di_f_socket_address_form_e_
+  enum {
+    f_socket_address_form_generic_e = 0,
+    f_socket_address_form_inet4_e,
+    f_socket_address_form_inet6_e,
+    f_socket_address_form_local_e,
+
+    #ifdef _en_support_socket_address_arp_
+      f_socket_address_form_arp_e,
+    #endif // _en_support_socket_address_arp_
+
+    #ifdef _en_support_socket_address_at_
+      f_socket_address_form_at_e,
+    #endif // _en_support_socket_address_at_
+
+    #ifdef _en_support_socket_address_ax25_
+      f_socket_address_form_ax25_e,
+    #endif // _en_support_socket_address_ax25_
+
+    #ifdef _en_support_socket_address_dl_
+      f_socket_address_form_dl_e,
+    #endif // _en_support_socket_address_dl_
+
+    #ifdef _en_support_socket_address_eon_
+      f_socket_address_form_eon_e,
+    #endif // _en_support_socket_address_eon_
+
+    #ifdef _en_support_socket_address_ipx_
+      f_socket_address_form_ipx_e,
+    #endif // _en_support_socket_address_ipx_
+
+    #ifdef _en_support_socket_address_iso_
+      f_socket_address_form_iso_e,
+    #endif // _en_support_socket_address_iso_
+
+    #ifdef _en_support_socket_address_ns_
+      f_socket_address_form_ns_e,
+    #endif // _en_support_socket_address_ns_
+
+    #ifdef _en_support_socket_address_x25_
+      f_socket_address_form_x25_e,
+    #endif // _en_support_socket_address_x25_
+  }; // enum
+#endif // _di_f_socket_address_form_e_
+
+/**
  * Provide a union to simplify using struct sockaddr in arrays.
  *
  * Managing different structures is not as practical.
@@ -25,22 +90,26 @@ extern "C" {
  *
  * All of the properties may or may not be present, but inet4, inet6, and local are generally assumed to exist.
  *
+ * These are associated with the address family, such as f_socket_address_family_local_e.
+ *
  * Properties:
- *   - arp:   Arp.
- *   - at:    At.
- *   - ax25:  Ax25.
- *   - dl:    Dl.
- *   - eon:   Eon.
- *   - inet4: Ipv4 internet network socket.
- *   - inet6: Ipv6 internet network socket..
- *   - ipx:   Ipx.
- *   - iso:   Iso.
- *   - local: Local (aka: Unix) socket (socket file or localhost).
- *   - ns:    Ns.
- *   - x25:   X25.
+ *   - arp:     Arp.
+ *   - at:      At.
+ *   - ax25:    Ax25.
+ *   - dl:      Dl.
+ *   - eon:     Eon.
+ *   - inet4:   Ipv4 internet network socket.
+ *   - inet6:   Ipv6 internet network socket..
+ *   - ipx:     Ipx.
+ *   - iso:     Iso.
+ *   - local:   Local (aka: Unix) socket (socket file or localhost).
+ *   - ns:      Ns.
+ *   - generic: None specified, does not use extra fields and should be considered the fallback / failsafe (see AF_UNSPEC).
+ *   - x25:     X25.
  */
 #ifndef _di_f_socket_address_t_
   typedef union {
+    struct sockaddr generic;
     struct sockaddr_in inet4;
     struct sockaddr_in6 inet6;
     struct sockaddr_un local;
@@ -84,6 +153,7 @@ extern "C" {
 
   #define f_socket_address_t_initialize { 0 }
 
+  #define f_socket_address_initialize_generic(value_generic) { .generic = value_generic }
   #define f_socket_address_initialize_inet4(value_inet4) { .inet4 = value_inet4 }
   #define f_socket_address_initialize_inet6(value_inet6) { .inet6 = value_inet6 }
   #define f_socket_address_initialize_local(value_local) { .local = value_local }

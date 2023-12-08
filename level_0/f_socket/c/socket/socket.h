@@ -25,6 +25,7 @@ extern "C" {
  *   - domain:   The socket domain (protocol family, such as f_socket_protocol_family_local_e).
  *   - protocol: The socket protocol (such as f_socket_protocol_tcp_e).
  *   - type:     The socket type (address family, such as f_socket_address_family_local_e).
+ *   - form:     The form of the socket address type, such as f_socket_address_form_inet4_e for sockaddr_in.
  *
  *   - size_read:  The default number of 1-byte characters to read at a time and is often used for the read buffer size.
  *   - size_write: The default number of 1-byte characters to read at a time and is often used for the write buffer size.
@@ -43,6 +44,7 @@ extern "C" {
     int domain;
     int protocol;
     int type;
+    uint16_t form;
 
     size_t size_read;
     size_t size_write;
@@ -53,14 +55,15 @@ extern "C" {
     f_string_static_t name;
   } f_socket_t;
 
-  #define f_socket_t_initialize { -1, -1, 0, 0, 0, F_socket_default_read_size_d, F_socket_default_write_size_d, f_socket_address_t_initialize, 0, f_string_static_t_initialize }
+  #define f_socket_t_initialize { -1, -1, 0, 0, 0, f_socket_address_form_generic_e, F_socket_default_read_size_d, F_socket_default_write_size_d, f_socket_address_t_initialize, 0, f_string_static_t_initialize }
 
-  #define macro_f_socket_t_initialize_1(address, length) { \
+  #define macro_f_socket_t_initialize_1(form, address, length) { \
     -1, \
     -1, \
     0, \
     0, \
     0, \
+    form, \
     F_socket_default_read_size_d, \
     F_socket_default_write_size_d, \
     address, \
@@ -68,12 +71,13 @@ extern "C" {
     f_string_empty_s \
   }
 
-  #define macro_f_socket_t_initialize_2(address, length, name) { \
+  #define macro_f_socket_t_initialize_2(form, address, length, name) { \
     -1, \
     -1, \
     0, \
     0, \
     0, \
+    form, \
     F_socket_default_read_size_d, \
     F_socket_default_write_size_d, \
     address, \
@@ -81,12 +85,13 @@ extern "C" {
     name \
   }
 
-  #define macro_f_socket_t_initialize_3(id, domain, protocol, type, address, length, name) { \
+  #define macro_f_socket_t_initialize_3(id, domain, protocol, type, form, address, length, name) { \
     id, \
     -1, \
     domain, \
     protocol, \
     type, \
+    form, \
     F_socket_default_read_size_d, \
     F_socket_default_write_size_d, \
     address, \
@@ -94,12 +99,13 @@ extern "C" {
     name \
   }
 
-  #define macro_f_socket_t_initialize_4(id, domain, protocol, type, size_read, size_write, address, length, name) { \
+  #define macro_f_socket_t_initialize_4(id, domain, protocol, type, form, size_read, size_write, address, length, name) { \
     id, \
     -1, \
     domain, \
     protocol, \
     type, \
+    form, \
     size_read, \
     size_write, \
     address, \
@@ -107,12 +113,13 @@ extern "C" {
     name \
   }
 
-  #define macro_f_socket_t_initialize_5(id, id_data, domain, protocol, type, size_read, size_write, address, length, name) { \
+  #define macro_f_socket_t_initialize_5(id, id_data, domain, protocol, type, form, size_read, size_write, address, length, name) { \
     id, \
     id_data, \
     domain, \
     protocol, \
     type, \
+    form, \
     size_read, \
     size_write, \
     address, \
@@ -126,6 +133,7 @@ extern "C" {
     file.domain = 0; \
     file.protocol = 0; \
     file.type = 0; \
+    file.form = 0; \
     file.size_read = 0; \
     file.size_write = 0; \
     file.length = 0; \
@@ -137,6 +145,7 @@ extern "C" {
     file.domain = 0; \
     file.protocol = 0; \
     file.type = 0; \
+    file.form = f_socket_address_form_generic_e; \
     file.size_read = F_socket_default_read_size_d; \
     file.size_write = F_socket_default_write_size_d; \
     file.length = 0; \

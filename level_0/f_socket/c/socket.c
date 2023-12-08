@@ -52,7 +52,102 @@ extern "C" {
       if (!socket) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (bind(socket->id, (struct sockaddr *) &socket->address, socket->length) == -1) {
+    struct sockaddr * address = 0;
+
+    if (socket->form == f_socket_address_form_inet4_e) {
+      address = (struct sockaddr *) &socket->address.inet4;
+      socket->address.inet4.sin_family = f_socket_address_family_inet4_e;
+      socket->length = sizeof(struct sockaddr);
+    }
+    else if (socket->form == f_socket_address_form_inet6_e) {
+      address = (struct sockaddr *) &socket->address.inet6;
+      socket->address.inet6.sin6_family = f_socket_address_family_inet6_e;
+      socket->length = sizeof(struct sockaddr);
+    }
+    else if (socket->form == f_socket_address_form_local_e) {
+      address = (struct sockaddr *) &socket->address.local;
+      socket->address.local.sun_family = f_socket_address_family_local_e;
+      socket->length = sizeof(struct sockaddr);
+
+      if (socket->name.used && socket->name.string && socket->name.used + 1 <= socket->name.size) {
+        memcpy((void *) socket->address.local.sun_path, (void *) socket->name.string, socket->name.used);
+        socket->address.local.sun_path[socket->name.used] = 0;
+      }
+      else {
+        socket->address.local.sun_path[0] = 0;
+      }
+    }
+
+    #ifdef _en_support_socket_address_arp_
+      else if (socket->form == f_socket_address_form_arp_e) {
+        address = (struct sockaddr *) &socket->address.arp;
+        socket->length = sizeof(struct sockaddr);
+      }
+    #endif // _en_support_socket_address_arp_
+
+    #ifdef _en_support_socket_address_at_
+      else if (socket->form == f_socket_address_form_at_e) {
+        address = (struct sockaddr *) &socket->address.at;
+        socket->length = sizeof(struct sockaddr);
+      }
+    #endif // _en_support_socket_address_at_
+
+    #ifdef _en_support_socket_address_ax25_
+      else if (socket->form == f_socket_address_form_ax25_e) {
+        address = (struct sockaddr *) &socket->address.ax25;
+        socket->length = sizeof(struct sockaddr);
+      }
+    #endif // _en_support_socket_address_ax25_
+
+    #ifdef _en_support_socket_address_dl_
+      else if (socket->form == f_socket_address_form_dl_e) {
+        address = (struct sockaddr *) &socket->address.dl;
+        socket->length = sizeof(struct sockaddr);
+      }
+    #endif // _en_support_socket_address_dl_
+
+    #ifdef _en_support_socket_address_eon_
+      else if (socket->form == f_socket_address_form_eon_e) {
+        address = (struct sockaddr *) &socket->address.eon;
+        socket->length = sizeof(struct sockaddr);
+      }
+    #endif // _en_support_socket_address_eon_
+
+    #ifdef _en_support_socket_address_ipx_
+      else if (socket->form == f_socket_address_form_ipx_e) {
+        address = (struct sockaddr *) &socket->address.ipx;
+        socket->length = sizeof(struct sockaddr);
+      }
+    #endif // _en_support_socket_address_ipx_
+
+    #ifdef _en_support_socket_address_iso_
+      else if (socket->form == f_socket_address_form_iso_e) {
+        address = (struct sockaddr *) &socket->address.iso;
+        socket->length = sizeof(struct sockaddr);
+      }
+    #endif // _en_support_socket_address_iso_
+
+    #ifdef _en_support_socket_address_ns_
+      else if (socket->form == f_socket_address_form_ns_e) {
+        address = (struct sockaddr *) &socket->address.ns;
+        socket->length = sizeof(struct sockaddr);
+      }
+    #endif // _en_support_socket_address_ns_
+
+    #ifdef _en_support_socket_address_x25_
+      else if (socket->form == f_socket_address_form_x25_e) {
+        address = (struct sockaddr *) &socket->address.x25;
+        socket->length = sizeof(struct sockaddr_x25);
+      }
+    #endif // _en_support_socket_address_x25_
+
+    // Generic (f_socket_address_form_generic_e) or failsafe.
+    else {
+      address = (struct sockaddr *) &socket->address.generic;
+      socket->length = sizeof(struct sockaddr);
+    }
+
+    if (bind(socket->id, address, socket->length) == -1) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EADDRINUSE) return F_status_set_error(F_busy_address);
       if (errno == EADDRNOTAVAIL) return F_status_set_error(F_available_not_address);
@@ -72,113 +167,84 @@ extern "C" {
   }
 #endif // _di_f_socket_bind_
 
-#ifndef _di_f_socket_bind_inet4_
-  f_status_t f_socket_bind_inet4(f_socket_t * const socket) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!socket) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (socket->domain != f_socket_protocol_family_inet4_e) return F_status_set_error(F_address_not);
-
-    socket->address.inet4.sin_family = f_socket_address_family_inet4_e;
-    socket->length = sizeof(struct sockaddr_in);
-
-    if (bind(socket->id, (struct sockaddr *) &socket->address.inet4, socket->length) == -1) {
-      if (errno == EACCES) return F_status_set_error(F_access_denied);
-      if (errno == EADDRINUSE) return F_status_set_error(F_busy_address);
-      if (errno == EADDRNOTAVAIL) return F_status_set_error(F_available_not_address);
-      if (errno == EFAULT) return F_status_set_error(F_buffer);
-      if (errno == EINVAL) return F_status_set_error(F_parameter);
-      if (errno == ELOOP) return F_status_set_error(F_loop);
-      if (errno == ENAMETOOLONG) return F_status_set_error(F_string_too_large);
-      if (errno == ENOENT) return F_status_set_error(F_file_found_not);
-      if (errno == ENOMEM) return F_status_set_error(F_memory_not);
-      if (errno == ENOTDIR) return F_status_set_error(F_directory_found_not);
-      if (errno == ENOTSOCK) return F_status_set_error(F_socket_not);
-
-      return F_status_set_error(F_failure);
-    }
-
-    return F_okay;
-  }
-#endif // _di_f_socket_bind_inet4_
-
-#ifndef _di_f_socket_bind_inet6_
-  f_status_t f_socket_bind_inet6(f_socket_t * const socket) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!socket) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (socket->domain != f_socket_protocol_family_inet6_e) return F_status_set_error(F_address_not);
-
-    socket->address.inet6.sin6_family = f_socket_address_family_inet6_e;
-    socket->length = sizeof(struct sockaddr_in6);
-
-    if (bind(socket->id, (struct sockaddr *) &socket->address.inet6, socket->length) == -1) {
-      if (errno == EACCES) return F_status_set_error(F_access_denied);
-      if (errno == EADDRINUSE) return F_status_set_error(F_busy_address);
-      if (errno == EADDRNOTAVAIL) return F_status_set_error(F_available_not_address);
-      if (errno == EFAULT) return F_status_set_error(F_buffer);
-      if (errno == EINVAL) return F_status_set_error(F_parameter);
-      if (errno == ELOOP) return F_status_set_error(F_loop);
-      if (errno == ENAMETOOLONG) return F_status_set_error(F_string_too_large);
-      if (errno == ENOENT) return F_status_set_error(F_file_found_not);
-      if (errno == ENOMEM) return F_status_set_error(F_memory_not);
-      if (errno == ENOTDIR) return F_status_set_error(F_directory_found_not);
-      if (errno == ENOTSOCK) return F_status_set_error(F_socket_not);
-
-      return F_status_set_error(F_failure);
-    }
-
-    return F_okay;
-  }
-#endif // _di_f_socket_bind_inet6_
-
-#ifndef _di_f_socket_bind_local_
-  f_status_t f_socket_bind_local(f_socket_t * const socket) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!socket) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (socket->domain != f_socket_protocol_family_local_e) return F_status_set_error(F_local_not);
-
-    socket->address.local.sun_family = f_socket_address_family_local_e;
-    socket->length = sizeof(struct sockaddr_un);
-
-    if (socket->name.used && socket->name.string) {
-      memcpy((void *) socket->address.local.sun_path, (void *) socket->name.string, socket->name.used);
-      socket->address.local.sun_path[socket->name.used] = 0;
-    }
-    else {
-      socket->address.local.sun_path[0] = 0;
-    }
-
-    if (bind(socket->id, (struct sockaddr *) &socket->address.local, socket->length) == -1) {
-      if (errno == EACCES) return F_status_set_error(F_access_denied);
-      if (errno == EADDRINUSE) return F_status_set_error(F_busy_address);
-      if (errno == EADDRNOTAVAIL) return F_status_set_error(F_available_not_address);
-      if (errno == EFAULT) return F_status_set_error(F_buffer);
-      if (errno == EINVAL) return F_status_set_error(F_parameter);
-      if (errno == ELOOP) return F_status_set_error(F_loop);
-      if (errno == ENAMETOOLONG) return F_status_set_error(F_string_too_large);
-      if (errno == ENOENT) return F_status_set_error(F_file_found_not);
-      if (errno == ENOMEM) return F_status_set_error(F_memory_not);
-      if (errno == ENOTDIR) return F_status_set_error(F_directory_found_not);
-      if (errno == ENOTSOCK) return F_status_set_error(F_socket_not);
-
-      return F_status_set_error(F_failure);
-    }
-
-    return F_okay;
-  }
-#endif // _di_f_socket_bind_local_
-
 #ifndef _di_f_socket_connect_
   f_status_t f_socket_connect(const f_socket_t socket) {
 
     if (socket.id == -1) return F_file_descriptor;
 
-    if (connect(socket.id, (struct sockaddr *) &socket.address, socket.length) == -1) {
+    struct sockaddr * address = 0;
+
+    if (socket.form == f_socket_address_form_inet4_e) {
+      address = (struct sockaddr *) &socket.address.inet4;
+    }
+    else if (socket.form == f_socket_address_form_inet6_e) {
+      address = (struct sockaddr *) &socket.address.inet6;
+    }
+    else if (socket.form == f_socket_address_form_local_e) {
+      address = (struct sockaddr *) &socket.address.local;
+    }
+
+    #ifdef _en_support_socket_address_arp_
+      else if (socket.form == f_socket_address_form_arp_e) {
+        address = (struct sockaddr *) &socket.address.arp;
+      }
+    #endif // _en_support_socket_address_arp_
+
+    #ifdef _en_support_socket_address_at_
+      else if (socket.form == f_socket_address_form_at_e) {
+        address = (struct sockaddr *) &socket.address.at;
+      }
+    #endif // _en_support_socket_address_at_
+
+    #ifdef _en_support_socket_address_ax25_
+      else if (socket.form == f_socket_address_form_ax25_e) {
+        address = (struct sockaddr *) &socket.address.ax25;
+      }
+    #endif // _en_support_socket_address_ax25_
+
+    #ifdef _en_support_socket_address_dl_
+      else if (socket.form == f_socket_address_form_dl_e) {
+        address = (struct sockaddr *) &socket.address.dl;
+      }
+    #endif // _en_support_socket_address_dl_
+
+    #ifdef _en_support_socket_address_eon_
+      else if (socket.form == f_socket_address_form_eon_e) {
+        address = (struct sockaddr *) &socket.address.eon;
+      }
+    #endif // _en_support_socket_address_eon_
+
+    #ifdef _en_support_socket_address_ipx_
+      else if (socket.form == f_socket_address_form_ipx_e) {
+        address = (struct sockaddr *) &socket.address.ipx;
+      }
+    #endif // _en_support_socket_address_ipx_
+
+    #ifdef _en_support_socket_address_iso_
+      else if (socket.form == f_socket_address_form_iso_e) {
+        address = (struct sockaddr *) &socket.address.iso;
+      }
+    #endif // _en_support_socket_address_iso_
+
+    #ifdef _en_support_socket_address_ns_
+      else if (socket.form == f_socket_address_form_ns_e) {
+        address = (struct sockaddr *) &socket.address.ns;
+      }
+    #endif // _en_support_socket_address_ns_
+
+    #ifdef _en_support_socket_address_x25_
+      else if (socket.form == f_socket_address_form_x25_e) {
+        address = (struct sockaddr *) &socket.address.x25;
+      }
+    #endif // _en_support_socket_address_x25_
+
+    else {
+
+      // Generic (f_socket_address_form_generic_e) or failsafe.
+      address = (struct sockaddr *) &socket.address.generic;
+    }
+
+    if (connect(socket.id, address, socket.length) == -1) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EADDRINUSE) return F_status_set_error(F_busy_address);
       if (errno == EADDRNOTAVAIL) return F_status_set_error(F_available_not_address);

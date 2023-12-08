@@ -25,15 +25,6 @@ int main(void) {
     cmocka_unit_test(test__f_socket_bind__fails),
     cmocka_unit_test(test__f_socket_bind__works),
 
-    cmocka_unit_test(test__f_socket_bind_inet4__fails),
-    cmocka_unit_test(test__f_socket_bind_inet4__works),
-
-    cmocka_unit_test(test__f_socket_bind_inet6__fails),
-    cmocka_unit_test(test__f_socket_bind_inet6__works),
-
-    cmocka_unit_test(test__f_socket_bind_local__fails),
-    cmocka_unit_test(test__f_socket_bind_local__works),
-
     cmocka_unit_test(test__f_socket_connect__fails),
     cmocka_unit_test(test__f_socket_connect__returns_file_descriptor),
     cmocka_unit_test(test__f_socket_connect__works),
@@ -104,9 +95,6 @@ int main(void) {
     #ifndef _di_level_0_parameter_checking_
       cmocka_unit_test(test__f_socket_accept__parameter_checking),
       cmocka_unit_test(test__f_socket_bind__parameter_checking),
-      cmocka_unit_test(test__f_socket_bind_inet4__parameter_checking),
-      cmocka_unit_test(test__f_socket_bind_inet6__parameter_checking),
-      cmocka_unit_test(test__f_socket_bind_local__parameter_checking),
       cmocka_unit_test(test__f_socket_create__parameter_checking),
       cmocka_unit_test(test__f_socket_create_pair__parameter_checking),
       cmocka_unit_test(test__f_socket_disconnect__parameter_checking),
