@@ -65,6 +65,8 @@ extern "C" {
  *   The socket.id is the socket file descriptor used to establish the data file descriptor socket.id_data.
  *   The socket.id_data, socket.address, and socket.length are updated upon a successful return.
  *
+ *   Must not be NULL.
+ *
  * @return
  *   F_okay on success.
  *
@@ -108,7 +110,7 @@ extern "C" {
  *   The socket.address may be any valid structure, like "struct sockaddr", "struct sockaddr_un", or "struct sockaddr_in".
  *   The socket.address.*.*_family is conditionally altered by this function.
  *   The caller must appropriately initialize and configure the socket.address.
- *   The socket.length must represent the full size of the address structure and is not altered by this function.
+ *   The socket.length is updated based on socket.form.
  *   The socket.id must refer to a valid socket file descriptor.
  *
  *   For IPv4:
@@ -136,6 +138,8 @@ extern "C" {
  *     The socket.domain (potocol family) must be assigned to f_socket_protocol_family_unspecified_e.
  *     The socket.length is updated to represent the size of "struct sockaddr".
  *     The socket.type is not modified.
+ *
+ *   Must not be NULL.
  *
  * @return
  *   F_okay on success.
@@ -171,6 +175,9 @@ extern "C" {
  *   The socket.address must have the proper structure setup based on the socket.type value, like "f_socket_address_family_inet4_e".
  *   Only domains defined with an associated structure in the f_socket_address_t are supported.
  *   Only socket.id is used.
+ *   The socket.length is updated based on socket.form.
+ *
+ *   Must not be NULL.
  *
  * @return
  *   F_okay on success.
@@ -199,7 +206,7 @@ extern "C" {
  * @see connect()
  */
 #ifndef _di_f_socket_connect_
-  extern f_status_t f_socket_connect(const f_socket_t socket);
+  extern f_status_t f_socket_connect(f_socket_t * const socket);
 #endif // _di_f_socket_connect_
 
 /**
@@ -212,6 +219,8 @@ extern "C" {
  *   The socket.protocol must be assigned the desired protocol.
  *   The socket.type must be assigned the desired socket type.
  *   The socket.id will be updated with a file descriptor representing the created socket.
+ *
+ *   Must not be NULL.
  *
  * @return
  *   F_okay on success.
@@ -247,10 +256,14 @@ extern "C" {
  *   The protocol to use.
  * @param id_1
  *   The first of the pair of socket file descriptors.
+ *
+ *   Must not be NULL.
  * @param id_2
  *   The second of the pair of socket file descriptors.
  *
  *   This socket is supposed to be identical to the one specified by id_1.
+ *
+ *   Must not be NULL.
  *
  * @return
  *   F_okay on success.
@@ -294,6 +307,8 @@ extern "C" {
  * @param socket
  *   The socket structure.
  *   The socket.id must represent a valid socket file descriptor.
+ *
+ *   Must not be NULL.
  * @param action
  *   The action to perform on close.
  *   f_socket_close_fast_e calls close().
@@ -328,6 +343,8 @@ extern "C" {
  * @param socket
  *   The socket structure.
  *   The socket.id must represent a valid socket file descriptor.
+ *
+ *   Must not be NULL.
  * @param backlog_max
  *   The max length of the pending connections queue.
  *   Suggested default setting: 8.
@@ -354,6 +371,8 @@ extern "C" {
  * @param socket
  *   The socket structure.
  *   The socket.id must represent a valid socket file descriptor.
+ *
+ *   Must not be NULL.
  * @param level
  *   The level in which the socket option is located.
  *   This may be synonymous with "layer".
@@ -361,8 +380,12 @@ extern "C" {
  *   The option code used to represent the option name.
  * @param value
  *   The value to assign.
+ *
+ *   Must not be NULL.
  * @param length
  *   The length of the value (often derived from a sizeof() call).
+ *
+ *   Must not be NULL.
  *
  * @return
  *   F_okay on success.
@@ -387,6 +410,8 @@ extern "C" {
  * @param socket
  *   The socket structure.
  *   The socket.id must represent a valid socket file descriptor.
+ *
+ *   Must not be NULL.
  * @param level
  *   The level in which the socket option is located.
  *   This may be synonymous with "layer".
@@ -394,6 +419,8 @@ extern "C" {
  *   The option code used to represent the option name.
  * @param value
  *   The value to assign.
+ *
+ *   Must not be NULL.
  * @param length
  *   The length of the value (often derived from a sizeof() call).
  *
@@ -423,10 +450,14 @@ extern "C" {
  *   The socket structure.
  *   The socket.id must represent a valid socket file descriptor.
  *   The socket.size_read is used to represent the buffer size in buffer and must not be larger than the actual size of the buffer.
+ *
+ *   Must not be NULL.
  * @param name
  *   The retrieved host name.
  *   The name.size is used to determine as the max size.
  *   If name.size is 0, then a default max (F_socket_default_name_max_d) is used.
+ *
+ *   Must not be NULL.
  *
  * @return
  *   F_okay on success.
@@ -460,6 +491,8 @@ extern "C" {
  *   The socket.size_read is used to represent the buffer size in buffer and must not be larger than the actual size of the buffer.
  *   The socket.address is used to store the name of the remote connection.
  *
+ *   Must not be NULL.
+ *
  * @return
  *   F_okay on success.
  *
@@ -489,10 +522,14 @@ extern "C" {
  *   The socket structure.
  *   The socket.id_data must represent a valid file descriptor.
  *   The socket.size_read is used to represent the buffer size in buffer and must not be larger than the actual size of the buffer.
+ *
+ *   Must not be NULL.
  * @param flags
  *   Read flags.
  * @param buffer
  *   The buffer to populate.
+ *
+ *   Must not be NULL.
  * @param length
  *   (optional) The length of the buffer.
  *   This gets replaced with the value of a positive ssize_t representing the length read.
@@ -535,10 +572,14 @@ extern "C" {
  * @param socket
  *   The socket structure.
  *   The socket.id_data must represent a valid file descriptor.
+ *
+ *   Must not be NULL.
  * @param flags
  *   Read flags.
  * @param header
  *   The message header.
+ *
+ *   Must not be NULL.
  * @param length
  *   (optional) The length of the buffer.
  *   This gets replaced with the value of a positive ssize_t representing the length read.
@@ -583,10 +624,14 @@ extern "C" {
  *   The socket structure.
  *   The socket.id_data must represent a valid file descriptor.
  *   The socket.size_read is used to represent the buffer size in buffer and must not be larger than the actual size of the buffer.
+ *
+ *   Must not be NULL.
  * @param flags
  *   Read flags.
  * @param buffer
  *   The buffer to populate.
+ *
+ *   Must not be NULL.
  * @param length
  *   (optional) The length of the buffer.
  *   This gets replaced with the value of a positive ssize_t representing the length read.
@@ -632,10 +677,14 @@ extern "C" {
  *   The socket structure.
  *   The socket.id_data must represent a valid socket file descriptor.
  *   The socket.size_write is used to represent the buffer size in buffer and must not be larger than the actual size of the buffer.
+ *
+ *   Must not be NULL.
  * @param flags
  *   Read flags.
  * @param buffer
  *   The buffer to populate.
+ *
+ *   Must not be NULL.
  * @param length
  *   (optional) The length of the buffer.
  *   This gets replaced with the value of a positive ssize_t representing the length send.
@@ -682,10 +731,14 @@ extern "C" {
  * @param socket
  *   The socket structure.
  *   The socket.id_data must represent a valid file descriptor.
+ *
+ *   Must not be NULL.
  * @param flags
  *   Read flags.
  * @param header
  *   The message header.
+ *
+ *   Must not be NULL.
  * @param length
  *   (optional) The length of the buffer.
  *   This gets replaced with the value of a positive ssize_t representing the length send.
@@ -734,10 +787,14 @@ extern "C" {
  *   The socket structure.
  *   The socket.id_data must represent a valid socket file descriptor.
  *   The socket.size_write is used to represent the buffer size in buffer and must not be larger than the actual size of the buffer.
+ *
+ *   Must not be NULL.
  * @param flags
  *   Read flags.
  * @param buffer
  *   The buffer to populate.
+ *
+ *   Must not be NULL.
  * @param length
  *   (optional) The length of the buffer.
  *   This gets replaced with the value of a positive ssize_t representing the length send.

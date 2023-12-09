@@ -57,17 +57,17 @@ extern "C" {
     if (socket->form == f_socket_address_form_inet4_e) {
       address = (struct sockaddr *) &socket->address.inet4;
       socket->address.inet4.sin_family = f_socket_address_family_inet4_e;
-      socket->length = sizeof(struct sockaddr);
+      socket->length = sizeof(struct sockaddr_in);
     }
     else if (socket->form == f_socket_address_form_inet6_e) {
       address = (struct sockaddr *) &socket->address.inet6;
       socket->address.inet6.sin6_family = f_socket_address_family_inet6_e;
-      socket->length = sizeof(struct sockaddr);
+      socket->length = sizeof(struct sockaddr_in6);
     }
     else if (socket->form == f_socket_address_form_local_e) {
       address = (struct sockaddr *) &socket->address.local;
       socket->address.local.sun_family = f_socket_address_family_local_e;
-      socket->length = sizeof(struct sockaddr);
+      socket->length = sizeof(struct sockaddr_un);
 
       if (socket->name.used && socket->name.string && socket->name.used + 1 <= socket->name.size) {
         memcpy((void *) socket->address.local.sun_path, (void *) socket->name.string, socket->name.used);
@@ -88,49 +88,49 @@ extern "C" {
     #ifdef _en_support_socket_address_at_
       else if (socket->form == f_socket_address_form_at_e) {
         address = (struct sockaddr *) &socket->address.at;
-        socket->length = sizeof(struct sockaddr);
+        socket->length = sizeof(struct sockaddr_at);
       }
     #endif // _en_support_socket_address_at_
 
     #ifdef _en_support_socket_address_ax25_
       else if (socket->form == f_socket_address_form_ax25_e) {
         address = (struct sockaddr *) &socket->address.ax25;
-        socket->length = sizeof(struct sockaddr);
+        socket->length = sizeof(struct sockaddr_ax25);
       }
     #endif // _en_support_socket_address_ax25_
 
     #ifdef _en_support_socket_address_dl_
       else if (socket->form == f_socket_address_form_dl_e) {
         address = (struct sockaddr *) &socket->address.dl;
-        socket->length = sizeof(struct sockaddr);
+        socket->length = sizeof(struct sockaddr_dl);
       }
     #endif // _en_support_socket_address_dl_
 
     #ifdef _en_support_socket_address_eon_
       else if (socket->form == f_socket_address_form_eon_e) {
         address = (struct sockaddr *) &socket->address.eon;
-        socket->length = sizeof(struct sockaddr);
+        socket->length = sizeof(struct sockaddr_eon);
       }
     #endif // _en_support_socket_address_eon_
 
     #ifdef _en_support_socket_address_ipx_
       else if (socket->form == f_socket_address_form_ipx_e) {
         address = (struct sockaddr *) &socket->address.ipx;
-        socket->length = sizeof(struct sockaddr);
+        socket->length = sizeof(struct sockaddr_ipx);
       }
     #endif // _en_support_socket_address_ipx_
 
     #ifdef _en_support_socket_address_iso_
       else if (socket->form == f_socket_address_form_iso_e) {
         address = (struct sockaddr *) &socket->address.iso;
-        socket->length = sizeof(struct sockaddr);
+        socket->length = sizeof(struct sockaddr_iso);
       }
     #endif // _en_support_socket_address_iso_
 
     #ifdef _en_support_socket_address_ns_
       else if (socket->form == f_socket_address_form_ns_e) {
         address = (struct sockaddr *) &socket->address.ns;
-        socket->length = sizeof(struct sockaddr);
+        socket->length = sizeof(struct sockaddr_ns);
       }
     #endif // _en_support_socket_address_ns_
 
@@ -168,83 +168,99 @@ extern "C" {
 #endif // _di_f_socket_bind_
 
 #ifndef _di_f_socket_connect_
-  f_status_t f_socket_connect(const f_socket_t socket) {
+  f_status_t f_socket_connect(f_socket_t * const socket) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!socket) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
 
-    if (socket.id == -1) return F_file_descriptor;
+    if (socket->id == -1) return F_file_descriptor;
 
     struct sockaddr * address = 0;
 
-    if (socket.form == f_socket_address_form_inet4_e) {
-      address = (struct sockaddr *) &socket.address.inet4;
+    if (socket->form == f_socket_address_form_inet4_e) {
+      address = (struct sockaddr *) &socket->address.inet4;
+      socket->length = sizeof(struct sockaddr_in);
     }
-    else if (socket.form == f_socket_address_form_inet6_e) {
-      address = (struct sockaddr *) &socket.address.inet6;
+    else if (socket->form == f_socket_address_form_inet6_e) {
+      address = (struct sockaddr *) &socket->address.inet6;
+      socket->length = sizeof(struct sockaddr_in6);
     }
-    else if (socket.form == f_socket_address_form_local_e) {
-      address = (struct sockaddr *) &socket.address.local;
+    else if (socket->form == f_socket_address_form_local_e) {
+      address = (struct sockaddr *) &socket->address.local;
+      socket->length = sizeof(struct sockaddr_un);
     }
 
     #ifdef _en_support_socket_address_arp_
-      else if (socket.form == f_socket_address_form_arp_e) {
-        address = (struct sockaddr *) &socket.address.arp;
+      else if (socket->form == f_socket_address_form_arp_e) {
+        address = (struct sockaddr *) &socket->address.arp;
+        socket->length = sizeof(struct sockaddr);
       }
     #endif // _en_support_socket_address_arp_
 
     #ifdef _en_support_socket_address_at_
-      else if (socket.form == f_socket_address_form_at_e) {
-        address = (struct sockaddr *) &socket.address.at;
+      else if (socket->form == f_socket_address_form_at_e) {
+        address = (struct sockaddr *) &socket->address.at;
+        socket->length = sizeof(struct sockaddr_at);
       }
     #endif // _en_support_socket_address_at_
 
     #ifdef _en_support_socket_address_ax25_
-      else if (socket.form == f_socket_address_form_ax25_e) {
-        address = (struct sockaddr *) &socket.address.ax25;
+      else if (socket->form == f_socket_address_form_ax25_e) {
+        address = (struct sockaddr *) &socket->address.ax25;
+        socket->length = sizeof(struct sockaddr_ax25);
       }
     #endif // _en_support_socket_address_ax25_
 
     #ifdef _en_support_socket_address_dl_
-      else if (socket.form == f_socket_address_form_dl_e) {
-        address = (struct sockaddr *) &socket.address.dl;
+      else if (socket->form == f_socket_address_form_dl_e) {
+        address = (struct sockaddr *) &socket->address.dl;
+        socket->length = sizeof(struct sockaddr_dl);
       }
     #endif // _en_support_socket_address_dl_
 
     #ifdef _en_support_socket_address_eon_
-      else if (socket.form == f_socket_address_form_eon_e) {
-        address = (struct sockaddr *) &socket.address.eon;
+      else if (socket->form == f_socket_address_form_eon_e) {
+        address = (struct sockaddr *) &socket->address.eon;
+        socket->length = sizeof(struct sockaddr_eon);
       }
     #endif // _en_support_socket_address_eon_
 
     #ifdef _en_support_socket_address_ipx_
-      else if (socket.form == f_socket_address_form_ipx_e) {
-        address = (struct sockaddr *) &socket.address.ipx;
+      else if (socket->form == f_socket_address_form_ipx_e) {
+        address = (struct sockaddr *) &socket->address.ipx;
+        socket->length = sizeof(struct sockaddr_ipx);
       }
     #endif // _en_support_socket_address_ipx_
 
     #ifdef _en_support_socket_address_iso_
-      else if (socket.form == f_socket_address_form_iso_e) {
-        address = (struct sockaddr *) &socket.address.iso;
+      else if (socket->form == f_socket_address_form_iso_e) {
+        address = (struct sockaddr *) &socket->address.iso;
+        socket->length = sizeof(struct sockaddr_iso);
       }
     #endif // _en_support_socket_address_iso_
 
     #ifdef _en_support_socket_address_ns_
-      else if (socket.form == f_socket_address_form_ns_e) {
-        address = (struct sockaddr *) &socket.address.ns;
+      else if (socket->form == f_socket_address_form_ns_e) {
+        address = (struct sockaddr *) &socket->address.ns;
+        socket->length = sizeof(struct sockaddr_ns);
       }
     #endif // _en_support_socket_address_ns_
 
     #ifdef _en_support_socket_address_x25_
-      else if (socket.form == f_socket_address_form_x25_e) {
-        address = (struct sockaddr *) &socket.address.x25;
+      else if (socket->form == f_socket_address_form_x25_e) {
+        address = (struct sockaddr *) &socket->address.x25;
+        socket->length = sizeof(struct sockaddr_x25);
       }
     #endif // _en_support_socket_address_x25_
 
     else {
 
       // Generic (f_socket_address_form_generic_e) or failsafe.
-      address = (struct sockaddr *) &socket.address.generic;
+      address = (struct sockaddr *) &socket->address.generic;
+      socket->length = sizeof(struct sockaddr);
     }
 
-    if (connect(socket.id, address, socket.length) == -1) {
+    if (connect(socket->id, address, socket->length) == -1) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EADDRINUSE) return F_status_set_error(F_busy_address);
       if (errno == EADDRNOTAVAIL) return F_status_set_error(F_available_not_address);

@@ -8,7 +8,7 @@ extern "C" {
 void test__f_socket_read_stream__fails(void **state) {
 
   f_socket_t socket = f_socket_t_initialize;
-  char *buffer = "test";
+  char * const buffer = "test";
   size_t length = 0;
 
   int errnos[] = {
@@ -70,7 +70,7 @@ void test__f_socket_read_stream__fails(void **state) {
 void test__f_socket_read_stream__parameter_checking(void **state) {
 
   f_socket_t socket = f_socket_t_initialize;
-  char *buffer = "test";
+  char * const buffer = "test";
 
   {
     const f_status_t status = f_socket_read_stream(0, 0, 0, 0);
@@ -94,7 +94,7 @@ void test__f_socket_read_stream__parameter_checking(void **state) {
 void test__f_socket_read_stream__works(void **state) {
 
   f_socket_t socket = f_socket_t_initialize;
-  char *buffer = "test";
+  char * const buffer = "test";
   size_t length = 0;
 
   {

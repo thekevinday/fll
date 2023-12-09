@@ -58,7 +58,7 @@ void test__f_socket_connect__fails(void **state) {
     will_return(__wrap_connect, true);
     will_return(__wrap_connect, errnos[i]);
 
-    const f_status_t status = f_socket_connect(socket);
+    const f_status_t status = f_socket_connect(&socket);
 
     assert_int_equal(status, F_status_set_error(statuss[i]));
   } // for
@@ -71,7 +71,7 @@ void test__f_socket_connect__returns_file_descriptor(void **state) {
 
     socket.id = -1;
 
-    const f_status_t status = f_socket_connect(socket);
+    const f_status_t status = f_socket_connect(&socket);
 
     assert_int_equal(status, F_file_descriptor);
   }
@@ -86,7 +86,7 @@ void test__f_socket_connect__works(void **state) {
   {
     will_return(__wrap_connect, false);
 
-    const f_status_t status = f_socket_connect(socket);
+    const f_status_t status = f_socket_connect(&socket);
 
     assert_int_equal(status, F_okay);
   }
