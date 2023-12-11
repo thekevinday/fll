@@ -25,6 +25,13 @@ extern void test__f_socket_read_stream__fails(void **state);
 extern void test__f_socket_read_stream__parameter_checking(void **state);
 
 /**
+ * Test that the function returns F_data_not.
+ *
+ * @see f_socket_read_stream()
+ */
+extern void test__f_socket_read_stream__returns_data_not(void **state);
+
+/**
  * Test that function works.
  *
  * @see f_socket_read_stream()

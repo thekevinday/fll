@@ -91,6 +91,30 @@ void test__f_socket_read_stream__parameter_checking(void **state) {
   }
 }
 
+void test__f_socket_read_stream__returns_data_not(void **state) {
+
+  char * const buffer = "test";
+
+  {
+    f_socket_t socket = f_socket_t_initialize;
+    socket.size_read = 0;
+
+    const f_status_t status = f_socket_read_stream(&socket, 0, (void *) buffer, 0);
+
+    assert_int_equal(status, F_data_not);
+  }
+
+  {
+    size_t length = 0;
+    f_socket_t socket = f_socket_t_initialize;
+    socket.size_read = 0;
+
+    const f_status_t status = f_socket_read_stream(&socket, 0, (void *) buffer, &length);
+
+    assert_int_equal(status, F_data_not);
+  }
+}
+
 void test__f_socket_read_stream__works(void **state) {
 
   f_socket_t socket = f_socket_t_initialize;

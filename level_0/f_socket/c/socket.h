@@ -538,6 +538,7 @@ extern "C" {
  *
  * @return
  *   F_okay on success.
+ *   F_data_not on success, but read size is 0 and so nothing was read.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_complete_not (with error bit) if an existing connection is not yet complete.
@@ -587,6 +588,7 @@ extern "C" {
  *
  * @return
  *   F_okay on success.
+ *   F_data_not on success, but read size is 0 and so nothing was read.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_complete_not (with error bit) if an existing connection is not yet complete.
@@ -640,6 +642,7 @@ extern "C" {
  *
  * @return
  *   F_okay on success.
+ *   F_data_not on success, but read size is 0 and so nothing was read.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_complete_not (with error bit) if an existing connection is not yet complete.
@@ -693,6 +696,7 @@ extern "C" {
  *
  * @return
  *   F_okay on success.
+ *   F_data_not on success, but write size is 0 and so nothing was written.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_address_not (with error bit) if no address is provided and the connection is not "connection-mode".
@@ -709,7 +713,7 @@ extern "C" {
  *   F_memory_not (with error bit) if out of memory.
  *   F_option_not (with error bit) if a flag is not supported.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_pipe (with error bit) if the local end of a connection oriented socket is closed or SIGPIPE is received.
+ *   F_pipe (with error bit) if the local end of a connection oriented socket is closed or SIGPIPE is received (Linux might return this isntead if F_connect_not).
  *   F_prohibited (with error bit) if the insufficient privileges to perform send.
  *   F_size (with error bit) if size of message makes atomically sending message impossible on a socket type that requires this to be atomic.
  *   F_socket_not (with error bit) if the ID is not a socket descriptor.
@@ -746,6 +750,7 @@ extern "C" {
  *
  * @return
  *   F_okay on success.
+ *   F_data_not on success, but write size is 0 and so nothing was written.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_address_not (with error bit) if no address is provided and the connection is not "connection-mode".
@@ -762,7 +767,7 @@ extern "C" {
  *   F_memory_not (with error bit) if out of memory.
  *   F_option_not (with error bit) if a flag is not supported.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_pipe (with error bit) if the local end of a connection oriented socket is closed or SIGPIPE is received.
+ *   F_pipe (with error bit) if the local end of a connection oriented socket is closed or SIGPIPE is received (Linux might return this isntead if F_connect_not).
  *   F_prohibited (with error bit) if the insufficient privileges to perform send.
  *   F_size (with error bit) if size of message makes atomically sending message impossible on a socket type that requires this to be atomic.
  *   F_socket_not (with error bit) if the ID is not a socket descriptor.
@@ -803,6 +808,7 @@ extern "C" {
  *
  * @return
  *   F_okay on success.
+ *   F_data_not on success, but write size is 0 and so nothing was written.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_address_not (with error bit) if no address is provided and the connection is not "connection-mode".
@@ -819,7 +825,7 @@ extern "C" {
  *   F_memory_not (with error bit) if out of memory.
  *   F_option_not (with error bit) if a flag is not supported.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_pipe (with error bit) if the local end of a connection oriented socket is closed or SIGPIPE is received.
+ *   F_pipe (with error bit) if the local end of a connection oriented socket is closed or SIGPIPE is received (Linux might return this isntead if F_connect_not).
  *   F_prohibited (with error bit) if the insufficient privileges to perform send.
  *   F_size (with error bit) if size of message makes atomically sending message impossible on a socket type that requires this to be atomic.
  *   F_socket_not (with error bit) if the ID is not a socket descriptor.

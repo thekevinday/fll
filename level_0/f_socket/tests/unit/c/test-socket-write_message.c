@@ -100,6 +100,32 @@ void test__f_socket_write_message__parameter_checking(void **state) {
   }
 }
 
+void test__f_socket_write_message__returns_data_not(void **state) {
+
+  struct msghdr header;
+
+  memset(&header, 0, sizeof(struct msghdr));
+
+  {
+    f_socket_t socket = f_socket_t_initialize;
+    socket.size_write = 0;
+
+    const f_status_t status = f_socket_write_message(&socket, 0, &header, 0);
+
+    assert_int_equal(status, F_data_not);
+  }
+
+  {
+    size_t length = 0;
+    f_socket_t socket = f_socket_t_initialize;
+    socket.size_write = 0;
+
+    const f_status_t status = f_socket_write_message(&socket, 0, &header, &length);
+
+    assert_int_equal(status, F_data_not);
+  }
+}
+
 void test__f_socket_write_message__works(void **state) {
 
   f_socket_t socket = f_socket_t_initialize;

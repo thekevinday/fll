@@ -10,7 +10,7 @@ extern "C" {
       if (!socket) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    const int result = accept(socket->id, (struct sockaddr *) &socket->address, &socket->length);
+    const int result = accept(socket->id, (struct sockaddr *) &socket->address.generic, &socket->length);
 
     if (result == -1) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
@@ -495,7 +495,7 @@ extern "C" {
       if (!socket) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (getpeername(socket->id, (struct sockaddr *) &socket->address, &socket->length) == -1) {
+    if (getpeername(socket->id, (struct sockaddr *) &socket->address.generic, &socket->length) == -1) {
       if (errno == EBADF) return F_status_set_error(F_file_descriptor);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
       if (errno == EINVAL) return F_status_set_error(F_parameter);
@@ -517,9 +517,11 @@ extern "C" {
       if (!buffer) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    const ssize_t result = recvfrom(socket->id_data, buffer, socket->size_read, flags, (struct sockaddr *) &socket->address, &socket->length);
+    if (!socket->size_read) return F_data_not;
 
-    if (result < 0) {
+    const ssize_t result = recvfrom(socket->id_data, buffer, socket->size_read, flags, (struct sockaddr *) &socket->address.generic, &socket->length);
+
+    if (result == -1) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
       if (errno == EALREADY) return F_status_set_error(F_complete_not);
@@ -556,9 +558,11 @@ extern "C" {
       if (!header) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
+    if (!socket->size_read) return F_data_not;
+
     const ssize_t result = recvmsg(socket->id_data, header, flags);
 
-    if (result < 0) {
+    if (result == -1) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
       if (errno == EALREADY) return F_status_set_error(F_complete_not);
@@ -595,9 +599,11 @@ extern "C" {
       if (!buffer) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
+    if (!socket->size_read) return F_data_not;
+
     const ssize_t result = recv(socket->id_data, buffer, socket->size_read, flags);
 
-    if (result < 0) {
+    if (result == -1) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
       if (errno == EALREADY) return F_status_set_error(F_complete_not);
@@ -634,9 +640,11 @@ extern "C" {
       if (!buffer) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    const ssize_t result = sendto(socket->id_data, buffer, socket->size_write, flags, (struct sockaddr *) &socket->address, socket->length);
+    if (!socket->size_write) return F_data_not;
 
-    if (result < 0) {
+    const ssize_t result = sendto(socket->id_data, buffer, socket->size_write, flags, (struct sockaddr *) &socket->address.generic, socket->length);
+
+    if (result == -1) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
       if (errno == EALREADY) return F_status_set_error(F_complete_not);
@@ -676,9 +684,11 @@ extern "C" {
       if (!header) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
+    if (!socket->size_write) return F_data_not;
+
     const ssize_t result = sendmsg(socket->id_data, header, flags);
 
-    if (result < 0) {
+    if (result == -1) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
       if (errno == EALREADY) return F_status_set_error(F_complete_not);
@@ -718,9 +728,11 @@ extern "C" {
       if (!buffer) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
+    if (!socket->size_write) return F_data_not;
+
     const ssize_t result = send(socket->id_data, buffer, socket->size_write, flags);
 
-    if (result < 0) {
+    if (result == -1) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
       if (errno == EALREADY) return F_status_set_error(F_complete_not);

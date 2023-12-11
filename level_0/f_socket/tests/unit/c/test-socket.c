@@ -63,21 +63,27 @@ int main(void) {
     cmocka_unit_test(test__f_socket_option_set__works),
 
     cmocka_unit_test(test__f_socket_read__fails),
+    cmocka_unit_test(test__f_socket_read__returns_data_not),
     cmocka_unit_test(test__f_socket_read__works),
 
     cmocka_unit_test(test__f_socket_read_message__fails),
+    cmocka_unit_test(test__f_socket_read_message__returns_data_not),
     cmocka_unit_test(test__f_socket_read_message__works),
 
     cmocka_unit_test(test__f_socket_read_stream__fails),
+    cmocka_unit_test(test__f_socket_read_stream__returns_data_not),
     cmocka_unit_test(test__f_socket_read_stream__works),
 
     cmocka_unit_test(test__f_socket_write__fails),
+    cmocka_unit_test(test__f_socket_write__returns_data_not),
     cmocka_unit_test(test__f_socket_write__works),
 
     cmocka_unit_test(test__f_socket_write_message__fails),
+    cmocka_unit_test(test__f_socket_write_message__returns_data_not),
     cmocka_unit_test(test__f_socket_write_message__works),
 
     cmocka_unit_test(test__f_socket_write_stream__fails),
+    cmocka_unit_test(test__f_socket_write_stream__returns_data_not),
     cmocka_unit_test(test__f_socket_write_stream__works),
 
     cmocka_unit_test(test__f_socket_addressss_destroy_callback__fails),
