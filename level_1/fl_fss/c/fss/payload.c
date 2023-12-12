@@ -40,6 +40,40 @@ extern "C" {
 
       private_fl_fss_basic_write(F_false, *data->cache, 0, &internal->range, &internal->destinations->array[internal->destinations->used].value, state, (void * const) internal);
       if (F_status_is_error(state->status)) return F_true;
+
+      // Strip NULLs that may have been introduced via private_fl_fss_basic_write().
+      if (data->cache->used) {
+        f_number_unsigned_t i = data->cache->used;
+        f_number_unsigned_t j = 0;
+        f_number_unsigned_t total = 0;
+
+        while (--i) {
+
+          if (!data->cache->string[i]) {
+            total = 1;
+
+            for (j = i - 1; j && !data->cache->string[j]; ++total, --j) {
+              // Do nothing.
+            } // for
+
+            if (!j) {
+              if (!data->cache->string[j]) {
+                ++total;
+              }
+              else {
+                ++j;
+              }
+            }
+
+            memmove(data->cache->string + j, data->cache->string + i + 1, total);
+
+            data->cache->used -= total;
+            i = j;
+
+            if (!i) break;
+          }
+        } // while
+      }
     }
 
     return F_false;
@@ -79,6 +113,40 @@ extern "C" {
 
       private_fl_fss_basic_write(F_false, *data->cache, 0, &internal->range, &internal->destinations->array[internal->destinations->used].value, state, (void * const) internal);
       if (F_status_is_error(state->status)) return F_true;
+
+      // Strip NULLs that may have been introduced via private_fl_fss_basic_write().
+      if (data->cache->used) {
+        f_number_unsigned_t i = data->cache->used;
+        f_number_unsigned_t j = 0;
+        f_number_unsigned_t total = 0;
+
+        while (--i) {
+
+          if (!data->cache->string[i]) {
+            total = 1;
+
+            for (j = i - 1; j && !data->cache->string[j]; ++total, --j) {
+              // Do nothing.
+            } // for
+
+            if (!j) {
+              if (!data->cache->string[j]) {
+                ++total;
+              }
+              else {
+                ++j;
+              }
+            }
+
+            memmove(data->cache->string + j, data->cache->string + i + 1, total);
+
+            data->cache->used -= total;
+            i = j;
+
+            if (!i) break;
+          }
+        } // while
+      }
     }
 
     return F_false;
