@@ -129,11 +129,13 @@ int main(void) {
     cmocka_unit_test(test__f_fss_simple_packetss_delete_callback__works),
     cmocka_unit_test(test__f_fss_simple_packetss_destroy_callback__works),
 
+    cmocka_unit_test(test__f_fss_simple_packet_encode__works_little_endian),
     cmocka_unit_test(test__f_fss_simple_packet_extract__works_little_endian),
     cmocka_unit_test(test__f_fss_simple_packet_extract_range__works_little_endian),
 
     cmocka_unit_test(test__f_fss_simple_packet_extract__works_big_endian),
     cmocka_unit_test(test__f_fss_simple_packet_extract_range__works_big_endian),
+    cmocka_unit_test(test__f_fss_simple_packet_encode__works_big_endian),
 
     cmocka_unit_test(test__f_fss_simple_packet_extract__returns_packet_too_small),
     cmocka_unit_test(test__f_fss_simple_packet_extract_range__returns_packet_too_small),
@@ -170,6 +172,7 @@ int main(void) {
 
       cmocka_unit_test(test__f_fss_simple_packet_delete__parameter_checking),
       cmocka_unit_test(test__f_fss_simple_packet_destroy__parameter_checking),
+      cmocka_unit_test(test__f_fss_simple_packet_encode__parameter_checking),
       cmocka_unit_test(test__f_fss_simple_packet_extract__parameter_checking),
       cmocka_unit_test(test__f_fss_simple_packet_extract_range__parameter_checking),
 

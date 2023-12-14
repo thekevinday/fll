@@ -34,6 +34,55 @@ extern "C" {
   }
 #endif // _di_f_fss_simple_packet_destroy_
 
+#ifndef _di_f_fss_simple_packet_encode_
+  f_status_t f_fss_simple_packet_encode(const uint8_t control, const uint32_t size, f_string_dynamic_t * const destination) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!destination) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    {
+      const f_status_t status = f_memory_array_increase_by(F_fss_simple_packet_block_header_size_d, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
+      if (F_status_is_error(status)) return status;
+    }
+
+    destination->string[destination->used++] = (uint8_t) control;
+
+    #ifdef _is_F_endian_little
+      // Big Endian.
+      if (control & F_fss_simple_packet_endian_d) {
+        destination->string[destination->used++] = ((uint8_t) size) & 0xff;
+        destination->string[destination->used++] = (((uint8_t) size) >> 8) & 0xff;
+        destination->string[destination->used++] = (((uint8_t) size) >> 16) & 0xff;
+        destination->string[destination->used++] = (((uint8_t) size) >> 24) & 0xff;
+      }
+      // Little Endian.
+      else {
+        destination->string[destination->used++] = (((uint8_t) size) >> 24) & 0xff;
+        destination->string[destination->used++] = (((uint8_t) size) >> 16) & 0xff;
+        destination->string[destination->used++] = (((uint8_t) size) >> 8) & 0xff;
+        destination->string[destination->used++] = ((uint8_t) size) & 0xff;
+      }
+    #else
+      // Big Endian.
+      if (control & F_fss_simple_packet_endian_d) {
+        destination->string[destination->used++] = (((uint8_t) size) >> 24) & 0xff;
+        destination->string[destination->used++] = (((uint8_t) size) >> 16) & 0xff;
+        destination->string[destination->used++] = (((uint8_t) size) >> 8) & 0xff;
+        destination->string[destination->used++] = ((uint8_t) size) & 0xff;
+      }
+      // Little Endian.
+      else {
+        destination->string[destination->used++] = ((uint8_t) size)) & 0xff;
+        destination->string[destination->used++] = (((uint8_t) size) >> 8) & 0xff;
+        destination->string[destination->used++] = (((uint8_t) size) >> 16) & 0xff;
+        destination->string[destination->used++] = (((uint8_t) size) >> 24) & 0xff;
+      }
+    #endif // _is_F_endian_little
+
+    return F_okay;
+  }
+#endif // _di_f_fss_simple_packet_encode_
+
 #ifndef _di_f_fss_simple_packet_extract_
   f_status_t f_fss_simple_packet_extract(const f_string_static_t buffer, f_fss_simple_packet_t * const packet) {
     #ifndef _di_level_0_parameter_checking_

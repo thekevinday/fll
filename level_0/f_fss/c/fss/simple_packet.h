@@ -204,6 +204,7 @@ extern "C" {
  *
  * @param simple_packet
  *   The FSS-000F (Simple Packet) to delete.
+ *   Must not be NULL.
  *
  * @return
  *   F_okay on success.
@@ -225,6 +226,7 @@ extern "C" {
  *
  * @param simple_packet
  *   The FSS-000F (Simple Packet) to destroy.
+ *   Must not be NULL.
  *
  * @return
  *   F_okay on success.
@@ -242,6 +244,32 @@ extern "C" {
 #endif // _di_f_fss_simple_packet_destroy_
 
 /**
+ * Encode the control and size parts of the FSS-000F (Simple Packet) packet structure into a string.
+ *
+ * This encodes only the header parts of the packet, which consists of the control block and the size block.
+ *
+ * @param control
+ *   The bits to encode into the control block.
+ * @param size
+ *   The size to encode into the size block.
+ * @param destination
+ *   The string buffer to encode the packet parts into.
+ *   Must not be NULL.
+ *
+ * @return
+ *   F_okay on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_array_resize().
+ *
+ * @see f_memory_array_resize()
+ */
+#ifndef _di_f_fss_simple_packet_encode_
+  extern f_status_t f_fss_simple_packet_encode(const uint8_t control, const uint32_t size, f_string_dynamic_t * const destination);
+#endif // _di_f_fss_simple_packet_encode_
+
+/**
  * Extract the different parts of the FSS-000F (Simple Packet) string into a packet structure.
  *
  * The buffer is processed as binary data, therefore, NULL and other control data are considered valid data and are not ignored.
@@ -252,6 +280,7 @@ extern "C" {
  * @param packet
  *   The packet extracted from the given buffer, without doing anything to the payload.
  *   The caller can allocate the payload and extract it at any time by just selecting the string from F_fss_simple_packet_block_header_size_d until at most F_fss_simple_packet_block_payload_size_d.
+ *   Must not be NULL.
  *
  * @return
  *   F_okay on success (The end of the Payload Block is assumed to be the remainder of the buffer or F_fss_simple_packet_block_payload_size_d, whichever is smaller).
@@ -274,6 +303,7 @@ extern "C" {
  *   This buffer is considered binary data and so any NULL found within is treated as a valid part of the buffer.
  * @param packet
  *   The packet range extracted from the given buffer, with the payload being represented by a range.
+ *   Must not be NULL.
  *
  * @return
  *   F_okay on success (The end of the Payload Block is assumed to be the remainder of the buffer or F_fss_simple_packet_block_payload_size_d, whichever is smaller).

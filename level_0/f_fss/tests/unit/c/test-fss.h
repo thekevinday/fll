@@ -67,6 +67,7 @@
 #include "test-fss-set_quotes_destroy_callback.h"
 #include "test-fss-set_quotess_delete_callback.h"
 #include "test-fss-set_quotess_destroy_callback.h"
+#include "test-fss-simple_packet_encode.h"
 #include "test-fss-simple_packet_extract.h"
 #include "test-fss-simple_packet_extract_range.h"
 #include "test-fss-simple_packet_delete.h"
