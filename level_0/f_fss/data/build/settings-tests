@@ -36,7 +36,7 @@ build_sources_program test-fss-set_delete.c test-fss-set_destroy.c
 build_sources_program test-fss-sets_delete_callback.c test-fss-sets_destroy_callback.c test-fss-setss_delete_callback.c test-fss-setss_destroy_callback.c
 build_sources_program test-fss-set_quote_delete.c test-fss-set_quote_destroy.c
 build_sources_program test-fss-set_quotes_delete_callback.c test-fss-set_quotes_destroy_callback.c test-fss-set_quotess_delete_callback.c test-fss-set_quotess_destroy_callback.c
-build_sources_program test-fss-simple_packet_encode.c test-fss-simple_packet_extract.c test-fss-simple_packet_extract_range.c
+build_sources_program test-fss-simple_packet_decode.c test-fss-simple_packet_decode_range.c test-fss-simple_packet_encode.c
 build_sources_program test-fss-simple_packet_delete.c test-fss-simple_packet_destroy.c
 build_sources_program test-fss-simple_packets_delete_callback.c test-fss-simple_packets_destroy_callback.c test-fss-simple_packetss_delete_callback.c test-fss-simple_packetss_destroy_callback.c
 

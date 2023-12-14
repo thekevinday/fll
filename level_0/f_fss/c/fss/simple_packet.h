@@ -200,6 +200,53 @@ extern "C" {
 #endif // _di_f_fss_simple_packet_rangess_t_
 
 /**
+ * Extract the different parts of the FSS-000F (Simple Packet) string into a packet structure.
+ *
+ * The buffer is processed as binary data, therefore, NULL and other control data are considered valid data and are not ignored.
+ *
+ * @param buffer
+ *   The string buffer to identify the packet ranges of.
+ *   This buffer is considered binary data and so any NULL found within is treated as a valid part of the buffer.
+ * @param packet
+ *   The packet extracted from the given buffer, without doing anything to the payload.
+ *   The caller can allocate the payload and extract it at any time by just selecting the string from F_fss_simple_packet_block_header_size_d until at most F_fss_simple_packet_block_payload_size_d.
+ *   Must not be NULL.
+ *
+ * @return
+ *   F_okay on success (The end of the Payload Block is assumed to be the remainder of the buffer or F_fss_simple_packet_block_payload_size_d, whichever is smaller).
+ *   F_packet_too_small if the buffer.used is smaller than the minimum size of the packet.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_valid_not (with error bit) if the data is invalid, which generally only happens when the value of the Size block is less than 5 (and when not returning F_partial).
+ */
+#ifndef _di_f_fss_simple_packet_decode_
+  extern f_status_t f_fss_simple_packet_decode(const f_string_static_t buffer, f_fss_simple_packet_t * const packet);
+#endif // _di_f_fss_simple_packet_decode_
+
+/**
+ * Extract the different parts of the FSS-000F (Simple Packet) string into a packet range structure.
+ *
+ * The buffer is processed as binary data, therefore, NULL and other control data are considered valid data and are not ignored.
+ *
+ * @param buffer
+ *   The string buffer to identify the packet ranges of.
+ *   This buffer is considered binary data and so any NULL found within is treated as a valid part of the buffer.
+ * @param packet
+ *   The packet range extracted from the given buffer, with the payload being represented by a range.
+ *   Must not be NULL.
+ *
+ * @return
+ *   F_okay on success (The end of the Payload Block is assumed to be the remainder of the buffer or F_fss_simple_packet_block_payload_size_d, whichever is smaller).
+ *   F_packet_too_small if the buffer.used is smaller than the minimum size of the packet.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_valid_not (with error bit) if the data is invalid, which generally only happens when the value of the Size block is less than 5 (and when not returning F_partial).
+ */
+#ifndef _di_f_fss_simple_packet_decode_range_
+  extern f_status_t f_fss_simple_packet_decode_range(const f_string_static_t buffer, f_fss_simple_packet_range_t * const packet);
+#endif // _di_f_fss_simple_packet_decode_range_
+
+/**
  * Delete a FSS-000F (Simple Packet).
  *
  * @param simple_packet
@@ -268,53 +315,6 @@ extern "C" {
 #ifndef _di_f_fss_simple_packet_encode_
   extern f_status_t f_fss_simple_packet_encode(const uint8_t control, const uint32_t size, f_string_dynamic_t * const destination);
 #endif // _di_f_fss_simple_packet_encode_
-
-/**
- * Extract the different parts of the FSS-000F (Simple Packet) string into a packet structure.
- *
- * The buffer is processed as binary data, therefore, NULL and other control data are considered valid data and are not ignored.
- *
- * @param buffer
- *   The string buffer to identify the packet ranges of.
- *   This buffer is considered binary data and so any NULL found within is treated as a valid part of the buffer.
- * @param packet
- *   The packet extracted from the given buffer, without doing anything to the payload.
- *   The caller can allocate the payload and extract it at any time by just selecting the string from F_fss_simple_packet_block_header_size_d until at most F_fss_simple_packet_block_payload_size_d.
- *   Must not be NULL.
- *
- * @return
- *   F_okay on success (The end of the Payload Block is assumed to be the remainder of the buffer or F_fss_simple_packet_block_payload_size_d, whichever is smaller).
- *   F_packet_too_small if the buffer.used is smaller than the minimum size of the packet.
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *   F_valid_not (with error bit) if the data is invalid, which generally only happens when the value of the Size block is less than 5 (and when not returning F_partial).
- */
-#ifndef _di_f_fss_simple_packet_extract_
-  extern f_status_t f_fss_simple_packet_extract(const f_string_static_t buffer, f_fss_simple_packet_t * const packet);
-#endif // _di_f_fss_simple_packet_extract_
-
-/**
- * Extract the different parts of the FSS-000F (Simple Packet) string into a packet range structure.
- *
- * The buffer is processed as binary data, therefore, NULL and other control data are considered valid data and are not ignored.
- *
- * @param buffer
- *   The string buffer to identify the packet ranges of.
- *   This buffer is considered binary data and so any NULL found within is treated as a valid part of the buffer.
- * @param packet
- *   The packet range extracted from the given buffer, with the payload being represented by a range.
- *   Must not be NULL.
- *
- * @return
- *   F_okay on success (The end of the Payload Block is assumed to be the remainder of the buffer or F_fss_simple_packet_block_payload_size_d, whichever is smaller).
- *   F_packet_too_small if the buffer.used is smaller than the minimum size of the packet.
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *   F_valid_not (with error bit) if the data is invalid, which generally only happens when the value of the Size block is less than 5 (and when not returning F_partial).
- */
-#ifndef _di_f_fss_simple_packet_extract_range_
-  extern f_status_t f_fss_simple_packet_extract_range(const f_string_static_t buffer, f_fss_simple_packet_range_t * const packet);
-#endif // _di_f_fss_simple_packet_extract_range_
 
 /**
  * A callback intended to be passed to f_memory_arrays_resize() for an f_fss_simple_packets_t structure.
