@@ -1,7 +1,7 @@
 # fss-0002 iki-0000
 #
 # license open-standard-license-1.0
-# version 2023/07/14
+# version 2023/12/16
 #
 # This file (assumed to be named time.txt) can be more easily read using the following iki_read commands:
 #   iki_read time.txt +Q -r UTC UTC -w -WW character "'" "'" code '"' '"'
@@ -25,17 +25,20 @@ Time Specification:
   The systems should expect 64-bit and larger bits would have to become common before something larger than 64-bit is the expected or assumed default.
   Negative signs can be allowed but they must not prevent the full use of the 64-bit.
   The implementation of how this is done is left to the implementer except that the signs are immediately to the left of the digit.
-  For example code:"2022:-5" would be 5 units after the start of the year 2022.
+  For example code:"2022:-5" would be 5 units before the start of the year 2022.
   Because the negative is allowed, so must the positive character (such as code:"2022:+5").
   A positive value is the default interpretation when no sign is valid.
 
   The unit of time called bold:"Time" is counted increments of a nanosecond, or 10^-9 seconds.
   A unit of bold:"Time" is, therefore, equivalent to a nanosecond.
-  The default year for bold:"Time" is the current year.
+  When the year is not specified, then the behavior of the year is not defined.
+  The year can be inferred, directly designated through some other means, understood, asserted, or simply unknown or otherwise unspecified.
+  The general recommendation is that the default year for bold:"Time" is the current year.
 
   The unit of time called bold:"EpochTime" is counted increments of a second, or 10^-9 seconds.
   A unit of bold:"EpochTime" is, therefore, equivalent to a second.
-  The default year for bold:"EpochTime" is the bold:"UNIX Epoch", sometimes called bold:"Unix time".
+  The behavior when the year is not specified is the same as described for the bold:"Time".
+  The general recommendation is that the default year for bold:"EpochTime" is the bold:"UNIX Epoch", sometimes called bold:"Unix time".
 
   The unit bold:"Time" has two technical forms and one common form, with the year and without the year.
 
