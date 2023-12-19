@@ -79,10 +79,11 @@
 #define _di_f_fss_sets_t_
 #define _di_f_fss_set_t_
 #define _di_f_fss_simple_packet_d_
+#define _di_f_fss_simple_packet_decode_
+#define _di_f_fss_simple_packet_decode_range_
 #define _di_f_fss_simple_packet_delete_
 #define _di_f_fss_simple_packet_destroy_
-#define _di_f_fss_simple_packet_extract_
-#define _di_f_fss_simple_packet_extract_range_
+#define _di_f_fss_simple_packet_encode_
 #define _di_f_fss_simple_packet_rangess_t_
 #define _di_f_fss_simple_packet_ranges_t_
 #define _di_f_fss_simple_packet_range_t_
