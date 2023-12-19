@@ -145,32 +145,32 @@ extern "C" {
     #ifdef _is_F_endian_little
       // Big Endian.
       if (control & F_fss_simple_packet_endian_d) {
-        destination->string[destination->used++] = ((uint8_t) size) & 0xff;
-        destination->string[destination->used++] = (((uint8_t) size) >> 8) & 0xff;
-        destination->string[destination->used++] = (((uint8_t) size) >> 16) & 0xff;
-        destination->string[destination->used++] = (((uint8_t) size) >> 24) & 0xff;
+        destination->string[destination->used++] = (uint8_t) (size & 0xff);
+        destination->string[destination->used++] = (uint8_t) ((size >> 8) & 0xff);
+        destination->string[destination->used++] = (uint8_t) ((size >> 16) & 0xff);
+        destination->string[destination->used++] = (uint8_t) ((size >> 24) & 0xff);
       }
       // Little Endian.
       else {
-        destination->string[destination->used++] = (((uint8_t) size) >> 24) & 0xff;
-        destination->string[destination->used++] = (((uint8_t) size) >> 16) & 0xff;
-        destination->string[destination->used++] = (((uint8_t) size) >> 8) & 0xff;
-        destination->string[destination->used++] = ((uint8_t) size) & 0xff;
+        destination->string[destination->used++] = (uint8_t) ((size >> 24) & 0xff);
+        destination->string[destination->used++] = (uint8_t) ((size >> 16) & 0xff);
+        destination->string[destination->used++] = (uint8_t) ((size >> 8) & 0xff);
+        destination->string[destination->used++] = (uint8_t) (size & 0xff);
       }
     #else
       // Big Endian.
       if (control & F_fss_simple_packet_endian_d) {
-        destination->string[destination->used++] = (((uint8_t) size) >> 24) & 0xff;
-        destination->string[destination->used++] = (((uint8_t) size) >> 16) & 0xff;
-        destination->string[destination->used++] = (((uint8_t) size) >> 8) & 0xff;
-        destination->string[destination->used++] = ((uint8_t) size) & 0xff;
+        destination->string[destination->used++] = (uint8_t) ((size >> 24) & 0xff);
+        destination->string[destination->used++] = (uint8_t) ((size >> 16) & 0xff);
+        destination->string[destination->used++] = (uint8_t) ((size >> 8) & 0xff);
+        destination->string[destination->used++] = (uint8_t) (size & 0xff);
       }
       // Little Endian.
       else {
-        destination->string[destination->used++] = ((uint8_t) size)) & 0xff;
-        destination->string[destination->used++] = (((uint8_t) size) >> 8) & 0xff;
-        destination->string[destination->used++] = (((uint8_t) size) >> 16) & 0xff;
-        destination->string[destination->used++] = (((uint8_t) size) >> 24) & 0xff;
+        destination->string[destination->used++] = (uint8_t) (size & 0xff);
+        destination->string[destination->used++] = (uint8_t) ((size >> 8) & 0xff);
+        destination->string[destination->used++] = (uint8_t) ((size >> 16) & 0xff);
+        destination->string[destination->used++] = (uint8_t) ((size >> 24) & 0xff);
       }
     #endif // _is_F_endian_little
 
