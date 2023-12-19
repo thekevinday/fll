@@ -40,12 +40,6 @@ extern "C" {
 /**
  * Write standard header of the FSS-000E (Payload).
  *
- * @todo Rewrite this to use an array of strings to represent the built headers.
- *       This will allow for randomization, alphabetization, and other header order options.
- *       This will be a better approach because the signature and appropriate callbacks are not needed here.
- *       The caller can then loop over these to transmit the data (or construct its own giant string).
- *       Having a lot of smaller strings is better than one giant string when it comes to memory reallocations.
- *
  * This implementation does not handle the following f_abstruse_*_e:
  *   - none.
  *   - void.
