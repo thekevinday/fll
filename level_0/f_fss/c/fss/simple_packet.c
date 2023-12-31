@@ -17,32 +17,32 @@ extern "C" {
     #ifdef _is_F_endian_little
       // Big Endian.
       if (packet->control & F_fss_simple_packet_endian_d) {
-        packet->size = ((uint8_t) buffer.string[1]);
-        packet->size += ((uint8_t) buffer.string[2]) << 8;
-        packet->size += ((uint8_t) buffer.string[3]) << 16;
-        packet->size += ((uint8_t) buffer.string[4]) << 24;
+        packet->size = (uint32_t) ((uint8_t) buffer.string[1]);
+        packet->size += ((uint32_t) ((uint8_t) buffer.string[2])) << 8;
+        packet->size += ((uint32_t) ((uint8_t) buffer.string[3])) << 16;
+        packet->size += ((uint32_t) ((uint8_t) buffer.string[4])) << 24;
       }
       // Little Endian.
       else {
-        packet->size = ((uint8_t) buffer.string[1]) << 24;
-        packet->size += ((uint8_t) buffer.string[2]) << 16;
-        packet->size += ((uint8_t) buffer.string[3]) << 8;
-        packet->size += ((uint8_t) buffer.string[4]);
+        packet->size = ((uint32_t) ((uint8_t) buffer.string[1])) << 24;
+        packet->size += ((uint32_t) ((uint8_t) buffer.string[2])) << 16;
+        packet->size += ((uint32_t) ((uint8_t) buffer.string[3])) << 8;
+        packet->size += ((uint32_t) ((uint8_t) buffer.string[4]));
       }
     #else
       // Big Endian.
       if (packet->control & F_fss_simple_packet_endian_d) {
-        packet->size = ((uint8_t) buffer.string[1]) << 24;
-        packet->size += ((uint8_t) buffer.string[2]) << 16;
-        packet->size += ((uint8_t) buffer.string[3]) << 8;
-        packet->size += ((uint8_t) buffer.string[4]);
+        packet->size = ((uint32_t) ((uint8_t) buffer.string[1])) << 24;
+        packet->size += ((uint32_t) ((uint8_t) buffer.string[2])) << 16;
+        packet->size += ((uint32_t) ((uint8_t) buffer.string[3])) << 8;
+        packet->size += ((uint32_t) ((uint8_t) buffer.string[4]));
       }
       // Little Endian.
       else {
-        packet->size = ((uint8_t) buffer.string[1]);
-        packet->size += ((uint8_t) buffer.string[2]) << 8;
-        packet->size += ((uint8_t) buffer.string[3]) << 16;
-        packet->size += ((uint8_t) buffer.string[4]) << 24;
+        packet->size = ((uint32_t) ((uint8_t) buffer.string[1]));
+        packet->size += ((uint32_t) ((uint8_t) buffer.string[2])) << 8;
+        packet->size += ((uint32_t) ((uint8_t) buffer.string[3])) << 16;
+        packet->size += ((uint32_t) ((uint8_t) buffer.string[4])) << 24;
       }
     #endif // _is_F_endian_little
 
@@ -63,32 +63,32 @@ extern "C" {
     #ifdef _is_F_endian_little
       // Big Endian.
       if (packet->control & F_fss_simple_packet_endian_d) {
-        packet->size = ((uint8_t) buffer.string[1]);
-        packet->size += ((uint8_t) buffer.string[2]) << 8;
-        packet->size += ((uint8_t) buffer.string[3]) << 16;
-        packet->size += ((uint8_t) buffer.string[4]) << 24;
+        packet->size = ((uint32_t) ((uint8_t) buffer.string[1]));
+        packet->size += ((uint32_t) ((uint8_t) buffer.string[2])) << 8;
+        packet->size += ((uint32_t) ((uint8_t) buffer.string[3])) << 16;
+        packet->size += ((uint32_t) ((uint8_t) buffer.string[4])) << 24;
       }
       // Little Endian.
       else {
-        packet->size = ((uint8_t) buffer.string[1]) << 24;
-        packet->size += ((uint8_t) buffer.string[2]) << 16;
-        packet->size += ((uint8_t) buffer.string[3]) << 8;
-        packet->size += ((uint8_t) buffer.string[4]);
+        packet->size = ((uint32_t) ((uint8_t) buffer.string[1])) << 24;
+        packet->size += ((uint32_t) ((uint8_t) buffer.string[2])) << 16;
+        packet->size += ((uint32_t) ((uint8_t) buffer.string[3])) << 8;
+        packet->size += ((uint32_t) ((uint8_t) buffer.string[4]));
       }
     #else
       // Big Endian.
       if (packet->control & F_fss_simple_packet_endian_d) {
-        packet->size = ((uint8_t) buffer.string[1]) << 24;
-        packet->size += ((uint8_t) buffer.string[2]) << 16;
-        packet->size += ((uint8_t) buffer.string[3]) << 8;
-        packet->size += ((uint8_t) buffer.string[4]);
+        packet->size = ((uint32_t) ((uint8_t) buffer.string[1])) << 24;
+        packet->size += ((uint32_t) ((uint8_t) buffer.string[2])) << 16;
+        packet->size += ((uint32_t) ((uint8_t) buffer.string[3])) << 8;
+        packet->size += ((uint32_t) ((uint8_t) buffer.string[4]));
       }
       // Little Endian.
       else {
-        packet->size = ((uint8_t) buffer.string[1]);
-        packet->size += ((uint8_t) buffer.string[2]) << 8;
-        packet->size += ((uint8_t) buffer.string[3]) << 16;
-        packet->size += ((uint8_t) buffer.string[4]) << 24;
+        packet->size = ((uint32_t) ((uint8_t) buffer.string[1]));
+        packet->size += ((uint32_t) ((uint8_t) buffer.string[2])) << 8;
+        packet->size += ((uint32_t) ((uint8_t) buffer.string[3])) << 16;
+        packet->size += ((uint32_t) ((uint8_t) buffer.string[4])) << 24;
       }
     #endif // _is_F_endian_little
 
