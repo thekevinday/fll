@@ -468,7 +468,7 @@ extern "C" {
  *   The total bytes to write, unless end of buffer is reached first.
  * @param written
  *   (optional) The total bytes written.
- *   Set to NULL to not use..
+ *   Set to NULL to not use.
  *
  * @return
  *   F_okay on success.
