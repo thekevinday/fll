@@ -56,6 +56,7 @@ build_sources_library level_0/parse.c level_0/parse/utf.c
 build_sources_library level_0/path.c level_0/private-path.c level_0/path/common.c
 build_sources_library level_0/pipe.c
 build_sources_library level_0/print.c level_0/private-print.c level_0/print/common.c level_0/print/to.c level_0/print/private-to.c
+build_sources_library level_0/random.c
 build_sources_library level_0/rip.c level_0/rip/utf.c level_0/private-rip.c level_0/rip/private-utf.c
 build_sources_library level_0/serialize.c level_0/private-serialize.c level_0/serialize/common.c
 build_sources_library level_0/signal.c
@@ -125,6 +126,7 @@ build_sources_headers level_0/parse.h level_0/parse/utf.h
 build_sources_headers level_0/path.h level_0/path/common.h
 build_sources_headers level_0/pipe.h
 build_sources_headers level_0/print.h level_0/print/to.h level_0/print/common.h
+build_sources_headers level_0/random.h
 build_sources_headers level_0/rip.h level_0/rip/utf.h
 build_sources_headers level_0/serialize.h level_0/serialize/common.h
 build_sources_headers level_0/signal.h level_0/signal/common.h
