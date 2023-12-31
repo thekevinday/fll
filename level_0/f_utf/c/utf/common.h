@@ -196,15 +196,15 @@ extern "C" {
   #define F_utf_char_mask_char_3_be_d 0x0000ff00 // 0000 0000, 0000 0000, 1111 1111, 0000 0000
   #define F_utf_char_mask_char_4_be_d 0x000000ff // 0000 0000, 0000 0000, 0000 0000, 1111 1111
 
-  #define macro_f_utf_char_t_to_char_1_be(sequence) (((sequence) & F_utf_char_mask_char_1_be_d) >> 24) // Grab first byte.
-  #define macro_f_utf_char_t_to_char_2_be(sequence) (((sequence) & F_utf_char_mask_char_2_be_d) >> 16) // Grab second byte.
-  #define macro_f_utf_char_t_to_char_3_be(sequence) (((sequence) & F_utf_char_mask_char_3_be_d) >> 8)  // Grab third byte.
-  #define macro_f_utf_char_t_to_char_4_be(sequence) ((sequence) & F_utf_char_mask_char_4_be_d)         // Grab fourth byte.
+  #define macro_f_utf_char_t_to_char_1_be(sequence) ((uint32_t) ((sequence) & F_utf_char_mask_char_1_be_d) >> 24) // Grab first byte.
+  #define macro_f_utf_char_t_to_char_2_be(sequence) ((uint32_t) ((sequence) & F_utf_char_mask_char_2_be_d) >> 16) // Grab second byte.
+  #define macro_f_utf_char_t_to_char_3_be(sequence) ((uint32_t) ((sequence) & F_utf_char_mask_char_3_be_d) >> 8)  // Grab third byte.
+  #define macro_f_utf_char_t_to_char_4_be(sequence) ((uint32_t) (sequence) & F_utf_char_mask_char_4_be_d)         // Grab fourth byte.
 
-  #define macro_f_utf_char_t_from_char_1_be(sequence) (((sequence) << 24) & F_utf_char_mask_char_1_be_d) // Shift to first byte.
-  #define macro_f_utf_char_t_from_char_2_be(sequence) (((sequence) << 16) & F_utf_char_mask_char_2_be_d) // Shift to second byte.
-  #define macro_f_utf_char_t_from_char_3_be(sequence) (((sequence) << 8) & F_utf_char_mask_char_3_be_d)  // Shift to third byte.
-  #define macro_f_utf_char_t_from_char_4_be(sequence) ((sequence) & F_utf_char_mask_char_4_be_d)         // Shift to fourth byte.
+  #define macro_f_utf_char_t_from_char_1_be(sequence) ((((uint32_t) (sequence)) << 24) & F_utf_char_mask_char_1_be_d) // Shift to first byte.
+  #define macro_f_utf_char_t_from_char_2_be(sequence) ((((uint32_t) (sequence)) << 16) & F_utf_char_mask_char_2_be_d) // Shift to second byte.
+  #define macro_f_utf_char_t_from_char_3_be(sequence) ((((uint32_t) (sequence)) << 8) & F_utf_char_mask_char_3_be_d)  // Shift to third byte.
+  #define macro_f_utf_char_t_from_char_4_be(sequence) (((uint32_t) (sequence)) & F_utf_char_mask_char_4_be_d)         // Shift to fourth byte.
 
   // Little Endian.
   #define F_utf_char_mask_byte_1_le_d 0x000000ff // 0000 0000, 0000 0000, 0000 0000, 1111 1111
@@ -217,15 +217,15 @@ extern "C" {
   #define F_utf_char_mask_char_3_le_d 0x00ff0000 // 0000 0000, 1111 1111, 0000 0000, 0000 0000
   #define F_utf_char_mask_char_4_le_d 0xff000000 // 1111 1111, 0000 0000, 0000 0000, 0000 0000
 
-  #define macro_f_utf_char_t_to_char_1_le(sequence) ((sequence) & F_utf_char_mask_char_1_le_d)         // Grab first byte.
-  #define macro_f_utf_char_t_to_char_2_le(sequence) (((sequence) & F_utf_char_mask_char_2_le_d) >> 8)  // Grab second byte.
-  #define macro_f_utf_char_t_to_char_3_le(sequence) (((sequence) & F_utf_char_mask_char_3_le_d) >> 16) // Grab third byte.
-  #define macro_f_utf_char_t_to_char_4_le(sequence) (((sequence) & F_utf_char_mask_char_4_le_d) >> 24) // Grab fourth byte.
+  #define macro_f_utf_char_t_to_char_1_le(sequence) ((uint32_t) ((sequence) & F_utf_char_mask_char_1_le_d))         // Grab first byte.
+  #define macro_f_utf_char_t_to_char_2_le(sequence) (((uint32_t) ((sequence) & F_utf_char_mask_char_2_le_d)) >> 8)  // Grab second byte.
+  #define macro_f_utf_char_t_to_char_3_le(sequence) (((uint32_t) ((sequence) & F_utf_char_mask_char_3_le_d)) >> 16) // Grab third byte.
+  #define macro_f_utf_char_t_to_char_4_le(sequence) (((uint32_t) ((sequence) & F_utf_char_mask_char_4_le_d)) >> 24) // Grab fourth byte.
 
-  #define macro_f_utf_char_t_from_char_1_le(sequence) ((sequence) & F_utf_char_mask_char_1_le_d)         // Shift to first byte.
-  #define macro_f_utf_char_t_from_char_2_le(sequence) (((sequence) << 8) & F_utf_char_mask_char_2_le_d)  // Shift to second byte.
-  #define macro_f_utf_char_t_from_char_3_le(sequence) (((sequence) << 16) & F_utf_char_mask_char_3_le_d) // Shift to third byte.
-  #define macro_f_utf_char_t_from_char_4_le(sequence) (((sequence) << 24) & F_utf_char_mask_char_4_le_d) // Shift to fourth byte.
+  #define macro_f_utf_char_t_from_char_1_le(sequence) (((uint32_t) (sequence) & F_utf_char_mask_char_1_le_d))         // Shift to first byte.
+  #define macro_f_utf_char_t_from_char_2_le(sequence) ((((uint32_t) (sequence) << 8) & F_utf_char_mask_char_2_le_d))  // Shift to second byte.
+  #define macro_f_utf_char_t_from_char_3_le(sequence) ((((uint32_t) (sequence) << 16) & F_utf_char_mask_char_3_le_d)) // Shift to third byte.
+  #define macro_f_utf_char_t_from_char_4_le(sequence) ((((uint32_t) (sequence) << 24) & F_utf_char_mask_char_4_le_d)) // Shift to fourth byte.
 
   #define F_utf_char_mask_byte_1_d F_utf_char_mask_byte_1_be_d
   #define F_utf_char_mask_byte_2_d F_utf_char_mask_byte_2_be_d
