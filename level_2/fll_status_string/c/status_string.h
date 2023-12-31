@@ -49,7 +49,7 @@ extern "C" {
  */
 #ifndef _di_fll_status_string_from_
   extern f_status_t fll_status_string_from(const f_string_static_t name, f_status_t * const code);
-#endif // _di_fll_status_string_to_
+#endif // _di_fll_status_string_from_
 
 #ifdef __cplusplus
 } // extern "C"

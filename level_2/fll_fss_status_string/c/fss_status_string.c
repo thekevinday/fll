@@ -209,7 +209,7 @@ extern "C" {
 
     return F_none;
   }
-#endif // _di_fll_status_string_to_
+#endif // _di_fll_fss_status_string_to_
 
 #ifdef __cplusplus
 } // extern "C"
