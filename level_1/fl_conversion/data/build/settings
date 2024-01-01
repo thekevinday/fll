@@ -16,7 +16,7 @@ build_name fl_conversion
 
 version_major 0
 version_minor 6
-version_micro 8
+version_micro 9
 version_file micro
 version_target minor
 
