@@ -1,7 +1,7 @@
 # fss-0002 iki-0000
 #
 # license open-standard-license-1.0
-# version 2023/12/07
+# version 2024/01/01
 #
 # This file (assumed to be named fss-000e.txt) can be more easily read using the following iki_read commands:
 #   iki_read fss-000e.txt +Q -w -rr EOF EOF FLL FLL -WWW character "'" "'" code '"' '"' italic '"' '"'
@@ -11,7 +11,7 @@
 #
 
 Featureless Settings Specification: 000e - Payload:
-  This is a code:"FSS-0002 (Basic List)" with two required objects and one optional object\:
+  This is a code:"FSS-0002 (Basic List)" with one required object and two optional objects\:
   1) italic:"header".
   2) italic:"signature" (optional).
   3) italic:"payload" (optional).
