@@ -21,6 +21,9 @@
 #include <fll/level_0/type.h>
 #include <fll/level_0/string.h>
 
+// FLL-0 random includes.
+#include <fll/level_0/random/common.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -62,8 +65,8 @@ extern "C" {
  *   The flags to be passed to getrandom().
  *
  *   Flag bits:
- *     - GRND_RANDOM:   Random data is taken from the random source, such as /dev/random and not the urandom source.
- *     - GRND_NONBLOCK: Does not block when getting the bits.
+ *     - F_random_seed_flag_block_not_d: Does not block when getting the bits.
+ *     - F_random_seed_flag_source_d:    Random data is taken from the random source, such as /dev/random and not the urandom source.
  * @param length
  *   The size within the destination string to copy.
  *   The standard max size is 255.
@@ -108,8 +111,8 @@ extern "C" {
  *   The flags to be passed to getrandom().
  *
  *   Flag bits:
- *     - GRND_RANDOM:   Random data is taken from the random source, such as /dev/random and not the urandom source.
- *     - GRND_NONBLOCK: Does not block when getting the bits.
+ *     - F_random_seed_flag_block_not_d: Does not block when getting the bits.
+ *     - F_random_seed_flag_source_d:    Random data is taken from the random source, such as /dev/random and not the urandom source.
  *
  * @return
  *   F_okay on success.

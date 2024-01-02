@@ -34,7 +34,7 @@ build_libraries-individual -lf_memory -lf_string
 
 build_sources_library random.c
 
-build_sources_headers random.h
+build_sources_headers random.h random/common.h
 
 build_script yes
 build_shared yes

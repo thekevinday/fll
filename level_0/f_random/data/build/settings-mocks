@@ -23,7 +23,7 @@ build_libraries-individual -lf_memory
 build_sources_library random.c
 build_sources_library ../../tests/unit/c/mock-random.c
 
-build_sources_headers random.h
+build_sources_headers random.h random/common.h
 
 build_script yes
 build_shared yes

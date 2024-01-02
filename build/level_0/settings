@@ -105,7 +105,7 @@ build_sources_headers parse.h parse/utf.h
 build_sources_headers path.h path/common.h
 build_sources_headers pipe.h
 build_sources_headers print.h print/to.h print/common.h
-build_sources_headers random.h
+build_sources_headers random.h random/common.h
 build_sources_headers rip.h rip/utf.h
 build_sources_headers serialize.h serialize/common.h
 build_sources_headers signal.h signal/common.h
