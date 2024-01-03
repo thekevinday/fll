@@ -27,14 +27,14 @@ extern "C" {
 
     // Identify and process first/last parameters.
     if (main->program.parameters.array[f_console_standard_parameter_line_first_no_e].result & f_console_result_found_e) {
-      main->setting.flag -= main->setting.flag & fake_main_flag_print_first_e;
+      main->setting.flag &= ~fake_main_flag_print_first_e;
     }
     else {
       main->setting.flag |= fake_main_flag_print_first_e;
     }
 
     if (main->program.parameters.array[f_console_standard_parameter_line_last_no_e].result & f_console_result_found_e) {
-      main->setting.flag -= main->setting.flag & fake_main_flag_print_last_e;
+      main->setting.flag &= ~fake_main_flag_print_last_e;
     }
     else {
       main->setting.flag |= fake_main_flag_print_last_e;
@@ -99,7 +99,7 @@ extern "C" {
       main->setting.flag |= fake_main_flag_pipe_e;
     }
     else {
-      main->setting.flag -= main->setting.flag & fake_main_flag_pipe_e;
+      main->setting.flag &= ~fake_main_flag_pipe_e;
     }
 
     {
@@ -129,7 +129,7 @@ extern "C" {
           if (main->program.parameters.array[enables[i]].result & f_console_result_found_e) {
             if (main->program.parameters.array[disables[i]].result & f_console_result_found_e) {
               if (main->program.parameters.array[enables[i]].location < main->program.parameters.array[disables[i]].location) {
-                main->setting.flag -= main->setting.flag & flags[i];
+                main->setting.flag &= ~flags[i];
               }
               else {
                 main->setting.flag |= flags[i];
@@ -140,7 +140,7 @@ extern "C" {
             }
           }
           else if (main->program.parameters.array[disables[i]].result & f_console_result_found_e) {
-            main->setting.flag -= main->setting.flag & flags[i];
+            main->setting.flag &= ~flags[i];
           }
         } // for
       }
@@ -447,7 +447,7 @@ extern "C" {
     }
     else {
       main->setting.flag |= fake_main_flag_operation_make_e;
-      main->setting.flag -= main->setting.flag & fake_main_flag_operation_e;
+      main->setting.flag &= ~fake_main_flag_operation_e;
 
       main->setting.state.status = f_memory_array_increase_by(1, sizeof(uint8_t), (void **) &main->setting.operations.array, &main->setting.operations.used, &main->setting.operations.size);
 

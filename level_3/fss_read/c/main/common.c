@@ -55,14 +55,14 @@ extern "C" {
 
     // Identify and process first/last parameters.
     if (parameters->array[f_console_standard_parameter_line_first_no_e].result & f_console_result_found_e) {
-      main->setting.flag -= main->setting.flag & fss_read_main_flag_print_first_e;
+      main->setting.flag &= ~fss_read_main_flag_print_first_e;
     }
     else {
       main->setting.flag |= fss_read_main_flag_print_first_e;
     }
 
     if (parameters->array[f_console_standard_parameter_line_last_no_e].result & f_console_result_found_e) {
-      main->setting.flag -= main->setting.flag & fss_read_main_flag_print_last_e;
+      main->setting.flag &= ~fss_read_main_flag_print_last_e;
     }
     else {
       main->setting.flag |= fss_read_main_flag_print_last_e;
@@ -139,7 +139,7 @@ extern "C" {
       main->setting.flag |= fss_read_main_flag_pipe_e;
     }
     else {
-      main->setting.flag -= main->setting.flag & fss_read_main_flag_pipe_e;
+      main->setting.flag &= ~fss_read_main_flag_pipe_e;
     }
 
     {

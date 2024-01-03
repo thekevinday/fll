@@ -435,8 +435,8 @@ extern "C" {
     if (vector == -1) {
       data.flag |= fl_conversion_data_flag_negative_e;
     }
-    else if (data.flag & fl_conversion_data_flag_negative_e) {
-      data.flag -= fl_conversion_data_flag_negative_e;
+    else {
+      data.flag &= ~fl_conversion_data_flag_negative_e;
     }
 
     if (mode == 10 || mode == 16 || mode == 12 || mode == 8) {
@@ -578,9 +578,7 @@ extern "C" {
 
     fl_conversion_data_t data = macro_fl_conversion_data_t_initialize_1(mode, flag);
 
-    if (data.flag & fl_conversion_data_flag_negative_e) {
-      data.flag -= fl_conversion_data_flag_negative_e;
-    }
+    data.flag &= ~fl_conversion_data_flag_negative_e;
 
     if (mode == 10 || mode == 16 || mode == 12 || mode == 8) {
       status = private_fl_conversion_dynamic_to_base_unsigned(data, string + offset, length - offset, number);

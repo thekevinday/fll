@@ -535,17 +535,13 @@ extern "C" {
               item->with |= controller_with_session_new_d;
 
               // The "session_new" and "session_same" are mutually exclusive.
-              if (item->with & controller_with_session_same_d) {
-                item->with -= controller_with_session_same_d;
-              }
+              item->with &= ~controller_with_session_same_d;
             }
             else if (f_compare_dynamic_partial_string(controller_session_same_s.string, cache->buffer_item, controller_session_same_s.used, cache->content_action.array[i]) == F_equal_to) {
               item->with |= controller_with_session_same_d;
 
               // The "session_new" and "session_same" are mutually exclusive.
-              if (item->with & controller_with_session_new_d) {
-                item->with -= controller_with_session_new_d;
-              }
+              item->with &= ~controller_with_session_new_d;
             }
             else {
               if (global.main->error.verbosity > f_console_verbosity_quiet_e) {

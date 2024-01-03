@@ -17,14 +17,14 @@ extern "C" {
 
     // Identify and process first/last parameters.
     if (main->program.parameters.array[f_console_standard_parameter_line_first_no_e].result & f_console_result_found_e) {
-      main->setting.flag -= main->setting.flag & byte_dump_main_flag_print_first_e;
+      main->setting.flag &= ~byte_dump_main_flag_print_first_e;
     }
     else {
       main->setting.flag |= byte_dump_main_flag_print_first_e;
     }
 
     if (main->program.parameters.array[f_console_standard_parameter_line_last_no_e].result & f_console_result_found_e) {
-      main->setting.flag -= main->setting.flag & byte_dump_main_flag_print_last_e;
+      main->setting.flag &= ~byte_dump_main_flag_print_last_e;
     }
     else {
       main->setting.flag |= byte_dump_main_flag_print_last_e;
@@ -154,9 +154,7 @@ extern "C" {
         }
 
         if (choices.array[choice] == byte_dump_parameter_narrow_e) {
-          if (main->setting.flag & byte_dump_main_flag_wide_e) {
-            main->setting.flag -= byte_dump_main_flag_wide_e;
-          }
+          main->setting.flag &= ~byte_dump_main_flag_wide_e;
         }
         else if (choices.array[choice] == byte_dump_parameter_wide_e) {
           main->setting.flag |= byte_dump_main_flag_wide_e;
@@ -189,7 +187,7 @@ extern "C" {
       main->setting.flag |= byte_dump_main_flag_pipe_e;
     }
     else {
-      main->setting.flag -= main->setting.flag & byte_dump_main_flag_pipe_e;
+      main->setting.flag &= ~byte_dump_main_flag_pipe_e;
     }
 
     if (main->program.parameters.array[byte_dump_parameter_width_e].result & f_console_result_value_e) {
@@ -284,7 +282,7 @@ extern "C" {
           return;
         }
         else {
-          main->setting.flag -= flags[i] & main->setting.flag;
+          main->setting.flag &= ~flags[i];
         }
       } // for
 
@@ -310,28 +308,28 @@ extern "C" {
       main->setting.flag |= byte_dump_main_flag_text_e;
     }
     else {
-      main->setting.flag -= byte_dump_main_flag_text_e & main->setting.flag;
+      main->setting.flag &= ~byte_dump_main_flag_text_e;
     }
 
     if (main->program.parameters.array[byte_dump_parameter_unicode_e].result & f_console_result_found_e) {
       main->setting.flag |= byte_dump_main_flag_unicode_e;
     }
     else {
-      main->setting.flag -= byte_dump_main_flag_unicode_e & main->setting.flag;
+      main->setting.flag &= ~byte_dump_main_flag_unicode_e;
     }
 
     if (main->program.parameters.array[byte_dump_parameter_placeholder_e].result & f_console_result_found_e) {
       main->setting.flag |= byte_dump_main_flag_placeholder_e;
     }
     else {
-      main->setting.flag -= byte_dump_main_flag_placeholder_e & main->setting.flag;
+      main->setting.flag &= ~byte_dump_main_flag_placeholder_e;
     }
 
     if (main->program.parameters.array[byte_dump_parameter_classic_e].result & f_console_result_found_e) {
       main->setting.flag |= byte_dump_main_flag_classic_e;
     }
     else {
-      main->setting.flag -= byte_dump_main_flag_classic_e & main->setting.flag;
+      main->setting.flag &= ~byte_dump_main_flag_classic_e;
     }
 
     if (main->program.parameters.remaining.used) {

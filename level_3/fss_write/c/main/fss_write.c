@@ -257,7 +257,7 @@ extern "C" {
         }
 
         // Reset the "has Content for Object" flag and associated contents array used length.
-        flag -= flag | 0x4;
+        flag &= ~0x4;
         main->setting.contents->used = 0;
 
         main->setting.state.status = f_memory_array_increase_by(main->setting.block.used, sizeof(f_char_t), (void **) &main->setting.object->string, &main->setting.object->used, &main->setting.object->size);

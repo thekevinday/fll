@@ -633,14 +633,14 @@ extern "C" {
 
     // Identify and process first/last parameters.
     if (main->program.parameters.array[f_console_standard_parameter_line_first_no_e].result & f_console_result_found_e) {
-      main->setting.flag -= main->setting.flag & controller_main_flag_print_first_e;
+      main->setting.flag &= ~controller_main_flag_print_first_e;
     }
     else {
       main->setting.flag |= controller_main_flag_print_first_e;
     }
 
     if (main->program.parameters.array[f_console_standard_parameter_line_last_no_e].result & f_console_result_found_e) {
-      main->setting.flag -= main->setting.flag & controller_main_flag_print_last_e;
+      main->setting.flag &= ~controller_main_flag_print_last_e;
     }
     else {
       main->setting.flag |= controller_main_flag_print_last_e;

@@ -17,14 +17,14 @@ extern "C" {
 
     // Identify and process first/last parameters.
     if (main->program.parameters.array[f_console_standard_parameter_line_first_no_e].result & f_console_result_found_e) {
-      main->setting.flag -= main->setting.flag & fss_identify_main_flag_print_first_e;
+      main->setting.flag &= ~fss_identify_main_flag_print_first_e;
     }
     else {
       main->setting.flag |= fss_identify_main_flag_print_first_e;
     }
 
     if (main->program.parameters.array[f_console_standard_parameter_line_last_no_e].result & f_console_result_found_e) {
-      main->setting.flag -= main->setting.flag & fss_identify_main_flag_print_last_e;
+      main->setting.flag &= ~fss_identify_main_flag_print_last_e;
     }
     else {
       main->setting.flag |= fss_identify_main_flag_print_last_e;
@@ -88,21 +88,21 @@ extern "C" {
       main->setting.flag |= fss_identify_main_flag_content_e;
     }
     else {
-      main->setting.flag -= main->setting.flag & fss_identify_main_flag_content_e;
+      main->setting.flag &= ~fss_identify_main_flag_content_e;
     }
 
     if (main->program.parameters.array[fss_identify_parameter_object_e].result & f_console_result_found_e) {
       main->setting.flag |= fss_identify_main_flag_object_e;
     }
     else {
-      main->setting.flag -= main->setting.flag & fss_identify_main_flag_object_e;
+      main->setting.flag &= ~fss_identify_main_flag_object_e;
     }
 
     if (main->program.parameters.array[fss_identify_parameter_total_e].result & f_console_result_found_e) {
       main->setting.flag |= fss_identify_main_flag_total_e;
     }
     else {
-      main->setting.flag -= main->setting.flag & fss_identify_main_flag_total_e;
+      main->setting.flag &= ~fss_identify_main_flag_total_e;
     }
 
     if (main->program.parameters.array[fss_identify_parameter_line_e].result & f_console_result_value_e) {
@@ -139,7 +139,7 @@ extern "C" {
       return;
     }
     else {
-      main->setting.flag -= main->setting.flag & fss_identify_main_flag_line_e;
+      main->setting.flag &= ~fss_identify_main_flag_line_e;
     }
 
     if (main->program.parameters.array[fss_identify_parameter_name_e].result & f_console_result_value_e) {
@@ -253,7 +253,7 @@ extern "C" {
       return;
     }
     else {
-      main->setting.flag -= main->setting.flag & fss_identify_parameter_name_e;
+      main->setting.flag &= ~fss_identify_parameter_name_e;
     }
 
     if (main->program.parameters.remaining.used) {
@@ -286,14 +286,14 @@ extern "C" {
       main->setting.flag |= fss_identify_main_flag_file_from_e;
     }
     else {
-      main->setting.flag -= main->setting.flag & fss_identify_main_flag_file_from_e;
+      main->setting.flag &= ~fss_identify_main_flag_file_from_e;
     }
 
     if (main->program.pipe & fll_program_data_pipe_input_e) {
       main->setting.flag |= fss_identify_main_flag_pipe_e;
     }
     else {
-      main->setting.flag -= main->setting.flag & fss_identify_main_flag_pipe_e;
+      main->setting.flag &= ~fss_identify_main_flag_pipe_e;
     }
 
     if (!(main->setting.flag & fss_identify_main_flag_pipe_e | fss_identify_main_flag_file_from_e)) {

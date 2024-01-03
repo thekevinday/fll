@@ -122,8 +122,7 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
           main->setting.standard = fss_write_basic_standard_s;
 
           // Remove flags not supported for this standard.
-          main->setting.flag -= main->setting.flag & fss_write_main_flag_ignore_e;
-          main->setting.flag -= main->setting.flag & fss_write_main_flag_content_multiple_e;
+          main->setting.flag &= ~(fss_write_main_flag_ignore_e | fss_write_main_flag_content_multiple_e);
 
           main->callback.process_content = &fss_write_basic_process_content;
           main->callback.process_help = &fss_write_basic_process_help;
@@ -140,8 +139,7 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
           main->setting.standard = fss_write_extended_standard_s;
 
           // Remove flags not supported for this standard.
-          main->setting.flag -= main->setting.flag & fss_write_main_flag_ignore_e;
-
+          main->setting.flag &= ~fss_write_main_flag_ignore_e;
           main->setting.flag |= fss_write_main_flag_content_multiple_e;
 
           main->callback.process_content = &fss_write_extended_process_content;
@@ -159,8 +157,7 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
           main->setting.standard = fss_write_basic_list_standard_s;
 
           // Remove flags not supported for this standard.
-          main->setting.flag -= main->setting.flag & fss_write_main_flag_ignore_e;
-          main->setting.flag -= main->setting.flag & fss_write_main_flag_content_multiple_e;
+          main->setting.flag &= ~(fss_write_main_flag_ignore_e | fss_write_main_flag_content_multiple_e);
 
           main->callback.process_content = &fss_write_basic_list_process_content;
           main->callback.process_help = &fss_write_basic_list_process_help;
@@ -177,8 +174,7 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
           main->setting.standard = fss_write_extended_list_standard_s;
 
           // Remove flags not supported for this standard.
-          main->setting.flag -= main->setting.flag & fss_write_main_flag_content_multiple_e;
-
+          main->setting.flag &= ~fss_write_main_flag_content_multiple_e;
           main->setting.flag |= fss_write_main_flag_ignore_e;
 
           main->callback.process_content = &fss_write_extended_list_process_content;
@@ -213,8 +209,7 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
           main->setting.standard = fss_write_payload_standard_s;
 
           // Remove flags not supported for this standard.
-          main->setting.flag -= main->setting.flag & fss_write_main_flag_ignore_e;
-          main->setting.flag -= main->setting.flag & fss_write_main_flag_content_multiple_e;
+          main->setting.flag &= ~(fss_write_main_flag_ignore_e | fss_write_main_flag_content_multiple_e);
 
           main->callback.process_content = 0;
           main->callback.process_help = &fss_write_payload_process_help;

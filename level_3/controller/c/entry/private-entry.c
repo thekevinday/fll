@@ -526,9 +526,7 @@ extern "C" {
 
             if (action->status == F_okay) {
               if (action->parameters.used == 2) {
-                if (action->flag & controller_entry_action_flag_undefined_e) {
-                  action->flag -= controller_entry_action_flag_undefined_e;
-                }
+                action->flag &= ~controller_entry_action_flag_undefined_e;
 
                 status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, action->parameters.array[1], &action->number);
 
@@ -1803,9 +1801,7 @@ extern "C" {
                   for (k = 0; k < entry->items.used; ++k) {
 
                     if (f_compare_dynamic(action->parameters.array[0], entry->items.array[k].name) == F_equal_to) {
-                      if (missing & 0x1) {
-                        missing -= 0x1;
-                      }
+                      missing &= ~0x1;
 
                       break;
                     }
@@ -1962,9 +1958,7 @@ extern "C" {
           }
         }
         else {
-          if (global.setting->control.flag & controller_control_flag_readonly_e) {
-            global.setting->control.flag -= controller_control_flag_readonly_e;
-          }
+          global.setting->control.flag &= ~controller_control_flag_readonly_e;
         }
 
         cache->action.generic.used = 0;
@@ -2236,10 +2230,7 @@ extern "C" {
             continue;
           }
 
-          if (entry->flag & controller_entry_flag_timeout_exit_no_e) {
-            entry->flag -= controller_entry_flag_timeout_exit_no_e;
-          }
-
+          entry->flag &= ~controller_entry_flag_timeout_exit_no_e;
           time = &entry->timeout_exit;
         }
         else if (f_compare_dynamic_partial_string(controller_kill_s.string, cache->buffer_file, controller_kill_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
@@ -2249,10 +2240,7 @@ extern "C" {
             continue;
           }
 
-          if (entry->flag & controller_entry_flag_timeout_kill_no_e) {
-            entry->flag -= controller_entry_flag_timeout_kill_no_e;
-          }
-
+          entry->flag &= ~controller_entry_flag_timeout_kill_no_e;
           time = &entry->timeout_kill;
         }
         else if (f_compare_dynamic_partial_string(controller_start_s.string, cache->buffer_file, controller_start_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
@@ -2262,10 +2250,7 @@ extern "C" {
             continue;
           }
 
-          if (entry->flag & controller_entry_flag_timeout_start_no_e) {
-            entry->flag -= controller_entry_flag_timeout_start_no_e;
-          }
-
+          entry->flag &= ~controller_entry_flag_timeout_start_no_e;
           time = &entry->timeout_start;
         }
         else if (f_compare_dynamic_partial_string(controller_stop_s.string, cache->buffer_file, controller_stop_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
@@ -2275,10 +2260,7 @@ extern "C" {
             continue;
           }
 
-          if (entry->flag & controller_entry_flag_timeout_stop_no_e) {
-            entry->flag -= controller_entry_flag_timeout_stop_no_e;
-          }
-
+          entry->flag &= ~controller_entry_flag_timeout_stop_no_e;
           time = &entry->timeout_stop;
         }
         else {

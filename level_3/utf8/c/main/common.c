@@ -17,14 +17,14 @@ extern "C" {
 
     // Identify and process first/last parameters.
     if (main->program.parameters.array[f_console_standard_parameter_line_first_no_e].result & f_console_result_found_e) {
-      main->setting.flag -= main->setting.flag & utf8_main_flag_print_first_e;
+      main->setting.flag &= ~utf8_main_flag_print_first_e;
     }
     else {
       main->setting.flag |= utf8_main_flag_print_first_e;
     }
 
     if (main->program.parameters.array[f_console_standard_parameter_line_last_no_e].result & f_console_result_found_e) {
-      main->setting.flag -= main->setting.flag & utf8_main_flag_print_last_e;
+      main->setting.flag &= ~utf8_main_flag_print_last_e;
     }
     else {
       main->setting.flag |= utf8_main_flag_print_last_e;
@@ -88,11 +88,11 @@ extern "C" {
         }
 
         if (choices.array[choice] == utf8_parameter_from_bytesequence_e) {
-          main->setting.mode -= main->setting.mode & utf8_mode_from_codepoint_e;
+          main->setting.mode &= ~utf8_mode_from_codepoint_e;
           main->setting.mode |= utf8_mode_from_bytesequence_e;
         }
         else if (choices.array[choice] == utf8_parameter_from_codepoint_e) {
-          main->setting.mode -= main->setting.mode & utf8_mode_from_bytesequence_e;
+          main->setting.mode &= ~utf8_mode_from_bytesequence_e;
           main->setting.mode |= utf8_mode_from_codepoint_e;
         }
       }
@@ -117,22 +117,15 @@ extern "C" {
         }
 
         if (choices.array[choice] == utf8_parameter_to_bytesequence_e) {
-          main->setting.mode -= main->setting.mode & utf8_mode_to_codepoint_e;
-          main->setting.mode -= main->setting.mode & utf8_mode_to_combining_e;
-          main->setting.mode -= main->setting.mode & utf8_mode_to_width_e;
-
+          main->setting.mode &= ~(utf8_mode_to_codepoint_e | utf8_mode_to_combining_e | utf8_mode_to_width_e);
           main->setting.mode |= utf8_mode_to_bytesequence_e;
         }
         else if (choices.array[choice] == utf8_parameter_to_codepoint_e) {
-          main->setting.mode -= main->setting.mode & utf8_mode_to_bytesequence_e;
-          main->setting.mode -= main->setting.mode & utf8_mode_to_combining_e;
-          main->setting.mode -= main->setting.mode & utf8_mode_to_width_e;
-
+          main->setting.mode &= ~(utf8_mode_to_bytesequence_e | utf8_mode_to_combining_e | utf8_mode_to_width_e);
           main->setting.mode |= utf8_mode_to_codepoint_e;
         }
         else if (choices.array[choice] == utf8_parameter_to_combining_e) {
-          main->setting.mode -= main->setting.mode & utf8_mode_to_bytesequence_e;
-          main->setting.mode -= main->setting.mode & utf8_mode_to_codepoint_e;
+          main->setting.mode &= ~(utf8_mode_to_bytesequence_e | utf8_mode_to_codepoint_e);
 
           // --to_width may be specified with --to_combining.
           if (main->program.parameters.array[utf8_parameter_to_width_e].result & f_console_result_found_e) {
@@ -142,8 +135,7 @@ extern "C" {
           main->setting.mode |= utf8_mode_to_combining_e;
         }
         else if (choices.array[choice] == utf8_parameter_to_width_e) {
-          main->setting.mode -= main->setting.mode & utf8_mode_to_bytesequence_e;
-          main->setting.mode -= main->setting.mode & utf8_mode_to_codepoint_e;
+          main->setting.mode &= ~(utf8_mode_to_bytesequence_e | utf8_mode_to_codepoint_e);
 
           // --to_width may be specified with --to_combining.
           if (main->program.parameters.array[utf8_parameter_to_combining_e].result & f_console_result_found_e) {
@@ -177,7 +169,7 @@ extern "C" {
       main->setting.flag |= utf8_main_flag_pipe_e;
     }
     else {
-      main->setting.flag -= main->setting.flag & utf8_main_flag_pipe_e;
+      main->setting.flag &= ~utf8_main_flag_pipe_e;
     }
 
     if (main->program.parameters.array[utf8_parameter_to_file_e].result & f_console_result_value_e) {
@@ -263,7 +255,7 @@ extern "C" {
     }
     else {
       main->program.output.to = main->program.message.to;
-      main->setting.flag -= main->setting.flag & utf8_main_flag_file_to_e;
+      main->setting.flag &= ~utf8_main_flag_file_to_e;
     }
 
     if (main->program.parameters.array[utf8_parameter_from_file_e].result & f_console_result_value_e) {
@@ -343,7 +335,7 @@ extern "C" {
       return;
     }
     else {
-      main->setting.flag -= main->setting.flag & utf8_main_flag_file_from_e;
+      main->setting.flag &= ~utf8_main_flag_file_from_e;
     }
 
     if (main->program.parameters.remaining.used) {

@@ -113,12 +113,12 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
     // Setup default standard (except for process_help): FSS-0000 (Basic).
     main->setting.standard = fss_read_basic_standard_s;
 
-    main->setting.flag -= main->setting.flag & fss_read_main_flag_content_has_close_e;
-    main->setting.flag -= main->setting.flag & fss_read_main_flag_content_multiple_e;
-    main->setting.flag -= main->setting.flag & fss_read_main_flag_depth_multiple_e;
-    main->setting.flag -= main->setting.flag & fss_read_main_flag_object_as_line_e;
-    main->setting.flag -= main->setting.flag & fss_read_main_flag_object_trim_e;
-    main->setting.flag -= main->setting.flag & fss_read_main_flag_trim_object_e;
+    main->setting.flag &= ~fss_read_main_flag_content_has_close_e;
+    main->setting.flag &= ~fss_read_main_flag_content_multiple_e;
+    main->setting.flag &= ~fss_read_main_flag_depth_multiple_e;
+    main->setting.flag &= ~fss_read_main_flag_object_as_line_e;
+    main->setting.flag &= ~fss_read_main_flag_object_trim_e;
+    main->setting.flag &= ~fss_read_main_flag_trim_object_e;
 
     main->setting.flag |= fss_read_main_flag_line_single_e;
     main->setting.flag |= fss_read_main_flag_quote_content_e | fss_read_main_flag_quote_object_e;
@@ -150,12 +150,12 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
           main->setting.standard = fss_read_basic_standard_s;
 
           // Remove flags not supported for this standard.
-          main->setting.flag -= main->setting.flag & fss_read_main_flag_content_has_close_e;
-          main->setting.flag -= main->setting.flag & fss_read_main_flag_content_multiple_e;
-          main->setting.flag -= main->setting.flag & fss_read_main_flag_depth_multiple_e;
-          main->setting.flag -= main->setting.flag & fss_read_main_flag_object_as_line_e;
-          main->setting.flag -= main->setting.flag & fss_read_main_flag_object_trim_e;
-          main->setting.flag -= main->setting.flag & fss_read_main_flag_trim_object_e;
+          main->setting.flag &= ~fss_read_main_flag_content_has_close_e;
+          main->setting.flag &= ~fss_read_main_flag_content_multiple_e;
+          main->setting.flag &= ~fss_read_main_flag_depth_multiple_e;
+          main->setting.flag &= ~fss_read_main_flag_object_as_line_e;
+          main->setting.flag &= ~fss_read_main_flag_object_trim_e;
+          main->setting.flag &= ~fss_read_main_flag_trim_object_e;
 
           main->setting.flag |= fss_read_main_flag_line_single_e;
           main->setting.flag |= fss_read_main_flag_quote_content_e | fss_read_main_flag_quote_object_e;
@@ -176,11 +176,11 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
           main->setting.standard = fss_read_extended_standard_s;
 
           // Remove flags not supported for this standard.
-          main->setting.flag -= main->setting.flag & fss_read_main_flag_content_has_close_e;
-          main->setting.flag -= main->setting.flag & fss_read_main_flag_depth_multiple_e;
-          main->setting.flag -= main->setting.flag & fss_read_main_flag_object_as_line_e;
-          main->setting.flag -= main->setting.flag & fss_read_main_flag_object_trim_e;
-          main->setting.flag -= main->setting.flag & fss_read_main_flag_trim_object_e;
+          main->setting.flag &= ~fss_read_main_flag_content_has_close_e;
+          main->setting.flag &= ~fss_read_main_flag_depth_multiple_e;
+          main->setting.flag &= ~fss_read_main_flag_object_as_line_e;
+          main->setting.flag &= ~fss_read_main_flag_object_trim_e;
+          main->setting.flag &= ~fss_read_main_flag_trim_object_e;
 
           main->setting.flag |= fss_read_main_flag_line_single_e | fss_read_main_flag_content_multiple_e;
           main->setting.flag |= fss_read_main_flag_quote_content_e | fss_read_main_flag_quote_object_e;
@@ -201,12 +201,12 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
           main->setting.standard = fss_read_basic_list_standard_s;
 
           // Remove flags not supported for this standard.
-          main->setting.flag -= main->setting.flag & fss_read_main_flag_content_has_close_e;
-          main->setting.flag -= main->setting.flag & fss_read_main_flag_content_multiple_e;
-          main->setting.flag -= main->setting.flag & fss_read_main_flag_depth_multiple_e;
-          main->setting.flag -= main->setting.flag & fss_read_main_flag_line_single_e;
-          main->setting.flag -= main->setting.flag & fss_read_main_flag_quote_content_e;
-          main->setting.flag -= main->setting.flag & fss_read_main_flag_quote_object_e;
+          main->setting.flag &= ~fss_read_main_flag_content_has_close_e;
+          main->setting.flag &= ~fss_read_main_flag_content_multiple_e;
+          main->setting.flag &= ~fss_read_main_flag_depth_multiple_e;
+          main->setting.flag &= ~fss_read_main_flag_line_single_e;
+          main->setting.flag &= ~fss_read_main_flag_quote_content_e;
+          main->setting.flag &= ~fss_read_main_flag_quote_object_e;
 
           main->setting.flag |= fss_read_main_flag_object_as_line_e | fss_read_main_flag_object_trim_e;
 
@@ -226,11 +226,11 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
           main->setting.standard = fss_read_extended_list_standard_s;
 
           // Remove flags not supported for this standard.
-          main->setting.flag -= main->setting.flag & fss_read_main_flag_line_single_e;
-          main->setting.flag -= main->setting.flag & fss_read_main_flag_content_multiple_e;
-          main->setting.flag -= main->setting.flag & fss_read_main_flag_depth_multiple_e;
-          main->setting.flag -= main->setting.flag & fss_read_main_flag_quote_content_e;
-          main->setting.flag -= main->setting.flag & fss_read_main_flag_quote_object_e;
+          main->setting.flag &= ~fss_read_main_flag_line_single_e;
+          main->setting.flag &= ~fss_read_main_flag_content_multiple_e;
+          main->setting.flag &= ~fss_read_main_flag_depth_multiple_e;
+          main->setting.flag &= ~fss_read_main_flag_quote_content_e;
+          main->setting.flag &= ~fss_read_main_flag_quote_object_e;
 
           main->setting.flag |= fss_read_main_flag_content_has_close_e;
           main->setting.flag |= fss_read_main_flag_object_as_line_e | fss_read_main_flag_object_trim_e;
@@ -251,10 +251,10 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
           main->setting.standard = fss_read_embedded_list_standard_s;
 
           // Remove flags not supported for this standard.
-          main->setting.flag -= main->setting.flag & fss_read_main_flag_content_has_close_e;
-          main->setting.flag -= main->setting.flag & fss_read_main_flag_line_single_e;
-          main->setting.flag -= main->setting.flag & fss_read_main_flag_quote_content_e;
-          main->setting.flag -= main->setting.flag & fss_read_main_flag_quote_object_e;
+          main->setting.flag &= ~fss_read_main_flag_content_has_close_e;
+          main->setting.flag &= ~fss_read_main_flag_line_single_e;
+          main->setting.flag &= ~fss_read_main_flag_quote_content_e;
+          main->setting.flag &= ~fss_read_main_flag_quote_object_e;
 
           main->setting.flag |= fss_read_main_flag_content_has_close_e | fss_read_main_flag_content_multiple_e;
           main->setting.flag |= fss_read_main_flag_depth_multiple_e;
@@ -276,12 +276,12 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
           main->setting.standard = fss_read_payload_standard_s;
 
           // Remove flags not supported for this standard.
-          main->setting.flag -= main->setting.flag & fss_read_main_flag_content_has_close_e;
-          main->setting.flag -= main->setting.flag & fss_read_main_flag_content_multiple_e;
-          main->setting.flag -= main->setting.flag & fss_read_main_flag_depth_multiple_e;
-          main->setting.flag -= main->setting.flag & fss_read_main_flag_line_single_e;
-          main->setting.flag -= main->setting.flag & fss_read_main_flag_quote_content_e;
-          main->setting.flag -= main->setting.flag & fss_read_main_flag_quote_object_e;
+          main->setting.flag &= ~fss_read_main_flag_content_has_close_e;
+          main->setting.flag &= ~fss_read_main_flag_content_multiple_e;
+          main->setting.flag &= ~fss_read_main_flag_depth_multiple_e;
+          main->setting.flag &= ~fss_read_main_flag_line_single_e;
+          main->setting.flag &= ~fss_read_main_flag_quote_content_e;
+          main->setting.flag &= ~fss_read_main_flag_quote_object_e;
 
           main->setting.flag |= fss_read_main_flag_object_as_line_e | fss_read_main_flag_object_trim_e;
 
