@@ -641,36 +641,24 @@ extern "C" {
 
       if (mode_change & F_file_mode_t_block_special_d) {
         if (change & F_file_mode_t_mask_bit_set_owner_d & F_file_mode_t_mask_how_subtract_d) {
-          if (*mode & F_file_mode_special_set_user_d) {
-            *mode -= F_file_mode_special_set_user_d;
-          }
+          *mode &= ~F_file_mode_special_set_user_d;
         }
         else if (change & F_file_mode_t_mask_bit_set_owner_d & F_file_mode_t_mask_how_add_d) {
-          if (!(*mode & F_file_mode_special_set_user_d)) {
-            *mode |= F_file_mode_special_set_user_d;
-          }
+          *mode |= F_file_mode_special_set_user_d;
         }
 
         if (change & F_file_mode_t_mask_bit_set_group_d & F_file_mode_t_mask_how_subtract_d) {
-          if (*mode & F_file_mode_special_set_group_d) {
-            *mode -= F_file_mode_special_set_group_d;
-          }
+          *mode &= ~F_file_mode_special_set_group_d;
         }
         else if (change & F_file_mode_t_mask_bit_set_group_d & F_file_mode_t_mask_how_add_d) {
-          if (!(*mode & F_file_mode_special_set_group_d)) {
-            *mode |= F_file_mode_special_set_group_d;
-          }
+          *mode |= F_file_mode_special_set_group_d;
         }
 
         if (change & F_file_mode_t_mask_bit_sticky_d & F_file_mode_t_mask_how_subtract_d) {
-          if (*mode & F_file_mode_special_sticky_d) {
-            *mode -= F_file_mode_special_sticky_d;
-          }
+          *mode &= ~F_file_mode_special_sticky_d;
         }
         else if (change & F_file_mode_t_mask_bit_sticky_d & F_file_mode_t_mask_how_add_d) {
-          if (!(*mode & F_file_mode_special_sticky_d)) {
-            *mode |= F_file_mode_special_sticky_d;
-          }
+          *mode |= F_file_mode_special_sticky_d;
         }
       }
     }
@@ -700,54 +688,34 @@ extern "C" {
 
       if (mode_change & F_file_mode_t_block_owner_d) {
         if (change & F_file_mode_t_mask_bit_read_d & F_file_mode_t_mask_how_subtract_d) {
-          if (*mode & F_file_mode_owner_r_d) {
-            *mode -= F_file_mode_owner_r_d;
-          }
+          *mode &= ~F_file_mode_owner_r_d;
         }
         else if (change & F_file_mode_t_mask_bit_read_d & F_file_mode_t_mask_how_add_d) {
-          if (!(*mode & F_file_mode_owner_r_d)) {
-            *mode |= F_file_mode_owner_r_d;
-          }
+          *mode |= F_file_mode_owner_r_d;
         }
 
         if (change & F_file_mode_t_mask_bit_write_d & F_file_mode_t_mask_how_subtract_d) {
-          if (*mode & F_file_mode_owner_w_d) {
-            *mode -= F_file_mode_owner_w_d;
-          }
+          *mode &= ~F_file_mode_owner_w_d;
         }
         else if (change & F_file_mode_t_mask_bit_write_d & F_file_mode_t_mask_how_add_d) {
-          if (!(*mode & F_file_mode_owner_w_d)) {
-            *mode |= F_file_mode_owner_w_d;
-          }
+          *mode |= F_file_mode_owner_w_d;
         }
 
         if (change & F_file_mode_t_mask_bit_execute_d) {
-          change &= F_file_mode_t_mask_bit_execute_d;
-
           if (change & F_file_mode_t_mask_how_subtract_d) {
-            if (*mode & F_file_mode_owner_x_d) {
-              *mode -= F_file_mode_owner_x_d;
-            }
+            *mode &= ~F_file_mode_owner_x_d;
           }
           else if (change & F_file_mode_t_mask_how_add_d) {
-            if (!(*mode & F_file_mode_owner_x_d)) {
-              *mode |= F_file_mode_owner_x_d;
-            }
+            *mode |= F_file_mode_owner_x_d;
           }
         }
         else if (change & F_file_mode_t_mask_bit_execute_only_d) {
-          change &= F_file_mode_t_mask_bit_execute_only_d;
-
           if (directory_is || (mode_file & F_file_mode_owner_x_d)) {
             if (change & F_file_mode_t_mask_how_subtract_d) {
-              if (*mode & F_file_mode_owner_x_d) {
-                *mode -= F_file_mode_owner_x_d;
-              }
+              *mode &= ~F_file_mode_owner_x_d;
             }
             else if (change & F_file_mode_t_mask_how_add_d) {
-              if (!(*mode & F_file_mode_owner_x_d)) {
-                *mode |= F_file_mode_owner_x_d;
-              }
+              *mode |= F_file_mode_owner_x_d;
             }
           }
         }
@@ -779,54 +747,34 @@ extern "C" {
 
       if (mode_change & F_file_mode_t_block_group_d) {
         if (change & F_file_mode_t_mask_bit_read_d & F_file_mode_t_mask_how_subtract_d) {
-          if (*mode & F_file_mode_group_r_d) {
-            *mode -= F_file_mode_group_r_d;
-          }
+          *mode &= ~F_file_mode_group_r_d;
         }
         else if (change & F_file_mode_t_mask_bit_read_d & F_file_mode_t_mask_how_add_d) {
-          if (!(*mode & F_file_mode_group_r_d)) {
-            *mode |= F_file_mode_group_r_d;
-          }
+          *mode |= F_file_mode_group_r_d;
         }
 
         if (change & F_file_mode_t_mask_bit_write_d & F_file_mode_t_mask_how_subtract_d) {
-          if (*mode & F_file_mode_group_w_d) {
-            *mode -= F_file_mode_group_w_d;
-          }
+          *mode &= ~F_file_mode_group_w_d;
         }
         else if (change & F_file_mode_t_mask_bit_write_d & F_file_mode_t_mask_how_add_d) {
-          if (!(*mode & F_file_mode_group_w_d)) {
-            *mode |= F_file_mode_group_w_d;
-          }
+          *mode |= F_file_mode_group_w_d;
         }
 
         if (change & F_file_mode_t_mask_bit_execute_d) {
-          change &= F_file_mode_t_mask_bit_execute_d;
-
           if (change & F_file_mode_t_mask_how_subtract_d) {
-            if (*mode & F_file_mode_group_x_d) {
-              *mode -= F_file_mode_group_x_d;
-            }
+            *mode &= ~F_file_mode_group_x_d;
           }
           else if (change & F_file_mode_t_mask_how_add_d) {
-            if (!(*mode & F_file_mode_group_x_d)) {
-              *mode |= F_file_mode_group_x_d;
-            }
+            *mode |= F_file_mode_group_x_d;
           }
         }
         else if (change & F_file_mode_t_mask_bit_execute_only_d) {
-          change &= F_file_mode_t_mask_bit_execute_only_d;
-
           if (directory_is || (mode_file & F_file_mode_group_x_d)) {
             if (change & F_file_mode_t_mask_how_subtract_d) {
-              if (*mode & F_file_mode_group_x_d) {
-                *mode -= F_file_mode_group_x_d;
-              }
+              *mode &= ~F_file_mode_group_x_d;
             }
             else if (change & F_file_mode_t_mask_how_add_d) {
-              if (!(*mode & F_file_mode_group_x_d)) {
-                *mode |= F_file_mode_group_x_d;
-              }
+              *mode |= F_file_mode_group_x_d;
             }
           }
         }
@@ -858,20 +806,14 @@ extern "C" {
 
       if (mode_change & F_file_mode_t_block_world_d) {
         if (change & F_file_mode_t_mask_bit_read_d & F_file_mode_t_mask_how_subtract_d) {
-          if (*mode & F_file_mode_world_r_d) {
-            *mode -= F_file_mode_world_r_d;
-          }
+          *mode &= ~F_file_mode_world_r_d;
         }
         else if (change & F_file_mode_t_mask_bit_read_d & F_file_mode_t_mask_how_add_d) {
-          if (!(*mode & F_file_mode_world_r_d)) {
-            *mode |= F_file_mode_world_r_d;
-          }
+          *mode |= F_file_mode_world_r_d;
         }
 
         if (change & F_file_mode_t_mask_bit_write_d & F_file_mode_t_mask_how_subtract_d) {
-          if (*mode & F_file_mode_world_w_d) {
-            *mode -= F_file_mode_world_w_d;
-          }
+          *mode &= ~F_file_mode_world_w_d;
         }
         else if (change & F_file_mode_t_mask_bit_write_d & F_file_mode_t_mask_how_add_d) {
           if (!(*mode & F_file_mode_world_w_d)) {
@@ -880,32 +822,20 @@ extern "C" {
         }
 
         if (change & F_file_mode_t_mask_bit_execute_d) {
-          change &= F_file_mode_t_mask_bit_execute_d;
-
           if (change & F_file_mode_t_mask_how_subtract_d) {
-            if (*mode & F_file_mode_world_x_d) {
-              *mode -= F_file_mode_world_x_d;
-            }
+            *mode &= ~F_file_mode_world_x_d;
           }
           else if (change & F_file_mode_t_mask_how_add_d) {
-            if (!(*mode & F_file_mode_world_x_d)) {
-              *mode |= F_file_mode_world_x_d;
-            }
+            *mode |= F_file_mode_world_x_d;
           }
         }
         else if (change & F_file_mode_t_mask_bit_execute_only_d) {
-          change &= F_file_mode_t_mask_bit_execute_only_d;
-
           if (directory_is || (mode_file & F_file_mode_world_x_d)) {
             if (change & F_file_mode_t_mask_how_subtract_d) {
-              if (*mode & F_file_mode_world_x_d) {
-                *mode -= F_file_mode_world_x_d;
-              }
+              *mode &= ~F_file_mode_world_x_d;
             }
             else if (change & F_file_mode_t_mask_how_add_d) {
-              if (!(*mode & F_file_mode_world_x_d)) {
-                *mode |= F_file_mode_world_x_d;
-              }
+              *mode |= F_file_mode_world_x_d;
             }
           }
         }
@@ -1044,7 +974,7 @@ extern "C" {
 
             // Clear by mask to prepare for replacement, which includes clearing the special block.
             mode_mask |= F_file_mode_t_block_special_d;
-            mode_result -= mode_result & mode_mask;
+            mode_result &= ~mode_mask;
 
             replace_result |= F_file_mode_t_replace_special_d;
 
@@ -1115,7 +1045,7 @@ extern "C" {
               incomplete = F_false;
 
               if (how > 3) {
-                mode_result -= mode_result & mode_umask;
+                mode_result &= ~mode_umask;
               }
 
               on = 0;
@@ -1138,7 +1068,7 @@ extern "C" {
 
                 // Clear by mask to prepare for replacement, which includes clearing the special block.
                 mode_mask |= F_file_mode_t_block_special_d;
-                mode_result -= mode_result & mode_mask;
+                mode_result &= ~mode_mask;
 
                 replace_result |= F_file_mode_t_replace_special_d;
 
@@ -1165,25 +1095,19 @@ extern "C" {
               if (how == 1 || how == 2 || how == 4 || how == 5) {
                 incomplete = F_false;
                 mode_result |= what & mode_mask & F_file_mode_t_mask_how_add_d;
-
-                if (mode_result & what & mode_mask & F_file_mode_t_mask_how_subtract_d) {
-                  mode_result -= mode_result & what & mode_mask & F_file_mode_t_mask_how_subtract_d;
-                }
+                mode_result &= ~F_file_mode_t_mask_how_subtract_d;
               }
               else if (how == 3 || how == 6) {
                 incomplete = F_false;
                 mode_result |= what & mode_mask & F_file_mode_t_mask_how_subtract_d;
-
-                if (mode_result & what & mode_mask & F_file_mode_t_mask_how_add_d) {
-                  mode_result -= mode_result & what & mode_mask & F_file_mode_t_mask_how_add_d;
-                }
+                mode_result &= ~F_file_mode_t_mask_how_add_d;
               }
             }
           } // for
 
           if (how > 3) {
             incomplete = F_false;
-            mode_result -= mode_result & mode_umask;
+            mode_result &= ~mode_umask;
           }
 
           if (!code.string[i]) break;

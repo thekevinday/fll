@@ -395,15 +395,13 @@ extern "C" {
       if (main->parameters.array[controller_parameter_interruptible_e].result == f_console_result_found_e) {
         setting.flag |= controller_setting_flag_interruptible_e;
       }
-      else if (setting.flag & controller_setting_flag_interruptible_e) {
-        setting.flag -= controller_setting_flag_interruptible_e;
+      else {
+        setting.flag &= ~controller_setting_flag_interruptible_e;
       }
     }
     else {
       if (main->parameters.array[controller_parameter_uninterruptible_e].result == f_console_result_found_e) {
-        if (setting.flag & controller_setting_flag_interruptible_e) {
-          setting.flag -= controller_setting_flag_interruptible_e;
-        }
+        setting.flag &= ~controller_setting_flag_interruptible_e;
       }
       else {
         setting.flag |= controller_setting_flag_interruptible_e;

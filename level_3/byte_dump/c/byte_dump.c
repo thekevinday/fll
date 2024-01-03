@@ -254,9 +254,7 @@ extern "C" {
       }
 
       if (choice == byte_dump_parameter_narrow_e) {
-        if (data.options & byte_dump_option_wide_d) {
-          data.options -= byte_dump_option_wide_d;
-        }
+        data.options &= ~byte_dump_option_wide_d;
       }
       else if (choice == byte_dump_parameter_wide_e) {
         data.options |= byte_dump_option_wide_d;

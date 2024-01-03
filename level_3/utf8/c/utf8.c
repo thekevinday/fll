@@ -196,17 +196,11 @@ extern "C" {
       }
 
       if (choice == utf8_parameter_from_bytesequence_e) {
-        if (data.mode & utf8_mode_from_codepoint_d) {
-          data.mode -= utf8_mode_from_codepoint_d;
-        }
-
+        data.mode &= ~utf8_mode_from_codepoint_d;
         data.mode |= utf8_mode_from_bytesequence_d;
       }
       else if (choice == utf8_parameter_from_codepoint_e) {
-        if (data.mode & utf8_mode_from_bytesequence_d) {
-          data.mode -= utf8_mode_from_bytesequence_d;
-        }
-
+        data.mode &= ~utf8_mode_from_bytesequence_d;
         data.mode |= utf8_mode_from_codepoint_d;
       }
     }
@@ -254,43 +248,15 @@ extern "C" {
       }
 
       if (choice == utf8_parameter_to_bytesequence_e) {
-        if (data.mode & utf8_mode_to_codepoint_d) {
-          data.mode -= utf8_mode_to_codepoint_d;
-        }
-
-        if (data.mode & utf8_mode_to_combining_d) {
-          data.mode -= utf8_mode_to_combining_d;
-        }
-
-        if (data.mode & utf8_mode_to_width_d) {
-          data.mode -= utf8_mode_to_width_d;
-        }
-
+        data.mode &= ~(utf8_mode_to_codepoint_d | utf8_mode_to_combining_d | utf8_mode_to_width_d);
         data.mode |= utf8_mode_to_bytesequence_d;
       }
       else if (choice == utf8_parameter_to_codepoint_e) {
-        if (data.mode & utf8_mode_to_bytesequence_d) {
-          data.mode -= utf8_mode_to_bytesequence_d;
-        }
-
-        if (data.mode & utf8_mode_to_combining_d) {
-          data.mode -= utf8_mode_to_combining_d;
-        }
-
-        if (data.mode & utf8_mode_to_width_d) {
-          data.mode -= utf8_mode_to_width_d;
-        }
-
+        data.mode &= ~(utf8_mode_to_bytesequence_d | utf8_mode_to_combining_d | utf8_mode_to_width_d);
         data.mode |= utf8_mode_to_codepoint_d;
       }
       else if (choice == utf8_parameter_to_combining_e) {
-        if (data.mode & utf8_mode_to_bytesequence_d) {
-          data.mode -= utf8_mode_to_bytesequence_d;
-        }
-
-        if (data.mode & utf8_mode_to_codepoint_d) {
-          data.mode -= utf8_mode_to_codepoint_d;
-        }
+        data.mode &= ~(utf8_mode_to_bytesequence_d | utf8_mode_to_codepoint_d);
 
         // --to_width may be specified with --to_combining.
         if (main->parameters.array[utf8_parameter_to_width_e].result == f_console_result_found_e) {
@@ -300,13 +266,7 @@ extern "C" {
         data.mode |= utf8_mode_to_combining_d;
       }
       else if (choice == utf8_parameter_to_width_e) {
-        if (data.mode & utf8_mode_to_bytesequence_d) {
-          data.mode -= utf8_mode_to_bytesequence_d;
-        }
-
-        if (data.mode & utf8_mode_to_codepoint_d) {
-          data.mode -= utf8_mode_to_codepoint_d;
-        }
+        data.mode &= ~(utf8_mode_to_bytesequence_d | utf8_mode_to_codepoint_d);
 
         // --to_width may be specified with --to_combining.
         if (main->parameters.array[utf8_parameter_to_combining_e].result == f_console_result_found_e) {
