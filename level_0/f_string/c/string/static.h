@@ -509,6 +509,8 @@ extern "C" {
   #define F_string_format_rr_single_s          "%[%r%r%]"
   #define F_string_format_sentence_end_s       "%[.%]%r"
   #define F_string_format_sentence_end_quote_s "%['.%]%r"
+  #define F_string_format_ul_double_s          "%[%[%ul%]%]"
+  #define F_string_format_ul_single_s          "%[%ul%]"
 
   #define F_string_format_Q_double_s_length           10
   #define F_string_format_Q_single_s_length           6
@@ -520,6 +522,8 @@ extern "C" {
   #define F_string_format_rr_single_s_length          8
   #define F_string_format_sentence_end_s_length       7
   #define F_string_format_sentence_end_quote_s_length 6
+  #define F_string_format_ul_single_s_length          11
+  #define F_string_format_ul_double_s_length          7
 
   extern const f_string_static_t f_string_format_Q_double_s;
   extern const f_string_static_t f_string_format_Q_single_s;
@@ -531,6 +535,8 @@ extern "C" {
   extern const f_string_static_t f_string_format_rr_single_s;
   extern const f_string_static_t f_string_format_sentence_end_s;
   extern const f_string_static_t f_string_format_sentence_end_quote_s;
+  extern const f_string_static_t f_string_format_ul_double_s;
+  extern const f_string_static_t f_string_format_ul_single_s;
 #endif // _di_f_string_format_s_
 
 /**
