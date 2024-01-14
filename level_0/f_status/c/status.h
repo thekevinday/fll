@@ -93,22 +93,22 @@ extern "C" {
   #define F_status_mask_fine 0x3fff   // 0011 1111 1111 1111
   #define F_status_mask_code 0xc000   // 1100 0000 0000 0000
 
-  #define F_status_is_error(status)   (status & F_status_bit_error)
-  #define F_status_is_fine(status)    ((status & F_status_mask_code) == 0)
-  #define F_status_is_problem(status) (status & F_status_mask_code)
-  #define F_status_is_signal(status)  ((status & F_status_bit_signal) == F_status_bit_signal)
-  #define F_status_is_warning(status) (status & F_status_bit_warning)
+  #define F_status_is_error(status)   ((status) & F_status_bit_error)
+  #define F_status_is_fine(status)    (((status) & F_status_mask_code) == 0)
+  #define F_status_is_problem(status) ((status) & F_status_mask_code)
+  #define F_status_is_signal(status)  (((status) & F_status_bit_signal) == F_status_bit_signal)
+  #define F_status_is_warning(status) ((status) & F_status_bit_warning)
 
-  #define F_status_is_error_not(status)   ((status & F_status_bit_error) == 0)
-  #define F_status_is_fine_not(status)    (status & F_status_mask_code)
-  #define F_status_is_problem_not(status) ((status & F_status_mask_code) == 0)
-  #define F_status_is_signal_not(status)  ((status & F_status_bit_signal) != F_status_bit_signal)
-  #define F_status_is_warning_not(status) ((status & F_status_bit_warning) == 0)
+  #define F_status_is_error_not(status)   (((status) & F_status_bit_error) == 0)
+  #define F_status_is_fine_not(status)    ((status) & F_status_mask_code)
+  #define F_status_is_problem_not(status) (((status) & F_status_mask_code) == 0)
+  #define F_status_is_signal_not(status)  (((status) & F_status_bit_signal) != F_status_bit_signal)
+  #define F_status_is_warning_not(status) (((status) & F_status_bit_warning) == 0)
 
-  #define F_status_set_error(status)   (status | F_status_bit_error)
-  #define F_status_set_fine(status)    (status & F_status_mask_fine)
-  #define F_status_set_signal(status)  (status | F_status_bit_signal)
-  #define F_status_set_warning(status) (status | F_status_bit_warning)
+  #define F_status_set_error(status)   ((status) | F_status_bit_error)
+  #define F_status_set_fine(status)    ((status) & F_status_mask_fine)
+  #define F_status_set_signal(status)  ((status) | F_status_bit_signal)
+  #define F_status_set_warning(status) ((status) | F_status_bit_warning)
 
   #define F_status_size_max_d           0x3fff
   #define F_status_size_max_with_bits_d 0xffff
