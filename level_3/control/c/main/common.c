@@ -371,7 +371,7 @@ extern "C" {
       return;
     }
 
-    main->setting.state.status = f_socket_connect(main->setting.socket);
+    main->setting.state.status = f_socket_connect(&main->setting.socket);
 
     if (F_status_is_error(main->setting.state.status)) {
       control_print_error(&main->program.error, macro_control_f(f_socket_connect));
