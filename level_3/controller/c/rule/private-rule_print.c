@@ -400,7 +400,7 @@ extern "C" {
     controller_lock_print(print.to, thread);
 
     fl_print_format("%r%[%QRule setting%S '%]", print.to, f_string_eol_s, print.context, print.prefix, before, print.context);
-    fl_print_format("%[%/Q%]", print.to, print.notable, cache->buffer_item, range, print.notable);
+    fl_print_format(f_string_format_Q_range_single_s.string, print.to, print.notable, cache->buffer_item, range, print.notable);
     fl_print_format("%['%S.%]%r", print.to, print.context, after, print.context, f_string_eol_s);
 
     controller_rule_print_error_cache(print, cache->action, F_false);

@@ -441,7 +441,7 @@ extern "C" {
               fl_print_format("%r%[%QRule item action '%]", global.main->error.to, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
               fl_print_format(f_string_format_r_single_s.string, global.main->error.to, global.main->error.notable, controller_rerun_s, global.main->error.notable);
               fl_print_format("%[' has '%]", global.main->error.to, global.main->error.context, global.main->error.context);
-              fl_print_format("%[%/Q%]", global.main->error.to, global.main->error.notable, cache->buffer_item, cache->content_action.array[0], global.main->error.notable);
+              fl_print_format(f_string_format_Q_range_single_s.string, global.main->error.to, global.main->error.notable, cache->buffer_item, cache->content_action.array[0], global.main->error.notable);
               fl_print_format("%[' as the first value, only the following are allowed: '%]", global.main->error.to, global.main->error.context, global.main->error.context);
               fl_print_format("%[%r%]%[', '%]", global.main->error.to, global.main->error.notable, controller_freeze_s, global.main->error.notable, global.main->error.context, global.main->error.context);
               fl_print_format("%[%r%]%[', '%]", global.main->error.to, global.main->error.notable, controller_kill_s, global.main->error.notable, global.main->error.context, global.main->error.context);
@@ -481,7 +481,7 @@ extern "C" {
               fl_print_format("%r%[%QRule item action '%]", global.main->error.to, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
               fl_print_format(f_string_format_r_single_s.string, global.main->error.to, global.main->error.notable, controller_rerun_s, global.main->error.notable);
               fl_print_format("%[' has '%]", global.main->error.to, global.main->error.context, global.main->error.context);
-              fl_print_format("%[%/Q%]", global.main->error.to, global.main->error.notable, cache->buffer_item, cache->content_action.array[1], global.main->error.notable);
+              fl_print_format(f_string_format_Q_range_single_s.string, global.main->error.to, global.main->error.notable, cache->buffer_item, cache->content_action.array[1], global.main->error.notable);
               fl_print_format("%[' as the second value, only the following are allowed: '%]", global.main->error.to, global.main->error.context, global.main->error.context);
               fl_print_format("%[%r%]%[' or '%]", global.main->error.to, global.main->error.notable, controller_stop_s, global.main->error.notable, global.main->error.context, global.main->error.context);
               fl_print_format(f_string_format_r_single_s.string, global.main->error.to, global.main->error.notable, controller_thaw_s, global.main->error.notable, global.main->error.context);
@@ -513,7 +513,7 @@ extern "C" {
                 fl_print_format("%r%[%QRule item action '%]", global.main->error.to, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
                 fl_print_format(f_string_format_r_single_s.string, global.main->error.to, global.main->error.notable, controller_rerun_s, global.main->error.notable);
                 fl_print_format("%[' has an unknown value '%]", global.main->error.to, global.main->error.context, global.main->error.context);
-                fl_print_format("%[%/Q%]", global.main->error.to, global.main->error.notable, cache->buffer_item, cache->content_action.array[i], global.main->error.notable);
+                fl_print_format(f_string_format_Q_range_single_s.string, global.main->error.to, global.main->error.notable, cache->buffer_item, cache->content_action.array[i], global.main->error.notable);
                 fl_print_format(f_string_format_sentence_end_quote_s.string, global.main->error.to, global.main->error.context, global.main->error.context, f_string_eol_s);
 
                 controller_rule_print_error_cache(global.main->error, cache->action, F_true);
@@ -548,7 +548,7 @@ extern "C" {
                 controller_lock_print(global.main->error.to, global.thread);
 
                 fl_print_format("%r%[%QUnknown value '%]", global.main->error.to, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
-                fl_print_format("%[%/Q%]", global.main->error.to, global.main->error.notable, cache->buffer_item, cache->content_action.array[i], global.main->error.notable);
+                fl_print_format(f_string_format_Q_range_single_s.string, global.main->error.to, global.main->error.notable, cache->buffer_item, cache->content_action.array[i], global.main->error.notable);
                 fl_print_format("%[' for rule item action '%]%[%r%]", global.main->error.to, global.main->error.context, global.main->error.context, global.main->error.notable, controller_with_s, global.main->error.notable);
                 fl_print_format(f_string_format_sentence_end_quote_s.string, global.main->error.to, global.main->error.context, global.main->error.context, f_string_eol_s);
 
@@ -4848,7 +4848,7 @@ extern "C" {
                 controller_lock_print(global.main->error.to, global.thread);
 
                 fl_print_format("%r%[%QRule setting has an invalid number '%]", global.main->error.to, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
-                fl_print_format("%[%/Q%]", global.main->error.to, global.main->error.notable, cache->buffer_item, cache->content_actions.array[i].array[1], global.main->error.notable);
+                fl_print_format(f_string_format_Q_range_single_s.string, global.main->error.to, global.main->error.notable, cache->buffer_item, cache->content_actions.array[i].array[1], global.main->error.notable);
 
                 if (zero_only) {
                   fl_print_format("%[', only%] ", global.main->error.to, global.main->error.context, global.main->error.context);
@@ -4927,7 +4927,7 @@ extern "C" {
             controller_lock_print(global.main->error.to, global.thread);
 
             fl_print_format("%r%[%QRule setting's first value has '%]", global.main->error.to, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
-            fl_print_format("%[%/Q%]", global.main->error.to, global.main->error.notable, cache->buffer_item, cache->content_actions.array[i].array[0], global.main->error.notable);
+            fl_print_format(f_string_format_Q_range_single_s.string, global.main->error.to, global.main->error.notable, cache->buffer_item, cache->content_actions.array[i].array[0], global.main->error.notable);
             fl_print_format("%[' but only supports %r, %r, and %r.%]%r", global.main->error.to, global.main->error.context, controller_kill_s, controller_start_s, controller_stop_s, global.main->error.context, f_string_eol_s);
 
             controller_rule_print_error_cache(global.main->error, cache->action, F_false);
@@ -5124,7 +5124,7 @@ extern "C" {
                 controller_lock_print(global.main->error.to, global.thread);
 
                 fl_print_format("%r%[%QRule setting has an invalid number '%]", global.main->error.to, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
-                fl_print_format("%[%/Q%]", global.main->error.to, global.main->error.notable, cache->buffer_item, cache->content_actions.array[i].array[0], global.main->error.notable);
+                fl_print_format(f_string_format_Q_range_single_s.string, global.main->error.to, global.main->error.notable, cache->buffer_item, cache->content_actions.array[i].array[0], global.main->error.notable);
                 fl_print_format("%[', only the whole numbers inclusively between%] ", global.main->error.to, global.main->error.context, global.main->error.context);
                 fl_print_format("%[-20%]", global.main->error.to, global.main->error.notable, global.main->error.notable);
                 fl_print_format(" %[and%] ", global.main->error.to, global.main->error.context, global.main->error.context);
@@ -5510,7 +5510,7 @@ extern "C" {
           controller_lock_print(global.main->error.to, global.thread);
 
           fl_print_format("%r%[%QRule setting's second value has '%]", global.main->error.to, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
-          fl_print_format("%[%/Q%]", global.main->error.to, global.main->error.notable, cache->buffer_item, cache->content_actions.array[i].array[1], global.main->error.notable);
+          fl_print_format(f_string_format_Q_range_single_s.string, global.main->error.to, global.main->error.notable, cache->buffer_item, cache->content_actions.array[i].array[1], global.main->error.notable);
           fl_print_format("%[' but only supports %r, %r, %r, %r, %r", global.main->error.to, global.main->error.context, controller_freeze_s, controller_kill_s, controller_pause_s, controller_reload_s, controller_restart_s);
           fl_print_format("%r, %r, %r, and %r.%]%r", global.main->error.to, controller_resume_s, controller_start_s, controller_stop_s, controller_thaw_s, global.main->error.context, f_string_eol_s);
 
@@ -5559,7 +5559,7 @@ extern "C" {
             controller_lock_print(global.main->error.to, global.thread);
 
             fl_print_format("%r%[%QRule setting's second value has '%]", global.main->error.to, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
-            fl_print_format("%[%/Q%]", global.main->error.to, global.main->error.notable, cache->buffer_item, cache->content_actions.array[i].array[1], global.main->error.notable);
+            fl_print_format(f_string_format_Q_range_single_s.string, global.main->error.to, global.main->error.notable, cache->buffer_item, cache->content_actions.array[i].array[1], global.main->error.notable);
             fl_print_format("%[' but only supports %r, %r, and %r.%]%r", global.main->error.to, global.main->error.context, controller_need_s, controller_want_s, controller_wish_s, global.main->error.context, f_string_eol_s);
 
             controller_rule_print_error_cache(global.main->error, cache->action, F_false);

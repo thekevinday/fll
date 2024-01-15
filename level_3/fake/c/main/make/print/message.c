@@ -15,14 +15,14 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[Now making using '%]", print->to, print->set->important, print->set->important);
-    fl_print_format("%[%Q%]", print->to, print->set->notable, fakefile, print->set->notable);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->set->notable, fakefile, print->set->notable);
 
     if (main->setting.modes.used) {
       fl_print_format("%[' with modes '%]", print->to, print->set->important, print->set->important);
 
       for (f_number_unsigned_t i = 0; i < main->setting.modes.used; ) {
 
-        fl_print_format("%[%Q%]", print->to, print->set->notable, main->setting.modes.array[i], print->set->notable);
+        fl_print_format(f_string_format_Q_single_s.string, print->to, print->set->notable, main->setting.modes.array[i], print->set->notable);
 
         if (++i < main->setting.modes.used) {
           fl_print_format("%[', '%]", print->to, print->set->important, print->set->important);
@@ -47,7 +47,7 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%r%[Processing Section '%]", print->to, f_string_eol_s, print->set->important, print->set->important);
-    fl_print_format("%[%/Q%]", print->to, print->set->notable, buffer, section.name, print->set->notable);
+    fl_print_format(f_string_format_Q_range_single_s.string, print->to, print->set->notable, buffer, section.name, print->set->notable);
     fl_print_format("%['.%]%r", print->to, print->set->important, print->set->important, f_string_eol_s);
 
     f_file_stream_unlock(print->to);

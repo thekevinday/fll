@@ -294,7 +294,7 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
         f_file_stream_lock(data->main->warning.to);
 
         fl_print_format("%r%[%QAt line %ul, the object '%]", data->main->warning.to, f_string_eol_s, data->main->warning.context, data->main->warning.prefix, i, data->main->warning.context, data->main->warning.notable);
-        fl_print_format("%[%/Q%]", data->main->warning.to, data->main->warning.notable, local->buffer, local->rule_objects.array[i], data->main->warning.notable);
+        fl_print_format(f_string_format_Q_range_single_s.string, data->main->warning.to, data->main->warning.notable, local->buffer, local->rule_objects.array[i], data->main->warning.notable);
         fl_print_format("%[' is invalid.%]%r", data->main->warning.to, data->main->warning.context, data->main->warning.context, f_string_eol_s);
 
         f_file_stream_unlock(data->main->warning.to);
@@ -313,9 +313,9 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
         f_file_stream_lock(data->main->warning.to);
 
         fl_print_format("%r%[%QAt line %ul, the object '%]", data->main->warning.to, f_string_eol_s, data->main->warning.context, data->main->warning.prefix, i, data->main->warning.context);
-        fl_print_format("%[%/Q%]", data->main->warning.to, data->main->warning.notable, local->buffer, local->rule_objects.array[i], data->main->warning.notable);
+        fl_print_format(f_string_format_Q_range_single_s.string, data->main->warning.to, data->main->warning.notable, local->buffer, local->rule_objects.array[i], data->main->warning.notable);
         fl_print_format("%[' has invalid content '%]", data->main->warning.to, data->main->warning.context, data->main->warning.context);
-        fl_print_format("%[%/Q%]", data->main->warning.to, data->main->warning.notable, local->buffer, local->rule_contents.array[i].array[0], data->main->warning.notable);
+        fl_print_format(f_string_format_Q_range_single_s.string, data->main->warning.to, data->main->warning.notable, local->buffer, local->rule_contents.array[i].array[0], data->main->warning.notable);
         fl_print_format(f_string_format_sentence_end_quote_s.string, data->main->warning.to, data->main->warning.context, data->main->warning.context, f_string_eol_s);
 
         f_file_stream_unlock(data->main->warning.to);
@@ -519,7 +519,7 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
         f_file_stream_lock(data->main->warning.to);
 
         fl_print_format("%r%[%QAt line %ul, the object '%]", data->main->warning.to, f_string_eol_s, data->main->warning.context, data->main->warning.prefix, i, data->main->warning.context);
-        fl_print_format("%[%/Q%]", data->main->warning.to, data->main->warning.notable, local->buffer, local->rule_objects.array[i], data->main->warning.notable);
+        fl_print_format(f_string_format_Q_range_single_s.string, data->main->warning.to, data->main->warning.notable, local->buffer, local->rule_objects.array[i], data->main->warning.notable);
         fl_print_format("%]%[' has no content.%]%r", data->main->warning.to, data->main->warning.context, data->main->warning.context, f_string_eol_s);
 
         f_file_stream_unlock(data->main->warning.to);

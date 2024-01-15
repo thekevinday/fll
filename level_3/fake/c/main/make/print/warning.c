@@ -15,7 +15,7 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QFailed change back to original path '%]", print->to, print->context, print->prefix, print->context);
-    fl_print_format("%[%Q%]", print->to, print->notable, path, print->notable);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->notable, path, print->notable);
     fl_print_format("%[', status code =%] ", print->to, print->context, print->context);
     fl_print_format("%[%ui%]", print->to, print->notable, main->setting.state.status, print->notable);
     fl_print_format("%['.%]%r", print->to, print->context, print->context, f_string_eol_s);
@@ -83,11 +83,11 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QThe fakefile '%]", print->to, print->context, print->prefix, print->context);
-    fl_print_format("%[%Q%]", print->to, print->notable, fakefile, print->notable);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->notable, fakefile, print->notable);
     fl_print_format("%[' has empty content for the '%]", print->to, print->context, print->context);
-    fl_print_format("%[%Q%]", print->to, print->notable, name, print->notable);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->notable, name, print->notable);
     fl_print_format("%[' object '%]", print->to, print->context, print->context);
-    fl_print_format("%[%/Q%]", print->to, print->notable, buffer, range, print->notable);
+    fl_print_format(f_string_format_Q_range_single_s.string, print->to, print->notable, buffer, range, print->notable);
     fl_print_format("%['.%]%r", print->to, print->context, print->context, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
@@ -105,13 +105,13 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QThe fakefile '%]", print->to, print->context, print->prefix, print->context);
-    fl_print_format("%[%Q%]", print->to, print->notable, fakefile, print->notable);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->notable, fakefile, print->notable);
     fl_print_format("%[' has invalid content '%]", print->to, print->context, print->context);
-    fl_print_format("%[%/Q%]", print->to, print->notable, buffer, content, print->notable);
+    fl_print_format(f_string_format_Q_range_single_s.string, print->to, print->notable, buffer, content, print->notable);
     fl_print_format("%[' for the '%]", print->to, print->context, print->context);
-    fl_print_format("%[%Q%]", print->to, print->notable, name, print->notable);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->notable, name, print->notable);
     fl_print_format("%[' object '%]", print->to, print->context, print->context);
-    fl_print_format("%[%/Q%]", print->to, print->notable, buffer, object, print->notable);
+    fl_print_format(f_string_format_Q_range_single_s.string, print->to, print->notable, buffer, object, print->notable);
     fl_print_format("%['.%]%r", print->to, print->context, print->context, f_string_eol_s);
 
     f_file_stream_unlock(print->to);

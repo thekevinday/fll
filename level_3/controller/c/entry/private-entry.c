@@ -1945,7 +1945,7 @@ extern "C" {
               fl_print_format(f_string_format_Q_single_s.string, global.main->error.to, global.main->error.notable, controller_control_s, global.main->error.notable);
               fl_print_format("%[' does not support the option '%]", global.main->error.to, global.main->error.context, global.main->error.context, f_string_eol_s);
 
-              fl_print_format("%[%/Q%]", global.main->error.to, global.main->error.notable, cache->buffer_file, cache->content_actions.array[i].array[1], global.main->error.notable);
+              fl_print_format(f_string_format_Q_range_single_s.string, global.main->error.to, global.main->error.notable, cache->buffer_file, cache->content_actions.array[i].array[1], global.main->error.notable);
 
               fl_print_format(f_string_format_sentence_end_quote_s.string, global.main->error.to, global.main->error.context, global.main->error.context, f_string_eol_s);
 
@@ -2286,7 +2286,7 @@ extern "C" {
             f_file_stream_lock(global.main->error.to);
 
             fl_print_format("%r%[%QThe %r setting '%]", global.main->error.to, f_string_eol_s, global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context);
-            fl_print_format("%[%/Q%]", global.main->error.to, global.main->error.notable, cache->buffer_file, cache->content_actions.array[i].array[1], global.main->error.notable);
+            fl_print_format(f_string_format_Q_range_single_s.string, global.main->error.to, global.main->error.notable, cache->buffer_file, cache->content_actions.array[i].array[1], global.main->error.notable);
             fl_print_format("%[' is not a valid supported number.%]", global.main->error.to, global.main->error.context, global.main->error.context, f_string_eol_s);
 
             f_file_stream_unlock(global.main->error.to);

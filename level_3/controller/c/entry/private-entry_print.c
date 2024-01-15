@@ -134,7 +134,7 @@ extern "C" {
     controller_lock_print(print.to, thread);
 
     fl_print_format("%r%[%Q%r setting%S '%]", print.to, f_string_eol_s, print.context, print.prefix, is_entry ? controller_Entry_s : controller_Exit_s, before, print.context);
-    fl_print_format("%[%/Q%]", print.to, print.notable, cache->buffer_file, range, print.notable);
+    fl_print_format(f_string_format_Q_range_single_s.string, print.to, print.notable, cache->buffer_file, range, print.notable);
     fl_print_format("%['%S.%]%r", print.to, print.context, after, print.context, f_string_eol_s);
 
     controller_entry_print_error_cache(is_entry, print, cache->action);
@@ -227,7 +227,7 @@ extern "C" {
     fl_print_format("%r%[%QThe %Q item setting '%]", global.main->warning.to, f_string_eol_s, global.main->warning.context, global.main->warning.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->warning.context);
     fl_print_format(f_string_format_Q_single_s.string, global.main->warning.to, global.main->warning.notable, cache.action.name_action, global.main->warning.notable);
     fl_print_format("%[' has an unknown value '%]", global.main->warning.to, global.main->warning.context, global.main->warning.context);
-    fl_print_format("%[%/Q%]", global.main->warning.to, global.main->warning.notable, cache.buffer_file, cache.content_actions.array[index].array[0], global.main->warning.notable);
+    fl_print_format(f_string_format_Q_range_single_s.string, global.main->warning.to, global.main->warning.notable, cache.buffer_file, cache.content_actions.array[index].array[0], global.main->warning.notable);
     fl_print_format(f_string_format_sentence_end_quote_s.string, global.main->warning.to, global.main->warning.context, global.main->warning.context, f_string_eol_s);
 
     controller_entry_print_error_cache(is_entry, global.main->warning, cache.action);

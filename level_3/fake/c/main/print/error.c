@@ -467,9 +467,9 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QThe section operation '%]", print->to, print->context, print->prefix, print->context);
-    fl_print_format("%[%/Q%]", print->to, print->notable, buffer, operation_name, print->notable);
+    fl_print_format(f_string_format_Q_range_single_s.string, print->to, print->notable, buffer, operation_name, print->notable);
     fl_print_format("%[' from section '%]", print->to, print->context, print->context);
-    fl_print_format("%[%/Q%]", print->to, print->notable, buffer, section_name, print->notable);
+    fl_print_format(f_string_format_Q_range_single_s.string, print->to, print->notable, buffer, section_name, print->notable);
     fl_print_format("%[' on line%] ", print->to, print->context, print->context);
     fl_print_format("%[%un%]", print->to, print->notable, line, print->notable);
     fl_print_format(" %[failed.%]%r", print->to, print->context, print->context, f_string_eol_s);
@@ -491,9 +491,9 @@ extern "C" {
     fl_print_format("%[%QThe argument '%]", print->to, print->context, print->prefix, print->context);
     fl_print_format(f_string_format_Q_single_s.string, print->to, print->notable, argument, print->notable);
     fl_print_format("%[' is not not valid and may only be one of either '%]", print->to, print->context, print->context);
-    fl_print_format("%[%r%]", print->to, print->notable, fake_make_operation_argument_force_s, print->notable);
+    fl_print_format(f_string_format_r_single_s.string, print->to, print->notable, fake_make_operation_argument_force_s, print->notable);
     fl_print_format("%[' or '%]", print->to, print->context, print->context);
-    fl_print_format("%[%r%]", print->to, print->notable, fake_make_operation_argument_strict_s, print->notable);
+    fl_print_format(f_string_format_r_single_s.string, print->to, print->notable, fake_make_operation_argument_strict_s, print->notable);
     fl_print_format(f_string_format_sentence_end_quote_s.string, print->to, print->context, print->context, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
@@ -595,9 +595,9 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QThe section operation '%]", print->to, print->context, print->prefix, print->context);
-    fl_print_format("%[%/Q%]", print->to, print->notable, buffer, operation_name, print->notable);
+    fl_print_format(f_string_format_Q_range_single_s.string, print->to, print->notable, buffer, operation_name, print->notable);
     fl_print_format("%[' from section '%]", print->to, print->context, buffer, print->context);
-    fl_print_format("%[%/Q%]", print->to, print->notable, buffer, section_name, print->notable);
+    fl_print_format(f_string_format_Q_range_single_s.string, print->to, print->notable, buffer, section_name, print->notable);
     fl_print_format("%[' on line%] ", print->to, print->context, print->context);
     fl_print_format("%[%ul%]", print->to, print->notable, line, print->notable);
     fl_print_format("%[' cannot be processed because the max stack depth of%] ", print->to, print->context, print->context);
@@ -628,9 +628,9 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QThe section operation '%]", print->to, print->context, print->prefix, print->context);
-    fl_print_format("%[%/Q%]", print->to, print->notable, buffer, operation_name, print->notable);
+    fl_print_format(f_string_format_Q_range_single_s.string, print->to, print->notable, buffer, operation_name, print->notable);
     fl_print_format("%[' from section '%]", print->to, print->context, buffer, print->context);
-    fl_print_format("%[%/Q%]", print->to, print->notable, buffer, section_name, print->notable);
+    fl_print_format(f_string_format_Q_range_single_s.string, print->to, print->notable, buffer, section_name, print->notable);
     fl_print_format("%[' on line%] ", print->to, print->context, print->context);
     fl_print_format("%[%ul%]", print->to, print->notable, line, print->notable);
     fl_print_format(" %[is not a known operation name.%]%r", print->to, print->context, print->context, f_string_eol_s);

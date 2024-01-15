@@ -37,7 +37,7 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QThe %S%rcontent '%]", print->to, print->context, print->prefix, content, content ? f_string_space_s : f_string_empty_s, print->context);
-    fl_print_format("%[%Q%]", print->to, print->notable, file, print->notable);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->notable, file, print->notable);
     fl_print_format("%[' must be a valid directory.%]%r", print->to, print->context, print->context, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
@@ -79,9 +79,9 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QThe fakefile '%]", print->to, print->context, print->prefix, print->context);
-    fl_print_format("%[%Q%]", print->to, print->notable, fakefile, print->notable);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->notable, fakefile, print->notable);
     fl_print_format("%[' is missing the required '%]", print->to, print->context, print->context);
-    fl_print_format("%[%Q%]", print->to, print->notable, section, print->notable);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->notable, section, print->notable);
     fl_print_format("%[' section.%]%r", print->to, print->context, print->context, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
@@ -111,7 +111,7 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QThe file '%]", print->to, print->context, print->prefix, print->context);
-    fl_print_format("%[%Q%]", print->to, print->notable, file, print->notable);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->notable, file, print->notable);
     fl_print_format("%[' must be a %Q file.%]%r", print->to, print->context, print->context, type, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
@@ -230,7 +230,7 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QThe section operation '%]", print->to, print->context, print->prefix, print->context);
-    fl_print_format("%[%/Q%]", print->to, print->notable, buffer, range, print->notable);
+    fl_print_format(f_string_format_Q_range_single_s.string, print->to, print->notable, buffer, range, print->notable);
     fl_print_format("%[' is already in the operation stack, recursion is not allowed.%]%r", print->to, print->context, print->context, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
@@ -260,7 +260,7 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QThe number '%]", print->to, print->context, print->prefix, print->context);
-    fl_print_format("%[%Q%]", print->to, print->notable, number, print->notable);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->notable, number, print->notable);
     fl_print_format("%[' may only be between the ranges -%un to %un.%]%r", print->to, print->context, minimum, maximum, print->context, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
@@ -356,7 +356,7 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QUnsupported %Q type '%]", print->to, print->context, print->prefix, type, print->context);
-    fl_print_format("%[%Q%]", print->to, print->notable, value, print->notable);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->notable, value, print->notable);
     fl_print_format("%['.%]%r", print->to, print->context, print->context, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
