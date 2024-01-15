@@ -500,6 +500,8 @@ extern "C" {
  */
 #ifndef _di_f_string_format_s_
   #define F_string_format_Q_double_s           "%[%[%Q%]%]"
+  #define F_string_format_Q_range_double_s     "%[%[%/Q%]%]"
+  #define F_string_format_Q_range_single_s     "%[%/Q%]"
   #define F_string_format_Q_single_s           "%[%Q%]"
   #define F_string_format_QQ_double_s          "%[%[%Q%Q%]%]"
   #define F_string_format_QQ_single_s          "%[%Q%Q%]"
@@ -513,6 +515,8 @@ extern "C" {
   #define F_string_format_ul_single_s          "%[%ul%]"
 
   #define F_string_format_Q_double_s_length           10
+  #define F_string_format_Q_range_double_s_length     11
+  #define F_string_format_Q_range_single_s_length     7
   #define F_string_format_Q_single_s_length           6
   #define F_string_format_QQ_double_s_length          12
   #define F_string_format_QQ_single_s_length          8
@@ -526,6 +530,8 @@ extern "C" {
   #define F_string_format_ul_double_s_length          7
 
   extern const f_string_static_t f_string_format_Q_double_s;
+  extern const f_string_static_t f_string_format_Q_range_double_s;
+  extern const f_string_static_t f_string_format_Q_range_single_s;
   extern const f_string_static_t f_string_format_Q_single_s;
   extern const f_string_static_t f_string_format_QQ_double_s;
   extern const f_string_static_t f_string_format_QQ_single_s;

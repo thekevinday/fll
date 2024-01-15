@@ -148,6 +148,8 @@ extern "C" {
 
 #ifndef _di_f_string_format_s_
   const f_string_static_t f_string_format_Q_double_s           = macro_f_string_static_t_initialize_1(F_string_format_Q_double_s, 0, F_string_format_Q_double_s_length);
+  const f_string_static_t f_string_format_Q_range_double_s     = macro_f_string_static_t_initialize_1(F_string_format_Q_range_double_s, 0, F_string_format_Q_range_double_s_length);
+  const f_string_static_t f_string_format_Q_range_single_s     = macro_f_string_static_t_initialize_1(F_string_format_Q_range_single_s, 0, F_string_format_Q_range_single_s_length);
   const f_string_static_t f_string_format_Q_single_s           = macro_f_string_static_t_initialize_1(F_string_format_Q_single_s, 0, F_string_format_Q_single_s_length);
   const f_string_static_t f_string_format_QQ_double_s          = macro_f_string_static_t_initialize_1(F_string_format_QQ_double_s, 0, F_string_format_QQ_double_s_length);
   const f_string_static_t f_string_format_QQ_single_s          = macro_f_string_static_t_initialize_1(F_string_format_QQ_single_s, 0, F_string_format_QQ_single_s_length);
