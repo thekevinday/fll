@@ -54,23 +54,23 @@ extern "C" {
  * IKI-specific syntax.
  */
 #ifndef _di_f_iki_syntax_s_
-  #define F_iki_syntax_separator_s      F_string_ascii_colon_s
-  #define F_iki_syntax_placeholder_s    F_string_placeholder_s
-  #define F_iki_syntax_quote_backtick_s F_string_ascii_grave_s
-  #define F_iki_syntax_quote_double_s   F_string_ascii_quote_double_s
-  #define F_iki_syntax_quote_single_s   F_string_ascii_quote_single_s
-  #define F_iki_syntax_slash_s          F_string_ascii_slash_backward_s
-  #define F_iki_syntax_wrap_open_s      F_string_ascii_bracket_open_s
-  #define F_iki_syntax_wrap_close_s     F_string_ascii_bracket_close_s
+  #define F_iki_syntax_separator_s    F_string_ascii_colon_s
+  #define F_iki_syntax_placeholder_s  F_string_placeholder_s
+  #define F_iki_syntax_quote_double_s F_string_ascii_quote_double_s
+  #define F_iki_syntax_quote_grave_s  F_string_ascii_grave_s
+  #define F_iki_syntax_quote_single_s F_string_ascii_quote_single_s
+  #define F_iki_syntax_slash_s        F_string_ascii_slash_backward_s
+  #define F_iki_syntax_wrap_open_s    F_string_ascii_bracket_open_s
+  #define F_iki_syntax_wrap_close_s   F_string_ascii_bracket_close_s
 
-  #define F_iki_syntax_separator_s_length      F_string_ascii_colon_s_length
-  #define F_iki_syntax_placeholder_s_length    F_string_placeholder_s_length
-  #define F_iki_syntax_quote_backtick_s_length F_string_ascii_grave_s_length
-  #define F_iki_syntax_quote_double_s_length   F_string_ascii_quote_double_s_length
-  #define F_iki_syntax_quote_single_s_length   F_string_ascii_quote_single_s_length
-  #define F_iki_syntax_slash_s_length          F_string_ascii_slash_backward_s_length
-  #define F_iki_syntax_wrap_open_s_length      F_string_ascii_bracket_open_s_length
-  #define F_iki_syntax_wrap_close_s_length     F_string_ascii_bracket_close_s_length
+  #define F_iki_syntax_separator_s_length    F_string_ascii_colon_s_length
+  #define F_iki_syntax_placeholder_s_length  F_string_placeholder_s_length
+  #define F_iki_syntax_quote_double_s_length F_string_ascii_quote_double_s_length
+  #define F_iki_syntax_quote_grave_s_length  F_string_ascii_grave_s_length
+  #define F_iki_syntax_quote_single_s_length F_string_ascii_quote_single_s_length
+  #define F_iki_syntax_slash_s_length        F_string_ascii_slash_backward_s_length
+  #define F_iki_syntax_wrap_open_s_length    F_string_ascii_bracket_open_s_length
+  #define F_iki_syntax_wrap_close_s_length   F_string_ascii_bracket_close_s_length
 
   #ifndef _di_f_iki_syntax_separator_s_
     extern const f_string_static_t f_iki_syntax_separator_s;
@@ -80,13 +80,13 @@ extern "C" {
     extern const f_string_static_t f_iki_syntax_placeholder_s;
   #endif // _di_f_iki_syntax_placeholder_s_
 
-  #ifndef _di_f_iki_syntax_quote_backtick_s_
-    extern const f_string_static_t f_iki_syntax_quote_backtick_s;
-  #endif // _di_f_iki_syntax_quote_backtick_s_
-
   #ifndef _di_f_iki_syntax_quote_double_s_
     extern const f_string_static_t f_iki_syntax_quote_double_s;
   #endif // _di_f_iki_syntax_quote_double_s_
+
+  #ifndef _di_f_iki_syntax_quote_grave_s_
+    extern const f_string_static_t f_iki_syntax_quote_grave_s;
+  #endif // _di_f_iki_syntax_quote_grave_s_
 
   #ifndef _di_f_iki_syntax_quote_single_s_
     extern const f_string_static_t f_iki_syntax_quote_single_s;

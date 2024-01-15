@@ -54,10 +54,10 @@ extern "C" {
  */
 #ifndef _di_iki_write_parameter_e_
   enum {
-    iki_write_parameter_backtick_e = f_console_standard_parameter_last_e,
-    iki_write_parameter_content_e,
+    iki_write_parameter_content_e = f_console_standard_parameter_last_e,
     iki_write_parameter_double_e,
     iki_write_parameter_file_e,
+    iki_write_parameter_grave_e,
     iki_write_parameter_object_e,
     iki_write_parameter_single_e,
     iki_write_parameter_wrap_e,
@@ -67,13 +67,13 @@ extern "C" {
     { \
       macro_fll_program_console_parameter_standard_initialize, \
       \
-      macro_f_console_parameter_t_initialize_3(iki_write_short_backtick_s, iki_write_long_backtick_s, 0, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize_3(iki_write_short_content_s,  iki_write_long_content_s,  1, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize_3(iki_write_short_double_s,   iki_write_long_double_s,   0, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize_3(iki_write_short_file_s,     iki_write_long_file_s,     1, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize_3(iki_write_short_object_s,   iki_write_long_object_s,   1, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize_3(iki_write_short_single_s,   iki_write_long_single_s,   0, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize_3(iki_write_short_wrap_s,     iki_write_long_wrap_s,     0, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(iki_write_short_content_s, iki_write_long_content_s, 1, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(iki_write_short_double_s,  iki_write_long_double_s,  0, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(iki_write_short_file_s,    iki_write_long_file_s,    1, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(iki_write_short_grave_s,   iki_write_long_grave_s,   0, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(iki_write_short_object_s,  iki_write_long_object_s,  1, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(iki_write_short_single_s,  iki_write_long_single_s,  0, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(iki_write_short_wrap_s,    iki_write_long_wrap_s,    0, f_console_flag_normal_e), \
     }
 
   #define iki_write_parameter_total_d 20

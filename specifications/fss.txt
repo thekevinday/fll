@@ -61,7 +61,7 @@ Featureless Settings Specifications:
   Unless otherwise specified, white space immediately both before (and after, outside of the terminating quote) an Object is not considered part of the Object.
   This simplifies identifying the object, use quoted Objects to support white space before/after an object for styling purposes.
 
-  Unless otherwise specified, quotes may only be a single quote character:"'" (unicode:"U+0027"), a double quote character:'"' (unicode:"U+0022"), or a backtick character:'`' (unicode:"U+0060") and only a backslash character:"\\" (unicode:"U+005C") may be used as a delimiter.
+  Unless otherwise specified, quotes may only be a single quote character:"'" (unicode:"U+0027"), a double quote character:'"' (unicode:"U+0022"), or a grave character:'`' (unicode:"U+0060") and only a backslash character:"\\" (unicode:"U+005C") may be used as a delimiter.
   For example, code:"FSS-0000 (Basic)"\:
     \"Object 1" has content starting at the '1', with an Object named '"Object'.
     \\"Object 1" has content starting at the '1', with an Object named '\"Object'.

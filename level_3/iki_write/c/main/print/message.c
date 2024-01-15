@@ -26,13 +26,13 @@ extern "C" {
 
     f_print_dynamic_raw(f_string_eol_s, print->to);
 
-    fll_program_print_help_option(print, iki_write_short_backtick_s, iki_write_long_backtick_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "Use backtick for quotes.");
-    fll_program_print_help_option(print, iki_write_short_content_s, iki_write_long_content_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, " The Content to write.");
-    fll_program_print_help_option(print, iki_write_short_double_s, iki_write_long_double_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "  Use double quotes (default).");
-    fll_program_print_help_option(print, iki_write_short_file_s, iki_write_long_file_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "    Specify a file to send data to.");
-    fll_program_print_help_option(print, iki_write_short_object_s, iki_write_long_object_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "  The Object to write.");
-    fll_program_print_help_option(print, iki_write_short_single_s, iki_write_long_single_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "  Use single quotes.");
-    fll_program_print_help_option(print, iki_write_short_wrap_s, iki_write_long_wrap_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "    Wrap the vocabulary name.");
+    fll_program_print_help_option(print, iki_write_short_content_s, iki_write_long_content_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "The Content to write.");
+    fll_program_print_help_option(print, iki_write_short_double_s, iki_write_long_double_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, " Use double quotes (U+0022) (default).");
+    fll_program_print_help_option(print, iki_write_short_file_s, iki_write_long_file_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "   Specify a file to send data to.");
+    fll_program_print_help_option(print, iki_write_short_grave_s, iki_write_long_grave_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "  Use grave (U+0060) for quotes.");
+    fll_program_print_help_option(print, iki_write_short_object_s, iki_write_long_object_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, " The Object to write.");
+    fll_program_print_help_option(print, iki_write_short_single_s, iki_write_long_single_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, " Use single quotes (U+0027).");
+    fll_program_print_help_option(print, iki_write_short_wrap_s, iki_write_long_wrap_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "   Wrap the vocabulary name.");
 
     f_print_dynamic_raw(f_string_eol_s, print->to);
 

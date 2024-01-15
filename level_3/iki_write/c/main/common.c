@@ -242,35 +242,35 @@ extern "C" {
         if (main->program.parameters.array[iki_write_parameter_double_e].location < main->program.parameters.array[iki_write_parameter_single_e].location) {
           main->setting.quote = f_iki_syntax_quote_single_s;
 
-          if (main->program.parameters.array[iki_write_parameter_backtick_e].result & f_console_result_found_e) {
-            if (main->program.parameters.array[iki_write_parameter_single_e].location < main->program.parameters.array[iki_write_parameter_backtick_e].location) {
-              main->setting.quote = f_iki_syntax_quote_backtick_s;
+          if (main->program.parameters.array[iki_write_parameter_grave_e].result & f_console_result_found_e) {
+            if (main->program.parameters.array[iki_write_parameter_single_e].location < main->program.parameters.array[iki_write_parameter_grave_e].location) {
+              main->setting.quote = f_iki_syntax_quote_grave_s;
             }
           }
         }
-        else if (main->program.parameters.array[iki_write_parameter_backtick_e].result & f_console_result_found_e) {
-          if (main->program.parameters.array[iki_write_parameter_double_e].location < main->program.parameters.array[iki_write_parameter_backtick_e].location) {
-            main->setting.quote = f_iki_syntax_quote_backtick_s;
+        else if (main->program.parameters.array[iki_write_parameter_grave_e].result & f_console_result_found_e) {
+          if (main->program.parameters.array[iki_write_parameter_double_e].location < main->program.parameters.array[iki_write_parameter_grave_e].location) {
+            main->setting.quote = f_iki_syntax_quote_grave_s;
           }
         }
       }
-      else if (main->program.parameters.array[iki_write_parameter_backtick_e].result & f_console_result_found_e) {
-        if (main->program.parameters.array[iki_write_parameter_double_e].location < main->program.parameters.array[iki_write_parameter_backtick_e].location) {
-          main->setting.quote = f_iki_syntax_quote_backtick_s;
+      else if (main->program.parameters.array[iki_write_parameter_grave_e].result & f_console_result_found_e) {
+        if (main->program.parameters.array[iki_write_parameter_double_e].location < main->program.parameters.array[iki_write_parameter_grave_e].location) {
+          main->setting.quote = f_iki_syntax_quote_grave_s;
         }
       }
     }
     else if (main->program.parameters.array[iki_write_parameter_single_e].result & f_console_result_found_e) {
       main->setting.quote = f_iki_syntax_quote_single_s;
 
-      if (main->program.parameters.array[iki_write_parameter_backtick_e].result & f_console_result_found_e) {
-        if (main->program.parameters.array[iki_write_parameter_single_e].location < main->program.parameters.array[iki_write_parameter_backtick_e].location) {
-          main->setting.quote = f_iki_syntax_quote_backtick_s;
+      if (main->program.parameters.array[iki_write_parameter_grave_e].result & f_console_result_found_e) {
+        if (main->program.parameters.array[iki_write_parameter_single_e].location < main->program.parameters.array[iki_write_parameter_grave_e].location) {
+          main->setting.quote = f_iki_syntax_quote_grave_s;
         }
       }
     }
-    else if (main->program.parameters.array[iki_write_parameter_backtick_e].result & f_console_result_found_e) {
-      main->setting.quote = f_iki_syntax_quote_backtick_s;
+    else if (main->program.parameters.array[iki_write_parameter_grave_e].result & f_console_result_found_e) {
+      main->setting.quote = f_iki_syntax_quote_grave_s;
     }
   }
 #endif // _di_iki_write_setting_load_

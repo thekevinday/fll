@@ -177,8 +177,8 @@ extern "C" {
       fll_print_dynamic_raw(
         type == f_fss_quote_type_single_e
           ? f_fss_quote_single_s
-          : type == f_fss_quote_type_backtick_e
-            ? f_fss_quote_backtick_s
+          : type == f_fss_quote_type_grave_e
+            ? f_fss_quote_grave_s
             : f_fss_quote_double_s,
         print->to
       );

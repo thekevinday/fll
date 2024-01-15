@@ -26,8 +26,8 @@ extern "C" {
   #define F_fss_minus_s          F_string_ascii_minus_s
   #define F_fss_f_s              F_string_ascii_f_s
   #define F_fss_pound_s          F_string_ascii_pound_s
-  #define F_fss_quote_backtick_s F_string_ascii_grave_s
   #define F_fss_quote_double_s   F_string_ascii_quote_double_s
+  #define F_fss_quote_grave_s    F_string_ascii_grave_s
   #define F_fss_quote_single_s   F_string_ascii_quote_single_s
   #define F_fss_s_s              F_string_ascii_s_s
   #define F_fss_slash_s          F_string_ascii_slash_backward_s
@@ -40,8 +40,8 @@ extern "C" {
   #define F_fss_minus_s_length          F_string_ascii_minus_s_length
   #define F_fss_f_s_length              F_string_ascii_f_s_length
   #define F_fss_pound_s_length          F_string_ascii_pound_s_length
-  #define F_fss_quote_backtick_s_length F_string_ascii_grave_s_length
   #define F_fss_quote_double_s_length   F_string_ascii_quote_double_s_length
+  #define F_fss_quote_grave_s_length    F_string_ascii_grave_s_length
   #define F_fss_quote_single_s_length   F_string_ascii_quote_single_s_length
   #define F_fss_s_s_length              F_string_ascii_s_s_length
   #define F_fss_slash_s_length          F_string_ascii_slash_backward_s_length
@@ -54,8 +54,8 @@ extern "C" {
   #define f_fss_minus_s          f_string_ascii_minus_s
   #define f_fss_f_s              f_string_ascii_f_s
   #define f_fss_pound_s          f_string_ascii_pound_s
-  #define f_fss_quote_backtick_s f_string_ascii_grave_s
   #define f_fss_quote_double_s   f_string_ascii_quote_double_s
+  #define f_fss_quote_grave_s    f_string_ascii_grave_s
   #define f_fss_quote_single_s   f_string_ascii_quote_single_s
   #define f_fss_s_s              f_string_ascii_s_s
   #define f_fss_slash_s          f_string_ascii_slash_backward_s

@@ -677,35 +677,35 @@ extern "C" {
         if (main->program.parameters.array[fss_write_parameter_double_e].location < main->program.parameters.array[fss_write_parameter_single_e].location) {
           main->setting.quote = f_fss_quote_single_s;
 
-          if (main->program.parameters.array[fss_write_parameter_backtick_e].result & f_console_result_found_e) {
-            if (main->program.parameters.array[fss_write_parameter_single_e].location < main->program.parameters.array[fss_write_parameter_backtick_e].location) {
-              main->setting.quote = f_fss_quote_backtick_s;
+          if (main->program.parameters.array[fss_write_parameter_grave_e].result & f_console_result_found_e) {
+            if (main->program.parameters.array[fss_write_parameter_single_e].location < main->program.parameters.array[fss_write_parameter_grave_e].location) {
+              main->setting.quote = f_fss_quote_grave_s;
             }
           }
         }
-        else if (main->program.parameters.array[fss_write_parameter_backtick_e].result & f_console_result_found_e) {
-          if (main->program.parameters.array[fss_write_parameter_double_e].location < main->program.parameters.array[fss_write_parameter_backtick_e].location) {
-            main->setting.quote = f_fss_quote_backtick_s;
+        else if (main->program.parameters.array[fss_write_parameter_grave_e].result & f_console_result_found_e) {
+          if (main->program.parameters.array[fss_write_parameter_double_e].location < main->program.parameters.array[fss_write_parameter_grave_e].location) {
+            main->setting.quote = f_fss_quote_grave_s;
           }
         }
       }
-      else if (main->program.parameters.array[fss_write_parameter_backtick_e].result & f_console_result_found_e) {
-        if (main->program.parameters.array[fss_write_parameter_double_e].location < main->program.parameters.array[fss_write_parameter_backtick_e].location) {
-          main->setting.quote = f_fss_quote_backtick_s;
+      else if (main->program.parameters.array[fss_write_parameter_grave_e].result & f_console_result_found_e) {
+        if (main->program.parameters.array[fss_write_parameter_double_e].location < main->program.parameters.array[fss_write_parameter_grave_e].location) {
+          main->setting.quote = f_fss_quote_grave_s;
         }
       }
     }
     else if (main->program.parameters.array[fss_write_parameter_single_e].result & f_console_result_found_e) {
       main->setting.quote = f_fss_quote_single_s;
 
-      if (main->program.parameters.array[fss_write_parameter_backtick_e].result & f_console_result_found_e) {
-        if (main->program.parameters.array[fss_write_parameter_single_e].location < main->program.parameters.array[fss_write_parameter_backtick_e].location) {
-          main->setting.quote = f_fss_quote_backtick_s;
+      if (main->program.parameters.array[fss_write_parameter_grave_e].result & f_console_result_found_e) {
+        if (main->program.parameters.array[fss_write_parameter_single_e].location < main->program.parameters.array[fss_write_parameter_grave_e].location) {
+          main->setting.quote = f_fss_quote_grave_s;
         }
       }
     }
-    else if (main->program.parameters.array[fss_write_parameter_backtick_e].result & f_console_result_found_e) {
-      main->setting.quote = f_fss_quote_backtick_s;
+    else if (main->program.parameters.array[fss_write_parameter_grave_e].result & f_console_result_found_e) {
+      main->setting.quote = f_fss_quote_grave_s;
     }
 
     if (main->program.parameters.array[fss_write_parameter_trim_e].result & f_console_result_found_e) {

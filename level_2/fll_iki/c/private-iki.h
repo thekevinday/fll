@@ -26,7 +26,7 @@ extern "C" {
  *   The range within the buffer that represents the content.
  * @param quote
  *   The quote character in use.
- *   This must be either a single quote (') (U+0027), double quote (") (U+0022), or backtick (`) (U+0060).
+ *   This must be either a single quote (') (U+0027), double quote (") (U+0022), or grave (`) (U+0060).
  * @param escaped
  *   The content whose data is escaped.
  *   The escaped string data is appended to this, so set the escaped.used = 0 if "replace" behavior is desired.
@@ -57,7 +57,7 @@ extern "C" {
  *   The range within the buffer that represents the content.
  * @param quote
  *   The quote character in use.
- *   This must be either a single quote (') (U+0027), double quote (") (U+0022), or backtick (`) (U+0060).
+ *   This must be either a single quote (') (U+0027), double quote (") (U+0022), or grave (`) (U+0060).
  * @param unescaped
  *   The content whose data is unescaped.
  *   The unescaped string data is appended to this, so set the unescaped.used = 0 if "replace" behavior is desired.
