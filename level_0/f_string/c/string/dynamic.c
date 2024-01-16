@@ -558,19 +558,19 @@ extern "C" {
 #endif // _di_f_string_dynamic_prepend_nulless_
 
 #ifndef _di_f_string_dynamic_seek_line_
-  f_status_t f_string_dynamic_seek_line(const f_string_static_t structure, f_range_t * const range) {
+  f_status_t f_string_dynamic_seek_line(const f_string_static_t buffer, f_range_t * const range) {
     #ifndef _di_level_0_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!structure.used) return F_data_not;
+    if (!buffer.used) return F_data_not;
     if (range->start > range->stop) return F_data_not_stop;
 
-    while (structure.string[range->start] != f_string_eol_s.string[0]) {
+    while (buffer.string[range->start] != f_string_eol_s.string[0]) {
 
       ++range->start;
 
-      if (range->start >= structure.used) return F_okay_eos;
+      if (range->start >= buffer.used) return F_okay_eos;
       if (range->start > range->stop) return F_okay_stop;
     } // while
 
@@ -579,21 +579,21 @@ extern "C" {
 #endif // _di_f_string_dynamic_seek_line_
 
 #ifndef _di_f_string_dynamic_seek_line_to_
-  f_status_t f_string_dynamic_seek_line_to(const f_string_static_t structure, const f_char_t seek_to_this, f_range_t * const range) {
+  f_status_t f_string_dynamic_seek_line_to(const f_string_static_t buffer, const f_char_t seek_to_this, f_range_t * const range) {
     #ifndef _di_level_0_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!structure.used) return F_data_not;
+    if (!buffer.used) return F_data_not;
     if (range->start > range->stop) return F_data_not_stop;
 
-    while (structure.string[range->start] != seek_to_this) {
+    while (buffer.string[range->start] != seek_to_this) {
 
-      if (structure.string[range->start] == f_string_eol_s.string[0]) return F_okay_eol;
+      if (buffer.string[range->start] == f_string_eol_s.string[0]) return F_okay_eol;
 
       ++range->start;
 
-      if (range->start >= structure.used) return F_okay_eos;
+      if (range->start >= buffer.used) return F_okay_eos;
       if (range->start > range->stop) return F_okay_stop;
     } // while
 
@@ -602,19 +602,19 @@ extern "C" {
 #endif // _di_f_string_dynamic_seek_line_to_
 
 #ifndef _di_f_string_dynamic_seek_to_
-  f_status_t f_string_dynamic_seek_to(const f_string_static_t structure, const f_char_t seek_to_this, f_range_t * const range) {
+  f_status_t f_string_dynamic_seek_to(const f_string_static_t buffer, const f_char_t seek_to_this, f_range_t * const range) {
     #ifndef _di_level_0_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!structure.used) return F_data_not;
+    if (!buffer.used) return F_data_not;
     if (range->start > range->stop) return F_data_not_stop;
 
-    while (structure.string[range->start] != seek_to_this) {
+    while (buffer.string[range->start] != seek_to_this) {
 
       ++range->start;
 
-      if (range->start >= structure.used) return F_okay_eos;
+      if (range->start >= buffer.used) return F_okay_eos;
       if (range->start > range->stop) return F_okay_stop;
     } // while
 

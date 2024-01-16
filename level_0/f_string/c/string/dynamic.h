@@ -668,7 +668,7 @@ extern "C" {
 /**
  * Seek the buffer location forward until EOL is reached.
  *
- * @param structure
+ * @param buffer
  *   The buffer to traverse.
  * @param range
  *   A range within the buffer representing the start and stop locations.
@@ -686,13 +686,13 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamic_seek_line_
-  extern f_status_t f_string_dynamic_seek_line(const f_string_static_t structure, f_range_t * const range);
+  extern f_status_t f_string_dynamic_seek_line(const f_string_static_t buffer, f_range_t * const range);
 #endif // _di_f_string_dynamic_seek_line_
 
 /**
  * Seek the buffer location forward until the character (1-byte wide) or EOL is reached.
  *
- * @param structure
+ * @param buffer
  *   The buffer to traverse.
  * @param seek_to_this
  *   A single-width character representing a character to seek to.
@@ -712,13 +712,13 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamic_seek_line_to_
-  extern f_status_t f_string_dynamic_seek_line_to(const f_string_static_t structure, const f_char_t seek_to_this, f_range_t * const range);
+  extern f_status_t f_string_dynamic_seek_line_to(const f_string_static_t buffer, const f_char_t seek_to_this, f_range_t * const range);
 #endif // _di_f_string_dynamic_seek_line_to_
 
 /**
  * Seek the buffer location forward until the character (1-byte wide) is reached.
  *
- * @param structure
+ * @param buffer
  *   The buffer to traverse.
  * @param seek_to_this
  *   A single-width character representing a character to seek to.
@@ -738,7 +738,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamic_seek_to_
-  extern f_status_t f_string_dynamic_seek_to(const f_string_static_t structure, const f_char_t seek_to_this, f_range_t * const range);
+  extern f_status_t f_string_dynamic_seek_to(const f_string_static_t buffer, const f_char_t seek_to_this, f_range_t * const range);
 #endif // _di_f_string_dynamic_seek_to_
 
 /**
