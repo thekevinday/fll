@@ -15,34 +15,40 @@ extern "C" {
 #endif
 
 /**
- * Defines for f_fss_payload_header_write().
+ * Defines for fl_fss_payload_header_map().
  *
  * macro_f_fss_payload_header_write_handle_error_d:
  *   Handle error return status, calling handle and reset destinations.used.
  *
  *   Parameters:
- *     - destinations: The destinations passed directly from the f_fss_payload_header_write() parameters.
- *     - state:        The state passed directly from the f_fss_payload_header_write() parameters.
- *     - internal:     The internal state, f_fss_payload_header_write_internal_t, created inside of f_fss_payload_header_write().
+ *     - destinations: The destinations passed directly from the fl_fss_payload_header_map() parameters.
+ *     - state:        The state passed directly from the fl_fss_payload_header_map() parameters.
+ *     - internal:     The internal state, f_fss_payload_header_internal_t, created inside of fl_fss_payload_header_map().
  *
- * macro_f_fss_payload_header_write_process_signed_numbers_d:
- *   Process the numbers array, converting it to a string.
- *   The data->cache is reset and used (via private_inline_f_payload_header_write_number_signed()).
+ * macro_f_fss_payload_header_write_process_numbers_d:
+ *   Process the numbers array (either signed or unsigned), converting it to a string.
+ *   The data->cache is reset and used (via private_fl_payload_header_map_number_signed()).
  *   The destinations->used is incremented on non-error.
- *   This requires private_inline_f_payload_header_write_number_signed() from payload.c.
+ *   This requires private_fl_payload_header_map_number_signed() from payload.c.
  *
  *   Parameters:
- *     - data:        The f_fss_payload_header_write_state_t pointer.
- *     - state:       The state passed directly from the f_fss_payload_header_write() parameters.
- *     - internal:    The internal state, f_fss_payload_header_write_internal_t, created inside of f_fss_payload_header_write().
+ *     - data:        The f_fss_payload_header_state_t pointer.
+ *     - state:       The state passed directly from the fl_fss_payload_header_map() parameters.
+ *     - internal:    The internal state, f_fss_payload_header_internal_t, created inside of fl_fss_payload_header_map().
  *     - numbers:     The is.a representing the array of signed numbers.
  *     - destination: The destination string to append to.
+ *     - function:    The private signed/unsigned function to call.
+ *     - cast:        The signed/unsigned structure to cast to.
  *
- * macro_f_fss_payload_header_write_process_unsigned_numbers_d:
- *   The same as the macro_f_fss_payload_header_write_process_signed_numbers_d() macro documentation above except for unsigned rather than signed.
+ * macro_f_fss_payload_header_write_process_numbers_signed_d:
+ *   This wraps macro_f_fss_payload_header_write_process_numbers_d, passing the signed function and cast.
+ *
+ * macro_f_fss_payload_header_write_process_numbers_unsigned_d:
+ *   This wraps macro_f_fss_payload_header_write_process_numbers_d, passing the unsigned function and cast.
  *
  * macro_f_fss_payload_header_write_process_dynamic_d:
- *   @todo document this.
+ *   This macro writes the given dynamic string into the cache.
+ *   If the dynamic string is empty, then an empty quotes are written to the cache.
  */
 #ifndef _di_f_fss_payload_header_write_d_
   #define macro_f_fss_payload_header_write_handle_error_d(destinations, state, internal) \
@@ -63,7 +69,9 @@ extern "C" {
       } \
     }
 
-  #define macro_f_fss_payload_header_write_process_signed_numbers_d(data, state, internal, numbers, destination) \
+  #define macro_f_fss_payload_header_write_process_numbers_d(data, state, internal, numbers, destination, function, cast) \
+    data->cache->used = 0; \
+    \
     for (internal.j = 0; internal.j < numbers.used; ++internal.j) { \
       \
       if (state->interrupt) { \
@@ -71,50 +79,55 @@ extern "C" {
         if (F_status_set_fine(state->status) == F_interrupt) break; \
       } \
       \
-      if (private_inline_f_payload_header_write_number_signed(data, state, &internal, (f_number_signed_t) numbers.array[internal.j])) break; \
-      \
-      if (data->cache->used && internal.j + 1 < numbers.used) { \
-        state->status = f_string_dynamic_append(f_fss_extended_open_s, &destination); \
-        if (F_status_is_error(state->status)) break; \
+      if (!(data->flag & f_fss_payload_header_map_flag_join_digits_e)) { \
+        data->cache->used = 0; \
       } \
+      \
+      if (function(data, state, &internal, (cast) numbers.array[internal.j])) { \
+        data->cache->used = 0; \
+        \
+        break; \
+      } \
+      \
+      if (!(data->flag & f_fss_payload_header_map_flag_join_digits_e)) { \
+        if (data->cache->used && internal.j + 1 < numbers.used) { \
+          state->status = f_string_dynamic_append(f_fss_extended_open_s, &destination); \
+          if (F_status_is_error(state->status)) break; \
+        } \
+        \
+        ++destinations->used; \
+      } \
+    } /* for */ \
+    \
+    if (data->cache->used && (data->flag & f_fss_payload_header_map_flag_join_digits_e)) { \
+      private_fl_payload_header_map_cache(data, state, &internal); \
+      \
       if (F_status_is_error_not(state->status)) { \
         ++destinations->used; \
       } \
-    } // for
+    }
 
-  #define macro_f_fss_payload_header_write_process_unsigned_numbers_d(data, state, internal, numbers, destination) \
-    for (internal.j = 0; internal.j < numbers.used; ++internal.j) { \
-      \
-      if (state->interrupt) { \
-        state->interrupt((void * const) state, (void * const) &internal); \
-        if (F_status_set_fine(state->status) == F_interrupt) break; \
-      } \
-      \
-      if (private_inline_f_payload_header_write_number_unsigned(data, state, &internal, (f_number_unsigned_t) numbers.array[internal.j])) break; \
-      \
-      if (data->cache->used && internal.j + 1 < numbers.used) { \
-        state->status = f_string_dynamic_append(f_fss_extended_open_s, &destination); \
-        if (F_status_is_error(state->status)) break; \
-      } \
-      if (F_status_is_error_not(state->status)) { \
-        ++destinations->used; \
-      } \
-    } // for
+  #define macro_f_fss_payload_header_write_process_numbers_signed_d(data, state, internal, numbers, destination) \
+    macro_f_fss_payload_header_write_process_numbers_d(data, state, internal, numbers, destination, private_fl_payload_header_map_number_signed, f_number_signed_t)
+
+  #define macro_f_fss_payload_header_write_process_numbers_unsigned_d(data, state, internal, numbers, destination) \
+    macro_f_fss_payload_header_write_process_numbers_d(data, state, internal, numbers, destination, private_fl_payload_header_map_number_unsigned, f_number_unsigned_t)
 
   #define macro_f_fss_payload_header_write_process_dynamic_d(data, state, internal, dynamic) \
-    if (dynamic.used) { \
-      internal.range.start = 0; \
-      internal.range.stop = dynamic.used - 1; \
+    if (dynamic.used || (data->flag & f_fss_payload_header_map_flag_null_dynamic_e)) { \
+      if (dynamic.used) { \
+        internal.range.start = 0; \
+        internal.range.stop = dynamic.used - 1; \
+        \
+        private_fl_fss_basic_write(F_false, dynamic, internal.quote, &internal.range, data->cache, state, (void * const) &internal); \
+      } \
+      else { \
+        private_fl_payload_header_map_null_add(internal, data->cache); \
+      } \
       \
-      private_fl_fss_basic_write(F_false, dynamic, 0, &internal.range, data->cache, state, (void * const) &internal); \
-    } \
-    else { \
-      data->cache->string[data->cache->used++] = f_string_ascii_quote_double_s.string[0]; \
-      data->cache->string[data->cache->used++] = f_string_ascii_quote_double_s.string[0]; \
-    } \
-    \
-    if (F_status_is_error_not(state->status)) { \
-      data->cache->string[data->cache->used++] = f_fss_extended_next_s.string[0]; \
+      if (F_status_is_error_not(state->status)) { \
+        data->cache->string[data->cache->used++] = f_fss_extended_next_s.string[0]; \
+      } \
     }
 #endif // _di_f_fss_payload_header_write_d_
 

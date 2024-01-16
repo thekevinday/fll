@@ -35,8 +35,6 @@
 extern "C" {
 #endif
 
-// @todo fl_fss_payload_header_read() to build an array of f_abstruse for the headers?
-
 /**
  * Write standard header of the FSS-000E (Payload).
  *
@@ -55,22 +53,23 @@ extern "C" {
  * @param destinations
  *   A map of strings representing the header names and values after being safely converted into the valid payload header format.
  *   This built header names and values are appended onto this.
+ *
  *   Must not be NULL.
  * @param state
  *   A state for providing flags and handling interrupts during long running operations.
  *   The state.handle() is optionally allowed.
  *   There is no "callbacks" structure.
- *   The data is required and set to f_fss_payload_header_write_state_t.
+ *   The data is required and set to f_fss_payload_header_state_t.
  *   The data.cache must not be NULL.
  *
  *   The optional state->handle() is called on error and the handler may alter the status to not have an error bit step to prevent returning except for when there is an invalid parameter passed to this function.
- *   The second parameter is a f_fss_payload_header_write_internal_t.
+ *   The second parameter is a f_fss_payload_header_internal_t.
  *   The second parameter to state->handle() is NULL on invalid paramter passed to this function.
  *
  *   When state.interrupt() returns, only F_interrupt and F_interrupt_not are processed.
  *   Error bit designates an error but must be passed along with F_interrupt.
  *   All other statuses are ignored.
- *   The second parameter is a f_fss_payload_header_write_internal_t.
+ *   The second parameter is a f_fss_payload_header_internal_t.
  *
  *   Must not be NULL.
  *
@@ -88,9 +87,15 @@ extern "C" {
  *
  *     Errors (with error bit) from: f_memory_array_increase().
  *     Errors (with error bit) from: f_memory_array_increase_by().
+ *     Errors (with error bit) from: f_string_dynamic_append_nulless().
+ *     Errors (with error bit) from: f_string_dynamic_strip_null().
+ *     Errors (with error bit) from: f_string_dynamic_strip_null_range().
  *
  * @see f_memory_array_increase()
  * @see f_memory_array_increase_by()
+ * @see f_string_dynamic_append_nulless()
+ * @see f_string_dynamic_strip_null()
+ * @see f_string_dynamic_strip_null_range()
  */
 #ifndef _di_fl_fss_payload_header_map_
   extern void fl_fss_payload_header_map(const f_abstruse_maps_t headers, f_string_maps_t * const destinations, f_state_t * const state);

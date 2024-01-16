@@ -1,157 +1,10 @@
 #include "payload.h"
 #include "../private-fss.h"
+#include "private-payload.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-#ifndef _di_fl_fss_payload_header_write_
-  /**
-   * Inline helper function to reduce amount of code typed.
-   *
-   * Process the signed number, converting it to a string and appending that string onto data->cache.
-   * The resulting data->cache is then appended onto the destination value on success.
-   * If the number is not appended to data->cache, then nothing is appended to the destination value.
-   *
-   * @param data
-   *   The f_fss_payload_header_write_state_t pointer.
-   *   This resets data->cache.used as needed.
-   * @param state
-   *   The state passed directly from the f_fss_payload_header_write() parameters.
-   * @param internal
-   *   The internal state, f_fss_payload_header_write_internal_t, created inside of f_fss_payload_header_write().
-   * @param number
-   *   The signed number.
-   *
-   * @return
-   *   F_true if the caller should break or exit due to an error or something similar.
-   *   F_false, otherwise.
-   */
-  static inline uint8_t private_inline_f_payload_header_write_number_signed(f_fss_payload_header_write_state_t * const data, f_state_t * const state, f_fss_payload_header_write_internal_t * const internal, const f_number_signed_t number) {
-
-    data->cache->used = 0;
-
-    state->status = f_conversion_number_signed_to_string(number, data->conversion, data->cache);
-    if (F_status_is_error(state->status)) return F_true;
-
-    if (data->cache->used) {
-      internal->range.start = 0;
-      internal->range.stop = data->cache->used - 1;
-
-      private_fl_fss_basic_write(F_false, *data->cache, 0, &internal->range, &internal->destinations->array[internal->destinations->used].value, state, (void * const) internal);
-      if (F_status_is_error(state->status)) return F_true;
-
-      // Strip NULLs that may have been introduced via private_fl_fss_basic_write().
-      if (data->cache->used) {
-        f_number_unsigned_t i = data->cache->used;
-        f_number_unsigned_t j = 0;
-        f_number_unsigned_t total = 0;
-
-        while (--i) {
-
-          if (!data->cache->string[i]) {
-            total = 1;
-
-            for (j = i - 1; j && !data->cache->string[j]; ++total, --j) {
-              // Do nothing.
-            } // for
-
-            if (!j) {
-              if (!data->cache->string[j]) {
-                ++total;
-              }
-              else {
-                ++j;
-              }
-            }
-
-            memmove(data->cache->string + j, data->cache->string + i + 1, total);
-
-            data->cache->used -= total;
-            i = j;
-
-            if (!i) break;
-          }
-        } // while
-      }
-    }
-
-    return F_false;
-  }
-
-  /**
-   * Inline helper function to reduce amount of code typed.
-   *
-   * Process the unsigned number, converting it to a string and appending that string onto data->cache.
-   * The resulting data->cache is then appended onto the destination value on success.
-   * If the number is not appended to data->cache, then nothing is appended to the destination value.
-   *
-   * @param data
-   *   The f_fss_payload_header_write_state_t pointer.
-   *   This resets data->cache.used as needed.
-   * @param state
-   *   The state passed directly from the f_fss_payload_header_write() parameters.
-   * @param internal
-   *   The internal state, f_fss_payload_header_write_internal_t, created inside of f_fss_payload_header_write().
-   * @param number
-   *   The unsigned number.
-   *
-   * @return
-   *   F_true if the caller should break or exit due to an error or something similar.
-   *   F_false, otherwise.
-   */
-  static inline uint8_t private_inline_f_payload_header_write_number_unsigned(f_fss_payload_header_write_state_t * const data, f_state_t * const state, f_fss_payload_header_write_internal_t * const internal, const f_number_unsigned_t number) {
-
-    data->cache->used = 0;
-
-    state->status = f_conversion_number_unsigned_to_string(number, data->conversion, data->cache);
-    if (F_status_is_error(state->status)) return F_true;
-
-    if (data->cache->used) {
-      internal->range.start = 0;
-      internal->range.stop = data->cache->used - 1;
-
-      private_fl_fss_basic_write(F_false, *data->cache, 0, &internal->range, &internal->destinations->array[internal->destinations->used].value, state, (void * const) internal);
-      if (F_status_is_error(state->status)) return F_true;
-
-      // Strip NULLs that may have been introduced via private_fl_fss_basic_write().
-      if (data->cache->used) {
-        f_number_unsigned_t i = data->cache->used;
-        f_number_unsigned_t j = 0;
-        f_number_unsigned_t total = 0;
-
-        while (--i) {
-
-          if (!data->cache->string[i]) {
-            total = 1;
-
-            for (j = i - 1; j && !data->cache->string[j]; ++total, --j) {
-              // Do nothing.
-            } // for
-
-            if (!j) {
-              if (!data->cache->string[j]) {
-                ++total;
-              }
-              else {
-                ++j;
-              }
-            }
-
-            memmove(data->cache->string + j, data->cache->string + i + 1, total);
-
-            data->cache->used -= total;
-            i = j;
-
-            if (!i) break;
-          }
-        } // while
-      }
-    }
-
-    return F_false;
-  }
-#endif // _di_fl_fss_payload_header_write_
 
 #ifndef _di_fl_fss_payload_header_map_
   void fl_fss_payload_header_map(const f_abstruse_maps_t headers, f_string_maps_t * const destinations, f_state_t * const state) {
@@ -169,8 +22,8 @@ extern "C" {
       }
     #endif // _di_level_1_parameter_checking_
 
-    f_fss_payload_header_write_state_t * const data = (f_fss_payload_header_write_state_t *) state->data;
-    f_fss_payload_header_write_internal_t internal = macro_f_fss_payload_header_write_internal_t_initialize_2(destinations, destinations->used);
+    f_fss_payload_header_state_t * const data = (f_fss_payload_header_state_t *) state->data;
+    f_fss_payload_header_internal_t internal = macro_f_fss_payload_header_internal_t_initialize_2(destinations, destinations->used);
 
     if (!data->cache) {
       state->status = F_status_set_error(F_parameter);
@@ -192,6 +45,13 @@ extern "C" {
     internal.j = 0;
     internal.k = 0;
     internal.l = 0;
+    internal.quote = f_fss_payload_header_map_flag_quote_double_e
+      ? f_string_ascii_quote_double_s.string[0]
+      : f_fss_payload_header_map_flag_quote_single_e
+        ? f_string_ascii_quote_single_s.string[0]
+        : f_fss_payload_header_map_flag_quote_grave_e
+          ? f_string_ascii_grave_s.string[0]
+          : 0;
 
     state->status = f_memory_array_increase_by(headers.used, sizeof(f_string_map_t), (void **) &destinations->array, &destinations->used, &destinations->size);
 
@@ -215,20 +75,26 @@ extern "C" {
         internal.range.start = 0;
         internal.range.stop = headers.array[internal.i].key.used - 1;
 
-        private_fl_fss_basic_write(F_true, headers.array[internal.i].key, 0, &internal.range, &destinations->array[destinations->used].name, state, (void * const) &internal);
+        private_fl_fss_basic_write(F_true, headers.array[internal.i].key, internal.quote, &internal.range, &destinations->array[destinations->used].name, state, (void * const) &internal);
 
         if (F_status_is_error_not(state->status)) {
-          // @todo need flag to specify whether or not to append NULL for single-valued and one for multi-valued number conversion results in invalid or does not exist.
-          // @todo the same for single-valued strings and multi-valued strings (like maps).
-          // @todo need a flag to designate whether to use single, double quotes, or auto.
+          state->status = f_string_dynamic_strip_null(&destinations->array[destinations->used].name);
+        }
+
+        if (F_status_is_error_not(state->status)) {
           switch (headers.array[internal.i].value.type) {
             case f_abstruse_none_e:
             case f_abstruse_void_e:
             case f_abstruse_voids_e:
+              // Voids and none are unknown or non-existent and so they cannot be converted.
               break;
 
             case f_abstruse_signed_e:
-              private_inline_f_payload_header_write_number_signed(data, state, &internal, headers.array[internal.i].value.is.a_signed);
+              data->cache->used = 0;
+
+              if (private_fl_payload_header_map_number_signed(data, state, &internal, headers.array[internal.i].value.is.a_signed) == F_false) {
+                private_fl_payload_header_map_cache(data, state, &internal);
+              }
 
               if (F_status_is_error_not(state->status)) {
                 ++destinations->used;
@@ -237,7 +103,11 @@ extern "C" {
               break;
 
             case f_abstruse_unsigned_e:
-              private_inline_f_payload_header_write_number_unsigned(data, state, &internal, headers.array[internal.i].value.is.a_unsigned);
+              data->cache->used = 0;
+
+              if (private_fl_payload_header_map_number_unsigned(data, state, &internal, headers.array[internal.i].value.is.a_unsigned) == F_false) {
+                private_fl_payload_header_map_cache(data, state, &internal);
+              }
 
               if (F_status_is_error_not(state->status)) {
                 ++destinations->used;
@@ -246,52 +116,52 @@ extern "C" {
               break;
 
             case f_abstruse_int8s_e:
-              macro_f_fss_payload_header_write_process_signed_numbers_d(data, state, internal, headers.array[internal.i].value.is.a_i8s, destinations->array[destinations->used].value);
+              macro_f_fss_payload_header_write_process_numbers_signed_d(data, state, internal, headers.array[internal.i].value.is.a_i8s, destinations->array[destinations->used].value);
 
               break;
 
             case f_abstruse_int16s_e:
-              macro_f_fss_payload_header_write_process_signed_numbers_d(data, state, internal, headers.array[internal.i].value.is.a_i16s, destinations->array[destinations->used].value);
+              macro_f_fss_payload_header_write_process_numbers_signed_d(data, state, internal, headers.array[internal.i].value.is.a_i16s, destinations->array[destinations->used].value);
 
               break;
 
             case f_abstruse_int32s_e:
-              macro_f_fss_payload_header_write_process_signed_numbers_d(data, state, internal, headers.array[internal.i].value.is.a_i32s, destinations->array[destinations->used].value);
+              macro_f_fss_payload_header_write_process_numbers_signed_d(data, state, internal, headers.array[internal.i].value.is.a_i32s, destinations->array[destinations->used].value);
 
               break;
 
             case f_abstruse_int64s_e:
-              macro_f_fss_payload_header_write_process_signed_numbers_d(data, state, internal, headers.array[internal.i].value.is.a_i64s, destinations->array[destinations->used].value);
+              macro_f_fss_payload_header_write_process_numbers_signed_d(data, state, internal, headers.array[internal.i].value.is.a_i64s, destinations->array[destinations->used].value);
 
               break;
 
             case f_abstruse_signeds_e:
-              macro_f_fss_payload_header_write_process_signed_numbers_d(data, state, internal, headers.array[internal.i].value.is.a_signeds, destinations->array[destinations->used].value);
+              macro_f_fss_payload_header_write_process_numbers_signed_d(data, state, internal, headers.array[internal.i].value.is.a_signeds, destinations->array[destinations->used].value);
 
               break;
 
             case f_abstruse_uint8s_e:
-              macro_f_fss_payload_header_write_process_unsigned_numbers_d(data, state, internal, headers.array[internal.i].value.is.a_u8s, destinations->array[destinations->used].value);
+              macro_f_fss_payload_header_write_process_numbers_unsigned_d(data, state, internal, headers.array[internal.i].value.is.a_u8s, destinations->array[destinations->used].value);
 
               break;
 
             case f_abstruse_uint16s_e:
-              macro_f_fss_payload_header_write_process_unsigned_numbers_d(data, state, internal, headers.array[internal.i].value.is.a_u16s, destinations->array[destinations->used].value);
+              macro_f_fss_payload_header_write_process_numbers_unsigned_d(data, state, internal, headers.array[internal.i].value.is.a_u16s, destinations->array[destinations->used].value);
 
               break;
 
             case f_abstruse_uint32s_e:
-              macro_f_fss_payload_header_write_process_unsigned_numbers_d(data, state, internal, headers.array[internal.i].value.is.a_u32s, destinations->array[destinations->used].value);
+              macro_f_fss_payload_header_write_process_numbers_unsigned_d(data, state, internal, headers.array[internal.i].value.is.a_u32s, destinations->array[destinations->used].value);
 
               break;
 
             case f_abstruse_uint64s_e:
-              macro_f_fss_payload_header_write_process_unsigned_numbers_d(data, state, internal, headers.array[internal.i].value.is.a_u64s, destinations->array[destinations->used].value);
+              macro_f_fss_payload_header_write_process_numbers_unsigned_d(data, state, internal, headers.array[internal.i].value.is.a_u64s, destinations->array[destinations->used].value);
 
               break;
 
             case f_abstruse_unsigneds_e:
-              macro_f_fss_payload_header_write_process_unsigned_numbers_d(data, state, internal, headers.array[internal.i].value.is.a_unsigneds, destinations->array[destinations->used].value);
+              macro_f_fss_payload_header_write_process_numbers_unsigned_d(data, state, internal, headers.array[internal.i].value.is.a_unsigneds, destinations->array[destinations->used].value);
 
               break;
 
@@ -299,155 +169,55 @@ extern "C" {
               string_static.string = headers.array[internal.i].value.is.a_string;
               string_static.used = string_static.string ? strnlen(string_static.string, F_string_t_size_d) : 0;
 
-              if (string_static.used) {
-                internal.range.start = 0;
-                internal.range.stop = string_static.used - 1;
-
-                private_fl_fss_basic_write(F_false, string_static, 0, &internal.range, &destinations->array[destinations->used].value, state, (void * const) &internal);
+              if (string_static.used || (data->flag & f_fss_payload_header_map_flag_null_string_e)) {
+                private_fl_payload_header_map_dynamic(data, state, &internal, &string_static, destinations);
               }
-
-              if (F_status_is_error_not(state->status)) {
+              else if (data->flag & f_fss_payload_header_map_flag_null_e) {
                 ++destinations->used;
               }
 
               break;
 
             case f_abstruse_strings_e:
-              // @todo flag to break strings into multiple rows.
-              data->cache->used = 0;
-
               if (headers.array[internal.i].value.is.a_strings) {
-                internal.k = 0;
-
-                for (internal.j = 0; headers.array[internal.i].value.is.a_strings[internal.j]; ++internal.j) {
-
-                  if (state->interrupt) {
-                    state->interrupt((void * const) state, (void * const) &internal);
-                    if (F_status_set_fine(state->status) == F_interrupt) return;
-                  }
-
-                  string_static.string = headers.array[internal.i].value.is.a_strings[internal.j];
-                  string_static.used = string_static.string ? strnlen(string_static.string, F_string_t_size_d) : 0;
-
-                  internal.k += string_static.used ? string_static.used : f_string_ascii_quote_double_s.used * 2;
-                  internal.k += f_fss_extended_next_s.used;
-                } // for
-
-                state->status = f_memory_array_increase_by(internal.k, sizeof(f_char_t), (void **) &data->cache->string, &data->cache->used, &data->cache->size);
+                private_fl_payload_header_map_strings(data, state, &internal, headers.array[internal.i].value.is.a_strings, destinations);
+              }
+              else if (data->flag & f_fss_payload_header_map_flag_null_string_e) {
+                state->status = f_memory_array_increase_by(2, sizeof(f_char_t), (void **) &destinations->array[destinations->used].value.string, &destinations->array[destinations->used].value.used, &destinations->array[destinations->used].value.size);
                 if (F_status_is_error(state->status)) break;
 
-                for (internal.j = 0; headers.array[internal.i].value.is.a_strings[internal.j]; ++internal.j) {
+                private_fl_payload_header_map_null_add(internal, &destinations->array[destinations->used].value);
+                if (F_status_is_error(state->status)) break;
 
-                  if (state->interrupt) {
-                    state->interrupt((void * const) state, (void * const) &internal);
-                    if (F_status_set_fine(state->status) == F_interrupt) return;
-                  }
-
-                  string_static.string = headers.array[internal.i].value.is.a_strings[internal.j];
-                  string_static.used = string_static.string ? strnlen(string_static.string, F_string_t_size_d) : 0;
-
-                  if (string_static.used) {
-                    internal.range.start = 0;
-                    internal.range.stop = string_static.used - 1;
-
-                    private_fl_fss_basic_write(F_false, string_static, 0, &internal.range, data->cache, state, (void * const) &internal);
-                    if (F_status_is_error(state->status)) break;
-
-                    data->cache->string[data->cache->used++] = f_fss_extended_open_s.string[0];
-                  }
-                } // for
-
-                if (F_status_is_error_not(state->status)) {
-
-                  // The f_fss_extended_next_s is always added at the end of the loop to avoid an additional condition check in the loop.
-                  data->cache->used -= f_fss_extended_next_s.used;
-
-                  state->status = f_string_dynamic_append(*data->cache, &destinations->array[destinations->used].value);
-                }
+                ++destinations->used;
               }
-
-              if (F_status_is_error_not(state->status)) {
+              else if (data->flag & f_fss_payload_header_map_flag_null_e) {
                 ++destinations->used;
               }
 
               break;
 
             case f_abstruse_dynamic_e:
-              data->cache->used = 0;
-
-              if (headers.array[internal.i].value.is.a_dynamic.used) {
-                internal.j = headers.array[internal.i].value.is.a_dynamic.used;
+              if (headers.array[internal.i].value.is.a_dynamic.used || (data->flag & f_fss_payload_header_map_flag_null_dynamic_e)) {
+                private_fl_payload_header_map_dynamic(data, state, &internal, &headers.array[internal.i].value.is.a_dynamic, destinations);
               }
-              else {
-                internal.j = f_string_ascii_quote_double_s.used * 2;
-              }
-
-              state->status = f_memory_array_increase_by(internal.j, sizeof(f_char_t), (void **) &data->cache->string, &data->cache->used, &data->cache->size);
-              if (F_status_is_error(state->status)) break;
-
-              macro_f_fss_payload_header_write_process_dynamic_d(data, state, internal, headers.array[internal.i].value.is.a_dynamic);
-
-              if (F_status_is_error_not(state->status)) {
-
-                // The f_fss_extended_next_s is always added at the end of the macro.
-                data->cache->used -= f_fss_extended_next_s.used;
-
-                state->status = f_string_dynamic_append(*data->cache, &destinations->array[destinations->used].value);
-              }
-
-              if (F_status_is_error_not(state->status)) {
+              else if (data->flag & f_fss_payload_header_map_flag_null_e) {
                 ++destinations->used;
               }
 
               break;
 
             case f_abstruse_dynamics_e:
-              // @todo flag to break dynamics into multiple rows.
-              data->cache->used = 0;
-
               if (headers.array[internal.i].value.is.a_dynamics.used) {
-                internal.k = 0;
-
-                for (internal.j = 0; internal.j < headers.array[internal.i].value.is.a_dynamics.used; ++internal.j) {
-
-                  if (state->interrupt) {
-                    state->interrupt((void * const) state, (void * const) &internal);
-                    if (F_status_set_fine(state->status) == F_interrupt) return;
-                  }
-
-                  internal.k += headers.array[internal.i].value.is.a_dynamics.array[internal.j].used ? headers.array[internal.i].value.is.a_dynamics.array[internal.j].used : f_string_ascii_quote_double_s.used * 2;
-                  internal.k += f_fss_extended_next_s.used;
-                } // for
-
-                state->status = f_memory_array_increase_by(internal.k, sizeof(f_char_t), (void **) &data->cache->string, &data->cache->used, &data->cache->size);
-                if (F_status_is_error(state->status)) break;
-
-                for (internal.j = 0; internal.j < headers.array[internal.i].value.is.a_dynamics.used; ++internal.j) {
-
-                  if (state->interrupt) {
-                    state->interrupt((void * const) state, (void * const) &internal);
-                    if (F_status_set_fine(state->status) == F_interrupt) return;
-                  }
-
-                  macro_f_fss_payload_header_write_process_dynamic_d(data, state, internal, headers.array[internal.i].value.is.a_dynamics.array[internal.j]);
-                  if (F_status_is_error(state->status)) break;
-                } // for
-
-                if (F_status_is_error_not(state->status)) {
-
-                  // The f_fss_extended_next_s is always added at the end of the loop to avoid an additional condition check in the loop.
-                  data->cache->used -= f_fss_extended_next_s.used;
-
-                  state->status = f_string_dynamic_append(*data->cache, &destinations->array[destinations->used].value);
-                }
+                private_fl_payload_header_map_dynamics(data, state, &internal, &headers.array[internal.i].value.is.a_dynamics, destinations);
               }
-
-              if (F_status_is_error_not(state->status)) {
+              else if (data->flag & f_fss_payload_header_map_flag_null_e) {
                 ++destinations->used;
               }
 
               break;
 
+// @todo resume here.
             case f_abstruse_map_e:
               data->cache->used = 0;
               internal.k = f_fss_extended_next_s.used;
@@ -466,6 +236,7 @@ extern "C" {
               state->status = f_memory_array_increase_by(internal.k, sizeof(f_char_t), (void **) &data->cache->string, &data->cache->used, &data->cache->size);
               if (F_status_is_error(state->status)) break;
 
+              // @todo this should be different, in regards to the f_fss_payload_header_map_flag_null_dynamic_e bit.
               macro_f_fss_payload_header_write_process_dynamic_d(data, state, internal, headers.array[internal.i].value.is.a_map.name);
               if (F_status_is_error(state->status)) break;
 
@@ -636,9 +407,7 @@ extern "C" {
       } // for
     }
 
-    if (F_status_is_error_not(state->status)) {
-      state->status = F_okay;
-    }
+    state->status = F_okay;
   }
 #endif // _di_fl_fss_payload_header_map_
 
