@@ -24,8 +24,8 @@ extern "C" {
  * Set start to some value larger than stop to designate that there is no range (such as start = 1, stop = 0).
  *
  * Properties:
- *   - start: The start position.
- *   - stop:  The stop position.
+ *   - start: The inclusive start position.
+ *   - stop:  The inclusive stop position.
  */
 #ifndef _di_f_range_t_
   typedef struct {
