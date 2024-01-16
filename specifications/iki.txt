@@ -1,7 +1,7 @@
 # fss-0002 iki-0000
 #
 # license open-standard-license-1.0
-# version 2023/07/14
+# version 2024/01/15
 #
 # This file (assumed to be named iki.txt) can be more easily read using the following iki_read commands:
 #   iki_read iki.txt +Q -w -WWW character "'" "'" code '"' '"' italic '"' '"'
@@ -30,7 +30,7 @@ IKI Specifications:
   White space, non-word, and non character:"_" (unicode:"U+005F"), character:"-" (unicode:"U+002D"), character:"+" (unicode:"U+002B")) character punctuations may not exist as part of the variable name.
   The only Unicode dash-like characters allowed as a "dash" are those intended to connect, such as the Unicode hyphens (unicode:"U+2010" and unicode:"U+2011").
 
-  Any potential IKI data must be escaped to make it treated as non-IKI data by prepending a backslash character:"\\" before the colon character:":" that is before the opening quote (single, double, or backtic). Potential IKI data refers to any valid IKI sequence without considering the closing single quote character:"'" (unicode:"U+0027"), closing double quote character:'"' (unicode:"U+0022"), or closing backtick character:'`' (unicode:"U+0060").
+  Any potential IKI data must be escaped to make it treated as non-IKI data by prepending a backslash character:"\\" before the colon character:":" that is before the opening quote (single, double, or backtic). Potential IKI data refers to any valid IKI sequence without considering the closing single quote character:"'" (unicode:"U+0027"), closing double quote character:'"' (unicode:"U+0022"), or closing grave character:'`' (unicode:"U+0060").
 
   Unicode punctuation connector characters are supported just like character:"_", except when they connect outside the current line (such as unicode:"U+FE33" character:"︳").
   Unicode invisible punctuations (such as invisible plus: unicode:"U+2064") are not considered a punctuations in this standard (because they a zero-width characters), therefore they are not to be considered a valid character:"_", character:"-", or character:"+" Unicode equivalents.
@@ -38,7 +38,7 @@ IKI Specifications:
   Key\:
     code:"\o" = any printable word character, including character:"_", character:"-", character:"+" (and Unicode equivalents).
     code:"\c" = any character, including white space and non-printing, and any delimited quote (used as the opening quote) or a any quote (undelimited) not used as the opening quote.
-    code:"\q" = either a single quote character:"'" (unicode:"U+0027"), a double quote character:'"' (unicode:"U+0022"), or a backtick character:'`' (unicode:"U+0060").
+    code:"\q" = either a single quote character:"'" (unicode:"U+0027"), a double quote character:'"' (unicode:"U+0022"), or a grave character:'`' (unicode:"U+0060").
     code:"\x" = any character.
     code:"\W" = any non-word character, discluding character:"_", character:"-", character:"+" (and Unicode equivalents).
     code:"\e" = an optional escape sequence of any number of backslashes, such as character:"\\".

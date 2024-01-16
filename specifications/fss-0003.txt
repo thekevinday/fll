@@ -1,7 +1,7 @@
 # fss-0002 iki-0000
 #
 # license open-standard-license-1.0
-# version 2023/07/14
+# version 2024/01/15
 #
 # This file (assumed to be named fss-0003.txt) can be more easily read using the following iki_read commands:
 #   iki_read fss-0003.txt +Q -w -WW character "'" "'" code '"' '"'
@@ -20,7 +20,7 @@ Featureless Settings Specification: 0003 - Extended List:
   Any Content column that could be interpreted as an end of Content must be delimited if it should be part of the Content.
   White space may follow a valid close-brace character:"}" (unicode:"U+007D") but a terminating new line must be present to designate a valid end of Content.
 
-  There is no single-quote, double-quote, or backtick delimitation in this specification.
+  There is no single-quote (unicode:"U+0027"), double-quote (unicode:"U+0022"), or grave (unicode:"U+0060") delimitation in this specification.
   Only an open-brace character:"{" (unicode:"U+007B") that would result in a valid Object or the close-brace character:"}" (unicode:"U+007D") that would terminate valid Content can be delimited.
   When inside potentially valid Content (which follows a valid Object) the open-brace character:"{" (unicode:"U+007B") cannot be delimited because this standard is not-recursive.
   When not inside any potentially valid Content (that is, there is no previous unclosed Object), then the Object may be delimited.
