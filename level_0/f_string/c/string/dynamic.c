@@ -622,6 +622,105 @@ extern "C" {
   }
 #endif // _di_f_string_dynamic_seek_to_
 
+#ifndef _di_f_string_dynamic_strip_null_
+  f_status_t f_string_dynamic_strip_null(f_string_dynamic_t * const buffer) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!buffer) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (!buffer->used) return F_data_not;
+
+    // Skip past trailing NULLs.
+    while (buffer->used && !buffer->string[buffer->used - 1]) {
+      --buffer->used;
+    } // while
+
+    if (!buffer->used) return F_okay;
+
+    f_number_unsigned_t i = buffer->used - 1;
+    f_number_unsigned_t j = 0;
+
+    do {
+      if (!buffer->string[i]) {
+
+        // Set index j to the left-most consecutive NULL from index i, with index i being the right-most NULL.
+        if (i) {
+          for (j = i - 1; j && !buffer->string[j]; --j) {
+            // Do nothing.
+          } // for
+
+          if (buffer->string[j]) {
+            ++j;
+          }
+        }
+        else {
+          j = i;
+        }
+
+        memmove(buffer->string + j, buffer->string + i + 1, buffer->used - i);
+        memset(buffer->string + (buffer->used - (i - j) - 1), 0, (i - j) + 1);
+
+        buffer->used -= (i - j) + 1;
+        i = j;
+      }
+
+    } while (i--);
+
+    return F_okay;
+  }
+#endif // _di_f_string_dynamic_strip_null_
+
+#ifndef _di_f_string_dynamic_strip_null_range_
+  f_status_t f_string_dynamic_strip_null_range(const f_range_t range, f_string_dynamic_t * const buffer) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!buffer) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (!buffer->used) return F_data_not;
+    if (range.start > range.stop) return F_data_not_stop;
+    if (range.start >= buffer->used) return F_data_not_eos;
+
+    f_number_unsigned_t last = range.stop;
+    f_number_unsigned_t i = range.stop + 1;
+    f_number_unsigned_t j = 0;
+
+    // Skip past trailing NULLs.
+    while (i-- > range.start && i) {
+      if (buffer->string[i]) break;
+    } // while
+
+    if (i) {
+      do {
+        if (!buffer->string[i]) {
+
+          // Set index j to the left-most consecutive NULL from index i, with index i being the right-most NULL.
+          if (i) {
+            for (j = i - 1; j && !buffer->string[j]; --j) {
+              // Do nothing.
+            } // for
+
+            if (buffer->string[j]) {
+              ++j;
+            }
+          }
+          else {
+            j = i;
+          }
+
+          memmove(buffer->string + j, buffer->string + i + 1, last - i);
+          memset(buffer->string + (last - (i - j)), 0, (i - j) + 1);
+
+          last -= (i - j) + 1;
+          i = j;
+        }
+
+      } while (i-- > range.start);
+    }
+
+    return F_okay;
+  }
+#endif // _di_f_string_dynamic_strip_null_range_
+
 #ifndef _di_f_string_dynamic_terminate_
   f_status_t f_string_dynamic_terminate(f_string_dynamic_t * const destination) {
     #ifndef _di_level_0_parameter_checking_

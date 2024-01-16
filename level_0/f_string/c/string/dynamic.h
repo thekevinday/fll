@@ -742,6 +742,52 @@ extern "C" {
 #endif // _di_f_string_dynamic_seek_to_
 
 /**
+ * String all NULLs from the given string.
+ *
+ * This does not resize the string.
+ * The string used length of the buffer is shrunk based on the NULLs removed.
+ *
+ * @param buffer
+ *   The string to strip the NULLs from.
+ *
+ * @return
+ *   F_okay on success.
+ *   F_data_not if source length is 0.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_string_too_large (with error bit) if the combined string is too large.
+ */
+#ifndef _di_f_string_dynamic_strip_null_
+  extern f_status_t f_string_dynamic_strip_null(f_string_dynamic_t * const buffer);
+#endif // _di_f_string_dynamic_strip_null_
+
+/**
+ * String all NULLs from the given string within the specified range.
+ *
+ * This does not resize the string.
+ * Unlike f_string_dynamic_strip_null(), this does not alter the string used length of the buffer.
+ *
+ * Any found NULLs are moved to the end of the range in the buffer.
+ *
+ * @param range
+ *   The given range within the buffer to strip.
+ * @param buffer
+ *   The string to strip the NULLs from.
+ *
+ * @return
+ *   F_okay on success.
+ *   F_data_not if source length is 0.
+ *   F_data_not_eos if range.start >= source.used.
+ *   F_data_not_stop if range.start > range.stop.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_string_too_large (with error bit) if the combined string is too large.
+ */
+#ifndef _di_f_string_dynamic_strip_null_range_
+  extern f_status_t f_string_dynamic_strip_null_range(const f_range_t range, f_string_dynamic_t * const buffer);
+#endif // _di_f_string_dynamic_strip_null_range_
+
+/**
  * Guarantee that an end of string (NULL) exists at the end of the string.
  *
  * This is intended to be used for anything requiring NULL terminated strings.

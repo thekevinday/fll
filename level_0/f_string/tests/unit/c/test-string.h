@@ -57,6 +57,8 @@
 #include "test-string-dynamic_seek_line.h"
 #include "test-string-dynamic_seek_line_to.h"
 #include "test-string-dynamic_seek_to.h"
+#include "test-string-dynamic_strip_null.h"
+#include "test-string-dynamic_strip_null_range.h"
 #include "test-string-dynamic_terminate.h"
 #include "test-string-dynamic_terminate_after.h"
 #include "test-string-dynamics_append.h"

@@ -72,6 +72,14 @@ int main(void) {
     cmocka_unit_test(test__f_string_dynamic_seek_to__returns_none_stop),
     cmocka_unit_test(test__f_string_dynamic_seek_to__works),
 
+    cmocka_unit_test(test__f_string_dynamic_strip_null__returns_data_not),
+    cmocka_unit_test(test__f_string_dynamic_strip_null__works),
+
+    cmocka_unit_test(test__f_string_dynamic_strip_null_range__returns_data_not),
+    cmocka_unit_test(test__f_string_dynamic_strip_null_range__returns_data_not_eos),
+    cmocka_unit_test(test__f_string_dynamic_strip_null_range__returns_data_not_stop),
+    cmocka_unit_test(test__f_string_dynamic_strip_null_range__works),
+
     cmocka_unit_test(test__f_string_dynamic_terminate__appends_null),
     cmocka_unit_test(test__f_string_dynamic_terminate__doesnt_append_null),
 
@@ -233,6 +241,9 @@ int main(void) {
       cmocka_unit_test(test__f_string_dynamic_seek_line__parameter_checking),
       cmocka_unit_test(test__f_string_dynamic_seek_line_to__parameter_checking),
       cmocka_unit_test(test__f_string_dynamic_seek_to__parameter_checking),
+
+      cmocka_unit_test(test__f_string_dynamic_strip_null__parameter_checking),
+      cmocka_unit_test(test__f_string_dynamic_strip_null_range__parameter_checking),
 
       cmocka_unit_test(test__f_string_dynamic_terminate__parameter_checking),
       cmocka_unit_test(test__f_string_dynamic_terminate_after__parameter_checking),

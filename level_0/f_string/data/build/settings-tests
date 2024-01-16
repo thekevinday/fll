@@ -35,6 +35,7 @@ build_sources_program test-string-dynamic_partial_mish.c test-string-dynamic_par
 build_sources_program test-string-dynamic_partial_prepend.c test-string-dynamic_partial_prepend_assure.c test-string-dynamic_partial_prepend_assure_nulless.c test-string-dynamic_partial_prepend_nulless.c
 build_sources_program test-string-dynamic_prepend.c test-string-dynamic_prepend_assure.c test-string-dynamic_prepend_assure_nulless.c test-string-dynamic_prepend_nulless.c
 build_sources_program test-string-dynamic_seek_line.c test-string-dynamic_seek_line_to.c test-string-dynamic_seek_to.c
+build_sources_program test-string-dynamic_strip_null.c test-string-dynamic_strip_null_range.c
 build_sources_program test-string-dynamic_terminate.c test-string-dynamic_terminate_after.c
 build_sources_program test-string-dynamics_append.c test-string-dynamics_append_all.c test-string-dynamicss_append.c test-string-dynamicss_append_all.c
 build_sources_program test-string-dynamics_delete_callback.c test-string-dynamics_destroy_callback.c
