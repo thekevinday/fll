@@ -1,7 +1,7 @@
 # fss-0002 iki-0000
 #
 # license open-standard-license-1.0
-# version 2023/07/14
+# version 2024/01/15
 #
 # This file (assumed to be named fss.txt) can be more easily read using the following iki_read commands:
 #   iki_read fss.txt +Q -w -rrrrrrrr anti-KISS anti-KISS ASCII ASCII BOM BOM FSS FSS KISS KISS UTF-8 UTF-8 URL URL XML XML -WWW character "'" "'" code '"' '"' italic '"' '"'
