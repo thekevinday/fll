@@ -123,7 +123,7 @@ extern "C" {
 #endif // !defined(_di_fl_fss_basic_list_object_write_) || !defined(_di_fl_fss_extended_list_object_write_)
 
 #if !defined(_di_fl_fss_basic_object_read_) || !defined(_di_fl_fss_extended_object_read_) || !defined(_di_fl_fss_extended_content_read_)
-  f_status_t private_fl_fss_basic_read(const f_string_static_t buffer, const bool object_as, f_state_t state, f_string_range_t * const range, f_fss_object_t * const found, f_fss_quote_t *quote, f_fss_delimits_t * const delimits) {
+  f_status_t private_fl_fss_basic_read(const f_string_static_t buffer, const bool object_as, f_state_t state, f_string_range_t * const range, f_fss_object_t * const found, f_fss_quote_t * const quote, f_fss_delimits_t * const delimits) {
 
     f_status_t status = f_fss_skip_past_space(state, buffer, range);
     if (F_status_is_error(status)) return status;
@@ -712,7 +712,7 @@ extern "C" {
 #endif // !defined(_di_fl_fss_basic_object_read_) || !defined(_di_fl_fss_extended_object_read_)
 
 #if !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_extended_object_write_) || !defined(_di_fl_fss_extended_content_write_)
-  f_status_t private_fl_fss_basic_write(const bool object_as, const f_string_static_t object, const f_fss_quote_t quote, f_state_t state, f_string_range_t *range, f_string_dynamic_t *destination) {
+  f_status_t private_fl_fss_basic_write(const bool object_as, const f_string_static_t object, const f_fss_quote_t quote, f_state_t state, f_string_range_t * const range, f_string_dynamic_t * const destination) {
 
     f_status_t status = f_fss_skip_past_space(state, object, range);
     if (F_status_is_error(status)) return status;
