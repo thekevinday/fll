@@ -20,33 +20,39 @@ extern "C" {
  * FSS-specific types.
  */
 #ifndef _di_f_fss_type_s_
-  #define F_fss_brace_close_s    F_string_ascii_brace_close_s
-  #define F_fss_brace_open_s     F_string_ascii_brace_open_s
-  #define F_fss_colon_s          F_string_ascii_colon_s
-  #define F_fss_minus_s          F_string_ascii_minus_s
-  #define F_fss_f_s              F_string_ascii_f_s
-  #define F_fss_pound_s          F_string_ascii_pound_s
-  #define F_fss_quote_double_s   F_string_ascii_quote_double_s
-  #define F_fss_quote_grave_s    F_string_ascii_grave_s
-  #define F_fss_quote_single_s   F_string_ascii_quote_single_s
-  #define F_fss_s_s              F_string_ascii_s_s
-  #define F_fss_slash_s          F_string_ascii_slash_backward_s
-  #define F_fss_space_s          F_string_ascii_space_s
-  #define F_fss_underscore_s     F_string_ascii_underscore_s
+  #define F_fss_brace_close_s       F_string_ascii_brace_close_s
+  #define F_fss_brace_open_s        F_string_ascii_brace_open_s
+  #define F_fss_colon_s             F_string_ascii_colon_s
+  #define F_fss_minus_s             F_string_ascii_minus_s
+  #define F_fss_f_s                 F_string_ascii_f_s
+  #define F_fss_pound_s             F_string_ascii_pound_s
+  #define F_fss_quote_double_s      F_string_ascii_quote_double_s
+  #define F_fss_quote_double_null_s (F_string_ascii_quote_double_s F_string_ascii_quote_double_s)
+  #define F_fss_quote_grave_s       F_string_ascii_grave_s
+  #define F_fss_quote_grave_null_s  (F_string_ascii_grave_s F_string_ascii_grave_s)
+  #define F_fss_quote_single_s      F_string_ascii_quote_single_s
+  #define F_fss_quote_single_null_s (F_string_ascii_quote_single_s F_string_ascii_quote_single_s)
+  #define F_fss_s_s                 F_string_ascii_s_s
+  #define F_fss_slash_s             F_string_ascii_slash_backward_s
+  #define F_fss_space_s             F_string_ascii_space_s
+  #define F_fss_underscore_s        F_string_ascii_underscore_s
 
-  #define F_fss_brace_close_s_length    F_string_ascii_brace_close_s_length
-  #define F_fss_brace_open_s_length     F_string_ascii_brace_open_s_length
-  #define F_fss_colon_s_length          F_string_ascii_colon_s_length
-  #define F_fss_minus_s_length          F_string_ascii_minus_s_length
-  #define F_fss_f_s_length              F_string_ascii_f_s_length
-  #define F_fss_pound_s_length          F_string_ascii_pound_s_length
-  #define F_fss_quote_double_s_length   F_string_ascii_quote_double_s_length
-  #define F_fss_quote_grave_s_length    F_string_ascii_grave_s_length
-  #define F_fss_quote_single_s_length   F_string_ascii_quote_single_s_length
-  #define F_fss_s_s_length              F_string_ascii_s_s_length
-  #define F_fss_slash_s_length          F_string_ascii_slash_backward_s_length
-  #define F_fss_space_s_length          F_string_ascii_space_s_length
-  #define F_fss_underscore_s_length     F_string_ascii_underscore_s_length
+  #define F_fss_brace_close_s_length        F_string_ascii_brace_close_s_length
+  #define F_fss_brace_open_s_length         F_string_ascii_brace_open_s_length
+  #define F_fss_colon_s_length              F_string_ascii_colon_s_length
+  #define F_fss_minus_s_length              F_string_ascii_minus_s_length
+  #define F_fss_f_s_length                  F_string_ascii_f_s_length
+  #define F_fss_pound_s_length              F_string_ascii_pound_s_length
+  #define F_fss_quote_double_s_length       F_string_ascii_quote_double_s_length
+  #define F_fss_quote_double_null_s_length  (F_string_ascii_quote_double_s_length * 2)
+  #define F_fss_quote_grave_s_length        F_string_ascii_grave_s_length
+  #define F_fss_quote_grave_null_s_length   (F_string_ascii_grave_s_length * 2)
+  #define F_fss_quote_single_s_length       F_string_ascii_quote_single_s_length
+  #define F_fss_quote_single_null_s_length  (F_string_ascii_quote_single_s_length * 2)
+  #define F_fss_s_s_length                  F_string_ascii_s_s_length
+  #define F_fss_slash_s_length              F_string_ascii_slash_backward_s_length
+  #define F_fss_space_s_length              F_string_ascii_space_s_length
+  #define F_fss_underscore_s_length         F_string_ascii_underscore_s_length
 
   #define f_fss_brace_close_s    f_string_ascii_brace_close_s
   #define f_fss_brace_open_s     f_string_ascii_brace_open_s
@@ -94,6 +100,18 @@ extern "C" {
   #define f_fss_type_header_part4_s       f_fss_s_s
   #define f_fss_type_header_part5_s       f_fss_minus_s
   #define f_fss_type_header_close_s       f_string_eol_s
+
+  #ifndef _di_f_fss_quote_double_null_s_
+    extern const f_string_static_t f_fss_quote_double_null_s;
+  #endif // _di_f_fss_quote_double_null_s_
+
+  #ifndef _di_f_fss_quote_grave_null_s_s_
+    extern const f_string_static_t f_fss_quote_grave_null_s;
+  #endif // _di_f_fss_quote_grave_null_s_
+
+  #ifndef _di_f_fss_quote_single_null_s_
+    extern const f_string_static_t f_fss_quote_single_null_s;
+  #endif // _di_f_fss_quote_single_null_s_
 #endif // _di_f_fss_type_s_
 
 /**
