@@ -54,7 +54,7 @@ extern "C" {
     f_number_unsigned_t used;
   } f_abstruse_maps_t;
 
-  #define f_abstruses_t_initialize { 0, 0, 0 }
+  #define f_abstruse_maps_t_initialize { 0, 0, 0 }
 
   #define macro_f_abstruse_maps_t_initialize_1(array, size, used) { array, size, used }
   #define macro_f_abstruse_maps_t_initialize_2(array, length) { array, length, length }

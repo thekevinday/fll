@@ -28,6 +28,7 @@ extern "C" {
  *   - l:            A counter used for more complex use cases such as with multi-maps.
  *   - range:        Used for passing a given string range to the FSS write functions.
  *   - conversion:   The conversion data.
+ *   - quote_null:   The string representing an empty, aka NULL, Content. This is generally double-quotes.
  *   - destinations: The destinations map being appended to.
  *   - original:     The original destination used length.
  */
@@ -42,6 +43,7 @@ extern "C" {
     f_range_t range;
     f_conversion_data_t conversion;
 
+    f_string_static_t quote_null;
     f_string_maps_t * const destinations;
     const f_number_unsigned_t original;
   } f_fss_payload_header_internal_t;
@@ -55,11 +57,12 @@ extern "C" {
     0, \
     f_range_t_initialize, \
     f_conversion_data_base_10_c, \
+    f_string_static_t_initialize, \
     0, \
     0, \
   }
 
-  #define macro_f_fss_payload_header_internal_t_initialize_1(quote, step, i, j, k, l, range, conversion, destinations, original) { \
+  #define macro_f_fss_payload_header_internal_t_initialize_1(quote, step, i, j, k, l, range, conversion, destinations, quote_null, original) { \
     quote, \
     step, \
     i, \
@@ -69,6 +72,7 @@ extern "C" {
     range, \
     conversion, \
     destinations, \
+    quote_null, \
     original, \
   }
 
@@ -81,6 +85,7 @@ extern "C" {
     0, \
     f_range_t_initialize, \
     f_conversion_data_base_10_c, \
+    f_string_static_t_initialize, \
     destinations, \
     original, \
   }

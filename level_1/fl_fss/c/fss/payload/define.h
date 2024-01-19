@@ -122,7 +122,7 @@ extern "C" {
         private_fl_fss_basic_write(F_false, dynamic, internal.quote, &internal.range, data->cache, state, (void * const) &internal); \
       } \
       else { \
-        private_fl_payload_header_map_null_add(internal, data->cache); \
+        state->status = f_string_dynamic_append(internal.quote_null, data->cache); \
       } \
       \
       if (F_status_is_error_not(state->status)) { \

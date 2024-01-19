@@ -45,13 +45,23 @@ extern "C" {
     internal.j = 0;
     internal.k = 0;
     internal.l = 0;
-    internal.quote = f_fss_payload_header_map_flag_quote_double_e
-      ? f_string_ascii_quote_double_s.string[0]
-      : f_fss_payload_header_map_flag_quote_single_e
-        ? f_string_ascii_quote_single_s.string[0]
-        : f_fss_payload_header_map_flag_quote_grave_e
-          ? f_string_ascii_grave_s.string[0]
-          : 0;
+
+    if (data->flag & f_fss_payload_header_map_flag_quote_double_e) {
+      internal.quote = f_string_ascii_quote_double_s.string[0];
+      internal.quote_null = f_fss_quote_double_null_s;
+    }
+    else if (data->flag & f_fss_payload_header_map_flag_quote_single_e) {
+      internal.quote = f_string_ascii_quote_single_s.string[0];
+      internal.quote_null = f_fss_quote_single_null_s;
+    }
+    else if (data->flag & f_fss_payload_header_map_flag_quote_grave_e) {
+      internal.quote = f_string_ascii_grave_s.string[0];
+      internal.quote_null = f_fss_quote_grave_null_s;
+    }
+    else {
+      internal.quote = 0;
+      internal.quote_null = f_fss_quote_double_null_s;
+    }
 
     state->status = f_memory_array_increase_by(headers.used, sizeof(f_string_map_t), (void **) &destinations->array, &destinations->used, &destinations->size);
 
@@ -183,10 +193,7 @@ extern "C" {
                 private_fl_payload_header_map_strings(data, state, &internal, headers.array[internal.i].value.is.a_strings, destinations);
               }
               else if (data->flag & f_fss_payload_header_map_flag_null_string_e) {
-                state->status = f_memory_array_increase_by(2, sizeof(f_char_t), (void **) &destinations->array[destinations->used].value.string, &destinations->array[destinations->used].value.used, &destinations->array[destinations->used].value.size);
-                if (F_status_is_error(state->status)) break;
-
-                private_fl_payload_header_map_null_add(internal, &destinations->array[destinations->used].value);
+                state->status = f_string_dynamic_append(internal.quote_null, &destinations->array[destinations->used].value);
                 if (F_status_is_error(state->status)) break;
 
                 ++destinations->used;
@@ -211,114 +218,63 @@ extern "C" {
               if (headers.array[internal.i].value.is.a_dynamics.used) {
                 private_fl_payload_header_map_dynamics(data, state, &internal, &headers.array[internal.i].value.is.a_dynamics, destinations);
               }
+              else if (data->flag & f_fss_payload_header_map_flag_null_dynamic_e) {
+                state->status = f_string_dynamic_append(internal.quote_null, &destinations->array[destinations->used].value);
+                if (F_status_is_error(state->status)) break;
+
+                ++destinations->used;
+              }
               else if (data->flag & f_fss_payload_header_map_flag_null_e) {
                 ++destinations->used;
               }
 
               break;
 
-// @todo resume here.
             case f_abstruse_map_e:
-              data->cache->used = 0;
-              internal.k = f_fss_extended_next_s.used;
-
-              if (headers.array[internal.i].value.is.a_map.name.used) {
-                internal.k += headers.array[internal.i].value.is.a_map.name.used;
-                internal.k += headers.array[internal.i].value.is.a_map.value.used ? headers.array[internal.i].value.is.a_map.value.used : (f_string_ascii_quote_double_s.used * 2);
+              if (headers.array[internal.i].value.is.a_map.name.used || headers.array[internal.i].value.is.a_map.value.used) {
+                private_fl_payload_header_map_map(data, state, &internal, &headers.array[internal.i].value.is.a_map, destinations);
               }
-              else if (headers.array[internal.i].value.is.a_map.value.used) {
-                internal.k += (f_string_ascii_quote_double_s.used * 2) + headers.array[internal.i].value.is.a_map.value.used;
+              else if (data->flag & f_fss_payload_header_map_flag_null_map_name_value_e) {
+                if (data->flag & f_fss_payload_header_map_flag_join_map_e) {
+                  state->status = f_string_dynamic_append(internal.quote_null, &destinations->array[destinations->used].value);
+                  if (F_status_is_error(state->status)) break;
+
+                  ++destinations->used;
+                }
+                else {
+                  private_fl_payload_header_map_map_name_value_null(data, state, &internal, destinations);
+                }
               }
-              else {
-                internal.k += f_string_ascii_quote_double_s.used * 4;
-              }
-
-              state->status = f_memory_array_increase_by(internal.k, sizeof(f_char_t), (void **) &data->cache->string, &data->cache->used, &data->cache->size);
-              if (F_status_is_error(state->status)) break;
-
-              // @todo this should be different, in regards to the f_fss_payload_header_map_flag_null_dynamic_e bit.
-              macro_f_fss_payload_header_write_process_dynamic_d(data, state, internal, headers.array[internal.i].value.is.a_map.name);
-              if (F_status_is_error(state->status)) break;
-
-              macro_f_fss_payload_header_write_process_dynamic_d(data, state, internal, headers.array[internal.i].value.is.a_map.value);
-
-              if (F_status_is_error_not(state->status)) {
-
-                // The f_fss_extended_next_s is always added at the end of the macro.
-                data->cache->used -= f_fss_extended_next_s.used;
-
-                state->status = f_string_dynamic_append(*data->cache, &destinations->array[destinations->used].value);
-              }
-
-              if (F_status_is_error_not(state->status)) {
+              else if (data->flag & f_fss_payload_header_map_flag_null_e) {
                 ++destinations->used;
               }
 
               break;
 
             case f_abstruse_maps_e:
-              // @todo
-              break;
+              if (headers.array[internal.i].value.is.a_maps.used) {
+                private_fl_payload_header_map_maps(data, state, &internal, &headers.array[internal.i].value.is.a_maps, destinations);
+              }
+              else if (data->flag & f_fss_payload_header_map_flag_null_map_name_value_e) {
+                if (data->flag & f_fss_payload_header_map_flag_join_maps_e) {
+                  state->status = f_string_dynamic_append(internal.quote_null, &destinations->array[destinations->used].value);
+                  if (F_status_is_error(state->status)) break;
 
-            case f_abstruse_map_multi_e:
-              data->cache->used = 0;
-              internal.k = headers.array[internal.i].value.is.a_map_multi.name.used ? headers.array[internal.i].value.is.a_map_multi.name.used : f_string_ascii_quote_double_s.used * 2;
-              internal.k += f_fss_extended_next_s.used;
-
-              if (headers.array[internal.i].value.is.a_map_multi.value.used) {
-                for (internal.l = 0; internal.l < headers.array[internal.i].value.is.a_map_multi.value.used; ++internal.l) {
-
-                  if (state->interrupt) {
-                    state->interrupt((void * const) state, (void * const) &internal);
-                    if (F_status_set_fine(state->status) == F_interrupt) return;
-                  }
-
-                  internal.k += headers.array[internal.i].value.is.a_map_multi.value.array[internal.l].used ? headers.array[internal.i].value.is.a_map_multi.value.array[internal.l].used : f_string_ascii_quote_double_s.used * 2;
-                  internal.k += f_fss_extended_next_s.used;
-                } // for
-
-                state->status = f_memory_array_increase_by(internal.k, sizeof(f_char_t), (void **) &data->cache->string, &data->cache->used, &data->cache->size);
-                if (F_status_is_error(state->status)) break;
-
-                macro_f_fss_payload_header_write_process_dynamic_d(data, state, internal, headers.array[internal.i].value.is.a_map_multi.name);
-
-                data->cache->string[data->cache->used++] = f_fss_extended_next_s.string[0];
-
-                for (internal.l = 0; internal.l < headers.array[internal.i].value.is.a_map_multi.value.used; ++internal.l) {
-
-                  if (state->interrupt) {
-                    state->interrupt((void * const) state, (void * const) &internal);
-                    if (F_status_set_fine(state->status) == F_interrupt) return;
-                  }
-
-                  if (headers.array[internal.i].value.is.a_map_multi.value.array[internal.l].used) {
-                    state->status = f_string_dynamic_append(headers.array[internal.i].value.is.a_map_multi.value.array[internal.l], data->cache);
-                    if (F_status_is_error(state->status)) break;
-                  }
-                  else {
-                    data->cache->string[data->cache->used++] = f_string_ascii_quote_double_s.string[0];
-                    data->cache->string[data->cache->used++] = f_string_ascii_quote_double_s.string[0];
-                  }
-
-                  data->cache->string[data->cache->used++] = f_fss_extended_next_s.string[0];
-                } // for
-
-                if (F_status_is_error_not(state->status)) {
-
-                  // The f_fss_extended_next_s is always added at the end of the loop to avoid an additional condition check in the loop.
-                  data->cache->used -= f_fss_extended_next_s.used;
-
-                  state->status = f_string_dynamic_append(*data->cache, &destinations->array[destinations->used].value);
+                  ++destinations->used;
+                }
+                else {
+                  private_fl_payload_header_map_map_name_value_null(data, state, &internal, destinations);
                 }
               }
-              else if (headers.array[internal.i].value.is.a_map_multi.name.used) {
-                state->status = f_string_dynamic_append(headers.array[internal.i].value.is.a_map_multi.name, &destinations->array[destinations->used].value);
-              }
-
-              if (F_status_is_error_not(state->status)) {
+              else if (data->flag & f_fss_payload_header_map_flag_null_e) {
                 ++destinations->used;
               }
 
+              break;
+
+// @todo resume after here.
+            case f_abstruse_map_multi_e:
+              // @todo
               break;
 
             case f_abstruse_map_multis_e:
@@ -336,6 +292,7 @@ extern "C" {
               break;
 
             case f_abstruse_triple_e:
+              // @todo update this.
               data->cache->used = 0;
 
               if (headers.array[internal.i].value.is.a_triple.a.used) {
@@ -343,28 +300,28 @@ extern "C" {
 
                 if (headers.array[internal.i].value.is.a_triple.b.used) {
                   internal.k += headers.array[internal.i].value.is.a_triple.b.used;
-                  internal.k += headers.array[internal.i].value.is.a_triple.c.used ? headers.array[internal.i].value.is.a_triple.c.used : (f_string_ascii_quote_double_s.used * 2);
+                  internal.k += headers.array[internal.i].value.is.a_triple.c.used ? headers.array[internal.i].value.is.a_triple.c.used : internal.quote_null.used;
                 }
                 else if (headers.array[internal.i].value.is.a_triple.c.used) {
-                  internal.k += headers.array[internal.i].value.is.a_triple.c.used + (f_string_ascii_quote_double_s.used * 2);
+                  internal.k += headers.array[internal.i].value.is.a_triple.c.used + internal.quote_null.used;
                 }
                 else {
-                  internal.k = f_string_ascii_quote_double_s.used * 4;
+                  internal.k = internal.quote_null.used * 2;
                 }
               }
               else if (headers.array[internal.i].value.is.a_triple.b.used) {
                 if (headers.array[internal.i].value.is.a_triple.c.used) {
-                  internal.k = (f_string_ascii_quote_double_s.used * 2) + headers.array[internal.i].value.is.a_triple.b.used + headers.array[internal.i].value.is.a_triple.c.used;
+                  internal.k = internal.quote_null.used + headers.array[internal.i].value.is.a_triple.b.used + headers.array[internal.i].value.is.a_triple.c.used;
                 }
                 else {
-                  internal.k = (f_string_ascii_quote_double_s.used * 4) + headers.array[internal.i].value.is.a_triple.b.used;
+                  internal.k = internal.quote_null.used * 2 + headers.array[internal.i].value.is.a_triple.b.used;
                 }
               }
               else if (headers.array[internal.i].value.is.a_triple.c.used) {
-                internal.k = (f_string_ascii_quote_double_s.used * 4) + headers.array[internal.i].value.is.a_triple.c.used;
+                internal.k = internal.quote_null.used * 2 + headers.array[internal.i].value.is.a_triple.c.used;
               }
               else {
-                internal.k = f_string_ascii_quote_double_s.used * 6;
+                internal.k = internal.quote_null.used * 3;
               }
 
               internal.k += f_fss_extended_next_s.used * 2;

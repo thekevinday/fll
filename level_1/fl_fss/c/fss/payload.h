@@ -75,14 +75,9 @@ extern "C" {
  *
  *   This alters state.status:
  *     F_okay on success.
- *     F_okay_eos on success after reaching the end of the buffer.
- *     F_okay_stop on success after reaching the range stop.
- *     F_data_not if object is empty (object.used is 0).
- *     F_data_not_eos no data to write due start location being greater than or equal to buffer size.
- *     F_data_not_stop no data to write due start location being greater than stop location.
+ *     F_data_not if headers is empty (headers.used is 0).
  *
  *     F_interrupt (with error bit) if stopping due to an interrupt.
- *     F_okay_eol (with error bit) after reaching an EOL, which is not supported by the standard.
  *     F_parameter (with error bit) if a parameter is invalid.
  *
  *     Errors (with error bit) from: f_memory_array_increase().
