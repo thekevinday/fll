@@ -18,20 +18,20 @@ settings:
   #define CMOCKA_XML_FILE ./out.xml
 
 main:
-  build settings-mocks individual test
+  build settings individual test
   build settings-tests individual test
 
   operate build_path
   operate ld_library_path
 
-  if exist parameter:"build_path"programs/shared/test-f_utf
-    shell parameter:"build_path"programs/shared/test-f_utf
+  if exist parameter:"build_path"programs/shared/test-fl_fss
+    shell parameter:"build_path"programs/shared/test-fl_fss
 
-  if exist parameter:"build_path"programs/static/test-f_utf
-    shell parameter:"build_path"programs/static/test-f_utf
+  if exist parameter:"build_path"programs/static/test-fl_fss
+    shell parameter:"build_path"programs/static/test-fl_fss
 
-  if not exist parameter:"build_path"programs/shared/test-f_utf
-  and not exist parameter:"build_path"programs/static/test-f_utf
+  if not exist parameter:"build_path"programs/shared/test-fl_fss
+  and not exist parameter:"build_path"programs/static/test-fl_fss
     operate not_created
 
 not_created:
