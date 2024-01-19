@@ -1,7 +1,7 @@
 /**
  * FLL - Level 2
  *
- * Project: IKI
+ * Project: Path
  * API Version: 0.6
  * Licenses: lgpl-2.1-or-later
  *
