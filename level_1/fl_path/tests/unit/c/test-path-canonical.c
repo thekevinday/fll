@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-void test__fll_path_canonical__back_paths(void **state) {
+void test__fl_path_canonical__back_paths(void **state) {
 
   // Paths that don't begin with '/' or '../' will expand to the full PWD.
   f_char_t pwd[PATH_MAX + 1];
@@ -147,7 +147,7 @@ void test__fll_path_canonical__back_paths(void **state) {
   free((void *) path.string);
 }
 
-void test__fll_path_canonical__empty_becomes_pwd(void **state) {
+void test__fl_path_canonical__empty_becomes_pwd(void **state) {
 
   f_char_t pwd[PATH_MAX + 1];
 
@@ -170,7 +170,7 @@ void test__fll_path_canonical__empty_becomes_pwd(void **state) {
   free((void *) path.string);
 }
 
-void test__fll_path_canonical__present_paths(void **state) {
+void test__fl_path_canonical__present_paths(void **state) {
 
   // Paths that don't begin with '/' or '../' will expand to the full PWD.
   f_char_t pwd[PATH_MAX + 1];
@@ -267,7 +267,7 @@ void test__fll_path_canonical__present_paths(void **state) {
   free((void *) path.string);
 }
 
-void test__fll_path_canonical__root_paths(void **state) {
+void test__fl_path_canonical__root_paths(void **state) {
 
   const f_string_static_t contents[] = {
     macro_f_string_static_t_initialize_1("/", 0, 1),
@@ -330,7 +330,7 @@ void test__fll_path_canonical__root_paths(void **state) {
   free((void *) path.string);
 }
 
-void test__fll_path_canonical__tilde_remains(void **state) {
+void test__fl_path_canonical__tilde_remains(void **state) {
 
   // Paths that don't begin with '/' or '../' will expand to the full PWD.
   f_char_t pwd[PATH_MAX + 1];
@@ -469,7 +469,7 @@ void test__fll_path_canonical__tilde_remains(void **state) {
   free((void *) path.string);
 }
 
-void test__fll_path_canonical__parameter_checking(void **state) {
+void test__fl_path_canonical__parameter_checking(void **state) {
 
   {
     const f_status_t status = fl_path_canonical(f_string_empty_s, 0);

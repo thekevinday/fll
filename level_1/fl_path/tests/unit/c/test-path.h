@@ -1,14 +1,14 @@
 /**
  * FLL - Level 2
  *
- * Project: IKI
+ * Project: Path
  * API Version: 0.6
  * Licenses: lgpl-2.1-or-later
  *
- * Test the fll_path project.
+ * Test the fl_path project.
  */
-#ifndef _TEST__FLL_path_h
-#define _TEST__FLL_path_h
+#ifndef _TEST__FL_path_h
+#define _TEST__FL_path_h
 
 // Libc includes.
 #include <stdarg.h>
@@ -21,7 +21,7 @@
 // cmocka includes.
 #include <cmocka.h>
 
-// FLL-2 includes.
+// FLL-1 includes.
 #include <fll/level_1/path.h>
 
 // Mock includes.
@@ -71,4 +71,4 @@ extern int main(void);
 } // extern "C"
 #endif
 
-#endif // _TEST__FLL_path_h
+#endif // _TEST__FL_path_h
