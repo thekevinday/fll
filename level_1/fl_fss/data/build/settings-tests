@@ -25,6 +25,11 @@ build_language c
 build_libraries -lc -lcmocka
 build_libraries-individual -lf_abstruse -lf_conversion -lf_file -lf_fss -lf_memory -lf_string -lf_type_array -lf_utf -lfl_fss
 
+build_sources_program test-fss-basic_content_read.c test-fss-basic_content_write.c test-fss-basic_object_read.c test-fss-basic_object_write.c
+build_sources_program test-fss-basic_list_content_read.c test-fss-basic_list_content_write.c test-fss-basic_list_object_read.c test-fss-basic_list_object_write.c
+build_sources_program test-fss-embedded_list_content_read.c test-fss-embedded_list_content_write.c test-fss-embedded_list_object_read.c test-fss-embedded_list_object_write.c
+build_sources_program test-fss-extended_content_read.c test-fss-extended_content_write.c test-fss-extended_object_read.c test-fss-extended_object_write.c
+build_sources_program test-fss-extended_list_content_read.c test-fss-extended_list_content_write.c test-fss-extended_list_object_read.c test-fss-extended_list_object_write.c
 build_sources_program test-fss-payload_header_map.c
 
 build_sources_program test-fss.c

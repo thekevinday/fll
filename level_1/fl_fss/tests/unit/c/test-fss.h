@@ -23,12 +23,37 @@
 
 // FLL-1 includes.
 #include <fll/level_1/fss.h>
+#include <fll/level_1/fss/basic.h>
+#include <fll/level_1/fss/basic_list.h>
+#include <fll/level_1/fss/embedded_list.h>
+#include <fll/level_1/fss/extended.h>
+#include <fll/level_1/fss/extended_list.h>
 #include <fll/level_1/fss/payload.h>
 
 // Mock includes.
 //#include "mock-fss.h"
 
 // Test includes.
+#include "test-fss-basic_content_read.h"
+#include "test-fss-basic_content_write.h"
+#include "test-fss-basic_object_read.h"
+#include "test-fss-basic_object_write.h"
+#include "test-fss-basic_list_content_read.h"
+#include "test-fss-basic_list_content_write.h"
+#include "test-fss-basic_list_object_read.h"
+#include "test-fss-basic_list_object_write.h"
+#include "test-fss-embedded_list_content_read.h"
+#include "test-fss-embedded_list_content_write.h"
+#include "test-fss-embedded_list_object_read.h"
+#include "test-fss-embedded_list_object_write.h"
+#include "test-fss-extended_content_read.h"
+#include "test-fss-extended_content_write.h"
+#include "test-fss-extended_object_read.h"
+#include "test-fss-extended_object_write.h"
+#include "test-fss-extended_list_content_read.h"
+#include "test-fss-extended_list_content_write.h"
+#include "test-fss-extended_list_object_read.h"
+#include "test-fss-extended_list_object_write.h"
 #include "test-fss-payload_header_map.h"
 
 #ifdef __cplusplus
