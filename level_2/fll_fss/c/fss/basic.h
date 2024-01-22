@@ -39,14 +39,14 @@ extern "C" {
  *   This will be populated with all valid contents found.
  * @param objects_quoted
  *   (optional) An array mapped to each object in objects representing the quote type discovered (from the f_fss_quote_type_*_e), if any.
- *   Set the pointer address to 0 to disable.
+ *   Set to NULL to not use.
  * @param objects_delimits
  *   An array of delimits for objects detected during processing.
  *   The caller is expected to decide if and when to process them.
  * @param contents_delimits
  *   (optional) An array of delimits for contents detected during processing.
  *   The caller is expected to decide if and when to process them.
- *   Set pointer address to 0 and all delimits will instead utilize objects_delimits.
+ *   Set to NULL and all delimits will instead utilize objects_delimits.
  * @param state
  A state for providing flags and handling interrupts during long running operations.
  *   There is no state.handle().

@@ -49,7 +49,7 @@ extern "C" {
  * @param contents_delimits
  *   (optional) An array of delimits for contents detected during processing.
  *   The caller is expected to decide if and when to process them.
- *   Set pointer address to 0 and all delimits will instead utilize objects_delimits.
+ *   Set to NULL and all delimits will instead utilize objects_delimits.
  * @param comments
  *   An array of ranges representing where comments are found within any valid content.
  *   This only stores comments found within valid content only.
@@ -114,9 +114,9 @@ extern "C" {
  *   If FALSE, the Object is passed f_fss_complete_full_e.
  *   The Content is always passed f_fss_complete_full_e.
  * @param content_prepend
- *   A string to prepend at the start of each line in content, such as spaces.
+ *   (optional) A string to prepend at the start of each line in content, such as spaces.
  *   This will not be prepended for the Object "payload".
- *   Set the pointer address to 0 to disable.
+ *   Set to NULL to not use.
  * @param destination
  *   The buffer to append to.
  * @param state

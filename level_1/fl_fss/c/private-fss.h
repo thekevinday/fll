@@ -103,8 +103,8 @@ extern "C" {
  * @param found
  *   A set of all locations where a valid object was found.
  * @param quote
- *   This will store the quote type representing the character to use (from the f_fss_quote_type_*_e).
- *   Set pointer address to 0 to not use.
+ *   (optional) This will store the quote type representing the character to use (from the f_fss_quote_type_*_e).
+ *   Set to NULL to not use.
  * @param delimits
  *   An array of delimits detected during processing.
  *   The caller is expected to decide if and when to process them.

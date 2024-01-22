@@ -45,7 +45,7 @@ extern "C" {
  * @param contents_delimits
  *   (optional) An array of delimits for contents detected during processing.
  *   The caller is expected to decide if and when to process them.
- *   Set pointer address to 0 and all delimits will instead utilize objects_delimits.
+ *   Set to NULL 0 and all delimits will instead utilize objects_delimits.
  * @param comments
  *   An array of ranges representing where comments are found within any valid content.
  *   This only stores comments found within valid content only.
@@ -92,13 +92,13 @@ extern "C" {
  * @param content
  *   A string representing the content.
  * @param content_prepend
- *   A string to prepend at the start of each line in content, such as spaces.
- *   Set the pointer address to 0 to disable.
+ *   (optional) A string to prepend at the start of each line in content, such as spaces.
+ *   Set to NULL to not use.
  * @param ignore
- *   An optional list of ranges within the string to ignore.
+ *   (optional) A list of ranges within the string to ignore.
  *   These ranges are only checked/ignored if there is a valid nested object open or a valid nested object close.
  *   Any valid nested object open or valid nested object close inside an ingore range will not be escaped.
- *   Set the pointer address to 0 to disable.
+ *   Set to NULL to not use.
  * @param destination
  *   The buffer where the content is written to.
  * @param state

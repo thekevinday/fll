@@ -111,9 +111,9 @@ extern "C" {
  *   If f_fss_complete_partial_e, this will write any appropriate open and close aspects of this content, except for the final newline.
  *   If f_fss_complete_full_e, this will write any appropriate open and close aspects of this content, including the final newline.
  * @param prepend
- *   A string of whitespace to prepend at the start of each line.
+ *   (optional) A string of whitespace to prepend at the start of each line.
  *   This should only be whitespace, anything else could produce invalid content.
- *   Set the pointer address to 0 to disable.
+ *   Set to NULL to not use.
  * @param range
  *   The start/stop location within the content string to write as an content.
  * @param destination

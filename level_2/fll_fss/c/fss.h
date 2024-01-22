@@ -100,11 +100,11 @@ extern "C" {
  * @param values
  *   An array of values where "snatched" content is stored.
  * @param matches
- *   An array representing the if an Object was matched.
- *   Set the pointer address to 0 to disable.
+ *   (optional) An array representing the if an Object was matched.
+ *   Set to NULL to not use.
  * @param indexs
- *   An array representing the index within the Objects where the Content match was made.
- *   Set the pointer address to 0 to disable.
+ *   (optional) An array representing the index within the Objects where the Content match was made.
+ *   Set to NULL to not use.
  *
  * @return
  *   F_okay on success.
@@ -148,11 +148,11 @@ extern "C" {
  * @param values
  *   An array of values where "snatched" content is stored.
  * @param matches
- *   An array representing the if an Object was matched.
- *   Set the pointer address to 0 to disable.
+ *   (optional) An array representing the if an Object was matched.
+ *   Set to NULL to not use.
  * @param indexs
- *   An array representing the index within the Objects where the Content match was made.
- *   Set the pointer address to 0 to disable.
+ *   (optional) An array representing the index within the Objects where the Content match was made.
+ *   Set to NULL to not use.
  *
  * @return
  *   F_okay on success.
@@ -200,11 +200,11 @@ extern "C" {
  * @param values
  *   An array of map arrays where "snatched" content is stored.
  * @param matches
- *   An array representing the if an Object was matched.
- *   Set the pointer address to 0 to disable.
+ *   (optional) An array representing the if an Object was matched.
+ *   Set to NULL to not use.
  * @param indexs
- *   An array representing the index within the Objects where the Content match was made.
- *   Set the pointer address to 0 to disable.
+ *   (optional) An array representing the index within the Objects where the Content match was made.
+ *   Set to NULL to not use.
  *
  * @return
  *   F_okay on success.
@@ -252,11 +252,11 @@ extern "C" {
  * @param values
  *   An array of multi map arrays where "snatched" content is stored.
  * @param matches
- *   An array representing the if an Object was matched.
- *   Set the pointer address to 0 to disable.
+ *   (optional) An array representing the if an Object was matched.
+ *   Set to NULL to not use.
  * @param indexs
- *   An array representing the index within the Objects where the Content match was made.
- *   Set the pointer address to 0 to disable.
+ *   (optional) An array representing the index within the Objects where the Content match was made.
+ *   Set to NULL to not use.
  *
  * @return
  *   F_okay on success.
@@ -305,11 +305,11 @@ extern "C" {
  * @param values
  *   An array of multi map value arrays where "snatched" content is stored.
  * @param matches
- *   An array representing the if an Object was matched.
- *   Set the pointer address to 0 to disable.
+ *   (optional) An array representing the if an Object was matched.
+ *   Set to NULL to not use.
  * @param indexs
- *   An array representing the index within the Objects where the Content match was made.
- *   Set the pointer address to 0 to disable.
+ *   (optional) An array representing the index within the Objects where the Content match was made.
+ *   Set to NULL to not use.
  *
  * @return
  *   F_okay on success.
@@ -356,11 +356,11 @@ extern "C" {
  * @param values
  *   An array of multi map value arrays where "snatched" content is stored.
  * @param matches
- *   An array representing the if an Object was matched.
- *   Set the pointer address to 0 to disable.
+ *   (optional) An array representing the if an Object was matched.
+ *   Set to NULL to not use.
  * @param indexs
- *   An array representing the index within the Objects where the Content match was made.
- *   Set the pointer address to 0 to disable.
+ *   (optional) An array representing the index within the Objects where the Content match was made.
+ *   Set to NULL to not use.
  *
  * @return
  *   F_okay on success.
@@ -409,11 +409,11 @@ extern "C" {
  * @param values
  *   An array of map arrays where "snatched" content is stored.
  * @param matches
- *   An array representing the if an Object was matched.
- *   Set the pointer address to 0 to disable.
+ *   (optional) An array representing the if an Object was matched.
+ *   Set to NULL to not use.
  * @param indexs
- *   An array representing the index within the Objects where the Content match was made.
- *   Set the pointer address to 0 to disable.
+ *   (optional) An array representing the index within the Objects where the Content match was made.
+ *   Set to NULL to not use.
  *
  * @return
  *   F_okay on success.
@@ -459,11 +459,11 @@ extern "C" {
  * @param values
  *   An array of values where "snatched" content is stored.
  * @param matches
- *   An array representing the if an Object was matched.
- *   Set the pointer address to 0 to disable.
+ *   (optional) An array representing the if an Object was matched.
+ *   Set to NULL to not use.
  * @param indexs
- *   An array representing the index within the Objects where the Content match was made.
- *   Set the pointer address to 0 to disable.
+ *   (optional) An array representing the index within the Objects where the Content match was made.
+ *   Set to NULL to not use.
  *
  * @return
  *   F_okay on success.
@@ -507,11 +507,11 @@ extern "C" {
  * @param values
  *   An array of values where "snatched" content is stored.
  * @param matches
- *   An array representing the if an Object was matched.
- *   Set the pointer address to 0 to disable.
+ *   (optional) An array representing the if an Object was matched.
+ *   Set to NULL to not use.
  * @param indexs
- *   An array representing the index within the Objects where the Content match was made.
- *   Set the pointer address to 0 to disable.
+ *   (optional) An array representing the index within the Objects where the Content match was made.
+ *   Set to NULL to not use.
  *
  * @return
  *   F_okay on success.
@@ -555,11 +555,11 @@ extern "C" {
  * @param values
  *   An array of values where "snatched" content is stored.
  * @param matches
- *   An array representing the if an Object was matched.
- *   Set the pointer address to 0 to disable.
+ *   (optional) An array representing the if an Object was matched.
+ *   Set to NULL to not use.
  * @param indexs
- *   An array representing the index within the Objects where the Content match was made.
- *   Set the pointer address to 0 to disable.
+ *   (optional) An array representing the index within the Objects where the Content match was made.
+ *   Set to NULL to not use.
  *
  * @return
  *   F_okay on success.
