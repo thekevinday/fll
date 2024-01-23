@@ -74,7 +74,7 @@ extern "C" {
     f_fss_payload_header_map_flag_quote_single_e        = 0x200000,
     f_fss_payload_header_map_flag_last_e                = 0x400000,
   }; // enum
-#endif // _di_f_fss_payload_header_flag_map_e_
+#endif // _di_f_fss_payload_header_map_flag_e_
 
 /**
  * FSS-000E (Payload) strings.

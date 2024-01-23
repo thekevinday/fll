@@ -105,7 +105,7 @@ extern "C" {
     extern const f_string_static_t f_fss_quote_double_null_s;
   #endif // _di_f_fss_quote_double_null_s_
 
-  #ifndef _di_f_fss_quote_grave_null_s_s_
+  #ifndef _di_f_fss_quote_grave_null_s_
     extern const f_string_static_t f_fss_quote_grave_null_s;
   #endif // _di_f_fss_quote_grave_null_s_
 

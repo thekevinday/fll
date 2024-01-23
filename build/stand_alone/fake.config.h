@@ -571,7 +571,7 @@
 #define _di_f_fss_payload_comment_header_begin_s_
 #define _di_f_fss_payload_comment_header_end_s_
 #define _di_f_fss_payload_comment_header_s_
-#define _di_f_fss_payload_header_map_e_
+#define _di_f_fss_payload_header_map_flag_e_
 #define _di_f_fss_payload_object_end_s_
 #define _di_f_fss_payload_object_header_s_
 #define _di_f_fss_payload_object_id_s_
@@ -586,6 +586,9 @@
 #define _di_f_fss_payload_object_type_s_
 #define _di_f_fss_payload_s_
 //#define _di_f_fss_placeholder_s_
+#define _di_f_fss_quote_double_null_s_
+#define _di_f_fss_quote_grave_null_s_
+#define _di_f_fss_quote_single_null_s_
 //#define _di_f_fss_quote_type_e_
 #define _di_f_fss_s_
 //#define _di_f_fss_seek_to_eol_
@@ -677,8 +680,8 @@
 //#define _di_f_iki_read_
 //#define _di_f_iki_state_flag_e_
 //#define _di_f_iki_syntax_placeholder_s_
-//#define _di_f_iki_syntax_quote_backtick_s_
 //#define _di_f_iki_syntax_quote_double_s_
+//#define _di_f_iki_syntax_quote_grave_s_
 //#define _di_f_iki_syntax_quote_single_s_
 //#define _di_f_iki_syntax_s_
 //#define _di_f_iki_syntax_separator_s_
@@ -782,7 +785,7 @@
 //#define _di_fl_fss_extended_object_read_
 #define _di_fl_fss_extended_object_write_
 #define _di_fl_fss_payload_header_map_
-#define _di_fl_fss_payload_header_write_
+#define _di_fl_fss_payload_header_maps_
 //#define _di_fl_iki_read_
 //#define _di_f_limit_process_
 #define _di_f_limit_setss_delete_callback_
@@ -795,6 +798,7 @@
 #define _di_f_limit_valuess_t_
 #define _di_f_limit_values_t_
 //#define _di_f_limit_value_t_
+#define _di_fll_control_group_prepare_
 //#define _di_fll_error_file_flag_e_
 //#define _di_fll_error_file_print_
 //#define _di_fll_error_file_type_directory_s_
@@ -1468,6 +1472,8 @@
 #define _di_f_string_dynamicss_destroy_callback_
 #define _di_f_string_dynamicss_t_
 //#define _di_f_string_dynamics_t_
+#define _di_f_string_dynamic_strip_null_
+#define _di_f_string_dynamic_strip_null_range_
 //#define _di_f_string_dynamic_t_
 //#define _di_f_string_dynamic_terminate_
 //#define _di_f_string_dynamic_terminate_after_
