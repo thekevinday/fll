@@ -135,6 +135,118 @@ void test__fl_fss_basic_object_read__returns_data_not(void **void_state) {
   }
 }
 
+void test__fl_fss_basic_object_read__works(void **void_state) {
+
+  {
+    // Note: These files are required to have the same number of lines and each line should probably be at max 255 characters.
+    FILE *file_strings = data__strings_file_open__basic_all_read();
+    FILE *file_objects = data__objects_file_open__basic_all_read();
+
+    assert_non_null(file_strings);
+    assert_non_null(file_objects);
+
+    size_t max = 0;
+    char *line_string = 0;
+    char *line_object = 0;
+    ssize_t result = 0;
+
+    f_string_static_t buffer_string = f_string_static_t_initialize;
+    f_string_static_t buffer_object = f_string_static_t_initialize;
+
+    f_state_t state = f_state_t_initialize;
+    f_range_t range = f_range_t_initialize;
+    f_range_t found = f_range_t_initialize;
+    uint8_t quote = 0;
+    f_number_unsigneds_t delimits = f_number_unsigneds_t_initialize;
+    f_string_dynamic_t result_string = f_string_dynamic_t_initialize;
+    f_string_dynamic_t delimit_string = f_string_dynamic_t_initialize;
+
+    for (;;) {
+
+      max = 255;
+
+      result = getline(&line_string, &max, file_strings);
+      if (result == -1) break;
+
+      buffer_string.string = line_string;
+      buffer_string.used = (f_number_unsigned_t) result;
+      buffer_string.size = buffer_string.used;
+
+      max = 255;
+
+      result = getline(&line_object, &max, file_objects);
+      assert_return_code(result, 0);
+
+      buffer_object.string = line_object;
+      buffer_object.used = (f_number_unsigned_t) result;
+      buffer_object.size = buffer_object.used;
+
+      // The newline is copied by getline(), and so remove that newline before comparing.
+      buffer_object.string[--buffer_object.used] = 0;
+
+      state.status = F_none;
+      range.start = 0;
+      range.stop = buffer_string.used - 1;
+      found.start = 1;
+      found.stop = 0;
+
+      fl_fss_basic_object_read(buffer_string, &range, &found, &quote, &delimits, &state);
+
+      assert_true(state.status == F_fss_found_object || state.status == F_fss_found_object_content_not);
+      assert_true(found.start <= found.stop);
+
+      {
+        const f_status_t status = f_string_dynamic_append(buffer_string, &delimit_string);
+        assert_int_equal(status, F_okay);
+      }
+
+      state.status = F_none;
+
+      f_fss_apply_delimit(delimits, &delimit_string, &state);
+      assert_int_equal(state.status, F_okay);
+
+      {
+        const f_status_t status = f_string_dynamic_partial_append_nulless(delimit_string, found, &result_string);
+        assert_true(status == F_okay || status == F_data_not_eos);
+      }
+
+      {
+        const f_status_t status = f_string_dynamic_terminate_after(&result_string);
+        assert_int_equal(status, F_okay);
+      }
+
+      assert_string_equal(result_string.string, line_object);
+
+      if (line_string) free(line_string);
+      if (line_object) free(line_object);
+      if (result_string.string) free(result_string.string);
+      if (delimit_string.string) free(delimit_string.string);
+      if (delimits.array) free(delimits.array);
+
+      line_string = 0;
+      line_object = 0;
+      result_string.string = 0;
+      result_string.used = 0;
+      result_string.size = 0;
+      delimit_string.string = 0;
+      delimit_string.used = 0;
+      delimit_string.size = 0;
+      delimits.array = 0;
+      delimits.used = 0;
+      delimits.size = 0;
+    } // for
+
+    if (file_strings) fclose(file_strings);
+    if (file_objects) fclose(file_objects);
+
+    if (delimits.array) free(delimits.array);
+    if (line_string) free(line_string);
+    if (line_object) free(line_object);
+    if (result_string.string) free(result_string.string);
+    if (delimit_string.string) free(delimit_string.string);
+  }
+}
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

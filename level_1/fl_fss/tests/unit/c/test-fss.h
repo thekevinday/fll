@@ -15,6 +15,7 @@
 #include <stddef.h>
 #include <setjmp.h>
 #include <stdint.h>
+#include <stdio.h>
 #include <string.h>
 #include <unistd.h>
 
@@ -32,6 +33,9 @@
 
 // Mock includes.
 //#include "mock-fss.h"
+
+// Data includes.
+#include "data-fss.h"
 
 // Test includes.
 #include "test-fss-basic_content_read.h"

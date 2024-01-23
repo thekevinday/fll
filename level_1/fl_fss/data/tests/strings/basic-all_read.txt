@@ -1,0 +1,39 @@
+a b c d
+ a b c d
+  a  b c d
+. a b c
+.a b c
+"a b c" d
+\"a b c d
+a" b c d
+a " b c d
+'a b" c' d
+'a b` c' d
+`a b` c d
+a: b c d
+a:
+  b c d
+a {
+  b c d
+}
+Ȁ b c d
+Ȃ Ȁ b c d
+Ȃ "Ȁ" b c d
+Ȃ " Ȁ " b c d
+Ȃ " Ȁ " b `c d`
+`Ȁ Ƞ`    b c      d
+"Ȁ Ƞ"    b c      d
+'Ȁ Ƞ'    b c      d
+''A b' c d' e
+""A b" c d" e
+``A b` c d` e
+'A b'' c d' e
+"A b"" c d" e
+`A b`` c d` e
+a b c d e   
+a b c d e ' 
+	a	b c d
+a b	 c
+ 	a   	c d
+a b c d	
+a b c d    	  	

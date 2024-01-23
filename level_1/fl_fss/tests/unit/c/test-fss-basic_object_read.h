@@ -24,4 +24,12 @@ extern void test__fl_fss_basic_object_read__parameter_checking(void **state);
  */
 extern void test__fl_fss_basic_object_read__returns_data_not(void **state);
 
+
+/**
+ * Test that the function works.
+ *
+ * @see fl_fss_basic_object_read()
+ */
+extern void test__fl_fss_basic_object_read__works(void **state);
+
 #endif // _TEST__FL_fss_basic_object_read_h
