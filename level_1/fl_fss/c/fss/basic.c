@@ -29,6 +29,7 @@ extern "C" {
     status = f_string_ranges_increase(state.step_small, found);
     if (F_status_is_error(status)) return status;
 
+    const f_number_unsigned_t begin = range->start;
     found->array[found->used].start = range->start;
 
     for (;; ++range->start) {
@@ -52,7 +53,13 @@ extern "C" {
 
     if (F_status_is_error(status)) return status;
 
-    found->array[found->used++].stop = range->start - 1;
+    if (range->start > begin) {
+      found->array[found->used++].stop = range->start - 1;
+    }
+    else {
+      found->array[found->used].start = 1;
+      found->array[found->used++].stop = 0;
+    }
 
     status = f_utf_buffer_increment(buffer, range, 1);
     if (F_status_is_error(status)) return status;

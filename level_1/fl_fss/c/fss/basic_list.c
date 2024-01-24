@@ -26,6 +26,7 @@ extern "C" {
     status = f_string_ranges_increase(state.step_small, found);
     if (F_status_is_error(status)) return status;
 
+    const f_number_unsigned_t begin = range->start;
     found->array[found->used].start = range->start;
 
     f_array_length_t newline_last = range->start;
@@ -283,7 +284,13 @@ extern "C" {
       return F_none_stop;
     }
 
-    found->array[found->used++].stop = range->start - 1;
+    if (range->start > begin) {
+      found->array[found->used++].stop = range->start - 1;
+    }
+    else {
+      found->array[found->used].start = 1;
+      found->array[found->used++].stop = 0;
+    }
 
     return F_fss_found_content;
   }
@@ -559,6 +566,7 @@ extern "C" {
     if (status == F_none_stop) return F_data_not_stop;
 
     // Begin the search.
+    const f_number_unsigned_t begin = range->start;
     found->start = range->start;
 
     // Ignore all comment lines.
@@ -625,7 +633,7 @@ extern "C" {
 
         if (buffer.string[range->start] == f_fss_basic_list_open_s.string[0]) {
           graph_first = F_false;
-          stop = range->start - 1;
+          stop = range->start;
 
           status = f_utf_buffer_increment(buffer, range, 1);
           if (F_status_is_error(status)) return status;
@@ -684,7 +692,14 @@ extern "C" {
                 }
               } // while
 
-              found->stop = stop;
+              if (stop > begin) {
+                found->stop = stop - 1;
+              }
+              else {
+                found->start = 1;
+                found->stop = 0;
+              }
+
               range->start = start + 1;
 
               return F_fss_found_object;
@@ -714,7 +729,7 @@ extern "C" {
 
       if (buffer.string[range->start] == f_fss_basic_list_open_s.string[0]) {
         graph_first = F_false;
-        stop = range->start - 1;
+        stop = range->start;
 
         status = f_utf_buffer_increment(buffer, range, 1);
         if (F_status_is_error(status)) break;
@@ -745,7 +760,13 @@ extern "C" {
         private_macro_fl_fss_object_return_on_overflow_delimited((buffer), (*range), (*found), F_none_eos, F_none_stop);
 
         if (buffer.string[range->start] == f_fss_eol_s.string[0]) {
-          found->stop = stop;
+          if (stop > begin) {
+            found->stop = stop - 1;
+          }
+          else {
+            found->start = 1;
+            found->stop = 0;
+          }
 
           status = f_utf_buffer_increment(buffer, range, 1);
           if (F_status_is_error(status)) break;
