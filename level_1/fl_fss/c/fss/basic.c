@@ -43,6 +43,7 @@ extern "C" {
     state->status = f_memory_array_increase(state->step_small, sizeof(f_range_t), (void **) &found->array, &found->used, &found->size);
     if (F_status_is_error(state->status)) return;
 
+    const f_number_unsigned_t begin = range->start;
     found->array[found->used].start = range->start;
 
     for (;; ++range->start) {
@@ -61,7 +62,13 @@ extern "C" {
 
     if (F_status_is_error(state->status)) return;
 
-    found->array[found->used++].stop = range->start - 1;
+    if (range->start > begin) {
+      found->array[found->used++].stop = range->start - 1;
+    }
+    else {
+      found->array[found->used].start = 1;
+      found->array[found->used++].stop = 0;
+    }
 
     state->status = f_utf_buffer_increment(buffer, range, 1);
     if (F_status_is_error(state->status)) return;

@@ -577,6 +577,7 @@ extern "C" {
     }
 
     // Begin the search.
+    const f_number_unsigned_t begin = range->start;
     found->start = range->start;
 
     // Ignore all comment lines.
@@ -662,7 +663,7 @@ extern "C" {
 
         if (buffer.string[range->start] == f_fss_extended_list_open_s.string[0]) {
           graph_first = F_false;
-          stop = range->start++ - 1;
+          stop = range->start++;
 
           while (range->start <= range->stop && range->start < buffer.used) {
 
@@ -692,7 +693,14 @@ extern "C" {
               state->status = F_data_not_eos;
             }
             else {
-              found->stop = range->stop;
+              if (stop > begin) {
+                found->stop = stop - 1;
+              }
+              else {
+                found->start = 1;
+                found->stop = 0;
+              }
+
               state->status =  F_data_not_stop;
             }
 
@@ -723,7 +731,14 @@ extern "C" {
 
               if (F_status_is_error(state->status)) break;
 
-              found->stop = stop;
+              if (stop > begin) {
+                found->stop = stop - 1;
+              }
+              else {
+                found->start = 1;
+                found->stop = 0;
+              }
+
               range->start = start + 1;
               state->status = F_fss_found_object;
 
@@ -754,7 +769,7 @@ extern "C" {
       }
       else if (buffer.string[range->start] == f_fss_extended_list_open_s.string[0]) {
         graph_first = F_false;
-        stop = range->start - 1;
+        stop = range->start;
 
         state->status = f_utf_buffer_increment(buffer, range, 1);
         if (F_status_is_error(state->status)) break;
@@ -795,7 +810,13 @@ extern "C" {
         }
 
         if (buffer.string[range->start] == f_fss_eol_s.string[0]) {
-          found->stop = stop;
+          if (stop > begin) {
+            found->stop = stop - 1;
+          }
+          else {
+            found->start = 1;
+            found->stop = 0;
+          }
 
           // Move the start position to after the EOL.
           ++range->start;

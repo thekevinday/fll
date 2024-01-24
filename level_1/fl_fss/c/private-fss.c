@@ -142,6 +142,7 @@ extern "C" {
     const f_number_unsigned_t delimits_used = delimits->used;
 
     // Begin the search.
+    const f_number_unsigned_t begin = range->start;
     found->start = range->start;
 
     // Ignore all comment lines.
@@ -216,7 +217,13 @@ extern "C" {
 
           // Found the end of the object while processing the slash for potential delimits.
           if (state->status == F_true) {
-            found->stop = range->start - 1;
+            if (range->start > begin) {
+              found->stop = range->start - 1;
+            }
+            else {
+              found->start = 1;
+              found->stop = 0;
+            }
 
             state->status = f_utf_buffer_increment(buffer, range, 1);
             if (F_status_is_error(state->status)) break;
@@ -552,7 +559,13 @@ extern "C" {
               }
             }
 
-            found->stop = range->start - 1;
+            if (range->start > begin) {
+              found->stop = range->start - 1;
+            }
+            else {
+              found->start = 1;
+              found->stop = 0;
+            }
 
             state->status = f_utf_buffer_increment(buffer, range, 1);
             if (F_status_is_error(state->status)) return;
@@ -642,8 +655,15 @@ extern "C" {
 
           // The quote is incomplete, so treat the entire line as the Object as per the specification (including the quotes).
           // The error bit is set to designate that the Object is found in an erroneous state (not having a terminating quote).
-          found->start -= 1;
-          found->stop = range->start - 1;
+          if (found->start > begin && range->start > begin) {
+            found->start -= 1;
+            found->stop = range->start - 1;
+          }
+          else {
+            found->start = 1;
+            found->stop = 0;
+          }
+
           state->status = F_status_set_error(F_fss_found_object_content_not);
 
           // The delimits cannot be preserved in this case as per specification.
@@ -696,7 +716,13 @@ extern "C" {
 
       if (F_status_is_error(state->status)) return;
 
-      found->stop = range->start - 1;
+      if (range->start > begin) {
+        found->stop = range->start - 1;
+      }
+      else {
+        found->start = 1;
+        found->stop = 0;
+      }
 
       if (buffer.string[range->start] == f_fss_eol_s.string[0]) {
 
