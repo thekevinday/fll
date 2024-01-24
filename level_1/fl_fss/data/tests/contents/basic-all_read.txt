@@ -1,39 +1,53 @@
-b c d
-b c d
-b c d
-a b c
-b c
-d
-b c d
-b c d
-" b c d
-d
-d
-c d
-b c d
+b c d 1
+b c d 2
+b c d 3
+a b c 4
+b c 5
+d 6
+b c d 7
+b c d 8
+" b c d 9
+d 10
+d 11
+c d 12
+b c d 13
 
-c d
+c d 14
 {
-c d
+c d 15
 
-b c d
-Ȁ b c d
-"Ȁ" b c d
-" Ȁ " b c d
-" Ȁ " b `c d`
-b c      d
-b c      d
-b c      d
-c d' e
-c d" e
-c d` e
-c d' e
-c d" e
-c d` e
-b c d e   
-b c d e ' 
-b c d
-b	 c
-c d
-b c d	
-b c d    	  	
+b c d 16
+Ȁ b c d 17
+"Ȁ" b c d 18
+" Ȁ " b c d 19
+" Ȁ " b `c d` 20
+b c      d 21
+b c      d 22
+b c      d 23
+c d' e 24
+c d" e 25
+c d` e 26
+c d' e 27
+c d" e 28
+c d` e 29
+b c d e 30   
+b c d e 31 ' 
+b c d 32
+b	 c 33
+c d 34
+b c d 35	
+b c d 36    	  	
+d zero​width 37
+мир 38
+e␠
+space! <-- should have the word 'space!' 39
+a comment...should have no slashes. 40
+a comment either...should have one slash. 41
+a comment either...should have two slashes. 42
+"b c d" "e f g"
+"b c' d" "e' f g"
+"b c` d" "e` f g"
+'b c d' 'e f g'
+'b c" d' 'e" f g'
+`b c" d` `e" f g`
+\'b c' d

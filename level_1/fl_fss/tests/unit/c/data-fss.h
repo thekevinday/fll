@@ -31,11 +31,16 @@ extern "C" {
 #endif
 
 /**
- * Open the "FSS basic" contents file.
+ * Open the test data file for the given set with the given name.
  *
- * This assumes the following:
- * - The file path is relative to the current working directory (tests are run from project root).
- * - The file path is "data/tests/contents/basic-all_read.txt".
+ * This requires the following:
+ *   - The file path is relative to the current working directory (tests are run from project root).
+ *   - The file path is "data/tests/${set}/${name}-all_read.txt".
+ *   - Where "${set}" represents the directory set, like "contents", "objects", or "strings".
+ *   - Where "${name}" represents the standard name, such as "basic" or "extended".
+ *
+ * @param at
+ *   A number representing the specific content index position.
  *
  * @return
  *   Non-zero on success.
@@ -43,29 +48,20 @@ extern "C" {
  *
  * @see fopen()
  */
-extern FILE *data__contents_file_open__basic_all_read(void);
+extern FILE *data__file_open__named__all_read(const f_string_t set, const f_string_t name);
 
 /**
- * Open the "FSS basic" objects file.
+ * Open the test data file for the given set with the given name and the given at index.
  *
- * This assumes the following:
- * - The file path is relative to the current working directory (tests are run from project root).
- * - The file path is "data/tests/objects/basic-all_read.txt".
+ * This requires the following:
+ *   - The file path is relative to the current working directory (tests are run from project root).
+ *   - The file path is "data/tests/${set}/${name}-all_read-${at}.txt".
+ *   - Where "${at}" represents the index.
+ *   - Where "${set}" represents the directory set, like "contents", "objects", or "strings".
+ *   - Where "${name}" represents the standard name, such as "basic" or "extended".
  *
- * @return
- *   Non-zero on success.
- *   0 on failure.
- *
- * @see fopen()
- */
-extern FILE *data__objects_file_open__basic_all_read(void);
-
-/**
- * Open the "fss basic" strings file.
- *
- * This assumes the following:
- * - The file path is relative to the current working directory (tests are run from project root).
- * - The file path is "data/tests/strings/basic-all_read.txt".
+ * @param at
+ *   A number representing the specific content index position.
  *
  * @return
  *   Non-zero on success.
@@ -73,7 +69,7 @@ extern FILE *data__objects_file_open__basic_all_read(void);
  *
  * @see fopen()
  */
-extern FILE *data__strings_file_open__basic_all_read(void);
+extern FILE *data__file_open__named_at__all_read(const f_string_t set, const f_string_t name, const uint8_t at);
 
 #ifdef __cplusplus
 } // extern "C"

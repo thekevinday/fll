@@ -1,0 +1,53 @@
+c
+c
+c
+b
+c
+6
+c
+c
+b
+10
+11
+d
+c
+
+d
+
+d
+
+c
+b
+b
+b
+b
+c
+c
+c
+d'
+d"
+d`
+d'
+d"
+d`
+c
+c
+c
+c
+d
+c
+c
+zero​width
+38
+
+<--
+comment...should
+comment
+comment
+e f g
+e' f g
+e` f g
+e f g
+e" f g
+e" f g
+c'

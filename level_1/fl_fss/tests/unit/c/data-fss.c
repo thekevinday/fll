@@ -4,16 +4,24 @@
 extern "C" {
 #endif
 
-FILE *data__contents_file_open__basic_all_read(void) {
-  return fopen("./data/tests/contents/basic-all_read.txt", "r");
+FILE *data__file_open__named__all_read(const f_string_t set, const f_string_t name) {
+  char path[255];
+
+  memset(path, 0, 255);
+
+  snprintf(path, 254, "./data/tests/%s/%s-all_read.txt", set, name);
+
+  return fopen(path, "r");
 }
 
-FILE *data__objects_file_open__basic_all_read(void) {
-  return fopen("./data/tests/objects/basic-all_read.txt", "r");
-}
+FILE *data__file_open__named_at__all_read(const f_string_t set, const f_string_t name, const uint8_t at) {
+  char path[255];
 
-FILE *data__strings_file_open__basic_all_read(void) {
-  return fopen("./data/tests/strings/basic-all_read.txt", "r");
+  memset(path, 0, 255);
+
+  snprintf(path, 254, "./data/tests/%s/%s-all_read-%d.txt", set, name, at);
+
+  return fopen(path, "r");
 }
 
 #ifdef __cplusplus

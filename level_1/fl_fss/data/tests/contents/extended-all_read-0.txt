@@ -1,0 +1,53 @@
+b
+b
+b
+a
+b
+d
+b
+b
+"
+d
+d
+c
+b
+
+c
+{
+c
+
+b
+Ȁ
+Ȁ
+ Ȁ 
+ Ȁ 
+b
+b
+b
+c
+c
+c
+c
+c
+c
+b
+b
+b
+b
+c
+b
+b
+d
+мир
+e␠
+space!
+a
+a
+a
+b c d
+b c' d
+b c` d
+b c d
+b c" d
+b c" d
+'b

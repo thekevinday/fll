@@ -139,8 +139,8 @@ void test__fl_fss_basic_object_read__works(void **void_state) {
 
   {
     // Note: These files are required to have the same number of lines and each line should probably be at max 255 characters.
-    FILE *file_strings = data__strings_file_open__basic_all_read();
-    FILE *file_objects = data__objects_file_open__basic_all_read();
+    FILE *file_strings = data__file_open__named__all_read("strings", "basic");
+    FILE *file_objects = data__file_open__named__all_read("objects", "basic");
 
     assert_non_null(file_strings);
     assert_non_null(file_objects);
@@ -151,7 +151,6 @@ void test__fl_fss_basic_object_read__works(void **void_state) {
     ssize_t result = 0;
 
     f_string_static_t buffer_string = f_string_static_t_initialize;
-    f_string_static_t buffer_object = f_string_static_t_initialize;
 
     f_state_t state = f_state_t_initialize;
     f_range_t range = f_range_t_initialize;
@@ -177,12 +176,8 @@ void test__fl_fss_basic_object_read__works(void **void_state) {
       result = getline(&line_object, &max, file_objects);
       assert_return_code(result, 0);
 
-      buffer_object.string = line_object;
-      buffer_object.used = (f_number_unsigned_t) result;
-      buffer_object.size = buffer_object.used;
-
       // The newline is copied by getline(), and so remove that newline before comparing.
-      buffer_object.string[--buffer_object.used] = 0;
+      line_object[result - 1] = 0;
 
       state.status = F_none;
       range.start = 0;
