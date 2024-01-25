@@ -261,7 +261,7 @@ enum {
  *
  * Recommended to be set to at least 4 to be UTF-8 friendlier.
  *
- * F_fss_default_*:
+ * F_fss_default_*_d:
  *   - block_size_huge:   The "huge" size in blocks to process for an FSS related task.
  *   - block_size_normal: The "normal" size in blocks to process for an FSS related task.
  *   - block_size_small:  The "small" size in blocks to process for an FSS related task.
@@ -285,14 +285,16 @@ enum {
  *
  * The f_fss_state_flag_none_e is expected to be 0, therefore it must be safe to use 0 directly.
  *
- * f_fss_state_flag_*:
+ * f_fss_state_flag_*_e:
  *   - none:                  No flags are set.
  *   - utf_fail_on_valid_not: Immediately fail on invalid UTF-8 character (including incomplete).
+ *   - quote_not:             Disable processing as quoted text (all found quotes are ignored and no quote-escaping is performed).
  */
 #ifndef _di_f_fss_state_flag_e_
   enum {
     f_fss_state_flag_none_e                  = 0x0,
     f_fss_state_flag_utf_fail_on_valid_not_e = 0x1,
+    f_fss_state_quote_not_e                  = 0x2,
   }; // enum
 #endif // _di_f_fss_state_flag_e_
 

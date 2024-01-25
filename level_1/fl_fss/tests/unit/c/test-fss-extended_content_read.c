@@ -148,6 +148,8 @@ void test__fl_fss_extended_content_read__works(void **void_state) {
       data__file_open__named_at__all_read("contents", "extended", 3),
       data__file_open__named_at__all_read("contents", "extended", 4),
       data__file_open__named_at__all_read("contents", "extended", 5),
+      data__file_open__named_at__all_read("contents", "extended", 6),
+      data__file_open__named_at__all_read("contents", "extended", 7),
     };
 
     assert_non_null(file_strings);
@@ -157,6 +159,8 @@ void test__fl_fss_extended_content_read__works(void **void_state) {
     assert_non_null(file_contents[3]);
     assert_non_null(file_contents[4]);
     assert_non_null(file_contents[5]);
+    assert_non_null(file_contents[6]);
+    assert_non_null(file_contents[7]);
 
     size_t max = 0;
     char *line_string = 0;
@@ -167,9 +171,11 @@ void test__fl_fss_extended_content_read__works(void **void_state) {
       0,
       0,
       0,
+      0,
+      0,
     };
     ssize_t result = 0;
-    const uint8_t total_content = 6;
+    const uint8_t total_content = 8;
 
     f_string_static_t buffer_string = f_string_static_t_initialize;
 
@@ -195,9 +201,9 @@ void test__fl_fss_extended_content_read__works(void **void_state) {
       buffer_string.used = (f_number_unsigned_t) result;
       buffer_string.size = buffer_string.used;
 
-      max = 255;
-
       for (uint8_t i = 0; i < total_content; ++i) {
+
+        max = 255;
 
         result = getline(&line_content[i], &max, file_contents[i]);
         assert_return_code(result, 0);
@@ -230,7 +236,7 @@ void test__fl_fss_extended_content_read__works(void **void_state) {
 
       if (state.status == F_fss_found_content) {
         assert_true(found.used);
-        assert_true(found.used < total_content);
+        assert_true(found.used <= (f_number_unsigned_t) total_content);
 
         {
           const f_status_t status = f_string_dynamic_append(buffer_string, &delimit_string);
@@ -273,25 +279,20 @@ void test__fl_fss_extended_content_read__works(void **void_state) {
       }
 
       if (line_string) free(line_string);
-      if (line_content[0]) free(line_content[0]);
-      if (line_content[1]) free(line_content[1]);
-      if (line_content[2]) free(line_content[2]);
-      if (line_content[3]) free(line_content[3]);
-      if (line_content[4]) free(line_content[4]);
-      if (line_content[5]) free(line_content[5]);
       if (result_string.string) free(result_string.string);
       if (delimit_string.string) free(delimit_string.string);
       if (delimits.array) free(delimits.array);
       if (found.array) free(found.array);
       if (quotes.array) free(quotes.array);
 
+      for (uint8_t i = 0; i < total_content; ++i) {
+
+        if (line_content[i]) free(line_content[i]);
+
+        line_content[i] = 0;
+      } // for
+
       line_string = 0;
-      line_content[0] = 0;
-      line_content[1] = 0;
-      line_content[2] = 0;
-      line_content[3] = 0;
-      line_content[4] = 0;
-      line_content[5] = 0;
       result_string.string = 0;
       result_string.used = 0;
       result_string.size = 0;
@@ -309,24 +310,20 @@ void test__fl_fss_extended_content_read__works(void **void_state) {
       quotes.size = 0;
     } // for
 
+    for (uint8_t i = 0; i < total_content; ++i) {
+
+      if (file_contents[i]) fclose(file_contents[i]);
+      if (line_content[i]) free(line_content[i]);
+
+      line_content[i] = 0;
+    } // for
+
     if (file_strings) fclose(file_strings);
-    if (file_contents[0]) fclose(file_contents[0]);
-    if (file_contents[1]) fclose(file_contents[1]);
-    if (file_contents[2]) fclose(file_contents[2]);
-    if (file_contents[3]) fclose(file_contents[3]);
-    if (file_contents[4]) fclose(file_contents[4]);
-    if (file_contents[5]) fclose(file_contents[5]);
 
     if (delimits.array) free(delimits.array);
     if (found.array) free(found.array);
     if (quotes.array) free(quotes.array);
     if (line_string) free(line_string);
-    if (line_content[0]) free(line_content[0]);
-    if (line_content[1]) free(line_content[1]);
-    if (line_content[2]) free(line_content[2]);
-    if (line_content[3]) free(line_content[3]);
-    if (line_content[4]) free(line_content[4]);
-    if (line_content[5]) free(line_content[5]);
     if (result_string.string) free(result_string.string);
     if (delimit_string.string) free(delimit_string.string);
   }

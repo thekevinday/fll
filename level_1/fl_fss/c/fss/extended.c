@@ -44,7 +44,7 @@ extern "C" {
     const f_number_unsigned_t quotes_used = quotes ? quotes->used : 0;
 
     uint8_t content_found = 0;
-    uint8_t quote = 0;
+    uint8_t quote = f_fss_quote_type_none_e;
 
     f_status_t status = F_okay;
 
@@ -52,9 +52,18 @@ extern "C" {
 
       f_range_t content_partial = f_range_t_initialize;
 
-      private_fl_fss_basic_read(buffer, F_false, range, &content_partial, &quote, delimits, state);
+      private_fl_fss_basic_or_extended_read(buffer, (state->flag & f_fss_state_quote_not_e) ? 0x2 : 0x0, range, &content_partial, &quote, delimits, state);
 
-      if (state->status == F_fss_found_object || F_status_set_fine(state->status) == F_fss_found_object_content_not) {
+      // Quote is unterminated, retry with quotes disabled as per-specification (this error should not be reported when quotes are disabled).
+      if (state->status == F_status_set_error(F_fss_found_object_content_not)) {
+        content_partial.start = 1;
+        content_partial.stop = 0;
+        state->status = F_okay;
+
+        private_fl_fss_basic_or_extended_read(buffer, 0x2, range, &content_partial, &quote, delimits, state);
+      }
+
+      if (state->status == F_fss_found_object || state->status == F_fss_found_object_content_not) {
         status = f_memory_array_increase(state->step_small, sizeof(f_range_t), (void **) &found->array, &found->used, &found->size);
 
         // The private function sets the error bit on unterminated quoted Object.
@@ -221,7 +230,7 @@ extern "C" {
 
     const f_number_unsigned_t delimits_used = delimits->used;
 
-    private_fl_fss_basic_read(buffer, F_true, range, found, quote, delimits, state);
+    private_fl_fss_basic_or_extended_read(buffer, 0x1, range, found, quote, delimits, state);
 
     if (state->status == F_status_set_error(F_fss_found_object_content_not)) {
 

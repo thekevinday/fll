@@ -170,7 +170,7 @@ extern "C" {
 
     const f_number_unsigned_t delimits_used = delimits->used;
 
-    private_fl_fss_basic_read(buffer, F_true, range, found, quote, delimits, state);
+    private_fl_fss_basic_or_extended_read(buffer, 0x1, range, found, quote, delimits, state);
 
     if (state->status == F_status_set_error(F_fss_found_object_content_not)) {
 
