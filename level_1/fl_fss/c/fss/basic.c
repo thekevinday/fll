@@ -152,7 +152,7 @@ extern "C" {
 
     const f_array_length_t delimits_used = delimits->used;
 
-    const f_status_t status = private_fl_fss_basic_read(buffer, F_true, state, range, found, quote, delimits);
+    const f_status_t status = private_fl_fss_basic_or_extended_read(buffer, 0x1, state, range, found, quote, delimits);
 
     // The private function sets the error bit on unterminated quoted Object.
     if (status == F_status_set_error(F_fss_found_object_content_not)) {

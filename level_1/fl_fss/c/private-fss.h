@@ -83,17 +83,19 @@ extern "C" {
 #endif // !defined(_di_fl_fss_basic_list_object_write_) || !defined(_di_fl_fss_extended_list_object_write_)
 
 /**
- * Private implementation of fl_fss_basic_object_read().
+ * Provide common processing for Basic and Extended Object and Content read.
  *
  * Intended to be shared to each of the different implementation variations.
  *
  * @param buffer
  *   The buffer to read from.
- * @param object_as
- *   If TRUE, then this operate as an Object.
- *   IF FALSE, then this operates as a Content.
+ * @param flag
+ *   Bits:
+ *     - 0x0: When 0x1 bit is not set, then operate as a Content (extended).
+ *     - 0x1: Operate as an Object (basic or extended).
+ *     - 0x2: Operate with quoting disabled, treating all quotes and escaped quotes as literal (extended).
  *
- *   As Object, this checks if the first graph character is a comment character '#', or an escaped comment character '#'.
+ *   As an Object, this checks if the first graph character is a comment character '#', or an escaped comment character '#'.
  *   As Content, this does nothing special in regards to a leading '#'.
  * @param state
  *   A state for providing flags and handling interrupts during long running operations.
@@ -155,7 +157,7 @@ extern "C" {
  * @see fl_fss_extended_content_read()
  */
 #if !defined(_di_fl_fss_basic_object_read_) || !defined(_di_fl_fss_extended_object_read_) || !defined(_di_fl_fss_extended_content_read_)
-  extern f_status_t private_fl_fss_basic_read(const f_string_static_t buffer, const bool object_as, f_state_t state, f_string_range_t * const range, f_fss_object_t * const found, f_fss_quote_t * const quote, f_fss_delimits_t * const delimits) F_attribute_visibility_internal_d;
+  extern f_status_t private_fl_fss_basic_or_extended_read(const f_string_static_t buffer, const uint8_t flag, f_state_t state, f_string_range_t * const range, f_fss_object_t * const found, f_fss_quote_t * const quote, f_fss_delimits_t * const delimits) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fl_fss_basic_object_read_) || !defined(_di_fl_fss_extended_object_read_) || !defined(_di_fl_fss_extended_content_read_)
 
 /**
@@ -165,9 +167,10 @@ extern "C" {
  *
  * Note: this does not attempt to "complete" the object.
  *
- * @param object_as
- *   If TRUE, then this operate as an Object.
- *   IF FALSE, then this operates as a Content.
+ * @param flag
+ *   Bits:
+ *     - 0x0: When 0x1 bit is not set, then operate as a Content (extended).
+ *     - 0x1: Operate as an Object (basic or extended).
  *
  *   As Object, this checks if the first graph character is a comment character '#', or an escaped comment character '#'.
  *   As Content, this does nothing special in regards to a leading '#'.
@@ -219,7 +222,7 @@ extern "C" {
  * @see fl_fss_extended_content_write()
  */
 #if !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_extended_object_write_) || !defined(_di_fl_fss_extended_content_write_)
-  extern f_status_t private_fl_fss_basic_write(const bool object_as, const f_string_static_t object, const f_fss_quote_t quote, f_state_t state, f_string_range_t * const range, f_string_dynamic_t * const destination) F_attribute_visibility_internal_d;
+  extern f_status_t private_fl_fss_basic_write(const uint8_t flag, const f_string_static_t object, const f_fss_quote_t quote, f_state_t state, f_string_range_t * const range, f_string_dynamic_t * const destination) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_extended_object_write_) || !defined(_di_fl_fss_extended_content_write_)
 
 /**

@@ -45,6 +45,9 @@ extern "C" {
  *   When state.interrupt() returns, only F_interrupt and F_interrupt_not are processed.
  *   Error bit designates an error but must be passed along with F_interrupt.
  *   All other statuses are ignored.
+ *
+ *   The following bits are supported when set on state.flags:
+ *     - f_fss_state_quote_not_e: Explicitly disable quotes, treating quotes and their respective delimits as normal characters.
  * @param range
  *   The start/stop location within the buffer to be processed.
  *   The start location will be updated as the buffer is being processed.
@@ -54,6 +57,7 @@ extern "C" {
  *   A set of all locations where a valid content was found.
  * @param quotes
  *   This will store the quote types representing the character to use (from the f_fss_quote_type_*_e).
+ *   Each index in quotes represents a position within the found array index.
  *   Set pointer address to 0 to not use.
  * @param delimits
  *   A delimits array representing where delimits exist within the buffer.

@@ -123,7 +123,7 @@ extern "C" {
 #endif // !defined(_di_fl_fss_basic_list_object_write_) || !defined(_di_fl_fss_extended_list_object_write_)
 
 #if !defined(_di_fl_fss_basic_object_read_) || !defined(_di_fl_fss_extended_object_read_) || !defined(_di_fl_fss_extended_content_read_)
-  f_status_t private_fl_fss_basic_read(const f_string_static_t buffer, const bool object_as, f_state_t state, f_string_range_t * const range, f_fss_object_t * const found, f_fss_quote_t * const quote, f_fss_delimits_t * const delimits) {
+  f_status_t private_fl_fss_basic_or_extended_read(const f_string_static_t buffer, const uint8_t flag, f_state_t state, f_string_range_t * const range, f_fss_object_t * const found, f_fss_quote_t * const quote, f_fss_delimits_t * const delimits) {
 
     f_status_t status = f_fss_skip_past_space(state, buffer, range);
     if (F_status_is_error(status)) return status;
@@ -144,10 +144,11 @@ extern "C" {
     const f_array_length_t delimits_used = delimits->used;
 
     // Begin the search.
+    const f_array_length_t begin = range->start;
     found->start = range->start;
 
     // Ignore all comment lines.
-    if (object_as && buffer.string[range->start] == f_fss_comment_s.string[0]) {
+    if ((flag & 0x1) && buffer.string[range->start] == f_fss_comment_s.string[0]) {
 
       while (buffer.string[range->start] != f_fss_eol_s.string[0]) {
 
@@ -220,7 +221,13 @@ extern "C" {
 
           // Found the end of the object while processing the slash for potential delimits.
           if (status == F_true) {
-            found->stop = range->start - 1;
+            if (range->start > begin) {
+              found->stop = range->start - 1;
+            }
+            else {
+              found->start = 1;
+              found->stop = 0;
+            }
 
             status = f_utf_buffer_increment(buffer, range, 1);
             if (F_status_is_error(status)) break;
@@ -253,7 +260,7 @@ extern "C" {
         return F_none_stop;
       }
 
-      if (buffer.string[range->start] == f_fss_quote_single_s.string[0] || buffer.string[range->start] == f_fss_quote_double_s.string[0] || buffer.string[range->start] == f_fss_quote_backtick_s.string[0] || (object_as && buffer.string[range->start] == f_fss_comment_s.string[0])) {
+      if ((!(flag & 0x2) && (buffer.string[range->start] == f_fss_quote_single_s.string[0] || buffer.string[range->start] == f_fss_quote_double_s.string[0] || buffer.string[range->start] == f_fss_quote_backtick_s.string[0])) || ((flag & 0x1) && buffer.string[range->start] == f_fss_comment_s.string[0])) {
 
         // Only the first slash before a quote needs to be escaped (or not) as once there is a slash before a quote, this cannot ever be a quote object.
         // This simplifies the number of slashes needed.
@@ -266,7 +273,7 @@ extern "C" {
         if (F_status_is_error(status)) return status;
       }
     }
-    else if (buffer.string[range->start] == f_fss_quote_single_s.string[0] || buffer.string[range->start] == f_fss_delimit_quote_double_s.string[0] || buffer.string[range->start] == f_fss_quote_backtick_s.string[0]) {
+    else if (!(flag & 0x2) && (buffer.string[range->start] == f_fss_quote_single_s.string[0] || buffer.string[range->start] == f_fss_delimit_quote_double_s.string[0] || buffer.string[range->start] == f_fss_quote_backtick_s.string[0])) {
       quote_found = buffer.string[range->start];
 
       status = f_utf_buffer_increment(buffer, range, 1);
@@ -543,7 +550,13 @@ extern "C" {
               }
             }
 
-            found->stop = range->start - 1;
+            if (range->start > begin) {
+              found->stop = range->start - 1;
+            }
+            else {
+              found->start = 1;
+              found->stop = 0;
+            }
 
             status = f_utf_buffer_increment(buffer, range, 1);
             if (F_status_is_error(status)) return status;
@@ -627,17 +640,30 @@ extern "C" {
           }
         }
         else if (buffer.string[range->start] == f_fss_eol_s.string[0]) {
+          if (flag & 0x1) {
 
-          // The quote is incomplete, so treat the entire line as the Object as per the specification (including the quotes).
-          // The error bit is set to designate that the Object is found in an erroneous state (not having a terminating quote).
-          found->start -= 1;
-          found->stop = range->start - 1;
+            // The quote is incomplete, so treat the entire line as the Object as per the specification (including the quotes).
+            // The error bit is set to designate that the Object is found in an erroneous state (not having a terminating quote).
+            if (found->start > begin && range->start > begin) {
+              found->start -= 1;
+              found->stop = range->start - 1;
+            }
+            else {
+              found->start = 1;
+              found->stop = 0;
+            }
+
+            // Move the start position to after the EOL.
+            ++range->start;
+          }
+          else {
+
+            // The quote is incomplete, do not save and reset range->start so that caller can fix the position and re-run with quotes disabled.
+            range->start = begin;
+          }
 
           // The delimits cannot be preserved in this case as per specification.
           delimits->used = delimits_used;
-
-          // Move the start position to after the EOL.
-          ++range->start;
 
           return F_status_set_error(F_fss_found_object_content_not);
         }
@@ -684,7 +710,13 @@ extern "C" {
 
       if (F_status_is_error(status)) return status;
 
-      found->stop = range->start - 1;
+      if (range->start > begin) {
+        found->stop = range->start - 1;
+      }
+      else {
+        found->start = 1;
+        found->stop = 0;
+      }
 
       if (buffer.string[range->start] == f_fss_eol_s.string[0]) {
 
@@ -712,7 +744,7 @@ extern "C" {
 #endif // !defined(_di_fl_fss_basic_object_read_) || !defined(_di_fl_fss_extended_object_read_)
 
 #if !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_extended_object_write_) || !defined(_di_fl_fss_extended_content_write_)
-  f_status_t private_fl_fss_basic_write(const bool object_as, const f_string_static_t object, const f_fss_quote_t quote, f_state_t state, f_string_range_t * const range, f_string_dynamic_t * const destination) {
+  f_status_t private_fl_fss_basic_write(const uint8_t flag, const f_string_static_t object, const f_fss_quote_t quote, f_state_t state, f_string_range_t * const range, f_string_dynamic_t * const destination) {
 
     f_status_t status = f_fss_skip_past_space(state, object, range);
     if (F_status_is_error(status)) return status;
@@ -746,7 +778,7 @@ extern "C" {
     if (object.string[input_start] == quote_char) {
       quote_is = F_true;
     }
-    else if (object_as && object.string[input_start] == f_fss_comment_s.string[0]) {
+    else if ((flag & 0x1) && object.string[input_start] == f_fss_comment_s.string[0]) {
       commented = F_true;
     }
 
@@ -888,7 +920,7 @@ extern "C" {
             destination->string[destination->used++] = object.string[range->start + i];
           } // for
         }
-        else if (object_as && object.string[range->start] == f_fss_comment_s.string[0]) {
+        else if ((flag & 0x1) && object.string[range->start] == f_fss_comment_s.string[0]) {
 
           // Only the first slash needs to be escaped for a comment, and then only if not quote.
           if (item_first == input_start) {
@@ -1099,9 +1131,7 @@ extern "C" {
       destination->string[used_start] = f_fss_delimit_slash_s.string[0];
     }
 
-    if (range->start > range->stop) return F_none_stop;
-
-    return F_none_eos;
+    return range->start > range->stop ? F_none_stop : F_none_eos;
   }
 #endif // !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_extended_object_write_) || !defined(_di_fl_fss_extended_content_write_)
 

@@ -378,11 +378,13 @@ enum {
  * f_fss_state_flag_*:
  *   - none:                  No flags are set.
  *   - utf_fail_on_valid_not: Immediately fail on invalid UTF-8 character (including incomplete).
+ *   - quote_not:             Disable processing as quoted text (all found quotes are ignored and no quote-escaping is performed).
  */
 #ifndef _di_f_fss_state_flags_
   enum {
     f_fss_state_flag_none_e                  = 0,
     f_fss_state_flag_utf_fail_on_valid_not_e = 0x1,
+    f_fss_state_quote_not_e                  = 0x2,
   }; // enum
 #endif // _di_f_fss_state_flags_
 
