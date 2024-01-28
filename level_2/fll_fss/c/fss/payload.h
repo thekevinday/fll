@@ -33,12 +33,12 @@ extern "C" {
  * This processes only the outermost part and specially handles the payload.
  * The inner data, such as the fss-0001 inside of the "header", should be directly processed via the appropriate function.
  *
- * The "payload" Object is required and if it is not file, this function returns with the error flag set.
+ * The "payload" Object is required and if it is not found, this function returns with the error flag set.
  *
  * @param buffer
  *   The buffer to read from.
  * @param state
- A state for providing flags and handling interrupts during long running operations.
+ *   A state for providing flags and handling interrupts during long running operations.
  *   There is no state.handle().
  *   There is no "callbacks" structure.
  *   There is no data structure passed to these functions.

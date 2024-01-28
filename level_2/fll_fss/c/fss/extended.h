@@ -32,7 +32,7 @@ extern "C" {
  * @param buffer
  *   The buffer to read from.
  * @param state
- A state for providing flags and handling interrupts during long running operations.
+ *   A state for providing flags and handling interrupts during long running operations.
  *   There is no state.handle().
  *   There is no "callbacks" structure.
  *   There is no data structure passed to these functions.
