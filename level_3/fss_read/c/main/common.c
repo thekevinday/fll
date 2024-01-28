@@ -316,7 +316,7 @@ extern "C" {
           return;
         }
 
-        if (f_compare_dynamic(fss_read_delimit_mode_name_none_s, parameters->arguments.array[index]) == F_equal_to) {
+        if (f_compare_dynamic(fss_read_string_none_s, parameters->arguments.array[index]) == F_equal_to) {
           main->setting.delimit_mode = fss_read_delimit_mode_none_e;
         }
         else if (f_compare_dynamic(fss_read_delimit_mode_name_all_s, parameters->arguments.array[index]) == F_equal_to) {

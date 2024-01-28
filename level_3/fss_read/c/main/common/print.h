@@ -40,6 +40,7 @@ extern "C" {
 #ifndef _di_fss_read_f_e_
   enum {
     fss_read_f_f_console_parameter_process_e,
+    fss_read_f_f_console_parameter_reset_e,
     fss_read_f_f_file_read_block_e,
     fss_read_f_f_file_size_e,
     fss_read_f_f_file_stream_open_e,

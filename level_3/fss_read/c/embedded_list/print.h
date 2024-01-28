@@ -13,24 +13,6 @@ extern "C" {
 #endif
 
 /**
- * Print help for FSS-0008 (Embedded List).
- *
- * @param print
- *   The output structure to print to.
- *
- *   This does not alter print.custom.setting.state.status.
- *
- * @return
- *   F_okay on success.
- *   F_output_not on success, but no printing is performed.
- *
- *   F_output_not (with error bit) if setting is NULL.
- */
-#ifndef _di_fss_read_embedded_list_print_help_
-  extern f_status_t fss_read_embedded_list_print_help(fl_print_t * const print);
-#endif // _di_fss_read_embedded_list_print_help_
-
-/**
  * Print the end of an Object (which is often the start of Content).
  *
  * This locks, uses, and unlocks the file stream.
@@ -52,9 +34,9 @@ extern "C" {
  * @see f_file_stream_unlock()
  * @see f_print_dynamic_raw()
  */
-#ifndef _di_fss_read_embedded_list_print_object_end_
-  extern f_status_t fss_read_embedded_list_print_object_end(fl_print_t * const print);
-#endif // _di_fss_read_embedded_list_print_object_end_
+#ifndef _di_fss_read_embedded_list_print_data_object_end_
+  extern f_status_t fss_read_embedded_list_print_data_object_end(fl_print_t * const print);
+#endif // _di_fss_read_embedded_list_print_data_object_end_
 
 /**
  * Print the end of an Object/Content set.
@@ -78,9 +60,27 @@ extern "C" {
  * @see f_file_stream_unlock()
  * @see f_print_dynamic_raw()
  */
-#ifndef _di_fss_read_embedded_list_print_set_end_
-  extern f_status_t fss_read_embedded_list_print_set_end(fl_print_t * const print);
-#endif // _di_fss_read_embedded_list_print_set_end_
+#ifndef _di_fss_read_embedded_list_print_data_set_end_
+  extern f_status_t fss_read_embedded_list_print_data_set_end(fl_print_t * const print);
+#endif // _di_fss_read_embedded_list_print_data_set_end_
+
+/**
+ * Print help for FSS-0008 (Embedded List).
+ *
+ * @param print
+ *   The output structure to print to.
+ *
+ *   This does not alter print.custom.setting.state.status.
+ *
+ * @return
+ *   F_okay on success.
+ *   F_output_not on success, but no printing is performed.
+ *
+ *   F_output_not (with error bit) if setting is NULL.
+ */
+#ifndef _di_fss_read_embedded_list_print_message_help_
+  extern f_status_t fss_read_embedded_list_print_message_help(fl_print_t * const print);
+#endif // _di_fss_read_embedded_list_print_message_help_
 
 #ifdef __cplusplus
 } // extern "C"

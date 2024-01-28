@@ -33,6 +33,28 @@ extern "C" {
 #endif // _di_fss_read_main_print_error_format_unknown_
 
 /**
+ * Print an error message about a value given to the --as parameter changed after re-loading.
+ *
+ * @param print
+ *   The output structure to print to.
+ *
+ *   This does not alter print.custom.setting.state.status.
+ * @param previous
+ *   A string representing the value of the previous --as parameter.
+ * @param current
+ *   A string representing the value of the current --as parameter.
+ *
+ * @return
+ *   F_okay on success.
+ *   F_output_not on success, but no printing is performed.
+ *
+ *   F_output_not (with error bit) if setting is NULL.
+ */
+#ifndef _di_fss_read_main_print_error_parameter_as_changed_
+  extern f_status_t fss_read_main_print_error_parameter_as_changed(fl_print_t * const print, const f_string_static_t previous, const f_string_static_t current);
+#endif // _di_fss_read_main_print_error_parameter_as_changed_
+
+/**
  * Print help for "main" fss_read.
  *
  * @param print
@@ -46,9 +68,9 @@ extern "C" {
  *
  *   F_output_not (with error bit) if setting is NULL.
  */
-#ifndef _di_fss_read_print_main_help_
-  extern f_status_t fss_read_main_print_help(fl_print_t * const print);
-#endif // _di_fss_read_print_main_help_
+#ifndef _di_fss_read_print_main_message_help_
+  extern f_status_t fss_read_main_print_message_help(fl_print_t * const print);
+#endif // _di_fss_read_print_main_message_help_
 
 #ifdef __cplusplus
 } // extern "C"

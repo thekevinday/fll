@@ -16,10 +16,17 @@ extern "C" {
       }
     #endif // _di_level_2_parameter_checking_
 
+    if (!buffer.used) {
+      state->status = F_data_not;
+
+      return;
+    }
+
     f_status_t status = F_okay;
     f_number_unsigned_t initial_used = objects->used;
 
-    bool found_data = F_false;
+    // 0x1 = found data, 0x2 = found payload object.
+    uint8_t found_data = 0;
 
     do {
       state->status = f_memory_array_increase(state->step_small, sizeof(f_range_t), (void **) &objects->array, &objects->used, &objects->size);
@@ -34,40 +41,18 @@ extern "C" {
         fl_fss_basic_list_object_read(buffer, range, &objects->array[objects->used], objects_delimits, state);
         if (F_status_is_error(state->status)) return;
 
+        if (f_compare_dynamic_partial_string(f_fss_payload_s.string, buffer, f_fss_payload_s.used, objects->array[objects->used]) == F_equal_to) {
+          found_data |= 0x2;
+        }
+
         if (range->start >= range->stop || range->start >= buffer.used) {
           if (state->status == F_fss_found_object || state->status == F_fss_found_object_content_not) {
-            if (f_compare_dynamic_partial_string(f_fss_payload_s.string, buffer, f_fss_payload_s.used, objects->array[objects->used]) == F_equal_to) {
-              state->status = F_fss_found_object_content_not;
-            }
+            state->status = F_fss_found_object_content_not;
 
-            // Returning without a "payload" is an error.
-            else {
-              state->status = F_status_set_error(F_fss_found_object_content_not);
-            }
-
-            ++objects->used;
-
-            status = f_memory_array_increase(state->step_small, sizeof(f_range_t), (void **) &contents->array[contents->used].array, &contents->array[contents->used].used, &contents->array[contents->used].size);
-
-            if (F_status_is_error(status)) {
-              state->status = status;
-
-              return;
-            }
-
-            contents->array[contents->used++].used = 0;
-
-            return;
+            break;
           }
 
-          // Returning without a "payload" is an error.
-          if (state->status == F_data_not) {
-            state->status = F_status_set_error(F_data_not);
-
-            return;
-          }
-
-          if (found_data) {
+          if (found_data & 0x1) {
             state->status = F_status_set_error((range->start >= buffer.used) ? F_okay_eos : F_okay_stop);
           }
           else {
@@ -78,8 +63,7 @@ extern "C" {
         }
 
         if (state->status == F_fss_found_object) {
-          found_data = F_true;
-
+          found_data |= 0x1;
           contents->array[contents->used].used = 0;
 
           if (f_compare_dynamic_partial_string(f_fss_payload_s.string, buffer, f_fss_payload_s.used, objects->array[objects->used]) == F_equal_to) {
@@ -118,34 +102,7 @@ extern "C" {
         }
 
         if (state->status == F_fss_found_object_content_not) {
-          found_data = F_true;
-
-          status = f_memory_array_increase(state->step_small, sizeof(f_range_t), (void **) &contents->array[contents->used].array, &contents->array[contents->used].used, &contents->array[contents->used].size);
-
-          if (F_status_is_error(status)) {
-            state->status = status;
-
-            return;
-          }
-
-          contents->array[contents->used].used = 0;
-
-          if (f_compare_dynamic_partial_string(f_fss_payload_s.string, buffer, f_fss_payload_s.used, objects->array[objects->used]) == F_equal_to) {
-            ++objects->used;
-
-            status = f_memory_array_increase(state->step_small, sizeof(f_range_t), (void **) &contents->array[contents->used].array, &contents->array[contents->used].used, &contents->array[contents->used].size);
-
-            if (F_status_is_error(status)) {
-              state->status = status;
-
-              return;
-            }
-
-            contents->array[contents->used++].used = 0;
-            state->status = F_okay;
-
-            return;
-          }
+          found_data |= 0x1;
 
           break;
         }
@@ -157,7 +114,9 @@ extern "C" {
         ++contents->used;
 
         // Returning without a "payload" is an error.
-        state->status = F_status_set_error(state->status);
+        if (!(found_data & 0x2)) {
+          state->status = F_status_set_error(state->status);
+        }
 
         return;
       }
@@ -168,7 +127,12 @@ extern "C" {
         if (objects->used > initial_used) {
 
           // Returning without a "payload" is an error.
-          state->status = (state->status == F_data_not_eos) ? F_status_set_error(F_okay_eos) : F_status_set_error(F_okay_stop);
+          if (found_data & 0x2) {
+            state->status = (state->status == F_data_not_eos) ? F_okay_eos : F_okay_stop;
+          }
+          else {
+            state->status = F_status_set_error((state->status == F_data_not_eos) ? F_okay_eos : F_okay_stop);
+          }
         }
         else {
           state->status = F_status_set_error(state->status);
@@ -181,27 +145,37 @@ extern "C" {
         return;
       }
 
+      if (state->status == F_fss_found_object_content_not) {
+        found_data |= 0x1;
+
+        status = f_memory_array_increase(state->step_small, sizeof(f_range_t), (void **) &contents->array[contents->used].array, &contents->array[contents->used].used, &contents->array[contents->used].size);
+
+        if (F_status_is_error(status)) {
+          state->status = status;
+
+          return;
+        }
+
+        contents->array[contents->used].used = 0;
+      }
+
       if (range->start >= range->stop || range->start >= buffer.used) {
 
         // When content is found, the range->start is incremented, if content is found at range->stop, then range->start will be > range.stop.
         if (state->status == F_fss_found_object || state->status == F_fss_found_content || state->status == F_fss_found_content_not || state->status == F_fss_found_object_content_not) {
-
-          if (state->status == F_fss_found_object_content_not) {
-            contents->array[contents->used].used = 0;
-          }
-
           ++objects->used;
           ++contents->used;
         }
 
         // Returning without a "payload" is an error.
-        state->status = F_status_set_error((range->start >= buffer.used) ? F_okay_eos : F_okay_stop);
+        if (found_data & 0x2) {
+          state->status = (range->start >= buffer.used) ? F_okay_eos : F_okay_stop;
+        }
+        else {
+          state->status = F_status_set_error((range->start >= buffer.used) ? F_okay_eos : F_okay_stop);
+        }
 
         return;
-      }
-
-      if (state->status == F_fss_found_object_content_not) {
-        contents->array[contents->used].used = 0;
       }
 
       ++objects->used;

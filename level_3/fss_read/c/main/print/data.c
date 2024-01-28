@@ -29,13 +29,27 @@ extern "C" {
       }
 
       if (main->setting.flag & fss_read_main_flag_content_e) {
-        if(main->setting.flag & fss_read_main_flag_select_e) {
-          if (main->setting.select < main->setting.contents.array[at].used && main->setting.contents.array[at].array[main->setting.select].start <= main->setting.contents.array[at].array[main->setting.select].stop) {
-            print_set_end = F_true;
+        if (main->setting.flag & fss_read_main_flag_select_e) {
+          if (main->setting.contents.array[at].used) {
+            if (main->setting.select < main->setting.contents.array[at].used) {
+              if (main->setting.contents.array[at].array[main->setting.select].start <= main->setting.contents.array[at].array[main->setting.select].stop) {
+                print_set_end = F_true;
 
-            if (main->callback.print_content) {
-              main->callback.print_content(&main->program.output, main->setting.contents.array[at].array[main->setting.select], main->setting.quotes_content.array[at].used ? main->setting.quotes_content.array[at].array[main->setting.select] : 0, delimits_content);
+                if (main->callback.print_content) {
+                  main->callback.print_content(&main->program.output, main->setting.contents.array[at].array[main->setting.select], main->setting.quotes_content.array[at].used ? main->setting.quotes_content.array[at].array[main->setting.select] : 0, delimits_content);
+                }
+              }
+              else {
+                print_set_end = F_true;
+
+                //if (main->callback.print_content_empty) {
+                //  main->callback.print_content_empty(&main->program.output);
+                //}
+              }
             }
+          }
+          else if (main->callback.print_content_empty_set && !main->setting.select) {
+            main->callback.print_content_empty_set(&main->program.output);
           }
         }
         else if (main->setting.contents.array[at].used) {
@@ -51,6 +65,9 @@ extern "C" {
               }
             } // for
           }
+        }
+        else if (main->callback.print_content_empty_set) {
+          main->callback.print_content_empty_set(&main->program.output);
         }
       }
 
@@ -95,6 +112,21 @@ extern "C" {
     return F_okay;
   }
 #endif // _di_fss_read_print_content_
+
+#ifndef _di_fss_read_print_content_empty_set_end_
+  f_status_t fss_read_print_content_empty_set_end(fl_print_t * const print) {
+
+    if (!print || !print->custom) return F_status_set_error(F_output_not);
+
+    fss_read_main_t * const main = (fss_read_main_t *) print->custom;
+
+    if (main->callback.print_set_end && (main->setting.flag & fss_read_main_flag_empty_e)) {
+      main->callback.print_set_end(print);
+    }
+
+    return F_okay;
+  }
+#endif // _di_fss_read_print_content_empty_set_end_
 
 #ifndef _di_fss_read_print_content_ignore_
   f_status_t fss_read_print_content_ignore(fl_print_t * const print) {

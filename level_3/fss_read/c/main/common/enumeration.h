@@ -39,6 +39,9 @@ extern "C" {
  *   - object_as_line:    The Object is counted as its own line for the purpose of -l/--line or any other similar behavior.
  *   - object_trim:       Empty space before an after Objects are ignored while processing without affecting printing behavior.
  *   - original:          Enable original printing, where the quotes are printed and no delimits are applied.
+ *   - payload_create:    Create the payload Object with empty Content if the payload Object is missing (when using FSS Payload and related).
+ *   - payload_error:     Treat missing or invalid payload as an error (when using FSS Payload and related).
+ *   - payload_warn:      Treat missing or invalid payload as a warning (when using FSS Payload and related).
  *   - pipe:              Use the input pipe.
  *   - pipe_format:       Print using the special pipe format.
  *   - print_first:       When set, print new line to message output on program begin after loading settings.
@@ -72,17 +75,20 @@ extern "C" {
     fss_read_main_flag_object_as_line_e    = 0x8000,
     fss_read_main_flag_object_trim_e       = 0x10000,
     fss_read_main_flag_original_e          = 0x20000,
-    fss_read_main_flag_pipe_e              = 0x40000,
-    fss_read_main_flag_pipe_format_e       = 0x80000,
-    fss_read_main_flag_print_first_e       = 0x100000,
-    fss_read_main_flag_print_last_e        = 0x200000,
-    fss_read_main_flag_quote_content_e     = 0x400000,
-    fss_read_main_flag_quote_object_e      = 0x800000,
-    fss_read_main_flag_select_e            = 0x1000000,
-    fss_read_main_flag_total_e             = 0x2000000,
-    fss_read_main_flag_trim_e              = 0x4000000,
-    fss_read_main_flag_trim_object_e       = 0x8000000,
-    fss_read_main_flag_version_e           = 0x10000000,
+    fss_read_main_flag_payload_create_e    = 0x40000,
+    fss_read_main_flag_payload_error_e     = 0x80000,
+    fss_read_main_flag_payload_warn_e      = 0x100000,
+    fss_read_main_flag_pipe_e              = 0x200000,
+    fss_read_main_flag_pipe_format_e       = 0x400000,
+    fss_read_main_flag_print_first_e       = 0x800000,
+    fss_read_main_flag_print_last_e        = 0x1000000,
+    fss_read_main_flag_quote_content_e     = 0x2000000,
+    fss_read_main_flag_quote_object_e      = 0x4000000,
+    fss_read_main_flag_select_e            = 0x8000000,
+    fss_read_main_flag_total_e             = 0x10000000,
+    fss_read_main_flag_trim_e              = 0x20000000,
+    fss_read_main_flag_trim_object_e       = 0x40000000,
+    fss_read_main_flag_version_e           = 0x80000000,
   }; // enum
 #endif // _di_fss_read_main_flag_e_
 
@@ -101,6 +107,7 @@ extern "C" {
     fss_read_parameter_line_e,
     fss_read_parameter_name_e,
     fss_read_parameter_object_e,
+    fss_read_parameter_payload_e,
     fss_read_parameter_pipe_e,
     fss_read_parameter_original_e,
     fss_read_parameter_select_e,
@@ -112,7 +119,7 @@ extern "C" {
     { \
       macro_fll_program_console_parameter_standard_initialize, \
       \
-      macro_f_console_parameter_t_initialize_3(fss_read_short_as_s,       fss_read_long_as_s,       1, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(fss_read_short_as_s,       fss_read_long_as_s,       1, f_console_flag_normal_e | f_console_flag_disable_e), \
       macro_f_console_parameter_t_initialize_3(fss_read_short_at_s,       fss_read_long_at_s,       1, f_console_flag_normal_e), \
       macro_f_console_parameter_t_initialize_3(fss_read_short_content_s,  fss_read_long_content_s,  0, f_console_flag_normal_e), \
       macro_f_console_parameter_t_initialize_3(fss_read_short_columns_s,  fss_read_long_columns_s,  0, f_console_flag_normal_e), \
@@ -122,6 +129,7 @@ extern "C" {
       macro_f_console_parameter_t_initialize_3(fss_read_short_line_s,     fss_read_long_line_s,     1, f_console_flag_normal_e), \
       macro_f_console_parameter_t_initialize_3(fss_read_short_name_s,     fss_read_long_name_s,     1, f_console_flag_normal_e), \
       macro_f_console_parameter_t_initialize_3(fss_read_short_object_s,   fss_read_long_object_s,   0, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_5(                           fss_read_long_payload_s,  1, f_console_flag_normal_e | f_console_flag_disable_e), \
       macro_f_console_parameter_t_initialize_3(fss_read_short_pipe_s,     fss_read_long_pipe_s,     0, f_console_flag_normal_e), \
       macro_f_console_parameter_t_initialize_3(fss_read_short_original_s, fss_read_long_original_s, 0, f_console_flag_normal_e), \
       macro_f_console_parameter_t_initialize_3(fss_read_short_select_s,   fss_read_long_select_s,   1, f_console_flag_normal_e), \
@@ -129,7 +137,7 @@ extern "C" {
       macro_f_console_parameter_t_initialize_3(fss_read_short_trim_s,     fss_read_long_trim_s,     0, f_console_flag_normal_e), \
     }
 
-  #define fss_read_parameter_total_d 28
+  #define fss_read_parameter_total_d 29
 #endif // _di_fss_read_parameter_e_
 
 /**

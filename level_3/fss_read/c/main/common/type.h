@@ -128,13 +128,15 @@ extern "C" {
  * process_name:    Process name parameter, usually called by the process_normal() callback.
  * process_total:   Process total parameter, usually called by the process_normal() callback.
  *
- * print_at:             Print at the given location, usually called by the process_normal() callback.
- * print_object:         Print the Object, usually called by the process_normal() callback.
- * print_content:        Print the Content, usually called by the process_normal() callback.
- * print_content_ignore: Print the Content ignore character, usually called by several callbacks within the process_normal() callback for a pipe.
- * print_content_next:   Print the Content next (content separator), usually called by several callbacks within the process_normal() callback.
- * print_object_end:     Print the Object end, usually called by several callbacks within the process_normal() callback.
- * print_set_end:        Print the Content set end, usually called by several callbacks within the process_normal() callback.
+ * print_at:                Print at the given location, usually called by the process_normal() callback.
+ * print_object:            Print the Object, usually called by the process_normal() callback.
+ * print_content:           Print the Content, usually called by the process_normal() callback.
+ * print_content_empty:     Print something when the individual Content is empty (this is not about the Content set).
+ * print_content_empty_set: Print something when the entire Content set is empty for the entire Content set.
+ * print_content_ignore:    Print the Content ignore character, usually called by several callbacks within the process_normal() callback for a pipe.
+ * print_content_next:      Print the Content next (content separator), usually called by several callbacks within the process_normal() callback.
+ * print_object_end:        Print the Object end, usually called by several callbacks within the process_normal() callback.
+ * print_set_end:           Print the Content set end, usually called by several callbacks within the process_normal() callback.
  */
 #ifndef _di_fss_read_callback_t_
   typedef struct {
@@ -152,6 +154,8 @@ extern "C" {
     f_status_t (*print_at)(fl_print_t * const print, const f_number_unsigned_t at, const f_number_unsigneds_t delimits_object, const f_number_unsigneds_t delimits_content);
     f_status_t (*print_object)(fl_print_t * const print, const f_number_unsigned_t at, const f_number_unsigneds_t delimits);
     f_status_t (*print_content)(fl_print_t * const print, const f_range_t range, const uint8_t quote, const f_number_unsigneds_t delimits);
+    //f_status_t (*print_content_empty)(fl_print_t * const print);
+    f_status_t (*print_content_empty_set)(fl_print_t * const print);
     f_status_t (*print_content_ignore)(fl_print_t * const print);
     f_status_t (*print_content_next)(fl_print_t * const print);
     f_status_t (*print_object_end)(fl_print_t * const print);
@@ -160,6 +164,7 @@ extern "C" {
 
   #define fss_read_callback_t_initialize \
     { \
+      0, \
       0, \
       0, \
       0, \

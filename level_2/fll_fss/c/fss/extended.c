@@ -55,27 +55,9 @@ extern "C" {
 
         if (range->start >= range->stop || range->start >= buffer.used) {
           if (state->status == F_fss_found_object || state->status == F_fss_found_object_content_not) {
-            ++objects->used;
-
-            if (objects_quoted) {
-              ++objects_quoted->used;
-            }
-
-            status = f_memory_array_increase(state->step_small, sizeof(f_range_t), (void **) &contents->array[contents->used].array, &contents->array[contents->used].used, &contents->array[contents->used].size);
-            if (F_status_is_error(status)) return;
-
-            contents->array[contents->used++].used = 0;
-
-            if (contents_quoted) {
-              status = f_memory_array_increase(state->step_small, sizeof(uint8_t), (void **) &contents_quoted->array[contents_quoted->used].array, &contents_quoted->array[contents_quoted->used].used, &contents_quoted->array[contents_quoted->used].size);
-              if (F_status_is_error(status)) return;
-
-              contents_quoted->array[contents_quoted->used++].used = 0;
-            }
-
             state->status = F_fss_found_object_content_not;
 
-            return;
+            break;
           }
 
           if (state->status == F_data_not) return;
@@ -92,13 +74,9 @@ extern "C" {
 
         if (state->status == F_fss_found_object) {
           found_data = F_true;
-
           contents->array[contents->used].used = 0;
 
           if (contents_quoted) {
-            state->status = f_memory_array_increase(state->step_small, sizeof(uint8_t), (void **) &contents_quoted->array[contents_quoted->used].array, &contents_quoted->array[contents_quoted->used].used, &contents_quoted->array[contents_quoted->used].size);
-            if (F_status_is_error(state->status)) return;
-
             quoted_content = &contents_quoted->array[contents_quoted->used];
             quoted_content->used = 0;
           }
@@ -109,11 +87,7 @@ extern "C" {
           break;
         }
 
-        if (state->status == F_fss_found_object_content_not) {
-          found_data = F_true;
-
-          break;
-        }
+        if (state->status == F_fss_found_object_content_not) break;
 
       } while (state->status == F_fss_found_object_not);
 
@@ -147,15 +121,23 @@ extern "C" {
         return;
       }
 
+      if (state->status == F_fss_found_object_content_not) {
+        found_data = F_true;
+        contents->array[contents->used].used = 0;
+
+        status = f_memory_array_increase(state->step_small, sizeof(f_range_t), (void **) &contents->array[contents->used].array, &contents->array[contents->used].used, &contents->array[contents->used].size);
+
+        if (F_status_is_error(status)) {
+          state->status = status;
+
+          return;
+        }
+      }
+
       if (range->start >= range->stop || range->start >= buffer.used) {
 
         // When content is found, the range->start is incremented, if content is found at range->stop, then range->start will be > range.stop.
         if (state->status == F_fss_found_object || state->status == F_fss_found_content || state->status == F_fss_found_content_not || state->status == F_fss_found_object_content_not || state->status == F_end_not_group) {
-
-          if (state->status == F_fss_found_object_content_not) {
-            contents->array[contents->used].used = 0;
-          }
-
           ++objects->used;
           ++contents->used;
 
@@ -177,10 +159,6 @@ extern "C" {
         state->status = (state->status == F_end_not_group) ? F_end_not_group_stop : F_okay_stop;
 
         return;
-      }
-
-      if (state->status == F_fss_found_object_content_not) {
-        contents->array[contents->used].used = 0;
       }
 
       ++objects->used;

@@ -7,6 +7,7 @@ extern "C" {
 #ifndef _di_fss_read_f_a_
   const f_string_t fss_read_f_a[] = {
     "f_console_parameter_process",
+    "f_console_parameter_reset",
     "f_file_read_block",
     "f_file_size",
     "f_file_stream_open",

@@ -10,7 +10,7 @@ extern "C" {
 
     if (!void_main) return;
 
-    fss_read_payload_print_help(&((fss_read_main_t *) void_main)->program.message);
+    fss_read_payload_print_message_help(&((fss_read_main_t *) void_main)->program.message);
   }
 #endif // _di_fss_read_payload_process_help_
 
@@ -44,17 +44,75 @@ extern "C" {
     if (F_status_is_error(main->setting.state.status)) {
       if (F_status_set_fine(main->setting.state.status) == F_interrupt) return;
 
-      fll_error_file_print(
-        &main->program.error,
-        F_status_set_fine(main->setting.state.status),
-        macro_fss_read_f(fll_fss_payload_read),
-        fll_error_file_flag_fallback_e,
-        fss_read_file_identify(main->setting.range.start, main->setting.files),
-        f_file_operation_process_s,
-        fll_error_file_type_file_e
-      );
+      if (main->setting.state.status == F_status_set_error(F_okay_stop) || main->setting.state.status == F_status_set_error(F_okay_eos)) {
+        if (main->setting.flag & fss_read_main_flag_payload_error_e) {
+          fss_read_payload_print_problem_payload_missing(&main->program.error);
 
-      return;
+          return;
+        }
+
+        if (main->setting.flag & (fss_read_main_flag_payload_error_e | fss_read_main_flag_payload_warn_e)) {
+          if (main->program.warning.verbosity > f_console_verbosity_normal_e) {
+            fss_read_payload_print_problem_payload_missing(&main->program.warning);
+          }
+
+          main->setting.state.status = F_okay;
+        }
+        else if (main->setting.flag & fss_read_main_flag_payload_create_e) {
+          main->setting.state.status = f_string_dynamic_append_assure(f_string_eol_s, &main->setting.buffer);
+
+          if (F_status_is_error(main->setting.state.status)) {
+            fss_read_print_error(&main->program.error, macro_fss_read_f(f_string_dynamic_append_assure));
+          }
+          else {
+            main->setting.state.status = f_memory_array_increase(main->setting.state.step_small, sizeof(f_range_t), (void **) &main->setting.objects.array, &main->setting.objects.used, &main->setting.objects.size);
+
+            if (F_status_is_error_not(main->setting.state.status)) {
+              main->setting.state.status = f_memory_array_increase(main->setting.state.step_small, sizeof(f_ranges_t), (void **) &main->setting.contents.array, &main->setting.contents.used, &main->setting.contents.size);
+            }
+
+            if (F_status_is_error(main->setting.state.status)) {
+              fss_read_print_error(&main->program.error, macro_fss_read_f(f_memory_array_increase));
+            }
+            else {
+              main->setting.objects.array[main->setting.objects.used].start = main->setting.buffer.used;
+
+              main->setting.state.status = f_string_dynamic_append(f_fss_payload_s, &main->setting.buffer);
+
+              if (F_status_is_error_not(main->setting.state.status)) {
+                main->setting.state.status = f_string_dynamic_append(f_fss_payload_list_open_s, &main->setting.buffer);
+              }
+
+              if (F_status_is_error_not(main->setting.state.status)) {
+                main->setting.state.status = f_string_dynamic_append(f_fss_payload_list_open_end_s, &main->setting.buffer);
+              }
+
+              if (F_status_is_error(main->setting.state.status)) {
+                fss_read_print_error(&main->program.error, macro_fss_read_f(f_string_dynamic_append));
+              }
+              else {
+                main->setting.objects.array[main->setting.objects.used++].stop = main->setting.objects.array[main->setting.objects.used].start + f_fss_payload_s.used - 1;
+                main->setting.contents.array[main->setting.contents.used++].used = 0;
+
+                main->setting.state.status = F_okay;
+              }
+            }
+          }
+        }
+      }
+      else {
+        fll_error_file_print(
+          &main->program.error,
+          F_status_set_fine(main->setting.state.status),
+          macro_fss_read_f(fll_fss_payload_read),
+          fll_error_file_flag_fallback_e,
+          fss_read_file_identify(main->setting.range.start, main->setting.files),
+          f_file_operation_process_s,
+          fll_error_file_type_file_e
+        );
+
+        return;
+      }
     }
 
     if (main->setting.state.status == F_data_not_stop || main->setting.state.status == F_data_not_eos) {
@@ -93,22 +151,32 @@ extern "C" {
 
     if (!main) return;
 
-    f_number_unsigneds_t * const values = &main->program.parameters.array[fss_read_parameter_object_e].values;
-    f_string_static_t * const argv = main->program.parameters.arguments.array;
+    f_number_unsigneds_t * const values = &main->program.parameters.array[fss_read_parameter_payload_e].values;
 
-    if ((main->program.parameters.array[fss_read_parameter_object_e].result & f_console_result_value_e) && values->used) {
-      for (f_number_unsigned_t i = 0; i < values->used; ++i) {
+    if ((main->program.parameters.array[fss_read_parameter_payload_e].result & f_console_result_value_e) && values->used) {
+      f_string_static_t * const argv = main->program.parameters.arguments.array;
 
-        if (fss_read_signal_check(main)) return;
+      if (f_compare_dynamic(argv[values->array[values->used - 1]], fss_read_string_create_s) == F_equal_to) {
+        main->setting.flag |= fss_read_main_flag_payload_create_e;
+        main->setting.flag &= ~(fss_read_main_flag_payload_error_e | fss_read_main_flag_payload_warn_e);
+      }
+      else if (f_compare_dynamic(argv[values->array[values->used - 1]], fss_read_string_none_s) == F_equal_to) {
+        main->setting.flag |= fss_read_main_flag_payload_error_e;
+        main->setting.flag &= ~(fss_read_main_flag_payload_create_e | fss_read_main_flag_payload_error_e | fss_read_main_flag_payload_warn_e);
+      }
+      else if (f_compare_dynamic(argv[values->array[values->used - 1]], fss_read_string_error_s) == F_equal_to) {
+        main->setting.flag |= fss_read_main_flag_payload_error_e;
+        main->setting.flag &= ~(fss_read_main_flag_payload_create_e | fss_read_main_flag_payload_warn_e);
+      }
+      else if (f_compare_dynamic(argv[values->array[values->used - 1]], fss_read_string_warn_s) == F_equal_to) {
+        main->setting.flag |= fss_read_main_flag_payload_warn_e;
+        main->setting.flag &= ~(fss_read_main_flag_payload_create_e | fss_read_main_flag_payload_error_e);
+      }
+      else {
+        main->setting.state.status = F_status_set_error(F_parameter);
 
-        if (f_compare_dynamic(argv[values->array[i]], fss_read_payload_s) == F_equal_to && i + 1 < values->used) {
-          main->setting.state.status = F_status_set_error(F_parameter);
-
-          fss_read_payload_print_error_payload_not_last(&main->program.error);
-
-          return;
-        }
-      } // for
+        fss_read_payload_print_error_parameter_value_payload(&main->program.error, argv[values->array[values->used - 1]]);
+      }
     }
   }
 #endif // _di_fss_read_payload_setting_load_

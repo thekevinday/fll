@@ -10,7 +10,7 @@ extern "C" {
 
     if (!void_main) return;
 
-    fss_read_embedded_list_print_help(&((fss_read_main_t *) void_main)->program.message);
+    fss_read_embedded_list_print_message_help(&((fss_read_main_t *) void_main)->program.message);
   }
 #endif // _di_fss_read_embedded_list_process_help_
 

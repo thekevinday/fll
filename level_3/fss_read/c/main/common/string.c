@@ -20,11 +20,14 @@ extern "C" {
 #endif // _di_fss_read_pipe_s_
 
 #ifndef _di_fss_read_s_
+  const f_string_static_t fss_read_string_create_s = macro_f_string_static_t_initialize_1(FSS_READ_string_create_s, 0, FSS_READ_string_create_s_length);
+  const f_string_static_t fss_read_string_error_s = macro_f_string_static_t_initialize_1(FSS_READ_string_error_s, 0, FSS_READ_string_error_s_length);
+  const f_string_static_t fss_read_string_none_s = macro_f_string_static_t_initialize_1(FSS_READ_string_none_s, 0, FSS_READ_string_none_s_length);
   const f_string_static_t fss_read_string_two_s = macro_f_string_static_t_initialize_1(FSS_READ_string_two_s, 0, FSS_READ_string_two_s_length);
+  const f_string_static_t fss_read_string_warn_s = macro_f_string_static_t_initialize_1(FSS_READ_string_warn_s, 0, FSS_READ_string_warn_s_length);
 #endif // _di_fss_read_s_
 
 #ifndef _di_fss_read_delimit_mode_s_
-  const f_string_static_t fss_read_delimit_mode_name_none_s = macro_f_string_static_t_initialize_1(FSS_READ_delimit_mode_name_none_s, 0, FSS_READ_delimit_mode_name_none_s_length);
   const f_string_static_t fss_read_delimit_mode_name_all_s = macro_f_string_static_t_initialize_1(FSS_READ_delimit_mode_name_all_s, 0, FSS_READ_delimit_mode_name_all_s_length);
   const f_string_static_t fss_read_delimit_mode_name_object_s = macro_f_string_static_t_initialize_1(FSS_READ_delimit_mode_name_object_s, 0, FSS_READ_delimit_mode_name_object_s_length);
   const f_string_static_t fss_read_delimit_mode_name_greater_s = macro_f_string_static_t_initialize_1(FSS_READ_delimit_mode_name_greater_s, 0, FSS_READ_delimit_mode_name_greater_s_length);
@@ -58,6 +61,7 @@ extern "C" {
   const f_string_static_t fss_read_long_line_s = macro_f_string_static_t_initialize_1(FSS_READ_long_line_s, 0, FSS_READ_long_line_s_length);
   const f_string_static_t fss_read_long_name_s = macro_f_string_static_t_initialize_1(FSS_READ_long_name_s, 0, FSS_READ_long_name_s_length);
   const f_string_static_t fss_read_long_object_s = macro_f_string_static_t_initialize_1(FSS_READ_long_object_s, 0, FSS_READ_long_object_s_length);
+  const f_string_static_t fss_read_long_payload_s = macro_f_string_static_t_initialize_1(FSS_READ_long_payload_s, 0, FSS_READ_long_payload_s_length);
   const f_string_static_t fss_read_long_pipe_s = macro_f_string_static_t_initialize_1(FSS_READ_long_pipe_s, 0, FSS_READ_long_pipe_s_length);
   const f_string_static_t fss_read_long_original_s = macro_f_string_static_t_initialize_1(FSS_READ_long_original_s, 0, FSS_READ_long_original_s_length);
   const f_string_static_t fss_read_long_select_s = macro_f_string_static_t_initialize_1(FSS_READ_long_select_s, 0, FSS_READ_long_select_s_length);

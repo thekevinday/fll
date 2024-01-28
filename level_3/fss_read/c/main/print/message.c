@@ -110,7 +110,7 @@ extern "C" {
     }
 
     fl_print_format("  The parameter %[%r%r%] accepts the following:%r", print->to, set->notable, f_console_symbol_long_normal_s, fss_read_long_delimit_s, set->notable, f_string_eol_s);
-    fl_print_format("  - %[%r%]: Do not apply delimits.%r", print->to, set->notable, fss_read_delimit_mode_name_none_s, set->notable, f_string_eol_s);
+    fl_print_format("  - %[%r%]: Do not apply delimits.%r", print->to, set->notable, fss_read_string_none_s, set->notable, f_string_eol_s);
     fl_print_format("  - %[%r%]: (default) Apply all delimits.%r", print->to, set->notable, fss_read_delimit_mode_name_all_s, set->notable, f_string_eol_s);
     fl_print_format("  - %[%r%]: Apply delimits for Objects.%r", print->to, set->notable, fss_read_delimit_mode_name_object_s, set->notable, f_string_eol_s); // @todo this isn't in embedded_list print, confirm/deny if this is intended or not.
     fl_print_format("  - A number, 0 or greater: apply delimits for Content at the specified depth.%r", print->to, f_string_eol_s);
@@ -120,7 +120,7 @@ extern "C" {
     fl_print_format("  The %[%r%r%] parameter may be specified multiple times to customize the delimit behavior.%r", print->to, set->notable, f_console_symbol_long_normal_s, fss_read_long_delimit_s, set->notable, f_string_eol_s);
 
     fl_print_format("  The %[%r%r%]", print->to, set->notable, f_console_symbol_long_normal_s, fss_read_long_delimit_s, set->notable);
-    fl_print_format(" values %[%r%]", print->to, set->notable, fss_read_delimit_mode_name_none_s, set->notable);
+    fl_print_format(" values %[%r%]", print->to, set->notable, fss_read_string_none_s, set->notable);
     fl_print_format(" and %[%r%],", print->to, set->notable, fss_read_delimit_mode_name_all_s, set->notable);
     fl_print_format(" overrule all other delimit values.%r%r", print->to, f_string_eol_s, f_string_eol_s);
 

@@ -92,11 +92,23 @@ extern "C" {
  * A collection of static strings associated with FSS Read.
  */
 #ifndef _di_fss_read_s_
-  #define FSS_READ_string_two_s "two"
+  #define FSS_READ_string_create_s "create"
+  #define FSS_READ_string_error_s  "error"
+  #define FSS_READ_string_none_s   "none"
+  #define FSS_READ_string_two_s    "two"
+  #define FSS_READ_string_warn_s   "warn"
 
-  #define FSS_READ_string_two_s_length 3
+  #define FSS_READ_string_create_s_length 6
+  #define FSS_READ_string_error_s_length  5
+  #define FSS_READ_string_none_s_length   4
+  #define FSS_READ_string_two_s_length    3
+  #define FSS_READ_string_warn_s_length   4
 
+  extern const f_string_static_t fss_read_string_create_s;
+  extern const f_string_static_t fss_read_string_error_s;
+  extern const f_string_static_t fss_read_string_none_s;
   extern const f_string_static_t fss_read_string_two_s;
+  extern const f_string_static_t fss_read_string_warn_s;
 #endif // _di_fss_read_s_
 
 /**
@@ -113,19 +125,16 @@ extern "C" {
  *   - object:                 Objects arre to have delimits applied.
  */
 #ifndef _di_fss_read_delimit_mode_s_
-  #define FSS_READ_delimit_mode_name_none_s    "none"
   #define FSS_READ_delimit_mode_name_all_s     "all"
   #define FSS_READ_delimit_mode_name_object_s  "object"
   #define FSS_READ_delimit_mode_name_greater_s "+"
   #define FSS_READ_delimit_mode_name_lesser_s  "-"
 
-  #define FSS_READ_delimit_mode_name_none_s_length    4
   #define FSS_READ_delimit_mode_name_all_s_length     3
   #define FSS_READ_delimit_mode_name_object_s_length  6
   #define FSS_READ_delimit_mode_name_greater_s_length 1
   #define FSS_READ_delimit_mode_name_lesser_s_length  1
 
-  extern const f_string_static_t fss_read_delimit_mode_name_none_s;
   extern const f_string_static_t fss_read_delimit_mode_name_all_s;
   extern const f_string_static_t fss_read_delimit_mode_name_object_s;
   extern const f_string_static_t fss_read_delimit_mode_name_greater_s;
@@ -162,6 +171,7 @@ extern "C" {
   #define FSS_READ_long_line_s     "line"
   #define FSS_READ_long_name_s     "name"
   #define FSS_READ_long_object_s   "object"
+  #define FSS_READ_long_payload_s  "payload"
   #define FSS_READ_long_pipe_s     "pipe"
   #define FSS_READ_long_original_s "original"
   #define FSS_READ_long_select_s   "select"
@@ -194,6 +204,7 @@ extern "C" {
   #define FSS_READ_long_line_s_length     4
   #define FSS_READ_long_name_s_length     4
   #define FSS_READ_long_object_s_length   6
+  #define FSS_READ_long_payload_s_length  7
   #define FSS_READ_long_pipe_s_length     4
   #define FSS_READ_long_original_s_length 8
   #define FSS_READ_long_select_s_length   6
@@ -226,6 +237,7 @@ extern "C" {
   extern const f_string_static_t fss_read_long_line_s;
   extern const f_string_static_t fss_read_long_name_s;
   extern const f_string_static_t fss_read_long_object_s;
+  extern const f_string_static_t fss_read_long_payload_s;
   extern const f_string_static_t fss_read_long_pipe_s;
   extern const f_string_static_t fss_read_long_original_s;
   extern const f_string_static_t fss_read_long_select_s;

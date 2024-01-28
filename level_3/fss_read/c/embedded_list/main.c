@@ -36,15 +36,16 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
   data.callback.print_at = &fss_read_print_at;
   data.callback.print_content = &fss_read_print_content;
+  //data.callback.print_content_empty = 0;
+  data.callback.print_content_empty_set = 0;
   data.callback.print_content_ignore = &fss_read_print_content_ignore;
   data.callback.print_content_next = 0;
   data.callback.print_object = &fss_read_print_object;
-  data.callback.print_object_end = &fss_read_embedded_list_print_object_end;
+  data.callback.print_object_end = &fss_read_embedded_list_print_data_object_end;
   data.callback.print_set_end = &fss_read_print_set_end;
 
   f_console_parameter_t parameters[] = fss_read_console_parameter_t_initialize;
   data.program.parameters.array = parameters;
-  data.program.parameters.array[fss_read_parameter_as_e].flag |= f_console_flag_disable_e;
   data.program.parameters.used = fss_read_parameter_total_d;
   data.program.environment = envp;
 

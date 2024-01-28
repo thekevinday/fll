@@ -5,8 +5,6 @@ extern "C" {
 #endif
 
 #ifndef _di_fss_read_payload_s_
-  const f_string_static_t fss_read_payload_s = macro_f_string_static_t_initialize_1(FSS_READ_payload_s, 0, FSS_READ_payload_s_length);
-
   const f_string_static_t fss_read_payload_standard_s = macro_f_string_static_t_initialize_1(FSS_READ_payload_standard_s, 0, FSS_READ_payload_standard_s_length);
 
   const f_string_static_t fss_read_payload_program_name_s = macro_f_string_static_t_initialize_1(FSS_READ_payload_program_name_s, 0, FSS_READ_payload_program_name_s_length);

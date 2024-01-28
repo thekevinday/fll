@@ -20,8 +20,6 @@ extern "C" {
  * The FSS-000E (Payload) specific strings.
  */
 #ifndef _di_fss_read_payload_s_
-  #define FSS_READ_payload_s "payload"
-
   #define FSS_READ_payload_standard_s "FSS-000E (Payload)"
 
   #define FSS_READ_payload_program_name_s      "fss_payload_read"
@@ -33,8 +31,6 @@ extern "C" {
   #define FSS_READ_format_code_machine_000e_s "payload"
   #define FSS_READ_format_code_name_000e_s    "Payload"
 
-  #define FSS_READ_payload_s_length 7
-
   #define FSS_READ_payload_standard_s_length 18
 
   #define FSS_READ_payload_program_name_s_length      16
@@ -45,8 +41,6 @@ extern "C" {
   #define FSS_READ_format_code_human_000e_s_length   7
   #define FSS_READ_format_code_machine_000e_s_length 7
   #define FSS_READ_format_code_name_000e_s_length    7
-
-  extern const f_string_static_t fss_read_payload_s;
 
   extern const f_string_static_t fss_read_payload_standard_s;
 

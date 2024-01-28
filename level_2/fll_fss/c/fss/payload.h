@@ -33,7 +33,7 @@ extern "C" {
  * This processes only the outermost part and specially handles the payload.
  * The inner data, such as the fss-0001 inside of the "header", should be directly processed via the appropriate function.
  *
- * The "payload" Object is required and if it is not file, this function returns with the error flag set.
+ * The "payload" Object is required and if it is not found, this function returns with the error flag set.
  *
  * @param buffer
  *   The buffer to read from.
@@ -72,11 +72,9 @@ extern "C" {
  *     F_data_not_stop no data to read due start location being greater than stop location.
  *
  *     F_fss_found_object_content_not (with error bit) When payload Content is missing.
- *     F_data_not_eos (with error bit) no data to read due start location being greater than or equal to buffer size, except that no "payload" is found.
- *     F_data_not_stop (with error bit) no data to read due start location being greater than stop location, except that no "payload" is found.
  *     F_okay (with error bit) on success, except that no "payload" is found.
- *     F_okay_eos (with error bit) on success after reaching the end of the buffer, except that no "payload" is found.
- *     F_okay_stop (with error bit) on success after reaching stopping point, except that no "payload" is found.
+ *     F_okay_eos (with error bit) on success, but no "payload" is found and start location is now greater than or equal to buffer size.
+ *     F_okay_stop (with error bit) on success, but no "payload" is found and start location is now greater than stop location.
  *     F_number_overflow (with error bit) if the maximum buffer size is reached.
  *     F_parameter (with error bit) if a parameter is invalid.
  *

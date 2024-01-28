@@ -36,20 +36,9 @@ extern "C" {
 
         if (range->start >= range->stop || range->start >= buffer.used) {
           if (state->status == F_fss_found_object || state->status == F_fss_found_object_content_not) {
-            ++objects->used;
-
-            status = f_memory_array_increase(state->step_small, sizeof(f_range_t), (void **) &contents->array[contents->used].array, &contents->array[contents->used].used, &contents->array[contents->used].size);
-
-            if (F_status_is_error(status)) {
-              state->status = status;
-
-              return;
-            }
-
-            contents->array[contents->used++].used = 0;
             state->status = F_fss_found_object_content_not;
 
-            return;
+            break;
           }
 
           if (state->status == F_data_not) return;
@@ -66,7 +55,6 @@ extern "C" {
 
         if (state->status == F_fss_found_object) {
           found_data = F_true;
-
           contents->array[contents->used].used = 0;
 
           fl_fss_basic_list_content_read(buffer, range, &contents->array[contents->used], contents_delimits ? contents_delimits : objects_delimits, comments, state);
@@ -75,19 +63,7 @@ extern "C" {
           break;
         }
 
-        if (state->status == F_fss_found_object_content_not) {
-          found_data = F_true;
-
-          status = f_memory_array_increase(state->step_small, sizeof(f_range_t), (void **) &contents->array[contents->used].array, &contents->array[contents->used].used, &contents->array[contents->used].size);
-
-          if (F_status_is_error(status)) {
-            state->status = status;
-
-            return;
-          }
-
-          break;
-        }
+        if (state->status == F_fss_found_object_content_not) break;
 
       } while (state->status == F_fss_found_object_not);
 
@@ -112,15 +88,24 @@ extern "C" {
         return;
       }
 
+      if (state->status == F_fss_found_object_content_not) {
+        found_data = F_true;
+
+        status = f_memory_array_increase(state->step_small, sizeof(f_range_t), (void **) &contents->array[contents->used].array, &contents->array[contents->used].used, &contents->array[contents->used].size);
+
+        if (F_status_is_error(status)) {
+          state->status = status;
+
+          return;
+        }
+
+        contents->array[contents->used].used = 0;
+      }
+
       if (range->start >= range->stop || range->start >= buffer.used) {
 
         // When content is found, the range->start is incremented, if content is found at range->stop, then range->start will be > range.stop.
         if (state->status == F_fss_found_object || state->status == F_fss_found_content || state->status == F_fss_found_content_not || state->status == F_fss_found_object_content_not) {
-
-          if (state->status == F_fss_found_object_content_not) {
-            contents->array[contents->used].used = 0;
-          }
-
           ++objects->used;
           ++contents->used;
         }
@@ -128,10 +113,6 @@ extern "C" {
         state->status = (range->start >= buffer.used) ? F_okay_eos : F_okay_stop;
 
         return;
-      }
-
-      if (state->status == F_fss_found_object_content_not) {
-        contents->array[contents->used].used = 0;
       }
 
       ++objects->used;

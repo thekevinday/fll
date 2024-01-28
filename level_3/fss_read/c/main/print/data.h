@@ -95,6 +95,30 @@ extern "C" {
 #endif // _di_fss_read_print_content_
 
 /**
+ * Print the set end via the set end callback when Content is empty and the empty flag is set.
+ *
+ * This locks, uses, and unlocks the file stream.
+ *
+ * @param print
+ *   The output structure to print to.
+ *
+ *   The print.custom is expected to be of type fss_read_main_t.
+ *
+ *   This does not alter print.custom.setting.state.status.
+ *
+ * @return
+ *   F_okay on success.
+ *   F_output_not on success, but no printing is performed.
+ *
+ *   F_output_not (with error bit) if a parameter is NULL.
+ *
+ * @see fll_print_dynamic_raw()
+ */
+#ifndef _di_fss_read_print_content_empty_set_end_
+  extern f_status_t fss_read_print_content_empty_set_end(fl_print_t * const print);
+#endif // _di_fss_read_print_content_empty_set_end_
+
+/**
  * Print the ignore character for Content.
  *
  * This locks, uses, and unlocks the file stream.

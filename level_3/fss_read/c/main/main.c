@@ -28,6 +28,7 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
   f_console_parameter_t parameters[] = fss_read_console_parameter_t_initialize;
   data.program.parameters.array = parameters;
+  data.program.parameters.array[fss_read_parameter_as_e].flag &= ~f_console_flag_disable_e;
   data.program.parameters.used = fss_read_parameter_total_d;
   data.program.environment = envp;
 
@@ -87,7 +88,7 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
     if (!void_main) return;
 
-    fss_read_main_print_help(&((fss_read_main_t *) void_main)->program.message);
+    fss_read_main_print_message_help(&((fss_read_main_t *) void_main)->program.message);
   }
 #endif // _di_fss_read_main_process_help_
 
@@ -96,6 +97,7 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
     if (!main || F_status_is_error(main->setting.state.status) || (main->setting.flag & fss_read_main_flag_version_e)) return;
 
+    // Use the default standard of: FSS-0000 (Basic)
     main->callback.process_help = &fss_read_main_process_help;
     main->callback.process_last_line = &fss_read_process_last_line;
     main->callback.process_normal = &fss_read_process_normal;
@@ -103,14 +105,20 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
     main->callback.process_at = &fss_read_process_normal_at;
     main->callback.process_at_line = &fss_read_process_normal_at_line;
     main->callback.process_columns = &fss_read_process_normal_columns;
+    main->callback.process_load = &fss_read_basic_process_load;
     main->callback.process_name = &fss_read_process_normal_name;
+    main->callback.process_total = &fss_read_process_normal_total;
 
     main->callback.print_at = &fss_read_print_at;
     main->callback.print_content = &fss_read_print_content;
-    main->callback.print_content_ignore = &fss_read_print_content_ignore;
+    //main->callback.print_content_empty = 0;
+    main->callback.print_content_empty_set = &fss_read_print_content_empty_set_end;
+    main->callback.print_content_ignore = 0;
+    main->callback.print_content_next = 0;
     main->callback.print_object = &fss_read_print_object;
+    main->callback.print_object_end = &fss_read_basic_print_data_object_end;
+    main->callback.print_set_end = &fss_read_print_set_end;
 
-    // Setup default standard (except for process_help): FSS-0000 (Basic).
     main->setting.standard = fss_read_basic_standard_s;
 
     main->setting.flag &= ~fss_read_main_flag_content_has_close_e;
@@ -118,200 +126,265 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
     main->setting.flag &= ~fss_read_main_flag_depth_multiple_e;
     main->setting.flag &= ~fss_read_main_flag_object_as_line_e;
     main->setting.flag &= ~fss_read_main_flag_object_trim_e;
+    main->setting.flag &= ~fss_read_main_flag_payload_error_e;
+    main->setting.flag &= ~fss_read_main_flag_payload_warn_e;
     main->setting.flag &= ~fss_read_main_flag_trim_object_e;
 
     main->setting.flag |= fss_read_main_flag_line_single_e;
     main->setting.flag |= fss_read_main_flag_quote_content_e | fss_read_main_flag_quote_object_e;
 
-    main->setting.flag |= fss_read_main_flag_line_single_e;
-    main->setting.flag |= fss_read_main_flag_quote_content_e | fss_read_main_flag_quote_object_e;
-
-    main->callback.process_load = &fss_read_basic_process_load;
-    main->callback.process_total = &fss_read_process_normal_total;
-
-    main->callback.print_content_next = 0;
-    main->callback.print_object_end = &fss_read_basic_print_object_end;
-    main->callback.print_set_end = &fss_read_print_set_end;
-
     if (main->program.parameters.array[fss_read_parameter_as_e].result & f_console_result_value_e && main->program.parameters.array[fss_read_parameter_as_e].values.used) {
+      const f_number_unsigned_t index = main->program.parameters.array[fss_read_parameter_as_e].values.array[main->program.parameters.array[fss_read_parameter_as_e].values.used - 1];
+      const f_string_static_t as = main->program.parameters.arguments.array[index];
 
-      f_number_unsigned_t index = 0;
-      f_string_static_t *argv = main->program.parameters.arguments.array;
+      if (f_compare_dynamic(as, fss_read_format_code_short_0000_s) == F_equal_to ||
+          f_compare_dynamic(as, fss_read_format_code_long_0000_s) == F_equal_to ||
+          f_compare_dynamic(as, fss_read_format_code_human_0000_s) == F_equal_to ||
+          f_compare_dynamic(as, fss_read_format_code_machine_0000_s) == F_equal_to) {
 
-      for (f_number_unsigned_t i = 0; i < main->program.parameters.array[fss_read_parameter_as_e].values.used; ++i) {
+        main->setting.standard = fss_read_basic_standard_s;
 
-        index = main->program.parameters.array[fss_read_parameter_as_e].values.array[i];
+        // Remove flags not supported for this standard.
+        main->setting.flag &= ~fss_read_main_flag_content_has_close_e;
+        main->setting.flag &= ~fss_read_main_flag_content_multiple_e;
+        main->setting.flag &= ~fss_read_main_flag_depth_multiple_e;
+        main->setting.flag &= ~fss_read_main_flag_object_as_line_e;
+        main->setting.flag &= ~fss_read_main_flag_object_trim_e;
+        main->setting.flag &= ~fss_read_main_flag_payload_error_e;
+        main->setting.flag &= ~fss_read_main_flag_payload_warn_e;
+        main->setting.flag &= ~fss_read_main_flag_trim_object_e;
 
-        if (f_compare_dynamic(argv[index], fss_read_format_code_short_0000_s) == F_equal_to ||
-            f_compare_dynamic(argv[index], fss_read_format_code_long_0000_s) == F_equal_to ||
-            f_compare_dynamic(argv[index], fss_read_format_code_human_0000_s) == F_equal_to ||
-            f_compare_dynamic(argv[index], fss_read_format_code_machine_0000_s) == F_equal_to) {
+        main->setting.flag |= fss_read_main_flag_line_single_e;
+        main->setting.flag |= fss_read_main_flag_quote_content_e | fss_read_main_flag_quote_object_e;
 
-          main->setting.standard = fss_read_basic_standard_s;
+        main->program.parameters.array[fss_read_parameter_payload_e].flag |= f_console_flag_disable_e;
 
-          // Remove flags not supported for this standard.
-          main->setting.flag &= ~fss_read_main_flag_content_has_close_e;
-          main->setting.flag &= ~fss_read_main_flag_content_multiple_e;
-          main->setting.flag &= ~fss_read_main_flag_depth_multiple_e;
-          main->setting.flag &= ~fss_read_main_flag_object_as_line_e;
-          main->setting.flag &= ~fss_read_main_flag_object_trim_e;
-          main->setting.flag &= ~fss_read_main_flag_trim_object_e;
+        main->callback.process_help = &fss_read_basic_process_help;
+        main->callback.process_load = &fss_read_basic_process_load;
+        main->callback.process_total = &fss_read_process_normal_total;
 
-          main->setting.flag |= fss_read_main_flag_line_single_e;
-          main->setting.flag |= fss_read_main_flag_quote_content_e | fss_read_main_flag_quote_object_e;
+        main->callback.print_content = &fss_read_print_content;
+        //main->callback.print_content_empty = 0;
+        main->callback.print_content_empty_set = &fss_read_print_content_empty_set_end;
+        main->callback.print_content_ignore = 0;
+        main->callback.print_content_next = 0;
+        main->callback.print_object = &fss_read_print_object;
+        main->callback.print_object_end = &fss_read_basic_print_data_object_end;
+        main->callback.print_set_end = &fss_read_print_set_end;
+      }
+      else if (f_compare_dynamic(as, fss_read_format_code_short_0001_s) == F_equal_to ||
+               f_compare_dynamic(as, fss_read_format_code_long_0001_s) == F_equal_to ||
+               f_compare_dynamic(as, fss_read_format_code_human_0001_s) == F_equal_to ||
+               f_compare_dynamic(as, fss_read_format_code_machine_0001_s) == F_equal_to) {
 
-          main->callback.process_help = &fss_read_basic_process_help;
-          main->callback.process_load = &fss_read_basic_process_load;
-          main->callback.process_total = &fss_read_process_normal_total;
+        main->setting.standard = fss_read_extended_standard_s;
 
-          main->callback.print_content_next = 0;
-          main->callback.print_object_end = &fss_read_basic_print_object_end;
-          main->callback.print_set_end = &fss_read_print_set_end;
-        }
-        else if (f_compare_dynamic(argv[index], fss_read_format_code_short_0001_s) == F_equal_to ||
-                 f_compare_dynamic(argv[index], fss_read_format_code_long_0001_s) == F_equal_to ||
-                 f_compare_dynamic(argv[index], fss_read_format_code_human_0001_s) == F_equal_to ||
-                 f_compare_dynamic(argv[index], fss_read_format_code_machine_0001_s) == F_equal_to) {
+        // Remove flags not supported for this standard.
+        main->setting.flag &= ~fss_read_main_flag_content_has_close_e;
+        main->setting.flag &= ~fss_read_main_flag_depth_multiple_e;
+        main->setting.flag &= ~fss_read_main_flag_object_as_line_e;
+        main->setting.flag &= ~fss_read_main_flag_object_trim_e;
+        main->setting.flag &= ~fss_read_main_flag_payload_error_e;
+        main->setting.flag &= ~fss_read_main_flag_payload_warn_e;
+        main->setting.flag &= ~fss_read_main_flag_trim_object_e;
 
-          main->setting.standard = fss_read_extended_standard_s;
+        main->setting.flag |= fss_read_main_flag_line_single_e | fss_read_main_flag_content_multiple_e;
+        main->setting.flag |= fss_read_main_flag_quote_content_e | fss_read_main_flag_quote_object_e;
 
-          // Remove flags not supported for this standard.
-          main->setting.flag &= ~fss_read_main_flag_content_has_close_e;
-          main->setting.flag &= ~fss_read_main_flag_depth_multiple_e;
-          main->setting.flag &= ~fss_read_main_flag_object_as_line_e;
-          main->setting.flag &= ~fss_read_main_flag_object_trim_e;
-          main->setting.flag &= ~fss_read_main_flag_trim_object_e;
+        main->program.parameters.array[fss_read_parameter_payload_e].flag |= f_console_flag_disable_e;
 
-          main->setting.flag |= fss_read_main_flag_line_single_e | fss_read_main_flag_content_multiple_e;
-          main->setting.flag |= fss_read_main_flag_quote_content_e | fss_read_main_flag_quote_object_e;
+        main->callback.process_help = &fss_read_extended_process_help;
+        main->callback.process_load = &fss_read_extended_process_load;
+        main->callback.process_total = &fss_read_process_normal_total;
 
-          main->callback.process_help = &fss_read_extended_process_help;
-          main->callback.process_load = &fss_read_extended_process_load;
-          main->callback.process_total = &fss_read_process_normal_total;
+        //main->callback.print_content_empty = 0;
+        main->callback.print_content_empty_set = &fss_read_print_content_empty_set_end;
+        main->callback.print_content_next = &fss_read_extended_print_data_content_next;
+        main->callback.print_object_end = &fss_read_extended_print_data_object_end;
+        main->callback.print_set_end = &fss_read_print_set_end;
+      }
+      else if (f_compare_dynamic(as, fss_read_format_code_short_0002_s) == F_equal_to ||
+               f_compare_dynamic(as, fss_read_format_code_long_0002_s) == F_equal_to ||
+               f_compare_dynamic(as, fss_read_format_code_human_0002_s) == F_equal_to ||
+               f_compare_dynamic(as, fss_read_format_code_machine_0002_s) == F_equal_to) {
 
-          main->callback.print_content_next = &fss_read_extended_print_content_next;
-          main->callback.print_object_end = &fss_read_extended_print_object_end;
-          main->callback.print_set_end = &fss_read_print_set_end;
-        }
-        else if (f_compare_dynamic(argv[index], fss_read_format_code_short_0002_s) == F_equal_to ||
-                 f_compare_dynamic(argv[index], fss_read_format_code_long_0002_s) == F_equal_to ||
-                 f_compare_dynamic(argv[index], fss_read_format_code_human_0002_s) == F_equal_to ||
-                 f_compare_dynamic(argv[index], fss_read_format_code_machine_0002_s) == F_equal_to) {
+        main->setting.standard = fss_read_basic_list_standard_s;
 
-          main->setting.standard = fss_read_basic_list_standard_s;
+        // Remove flags not supported for this standard.
+        main->setting.flag &= ~fss_read_main_flag_content_has_close_e;
+        main->setting.flag &= ~fss_read_main_flag_content_multiple_e;
+        main->setting.flag &= ~fss_read_main_flag_depth_multiple_e;
+        main->setting.flag &= ~fss_read_main_flag_line_single_e;
+        main->setting.flag &= ~fss_read_main_flag_payload_error_e;
+        main->setting.flag &= ~fss_read_main_flag_payload_warn_e;
+        main->setting.flag &= ~fss_read_main_flag_quote_content_e;
+        main->setting.flag &= ~fss_read_main_flag_quote_object_e;
 
-          // Remove flags not supported for this standard.
-          main->setting.flag &= ~fss_read_main_flag_content_has_close_e;
-          main->setting.flag &= ~fss_read_main_flag_content_multiple_e;
-          main->setting.flag &= ~fss_read_main_flag_depth_multiple_e;
-          main->setting.flag &= ~fss_read_main_flag_line_single_e;
-          main->setting.flag &= ~fss_read_main_flag_quote_content_e;
-          main->setting.flag &= ~fss_read_main_flag_quote_object_e;
+        main->setting.flag |= fss_read_main_flag_object_as_line_e | fss_read_main_flag_object_trim_e;
 
-          main->setting.flag |= fss_read_main_flag_object_as_line_e | fss_read_main_flag_object_trim_e;
+        main->program.parameters.array[fss_read_parameter_payload_e].flag |= f_console_flag_disable_e;
 
-          main->callback.process_help = &fss_read_basic_list_process_help;
-          main->callback.process_load = &fss_read_basic_list_process_load;
-          main->callback.process_total = &fss_read_process_normal_total_multiple;
+        main->callback.process_help = &fss_read_basic_list_process_help;
+        main->callback.process_load = &fss_read_basic_list_process_load;
+        main->callback.process_total = &fss_read_process_normal_total_multiple;
 
-          main->callback.print_content_next = 0;
-          main->callback.print_object_end = &fss_read_basic_list_print_object_end;
-          main->callback.print_set_end = &fss_read_print_set_end_no_eol;
-        }
-        else if (f_compare_dynamic(argv[index], fss_read_format_code_short_0003_s) == F_equal_to ||
-                 f_compare_dynamic(argv[index], fss_read_format_code_long_0003_s) == F_equal_to ||
-                 f_compare_dynamic(argv[index], fss_read_format_code_human_0003_s) == F_equal_to ||
-                 f_compare_dynamic(argv[index], fss_read_format_code_machine_0003_s) == F_equal_to) {
+        //main->callback.print_content_empty = 0;
+        main->callback.print_content_empty_set = 0;
+        main->callback.print_content_next = 0;
+        main->callback.print_object_end = &fss_read_basic_list_print_data_object_end;
+        main->callback.print_set_end = &fss_read_print_set_end_no_eol;
+      }
+      else if (f_compare_dynamic(as, fss_read_format_code_short_0003_s) == F_equal_to ||
+               f_compare_dynamic(as, fss_read_format_code_long_0003_s) == F_equal_to ||
+               f_compare_dynamic(as, fss_read_format_code_human_0003_s) == F_equal_to ||
+               f_compare_dynamic(as, fss_read_format_code_machine_0003_s) == F_equal_to) {
 
-          main->setting.standard = fss_read_extended_list_standard_s;
+        main->setting.standard = fss_read_extended_list_standard_s;
 
-          // Remove flags not supported for this standard.
-          main->setting.flag &= ~fss_read_main_flag_line_single_e;
-          main->setting.flag &= ~fss_read_main_flag_content_multiple_e;
-          main->setting.flag &= ~fss_read_main_flag_depth_multiple_e;
-          main->setting.flag &= ~fss_read_main_flag_quote_content_e;
-          main->setting.flag &= ~fss_read_main_flag_quote_object_e;
+        // Remove flags not supported for this standard.
+        main->setting.flag &= ~fss_read_main_flag_line_single_e;
+        main->setting.flag &= ~fss_read_main_flag_content_multiple_e;
+        main->setting.flag &= ~fss_read_main_flag_depth_multiple_e;
+        main->setting.flag &= ~fss_read_main_flag_payload_error_e;
+        main->setting.flag &= ~fss_read_main_flag_payload_warn_e;
+        main->setting.flag &= ~fss_read_main_flag_quote_content_e;
+        main->setting.flag &= ~fss_read_main_flag_quote_object_e;
 
-          main->setting.flag |= fss_read_main_flag_content_has_close_e;
-          main->setting.flag |= fss_read_main_flag_object_as_line_e | fss_read_main_flag_object_trim_e;
+        main->setting.flag |= fss_read_main_flag_content_has_close_e;
+        main->setting.flag |= fss_read_main_flag_object_as_line_e | fss_read_main_flag_object_trim_e;
 
-          main->callback.process_help = &fss_read_extended_list_process_help;
-          main->callback.process_load = &fss_read_extended_list_process_load;
-          main->callback.process_total = &fss_read_process_normal_total_multiple;
+        main->program.parameters.array[fss_read_parameter_payload_e].flag |= f_console_flag_disable_e;
 
-          main->callback.print_content_next = 0;
-          main->callback.print_object_end = &fss_read_extended_list_print_object_end;
-          main->callback.print_set_end = &fss_read_extended_list_print_set_end;
-        }
-        else if (f_compare_dynamic(argv[index], fss_read_format_code_short_0008_s) == F_equal_to ||
-                 f_compare_dynamic(argv[index], fss_read_format_code_long_0008_s) == F_equal_to ||
-                 f_compare_dynamic(argv[index], fss_read_format_code_human_0008_s) == F_equal_to ||
-                 f_compare_dynamic(argv[index], fss_read_format_code_machine_0008_s) == F_equal_to) {
+        main->callback.process_help = &fss_read_extended_list_process_help;
+        main->callback.process_load = &fss_read_extended_list_process_load;
+        main->callback.process_total = &fss_read_process_normal_total_multiple;
 
-          main->setting.standard = fss_read_embedded_list_standard_s;
+        //main->callback.print_content_empty = 0;
+        main->callback.print_content_empty_set = 0;
+        main->callback.print_content_next = 0;
+        main->callback.print_object_end = &fss_read_extended_list_print_data_object_end;
+        main->callback.print_set_end = &fss_read_extended_list_print_data_set_end;
+      }
+      else if (f_compare_dynamic(as, fss_read_format_code_short_0008_s) == F_equal_to ||
+               f_compare_dynamic(as, fss_read_format_code_long_0008_s) == F_equal_to ||
+               f_compare_dynamic(as, fss_read_format_code_human_0008_s) == F_equal_to ||
+               f_compare_dynamic(as, fss_read_format_code_machine_0008_s) == F_equal_to) {
 
-          // Remove flags not supported for this standard.
-          main->setting.flag &= ~fss_read_main_flag_content_has_close_e;
-          main->setting.flag &= ~fss_read_main_flag_line_single_e;
-          main->setting.flag &= ~fss_read_main_flag_quote_content_e;
-          main->setting.flag &= ~fss_read_main_flag_quote_object_e;
+        main->setting.standard = fss_read_embedded_list_standard_s;
 
-          main->setting.flag |= fss_read_main_flag_content_has_close_e | fss_read_main_flag_content_multiple_e;
-          main->setting.flag |= fss_read_main_flag_depth_multiple_e;
-          main->setting.flag |= fss_read_main_flag_object_as_line_e | fss_read_main_flag_object_trim_e;
+        // Remove flags not supported for this standard.
+        main->setting.flag &= ~fss_read_main_flag_content_has_close_e;
+        main->setting.flag &= ~fss_read_main_flag_line_single_e;
+        main->setting.flag &= ~fss_read_main_flag_payload_error_e;
+        main->setting.flag &= ~fss_read_main_flag_payload_warn_e;
+        main->setting.flag &= ~fss_read_main_flag_quote_content_e;
+        main->setting.flag &= ~fss_read_main_flag_quote_object_e;
 
-          main->callback.process_help = &fss_read_embedded_list_process_help;
-          main->callback.process_load = &fss_read_embedded_list_process_load;
-          main->callback.process_total = &fss_read_process_normal_total_multiple;
+        main->setting.flag |= fss_read_main_flag_content_has_close_e | fss_read_main_flag_content_multiple_e;
+        main->setting.flag |= fss_read_main_flag_depth_multiple_e;
+        main->setting.flag |= fss_read_main_flag_object_as_line_e | fss_read_main_flag_object_trim_e;
 
-          main->callback.print_content_next = 0;
-          main->callback.print_object_end = &fss_read_embedded_list_print_object_end;
-          main->callback.print_set_end = &fss_read_embedded_list_print_set_end;
-        }
-        else if (f_compare_dynamic(argv[index], fss_read_format_code_short_000e_s) == F_equal_to ||
-                 f_compare_dynamic(argv[index], fss_read_format_code_long_000e_s) == F_equal_to ||
-                 f_compare_dynamic(argv[index], fss_read_format_code_human_000e_s) == F_equal_to ||
-                 f_compare_dynamic(argv[index], fss_read_format_code_machine_000e_s) == F_equal_to) {
+        main->program.parameters.array[fss_read_parameter_payload_e].flag |= f_console_flag_disable_e;
 
-          main->setting.standard = fss_read_payload_standard_s;
+        main->callback.process_help = &fss_read_embedded_list_process_help;
+        main->callback.process_load = &fss_read_embedded_list_process_load;
+        main->callback.process_total = &fss_read_process_normal_total_multiple;
 
-          // Remove flags not supported for this standard.
-          main->setting.flag &= ~fss_read_main_flag_content_has_close_e;
-          main->setting.flag &= ~fss_read_main_flag_content_multiple_e;
-          main->setting.flag &= ~fss_read_main_flag_depth_multiple_e;
-          main->setting.flag &= ~fss_read_main_flag_line_single_e;
-          main->setting.flag &= ~fss_read_main_flag_quote_content_e;
-          main->setting.flag &= ~fss_read_main_flag_quote_object_e;
+        //main->callback.print_content_empty = 0;
+        main->callback.print_content_empty_set = 0;
+        main->callback.print_content_next = 0;
+        main->callback.print_object_end = &fss_read_embedded_list_print_data_object_end;
+        main->callback.print_set_end = &fss_read_embedded_list_print_data_set_end;
+      }
+      else if (f_compare_dynamic(as, fss_read_format_code_short_000e_s) == F_equal_to ||
+               f_compare_dynamic(as, fss_read_format_code_long_000e_s) == F_equal_to ||
+               f_compare_dynamic(as, fss_read_format_code_human_000e_s) == F_equal_to ||
+               f_compare_dynamic(as, fss_read_format_code_machine_000e_s) == F_equal_to) {
 
-          main->setting.flag |= fss_read_main_flag_object_as_line_e | fss_read_main_flag_object_trim_e;
+        main->setting.standard = fss_read_payload_standard_s;
 
-          main->callback.process_help = &fss_read_payload_process_help;
-          main->callback.process_load = &fss_read_payload_process_load;
-          main->callback.process_total = &fss_read_process_normal_total_multiple;
+        // Remove flags not supported for this standard.
+        main->setting.flag &= ~fss_read_main_flag_content_has_close_e;
+        main->setting.flag &= ~fss_read_main_flag_content_multiple_e;
+        main->setting.flag &= ~fss_read_main_flag_depth_multiple_e;
+        main->setting.flag &= ~fss_read_main_flag_line_single_e;
+        main->setting.flag &= ~fss_read_main_flag_quote_content_e;
+        main->setting.flag &= ~fss_read_main_flag_quote_object_e;
 
-          main->callback.print_content_next = 0;
-          main->callback.print_object_end = &fss_read_payload_print_object_end;
-          main->callback.print_set_end = &fss_read_print_set_end_no_eol;
+        main->setting.flag |= fss_read_main_flag_object_as_line_e | fss_read_main_flag_object_trim_e;
+        main->setting.flag |= fss_read_main_flag_payload_error_e;
+
+        main->program.parameters.array[fss_read_parameter_payload_e].flag &= ~f_console_flag_disable_e;
+
+        main->callback.process_help = &fss_read_payload_process_help;
+        main->callback.process_load = &fss_read_payload_process_load;
+        main->callback.process_total = &fss_read_process_normal_total_multiple;
+
+        //main->callback.print_content_empty = 0;
+        main->callback.print_content_empty_set = 0;
+        main->callback.print_content_next = 0;
+        main->callback.print_object_end = &fss_read_payload_print_data_object_end;
+        main->callback.print_set_end = &fss_read_print_set_end_no_eol;
+      }
+      else {
+        main->setting.state.status = F_status_set_error(F_parameter);
+
+        if (main->setting.flag & fss_read_main_flag_help_e) {
+          fss_read_main_process_help((void *) main);
         }
         else {
-          if (main->setting.flag & fss_read_main_flag_help_e) {
-            main->setting.state.status = F_status_set_error(F_parameter);
-
-            break;
-          }
-
-          main->setting.state.status = F_status_set_error(F_parameter);
-
-          fss_read_main_print_error_format_unknown(&main->program.error, argv[index]);
+          fss_read_main_print_error_format_unknown(&main->program.error, as);
         }
-      } // for
+
+        return;
+      }
+
+      main->setting.state.step_small = fss_read_allocation_console_d;
+
+      main->setting.state.status = f_console_parameter_reset(&main->program.parameters);
 
       if (F_status_is_error(main->setting.state.status)) {
         if (main->setting.flag & fss_read_main_flag_help_e) {
           fss_read_main_process_help((void *) main);
         }
+        else {
+          fss_read_print_error(&main->program.error, macro_fss_read_f(f_console_parameter_reset));
+        }
 
         return;
+      }
+
+      f_console_parameter_process(arguments, &main->program.parameters, &main->setting.state, 0);
+
+      if (F_status_is_error(main->setting.state.status)) {
+        if (main->setting.flag & fss_read_main_flag_help_e) {
+          fss_read_main_process_help((void *) main);
+        }
+        else {
+          fss_read_print_error(&main->program.error, macro_fss_read_f(f_console_parameter_process));
+        }
+
+        return;
+      }
+
+      main->setting.state.step_small = fss_read_allocation_small_d;
+
+      // If the --as parameter changed as a result of the re-run of the parameter processing, then something is wrong with the parameters.
+      {
+        const f_number_unsigned_t index_new = main->program.parameters.array[fss_read_parameter_as_e].values.array[main->program.parameters.array[fss_read_parameter_as_e].values.used - 1];
+
+        if (f_compare_dynamic(as, main->program.parameters.arguments.array[index_new]) != F_equal_to) {
+          main->setting.state.status = F_status_set_error(F_parameter);
+
+          if (main->setting.flag & fss_read_main_flag_help_e) {
+            fss_read_main_process_help((void *) main);
+          }
+          else {
+            fss_read_main_print_error_parameter_as_changed(&main->program.error, as, main->program.parameters.arguments.array[index_new]);
+          }
+
+          return;
+        }
       }
     }
     else if (main->program.parameters.array[fss_read_parameter_as_e].result & f_console_result_found_e) {

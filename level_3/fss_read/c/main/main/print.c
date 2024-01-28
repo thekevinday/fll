@@ -31,8 +31,30 @@ extern "C" {
   }
 #endif // _di_fss_read_main_print_error_format_unknown_
 
+#ifndef _di_fss_read_main_print_error_parameter_as_changed_
+  f_status_t fss_read_main_print_error_parameter_as_changed(fl_print_t * const print, const f_string_static_t previous, const f_string_static_t current) {
+
+    if (!print) return F_status_set_error(F_output_not);
+    if (print->verbosity == f_console_verbosity_quiet_e) return F_output_not;
+
+    f_file_stream_lock(print->to);
+
+    fl_print_format("%[%QThe parameter '%]", print->to, print->set->error, print->prefix, print->set->error);
+    fl_print_format(f_string_format_QQ_single_s.string, print->to, print->set->notable, f_console_symbol_long_normal_s, fss_read_long_as_s, print->set->notable);
+    fl_print_format("%[' value changed from '%]", print->to, print->set->error, print->set->error);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->set->notable, previous, print->set->notable);
+    fl_print_format("%[' to %] ", print->to, print->set->error, print->set->error);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->set->notable, current, print->set->notable);
+    fl_print_format(f_string_format_sentence_end_quote_s.string, print->to, print->set->error, print->set->error, f_string_eol_s);
+
+    f_file_stream_unlock(print->to);
+
+    return F_okay;
+  }
+#endif // _di_fss_read_main_print_error_parameter_as_changed_
+
 #ifndef _di_fss_read_main_main_print_help_
-  f_status_t fss_read_main_print_help(fl_print_t * const print) {
+  f_status_t fss_read_main_print_message_help(fl_print_t * const print) {
 
     if (!print) return F_status_set_error(F_output_not);
 
@@ -57,8 +79,6 @@ extern "C" {
     fss_read_print_message_help_note(print, F_false);
 
     f_print_dynamic_raw(f_string_eol_s, print->to);
-
-    // @todo everything below needs to be reviewed and updated as appropriate.
 
     fl_print_format("  The '%[%r%r%]' parameter supports the following standards with the specified possible case-sensitive values:%r", print->to, print->set->notable, f_console_symbol_long_normal_s, fss_read_long_as_s, print->set->notable, f_string_eol_s);
 
