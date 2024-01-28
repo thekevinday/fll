@@ -25,7 +25,14 @@ build_language c
 build_libraries -lc -lcmocka
 build_libraries-individual -lf_memory -lf_string -lf_type_array -lf_utf -lf_console
 
-build_sources_program test-console-environment_process.c test-console-identify.c test-console-parameter_prioritize_left.c test-console-parameter_prioritize_right.c test-console-parameter_process.c test-console-parameters_delete.c test-console-parameters_destroy.c test-console.c
+build_sources_program test-console-environment_process.c
+build_sources_program test-console-identify.c
+build_sources_program test-console-parameter_prioritize_left.c
+build_sources_program test-console-parameter_prioritize_right.c
+build_sources_program test-console-parameter_process.c
+build_sources_program test-console-parameter_reset.c
+build_sources_program test-console-parameters_delete.c test-console-parameters_destroy.c
+build_sources_program test-console.c
 
 build_script no
 build_shared yes

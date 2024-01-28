@@ -673,6 +673,42 @@ extern "C" {
   }
 #endif // _di_f_console_parameter_process_
 
+#ifndef _di_f_console_parameter_reset_
+  f_status_t f_console_parameter_reset(f_console_parameters_t * const parameters) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!parameters) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    f_number_unsigned_t i = 0;
+
+    for (; i < parameters->arguments.used; ++i) {
+      parameters->arguments.array[i].used = 0;
+    } // for
+
+    for (i = 0; i < parameters->used; ++i) {
+
+      memset(parameters->array[i].locations.array, 0, parameters->array[i].locations.used);
+      memset(parameters->array[i].locations_sub.array, 0, parameters->array[i].locations_sub.used);
+      memset(parameters->array[i].values.array, 0, parameters->array[i].values.used);
+
+      parameters->array[i].flag &= ~f_console_flag_disable_e;
+      parameters->array[i].result = f_console_result_none_e;
+      parameters->array[i].location = 0;
+      parameters->array[i].location_sub = 0;
+      parameters->array[i].locations.used = 0;
+      parameters->array[i].locations_sub.used = 0;
+      parameters->array[i].values.used = 0;
+    } // for
+
+    memset(parameters->remaining.array, 0,  parameters->remaining.used);
+
+    parameters->arguments.used = 0;
+    parameters->remaining.used = 0;
+
+    return F_okay;
+  }
+#endif // _di_f_console_parameter_reset_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

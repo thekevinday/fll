@@ -185,6 +185,33 @@ extern "C" {
   extern void f_console_parameter_process(const f_console_arguments_t arguments, f_console_parameters_t * const parameters, f_state_t * const state, void * const data);
 #endif // _di_f_console_parameter_process_
 
+
+/**
+ * Reset all parameter properties.
+ *
+ * This only resets values using the "used" counts just in case any static data is provided rather than resetting via the "size" counts.
+ * This does not perform any de-allocation.
+ * This does not alter the "size" counts.
+ * This does not alter the parameters.used.
+ * This does not alter the following individual parameter properties in the parameters array:
+ *   - match_short.
+ *   - match_long.
+ *   - match_simple.
+ *   - values_total.
+ * This only alters "state" flags in parameters[].flag.
+ *
+ * @param parameters
+ *   The console parameters to reset.
+ *
+ * @return
+ *   F_okay on success.
+ *
+ * @see memset()
+ */
+#ifndef _di_f_console_parameter_reset_
+  extern f_status_t f_console_parameter_reset(f_console_parameters_t * const parameters);
+#endif // _di_f_console_parameter_reset_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif
