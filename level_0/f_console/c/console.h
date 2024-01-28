@@ -171,12 +171,12 @@ extern "C" {
  *     F_failure (with error bit) if width is not long enough to convert when processing arguments as UTF-8.
  *     F_interrupt (with error bit) if an interrupt is received via the state.interrupt callback.
  *     F_parameter (with error bit) if a parameter is invalid.
+ *
+ *     Errors (with error bit) from: f_memory_array_increase_by().
+ *     Errors (with error bit) from: f_utf_char_to_character().
  * @param data
  *   (optional) A variable passed to the callback, if provided.
  *   Set to NULL to not use.
- *
- *   Errors (with error bit) from: f_memory_array_increase_by().
- *   Errors (with error bit) from: f_utf_char_to_character().
  *
  * @see f_memory_array_increase_by()
  * @see f_utf_char_to_character()

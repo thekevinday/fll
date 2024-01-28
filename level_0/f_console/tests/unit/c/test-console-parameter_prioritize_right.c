@@ -1,5 +1,4 @@
 #include "test-console.h"
-#include "test-console-parameter_prioritize_right.h"
 
 #ifdef __cplusplus
 extern "C" {

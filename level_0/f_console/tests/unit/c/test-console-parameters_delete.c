@@ -1,5 +1,4 @@
 #include "test-console.h"
-#include "test-console-parameters_delete.h"
 
 #ifdef __cplusplus
 extern "C" {
