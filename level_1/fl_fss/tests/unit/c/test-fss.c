@@ -32,7 +32,7 @@ int main(void) {
     cmocka_unit_test(test__fl_fss_basic_list_object_read__returns_data_not),
     cmocka_unit_test(test__fl_fss_basic_list_object_write__returns_data_not),
 
-    //cmocka_unit_test(test__fl_fss_basic_list_content_read__works),
+    cmocka_unit_test(test__fl_fss_basic_list_content_read__works),
     cmocka_unit_test(test__fl_fss_basic_list_object_read__works),
 
     cmocka_unit_test(test__fl_fss_embedded_list_content_read__returns_data_not),
@@ -52,6 +52,9 @@ int main(void) {
     cmocka_unit_test(test__fl_fss_extended_list_content_write__returns_data_not),
     cmocka_unit_test(test__fl_fss_extended_list_object_read__returns_data_not),
     cmocka_unit_test(test__fl_fss_extended_list_object_write__returns_data_not),
+
+    cmocka_unit_test(test__fl_fss_extended_list_content_read__works),
+    cmocka_unit_test(test__fl_fss_extended_list_object_read__works),
 
     cmocka_unit_test(test__fl_fss_payload_header_map__returns_data_not),
 

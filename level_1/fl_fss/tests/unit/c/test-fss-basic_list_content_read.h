@@ -24,4 +24,11 @@ extern void test__fl_fss_basic_list_content_read__parameter_checking(void **stat
  */
 extern void test__fl_fss_basic_list_content_read__returns_data_not(void **state);
 
+/**
+ * Test that the function works.
+ *
+ * @see fl_fss_basic_list_content_read()
+ */
+extern void test__fl_fss_basic_list_content_read__works(void **state);
+
 #endif // _TEST__FL_fss_basic_list_content_read_list_h
