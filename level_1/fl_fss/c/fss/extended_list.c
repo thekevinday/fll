@@ -187,7 +187,14 @@ extern "C" {
       }
 
       if (buffer.string[range->start] == f_fss_comment_s.string[0]) {
-        start = newline_last + 1;
+
+        // The newline_last is initialized to the range->start, which may not actually be a new line.
+        if (buffer.string[newline_last] == f_string_eol_s.string[0]) {
+          start = newline_last + 1;
+        }
+        else {
+          start = newline_last;
+        }
 
         f_fss_seek_to_eol(buffer, range, state);
         if (F_status_is_error(state->status)) break;
