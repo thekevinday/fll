@@ -41,10 +41,6 @@ extern "C" {
               }
               else {
                 print_set_end = F_true;
-
-                //if (main->callback.print_content_empty) {
-                //  main->callback.print_content_empty(&main->program.output);
-                //}
               }
             }
           }

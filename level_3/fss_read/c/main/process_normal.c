@@ -161,7 +161,7 @@ extern "C" {
           }
         }
         else if (main->setting.flag & fss_read_main_flag_columns_e) {
-          fss_read_print_number(&main->program.output, main->setting.contents.array[i].used); // @todo review and consider what to do when empty flag is set.
+          fss_read_print_number(&main->program.output, main->setting.contents.array[i].used);
         }
         else if (main->callback.print_at) {
           main->callback.print_at(&main->program.output, i, delimits_object, delimits_content);
