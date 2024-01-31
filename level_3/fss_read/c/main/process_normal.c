@@ -223,15 +223,43 @@ extern "C" {
     }
 
     if (main->setting.flag & fss_read_main_flag_content_e) {
-
-      // Must process/count line when both Object and Content share the same line but Content is empty. @todo review this block.
       if (!main->setting.contents.array[at].used) {
-        if (main->setting.flag & (fss_read_main_flag_empty_e | fss_read_main_flag_object_e)) {
-          if (!(main->setting.flag & fss_read_main_flag_object_e) || !(main->setting.flag & fss_read_main_flag_object_as_line_e) && (main->setting.flag & fss_read_main_flag_line_single_e)) {
-            if (*line == main->setting.line) {
-              if (main->callback.print_set_end) {
-                main->callback.print_set_end(&main->program.output);
+
+        // Must process/count line when both Object and Content share the same line but Content is empty for single line Content.
+        if ((main->setting.flag & fss_read_main_flag_line_single_e)) {
+          if (main->setting.flag & fss_read_main_flag_object_e) {
+            if (!(main->setting.flag & fss_read_main_flag_object_as_line_e)) {
+              if (*line == main->setting.line) {
+                if (main->callback.print_set_end) {
+                  main->callback.print_set_end(&main->program.output);
+                }
+
+                main->setting.state.status = F_success;
+
+                return;
               }
+
+              ++(*line);
+            }
+          }
+          else if (main->setting.flag & fss_read_main_flag_empty_e) {
+            if (*line == main->setting.line) {
+              if (main->callback.print_content_empty_set) {
+                main->callback.print_content_empty_set(&main->program.output);
+              }
+
+              main->setting.state.status = F_success;
+
+              return;
+            }
+
+            ++(*line);
+          }
+        }
+        else {
+          if (main->callback.print_content_empty_set) {
+            if (*line == main->setting.line) {
+              main->callback.print_content_empty_set(&main->program.output);
 
               main->setting.state.status = F_success;
 
@@ -250,28 +278,22 @@ extern "C" {
       f_number_unsigned_t i = 0;
 
       if (main->setting.flag & fss_read_main_flag_line_single_e) {
-        // @fixme review this for when the line is empty.
         if (*line == main->setting.line) {
-          if (main->setting.contents.array[at].used) {
-            while (main->setting.contents.array[at].used) {
+          while (main->setting.contents.array[at].used) {
 
-              if (main->callback.print_content) {
-                main->callback.print_content(&main->program.output, main->setting.contents.array[at].array[i], main->setting.quotes_content.array[at].array[i], delimits_content);
-              }
-
-              if (++i >= main->setting.contents.array[at].used) break;
-
-              if (main->callback.print_content_next) {
-                main->callback.print_content_next(&main->program.output);
-              }
-            } // while
-
-            if (main->callback.print_set_end) {
-              main->callback.print_set_end(&main->program.output);
+            if (main->callback.print_content) {
+              main->callback.print_content(&main->program.output, main->setting.contents.array[at].array[i], main->setting.quotes_content.array[at].array[i], delimits_content);
             }
-          }
-          else if (main->callback.print_content_empty_set) {
-            main->callback.print_content_empty_set(&main->program.output);
+
+            if (++i >= main->setting.contents.array[at].used) break;
+
+            if (main->callback.print_content_next) {
+              main->callback.print_content_next(&main->program.output);
+            }
+          } // while
+
+          if (main->callback.print_set_end) {
+            main->callback.print_set_end(&main->program.output);
           }
 
           main->setting.state.status = F_success;
@@ -286,54 +308,49 @@ extern "C" {
         f_number_unsigned_t j = 0;
         f_number_unsigned_t k = 0;
 
-        if (main->setting.contents.array[at].used) {
-          for (; i < main->setting.contents.array[at].used; ++i) {
+        for (; i < main->setting.contents.array[at].used; ++i) {
+
+          if (fss_read_signal_check(main)) return;
+
+          line_original = *line;
+          main->setting.range = main->setting.contents.array[at].array[i];
+          k = 0;
+
+          for (j = main->setting.range.start; j <= main->setting.range.stop; ++j) {
 
             if (fss_read_signal_check(main)) return;
 
-            line_original = *line;
-            main->setting.range = main->setting.contents.array[at].array[i];
-            k = 0;
+            if (k < main->setting.comments.used) {
+              while (main->setting.comments.array[k].stop < j) ++k;
 
-            for (j = main->setting.range.start; j <= main->setting.range.stop; ++j) {
+              if (j >= main->setting.comments.array[k].start && j <= main->setting.comments.array[k].stop) {
+                j = main->setting.comments.array[k++].stop + 1;
 
-              if (fss_read_signal_check(main)) return;
+                if (j > main->setting.range.stop) break;
+              }
+            }
 
-              if (k < main->setting.comments.used) {
-                while (main->setting.comments.array[k].stop < j) ++k;
+            if (main->setting.buffer.string[j] == f_string_eol_s.string[0]) {
+              if (*line == main->setting.line) {
+                main->setting.range.stop = j;
 
-                if (j >= main->setting.comments.array[k].start && j <= main->setting.comments.array[k].stop) {
-                  j = main->setting.comments.array[k++].stop + 1;
-
-                  if (j > main->setting.range.stop) break;
+                if (main->callback.print_content) {
+                  main->callback.print_content(&main->program.output, main->setting.range, main->setting.quotes_content.array[at].array[i], delimits_content);
                 }
+
+                main->setting.state.status = F_success;
+
+                return;
               }
 
-              if (main->setting.buffer.string[j] == f_string_eol_s.string[0]) {
-                if (*line == main->setting.line) {
-                  main->setting.range.stop = j;
+              main->setting.range.start = j + 1;
 
-                  if (main->callback.print_content) {
-                    main->callback.print_content(&main->program.output, main->setting.range, main->setting.quotes_content.array[at].array[i], delimits_content);
-                  }
-
-                  main->setting.state.status = F_success;
-
-                  return;
-                }
-
-                main->setting.range.start = j + 1;
-
-                if (j <= main->setting.range.stop) {
-                  ++(*line);
-                }
+              if (j <= main->setting.range.stop) {
+                ++(*line);
               }
-            } // for
+            }
           } // for
-        }
-        else if (main->callback.print_content_empty_set) {
-          main->callback.print_content_empty_set(&main->program.output);
-        }
+        } // for
       }
 
       // @fixme The fll_fss_*_read functions do not have a store of the set closing ranges but should.
@@ -549,7 +566,7 @@ extern "C" {
           range.stop = main->setting.contents.array[at].array[i].stop;
 
           // This content has no data, do not even check "include empty" because it cannot be counted as a line.
-          if (range.start > range.stop) continue; // @fixme review this check for when include empty is set (basic list might not count but extended list might).
+          if (range.start > range.stop) continue;
 
           for (j = range.start; j <= range.stop; ++j) {
 
