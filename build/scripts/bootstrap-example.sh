@@ -57,6 +57,8 @@ mode_part=
 mode_parameter=
 mode_path=
 mode_value=
+mode_thread_param="-m"
+mode_thread_value="thread"
 build_mode=
 build_mode_extra_param_1=
 build_mode_extra_value_1=
@@ -137,7 +139,7 @@ if [[ ${1} == "individual" ]] ; then
 
       ${shell_command} ./bootstrap.sh clean ${verbose} ${color} ${suppress_first} &&
 
-      ${shell_command} ./bootstrap.sh build ${verbose} ${color} ${suppress_first} ${shared} ${static} -w ${path_work} -m individual -m individual_thread -m thread ${clang} &&
+      ${shell_command} ./bootstrap.sh build ${verbose} ${color} ${suppress_first} ${shared} ${static} -w ${path_work} -m individual -m individual_thread ${mode_thread_param} ${mode_thread_value} ${clang} &&
 
       ${shell_command} ./install.sh ${verbose} ${color} ${suppress_first} ${shared} ${static} -w ${path_work} &&
 
@@ -153,7 +155,7 @@ if [[ ${1} == "level" ]] ; then
 
   ${shell_command} ./bootstrap.sh clean ${verbose} ${color} ${suppress_first} &&
 
-  ${shell_command} ./bootstrap.sh build ${verbose} ${color} ${suppress_first} ${shared} ${static} -w ${path_work} -m level -m thread ${clang} &&
+  ${shell_command} ./bootstrap.sh build ${verbose} ${color} ${suppress_first} ${shared} ${static} -w ${path_work} -m level ${mode_thread_param} ${mode_thread_value} ${clang} &&
 
   ${shell_command} ./install.sh ${verbose} ${color} ${suppress_first} ${shared} ${static} -w ${path_work} &&
 
@@ -163,7 +165,7 @@ if [[ ${1} == "level" ]] ; then
 
   ${shell_command} ./bootstrap.sh clean ${verbose} ${color} ${suppress_first} &&
 
-  ${shell_command} ./bootstrap.sh build ${verbose} ${color} ${suppress_first} ${shared} ${static} -w ${path_work} -m level -m thread &&
+  ${shell_command} ./bootstrap.sh build ${verbose} ${color} ${suppress_first} ${shared} ${static} -w ${path_work} -m level ${mode_thread_param} ${mode_thread_value} &&
 
   ${shell_command} ./install.sh ${verbose} ${color} ${suppress_first} ${shared} ${static} -w ${path_work} &&
 
@@ -173,7 +175,7 @@ if [[ ${1} == "level" ]] ; then
 
   ${shell_command} ./bootstrap.sh clean ${verbose} ${color} ${suppress_first} &&
 
-  ${shell_command} ./bootstrap.sh build ${verbose} ${color} ${suppress_first} ${shared} ${static} -w ${path_work} -m level -m thread &&
+  ${shell_command} ./bootstrap.sh build ${verbose} ${color} ${suppress_first} ${shared} ${static} -w ${path_work} -m level ${mode_thread_param} ${mode_thread_value} &&
 
   ${shell_command} ./install.sh ${verbose} ${color} ${suppress_first} ${shared} ${static} -w ${path_work}
 fi
@@ -185,7 +187,7 @@ if [[ ${1} == "monolithic" ]] ; then
 
   ${shell_command} ./bootstrap.sh clean ${verbose} ${color} ${suppress_first} &&
 
-  ${shell_command} ./bootstrap.sh build ${verbose} ${color} ${suppress_first} ${shared} ${static} -w ${path_work} -m monolithic -m thread ${clang} &&
+  ${shell_command} ./bootstrap.sh build ${verbose} ${color} ${suppress_first} ${shared} ${static} -w ${path_work} -m monolithic ${mode_thread_param} ${mode_thread_value} ${clang} &&
 
   ${shell_command} ./install.sh ${verbose} ${color} ${shared} ${suppress_first} ${static} -w ${path_work}
 fi
@@ -210,25 +212,29 @@ if [[ ${mode_part} != "" ]] ; then
 
   if [[ ${1} == "${mode_part}-individual" ]] ; then
     build_mode="individual"
-    build_mode_extra_param_1="-m"
-    build_mode_extra_value_1="individual_thread"
-    build_mode_extra_param_2="-m"
-    build_mode_extra_value_2="thread"
+
+    if [[ ${mode_thread_param} != "" ]] ; then
+      build_mode_extra_param_1="-m"
+      build_mode_extra_value_1="individual_thread"
+    fi
+
+    build_mode_extra_param_2=${mode_thread_param}
+    build_mode_extra_value_2=${mode_thread_value}
   elif [[ ${1} == "${mode_part}-level" ]] ; then
     build_mode="level"
-    build_mode_extra_param_1="-m"
-    build_mode_extra_value_1="thread"
+    build_mode_extra_param_1=${mode_thread_param}
+    build_mode_extra_value_1=${mode_thread_value}
   elif [[ ${1} == "${mode_part}-monolithic" ]] ; then
     build_mode="monolithic"
-    build_mode_extra_param_1="-m"
-    build_mode_extra_value_1="thread"
+    build_mode_extra_param_1=${mode_thread_param}
+    build_mode_extra_value_1=${mode_thread_value}
   elif [[ ${1} == "${mode_part}-stand_alone" ]] ; then
     build_mode="stand_alone"
     mode_path="stand_alone"
     mode_parameter="-S"
     mode_value="${mode_part}"
-    build_mode_extra_param_1="-m"
-    build_mode_extra_value_1="thread"
+    build_mode_extra_param_1=${mode_thread_param}
+    build_mode_extra_value_1=${mode_thread_value}
   fi
 
   ${shell_command} build/scripts/package.sh ${verbose} ${color} rebuild ${mode_parameter} ${mode_value} &&
@@ -250,16 +256,22 @@ elif [[ ${1} == "programs-individual" || ${1} == "programs-level" || ${1} == "pr
 
   if [[ ${1} == "programs-individual" ]] ; then
     build_mode="individual"
-    build_mode_extra_param_1="-m"
-    build_mode_extra_value_1="individual_thread"
-    build_mode_extra_param_2="-m"
-    build_mode_extra_value_2="thread"
+
+    if [[ ${mode_thread_param} != "" ]] ; then
+      build_mode_extra_param_1="-m"
+      build_mode_extra_value_1="individual_thread"
+    fi
+
+    build_mode_extra_param_2=${mode_thread_param}
+    build_mode_extra_value_2=${mode_thread_value}
   elif [[ ${1} == "programs-level" ]] ; then
     build_mode="level"
+    build_mode_extra_param_1=${mode_thread_param}
+    build_mode_extra_value_1=${mode_thread_value}
   elif [[ ${1} == "programs-monolithic" ]] ; then
     build_mode="monolithic"
-    build_mode_extra_param_1="-m"
-    build_mode_extra_value_1="thread"
+    build_mode_extra_param_1=${mode_thread_param}
+    build_mode_extra_value_1=${mode_thread_value}
   fi
 
   ${shell_command} build/scripts/package.sh ${verbose} ${color} rebuild -p &&
@@ -274,7 +286,7 @@ elif [[ ${1} == "programs-individual" || ${1} == "programs-level" || ${1} == "pr
 
       ${shell_command} ./bootstrap.sh clean ${verbose} ${color} ${suppress_first} &&
 
-      ${shell_command} ./bootstrap.sh build ${verbose} ${color} ${suppress_first} ${shared} ${static} -w ${path_work} -m ${build_mode} ${build_mode_extra_param_1} ${build_mode_extra_value_1} ${build_mode_extra_param_2} ${build_mode_extra_value_2} &&
+      ${shell_command} ./bootstrap.sh build ${verbose} ${color} ${suppress_first} ${shared} ${static} -w ${path_work} -m ${build_mode} ${build_mode_extra_param_1} ${build_mode_extra_value_1}  ${build_mode_extra_param_2} ${build_mode_extra_value_2} &&
 
       ${shell_command} ./install.sh ${verbose} ${color} ${suppress_first} ${shared} ${static} -w ${path_work} ||
 
