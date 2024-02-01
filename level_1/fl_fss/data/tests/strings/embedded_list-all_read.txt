@@ -1,0 +1,56 @@
+first{
+  content.
+}
+empty{
+}
+third{
+  content as well.
+  With multiple lines.
+}
+fourth{
+Not tabbed over.
+
+
+Has empty lines before and after.
+
+}
+   spaces around {
+This{ is not a list.
+
+}
+To "disable"{
+
+  just\{
+  Add a slash.
+
+}
+Has\\{
+  a slash.
+}
+Also Has\\\\{
+  slashes.
+Has Slashes but is not a list\\\{
+  This is part of the previous one.
+
+}
+{
+  The object name is an empty string.
+
+}
+""{
+  Quotes aren't supported here, so this is not an empty object.
+\}
+
+}
+привет{
+  Has UTF-8 characters.
+
+}
+Content also'{
+  Has UTF-8: привет мир
+}
+Comments{
+# Are 
+  #### ignored.
+}
+# and after.
