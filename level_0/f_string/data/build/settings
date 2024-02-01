@@ -74,9 +74,12 @@ search_static yes
 environment PATH LD_LIBRARY_PATH
 environment LANG LC_ALL LC_COLLATE LC_CTYPE LC_FASTMSG LC_MESSAGES LC_MONETARY LC_NUMERIC LC_TIME LOCPATH NLSPATH
 
-flags -O2 -z now -g -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-parentheses
+flags -O2 -g -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-parentheses
+flags -fstack-clash-protection -fno-delete-null-pointer-checks -fstrict-flex-arrays=3
+flags -D_FORTIFY_SOURCE=3
+flags -Wl,-z,nodlopen -Wl,-z,noexecstack -Wl,-z,relro -Wl,-z,now
 flags-clang -Wno-logical-op-parentheses
-flags-test -O0 -fstack-protector -Wall
+flags-test -O0 -fstack-protector-strong -Wall
 flags-coverage -O0 --coverage -fprofile-abs-path -fprofile-dir=build/coverage/
 
 flags_library -fPIC
