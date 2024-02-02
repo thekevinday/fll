@@ -8,6 +8,7 @@
 #   - clang:             Use clang rather than the default, which is generally gcc.
 #   - test:              Compile for a test, such as unit testing.
 #   - fanalyzer:         Compile using GCC's -fanalyzer compile time option.
+#   - coverage:          Compile for building coverage.
 #   - thread:            Compile with thread support.
 #   - threadless:        Compile without thread support.
 #
@@ -23,7 +24,7 @@ version_target minor
 process_pre process_pre.sh
 process_post process_post.sh
 
-modes individual individual_thread level monolithic clang test fanalyzer thread threadless
+modes individual individual_thread level monolithic clang test fanalyzer coverage thread threadless
 modes_default monolithic thread
 
 build_compiler gcc
