@@ -255,16 +255,11 @@ extern "C" {
               if (headers.array[internal.i].value.is.a_maps.used) {
                 private_fl_payload_header_map_maps(data, state, &internal, &headers.array[internal.i].value.is.a_maps, destinations);
               }
-              else if (data->flag & f_fss_payload_header_map_flag_null_map_name_value_e) {
-                if (data->flag & f_fss_payload_header_map_flag_join_maps_e) {
-                  state->status = f_string_dynamic_append(internal.quote_null, &destinations->array[destinations->used].value);
-                  if (F_status_is_error(state->status)) break;
+              else if (data->flag & f_fss_payload_header_map_flag_join_maps_e) {
+                state->status = f_string_dynamic_append(internal.quote_null, &destinations->array[destinations->used].value);
+                if (F_status_is_error(state->status)) break;
 
-                  ++destinations->used;
-                }
-                else {
-                  private_fl_payload_header_map_map_name_value_null(data, state, &internal, destinations);
-                }
+                ++destinations->used;
               }
               else if (data->flag & f_fss_payload_header_map_flag_null_e) {
                 ++destinations->used;

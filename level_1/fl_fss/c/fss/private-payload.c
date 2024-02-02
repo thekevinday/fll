@@ -61,7 +61,7 @@ extern "C" {
     if (F_status_is_error(state->status)) return F_true;
 
     if (data->flag & f_fss_payload_header_map_flag_join_dynamics_e) {
-      state->status = f_memory_array_increase_by(buffers->used + ((f_fss_extended_next_s.used + internal->quote_null.used) * buffers->used), sizeof(f_char_t), (void **) &data->cache->string, &data->cache->used, &data->cache->size);
+      state->status = f_memory_array_increase_by(buffers->used + ((f_fss_space_s.used + internal->quote_null.used) * buffers->used), sizeof(f_char_t), (void **) &data->cache->string, &data->cache->used, &data->cache->size);
       if (F_status_is_error(state->status)) return F_true;
     }
 
@@ -87,7 +87,7 @@ extern "C" {
           private_fl_fss_basic_write(F_false, buffers->array[internal->j], internal->quote, &internal->range, &destinations->array[destinations->used].value, state, (void * const) internal);
           if (F_status_is_error(state->status)) return F_true;
 
-          state->status = f_string_dynamic_append_assure(f_fss_extended_next_s, data->cache);
+          state->status = f_string_dynamic_append_assure(f_fss_extended_next_s, &destinations->array[destinations->used].value);
           if (F_status_is_error(state->status)) return F_true;
         }
         else if (data->flag & f_fss_payload_header_map_flag_null_string_e) {
@@ -100,7 +100,7 @@ extern "C" {
     if (data->flag & f_fss_payload_header_map_flag_join_dynamics_e) {
       if (data->cache->used) {
 
-        // Do not include the f_string_space_s that is always added at the end of the loop.
+        // Remove the always added trailing space.
         data->cache->used -= f_string_space_s.used;
 
         internal->range.start = 0;
@@ -136,12 +136,15 @@ extern "C" {
 
       data->cache->used = 0;
 
+      state->status = f_memory_array_increase_by(map->name.used + map->value.used + f_string_space_s.used, sizeof(f_char_t), (void **) &data->cache->string, &data->cache->used, &data->cache->size);
+      if (F_status_is_error(state->status)) return F_true;
+
       if (map->name.used) {
         f_string_dynamic_append(map->name, data->cache);
         if (F_status_is_error(state->status)) return F_true;
 
         if (map->value.used) {
-          f_string_dynamic_append_assure(f_fss_extended_next_s, data->cache);
+          f_string_dynamic_append_assure(f_fss_space_s, data->cache);
           if (F_status_is_error(state->status)) return F_true;
         }
       }
@@ -163,7 +166,7 @@ extern "C" {
         if (F_status_is_error(state->status)) return F_true;
 
         if (map->value.used) {
-          f_string_dynamic_append_assure(f_string_space_s, &destinations->array[destinations->used].value);
+          f_string_dynamic_append_assure(f_fss_extended_next_s, &destinations->array[destinations->used].value);
           if (F_status_is_error(state->status)) return F_true;
         }
       }
@@ -212,83 +215,151 @@ extern "C" {
 #if !defined(_di_fl_fss_payload_header_maps_)
   uint8_t private_fl_payload_header_map_maps(f_fss_payload_header_state_t * const data, f_state_t * const state, f_fss_payload_header_internal_t * const internal, f_string_maps_t * const maps, f_string_maps_t * const destinations) {
 
+    internal->k = 0;
+
+    for (internal->l = 0; internal->l < maps->used; ++internal->k) {
+
+      if (maps->array[internal->l].name.used) {
+        internal->k += maps->array[internal->k].name.used + f_fss_extended_next_s.used + internal->quote_null.used;
+      }
+      else if (data->flag & f_fss_payload_header_map_flag_null_map_name_e) {
+        internal->k += f_fss_extended_next_s.used + internal->quote_null.used;
+      }
+
+      if (maps->array[internal->l].value.used) {
+        internal->k += maps->array[internal->l].value.used + f_fss_extended_next_s.used + internal->quote_null.used;
+      }
+      else if (data->flag & f_fss_payload_header_map_flag_null_map_value_e) {
+        internal->k += f_fss_extended_next_s.used + internal->quote_null.used;
+      }
+    } // for
+
     if (data->flag & f_fss_payload_header_map_flag_join_maps_e) {
-      // @todo
-    }
-    else if (data->flag & f_fss_payload_header_map_flag_null_map_name_value_e) {
-      // @todo
-    }
-    else {
-      for (internal->k = 0; internal->k < maps->used; ++internal->k) {
+      data->cache->used = 0;
 
-        if (maps->array[internal->k].name.used) {
-          internal->k += maps->array[internal->k].name.used + f_fss_extended_next_s.used + internal->quote_null.used;
-        }
-        else if (data->flag & f_fss_payload_header_map_flag_null_map_name_e) {
-          internal->k += f_fss_extended_next_s.used + internal->quote_null.used;
-        }
+      state->status = f_memory_array_increase_by(internal->k, sizeof(f_char_t), (void **) &data->cache->string, &data->cache->used, &data->cache->size);
+      if (F_status_is_error(state->status)) return F_true;
 
-        if (maps->array[internal->k].value.used) {
-          internal->k += maps->array[internal->k].value.used + f_fss_extended_next_s.used + internal->quote_null.used;
-        }
-        else if (data->flag & f_fss_payload_header_map_flag_null_map_value_e) {
-          internal->k += f_fss_extended_next_s.used + internal->quote_null.used;
-        }
-      } // for
+      for (internal->l = 0; internal->l < maps->used; ++internal->l) {
 
-      // @todo all of this below.
-
-      if (data->flag & f_fss_payload_header_map_flag_join_map_e) {
-        data->cache->used = 0;
-
-        state->status = f_memory_array_increase_by(internal->k, sizeof(f_char_t), (void **) &data->cache->string, &data->cache->used, &data->cache->size);
-        if (F_status_is_error(state->status)) return F_true;
-
-        for (internal->l = 0; internal->l < maps->used; ++internal->l) {
-
-          if (maps->array[internal->l].name.used || (data->flag & f_fss_payload_header_map_flag_null_map_name_e)) {
-            if (maps->array[internal->l].name.used) {
-              f_string_dynamic_append(maps->array[internal->l].name, data->cache);
-            }
-            else if (data->flag & f_fss_payload_header_map_flag_null_map_name_e) {
-              state->status = f_string_dynamic_append(internal->quote_null, data->cache);
-            }
-
-            if (F_status_is_error(state->status)) return F_true;
-
-            if (maps->array[internal->l].value.used) {
-              f_string_dynamic_append_assure(f_fss_extended_next_s, data->cache);
-              if (F_status_is_error(state->status)) return F_true;
-            }
+        if (maps->array[internal->l].name.used || (data->flag & f_fss_payload_header_map_flag_null_map_name_e)) {
+          if (maps->array[internal->l].name.used) {
+            f_string_dynamic_append(maps->array[internal->l].name, data->cache);
           }
-
-          if (maps->array[internal->l].value.used) {
-            f_string_dynamic_append(maps->array[internal->l].value, data->cache);
-          }
-          else if (data->flag & f_fss_payload_header_map_flag_null_map_value_e) {
+          else if (data->flag & f_fss_payload_header_map_flag_null_map_name_e) {
             state->status = f_string_dynamic_append(internal->quote_null, data->cache);
           }
 
           if (F_status_is_error(state->status)) return F_true;
 
-          state->status = f_string_dynamic_append_assure(f_fss_extended_next_s, data->cache);
-          if (F_status_is_error(state->status)) return F_true;
-        } // for
-
-        // Remove any trailing "extended_next".
-        if (data->cache->used) {
-          data->cache->used -= f_fss_extended_next_s.used;
+          if (maps->array[internal->l].value.used || (data->flag & f_fss_payload_header_map_flag_null_map_value_e)) {
+            f_string_dynamic_append_assure(f_fss_space_s, data->cache);
+            if (F_status_is_error(state->status)) return F_true;
+          }
         }
+
+        if (maps->array[internal->l].value.used) {
+          f_string_dynamic_append(maps->array[internal->l].value, data->cache);
+        }
+        else if (data->flag & f_fss_payload_header_map_flag_null_map_value_e) {
+          state->status = f_string_dynamic_append(internal->quote_null, data->cache);
+        }
+
+        if (F_status_is_error(state->status)) return F_true;
+
+        state->status = f_string_dynamic_append_assure(f_fss_space_s, data->cache);
+        if (F_status_is_error(state->status)) return F_true;
+      } // for
+
+      // Remove the always added trailing space.
+      if (data->cache->used) {
+        data->cache->used -= f_fss_space_s.used;
+      }
+
+      private_fl_fss_basic_write(F_false, *data->cache, 0, &internal->range, &destinations->array[destinations->used].value, state, (void * const) internal);
+      if (F_status_is_error(state->status)) return F_true;
+    }
+    else if (data->flag & f_fss_payload_header_map_flag_join_map_e) {
+      data->cache->used = 0;
+
+      state->status = f_memory_array_increase_by(internal->k, sizeof(f_char_t), (void **) &data->cache->string, &data->cache->used, &data->cache->size);
+      if (F_status_is_error(state->status)) return F_true;
+
+      for (internal->l = 0; internal->l < maps->used; ++internal->l) {
+
+        data->cache->used = 0;
+
+        if (maps->array[internal->l].name.used || (data->flag & f_fss_payload_header_map_flag_null_map_name_e)) {
+          if (maps->array[internal->l].name.used) {
+            f_string_dynamic_append(maps->array[internal->l].name, data->cache);
+          }
+          else if (data->flag & f_fss_payload_header_map_flag_null_map_name_e) {
+            state->status = f_string_dynamic_append(internal->quote_null, data->cache);
+          }
+
+          if (F_status_is_error(state->status)) return F_true;
+
+          if (maps->array[internal->l].value.used || (data->flag & f_fss_payload_header_map_flag_null_map_value_e)) {
+            f_string_dynamic_append_assure(f_fss_space_s, data->cache);
+            if (F_status_is_error(state->status)) return F_true;
+          }
+        }
+
+        if (maps->array[internal->l].value.used) {
+          f_string_dynamic_append(maps->array[internal->l].value, data->cache);
+        }
+        else if (data->flag & f_fss_payload_header_map_flag_null_map_value_e) {
+          state->status = f_string_dynamic_append(internal->quote_null, data->cache);
+        }
+
+        if (F_status_is_error(state->status)) return F_true;
 
         private_fl_fss_basic_write(F_false, *data->cache, 0, &internal->range, &destinations->array[destinations->used].value, state, (void * const) internal);
         if (F_status_is_error(state->status)) return F_true;
-      }
-      else {
-        state->status = f_memory_array_increase_by(internal->k, sizeof(f_char_t), (void **) &destinations->array[destinations->used].value.string, &destinations->array[destinations->used].value.used, &destinations->array[destinations->used].value.size);
-        if (F_status_is_error(state->status)) return F_true;
 
-        // @todo
-      }
+        if (internal->l + 1 < maps->used) {
+          state->status = f_string_dynamic_append_assure(f_fss_extended_next_s, &destinations->array[destinations->used].value);
+          if (F_status_is_error(state->status)) return F_true;
+        }
+      } // for
+    }
+    else {
+      state->status = f_memory_array_increase_by(internal->k, sizeof(f_char_t), (void **) &destinations->array[destinations->used].value.string, &destinations->array[destinations->used].value.used, &destinations->array[destinations->used].value.size);
+      if (F_status_is_error(state->status)) return F_true;
+
+      for (internal->l = 0; internal->l < maps->used; ++internal->l) {
+
+        if (maps->array[internal->l].name.used || (data->flag & f_fss_payload_header_map_flag_null_map_name_e)) {
+          if (maps->array[internal->l].name.used) {
+            internal->range.start = 0;
+            internal->range.stop = maps->array[internal->l].name.used - 1;
+
+            private_fl_fss_basic_write(F_false, maps->array[internal->l].name, 0, &internal->range, &destinations->array[destinations->used].value, state, (void * const) internal);
+            if (F_status_is_error(state->status)) return F_true;
+          }
+          else if (data->flag & f_fss_payload_header_map_flag_null_map_name_e) {
+            state->status = f_string_dynamic_append(internal->quote_null, &destinations->array[destinations->used].value);
+            if (F_status_is_error(state->status)) return F_true;
+          }
+
+          if (maps->array[internal->l].value.used) {
+            f_string_dynamic_append_assure(f_fss_extended_next_s, &destinations->array[destinations->used].value);
+            if (F_status_is_error(state->status)) return F_true;
+          }
+        }
+
+        if (maps->array[internal->l].value.used) {
+          internal->range.start = 0;
+          internal->range.stop = maps->array[internal->l].value.used - 1;
+
+          private_fl_fss_basic_write(F_true, maps->array[internal->l].value, 0, &internal->range, &destinations->array[destinations->used].value, state, (void * const) internal);
+          if (F_status_is_error(state->status)) return F_true;
+        }
+        else if (data->flag & f_fss_payload_header_map_flag_null_map_value_e) {
+          state->status = f_string_dynamic_append(internal->quote_null, &destinations->array[destinations->used].value);
+          if (F_status_is_error(state->status)) return F_true;
+        }
+      } // for
     }
 
     state->status = f_string_dynamic_strip_null(&destinations->array[destinations->used].value);
