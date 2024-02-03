@@ -49,8 +49,6 @@ build_sources_program test-string-mapss_delete_callback.c test-string-mapss_dest
 build_sources_program test-string-mash.c test-string-mash_nulless.c
 build_sources_program test-string-mish.c test-string-mish_nulless.c
 build_sources_program test-string-prepend.c test-string-prepend_assure.c test-string-prepend_assure_nulless.c test-string-prepend_nulless.c
-build_sources_program test-string-quantitys_append.c test-string-quantitys_append_all.c test-string-quantityss_append.c test-string-quantityss_append_all.c
-build_sources_program test-string-quantityss_delete_callback.c test-string-quantityss_destroy_callback.c
 build_sources_program test-string-seek_line.c test-string-seek_line_to.c test-string-seek_to.c
 build_sources_program test-string-triples_append.c test-string-triples_append_all.c test-string-tripless_append.c test-string-tripless_append_all.c
 build_sources_program test-string-triples_delete_callback.c test-string-triples_destroy_callback.c

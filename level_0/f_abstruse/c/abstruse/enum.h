@@ -43,8 +43,8 @@ extern "C" {
  *   - maps:       Maps to f_string_maps_t.
  *   - map_multi:  Maps to f_string_map_multi_t.
  *   - map_multis: Maps to f_string_map_multis_t.
- *   - quantity:   Maps to f_string_quantity_t.
- *   - quantitys:  Maps to f_string_quantitys_t.
+ *   - quantity:   Maps to f_quantity_t.
+ *   - quantitys:  Maps to f_quantitys_t.
  *   - range:      Maps to f_range_t.
  *   - ranges:     Maps to f_ranges_t.
  *   - triple:     Maps to f_string_triple_t.

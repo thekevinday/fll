@@ -29,6 +29,7 @@
 #include <fll/level_0/type/cell.h>
 #include <fll/level_0/type/fll.h>
 #include <fll/level_0/type/mode.h>
+#include <fll/level_0/type/quantity.h>
 #include <fll/level_0/type/range.h>
 #include <fll/level_0/type/range_double.h>
 #include <fll/level_0/type/state.h>

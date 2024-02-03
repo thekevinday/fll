@@ -91,8 +91,9 @@ extern "C" {
                 fss_read_print_error(&main->program.error, macro_fss_read_f(f_string_dynamic_append));
               }
               else {
-                main->setting.objects.array[main->setting.objects.used++].stop = main->setting.objects.array[main->setting.objects.used].start + f_fss_payload_s.used - 1;
+                main->setting.objects.array[main->setting.objects.used].stop = main->setting.objects.array[main->setting.objects.used].start + f_fss_payload_s.used - 1;
                 main->setting.contents.array[main->setting.contents.used++].used = 0;
+                ++main->setting.objects.used;
 
                 main->setting.state.status = F_okay;
               }

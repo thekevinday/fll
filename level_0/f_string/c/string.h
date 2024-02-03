@@ -35,9 +35,6 @@
 #include <fll/level_0/string/map_multi.h>
 #include <fll/level_0/string/map_multis.h>
 #include <fll/level_0/string/map_multiss.h>
-#include <fll/level_0/string/quantity.h>
-#include <fll/level_0/string/quantitys.h>
-#include <fll/level_0/string/quantityss.h>
 #include <fll/level_0/string/triple.h>
 #include <fll/level_0/string/triples.h>
 #include <fll/level_0/string/tripless.h>

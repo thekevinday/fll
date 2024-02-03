@@ -28,6 +28,9 @@
 #include <fll/level_0/type_array/int128.h>
 #include <fll/level_0/type_array/number_signed.h>
 #include <fll/level_0/type_array/number_unsigned.h>
+#include <fll/level_0/type_array/quantity.h>
+#include <fll/level_0/type_array/quantitys.h>
+#include <fll/level_0/type_array/quantityss.h>
 #include <fll/level_0/type_array/range.h>
 #include <fll/level_0/type_array/ranges.h>
 #include <fll/level_0/type_array/rangess.h>

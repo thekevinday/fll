@@ -304,7 +304,6 @@ extern "C" {
         ++(*line);
       }
       else {
-        f_number_unsigned_t line_original = 0;
         f_number_unsigned_t j = 0;
         f_number_unsigned_t k = 0;
 
@@ -312,7 +311,6 @@ extern "C" {
 
           if (fss_read_signal_check(main)) return;
 
-          line_original = *line;
           main->setting.range = main->setting.contents.array[at].array[i];
           k = 0;
 

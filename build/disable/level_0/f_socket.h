@@ -1,14 +1,12 @@
 #define _di_f_socket_accept_
 #define _di_f_socket_address_family_e_
+#define _di_f_socket_address_form_e_
 #define _di_f_socket_addressss_delete_callback_
 #define _di_f_socket_addressss_destroy_callback_
 #define _di_f_socket_addressss_t_
 #define _di_f_socket_addresss_t_
 #define _di_f_socket_address_t_
 #define _di_f_socket_bind_
-#define _di_f_socket_bind_inet4_
-#define _di_f_socket_bind_inet6_
-#define _di_f_socket_bind_local_
 #define _di_f_socket_close_e_
 #define _di_f_socket_connect_
 #define _di_f_socket_create_

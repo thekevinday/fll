@@ -1,47 +1,20 @@
 /**
  * FLL - Level 0
  *
- * Project: String
+ * Project: Type
  * API Version: 0.7
  * Licenses: lgpl-2.1-or-later
  *
- * Defines quantity string data.
+ * Defines data to be used for/by type (array) related functionality.
  *
- * This is auto-included by string.h and should not need to be explicitly included.
+ * This is auto-included by type_array.h and should not need to be explicitly included.
  */
-#ifndef _F_string_quantityss_h
-#define _F_string_quantityss_h
+#ifndef _F_type_array_quantityss_h
+#define _F_type_array_quantityss_h
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-/**
- * This holds an array of f_string_quantitys_t.
- *
- * Properties:
- *   - array: The array of quantitys arrays.
- *   - size:  Total amount of allocated space.
- *   - used:  Total number of allocated spaces used.
- */
-#ifndef _di_f_string_quantityss_t_
-  typedef struct {
-    f_string_quantitys_t *array;
-
-    f_number_unsigned_t size;
-    f_number_unsigned_t used;
-  } f_string_quantityss_t;
-
-  #define f_string_quantityss_t_initialize { 0, 0, 0 }
-
-  #define macro_f_string_quantityss_t_initialize_1(array, size, used) { array, size, used }
-  #define macro_f_string_quantityss_t_initialize_2(array, length) { array, length, length }
-
-  #define macro_f_string_quantityss_t_clear(quantityss) \
-    quantityss.array = 0; \
-    quantityss.size = 0; \
-    quantityss.used = 0;
-#endif // _di_f_string_quantityss_t_
 
 /**
  * Append the single source quantitys onto the destination.
@@ -59,9 +32,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_string_quantityss_append_
-  extern f_status_t f_string_quantityss_append(const f_string_quantitys_t source, f_string_quantityss_t * const destination);
-#endif // _di_f_string_quantityss_append_
+#ifndef _di_f_quantityss_append_
+  extern f_status_t f_quantityss_append(const f_quantitys_t source, f_quantityss_t * const destination);
+#endif // _di_f_quantityss_append_
 
 /**
  * Append the source quantityss onto the destination.
@@ -79,12 +52,12 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_string_quantityss_append_all_
-  extern f_status_t f_string_quantityss_append_all(const f_string_quantityss_t source, f_string_quantityss_t * const destination);
-#endif // _di_f_string_quantityss_append_all_
+#ifndef _di_f_quantityss_append_all_
+  extern f_status_t f_quantityss_append_all(const f_quantityss_t source, f_quantityss_t * const destination);
+#endif // _di_f_quantityss_append_all_
 
 /**
- * A callback intended to be passed to f_memory_arrayss_resize() for an f_string_quantityss_t structure.
+ * A callback intended to be passed to f_memory_arrayss_resize() for an f_quantityss_t structure.
  *
  * This is only called when shrinking the array and generally should perform deallocations.
  *
@@ -107,12 +80,12 @@ extern "C" {
  *
  * @see f_memory_array_resize()
  */
-#ifndef _di_f_string_quantityss_delete_callback_
-  extern f_status_t f_string_quantityss_delete_callback(const f_number_unsigned_t start, const f_number_unsigned_t stop, void * const array);
-#endif // _di_f_string_quantityss_delete_callback_
+#ifndef _di_f_quantityss_delete_callback_
+  extern f_status_t f_quantityss_delete_callback(const f_number_unsigned_t start, const f_number_unsigned_t stop, void * const array);
+#endif // _di_f_quantityss_delete_callback_
 
 /**
- * A callback intended to be passed to f_memory_arrayss_adjust() for an f_string_quantityss_t structure.
+ * A callback intended to be passed to f_memory_arrayss_adjust() for an f_quantityss_t structure.
  *
  * This is only called when shrinking the array and generally should perform deallocations.
  *
@@ -135,12 +108,12 @@ extern "C" {
  *
  * @see f_memory_array_adjust()
  */
-#ifndef _di_f_string_quantityss_destroy_callback_
-  extern f_status_t f_string_quantityss_destroy_callback(const f_number_unsigned_t start, const f_number_unsigned_t stop, void * const array);
-#endif // _di_f_string_quantityss_destroy_callback_
+#ifndef _di_f_quantityss_destroy_callback_
+  extern f_status_t f_quantityss_destroy_callback(const f_number_unsigned_t start, const f_number_unsigned_t stop, void * const array);
+#endif // _di_f_quantityss_destroy_callback_
 
 #ifdef __cplusplus
 } // extern "C"
 #endif
 
-#endif // _F_string_quantityss_h
+#endif // _F_type_array_quantityss_h

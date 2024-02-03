@@ -30,6 +30,15 @@
 #define _di_f_pollss_t_
 #define _di_f_polls_t_
 #define _di_f_poll_t_
+#define _di_f_quantityss_t_
+#define _di_f_quantitys_t_
+#define _di_f_quantity_t_
+#define _di_f_range_doubless_t_
+#define _di_f_range_doubles_t_
+#define _di_f_range_double_t_
+#define _di_f_rangess_t_
+#define _di_f_ranges_t_
+#define _di_f_range_t_
 #define _di_f_statess_t_
 #define _di_f_states_t_
 #define _di_f_state_t_

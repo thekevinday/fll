@@ -42,7 +42,7 @@
 #define _di_f_fss_payload_comment_header_begin_s_
 #define _di_f_fss_payload_comment_header_end_s_
 #define _di_f_fss_payload_comment_header_s_
-#define _di_f_fss_payload_header_map_e_
+#define _di_f_fss_payload_header_map_flag_e_
 #define _di_f_fss_payload_object_end_s_
 #define _di_f_fss_payload_object_header_s_
 #define _di_f_fss_payload_object_id_s_
@@ -57,6 +57,9 @@
 #define _di_f_fss_payload_object_type_s_
 #define _di_f_fss_payload_s_
 #define _di_f_fss_placeholder_s_
+#define _di_f_fss_quote_double_null_s_
+#define _di_f_fss_quote_grave_null_s_
+#define _di_f_fss_quote_single_null_s_
 #define _di_f_fss_quote_type_e_
 #define _di_f_fss_s_
 #define _di_f_fss_seek_to_eol_

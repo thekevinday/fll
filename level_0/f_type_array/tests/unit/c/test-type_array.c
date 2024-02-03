@@ -83,6 +83,20 @@ int main(void) {
     cmocka_unit_test(test__f_type_array_pollss_destroy_callback__fails),
     cmocka_unit_test(test__f_type_array_pollss_destroy_callback__works),
 
+    cmocka_unit_test(test__f_type_array_quantitys_append__works),
+    cmocka_unit_test(test__f_type_array_quantitys_append_all__works),
+    cmocka_unit_test(test__f_type_array_quantitys_append_all__returns_data_not),
+
+    cmocka_unit_test(test__f_type_array_quantityss_append__works),
+    cmocka_unit_test(test__f_type_array_quantityss_append__returns_data_not),
+    cmocka_unit_test(test__f_type_array_quantityss_append_all__works),
+    cmocka_unit_test(test__f_type_array_quantityss_append_all__returns_data_not),
+
+    cmocka_unit_test(test__f_type_array_quantityss_delete_callback__fails),
+    cmocka_unit_test(test__f_type_array_quantityss_destroy_callback__fails),
+    cmocka_unit_test(test__f_type_array_quantityss_delete_callback__works),
+    cmocka_unit_test(test__f_type_array_quantityss_destroy_callback__works),
+
     cmocka_unit_test(test__f_type_array_ranges_append__works),
     cmocka_unit_test(test__f_type_array_ranges_append_all__works),
     cmocka_unit_test(test__f_type_array_ranges_append_all__returns_data_not),
@@ -172,6 +186,14 @@ int main(void) {
 
       // f_pollss_destroy_callback() doesn't use parameter checking.
       // f_pollss_delete_callback() doesn't use parameter checking.
+
+      cmocka_unit_test(test__f_type_array_quantitys_append__parameter_checking),
+      cmocka_unit_test(test__f_type_array_quantitys_append_all__parameter_checking),
+      cmocka_unit_test(test__f_type_array_quantityss_append__parameter_checking),
+      cmocka_unit_test(test__f_type_array_quantityss_append_all__parameter_checking),
+
+      // f_quantityss_delete_callback() doesn't use parameter checking.
+      // f_quantityss_destroy_callback() doesn't use parameter checking.
 
       cmocka_unit_test(test__f_type_array_ranges_append__parameter_checking),
       cmocka_unit_test(test__f_type_array_ranges_append_all__parameter_checking),

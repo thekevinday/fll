@@ -19,8 +19,8 @@
 #define _di_f_iki_read_
 #define _di_f_iki_state_flag_e_
 #define _di_f_iki_syntax_placeholder_s_
-#define _di_f_iki_syntax_quote_backtick_s_
 #define _di_f_iki_syntax_quote_double_s_
+#define _di_f_iki_syntax_quote_grave_s_
 #define _di_f_iki_syntax_quote_single_s_
 #define _di_f_iki_syntax_s_
 #define _di_f_iki_syntax_separator_s_

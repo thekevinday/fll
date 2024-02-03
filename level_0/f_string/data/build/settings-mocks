@@ -25,7 +25,6 @@ build_sources_library private-string.c string/common.c
 build_sources_library string/dynamic.c string/dynamics.c string/dynamicss.c
 build_sources_library string/map.c string/maps.c string/mapss.c
 build_sources_library string/map_multi.c string/map_multis.c string/map_multiss.c
-build_sources_library string/quantity.c string/quantitys.c string/quantityss.c
 build_sources_library string/static.c string/statics.c string/staticss.c
 build_sources_library string/triple.c string/triples.c string/tripless.c
 build_sources_library ../../tests/unit/c/mock-string.c
@@ -34,7 +33,6 @@ build_sources_headers string.h string/common.h
 build_sources_headers string/dynamic.h string/dynamics.h string/dynamicss.h
 build_sources_headers string/map.h string/maps.h string/mapss.h
 build_sources_headers string/map_multi.h string/map_multis.h string/map_multiss.h
-build_sources_headers string/quantity.h string/quantitys.h string/quantityss.h
 build_sources_headers string/static.h string/statics.h string/staticss.h
 build_sources_headers string/triple.h string/triples.h string/tripless.h
 

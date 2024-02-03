@@ -124,15 +124,6 @@ int main(void) {
     cmocka_unit_test(test__f_string_prepend_assure_nulless__works),
     cmocka_unit_test(test__f_string_prepend_nulless__works),
 
-    cmocka_unit_test(test__f_string_quantitys_append__works),
-    cmocka_unit_test(test__f_string_quantitys_append_all__works),
-    cmocka_unit_test(test__f_string_quantitys_append_all__returns_data_not),
-
-    cmocka_unit_test(test__f_string_quantityss_append__works),
-    cmocka_unit_test(test__f_string_quantityss_append__returns_data_not),
-    cmocka_unit_test(test__f_string_quantityss_append_all__works),
-    cmocka_unit_test(test__f_string_quantityss_append_all__returns_data_not),
-
     cmocka_unit_test(test__f_string_triples_append__works),
     cmocka_unit_test(test__f_string_triples_append_all__works),
     cmocka_unit_test(test__f_string_triples_append_all__returns_data_not),
@@ -184,11 +175,6 @@ int main(void) {
     cmocka_unit_test(test__f_string_mapss_destroy_callback__fails),
     cmocka_unit_test(test__f_string_mapss_delete_callback__works),
     cmocka_unit_test(test__f_string_mapss_destroy_callback__works),
-
-    cmocka_unit_test(test__f_string_quantityss_delete_callback__fails),
-    cmocka_unit_test(test__f_string_quantityss_destroy_callback__fails),
-    cmocka_unit_test(test__f_string_quantityss_delete_callback__works),
-    cmocka_unit_test(test__f_string_quantityss_destroy_callback__works),
 
     cmocka_unit_test(test__f_string_triples_delete_callback__fails),
     cmocka_unit_test(test__f_string_triples_destroy_callback__fails),
@@ -274,11 +260,6 @@ int main(void) {
       cmocka_unit_test(test__f_string_prepend_assure_nulless__parameter_checking),
       cmocka_unit_test(test__f_string_prepend_nulless__parameter_checking),
 
-      cmocka_unit_test(test__f_string_quantitys_append__parameter_checking),
-      cmocka_unit_test(test__f_string_quantitys_append_all__parameter_checking),
-      cmocka_unit_test(test__f_string_quantityss_append__parameter_checking),
-      cmocka_unit_test(test__f_string_quantityss_append_all__parameter_checking),
-
       cmocka_unit_test(test__f_string_triples_append__parameter_checking),
       cmocka_unit_test(test__f_string_triples_append_all__parameter_checking),
       cmocka_unit_test(test__f_string_tripless_append__parameter_checking),
@@ -307,9 +288,6 @@ int main(void) {
 
       // f_string_mapss_delete_callback() doesn't use parameter checking.
       // f_string_mapss_destroy_callback() doesn't use parameter checking.
-
-      // f_string_quantityss_delete_callback() doesn't use parameter checking.
-      // f_string_quantityss_destroy_callback() doesn't use parameter checking.
 
       // f_string_triples_delete_callback() doesn't use parameter checking.
       // f_string_triples_destroy_callback() doesn't use parameter checking.

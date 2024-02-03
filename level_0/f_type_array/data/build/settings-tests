@@ -34,6 +34,8 @@ build_sources_program test-type_array-int128ss_delete_callback.c test-type_array
 build_sources_program test-type_array-number_signedss_delete_callback.c test-type_array-number_signedss_destroy_callback.c
 build_sources_program test-type_array-number_unsignedss_delete_callback.c test-type_array-number_unsignedss_destroy_callback.c
 build_sources_program test-type_array-pollss_delete_callback.c test-type_array-pollss_destroy_callback.c
+build_sources_program test-type_array-quantitys_append.c test-type_array-quantitys_append_all.c test-type_array-quantityss_append.c test-type_array-quantityss_append_all.c
+build_sources_program test-type_array-quantityss_delete_callback.c test-type_array-quantityss_destroy_callback.c
 build_sources_program test-type_array-ranges_append.c test-type_array-ranges_append_all.c test-type_array-rangess_append.c test-type_array-rangess_append_all.c
 build_sources_program test-type_array-rangess_delete_callback.c test-type_array-rangess_destroy_callback.c
 build_sources_program test-type_array-range_doubles_append.c test-type_array-range_doubles_append_all.c test-type_array-range_doubless_append.c test-type_array-range_doubless_append_all.c
