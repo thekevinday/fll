@@ -100,7 +100,7 @@ extern "C" {
     } /* for */ \
     \
     if (data->cache->used && (data->flag & f_fss_payload_header_map_flag_join_digits_e)) { \
-      private_fl_payload_header_map_cache(data, state, &internal); \
+      private_fl_payload_header_map_cache_write(data, state, &internal); \
       \
       if (F_status_is_error_not(state->status)) { \
         ++destinations->used; \

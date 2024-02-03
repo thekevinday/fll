@@ -36,6 +36,18 @@ extern "C" {
 #endif
 
 /**
+ * Special print strings.
+ *
+ * FL_fss_payload_*_d:
+ *   - digit_size_1: A default buffer size to use when allocating space for digit conversions of one digit.
+ *   - digit_size_2: A default buffer size to use when allocating space for digit conversions of two digits.
+ */
+#ifndef _di_fl_fss_payload_d_
+  #define FL_payload_digit_size_1_d 32
+  #define FL_payload_digit_size_2_d 64
+#endif // _di_fl_fss_payload_d_
+
+/**
  * Write standard header of the FSS-000E (Payload).
  *
  * This implementation does not handle the following f_abstruse_*_e:
