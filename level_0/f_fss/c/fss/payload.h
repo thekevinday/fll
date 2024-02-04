@@ -22,63 +22,89 @@ extern "C" {
  * When both *_split_range_e and *_split_ranges_e are set, then both the individual ranges and the range sets are split into separate Content (separate columns).
  *
  * Values of f_fss_payload_header_map_flag_*_e:
- *   - none:                No flag set.
- *   - join_digits:         Types of digits are combined into a single Content (single column).
- *   - join_dynamics:       Types of dynamics are combined into a single Content (single column).
- *   - join_map:            Types of map are combined into a single Content (single column), example: "key1 value1" "key2 value2" as opposed to "key1" "value1" "key2" "value2".
- *   - join_maps:           Types of maps are combined into a single Content (single column), example: "key1 value1 key2 value2" as opposed to "key1 value1" "key2 value2" or "key1" "value1" "key2" "value2".
- *   - join_range:          Types of range are combined into a single Content (single column).
- *   - join_ranges:         Types of ranges are combined into a single Content (single column) (this effectively forces join_range to always be treated as set).
- *   - join_strings:        Types of strings are combined into a single Content (single column).
- *   - join_triple:         Types of triple are combined into a single Content (single column), example: "a b c" "d e f" as opposed to "a" "b" "c" "d" "e" "f".
- *   - join_triples:        Types of triples are combined into a single Content (single column), example: "a b c d e f" as opposed to "a b c" "d e f" or "a" "b" "c" "d" "e" "f".
- *   - null:                When the key has no header Content (header value.used is 0), still add the Object (header key) (When this is not set then the Object (header key) is not added).
- *   - null_dynamic:        Types of dynamic and dynamics have empty strings (such as "") added for NULL values (used is 0).
- *   - null_map_name:       Types of map and maps has empty strings (such as "") added for NULL values (used is 0) for the map key.
- *   - null_map_value:      Types of map and maps has empty strings (such as "") added for NULL values (used is 0) for the map value.
- *   - null_map_name_value: An enumeration value representing both null_map_name and null_map_value keys being set.
- *   - null_maps:           Types of dynamic and dynamics have empty strings (such as "") added for when null_map_key and null_map_value are not set and both map key and map value have NULL values (used is 0).
- *   - null_range:          Types of range and ranges have empty strings (such as "") for when start > stop, aka NULL ranges.
- *   - null_ranges:         Types of ranges have empty strings (such as "") added for when the array is empty.
- *   - null_string:         Types of string and strings have empty strings (such as "") for NULL values.
- *   - null_triple_a:       Types of triple and triples has empty strings (such as "") added for NULL values (used is 0) for the "a" property.
- *   - null_triple_b:       Types of triple and triples has empty strings (such as "") added for NULL values (used is 0) for the "b" property.
- *   - null_triple_c:       Types of triple and triples has empty strings (such as "") added for NULL values (used is 0) for the "c" property.
- *   - null_triples:        Types of triples have empty strings (such as "") added for when the array is empty.
- *   - quote_double:        Use double quotes (U+0022) when quoting strings.
- *   - quote_grave:         Use grave (U+0060) when quoting strings.
- *   - quote_single:        Use single quotes (U+0027) when quoting strings.
- *   - last:                This does nothing and is provided to be used as a starting point for anything extending this (there should be a max total of 64 bits allowed).
+ *   - none:                       No flag set.
+ *   - join_digits:                Types of digits are combined into a single Content (single column).
+ *   - join_dynamics:              Types of dynamics are combined into a single Content (single column).
+ *   - join_map:                   Types of map are combined into a single Content (single column), example: "key1 value1" "key2 value2" as opposed to "key1" "value1" "key2" "value2".
+ *   - join_map_multi:             Types of multi-map are combined into a single Content (single column), example: "key1 value1" "key2 value2" as opposed to "key1" "value1" "key2" "value2".
+ *   - join_map_multis:            Types of multi-maps are combined into a single Content (single column), example: "key1 value1 key2 value2" as opposed to "key1 value1" "key2 value2" or "key1" "value1" "key2" "value2".
+ *   - join_maps:                  Types of maps are combined into a single Content (single column), example: "key1 value1 key2 value2" as opposed to "key1 value1" "key2 value2" or "key1" "value1" "key2" "value2".
+ *   - join_quantity:              Types of quantity are combined into a single Content (single column).
+ *   - join_quantitys:             Types of quantitys are combined into a single Content (single column) (this effectively forces join_quantity to always be treated as set).
+ *   - join_quantitys_quantity:    An enumeration value representing both join_quantitys and join_quantity keys being set.
+ *   - join_range:                 Types of range are combined into a single Content (single column).
+ *   - join_ranges:                Types of ranges are combined into a single Content (single column) (this effectively forces join_range to always be treated as set).
+ *   - join_ranges_range:          An enumeration value representing both join_ranges and join_range keys being set.
+ *   - join_strings:               Types of strings are combined into a single Content (single column).
+ *   - join_triple:                Types of triple are combined into a single Content (single column), example: "a b c" "d e f" as opposed to "a" "b" "c" "d" "e" "f".
+ *   - join_triples:               Types of triples are combined into a single Content (single column), example: "a b c d e f" as opposed to "a b c" "d e f" or "a" "b" "c" "d" "e" "f".
+ *   - join_triples_triple:        An enumeration value representing both join_triple and join_triples keys being set.
+ *   - null:                       When the key has no header Content (header value.used is 0), still add the Object (header key) (When this is not set then the Object (header key) is not added).
+ *   - null_dynamic:               Types of dynamic and dynamics have empty strings added (such as "") added for NULL values (used is 0).
+ *   - null_dynamics:              Types of dynamics have empty strings added (such as "") added for when the array is empty.
+ *   - null_map_multi_name:        Types of multi-map and multi-maps has empty strings (such as "") added for NULL values (used is 0) for the map key.
+ *   - null_map_multi_values:      Types of multi-map and multi-maps has empty strings (such as "") added for NULL values (used is 0) for the map value.
+ *   - null_map_multi_values_name: An enumeration value representing both null_map_multi_name and null_map_multi_values keys being set.
+ *   - null_map_multis:            Types of multi-maps have empty strings added (such as "") added for when null_map_multi and null_map_multi_values are not set and both map key and map value have NULL values (used is 0).
+ *   - null_map_name:              Types of map and maps has empty strings (such as "") added for NULL values (used is 0) for the map key.
+ *   - null_map_value:             Types of map and maps has empty strings (such as "") added for NULL values (used is 0) for the map value.
+ *   - null_map_value_name:        An enumeration value representing both null_map_name and null_map_value keys being set.
+ *   - null_maps:                  Types of map and maps have empty strings added (such as "") added for when null_map_key and null_map_value are not set and both map key and map value have NULL values (used is 0).
+ *   - null_quantity:              Types of quantity and quantitys have empty strings added (such as "") for when start > stop, aka NULL quantitys.
+ *   - null_quantitys:             Types of quantitys have empty strings added (such as "") added for when the array is empty.
+ *   - null_range:                 Types of range and ranges have empty strings added (such as "") for when start > stop, aka NULL ranges.
+ *   - null_ranges:                Types of ranges have empty strings added (such as "") added for when the array is empty.
+ *   - null_string:                Types of string and strings have empty strings added (such as "") for NULL values.
+ *   - null_strings:               Types of strings have empty strings added (such as "") added for when the array is empty.
+ *   - null_triple:                Types of triple and triples has empty strings (such as "") added for NULL values (used is 0) (for any property, a, b, and c).
+ *   - null_triples:               Types of triples have empty strings added (such as "") added for when the array is empty.
+ *   - quote_double:               Use double quotes (U+0022) when quoting strings.
+ *   - quote_grave:                Use grave (U+0060) when quoting strings.
+ *   - quote_single:               Use single quotes (U+0027) when quoting strings.
+ *   - last:                       This does nothing and is provided to be used as a starting point for anything extending this (there should be a max total of 64 bits allowed).
  */
 #ifndef _di_f_fss_payload_header_map_flag_e_
   enum {
-    f_fss_payload_header_map_flag_none_e                = 0x0,
-    f_fss_payload_header_map_flag_join_digits_e         = 0x1,
-    f_fss_payload_header_map_flag_join_dynamics_e       = 0x2,
-    f_fss_payload_header_map_flag_join_map_e            = 0x4,
-    f_fss_payload_header_map_flag_join_maps_e           = 0x8,
-    f_fss_payload_header_map_flag_join_range_e          = 0x10,
-    f_fss_payload_header_map_flag_join_ranges_e         = 0x20,
-    f_fss_payload_header_map_flag_join_strings_e        = 0x40,
-    f_fss_payload_header_map_flag_join_triple_e         = 0x80,
-    f_fss_payload_header_map_flag_join_triples_e        = 0x100,
-    f_fss_payload_header_map_flag_null_e                = 0x200,
-    f_fss_payload_header_map_flag_null_dynamic_e        = 0x400,
-    f_fss_payload_header_map_flag_null_map_name_e       = 0x800,
-    f_fss_payload_header_map_flag_null_map_value_e      = 0x1000,
-    f_fss_payload_header_map_flag_null_map_name_value_e = 0x2000,
-    f_fss_payload_header_map_flag_null_maps_e           = 0x4000,
-    f_fss_payload_header_map_flag_null_range_e          = 0x8000,
-    f_fss_payload_header_map_flag_null_ranges_e         = 0x10000,
-    f_fss_payload_header_map_flag_null_string_e         = 0x20000,
-    f_fss_payload_header_map_flag_null_triple_a_e       = 0x40000,
-    f_fss_payload_header_map_flag_null_triple_b_e       = 0x80000,
-    f_fss_payload_header_map_flag_null_triple_c_e       = 0x100000,
-    f_fss_payload_header_map_flag_null_triples_e        = 0x200000,
-    f_fss_payload_header_map_flag_quote_double_e        = 0x400000,
-    f_fss_payload_header_map_flag_quote_grave_e         = 0x800000,
-    f_fss_payload_header_map_flag_quote_single_e        = 0x1000000,
-    f_fss_payload_header_map_flag_last_e                = 0x2000000,
+    f_fss_payload_header_map_flag_none_e                       = 0x0,
+    f_fss_payload_header_map_flag_join_digits_e                = 0x1,
+    f_fss_payload_header_map_flag_join_dynamics_e              = 0x2,
+    f_fss_payload_header_map_flag_join_map_e                   = 0x4,
+    f_fss_payload_header_map_flag_join_map_multi_e             = 0x8,
+    f_fss_payload_header_map_flag_join_map_multis_e            = 0x10,
+    f_fss_payload_header_map_flag_join_maps_e                  = 0x20,
+    f_fss_payload_header_map_flag_join_quantity_e              = 0x40,
+    f_fss_payload_header_map_flag_join_quantitys_e             = 0x80,
+    f_fss_payload_header_map_flag_join_quantitys_quantity_e    = 0xc0,
+    f_fss_payload_header_map_flag_join_range_e                 = 0x100,
+    f_fss_payload_header_map_flag_join_ranges_e                = 0x200,
+    f_fss_payload_header_map_flag_join_ranges_range_e          = 0x300,
+    f_fss_payload_header_map_flag_join_strings_e               = 0x400,
+    f_fss_payload_header_map_flag_join_triple_e                = 0x800,
+    f_fss_payload_header_map_flag_join_triples_e               = 0x1000,
+    f_fss_payload_header_map_flag_join_triples_triple_e        = 0x1800,
+    f_fss_payload_header_map_flag_null_e                       = 0x2000,
+    f_fss_payload_header_map_flag_null_dynamic_e               = 0x4000,
+    f_fss_payload_header_map_flag_null_dynamics_e              = 0x8000,
+    f_fss_payload_header_map_flag_null_map_multi_name_e        = 0x10000,
+    f_fss_payload_header_map_flag_null_map_multi_values_e      = 0x20000,
+    f_fss_payload_header_map_flag_null_map_multi_values_name_e = 0x30000,
+    f_fss_payload_header_map_flag_null_map_multis_e            = 0x40000,
+    f_fss_payload_header_map_flag_null_map_name_e              = 0x80000,
+    f_fss_payload_header_map_flag_null_map_value_e             = 0x100000,
+    f_fss_payload_header_map_flag_null_map_value_name_e        = 0x180000,
+    f_fss_payload_header_map_flag_null_maps_e                  = 0x200000,
+    f_fss_payload_header_map_flag_null_quantity_e              = 0x400000,
+    f_fss_payload_header_map_flag_null_quantitys_e             = 0x800000,
+    f_fss_payload_header_map_flag_null_range_e                 = 0x1000000,
+    f_fss_payload_header_map_flag_null_ranges_e                = 0x2000000,
+    f_fss_payload_header_map_flag_null_string_e                = 0x4000000,
+    f_fss_payload_header_map_flag_null_strings_e               = 0x8000000,
+    f_fss_payload_header_map_flag_null_triple_e                = 0x10000000,
+    f_fss_payload_header_map_flag_null_triples_e               = 0x20000000,
+    f_fss_payload_header_map_flag_quote_double_e               = 0x40000000,
+    f_fss_payload_header_map_flag_quote_grave_e                = 0x80000000,
+    f_fss_payload_header_map_flag_quote_single_e               = 0x10000000,
+    f_fss_payload_header_map_flag_last_e                       = 0x20000000,
   }; // enum
 #endif // _di_f_fss_payload_header_map_flag_e_
 
