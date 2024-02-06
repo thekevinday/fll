@@ -198,9 +198,7 @@ extern "C" {
 #endif // !defined(_di_fl_fss_payload_header_map_)
 
 /**
- * Process the case where a map is added with the appropriate NULL flag bits set.
- *
- * This adds the data.quote_null strings for both the map name and the map value, depending on the f_fss_payload_header_map_flag_null_map_name_e and f_fss_payload_header_map_flag_null_map_value_e flags.
+ * Process the multi-map strings, writing it into the packet with the appropriate escaping as necessary.
  *
  * This expects that the appropriate used and flag checks are performed prior to calling this.
  *
@@ -221,6 +219,9 @@ extern "C" {
  * @param internal
  *   The internal state, f_fss_payload_header_internal_t, created inside of fl_fss_payload_header_map().
  *   Must not be NULL.
+ * @param map
+ *   The map to read from.
+ *   Must not be NULL.
  * @param destinations
  *   A map of strings representing the header names and values after being safely converted into the valid payload header format.
  *   This built header names and values are appended onto this.
@@ -240,8 +241,55 @@ extern "C" {
  * @see fl_fss_payload_header_map()
  */
 #if !defined(_di_fl_fss_payload_header_map_)
-  extern uint8_t private_fl_payload_header_map_map_name_value_null(f_fss_payload_header_state_t * const data, f_state_t * const state, f_fss_payload_header_internal_t * const internal, f_string_maps_t * const destinations) F_attribute_visibility_internal_d;
+  extern uint8_t private_fl_payload_header_map_map_multi(f_fss_payload_header_state_t * const data, f_state_t * const state, f_fss_payload_header_internal_t * const internal, f_string_map_multi_t * const map, f_string_maps_t * const destinations) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fl_fss_payload_header_map_)
+
+/**
+ * Process the multi-map strings, writing it into the packet with the appropriate escaping as necessary.
+ *
+ * This expects that the appropriate used and flag checks are performed prior to calling this.
+ *
+ * @param data
+ *   The f_fss_payload_header_state_t pointer.
+ *   Must not be NULL.
+ * @param state
+ *   The state passed directly from the fl_fss_payload_header_map() parameters.
+ *
+ *   This alters state.status:
+ *     F_okay on success.
+ *
+ *     Errors (with error bit) from: f_memory_array_increase_by().
+ *     Errors (with error bit) from: f_string_dynamic_strip_null().
+ *     Errors (with error bit) from: private_fl_fss_basic_write().
+ *
+ *   Must not be NULL.
+ * @param internal
+ *   The internal state, f_fss_payload_header_internal_t, created inside of fl_fss_payload_header_map().
+ *   Must not be NULL.
+ * @param maps
+ *   The maps to read from.
+ *   Must not be NULL.
+ * @param destinations
+ *   A map of strings representing the header names and values after being safely converted into the valid payload header format.
+ *   This built header names and values are appended onto this.
+ *   This is updated as appropriate.
+ *   Must not be NULL.
+ *
+ * @return
+ *   F_true if the caller should break or exit due to an error or something similar.
+ *   F_false, otherwise.
+ *
+ * @see f_memory_array_increase_by()
+ * @see f_string_dynamic_append()
+ * @see f_string_dynamic_strip_null()
+ *
+ * @see private_fl_fss_basic_write()
+ *
+ * @see fl_fss_payload_header_map()
+ */
+#if !defined(_di_fl_fss_payload_header_maps_)
+  extern uint8_t private_fl_payload_header_map_map_multis(f_fss_payload_header_state_t * const data, f_state_t * const state, f_fss_payload_header_internal_t * const internal, f_string_map_multis_t * const maps, f_string_maps_t * const destinations) F_attribute_visibility_internal_d;
+#endif // !defined(_di_fl_fss_payload_header_maps_)
 
 /**
  * Process the map strings, writing it into the packet with the appropriate escaping as necessary.
@@ -369,6 +417,110 @@ extern "C" {
  */
 #if !defined(_di_fl_fss_payload_header_map_)
   extern uint8_t private_fl_payload_header_map_number_unsigned(f_fss_payload_header_state_t * const data, f_state_t * const state, f_fss_payload_header_internal_t * const internal, const f_number_unsigned_t number) F_attribute_visibility_internal_d;
+#endif // !defined(_di_fl_fss_payload_header_map_)
+
+/**
+ * Process the quantity, writing it into the packet with the appropriate escaping as necessary.
+ *
+ * This expects that the appropriate used and flag checks are performed prior to calling this.
+ *
+ * @param headers
+ *   An abstruse map representing individual headers.
+ * @param data
+ *   The f_fss_payload_header_state_t pointer.
+ *   This modifies data.cache.
+ *   Must not be NULL.
+ * @param state
+ *   The state passed directly from the fl_fss_payload_header_map() parameters.
+ *
+ *   This alters state.status:
+ *     F_okay on success.
+ *
+ *     Errors (with error bit) from: f_memory_array_increase_by().
+ *     Errors (with error bit) from: f_string_dynamic_append().
+ *     Errors (with error bit) from: f_string_dynamic_append_assure().
+ *     Errors (with error bit) from: f_string_dynamic_strip_null().
+ *     Errors (with error bit) from: private_fl_fss_basic_write().
+ *
+ *   Must not be NULL.
+ * @param internal
+ *   The internal state, f_fss_payload_header_internal_t, created inside of fl_fss_payload_header_map().
+ *   Must not be NULL.
+ * @param quantity
+ *   The quantity to process.
+ * @param destinations
+ *   A map of strings representing the header names and values after being safely converted into the valid payload header format.
+ *   This built header names and values are appended onto this.
+ *   This is updated as appropriate.
+ *   Must not be NULL.
+ *
+ * @return
+ *   F_true if the caller should break or exit due to an error or something similar.
+ *   F_false, otherwise.
+ *
+ * @see f_memory_array_increase_by()
+ * @see f_string_dynamic_append()
+ * @see f_string_dynamic_append_assure()
+ * @see f_string_dynamic_strip_null()
+ *
+ * @see private_fl_fss_basic_write()
+ *
+ * @see fl_fss_payload_header_map()
+ */
+#if !defined(_di_fl_fss_payload_header_map_)
+  extern uint8_t private_fl_payload_header_map_quantity(f_fss_payload_header_state_t * const data, f_state_t * const state, f_fss_payload_header_internal_t * const internal, const f_quantity_t quantity, f_string_maps_t * const destinations) F_attribute_visibility_internal_d;
+#endif // !defined(_di_fl_fss_payload_header_map_)
+
+/**
+ * Process the quantity, writing it into the packet with the appropriate escaping as necessary.
+ *
+ * This expects that the appropriate used and flag checks are performed prior to calling this.
+ *
+ * @param headers
+ *   An abstruse map representing individual headers.
+ * @param data
+ *   The f_fss_payload_header_state_t pointer.
+ *   This modifies data.cache.
+ *   Must not be NULL.
+ * @param state
+ *   The state passed directly from the fl_fss_payload_header_map() parameters.
+ *
+ *   This alters state.status:
+ *     F_okay on success.
+ *
+ *     Errors (with error bit) from: f_string_dynamic_append().
+ *     Errors (with error bit) from: f_string_dynamic_append_assure().
+ *     Errors (with error bit) from: private_fl_fss_basic_write().
+ *     Errors (with error bit) from: private_fl_payload_header_map_cache_write().
+ *     Errors (with error bit) from: private_fl_payload_header_map_number_unsigned().
+ *
+ *   Must not be NULL.
+ * @param internal
+ *   The internal state, f_fss_payload_header_internal_t, created inside of fl_fss_payload_header_map().
+ *   Must not be NULL.
+ * @param quantity
+ *   The quantity to process.
+ * @param destinations
+ *   A map of strings representing the header names and values after being safely converted into the valid payload header format.
+ *   This built header names and values are appended onto this.
+ *   This is updated as appropriate.
+ *   Must not be NULL.
+ *
+ * @return
+ *   F_true if the caller should break or exit due to an error or something similar.
+ *   F_false, otherwise.
+ *
+ * @see f_memory_array_increase_by()
+ * @see f_string_dynamic_append()
+ * @see f_string_dynamic_append_assure()
+ * @see f_string_dynamic_strip_null()
+ *
+ * @see private_fl_fss_basic_write()
+ *
+ * @see fl_fss_payload_header_map()
+ */
+#if !defined(_di_fl_fss_payload_header_map_)
+  extern uint8_t private_fl_payload_header_map_quantitys(f_fss_payload_header_state_t * const data, f_state_t * const state, f_fss_payload_header_internal_t * const internal, const f_quantitys_t quantitys, f_string_maps_t * const destinations) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fl_fss_payload_header_map_)
 
 /**
@@ -526,6 +678,110 @@ extern "C" {
  */
 #if !defined(_di_fl_fss_payload_header_map_)
   extern uint8_t private_fl_payload_header_map_strings(f_fss_payload_header_state_t * const data, f_state_t * const state, f_fss_payload_header_internal_t * const internal, f_string_t * const buffers, f_string_maps_t * const destinations) F_attribute_visibility_internal_d;
+#endif // !defined(_di_fl_fss_payload_header_map_)
+
+/**
+ * Process the triple, writing it into the packet with the appropriate escaping as necessary.
+ *
+ * This expects that the appropriate used and flag checks are performed prior to calling this.
+ *
+ * @param headers
+ *   An abstruse map representing individual headers.
+ * @param data
+ *   The f_fss_payload_header_state_t pointer.
+ *   This modifies data.cache.
+ *   Must not be NULL.
+ * @param state
+ *   The state passed directly from the fl_fss_payload_header_map() parameters.
+ *
+ *   This alters state.status:
+ *     F_okay on success.
+ *
+ *     Errors (with error bit) from: f_memory_array_increase_by().
+ *     Errors (with error bit) from: f_string_dynamic_append().
+ *     Errors (with error bit) from: f_string_dynamic_append_assure().
+ *     Errors (with error bit) from: f_string_dynamic_strip_null().
+ *     Errors (with error bit) from: private_fl_fss_basic_write().
+ *
+ *   Must not be NULL.
+ * @param internal
+ *   The internal state, f_fss_payload_header_internal_t, created inside of fl_fss_payload_header_map().
+ *   Must not be NULL.
+ * @param triple
+ *   The triple to process.
+ * @param destinations
+ *   A map of strings representing the header names and values after being safely converted into the valid payload header format.
+ *   This built header names and values are appended onto this.
+ *   This is updated as appropriate.
+ *   Must not be NULL.
+ *
+ * @return
+ *   F_true if the caller should break or exit due to an error or something similar.
+ *   F_false, otherwise.
+ *
+ * @see f_memory_array_increase_by()
+ * @see f_string_dynamic_append()
+ * @see f_string_dynamic_append_assure()
+ * @see f_string_dynamic_strip_null()
+ *
+ * @see private_fl_fss_basic_write()
+ *
+ * @see fl_fss_payload_header_map()
+ */
+#if !defined(_di_fl_fss_payload_header_map_)
+  extern uint8_t private_fl_payload_header_map_triple(f_fss_payload_header_state_t * const data, f_state_t * const state, f_fss_payload_header_internal_t * const internal, const f_string_triple_t triple, f_string_maps_t * const destinations) F_attribute_visibility_internal_d;
+#endif // !defined(_di_fl_fss_payload_header_map_)
+
+/**
+ * Process the triple, writing it into the packet with the appropriate escaping as necessary.
+ *
+ * This expects that the appropriate used and flag checks are performed prior to calling this.
+ *
+ * @param headers
+ *   An abstruse map representing individual headers.
+ * @param data
+ *   The f_fss_payload_header_state_t pointer.
+ *   This modifies data.cache.
+ *   Must not be NULL.
+ * @param state
+ *   The state passed directly from the fl_fss_payload_header_map() parameters.
+ *
+ *   This alters state.status:
+ *     F_okay on success.
+ *
+ *     Errors (with error bit) from: f_string_dynamic_append().
+ *     Errors (with error bit) from: f_string_dynamic_append_assure().
+ *     Errors (with error bit) from: private_fl_fss_basic_write().
+ *     Errors (with error bit) from: private_fl_payload_header_map_cache_write().
+ *     Errors (with error bit) from: private_fl_payload_header_map_number_unsigned().
+ *
+ *   Must not be NULL.
+ * @param internal
+ *   The internal state, f_fss_payload_header_internal_t, created inside of fl_fss_payload_header_map().
+ *   Must not be NULL.
+ * @param triple
+ *   The triple to process.
+ * @param destinations
+ *   A map of strings representing the header names and values after being safely converted into the valid payload header format.
+ *   This built header names and values are appended onto this.
+ *   This is updated as appropriate.
+ *   Must not be NULL.
+ *
+ * @return
+ *   F_true if the caller should break or exit due to an error or something similar.
+ *   F_false, otherwise.
+ *
+ * @see f_memory_array_increase_by()
+ * @see f_string_dynamic_append()
+ * @see f_string_dynamic_append_assure()
+ * @see f_string_dynamic_strip_null()
+ *
+ * @see private_fl_fss_basic_write()
+ *
+ * @see fl_fss_payload_header_map()
+ */
+#if !defined(_di_fl_fss_payload_header_map_)
+  extern uint8_t private_fl_payload_header_map_triples(f_fss_payload_header_state_t * const data, f_state_t * const state, f_fss_payload_header_internal_t * const internal, const f_string_triples_t triples, f_string_maps_t * const destinations) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fl_fss_payload_header_map_)
 
 #ifdef __cplusplus

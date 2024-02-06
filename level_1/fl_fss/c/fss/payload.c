@@ -176,7 +176,9 @@ extern "C" {
               string_static.used = string_static.string ? strnlen(string_static.string, F_string_t_size_d) : 0;
 
               if (string_static.used || (data->flag & f_fss_payload_header_map_flag_null_string_e)) {
-                private_fl_payload_header_map_dynamic(data, state, &internal, &string_static, destinations);
+                if (private_fl_payload_header_map_dynamic(data, state, &internal, &string_static, destinations) == F_false) {
+                  ++destinations->used;
+                }
               }
               else if (data->flag & f_fss_payload_header_map_flag_null_e) {
                 ++destinations->used;
@@ -185,15 +187,10 @@ extern "C" {
               break;
 
             case f_abstruse_strings_e:
-              if (headers.array[internal.i].value.is.a_strings) {
-                private_fl_payload_header_map_strings(data, state, &internal, headers.array[internal.i].value.is.a_strings, destinations);
-              }
-              else if (data->flag & f_fss_payload_header_map_flag_null_string_e) {
-                // @todo handle join flags.
-                state->status = f_string_dynamic_append(internal.quote_null, &destinations->array[destinations->used].value);
-                if (F_status_is_error(state->status)) break;
-
-                ++destinations->used;
+              if (headers.array[internal.i].value.is.a_strings || (data->flag & f_fss_payload_header_map_flag_null_strings_e)) {
+                if (private_fl_payload_header_map_strings(data, state, &internal, headers.array[internal.i].value.is.a_strings, destinations) == F_false) {
+                  ++destinations->used;
+                }
               }
               else if (data->flag & f_fss_payload_header_map_flag_null_e) {
                 ++destinations->used;
@@ -203,7 +200,9 @@ extern "C" {
 
             case f_abstruse_dynamic_e:
               if (headers.array[internal.i].value.is.a_dynamic.used || (data->flag & f_fss_payload_header_map_flag_null_dynamic_e)) {
-                private_fl_payload_header_map_dynamic(data, state, &internal, &headers.array[internal.i].value.is.a_dynamic, destinations);
+                if (private_fl_payload_header_map_dynamic(data, state, &internal, &headers.array[internal.i].value.is.a_dynamic, destinations) == F_false) {
+                  ++destinations->used;
+                }
               }
               else if (data->flag & f_fss_payload_header_map_flag_null_e) {
                 ++destinations->used;
@@ -212,15 +211,10 @@ extern "C" {
               break;
 
             case f_abstruse_dynamics_e:
-              if (headers.array[internal.i].value.is.a_dynamics.used) {
-                private_fl_payload_header_map_dynamics(data, state, &internal, &headers.array[internal.i].value.is.a_dynamics, destinations);
-              }
-              else if (data->flag & f_fss_payload_header_map_flag_null_dynamic_e) {
-                // @todo handle join flags.
-                state->status = f_string_dynamic_append(internal.quote_null, &destinations->array[destinations->used].value);
-                if (F_status_is_error(state->status)) break;
-
-                ++destinations->used;
+              if (headers.array[internal.i].value.is.a_dynamics.used || (data->flag & f_fss_payload_header_map_flag_null_dynamics_e)) {
+                if (private_fl_payload_header_map_dynamics(data, state, &internal, &headers.array[internal.i].value.is.a_dynamics, destinations) == F_false) {
+                  ++destinations->used;
+                }
               }
               else if (data->flag & f_fss_payload_header_map_flag_null_e) {
                 ++destinations->used;
@@ -230,17 +224,8 @@ extern "C" {
 
             case f_abstruse_map_e:
               if (headers.array[internal.i].value.is.a_map.name.used || headers.array[internal.i].value.is.a_map.value.used) {
-                private_fl_payload_header_map_map(data, state, &internal, &headers.array[internal.i].value.is.a_map, destinations);
-              }
-              else if (data->flag & f_fss_payload_header_map_flag_null_map_name_value_e) {
-                if (data->flag & f_fss_payload_header_map_flag_join_map_e) {
-                  state->status = f_string_dynamic_append(internal.quote_null, &destinations->array[destinations->used].value);
-                  if (F_status_is_error(state->status)) break;
-
+                if (private_fl_payload_header_map_map(data, state, &internal, &headers.array[internal.i].value.is.a_map, destinations) == F_false) {
                   ++destinations->used;
-                }
-                else {
-                  private_fl_payload_header_map_map_name_value_null(data, state, &internal, destinations);
                 }
               }
               else if (data->flag & f_fss_payload_header_map_flag_null_e) {
@@ -250,15 +235,10 @@ extern "C" {
               break;
 
             case f_abstruse_maps_e:
-              if (headers.array[internal.i].value.is.a_maps.used) {
-                private_fl_payload_header_map_maps(data, state, &internal, &headers.array[internal.i].value.is.a_maps, destinations);
-              }
-              else if (data->flag & f_fss_payload_header_map_flag_null_maps_e) {
-                // @todo handle join flags.
-                state->status = f_string_dynamic_append(internal.quote_null, &destinations->array[destinations->used].value);
-                if (F_status_is_error(state->status)) break;
-
-                ++destinations->used;
+              if (headers.array[internal.i].value.is.a_maps.used || (data->flag & f_fss_payload_header_map_flag_null_maps_e)) {
+                if (private_fl_payload_header_map_maps(data, state, &internal, &headers.array[internal.i].value.is.a_maps, destinations) == F_false) {
+                  ++destinations->used;
+                }
               }
               else if (data->flag & f_fss_payload_header_map_flag_null_e) {
                 ++destinations->used;
@@ -267,16 +247,51 @@ extern "C" {
               break;
 
             case f_abstruse_map_multi_e:
-              // @todo
+              if (headers.array[internal.i].value.is.a_map_multi.name.used || headers.array[internal.i].value.is.a_map_multi.value.used || (data->flag & f_fss_payload_header_map_flag_null_map_multi_values_name_e)) {
+                if (private_fl_payload_header_map_map_multi(data, state, &internal, &headers.array[internal.i].value.is.a_map_multi, destinations) == F_false) {
+                  ++destinations->used;
+                }
+              }
+              else if (data->flag & f_fss_payload_header_map_flag_null_e) {
+                ++destinations->used;
+              }
+
               break;
 
             case f_abstruse_map_multis_e:
-              // @todo
+              if (headers.array[internal.i].value.is.a_map_multis.used || (data->flag & f_fss_payload_header_map_flag_null_map_multis_e)) {
+                if (private_fl_payload_header_map_map_multis(data, state, &internal, &headers.array[internal.i].value.is.a_map_multis, destinations) == F_false) {
+                  ++destinations->used;
+                }
+              }
+              else if (data->flag & f_fss_payload_header_map_flag_null_e) {
+                ++destinations->used;
+              }
+
               break;
 
             case f_abstruse_quantity_e:
+              if (!headers.array[internal.i].value.is.a_quantity.total || (data->flag & f_fss_payload_header_map_flag_null_quantity_e)) {
+                if (private_fl_payload_header_map_quantity(data, state, &internal, headers.array[internal.i].value.is.a_quantity, destinations) == F_false) {
+                  ++destinations->used;
+                }
+              }
+              else if (data->flag & f_fss_payload_header_map_flag_null_e) {
+                ++destinations->used;
+              }
+
+              break;
+
             case f_abstruse_quantitys_e:
-              // @todo
+              if (headers.array[internal.i].value.is.a_quantitys.used || (data->flag & f_fss_payload_header_map_flag_null_quantitys_e)) {
+                if (private_fl_payload_header_map_quantitys(data, state, &internal, headers.array[internal.i].value.is.a_quantitys, destinations) == F_false) {
+                  ++destinations->used;
+                }
+              }
+              else if (data->flag & f_fss_payload_header_map_flag_null_e) {
+                ++destinations->used;
+              }
+
               break;
 
             case f_abstruse_range_e:
@@ -303,69 +318,28 @@ extern "C" {
 
               break;
 
-// @todo resume after here.
             case f_abstruse_triple_e:
-              // @todo update this.
-              data->cache->used = 0;
-
-              if (headers.array[internal.i].value.is.a_triple.a.used) {
-                internal.k = headers.array[internal.i].value.is.a_triple.a.used;
-
-                if (headers.array[internal.i].value.is.a_triple.b.used) {
-                  internal.k += headers.array[internal.i].value.is.a_triple.b.used;
-                  internal.k += headers.array[internal.i].value.is.a_triple.c.used ? headers.array[internal.i].value.is.a_triple.c.used : internal.quote_null.used;
-                }
-                else if (headers.array[internal.i].value.is.a_triple.c.used) {
-                  internal.k += headers.array[internal.i].value.is.a_triple.c.used + internal.quote_null.used;
-                }
-                else {
-                  internal.k = internal.quote_null.used * 2;
+              if (headers.array[internal.i].value.is.a_triple.a.used || headers.array[internal.i].value.is.a_triple.b.used || headers.array[internal.i].value.is.a_triple.c.used || (data->flag & f_fss_payload_header_map_flag_null_triple_e)) {
+                if (private_fl_payload_header_map_triple(data, state, &internal, headers.array[internal.i].value.is.a_triple, destinations) == F_false) {
+                  ++destinations->used;
                 }
               }
-              else if (headers.array[internal.i].value.is.a_triple.b.used) {
-                if (headers.array[internal.i].value.is.a_triple.c.used) {
-                  internal.k = internal.quote_null.used + headers.array[internal.i].value.is.a_triple.b.used + headers.array[internal.i].value.is.a_triple.c.used;
-                }
-                else {
-                  internal.k = internal.quote_null.used * 2 + headers.array[internal.i].value.is.a_triple.b.used;
-                }
-              }
-              else if (headers.array[internal.i].value.is.a_triple.c.used) {
-                internal.k = internal.quote_null.used * 2 + headers.array[internal.i].value.is.a_triple.c.used;
-              }
-              else {
-                internal.k = internal.quote_null.used * 3;
-              }
-
-              internal.k += f_fss_extended_next_s.used * 2;
-
-              state->status = f_memory_array_increase_by(internal.k, sizeof(f_char_t), (void **) &data->cache->string, &data->cache->used, &data->cache->size);
-              if (F_status_is_error(state->status)) break;
-
-              macro_f_fss_payload_header_write_process_dynamic_d(data, state, internal, headers.array[internal.i].value.is.a_triple.a);
-              if (F_status_is_error(state->status)) break;
-
-              macro_f_fss_payload_header_write_process_dynamic_d(data, state, internal, headers.array[internal.i].value.is.a_triple.b);
-              if (F_status_is_error(state->status)) break;
-
-              macro_f_fss_payload_header_write_process_dynamic_d(data, state, internal, headers.array[internal.i].value.is.a_triple.c);
-
-              if (F_status_is_error_not(state->status)) {
-
-                // The f_fss_extended_next_s is always added at the end of the macro.
-                data->cache->used -= f_fss_extended_next_s.used;
-
-                state->status = f_string_dynamic_append(*data->cache, &destinations->array[destinations->used].value);
-              }
-
-              if (F_status_is_error_not(state->status)) {
+              else if (data->flag & f_fss_payload_header_map_flag_null_e) {
                 ++destinations->used;
               }
 
               break;
 
             case f_abstruse_triples_e:
-              // @todo
+              if (headers.array[internal.i].value.is.a_triples.used || (data->flag & f_fss_payload_header_map_flag_null_triples_e)) {
+                if (private_fl_payload_header_map_triples(data, state, &internal, headers.array[internal.i].value.is.a_triples, destinations) == F_false) {
+                  ++destinations->used;
+                }
+              }
+              else if (data->flag & f_fss_payload_header_map_flag_null_e) {
+                ++destinations->used;
+              }
+
               break;
 
             default:

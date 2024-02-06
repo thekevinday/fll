@@ -25,7 +25,8 @@ extern "C" {
  *   - i:            A counter used for the "headers" outer arrays.
  *   - j:            A counter used for the inner loop or for pre-allocation counting.
  *   - k:            A number used for converting values but also made available for use as a counter if need be.
- *   - l:            A counter used for more complex use cases such as with multi-maps.
+ *   - l:            A counter used for more complex use cases, such as with multi-maps.
+ *   - m:            A counter used for more complex use cases, such as with multi-maps.
  *   - range:        Used for passing a given string range to the FSS write functions.
  *   - conversion:   The conversion data.
  *   - quote_null:   The string representing an empty, aka NULL, Content. This is generally double-quotes.
@@ -40,6 +41,7 @@ extern "C" {
     f_number_unsigned_t j;
     f_number_unsigned_t k;
     f_number_unsigned_t l;
+    f_number_unsigned_t m;
     f_range_t range;
     f_conversion_data_t conversion;
 
@@ -55,6 +57,7 @@ extern "C" {
     0, \
     0, \
     0, \
+    0, \
     f_range_t_initialize, \
     f_conversion_data_base_10_c, \
     f_string_static_t_initialize, \
@@ -62,13 +65,14 @@ extern "C" {
     0, \
   }
 
-  #define macro_f_fss_payload_header_internal_t_initialize_1(quote, step, i, j, k, l, range, conversion, destinations, quote_null, original) { \
+  #define macro_f_fss_payload_header_internal_t_initialize_1(quote, step, i, j, k, l, m, range, conversion, destinations, quote_null, original) { \
     quote, \
     step, \
     i, \
     j, \
     k, \
     l, \
+    m, \
     range, \
     conversion, \
     destinations, \
@@ -77,6 +81,7 @@ extern "C" {
   }
 
   #define macro_f_fss_payload_header_internal_t_initialize_2(destinations, original) { \
+    0, \
     0, \
     0, \
     0, \
