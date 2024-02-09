@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #ifndef _di_f_memory_adjust_
-  f_status_t f_memory_adjust(const size_t length_old, const size_t length_new, const size_t size, void ** const pointer) {
+  f_status_t f_memory_adjust(const size_t length_old, const size_t length_new, const size_t size, void ** restrict const pointer) {
     #ifndef _di_level_0_parameter_checking_
       if (!size) return F_status_set_error(F_parameter);
       if (!pointer) return F_status_set_error(F_parameter);
@@ -24,7 +24,7 @@ extern "C" {
 #endif // _di_f_memory_adjust_
 
 #ifndef _di_f_memory_delete_
-  f_status_t f_memory_delete(const size_t length, const size_t size, void ** const pointer) {
+  f_status_t f_memory_delete(const size_t length, const size_t size, void ** restrict const pointer) {
     #ifndef _di_level_0_parameter_checking_
       if (!size) return F_status_set_error(F_parameter);
       if (!pointer) return F_status_set_error(F_parameter);
@@ -49,7 +49,7 @@ extern "C" {
 #endif // _di_f_memory_delete_
 
 #ifndef _di_f_memory_destroy_
-  f_status_t f_memory_destroy(const size_t length, const size_t size, void ** const pointer) {
+  f_status_t f_memory_destroy(const size_t length, const size_t size, void ** restrict const pointer) {
     #ifndef _di_level_0_parameter_checking_
       if (!size) return F_status_set_error(F_parameter);
       if (!pointer) return F_status_set_error(F_parameter);
@@ -74,7 +74,7 @@ extern "C" {
 #endif // _di_f_memory_destroy_
 
 #ifndef _di_f_memory_new_
-  f_status_t f_memory_new(const size_t length, const size_t size, void ** const pointer) {
+  f_status_t f_memory_new(const size_t length, const size_t size, void ** restrict const pointer) {
     #ifndef _di_level_0_parameter_checking_
       if (!size) return F_status_set_error(F_parameter);
       if (!pointer) return F_status_set_error(F_parameter);
@@ -91,7 +91,7 @@ extern "C" {
 
 
 #ifndef _di_f_memory_new_aligned_
-  f_status_t f_memory_new_aligned(const size_t length, const size_t alignment, void ** const pointer) {
+  f_status_t f_memory_new_aligned(const size_t length, const size_t alignment, void ** restrict const pointer) {
     #ifndef _di_level_0_parameter_checking_
       if (!alignment) return F_status_set_error(F_parameter);
       if (!pointer) return F_status_set_error(F_parameter);
@@ -129,7 +129,7 @@ extern "C" {
 #endif // _di_f_memory_new_aligned_
 
 #ifndef _di_f_memory_resize_
-  f_status_t f_memory_resize(const size_t length_old, const size_t length_new, const size_t size, void ** const pointer) {
+  f_status_t f_memory_resize(const size_t length_old, const size_t length_new, const size_t size, void ** restrict const pointer) {
     #ifndef _di_level_0_parameter_checking_
       if (!size) return F_status_set_error(F_parameter);
       if (!pointer) return F_status_set_error(F_parameter);

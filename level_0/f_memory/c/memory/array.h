@@ -43,7 +43,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_memory_array_adjust_
-  extern f_status_t f_memory_array_adjust(const f_number_unsigned_t length, const size_t width, void ** const array, f_number_unsigned_t * const used, f_number_unsigned_t * const size);
+  extern f_status_t f_memory_array_adjust(const f_number_unsigned_t length, const size_t width, void ** restrict const array, f_number_unsigned_t * restrict const used, f_number_unsigned_t * restrict const size);
 #endif // _di_f_memory_array_adjust_
 
 /**
@@ -88,7 +88,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_memory_array_append_
-  extern f_status_t f_memory_array_append(const void * const source, const size_t width, void ** const array, f_number_unsigned_t * const used, f_number_unsigned_t * const size);
+  extern f_status_t f_memory_array_append(const void * const source, const size_t width, void ** const array, f_number_unsigned_t * restrict const used, f_number_unsigned_t * restrict const size);
 #endif // _di_f_memory_array_append_
 
 /**
@@ -141,7 +141,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_memory_array_append_all_
-  extern f_status_t f_memory_array_append_all(const void * const sources, const f_number_unsigned_t amount, const size_t width, void ** const array, f_number_unsigned_t * const used, f_number_unsigned_t * const size);
+  extern f_status_t f_memory_array_append_all(const void * const sources, const f_number_unsigned_t amount, const size_t width, void ** const array, f_number_unsigned_t * restrict const used, f_number_unsigned_t * restrict const size);
 #endif // _di_f_memory_array_append_all_
 
 /**
@@ -174,7 +174,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_memory_array_decimate_by_
-  extern f_status_t f_memory_array_decimate_by(const f_number_unsigned_t amount, const size_t width, void ** const array, f_number_unsigned_t * const used, f_number_unsigned_t * const size);
+  extern f_status_t f_memory_array_decimate_by(const f_number_unsigned_t amount, const size_t width, void ** restrict const array, f_number_unsigned_t * restrict const used, f_number_unsigned_t * restrict const size);
 #endif // _di_f_memory_array_decimate_by_
 
 /**
@@ -207,7 +207,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_memory_array_decrease_by_
-  extern f_status_t f_memory_array_decrease_by(const f_number_unsigned_t amount, const size_t width, void ** const array, f_number_unsigned_t * const used, f_number_unsigned_t * const size);
+  extern f_status_t f_memory_array_decrease_by(const f_number_unsigned_t amount, const size_t width, void ** restrict const array, f_number_unsigned_t * restrict const used, f_number_unsigned_t * restrict const size);
 #endif // _di_f_memory_array_decrease_by_
 
 /**
@@ -242,7 +242,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_memory_array_increase_
-  extern f_status_t f_memory_array_increase(const f_number_unsigned_t step, const size_t width, void ** const array, f_number_unsigned_t * const used, f_number_unsigned_t * const size);
+  extern f_status_t f_memory_array_increase(const f_number_unsigned_t step, const size_t width, void ** restrict const array, f_number_unsigned_t * restrict const used, f_number_unsigned_t * restrict const size);
 #endif // _di_f_memory_array_increase_
 
 /**
@@ -277,7 +277,7 @@ extern "C" {
  *   F_array_too_large (with error bit) if the new array length is too large.
  */
 #ifndef _di_f_memory_array_increase_by_
-  extern f_status_t f_memory_array_increase_by(const f_number_unsigned_t amount, const size_t width, void ** const array, f_number_unsigned_t * const used, f_number_unsigned_t * const size);
+  extern f_status_t f_memory_array_increase_by(const f_number_unsigned_t amount, const size_t width, void ** restrict const array, f_number_unsigned_t * restrict const used, f_number_unsigned_t * restrict const size);
 #endif // _di_f_memory_array_increase_by_
 
 /**
@@ -307,7 +307,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_memory_array_resize_
-  extern f_status_t f_memory_array_resize(const f_number_unsigned_t length, const size_t width, void ** const array, f_number_unsigned_t * const used, f_number_unsigned_t * const size);
+  extern f_status_t f_memory_array_resize(const f_number_unsigned_t length, const size_t width, void ** restrict const array, f_number_unsigned_t * restrict const used, f_number_unsigned_t * restrict const size);
 #endif // _di_f_memory_array_resize_
 
 #ifdef __cplusplus
