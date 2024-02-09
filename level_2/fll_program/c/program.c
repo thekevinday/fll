@@ -532,12 +532,10 @@ extern "C" {
 #endif // _di_fll_program_standard_signal_received_
 
 #ifndef _di_fll_program_standard_signal_handle_
-  void fll_program_standard_signal_handle(void * const void_state, void * const internal) {
+  void fll_program_standard_signal_handle(f_state_t * const state, void * const internal) {
     #ifndef _di_level_2_parameter_checking_
-      if (!void_state) return;
+      if (!state) return;
     #endif // _di_level_2_parameter_checking_
-
-    f_state_t * const state = (f_state_t *) void_state;
 
     if (!state->custom) {
       state->status = F_interrupt_not;

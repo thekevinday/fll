@@ -419,7 +419,7 @@ extern "C" {
  * @see fll_program_standard_signal_received()
  */
 #ifndef _di_fll_program_standard_signal_handle_
-  extern void fll_program_standard_signal_handle(void * const state, void * const internal);
+  extern void fll_program_standard_signal_handle(f_state_t * const state, void * const internal);
 #endif // _di_fll_program_standard_signal_handle_
 
 #ifdef __cplusplus

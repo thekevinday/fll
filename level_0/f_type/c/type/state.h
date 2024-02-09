@@ -37,7 +37,7 @@ extern "C" {
  * This allows for the error to be processed with all relevant data before the function returns.
  *
  * These two callbacks (handle() and interrupt()) accept the following parameters:
- *   - state:    The state data. Must be of type f_state_t. Must not be NULL.
+ *   - state:    The state data. Must not be NULL.
  *   - internal: Additional data passed by the function being called, often containing internal data to the called function. May be NULL.
  *
  * The "custom" property on f_state_t is intended to be used so that the callback, such as the interrupt(), can make changes to something within the scope of the parent.
@@ -65,20 +65,21 @@ extern "C" {
  *   - data:       A structure (defined by function) for holding data relevant to the function. May be NULL. May be required.
  */
 #ifndef _di_f_state_t_
-  typedef struct {
+  typedef struct f_state_t_ f_state_t;
+  struct f_state_t_ {
     uint16_t step_large;
     uint16_t step_small;
     f_status_t status;
     uint64_t flag;
     uint64_t code;
 
-    void (*handle)(void * const state, void * const internal);
-    void (*interrupt)(void * const state, void * const internal);
+    void (*handle)(f_state_t * const state, void * const internal);
+    void (*interrupt)(f_state_t * const state, void * const internal);
 
     void *callbacks;
     void *custom;
     void *data;
-  } f_state_t;
+  };
 
   #define f_state_t_initialize { \
     F_memory_default_allocation_large_d, \

@@ -96,7 +96,7 @@ extern "C" {
  *   Not used.
  */
 #ifndef _di_fake_signal_handler_callback_
-  extern void fake_signal_handler_callback(void * const state, void * const internal);
+  extern void fake_signal_handler_callback(f_state_t * const state, void * const internal);
 #endif // _di_fake_signal_handler_callback_
 
 #ifdef __cplusplus

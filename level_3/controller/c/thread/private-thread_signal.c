@@ -43,19 +43,13 @@ extern "C" {
 #endif // _di_controller_thread_signal_
 
 #ifndef _di_controller_thread_signal_state_fss_
-  f_status_t controller_thread_signal_state_fss(void * const state, void * const internal) {
+  f_status_t controller_thread_signal_state_fss(f_state_t * const state, void * const internal) {
 
-    if (!state) {
+    if (!state || !state->custom) {
       return F_interrupt_not;
     }
 
-    f_state_t *state_ptr = (f_state_t *) state;
-
-    if (!state_ptr->custom) {
-      return F_interrupt_not;
-    }
-
-    controller_state_interrupt_t *custom = (controller_state_interrupt_t *) state_ptr->custom;
+    controller_state_interrupt_t *custom = (controller_state_interrupt_t *) state->custom;
     controller_thread_t *thread = custom->thread;
 
     if (!controller_thread_is_enabled(custom->is_normal, thread)) {
@@ -73,17 +67,11 @@ extern "C" {
 #ifndef _di_controller_thread_signal_state_iki_
   f_status_t controller_thread_signal_state_iki(void * const state, void * const internal) {
 
-    if (!state) {
+    if (!state || !state->custom) {
       return F_interrupt_not;
     }
 
-    f_state_t *state_ptr = (f_state_t *) state;
-
-    if (!state_ptr->custom) {
-      return F_interrupt_not;
-    }
-
-    controller_state_interrupt_t *custom = (controller_state_interrupt_t *) state_ptr->custom;
+    controller_state_interrupt_t *custom = (controller_state_interrupt_t *) state->custom;
     controller_thread_t *thread = custom->thread;
 
     if (!controller_thread_is_enabled(custom->is_normal, thread)) {
