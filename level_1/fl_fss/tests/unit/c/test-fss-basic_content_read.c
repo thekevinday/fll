@@ -89,8 +89,8 @@ void test__fl_fss_basic_content_read__works(void **void_state) {
 
   {
     // Note: These files are required to have the same number of lines and each line should probably be at max 255 characters.
-    FILE *file_strings = data__file_open__named__all_read("strings", "basic");
-    FILE *file_contents = data__file_open__named__all_read("contents", "basic");
+    FILE *file_strings = data__file_open__named("strings", "basic", "all_read");
+    FILE *file_contents = data__file_open__named("contents", "basic", "all_read");
 
     assert_non_null(file_strings);
     assert_non_null(file_contents);

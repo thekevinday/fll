@@ -16,87 +16,6 @@ extern "C" {
 #endif
 
 /**
- * Write the cache to the destination.
- *
- * @param data
- *   The f_fss_payload_header_state_t pointer.
- *   This caller must reset data.cache.used as needed.
- *   if data.cache.used is not 0, then this will append a space before adding the converted number.
- *   Must not be NULL.
- * @param state
- *   The state passed directly from the fl_fss_payload_header_map() parameters.
- *
- *   This alters state.status:
- *     F_okay on success.
- *
- *     Errors (with error bit) from: private_fl_fss_basic_write().
- *     Errors (with error bit) from: f_string_dynamic_strip_null().
- *
- *   Must not be NULL.
- * @param internal
- *   The internal state, f_fss_payload_header_internal_t, created inside of fl_fss_payload_header_map().
- *   The internal.range is modified.
- *   Must not be NULL.
- *
- * @return
- *   F_true if the caller should break or exit due to an error or something similar.
- *   F_false, otherwise.
- *
- * @see private_fl_fss_basic_write()
- * @see f_string_dynamic_strip_null()
- *
- * @see fl_fss_payload_header_map()
- */
-#if !defined(_di_fl_fss_payload_header_map_)
-  extern uint8_t private_fl_payload_header_map_cache_write(f_fss_payload_header_state_t * const data, f_state_t * const state, f_fss_payload_header_internal_t * const internal) F_attribute_visibility_internal_d;
-#endif // !defined(_di_fl_fss_payload_header_map_)
-
-/**
- * Process the dynamic string, writing it into the packet with the appropriate escaping as necessary.
- *
- * This expects that the appropriate used and flag checks are performed prior to calling this.
- *
- * @param data
- *   The f_fss_payload_header_state_t pointer.
- *   Must not be NULL.
- * @param state
- *   The state passed directly from the fl_fss_payload_header_map() parameters.
- *
- *   This alters state.status:
- *     F_okay on success.
- *
- *     Errors (with error bit) from: f_string_dynamic_strip_null().
- *     Errors (with error bit) from: private_fl_fss_basic_write().
- *
- *   Must not be NULL.
- * @param internal
- *   The internal state, f_fss_payload_header_internal_t, created inside of fl_fss_payload_header_map().
- *   Must not be NULL.
- * @param buffer
- *   The dynamic string to read from.
- *   Must not be NULL.
- * @param destinations
- *   A map of strings representing the header names and values after being safely converted into the valid payload header format.
- *   This built header names and values are appended onto this.
- *   This is updated as appropriate.
- *   Must not be NULL.
- *
- * @return
- *   F_true if the caller should break or exit due to an error or something similar.
- *   F_false, otherwise.
- *
- * @see f_string_dynamic_append()
- * @see f_string_dynamic_strip_null()
- *
- * @see private_fl_fss_basic_write()
- *
- * @see fl_fss_payload_header_map()
- */
-#if !defined(_di_fl_fss_payload_header_map_)
-  extern uint8_t private_fl_payload_header_map_dynamic(f_fss_payload_header_state_t * const data, f_state_t * const state, f_fss_payload_header_internal_t * const internal, f_string_static_t * const buffer, f_string_maps_t * const destinations) F_attribute_visibility_internal_d;
-#endif // !defined(_di_fl_fss_payload_header_map_)
-
-/**
  * Process the array of dynamic strings, writing it into the packet with the appropriate escaping as necessary.
  *
  * This expects that the appropriate used and flag checks are performed prior to calling this.
@@ -340,6 +259,7 @@ extern "C" {
 
 /**
  * Process the signed number, converting it to a string and appending that string onto data->cache.
+ *
  * The resulting data->cache is then appended onto the destination value on success.
  * If the number is not appended to data->cache, then nothing is appended to the destination value.
  *
@@ -380,6 +300,7 @@ extern "C" {
 
 /**
  * Process the unsigned number, converting it to a string and appending that string onto data->cache.
+ *
  * The resulting data->cache is then appended onto the destination value on success.
  * If the number is not appended to data->cache, then nothing is appended to the destination value.
  *
@@ -491,8 +412,8 @@ extern "C" {
  *     Errors (with error bit) from: f_string_dynamic_append().
  *     Errors (with error bit) from: f_string_dynamic_append_assure().
  *     Errors (with error bit) from: private_fl_fss_basic_write().
- *     Errors (with error bit) from: private_fl_payload_header_map_cache_write().
  *     Errors (with error bit) from: private_fl_payload_header_map_number_unsigned().
+ *     Errors (with error bit) from: private_fl_payload_helper_header_map_destination_write_buffer().
  *
  *   Must not be NULL.
  * @param internal
@@ -595,8 +516,8 @@ extern "C" {
  *     Errors (with error bit) from: f_string_dynamic_append().
  *     Errors (with error bit) from: f_string_dynamic_append_assure().
  *     Errors (with error bit) from: private_fl_fss_basic_write().
- *     Errors (with error bit) from: private_fl_payload_header_map_cache_write().
  *     Errors (with error bit) from: private_fl_payload_header_map_number_unsigned().
+ *     Errors (with error bit) from: private_fl_payload_helper_header_map_destination_write_buffer().
  *
  *   Must not be NULL.
  * @param internal
@@ -752,8 +673,8 @@ extern "C" {
  *     Errors (with error bit) from: f_string_dynamic_append().
  *     Errors (with error bit) from: f_string_dynamic_append_assure().
  *     Errors (with error bit) from: private_fl_fss_basic_write().
- *     Errors (with error bit) from: private_fl_payload_header_map_cache_write().
  *     Errors (with error bit) from: private_fl_payload_header_map_number_unsigned().
+ *     Errors (with error bit) from: private_fl_payload_helper_header_map_destination_write_buffer().
  *
  *   Must not be NULL.
  * @param internal

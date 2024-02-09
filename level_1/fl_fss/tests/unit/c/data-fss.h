@@ -15,17 +15,6 @@
 #include <stdint.h>
 #include <stdio.h>
 
-// FLL-0 includes.
-
-// FLL-1 includes.
-#include <fll/level_1/fss.h>
-#include <fll/level_1/fss/basic.h>
-#include <fll/level_1/fss/basic_list.h>
-#include <fll/level_1/fss/embedded_list.h>
-#include <fll/level_1/fss/extended.h>
-#include <fll/level_1/fss/extended_list.h>
-#include <fll/level_1/fss/payload.h>
-
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -35,10 +24,17 @@ extern "C" {
  *
  * This requires the following:
  *   - The file path is relative to the current working directory (tests are run from project root).
- *   - The file path is "data/tests/${set}/${name}-all_read.txt".
+ *   - The file path is "data/tests/${set}/${name}-${context}.txt".
  *   - Where "${set}" represents the directory set, like "contents", "objects", or "strings".
  *   - Where "${name}" represents the standard name, such as "basic" or "extended".
+ *   - Where "${context}" represents the test context, such as "all_read" or "header_map".
  *
+ * @param set
+ *   The name of the test set, representing the directory the the files are stored within.
+ * @param context
+ *   The test file directory set.
+ * @param name
+ *   The test file standard name.
  * @param at
  *   A number representing the specific content index position.
  *
@@ -48,18 +44,25 @@ extern "C" {
  *
  * @see fopen()
  */
-extern FILE *data__file_open__named__all_read(const f_string_t set, const f_string_t name);
+extern FILE *data__file_open__named(const f_string_t set, const f_string_t name, const f_string_t context);
 
 /**
  * Open the test data file for the given set with the given name and the given at index.
  *
  * This requires the following:
  *   - The file path is relative to the current working directory (tests are run from project root).
- *   - The file path is "data/tests/${set}/${name}-all_read-${at}.txt".
+ *   - The file path is "data/tests/${set}/${name}-${context}-${at}.txt".
+ *   - Where "${set}" represents the directory set, like "contents", "headers", "objects", "strings", or "variables".
+ *   - Where "${name}" represents the standard name, such as "basic", "extended", or "payload".
+ *   - Where "${context}" represents the test context, such as "all_read" or "abstruse_signed".
  *   - Where "${at}" represents the index.
- *   - Where "${set}" represents the directory set, like "contents", "objects", or "strings".
- *   - Where "${name}" represents the standard name, such as "basic" or "extended".
  *
+ * @param set
+ *   The name of the test set, representing the directory the the files are stored within.
+ * @param context
+ *   The test file directory set.
+ * @param name
+ *   The test file standard name.
  * @param at
  *   A number representing the specific content index position.
  *
@@ -69,7 +72,7 @@ extern FILE *data__file_open__named__all_read(const f_string_t set, const f_stri
  *
  * @see fopen()
  */
-extern FILE *data__file_open__named_at__all_read(const f_string_t set, const f_string_t name, const uint8_t at);
+extern FILE *data__file_open__named_at(const f_string_t set, const f_string_t name, const f_string_t context, const uint16_t at);
 
 #ifdef __cplusplus
 } // extern "C"

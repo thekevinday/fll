@@ -155,8 +155,8 @@ void test__fl_fss_extended_object_read__works(void **void_state) {
 
   {
     // Note: These files are required to have the same number of lines and each line should probably be at max 255 characters.
-    FILE *file_strings = data__file_open__named__all_read("strings", "extended");
-    FILE *file_objects = data__file_open__named__all_read("objects", "extended");
+    FILE *file_strings = data__file_open__named("strings", "extended", "all_read");
+    FILE *file_objects = data__file_open__named("objects", "extended", "all_read");
 
     assert_non_null(file_strings);
     assert_non_null(file_objects);
@@ -176,7 +176,7 @@ void test__fl_fss_extended_object_read__works(void **void_state) {
     f_string_dynamic_t result_string = f_string_dynamic_t_initialize;
     f_string_dynamic_t delimit_string = f_string_dynamic_t_initialize;
 
-    for (int line = 0; ; ++line) {
+    for (;;) {
 
       max = 255;
 

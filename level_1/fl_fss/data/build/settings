@@ -33,7 +33,7 @@ build_language c
 build_libraries -lc
 build_libraries-individual -lf_abstruse -lf_conversion -lf_file -lf_fss -lf_memory -lf_string -lf_type_array -lf_utf
 
-build_sources_library private-fss.c fss/basic.c fss/basic_list.c fss/embedded_list.c fss/extended.c fss/extended_list.c fss/payload.c fss/private-payload.c
+build_sources_library private-fss.c fss/basic.c fss/basic_list.c fss/embedded_list.c fss/extended.c fss/extended_list.c fss/payload.c fss/private-payload.c fss/private-payload-helper.c
 
 build_sources_headers fss.h fss/basic.h fss/basic_list.h fss/embedded_list.h fss/extended.h fss/extended_list.h fss/payload.h fss/payload/define.h fss/payload/type.h
 

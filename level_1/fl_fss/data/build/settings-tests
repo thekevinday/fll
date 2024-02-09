@@ -31,8 +31,9 @@ build_sources_program test-fss-embedded_list_content_read.c test-fss-embedded_li
 build_sources_program test-fss-extended_content_read.c test-fss-extended_content_write.c test-fss-extended_object_read.c test-fss-extended_object_write.c
 build_sources_program test-fss-extended_list_content_read.c test-fss-extended_list_content_write.c test-fss-extended_list_object_read.c test-fss-extended_list_object_write.c
 build_sources_program test-fss-payload_header_map.c
+build_sources_program test-fss-payload_header_map-abstruse_signed.c test-fss-payload_header_map-abstruse_unsigned.c
 
-build_sources_program test-fss.c data-fss.c
+build_sources_program test-fss.c data-fss.c help-fss.c
 
 build_script no
 build_shared yes

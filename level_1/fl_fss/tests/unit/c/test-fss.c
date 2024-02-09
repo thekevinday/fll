@@ -60,6 +60,8 @@ int main(void) {
     cmocka_unit_test(test__fl_fss_extended_list_object_read__works),
 
     cmocka_unit_test(test__fl_fss_payload_header_map__returns_data_not),
+    cmocka_unit_test(test__fl_fss_payload_header_map__abstruse_signed__works_combined),
+    cmocka_unit_test(test__fl_fss_payload_header_map__abstruse_unsigned__works_combined),
 
     #ifndef _di_level_0_parameter_checking_
       cmocka_unit_test(test__fl_fss_basic_content_read__parameter_checking),

@@ -139,17 +139,17 @@ void test__fl_fss_extended_content_read__works(void **void_state) {
 
   {
     // Note: These files are required to have the same number of lines and each line should probably be at max 255 characters.
-    FILE *file_strings = data__file_open__named__all_read("strings", "extended");
+    FILE *file_strings = data__file_open__named("strings", "extended", "all_read");
 
     FILE *file_contents[] = {
-      data__file_open__named_at__all_read("contents", "extended", 0),
-      data__file_open__named_at__all_read("contents", "extended", 1),
-      data__file_open__named_at__all_read("contents", "extended", 2),
-      data__file_open__named_at__all_read("contents", "extended", 3),
-      data__file_open__named_at__all_read("contents", "extended", 4),
-      data__file_open__named_at__all_read("contents", "extended", 5),
-      data__file_open__named_at__all_read("contents", "extended", 6),
-      data__file_open__named_at__all_read("contents", "extended", 7),
+      data__file_open__named_at("contents", "extended", "all_read", 0),
+      data__file_open__named_at("contents", "extended", "all_read", 1),
+      data__file_open__named_at("contents", "extended", "all_read", 2),
+      data__file_open__named_at("contents", "extended", "all_read", 3),
+      data__file_open__named_at("contents", "extended", "all_read", 4),
+      data__file_open__named_at("contents", "extended", "all_read", 5),
+      data__file_open__named_at("contents", "extended", "all_read", 6),
+      data__file_open__named_at("contents", "extended", "all_read", 7),
     };
 
     assert_non_null(file_strings);

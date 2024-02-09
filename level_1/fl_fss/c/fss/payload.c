@@ -1,6 +1,7 @@
 #include "payload.h"
 #include "../private-fss.h"
 #include "private-payload.h"
+#include "private-payload-helper.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -80,10 +81,8 @@ extern "C" {
         destinations->array[destinations->used].name.used = 0;
         destinations->array[destinations->used].value.used = 0;
 
-        if (!headers.array[internal.i].key.used) continue;
-
         internal.range.start = 0;
-        internal.range.stop = headers.array[internal.i].key.used - 1;
+        internal.range.stop = headers.array[internal.i].key.used ? headers.array[internal.i].key.used - 1 : 0;
 
         private_fl_fss_basic_write(F_true, headers.array[internal.i].key, internal.quote, &internal.range, &destinations->array[destinations->used].name, state, (void * const) &internal);
 
@@ -103,7 +102,7 @@ extern "C" {
               data->cache->used = 0;
 
               if (private_fl_payload_header_map_number_signed(data, state, &internal, headers.array[internal.i].value.is.a_signed) == F_false) {
-                if (private_fl_payload_header_map_cache_write(data, state, &internal) == F_false) {
+                if (private_fl_payload_helper_header_map_destination_write_buffer(data, state, &internal, data->cache, destinations) == F_false) {
                   ++destinations->used;
                 }
               }
@@ -114,7 +113,7 @@ extern "C" {
               data->cache->used = 0;
 
               if (private_fl_payload_header_map_number_unsigned(data, state, &internal, headers.array[internal.i].value.is.a_unsigned) == F_false) {
-                if (private_fl_payload_header_map_cache_write(data, state, &internal) == F_false) {
+                if (private_fl_payload_helper_header_map_destination_write_buffer(data, state, &internal, data->cache, destinations) == F_false) {
                   ++destinations->used;
                 }
               }
@@ -176,7 +175,7 @@ extern "C" {
               string_static.used = string_static.string ? strnlen(string_static.string, F_string_t_size_d) : 0;
 
               if (string_static.used || (data->flag & f_fss_payload_header_map_flag_null_string_e)) {
-                if (private_fl_payload_header_map_dynamic(data, state, &internal, &string_static, destinations) == F_false) {
+                if (private_fl_payload_helper_header_map_destination_write_buffer_or_empty(data, state, &internal, &string_static, destinations, f_fss_payload_header_map_flag_null_string_e) == F_false) {
                   ++destinations->used;
                 }
               }
@@ -200,7 +199,7 @@ extern "C" {
 
             case f_abstruse_dynamic_e:
               if (headers.array[internal.i].value.is.a_dynamic.used || (data->flag & f_fss_payload_header_map_flag_null_dynamic_e)) {
-                if (private_fl_payload_header_map_dynamic(data, state, &internal, &headers.array[internal.i].value.is.a_dynamic, destinations) == F_false) {
+                if (private_fl_payload_helper_header_map_destination_write_buffer_or_empty(data, state, &internal, &headers.array[internal.i].value.is.a_dynamic, destinations, f_fss_payload_header_map_flag_null_dynamic_e) == F_false) {
                   ++destinations->used;
                 }
               }

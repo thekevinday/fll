@@ -100,9 +100,7 @@ extern "C" {
     } /* for */ \
     \
     if (data->cache->used && (data->flag & f_fss_payload_header_map_flag_join_digits_e)) { \
-      private_fl_payload_header_map_cache_write(data, state, &internal); \
-      \
-      if (F_status_is_error_not(state->status)) { \
+      if (private_fl_payload_helper_header_map_destination_write_buffer(data, state, &internal, data->cache, destinations) == F_false) { \
         ++destinations->used; \
       } \
     }

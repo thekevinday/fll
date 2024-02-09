@@ -86,7 +86,7 @@ build_sources_library level_1/control_group.c
 build_sources_library level_1/conversion.c level_1/private-conversion.c level_1/conversion/common.c
 build_sources_library level_1/directory.c level_1/private-directory.c
 build_sources_library level_1/environment.c
-build_sources_library level_1/private-fss.c level_1/fss/basic.c level_1/fss/basic_list.c level_1/fss/embedded_list.c level_1/fss/extended.c level_1/fss/extended_list.c level_1/fss/payload.c level_1/fss/private-payload.c
+build_sources_library level_1/private-fss.c level_1/fss/basic.c level_1/fss/basic_list.c level_1/fss/embedded_list.c level_1/fss/extended.c level_1/fss/extended_list.c level_1/fss/payload.c level_1/fss/private-payload.c level_1/fss/private-payload-helper.c
 build_sources_library level_1/iki.c
 build_sources_library level_1/path.c
 build_sources_library level_1/print.c level_1/private-print.c level_1/print/common.c

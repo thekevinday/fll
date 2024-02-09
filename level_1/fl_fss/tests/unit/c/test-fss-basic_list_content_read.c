@@ -123,21 +123,21 @@ void test__fl_fss_basic_list_content_read__works(void **void_state) {
 
   {
     // Note: These files are required to have the same number of lines and each line should probably be at max 255 characters.
-    FILE *file_strings = data__file_open__named__all_read("strings", "basic_list");
+    FILE *file_strings = data__file_open__named("strings", "basic_list", "all_read");
 
     FILE *file_contents[] = {
-      data__file_open__named_at__all_read("contents", "basic_list", 0),
-      data__file_open__named_at__all_read("contents", "basic_list", 1),
-      data__file_open__named_at__all_read("contents", "basic_list", 2),
-      data__file_open__named_at__all_read("contents", "basic_list", 3),
-      data__file_open__named_at__all_read("contents", "basic_list", 4),
-      data__file_open__named_at__all_read("contents", "basic_list", 5),
-      data__file_open__named_at__all_read("contents", "basic_list", 6),
-      data__file_open__named_at__all_read("contents", "basic_list", 7),
-      data__file_open__named_at__all_read("contents", "basic_list", 8),
-      data__file_open__named_at__all_read("contents", "basic_list", 9),
-      data__file_open__named_at__all_read("contents", "basic_list", 10),
-      data__file_open__named_at__all_read("contents", "basic_list", 11),
+      data__file_open__named_at("contents", "basic_list", "all_read", 0),
+      data__file_open__named_at("contents", "basic_list", "all_read", 1),
+      data__file_open__named_at("contents", "basic_list", "all_read", 2),
+      data__file_open__named_at("contents", "basic_list", "all_read", 3),
+      data__file_open__named_at("contents", "basic_list", "all_read", 4),
+      data__file_open__named_at("contents", "basic_list", "all_read", 5),
+      data__file_open__named_at("contents", "basic_list", "all_read", 6),
+      data__file_open__named_at("contents", "basic_list", "all_read", 7),
+      data__file_open__named_at("contents", "basic_list", "all_read", 8),
+      data__file_open__named_at("contents", "basic_list", "all_read", 9),
+      data__file_open__named_at("contents", "basic_list", "all_read", 10),
+      data__file_open__named_at("contents", "basic_list", "all_read", 11),
     };
 
     assert_non_null(file_strings);

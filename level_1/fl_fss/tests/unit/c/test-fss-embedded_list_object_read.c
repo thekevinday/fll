@@ -88,8 +88,8 @@ void test__fl_fss_embedded_list_object_read__returns_data_not(void **void_state)
 void test__fl_fss_embedded_list_object_read__works(void **void_state) {
 
   {
-    FILE *file_strings = data__file_open__named__all_read("strings", "embedded_list");
-    FILE *file_objects = data__file_open__named__all_read("objects", "embedded_list");
+    FILE *file_strings = data__file_open__named("strings", "embedded_list", "all_read");
+    FILE *file_objects = data__file_open__named("objects", "embedded_list", "all_read");
 
     assert_non_null(file_strings);
     assert_non_null(file_objects);

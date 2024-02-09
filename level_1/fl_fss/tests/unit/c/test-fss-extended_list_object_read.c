@@ -88,8 +88,8 @@ void test__fl_fss_extended_list_object_read__returns_data_not(void **void_state)
 void test__fl_fss_extended_list_object_read__works(void **void_state) {
 
   {
-    FILE *file_strings = data__file_open__named__all_read("strings", "extended_list");
-    FILE *file_objects = data__file_open__named__all_read("objects", "extended_list");
+    FILE *file_strings = data__file_open__named("strings", "extended_list", "all_read");
+    FILE *file_objects = data__file_open__named("objects", "extended_list", "all_read");
 
     assert_non_null(file_strings);
     assert_non_null(file_objects);

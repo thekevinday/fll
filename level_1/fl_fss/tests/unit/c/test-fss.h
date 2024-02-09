@@ -16,6 +16,7 @@
 #include <setjmp.h>
 #include <stdint.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 
@@ -36,6 +37,7 @@
 
 // Data includes.
 #include "data-fss.h"
+#include "help-fss.h"
 
 // Test includes.
 #include "test-fss-basic_content_read.h"
@@ -59,6 +61,8 @@
 #include "test-fss-extended_list_object_read.h"
 #include "test-fss-extended_list_object_write.h"
 #include "test-fss-payload_header_map.h"
+#include "test-fss-payload_header_map-abstruse_signed.h"
+#include "test-fss-payload_header_map-abstruse_unsigned.h"
 
 #ifdef __cplusplus
 extern "C" {
