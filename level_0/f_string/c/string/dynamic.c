@@ -657,7 +657,7 @@ extern "C" {
           j = i;
         }
 
-        memmove(buffer->string + j, buffer->string + i + 1, buffer->used - i);
+        memmove(buffer->string + j, buffer->string + i + 1, buffer->used - (i + 1));
         memset(buffer->string + (buffer->used - (i - j) - 1), 0, (i - j) + 1);
 
         buffer->used -= (i - j) + 1;
