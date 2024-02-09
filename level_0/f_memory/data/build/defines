@@ -1,4 +1,6 @@
 # fss-0000
-_f_memory_FORCE_secure_memory_ all to-be removed address spaces are set to 0 before freeing or resizing.
-_f_memory_FORCE_fast_memory_ all to-be removed address spaces remain unchanged before freeing or resizing.
-_f_memory_USE_posix_memalign_ use POSIX memalign instead of aligned_alloc() (aligned_alloc() is in C as of C11 standard).
+_f_memory_FORCE_secure_memory_ All to-be removed address spaces are set to 0 before freeing or resizing.
+_f_memory_FORCE_fast_memory_ All to-be removed address spaces remain unchanged before freeing or resizing.
+_f_memory_USE_posix_memalign_ Use POSIX memalign instead of aligned_alloc() (aligned_alloc() is in C as of C11 standard).
+_f_memory_USE_reallocarray_ Use reallocarray() instead of realloc().
+_f_memory_NO_zeroing_on_larger_ Do not call memset() to zero out memory when the new size is larger for the newly added memory.
