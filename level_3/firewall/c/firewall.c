@@ -521,7 +521,7 @@ extern "C" {
           }
           else {
             if (main->error.verbosity != f_console_verbosity_quiet_e) {
-              fll_print_format("%r%[%QFailed to perform stop request because the lock instructions are missing from: %r.%]%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, path_file_other, main->error.context, f_string_eol_s);
+              fll_print_format("%r%[%QFailed to perform stop request because the stop instructions are missing from: %r.%]%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, path_file_other, main->error.context, f_string_eol_s);
             }
 
             firewall_delete_local_data(&local);
