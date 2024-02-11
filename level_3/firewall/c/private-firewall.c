@@ -1257,6 +1257,9 @@ f_status_t firewall_process_rules(firewall_data_t * const data, f_string_range_t
       fll_error_print(data->main->error, F_status_set_fine(status), "f_fss_apply_delimit", F_true);
     }
   }
+  else {
+    fll_error_print(data->main->error, F_status_set_fine(status), "fll_fss_extended_read", F_true);
+  }
 
   macro_f_fss_delimits_t_delete_simple(delimits);
 
