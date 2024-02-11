@@ -560,6 +560,9 @@ extern "C" {
  * The f_console_standard_parameter_last_e is not a parameter.
  * f_console_standard_parameter_last_e represents the end of the enumeration.
  * Use f_console_standard_parameter_last_e as the starting enum for any custom project.
+ *
+ * This also defines f_console_parameter_state_type_total_d to represent the total, not including the parameter last.
+ * This is provided so that this total can be use by the pre-processor in macro mathematical operations.
  */
 #ifndef _di_f_console_parameter_state_type_e_
   enum {
@@ -578,6 +581,8 @@ extern "C" {
     f_console_standard_parameter_line_last_no_e,
     f_console_standard_parameter_last_e,
   }; // enum
+
+  #define f_console_parameter_state_type_total_d 13
 #endif // _di_f_console_standard_parameter_e_
 
 /**

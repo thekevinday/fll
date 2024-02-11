@@ -41,7 +41,7 @@ extern "C" {
 
     main->setting.state.status = F_okay;
 
-    if (main->setting.flag & (status_code_main_flag_help_e | status_code_main_flag_version_e | status_code_main_flag_copyright_e)) {
+    if (main->setting.flag & status_code_main_flag_version_copyright_help_e) {
       if (main->setting.flag & status_code_main_flag_help_e) {
         status_code_print_message_help(&main->program.message);
       }

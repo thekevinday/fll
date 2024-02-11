@@ -20,32 +20,34 @@ extern "C" {
  * Flags passed to the main function or program.
  *
  * iki_write_main_flag_*_e:
- *   - none:        No flags set.
- *   - content:     The Content being written is specified.
- *   - copyright:   Print copyright.
- *   - file_to:     Using a specified destination file.
- *   - help:        Print help.
- *   - object:      The Object being written is specified.
- *   - pipe:        Use the input pipe.
- *   - print_first: When set, print new line to message output on program begin after loading settings.
- *   - print_last:  When set, print new line to message output on program end.
- *   - print_last:  The Object being written is specified.
- *   - version:     Print version.
- *   - wrap:        Wrap the vocabulary.
+ *   - none:                   No flags set.
+ *   - content:                The Content being written is specified.
+ *   - copyright:              Print copyright.
+ *   - file_to:                Using a specified destination file.
+ *   - help:                   Print help.
+ *   - object:                 The Object being written is specified.
+ *   - pipe:                   Use the input pipe.
+ *   - print_first:            When set, print new line to message output on program begin after loading settings.
+ *   - print_last:             When set, print new line to message output on program end.
+ *   - print_last:             The Object being written is specified.
+ *   - version:                Print version.
+ *   - version_copyright_help: A helper flag representing version, copyright, and help flag bits being set.
+ *   - wrap:                   Wrap the vocabulary.
  */
 #ifndef _di_iki_write_main_flag_e_
   enum {
-    iki_write_main_flag_none_e        = 0x0,
-    iki_write_main_flag_content_e     = 0x1,
-    iki_write_main_flag_copyright_e   = 0x2,
-    iki_write_main_flag_file_to_e     = 0x4,
-    iki_write_main_flag_help_e        = 0x8,
-    iki_write_main_flag_object_e      = 0x10,
-    iki_write_main_flag_pipe_e        = 0x20,
-    iki_write_main_flag_print_first_e = 0x40,
-    iki_write_main_flag_print_last_e  = 0x80,
-    iki_write_main_flag_version_e     = 0x100,
-    iki_write_main_flag_wrap_e        = 0x200,
+    iki_write_main_flag_none_e                   = 0x0,
+    iki_write_main_flag_content_e                = 0x1,
+    iki_write_main_flag_copyright_e              = 0x2,
+    iki_write_main_flag_file_to_e                = 0x4,
+    iki_write_main_flag_help_e                   = 0x8,
+    iki_write_main_flag_object_e                 = 0x10,
+    iki_write_main_flag_pipe_e                   = 0x20,
+    iki_write_main_flag_print_first_e            = 0x40,
+    iki_write_main_flag_print_last_e             = 0x80,
+    iki_write_main_flag_version_e                = 0x100,
+    iki_write_main_flag_version_copyright_help_e = 0x10a,
+    iki_write_main_flag_wrap_e                   = 0x200,
   }; // enum
 #endif // _di_iki_write_main_flag_e_
 
@@ -76,7 +78,7 @@ extern "C" {
       macro_f_console_parameter_t_initialize_3(iki_write_short_wrap_s,    iki_write_long_wrap_s,    0, f_console_flag_normal_e), \
     }
 
-  #define iki_write_parameter_total_d 20
+  #define iki_write_parameter_total_d (f_console_parameter_state_type_total_d + 7)
 #endif // _di_iki_write_parameter_e_
 
 /**

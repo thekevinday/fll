@@ -23,6 +23,8 @@ extern "C" {
  *   The output structure to print to.
  *
  *   This does not alter print.custom.setting.state.status.
+ * @param function
+ *   The name of the function associated with the error.
  *
  * @return
  *   F_okay on success.

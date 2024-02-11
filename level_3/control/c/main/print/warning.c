@@ -31,9 +31,9 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QFailed while calling f_status_string_to() for status%] ", print->to, print->set->warning, print->set->warning, print->set->warning);
-    fl_print_format("%[%ui%]", print->to, print->set->notable, status_of, print->set->notable);
+    fl_print_format(f_string_format_ui_single_s.string, print->to, print->set->notable, status_of, print->set->notable);
     fl_print_format("%[, failing with status code%] ", print->to, print->set->warning, status_error, print->set->warning);
-    fl_print_format("%[%ui%]", print->to, print->set->notable, status_error, print->set->notable);
+    fl_print_format(f_string_format_ui_single_s.string, print->to, print->set->notable, status_error, print->set->notable);
     fl_print_format(f_string_format_sentence_end_s.string, print->to, print->set->warning, print->set->warning, f_string_eol_s);
 
     f_file_stream_unlock(print->to);

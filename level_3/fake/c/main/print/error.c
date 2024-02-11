@@ -163,7 +163,7 @@ extern "C" {
       f_file_stream_lock(print->to);
 
       fl_print_format("%[UNKNOWN %Q(%]", print->to, print->context, print->prefix, print->context);
-      fl_print_format("%[%ui%]", print->to, print->notable, F_status_set_fine(main->setting.state.status), print->notable);
+      fl_print_format(f_string_format_ui_single_s.string, print->to, print->notable, F_status_set_fine(main->setting.state.status), print->notable);
       fl_print_format("%[) occurred ", print->to, print->context);
 
       fake_print_error_build_operation_file_partial(print, operation, source, destination, how);
@@ -599,9 +599,9 @@ extern "C" {
     fl_print_format("%[' from section '%]", print->to, print->context, buffer, print->context);
     fl_print_format(f_string_format_Q_range_single_s.string, print->to, print->notable, buffer, section_name, print->notable);
     fl_print_format("%[' on line%] ", print->to, print->context, print->context);
-    fl_print_format("%[%ul%]", print->to, print->notable, line, print->notable);
+    fl_print_format(f_string_format_ul_single_s.string, print->to, print->notable, line, print->notable);
     fl_print_format("%[' cannot be processed because the max stack depth of%] ", print->to, print->context, print->context);
-    fl_print_format("%[%ul%]", print->to, print->notable, stack_max, print->notable);
+    fl_print_format(f_string_format_ul_single_s.string, print->to, print->notable, stack_max, print->notable);
     fl_print_format(" %[has been reached.%]%r", print->to, print->context, print->context, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
@@ -632,7 +632,7 @@ extern "C" {
     fl_print_format("%[' from section '%]", print->to, print->context, buffer, print->context);
     fl_print_format(f_string_format_Q_range_single_s.string, print->to, print->notable, buffer, section_name, print->notable);
     fl_print_format("%[' on line%] ", print->to, print->context, print->context);
-    fl_print_format("%[%ul%]", print->to, print->notable, line, print->notable);
+    fl_print_format(f_string_format_ul_single_s.string, print->to, print->notable, line, print->notable);
     fl_print_format(" %[is not a known operation name.%]%r", print->to, print->context, print->context, f_string_eol_s);
 
     f_file_stream_unlock(print->to);

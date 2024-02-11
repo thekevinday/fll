@@ -499,50 +499,215 @@ extern "C" {
  * Provide a static strings focusing on the commonly used print format strings.
  */
 #ifndef _di_f_string_format_s_
-  #define F_string_format_Q_double_s           "%[%[%Q%]%]"
-  #define F_string_format_Q_range_double_s     "%[%[%/Q%]%]"
-  #define F_string_format_Q_range_single_s     "%[%/Q%]"
-  #define F_string_format_Q_single_s           "%[%Q%]"
-  #define F_string_format_QQ_double_s          "%[%[%Q%Q%]%]"
-  #define F_string_format_QQ_single_s          "%[%Q%Q%]"
-  #define F_string_format_r_double_s           "%[%[%r%]%]"
-  #define F_string_format_r_single_s           "%[%r%]"
-  #define F_string_format_rr_double_s          "%[%[%r%r%]%]"
-  #define F_string_format_rr_single_s          "%[%r%r%]"
+  #define F_string_format_d_double_s       "%[%[%d%]%]"
+  #define F_string_format_d_single_s       "%[%d%]"
+  #define F_string_format_D_double_s       "%[%[%D%]%]"
+  #define F_string_format_D_single_s       "%[%D%]"
+  #define F_string_format_i_double_s       "%[%[%i%]%]"
+  #define F_string_format_i_single_s       "%[%i%]"
+  #define F_string_format_q_double_s       "%[%[%q%]%]"
+  #define F_string_format_q_range_double_s "%[%[%/q%]%]"
+  #define F_string_format_q_range_single_s "%[%/q%]"
+  #define F_string_format_q_single_s       "%[%q%]"
+  #define F_string_format_Q_double_s       "%[%[%Q%]%]"
+  #define F_string_format_Q_range_double_s "%[%[%/Q%]%]"
+  #define F_string_format_Q_range_single_s "%[%/Q%]"
+  #define F_string_format_Q_single_s       "%[%Q%]"
+  #define F_string_format_r_double_s       "%[%[%r%]%]"
+  #define F_string_format_r_range_double_s "%[%[%/r%]%]"
+  #define F_string_format_r_range_single_s "%[%/r%]"
+  #define F_string_format_r_single_s       "%[%r%]"
+  #define F_string_format_R_double_s       "%[%[%R%]%]"
+  #define F_string_format_R_range_double_s "%[%[%/R%]%]"
+  #define F_string_format_R_range_single_s "%[%/R%]"
+  #define F_string_format_R_single_s       "%[%R%]"
+  #define F_string_format_s_double_s       "%[%[%s%]%]"
+  #define F_string_format_s_single_s       "%[%s%]"
+  #define F_string_format_S_double_s       "%[%[%S%]%]"
+  #define F_string_format_S_single_s       "%[%S%]"
+  #define F_string_format_u_double_s       "%[%[%u%]%]"
+  #define F_string_format_u_single_s       "%[%u%]"
+  #define F_string_format_z_double_s       "%[%[%u%]%]"
+  #define F_string_format_z_single_s       "%[%u%]"
+  #define F_string_format_Z_double_s       "%[%[%u%]%]"
+  #define F_string_format_Z_single_s       "%[%u%]"
+  #define F_string_format_dl_double_s      "%[%[%dl%]%]"
+  #define F_string_format_dl_single_s      "%[%dl%]"
+  #define F_string_format_DL_double_s      "%[%[%DL%]%]"
+  #define F_string_format_DL_single_s      "%[%DL%]"
+  #define F_string_format_ii_double_s      "%[%[%ii%]%]"
+  #define F_string_format_ii_single_s      "%[%ii%]"
+  #define F_string_format_il_double_s      "%[%[%il%]%]"
+  #define F_string_format_il_single_s      "%[%il%]"
+  #define F_string_format_in_double_s      "%[%[%in%]%]"
+  #define F_string_format_in_single_s      "%[%in%]"
+  #define F_string_format_QQ_double_s      "%[%[%Q%Q%]%]"
+  #define F_string_format_QQ_single_s      "%[%Q%Q%]"
+  #define F_string_format_rr_double_s      "%[%[%r%r%]%]"
+  #define F_string_format_rr_single_s      "%[%r%r%]"
+  #define F_string_format_RR_double_s      "%[%[%R%R%]%]"
+  #define F_string_format_RR_single_s      "%[%R%R%]"
+  #define F_string_format_ss_double_s      "%[%[%s%s%]%]"
+  #define F_string_format_ss_single_s      "%[%s%s%]"
+  #define F_string_format_SS_double_s      "%[%[%S%S%]%]"
+  #define F_string_format_SS_single_s      "%[%S%S%]"
+  #define F_string_format_ui_double_s      "%[%[%ui%]%]"
+  #define F_string_format_ui_single_s      "%[%ui%]"
+  #define F_string_format_ul_double_s      "%[%[%ul%]%]"
+  #define F_string_format_ul_single_s      "%[%ul%]"
+  #define F_string_format_un_double_s      "%[%[%un%]%]"
+  #define F_string_format_un_single_s      "%[%un%]"
+  #define F_string_format_iii_double_s     "%[%[%iii%]%]"
+  #define F_string_format_iii_single_s     "%[%iii%]"
+  #define F_string_format_ill_double_s     "%[%[%ill%]%]"
+  #define F_string_format_ill_single_s     "%[%ill%]"
+  #define F_string_format_uii_double_s     "%[%[%uii%]%]"
+  #define F_string_format_uii_single_s     "%[%uii%]"
+  #define F_string_format_ull_double_s     "%[%[%ull%]%]"
+  #define F_string_format_ull_single_s     "%[%ull%]"
+
   #define F_string_format_sentence_end_s       "%[.%]%r"
   #define F_string_format_sentence_end_quote_s "%['.%]%r"
-  #define F_string_format_ul_double_s          "%[%[%ul%]%]"
-  #define F_string_format_ul_single_s          "%[%ul%]"
 
-  #define F_string_format_Q_double_s_length           10
-  #define F_string_format_Q_range_double_s_length     11
-  #define F_string_format_Q_range_single_s_length     7
-  #define F_string_format_Q_single_s_length           6
-  #define F_string_format_QQ_double_s_length          12
-  #define F_string_format_QQ_single_s_length          8
-  #define F_string_format_r_double_s_length           10
-  #define F_string_format_r_single_s_length           6
-  #define F_string_format_rr_double_s_length          12
-  #define F_string_format_rr_single_s_length          8
+  #define F_string_format_d_single_s_length       10
+  #define F_string_format_d_double_s_length       6
+  #define F_string_format_D_single_s_length       10
+  #define F_string_format_D_double_s_length       6
+  #define F_string_format_i_single_s_length       10
+  #define F_string_format_i_double_s_length       6
+  #define F_string_format_q_double_s_length       10
+  #define F_string_format_q_range_double_s_length 11
+  #define F_string_format_q_range_single_s_length 7
+  #define F_string_format_q_single_s_length       6
+  #define F_string_format_Q_double_s_length       10
+  #define F_string_format_Q_range_double_s_length 11
+  #define F_string_format_Q_range_single_s_length 7
+  #define F_string_format_Q_single_s_length       6
+  #define F_string_format_r_double_s_length       10
+  #define F_string_format_r_range_double_s_length 11
+  #define F_string_format_r_range_single_s_length 7
+  #define F_string_format_r_single_s_length       6
+  #define F_string_format_R_double_s_length       10
+  #define F_string_format_R_range_double_s_length 11
+  #define F_string_format_R_range_single_s_length 7
+  #define F_string_format_R_single_s_length       6
+  #define F_string_format_s_single_s_length       10
+  #define F_string_format_s_double_s_length       6
+  #define F_string_format_S_single_s_length       10
+  #define F_string_format_S_double_s_length       6
+  #define F_string_format_u_single_s_length       10
+  #define F_string_format_u_double_s_length       6
+  #define F_string_format_z_single_s_length       10
+  #define F_string_format_z_double_s_length       6
+  #define F_string_format_Z_single_s_length       10
+  #define F_string_format_Z_double_s_length       6
+  #define F_string_format_dl_single_s_length      11
+  #define F_string_format_dl_double_s_length      7
+  #define F_string_format_DL_single_s_length      11
+  #define F_string_format_DL_double_s_length      7
+  #define F_string_format_ii_single_s_length      11
+  #define F_string_format_ii_double_s_length      7
+  #define F_string_format_il_single_s_length      11
+  #define F_string_format_il_double_s_length      7
+  #define F_string_format_in_single_s_length      11
+  #define F_string_format_in_double_s_length      7
+  #define F_string_format_QQ_double_s_length      12
+  #define F_string_format_QQ_single_s_length      8
+  #define F_string_format_rr_double_s_length      12
+  #define F_string_format_rr_single_s_length      8
+  #define F_string_format_RR_double_s_length      12
+  #define F_string_format_RR_single_s_length      8
+  #define F_string_format_ss_single_s_length      12
+  #define F_string_format_ss_double_s_length      8
+  #define F_string_format_SS_single_s_length      12
+  #define F_string_format_SS_double_s_length      8
+  #define F_string_format_ui_single_s_length      11
+  #define F_string_format_ui_double_s_length      7
+  #define F_string_format_ul_single_s_length      11
+  #define F_string_format_ul_double_s_length      7
+  #define F_string_format_un_single_s_length      11
+  #define F_string_format_un_double_s_length      7
+  #define F_string_format_iii_single_s_length     12
+  #define F_string_format_iii_double_s_length     8
+  #define F_string_format_ill_single_s_length     12
+  #define F_string_format_ill_double_s_length     8
+  #define F_string_format_uii_single_s_length     12
+  #define F_string_format_uii_double_s_length     8
+  #define F_string_format_ull_single_s_length     12
+  #define F_string_format_ull_double_s_length     8
+
   #define F_string_format_sentence_end_s_length       7
   #define F_string_format_sentence_end_quote_s_length 6
-  #define F_string_format_ul_single_s_length          11
-  #define F_string_format_ul_double_s_length          7
 
+  extern const f_string_static_t f_string_format_d_double_s;
+  extern const f_string_static_t f_string_format_d_single_s;
+  extern const f_string_static_t f_string_format_D_double_s;
+  extern const f_string_static_t f_string_format_D_single_s;
+  extern const f_string_static_t f_string_format_i_double_s;
+  extern const f_string_static_t f_string_format_i_single_s;
+  extern const f_string_static_t f_string_format_q_double_s;
+  extern const f_string_static_t f_string_format_q_range_double_s;
+  extern const f_string_static_t f_string_format_q_range_single_s;
+  extern const f_string_static_t f_string_format_q_single_s;
   extern const f_string_static_t f_string_format_Q_double_s;
   extern const f_string_static_t f_string_format_Q_range_double_s;
   extern const f_string_static_t f_string_format_Q_range_single_s;
   extern const f_string_static_t f_string_format_Q_single_s;
+  extern const f_string_static_t f_string_format_r_double_s;
+  extern const f_string_static_t f_string_format_r_range_double_s;
+  extern const f_string_static_t f_string_format_r_range_single_s;
+  extern const f_string_static_t f_string_format_r_single_s;
+  extern const f_string_static_t f_string_format_R_double_s;
+  extern const f_string_static_t f_string_format_R_range_double_s;
+  extern const f_string_static_t f_string_format_R_range_single_s;
+  extern const f_string_static_t f_string_format_R_single_s;
+  extern const f_string_static_t f_string_format_s_double_s;
+  extern const f_string_static_t f_string_format_s_single_s;
+  extern const f_string_static_t f_string_format_S_double_s;
+  extern const f_string_static_t f_string_format_S_single_s;
+  extern const f_string_static_t f_string_format_u_double_s;
+  extern const f_string_static_t f_string_format_u_single_s;
+  extern const f_string_static_t f_string_format_z_double_s;
+  extern const f_string_static_t f_string_format_z_single_s;
+  extern const f_string_static_t f_string_format_Z_double_s;
+  extern const f_string_static_t f_string_format_Z_single_s;
+  extern const f_string_static_t f_string_format_dl_double_s;
+  extern const f_string_static_t f_string_format_dl_single_s;
+  extern const f_string_static_t f_string_format_DL_double_s;
+  extern const f_string_static_t f_string_format_DL_single_s;
+  extern const f_string_static_t f_string_format_ii_double_s;
+  extern const f_string_static_t f_string_format_ii_single_s;
+  extern const f_string_static_t f_string_format_il_double_s;
+  extern const f_string_static_t f_string_format_il_single_s;
+  extern const f_string_static_t f_string_format_in_double_s;
+  extern const f_string_static_t f_string_format_in_single_s;
   extern const f_string_static_t f_string_format_QQ_double_s;
   extern const f_string_static_t f_string_format_QQ_single_s;
-  extern const f_string_static_t f_string_format_r_double_s;
-  extern const f_string_static_t f_string_format_r_single_s;
   extern const f_string_static_t f_string_format_rr_double_s;
   extern const f_string_static_t f_string_format_rr_single_s;
-  extern const f_string_static_t f_string_format_sentence_end_s;
-  extern const f_string_static_t f_string_format_sentence_end_quote_s;
+  extern const f_string_static_t f_string_format_RR_double_s;
+  extern const f_string_static_t f_string_format_RR_single_s;
+  extern const f_string_static_t f_string_format_ss_double_s;
+  extern const f_string_static_t f_string_format_ss_single_s;
+  extern const f_string_static_t f_string_format_SS_double_s;
+  extern const f_string_static_t f_string_format_SS_single_s;
+  extern const f_string_static_t f_string_format_ui_double_s;
+  extern const f_string_static_t f_string_format_ui_single_s;
   extern const f_string_static_t f_string_format_ul_double_s;
   extern const f_string_static_t f_string_format_ul_single_s;
+  extern const f_string_static_t f_string_format_un_double_s;
+  extern const f_string_static_t f_string_format_un_single_s;
+  extern const f_string_static_t f_string_format_iii_double_s;
+  extern const f_string_static_t f_string_format_iii_single_s;
+  extern const f_string_static_t f_string_format_ill_double_s;
+  extern const f_string_static_t f_string_format_ill_single_s;
+  extern const f_string_static_t f_string_format_uii_double_s;
+  extern const f_string_static_t f_string_format_uii_single_s;
+  extern const f_string_static_t f_string_format_ull_double_s;
+  extern const f_string_static_t f_string_format_ull_single_s;
+
+  extern const f_string_static_t f_string_format_sentence_end_s;
+  extern const f_string_static_t f_string_format_sentence_end_quote_s;
 #endif // _di_f_string_format_s_
 
 /**

@@ -561,6 +561,18 @@ extern "C" {
   }
 #endif // _di_fll_program_print_help_header_
 
+#ifndef _di_fll_program_print_help_operations_
+  f_status_t fll_program_print_help_operations(fl_print_t * const print) {
+    #ifndef _di_level_2_parameter_checking_
+      if (!print) return F_status_set_error(F_parameter);
+    #endif // _di_level_2_parameter_checking_
+
+    fl_print_format(" %[Operations:%]%r", print->to, print->set->important, print->set->important, f_string_eol_s);
+
+    return F_okay;
+  }
+#endif // _di_fll_program_print_help_operations_
+
 #ifndef _di_fll_program_print_help_option_
   f_status_t fll_program_print_help_option(fl_print_t * const print, const f_string_static_t option_short, const f_string_static_t option_long, const f_string_static_t symbol_short, const f_string_static_t symbol_long, const char *description) {
     #ifndef _di_level_2_parameter_checking_
@@ -619,6 +631,18 @@ extern "C" {
   }
 #endif // _di_fll_program_print_help_option_other_
 
+#ifndef _di_fll_program_print_help_special_options_
+  f_status_t fll_program_print_help_special_options(fl_print_t * const print) {
+    #ifndef _di_level_2_parameter_checking_
+      if (!print) return F_status_set_error(F_parameter);
+    #endif // _di_level_2_parameter_checking_
+
+    fl_print_format(" %[Special Options:%]%r", print->to, print->set->important, print->set->important, f_string_eol_s);
+
+    return F_okay;
+  }
+#endif // _di_fll_program_print_help_special_options_
+
 #ifndef _di_fll_program_print_help_usage_
   f_status_t fll_program_print_help_usage(fl_print_t * const print, const f_string_static_t name, const f_string_static_t parameters) {
     #ifndef _di_level_2_parameter_checking_
@@ -656,7 +680,7 @@ extern "C" {
     f_file_stream_flush(print->to);
 
     fl_print_format("%]%[Received signal code %]", print->to, print->set->reset, print->set->warning, print->set->warning);
-    fl_print_format("%[%u%]", print->to, print->set->notable, signal, print->set->notable);
+    fl_print_format(f_string_format_u_single_s.string, print->to, print->set->notable, signal, print->set->notable);
     fl_print_format(f_string_format_sentence_end_s.string, print->to, print->set->warning, print->set->warning, f_string_eol_s);
 
     f_file_stream_unlock(print->to);

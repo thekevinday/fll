@@ -981,10 +981,12 @@
 #define _di_fll_program_print_error_pipe_missing_content_
 #define _di_fll_program_print_error_pipe_object_without_content_
 //#define _di_fll_program_print_help_header_
+//#define _di_fll_program_print_help_operations_
 //#define _di_fll_program_print_help_option_
 //#define _di_fll_program_print_help_option_long_
 //#define _di_fll_program_print_help_option_other_
 //#define _di_fll_program_print_help_option_standard_
+//#define _di_fll_program_print_help_special_options_
 //#define _di_fll_program_print_help_usage_
 //#define _di_fll_program_print_signal_received_
 //#define _di_fll_program_print_version_

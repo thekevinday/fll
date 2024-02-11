@@ -814,6 +814,28 @@ extern "C" {
 #endif // _di_fll_program_print_help_header_
 
 /**
+ * Print standard help operations.
+ *
+ * This print function does not use locking, be sure something like flockfile() and funlockfile() are appropriately called.
+ *
+ * @param print
+ *   The output structure to print to.
+ *   This uses but does not lock or unlock file stream.
+ *   This requires print.set to be non-NULL.
+ *
+ * @return
+ *   F_okay on success.
+ *   F_output_not on success, but no printing is performed.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see fl_print_format()
+ */
+#ifndef _di_fll_program_print_help_operations_
+  extern f_status_t fll_program_print_help_operations(fl_print_t * const print);
+#endif // _di_fll_program_print_help_operations_
+
+/**
  * Print standard help option.
  *
  * This print function does not use locking, be sure something like flockfile() and funlockfile() are appropriately called.
@@ -922,6 +944,28 @@ extern "C" {
 #ifndef _di_fll_program_print_help_option_standard_
   extern f_status_t fll_program_print_help_option_standard(fl_print_t * const print);
 #endif // _di_fll_program_print_help_option_standard_
+
+/**
+ * Print standard help special options.
+ *
+ * This print function does not use locking, be sure something like flockfile() and funlockfile() are appropriately called.
+ *
+ * @param print
+ *   The output structure to print to.
+ *   This uses but does not lock or unlock file stream.
+ *   This requires print.set to be non-NULL.
+ *
+ * @return
+ *   F_okay on success.
+ *   F_output_not on success, but no printing is performed.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see fl_print_format()
+ */
+#ifndef _di_fll_program_print_help_special_options_
+  extern f_status_t fll_program_print_help_special_options(fl_print_t * const print);
+#endif // _di_fll_program_print_help_special_options_
 
 /**
  * Print standard help usage.

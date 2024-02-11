@@ -147,20 +147,75 @@ extern "C" {
 #endif // _di_f_string_ascii_s_
 
 #ifndef _di_f_string_format_s_
+  const f_string_static_t f_string_format_d_double_s           = macro_f_string_static_t_initialize_1(F_string_format_d_double_s, 0, F_string_format_d_double_s_length);
+  const f_string_static_t f_string_format_d_single_s           = macro_f_string_static_t_initialize_1(F_string_format_d_single_s, 0, F_string_format_d_single_s_length);
+  const f_string_static_t f_string_format_D_double_s           = macro_f_string_static_t_initialize_1(F_string_format_D_double_s, 0, F_string_format_D_double_s_length);
+  const f_string_static_t f_string_format_D_single_s           = macro_f_string_static_t_initialize_1(F_string_format_D_single_s, 0, F_string_format_D_single_s_length);
+  const f_string_static_t f_string_format_i_double_s           = macro_f_string_static_t_initialize_1(F_string_format_i_double_s, 0, F_string_format_i_double_s_length);
+  const f_string_static_t f_string_format_i_single_s           = macro_f_string_static_t_initialize_1(F_string_format_i_single_s, 0, F_string_format_i_single_s_length);
+  const f_string_static_t f_string_format_q_double_s           = macro_f_string_static_t_initialize_1(F_string_format_q_double_s, 0, F_string_format_q_double_s_length);
+  const f_string_static_t f_string_format_q_range_double_s     = macro_f_string_static_t_initialize_1(F_string_format_q_range_double_s, 0, F_string_format_q_range_double_s_length);
+  const f_string_static_t f_string_format_q_range_single_s     = macro_f_string_static_t_initialize_1(F_string_format_q_range_single_s, 0, F_string_format_q_range_single_s_length);
+  const f_string_static_t f_string_format_q_single_s           = macro_f_string_static_t_initialize_1(F_string_format_q_single_s, 0, F_string_format_q_single_s_length);
   const f_string_static_t f_string_format_Q_double_s           = macro_f_string_static_t_initialize_1(F_string_format_Q_double_s, 0, F_string_format_Q_double_s_length);
   const f_string_static_t f_string_format_Q_range_double_s     = macro_f_string_static_t_initialize_1(F_string_format_Q_range_double_s, 0, F_string_format_Q_range_double_s_length);
   const f_string_static_t f_string_format_Q_range_single_s     = macro_f_string_static_t_initialize_1(F_string_format_Q_range_single_s, 0, F_string_format_Q_range_single_s_length);
   const f_string_static_t f_string_format_Q_single_s           = macro_f_string_static_t_initialize_1(F_string_format_Q_single_s, 0, F_string_format_Q_single_s_length);
+  const f_string_static_t f_string_format_r_double_s           = macro_f_string_static_t_initialize_1(F_string_format_r_double_s, 0, F_string_format_r_double_s_length);
+  const f_string_static_t f_string_format_r_range_double_s     = macro_f_string_static_t_initialize_1(F_string_format_r_range_double_s, 0, F_string_format_r_range_double_s_length);
+  const f_string_static_t f_string_format_r_range_single_s     = macro_f_string_static_t_initialize_1(F_string_format_r_range_single_s, 0, F_string_format_r_range_single_s_length);
+  const f_string_static_t f_string_format_r_single_s           = macro_f_string_static_t_initialize_1(F_string_format_r_single_s, 0, F_string_format_r_single_s_length);
+  const f_string_static_t f_string_format_R_double_s           = macro_f_string_static_t_initialize_1(F_string_format_R_double_s, 0, F_string_format_R_double_s_length);
+  const f_string_static_t f_string_format_R_range_double_s     = macro_f_string_static_t_initialize_1(F_string_format_R_range_double_s, 0, F_string_format_R_range_double_s_length);
+  const f_string_static_t f_string_format_R_range_single_s     = macro_f_string_static_t_initialize_1(F_string_format_R_range_single_s, 0, F_string_format_R_range_single_s_length);
+  const f_string_static_t f_string_format_R_single_s           = macro_f_string_static_t_initialize_1(F_string_format_R_single_s, 0, F_string_format_R_single_s_length);
+  const f_string_static_t f_string_format_s_double_s           = macro_f_string_static_t_initialize_1(F_string_format_s_double_s, 0, F_string_format_s_double_s_length);
+  const f_string_static_t f_string_format_s_single_s           = macro_f_string_static_t_initialize_1(F_string_format_s_single_s, 0, F_string_format_s_single_s_length);
+  const f_string_static_t f_string_format_S_double_s           = macro_f_string_static_t_initialize_1(F_string_format_S_double_s, 0, F_string_format_S_double_s_length);
+  const f_string_static_t f_string_format_S_single_s           = macro_f_string_static_t_initialize_1(F_string_format_S_single_s, 0, F_string_format_S_single_s_length);
+  const f_string_static_t f_string_format_u_double_s           = macro_f_string_static_t_initialize_1(F_string_format_u_double_s, 0, F_string_format_u_double_s_length);
+  const f_string_static_t f_string_format_u_single_s           = macro_f_string_static_t_initialize_1(F_string_format_u_single_s, 0, F_string_format_u_single_s_length);
+  const f_string_static_t f_string_format_z_double_s           = macro_f_string_static_t_initialize_1(F_string_format_z_double_s, 0, F_string_format_z_double_s_length);
+  const f_string_static_t f_string_format_z_single_s           = macro_f_string_static_t_initialize_1(F_string_format_z_single_s, 0, F_string_format_z_single_s_length);
+  const f_string_static_t f_string_format_Z_double_s           = macro_f_string_static_t_initialize_1(F_string_format_Z_double_s, 0, F_string_format_Z_double_s_length);
+  const f_string_static_t f_string_format_Z_single_s           = macro_f_string_static_t_initialize_1(F_string_format_Z_single_s, 0, F_string_format_Z_single_s_length);
+  const f_string_static_t f_string_format_dl_double_s          = macro_f_string_static_t_initialize_1(F_string_format_dl_double_s, 0, F_string_format_dl_double_s_length);
+  const f_string_static_t f_string_format_dl_single_s          = macro_f_string_static_t_initialize_1(F_string_format_dl_single_s, 0, F_string_format_dl_single_s_length);
+  const f_string_static_t f_string_format_DL_double_s          = macro_f_string_static_t_initialize_1(F_string_format_DL_double_s, 0, F_string_format_DL_double_s_length);
+  const f_string_static_t f_string_format_DL_single_s          = macro_f_string_static_t_initialize_1(F_string_format_DL_single_s, 0, F_string_format_DL_single_s_length);
+  const f_string_static_t f_string_format_ii_double_s          = macro_f_string_static_t_initialize_1(F_string_format_ii_double_s, 0, F_string_format_ii_double_s_length);
+  const f_string_static_t f_string_format_ii_single_s          = macro_f_string_static_t_initialize_1(F_string_format_ii_single_s, 0, F_string_format_ii_single_s_length);
+  const f_string_static_t f_string_format_il_double_s          = macro_f_string_static_t_initialize_1(F_string_format_il_double_s, 0, F_string_format_il_double_s_length);
+  const f_string_static_t f_string_format_il_single_s          = macro_f_string_static_t_initialize_1(F_string_format_il_single_s, 0, F_string_format_il_single_s_length);
+  const f_string_static_t f_string_format_in_double_s          = macro_f_string_static_t_initialize_1(F_string_format_in_double_s, 0, F_string_format_in_double_s_length);
+  const f_string_static_t f_string_format_in_single_s          = macro_f_string_static_t_initialize_1(F_string_format_in_single_s, 0, F_string_format_in_single_s_length);
   const f_string_static_t f_string_format_QQ_double_s          = macro_f_string_static_t_initialize_1(F_string_format_QQ_double_s, 0, F_string_format_QQ_double_s_length);
   const f_string_static_t f_string_format_QQ_single_s          = macro_f_string_static_t_initialize_1(F_string_format_QQ_single_s, 0, F_string_format_QQ_single_s_length);
-  const f_string_static_t f_string_format_r_double_s           = macro_f_string_static_t_initialize_1(F_string_format_r_double_s, 0, F_string_format_r_double_s_length);
-  const f_string_static_t f_string_format_r_single_s           = macro_f_string_static_t_initialize_1(F_string_format_r_single_s, 0, F_string_format_r_single_s_length);
   const f_string_static_t f_string_format_rr_double_s          = macro_f_string_static_t_initialize_1(F_string_format_rr_double_s, 0, F_string_format_rr_double_s_length);
   const f_string_static_t f_string_format_rr_single_s          = macro_f_string_static_t_initialize_1(F_string_format_rr_single_s, 0, F_string_format_rr_single_s_length);
-  const f_string_static_t f_string_format_sentence_end_s       = macro_f_string_static_t_initialize_1(F_string_format_sentence_end_s, 0, F_string_format_sentence_end_s_length);
-  const f_string_static_t f_string_format_sentence_end_quote_s = macro_f_string_static_t_initialize_1(F_string_format_sentence_end_quote_s, 0, F_string_format_sentence_end_quote_s_length);
+  const f_string_static_t f_string_format_RR_double_s          = macro_f_string_static_t_initialize_1(F_string_format_RR_double_s, 0, F_string_format_RR_double_s_length);
+  const f_string_static_t f_string_format_RR_single_s          = macro_f_string_static_t_initialize_1(F_string_format_RR_single_s, 0, F_string_format_RR_single_s_length);
+  const f_string_static_t f_string_format_ss_double_s          = macro_f_string_static_t_initialize_1(F_string_format_ss_double_s, 0, F_string_format_ss_double_s_length);
+  const f_string_static_t f_string_format_ss_single_s          = macro_f_string_static_t_initialize_1(F_string_format_ss_single_s, 0, F_string_format_ss_single_s_length);
+  const f_string_static_t f_string_format_SS_double_s          = macro_f_string_static_t_initialize_1(F_string_format_SS_double_s, 0, F_string_format_SS_double_s_length);
+  const f_string_static_t f_string_format_SS_single_s          = macro_f_string_static_t_initialize_1(F_string_format_SS_single_s, 0, F_string_format_SS_single_s_length);
+  const f_string_static_t f_string_format_ui_double_s          = macro_f_string_static_t_initialize_1(F_string_format_ui_double_s, 0, F_string_format_ui_double_s_length);
+  const f_string_static_t f_string_format_ui_single_s          = macro_f_string_static_t_initialize_1(F_string_format_ui_single_s, 0, F_string_format_ui_single_s_length);
   const f_string_static_t f_string_format_ul_double_s          = macro_f_string_static_t_initialize_1(F_string_format_ul_double_s, 0, F_string_format_ul_double_s_length);
   const f_string_static_t f_string_format_ul_single_s          = macro_f_string_static_t_initialize_1(F_string_format_ul_single_s, 0, F_string_format_ul_single_s_length);
+  const f_string_static_t f_string_format_un_double_s          = macro_f_string_static_t_initialize_1(F_string_format_un_double_s, 0, F_string_format_un_double_s_length);
+  const f_string_static_t f_string_format_un_single_s          = macro_f_string_static_t_initialize_1(F_string_format_un_single_s, 0, F_string_format_un_single_s_length);
+  const f_string_static_t f_string_format_iii_double_s         = macro_f_string_static_t_initialize_1(F_string_format_iii_double_s, 0, F_string_format_iii_double_s_length);
+  const f_string_static_t f_string_format_iii_single_s         = macro_f_string_static_t_initialize_1(F_string_format_iii_single_s, 0, F_string_format_iii_single_s_length);
+  const f_string_static_t f_string_format_ill_double_s         = macro_f_string_static_t_initialize_1(F_string_format_ill_double_s, 0, F_string_format_ill_double_s_length);
+  const f_string_static_t f_string_format_ill_single_s         = macro_f_string_static_t_initialize_1(F_string_format_ill_single_s, 0, F_string_format_ill_single_s_length);
+  const f_string_static_t f_string_format_uii_double_s         = macro_f_string_static_t_initialize_1(F_string_format_uii_double_s, 0, F_string_format_uii_double_s_length);
+  const f_string_static_t f_string_format_uii_single_s         = macro_f_string_static_t_initialize_1(F_string_format_uii_single_s, 0, F_string_format_uii_single_s_length);
+  const f_string_static_t f_string_format_ull_double_s         = macro_f_string_static_t_initialize_1(F_string_format_ull_double_s, 0, F_string_format_ull_double_s_length);
+  const f_string_static_t f_string_format_ull_single_s         = macro_f_string_static_t_initialize_1(F_string_format_ull_single_s, 0, F_string_format_ull_single_s_length);
+
+  const f_string_static_t f_string_format_sentence_end_s       = macro_f_string_static_t_initialize_1(F_string_format_sentence_end_s, 0, F_string_format_sentence_end_s_length);
+  const f_string_static_t f_string_format_sentence_end_quote_s = macro_f_string_static_t_initialize_1(F_string_format_sentence_end_quote_s, 0, F_string_format_sentence_end_quote_s_length);
 #endif // _di_f_string_format_s_
 
 #ifdef __cplusplus

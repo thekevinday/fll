@@ -20,39 +20,41 @@ extern "C" {
  * Flags passed to the main function or program.
  *
  * fss_identify_main_flag_*_e:
- *   - none:          No flags set.
- *   - content:       Use the content (The "0000" part of "FSS-0000").
- *   - copyright:     Print copyright.
- *   - file_from:     Using a specified source file.
- *   - file_to:       Using a specified destination file. (Not used at this time.)
- *   - header:        Enable printing of headers.
- *   - help:          Print help.
- *   - line:          Print only the identifier at a given line.
- *   - name:          Select using this full or partial type name or code.
- *   - object:        Use the object (The "FSS" part of "FSS-0000").
- *   - pipe:          Use the input pipe.
- *   - print_first:   When set, print new line to message output on program begin after loading settings.
- *   - print_last:    When set, print new line to message output on program end.
- *   - total:         Print the total Identifiers found.
- *   - version:       Print version.
+ *   - none:                   No flags set.
+ *   - content:                Use the content (The "0000" part of "FSS-0000").
+ *   - copyright:              Print copyright.
+ *   - file_from:              Using a specified source file.
+ *   - file_to:                Using a specified destination file. (Not used at this time.)
+ *   - header:                 Enable printing of headers.
+ *   - help:                   Print help.
+ *   - line:                   Print only the identifier at a given line.
+ *   - name:                   Select using this full or partial type name or code.
+ *   - object:                 Use the object (The "FSS" part of "FSS-0000").
+ *   - pipe:                   Use the input pipe.
+ *   - print_first:            When set, print new line to message output on program begin after loading settings.
+ *   - print_last:             When set, print new line to message output on program end.
+ *   - total:                  Print the total Identifiers found.
+ *   - version:                Print version.
+ *   - version_copyright_help: A helper flag representing version, copyright, and help flag bits being set.
  */
 #ifndef _di_fss_identify_main_flag_e_
   enum {
-    fss_identify_main_flag_none_e          = 0x0,
-    fss_identify_main_flag_content_e       = 0x1,
-    fss_identify_main_flag_copyright_e     = 0x2,
-    fss_identify_main_flag_file_from_e     = 0x4,
-    fss_identify_main_flag_file_to_e       = 0x8,
-    fss_identify_main_flag_header_e        = 0x10,
-    fss_identify_main_flag_help_e          = 0x20,
-    fss_identify_main_flag_line_e          = 0x40,
-    fss_identify_main_flag_name_e          = 0x80,
-    fss_identify_main_flag_object_e        = 0x100,
-    fss_identify_main_flag_pipe_e          = 0x200,
-    fss_identify_main_flag_print_first_e   = 0x400,
-    fss_identify_main_flag_print_last_e    = 0x800,
-    fss_identify_main_flag_total_e         = 0x1000,
-    fss_identify_main_flag_version_e       = 0x2000,
+    fss_identify_main_flag_none_e                   = 0x0,
+    fss_identify_main_flag_content_e                = 0x1,
+    fss_identify_main_flag_copyright_e              = 0x2,
+    fss_identify_main_flag_file_from_e              = 0x4,
+    fss_identify_main_flag_file_to_e                = 0x8,
+    fss_identify_main_flag_header_e                 = 0x10,
+    fss_identify_main_flag_help_e                   = 0x20,
+    fss_identify_main_flag_line_e                   = 0x40,
+    fss_identify_main_flag_name_e                   = 0x80,
+    fss_identify_main_flag_object_e                 = 0x100,
+    fss_identify_main_flag_pipe_e                   = 0x200,
+    fss_identify_main_flag_print_first_e            = 0x400,
+    fss_identify_main_flag_print_last_e             = 0x800,
+    fss_identify_main_flag_total_e                  = 0x1000,
+    fss_identify_main_flag_version_e                = 0x2000,
+    fss_identify_main_flag_version_copyright_help_e = 0x2022,
   }; // enum
 #endif // _di_fss_identify_main_flag_e_
 
@@ -79,7 +81,7 @@ extern "C" {
       macro_f_console_parameter_t_initialize_3(fss_identify_short_total_s, fss_identify_long_total_s, 0, f_console_flag_normal_e), \
     }
 
-  #define fss_identify_parameter_total_d 18
+  #define fss_identify_parameter_total_d (f_console_parameter_state_type_total_d + 5)
 #endif // _di_fss_identify_parameter_e_
 
 /**

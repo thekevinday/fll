@@ -20,75 +20,77 @@ extern "C" {
  * Flags passed to the main function or program.
  *
  * fss_read_main_flag_*_e:
- *   - none:              No flags set.
- *   - at:                The object at the given position is being selected (Think of this as select a row for some Object).
- *   - columns:           The total columns found and selected is printed instead of the Content.
- *   - content:           The Content is to be printed.
- *   - content_has_close: The Content has a closing character which needs to be counted and handled when processing both Object and Content, but is otherwise not processed or printed.
- *   - content_multiple:  Designate that multiple Content is allowed for an Object for this standard rather than a single Content per Object.
- *   - copyright:         Print copyright.
- *   - delimit:           How delimits are to be handled is designated.
- *   - depth:             The depth is specified at least once.
- *   - depth_multiple:    Designate that multiple depths are allowed within Content rather than being single depth Content.
- *   - empty:             Empty Content will be printed (Objects that have no Content will have their empty Content printed).
- *   - help:              Print help.
- *   - line:              A specific Content at a given line is to be selected (Think of this as select a row for some Content).
- *   - line_single:       Designate that only a single line for Content is allowed for an Object for this standard rather than allowing multiple lines per Content per Object.
- *   - name:              A specific Object name has been requested.
- *   - object:            The Object is to be printed.
- *   - object_as_line:    The Object is counted as its own line for the purpose of -l/--line or any other similar behavior.
- *   - object_trim:       Empty space before an after Objects are ignored while processing without affecting printing behavior.
- *   - original:          Enable original printing, where the quotes are printed and no delimits are applied.
- *   - payload_create:    Create the payload Object with empty Content if the payload Object is missing (when using FSS Payload and related).
- *   - payload_error:     Treat missing or invalid payload as an error (when using FSS Payload and related).
- *   - payload_warn:      Treat missing or invalid payload as a warning (when using FSS Payload and related).
- *   - pipe:              Use the input pipe.
- *   - pipe_format:       Print using the special pipe format.
- *   - print_first:       When set, print new line to message output on program begin after loading settings.
- *   - print_last:        When set, print new line to message output on program end.
- *   - quote_content:     Designate that the standard supports quotes on Content.
- *   - quote_object:      Designate that the standard supports quotes on Objects.
- *   - select:            A specific Content at a given position is to be selected (Think of this as select a column for some Content).
- *   - total:             The total lines found and selected is printed instead of the Content.
- *   - trim:              Empty space before and after Objects and Content will not be printed (They will be trimmed).
- *   - trim_object:       Empty space before and after Objects (but not Content) will not be printed (They will be trimmed).
- *   - version:           Print version.
+ *   - none:                   No flags set.
+ *   - at:                     The object at the given position is being selected (Think of this as select a row for some Object).
+ *   - columns:                The total columns found and selected is printed instead of the Content.
+ *   - content:                The Content is to be printed.
+ *   - content_has_close:      The Content has a closing character which needs to be counted and handled when processing both Object and Content, but is otherwise not processed or printed.
+ *   - content_multiple:       Designate that multiple Content is allowed for an Object for this standard rather than a single Content per Object.
+ *   - copyright:              Print copyright.
+ *   - delimit:                How delimits are to be handled is designated.
+ *   - depth:                  The depth is specified at least once.
+ *   - depth_multiple:         Designate that multiple depths are allowed within Content rather than being single depth Content.
+ *   - empty:                  Empty Content will be printed (Objects that have no Content will have their empty Content printed).
+ *   - help:                   Print help.
+ *   - line:                   A specific Content at a given line is to be selected (Think of this as select a row for some Content).
+ *   - line_single:            Designate that only a single line for Content is allowed for an Object for this standard rather than allowing multiple lines per Content per Object.
+ *   - name:                   A specific Object name has been requested.
+ *   - object:                 The Object is to be printed.
+ *   - object_as_line:         The Object is counted as its own line for the purpose of -l/--line or any other similar behavior.
+ *   - object_trim:            Empty space before an after Objects are ignored while processing without affecting printing behavior.
+ *   - original:               Enable original printing, where the quotes are printed and no delimits are applied.
+ *   - payload_create:         Create the payload Object with empty Content if the payload Object is missing (when using FSS Payload and related).
+ *   - payload_error:          Treat missing or invalid payload as an error (when using FSS Payload and related).
+ *   - payload_warn:           Treat missing or invalid payload as a warning (when using FSS Payload and related).
+ *   - pipe:                   Use the input pipe.
+ *   - pipe_format:            Print using the special pipe format.
+ *   - print_first:            When set, print new line to message output on program begin after loading settings.
+ *   - print_last:             When set, print new line to message output on program end.
+ *   - quote_content:          Designate that the standard supports quotes on Content.
+ *   - quote_object:           Designate that the standard supports quotes on Objects.
+ *   - select:                 A specific Content at a given position is to be selected (Think of this as select a column for some Content).
+ *   - total:                  The total lines found and selected is printed instead of the Content.
+ *   - trim:                   Empty space before and after Objects and Content will not be printed (They will be trimmed).
+ *   - trim_object:            Empty space before and after Objects (but not Content) will not be printed (They will be trimmed).
+ *   - version:                Print version.
+ *   - version_copyright_help: A helper flag representing version, copyright, and help flag bits being set.
  */
 #ifndef _di_fss_read_main_flag_e_
   enum {
-    fss_read_main_flag_none_e              = 0x0,
-    fss_read_main_flag_at_e                = 0x1,
-    fss_read_main_flag_columns_e           = 0x2,
-    fss_read_main_flag_content_e           = 0x4,
-    fss_read_main_flag_content_has_close_e = 0x8,
-    fss_read_main_flag_content_multiple_e  = 0x10,
-    fss_read_main_flag_copyright_e         = 0x20,
-    fss_read_main_flag_delimit_e           = 0x40,
-    fss_read_main_flag_depth_e             = 0x80,
-    fss_read_main_flag_depth_multiple_e    = 0x100,
-    fss_read_main_flag_empty_e             = 0x200,
-    fss_read_main_flag_help_e              = 0x400,
-    fss_read_main_flag_line_e              = 0x800,
-    fss_read_main_flag_line_single_e       = 0x1000,
-    fss_read_main_flag_name_e              = 0x2000,
-    fss_read_main_flag_object_e            = 0x4000,
-    fss_read_main_flag_object_as_line_e    = 0x8000,
-    fss_read_main_flag_object_trim_e       = 0x10000,
-    fss_read_main_flag_original_e          = 0x20000,
-    fss_read_main_flag_payload_create_e    = 0x40000,
-    fss_read_main_flag_payload_error_e     = 0x80000,
-    fss_read_main_flag_payload_warn_e      = 0x100000,
-    fss_read_main_flag_pipe_e              = 0x200000,
-    fss_read_main_flag_pipe_format_e       = 0x400000,
-    fss_read_main_flag_print_first_e       = 0x800000,
-    fss_read_main_flag_print_last_e        = 0x1000000,
-    fss_read_main_flag_quote_content_e     = 0x2000000,
-    fss_read_main_flag_quote_object_e      = 0x4000000,
-    fss_read_main_flag_select_e            = 0x8000000,
-    fss_read_main_flag_total_e             = 0x10000000,
-    fss_read_main_flag_trim_e              = 0x20000000,
-    fss_read_main_flag_trim_object_e       = 0x40000000,
-    fss_read_main_flag_version_e           = 0x80000000,
+    fss_read_main_flag_none_e                   = 0x0,
+    fss_read_main_flag_at_e                     = 0x1,
+    fss_read_main_flag_columns_e                = 0x2,
+    fss_read_main_flag_content_e                = 0x4,
+    fss_read_main_flag_content_has_close_e      = 0x8,
+    fss_read_main_flag_content_multiple_e       = 0x10,
+    fss_read_main_flag_copyright_e              = 0x20,
+    fss_read_main_flag_delimit_e                = 0x40,
+    fss_read_main_flag_depth_e                  = 0x80,
+    fss_read_main_flag_depth_multiple_e         = 0x100,
+    fss_read_main_flag_empty_e                  = 0x200,
+    fss_read_main_flag_help_e                   = 0x400,
+    fss_read_main_flag_line_e                   = 0x800,
+    fss_read_main_flag_line_single_e            = 0x1000,
+    fss_read_main_flag_name_e                   = 0x2000,
+    fss_read_main_flag_object_e                 = 0x4000,
+    fss_read_main_flag_object_as_line_e         = 0x8000,
+    fss_read_main_flag_object_trim_e            = 0x10000,
+    fss_read_main_flag_original_e               = 0x20000,
+    fss_read_main_flag_payload_create_e         = 0x40000,
+    fss_read_main_flag_payload_error_e          = 0x80000,
+    fss_read_main_flag_payload_warn_e           = 0x100000,
+    fss_read_main_flag_pipe_e                   = 0x200000,
+    fss_read_main_flag_pipe_format_e            = 0x400000,
+    fss_read_main_flag_print_first_e            = 0x800000,
+    fss_read_main_flag_print_last_e             = 0x1000000,
+    fss_read_main_flag_quote_content_e          = 0x2000000,
+    fss_read_main_flag_quote_object_e           = 0x4000000,
+    fss_read_main_flag_select_e                 = 0x8000000,
+    fss_read_main_flag_total_e                  = 0x10000000,
+    fss_read_main_flag_trim_e                   = 0x20000000,
+    fss_read_main_flag_trim_object_e            = 0x40000000,
+    fss_read_main_flag_version_e                = 0x80000000,
+    fss_read_main_flag_version_copyright_help_e = 0x80000420,
   }; // enum
 #endif // _di_fss_read_main_flag_e_
 
@@ -137,7 +139,7 @@ extern "C" {
       macro_f_console_parameter_t_initialize_3(fss_read_short_trim_s,     fss_read_long_trim_s,     0, f_console_flag_normal_e), \
     }
 
-  #define fss_read_parameter_total_d 29
+  #define fss_read_parameter_total_d (f_console_parameter_state_type_total_d + 16)
 #endif // _di_fss_read_parameter_e_
 
 /**

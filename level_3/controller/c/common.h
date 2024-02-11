@@ -160,7 +160,7 @@ extern "C" {
       macro_f_console_parameter_t_initialize_3(controller_short_validate_s,        controller_long_validate_s,        0, f_console_flag_normal_e), \
     }
 
-  #define controller_parameter_total_d 23
+  #define controller_parameter_total_d (f_console_parameter_state_type_total_d + 10)
 #endif // _di_controller_parameter_d_
 
 /**

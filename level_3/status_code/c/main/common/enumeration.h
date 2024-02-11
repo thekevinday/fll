@@ -22,31 +22,33 @@ extern "C" {
  * When number mode is not specified, then mode is "string" mode (there is no flag for "string" mode).
  *
  * status_code_main_flag_*_e:
- *   - none:        No flags set.
- *   - copyright:   Print copyright.
- *   - error:       Check if status is "error".
- *   - fine:        Check if status is "fine".
- *   - help:        Print help.
- *   - number:      Operate in number mode.
- *   - pipe:        Use the input pipe.
- *   - print_first: When set, print new line to message output on program begin after loading settings.
- *   - print_last:  When set, print new line to message output on program end.
- *   - version:     Print version.
- *   - warning:     Check if status is "warning".
+ *   - none:                   No flags set.
+ *   - copyright:              Print copyright.
+ *   - error:                  Check if status is "error".
+ *   - fine:                   Check if status is "fine".
+ *   - help:                   Print help.
+ *   - number:                 Operate in number mode.
+ *   - pipe:                   Use the input pipe.
+ *   - print_first:            When set, print new line to message output on program begin after loading settings.
+ *   - print_last:             When set, print new line to message output on program end.
+ *   - version:                Print version.
+ *   - version_copyright_help: A helper flag representing version, copyright, and help flag bits being set.
+ *   - warning:                Check if status is "warning".
  */
 #ifndef _di_status_code_main_flag_e_
   enum {
-    status_code_main_flag_none_e        = 0x0,
-    status_code_main_flag_copyright_e   = 0x1,
-    status_code_main_flag_error_e       = 0x2,
-    status_code_main_flag_fine_e        = 0x4,
-    status_code_main_flag_help_e        = 0x8,
-    status_code_main_flag_number_e      = 0x10,
-    status_code_main_flag_pipe_e        = 0x20,
-    status_code_main_flag_print_first_e = 0x40,
-    status_code_main_flag_print_last_e  = 0x80,
-    status_code_main_flag_version_e     = 0x100,
-    status_code_main_flag_warning_e     = 0x200,
+    status_code_main_flag_none_e                   = 0x0,
+    status_code_main_flag_copyright_e              = 0x1,
+    status_code_main_flag_error_e                  = 0x2,
+    status_code_main_flag_fine_e                   = 0x4,
+    status_code_main_flag_help_e                   = 0x8,
+    status_code_main_flag_number_e                 = 0x10,
+    status_code_main_flag_pipe_e                   = 0x20,
+    status_code_main_flag_print_first_e            = 0x40,
+    status_code_main_flag_print_last_e             = 0x80,
+    status_code_main_flag_version_e                = 0x100,
+    status_code_main_flag_version_copyright_help_e = 0x109,
+    status_code_main_flag_warning_e                = 0x200,
   }; // enum
 #endif // _di_status_code_main_flag_e_
 
@@ -71,7 +73,7 @@ extern "C" {
       macro_f_console_parameter_t_initialize_3(status_code_short_number_s,  status_code_long_number_s,  0, f_console_flag_normal_e), \
     }
 
-  #define status_code_parameter_total_d 17
+  #define status_code_parameter_total_d (f_console_parameter_state_type_total_d + 4)
 #endif // _di_status_code_parameter_e_
 
 /**

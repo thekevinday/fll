@@ -4,10 +4,6 @@
 extern "C" {
 #endif
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #ifndef _di_fss_identify_process_
   void fss_identify_process(fss_identify_main_t * const main, const f_string_static_t name) {
 

@@ -77,54 +77,56 @@ extern "C" {
       macro_f_console_parameter_t_initialize_6(fake_other_operation_skeleton_s, 0, f_console_flag_simple_e), \
     }
 
-  #define fake_parameter_total_d 35
+  #define fake_parameter_total_d (f_console_parameter_state_type_total_d + 22)
 #endif // _di_fake_parameter_e_
 
 /**
  * Flags passed to the main function or program.
  *
  * fake_main_flag_*_e:
- *   - none:               No flags set.
- *   - copyright:          Print copyright.
- *   - enable_documents:   Enable documents, as in --enable-doc (not specifying means --disable-doc).
- *   - enable_shared:      Enable shared, as in --enable-shared (not specifying means --disable-shared).
- *   - enable_static:      Enable static, as in --enable-static (not specifying means --disable-static).
- *   - header:             Enable printing of headers.
- *   - help:               Print help.
- *   - operation:          Designate that an operation is explicitly passed.
- *   - operation_build:    The build operation is designated.
- *   - operation_clean:    The clean operation is designated.
- *   - operation_make:     The make operation is designated (or enabled as default).
- *   - operation_skeleton: The skeleton operation is designated.
- *   - pipe:               Use the input pipe.
- *   - print_first:        When set, print new line to message output on program begin after loading settings.
- *   - print_last:         When set, print new line to message output on program end.
- *   - separate:           Enable printing of separators.
- *   - strip_invalid:      Using strip invalid character mode.
- *   - verify:             Using verify mode.
- *   - version:            Print version.
+ *   - none:                   No flags set.
+ *   - copyright:              Print copyright.
+ *   - enable_documents:       Enable documents, as in --enable-doc (not specifying means --disable-doc).
+ *   - enable_shared:          Enable shared, as in --enable-shared (not specifying means --disable-shared).
+ *   - enable_static:          Enable static, as in --enable-static (not specifying means --disable-static).
+ *   - header:                 Enable printing of headers.
+ *   - help:                   Print help.
+ *   - operation:              Designate that an operation is explicitly passed.
+ *   - operation_build:        The build operation is designated.
+ *   - operation_clean:        The clean operation is designated.
+ *   - operation_make:         The make operation is designated (or enabled as default).
+ *   - operation_skeleton:     The skeleton operation is designated.
+ *   - pipe:                   Use the input pipe.
+ *   - print_first:            When set, print new line to message output on program begin after loading settings.
+ *   - print_last:             When set, print new line to message output on program end.
+ *   - separate:               Enable printing of separators.
+ *   - strip_invalid:          Using strip invalid character mode.
+ *   - verify:                 Using verify mode.
+ *   - version:                Print version.
+ *   - version_copyright_help: A helper flag representing version, copyright, and help flag bits being set.
  */
 #ifndef _di_fake_main_flag_e_
   enum {
-    fake_main_flag_none_e               = 0x0,
-    fake_main_flag_copyright_e          = 0x1,
-    fake_main_flag_enable_documents_e   = 0x2,
-    fake_main_flag_enable_shared_e      = 0x4,
-    fake_main_flag_enable_static_e      = 0x8,
-    fake_main_flag_header_e             = 0x10,
-    fake_main_flag_help_e               = 0x20,
-    fake_main_flag_operation_e          = 0x40,
-    fake_main_flag_operation_build_e    = 0x80,
-    fake_main_flag_operation_clean_e    = 0x100,
-    fake_main_flag_operation_make_e     = 0x200,
-    fake_main_flag_operation_skeleton_e = 0x400,
-    fake_main_flag_pipe_e               = 0x800,
-    fake_main_flag_print_first_e        = 0x1000,
-    fake_main_flag_print_last_e         = 0x2000,
-    fake_main_flag_separate_e           = 0x4000,
-    fake_main_flag_strip_invalid_e      = 0x8000,
-    fake_main_flag_verify_e             = 0x10000,
-    fake_main_flag_version_e            = 0x20000,
+    fake_main_flag_none_e                   = 0x0,
+    fake_main_flag_copyright_e              = 0x1,
+    fake_main_flag_enable_documents_e       = 0x2,
+    fake_main_flag_enable_shared_e          = 0x4,
+    fake_main_flag_enable_static_e          = 0x8,
+    fake_main_flag_header_e                 = 0x10,
+    fake_main_flag_help_e                   = 0x20,
+    fake_main_flag_operation_e              = 0x40,
+    fake_main_flag_operation_build_e        = 0x80,
+    fake_main_flag_operation_clean_e        = 0x100,
+    fake_main_flag_operation_make_e         = 0x200,
+    fake_main_flag_operation_skeleton_e     = 0x400,
+    fake_main_flag_pipe_e                   = 0x800,
+    fake_main_flag_print_first_e            = 0x1000,
+    fake_main_flag_print_last_e             = 0x2000,
+    fake_main_flag_separate_e               = 0x4000,
+    fake_main_flag_strip_invalid_e          = 0x8000,
+    fake_main_flag_verify_e                 = 0x10000,
+    fake_main_flag_version_e                = 0x20000,
+    fake_main_flag_version_copyright_help_e = 0x20021,
   }; // enum
 #endif // _di_fake_main_flag_e_
 

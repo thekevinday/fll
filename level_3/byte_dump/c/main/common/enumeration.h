@@ -60,37 +60,39 @@ extern "C" {
  * Flags passed to the main function or program.
  *
  * byte_dump_main_flag_*_e:
- *   - none:        No flags set.
- *   - classic:     Classic is specified.
- *   - copyright:   Print the copyright.
- *   - first:       The first position is specified.
- *   - help:        Print help.
- *   - last:        The last position is specified.
- *   - placeholder: Placeholder is specified.
- *   - pipe:        Use the input pipe.
- *   - print_first: When set, print new line to message output on program begin after loading settings.
- *   - print_last:  When set, print new line to message output on program end.
- *   - text:        Text is specified.
- *   - unicode:     Unicode is specified.
- *   - version:     Print version.
- *   - wide:        Wide option is specified for printing wide.
+ *   - none:                   No flags set.
+ *   - classic:                Classic is specified.
+ *   - copyright:              Print the copyright.
+ *   - first:                  The first position is specified.
+ *   - help:                   Print help.
+ *   - last:                   The last position is specified.
+ *   - placeholder:            Placeholder is specified.
+ *   - pipe:                   Use the input pipe.
+ *   - print_first:            When set, print new line to message output on program begin after loading settings.
+ *   - print_last:             When set, print new line to message output on program end.
+ *   - text:                   Text is specified.
+ *   - unicode:                Unicode is specified.
+ *   - version:                Print version.
+ *   - version_copyright_help: A helper flag representing version, copyright, and help flag bits being set.
+ *   - wide:                   Wide option is specified for printing wide.
  */
 #ifndef _di_byte_dump_main_flag_e_
   enum {
-    byte_dump_main_flag_none_e        = 0x0,
-    byte_dump_main_flag_classic_e     = 0x1,
-    byte_dump_main_flag_copyright_e   = 0x2,
-    byte_dump_main_flag_first_e       = 0x4,
-    byte_dump_main_flag_help_e        = 0x8,
-    byte_dump_main_flag_last_e        = 0x10,
-    byte_dump_main_flag_pipe_e        = 0x20,
-    byte_dump_main_flag_placeholder_e = 0x40,
-    byte_dump_main_flag_print_first_e = 0x80,
-    byte_dump_main_flag_print_last_e  = 0x100,
-    byte_dump_main_flag_text_e        = 0x200,
-    byte_dump_main_flag_unicode_e     = 0x400,
-    byte_dump_main_flag_version_e     = 0x800,
-    byte_dump_main_flag_wide_e        = 0x1000,
+    byte_dump_main_flag_none_e                   = 0x0,
+    byte_dump_main_flag_classic_e                = 0x1,
+    byte_dump_main_flag_copyright_e              = 0x2,
+    byte_dump_main_flag_first_e                  = 0x4,
+    byte_dump_main_flag_help_e                   = 0x8,
+    byte_dump_main_flag_last_e                   = 0x10,
+    byte_dump_main_flag_pipe_e                   = 0x20,
+    byte_dump_main_flag_placeholder_e            = 0x40,
+    byte_dump_main_flag_print_first_e            = 0x80,
+    byte_dump_main_flag_print_last_e             = 0x100,
+    byte_dump_main_flag_text_e                   = 0x200,
+    byte_dump_main_flag_unicode_e                = 0x400,
+    byte_dump_main_flag_version_e                = 0x800,
+    byte_dump_main_flag_version_copyright_help_e = 0x80a,
+    byte_dump_main_flag_wide_e                   = 0x1000,
   }; // enum
 #endif // _di_byte_dump_main_flag_e_
 
@@ -166,7 +168,7 @@ extern "C" {
       macro_f_console_parameter_t_initialize_5(byte_dump_long_classic_s, 0, f_console_flag_normal_e), \
     }
 
-  #define byte_dump_parameter_total_d 29
+  #define byte_dump_parameter_total_d (f_console_parameter_state_type_total_d + 16)
 #endif // _di_byte_dump_parameter_e_
 
 /**

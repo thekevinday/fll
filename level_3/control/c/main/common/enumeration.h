@@ -82,26 +82,28 @@ extern "C" {
  * Flags passed to the main function or program.
  *
  * control_main_flag_*_e:
- *   - none:          No flags set.
- *   - copyright:     Print copyright.
- *   - header:        Enable printing of headers.
- *   - help:          Print help.
- *   - pipe:          Use the input pipe.
- *   - print_first:   When set, print new line to message output on program begin after loading settings.
- *   - print_last:    When set, print new line to message output on program end.
- *   - return:        The parameter is specified.
- *   - version:       Print version.
+ *   - none:                   No flags set.
+ *   - copyright:              Print copyright.
+ *   - header:                 Enable printing of headers.
+ *   - help:                   Print help.
+ *   - pipe:                   Use the input pipe.
+ *   - print_first:            When set, print new line to message output on program begin after loading settings.
+ *   - print_last:             When set, print new line to message output on program end.
+ *   - return:                 The parameter is specified.
+ *   - version:                Print version.
+ *   - version_copyright_help: A helper flag representing version, copyright, and help flag bits being set.
  */
 #ifndef _di_control_main_flag_e_
   enum {
-    control_main_flag_none_e        = 0x0,
-    control_main_flag_copyright_e   = 0x1,
-    control_main_flag_help_e        = 0x2,
-    control_main_flag_pipe_e        = 0x4,
-    control_main_flag_print_first_e = 0x8,
-    control_main_flag_print_last_e  = 0x10,
-    control_main_flag_return_e      = 0x20,
-    control_main_flag_version_e     = 0x40,
+    control_main_flag_none_e                   = 0x0,
+    control_main_flag_copyright_e              = 0x1,
+    control_main_flag_help_e                   = 0x2,
+    control_main_flag_pipe_e                   = 0x4,
+    control_main_flag_print_first_e            = 0x8,
+    control_main_flag_print_last_e             = 0x10,
+    control_main_flag_return_e                 = 0x20,
+    control_main_flag_version_e                = 0x40,
+    control_main_flag_version_copyright_help_e = 0x43,
   }; // enum
 #endif // _di_control_main_flag_e_
 
@@ -126,7 +128,7 @@ extern "C" {
       macro_f_console_parameter_t_initialize_3(control_short_socket_s,   control_long_socket_s,   1, f_console_flag_normal_e), \
     }
 
-  #define control_parameter_total_d 17
+  #define control_parameter_total_d (f_console_parameter_state_type_total_d + 4)
 #endif // _di_control_parameter_d_
 
 /**

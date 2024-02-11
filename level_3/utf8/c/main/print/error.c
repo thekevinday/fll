@@ -48,8 +48,8 @@ extern "C" {
       fl_print_format("%[', invalid UTF-8 fragment.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
     }
     else {
-      fl_print_format("%[', error status code%] ", print->to, print->set->error, print->set->error, f_string_eol_s);
-      fl_print_format("%[%ui%]", print->to, print->set->notable, F_status_set_fine(main->setting.state.status), print->set->notable);
+      fl_print_format("%[', error code%] ", print->to, print->set->error, print->set->error, f_string_eol_s);
+      fl_print_format(f_string_format_ui_single_s.string, print->to, print->set->notable, F_status_set_fine(main->setting.state.status), print->set->notable);
       fl_print_format(f_string_format_sentence_end_s.string, print->to, print->set->error, print->set->error, f_string_eol_s);
     }
 
@@ -74,8 +74,8 @@ extern "C" {
       fl_print_format("%[', not a valid Unicode codepoint.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
     }
     else {
-      fl_print_format("%[', error status code%] ", print->to, print->set->error, print->set->error, f_string_eol_s);
-      fl_print_format("%[%ui%]", print->to, print->set->notable, F_status_set_fine(main->setting.state.status), print->set->notable);
+      fl_print_format("%[', error code%] ", print->to, print->set->error, print->set->error, f_string_eol_s);
+      fl_print_format(f_string_format_ui_single_s.string, print->to, print->set->notable, F_status_set_fine(main->setting.state.status), print->set->notable);
       fl_print_format(f_string_format_sentence_end_s.string, print->to, print->set->error, print->set->error, f_string_eol_s);
     }
 
@@ -118,7 +118,7 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QNo file specified at parameter index%] ", print->to, print->set->error, print->prefix, print->set->error);
-    fl_print_format("%[%ul%]", print->to, print->set->notable, index, print->set->notable);
+    fl_print_format(f_string_format_ul_single_s.string, print->to, print->set->notable, index, print->set->notable);
     fl_print_format(f_string_format_sentence_end_s.string, print->to, print->set->error, print->set->error, f_string_eol_s);
 
     f_file_stream_unlock(print->to);

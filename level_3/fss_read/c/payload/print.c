@@ -120,7 +120,9 @@ extern "C" {
 
     if (!print || !print->set) return F_status_set_error(F_output_not);
 
-    fl_print_format("%r %[Special Options:%] %r", print->to, f_string_eol_s, print->set->important, print->set->important, f_string_eol_s);
+    f_print_dynamic_raw(f_string_eol_s, print->to);
+
+    fll_program_print_help_special_options(print);
 
     fll_program_print_help_option_long(print, fss_read_long_payload_s, f_console_symbol_long_normal_s, "Specify custom actions to perform when payload Object is missing.");
 

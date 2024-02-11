@@ -20,44 +20,46 @@ extern "C" {
  * Flags passed to the main function or program.
  *
  * fss_write_main_flag_*_e:
- *   - none:             No flags set.
- *   - content:          The Content being written is specified.
- *   - content_end:      The Content end characters are to be printed.
- *   - content_multiple: Designate that multiple Content is allowed for an Object for this standard rather than a single Content per Object.
- *   - content_next:     The Content next characters are to be printed.
- *   - copyright:        Print copyright.
- *   - file_to:          Using a specified destination file.
- *   - help:             Print help.
- *   - ignore:           Ignore a given range within a Content (specify flag before setting loading to designate ignores is supported by standard).
- *   - object:           The Object being written is specified.
- *   - object_open:      The Object open characters are to be printed.
- *   - partial:          Do not write end of Object/Content character.
- *   - pipe:             Use the input pipe.
- *   - print_first:      When set, print new line to message output on program begin after loading settings.
- *   - print_last:       When set, print new line to message output on program end.
- *   - trim:             Trim Object names.
- *   - version:          Print version.
+ *   - none:                   No flags set.
+ *   - content:                The Content being written is specified.
+ *   - content_end:            The Content end characters are to be printed.
+ *   - content_multiple:       Designate that multiple Content is allowed for an Object for this standard rather than a single Content per Object.
+ *   - content_next:           The Content next characters are to be printed.
+ *   - copyright:              Print copyright.
+ *   - file_to:                Using a specified destination file.
+ *   - help:                   Print help.
+ *   - ignore:                 Ignore a given range within a Content (specify flag before setting loading to designate ignores is supported by standard).
+ *   - object:                 The Object being written is specified.
+ *   - object_open:            The Object open characters are to be printed.
+ *   - partial:                Do not write end of Object/Content character.
+ *   - pipe:                   Use the input pipe.
+ *   - print_first:            When set, print new line to message output on program begin after loading settings.
+ *   - print_last:             When set, print new line to message output on program end.
+ *   - trim:                   Trim Object names.
+ *   - version:                Print version.
+ *   - version_copyright_help: A helper flag representing version, copyright, and help flag bits being set.
  */
 #ifndef _di_fss_write_main_flag_e_
   enum {
-    fss_write_main_flag_none_e             = 0x0,
-    fss_write_main_flag_content_e          = 0x1,
-    fss_write_main_flag_content_end_e      = 0x2,
-    fss_write_main_flag_content_multiple_e = 0x4,
-    fss_write_main_flag_content_next_e     = 0x8,
-    fss_write_main_flag_copyright_e        = 0x10,
-    fss_write_main_flag_file_to_e          = 0x20,
-    fss_write_main_flag_help_e             = 0x40,
-    fss_write_main_flag_ignore_e           = 0x80,
-    fss_write_main_flag_object_e           = 0x100,
-    fss_write_main_flag_object_open_e      = 0x200,
-    fss_write_main_flag_partial_e          = 0x400,
-    fss_write_main_flag_pipe_e             = 0x800,
-    fss_write_main_flag_prepend_e          = 0x1000,
-    fss_write_main_flag_print_first_e      = 0x2000,
-    fss_write_main_flag_print_last_e       = 0x4000,
-    fss_write_main_flag_trim_e             = 0x8000,
-    fss_write_main_flag_version_e          = 0x10000,
+    fss_write_main_flag_none_e                   = 0x0,
+    fss_write_main_flag_content_e                = 0x1,
+    fss_write_main_flag_content_end_e            = 0x2,
+    fss_write_main_flag_content_multiple_e       = 0x4,
+    fss_write_main_flag_content_next_e           = 0x8,
+    fss_write_main_flag_copyright_e              = 0x10,
+    fss_write_main_flag_file_to_e                = 0x20,
+    fss_write_main_flag_help_e                   = 0x40,
+    fss_write_main_flag_ignore_e                 = 0x80,
+    fss_write_main_flag_object_e                 = 0x100,
+    fss_write_main_flag_object_open_e            = 0x200,
+    fss_write_main_flag_partial_e                = 0x400,
+    fss_write_main_flag_pipe_e                   = 0x800,
+    fss_write_main_flag_prepend_e                = 0x1000,
+    fss_write_main_flag_print_first_e            = 0x2000,
+    fss_write_main_flag_print_last_e             = 0x4000,
+    fss_write_main_flag_trim_e                   = 0x8000,
+    fss_write_main_flag_version_e                = 0x10000,
+    fss_write_main_flag_version_copyright_help_e = 0x10050,
   }; // enum
 #endif // _di_fss_write_main_flag_e_
 
@@ -102,7 +104,7 @@ extern "C" {
       macro_f_console_parameter_t_initialize_3(fss_write_short_trim_s,         fss_write_long_trim_s,         0, f_console_flag_normal_e), \
     }
 
-  #define fss_write_parameter_total_d 27
+  #define fss_write_parameter_total_d (f_console_parameter_state_type_total_d + 14)
 #endif // _di_fss_write_parameter_e_
 
 /**

@@ -57,9 +57,9 @@ extern "C" {
     fl_print_format("%[%QThe parameter '%]", print->to, print->context, print->prefix, print->context);
     fl_print_format(f_string_format_rr_single_s.string, print->to, print->notable, symbol, name, print->notable);
     fl_print_format("%[' may not have the value '%]", print->to, print->context, print->context);
-    fl_print_format("%[%ul%]", print->to, print->notable, value, print->notable);
+    fl_print_format(f_string_format_ul_single_s.string, print->to, print->notable, value, print->notable);
     fl_print_format("%[' before the value '%]", print->to, print->context, print->context);
-    fl_print_format("%[%ul%]", print->to, print->notable, before, print->notable);
+    fl_print_format(f_string_format_ul_single_s.string, print->to, print->notable, before, print->notable);
     fl_print_format(f_string_format_sentence_end_quote_s.string, print->to, print->context, print->context, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
@@ -77,7 +77,7 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QThe value '%]", print->to, print->context, print->prefix, print->context);
-    fl_print_format("%[%ul%]", print->to, print->notable, value, print->notable);
+    fl_print_format(f_string_format_ul_single_s.string, print->to, print->notable, value, print->notable);
     fl_print_format("%[' may only be specified once for the parameter '%]", print->to, print->context, print->context);
     fl_print_format(f_string_format_rr_single_s.string, print->to, print->notable, symbol, name, print->notable);
     fl_print_format(f_string_format_sentence_end_quote_s.string, print->to, print->context, print->context, f_string_eol_s);

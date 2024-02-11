@@ -48,35 +48,37 @@ extern "C" {
  * Flags passed to the main function or program.
  *
  * utf8_main_flag_*_e:
- *   - none:          No flags set.
- *   - copyright:     Print the copyright.
- *   - file_from:     Using a specified source file.
- *   - file_to:       Using a specified destination file.
- *   - header:        Enable printing of headers.
- *   - help:          Print help.
- *   - pipe:          Use the input pipe.
- *   - print_first:   When set, print new line to message output on program begin after loading settings.
- *   - print_last:    When set, print new line to message output on program end.
- *   - separate:      Enable printing of separators.
- *   - strip_invalid: Using strip invalid character mode.
- *   - verify:        Using verify mode.
- *   - version:       Print version.
+ *   - none:                   No flags set.
+ *   - copyright:              Print the copyright.
+ *   - file_from:              Using a specified source file.
+ *   - file_to:                Using a specified destination file.
+ *   - header:                 Enable printing of headers.
+ *   - help:                   Print help.
+ *   - pipe:                   Use the input pipe.
+ *   - print_first:            When set, print new line to message output on program begin after loading settings.
+ *   - print_last:             When set, print new line to message output on program end.
+ *   - separate:               Enable printing of separators.
+ *   - strip_invalid:          Using strip invalid character mode.
+ *   - verify:                 Using verify mode.
+ *   - version:                Print version.
+ *   - version_copyright_help: A helper flag representing version, copyright, and help flag bits being set.
  */
 #ifndef _di_utf8_main_flag_e_
   enum {
-    utf8_main_flag_none_e          = 0x0,
-    utf8_main_flag_copyright_e     = 0x1,
-    utf8_main_flag_file_from_e     = 0x2,
-    utf8_main_flag_file_to_e       = 0x4,
-    utf8_main_flag_header_e        = 0x8,
-    utf8_main_flag_help_e          = 0x10,
-    utf8_main_flag_pipe_e          = 0x20,
-    utf8_main_flag_print_first_e   = 0x40,
-    utf8_main_flag_print_last_e    = 0x80,
-    utf8_main_flag_separate_e      = 0x100,
-    utf8_main_flag_strip_invalid_e = 0x200,
-    utf8_main_flag_verify_e        = 0x400,
-    utf8_main_flag_version_e       = 0x800,
+    utf8_main_flag_none_e                   = 0x0,
+    utf8_main_flag_copyright_e              = 0x1,
+    utf8_main_flag_file_from_e              = 0x2,
+    utf8_main_flag_file_to_e                = 0x4,
+    utf8_main_flag_header_e                 = 0x8,
+    utf8_main_flag_help_e                   = 0x10,
+    utf8_main_flag_pipe_e                   = 0x20,
+    utf8_main_flag_print_first_e            = 0x40,
+    utf8_main_flag_print_last_e             = 0x80,
+    utf8_main_flag_separate_e               = 0x100,
+    utf8_main_flag_strip_invalid_e          = 0x200,
+    utf8_main_flag_verify_e                 = 0x400,
+    utf8_main_flag_version_e                = 0x800,
+    utf8_main_flag_version_copyright_help_e = 0x811,
   }; // enum
 #endif // _di_utf8_main_flag_e_
 
@@ -153,7 +155,7 @@ extern "C" {
       macro_f_console_parameter_t_initialize_3(utf8_short_verify_s,            utf8_long_verify_s,            0, f_console_flag_normal_e), \
     }
 
-  #define utf8_parameter_total_d 25
+  #define utf8_parameter_total_d (f_console_parameter_state_type_total_d + 12)
 #endif // _di_utf8_parameter_e_
 
 /**

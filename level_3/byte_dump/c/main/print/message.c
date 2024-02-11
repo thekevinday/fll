@@ -39,7 +39,9 @@ extern "C" {
     fll_program_print_help_option(print, byte_dump_short_wide_s, byte_dump_long_wide_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "       Use wide display, resulting in 2*width allowing for space for wide characters in the text columns.");
     fll_program_print_help_option(print, byte_dump_short_width_s, byte_dump_long_width_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "      Set number of columns of Bytes to display.");
 
-    fl_print_format("%r %[Special Options:%] %r", print->to, f_string_eol_s, print->set->important, print->set->important, f_string_eol_s);
+    f_print_dynamic_raw(f_string_eol_s, print->to);
+
+    fll_program_print_help_special_options(print);
 
     fll_program_print_help_option_long(print, byte_dump_long_normal_s, f_console_symbol_long_normal_s, " Display UTF-8 symbols for ASCII control codes.");
     fll_program_print_help_option_long(print, byte_dump_long_simple_s, f_console_symbol_long_normal_s, " Display spaces for ASCII control codes.");

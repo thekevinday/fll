@@ -45,7 +45,7 @@ extern "C" {
     fl_print_format("%[' with status '%]", print->to, print->set->error, print->set->error);
     fl_print_format(f_string_format_Q_single_s.string, print->to, print->set->notable, string_status, print->set->notable);
     fl_print_format("%[' (%]", print->to, print->set->error, print->set->error);
-    fl_print_format("%[%ui%]", print->to, print->set->notable, header.status, print->set->notable);
+    fl_print_format(f_string_format_ui_single_s.string, print->to, print->set->notable, header.status, print->set->notable);
 
     if (header.length) {
       fl_print_format("%[): %/Q%]%r", print->to, print->set->error, print->set->error, main->cache.large, main->cache.packet_contents.array[main->cache.packet_contents.used - 1].array[0], f_string_eol_s);
@@ -75,7 +75,7 @@ extern "C" {
     fl_print_format("%[' failed with status '%]", print->to, print->set->error, print->set->error);
     fl_print_format(f_string_format_Q_single_s.string, print->to, print->set->notable, string_status, print->set->notable);
     fl_print_format("%[' (%]", print->to, print->set->error, print->set->error);
-    fl_print_format("%[%ui%]", print->to, print->set->notable, header.status, print->set->notable);
+    fl_print_format(f_string_format_ui_single_s.string, print->to, print->set->notable, header.status, print->set->notable);
 
     if (header.length) {
       fl_print_format("%[): %/Q%]%r", print->to, print->set->error, print->set->error, main->cache.large, main->cache.packet_contents.array[main->cache.packet_contents.used - 1].array[0], f_string_eol_s);

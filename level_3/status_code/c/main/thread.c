@@ -4,10 +4,6 @@
 extern "C" {
 #endif
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #if !defined(_di_status_code_thread_signal_) && !defined(_di_thread_support_)
   void * status_code_thread_signal(void * const main) {
 

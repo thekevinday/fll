@@ -23,7 +23,7 @@ extern "C" {
 
     main->setting.state.status = F_okay;
 
-    if (main->setting.flag & (fss_identify_main_flag_help_e | fss_identify_main_flag_version_e | fss_identify_main_flag_copyright_e)) {
+    if (main->setting.flag & fss_identify_main_flag_version_copyright_help_e) {
       if (main->setting.flag & fss_identify_main_flag_help_e) {
         fss_identify_print_message_help(&main->program.message);
       }
@@ -89,8 +89,7 @@ extern "C" {
       fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
     }
 
-    if (F_status_set_fine(main->setting.state.status) == F_interrupt) return;
-    if (F_status_is_error(main->setting.state.status)) return;
+    if (F_status_is_error(main->setting.state.status) || main->setting.state.status == F_interrupt) return;
 
     main->setting.state.status = F_okay;
   }

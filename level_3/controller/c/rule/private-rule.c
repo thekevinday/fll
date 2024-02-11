@@ -1887,7 +1887,7 @@ extern "C" {
           if (rerun_item->max) {
             fl_print_format(" for %[%ul%]", main->output.to, main->context.set.notable, rerun_item->count, main->context.set.notable);
             fl_print_format(" of %[%r%] ", main->output.to, main->context.set.notable, controller_max_s, main->context.set.notable);
-            fl_print_format("%[%ul%]", main->output.to, main->context.set.notable, rerun_item->max, main->context.set.notable);
+            fl_print_format(f_string_format_ul_single_s.string, main->output.to, main->context.set.notable, rerun_item->max, main->context.set.notable);
             fl_print_format(".%r", main->output.to, f_string_eol_s);
           }
           else {

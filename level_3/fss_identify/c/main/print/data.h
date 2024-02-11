@@ -9,8 +9,8 @@
  *
  * This is auto-included and should not need to be explicitly included.
  */
-#ifndef _fss_identify_print_data_data_h
-#define _fss_identify_print_data_data_h
+#ifndef _fss_identify_print_data_h
+#define _fss_identify_print_data_h
 
 #ifdef __cplusplus
 extern "C" {
@@ -58,4 +58,4 @@ extern "C" {
 } // extern "C"
 #endif
 
-#endif // _fss_identify_print_data_data_h
+#endif // _fss_identify_print_data_h

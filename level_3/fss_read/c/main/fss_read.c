@@ -66,7 +66,7 @@ extern "C" {
 
     main->setting.state.status = F_okay;
 
-    if (main->setting.flag & (fss_read_main_flag_help_e | fss_read_main_flag_version_e | fss_read_main_flag_copyright_e)) {
+    if (main->setting.flag & fss_read_main_flag_version_copyright_help_e) {
       if (main->setting.flag & fss_read_main_flag_help_e) {
         if (main->callback.process_help) {
           main->callback.process_help(void_main);

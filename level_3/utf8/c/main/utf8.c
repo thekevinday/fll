@@ -23,7 +23,7 @@ extern "C" {
 
     main->setting.state.status = F_okay;
 
-    if (main->setting.flag & (utf8_main_flag_help_e | utf8_main_flag_version_e | utf8_main_flag_copyright_e)) {
+    if (main->setting.flag & utf8_main_flag_version_copyright_help_e) {
       if (main->setting.flag & utf8_main_flag_help_e) {
         utf8_print_message_help(&main->program.message);
       }
@@ -166,15 +166,9 @@ extern "C" {
       }
     }
 
-    if (F_status_set_fine(main->setting.state.status) == F_interrupt) return;
-    if (F_status_is_error(main->setting.state.status)) return;
+    if (F_status_is_error(main->setting.state.status) || main->setting.state.status == F_interrupt) return;
 
-    if (main->setting.flag & utf8_main_flag_verify_e) {
-      main->setting.state.status = valid;
-    }
-    else {
-      main->setting.state.status = F_okay;
-    }
+    main->setting.state.status = (main->setting.flag & utf8_main_flag_verify_e) ? valid : F_okay;
   }
 #endif // _di_utf8_main_
 

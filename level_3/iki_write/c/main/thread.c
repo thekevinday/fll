@@ -4,10 +4,6 @@
 extern "C" {
 #endif
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #if !defined(_di_iki_write_thread_signal_) && !defined(_di_thread_support_)
   void * iki_write_thread_signal(void * const main) {
 
