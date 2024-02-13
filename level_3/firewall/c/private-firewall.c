@@ -619,7 +619,7 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
                 status = fll_fss_basic_read(local_buffer, state, &input, &basic_objects, &basic_contents, 0, &delimits, 0);
               }
 
-              if (F_status_set_error(status)) {
+              if (F_status_is_error(status)) {
                 status = F_status_set_fine(status);
 
                 if (status == F_parameter) {
