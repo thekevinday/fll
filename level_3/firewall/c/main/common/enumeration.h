@@ -69,65 +69,145 @@ extern "C" {
 #endif // _di_firewall_main_flag_e_
 
 /**
+ * The firewall action.
+ *
+ * firewall_action_*_e:
+ *   - none:   The action is none.
+ *   - append: The action is append.
+ *   - insert: The action is insert.
+ *   - policy: The action is policy.
+ */
+#ifndef _di_firewall_action_e_
+  enum {
+    firewall_action_none_e,
+    firewall_action_append_e,
+    firewall_action_insert_e,
+    firewall_action_policy_e,
+  }; // enum
+#endif // _di_firewall_action_e_
+
+/**
+ * The firewall chain.
+ *
+ * firewall_chain_*_e:
+ *   - none:        The chain is none.
+ *   - forward:     The chain is forward.
+ *   - input:       The chain is input.
+ *   - output:      The chain is output.
+ *   - postrouting: The chain is postrouting.
+ *   - prerouting:  The chain is prerouting.
+ */
+#ifndef _di_firewall_action_e_
+  enum {
+    firewall_chain_none_e,
+    firewall_chain_forward_e,
+    firewall_chain_input_e,
+    firewall_chain_output_e,
+    firewall_chain_postrouting_e,
+    firewall_chain_prerouting_e,
+  }; // enum
+#endif // _di_firewall_action_e_
+
+/**
  * Flags representing the current state of the processed rule.
  *
- * firewall_data_flag_*_e:
- *   - none:   No flags set.
- *   - global: The current processed rule is global.
- *   - local:  The current processed rule is lock.
- *   - main:   The current processed rule is main.
- *   - stop:   The current processed rule is stop.
+ * firewall_data_is_*_e:
+ *   - none:           No flags set.
+ *   - global:         The current processed rule is global.
+ *   - local:          The current processed rule is lock.
+ *   - main:           The current processed rule is main.
+ *   - stop:           The current processed rule is stop.
+ *   - stop_main_lock: Helper flag representing main, stop, and lock being set.
  */
-#ifndef _di_firewall_data_flag_e_
+#ifndef _di_firewall_data_is_e_
   enum {
-    firewall_data_is_none_e   = 0x0,
-    firewall_data_is_global_e = 0x1,
-    firewall_data_is_lock_e   = 0x2,
-    firewall_data_is_main_e   = 0x4,
-    firewall_data_is_stop_e   = 0x8,
+    firewall_data_is_none_e           = 0x0,
+    firewall_data_is_global_e         = 0x1,
+    firewall_data_is_lock_e           = 0x2,
+    firewall_data_is_main_e           = 0x4,
+    firewall_data_is_stop_e           = 0x8,
+    firewall_data_is_stop_main_lock_e = 0xe,
   }; // enum
-#endif // _di_firewall_data_flag_e_
+#endif // _di_firewall_data_is_e_
 
 /**
  * Flags representing the existence of reserved sets.
  *
- * firewall_data_flag_*_e:
+ * firewall_data_has_*_e:
  *   - none:  No flags set.
  *   - local: The current processed rule is lock.
  *   - main:  The current processed rule is main.
  *   - stop:  The current processed rule is stop.
  */
-#ifndef _di_firewall_data_flag_e_
+#ifndef _di_firewall_data_has_e_
   enum {
-    firewall_data_has_none_e   = 0x0,
-    firewall_data_has_lock_e   = 0x1,
-    firewall_data_has_main_e   = 0x2,
-    firewall_data_has_stop_e   = 0x4,
+    firewall_data_has_none_e = 0x0,
+    firewall_data_has_lock_e = 0x1,
+    firewall_data_has_main_e = 0x2,
+    firewall_data_has_stop_e = 0x4,
   }; // enum
-#endif // _di_firewall_data_flag_e_
+#endif // _di_firewall_data_has_e_
+
+/**
+ * The firewall direction.
+ *
+ * firewall_direction_*_e:
+ *   - none:   No direction.
+ *   - input:  The input direction.
+ *   - output: The output direction.
+ */
+#ifndef _di_firewall_direction_e_
+  enum {
+    firewall_direction_none_e = 0,
+    firewall_direction_input_e,
+    firewall_direction_output_e,
+  }; // enum
+#endif // _di_firewall_direction_e_
+
+/**
+ * The firewall tool (the program being used).
+ *
+ * firewall_tool_*_e:
+ *   - none:       No flags set.
+ *   - ip46tables: Use both iptables and ip6tables tools.
+ *   - ip6tables:  Use the ip6tables tool.
+ *   - ipset:      Use the ipset tool.
+ *   - iptables:   Use the iptables tool.
+ */
+#ifndef _di_firewall_tool_e_
+  enum {
+    firewall_tool_none_e = 0,
+    firewall_tool_ip46tables_e,
+    firewall_tool_ip6tables_e,
+    firewall_tool_iptables_e,
+    firewall_tool_ipset_e,
+  }; // enum
+#endif // _di_firewall_tool_e_
 
 /**
  * The main program parameters.
  */
 #ifndef _di_firewall_parameter_e_
   enum {
-    fake_parameter_operation_build_e = f_console_standard_parameter_last_e,
-    fake_parameter_operation_clean_e,
-    fake_parameter_operation_make_e,
-    fake_parameter_operation_skeleton_e,
+    fake_parameter_operation_lock_e = f_console_standard_parameter_last_e,
+    fake_parameter_operation_restart_e,
+    fake_parameter_operation_show_e,
+    fake_parameter_operation_start_e,
+    fake_parameter_operation_stop_e,
   }; // enum
 
   #define firewall_console_parameter_t_initialize \
     { \
       macro_fll_program_console_parameter_standard_initialize, \
       \
-      macro_f_console_parameter_t_initialize_6(fake_other_operation_build_s,    0, f_console_flag_simple_e), \
-      macro_f_console_parameter_t_initialize_6(fake_other_operation_clean_s,    0, f_console_flag_simple_e), \
-      macro_f_console_parameter_t_initialize_6(fake_other_operation_make_s,     0, f_console_flag_simple_e), \
-      macro_f_console_parameter_t_initialize_6(fake_other_operation_skeleton_s, 0, f_console_flag_simple_e), \
+      macro_f_console_parameter_t_initialize_6(fake_other_operation_lock_s,    0, f_console_flag_simple_e), \
+      macro_f_console_parameter_t_initialize_6(fake_other_operation_restart_s, 0, f_console_flag_simple_e), \
+      macro_f_console_parameter_t_initialize_6(fake_other_operation_show_s,    0, f_console_flag_simple_e), \
+      macro_f_console_parameter_t_initialize_6(fake_other_operation_start_s,   0, f_console_flag_simple_e), \
+      macro_f_console_parameter_t_initialize_6(fake_other_operation_stop_s,    0, f_console_flag_simple_e), \
     }
 
-  #define firewall_parameter_total_d (f_console_parameter_state_type_total_d + 4)
+  #define firewall_parameter_total_d (f_console_parameter_state_type_total_d + 5)
 #endif // _di_firewall_parameter_e_
 
 /**

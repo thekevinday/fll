@@ -30,6 +30,24 @@ extern "C" {
   }
 #endif // _di_firewall_print_error_file_
 
+#ifndef _di_firewall_print_error_file_empty_
+  f_status_t firewall_print_error_file_empty(fl_print_t * const print, const f_string_static_t section, const f_string_static_t file) {
+
+    if (!print) return F_status_set_error(F_output_not);
+    if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
+
+    f_file_stream_lock(print->to);
+
+    fl_print_format("%[%QNo relevant data is found within the file '%]", print->to, print->context, print->prefix, print->context);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->notable, operation, print->notable);
+    fl_print_format(f_string_format_sentence_end_quote_s.string, print->to, print->set->error, print->set->error, f_string_eol_s);
+
+    f_file_stream_unlock(print->to);
+
+    return F_okay;
+  }
+#endif // _di_firewall_print_error_file_empty_
+
 #ifndef _di_firewall_print_error_network_device_none_
   f_status_t firewall_print_error_network_device_none(fl_print_t * const print) {
 
@@ -42,57 +60,8 @@ extern "C" {
   }
 #endif // _di_firewall_print_error_network_device_none_
 
-#ifndef _di_firewall_print_error_on_invalid_parameter_
-  void firewall_print_error_on_invalid_parameter(const fl_print_t output, const f_string_t function) {
-
-    if (output.verbosity == f_console_verbosity_quiet_e) return;
-
-    fll_print_format("%r%[%QInvalid parameter when calling %s().%]%r", print->to, f_string_eol_s, print->context, output.prefix, function, print->context, f_string_eol_s);
-  }
-#endif // _di_firewall_print_error_on_invalid_parameter_
-
-#ifndef _di_firewall_print_error_on_invalid_parameter_
-  void firewall_print_error_on_invalid_parameter_for_file(const fl_print_t output, const f_string_t function, const f_string_static_t filename) {
-
-    if (output.verbosity == f_console_verbosity_quiet_e) return;
-
-    fll_print_format("%r%[%QInvalid parameter when calling %s() for the file '%Q'.%]%r", print->to, f_string_eol_s, print->context, output.prefix, function, filename, print->context, f_string_eol_s);
-  }
-#endif // _di_firewall_print_error_on_invalid_parameter_
-
-#ifndef _di_firewall_print_error_unhandled_
-  void firewall_print_error_unhandled(const fl_print_t print, const f_string_t function, const f_string_static_t file) {
-
-    if (!print || !print->custom) return F_status_set_error(F_output_not);
-    if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
-
-    f_file_stream_lock(print->to);
-
-    firewall_main_t * const main = (firewall_main_t *) print->custom);
-
-    fl_print_format("%[%QAn unhandled error (%]", print->to, f_string_eol_s, print->context, print->prefix, print->context);
-
-    fl_print_format(f_string_format_ui_single_s.string, print->to, print->notable, F_status_set_fine(main->setting.state.status), print->notable);
-    fl_print_format("%[) has occurred while calling%] ", print->to, print->context, print->prefix, print->context);
-    fl_print_format(f_string_format_Q_single_s.string, print->to, print->notable, operation, print->notable);
-
-    if (file.used) {
-      fl_print_format("%[() for the file%] ", print->to, print->context, print->prefix, print->context);
-      fl_print_format(f_string_format_Q_single_s.string, print->to, print->notable, file, print->notable);
-      fl_print_format(f_string_format_sentence_end_s.string, print->to, print->set->error, print->set->error, f_string_eol_s);
-    }
-    else {
-      fl_print_format("%[().%]%r", print->to, print->context, print->context, f_string_eol_s);
-    }
-
-    f_file_stream_unlock(print->to);
-
-    return F_okay;
-  }
-#endif // _di_firewall_print_error_unhandled_
-
 #ifndef _di_firewall_print_error_operation_
-  void firewall_print_error_operation(const fl_print_t output, const f_string_static_t tool, const f_string_statics_t arguments) {
+  f_status_t firewall_print_error_operation(fl_print_t * const print, const f_string_static_t tool, const f_string_statics_t arguments) {
 
     if (!print || !print->custom) return F_status_set_error(F_output_not);
     if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
@@ -127,7 +96,7 @@ extern "C" {
 #endif // _di_firewall_print_error_operation_
 
 #ifndef _di_firewall_print_error_operation_files_missing_
-  f_status_t firewall_print_error_operation_files_missing(const fl_print_t print, const f_string_static_t operation, const f_string_static_t file) {
+  f_status_t firewall_print_error_operation_files_missing(fl_print_t * const print, const f_string_static_t operation, const f_string_static_t file) {
 
     if (!print || !print->custom) return F_status_set_error(F_output_not);
     if (print->verbosity == f_console_verbosity_quiet_e) return F_output_not;
@@ -138,9 +107,9 @@ extern "C" {
 
     fl_print_format("%[%QFailed to perform%] ", print->to, print->context, output.prefix);
     fl_print_format(f_string_format_Q_single_s.string, print->to, print->notable, operation, print->notable);
-    fl_print_format("%[request because the%] ", print->to, print->context, print->prefix, print->context);
+    fl_print_format(" %[request because the%] ", print->to, print->context, print->prefix, print->context);
     fl_print_format(f_string_format_Q_single_s.string, print->to, print->notable, operation, print->notable);
-    fl_print_format("%[instructions are missing from '%]", print->to, print->set->error, print->set->error);
+    fl_print_format(" %[instructions are missing from '%]", print->to, print->set->error, print->set->error);
     fl_print_format(f_string_format_Q_single_s.string, print->to, print->notable, file, print->notable);
     fl_print_format(f_string_format_sentence_end_quote_s.string, print->to, print->set->error, print->set->error, f_string_eol_s);
 
@@ -168,10 +137,6 @@ extern "C" {
     if (!print) return F_status_set_error(F_output_not);
     if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
 
-    fll_print_format("%[%QCould not find any network devices.%]%r", print->to, print->context, print->prefix, print->context, f_string_eol_s);
-
-    //fll_print_format("%r%[%QFailed to read the device directory '%r'.%]%r", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, firewall_network_devices_s, main->error.context, f_string_eol_s);
-
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QFailed to read the device directory '%]", print->to, print->context, print->prefix, print->context);
@@ -186,6 +151,36 @@ extern "C" {
     return F_okay;
   }
 #endif // _di_firewall_print_error_directory_read_
+
+#ifndef _di_firewall_print_error_unhandled_
+  void firewall_print_error_unhandled(const fl_print_t print, const f_string_t function, const f_string_static_t file) {
+
+    if (!print || !print->custom) return F_status_set_error(F_output_not);
+    if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
+
+    f_file_stream_lock(print->to);
+
+    firewall_main_t * const main = (firewall_main_t *) print->custom);
+
+    fl_print_format("%[%QAn unhandled error (%]", print->to, f_string_eol_s, print->context, print->prefix, print->context);
+    fl_print_format(f_string_format_ui_single_s.string, print->to, print->notable, F_status_set_fine(main->setting.state.status), print->notable);
+    fl_print_format("%[) has occurred while calling%] ", print->to, print->context, print->prefix, print->context);
+    fl_print_format(f_string_format_Q_single_s.string, print->to, print->notable, operation, print->notable);
+
+    if (file.used) {
+      fl_print_format("%[() for the file%] ", print->to, print->context, print->prefix, print->context);
+      fl_print_format(f_string_format_Q_single_s.string, print->to, print->notable, file, print->notable);
+      fl_print_format(f_string_format_sentence_end_s.string, print->to, print->set->error, print->set->error, f_string_eol_s);
+    }
+    else {
+      fl_print_format("%[().%]%r", print->to, print->context, print->context, f_string_eol_s);
+    }
+
+    f_file_stream_unlock(print->to);
+
+    return F_okay;
+  }
+#endif // _di_firewall_print_error_unhandled_
 
 #ifdef __cplusplus
 } // extern "C"

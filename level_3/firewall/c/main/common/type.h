@@ -17,12 +17,64 @@ extern "C" {
 #endif
 
 /**
- * A data uses for building and processing firewall rules.
+ * A cache used for during processing.
+ *
+ * Properties:
+ *   - file: The file structure.
+ *
+ *   - buffer:             A generic string buffer.
+ *   - device:             The device string.
+ *   - ip_list:            The ip_list string.
+ *   - local_buffer:       The protocol string.
+ *   - path_file:          The protocol string.
+ *   - path_file_specific: The protocol string.
+ *   - protocol:           The protocol string.
+ *   - arguments:          The array of strings.
+ *
+ *   - basic_objects:  The FSS Basic Objects.
+ *   - basic_contents: The FSS Basic Contents.
+ */
+#ifndef _di_firewall_cache_t_
+  typedef struct {
+    f_file_t file = f_file_t_initialize;
+
+    f_string_dynamic_t buffer;
+    f_string_dynamic_t device;
+    f_string_dynamic_t ip_list;
+    f_string_dynamic_t local_buffer;
+    f_string_dynamic_t path_file;
+    f_string_dynamic_t path_file_specific;
+    f_string_dynamic_t protocol;
+    f_string_dynamics_t arguments;
+
+    f_ranges_t basic_objects;
+    f_rangess_t basic_contents;
+  } firewall_cache_t;
+
+  #define firewall_cache_t_initialize \
+    { \
+      f_file_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamics_t_initialize, \
+      f_ranges_t_initialize, \
+      f_rangess_t_initialize, \
+    }
+#endif // _di_firewall_cache_t_
+
+/**
+ * A data used for building and processing firewall rules.
  *
  * Properties:
  *   - is:  Flags used to represent the state in the current set being processed.
  *   - has: Flags used to represent if each at has a position.
  *
+ *   - chain:  The chain currently being processed (fom chain_contents).
  *   - device: The device position.
  *   - lock:   The lock position.
  *   - main:   The main position.
@@ -44,6 +96,7 @@ extern "C" {
     uint8_t is;
     uint8_t has;
 
+    f_number_unsigned_t chain;
     f_number_unsigned_t device;
     f_number_unsigned_t lock;
     f_number_unsigned_t main;
@@ -65,6 +118,7 @@ extern "C" {
     { \
       firewall_data_is_none_e, \
       firewall_data_has_none_e, \
+      0, \
       0, \
       0, \
       0, \
@@ -123,12 +177,14 @@ extern "C" {
  *   - program: The main program data.
  *   - setting: The settings data.
  *   - data:    The firewall data.
+ *   - cache:   The firewall cache.
  */
 #ifndef _di_firewall_main_t_
   typedef struct {
     fll_program_data_t program;
     firewall_setting_t setting;
     firewall_data_t data;
+    firewall_cache_t cache;
   } firewall_main_t;
 
   #define firewall_main_t_initialize \
@@ -136,8 +192,21 @@ extern "C" {
       fll_program_data_t_initialize, \
       firewall_setting_t_initialize, \
       firewall_data_t_initialize, \
+      firewall_cache_t_initialize, \
     }
 #endif // _di_firewall_main_t_
+
+/**
+ * Deallocate firewall cache.
+ *
+ * @param cache
+ *   The firewall cache.
+ *
+ *   This does not alter main.setting.state.status.
+ */
+#ifndef _di_firewall_cache_delete_
+  extern void firewall_data_delete(firewall_cache_t * const cache);
+#endif // _di_firewall_cache_delete_
 
 /**
  * Deallocate firewall data.

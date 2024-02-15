@@ -4,6 +4,28 @@
 extern "C" {
 #endif
 
+#ifndef _di_firewall_cache_delete_
+  void firewall_cache_delete(firewall_cache_t * const cache) {
+
+    if (!cache) return;
+
+    f_file_close(&cache->file);
+
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &cache->buffer.string, &cache->buffer.used, &cache->buffer.size);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &cache->device.string, &cache->device.used, &cache->device.size);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &cache->ip_list.string, &cache->ip_list.used, &cache->ip_list.size);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &cache->local_buffer.string, &cache->local_buffer.used, &cache->local_buffer.size);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &cache->path_file.string, &cache->path_file.used, &cache->path_file.size);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &cache->path_file_specific.string, &cache->path_file_specific.used, &cache->path_file_specific.size);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &cache->protocol.string, &cache->protocol.used, &cache->protocol.size);
+
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &cache->arguments.array, &cache->arguments.used, &cache->arguments.size, &f_string_dynamics_delete_callback);
+
+    f_memory_array_resize(0, sizeof(f_range_t), (void **) &cache->basic_objects.string, &cache->basic_objects.used, &cache->basic_objects.size);
+    f_memory_arrays_resize(0, sizeof(f_ranges_t), (void **) &cache->basic_contents.array, &cache->basic_contents.used, &cache->basic_contents.size, &f_rangess_delete_callback);
+  }
+#endif // _di_firewall_cache_delete_
+
 #ifndef _di_firewall_data_delete_
   void firewall_data_delete(firewall_data_t * const data) {
 
@@ -26,8 +48,10 @@ extern "C" {
     if (!main) return;
 
     fll_program_data_delete(&main->program);
+
     firewall_setting_delete(&main->setting);
     firewall_data_delete(&main->data);
+    firewall_cache_delete(&main->cache);
   }
 #endif // _di_firewall_main_delete_
 

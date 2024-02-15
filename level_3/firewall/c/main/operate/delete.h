@@ -16,23 +16,27 @@
 extern "C" {
 #endif
 
-/**
- * Deallocate chains.
+ /**
+ * Unapply (remove) the firewall rules, deleting all existing firewall rules being used.
  *
- * @param data
- *   The program data.
+ * This function is not about de-allocating memory.
+ * This function is not about modifying settings or files.
  *
- * @return
- *   F_okay on success.
- *   F_child on child process exiting.
+ * @param main
+ *   The main program and setting data.
  *
- *   F_interrupt (with error bit) on receiving a process signal, such as an interrupt signal.
- *   F_parameter (with error bit) on invalid parameter passed.
+ *   This alters main.setting.state.status:
+ *     F_okay on success.
+ *     F_child on child process exiting.
  *
- *   Status codes (with error bit) are returned on any problem.
+ *     F_interrupt (with error bit) on interrupt signal received.
+ *
+ *     Errors (with error bit) from: fll_execute_program()
+ *
+ * @see fll_execute_program()
  */
 #ifndef _di_firewall_operate_delete_chains_
-  extern f_status_t firewall_operate_delete_chains(firewall_main_t * const main);
+  extern void firewall_operate_delete_chains(firewall_main_t * const main);
 #endif // _di_firewall_operate_delete_chains_
 
 #ifdef __cplusplus

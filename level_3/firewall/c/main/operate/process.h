@@ -17,25 +17,6 @@ extern "C" {
 #endif
 
 /**
- * Process the loaded firewall rules.
- *
- * @param main
- *   The main program and setting data.
- *
- *   This alters main.setting.state.status:
- *     F_okay on success.
- *
- *     F_interrupt (with error bit) on interrupt signal received.
- *
- *     Errors (with error bit) from: firewall_operate_process_rules_perform()
- *
- * @see firewall_operate_process_rules_perform()
- */
-#ifndef _di_firewall_operate_process_rules_
-  extern void firewall_operate_process_rules(firewall_main_t * const main);
-#endif // _di_firewall_operate_process_rules_
-
-/**
  * Perforrm the loaded firewall rules.
  *
  * @param main
@@ -50,9 +31,9 @@ extern "C" {
  *
  * @see ()
  */
-#ifndef _di_firewall_operate_process_rules_perform_
-  extern f_status_t firewall_operate_process_rules_perform(firewall_main_t * const main);
-#endif // _di_firewall_operate_process_rules_perform_
+#ifndef _di_firewall_operate_process_rules_
+  extern void firewall_operate_process_rules(firewall_main_t * const main);
+#endif // _di_firewall_operate_process_rules_
 
 #ifdef __cplusplus
 } // extern "C"

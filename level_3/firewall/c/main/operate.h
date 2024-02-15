@@ -24,16 +24,55 @@ extern "C" {
  *
  *   This alters main.setting.state.status:
  *     F_okay on success.
+ *     F_child on child process exiting.
  *
  *     F_interrupt (with error bit) on interrupt signal received.
  *
- *     Errors (with error bit) from: ()
+ *     Errors (with error bit) from: f_directory_list()
+ *     Errors (with error bit) from: f_memory_array_increase_by()
+ *     Errors (with error bit) from: firewall_operate_buffer_rules()
+ *     Errors (with error bit) from: firewall_operate_create_custom_chains()
+ *     Errors (with error bit) from: firewall_operate_default_lock()
+ *     Errors (with error bit) from: firewall_operate_delete_chains()
+ *     Errors (with error bit) from: firewall_operate_load_rules()
+ *     Errors (with error bit) from: firewall_operate_process_rules()
+ *     Errors (with error bit) from: firewall_operate_show()
  *
- * @see ()
+ * @see f_directory_list()
+ * @see f_memory_array_increase_by()
+ * @see firewall_operate_buffer_rules()
+ * @see firewall_operate_create_custom_chains()
+ * @see firewall_operate_default_lock()
+ * @see firewall_operate_delete_chains()
+ * @see firewall_operate_load_rules()
+ * @see firewall_operate_process_rules()
+ * @see firewall_operate_show()
  */
 #ifndef _di_firewall_operate_
   extern void firewall_operate(firewall_main_t * const main);
 #endif // _di_firewall_operate_
+
+/**
+ * Perform the firewall show operation.
+ *
+ * @param main
+ *   The main program and setting data.
+ *
+ *   This alters main.setting.state.status:
+ *     F_okay on success.
+ *     F_child on child process exiting.
+ *
+ *     F_interrupt (with error bit) on interrupt signal received.
+ *
+ *     Errors (with error bit) from: fll_execute_program()
+ *     Errors (with error bit) from: fll_print_dynamic_raw()
+ *
+ * @see fll_execute_program()
+ * @see fll_print_dynamic_raw()
+ */
+#ifndef _di_firewall_operate_show_
+  extern void firewall_operate_show(firewall_main_t * const main);
+#endif // _di_firewall_operate_show_
 
 #ifdef __cplusplus
 } // extern "C"

@@ -17,19 +17,25 @@ extern "C" {
 #endif
 
 /**
- * Lock the firewall.
+ * Apply firewall rules intended to lock down the firewall.
  *
- * @param data
- *   The program data.
+ * This is intended to setup the firewall with rules that prevent access to or from the network.
  *
- * @return
- *   F_okay on success.
- *   F_child on child process exiting.
+ * @param main
+ *   The main program and setting data.
  *
- *   Status codes (with error bit) are returned on any problem.
+ *   This alters main.setting.state.status:
+ *     F_okay on success.
+ *     F_child on child process exiting.
+ *
+ *     F_interrupt (with error bit) on interrupt signal received.
+ *
+ *     Errors (with error bit) from: fll_execute_program()
+ *
+ * @see fll_execute_program()
  */
 #ifndef _di_firewall_operate_default_lock_
-  extern f_status_t firewall_operate_default_lock(firewall_main_t * const main);
+  extern void firewall_operate_default_lock(firewall_main_t * const main);
 #endif // _di_firewall_operate_default_lock_
 
 #ifdef __cplusplus

@@ -52,11 +52,9 @@
 #include <program/firewall/main/common/string.h>
 #include <program/firewall/main/common/type.h>
 #include <program/firewall/main/common.h>
-#include <program/firewall/main/print/data.h>
 #include <program/firewall/main/print/debug.h>
 #include <program/firewall/main/print/error.h>
 #include <program/firewall/main/print/message.h>
-#include <program/firewall/main/print/verbose.h>
 #include <program/firewall/main/print/warning.h>
 #include <program/firewall/main/operate/buffer.h>
 #include <program/firewall/main/operate/create.h>

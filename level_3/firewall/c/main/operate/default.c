@@ -5,16 +5,12 @@ extern "C" {
 #endif
 
 #ifndef _di_firewall_operate_default_lock_
-  f_status_t firewall_operate_default_lock(firewall_data_t * const data) {
+  void firewall_operate_default_lock(firewall_main_t * const main) {
 
-    if (!data) return F_status_set_error(F_parameter);
+    if (!main || F_status_is_error_not(main->setting.state.status) && main->setting.state.status == F_child) return;
 
     const f_string_static_t chains[3] = { firewall_chain_input_s, firewall_chain_output_s, firewall_chain_forward_s };
     const f_string_static_t tools[2] = { firewall_tool_iptables_s, firewall_tool_ip6tables_s };
-
-    f_status_t status = F_okay;
-
-    int return_code = 0;
 
     f_string_statics_t arguments = f_string_statics_t_initialize;
     arguments.used = 3;
@@ -24,8 +20,9 @@ extern "C" {
     arguments.array[0] = firewall_action_policy_command_s;
     arguments.array[2] = firewall_chain_drop_s;
 
-    f_number_unsigned_t i = 0;
-    f_number_unsigned_t j = 0;
+    int return_code = 0;
+    uint8_t i = 0;
+    uint8_t j = 0;
 
     for (; i < 3; ++i) {
 
@@ -37,37 +34,30 @@ extern "C" {
 
         return_code = 0;
 
-        status = fll_execute_program(tools[j], arguments, 0, 0, (void *) &return_code);
+        main->setting.state.status = fll_execute_program(tools[j], arguments, 0, 0, (void *) &return_code);
 
-        if (status == F_child) {
+        if (main->setting.state.status == F_child) {
           data->main->child = return_code;
 
-          break;
+          return;
         }
 
-        if (firewall_signal_received(data)) {
-          status = F_status_set_error(F_interrupt);
+        if (firewall_signal_check(main)) return;
 
-          break;
-        }
-
-        if (F_status_is_error(status)) {
-          if (F_status_set_fine(status) == F_failure) {
-            firewall_print_error_operation(data->main->error, tools[j], arguments);
-          }
-          else if (F_status_set_fine(status) == F_parameter) {
-            firewall_print_error_on_invalid_parameter(data->main->error, "fll_execute_program");
+        if (F_status_is_error(main->setting.state.status)) {
+          if (F_status_set_fine(main->setting.state.status) == F_failure) {
+            firewall_print_error_operation(main->program->error, tools[j], arguments);
           }
           else {
-            firewall_print_error_on_unhandled(data->main->error, "fll_execute_program", F_status_set_fine(status));
+            firewall_print_error(&main->program.error, macro_firewall_f(fll_execute_program));
           }
 
-          break;
+          return;
         }
       } // for
     } // for
 
-    return status;
+    main->setting.state.status = F_okay;
   }
 #endif // _di_firewall_operate_default_lock_
 

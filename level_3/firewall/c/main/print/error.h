@@ -68,6 +68,30 @@ extern "C" {
 #endif // _di_firewall_print_error_file_
 
 /**
+ * Print file related error message regarding that there is no relevant data in the file.
+ *
+ * The file is effectively empty but could have comments or other non-valid (aka non-Object) data.
+ *
+ * @param print
+ *   The output structure to print to.
+ *
+ *   This does not alter print.custom.setting.state.status.
+ * @param file
+ *   The name of the file.
+ *
+ * @return
+ *   F_okay on success.
+ *   F_output_not on success, but no printing is performed.
+ *
+ *   F_output_not (with error bit) if setting is NULL.
+ *
+ * @see fll_error_file_print()
+ */
+#ifndef _di_firewall_print_error_file_empty_
+  extern f_status_t firewall_print_error_file_empty(fl_print_t * const print, const f_string_static_t file);
+#endif // _di_firewall_print_error_file_empty_
+
+/**
  * Print error message regarding being unable to find any devices.
  *
  * @param print
@@ -88,16 +112,69 @@ extern "C" {
 #endif // _di_firewall_print_error_network_device_none_
 
 /**
- * Print an invalid parameter error for the given function.
+ * Print an error about the given operation failed.
  *
- * @param output
- *   The output to print to.
- * @param function
- *   The function that failed.
+ * @param print
+ *   The output structure to print to.
+ *
+ *   This does not alter print.custom.setting.state.status.
+ * @param tool
+ *   The tool, such as iptables, that failed.
+ * @param arguments
+ *   The arguments passed to the tool.
+ *
+ * @return
+ *   F_okay on success.
+ *   F_output_not on success, but no printing is performed.
+ *
+ *   F_output_not (with error bit) if setting is NULL.
  */
-#ifndef _di_firewall_print_error_on_invalid_parameter_
-  extern void firewall_print_error_on_invalid_parameter(const fl_print_t output, const f_string_t function, const f_string_static_t file);
-#endif // _di_firewall_print_error_on_invalid_parameter_
+#ifndef _di_firewall_print_error_operation_
+  extern f_status_t firewall_print_error_operation(fl_print_t * const print, const f_string_static_t tool, const f_string_statics_t arguments);
+#endif // _di_firewall_print_error_operation_
+
+/**
+ * Print an error about the operation setting missing from the file.
+ *
+ * @param print
+ *   The output structure to print to.
+ *
+ *   This does not alter print.custom.setting.state.status.
+ * @param operation
+ *   The operation setting that is missing from the file.
+ *   This is also the name of the operation itself.
+ * @param file
+ *   The file that is missing the operation.
+ *
+ * @return
+ *   F_okay on success.
+ *   F_output_not on success, but no printing is performed.
+ *
+ *   F_output_not (with error bit) if setting is NULL.
+ */
+#ifndef _di_firewall_print_error_operation_files_missing_
+  extern f_status_t firewall_print_error_operation_files_missing(fl_print_t * const print, const f_string_static_t operation, const f_string_static_t file);
+#endif // _di_firewall_print_error_operation_files_missing_
+
+/**
+ * Print generic error message regarding a function failing in some way.
+ *
+ * @param print
+ *   The output structure to print to.
+ *
+ *   This does not alter print.custom.setting.state.status.
+ *
+ * @return
+ *   F_okay on success.
+ *   F_output_not on success, but no printing is performed.
+ *
+ *   F_output_not (with error bit) if setting is NULL.
+ *
+ * @see fll_error_print()
+ */
+#ifndef _di_firewall_print_error_operation_specified_not_
+  extern f_status_t firewall_print_error_operation_specified_not(fl_print_t * const print);
+#endif // _di_firewall_print_error_operation_specified_not_
 
 /**
  * Print an unhandled error for the given function.
@@ -121,71 +198,6 @@ extern "C" {
 #ifndef _di_firewall_print_error_unhandled_
   extern f_status_t firewall_print_error_unhandled(const fl_print_t print, const f_string_t function, const f_string_static_t file);
 #endif // _di_firewall_print_error_unhandled_
-
-/**
- * Print an error about the given operation failed.
- *
- * @param print
- *   The output structure to print to.
- *
- *   This does not alter print.custom.setting.state.status.
- * @param tool
- *   The tool, such as iptables, that failed.
- * @param arguments
- *   The arguments passed to the tool.
- *
- * @return
- *   F_okay on success.
- *   F_output_not on success, but no printing is performed.
- *
- *   F_output_not (with error bit) if setting is NULL.
- */
-#ifndef _di_firewall_print_error_operation_
-  extern f_status_t firewall_print_error_operation(const fl_print_t print, const f_string_static_t tool, const f_string_statics_t arguments);
-#endif // _di_firewall_print_error_operation_
-
-/**
- * Print an error about the operation setting missing from the file.
- *
- * @param print
- *   The output structure to print to.
- *
- *   This does not alter print.custom.setting.state.status.
- * @param operation
- *   The operation setting that is missing from the file.
- *   This is also the name of the operation itself.
- * @param file
- *   The file that is missing the operation.
- *
- * @return
- *   F_okay on success.
- *   F_output_not on success, but no printing is performed.
- *
- *   F_output_not (with error bit) if setting is NULL.
- */
-#ifndef _di_firewall_print_error_operation_files_missing_
-  extern f_status_t firewall_print_error_operation_files_missing(const fl_print_t print, const f_string_static_t operation, const f_string_static_t file);
-#endif // _di_firewall_print_error_operation_files_missing_
-
-/**
- * Print generic error message regarding a function failing in some way.
- *
- * @param print
- *   The output structure to print to.
- *
- *   This does not alter print.custom.setting.state.status.
- *
- * @return
- *   F_okay on success.
- *   F_output_not on success, but no printing is performed.
- *
- *   F_output_not (with error bit) if setting is NULL.
- *
- * @see fll_error_print()
- */
-#ifndef _di_firewall_print_error_operation_specified_not_
-  extern f_status_t firewall_print_error_operation_specified_not(fl_print_t * const print);
-#endif // _di_firewall_print_error_operation_specified_not_
 
 #ifdef __cplusplus
 } // extern "C"

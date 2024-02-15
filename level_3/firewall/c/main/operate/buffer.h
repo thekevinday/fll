@@ -19,24 +19,32 @@ extern "C" {
 /**
  * Buffer firewall rules.
  *
- * @param data
- *   The program data.
- * @param filename
+ * @param main
+ *   The main program and setting data.
+ *
+ *   This alters main.setting.state.status:
+ *     F_okay on success.
+ *     F_child on child process exiting.
+ *
+ *     F_interrupt (with error bit) on interrupt signal received.
+ *
+ *     Errors (with error bit) from: f_file_open()
+ *     Errors (with error bit) from: f_file_read()
+ *     Errors (with error bit) from: f_fss_apply_delimit()
+ *     Errors (with error bit) from: fll_fss_basic_list_read()
+ * @param file
  *   File name to read the rules from.
  * @param optional
  *   TRUE if this files is optional.
  *   FALSE otherwise (more are errors returned when not optional).
- * @param local
- *   Local firewall settings.
  *
- * @return
- *   F_okay on success.
- *   F_child on child process exiting.
- *
- *   Status codes (with error bit) are returned on any problem.
+ * @see f_file_open()
+ * @see f_file_read()
+ * @see f_fss_apply_delimit()
+ * @see fll_fss_basic_list_read()
  */
 #ifndef _di_firewall_operate_buffer_rules_
-  extern f_status_t firewall_operate_buffer_rules(firewall_main_t * const main, const f_string_static_t filename, const bool optional);
+  extern void firewall_operate_buffer_rules(firewall_main_t * const main, const f_string_static_t file, const bool optional);
 #endif // _di_firewall_operate_buffer_rules_
 
 #ifdef __cplusplus
