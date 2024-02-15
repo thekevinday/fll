@@ -51,7 +51,7 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QEmpty string is not allowed at index%] ", print->to, print->set->error, print->prefix, print->set->error);
-    fl_print_format(f_string_format_ul_single_s.string, print->to, print->set->notable, index, print->set->notable);
+    fl_print_format(f_string_format_un_single_s.string, print->to, print->set->notable, index, print->set->notable);
     fl_print_format(" %[for the parameter '%]", print->to, print->set->error, print->set->error);
     fl_print_format(f_string_format_rr_single_s.string, print->to, print->set->notable, f_console_symbol_long_normal_s, fss_identify_long_name_s, print->set->notable);
     fl_print_format(f_string_format_sentence_end_quote_s.string, print->to, print->set->error, print->set->error, f_string_eol_s);
@@ -73,7 +73,7 @@ extern "C" {
     fl_print_format("%[%QThe value '%]", print->to, print->set->error, print->prefix, print->set->error);
     fl_print_format(f_string_format_Q_single_s.string, print->to, print->set->notable, name, print->set->notable);
     fl_print_format("%[' at index%] ", print->to, print->set->error, print->set->error);
-    fl_print_format(f_string_format_ul_single_s.string, print->to, print->set->notable, index, print->set->notable);
+    fl_print_format(f_string_format_un_single_s.string, print->to, print->set->notable, index, print->set->notable);
     fl_print_format("%[ for the parameter '%]", print->to, print->set->error, print->set->error);
     fl_print_format(f_string_format_rr_single_s.string, print->to, print->set->notable, f_console_symbol_long_normal_s, fss_identify_long_name_s, print->set->notable);
     fl_print_format("%[' may only contain word characters or the dash (minus) character.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);

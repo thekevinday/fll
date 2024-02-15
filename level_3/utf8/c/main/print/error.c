@@ -118,7 +118,7 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     fl_print_format("%[%QNo file specified at parameter index%] ", print->to, print->set->error, print->prefix, print->set->error);
-    fl_print_format(f_string_format_ul_single_s.string, print->to, print->set->notable, index, print->set->notable);
+    fl_print_format(f_string_format_un_single_s.string, print->to, print->set->notable, index, print->set->notable);
     fl_print_format(f_string_format_sentence_end_s.string, print->to, print->set->error, print->set->error, f_string_eol_s);
 
     f_file_stream_unlock(print->to);

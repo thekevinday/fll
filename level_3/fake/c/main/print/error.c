@@ -599,9 +599,9 @@ extern "C" {
     fl_print_format("%[' from section '%]", print->to, print->context, buffer, print->context);
     fl_print_format(f_string_format_Q_range_single_s.string, print->to, print->notable, buffer, section_name, print->notable);
     fl_print_format("%[' on line%] ", print->to, print->context, print->context);
-    fl_print_format(f_string_format_ul_single_s.string, print->to, print->notable, line, print->notable);
+    fl_print_format(f_string_format_un_single_s.string, print->to, print->notable, line, print->notable);
     fl_print_format("%[' cannot be processed because the max stack depth of%] ", print->to, print->context, print->context);
-    fl_print_format(f_string_format_ul_single_s.string, print->to, print->notable, stack_max, print->notable);
+    fl_print_format(f_string_format_un_single_s.string, print->to, print->notable, stack_max, print->notable);
     fl_print_format(" %[has been reached.%]%r", print->to, print->context, print->context, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
@@ -632,7 +632,7 @@ extern "C" {
     fl_print_format("%[' from section '%]", print->to, print->context, buffer, print->context);
     fl_print_format(f_string_format_Q_range_single_s.string, print->to, print->notable, buffer, section_name, print->notable);
     fl_print_format("%[' on line%] ", print->to, print->context, print->context);
-    fl_print_format(f_string_format_ul_single_s.string, print->to, print->notable, line, print->notable);
+    fl_print_format(f_string_format_un_single_s.string, print->to, print->notable, line, print->notable);
     fl_print_format(" %[is not a known operation name.%]%r", print->to, print->context, print->context, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
