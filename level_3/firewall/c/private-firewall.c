@@ -74,7 +74,7 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
       data->main->signal_check = 0;
     }
 
-    length = (local->rule_objects.array[i].stop - local->rule_objects.array[i].start) + 1;
+    length = (local->rule_objects.array[i].start > local->rule_objects.array[i].stop) ? 0 : (local->rule_objects.array[i].stop - local->rule_objects.array[i].start) + 1;
     invalid = F_false;
 
     is_ip_list = F_false;
@@ -92,7 +92,7 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
         continue;
       }
 
-      length = (local->rule_contents.array[i].array[0].stop - local->rule_contents.array[i].array[0].start) + 1;
+      length = (local->rule_contents.array[i].array[0].start > local->rule_contents.array[i].array[0].stop) ? 0 : (local->rule_contents.array[i].array[0].stop - local->rule_contents.array[i].array[0].start) + 1;
 
       if (local->rule_contents.array[i].used != 1) {
         invalid = F_true;
@@ -124,7 +124,7 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
 
     // Process direction rule
     else if (fl_string_dynamic_compare_string(local->buffer.string + local->rule_objects.array[i].start, firewall_direction_s, length) == F_equal_to) {
-      length = (local->rule_contents.array[i].array[0].stop - local->rule_contents.array[i].array[0].start) + 1;
+      length = (local->rule_contents.array[i].array[0].start > local->rule_contents.array[i].array[0].stop) ? 0 : (local->rule_contents.array[i].array[0].stop - local->rule_contents.array[i].array[0].start) + 1;
 
       if (local->rule_contents.array[i].used != 1) {
         invalid = F_true;
@@ -149,7 +149,7 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
 
     // Process device rule.
     else if (fl_string_dynamic_compare_string(local->buffer.string + local->rule_objects.array[i].start, firewall_device_s, length) == F_equal_to) {
-      length = (local->rule_contents.array[i].array[0].stop - local->rule_contents.array[i].array[0].start) + 1;
+      length = (local->rule_contents.array[i].array[0].start > local->rule_contents.array[i].array[0].stop) ? 0 : (local->rule_contents.array[i].array[0].stop - local->rule_contents.array[i].array[0].start) + 1;
 
       if (local->rule_contents.array[i].used != 1) {
         invalid = F_true;
@@ -192,7 +192,7 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
 
     // Process action rule.
     else if (fl_string_dynamic_compare_string(local->buffer.string + local->rule_objects.array[i].start, firewall_action_s, length) == F_equal_to) {
-      length = (local->rule_contents.array[i].array[0].stop - local->rule_contents.array[i].array[0].start) + 1;
+      length = (local->rule_contents.array[i].array[0].start > local->rule_contents.array[i].array[0].stop) ? 0 : (local->rule_contents.array[i].array[0].stop - local->rule_contents.array[i].array[0].start) + 1;
 
       if (local->rule_contents.array[i].used != 1) {
         invalid = F_true;
@@ -218,7 +218,7 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
 
     // Process ip_list rule.
     else if (fl_string_dynamic_compare_string(local->buffer.string + local->rule_objects.array[i].start, firewall_ip_list, length) == F_equal_to) {
-      length = (local->rule_contents.array[i].array[0].stop - local->rule_contents.array[i].array[0].start) + 1;
+      length = (local->rule_contents.array[i].array[0].start > local->rule_contents.array[i].array[0].stop) ? 0 : (local->rule_contents.array[i].array[0].stop - local->rule_contents.array[i].array[0].start) + 1;
       is_ip_list = F_true;
 
       if (fl_string_dynamic_compare_string(local->buffer.string + local->rule_contents.array[i].array[0].start, firewall_ip_list_source_s, length) == F_equal_to) {
@@ -232,7 +232,7 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
       }
     }
     else if (fl_string_dynamic_compare_string(local->buffer.string + local->rule_objects.array[i].start, firewall_protocol_s, length) == F_equal_to) {
-      length = (local->rule_contents.array[i].array[0].stop - local->rule_contents.array[i].array[0].start) + 1;
+      length = (local->rule_contents.array[i].array[0].start > local->rule_contents.array[i].array[0].stop) ? 0 : (local->rule_contents.array[i].array[0].stop - local->rule_contents.array[i].array[0].start) + 1;
 
       if (local->rule_contents.array[i].used != 1) {
         invalid = F_true;
@@ -260,7 +260,7 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
 
     // Process tool rule.
     else if (fl_string_dynamic_compare_string(local->buffer.string + local->rule_objects.array[i].start, firewall_tool_s, length) == F_equal_to) {
-      length = (local->rule_contents.array[i].array[0].stop - local->rule_contents.array[i].array[0].start) + 1;
+      length = (local->rule_contents.array[i].array[0].start > local->rule_contents.array[i].array[0].stop) ? 0 : (local->rule_contents.array[i].array[0].stop - local->rule_contents.array[i].array[0].start) + 1;
 
       if (local->rule_contents.array[i].used != 1) {
         invalid = F_true;
@@ -308,7 +308,7 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
     }
 
     if (invalid) {
-      length = (local->rule_objects.array[i].stop - local->rule_objects.array[i].start) + 1;
+      length = (local->rule_objects.array[i].start > local->rule_objects.array[i].stop) ? 0 : (local->rule_objects.array[i].stop - local->rule_objects.array[i].start) + 1;
 
       if (length) {
         flockfile(data->main->warning.to.stream);
@@ -479,7 +479,7 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
           // Skip past the chain.
           ++subcounter;
 
-          length = (local->rule_contents.array[i].array[subcounter].stop - local->rule_contents.array[i].array[subcounter].start) + 1;
+          length = (local->rule_contents.array[i].array[subcounter].start > local->rule_contents.array[i].array[subcounter].stop) ? 0 : (local->rule_contents.array[i].array[subcounter].stop - local->rule_contents.array[i].array[subcounter].start) + 1;
 
           if (length) {
             ip_list.used = 0;
@@ -502,7 +502,7 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
 
         for (; subcounter < local->rule_contents.array[i].used; ++subcounter) {
 
-          length = (local->rule_contents.array[i].array[subcounter].stop - local->rule_contents.array[i].array[subcounter].start) + 1;
+          length = (local->rule_contents.array[i].array[subcounter].start > local->rule_contents.array[i].array[subcounter].stop) ? 0 : (local->rule_contents.array[i].array[subcounter].stop - local->rule_contents.array[i].array[subcounter].start) + 1;
 
           if (length) {
             arguments.array[arguments.used].used = 0;
@@ -515,7 +515,7 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
         } // for
       }
       else {
-        length = (local->rule_objects.array[i].stop - local->rule_objects.array[i].start) + 1;
+        length = (local->rule_objects.array[i].start > local->rule_objects.array[i].stop) ? 0 : (local->rule_objects.array[i].stop - local->rule_objects.array[i].start) + 1;
 
         flockfile(data->main->warning.to.stream);
 
@@ -872,7 +872,7 @@ f_status_t firewall_create_custom_chains(firewall_data_t * const data, firewall_
       if (F_status_is_error(status)) break;
 
       create_chain = F_true;
-      length = (local->chain_objects.array[i].stop - local->chain_objects.array[i].start) + 1;
+      length = (local->chain_objects.array[i].start > local->chain_objects.array[i].stop) ? 0 : (local->chain_objects.array[i].stop - local->chain_objects.array[i].start) + 1;
 
       arguments.array[1].used = 0;
 
