@@ -196,7 +196,7 @@ extern "C" {
  *   F_output_not (with error bit) if setting is NULL.
  */
 #ifndef _di_firewall_print_error_unhandled_
-  extern f_status_t firewall_print_error_unhandled(const fl_print_t print, const f_string_t function, const f_string_static_t file);
+  extern f_status_t firewall_print_error_unhandled(fl_print_t * const print, const f_string_t function, const f_string_static_t file);
 #endif // _di_firewall_print_error_unhandled_
 
 #ifdef __cplusplus

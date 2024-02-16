@@ -27,7 +27,7 @@ extern "C" {
 
     f_print_dynamic_raw(f_string_eol_s, print->to);
 
-    fll_program_print_help_usage(print, firewall_program_name_s, firewall_program_help_commands_s);
+    fll_program_print_help_usage(print, firewall_program_name_s, firewall_program_help_parameters_s);
 
     f_file_stream_flush(print->to);
     f_file_stream_unlock(print->to);
@@ -44,13 +44,13 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     if (left.used) {
-      fl_print_format("%[%Q%] ", print->to, print->set.standout, left, print->set.standout);
+      fl_print_format("%[%Q%] ", print->to, print->set->standout, left, print->set->standout);
     }
 
-    fll_print_format("%[%Q%]", print->to, print->set.standout, print->set.standout, print->set.title, print->set.title, print->set.standout, print->set.standout, f_string_eol_s);
+    fll_print_format("%[%Q%]", print->to, print->set->standout, print->set->standout, print->set->title, print->set->title, print->set->standout, print->set->standout, f_string_eol_s);
 
     if (left.used) {
-      fl_print_format(" %[%Q%]", print->to, print->set.standout, right, print->set.standout);
+      fl_print_format(" %[%Q%]", print->to, print->set->standout, right, print->set->standout);
     }
 
     f_print_dynamic_raw(f_string_eol_s, print->to);

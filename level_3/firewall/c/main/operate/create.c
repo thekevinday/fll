@@ -19,13 +19,13 @@ extern "C" {
 
     f_string_static_t tool = firewall_tool_iptables_s;
 
-    main->cache.chain_ids.used = 0;
+    main->data.chain_ids.used = 0;
     main->cache.arguments.used = 0;
 
     main->setting.state.status = f_memory_array_increase_by(2, sizeof(f_string_dynamic_t), (void **) &main->cache.arguments.array, &main->cache.arguments.used, &main->cache.arguments.size);
 
     if (F_status_is_error_not(main->setting.state.status)) {
-      main->setting.state.status = f_memory_array_increase_by(main->cache.chain_objects.used, sizeof(f_number_unsigned_t), (void **) &main->cache.chain_ids.array, &main->cache.chain_ids.used, &main->cache.chain_ids.size);
+      main->setting.state.status = f_memory_array_increase_by(main->data.chain_objects.used, sizeof(f_number_unsigned_t), (void **) &main->data.chain_ids.array, &main->data.chain_ids.used, &main->data.chain_ids.size);
     }
 
     if (F_status_is_error(main->setting.state.status)) {
@@ -34,10 +34,10 @@ extern "C" {
       return;
     }
 
-    main->cache.chain_ids.used = main->cache.chain_objects.used;
-    memset(main->cache.chain_ids.array, 0, sizeof(f_number_unsigned_t) * main->cache.chain_ids.used);
+    main->data.chain_ids.used = main->data.chain_objects.used;
+    memset(main->data.chain_ids.array, 0, sizeof(f_number_unsigned_t) * main->data.chain_ids.used);
 
-    main->setting.state.status = f_string_dynamic_append(firewall_chain_create_command_s, &main->cache.arguments.array[0]);
+    main->setting.state.status = f_string_dynamic_append(firewall_chain_create_operation_s, &main->cache.arguments.array[0]);
 
     if (F_status_is_error(main->setting.state.status)) {
       firewall_print_error(&main->program.error, macro_firewall_f(f_string_dynamic_append));
@@ -56,7 +56,7 @@ extern "C" {
     main->cache.arguments.used = 2;
     main->data.has = 0;
 
-    for (; i < main->cache.chain_objects.used; ++i) {
+    for (; i < main->data.chain_objects.used; ++i) {
 
       if (firewall_signal_check(main)) return;
 
@@ -64,37 +64,37 @@ extern "C" {
       j = 0;
 
       // Skip globally reserved chain name: main.
-      if (f_compare_dynamic_partial_string(firewall_group_main_s.string, main->cache.buffer, firewall_group_main_s.used, main->cache.chain_objects.array[i]) == F_equal_to) {
+      if (f_compare_dynamic_partial_string(firewall_group_main_s.string, main->data.buffer, firewall_group_main_s.used, main->data.chain_objects.array[i]) == F_equal_to) {
         new_chain = F_false;
         main->data.has |= firewall_data_has_main_e;
         main->data.main = i;
       }
 
       // Skip globally reserved chain name: stop.
-      if (f_compare_dynamic_partial_string(firewall_group_stop_s.string, main->cache.buffer, firewall_group_stop_s.used, main->cache.chain_objects.array[i]) == F_equal_to) {
+      if (f_compare_dynamic_partial_string(firewall_group_stop_s.string, main->data.buffer, firewall_group_stop_s.used, main->data.chain_objects.array[i]) == F_equal_to) {
         new_chain = F_false;
         main->data.has |= firewall_data_has_stop_e;
         main->data.stop = i;
       }
 
       // Skip globally reserved chain name: lock.
-      if (f_compare_dynamic_partial_string(firewall_group_lock_s.string, main->cache.buffer, firewall_group_lock_s.used, main->cache.chain_objects.array[i]) == F_equal_to) {
+      if (f_compare_dynamic_partial_string(firewall_group_lock_s.string, main->data.buffer, firewall_group_lock_s.used, main->data.chain_objects.array[i]) == F_equal_to) {
         new_chain = F_false;
         main->data.has |= firewall_data_has_lock_e;
         main->data.lock = i;
       }
 
       // Skip globally reserved chain name: none.
-      if (f_compare_dynamic_partial_string(firewall_chain_none_s.string, main->cache.buffer, firewall_chain_none_s.used, main->cache.chain_objects.array[i]) == F_equal_to) {
+      if (f_compare_dynamic_partial_string(firewall_chain_none_s.string, main->data.buffer, firewall_chain_none_s.used, main->data.chain_objects.array[i]) == F_equal_to) {
         new_chain = F_false;
       }
 
       if (new_chain) {
-        for (; j < main->data.chains.used; ++j) {
+        for (; j < main->setting.chains.used; ++j) {
 
-          if (f_compare_dynamic_partial_string(main->data.chains.array[j].string, main->cache.buffer, main->data.chains.array[j].used, main->cache.chain_objects.array[i]) == F_equal_to) {
+          if (f_compare_dynamic_partial_string(main->setting.chains.array[j].string, main->data.buffer, main->setting.chains.array[j].used, main->data.chain_objects.array[i]) == F_equal_to) {
             new_chain = F_false;
-            main->cache.chain_ids.array[i] = j;
+            main->data.chain_ids.array[i] = j;
 
             break;
           }
@@ -102,7 +102,7 @@ extern "C" {
       }
 
       if (new_chain) {
-        main->setting.state.status = f_memory_array_increase(firewall_default_allocation_step_d, sizeof(f_string_dynamic_t), (void **) &main->data.chains.array, &main->data.chains.used, &main->data.chains.size);
+        main->setting.state.status = f_memory_array_increase(firewall_allocation_small_d, sizeof(f_string_dynamic_t), (void **) &main->setting.chains.array, &main->setting.chains.used, &main->setting.chains.size);
 
         if (F_status_is_error(main->setting.state.status)) {
           firewall_print_error(&main->program.error, macro_firewall_f(f_memory_array_increase));
@@ -111,14 +111,14 @@ extern "C" {
         }
 
         create_chain = F_true;
-        length = (main->data.chain_objects.array[i].stop - main->data.chain_objects.array[i].start) + 1;
+        length = (main->data.chain_objects.array[i].start > main->data.chain_objects.array[i].stop) ? 0 : (main->data.chain_objects.array[i].stop - main->data.chain_objects.array[i].start) + 1;
 
         main->cache.arguments.array[1].used = 0;
 
         main->setting.state.status = f_memory_array_increase_by(length + 1, sizeof(f_char_t), (void **) &main->cache.arguments.array[1].string, &main->cache.arguments.array[1].used, &main->cache.arguments.array[1].size);
 
         if (F_status_is_error_not(main->setting.state.status)) {
-          main->setting.state.status = f_memory_array_increase_by(length + 1, sizeof(f_char_t), (void **) &main->data.chains.array[main->data.chains.used].string, &main->data.chains.array[main->data.chains.used].used, &main->data.chains.array[main->data.chains.used].size);
+          main->setting.state.status = f_memory_array_increase_by(length + 1, sizeof(f_char_t), (void **) &main->setting.chains.array[main->setting.chains.used].string, &main->setting.chains.array[main->setting.chains.used].used, &main->setting.chains.array[main->setting.chains.used].size);
         }
 
         if (F_status_is_error(main->setting.state.status)) {
@@ -127,20 +127,31 @@ extern "C" {
           return;
         }
 
-        main->data.chains.array[main->data.chains.used].used = 0;
-        main->data.chain_ids.array[i] = main->data.chains.used;
+        f_string_dynamic_partial_append_nulless(main->data.buffer, main->data.chain_objects.array[i], &main->cache.arguments.array[1]);
 
-        // Copy the string character by character, ignoring placeholders.
-        for (j = main->data.chain_objects.array[i].start; j <= main->data.chain_objects.array[i].stop; ++j) {
+        if (F_status_is_error_not(main->setting.state.status)) {
+          f_string_dynamic_partial_append_nulless(main->data.buffer, main->data.chain_objects.array[i], &main->setting.chains.array[main->setting.chains.used]);
+        }
 
-          if (main->data.buffer.string[j] == f_fss_placeholder_s.string[0]) continue;
+        if (F_status_is_error(main->setting.state.status)) {
+          firewall_print_error(&main->program.error, macro_firewall_f(f_string_dynamic_partial_append_nulless));
 
-          main->data.chains.array[main->data.chains.used].string[main->data.chains.array[main->data.chains.used].used++] = main->data.buffer.string[j];
-          main->cache.arguments.array[1].string[main->cache.arguments.array[1].used++] = main->data.buffer.string[j];
-        } // for
+          return;
+        }
 
-        main->cache.arguments.array[1].string[main->cache.arguments.array[1].used] = 0;
-        main->data.chains.array[main->data.chains.used].string[main->data.chains.array[main->data.chains.used].used] = 0;
+        f_string_dynamic_terminate_after(&main->cache.arguments.array[1]);
+
+        if (F_status_is_error_not(main->setting.state.status)) {
+          f_string_dynamic_terminate_after(&main->setting.chains.array[main->setting.chains.used]);
+        }
+
+        if (F_status_is_error(main->setting.state.status)) {
+          firewall_print_error(&main->program.error, macro_firewall_f(f_string_dynamic_terminate_after));
+
+          return;
+        }
+
+        main->data.chain_ids.array[i] = main->setting.chains.used;
 
         if (f_compare_dynamic(main->cache.arguments.array[1], firewall_chain_forward_s) == F_equal_to) {
           create_chain = F_false;
@@ -159,14 +170,14 @@ extern "C" {
         }
 
         if (create_chain) {
-          firewall_print_debug_tool(main->program->warning, firewall_tool_iptables_s, main->cache.arguments);
+          firewall_print_debug_tool(&main->program.warning, firewall_tool_iptables_s, main->cache.arguments);
 
           tool = firewall_tool_iptables_s;
 
           main->setting.state.status = fll_execute_program(firewall_tool_iptables_s, main->cache.arguments, 0, 0, (void *) &return_code);
 
           if (main->setting.state.status == F_child) {
-            main->program->child = return_code;
+            main->program.child = return_code;
 
             return;
           }
@@ -176,13 +187,13 @@ extern "C" {
           if (F_status_is_error_not(main->setting.state.status) && main->setting.state.status != F_child) {
             tool = firewall_tool_ip6tables_s;
 
-            firewall_print_debug_tool(main->program->warning, firewall_tool_ip6tables_s, main->cache.arguments);
+            firewall_print_debug_tool(&main->program.warning, firewall_tool_ip6tables_s, main->cache.arguments);
 
             main->setting.state.status = fll_execute_program(firewall_tool_ip6tables_s, main->cache.arguments, 0, 0, (void *) &return_code);
           }
 
           if (main->setting.state.status == F_child) {
-            main->program->child = return_code;
+            main->program.child = return_code;
 
             return;
           }
@@ -191,7 +202,7 @@ extern "C" {
 
           if (F_status_is_error(main->setting.state.status)) {
             if (F_status_set_fine(main->setting.state.status) == F_failure) {
-              firewall_print_error_operation(main->program->error, tool, main->cache.arguments);
+              firewall_print_error_operation(&main->program.error, tool, main->cache.arguments);
             }
             else {
               firewall_print_error(&main->program.error, macro_firewall_f(fll_execute_program));
@@ -201,7 +212,7 @@ extern "C" {
           }
         }
 
-        ++main->data.chains.used;
+        ++main->setting.chains.used;
       }
     } // for
 

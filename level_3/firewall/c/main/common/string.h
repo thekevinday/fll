@@ -349,33 +349,33 @@ extern "C" {
 #endif // _di_firewall_path_s_
 
 /**
- * The show option related strings.
+ * The show option related strings for printing to the screen.
  */
-#ifndef _di_firewall_show_s_
-  #define FIREWALL_show_filter_s "FILTER"
-  #define FIREWALL_show_mangle_s "MANGLE"
-  #define FIREWALL_show_nat_s    "NAT"
+#ifndef _di_firewall_print_show_s_
+  #define FIREWALL_print_show_filter_s "FILTER"
+  #define FIREWALL_print_show_mangle_s "MANGLE"
+  #define FIREWALL_print_show_nat_s    "NAT"
 
-  #define FIREWALL_show_bars_26_s "=========================="
-  #define FIREWALL_show_bars_27_s "============================"
-  #define FIREWALL_show_bars_28_s "============================"
+  #define FIREWALL_print_show_bars_26_s "=========================="
+  #define FIREWALL_print_show_bars_27_s "============================"
+  #define FIREWALL_print_show_bars_28_s "============================"
 
-  #define FIREWALL_show_filter_s_length 6
-  #define FIREWALL_show_mangle_s_length 6
-  #define FIREWALL_show_nat_s_length    3
+  #define FIREWALL_print_show_filter_s_length 6
+  #define FIREWALL_print_show_mangle_s_length 6
+  #define FIREWALL_print_show_nat_s_length    3
 
-  #define FIREWALL_show_bars_26_s_length 26
-  #define FIREWALL_show_bars_27_s_length 27
-  #define FIREWALL_show_bars_28_s_length 28
+  #define FIREWALL_print_show_bars_26_s_length 26
+  #define FIREWALL_print_show_bars_27_s_length 27
+  #define FIREWALL_print_show_bars_28_s_length 28
 
-  extern const f_string_static_t firewall_show_filter_s;
-  extern const f_string_static_t firewall_show_mangle_s;
-  extern const f_string_static_t firewall_show_nat_s;
+  extern const f_string_static_t firewall_print_show_filter_s;
+  extern const f_string_static_t firewall_print_show_mangle_s;
+  extern const f_string_static_t firewall_print_show_nat_s;
 
-  extern const f_string_static_t firewall_show_bars_26_s;
-  extern const f_string_static_t firewall_show_bars_27_s;
-  extern const f_string_static_t firewall_show_bars_28_s;
-#endif // _di_firewall_show_s_
+  extern const f_string_static_t firewall_print_show_bars_26_s;
+  extern const f_string_static_t firewall_print_show_bars_27_s;
+  extern const f_string_static_t firewall_print_show_bars_28_s;
+#endif // _di_firewall_print_show_s_
 
 #ifdef __cplusplus
 } // extern "C"

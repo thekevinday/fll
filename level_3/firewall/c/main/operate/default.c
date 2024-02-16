@@ -17,7 +17,7 @@ extern "C" {
 
     f_string_static_t argument_array[arguments.used];
     arguments.array = argument_array;
-    arguments.array[0] = firewall_action_policy_command_s;
+    arguments.array[0] = firewall_action_policy_operation_s;
     arguments.array[2] = firewall_chain_drop_s;
 
     int return_code = 0;
@@ -30,14 +30,14 @@ extern "C" {
 
       for (j = 0; j < 2; ++j) {
 
-        firewall_print_debug_tool(data->main->warning, tools[j], arguments);
+        firewall_print_debug_tool(&main->program.warning, tools[j], arguments);
 
         return_code = 0;
 
         main->setting.state.status = fll_execute_program(tools[j], arguments, 0, 0, (void *) &return_code);
 
         if (main->setting.state.status == F_child) {
-          data->main->child = return_code;
+          main->program.child = return_code;
 
           return;
         }
@@ -46,7 +46,7 @@ extern "C" {
 
         if (F_status_is_error(main->setting.state.status)) {
           if (F_status_set_fine(main->setting.state.status) == F_failure) {
-            firewall_print_error_operation(main->program->error, tools[j], arguments);
+            firewall_print_error_operation(&main->program.error, tools[j], arguments);
           }
           else {
             firewall_print_error(&main->program.error, macro_firewall_f(fll_execute_program));

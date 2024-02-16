@@ -22,30 +22,32 @@ extern "C" {
  * Properties:
  *   - file: The file structure.
  *
- *   - buffer:             A generic string buffer.
- *   - device:             The device string.
- *   - ip_list:            The ip_list string.
- *   - local_buffer:       The protocol string.
- *   - path_file:          The protocol string.
- *   - path_file_specific: The protocol string.
- *   - protocol:           The protocol string.
- *   - arguments:          The array of strings.
+ *   - buffer:             A buffer used when proessing the basic objects and contents cache.
+ *   - device:             The device.
+ *   - ip_list:            The ip list.
+ *   - path_file:          The path to a file.
+ *   - path_file_specific: The specific path to a file.
+ *   - protocol:           The protocol.
+ *   - arguments:          The arguments array.
+ *
+ *   - delimits: The delimits array used when loading FSS data.
  *
  *   - basic_objects:  The FSS Basic Objects.
  *   - basic_contents: The FSS Basic Contents.
  */
 #ifndef _di_firewall_cache_t_
   typedef struct {
-    f_file_t file = f_file_t_initialize;
+    f_file_t file;
 
     f_string_dynamic_t buffer;
     f_string_dynamic_t device;
     f_string_dynamic_t ip_list;
-    f_string_dynamic_t local_buffer;
     f_string_dynamic_t path_file;
     f_string_dynamic_t path_file_specific;
     f_string_dynamic_t protocol;
     f_string_dynamics_t arguments;
+
+    f_number_unsigneds_t delimits;
 
     f_ranges_t basic_objects;
     f_rangess_t basic_contents;
@@ -60,8 +62,8 @@ extern "C" {
       f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
       f_string_dynamics_t_initialize, \
+      f_number_unsigneds_t_initialize, \
       f_ranges_t_initialize, \
       f_rangess_t_initialize, \
     }
@@ -81,10 +83,9 @@ extern "C" {
  *   - stop:   The stop position.
  *   - range:  A range used during operation processing.
  *
- *   - buffer: The buffer used for during processing.
+ *   - buffer: The entire set of chains and rules to operate on.
  *
  *   - chain_ids: The list of chain IDs.
- *   - delimits: The delimits array used when loading FSS data.
  *
  *   - chain_objects:  The list of chain Objects.
  *   - rule_objects:   The list of rule Objects.
@@ -103,11 +104,11 @@ extern "C" {
     f_number_unsigned_t stop;
     f_range_t range;
 
-    f_number_unsigneds_t chain_ids;
-    f_number_unsigneds_t delimits;
-
     f_string_dynamic_t buffer;
 
+    f_number_unsigneds_t chain_ids;
+
+    f_ranges_t comments;
     f_ranges_t chain_objects;
     f_ranges_t rule_objects;
     f_rangess_t chain_contents;
@@ -124,9 +125,9 @@ extern "C" {
       0, \
       0, \
       f_range_t_initialize, \
-      f_number_unsigneds_t_initialize, \
-      f_number_unsigneds_t_initialize, \
       f_string_dynamic_t_initialize, \
+      f_number_unsigneds_t_initialize, \
+      f_ranges_t_initialize, \
       f_ranges_t_initialize, \
       f_ranges_t_initialize, \
       f_rangess_t_initialize, \
@@ -205,7 +206,7 @@ extern "C" {
  *   This does not alter main.setting.state.status.
  */
 #ifndef _di_firewall_cache_delete_
-  extern void firewall_data_delete(firewall_cache_t * const cache);
+  extern void firewall_cache_delete(firewall_cache_t * const cache);
 #endif // _di_firewall_cache_delete_
 
 /**

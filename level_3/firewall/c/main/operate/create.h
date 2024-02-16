@@ -45,7 +45,7 @@ extern "C" {
  */
 #ifndef _di_firewall_operate_create_custom_chains_
   extern void firewall_operate_create_custom_chains(firewall_main_t * const main);
-#endif / _di_firewall_operate_create_custom_chains_
+#endif // _di_firewall_operate_create_custom_chains_
 
 #ifdef __cplusplus
 } // extern "C"

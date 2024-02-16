@@ -10,14 +10,14 @@ extern "C" {
     if (!main || F_status_is_error_not(main->setting.state.status) && main->setting.state.status == F_child) return;
 
     const f_string_static_t tools[2] = { firewall_tool_iptables_s, firewall_tool_ip6tables_s };
-    const f_string_static_t command[2] = { firewall_chain_flush_command_s, firewall_chain_delete_command_s };
+    const f_string_static_t command[2] = { firewall_chain_flush_operation_s, firewall_chain_delete_operation_s };
 
     f_string_statics_t arguments = f_string_statics_t_initialize;
     arguments.used = 1;
 
     f_string_static_t argument_array[arguments.used];
     arguments.array = argument_array;
-    argument_array[0] = firewall_chain_flush_command_s;
+    argument_array[0] = firewall_chain_flush_operation_s;
 
     int return_code = 0;
     uint8_t i = 0;
@@ -33,19 +33,19 @@ extern "C" {
 
         return_code = 0;
 
-        firewall_print_debug_tool(data->main->warning, tools[j], arguments);
+        firewall_print_debug_tool(&main->program.warning, tools[j], arguments);
 
         main->setting.state.status = fll_execute_program(tools[j], arguments, 0, 0, (void *) &return_code);
 
         if (main->setting.state.status == F_child) {
-          data->main->child = return_code;
+          main->program.child = return_code;
 
           return;
         }
 
         if (F_status_is_error(main->setting.state.status)) {
           if (F_status_set_fine(main->setting.state.status) == F_failure) {
-            firewall_print_error_operation(main->program->error, tools[j], arguments);
+            firewall_print_error_operation(&main->program.error, tools[j], arguments);
           }
           else {
             firewall_print_error(&main->program.error, macro_firewall_f(fll_execute_program));

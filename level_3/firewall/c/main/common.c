@@ -83,6 +83,7 @@ extern "C" {
     }
 
     f_number_unsigned_t at = 0;
+    f_number_unsigned_t index = 0;
 
     if (main->program.parameters.array[firewall_parameter_operation_start_e].result & f_console_result_found_e) {
       main->setting.flag &= ~firewall_main_flag_operation_lock_e;
@@ -153,30 +154,50 @@ extern "C" {
     }
 
     if (main->setting.flag & firewall_main_flag_operation_show_e) {
-      if (main->parameters.remaining.used) {
+      if (main->program.parameters.remaining.used) {
         main->setting.flag &= ~firewall_main_flag_operation_show_filter_nat_mangle_e;
 
-        for (at = 0; at < main->parameters.remaining.used; ++at) {
+        for (at = 0; at < main->program.parameters.remaining.used; ++at) {
 
           if (firewall_signal_check(main)) return;
 
-          if (f_compare_dynamic(firewall_show_nat_s, data.argv[main->program.parameters.remaining.array[at]]) == F_equal_to) {
+          index = main->program.parameters.remaining.array[at];
+
+          if (f_compare_dynamic(firewall_show_nat_s, main->program.parameters.arguments.array[index]) == F_equal_to) {
             main->setting.flag |= firewall_main_flag_operation_show_nat_e;
           }
-          else if (f_compare_dynamic(firewall_show_mangle_s, data.argv[main->program.parameters.remaining.array[at]]) == F_equal_to) {
+          else if (f_compare_dynamic(firewall_show_mangle_s, main->program.parameters.arguments.array[index]) == F_equal_to) {
             main->setting.flag |= firewall_main_flag_operation_show_mangle_e;
           }
-          else if (f_compare_dynamic(firewall_show_fillter_s, data.argv[main->program.parameters.remaining.array[at]]) == F_equal_to) {
+          else if (f_compare_dynamic(firewall_show_filter_s, main->program.parameters.arguments.array[index]) == F_equal_to) {
             main->setting.flag |= firewall_main_flag_operation_show_filter_e;
           }
           else {
-            firewall_print_warning_show_option_unknown(&main->warning, data.argv[main->program.parameters.remaining.array[at]]);
+            firewall_print_warning_show_option_unknown(&main->program.warning, main->program.parameters.arguments.array[index]);
           }
         } // for
       }
       else {
         main->setting.flag |= firewall_main_flag_operation_show_filter_nat_mangle_e;
       }
+    }
+    else {
+      // @todo
+
+      // Example:
+      /*
+      for (f_number_unsigned_t number = 0; index < main->program.parameters.remaining.used; ++index) {
+
+        if (control_signal_check(main)) return;
+
+        number = main->program.parameters.remaining.array[index];
+
+        // Statically allocate the inner strings.
+        main->setting.actions.array[main->setting.actions.used].string = main->program.parameters.arguments.array[number].string;
+        main->setting.actions.array[main->setting.actions.used].used = main->program.parameters.arguments.array[number].used;
+        main->setting.actions.array[main->setting.actions.used++].size = 0;
+      } // for
+      */
     }
   }
 #endif // _di_firewall_setting_load_

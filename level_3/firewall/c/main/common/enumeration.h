@@ -91,6 +91,7 @@ extern "C" {
  *
  * firewall_chain_*_e:
  *   - none:        The chain is none.
+ *   - custom:      The chain is custom.
  *   - forward:     The chain is forward.
  *   - input:       The chain is input.
  *   - output:      The chain is output.
@@ -100,6 +101,7 @@ extern "C" {
 #ifndef _di_firewall_action_e_
   enum {
     firewall_chain_none_e,
+    firewall_chain_custom_e,
     firewall_chain_forward_e,
     firewall_chain_input_e,
     firewall_chain_output_e,
@@ -189,22 +191,22 @@ extern "C" {
  */
 #ifndef _di_firewall_parameter_e_
   enum {
-    fake_parameter_operation_lock_e = f_console_standard_parameter_last_e,
-    fake_parameter_operation_restart_e,
-    fake_parameter_operation_show_e,
-    fake_parameter_operation_start_e,
-    fake_parameter_operation_stop_e,
+    firewall_parameter_operation_lock_e = f_console_standard_parameter_last_e,
+    firewall_parameter_operation_restart_e,
+    firewall_parameter_operation_show_e,
+    firewall_parameter_operation_start_e,
+    firewall_parameter_operation_stop_e,
   }; // enum
 
   #define firewall_console_parameter_t_initialize \
     { \
       macro_fll_program_console_parameter_standard_initialize, \
       \
-      macro_f_console_parameter_t_initialize_6(fake_other_operation_lock_s,    0, f_console_flag_simple_e), \
-      macro_f_console_parameter_t_initialize_6(fake_other_operation_restart_s, 0, f_console_flag_simple_e), \
-      macro_f_console_parameter_t_initialize_6(fake_other_operation_show_s,    0, f_console_flag_simple_e), \
-      macro_f_console_parameter_t_initialize_6(fake_other_operation_start_s,   0, f_console_flag_simple_e), \
-      macro_f_console_parameter_t_initialize_6(fake_other_operation_stop_s,    0, f_console_flag_simple_e), \
+      macro_f_console_parameter_t_initialize_6(firewall_operation_lock_s,    0, f_console_flag_simple_e), \
+      macro_f_console_parameter_t_initialize_6(firewall_operation_restart_s, 0, f_console_flag_simple_e), \
+      macro_f_console_parameter_t_initialize_6(firewall_operation_show_s,    0, f_console_flag_simple_e), \
+      macro_f_console_parameter_t_initialize_6(firewall_operation_start_s,   0, f_console_flag_simple_e), \
+      macro_f_console_parameter_t_initialize_6(firewall_operation_stop_s,    0, f_console_flag_simple_e), \
     }
 
   #define firewall_parameter_total_d (f_console_parameter_state_type_total_d + 5)

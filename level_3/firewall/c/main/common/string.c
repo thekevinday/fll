@@ -93,14 +93,6 @@ extern "C" {
   const f_string_static_t firewall_tool_ipset_s = macro_f_string_static_t_initialize_1(FIREWALL_tool_ipset_s, 0, FIREWALL_tool_ipset_s_length);
 #endif // _di_firewall_s_
 
-#ifndef _di_firewall_operation_s_
-  const f_string_static_t firewall_operation_start_s = macro_f_string_static_t_initialize_1(FIREWALL_operation_start_s, 0, FIREWALL_operation_start_s_length);
-  const f_string_static_t firewall_operation_stop_s = macro_f_string_static_t_initialize_1(FIREWALL_operation_stop_s, 0, FIREWALL_operation_stop_s_length);
-  const f_string_static_t firewall_operation_restart_s = macro_f_string_static_t_initialize_1(FIREWALL_operation_restart_s, 0, FIREWALL_operation_restart_s_length);
-  const f_string_static_t firewall_operation_lock_s = macro_f_string_static_t_initialize_1(FIREWALL_operation_lock_s, 0, FIREWALL_operation_lock_s_length);
-  const f_string_static_t firewall_operation_show_s = macro_f_string_static_t_initialize_1(FIREWALL_operation_show_s, 0, FIREWALL_operation_show_s_length);
-#endif // _di_firewall_operation_s_
-
 #ifndef _di_firewall_path_s_
   const f_string_static_t firewall_file_first_s = macro_f_string_static_t_initialize_1(FIREWALL_file_first_s, 0, FIREWALL_file_first_s_length);
   const f_string_static_t firewall_file_last_s = macro_f_string_static_t_initialize_1(FIREWALL_file_last_s, 0, FIREWALL_file_last_s_length);
@@ -111,15 +103,15 @@ extern "C" {
   const f_string_static_t firewall_network_devices_s = macro_f_string_static_t_initialize_1(FIREWALL_network_devices_s, 0, FIREWALL_network_devices_s_length);
 #endif // _di_firewall_path_s_
 
-#ifndef _di_firewall_show_s_
-  const f_string_static_t firewall_show_filter_s = macro_f_string_static_t_initialize_1(FIREWALL_show_filter_s, 0, FIREWALL_show_filter_s_length);
-  const f_string_static_t firewall_show_mangle_s = macro_f_string_static_t_initialize_1(FIREWALL_show_mangle_s, 0, FIREWALL_show_mangle_s_length);
-  const f_string_static_t firewall_show_nat_s = macro_f_string_static_t_initialize_1(FIREWALL_show_nat_s, 0, FIREWALL_show_nat_s_length);
+#ifndef _di_firewall_print_show_s_
+  const f_string_static_t firewall_print_show_filter_s = macro_f_string_static_t_initialize_1(FIREWALL_print_show_filter_s, 0, FIREWALL_print_show_filter_s_length);
+  const f_string_static_t firewall_print_show_mangle_s = macro_f_string_static_t_initialize_1(FIREWALL_print_show_mangle_s, 0, FIREWALL_print_show_mangle_s_length);
+  const f_string_static_t firewall_print_show_nat_s = macro_f_string_static_t_initialize_1(FIREWALL_print_show_nat_s, 0, FIREWALL_print_show_nat_s_length);
 
-  const f_string_static_t firewall_show_bars_26_s = macro_f_string_static_t_initialize_1(FIREWALL_show_bars_26_s, 0, FIREWALL_show_bars_26_s_length);
-  const f_string_static_t firewall_show_bars_27_s = macro_f_string_static_t_initialize_1(FIREWALL_show_bars_27_s, 0, FIREWALL_show_bars_27_s_length);
-  const f_string_static_t firewall_show_bars_28_s = macro_f_string_static_t_initialize_1(FIREWALL_show_bars_28_s, 0, FIREWALL_show_bars_28_s_length);
-#endif // _di_firewall_show_s_
+  const f_string_static_t firewall_print_show_bars_26_s = macro_f_string_static_t_initialize_1(FIREWALL_print_show_bars_26_s, 0, FIREWALL_print_show_bars_26_s_length);
+  const f_string_static_t firewall_print_show_bars_27_s = macro_f_string_static_t_initialize_1(FIREWALL_print_show_bars_27_s, 0, FIREWALL_print_show_bars_27_s_length);
+  const f_string_static_t firewall_print_show_bars_28_s = macro_f_string_static_t_initialize_1(FIREWALL_print_show_bars_28_s, 0, FIREWALL_print_show_bars_28_s_length);
+#endif // _di_firewall_print_show_s_
 
 #ifdef __cplusplus
 } // extern "C"
