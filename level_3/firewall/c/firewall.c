@@ -109,7 +109,7 @@ extern "C" {
     // Identify priority of verbosity related parameters.
     {
       f_console_parameter_id_t ids[5] = { firewall_parameter_verbosity_quiet_e, firewall_parameter_verbosity_error_e, firewall_parameter_verbosity_normal_e, firewall_parameter_verbosity_verbose_e, firewall_parameter_verbosity_debug_e };
-      const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 4);
+      const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 5);
       f_console_parameter_id_t choice = 0;
 
       status = f_console_parameter_prioritize_right(main->parameters, choices, &choice);
