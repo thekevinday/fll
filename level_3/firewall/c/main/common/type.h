@@ -83,6 +83,7 @@ extern "C" {
  *   - stop:   The stop position.
  *   - range:  A range used during operation processing.
  *
+ *   - file:   The file name currently in use.
  *   - buffer: The entire set of chains and rules to operate on.
  *
  *   - chain_ids: The list of chain IDs.
@@ -104,6 +105,7 @@ extern "C" {
     f_number_unsigned_t stop;
     f_range_t range;
 
+    f_string_static_t  file;
     f_string_dynamic_t buffer;
 
     f_number_unsigneds_t chain_ids;
@@ -125,6 +127,7 @@ extern "C" {
       0, \
       0, \
       f_range_t_initialize, \
+      f_string_static_t_initialize, \
       f_string_dynamic_t_initialize, \
       f_number_unsigneds_t_initialize, \
       f_ranges_t_initialize, \

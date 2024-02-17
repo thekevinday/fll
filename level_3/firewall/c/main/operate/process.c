@@ -183,6 +183,8 @@ extern "C" {
           valid = F_false;
         }
       }
+
+      // Process protocol rule.
       else if (f_compare_dynamic_partial_string(firewall_protocol_s.string, main->data.buffer, firewall_protocol_s.used, rule_objects->array[i]) == F_equal_to) {
         if (rule_contents->array[i].used != 1) {
           valid = F_false;
@@ -234,7 +236,7 @@ extern "C" {
       }
 
       // If the remaining rule does not match as firewall_rule_s, then it is an invalid rule.
-      else if (f_compare_dynamic_partial_string(firewall_rule_s.string, main->data.buffer, firewall_rule_s.used, rule_objects->array[i]) == F_equal_to) {
+      else if (f_compare_dynamic_partial_string(firewall_rule_s.string, main->data.buffer, firewall_rule_s.used, rule_objects->array[i]) == F_equal_to_not) {
         firewall_print_warning_object_invalid_missing_line(&main->program.warning, i, main->data.buffer, main->data.rule_objects.array[i]);
 
         continue;
@@ -246,7 +248,7 @@ extern "C" {
         continue;
       }
 
-      for (j = repeat; F_status_is_error_not(main->setting.state.status) && j; --j) {
+      for (j = repeat; j; --j) {
 
         if (firewall_signal_check(main)) return;
 
@@ -381,25 +383,25 @@ extern "C" {
 
         // Last up is the "rule".
         if ((!is_ip_list && rule_contents->array[i].used > 0) || (is_ip_list && rule_contents->array[i].used > 1)) {
-          j = 0;
+          at = 0;
 
           if (is_ip_list) {
 
             // Skip past the chain.
-            ++j;
+            ++at;
 
-            if (rule_contents->array[i].array[j].start <= rule_contents->array[i].array[j].stop) {
+            if (rule_contents->array[i].array[at].start <= rule_contents->array[i].array[at].stop) {
               main->cache.ip_list.used = 0;
 
-              main->setting.state.status = f_string_dynamic_partial_append(main->data.buffer, rule_contents->array[i].array[j], &main->cache.ip_list);
+              main->setting.state.status = f_string_dynamic_partial_append(main->data.buffer, rule_contents->array[i].array[at], &main->cache.ip_list);
 
               if (F_status_is_error(main->setting.state.status)) {
 
                 // Prevent the loop below from being processed.
-                j = rule_contents->array[i].used;
+                at = rule_contents->array[i].used;
               }
               else {
-                ++j;
+                ++at;
               }
             }
           }
@@ -407,14 +409,14 @@ extern "C" {
           main->setting.state.status = f_memory_array_increase_by(rule_contents->array[i].used, sizeof(f_string_dynamic_t), (void **) &main->cache.arguments.array, &main->cache.arguments.used, &main->cache.arguments.size);
           if (F_status_is_error(main->setting.state.status)) return;
 
-          for (; j < rule_contents->array[i].used; ++j) {
+          for (; at < rule_contents->array[i].used; ++at) {
 
             if (firewall_signal_check(main)) return;
 
-            if (rule_contents->array[i].array[j].start <= rule_contents->array[i].array[j].stop) {
+            if (rule_contents->array[i].array[at].start <= rule_contents->array[i].array[at].stop) {
               main->cache.arguments.array[main->cache.arguments.used].used = 0;
 
-              main->setting.state.status = f_string_dynamic_partial_append(main->data.buffer, rule_contents->array[i].array[j], &main->cache.arguments.array[main->cache.arguments.used]);
+              main->setting.state.status = f_string_dynamic_partial_append(main->data.buffer, rule_contents->array[i].array[at], &main->cache.arguments.array[main->cache.arguments.used]);
               if (F_status_is_error(main->setting.state.status)) return;
 
               ++main->cache.arguments.used;

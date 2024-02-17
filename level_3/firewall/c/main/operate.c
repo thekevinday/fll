@@ -34,7 +34,6 @@ extern "C" {
     }
 
     f_number_unsigned_t i = 0;
-    f_string_static_t buffer = f_string_static_t_initialize;
 
     // Remove "lo" (loopback) from the device listing.
     for (; i < main->setting.devices.used; ++i) {
@@ -42,27 +41,30 @@ extern "C" {
       if (firewall_signal_check(main)) return;
 
       if (f_compare_dynamic(firewall_device_loop_s, main->setting.devices.array[i]) == F_equal_to) {
-        buffer = main->setting.devices.array[i];
+        main->data.file = main->setting.devices.array[i];
 
         for (--main->setting.devices.used; i < main->setting.devices.used; ++i) {
           main->setting.devices.array[i] = main->setting.devices.array[i + 1];
         } // for
 
-        main->setting.devices.array[main->setting.devices.used] = buffer;
+        main->setting.devices.array[main->setting.devices.used] = main->data.file;
       }
     } // for
 
-    if (main->setting.flag & firewall_main_flag_operation_stop_restart_lock_e) {
-      buffer.used = firewall_network_path_s.used + firewall_file_other_s.used;
+    main->data.file.string = 0;
+    main->data.file.used = 0;
 
-      f_char_t path_file_other[buffer.used + 1];
-      buffer.string = path_file_other;
-      path_file_other[buffer.used] = 0;
+    if (main->setting.flag & firewall_main_flag_operation_stop_restart_lock_e) {
+      main->data.file.used = firewall_network_path_s.used + firewall_file_other_s.used;
+
+      f_char_t path_file_other[main->data.file.used + 1];
+      main->data.file.string = path_file_other;
+      path_file_other[main->data.file.used] = 0;
 
       memcpy(path_file_other, firewall_network_path_s.string, sizeof(f_char_t) * firewall_network_path_s.used);
       memcpy(path_file_other + firewall_network_path_s.used, firewall_file_other_s.string, sizeof(f_char_t) * firewall_file_other_s.used);
 
-      firewall_operate_buffer_chain(main, buffer, F_false);
+      firewall_operate_buffer_chain(main, main->data.file, F_false);
       if (F_status_is_error(main->setting.state.status) || main->setting.state.status == F_child) return;
 
       for (i = 0; i < main->data.chain_objects.used; ++i) {
@@ -99,13 +101,13 @@ extern "C" {
         else {
           main->setting.state.status = F_status_set_error(F_data);
 
-          firewall_print_error_operation_files_missing(&main->program.error, firewall_operation_lock_s, buffer);
+          firewall_print_error_operation_files_missing(&main->program.error, firewall_operation_lock_s, main->data.file);
         }
 
         return;
       }
 
-      if (main->data.has & firewall_main_flag_operation_stop_restart_e) {
+      if (main->setting.flag & firewall_main_flag_operation_stop_restart_e) {
         if (main->data.has & firewall_data_has_stop_e) {
           firewall_operate_delete_chains(main);
 
@@ -127,24 +129,27 @@ extern "C" {
         else {
           main->setting.state.status = F_status_set_error(F_data);
 
-          firewall_print_error_operation_files_missing(&main->program.error, firewall_operation_stop_s, buffer);
+          firewall_print_error_operation_files_missing(&main->program.error, firewall_operation_stop_s, main->data.file);
 
           return;
         }
       }
+
+      main->data.file.string = 0;
+      main->data.file.used = 0;
     }
 
     if (main->setting.flag & firewall_main_flag_operation_start_restart_e) {
-      buffer.used = firewall_network_path_s.used + firewall_file_first_s.used;
+      main->data.file.used = firewall_network_path_s.used + firewall_file_first_s.used;
 
-      f_char_t path_file_first[buffer.used + 1];
-      buffer.string = path_file_first;
-      path_file_first[buffer.used] = 0;
+      f_char_t path_file_first[main->data.file.used + 1];
+      main->data.file.string = path_file_first;
+      path_file_first[main->data.file.used] = 0;
 
       memcpy(path_file_first, firewall_network_path_s.string, sizeof(f_char_t) * firewall_network_path_s.used);
       memcpy(path_file_first + firewall_network_path_s.used, firewall_file_first_s.string, sizeof(f_char_t) * firewall_file_first_s.used);
 
-      firewall_operate_buffer_chain(main, buffer, F_false);
+      firewall_operate_buffer_chain(main, main->data.file, F_false);
 
       if (main->setting.flag & firewall_main_flag_operation_start_e) {
         firewall_operate_delete_chains(main);
@@ -160,54 +165,31 @@ extern "C" {
 
       if (F_status_is_error(main->setting.state.status) || main->setting.state.status == F_child || (main->setting.flag & firewall_main_flag_operation_stop_e)) return;
 
-      {
-        for (f_number_unsigned_t j = 0; j < main->setting.devices.used; ++j) {
+      for (f_number_unsigned_t j = 0; j < main->setting.devices.used; ++j) {
 
-          if (firewall_signal_check(main)) return;
-
-          main->cache.path_file.used = 0;
-          main->data.device = j;
-
-          main->setting.state.status = f_memory_array_increase_by(firewall_network_path_s.used + main->setting.devices.array[j].used + firewall_file_suffix_s.used + 1, sizeof(f_char_t), (void **) &main->cache.path_file.string, &main->cache.path_file.used, &main->cache.path_file.size);
-
-          if (F_status_is_error(main->setting.state.status)) {
-            firewall_print_error(&main->program.error, macro_firewall_f(f_memory_array_increase_by));
-
-            return;
-          }
-
-          main->setting.state.status = f_string_dynamic_append(firewall_network_path_s, &main->cache.path_file);
-
-          if (F_status_is_error_not(main->setting.state.status)) {
-            main->setting.state.status = f_string_dynamic_append(main->setting.devices.array[j], &main->cache.path_file);
-          }
-
-          if (F_status_is_error_not(main->setting.state.status)) {
-            main->setting.state.status = f_string_dynamic_append(firewall_file_suffix_s, &main->cache.path_file);
-          }
-
-          if (F_status_is_error(main->setting.state.status)) {
-            firewall_print_error(&main->program.error, macro_firewall_f(f_string_dynamic_append));
-
-            return;
-          }
-
-          firewall_operate_buffer_chain(main, main->cache.path_file, F_true);
-
-          firewall_operate_create_custom_chains(main);
-
-          main->data.is = 0;
-
-          firewall_operate_chains(main);
-          if (F_status_is_error(main->setting.state.status) || main->setting.state.status == F_child || (main->setting.flag & firewall_main_flag_operation_stop_e)) return;
-        } // for
+        if (firewall_signal_check(main)) return;
 
         main->cache.path_file.used = 0;
+        main->data.device = j;
+
+        main->setting.state.status = f_memory_array_increase_by(firewall_network_path_s.used + main->setting.devices.array[j].used + firewall_file_suffix_s.used + 1, sizeof(f_char_t), (void **) &main->cache.path_file.string, &main->cache.path_file.used, &main->cache.path_file.size);
+
+        if (F_status_is_error(main->setting.state.status)) {
+          firewall_print_error(&main->program.error, macro_firewall_f(f_memory_array_increase_by));
+
+          return;
+        }
+
+        main->data.file = main->cache.path_file;
 
         main->setting.state.status = f_string_dynamic_append(firewall_network_path_s, &main->cache.path_file);
 
         if (F_status_is_error_not(main->setting.state.status)) {
-          main->setting.state.status = f_string_dynamic_append(firewall_file_last_s, &main->cache.path_file);
+          main->setting.state.status = f_string_dynamic_append(main->setting.devices.array[j], &main->cache.path_file);
+        }
+
+        if (F_status_is_error_not(main->setting.state.status)) {
+          main->setting.state.status = f_string_dynamic_append(firewall_file_suffix_s, &main->cache.path_file);
         }
 
         if (F_status_is_error(main->setting.state.status)) {
@@ -216,15 +198,43 @@ extern "C" {
           return;
         }
 
-        firewall_operate_buffer_chain(main, main->cache.path_file, F_false);
+        firewall_operate_buffer_chain(main, main->cache.path_file, F_true);
 
         firewall_operate_create_custom_chains(main);
 
-        main->data.is = firewall_data_is_global_e;
+        main->data.is = 0;
 
         firewall_operate_chains(main);
-        if (F_status_is_error(main->setting.state.status) || main->setting.state.status == F_child) return;
+        if (F_status_is_error(main->setting.state.status) || main->setting.state.status == F_child || (main->setting.flag & firewall_main_flag_operation_stop_e)) return;
+      } // for
+
+      main->cache.path_file.used = 0;
+
+      main->setting.state.status = f_string_dynamic_append(firewall_network_path_s, &main->cache.path_file);
+
+      if (F_status_is_error_not(main->setting.state.status)) {
+        main->setting.state.status = f_string_dynamic_append(firewall_file_last_s, &main->cache.path_file);
       }
+
+      if (F_status_is_error(main->setting.state.status)) {
+        firewall_print_error(&main->program.error, macro_firewall_f(f_string_dynamic_append));
+
+        return;
+      }
+
+      main->data.file.used = main->cache.path_file.used;
+
+      firewall_operate_buffer_chain(main, main->cache.path_file, F_false);
+
+      firewall_operate_create_custom_chains(main);
+
+      main->data.is = firewall_data_is_global_e;
+
+      firewall_operate_chains(main);
+      if (F_status_is_error(main->setting.state.status) || main->setting.state.status == F_child) return;
+
+      main->data.file.string = 0;
+      main->data.file.used = 0;
     }
 
     main->setting.state.status = F_okay;
@@ -268,7 +278,7 @@ extern "C" {
     firewall_operate_process_rules(main);
 
     if (F_status_is_error(main->setting.state.status)) {
-      if (F_status_set_fine(main->setting.state.status) != F_failure) {
+      if (F_status_set_fine(main->setting.state.status) != F_failure && F_status_set_fine(main->setting.state.status) != F_interrupt) {
         firewall_print_error_unhandled(&main->program.error, macro_firewall_f(firewall_operate_process_rules), f_string_empty_s);
       }
 
