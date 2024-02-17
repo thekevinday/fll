@@ -40,7 +40,7 @@ extern "C" {
 
     fl_print_format("%[%QNo relevant data is found within the file '%]", print->to, print->context, print->prefix, print->context);
     fl_print_format(f_string_format_Q_single_s.string, print->to, print->notable, file, print->notable);
-    fl_print_format(f_string_format_sentence_end_quote_s.string, print->to, print->set->error, print->set->error, f_string_eol_s);
+    fl_print_format(f_string_format_sentence_end_quote_s.string, print->to, print->context, print->context, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
 
@@ -71,21 +71,21 @@ extern "C" {
     f_file_stream_lock(print->to);
 
     if (F_status_set_fine(main->setting.state.status) == F_memory_not) {
-      fl_print_format("%[%QOut of memory while performing requested %r operation:%]", print->to, print->context, print->prefix, tool, print->context);
+      fl_print_format("%[%QOut of memory while performing requested %r operation '%]", print->to, print->context, print->prefix, tool, print->context);
     }
     else {
-      fl_print_format("%[%QFailed to perform requested %r operation:%]", print->to, print->context, print->prefix, tool, print->context);
+      fl_print_format("%[%QFailed to perform requested %r operation '%]", print->to, print->context, print->prefix, tool, print->context);
     }
 
-    fl_print_format("%r  %[%Q", print->to, f_string_eol_s, print->context, tool);
+    fl_print_format("%[%Q", print->to, print->set->notable, tool);
 
     for (f_number_unsigned_t i = 0; i < arguments.used; ++i) {
       fl_print_format(" %Q", print->to, arguments.array[i]);
     } // for
 
-    fl_print_format("%[', error code%] ", print->to, print->set->error, print->set->error, f_string_eol_s);
+    fl_print_format("%]%[', error code is%] ", print->to, print->set->notable, print->context, print->context);
     fl_print_format(f_string_format_ui_single_s.string, print->to, print->set->notable, F_status_set_fine(main->setting.state.status), print->set->notable);
-    fl_print_format(f_string_format_sentence_end_s.string, print->to, print->set->error, print->set->error, f_string_eol_s);
+    fl_print_format(f_string_format_sentence_end_s.string, print->to, print->context, print->context, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
 
@@ -117,6 +117,33 @@ extern "C" {
   }
 #endif // _di_firewall_print_error_operation_files_missing_
 
+#ifndef _di_firewall_print_error_operation_return_code_
+  f_status_t firewall_print_error_operation_return_code(fl_print_t * const print, const f_string_static_t tool, const f_string_statics_t arguments, const int return_code) {
+
+    if (!print || !print->custom) return F_status_set_error(F_output_not);
+    if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
+
+    firewall_main_t * const main = (firewall_main_t *) print->custom;
+
+    f_file_stream_lock(print->to);
+
+    fl_print_format("%[%QThe operation '%]", print->to, print->context, print->prefix, tool, print->context);
+    fl_print_format("%[%Q", print->to, print->set->notable, tool);
+
+    for (f_number_unsigned_t i = 0; i < arguments.used; ++i) {
+      fl_print_format(" %Q", print->to, arguments.array[i]);
+    } // for
+
+    fl_print_format("%]%[' returned with code of%] ", print->to, print->set->notable, print->context, print->context);
+    fl_print_format(f_string_format_i_single_s.string, print->to, print->set->notable, return_code, print->set->notable);
+    fl_print_format(f_string_format_sentence_end_s.string, print->to, print->context, print->context, f_string_eol_s);
+
+    f_file_stream_unlock(print->to);
+
+    return F_okay;
+  }
+#endif // _di_firewall_print_error_operation_return_code_
+
 #ifndef _di_firewall_print_error_operation_specified_not_
   f_status_t firewall_print_error_operation_specified_not(fl_print_t * const print) {
 
@@ -147,7 +174,7 @@ extern "C" {
     if (file.used) {
       fl_print_format("%[() for the file%] ", print->to, print->context, print->prefix, print->context);
       fl_print_format(f_string_format_Q_single_s.string, print->to, print->notable, file, print->notable);
-      fl_print_format(f_string_format_sentence_end_s.string, print->to, print->set->error, print->set->error, f_string_eol_s);
+      fl_print_format(f_string_format_sentence_end_s.string, print->to, print->context, print->context, f_string_eol_s);
     }
     else {
       fl_print_format("%[().%]%r", print->to, print->context, print->context, f_string_eol_s);

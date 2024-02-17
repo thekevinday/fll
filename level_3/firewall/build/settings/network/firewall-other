@@ -1,0 +1,69 @@
+# fss-0002
+
+stop:
+  action policy
+
+  chain INPUT
+  rule ACCEPT
+
+  chain OUTPUT
+  rule ACCEPT
+
+  chain FORWARD
+  rule ACCEPT
+
+  chain none
+  direction none
+  action none
+  rule -t filter --flush
+
+  tool iptables
+  rule -t nat --flush
+  rule -t mangle --flush
+  tool ip46tables
+
+  rule --delete-chain
+
+  tool iptables
+  rule -t nat --delete-chain
+  rule -t mangle --delete-chain
+  tool ip46tables
+
+
+lock:
+  action policy
+
+  chain INPUT
+  rule DROP
+
+  chain OUTPUT
+  rule DROP
+
+  chain FORWARD
+  rule DROP
+
+  chain none
+  direction none
+  action none
+  rule --flush
+
+  tool iptables
+  rule -t nat --flush
+  rule -t mangle --flush
+  tool ip46tables
+
+  rule --delete-chain
+
+  tool iptables
+  rule -t nat --delete-chain
+  rule -t mangle --delete-chain
+  tool ip46tables
+
+  device lo
+  action insert
+  direction output
+  chain OUTPUT
+  rule -j ACCEPT
+  direction input
+  chain INPUT
+  rule -j ACCEPT

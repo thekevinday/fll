@@ -6,7 +6,7 @@ f_memory
 f_type_array
 f_string
 f_utf
-f_account
+f_abstruse
 f_capability
 f_color
 f_compare
@@ -31,6 +31,7 @@ f_thread
 fl_control_group
 fl_conversion
 fl_environment
+fl_execute
 fl_fss
 fl_print
 

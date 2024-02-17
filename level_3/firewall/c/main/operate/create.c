@@ -34,6 +34,8 @@ extern "C" {
       return;
     }
 
+    main->cache.arguments.array[0].used = 0;
+    main->cache.arguments.array[1].used = 0;
     main->data.chain_ids.used = main->data.chain_objects.used;
     memset(main->data.chain_ids.array, 0, sizeof(f_number_unsigned_t) * main->data.chain_ids.used);
 
@@ -170,11 +172,12 @@ extern "C" {
         }
 
         if (create_chain) {
-          firewall_print_debug_tool(&main->program.warning, firewall_tool_iptables_s, main->cache.arguments);
-
           tool = firewall_tool_iptables_s;
+          return_code = 0;
 
-          main->setting.state.status = fll_execute_program(firewall_tool_iptables_s, main->cache.arguments, 0, 0, (void *) &return_code);
+          firewall_print_debug_tool(&main->program.warning, tool, main->cache.arguments);
+
+          main->setting.state.status = fll_execute_program(tool, main->cache.arguments, 0, 0, (void *) &return_code);
 
           if (main->setting.state.status == F_child) {
             main->program.child = return_code;
@@ -184,12 +187,21 @@ extern "C" {
 
           if (firewall_signal_check(main)) return;
 
+          if (return_code && F_status_is_error_not(main->setting.state.status)) {
+            firewall_print_error_operation_return_code(&main->program.error, tool, main->cache.arguments, return_code);
+          }
+
           if (F_status_is_error_not(main->setting.state.status) && main->setting.state.status != F_child) {
             tool = firewall_tool_ip6tables_s;
+            return_code = 0;
 
-            firewall_print_debug_tool(&main->program.warning, firewall_tool_ip6tables_s, main->cache.arguments);
+            firewall_print_debug_tool(&main->program.warning, tool, main->cache.arguments);
 
-            main->setting.state.status = fll_execute_program(firewall_tool_ip6tables_s, main->cache.arguments, 0, 0, (void *) &return_code);
+            main->setting.state.status = fll_execute_program(tool, main->cache.arguments, 0, 0, (void *) &return_code);
+
+            if (return_code && F_status_is_error_not(main->setting.state.status)) {
+              firewall_print_error_operation_return_code(&main->program.error, tool, main->cache.arguments, return_code);
+            }
           }
 
           if (main->setting.state.status == F_child) {

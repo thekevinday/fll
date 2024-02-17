@@ -157,6 +157,30 @@ extern "C" {
 #endif // _di_firewall_print_error_operation_files_missing_
 
 /**
+ * Print an error about the given operation failed according to the given return code.
+ *
+ * @param print
+ *   The output structure to print to.
+ *
+ *   This does not alter print.custom.setting.state.status.
+ * @param tool
+ *   The tool, such as iptables, that failed.
+ * @param arguments
+ *   The arguments passed to the tool.
+ * @param return_code
+ *   The code returned by the tool.
+ *
+ * @return
+ *   F_okay on success.
+ *   F_output_not on success, but no printing is performed.
+ *
+ *   F_output_not (with error bit) if setting is NULL.
+ */
+#ifndef _di_firewall_print_error_operation_return_code_
+  extern f_status_t firewall_print_error_operation_return_code(fl_print_t * const print, const f_string_static_t tool, const f_string_statics_t arguments, const int return_code);
+#endif // _di_firewall_print_error_operation_return_code_
+
+/**
  * Print generic error message regarding a function failing in some way.
  *
  * @param print

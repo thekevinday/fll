@@ -224,7 +224,7 @@ extern "C" {
             repeat = 1;
           }
           else if (f_compare_dynamic_partial_string(firewall_tool_ip46tables_s.string, main->data.buffer, firewall_tool_ip46tables_s.used, rule_contents->array[i].array[0]) == F_equal_to) {
-            tool = firewall_tool_iptables_s;
+            tool = firewall_tool_ip46tables_s;
             repeat = 2;
           }
           else {
@@ -258,7 +258,7 @@ extern "C" {
         main->setting.state.status = f_memory_array_increase(firewall_allocation_small_d, sizeof(f_string_dynamic_t), (void **) &main->cache.arguments.array, &main->cache.arguments.used, &main->cache.arguments.size);
         if (F_status_is_error(main->setting.state.status)) return;
 
-        if (tool.string == firewall_tool_ip46tables_s.string) {
+        if (repeat == 2) {
           tool = (j == 2) ? firewall_tool_iptables_s : firewall_tool_ip6tables_s;
         }
 
@@ -537,6 +537,7 @@ extern "C" {
                 }
 
                 ++main->cache.arguments.used;
+                return_code = 0;
 
                 firewall_print_debug_tool(&main->program.warning, tool, main->cache.arguments);
 
@@ -561,6 +562,9 @@ extern "C" {
 
                   return;
                 }
+                else if (return_code) {
+                  firewall_print_error_operation_return_code(&main->program.error, tool, main->cache.arguments, return_code);
+                }
               } // for
 
               // Remove ip_list_action from arguments string.
@@ -570,6 +574,8 @@ extern "C" {
             if (F_status_set_fine(main->setting.state.status) == F_failure || F_status_set_fine(main->setting.state.status) == F_parameter) return;
           }
           else {
+            return_code = 0;
+
             firewall_print_debug_tool(&main->program.warning, tool, main->cache.arguments);
 
             main->setting.state.status = fll_execute_program(tool, main->cache.arguments, 0, 0, (void *) &return_code);
@@ -589,6 +595,9 @@ extern "C" {
               }
 
               return;
+            }
+            else if (return_code) {
+              firewall_print_error_operation_return_code(&main->program.error, tool, main->cache.arguments, return_code);
             }
           }
         }

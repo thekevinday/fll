@@ -1,0 +1,241 @@
+# fss-0002
+# valid tool: iptables, ip6tables, ip46tables (ip46tables = both ip4 and ip6 tables, which is the default).
+# valid direction: input, output, none.
+# valid device: all, this, (any device name goes here without parenthesis).
+# valid action: append, insert, policy, none.
+# valid procotol: none, (any valid iptables protocol type, such as tcp, udp, and icmp).
+# reserved chains: INPUT, OUTPUT, FORWARD, POSTROUTING, PREROUTING, none (this only applies from within a 'main' list).
+# some options for -j: ACCEPT, REJECT, DROP, RETURN, LOG, AUDIT, CHECKSUM, CLASSIFY, CLUSTERIP, CONNMARK, CONNSECMARK, CT, DNAT, DNPT, DSCP, ECN, HL, HMARK, IDLETIMER, LED, MARK, MASQUERADE, MIRROR, NETMAP, NFLOG, NFQUEUE, NOTRACK, RATETEST, REDIRECT, SAME, SECMARK, SET, SNAT, SNPT, TCPMSS,TCPOPTSTRIP, TEE, TOS, TPROXY, TRACE, TTL, ULOG.
+# some options for -t: nat, mangle, filter, raw, security (filter is the default).
+# some options for --state: NEW, ESTABLISHED, RELATED, INVALID, UNTRACKED, SNAT, DNAT.
+# some options for --ctstatus: NONE, EXPECTED, SEEN_REPLY, ASSURED, CONFIRMED.
+
+main:
+  chain INPUT
+  device this
+  direction none
+
+  # Define a blacklist and a whitelist, put ip addresses in the file named 'example-device-whitelist' separated by white space to whitelist an ip address
+  # (ip_list might be removed in the future once I figure out how ipset works and confirm if ipset can replace my ip_list.)
+  #ip_list source example-device-whitelist -j ACCEPT
+  #ip_list source example-device-blacklist -j REJECT
+  #ip_list destination example-device-whitelist -j ACCEPT
+  #ip_list destination example-device-blacklist -j REJECT
+
+  # Connection marking for vlans or QoS (via: tc).
+  #chain PREROUTING
+  #rule -t mangle -j CONNMARK --restore-mark
+  #chain INPUT
+
+  # save markings that have been restored (prerouting).
+  #chain PREROUTING
+  #rule -t mangle -m mark --mark 2 -j CONNMARK --save-mark
+  #rule -t mangle -m mark --mark 3 -j CONNMARK --save-mark
+  #chain INPUT
+
+  # example rate limit using marking for port 22
+  #protocol tcp
+  #chain OUTPUT
+  #direction output
+  #rule -t mangle --sport 22 -j MARK --set-mark 2
+  #chain INPUT
+  #direction input
+  #rule -t mangle --dport 22 -j MARK --set-mark 2
+  #direction none
+
+  # rate limit when there are 8 or more connections from a single host.
+  #protocol tcp
+  #chain OUTPUT
+  #rule -t mangle -m connlimit --connlimit-above 7 -j MARK --set-mark 3
+  #chain INPUT
+  #rule -t mangle -m connlimit --connlimit-above 7 -j MARK --set-mark 3
+
+  # save markings that have been assigned (postrouting).
+  #protocol none
+  #chain POSTROUTING
+  #rule -t mangle -m mark --mark 2 -j CONNMARK --save-mark
+  #rule -t mangle -m mark --mark 3 -j CONNMARK --save-mark
+  #chain INPUT
+
+
+  # randomly trigger the rule (51% of the time) and then the reset of the time go to the second rule.
+  # this can be very useful in distributing connections between different devices or servers.
+  #rule -m random --average 51 -j example_rule_1
+  #rule -j example_rule_2
+
+
+input-tcp:
+  device this
+  direction input
+  protocol tcp
+
+  ## Http / Web
+  #rule --dport 80 -j LOG --log-prefix "TRAFFIC:WEB "
+  #rule --dport 80 -j ACCEPT
+
+  ## Http / Web redirect to Https / Secure Web
+  #tool iptables
+  #rule -t nat --dport 80 -j REDIRECT --to-port 443
+  #tool ip46tables
+  #direction input
+
+  ## Https / Secure Web
+  #rule --dport 443 -j LOG --log-prefix "TRAFFIC:WEB "
+  #rule --dport 443 -j ACCEPT
+
+  ## Http / Https / Web throttle connections that occur too often.
+  #rule --dport 80 --sync -m recent --name http_throttle --set
+  #rule --dport 80 --sync -m recent --name http_throttle --update --seconds 3 --hitcount 10 -j DROP
+  #rule --dport 443 --sync -m recent --name http_throttle --set
+  #rule --dport 443 --sync -m recent --name http_throttle --update --seconds 3 --hitcount 10 -j DROP
+
+  ## MySQL
+  #rule --dport 3306 -j ACCEPT
+
+  ## Music Player Daemon
+  #rule --dport 6600 -j ACCEPT
+
+  ## Camsource
+  #rule --dport 9192 -j ACCEPT
+
+  ## Cups Printer Administration
+  #rule --dport 631 -j ACCEPT
+
+  ## Ssh (OpenSSH)
+  #rule --dport 22 -j LOG --log-prefix "TRAFFIC:SSH "
+  #rule --dport 22 -j ACCEPT
+
+  ## clamd (Clam Antivirus) - remote access, not needed for normal
+  #rule --dport 3310 -j ACCEPT
+
+  ## Virtual Network Client Server (add 1 for each seperat vnc server)
+  #rule --dport 5900 -j ACCEPT
+
+  ## Printer Port, is probably open...safer to close unless you are SERVING a printer
+  #rule --dport 515 -j REJECT
+
+  ## Subversion server
+  #rule --dport 3690 -j ACCEPT
+
+  ## Silc server
+  #rule --dport 706 -j ACCEPT
+
+  ## Worms of Prey
+  #rule --dport 47288 -j ACCEPT
+
+  ## Git Daemon
+  #rule --dport 9418 -j ACCEPT
+
+  ## Ldap Server
+  #rule --dport 389 -j ACCEPT
+  #rule --dport 636 -j ACCEPT
+  #rule --dport 1636 -j ACCEPT
+
+  ## Mail Server (25 = SMTP, 465 = SMTPS, 993 = IMAP, 995 = POP)
+  #rule --dport 25 -j ACCEPT
+
+
+input-udp:
+  device this
+  direction input
+  protocol udp
+
+  ## DNS Server (Bind or Maradns) (zoneserver from maradns does this portion)
+  #rule --dport 53 -j ACCEPT
+
+  ## DHCP Server (providing dhcp address to clients)
+  #tool iptables
+  #rule --sport 68 -d 255.255.255.255 --dport 67 -j ACCEPT
+  #tool ip46tables
+
+  ## Subversion server
+  #rule --dport 3690 -j ACCEPT
+
+  ## Worms of Prey
+  #rule --sport 47288:47544 -j ACCEPT
+  #rule --dport 47288:47544 -j ACCEPT
+
+
+input-icmp:
+  device this
+  direction input
+  protocol icmp
+
+  # allow all icmp input, such as pings
+  #rule -j ACCEPT
+
+  # allow icmp: echo reply (outbound ping)
+  ##rule --icmp-type 0 -j ACCEPT
+
+  # allow icmp: destination unreachable
+  #rule --icmp-type 3 -j ACCEPT
+
+  # allow icmp: source quench
+  #rule --icmp-type 4 -j ACCEPT
+
+  # allow icmp: redirect
+  #rule --icmp-type 5 -j ACCEPT
+
+  # allow icmp: echo request (inbound ping)
+  #rule --icmp-type 8 -j ACCEPT
+
+  # allow icmp: router advertisement
+  #rule --icmp-type 9 -j ACCEPT
+
+  # allow icmp: router Solicitation
+  #rule --icmp-type 10 -j ACCEPT
+
+  # allow icmp: time exceeded
+  #rule --icmp-type 11 -j ACCEPT
+
+  # allow icmp: bad ip header
+  #rule --icmp-type 12 -j ACCEPT
+
+  # allow icmp: timestamp
+  #rule --icmp-type 13 -j ACCEPT
+
+  # allow icmp: timestamp reply
+  #rule --icmp-type 14 -j ACCEPT
+
+  # allow icmp: information request
+  #rule --icmp-type 15 -j ACCEPT
+
+  # allow icmp: information reply
+  #rule --icmp-type 16 -j ACCEPT
+
+  # allow icmp: address request
+  #rule --icmp-type 17 -j ACCEPT
+
+  # allow icmp: address reply
+  #rule --icmp-type 18 -j ACCEPT
+
+  # allow icmp: traceroute
+  #rule --icmp-type 30 -j ACCEPT
+
+
+output-tcp:
+  device this
+  direction output
+  protocol tcp
+
+
+output-udp:
+  device this
+  direction output
+  protocol udp
+
+  ## DNS Server (Bind or Maradns) (zoneserver from maradns does this portion)
+  #rule --dport 53 -j ACCEPT
+
+  ## DHCP Server (providing dhcp address to clients)
+  #tool iptables
+  #rule --sport 67 -d 255.255.255.255 --dport 68 -j ACCEPT
+  #tool ip46tables
+
+
+output-icmp:
+  device this
+  direction output
+  protocol icmp
+
+

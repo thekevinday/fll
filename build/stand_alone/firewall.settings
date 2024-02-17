@@ -1,7 +1,15 @@
 # fss-0001
 #
-# A custom build for compiling utf8 as a stand alone binary building in all of the FLL dependencies.
-# This will compile a program that does not have a libutf8.so library.
+# A custom build for compiling firewall as a stand alone binary building in all of the FLL dependencies.
+# This will compile a program that does not have a libfirewall.so library and builds all of the FLL dependencies into the resulting program.
+#
+# Modes:
+#   - stand_alone: The stand alone build mode, which in general should always be used.
+#   - clang:       Use clang rather than the default, which is generally gcc.
+#   - test:        Compile for a test, such as unit testing.
+#   - fanalyzer:   Compile using GCC's -fanalyzer compile time option.
+#   - thread:      Compile with thread support.
+#   - threadless:  Compile without thread support.
 #
 
 build_name firewall
@@ -23,44 +31,54 @@ build_language c
 
 build_libraries -lc -lcap
 
-build_sources_program fll/level_0/account.c fll/level_0/private-account.c
+build_sources_program fll/level_0/abstruse.c fll/level_0/abstruse/abstruse.c fll/level_0/abstruse/map.c fll/level_0/abstruse/private-abstruse.c
 build_sources_program fll/level_0/capability.c
 build_sources_program fll/level_0/color.c fll/level_0/private-color.c fll/level_0/color/common.c
+build_sources_program fll/level_0/compare.c fll/level_0/compare/utf.c fll/level_0/private-compare.c fll/level_0/compare/private-utf.c
 build_sources_program fll/level_0/console.c fll/level_0/console/common.c fll/level_0/private-console.c
 build_sources_program fll/level_0/control_group.c fll/level_0/control_group/common.c
 build_sources_program fll/level_0/conversion.c fll/level_0/private-conversion.c fll/level_0/conversion/common.c
-build_sources_program fll/level_0/directory.c fll/level_0/directory/common.c fll/level_0/private-directory.c
+build_sources_program fll/level_0/directory.c fll/level_0/directory/common.c fll/level_0/directory/listing.c fll/level_0/directory/recurse_do.c fll/level_0/directory/status.c
+build_sources_program fll/level_0/private-directory.c
 build_sources_program fll/level_0/environment.c
 build_sources_program fll/level_0/execute.c
-build_sources_program fll/level_0/file.c fll/level_0/private-file.c fll/level_0/file/common.c
-build_sources_program fll/level_0/fss.c fll/level_0/private-fss.c fll/level_0/fss/common.c fll/level_0/fss/named.c fll/level_0/fss/nest.c fll/level_0/fss/set.c
+build_sources_program fll/level_0/file.c fll/level_0/private-file.c fll/level_0/file/common.c fll/level_0/file/stream.c
+build_sources_program fll/level_0/fss.c fll/level_0/fss/common.c fll/level_0/fss/item.c fll/level_0/fss/named.c fll/level_0/fss/nest.c fll/level_0/fss/payload.c fll/level_0/fss/quote.c fll/level_0/fss/set.c fll/level_0/fss/set_quote.c fll/level_0/fss/simple_packet.c
 build_sources_program fll/level_0/limit.c fll/level_0/limit/set.c fll/level_0/limit/value.c
-build_sources_program fll/level_0/memory.c fll/level_0/private-memory.c fll/level_0/memory/structure.c
+build_sources_program fll/level_0/memory.c fll/level_0/memory/array.c fll/level_0/memory/arrays.c
+build_sources_program fll/level_0/private-memory.c fll/level_0/memory/private-array.c
 build_sources_program fll/level_0/path.c fll/level_0/private-path.c fll/level_0/path/common.c
 build_sources_program fll/level_0/pipe.c
 build_sources_program fll/level_0/print.c fll/level_0/private-print.c fll/level_0/print/common.c fll/level_0/print/to.c fll/level_0/print/private-to.c
+build_sources_program fll/level_0/rip.c fll/level_0/rip/utf.c fll/level_0/private-rip.c fll/level_0/rip/private-utf.c
 build_sources_program fll/level_0/signal.c
-build_sources_program fll/level_0/string.c fll/level_0/private-string.c fll/level_0/string/common.c fll/level_0/string/dynamic.c fll/level_0/string/map.c fll/level_0/string/map_multi.c fll/level_0/string/static.c fll/level_0/string/triple.c
-build_sources_program fll/level_0/thread.c fll/level_0/private-thread.c fll/level_0/thread/attribute.c fll/level_0/thread/barrier.c fll/level_0/thread/barrier_attribute.c fll/level_0/thread/condition.c fll/level_0/thread/condition_attribute.c fll/level_0/thread/id.c fll/level_0/thread/key.c fll/level_0/thread/lock.c fll/level_0/thread/lock_attribute.c fll/level_0/thread/mutex.c fll/level_0/thread/mutex_attribute.c fll/level_0/thread/once.c fll/level_0/thread/semaphore.c fll/level_0/thread/set.c fll/level_0/thread/spin.c
-build_sources_program fll/level_0/type_array/cell.c fll/level_0/type_array/file.c fll/level_0/type_array/fll_id.c fll/level_0/type_array/int8.c fll/level_0/type_array/int16.c fll/level_0/type_array/int32.c fll/level_0/type_array/int64.c fll/level_0/type_array/int128.c fll/level_0/type_array/number_signed.c fll/level_0/type_array/number_unsigned.c fll/level_0/type_array/poll.c fll/level_0/type_array/quantity.c fll/level_0/type_array/range.c fll/level_0/type_array/state.c fll/level_0/type_array/status.c fll/level_0/type_array/uint8.c fll/level_0/type_array/uint16.c fll/level_0/type_array/uint32.c fll/level_0/type_array/uint64.c fll/level_0/type_array/uint128.c
+build_sources_program fll/level_0/string.c fll/level_0/private-string.c fll/level_0/string/common.c
+build_sources_program fll/level_0/string/dynamic.c fll/level_0/string/dynamics.c fll/level_0/string/dynamicss.c fll/level_0/string/map.c fll/level_0/string/maps.c fll/level_0/string/mapss.c fll/level_0/string/map_multi.c fll/level_0/string/map_multis.c fll/level_0/string/map_multiss.c fll/level_0/string/static.c fll/level_0/string/statics.c fll/level_0/string/staticss.c fll/level_0/string/triple.c fll/level_0/string/triples.c fll/level_0/string/tripless.c
+build_sources_program fll/level_0/type_array/cell.c fll/level_0/type_array/file.c fll/level_0/type_array/fll_id.c fll/level_0/type_array/int8.c fll/level_0/type_array/int16.c fll/level_0/type_array/int32.c fll/level_0/type_array/int64.c fll/level_0/type_array/int128.c fll/level_0/type_array/number_signed.c fll/level_0/type_array/number_unsigned.c fll/level_0/type_array/poll.c fll/level_0/type_array/quantity.c  fll/level_0/type_array/quantitys.c fll/level_0/type_array/quantityss.c fll/level_0/type_array/range.c  fll/level_0/type_array/ranges.c fll/level_0/type_array/rangess.c fll/level_0/type_array/state.c fll/level_0/type_array/status.c fll/level_0/type_array/uint8.c fll/level_0/type_array/uint16.c fll/level_0/type_array/uint32.c fll/level_0/type_array/uint64.c fll/level_0/type_array/uint128.c
 build_sources_program fll/level_0/utf.c fll/level_0/private-utf.c fll/level_0/private-utf_alphabetic.c fll/level_0/private-utf_combining.c fll/level_0/private-utf_control.c fll/level_0/private-utf_digit.c fll/level_0/private-utf_emoji.c fll/level_0/private-utf_numeric.c fll/level_0/private-utf_phonetic.c fll/level_0/private-utf_private.c fll/level_0/private-utf_punctuation.c fll/level_0/private-utf_subscript.c fll/level_0/private-utf_superscript.c fll/level_0/private-utf_symbol.c fll/level_0/private-utf_unassigned.c fll/level_0/private-utf_valid.c fll/level_0/private-utf_whitespace.c fll/level_0/private-utf_wide.c fll/level_0/private-utf_word.c fll/level_0/private-utf_zero_width.c
-build_sources_program fll/level_0/utf/common.c fll/level_0/utf/convert.c fll/level_0/utf/dynamic.c fll/level_0/utf/is.c fll/level_0/utf/is_character.c fll/level_0/utf/map.c fll/level_0/utf/map_multi.c fll/level_0/utf/static.c fll/level_0/utf/string.c fll/level_0/utf/triple.c fll/level_0/utf/private-dynamic.c fll/level_0/utf/private-map.c fll/level_0/utf/private-map_multi.c fll/level_0/utf/private-triple.c fll/level_0/utf/private-string.c
+build_sources_program fll/level_0/utf/common.c fll/level_0/utf/convert.c fll/level_0/utf/dynamic.c fll/level_0/utf/dynamics.c fll/level_0/utf/dynamicss.c fll/level_0/utf/is.c fll/level_0/utf/is_character.c fll/level_0/utf/map.c fll/level_0/utf/maps.c fll/level_0/utf/mapss.c fll/level_0/utf/map_multi.c fll/level_0/utf/map_multis.c fll/level_0/utf/map_multiss.c fll/level_0/utf/static.c fll/level_0/utf/statics.c fll/level_0/utf/staticss.c fll/level_0/utf/string.c fll/level_0/utf/triple.c fll/level_0/utf/triples.c fll/level_0/utf/tripless.c
+build_sources_program fll/level_0/utf/private-dynamics.c fll/level_0/utf/private-maps.c fll/level_0/utf/private-map_multis.c fll/level_0/utf/private-string.c fll/level_0/utf/private-triples.c
+
+build_sources_program-thread fll/level_0/thread.c fll/level_0/thread/attribute.c fll/level_0/thread/barrier.c fll/level_0/thread/barrier_attribute.c fll/level_0/thread/condition.c fll/level_0/thread/condition_attribute.c fll/level_0/thread/id.c fll/level_0/thread/key.c fll/level_0/thread/lock.c fll/level_0/thread/lock_attribute.c fll/level_0/thread/mutex.c fll/level_0/thread/mutex_attribute.c fll/level_0/thread/once.c fll/level_0/thread/semaphore.c fll/level_0/thread/set.c fll/level_0/thread/spin.c
 
 build_sources_program fll/level_1/control_group.c
 build_sources_program fll/level_1/conversion.c fll/level_1/private-conversion.c fll/level_1/conversion/common.c
 build_sources_program fll/level_1/environment.c
-build_sources_program fll/level_1/private-fss.c fll/level_1/fss/basic.c fll/level_1/fss/basic_list.c fll/level_1/fss/embedded_list.c fll/level_1/fss/extended.c fll/level_1/fss/extended_list.c
+build_sources_program fll/level_1/private-fss.c fll/level_1/fss/basic.c fll/level_1/fss/basic_list.c fll/level_1/fss/embedded_list.c fll/level_1/fss/extended.c fll/level_1/fss/extended_list.c fll/level_1/fss/payload.c
 build_sources_program fll/level_1/print.c fll/level_1/private-print.c fll/level_1/print/common.c
-build_sources_program fll/level_1/string.c fll/level_1/private-string.c
 
-build_sources_program fll/level_2/error.c fll/level_2/error/common.c fll/level_2/private-error.c
+build_sources_program fll/level_2/error.c fll/level_2/private-error.c fll/level_2/error/common.c
 build_sources_program fll/level_2/execute.c fll/level_2/private-execute.c
 build_sources_program fll/level_2/fss.c fll/level_2/fss/basic.c fll/level_2/fss/basic_list.c fll/level_2/fss/embedded_list.c fll/level_2/fss/extended.c fll/level_2/fss/extended_list.c fll/level_2/fss/payload.c
 build_sources_program fll/level_2/print.c
-build_sources_program fll/level_2/program.c fll/level_2/program/common.c fll/level_2/private-program.c
+build_sources_program fll/level_2/program.c fll/level_2/program/common.c fll/level_2/program/print.c fll/level_2/private-program.c
 
-build_sources_program program/firewall/firewall.c program/firewall/common.c program/firewall/private-common.c program/firewall/private-firewall.c
-build_sources_program program/firewall/main.c
+build_sources_program program/firewall/main/common.c program/firewall/main/common/define.c program/firewall/main/common/enumeration.c program/firewall/main/common/print.c program/firewall/main/common/string.c program/firewall/main/common/type.c
+build_sources_program program/firewall/main/print/debug.c program/firewall/main/print/error.c program/firewall/main/print/message.c program/firewall/main/print/warning.c
+build_sources_program program/firewall/main/operate.c program/firewall/main/operate/buffer.c program/firewall/main/operate/chains.c program/firewall/main/operate/create.c program/firewall/main/operate/default.c program/firewall/main/operate/delete.c program/firewall/main/operate/process.c program/firewall/main/operate/rules.c program/firewall/main/operate/show.c
+build_sources_program program/firewall/main/firewall.c program/firewall/main/signal.c program/firewall/main/thread.c
+
+build_sources_program program/firewall/main/main.c
 
 build_sources_documentation man
 
@@ -99,16 +117,14 @@ defines-clang -D_clang_not_a_compile_time_constant_workaround_
 defines-threadless -D_di_thread_support_
 defines-thread -D_pthread_attr_unsupported_ -D_pthread_sigqueue_unsupported_
 
-flags -O2 -g -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-parentheses
+flags -O2 -g -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-parentheses -Wno-main
 flags -fstack-clash-protection -fno-delete-null-pointer-checks -fstrict-flex-arrays=3
 flags -D_FORTIFY_SOURCE=3
 flags -Wl,-z,nodlopen -Wl,-z,noexecstack -Wl,-z,relro -Wl,-z,now
 flags-thread -pthread
 flags-clang -Wno-logical-op-parentheses
-flags-thread -pthread
 flags-test -O0 -fstack-protector-strong -Wall
 flags-fanalyzer -fanalyzer
-flags-coverage -O0 --coverage -fprofile-abs-path -fprofile-dir=build/coverage/
 
 flags_library -fPIC
 flags_object -fPIC

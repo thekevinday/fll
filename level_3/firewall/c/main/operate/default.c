@@ -54,6 +54,9 @@ extern "C" {
 
           return;
         }
+        else if (return_code) {
+          firewall_print_error_operation_return_code(&main->program.error, tools[j], main->cache.arguments, return_code);
+        }
       } // for
     } // for
 

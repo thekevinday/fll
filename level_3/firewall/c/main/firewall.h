@@ -21,22 +21,17 @@
 #include <fll/level_0/memory.h>
 #include <fll/level_0/string.h>
 #include <fll/level_0/utf.h>
-#include <fll/level_0/color.h>
 #include <fll/level_0/compare.h>
 #include <fll/level_0/console.h>
-#include <fll/level_0/conversion.h>
 #include <fll/level_0/directory.h>
 #include <fll/level_0/fss.h>
 #include <fll/level_0/file.h>
 #include <fll/level_0/pipe.h>
 #include <fll/level_0/print.h>
-#include <fll/level_0/rip.h>
 #include <fll/level_0/signal.h>
 #include <fll/level_0/thread.h>
 
 // FLL-1 includes.
-#include <fll/level_1/conversion.h>
-#include <fll/level_1/fss.h>
 #include <fll/level_1/print.h>
 
 // FLL-2 includes.
@@ -62,10 +57,13 @@
 #include <program/firewall/main/print/warning.h>
 #include <program/firewall/main/operate.h>
 #include <program/firewall/main/operate/buffer.h>
+#include <program/firewall/main/operate/chains.h>
 #include <program/firewall/main/operate/create.h>
 #include <program/firewall/main/operate/default.h>
 #include <program/firewall/main/operate/delete.h>
 #include <program/firewall/main/operate/process.h>
+#include <program/firewall/main/operate/rules.h>
+#include <program/firewall/main/operate/show.h>
 #include <program/firewall/main/signal.h>
 #include <program/firewall/main/thread.h>
 
