@@ -31,7 +31,7 @@ build_indexer_arguments rcs
 build_language c
 
 build_libraries -lc -lcap
-build_libraries-individual -lfl_control_group -lfl_environment -lf_account -lf_capability -lf_control_group -lf_environment -lf_execute -lf_file -lf_limit -lf_memory -lf_path -lf_signal -lf_string -lf_type_array -lf_utf
+build_libraries-individual -lfl_control_group -lfl_environment -lf_capability -lf_control_group -lf_environment -lf_execute -lf_file -lf_limit -lf_memory -lf_path -lf_signal -lf_string -lf_type_array -lf_utf
 build_libraries-individual_thread -lf_thread
 
 build_sources_library execute.c private-execute.c

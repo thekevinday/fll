@@ -4,7 +4,6 @@ f_type
 f_status
 f_memory
 f_string
-f_account
 f_capability
 f_environment
 f_execute
