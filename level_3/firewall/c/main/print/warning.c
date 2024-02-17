@@ -67,7 +67,7 @@ extern "C" {
     else {
       fl_print_format(" %[the object '%]", print->to, print->context, print->prefix, print->context);
       fl_print_format(f_string_format_Q_range_single_s.string, print->to, print->notable, buffer, range, print->notable);
-      fl_print_format("%[' has no content.%]%r", print->to, print->context, print->context, f_string_eol_s);
+      fl_print_format("%[' is invalid.%]%r", print->to, print->context, print->context, f_string_eol_s);
     }
 
     f_file_stream_unlock(print->to);

@@ -29,8 +29,8 @@ extern "C" {
  *   - operation_show:                   Perform the show operation.
  *   - operation_show_nat:               For the show operation, show nat.
  *   - operation_show_mangle:            For the show operation, show mangle.
- *   - operation_show_filter:            For the show operation, show ports.
- *   - operation_show_filter_nat_mangle: A helper flag representing the show nat, show mangle, and short port flags set.
+ *   - operation_show_filter:            For the show operation, show filter.
+ *   - operation_show_filter_nat_mangle: A helper flag representing the show nat, show mangle, and short filter flags set.
  *   - operation_start:                  Perform the start operation.
  *   - operation_start_restart:          A helper flag representing both the start and restart operation flag set.
  *   - operation_stop:                   Perform the stop operation.
@@ -47,24 +47,24 @@ extern "C" {
     firewall_main_flag_none_e                             = 0x0,
     firewall_main_flag_copyright_e                        = 0x1,
     firewall_main_flag_help_e                             = 0x2,
-    firewall_main_flag_operation_e                        = 0x4,
-    firewall_main_flag_operation_lock_e                   = 0x8,
-    firewall_main_flag_operation_restart_e                = 0x10,
-    firewall_main_flag_operation_show_e                   = 0x20,
-    firewall_main_flag_operation_show_nat_e               = 0x40,
-    firewall_main_flag_operation_show_mangle_e            = 0x80,
-    firewall_main_flag_operation_show_filter_e            = 0x100,
-    firewall_main_flag_operation_show_filter_nat_mangle_e = 0x1c0,
-    firewall_main_flag_operation_start_e                  = 0x200,
-    firewall_main_flag_operation_start_restart_e          = 0x210,
-    firewall_main_flag_operation_stop_e                   = 0x400,
-    firewall_main_flag_operation_stop_restart_e           = 0x410,
-    firewall_main_flag_operation_stop_restart_lock_e      = 0x418,
-    firewall_main_flag_pipe_e                             = 0x800,
-    firewall_main_flag_print_first_e                      = 0x1000,
-    firewall_main_flag_print_last_e                       = 0x2000,
-    firewall_main_flag_version_e                          = 0x4000,
-    firewall_main_flag_version_copyright_help_e           = 0x4003,
+    firewall_main_flag_operation_e                        = 0x31c,
+    firewall_main_flag_operation_lock_e                   = 0x4,
+    firewall_main_flag_operation_restart_e                = 0x8,
+    firewall_main_flag_operation_show_e                   = 0x10,
+    firewall_main_flag_operation_show_nat_e               = 0x20,
+    firewall_main_flag_operation_show_mangle_e            = 0x40,
+    firewall_main_flag_operation_show_filter_e            = 0x80,
+    firewall_main_flag_operation_show_filter_nat_mangle_e = 0xe0,
+    firewall_main_flag_operation_start_e                  = 0x100,
+    firewall_main_flag_operation_start_restart_e          = 0x108,
+    firewall_main_flag_operation_stop_e                   = 0x200,
+    firewall_main_flag_operation_stop_restart_e           = 0x208,
+    firewall_main_flag_operation_stop_restart_lock_e      = 0x20c,
+    firewall_main_flag_pipe_e                             = 0x400,
+    firewall_main_flag_print_first_e                      = 0x800,
+    firewall_main_flag_print_last_e                       = 0x1000,
+    firewall_main_flag_version_e                          = 0x2000,
+    firewall_main_flag_version_copyright_help_e           = 0x2003,
   }; // enum
 #endif // _di_firewall_main_flag_e_
 

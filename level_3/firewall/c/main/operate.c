@@ -356,6 +356,7 @@ extern "C" {
 
       parameters.array = show_arrays[i];
       parameters.used = show_lengths[i];
+      return_code = 0;
 
       firewall_print_message_show_header(&main->program.output, show_lefts[i], show_headers[i], show_rights[i]);
 

@@ -47,7 +47,7 @@ extern "C" {
       fl_print_format("%[%Q%] ", print->to, print->set->standout, left, print->set->standout);
     }
 
-    fll_print_format("%[%Q%]", print->to, print->set->standout, print->set->standout, print->set->title, print->set->title, print->set->standout, print->set->standout, f_string_eol_s);
+    fll_print_format("%[%Q%]", print->to, print->set->title, header, print->set->title, f_string_eol_s);
 
     if (left.used) {
       fl_print_format(" %[%Q%]", print->to, print->set->standout, right, print->set->standout);

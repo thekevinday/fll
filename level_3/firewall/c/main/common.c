@@ -82,66 +82,45 @@ extern "C" {
       return;
     }
 
-    f_number_unsigned_t at = 0;
     f_number_unsigned_t index = 0;
 
     if (main->program.parameters.array[firewall_parameter_operation_start_e].result & f_console_result_found_e) {
-      main->setting.flag &= ~firewall_main_flag_operation_lock_e;
-      main->setting.flag &= ~firewall_main_flag_operation_restart_e;
-      main->setting.flag &= ~firewall_main_flag_operation_show_e;
-      main->setting.flag &= ~firewall_main_flag_operation_stop_e;
-
+      main->setting.flag &= ~firewall_main_flag_operation_e;
       main->setting.flag |= firewall_main_flag_operation_start_e;
 
-      at = main->program.parameters.array[firewall_parameter_operation_start_e].values.array[0];
+      index = main->program.parameters.array[firewall_parameter_operation_start_e].location;
     }
 
     if (main->program.parameters.array[firewall_parameter_operation_stop_e].result & f_console_result_found_e) {
-      if (!(main->setting.flag & firewall_main_flag_operation_e) || (main->program.parameters.array[at].values.array[0] > main->program.parameters.array[firewall_parameter_operation_stop_e].values.array[0])) {
-        main->setting.flag &= ~firewall_main_flag_operation_lock_e;
-        main->setting.flag &= ~firewall_main_flag_operation_restart_e;
-        main->setting.flag &= ~firewall_main_flag_operation_show_e;
-        main->setting.flag &= ~firewall_main_flag_operation_start_e;
-
+      if (!(main->setting.flag & firewall_main_flag_operation_e) || main->program.parameters.array[firewall_parameter_operation_stop_e].location > index) {
+        main->setting.flag &= ~firewall_main_flag_operation_e;
         main->setting.flag |= firewall_main_flag_operation_stop_e;
 
-        at = main->program.parameters.array[firewall_parameter_operation_stop_e].values.array[0];
+        index = main->program.parameters.array[firewall_parameter_operation_stop_e].location;
       }
     }
 
     if (main->program.parameters.array[firewall_parameter_operation_restart_e].result & f_console_result_found_e) {
-      if (!(main->setting.flag & firewall_main_flag_operation_e) || (main->program.parameters.array[at].values.array[0] > main->program.parameters.array[firewall_parameter_operation_restart_e].values.array[0])) {
-        main->setting.flag &= ~firewall_main_flag_operation_lock_e;
-        main->setting.flag &= ~firewall_main_flag_operation_show_e;
-        main->setting.flag &= ~firewall_main_flag_operation_start_e;
-        main->setting.flag &= ~firewall_main_flag_operation_stop_e;
-
+      if (!(main->setting.flag & firewall_main_flag_operation_e) || main->program.parameters.array[firewall_parameter_operation_restart_e].location > index) {
+        main->setting.flag &= ~firewall_main_flag_operation_e;
         main->setting.flag |= firewall_main_flag_operation_restart_e;
 
-        at = main->program.parameters.array[firewall_parameter_operation_restart_e].values.array[0];
+        index = main->program.parameters.array[firewall_parameter_operation_restart_e].location;
       }
     }
 
     if (main->program.parameters.array[firewall_parameter_operation_lock_e].result & f_console_result_found_e) {
-      if (!(main->setting.flag & firewall_main_flag_operation_e) || (main->program.parameters.array[at].values.array[0] > main->program.parameters.array[firewall_parameter_operation_lock_e].values.array[0])) {
-        main->setting.flag &= ~firewall_main_flag_operation_restart_e;
-        main->setting.flag &= ~firewall_main_flag_operation_show_e;
-        main->setting.flag &= ~firewall_main_flag_operation_start_e;
-        main->setting.flag &= ~firewall_main_flag_operation_stop_e;
-
+      if (!(main->setting.flag & firewall_main_flag_operation_e) || main->program.parameters.array[firewall_parameter_operation_lock_e].location > index) {
+        main->setting.flag &= ~firewall_main_flag_operation_e;
         main->setting.flag |= firewall_main_flag_operation_lock_e;
 
-        at = main->program.parameters.array[firewall_parameter_operation_lock_e].values.array[0];
+        index = main->program.parameters.array[firewall_parameter_operation_lock_e].location;
       }
     }
 
     if (main->program.parameters.array[firewall_parameter_operation_show_e].result & f_console_result_found_e) {
-      if (!(main->setting.flag & firewall_main_flag_operation_e) || (main->program.parameters.array[at].values.array[0] > main->program.parameters.array[firewall_parameter_operation_show_e].values.array[0])) {
-        main->setting.flag &= ~firewall_main_flag_operation_lock_e;
-        main->setting.flag &= ~firewall_main_flag_operation_restart_e;
-        main->setting.flag &= ~firewall_main_flag_operation_start_e;
-        main->setting.flag &= ~firewall_main_flag_operation_stop_e;
-
+      if (!(main->setting.flag & firewall_main_flag_operation_e) || main->program.parameters.array[firewall_parameter_operation_show_e].location > index) {
+        main->setting.flag &= ~firewall_main_flag_operation_e;
         main->setting.flag |= firewall_main_flag_operation_show_e;
       }
     }
@@ -157,11 +136,11 @@ extern "C" {
       if (main->program.parameters.remaining.used) {
         main->setting.flag &= ~firewall_main_flag_operation_show_filter_nat_mangle_e;
 
-        for (at = 0; at < main->program.parameters.remaining.used; ++at) {
+        for (f_number_unsigned_t i = 0; i < main->program.parameters.remaining.used; ++i) {
 
           if (firewall_signal_check(main)) return;
 
-          index = main->program.parameters.remaining.array[at];
+          index = main->program.parameters.remaining.array[i];
 
           if (f_compare_dynamic(firewall_show_nat_s, main->program.parameters.arguments.array[index]) == F_equal_to) {
             main->setting.flag |= firewall_main_flag_operation_show_nat_e;
@@ -180,24 +159,6 @@ extern "C" {
       else {
         main->setting.flag |= firewall_main_flag_operation_show_filter_nat_mangle_e;
       }
-    }
-    else {
-      // @todo
-
-      // Example:
-      /*
-      for (f_number_unsigned_t number = 0; index < main->program.parameters.remaining.used; ++index) {
-
-        if (control_signal_check(main)) return;
-
-        number = main->program.parameters.remaining.array[index];
-
-        // Statically allocate the inner strings.
-        main->setting.actions.array[main->setting.actions.used].string = main->program.parameters.arguments.array[number].string;
-        main->setting.actions.array[main->setting.actions.used].used = main->program.parameters.arguments.array[number].used;
-        main->setting.actions.array[main->setting.actions.used++].size = 0;
-      } // for
-      */
     }
   }
 #endif // _di_firewall_setting_load_
