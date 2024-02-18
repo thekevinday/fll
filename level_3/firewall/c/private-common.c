@@ -71,6 +71,26 @@ void firewall_print_error_on_operation(const fl_print_t output, const f_string_s
   funlockfile(output.to.stream);
 }
 
+void firewall_print_error_on_operation_return_code(const fl_print_t output, const f_string_static_t tool, const f_string_statics_t arguments, const int return_code) {
+
+  if (output.verbosity == f_console_verbosity_quiet_e) return;
+
+  flockfile(output.to.stream);
+
+  fl_print_format("%r%[%QFailed to perform requested %r operation '%]", output.to.stream, f_string_eol_s, output.context, output.prefix, tool, output.context);
+  fl_print_format("%[%r", output.to.stream, output.notable, tool);
+
+  for (f_array_length_t i = 0; i < arguments.used; ++i) {
+    fl_print_format(" %Q", output.to.stream, arguments.array[i]);
+  } // for
+
+  fl_print_format("%]%[' returned with code of%] ", output.to.stream, output.notable, output.context, output.context);
+  fl_print_format("%[%i%]", output.to.stream, output.notable, return_code, output.notable);
+  fl_print_format("%[.%]%r", output.to.stream, output.context, output.context, f_string_eol_s);
+
+  funlockfile(output.to.stream);
+}
+
 void firewall_print_error_on_unhandled(const fl_print_t output, const char *function, const f_status_t status) {
 
   if (output.verbosity == f_console_verbosity_quiet_e) return;

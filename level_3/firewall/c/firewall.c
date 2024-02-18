@@ -364,6 +364,9 @@ extern "C" {
 
           status = F_status_set_error(status);
         }
+        else if (return_code) {
+          firewall_print_error_on_operation_return_code(main->error, firewall_tool_iptables_s, parameters, return_code);
+        }
 
         firewall_delete_local_data(&local);
         firewall_data_delete(&data);

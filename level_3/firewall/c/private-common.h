@@ -163,6 +163,20 @@ extern void firewall_print_error_on_invalid_parameter_for_file(const fl_print_t 
 extern void firewall_print_error_on_operation(const fl_print_t output, const f_string_static_t tool, const f_string_statics_t arguments) F_attribute_visibility_internal_d;
 
 /**
+ * Print an error about the given operation failed.
+ *
+ * @param output
+ *   The output to print to.
+ * @param tool
+ *   The iptables tool that failed.
+ * @param arguments
+ *   The arguments passed to the tool.
+ * @param return_code
+ *   The return code that represents the failure.
+ */
+extern void firewall_print_error_on_operation_return_code(const fl_print_t output, const f_string_static_t tool, const f_string_statics_t arguments, const int return_code) F_attribute_visibility_internal_d;
+
+/**
  * Print an unhandled error for the given function.
  *
  * @param output

@@ -671,6 +671,7 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
                 for (f_array_length_t at = 0; at < basic_objects.used; ++at) {
 
                   arguments.array[arguments.used].used = 0;
+                  return_code = 0;
 
                   status = f_string_dynamic_partial_append(local_buffer, basic_objects.array[at], &arguments.array[arguments.used]);
                   if (F_status_is_error(status)) break;
@@ -710,6 +711,9 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
 
                     break;
                   }
+                  else if (return_code) {
+                    firewall_print_error_on_operation_return_code(data->main->error, current_tool, arguments, return_code);
+                  }
                 } // for
 
                 // Remove ip_list_action from arguments string.
@@ -729,6 +733,8 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
           if (F_status_set_fine(status) == F_failure || F_status_set_fine(status) == F_parameter) break;
         }
         else {
+          return_code = 0;
+
           firewall_print_debug_tool(data->main->warning, current_tool, arguments);
 
           status = fll_execute_program(current_tool, arguments, 0, 0, (void *) &return_code);
@@ -756,6 +762,9 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
             }
 
             break;
+          }
+          else if (return_code) {
+            firewall_print_error_on_operation_return_code(data->main->error, current_tool, arguments, return_code);
           }
         }
       }
@@ -917,6 +926,8 @@ f_status_t firewall_create_custom_chains(firewall_data_t * const data, firewall_
         firewall_print_debug_tool(data->main->warning, firewall_tool_iptables_s, arguments);
 
         tool = firewall_program_iptables_e;
+        return_code = 0;
+
         status = fll_execute_program(firewall_tool_iptables_s, arguments, 0, 0, (void *) &return_code);
 
         if (status == F_child) {
@@ -931,6 +942,12 @@ f_status_t firewall_create_custom_chains(firewall_data_t * const data, firewall_
 
             break;
           }
+
+          if (return_code) {
+            firewall_print_error_on_operation_return_code(data->main->error, firewall_tool_iptables_s, arguments, return_code);
+          }
+
+          return_code = 0;
 
           firewall_print_debug_tool(data->main->warning, firewall_tool_ip6tables_s, arguments);
 
@@ -956,6 +973,9 @@ f_status_t firewall_create_custom_chains(firewall_data_t * const data, firewall_
           }
 
           break;
+        }
+        else if (return_code) {
+          firewall_print_error_on_operation_return_code(data->main->error, firewall_tool_ip6tables_s, arguments, return_code);
         }
       }
 
@@ -1013,6 +1033,9 @@ f_status_t firewall_delete_chains(firewall_data_t * const data) {
 
       return status;
     }
+    else if (return_code) {
+      firewall_print_error_on_operation_return_code(data->main->error, tools[i], arguments, return_code);
+    }
   } // for
 
   int return_code = 0;
@@ -1056,6 +1079,9 @@ f_status_t firewall_delete_chains(firewall_data_t * const data) {
       }
 
       break;
+    }
+    else if (return_code) {
+      firewall_print_error_on_operation_return_code(data->main->error, tools[i], arguments, return_code);
     }
   } // for
 
@@ -1120,6 +1146,9 @@ f_status_t firewall_default_lock(firewall_data_t * const data) {
         }
 
         break;
+      }
+      else if (return_code) {
+        firewall_print_error_on_operation_return_code(data->main->error, tools[j], arguments, return_code);
       }
     } // for
   } // for
