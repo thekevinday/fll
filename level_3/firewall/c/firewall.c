@@ -515,6 +515,7 @@ extern "C" {
 
             if (F_status_is_error(status) || command == firewall_parameter_command_stop_e || status == F_child) {
               firewall_delete_local_data(&local);
+              firewall_data_delete(&data);
 
               return status;
             }
