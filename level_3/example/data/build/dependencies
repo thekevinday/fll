@@ -1,0 +1,26 @@
+# fss-0000
+#
+# Dependencies for the "example" program.
+#
+
+f_type
+f_status
+f_memory
+f_type_array
+f_string
+f_utf
+f_color
+f_console
+f_conversion
+f_file
+f_pipe
+f_print
+f_rip
+f_signal
+f_thread
+
+fl_print
+
+fll_error
+fll_print
+fll_program
