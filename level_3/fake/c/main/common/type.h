@@ -903,6 +903,8 @@ extern "C" {
  * @param build_data
  *   The build data.
  *
+ *   Must not be NULL.
+ *
  *   This does not alter setting.state.status.
  */
 #ifndef _di_fake_build_data_delete_
@@ -914,6 +916,8 @@ extern "C" {
  *
  * @param build_setting
  *   The build setting.
+ *
+ *   Must not be NULL.
  *
  *   This does not alter setting.state.status.
  */
@@ -927,6 +931,8 @@ extern "C" {
  * @param build_stage
  *   The build stage.
  *
+ *   Must not be NULL.
+ *
  *   This does not alter setting.state.status.
  */
 #ifndef _di_fake_build_stage_delete_
@@ -938,6 +944,8 @@ extern "C" {
  *
  * @param data
  *   The program data.
+ *
+ *   Must not be NULL.
  *
  *   This does not alter data.main.settings.state.status.
  */
@@ -951,6 +959,8 @@ extern "C" {
  * @param data_make
  *   The make data.
  *
+ *   Must not be NULL.
+ *
  *   This does not alter data_make.main.setting.state.status.
  */
 #ifndef _di_fake_make_data_delete_
@@ -960,10 +970,18 @@ extern "C" {
 /**
  * Deallocate main program data.
  *
- * @param setting_make
- *   The make setting data.
+ * @param main
+ *   The main program data.
+ *
+ *   Must not be NULL.
  *
  *   This does not alter data_make.main.setting.state.status.
+ *
+ * @see f_directory_recurse_do_delete()
+ * @see f_iki_data_delete()
+ * @see f_memory_array_resize()
+ * @see fll_program_data_delete()
+ * @see fake_setting_delete()
  */
 #ifndef _di_fake_main_delete_
   extern void fake_main_delete(fake_main_t * const main);
@@ -975,7 +993,13 @@ extern "C" {
  * @param setting_make
  *   The make setting data.
  *
+ *   Must not be NULL.
+ *
  *   This does not alter data_make.main.setting.state.status.
+ *
+ * @see f_memory_arrays_resize()
+ * @see fake_build_setting_delete()
+ * @see fake_make_setting_delete()
  */
 #ifndef _di_fake_make_setting_delete_
   extern void fake_make_setting_delete(fake_make_setting_t * const setting_make);
@@ -987,7 +1011,12 @@ extern "C" {
  * @param setting
  *   The program main setting data.
  *
+ *   Must not be NULL.
+ *
  *   This does not alter setting.state.status.
+ *
+ * @see f_memory_array_resize()
+ * @see f_memory_arrays_resize()
  */
 #ifndef _di_fake_setting_delete_
   extern void fake_setting_delete(fake_setting_t * const setting);

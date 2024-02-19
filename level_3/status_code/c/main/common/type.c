@@ -15,11 +15,9 @@ extern "C" {
 #endif // _di_status_code_main_delete_
 
 #ifndef _di_status_code_setting_delete_
-  f_status_t status_code_setting_delete(status_code_setting_t * const setting) {
+  void status_code_setting_delete(status_code_setting_t * const setting) {
 
-    if (!setting) return F_status_set_error(F_parameter);
-
-    return F_okay;
+    if (!setting) return;
   }
 #endif // _di_status_code_setting_delete_
 

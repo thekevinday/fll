@@ -15,7 +15,6 @@ extern "C" {
 
     main->setting.state.step_small = iki_write_allocation_small_d;
 
-    // Identify and process first/last parameters.
     if (main->program.parameters.array[f_console_standard_parameter_line_first_no_e].result & f_console_result_found_e) {
       main->setting.flag &= ~iki_write_main_flag_print_first_e;
     }

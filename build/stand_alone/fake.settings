@@ -1,6 +1,6 @@
 # fss-0001
 #
-# A custom build for compiling fake as a stand alone binary building in all of the FLL dependencies.
+# A custom build for compiling Featureless Make as a stand alone binary building in all of the FLL dependencies.
 # This will compile a program that does not have a libfake.so library and builds all of the FLL dependencies into the resulting program.
 #
 # Modes:

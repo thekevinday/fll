@@ -304,6 +304,8 @@ extern "C" {
  *   The depth to deallocate.
  *
  *   Must not be NULL.
+ *
+ * @see f_memory_array_resize()
  */
 #ifndef _di_fss_read_depth_delete_
   extern void fss_read_depth_delete(fss_read_depth_t * const depth);
@@ -365,6 +367,9 @@ extern "C" {
  *   Must be of type fss_read_main_t.
  *
  *   This does not alter main.setting.state.status.
+ *
+ * @see fll_program_data_delete()
+ * @see fss_read_setting_delete()
  */
 #ifndef _di_fss_read_main_delete_
   extern void fss_read_main_delete(fss_read_main_t * const main);
@@ -380,13 +385,15 @@ extern "C" {
  *
  *   This does not alter setting.state.status.
  *
- * @return
- *   F_okay on success.
- *
- *   F_parameter (with error bit) if a parameter is invalid.
+ * @see f_fss_nest_delete()
+ * @see f_memory_array_resize()
+ * @see fss_read_files_resize()
+ * @see fss_read_depths_resize()
+ * @see f_memory_array_resize()
+ * @see f_memory_arrays_resize()
  */
 #ifndef _di_fss_read_setting_delete_
-  extern f_status_t fss_read_setting_delete(fss_read_setting_t * const setting);
+  extern void fss_read_setting_delete(fss_read_setting_t * const setting);
 #endif // _di_fss_read_setting_delete_
 
 #ifdef __cplusplus

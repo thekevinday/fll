@@ -15,9 +15,9 @@ extern "C" {
 #endif // _di_fss_write_main_delete_
 
 #ifndef _di_fss_write_setting_delete_
-  f_status_t fss_write_setting_delete(fss_write_setting_t * const setting) {
+  void fss_write_setting_delete(fss_write_setting_t * const setting) {
 
-    if (!setting) return F_status_set_error(F_parameter);
+    if (!setting) return;
 
     f_memory_array_resize(0, sizeof(f_char_t), (void **) &setting->block.string, &setting->block.used, &setting->block.size);
     f_memory_array_resize(0, sizeof(f_char_t), (void **) &setting->buffer.string, &setting->buffer.used, &setting->buffer.size);
@@ -26,8 +26,6 @@ extern "C" {
     f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &setting->ignoress.array, &setting->ignoress.used, &setting->ignoress.size, &f_string_dynamics_delete_callback);
     f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &setting->objects.array, &setting->objects.used, &setting->objects.size, &f_string_dynamics_delete_callback);
     f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &setting->contentss.array, &setting->contentss.used, &setting->contentss.size, &f_string_dynamics_delete_callback);
-
-    return F_okay;
   }
 #endif // _di_fss_write_setting_delete_
 

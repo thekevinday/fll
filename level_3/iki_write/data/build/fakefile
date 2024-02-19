@@ -2,7 +2,7 @@
 
 settings:
   fail exit
-  modes individual individual_thread level monolithic clang test fanalyzer thread threadless
+  modes individual individual_thread level monolithic clang test fanalyzer coverage thread threadlesss
 
   environment PATH LD_LIBRARY_PATH
   environment LANG LC_ALL LC_COLLATE LC_CTYPE LC_FASTMSG LC_MESSAGES LC_MONETARY LC_NUMERIC LC_TIME LOCPATH NLSPATH
@@ -15,7 +15,7 @@ install:
 
 help:
   print
-  print context:'title'Fakefile Options for IKI Write Software.context:'reset'
+  print context:'title'Fakefile Options for IKI Write Program.context:'reset'
 
   print
   print The following operations are available\:

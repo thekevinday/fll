@@ -68,9 +68,9 @@ extern "C" {
 #endif // _di_fss_read_main_delete_
 
 #ifndef _di_fss_read_setting_delete_
-  f_status_t fss_read_setting_delete(fss_read_setting_t * const setting) {
+  void fss_read_setting_delete(fss_read_setting_t * const setting) {
 
-    if (!setting) return F_status_set_error(F_parameter);
+    if (!setting) return;
 
     fss_read_files_resize(0, &setting->files);
     fss_read_depths_resize(0, &setting->depths);
@@ -88,8 +88,6 @@ extern "C" {
 
     f_memory_array_resize(0, sizeof(uint8_t), (void **) &setting->quotes_object.array, &setting->quotes_object.used, &setting->quotes_object.size);
     f_memory_arrays_resize(0, sizeof(f_uint8s_t), (void **) &setting->quotes_content.array, &setting->quotes_content.used, &setting->quotes_content.size, &f_uint8ss_delete_callback);
-
-    return F_okay;
   }
 #endif // _di_fss_read_setting_delete_
 

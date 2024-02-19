@@ -15,17 +15,15 @@ extern "C" {
 #endif // _di_fss_identify_main_delete_
 
 #ifndef _di_fss_identify_setting_delete_
-  f_status_t fss_identify_setting_delete(fss_identify_setting_t * const setting) {
+  void fss_identify_setting_delete(fss_identify_setting_t * const setting) {
 
-    if (!setting) return F_status_set_error(F_parameter);
+    if (!setting) return;
 
     f_memory_array_resize(0, sizeof(f_char_t), (void **) &setting->buffer.string, &setting->buffer.used, &setting->buffer.size);
     f_memory_array_resize(0, sizeof(f_fll_id_t), (void **) &setting->ids.array, &setting->ids.used, &setting->ids.size);
 
     f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &setting->names.array, &setting->names.used, &setting->names.size, &f_string_dynamics_delete_callback);
     f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &setting->files.array, &setting->files.used, &setting->files.size, &f_string_dynamics_delete_callback);
-
-    return F_okay;
   }
 #endif // _di_fss_identify_setting_delete_
 

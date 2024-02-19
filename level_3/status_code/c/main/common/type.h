@@ -81,10 +81,15 @@ extern "C" {
 /**
  * Deallocate main program data.
  *
- * @param setting_make
- *   The make setting data.
+ * @param main
+ *   The main program data..
+ *
+ *   Must not be NULL.
  *
  *   This does not alter main.setting.state.status.
+ *
+ * @see fll_program_data_delete()
+ * @see status_code_setting_delete()
  */
 #ifndef _di_status_code_main_delete_
   extern void status_code_main_delete(status_code_main_t * const main);
@@ -96,15 +101,12 @@ extern "C" {
  * @param setting
  *   The program main setting data.
  *
+ *   Must not be NULL.
+ *
  *   This does not alter setting.state.status.
- *
- * @return
- *   F_okay on success.
- *
- *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_status_code_setting_delete_
-  extern f_status_t status_code_setting_delete(status_code_setting_t * const setting);
+  extern void status_code_setting_delete(status_code_setting_t * const setting);
 #endif // _di_status_code_setting_delete_
 
 #ifdef __cplusplus

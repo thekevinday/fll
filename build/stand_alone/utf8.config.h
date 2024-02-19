@@ -1,5 +1,5 @@
-// A config.h file for defining all code being disabled for compiling the stand alone Featureless Make.
-// To assist in building this file use (may need to omit --defined-only): "nm --defined-only -f p programs/shared/fake | grep -oP '^(f|fl|fll)_[^\s]+'".
+// A config.h file for defining all code being disabled for compiling the stand alone UTF8.
+// To assist in building this file use (may need to omit --defined-only): "nm --defined-only -f p programs/shared/utf8 | grep -oP '^(f|fl|fll)_[^\s]+'".
 // To get the list of all possible functions, use something like: "grep -horP '\b_di_f_\w*\b' level_0/f_color/".
 //
 // Note that some special defines may need to be manually added, such as:

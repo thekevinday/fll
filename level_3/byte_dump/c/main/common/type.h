@@ -134,10 +134,15 @@ extern "C" {
 /**
  * Deallocate main program data.
  *
- * @param setting_make
- *   The make setting data.
+ * @param main
+ *   The main program data.
+ *
+ *   Must not be NULL.
  *
  *   This does not alter main.setting.state.status.
+ *
+ * @see byte_dump_setting_delete()
+ * @see fll_program_data_delete()
  */
 #ifndef _di_byte_dump_main_delete_
   extern void byte_dump_main_delete(byte_dump_main_t * const main);
@@ -149,15 +154,14 @@ extern "C" {
  * @param setting
  *   The program main setting data.
  *
+ *   Must not be NULL.
+ *
  *   This does not alter setting.state.status.
  *
- * @return
- *   F_okay on success.
- *
- *   F_parameter (with error bit) if a parameter is invalid.
+ * @see f_memory_arrays_resize()
  */
 #ifndef _di_byte_dump_setting_delete_
-  extern f_status_t byte_dump_setting_delete(byte_dump_setting_t * const setting);
+  extern void byte_dump_setting_delete(byte_dump_setting_t * const setting);
 #endif // _di_byte_dump_setting_delete_
 
 #ifdef __cplusplus

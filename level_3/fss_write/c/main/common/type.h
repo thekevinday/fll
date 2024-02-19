@@ -151,10 +151,15 @@ extern "C" {
 /**
  * Deallocate main program data.
  *
- * @param setting_make
- *   The make setting data.
+ * @param main
+ *   The main program data.
+ *
+ *   Must not be NULL.
  *
  *   This does not alter main.setting.state.status.
+ *
+ * @see fll_program_data_delete()
+ * @see fss_write_setting_delete()
  */
 #ifndef _di_fss_write_main_delete_
   extern void fss_write_main_delete(fss_write_main_t * const main);
@@ -166,15 +171,15 @@ extern "C" {
  * @param setting
  *   The program main setting data.
  *
+ *   Must not be NULL.
+ *
  *   This does not alter setting.state.status.
  *
- * @return
- *   F_okay on success.
- *
- *   F_parameter (with error bit) if a parameter is invalid.
+ * @see f_memory_array_resize()
+ * @see f_memory_arrays_resize()
  */
 #ifndef _di_fss_write_setting_delete_
-  extern f_status_t fss_write_setting_delete(fss_write_setting_t * const setting);
+  extern void fss_write_setting_delete(fss_write_setting_t * const setting);
 #endif // _di_fss_write_setting_delete_
 
 #ifdef __cplusplus

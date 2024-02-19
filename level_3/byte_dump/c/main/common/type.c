@@ -15,13 +15,11 @@ extern "C" {
 #endif // _di_byte_dump_main_delete_
 
 #ifndef _di_byte_dump_setting_delete_
-  f_status_t byte_dump_setting_delete(byte_dump_setting_t * const setting) {
+  void byte_dump_setting_delete(byte_dump_setting_t * const setting) {
 
-    if (!setting) return F_status_set_error(F_parameter);
+    if (!setting) return;
 
     f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &setting->files.array, &setting->files.used, &setting->files.size, &f_string_dynamics_delete_callback);
-
-    return F_okay;
   }
 #endif // _di_byte_dump_setting_delete_
 

@@ -59,14 +59,12 @@ extern "C" {
 #endif // _di_firewall_main_delete_
 
 #ifndef _di_firewall_setting_delete_
-  f_status_t firewall_setting_delete(firewall_setting_t * const setting) {
+  void firewall_setting_delete(firewall_setting_t * const setting) {
 
-    if (!setting) return F_status_set_error(F_parameter);
+    if (!setting) return;
 
     f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &setting->chains.array, &setting->chains.used, &setting->chains.size, &f_string_dynamics_delete_callback);
     f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &setting->devices.array, &setting->devices.used, &setting->devices.size, &f_string_dynamics_delete_callback);
-
-    return F_okay;
   }
 #endif // _di_firewall_setting_delete_
 

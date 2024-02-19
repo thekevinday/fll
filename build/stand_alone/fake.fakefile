@@ -15,7 +15,7 @@ install:
 
 help:
   print
-  print context:'title'Fakefile Options for Featureless Make Software.context:'reset'
+  print context:'title'Fakefile Options for Featureless Make Program.context:'reset'
 
   print
   print The following operations are available\:

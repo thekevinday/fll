@@ -15,9 +15,9 @@ extern "C" {
 #endif // _di_iki_read_main_delete_
 
 #ifndef _di_iki_read_setting_delete_
-  f_status_t iki_read_setting_delete(iki_read_setting_t * const setting) {
+  void iki_read_setting_delete(iki_read_setting_t * const setting) {
 
-    if (!setting) return F_status_set_error(F_parameter);
+    if (!setting) return;
 
     f_memory_array_resize(0, sizeof(f_char_t), (void **) &setting->buffer.string, &setting->buffer.used, &setting->buffer.size);
 
@@ -31,8 +31,6 @@ extern "C" {
     f_memory_arrays_resize(0, sizeof(f_string_triple_t), (void **) &setting->wrap.array, &setting->wrap.used, &setting->wrap.size, &f_string_triples_delete_callback);
 
     f_iki_data_delete(&setting->data);
-
-    return F_okay;
   }
 #endif // _di_iki_read_setting_delete_
 
