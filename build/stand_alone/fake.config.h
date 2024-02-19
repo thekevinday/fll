@@ -8,9 +8,9 @@
 //
 // Example:
 //   echo > /tmp/all.txt
-//   for i in f_type f_status f_memory f_type_array f_string f_utf f_abstruse f_account f_capability f_color f_compare f_console f_control_group f_conversion f_directory f_environment f_execute f_file f_fss f_iki f_limit f_network f_parse f_path f_pipe f_print f_random f_rip f_serialize f_signal f_socket f_status_string f_thread f_time ; do grep -horP '\b_di_f_\w*\b' level_0/$i/c >> /tmp/all.txt ; grep -horP '\b_di_macro_\w*\b' level_0/$i/c >> /tmp/all.txt ; done
-//   for i in fl_control_group fl_conversion fl_directory fl_environment fl_execute fl_fss fl_iki fl_path fl_print fl_status_string fl_utf_file ; do grep -horP '\b_di_fl_\w*\b' level_1/$i/c >> /tmp/all.txt ; grep -horP '\b_di_macro_\w*\b' level_1/$i/c >> /tmp/all.txt ; done
-//   for i in fll_control_group fll_error fll_execute fll_file fll_fss fll_fss_status_string fll_iki fll_print fll_program ; do grep -horP '\b_di_fll_\w*\b' level_2/$i/c >> /tmp/all.txt ; grep -horP '\b_di_macro_\w*\b' level_2/$i/c >> /tmp/all.txt ; done
+//   for i in f_type f_status f_memory f_type_array f_string f_utf f_abstruse f_account f_capability f_color f_compare f_console f_control_group f_conversion f_directory f_environment f_execute f_file f_fss f_iki f_limit f_network f_parse f_path f_pipe f_print f_rip f_serialize f_signal f_thread ; do grep -horP '\b_di_f_\w*\b' level_0/$i/c >> /tmp/all.txt ; grep -horP '\b_di_macro_\w*\b' level_0/$i/c >> /tmp/all.txt ; done
+//   for i in fl_control_group fl_conversion fl_directory fl_environment fl_execute fl_fss fl_iki fl_path fl_print ; do grep -horP '\b_di_fl_\w*\b' level_1/$i/c >> /tmp/all.txt ; grep -horP '\b_di_macro_\w*\b' level_1/$i/c >> /tmp/all.txt ; done
+//   for i in fll_error fll_execute fll_file fll_fss fll_print fll_program ; do grep -horP '\b_di_fll_\w*\b' level_2/$i/c >> /tmp/all.txt ; grep -horP '\b_di_macro_\w*\b' level_2/$i/c >> /tmp/all.txt ; done
 //   sort /tmp/all.txt | uniq | sed -e 's|^_|#define &|g' > /tmp/sorted.txt
 //   echo "#define _di_private_inline_f_print_to_error_" >> /tmp/sorted.txt
 //   echo "#define _di_private_inline_private_f_print_to_error_" >> /tmp/sorted.txt
@@ -49,7 +49,7 @@
 #define _di_f_accountss_destroy_callback_
 #define _di_f_accountss_t_
 #define _di_f_accounts_t_
-//#define _di_f_account_t_
+#define _di_f_account_t_
 #define _di_f_capability_ambient_get_
 #define _di_f_capability_ambient_reset_
 #define _di_f_capability_ambient_set_
@@ -572,10 +572,7 @@
 #define _di_f_fss_payload_comment_header_begin_s_
 #define _di_f_fss_payload_comment_header_end_s_
 #define _di_f_fss_payload_comment_header_s_
-#define _di_f_fss_payload_header_internal_t_
 #define _di_f_fss_payload_header_map_flag_e_
-#define _di_f_fss_payload_header_state_t_
-#define _di_f_fss_payload_header_write_d_
 #define _di_f_fss_payload_object_end_s_
 #define _di_f_fss_payload_object_header_s_
 #define _di_f_fss_payload_object_id_s_
@@ -799,7 +796,6 @@
 #define _di_f_limit_valuess_t_
 #define _di_f_limit_values_t_
 //#define _di_f_limit_value_t_
-#define _di_fll_control_group_prepare_
 //#define _di_fll_error_file_flag_e_
 //#define _di_fll_error_file_print_
 //#define _di_fll_error_file_type_directory_s_
@@ -843,17 +839,6 @@
 #define _di_fll_fss_snatch_mash_
 #define _di_fll_fss_snatch_mash_apart_
 #define _di_fll_fss_snatch_together_
-#define _di_fll_fss_status_codes_
-#define _di_fll_fss_status_error_
-#define _di_fll_fss_status_string_
-#define _di_fll_fss_status_string_from_
-#define _di_fll_fss_status_string_to_
-#define _di_fll_fss_status_success_
-#define _di_fll_fss_status_warning_
-#define _di_fll_iki_content_escape_
-#define _di_fll_iki_content_partial_escape_
-#define _di_fll_iki_content_partial_unescape_
-#define _di_fll_iki_content_unescape_
 #define _di_fll_print_
 #define _di_fll_print_character_
 #define _di_fll_print_character_safely_
@@ -1035,15 +1020,6 @@
 #define _di_fl_print_trim_raw_safely_
 #define _di_fl_print_trim_safely_
 //#define _di_fl_print_warning_s_
-#define _di_fl_status_string_from_
-#define _di_fl_utf_file_read_
-#define _di_fl_utf_file_read_block_
-#define _di_fl_utf_file_read_range_
-#define _di_fl_utf_file_read_until_
-#define _di_fl_utf_file_write_
-#define _di_fl_utf_file_write_block_
-#define _di_fl_utf_file_write_range_
-#define _di_fl_utf_file_write_until_
 #define _di_f_memory_adjust_
 #define _di_f_memory_array_adjust_
 #define _di_f_memory_array_append_
@@ -1325,11 +1301,6 @@
 #define _di_f_quantityss_t_
 #define _di_f_quantitys_t_
 #define _di_f_quantity_t_
-#define _di_f_random_get_
-#define _di_f_random_read_
-#define _di_f_random_seed_
-#define _di_f_random_seed_flag_d_
-#define _di_f_random_seed_set_
 #define _di_f_range_double_empty_c_
 #define _di_f_range_doubles_append_
 #define _di_f_range_doubles_append_all_
@@ -1387,59 +1358,17 @@
 //#define _di_f_signal_t_
 //#define _di_f_signal_wait_
 #define _di_f_signal_wait_until_
-#define _di_f_socket_accept_
-#define _di_f_socket_address_family_e_
-#define _di_f_socket_address_form_e_
-#define _di_f_socket_addressss_delete_callback_
-#define _di_f_socket_addressss_destroy_callback_
-#define _di_f_socket_addressss_t_
-#define _di_f_socket_addresss_t_
-#define _di_f_socket_address_t_
-#define _di_f_socket_bind_
-#define _di_f_socket_close_e_
-#define _di_f_socket_connect_
-#define _di_f_socket_create_
-#define _di_f_socket_create_pair_
-#define _di_f_socket_default_d_
-#define _di_f_socket_disconnect_
-#define _di_f_socket_flag_e_
-#define _di_f_socket_host_name_
-#define _di_f_socket_level_e_
-#define _di_f_socket_listen_
-#define _di_f_socket_message_flag_e_
-#define _di_f_socket_name_host_
-#define _di_f_socket_name_peer_
-#define _di_f_socket_option_e_
-#define _di_f_socket_option_get_
-#define _di_f_socket_option_set_
-#define _di_f_socket_protocol_e_
-#define _di_f_socket_protocol_family_e_
-#define _di_f_socket_read_
-#define _di_f_socket_read_message_
-#define _di_f_socket_read_stream_
-#define _di_f_socketss_delete_callback_
-#define _di_f_socketss_destroy_callback_
-#define _di_f_socketss_t_
-#define _di_f_sockets_t_
-#define _di_f_socket_t_
-#define _di_f_socket_type_e_
-#define _di_f_socket_write_
-#define _di_f_socket_write_message_
-#define _di_f_socket_write_stream_
 #define _di_f_statess_delete_callback_
 #define _di_f_statess_destroy_callback_
 #define _di_f_statess_t_
 #define _di_f_states_t_
 //#define _di_f_state_t_
-#define _di_f_status_directory_s_
 //#define _di_f_status_e_
 //#define _di_f_status_mask_d_
 #define _di_f_statusss_delete_callback_
 #define _di_f_statusss_destroy_callback_
 #define _di_f_statusss_t_
 #define _di_f_statuss_t_
-#define _di_f_status_string_s_
-#define _di_f_status_string_to_
 //#define _di_f_status_t_
 //#define _di_f_string_append_
 #define _di_f_string_append_assure_
@@ -1741,8 +1670,6 @@
 #define _di_f_thread_spin_t_
 #define _di_f_thread_spin_unlock_
 #define _di_f_thread_unlock_
-#define _di_f_time_spec_millisecond_
-#define _di_f_time_spec_nanosecond_
 #define _di_f_time_spec_t_
 #define _di_f_time_t_
 //#define _di_f_type_d_
