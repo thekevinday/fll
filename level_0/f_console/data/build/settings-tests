@@ -55,11 +55,13 @@ defines -Ibuild/includes
 defines_static -Lbuild/libraries/static
 defines_shared -Lbuild/libraries/shared
 
-flags -O2 -z now -g -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-parentheses
+flags -O2 -g -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-parentheses
 flags -fstack-clash-protection -fno-delete-null-pointer-checks
+flags -D_FORTIFY_SOURCE=3
+flags -Wl,-z,nodlopen -Wl,-z,noexecstack -Wl,-z,relro -Wl,-z,now
 flags-clang -Wno-logical-op-parentheses
 flags-gcc -fstrict-flex-arrays=3
-flags-test -fstack-protector -Wall
+flags-test -fstack-protector-strong -Wall
 flags-coverage -O0 --coverage -fprofile-abs-path -fprofile-dir=build/coverage/
 
 flags_program -fPIE
