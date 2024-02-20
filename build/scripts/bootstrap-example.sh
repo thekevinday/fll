@@ -52,7 +52,8 @@ color=
 shared=
 static=
 version=0.6.9
-clang=
+mode_compiler_param="-m"
+mode_compiler_value="gcc"
 mode_part=
 mode_parameter=
 mode_path=
@@ -112,7 +113,7 @@ while [[ ${i} -le $# ]] ; do
   elif [[ ${p} == "--disable-shared" ]] ; then
     shared="--disable-shared"
   elif [[ ${p} == "clang" ]] ; then
-    clang="-m clang"
+    mode_compiler_value="clang"
   elif [[ ${p} == "-w" || ${p} == "--work" ]] ; then
     let i++
 
@@ -139,7 +140,7 @@ if [[ ${1} == "individual" ]] ; then
 
       ${shell_command} ./bootstrap.sh clean ${verbose} ${color} ${suppress_first} &&
 
-      ${shell_command} ./bootstrap.sh build ${verbose} ${color} ${suppress_first} ${shared} ${static} -w ${path_work} -m individual -m individual_thread ${mode_thread_param} ${mode_thread_value} ${clang} &&
+      ${shell_command} ./bootstrap.sh build ${verbose} ${color} ${suppress_first} ${shared} ${static} -w ${path_work} -m individual -m individual_thread ${mode_thread_param} ${mode_thread_value} ${mode_compiler_param} ${mode_compiler_value} &&
 
       ${shell_command} ./install.sh ${verbose} ${color} ${suppress_first} ${shared} ${static} -w ${path_work} &&
 
@@ -155,7 +156,7 @@ if [[ ${1} == "level" ]] ; then
 
   ${shell_command} ./bootstrap.sh clean ${verbose} ${color} ${suppress_first} &&
 
-  ${shell_command} ./bootstrap.sh build ${verbose} ${color} ${suppress_first} ${shared} ${static} -w ${path_work} -m level ${mode_thread_param} ${mode_thread_value} ${clang} &&
+  ${shell_command} ./bootstrap.sh build ${verbose} ${color} ${suppress_first} ${shared} ${static} -w ${path_work} -m level ${mode_thread_param} ${mode_thread_value} ${mode_compiler_param} ${mode_compiler_value} &&
 
   ${shell_command} ./install.sh ${verbose} ${color} ${suppress_first} ${shared} ${static} -w ${path_work} &&
 
@@ -165,7 +166,7 @@ if [[ ${1} == "level" ]] ; then
 
   ${shell_command} ./bootstrap.sh clean ${verbose} ${color} ${suppress_first} &&
 
-  ${shell_command} ./bootstrap.sh build ${verbose} ${color} ${suppress_first} ${shared} ${static} -w ${path_work} -m level ${mode_thread_param} ${mode_thread_value} &&
+  ${shell_command} ./bootstrap.sh build ${verbose} ${color} ${suppress_first} ${shared} ${static} -w ${path_work} -m level ${mode_thread_param} ${mode_thread_value} ${mode_compiler_param} ${mode_compiler_value} &&
 
   ${shell_command} ./install.sh ${verbose} ${color} ${suppress_first} ${shared} ${static} -w ${path_work} &&
 
@@ -175,7 +176,7 @@ if [[ ${1} == "level" ]] ; then
 
   ${shell_command} ./bootstrap.sh clean ${verbose} ${color} ${suppress_first} &&
 
-  ${shell_command} ./bootstrap.sh build ${verbose} ${color} ${suppress_first} ${shared} ${static} -w ${path_work} -m level ${mode_thread_param} ${mode_thread_value} &&
+  ${shell_command} ./bootstrap.sh build ${verbose} ${color} ${suppress_first} ${shared} ${static} -w ${path_work} -m level ${mode_thread_param} ${mode_thread_value} ${mode_compiler_param} ${mode_compiler_value} &&
 
   ${shell_command} ./install.sh ${verbose} ${color} ${suppress_first} ${shared} ${static} -w ${path_work}
 fi
@@ -187,7 +188,7 @@ if [[ ${1} == "monolithic" ]] ; then
 
   ${shell_command} ./bootstrap.sh clean ${verbose} ${color} ${suppress_first} &&
 
-  ${shell_command} ./bootstrap.sh build ${verbose} ${color} ${suppress_first} ${shared} ${static} -w ${path_work} -m monolithic ${mode_thread_param} ${mode_thread_value} ${clang} &&
+  ${shell_command} ./bootstrap.sh build ${verbose} ${color} ${suppress_first} ${shared} ${static} -w ${path_work} -m monolithic ${mode_thread_param} ${mode_thread_value} ${mode_compiler_param} ${mode_compiler_value} &&
 
   ${shell_command} ./install.sh ${verbose} ${color} ${shared} ${suppress_first} ${static} -w ${path_work}
 fi
@@ -243,7 +244,7 @@ if [[ ${mode_part} != "" ]] ; then
 
   ${shell_command} ./bootstrap.sh clean ${verbose} ${color} ${suppress_first} &&
 
-  ${shell_command} ./bootstrap.sh build ${verbose} ${color} ${suppress_first} ${shared} ${static} -w ${path_work} -m ${build_mode} ${build_mode_extra_param_1} ${build_mode_extra_value_1} ${build_mode_extra_param_2} ${build_mode_extra_value_2} &&
+  ${shell_command} ./bootstrap.sh build ${verbose} ${color} ${suppress_first} ${shared} ${static} -w ${path_work} -m ${build_mode} ${build_mode_extra_param_1} ${build_mode_extra_value_1} ${build_mode_extra_param_2} ${build_mode_extra_value_2} ${mode_compiler_param} ${mode_compiler_value} &&
 
   ${shell_command} ./install.sh ${verbose} ${color} ${suppress_first} ${shared} ${static} -w ${path_work}
 
@@ -286,7 +287,7 @@ elif [[ ${1} == "programs-individual" || ${1} == "programs-level" || ${1} == "pr
 
       ${shell_command} ./bootstrap.sh clean ${verbose} ${color} ${suppress_first} &&
 
-      ${shell_command} ./bootstrap.sh build ${verbose} ${color} ${suppress_first} ${shared} ${static} -w ${path_work} -m ${build_mode} ${build_mode_extra_param_1} ${build_mode_extra_value_1}  ${build_mode_extra_param_2} ${build_mode_extra_value_2} &&
+      ${shell_command} ./bootstrap.sh build ${verbose} ${color} ${suppress_first} ${shared} ${static} -w ${path_work} -m ${build_mode} ${build_mode_extra_param_1} ${build_mode_extra_value_1} ${build_mode_extra_param_2} ${build_mode_extra_value_2} ${mode_compiler_param} ${mode_compiler_value} &&
 
       ${shell_command} ./install.sh ${verbose} ${color} ${suppress_first} ${shared} ${static} -w ${path_work} ||
 

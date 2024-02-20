@@ -666,7 +666,6 @@ package_dependencies_individual() {
   local dependencies_2=
   local dependencies_thread=
   local dependencies_individual=
-  local dependencies_individual_threadless=
   local dependency=
   local dependency_file=
   local dependency_files=
@@ -912,32 +911,6 @@ package_dependencies_individual() {
         break
       fi
 
-      if [[ $has_thread == "yes" && ${dependencies_individual} != "" && $(grep -o "^\s*build_libraries-individual_threadless\>" ${settings}) != "" ]] ; then
-        dependencies_individual_threadless=$(echo "${dependencies_individual}" | sed -e "s| \-lf_thread\>||g")
-
-        if [[ ${verbosity} == "verbose" ]] ; then
-          package_print_first
-
-          echo -e " (threadless) ${dependencies_individual_threadless}"
-        fi
-
-        settings=${directory}/data/build/settings
-        sed -i -e "s|^\s*build_libraries-individual_threadless[[:space:]].*\$|build_libraries-individual_threadless${dependencies_individual_threadless}|" ${settings} &&
-        sed -i -e "s|^\s*build_libraries-individual_threadless\$|build_libraries-individual_threadless${dependencies_individual_threadless}|" ${settings}
-
-        if [[ ${?} -ne 0 ]] ; then
-          if [[ ${verbosity} != "quiet" ]] ; then
-            package_print_first
-
-            echo -e "${c_error}ERROR: Failed to update settings file ${c_notice}${settings}${c_error}.${c_reset}"
-          fi
-
-          let failure=1
-
-          break
-        fi
-      fi
-
       # All level 3 are expected to support all modes: individual, level, and monolithic.
       if [[ ${level_current} == "3" ]] ; then
         sed -i -e "s|^\s*build_libraries-level\>.*\$|build_libraries-level -lfll_2 -lfll_1 -lfll_0|" ${settings} &&
@@ -1161,8 +1134,6 @@ package_dependencies_level_update() {
 
   sed -i -e "s|^\s*build_libraries-level\s.*\$|build_libraries-level${level_libraries}|" ${settings} &&
   sed -i -e "s|^\s*build_libraries-level\$|build_libraries-level${level_libraries}|" ${settings} &&
-  sed -i -e "s|^\s*build_libraries-level_threadless\s.*\$|build_libraries-level_threadless${level_libraries}|" ${settings} &&
-  sed -i -e "s|^\s*build_libraries-level_threadless\$|build_libraries-level_threadless${level_libraries}|" ${settings}
 
   if [[ ${?} -ne 0 ]] ; then
     if [[ ${verbosity} != "quiet" ]] ; then
