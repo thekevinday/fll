@@ -44,9 +44,9 @@ extern "C" {
  * @see f_memory_adjust()
  * @see f_memory_resize()
  */
-#if !defined(_di_f_memory_adjust_) || defined(_f_memory_FORCE_secure_memory_)
+#if !defined(_di_f_memory_adjust_) || defined(_f_memory_FORCE_secure_memory_) && !defined(_di_f_memory_resize_) || !defined(_di_f_memory_array_adjust_) || !defined(_di_f_memory_array_decimate_by_)
   extern f_status_t private_f_memory_adjust(const size_t length_old, const size_t length_new, const size_t type_size, void ** const pointer) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_memory_adjust_) || defined(_f_memory_FORCE_secure_memory_)
+#endif // !defined(_di_f_memory_adjust_) || defined(_f_memory_FORCE_secure_memory_) && !defined(_di_f_memory_resize_) || !defined(_di_f_memory_array_adjust_) || !defined(_di_f_memory_array_decimate_by_)
 
 /**
  * Private implementation for resizing.
@@ -77,9 +77,9 @@ extern "C" {
  * @see f_memory_adjust()
  * @see f_memory_resize()
  */
-#if !defined(_di_f_memory_resize_) || defined(_f_memory_FORCE_fast_memory_)
+#if !defined(_di_f_memory_resize_) || defined(_f_memory_FORCE_fast_memory_) && !defined(_di_f_memory_adjust_) || !defined(_di_f_memory_array_append_) || !defined(_di_f_memory_array_append_all_) || !defined(_di_f_memory_array_decrease_by_) || !defined(_di_f_memory_array_increase_) || !defined(_di_f_memory_array_increase_by_) || !defined(_di_f_memory_array_resize_)
   extern f_status_t private_f_memory_resize(const size_t length_old, const size_t length_new, const size_t type_size, void ** const pointer) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_memory_resize_) || defined(_f_memory_FORCE_fast_memory_)
+#endif // !defined(_di_f_memory_resize_) || defined(_f_memory_FORCE_fast_memory_) && !defined(_di_f_memory_adjust_) || !defined(_di_f_memory_array_append_) || !defined(_di_f_memory_array_append_all_) || !defined(_di_f_memory_array_decrease_by_) || !defined(_di_f_memory_array_increase_) || !defined(_di_f_memory_array_increase_by_) || !defined(_di_f_memory_array_resize_)
 
 #ifdef __cplusplus
 } // extern "C"
