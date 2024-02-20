@@ -9,8 +9,6 @@ extern "C" {
 
     if (!print || !print->custom) return F_status_set_error(F_output_not);
 
-    fss_identify_main_t * const main = (fss_identify_main_t *) print->custom;
-
     f_file_stream_lock(print->to);
 
     fll_program_print_help_header(print, fss_identify_program_name_long_s, fss_identify_program_version_s);

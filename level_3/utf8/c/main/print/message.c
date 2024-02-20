@@ -9,8 +9,6 @@ extern "C" {
 
     if (!print || !print->custom) return F_status_set_error(F_output_not);
 
-    utf8_main_t * const main = (utf8_main_t *) print->custom;
-
     f_file_stream_lock(print->to);
 
     fll_program_print_help_header(print, utf8_program_name_long_s, utf8_program_version_s);

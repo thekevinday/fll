@@ -57,6 +57,8 @@ extern "C" {
 
     f_file_stream_flush(print->to);
     f_file_stream_unlock(print->to);
+
+    return F_okay;
   }
 #endif // _di_firewall_print_message_show_header_
 

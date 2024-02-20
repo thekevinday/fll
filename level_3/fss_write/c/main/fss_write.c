@@ -205,7 +205,6 @@ extern "C" {
     input.size_read = main->setting.state.step_large;
 
     f_number_unsigned_t total = 0;
-    f_number_unsigned_t ignore = 0;
     f_range_t range = f_range_t_initialize;
 
     // Reset all of the used data before starting the loop.
@@ -391,8 +390,6 @@ extern "C" {
                 flag -= 0x2;
               }
               else {
-                ignore = main->setting.contents->array[main->setting.contents->used].used;
-
                 flag |= 0x2;
               }
 

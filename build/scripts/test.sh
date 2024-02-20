@@ -482,7 +482,7 @@ test_operate_build_individual() {
 
   for project in ${projects} ; do
 
-    test_operate_build_project "${path_test_package_individual}" "${path_test_work}" "${project}" individual ${test_thread} ${test_thread_individual}
+    test_operate_build_project "${path_test_package_individual}" "${path_test_work}" "${project}" individual "" ${test_thread} ${test_thread_individual}
 
     if [[ ${?} -ne 0 ]] ; then
       let failure=1

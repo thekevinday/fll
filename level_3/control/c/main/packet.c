@@ -168,7 +168,6 @@ extern "C" {
 
     f_number_unsigned_t i = 0;
     f_range_t range_header = f_range_t_initialize;
-    f_range_t range_payload = f_range_t_initialize;
 
     {
       f_number_unsigned_t length = 5;
@@ -308,7 +307,6 @@ extern "C" {
         }
 
         range_header = content_header->array[0];
-        range_payload = content_payload->array[0];
       }
 
       {

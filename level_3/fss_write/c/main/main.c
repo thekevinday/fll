@@ -85,7 +85,7 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 #ifndef _di_fss_write_main_process_help_
   void fss_write_main_process_help(void * const void_main) {
 
-    if (!main) return;
+    if (!void_main) return;
 
     fss_write_main_print_help(&((fss_write_main_t *) void_main)->program.message);
   }
