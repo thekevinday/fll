@@ -13,8 +13,8 @@ version_micro 0
 version_file major
 version_target major
 
-modes individual clang test coverage
-modes_default individual test
+modes individual clang gcc test coverage
+modes_default individual test gcc
 
 build_compiler gcc
 build_compiler-clang clang
@@ -50,7 +50,9 @@ defines_static -Lbuild/libraries/static
 defines_shared -Lbuild/libraries/shared
 
 flags -O2 -z now -g -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-parentheses
+flags -fstack-clash-protection -fno-delete-null-pointer-checks
 flags-clang -Wno-logical-op-parentheses
+flags-gcc -fstrict-flex-arrays=3
 flags-test -fstack-protector -Wall
 flags-coverage -O0 --coverage -fprofile-abs-path -fprofile-dir=build/coverage/
 
