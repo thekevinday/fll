@@ -362,137 +362,513 @@ extern "C" {
   #define F_string_ascii_transmission_stop_s_length      1
   #define F_string_ascii_transmission_block_end_s_length 1
 
-  extern const f_string_static_t f_string_ascii_0_s;
-  extern const f_string_static_t f_string_ascii_1_s;
-  extern const f_string_static_t f_string_ascii_2_s;
-  extern const f_string_static_t f_string_ascii_3_s;
-  extern const f_string_static_t f_string_ascii_4_s;
-  extern const f_string_static_t f_string_ascii_5_s;
-  extern const f_string_static_t f_string_ascii_6_s;
-  extern const f_string_static_t f_string_ascii_7_s;
-  extern const f_string_static_t f_string_ascii_8_s;
-  extern const f_string_static_t f_string_ascii_9_s;
+  #ifndef _di_f_string_ascii_0_s_
+    extern const f_string_static_t f_string_ascii_0_s;
+  #endif // _di_f_string_ascii_0_s_
 
-  extern const f_string_static_t f_string_ascii_a_s;
-  extern const f_string_static_t f_string_ascii_b_s;
-  extern const f_string_static_t f_string_ascii_c_s;
-  extern const f_string_static_t f_string_ascii_d_s;
-  extern const f_string_static_t f_string_ascii_e_s;
-  extern const f_string_static_t f_string_ascii_f_s;
-  extern const f_string_static_t f_string_ascii_g_s;
-  extern const f_string_static_t f_string_ascii_h_s;
-  extern const f_string_static_t f_string_ascii_i_s;
-  extern const f_string_static_t f_string_ascii_j_s;
-  extern const f_string_static_t f_string_ascii_k_s;
-  extern const f_string_static_t f_string_ascii_l_s;
-  extern const f_string_static_t f_string_ascii_m_s;
-  extern const f_string_static_t f_string_ascii_n_s;
-  extern const f_string_static_t f_string_ascii_o_s;
-  extern const f_string_static_t f_string_ascii_p_s;
-  extern const f_string_static_t f_string_ascii_q_s;
-  extern const f_string_static_t f_string_ascii_r_s;
-  extern const f_string_static_t f_string_ascii_s_s;
-  extern const f_string_static_t f_string_ascii_t_s;
-  extern const f_string_static_t f_string_ascii_u_s;
-  extern const f_string_static_t f_string_ascii_v_s;
-  extern const f_string_static_t f_string_ascii_w_s;
-  extern const f_string_static_t f_string_ascii_x_s;
-  extern const f_string_static_t f_string_ascii_y_s;
-  extern const f_string_static_t f_string_ascii_z_s;
+  #ifndef _di_f_string_ascii_1_s_
+    extern const f_string_static_t f_string_ascii_1_s;
+  #endif // _di_f_string_ascii_1_s_
 
-  extern const f_string_static_t f_string_ascii_A_s;
-  extern const f_string_static_t f_string_ascii_B_s;
-  extern const f_string_static_t f_string_ascii_C_s;
-  extern const f_string_static_t f_string_ascii_D_s;
-  extern const f_string_static_t f_string_ascii_E_s;
-  extern const f_string_static_t f_string_ascii_F_s;
-  extern const f_string_static_t f_string_ascii_G_s;
-  extern const f_string_static_t f_string_ascii_H_s;
-  extern const f_string_static_t f_string_ascii_I_s;
-  extern const f_string_static_t f_string_ascii_J_s;
-  extern const f_string_static_t f_string_ascii_K_s;
-  extern const f_string_static_t f_string_ascii_L_s;
-  extern const f_string_static_t f_string_ascii_M_s;
-  extern const f_string_static_t f_string_ascii_N_s;
-  extern const f_string_static_t f_string_ascii_O_s;
-  extern const f_string_static_t f_string_ascii_P_s;
-  extern const f_string_static_t f_string_ascii_Q_s;
-  extern const f_string_static_t f_string_ascii_R_s;
-  extern const f_string_static_t f_string_ascii_S_s;
-  extern const f_string_static_t f_string_ascii_T_s;
-  extern const f_string_static_t f_string_ascii_U_s;
-  extern const f_string_static_t f_string_ascii_V_s;
-  extern const f_string_static_t f_string_ascii_W_s;
-  extern const f_string_static_t f_string_ascii_X_s;
-  extern const f_string_static_t f_string_ascii_Y_s;
-  extern const f_string_static_t f_string_ascii_Z_s;
+  #ifndef _di_f_string_ascii_2_s_
+    extern const f_string_static_t f_string_ascii_2_s;
+  #endif // _di_f_string_ascii_2_s_
 
-  extern const f_string_static_t f_string_ascii_ampersand_s;
-  extern const f_string_static_t f_string_ascii_asterisk_s;
-  extern const f_string_static_t f_string_ascii_brace_close_s;
-  extern const f_string_static_t f_string_ascii_brace_open_s;
-  extern const f_string_static_t f_string_ascii_bracket_close_s;
-  extern const f_string_static_t f_string_ascii_bracket_open_s;
-  extern const f_string_static_t f_string_ascii_caret_s;
-  extern const f_string_static_t f_string_ascii_comma_s;
-  extern const f_string_static_t f_string_ascii_colon_s;
-  extern const f_string_static_t f_string_ascii_colon_semi_s;
-  extern const f_string_static_t f_string_ascii_dollar_s;
-  extern const f_string_static_t f_string_ascii_equal_s;
-  extern const f_string_static_t f_string_ascii_exclamation_s;
-  extern const f_string_static_t f_string_ascii_grave_s;
-  extern const f_string_static_t f_string_ascii_mark_question_s;
-  extern const f_string_static_t f_string_ascii_minus_s;
-  extern const f_string_static_t f_string_ascii_parenthesis_open_s;
-  extern const f_string_static_t f_string_ascii_parenthesis_close_s;
-  extern const f_string_static_t f_string_ascii_percent_s;
-  extern const f_string_static_t f_string_ascii_period_s;
-  extern const f_string_static_t f_string_ascii_pipe_s;
-  extern const f_string_static_t f_string_ascii_plus_s;
-  extern const f_string_static_t f_string_ascii_pound_s;
-  extern const f_string_static_t f_string_ascii_quote_double_s;
-  extern const f_string_static_t f_string_ascii_quote_single_s;
-  extern const f_string_static_t f_string_ascii_sign_at_s;
-  extern const f_string_static_t f_string_ascii_sign_greater_than_s;
-  extern const f_string_static_t f_string_ascii_sign_less_than_s;
-  extern const f_string_static_t f_string_ascii_slash_forward_s;
-  extern const f_string_static_t f_string_ascii_slash_backward_s;
-  extern const f_string_static_t f_string_ascii_tilde_s;
-  extern const f_string_static_t f_string_ascii_underscore_s;
+  #ifndef _di_f_string_ascii_3_s_
+    extern const f_string_static_t f_string_ascii_3_s;
+  #endif // _di_f_string_ascii_3_s_
 
-  extern const f_string_static_t f_string_ascii_acknowledge_s;
-  extern const f_string_static_t f_string_ascii_acknowledge_negative_s;
-  extern const f_string_static_t f_string_ascii_bell_s;
-  extern const f_string_static_t f_string_ascii_cancel_s;
-  extern const f_string_static_t f_string_ascii_data_link_escape_s;
-  extern const f_string_static_t f_string_ascii_device_control_one_s;
-  extern const f_string_static_t f_string_ascii_device_control_two_s;
-  extern const f_string_static_t f_string_ascii_device_control_three_s;
-  extern const f_string_static_t f_string_ascii_device_control_four_s;
-  extern const f_string_static_t f_string_ascii_enquiry_s;
-  extern const f_string_static_t f_string_ascii_escape_s;
-  extern const f_string_static_t f_string_ascii_feed_form_s;
-  extern const f_string_static_t f_string_ascii_feed_line_s;
-  extern const f_string_static_t f_string_ascii_header_start_s;
-  extern const f_string_static_t f_string_ascii_medium_stop_s;
-  extern const f_string_static_t f_string_ascii_null_s;
-  extern const f_string_static_t f_string_ascii_return_carriage_s;
-  extern const f_string_static_t f_string_ascii_separator_file_s;
-  extern const f_string_static_t f_string_ascii_separator_group_s;
-  extern const f_string_static_t f_string_ascii_separator_record_s;
-  extern const f_string_static_t f_string_ascii_separator_unit_s;
-  extern const f_string_static_t f_string_ascii_shift_in_s;
-  extern const f_string_static_t f_string_ascii_shift_out_s;
-  extern const f_string_static_t f_string_ascii_space_s;
-  extern const f_string_static_t f_string_ascii_space_back_s;
-  extern const f_string_static_t f_string_ascii_substitute_s;
-  extern const f_string_static_t f_string_ascii_synchronous_idle_s;
-  extern const f_string_static_t f_string_ascii_tab_horizontal_s;
-  extern const f_string_static_t f_string_ascii_tab_vertical_s;
-  extern const f_string_static_t f_string_ascii_text_start_s;
-  extern const f_string_static_t f_string_ascii_text_stop_s;
-  extern const f_string_static_t f_string_ascii_transmission_stop_s;
-  extern const f_string_static_t f_string_ascii_transmission_block_end_s;
+  #ifndef _di_f_string_ascii_4_s_
+    extern const f_string_static_t f_string_ascii_4_s;
+  #endif // _di_f_string_ascii_4_s_
+
+  #ifndef _di_f_string_ascii_5_s_
+    extern const f_string_static_t f_string_ascii_5_s;
+  #endif // _di_f_string_ascii_5_s_
+
+  #ifndef _di_f_string_ascii_6_s_
+    extern const f_string_static_t f_string_ascii_6_s;
+  #endif // _di_f_string_ascii_6_s_
+
+  #ifndef _di_f_string_ascii_7_s_
+    extern const f_string_static_t f_string_ascii_7_s;
+  #endif // _di_f_string_ascii_7_s_
+
+  #ifndef _di_f_string_ascii_8_s_
+    extern const f_string_static_t f_string_ascii_8_s;
+  #endif // _di_f_string_ascii_8_s_
+
+  #ifndef _di_f_string_ascii_9_s_
+    extern const f_string_static_t f_string_ascii_9_s;
+  #endif // _di_f_string_ascii_9_s_
+
+  #ifndef _di_f_string_ascii_a_s_
+    extern const f_string_static_t f_string_ascii_a_s;
+  #endif // _di_f_string_ascii_a_s_
+
+  #ifndef _di_f_string_ascii_b_s_
+    extern const f_string_static_t f_string_ascii_b_s;
+  #endif // _di_f_string_ascii_b_s_
+
+  #ifndef _di_f_string_ascii_c_s_
+    extern const f_string_static_t f_string_ascii_c_s;
+  #endif // _di_f_string_ascii_c_s_
+
+  #ifndef _di_f_string_ascii_d_s_
+    extern const f_string_static_t f_string_ascii_d_s;
+  #endif // _di_f_string_ascii_d_s_
+
+  #ifndef _di_f_string_ascii_e_s_
+    extern const f_string_static_t f_string_ascii_e_s;
+  #endif // _di_f_string_ascii_e_s_
+
+  #ifndef _di_f_string_ascii_f_s_
+    extern const f_string_static_t f_string_ascii_f_s;
+  #endif // _di_f_string_ascii_f_s_
+
+  #ifndef _di_f_string_ascii_g_s_
+    extern const f_string_static_t f_string_ascii_g_s;
+  #endif // _di_f_string_ascii_g_s_
+
+  #ifndef _di_f_string_ascii_h_s_
+    extern const f_string_static_t f_string_ascii_h_s;
+  #endif // _di_f_string_ascii_h_s_
+
+  #ifndef _di_f_string_ascii_i_s_
+    extern const f_string_static_t f_string_ascii_i_s;
+  #endif // _di_f_string_ascii_i_s_
+
+  #ifndef _di_f_string_ascii_j_s_
+    extern const f_string_static_t f_string_ascii_j_s;
+  #endif // _di_f_string_ascii_j_s_
+
+  #ifndef _di_f_string_ascii_k_s_
+    extern const f_string_static_t f_string_ascii_k_s;
+  #endif // _di_f_string_ascii_k_s_
+
+  #ifndef _di_f_string_ascii_l_s_
+    extern const f_string_static_t f_string_ascii_l_s;
+  #endif // _di_f_string_ascii_l_s_
+
+  #ifndef _di_f_string_ascii_m_s_
+    extern const f_string_static_t f_string_ascii_m_s;
+  #endif // _di_f_string_ascii_m_s_
+
+  #ifndef _di_f_string_ascii_n_s_
+    extern const f_string_static_t f_string_ascii_n_s;
+  #endif // _di_f_string_ascii_n_s_
+
+  #ifndef _di_f_string_ascii_o_s_
+    extern const f_string_static_t f_string_ascii_o_s;
+  #endif // _di_f_string_ascii_o_s_
+
+  #ifndef _di_f_string_ascii_p_s_
+    extern const f_string_static_t f_string_ascii_p_s;
+  #endif // _di_f_string_ascii_p_s_
+
+  #ifndef _di_f_string_ascii_q_s_
+    extern const f_string_static_t f_string_ascii_q_s;
+  #endif // _di_f_string_ascii_q_s_
+
+  #ifndef _di_f_string_ascii_r_s_
+    extern const f_string_static_t f_string_ascii_r_s;
+  #endif // _di_f_string_ascii_r_s_
+
+  #ifndef _di_f_string_ascii_s_s_
+    extern const f_string_static_t f_string_ascii_s_s;
+  #endif // _di_f_string_ascii_s_s_
+
+  #ifndef _di_f_string_ascii_t_s_
+    extern const f_string_static_t f_string_ascii_t_s;
+  #endif // _di_f_string_ascii_t_s_
+
+  #ifndef _di_f_string_ascii_u_s_
+    extern const f_string_static_t f_string_ascii_u_s;
+  #endif // _di_f_string_ascii_u_s_
+
+  #ifndef _di_f_string_ascii_v_s_
+    extern const f_string_static_t f_string_ascii_v_s;
+  #endif // _di_f_string_ascii_v_s_
+
+  #ifndef _di_f_string_ascii_w_s_
+    extern const f_string_static_t f_string_ascii_w_s;
+  #endif // _di_f_string_ascii_w_s_
+
+  #ifndef _di_f_string_ascii_x_s_
+    extern const f_string_static_t f_string_ascii_x_s;
+  #endif // _di_f_string_ascii_x_s_
+
+  #ifndef _di_f_string_ascii_y_s_
+    extern const f_string_static_t f_string_ascii_y_s;
+  #endif // _di_f_string_ascii_y_s_
+
+  #ifndef _di_f_string_ascii_z_s_
+    extern const f_string_static_t f_string_ascii_z_s;
+  #endif // _di_f_string_ascii_z_s_
+
+  #ifndef _di_f_string_ascii_A_s_
+    extern const f_string_static_t f_string_ascii_A_s;
+  #endif // _di_f_string_ascii_A_s_
+
+  #ifndef _di_f_string_ascii_B_s_
+    extern const f_string_static_t f_string_ascii_B_s;
+  #endif // _di_f_string_ascii_B_s_
+
+  #ifndef _di_f_string_ascii_C_s_
+    extern const f_string_static_t f_string_ascii_C_s;
+  #endif // _di_f_string_ascii_C_s_
+
+  #ifndef _di_f_string_ascii_D_s_
+    extern const f_string_static_t f_string_ascii_D_s;
+  #endif // _di_f_string_ascii_D_s_
+
+  #ifndef _di_f_string_ascii_E_s_
+    extern const f_string_static_t f_string_ascii_E_s;
+  #endif // _di_f_string_ascii_E_s_
+
+  #ifndef _di_f_string_ascii_F_s_
+    extern const f_string_static_t f_string_ascii_F_s;
+  #endif // _di_f_string_ascii_F_s_
+
+  #ifndef _di_f_string_ascii_G_s_
+    extern const f_string_static_t f_string_ascii_G_s;
+  #endif // _di_f_string_ascii_G_s_
+
+  #ifndef _di_f_string_ascii_H_s_
+    extern const f_string_static_t f_string_ascii_H_s;
+  #endif // _di_f_string_ascii_H_s_
+
+  #ifndef _di_f_string_ascii_I_s_
+    extern const f_string_static_t f_string_ascii_I_s;
+  #endif // _di_f_string_ascii_I_s_
+
+  #ifndef _di_f_string_ascii_J_s_
+    extern const f_string_static_t f_string_ascii_J_s;
+  #endif // _di_f_string_ascii_J_s_
+
+  #ifndef _di_f_string_ascii_K_s_
+    extern const f_string_static_t f_string_ascii_K_s;
+  #endif // _di_f_string_ascii_K_s_
+
+  #ifndef _di_f_string_ascii_L_s_
+    extern const f_string_static_t f_string_ascii_L_s;
+  #endif // _di_f_string_ascii_L_s_
+
+  #ifndef _di_f_string_ascii_M_s_
+    extern const f_string_static_t f_string_ascii_M_s;
+  #endif // _di_f_string_ascii_M_s_
+
+  #ifndef _di_f_string_ascii_N_s_
+    extern const f_string_static_t f_string_ascii_N_s;
+  #endif // _di_f_string_ascii_N_s_
+
+  #ifndef _di_f_string_ascii_O_s_
+    extern const f_string_static_t f_string_ascii_O_s;
+  #endif // _di_f_string_ascii_O_s_
+
+  #ifndef _di_f_string_ascii_P_s_
+    extern const f_string_static_t f_string_ascii_P_s;
+  #endif // _di_f_string_ascii_P_s_
+
+  #ifndef _di_f_string_ascii_Q_s_
+    extern const f_string_static_t f_string_ascii_Q_s;
+  #endif // _di_f_string_ascii_Q_s_
+
+  #ifndef _di_f_string_ascii_R_s_
+    extern const f_string_static_t f_string_ascii_R_s;
+  #endif // _di_f_string_ascii_R_s_
+
+  #ifndef _di_f_string_ascii_S_s_
+    extern const f_string_static_t f_string_ascii_S_s;
+  #endif // _di_f_string_ascii_S_s_
+
+  #ifndef _di_f_string_ascii_T_s_
+    extern const f_string_static_t f_string_ascii_T_s;
+  #endif // _di_f_string_ascii_T_s_
+
+  #ifndef _di_f_string_ascii_U_s_
+    extern const f_string_static_t f_string_ascii_U_s;
+  #endif // _di_f_string_ascii_U_s_
+
+  #ifndef _di_f_string_ascii_V_s_
+    extern const f_string_static_t f_string_ascii_V_s;
+  #endif // _di_f_string_ascii_V_s_
+
+  #ifndef _di_f_string_ascii_W_s_
+    extern const f_string_static_t f_string_ascii_W_s;
+  #endif // _di_f_string_ascii_W_s_
+
+  #ifndef _di_f_string_ascii_X_s_
+    extern const f_string_static_t f_string_ascii_X_s;
+  #endif // _di_f_string_ascii_X_s_
+
+  #ifndef _di_f_string_ascii_Y_s_
+    extern const f_string_static_t f_string_ascii_Y_s;
+  #endif // _di_f_string_ascii_Y_s_
+
+  #ifndef _di_f_string_ascii_Z_s_
+    extern const f_string_static_t f_string_ascii_Z_s;
+  #endif // _di_f_string_ascii_Z_s_
+
+  #ifndef _di_f_string_ascii_ampersand_s_
+    extern const f_string_static_t f_string_ascii_ampersand_s;
+  #endif // _di_f_string_ascii_ampersand_s_
+
+  #ifndef _di_f_string_ascii_asterisk_s_
+    extern const f_string_static_t f_string_ascii_asterisk_s;
+  #endif // _di_f_string_ascii_asterisk_s_
+
+  #ifndef _di_f_string_ascii_brace_close_s_
+    extern const f_string_static_t f_string_ascii_brace_close_s;
+  #endif // _di_f_string_ascii_brace_close_s_
+
+  #ifndef _di_f_string_ascii_brace_open_s_
+    extern const f_string_static_t f_string_ascii_brace_open_s;
+  #endif // _di_f_string_ascii_brace_open_s_
+
+  #ifndef _di_f_string_ascii_bracket_close_s_
+    extern const f_string_static_t f_string_ascii_bracket_close_s;
+  #endif // _di_f_string_ascii_bracket_close_s_
+
+  #ifndef _di_f_string_ascii_bracket_open_s_
+    extern const f_string_static_t f_string_ascii_bracket_open_s;
+  #endif // _di_f_string_ascii_bracket_open_s_
+
+  #ifndef _di_f_string_ascii_caret_s_
+    extern const f_string_static_t f_string_ascii_caret_s;
+  #endif // _di_f_string_ascii_caret_s_
+
+  #ifndef _di_f_string_ascii_comma_s_
+    extern const f_string_static_t f_string_ascii_comma_s;
+  #endif // _di_f_string_ascii_comma_s_
+
+  #ifndef _di_f_string_ascii_colon_s_
+    extern const f_string_static_t f_string_ascii_colon_s;
+  #endif // _di_f_string_ascii_colon_s_
+
+  #ifndef _di_f_string_ascii_colon_semi_s_
+    extern const f_string_static_t f_string_ascii_colon_semi_s;
+  #endif // _di_f_string_ascii_colon_semi_s_
+
+  #ifndef _di_f_string_ascii_dollar_s_
+    extern const f_string_static_t f_string_ascii_dollar_s;
+  #endif // _di_f_string_ascii_dollar_s_
+
+  #ifndef _di_f_string_ascii_equal_s_
+    extern const f_string_static_t f_string_ascii_equal_s;
+  #endif // _di_f_string_ascii_equal_s_
+
+  #ifndef _di_f_string_ascii_exclamation_s_
+    extern const f_string_static_t f_string_ascii_exclamation_s;
+  #endif // _di_f_string_ascii_exclamation_s_
+
+  #ifndef _di_f_string_ascii_grave_s_
+    extern const f_string_static_t f_string_ascii_grave_s;
+  #endif // _di_f_string_ascii_grave_s_
+
+  #ifndef _di_f_string_ascii_mark_question_s_
+    extern const f_string_static_t f_string_ascii_mark_question_s;
+  #endif // _di_f_string_ascii_mark_question_s_
+
+  #ifndef _di_f_string_ascii_minus_s_
+    extern const f_string_static_t f_string_ascii_minus_s;
+  #endif // _di_f_string_ascii_minus_s_
+
+  #ifndef _di_f_string_ascii_parenthesis_open_s_
+    extern const f_string_static_t f_string_ascii_parenthesis_open_s;
+  #endif // _di_f_string_ascii_parenthesis_open_s_
+
+  #ifndef _di_f_string_ascii_parenthesis_close_s_
+    extern const f_string_static_t f_string_ascii_parenthesis_close_s;
+  #endif // _di_f_string_ascii_parenthesis_close_s_
+
+  #ifndef _di_f_string_ascii_percent_s_
+    extern const f_string_static_t f_string_ascii_percent_s;
+  #endif // _di_f_string_ascii_percent_s_
+
+  #ifndef _di_f_string_ascii_period_s_
+    extern const f_string_static_t f_string_ascii_period_s;
+  #endif // _di_f_string_ascii_period_s_
+
+  #ifndef _di_f_string_ascii_pipe_s_
+    extern const f_string_static_t f_string_ascii_pipe_s;
+  #endif // _di_f_string_ascii_pipe_s_
+
+  #ifndef _di_f_string_ascii_plus_s_
+    extern const f_string_static_t f_string_ascii_plus_s;
+  #endif // _di_f_string_ascii_plus_s_
+
+  #ifndef _di_f_string_ascii_pound_s_
+    extern const f_string_static_t f_string_ascii_pound_s;
+  #endif // _di_f_string_ascii_pound_s_
+
+  #ifndef _di_f_string_ascii_quote_double_s_
+    extern const f_string_static_t f_string_ascii_quote_double_s;
+  #endif // _di_f_string_ascii_quote_double_s_
+
+  #ifndef _di_f_string_ascii_quote_single_s_
+    extern const f_string_static_t f_string_ascii_quote_single_s;
+  #endif // _di_f_string_ascii_quote_single_s_
+
+  #ifndef _di_f_string_ascii_sign_at_s_
+    extern const f_string_static_t f_string_ascii_sign_at_s;
+  #endif // _di_f_string_ascii_sign_at_s_
+
+  #ifndef _di_f_string_ascii_sign_greater_than_s_
+    extern const f_string_static_t f_string_ascii_sign_greater_than_s;
+  #endif // _di_f_string_ascii_sign_greater_than_s_
+
+  #ifndef _di_f_string_ascii_sign_less_than_s_
+    extern const f_string_static_t f_string_ascii_sign_less_than_s;
+  #endif // _di_f_string_ascii_sign_less_than_s_
+
+  #ifndef _di_f_string_ascii_slash_forward_s_
+    extern const f_string_static_t f_string_ascii_slash_forward_s;
+  #endif // _di_f_string_ascii_slash_forward_s_
+
+  #ifndef _di_f_string_ascii_slash_backward_s_
+    extern const f_string_static_t f_string_ascii_slash_backward_s;
+  #endif // _di_f_string_ascii_slash_backward_s_
+
+  #ifndef _di_f_string_ascii_tilde_s_
+    extern const f_string_static_t f_string_ascii_tilde_s;
+  #endif // _di_f_string_ascii_tilde_s_
+
+  #ifndef _di_f_string_ascii_underscore_s_
+    extern const f_string_static_t f_string_ascii_underscore_s;
+  #endif // _di_f_string_ascii_underscore_s_
+
+  #ifndef _di_f_string_ascii_acknowledge_s_
+    extern const f_string_static_t f_string_ascii_acknowledge_s;
+  #endif // _di_f_string_ascii_acknowledge_s_
+
+  #ifndef _di_f_string_ascii_acknowledge_negative_s_
+    extern const f_string_static_t f_string_ascii_acknowledge_negative_s;
+  #endif // _di_f_string_ascii_acknowledge_negative_s_
+
+  #ifndef _di_f_string_ascii_bell_s_
+    extern const f_string_static_t f_string_ascii_bell_s;
+  #endif // _di_f_string_ascii_bell_s_
+
+  #ifndef _di_f_string_ascii_cancel_s_
+    extern const f_string_static_t f_string_ascii_cancel_s;
+  #endif // _di_f_string_ascii_cancel_s_
+
+  #ifndef _di_f_string_ascii_data_link_escape_s_
+    extern const f_string_static_t f_string_ascii_data_link_escape_s;
+  #endif // _di_f_string_ascii_data_link_escape_s_
+
+  #ifndef _di_f_string_ascii_device_control_one_s_
+    extern const f_string_static_t f_string_ascii_device_control_one_s;
+  #endif // _di_f_string_ascii_device_control_one_s_
+
+  #ifndef _di_f_string_ascii_device_control_two_s_
+    extern const f_string_static_t f_string_ascii_device_control_two_s;
+  #endif // _di_f_string_ascii_device_control_two_s_
+
+  #ifndef _di_f_string_ascii_device_control_three_s_
+    extern const f_string_static_t f_string_ascii_device_control_three_s;
+  #endif // _di_f_string_ascii_device_control_three_s_
+
+  #ifndef _di_f_string_ascii_device_control_four_s_
+    extern const f_string_static_t f_string_ascii_device_control_four_s;
+  #endif // _di_f_string_ascii_device_control_four_s_
+
+  #ifndef _di_f_string_ascii_enquiry_s_
+    extern const f_string_static_t f_string_ascii_enquiry_s;
+  #endif // _di_f_string_ascii_enquiry_s_
+
+  #ifndef _di_f_string_ascii_escape_s_
+    extern const f_string_static_t f_string_ascii_escape_s;
+  #endif // _di_f_string_ascii_escape_s_
+
+  #ifndef _di_f_string_ascii_feed_form_s_
+    extern const f_string_static_t f_string_ascii_feed_form_s;
+  #endif // _di_f_string_ascii_feed_form_s_
+
+  #ifndef _di_f_string_ascii_feed_line_s_
+    extern const f_string_static_t f_string_ascii_feed_line_s;
+  #endif // _di_f_string_ascii_feed_line_s_
+
+  #ifndef _di_f_string_ascii_header_start_s_
+    extern const f_string_static_t f_string_ascii_header_start_s;
+  #endif // _di_f_string_ascii_header_start_s_
+
+  #ifndef _di_f_string_ascii_medium_stop_s_
+    extern const f_string_static_t f_string_ascii_medium_stop_s;
+  #endif // _di_f_string_ascii_medium_stop_s_
+
+  #ifndef _di_f_string_ascii_null_s_
+    extern const f_string_static_t f_string_ascii_null_s;
+  #endif // _di_f_string_ascii_null_s_
+
+  #ifndef _di_f_string_ascii_return_carriage_s_
+    extern const f_string_static_t f_string_ascii_return_carriage_s;
+  #endif // _di_f_string_ascii_return_carriage_s_
+
+  #ifndef _di_f_string_ascii_separator_file_s_
+    extern const f_string_static_t f_string_ascii_separator_file_s;
+  #endif // _di_f_string_ascii_separator_file_s_
+
+  #ifndef _di_f_string_ascii_separator_group_s_
+    extern const f_string_static_t f_string_ascii_separator_group_s;
+  #endif // _di_f_string_ascii_separator_group_s_
+
+  #ifndef _di_f_string_ascii_separator_record_s_
+    extern const f_string_static_t f_string_ascii_separator_record_s;
+  #endif // _di_f_string_ascii_separator_record_s_
+
+  #ifndef _di_f_string_ascii_separator_unit_s_
+    extern const f_string_static_t f_string_ascii_separator_unit_s;
+  #endif // _di_f_string_ascii_separator_unit_s_
+
+  #ifndef _di_f_string_ascii_shift_in_s_
+    extern const f_string_static_t f_string_ascii_shift_in_s;
+  #endif // _di_f_string_ascii_shift_in_s_
+
+  #ifndef _di_f_string_ascii_shift_out_s_
+    extern const f_string_static_t f_string_ascii_shift_out_s;
+  #endif // _di_f_string_ascii_shift_out_s_
+
+  #ifndef _di_f_string_ascii_space_s_
+    extern const f_string_static_t f_string_ascii_space_s;
+  #endif // _di_f_string_ascii_space_s_
+
+  #ifndef _di_f_string_ascii_space_back_s_
+    extern const f_string_static_t f_string_ascii_space_back_s;
+  #endif // _di_f_string_ascii_space_back_s_
+
+  #ifndef _di_f_string_ascii_substitute_s_
+    extern const f_string_static_t f_string_ascii_substitute_s;
+  #endif // _di_f_string_ascii_substitute_s_
+
+  #ifndef _di_f_string_ascii_synchronous_idle_s_
+    extern const f_string_static_t f_string_ascii_synchronous_idle_s;
+  #endif // _di_f_string_ascii_synchronous_idle_s_
+
+  #ifndef _di_f_string_ascii_tab_horizontal_s_
+    extern const f_string_static_t f_string_ascii_tab_horizontal_s;
+  #endif // _di_f_string_ascii_tab_horizontal_s_
+
+  #ifndef _di_f_string_ascii_tab_vertical_s_
+    extern const f_string_static_t f_string_ascii_tab_vertical_s;
+  #endif // _di_f_string_ascii_tab_vertical_s_
+
+  #ifndef _di_f_string_ascii_text_start_s_
+    extern const f_string_static_t f_string_ascii_text_start_s;
+  #endif // _di_f_string_ascii_text_start_s_
+
+  #ifndef _di_f_string_ascii_text_stop_s_
+    extern const f_string_static_t f_string_ascii_text_stop_s;
+  #endif // _di_f_string_ascii_text_stop_s_
+
+  #ifndef _di_f_string_ascii_transmission_stop_s_
+    extern const f_string_static_t f_string_ascii_transmission_stop_s;
+  #endif // _di_f_string_ascii_transmission_stop_s_
+
+  #ifndef _di_f_string_ascii_transmission_block_end_s_
+    extern const f_string_static_t f_string_ascii_transmission_block_end_s;
+  #endif // _di_f_string_ascii_transmission_block_end_s_
 #endif // _di_f_string_ascii_s_
 
 /**
@@ -639,75 +1015,277 @@ extern "C" {
   #define F_string_format_sentence_end_s_length       7
   #define F_string_format_sentence_end_quote_s_length 6
 
-  extern const f_string_static_t f_string_format_d_double_s;
-  extern const f_string_static_t f_string_format_d_single_s;
-  extern const f_string_static_t f_string_format_D_double_s;
-  extern const f_string_static_t f_string_format_D_single_s;
-  extern const f_string_static_t f_string_format_i_double_s;
-  extern const f_string_static_t f_string_format_i_single_s;
-  extern const f_string_static_t f_string_format_q_double_s;
-  extern const f_string_static_t f_string_format_q_range_double_s;
-  extern const f_string_static_t f_string_format_q_range_single_s;
-  extern const f_string_static_t f_string_format_q_single_s;
-  extern const f_string_static_t f_string_format_Q_double_s;
-  extern const f_string_static_t f_string_format_Q_range_double_s;
-  extern const f_string_static_t f_string_format_Q_range_single_s;
-  extern const f_string_static_t f_string_format_Q_single_s;
-  extern const f_string_static_t f_string_format_r_double_s;
-  extern const f_string_static_t f_string_format_r_range_double_s;
-  extern const f_string_static_t f_string_format_r_range_single_s;
-  extern const f_string_static_t f_string_format_r_single_s;
-  extern const f_string_static_t f_string_format_R_double_s;
-  extern const f_string_static_t f_string_format_R_range_double_s;
-  extern const f_string_static_t f_string_format_R_range_single_s;
-  extern const f_string_static_t f_string_format_R_single_s;
-  extern const f_string_static_t f_string_format_s_double_s;
-  extern const f_string_static_t f_string_format_s_single_s;
-  extern const f_string_static_t f_string_format_S_double_s;
-  extern const f_string_static_t f_string_format_S_single_s;
-  extern const f_string_static_t f_string_format_u_double_s;
-  extern const f_string_static_t f_string_format_u_single_s;
-  extern const f_string_static_t f_string_format_z_double_s;
-  extern const f_string_static_t f_string_format_z_single_s;
-  extern const f_string_static_t f_string_format_Z_double_s;
-  extern const f_string_static_t f_string_format_Z_single_s;
-  extern const f_string_static_t f_string_format_dl_double_s;
-  extern const f_string_static_t f_string_format_dl_single_s;
-  extern const f_string_static_t f_string_format_DL_double_s;
-  extern const f_string_static_t f_string_format_DL_single_s;
-  extern const f_string_static_t f_string_format_ii_double_s;
-  extern const f_string_static_t f_string_format_ii_single_s;
-  extern const f_string_static_t f_string_format_il_double_s;
-  extern const f_string_static_t f_string_format_il_single_s;
-  extern const f_string_static_t f_string_format_in_double_s;
-  extern const f_string_static_t f_string_format_in_single_s;
-  extern const f_string_static_t f_string_format_QQ_double_s;
-  extern const f_string_static_t f_string_format_QQ_single_s;
-  extern const f_string_static_t f_string_format_rr_double_s;
-  extern const f_string_static_t f_string_format_rr_single_s;
-  extern const f_string_static_t f_string_format_RR_double_s;
-  extern const f_string_static_t f_string_format_RR_single_s;
-  extern const f_string_static_t f_string_format_ss_double_s;
-  extern const f_string_static_t f_string_format_ss_single_s;
-  extern const f_string_static_t f_string_format_SS_double_s;
-  extern const f_string_static_t f_string_format_SS_single_s;
-  extern const f_string_static_t f_string_format_ui_double_s;
-  extern const f_string_static_t f_string_format_ui_single_s;
-  extern const f_string_static_t f_string_format_ul_double_s;
-  extern const f_string_static_t f_string_format_ul_single_s;
-  extern const f_string_static_t f_string_format_un_double_s;
-  extern const f_string_static_t f_string_format_un_single_s;
-  extern const f_string_static_t f_string_format_iii_double_s;
-  extern const f_string_static_t f_string_format_iii_single_s;
-  extern const f_string_static_t f_string_format_ill_double_s;
-  extern const f_string_static_t f_string_format_ill_single_s;
-  extern const f_string_static_t f_string_format_uii_double_s;
-  extern const f_string_static_t f_string_format_uii_single_s;
-  extern const f_string_static_t f_string_format_ull_double_s;
-  extern const f_string_static_t f_string_format_ull_single_s;
+  #ifndef _di_f_string_format_d_double_s_
+    extern const f_string_static_t f_string_format_d_double_s;
+  #endif // _di_f_string_format_d_double_s_
 
-  extern const f_string_static_t f_string_format_sentence_end_s;
-  extern const f_string_static_t f_string_format_sentence_end_quote_s;
+  #ifndef _di_f_string_format_d_single_s_
+    extern const f_string_static_t f_string_format_d_single_s;
+  #endif // _di_f_string_format_d_single_s_
+
+  #ifndef _di_f_string_format_D_double_s_
+    extern const f_string_static_t f_string_format_D_double_s;
+  #endif // _di_f_string_format_D_double_s_
+
+  #ifndef _di_f_string_format_D_single_s_
+    extern const f_string_static_t f_string_format_D_single_s;
+  #endif // _di_f_string_format_D_single_s_
+
+  #ifndef _di_f_string_format_i_double_s_
+    extern const f_string_static_t f_string_format_i_double_s;
+  #endif // _di_f_string_format_i_double_s_
+
+  #ifndef _di_f_string_format_i_single_s_
+    extern const f_string_static_t f_string_format_i_single_s;
+  #endif // _di_f_string_format_i_single_s_
+
+  #ifndef _di_f_string_format_q_double_s_
+    extern const f_string_static_t f_string_format_q_double_s;
+  #endif // _di_f_string_format_q_double_s_
+
+  #ifndef _di_f_string_format_q_range_double_s_
+    extern const f_string_static_t f_string_format_q_range_double_s;
+  #endif // _di_f_string_format_q_range_double_s_
+
+  #ifndef _di_f_string_format_q_range_single_s_
+    extern const f_string_static_t f_string_format_q_range_single_s;
+  #endif // _di_f_string_format_q_range_single_s_
+
+  #ifndef _di_f_string_format_q_single_s_
+    extern const f_string_static_t f_string_format_q_single_s;
+  #endif // _di_f_string_format_q_single_s_
+
+  #ifndef _di_f_string_format_Q_double_s_
+    extern const f_string_static_t f_string_format_Q_double_s;
+  #endif // _di_f_string_format_Q_double_s_
+
+  #ifndef _di_f_string_format_Q_range_double_s_
+    extern const f_string_static_t f_string_format_Q_range_double_s;
+  #endif // _di_f_string_format_Q_range_double_s_
+
+  #ifndef _di_f_string_format_Q_range_single_s_
+    extern const f_string_static_t f_string_format_Q_range_single_s;
+  #endif // _di_f_string_format_Q_range_single_s_
+
+  #ifndef _di_f_string_format_Q_single_s_
+    extern const f_string_static_t f_string_format_Q_single_s;
+  #endif // _di_f_string_format_Q_single_s_
+
+  #ifndef _di_f_string_format_r_double_s_
+    extern const f_string_static_t f_string_format_r_double_s;
+  #endif // _di_f_string_format_r_double_s_
+
+  #ifndef _di_f_string_format_r_range_double_s_
+    extern const f_string_static_t f_string_format_r_range_double_s;
+  #endif // _di_f_string_format_r_range_double_s_
+
+  #ifndef _di_f_string_format_r_range_single_s_
+    extern const f_string_static_t f_string_format_r_range_single_s;
+  #endif // _di_f_string_format_r_range_single_s_
+
+  #ifndef _di_f_string_format_r_single_s_
+    extern const f_string_static_t f_string_format_r_single_s;
+  #endif // _di_f_string_format_r_single_s_
+
+  #ifndef _di_f_string_format_R_double_s_
+    extern const f_string_static_t f_string_format_R_double_s;
+  #endif // _di_f_string_format_R_double_s_
+
+  #ifndef _di_f_string_format_R_range_double_s_
+    extern const f_string_static_t f_string_format_R_range_double_s;
+  #endif // _di_f_string_format_R_range_double_s_
+
+  #ifndef _di_f_string_format_R_range_single_s_
+    extern const f_string_static_t f_string_format_R_range_single_s;
+  #endif // _di_f_string_format_R_range_single_s_
+
+  #ifndef _di_f_string_format_R_single_s_
+    extern const f_string_static_t f_string_format_R_single_s;
+  #endif // _di_f_string_format_R_single_s_
+
+  #ifndef _di_f_string_format_s_double_s_
+    extern const f_string_static_t f_string_format_s_double_s;
+  #endif // _di_f_string_format_s_double_s_
+
+  #ifndef _di_f_string_format_s_single_s_
+    extern const f_string_static_t f_string_format_s_single_s;
+  #endif // _di_f_string_format_s_single_s_
+
+  #ifndef _di_f_string_format_S_double_s_
+    extern const f_string_static_t f_string_format_S_double_s;
+  #endif // _di_f_string_format_S_double_s_
+
+  #ifndef _di_f_string_format_S_single_s_
+    extern const f_string_static_t f_string_format_S_single_s;
+  #endif // _di_f_string_format_S_single_s_
+
+  #ifndef _di_f_string_format_u_double_s_
+    extern const f_string_static_t f_string_format_u_double_s;
+  #endif // _di_f_string_format_u_double_s_
+
+  #ifndef _di_f_string_format_u_single_s_
+    extern const f_string_static_t f_string_format_u_single_s;
+  #endif // _di_f_string_format_u_single_s_
+
+  #ifndef _di_f_string_format_z_double_s_
+    extern const f_string_static_t f_string_format_z_double_s;
+  #endif // _di_f_string_format_z_double_s_
+
+  #ifndef _di_f_string_format_z_single_s_
+    extern const f_string_static_t f_string_format_z_single_s;
+  #endif // _di_f_string_format_z_single_s_
+
+  #ifndef _di_f_string_format_Z_double_s_
+    extern const f_string_static_t f_string_format_Z_double_s;
+  #endif // _di_f_string_format_Z_double_s_
+
+  #ifndef _di_f_string_format_Z_single_s_
+    extern const f_string_static_t f_string_format_Z_single_s;
+  #endif // _di_f_string_format_Z_single_s_
+
+  #ifndef _di_f_string_format_dl_double_s_
+    extern const f_string_static_t f_string_format_dl_double_s;
+  #endif // _di_f_string_format_dl_double_s_
+
+  #ifndef _di_f_string_format_dl_single_s_
+    extern const f_string_static_t f_string_format_dl_single_s;
+  #endif // _di_f_string_format_dl_single_s_
+
+  #ifndef _di_f_string_format_DL_double_s_
+    extern const f_string_static_t f_string_format_DL_double_s;
+  #endif // _di_f_string_format_DL_double_s_
+
+  #ifndef _di_f_string_format_DL_single_s_
+    extern const f_string_static_t f_string_format_DL_single_s;
+  #endif // _di_f_string_format_DL_single_s_
+
+  #ifndef _di_f_string_format_ii_double_s_
+    extern const f_string_static_t f_string_format_ii_double_s;
+  #endif // _di_f_string_format_ii_double_s_
+
+  #ifndef _di_f_string_format_ii_single_s_
+    extern const f_string_static_t f_string_format_ii_single_s;
+  #endif // _di_f_string_format_ii_single_s_
+
+  #ifndef _di_f_string_format_il_double_s_
+    extern const f_string_static_t f_string_format_il_double_s;
+  #endif // _di_f_string_format_il_double_s_
+
+  #ifndef _di_f_string_format_il_single_s_
+    extern const f_string_static_t f_string_format_il_single_s;
+  #endif // _di_f_string_format_il_single_s_
+
+  #ifndef _di_f_string_format_in_double_s_
+    extern const f_string_static_t f_string_format_in_double_s;
+  #endif // _di_f_string_format_in_double_s_
+
+  #ifndef _di_f_string_format_in_single_s_
+    extern const f_string_static_t f_string_format_in_single_s;
+  #endif // _di_f_string_format_in_single_s_
+
+  #ifndef _di_f_string_format_QQ_double_s_
+    extern const f_string_static_t f_string_format_QQ_double_s;
+  #endif // _di_f_string_format_QQ_double_s_
+
+  #ifndef _di_f_string_format_QQ_single_s_
+    extern const f_string_static_t f_string_format_QQ_single_s;
+  #endif // _di_f_string_format_QQ_single_s_
+
+  #ifndef _di_f_string_format_rr_double_s_
+    extern const f_string_static_t f_string_format_rr_double_s;
+  #endif // _di_f_string_format_rr_double_s_
+
+  #ifndef _di_f_string_format_rr_single_s_
+    extern const f_string_static_t f_string_format_rr_single_s;
+  #endif // _di_f_string_format_rr_single_s_
+
+  #ifndef _di_f_string_format_RR_double_s_
+    extern const f_string_static_t f_string_format_RR_double_s;
+  #endif // _di_f_string_format_RR_double_s_
+
+  #ifndef _di_f_string_format_RR_single_s_
+    extern const f_string_static_t f_string_format_RR_single_s;
+  #endif // _di_f_string_format_RR_single_s_
+
+  #ifndef _di_f_string_format_ss_double_s_
+    extern const f_string_static_t f_string_format_ss_double_s;
+  #endif // _di_f_string_format_ss_double_s_
+
+  #ifndef _di_f_string_format_ss_single_s_
+    extern const f_string_static_t f_string_format_ss_single_s;
+  #endif // _di_f_string_format_ss_single_s_
+
+  #ifndef _di_f_string_format_SS_double_s_
+    extern const f_string_static_t f_string_format_SS_double_s;
+  #endif // _di_f_string_format_SS_double_s_
+
+  #ifndef _di_f_string_format_SS_single_s_
+    extern const f_string_static_t f_string_format_SS_single_s;
+  #endif // _di_f_string_format_SS_single_s_
+
+  #ifndef _di_f_string_format_ui_double_s_
+    extern const f_string_static_t f_string_format_ui_double_s;
+  #endif // _di_f_string_format_ui_double_s_
+
+  #ifndef _di_f_string_format_ui_single_s_
+    extern const f_string_static_t f_string_format_ui_single_s;
+  #endif // _di_f_string_format_ui_single_s_
+
+  #ifndef _di_f_string_format_ul_double_s_
+    extern const f_string_static_t f_string_format_ul_double_s;
+  #endif // _di_f_string_format_ul_double_s_
+
+  #ifndef _di_f_string_format_ul_single_s_
+    extern const f_string_static_t f_string_format_ul_single_s;
+  #endif // _di_f_string_format_ul_single_s_
+
+  #ifndef _di_f_string_format_un_double_s_
+    extern const f_string_static_t f_string_format_un_double_s;
+  #endif // _di_f_string_format_un_double_s_
+
+  #ifndef _di_f_string_format_un_single_s_
+    extern const f_string_static_t f_string_format_un_single_s;
+  #endif // _di_f_string_format_un_single_s_
+
+  #ifndef _di_f_string_format_iii_double_s_
+    extern const f_string_static_t f_string_format_iii_double_s;
+  #endif // _di_f_string_format_iii_double_s_
+
+  #ifndef _di_f_string_format_iii_single_s_
+    extern const f_string_static_t f_string_format_iii_single_s;
+  #endif // _di_f_string_format_iii_single_s_
+
+  #ifndef _di_f_string_format_ill_double_s_
+    extern const f_string_static_t f_string_format_ill_double_s;
+  #endif // _di_f_string_format_ill_double_s_
+
+  #ifndef _di_f_string_format_ill_single_s_
+    extern const f_string_static_t f_string_format_ill_single_s;
+  #endif // _di_f_string_format_ill_single_s_
+
+  #ifndef _di_f_string_format_uii_double_s_
+    extern const f_string_static_t f_string_format_uii_double_s;
+  #endif // _di_f_string_format_uii_double_s_
+
+  #ifndef _di_f_string_format_uii_single_s_
+    extern const f_string_static_t f_string_format_uii_single_s;
+  #endif // _di_f_string_format_uii_single_s_
+
+  #ifndef _di_f_string_format_ull_double_s_
+    extern const f_string_static_t f_string_format_ull_double_s;
+  #endif // _di_f_string_format_ull_double_s_
+
+  #ifndef _di_f_string_format_ull_single_s_
+    extern const f_string_static_t f_string_format_ull_single_s;
+  #endif // _di_f_string_format_ull_single_s_
+
+  #ifndef _di_f_string_format_sentence_end_s_
+    extern const f_string_static_t f_string_format_sentence_end_s;
+  #endif // _di_f_string_format_sentence_end_s_
+
+  #ifndef _di_f_string_format_sentence_end_quote_s_
+    extern const f_string_static_t f_string_format_sentence_end_quote_s;
+  #endif // _di_f_string_format_sentence_end_quote_s_
 #endif // _di_f_string_format_s_
 
 /**
