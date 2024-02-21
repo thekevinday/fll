@@ -7,6 +7,7 @@ f_type_array
 f_string
 f_utf
 f_color
+f_compare
 f_console
 f_conversion
 f_file
