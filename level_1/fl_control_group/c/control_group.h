@@ -41,7 +41,7 @@ extern "C" {
 /**
  * Apply the given control groups to the process represented by the PID.
  *
- * @param control
+ * @param control_group
  *   The control group(s) to apply.
  * @param id
  *   The PID of the process to apply the control group(s) to.

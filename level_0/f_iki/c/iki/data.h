@@ -63,8 +63,8 @@ extern "C" {
  *
  * @param length
  *   The new size to use.
- * @param iki_datas
- *   The iki_datas array to resize.
+ * @param datas
+ *   The array to resize.
  *
  * @return
  *   F_none on success.
@@ -126,8 +126,8 @@ extern "C" {
  *
  * @param amount
  *   A positive number representing how much to decimate the size by.
- * @param iki_datas
- *   The iki_datas array to resize.
+ * @param datas
+ *   The array to resize.
  *
  * @return
  *   F_none on success.
@@ -150,8 +150,8 @@ extern "C" {
  *
  * @param amount
  *   A positive number representing how much to decrease the size by.
- * @param iki_datas
- *   The iki_datas array to resize.
+ * @param datas
+ *   The array to resize.
  *
  * @return
  *   F_none on success.
@@ -174,8 +174,8 @@ extern "C" {
  * @param step
  *   The allocation step to use.
  *   Must be greater than 0.
- * @param iki_datas
- *   The iki_datas array to resize.
+ * @param datas
+ *   The array to resize.
  *
  * @return
  *   F_none on success.
@@ -199,8 +199,8 @@ extern "C" {
  *
  * @param amount
  *   A positive number representing how much to increase the size by.
- * @param iki_datas
- *   The iki_datas array to resize.
+ * @param datas
+ *   The array to resize.
  *
  * @return
  *   F_none on success.
@@ -220,8 +220,8 @@ extern "C" {
  *
  * @param length
  *   The new size to use.
- * @param iki_datas
- *   The iki_datas array to adjust.
+ * @param datas
+ *   The array to adjust.
  *
  * @return
  *   F_none on success.
@@ -239,8 +239,8 @@ extern "C" {
  *
  * @param length
  *   The new size to use.
- * @param iki_datass
- *   The iki_datass array to resize.
+ * @param datass
+ *   The array to resize.
  *
  * @return
  *   F_none on success.
@@ -303,8 +303,8 @@ extern "C" {
  *
  * @param amount
  *   A positive number representing how much to decimate the size by.
- * @param iki_datass
- *   The iki_datass array to resize.
+ * @param datass
+ *   The array to resize.
  *
  * @return
  *   F_none on success.
@@ -328,8 +328,8 @@ extern "C" {
  *
  * @param amount
  *   A positive number representing how much to decrease the size by.
- * @param iki_datass
- *   The iki_datass array to resize.
+ * @param datass
+ *   The array to resize.
  *
  * @return
  *   F_none on success.
@@ -353,8 +353,8 @@ extern "C" {
  * @param step
  *   The allocation step to use.
  *   Must be greater than 0.
- * @param iki_datass
- *   The iki_datass array to resize.
+ * @param datass
+ *   The array to resize.
  *
  * @return
  *   F_none on success.
@@ -378,8 +378,8 @@ extern "C" {
  *
  * @param amount
  *   A positive number representing how much to increase the size by.
- * @param iki_datass
- *   The iki_datass array to resize.
+ * @param datass
+ *   The array to resize.
  *
  * @return
  *   F_none on success.
@@ -399,8 +399,8 @@ extern "C" {
  *
  * @param length
  *   The new size to use.
- * @param iki_datass
- *   The iki_datass array to adjust.
+ * @param datass
+ *   The array to adjust.
  *
  * @return
  *   F_none on success.

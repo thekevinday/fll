@@ -1115,8 +1115,6 @@ extern "C" {
  *
  * @param string
  *   The string to output.
- * @param length
- *   The total number of characters to print.
  * @param output
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *

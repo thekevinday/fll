@@ -198,8 +198,6 @@ extern "C" {
  *   The string to process.
  * @param range
  *   The character at the start position will be checked against the graph.
- * @param header
- *   The header data to populate with results of this function.
  *
  * @return
  *   F_true if the character in the buffer is a combining character.
@@ -224,8 +222,6 @@ extern "C" {
  *   The string to process.
  * @param range
  *   The character at the start position will be checked against the graph.
- * @param header
- *   The header data to populate with results of this function.
  *
  * @return
  *   F_true if the character in the buffer is a graph character.
@@ -250,8 +246,6 @@ extern "C" {
  *   The string to process.
  * @param range
  *   The character at the start position will be checked against the graph.
- * @param header
- *   The header data to populate with results of this function.
  *
  * @return
  *   F_true if the character in the buffer is a space character.
@@ -282,8 +276,6 @@ extern "C" {
  *   The string to process.
  * @param range
  *   The character at the start position will be checked against the graph.
- * @param header
- *   The header data to populate with results of this function.
  *
  * @return
  *   F_true if the character in the buffer is a zero-width character.

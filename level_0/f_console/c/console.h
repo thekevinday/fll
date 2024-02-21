@@ -33,8 +33,8 @@ extern "C" {
  *
  * All values are appended to the environment maps.
  *
- * @param parameters
- *   The parameters to process.
+ * @param arguments
+ *   The arguments to process.
  * @param environment
  *   Maps representing the environment variable names and values.
  *   Both the name and the value strings may not be NULL terminated.

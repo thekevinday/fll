@@ -545,7 +545,7 @@ extern "C" {
 
 /**
  * Define the end of line character.
- * FLL forbids '\r' and '\r\n' as end of line characters, \r will be silently ignored.
+ * FLL forbids '\r' and '\r\n' as end of line characters, '\r' will be silently ignored.
  */
 #ifndef _di_f_string_eol_s_
   #define f_string_eol_s f_string_ascii_feed_line_s

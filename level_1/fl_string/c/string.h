@@ -713,6 +713,8 @@ extern "C" {
  *   String to compare.
  * @param string2
  *   String to compare.
+ * @param range1
+ *   A range within the string1 to restrict the comparison to.
  * @param range2
  *   A range within the string2 to restrict the comparison to.
  *
