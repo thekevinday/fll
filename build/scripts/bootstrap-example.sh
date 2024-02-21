@@ -8,7 +8,7 @@
 #
 # This only accepts one argument, followed by these optional arguments:
 # 1) One of "Modes" from below.
-# 2) Optional, may be one of: +d, +l, +n, +V, +Q, +E, +N, +D, --enable-shared, --enable-static, --disable-shared, --disable-static.
+# 2) Optional, may be one of: +d, +l, +n, +V, +Q, +E, +N, +D, -X, --enable-shared, --enable-static, --disable-shared, --disable-static.
 # 3) Optional, may be one of: -w, --work.
 # 4) Optional, may be: clang.
 #
@@ -30,6 +30,8 @@
 #
 # The -w/--work requires the path to the work directory following it.
 # The clang parameter does not need the "-m".
+#
+# The -X represents excluding a program when building.
 #
 # This will create a directory at he present working directory of the script caller called "fll" where everything will be installed.
 # This assumes the shell script is GNU bash.
@@ -67,12 +69,16 @@ build_mode_extra_param_2=
 build_mode_extra_value_2=
 shell_command=bash
 suppress_first=""
+exclude_programs=
+grab_next=
+skip=
 
 if [[ ${SHELL_ENGINE} == "zsh" ]] ; then
   shell_command=zsh
 fi
 
 let i=2
+j=
 p=
 
 while [[ ${i} -le $# ]] ; do
@@ -83,7 +89,10 @@ while [[ ${i} -le $# ]] ; do
     p=${!i}
   fi
 
-  if [[ ${p} == "+d" ]] ; then
+  if [[ ${grab_next} == "exclude_program" ]] ; then
+    exclude_programs="${exclude_programs}${p} "
+    grab_next=
+  elif [[ ${p} == "+d" ]] ; then
     color="+d"
   elif [[ ${p} == "+l" ]] ; then
     color="+l"
@@ -104,6 +113,8 @@ while [[ ${i} -le $# ]] ; do
   elif [[ ${p} == "+D" ]] ; then
     verbose="+D"
     verbose_common="-v"
+  elif [[ ${p} == "-X" ]] ; then
+    grab_next="exclude_program"
   elif [[ ${p} == "--enable-static" ]] ; then
     static="--enable-static"
   elif [[ ${p} == "--disable-static" ]] ; then
@@ -282,6 +293,23 @@ elif [[ ${1} == "programs-individual" || ${1} == "programs-level" || ${1} == "pr
   if [[ ${?} -eq 0 ]] ; then
 
     for i in * ; do
+
+      skip=
+
+      for j in ${exclude_programs} ; do
+        if [[ ${i} == "${j}-${version}" ]] ; then
+          skip="true"
+
+          break
+        fi
+      done
+
+      if [[ $skip != "" ]] ; then
+        echo "Skipping program: '${i}'."
+        echo
+
+        continue
+      fi
 
       cd ${path_original}package/program/${i} &&
 
