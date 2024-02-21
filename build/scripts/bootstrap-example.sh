@@ -78,7 +78,7 @@ if [[ ${SHELL_ENGINE} == "zsh" ]] ; then
 fi
 
 let i=2
-let j=
+j=
 p=
 
 while [[ ${i} -le $# ]] ; do
