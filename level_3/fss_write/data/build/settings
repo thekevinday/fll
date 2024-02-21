@@ -48,7 +48,7 @@ build_sources_library extended_list/fss_write.c extended_list/common.c extended_
 build_sources_library payload/fss_write.c payload/common.c payload/print.c
 
 build_sources_headers main/fss_write.h main/common.h main/common/define.h main/common/enumeration.h main/common/print.h main/common/string.h main/common/type.h main/print/error.h main/print/message.h main/signal.h main/thread.h
-build_sources_headers basic/fss_write.h basic/common.h basic/print.h basic/private-common.h
+build_sources_headers basic/fss_write.h basic/common.h basic/print.h
 build_sources_headers basic_list/fss_write.h basic_list/common.h basic_list/print.h
 build_sources_headers embedded_list/fss_write.h embedded_list/common.h embedded_list/print.h
 build_sources_headers extended/fss_write.h extended/common.h extended/print.h

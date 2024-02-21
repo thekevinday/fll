@@ -41,7 +41,7 @@ build_sources_library main/common.c main/common/define.c main/common/enumeration
 
 build_sources_program main/main.c
 
-build_sources_headers main/common.h main/common/define.h main/common/enumeration.h main/common/print.h main/common/string.h main/common/type.h main/print.h main/print/data.h main/print/debug.h main/print/error.h main/print/message.h main/print/warning.h main/action.h main/control.h main/packet.h main/payload.h main/signal.h main/thread.h
+build_sources_headers main/common.h main/common/define.h main/common/enumeration.h main/common/print.h main/common/string.h main/common/type.h main/print/data.h main/print/debug.h main/print/error.h main/print/message.h main/print/warning.h main/action.h main/control.h main/packet.h main/payload.h main/signal.h main/thread.h
 
 build_sources_documentation man
 
