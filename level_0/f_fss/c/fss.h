@@ -196,8 +196,6 @@ extern "C" {
  *   The string to process.
  * @param range
  *   The character at the start position will be checked against the graph.
- * @param header
- *   The header data to populate with results of this function.
  * @param state
  *   A state for providing flags and handling interrupts during long running operations.
  *
@@ -227,8 +225,6 @@ extern "C" {
  *   The string to process.
  * @param range
  *   The character at the start position will be checked against the graph.
- * @param header
- *   The header data to populate with results of this function.
  * @param state
  *   A state for providing flags and handling interrupts during long running operations.
  *
@@ -258,8 +254,6 @@ extern "C" {
  *   The string to process.
  * @param range
  *   The character at the start position will be checked against the graph.
- * @param header
- *   The header data to populate with results of this function.
  * @param state
  *   A state for providing flags and handling interrupts during long running operations.
  *

@@ -237,8 +237,8 @@ extern "C" {
  * @param file
  *   The file to write to.
  *   The file must already be open.
- * @param destination
- *   The destination to write to the file.
+ * @param buffer
+ *   The string to write to the file.
  * @param range
  *   An inclusive start an stop range within the destination to read.
  * @param written

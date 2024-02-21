@@ -36,7 +36,7 @@ extern "C" {
  *
  * This does not, however, create the control_group.path and will error out if that directory does not exist.
  *
- * @param control
+ * @param control_group
  *   The control group(s) to ensure the directories exist.
  *
  * @return

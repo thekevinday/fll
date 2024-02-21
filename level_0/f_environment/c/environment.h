@@ -52,13 +52,9 @@ extern "C" {
  * The variable is copied into a new dynamically allocated string and is safe to alter.
  *
  * @param name
- *   The name of the environment variable to get.
+ *   The name of the environment variable to check the existence of.
  *   The name string must not contain the '=' character.
  *   The name must be NULL terminated.
- * @param value
- *   The value associated with name.
- *   The value will not be null terminated.
- *   The value will be appended (set value->used to 0 to replace).
  *
  * @return
  *   F_data_not if name.used is 0.

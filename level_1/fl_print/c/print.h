@@ -1475,8 +1475,6 @@ extern "C" {
  *
  * @param buffer
  *   The string to output.
- * @param offset
- *   The inclusive start point to start printing.
  * @param except_at
  *   An array of locations within the given string to not print.
  *   The array of locations is required/assumed to be in linear order.

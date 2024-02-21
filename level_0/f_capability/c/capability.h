@@ -892,9 +892,6 @@ extern "C" {
 /**
  * Check if capabilities support ambient, using special libcap function/macro.
  *
- * @param code
- *   The capability code.
- *
  * @return
  *   TRUE if ambient is supported.
  *   FALSE otherwise.

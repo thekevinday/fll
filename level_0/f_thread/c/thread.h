@@ -58,7 +58,7 @@ extern "C" {
  *   The function to call before forking.
  * @param after_parent
  *   The function called after forking, for the parent process.
- * @param child_parent
+ * @param after_child
  *   The function called after forking, for the child process.
  *
  * @return
@@ -2101,6 +2101,8 @@ extern "C" {
  *
  * Subsequent calls will not call the given routine.
  *
+ * @param routine
+ *   The callback.
  * @param once
  *   The once variable designating that the given routine will be called only once.
  *

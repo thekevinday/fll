@@ -50,7 +50,6 @@ extern "C" {
  *   The string to output.
  * @param length
  *   The total number of characters to print.
-
  * @param file
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
@@ -79,7 +78,6 @@ extern "C" {
  *
  * @param character
  *   The character to verify as safe or not and then print.
-
  * @param file
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
@@ -115,7 +113,6 @@ extern "C" {
  *
  * @param character
  *   The character to verify as safe or not and then print.
-
  * @param file
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
@@ -171,7 +168,6 @@ extern "C" {
  *
  * @param buffer
  *   The string to output.
-
  * @param file
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
@@ -204,7 +200,6 @@ extern "C" {
  *   The string to output.
  * @param range
  *   The range within the provided string to print.
-
  * @param file
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
@@ -239,7 +234,6 @@ extern "C" {
  *   The string to output.
  * @param range
  *   The range within the provided string to print.
-
  * @param file
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
@@ -277,7 +271,6 @@ extern "C" {
  *   The string to output.
  * @param range
  *   The range within the provided string to print.
-
  * @param file
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
@@ -315,7 +308,6 @@ extern "C" {
  *   The string to output.
  * @param range
  *   The range within the provided string to print.
-
  * @param file
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
@@ -350,7 +342,6 @@ extern "C" {
  *
  * @param buffer
  *   The string to output.
-
  * @param file
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
@@ -386,7 +377,6 @@ extern "C" {
  *
  * @param buffer
  *   The string to output.
-
  * @param file
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
@@ -422,7 +412,6 @@ extern "C" {
  *
  * @param buffer
  *   The string to output.
-
  * @param file
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
@@ -465,7 +454,6 @@ extern "C" {
  * @param except
  *   An array of locations within the given string to not print.
  *   The array of locations is required/assumed to be in linear order.
-
  * @param file
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
@@ -500,7 +488,6 @@ extern "C" {
  * @param except
  *   An array of locations within the given string to not print.
  *   The array of locations is required/assumed to be in linear order.
-
  * @param file
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
@@ -537,7 +524,6 @@ extern "C" {
  * @param except
  *   An array of locations within the given string to not print.
  *   The array of locations is required/assumed to be in linear order.
-
  * @param file
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
@@ -576,7 +562,6 @@ extern "C" {
  * @param except
  *   An array of locations within the given string to not print.
  *   The array of locations is required/assumed to be in linear order.
-
  * @param file
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
@@ -618,7 +603,6 @@ extern "C" {
  * @param except
  *   An array of locations within the given string to not print.
  *   The array of locations is required/assumed to be in linear order.
-
  * @param file
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
@@ -660,7 +644,6 @@ extern "C" {
  * @param except
  *   An array of locations within the given string to not print.
  *   The array of locations is required/assumed to be in linear order.
-
  * @param file
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
@@ -699,7 +682,6 @@ extern "C" {
  * @param except
  *   An array of locations within the given string to not print.
  *   The array of locations is required/assumed to be in linear order.
-
  * @param file
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
@@ -739,7 +721,6 @@ extern "C" {
  * @param except
  *   An array of locations within the given string to not print.
  *   The array of locations is required/assumed to be in linear order.
-
  * @param file
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
@@ -779,7 +760,6 @@ extern "C" {
  * @param except
  *   An array of locations within the given string to not print.
  *   The array of locations is required/assumed to be in linear order.
-
  * @param file
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
@@ -826,7 +806,6 @@ extern "C" {
  * @param except_in
  *   An array of ranges within the string to not print.
  *   The array of ranges is required/assumed to be in linear order.
-
  * @param file
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
@@ -865,7 +844,6 @@ extern "C" {
  * @param except_in
  *   An array of ranges within the string to not print.
  *   The array of ranges is required/assumed to be in linear order.
-
  * @param file
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
@@ -906,7 +884,6 @@ extern "C" {
  * @param except_in
  *   An array of ranges within the string to not print.
  *   The array of ranges is required/assumed to be in linear order.
-
  * @param file
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
@@ -949,7 +926,6 @@ extern "C" {
  * @param except_in
  *   An array of ranges within the string to not print.
  *   The array of ranges is required/assumed to be in linear order.
-
  * @param file
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
@@ -992,7 +968,6 @@ extern "C" {
  * @param except_in
  *   An array of ranges within the string to not print.
  *   The array of ranges is required/assumed to be in linear order.
-
  * @param file
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
@@ -1035,7 +1010,6 @@ extern "C" {
  * @param except_in
  *   An array of ranges within the string to not print.
  *   The array of ranges is required/assumed to be in linear order.
-
  * @param file
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
@@ -1078,7 +1052,6 @@ extern "C" {
  * @param except_in
  *   An array of ranges within the string to not print.
  *   The array of ranges is required/assumed to be in linear order.
-
  * @param file
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
@@ -1122,7 +1095,6 @@ extern "C" {
  * @param except_in
  *   An array of ranges within the string to not print.
  *   The array of ranges is required/assumed to be in linear order.
-
  * @param file
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
@@ -1214,7 +1186,6 @@ extern "C" {
  * @param except_in
  *   An array of ranges within the string to not print.
  *   The array of ranges is required/assumed to be in linear order.
-
  * @param file
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
@@ -1264,7 +1235,6 @@ extern "C" {
  * @param except_in
  *   An array of ranges within the string to not print.
  *   The array of ranges is required/assumed to be in linear order.
-
  * @param file
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
@@ -1314,7 +1284,6 @@ extern "C" {
  * @param except_in
  *   An array of ranges within the string to not print.
  *   The array of ranges is required/assumed to be in linear order.
-
  * @param file
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
@@ -1359,7 +1328,6 @@ extern "C" {
  * @param except
  *   An array of locations within the given string to not print.
  *   The array of locations is required/assumed to be in linear order.
-
  * @param file
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
@@ -1403,7 +1371,6 @@ extern "C" {
  * @param except
  *   An array of locations within the given string to not print.
  *   The array of locations is required/assumed to be in linear order.
-
  * @param file
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
@@ -1447,7 +1414,6 @@ extern "C" {
  * @param except
  *   An array of locations within the given string to not print.
  *   The array of locations is required/assumed to be in linear order.
-
  * @param file
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
@@ -1484,7 +1450,6 @@ extern "C" {
  *   The string to output.
  * @param length
  *   The total number of characters to print.
-
  * @param file
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
@@ -1522,7 +1487,6 @@ extern "C" {
  *   The string to output.
  * @param length
  *   The total number of characters to print.
-
  * @param file
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
@@ -1555,7 +1519,6 @@ extern "C" {
  *
  * @param string
  *   The string to output.
-
  * @param file
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
@@ -1591,7 +1554,6 @@ extern "C" {
  *   The string to output.
  * @param length
  *   The total number of characters to print.
-
  * @param file
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
@@ -1688,7 +1650,6 @@ extern "C" {
  *
  * @param string
  *   The string to output.
-
  * @param file
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
