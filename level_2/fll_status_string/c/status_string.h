@@ -31,7 +31,7 @@ extern "C" {
  *
  * Error, warning, and signal flags will not be assigned to the error.
  *
- * This process the string until either a match or NULL is reached.
+ * This processes the string until either a match or NULL is reached.
  *
  * @param name
  *   The status name to process.
