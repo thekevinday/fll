@@ -866,8 +866,8 @@ extern "C" {
  * Check if capabilities are supported.
  *
  * @return
- *   TRUE if supported.
- *   FALSE otherwise.
+ *   F_true if supported.
+ *   F_false otherwise.
  */
 #ifndef _di_f_capability_supported_
   extern bool f_capability_supported(void);
@@ -880,8 +880,8 @@ extern "C" {
  *   The capability code.
  *
  * @return
- *   TRUE if the code is supported.
- *   FALSE otherwise.
+ *   F_true if the code is supported.
+ *   F_false otherwise.
  *
  * @see CAP_IS_SUPPORTED()
  */
@@ -893,8 +893,8 @@ extern "C" {
  * Check if capabilities support ambient, using special libcap function/macro.
  *
  * @return
- *   TRUE if ambient is supported.
- *   FALSE otherwise.
+ *   F_true if ambient is supported.
+ *   F_false otherwise.
  *
  * @see CAP_AMBIENT_SUPPORTED()
  */
