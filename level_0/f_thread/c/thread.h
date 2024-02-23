@@ -2254,8 +2254,6 @@ extern "C" {
  *
  *   F_failure (with error bit) on any other error.
  *
- * A named semaphore should be deleted with this function or with f_thread_semephore_file_destroy().
- *
  * @see sem_close()
  */
 #ifndef _di_f_thread_semaphore_file_close_
