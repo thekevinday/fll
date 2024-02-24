@@ -62,6 +62,8 @@ test_main() {
   local test_system=
   local test_thread="thread"
   local test_thread_individual="individual_thread"
+  local anaylze_flag=
+  local analyze_value=
 
   local context=
   local failure=0
@@ -125,6 +127,9 @@ test_main() {
         elif [[ ${p} == "+v" || ${p} == "++version" ]] ; then
           echo ${version}
           return 0
+        elif [[ ${p} == "-a" || ${p} == "--analyze" ]] ; then
+          analyze_flag="-m"
+          analyze_value="fanalyzer"
         elif [[ ${p} == "-c" || ${p} == "--compiler" ]] ; then
           grab_next=build_compiler
         elif [[ ${p} == "-p" || ${p} == "--project" ]] ; then
@@ -372,6 +377,7 @@ test_help() {
   echo -e " +${c_important}D${c_reset}, ++${c_important}debug${c_reset}      Enable debugging, significantly increasing verbosity beyond normal print.to."
   echo -e " +${c_important}v${c_reset}, ++${c_important}version${c_reset}    Print only the version number."
   echo
+  echo -e " -${c_important}a${c_reset}, --${c_important}analyze${c_reset}       Perform analyzation on during tests (using fanalyzer mode)."
   echo -e " -${c_important}c${c_reset}, --${c_important}compiler${c_reset}      Specify the compiler, either gcc (default) or clang."
   echo -e " -${c_important}p${c_reset}, --${c_important}project${c_reset}       Designate that the project files must also be built."
   echo -e " -${c_important}s${c_reset}, --${c_important}path_scripts${c_reset}  Specify a custom directory where the build scripts are found."
@@ -593,16 +599,16 @@ test_operate_build_project() {
       test_print_first_or_always
 
       if [[ ${build_compiler} == "gcc" ]] ; then
-        echo "PATH=\"${env_path}\" LD_LIBRARY_PATH=\"${env_libs}\" fake ${verbose} ${context} -w \"${destination}\" -m ${mode} ${mode_thread_param} ${mode_thread_value} ${mode_thread_individual_param} ${mode_thread_individual_value} clean build ${ci_arguments}"
+        echo "PATH=\"${env_path}\" LD_LIBRARY_PATH=\"${env_libs}\" fake ${verbose} ${context} -w \"${destination}\" -m ${mode} ${mode_thread_param} ${mode_thread_value} ${mode_thread_individual_param} ${mode_thread_individual_value} -m test ${analyze_flag} ${analyze_value} clean build ${ci_arguments}"
       else
-        echo "PATH=\"${env_path}\" LD_LIBRARY_PATH=\"${env_libs}\" fake ${verbose} ${context} -w \"${destination}\" -m ${mode} ${mode_thread_param} ${mode_thread_value} -m ${build_compiler} ${mode_thread_individual_param} ${mode_thread_individual_value} clean make -f testfile ${ci_arguments}"
+        echo "PATH=\"${env_path}\" LD_LIBRARY_PATH=\"${env_libs}\" fake ${verbose} ${context} -w \"${destination}\" -m ${mode} ${mode_thread_param} ${mode_thread_value} -m ${build_compiler} ${mode_thread_individual_param} ${mode_thread_individual_value} -m test ${analyze_flag} ${analyze_value} -m ${build_compiler} clean make -f testfile ${ci_arguments}"
       fi
     fi
 
     if [[ ${build_compiler} == "gcc" ]] ; then
-      PATH="${env_path}" LD_LIBRARY_PATH="${env_libs}" fake ${verbose} ${context} -w "${destination}" -m ${mode} ${mode_thread_param} ${mode_thread_value} ${mode_thread_individual_param} ${mode_thread_individual_value} -m test clean build ${ci_arguments}
+      PATH="${env_path}" LD_LIBRARY_PATH="${env_libs}" fake ${verbose} ${context} -w "${destination}" -m ${mode} ${mode_thread_param} ${mode_thread_value} ${mode_thread_individual_param} ${mode_thread_individual_value} -m test ${analyze_flag} ${analyze_value} clean build ${ci_arguments}
     else
-      PATH="${env_path}" LD_LIBRARY_PATH="${env_libs}" fake ${verbose} ${context} -w "${destination}" -m ${mode} ${mode_thread_param} ${mode_thread_value} ${mode_thread_individual_param} ${mode_thread_individual_value} -m test -m ${build_compiler} clean build ${ci_arguments}
+      PATH="${env_path}" LD_LIBRARY_PATH="${env_libs}" fake ${verbose} ${context} -w "${destination}" -m ${mode} ${mode_thread_param} ${mode_thread_value} ${mode_thread_individual_param} ${mode_thread_individual_value} -m test ${analyze_flag} ${analyze_value} -m ${build_compiler} clean build ${ci_arguments}
     fi
   else
     if [[ ${SHELL_ENGINE} == "zsh" ]] ; then
@@ -610,32 +616,32 @@ test_operate_build_project() {
         test_print_first_or_always
 
         if [[ ${build_compiler} == "gcc" ]] ; then
-          echo "zsh ./bootstrap.sh ${verbose} ${context} -w \"${destination}\" -m ${mode} ${mode_thread_param} ${mode_thread_value} ${mode_thread_individual_param} ${mode_thread_individual_value} -m test build"
+          echo "zsh ./bootstrap.sh ${verbose} ${context} -w \"${destination}\" -m ${mode} ${mode_thread_param} ${mode_thread_value} ${mode_thread_individual_param} ${mode_thread_individual_value} -m test ${analyze_flag} ${analyze_value} build"
         else
-          echo "zsh ./bootstrap.sh ${verbose} ${context} -w \"${destination}\" -m ${mode} ${mode_thread_param} ${mode_thread_value} ${mode_thread_individual_param} ${mode_thread_individual_value} -m test -m ${build_compiler} build"
+          echo "zsh ./bootstrap.sh ${verbose} ${context} -w \"${destination}\" -m ${mode} ${mode_thread_param} ${mode_thread_value} ${mode_thread_individual_param} ${mode_thread_individual_value} -m test ${analyze_flag} ${analyze_value} -m ${build_compiler} build"
         fi
       fi
 
       if [[ ${build_compiler} == "gcc" ]] ; then
-        zsh ./bootstrap.sh ${verbose} ${context} -w "${destination}" -m ${mode} ${mode_thread_param} ${mode_thread_value} ${mode_thread_individual_param} ${mode_thread_individual_value} -m test build
+        zsh ./bootstrap.sh ${verbose} ${context} -w "${destination}" -m ${mode} ${mode_thread_param} ${mode_thread_value} ${mode_thread_individual_param} ${mode_thread_individual_value} -m test ${analyze_flag} ${analyze_value} build
       else
-        zsh ./bootstrap.sh ${verbose} ${context} -w "${destination}" -m ${mode} ${mode_thread_param} ${mode_thread_value} ${mode_thread_individual_param} ${mode_thread_individual_value} -m test -m ${build_compiler} build
+        zsh ./bootstrap.sh ${verbose} ${context} -w "${destination}" -m ${mode} ${mode_thread_param} ${mode_thread_value} ${mode_thread_individual_param} ${mode_thread_individual_value} -m test ${analyze_flag} ${analyze_value} -m ${build_compiler} build
       fi
     else
       if [[ ${verbosity} == "debug" ]] ; then
         test_print_first_or_always
 
         if [[ ${build_compiler} == "gcc" ]] ; then
-          echo "./bootstrap.sh ${verbose} ${context} -w \"${destination}\" -m ${mode} ${mode_thread_individual_param} ${mode_thread_individual_value} ${mode_thread_param} ${mode_thread_value} -m test build"
+          echo "./bootstrap.sh ${verbose} ${context} -w \"${destination}\" -m ${mode} ${mode_thread_individual_param} ${mode_thread_individual_value} ${mode_thread_param} ${mode_thread_value} -m test ${analyze_flag} ${analyze_value} build"
         else
-          echo "./bootstrap.sh ${verbose} ${context} -w \"${destination}\" -m ${mode} ${mode_thread_individual_param} ${mode_thread_individual_value} ${mode_thread_param} ${mode_thread_value} -m test -m ${build_compiler} build"
+          echo "./bootstrap.sh ${verbose} ${context} -w \"${destination}\" -m ${mode} ${mode_thread_individual_param} ${mode_thread_individual_value} ${mode_thread_param} ${mode_thread_value} -m test ${analyze_flag} ${analyze_value} -m ${build_compiler} build"
         fi
       fi
 
       if [[ ${build_compiler} == "gcc" ]] ; then
-        ./bootstrap.sh ${verbose} ${context} -w "${destination}" -m ${mode} ${mode_thread_param} ${mode_thread_value} ${mode_thread_individual_param} ${mode_thread_individual_value} -m test build
+        ./bootstrap.sh ${verbose} ${context} -w "${destination}" -m ${mode} ${mode_thread_param} ${mode_thread_value} ${mode_thread_individual_param} ${mode_thread_individual_value} -m test ${analyze_flag} ${analyze_value} build
       else
-        ./bootstrap.sh ${verbose} ${context} -w "${destination}" -m ${mode} ${mode_thread_param} ${mode_thread_value} ${mode_thread_individual_param} ${mode_thread_individual_value} -m test -m ${build_compiler} build
+        ./bootstrap.sh ${verbose} ${context} -w "${destination}" -m ${mode} ${mode_thread_param} ${mode_thread_value} ${mode_thread_individual_param} ${mode_thread_individual_value} -m test ${analyze_flag} ${analyze_value} -m ${build_compiler} build
       fi
     fi
   fi
@@ -1205,16 +1211,16 @@ test_operate_tests_run() {
       test_print_first_or_always
 
       if [[ ${build_compiler} == "gcc" ]] ; then
-        echo "PATH=\"${env_path}\" LD_LIBRARY_PATH=\"${env_libs}\" fake ${verbose} ${context} -w \"${destination}\" -m individual -m ${test_thread} ${thread_individual_param} ${thread_individual_value} -m test clean make -f testfile ${ci_arguments}"
+        echo "PATH=\"${env_path}\" LD_LIBRARY_PATH=\"${env_libs}\" fake ${verbose} ${context} -w \"${destination}\" -m individual -m ${test_thread} ${thread_individual_param} ${thread_individual_value} -m test ${analyze_flag} ${analyze_value} clean make -f testfile ${ci_arguments}"
       else
-        echo "PATH=\"${env_path}\" LD_LIBRARY_PATH=\"${env_libs}\" fake ${verbose} ${context} -w \"${destination}\" -m individual -m ${test_thread} ${thread_individual_param} ${thread_individual_value} -m test -m ${build_compiler} clean make -f testfile ${ci_arguments}"
+        echo "PATH=\"${env_path}\" LD_LIBRARY_PATH=\"${env_libs}\" fake ${verbose} ${context} -w \"${destination}\" -m individual -m ${test_thread} ${thread_individual_param} ${thread_individual_value} -m test ${analyze_flag} ${analyze_value} -m ${build_compiler} clean make -f testfile ${ci_arguments}"
       fi
     fi
 
     if [[ ${build_compiler} == "gcc" ]] ; then
-      PATH="${env_path}" LD_LIBRARY_PATH="${env_libs}" fake ${verbose} ${context} -w "${destination}" -m individual -m ${test_thread} ${thread_individual_param} ${thread_individual_value} -m test clean make -f testfile ${ci_arguments}
+      PATH="${env_path}" LD_LIBRARY_PATH="${env_libs}" fake ${verbose} ${context} -w "${destination}" -m individual -m ${test_thread} ${thread_individual_param} ${thread_individual_value} -m test ${analyze_flag} ${analyze_value} clean make -f testfile ${ci_arguments}
     else
-      PATH="${env_path}" LD_LIBRARY_PATH="${env_libs}" fake ${verbose} ${context} -w "${destination}" -m individual -m ${test_thread} ${thread_individual_param} ${thread_individual_value} -m test -m ${build_compiler} clean make -f testfile ${ci_arguments}
+      PATH="${env_path}" LD_LIBRARY_PATH="${env_libs}" fake ${verbose} ${context} -w "${destination}" -m individual -m ${test_thread} ${thread_individual_param} ${thread_individual_value} -m test ${analyze_flag} ${analyze_value} -m ${build_compiler} clean make -f testfile ${ci_arguments}
     fi
 
     if [[ ${?} -ne 0 ]] ; then
