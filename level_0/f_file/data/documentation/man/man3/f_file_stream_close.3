@@ -1,4 +1,4 @@
-.TH f_file_stream_close "3" "July 2023" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
+.TH f_file_stream_close "3" "February 2024" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
 .SH "NAME"
 f_file_stream_close
 .SH SYNOPSIS
@@ -44,9 +44,7 @@ The file information. The file.stream is set to 0, on success or on failure. The
 .br
 \fBF_file_synchronize\fP (with error bit) on flush failure.
 .br
-\fBF_file_type_not_directory\fP (with error bit) if
-.br
-\fBF_NOTIFY\fP was specified and file.id is not a directory.
+\fBF_file_type_not_directory\fP (with error bit) if F_NOTIFY was specified and file.id is not a directory.
 .br
 \fBF_filesystem_quota_block\fP (with error bit) if file system's disk blocks or inodes are exhausted.
 .br
@@ -63,8 +61,15 @@ The file information. The file.stream is set to 0, on success or on failure. The
 \fBF_space_not\fP (with error bit) if file system is out of space (or file system quota is reached).
 .br
 \fBF_socket_not\fP (with error bit) if the datagram socket in which a peer has not been set (for socket related streams).
+.SH SEE ALSO
+.PP
+.nh
+.ad l
+\fIf_file_access\fP(3), \fIf_file_access_at\fP(3), \fIf_file_clone\fP(3), \fIf_file_close\fP(3), \fIf_file_close_flush\fP(3), \fIf_file_copy\fP(3), \fIf_file_create\fP(3), \fIf_file_create_at\fP(3), \fIf_file_create_device\fP(3), \fIf_file_create_device_at\fP(3), \fIf_file_create_fifo\fP(3), \fIf_file_create_fifo_at\fP(3), \fIf_file_create_node\fP(3), \fIf_file_create_node_at\fP(3), \fIf_file_descriptor\fP(3), \fIf_file_exists\fP(3), \fIf_file_exists_at\fP(3), \fIf_file_flush\fP(3), \fIf_file_group_read\fP(3), \fIf_file_is\fP(3), \fIf_file_is_at\fP(3), \fIf_file_link\fP(3), \fIf_file_link_at\fP(3), \fIf_file_link_hard\fP(3), \fIf_file_link_hard_at\fP(3), \fIf_file_link_read\fP(3), \fIf_file_link_read_at\fP(3), \fIf_file_mode_determine\fP(3), \fIf_file_mode_from_string\fP(3), \fIf_file_mode_read\fP(3), \fIf_file_mode_read_at\fP(3), \fIf_file_mode_set\fP(3), \fIf_file_mode_set_at\fP(3), \fIf_file_mode_to_mode\fP(3), \fIf_file_name_base\fP(3), \fIf_file_name_directory\fP(3), \fIf_file_open\fP(3), \fIf_file_open_at\fP(3), \fIf_file_owner_read\fP(3), \fIf_file_read\fP(3), \fIf_file_read_block\fP(3), \fIf_file_read_until\fP(3), \fIf_file_remove\fP(3), \fIf_file_remove_at\fP(3), \fIf_file_rename\fP(3), \fIf_file_rename_at\fP(3), \fIf_file_role_change\fP(3), \fIf_file_role_change_at\fP(3), \fIf_file_seek\fP(3), \fIf_file_size\fP(3), \fIf_file_size_at\fP(3), \fIf_file_size_by_id\fP(3), \fIf_file_stat\fP(3), \fIf_file_stat_at\fP(3), \fIf_file_stat_by_id\fP(3), \fIf_file_stream_close\fP(3), \fIf_file_stream_open\fP(3), \fIf_file_stream_open_descriptor\fP(3), \fIf_file_stream_read\fP(3), \fIf_file_stream_read_block\fP(3), \fIf_file_stream_read_until\fP(3), \fIf_file_stream_reopen\fP(3), \fIf_file_stream_write\fP(3), \fIf_file_stream_write_block\fP(3), \fIf_file_stream_write_range\fP(3), \fIf_file_stream_write_until\fP(3), \fIf_file_touch\fP(3), \fIf_file_touch_at\fP(3), \fIf_file_type\fP(3), \fIf_file_type_at\fP(3), \fIf_file_umask_get\fP(3), \fIf_file_umask_set\fP(3), \fIf_file_write\fP(3), \fIf_file_write_block\fP(3), \fIf_file_write_range\fP(3), \fIf_file_write_until\fP(3), \fIclose()\fP, \fIfclose()\fP, \fIfflush()\fP
+.ad
+.hy
 .SH AUTHOR
 Written by Kevin Day.
 .SH COPYRIGHT
 .PP
-Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.
+Copyright \(co 2007-2024 Kevin Day, GNU LGPL Version 2.1 or later.

@@ -1,4 +1,4 @@
-.TH f_control_group_copy "3" "July 2023" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
+.TH f_control_group_copy "3" "February 2024" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
 .SH "NAME"
 f_control_group_copy
 .SH SYNOPSIS
@@ -11,6 +11,10 @@ f_control_group_copy
 );
 .fi
 .SH DESCRIPTION
+.PP
+FLL - Level 0
+.PP
+Project: Control Group API Version: 0.6 Licenses: lgpl-2.1-or-later
 .PP
 Provides control group (cgroup) related functionality.
 .PP
@@ -32,9 +36,18 @@ The destination the source is appended onto.
 .br
 \fBF_parameter\fP (with error bit) if a parameter is invalid.
 .br
-Errors (with error bit) from: f_string_dynamic_append(). Errors (with error bit) from: f_string_dynamics_append_all().
+Errors (with error bit) from: f_string_dynamic_append().
+.br
+Errors (with error bit) from: f_string_dynamics_append_all().
+.SH SEE ALSO
+.PP
+.nh
+.ad l
+\fIf_control_group_copy\fP(3), \fIf_string_dynamic_append()\fP, \fIf_string_dynamics_append_all()\fP, \fIf_string_dynamic_append()\fP, \fIf_string_dynamics_append_all()\fP
+.ad
+.hy
 .SH AUTHOR
 Written by Kevin Day.
 .SH COPYRIGHT
 .PP
-Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.
+Copyright \(co 2007-2024 Kevin Day, GNU LGPL Version 2.1 or later.

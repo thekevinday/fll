@@ -1,4 +1,4 @@
-.TH fll_program_print_help_option "3" "July 2023" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
+.TH fll_program_print_help_option "3" "February 2024" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
 .SH "NAME"
 fll_program_print_help_option
 .SH SYNOPSIS
@@ -12,7 +12,7 @@ fll_program_print_help_option
     \fBconst f_string_static_t \fP\fIoption_long\fP,
     \fBconst f_string_static_t \fP\fIsymbol_short\fP,
     \fBconst f_string_static_t \fP\fIsymbol_long\fP,
-    \fBconst char             *\fP\fIdescription\fP
+    \fBconst char *const       \fP\fIdescription\fP
 );
 .fi
 .SH DESCRIPTION
@@ -52,8 +52,17 @@ A desciption associated with the option.
 .SH RETURN VALUE
 .PP
 \fBF_none\fP on success.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.SH SEE ALSO
+.PP
+.nh
+.ad l
+\fIfll_program_parameter_additional_append\fP(3), \fIfll_program_parameter_additional_mash\fP(3), \fIfll_program_parameter_additional_rip\fP(3), \fIfll_program_parameter_additional_rip_mash\fP(3), \fIfll_program_parameter_long_print_cannot_use_with\fP(3), \fIfll_program_parameter_process\fP(3), \fIfll_program_parameter_process_empty\fP(3), \fIfll_program_print_help_header\fP(3), \fIfll_program_print_help_option\fP(3), \fIfll_program_print_help_option_long\fP(3), \fIfll_program_print_help_option_other\fP(3), \fIfll_program_print_help_usage\fP(3), \fIfll_program_print_version\fP(3), \fIfll_program_standard_setdown\fP(3), \fIfll_program_standard_setup\fP(3), \fIfll_program_standard_signal_received\fP(3), \fIfll_program_standard_signal_state\fP(3), \fIf_print_terminated()\fP, \fIfl_print_format()\fP
+.ad
+.hy
 .SH AUTHOR
 Written by Kevin Day.
 .SH COPYRIGHT
 .PP
-Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.
+Copyright \(co 2007-2024 Kevin Day, GNU LGPL Version 2.1 or later.

@@ -1,13 +1,13 @@
-.TH fll_fss_status_string_to "3" "July 2023" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
+.TH fll_fss_status_string_to "3" "February 2024" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
 .SH "NAME"
-fll_fss_status_string_to - Convert code codes to their string equivalents.
+fll_fss_status_string_to
 .SH SYNOPSIS
 .nf
 .B #include <fll/level_2/fss_status_string.h>
 .sp
 \fBf_status_t fll_fss_status_string_to\fP(
-    \fBconst f_status_t          \fP\fIcode\fP
-    \fBf_string_static_t * const \fP\fIname\fP
+    \fBconst f_status_t         \fP\fIcode\fP,
+    \fBf_string_static_t *const \fP\fIname\fP
 );
 .fi
 .SH DESCRIPTION
@@ -29,8 +29,15 @@ The status name that represents the given code.
 \fBF_parameter\fP (with error bit) if a parameter is invalid.
 .br
 Errors (with error bit) from: f_status_string_to().
+.SH SEE ALSO
+.PP
+.nh
+.ad l
+\fIfll_fss_status_string_from\fP(3), \fIfll_fss_status_string_to\fP(3), \fIf_status_string_to()\fP, \fIf_status_string_to()\fP
+.ad
+.hy
 .SH AUTHOR
 Written by Kevin Day.
 .SH COPYRIGHT
 .PP
-Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.
+Copyright \(co 2007-2024 Kevin Day, GNU LGPL Version 2.1 or later.

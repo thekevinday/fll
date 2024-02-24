@@ -1,4 +1,4 @@
-.TH fl_print_format "3" "July 2023" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
+.TH fl_print_format "3" "February 2024" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
 .SH "NAME"
 fl_print_format
 .SH SYNOPSIS
@@ -13,9 +13,7 @@ fl_print_format
 .fi
 .SH DESCRIPTION
 .PP
-Provides some standard printing functions not available in a libc.
-.PP
-Functions provided here are UTF-8 aware. A formatted print function similar to (but not the same as) the c-library fprintf() function.
+A formatted print function similar to (but not the same as) the c-library fprintf() function.
 .PP
 This function attempts to operate as closely to how fprintf() operates, however, there are notable differences.
 .PP
@@ -33,7 +31,7 @@ The default format is decimal: [-]ddd.ddd.
 .PP
 The case-sensitivity of above, such as 'e' vs 'E,' does not replace or relate to the case-sensitivity meaning of 'd' or 'D'. Instead, when 'e' is specified 'e' is used (such as such as [-]d.ddde±dd), but when 'E' is specified, then 'E' is used (such as [-]d.dddE±dd).
 .PP
-Note: Currently the float/double implementation does not support the notation modes except integer (default) or hexidecimal. This is not intended but is simply a result of the temporary use of sprintf() to perform these operations. Once a custom implementation is provided, replacing snprintf(), then this can properly support the notation modes. Therefore, this function is supposed to support notation modes and does not yet do this (/
+Note: Currently the float/double implementation does not support the notation modes except integer (default) or hexidecimal. This is not intended but is simply a result of the temporary use of sprintf() to perform these operations. Once a custom implementation is provided, replacing snprintf(), then this can properly support the notation modes. Therefore, this function is supposed to support notation modes and does not yet do this (@fixme/
 .PP
 This "%$" sequence is used to prevent characters from being interpreted. For example, consider "%de" vs "%d%$e". The first case "%de" is interpretted as a double using the "e" notation. The second case "%d%$e" is interpretted as a double followed by the letter "e".
 .PP
@@ -93,8 +91,15 @@ Errors (with error bit) from: f_print_dynamic_safely().
 Errors (with error bit) from: f_print_safely().
 .br
 Errors (with error bit) from: f_print_terminated().
+.SH SEE ALSO
+.PP
+.nh
+.ad l
+\fIfl_print_format\fP(3), \fIfl_print_format_convert\fP(3), \fIfl_print_string_va\fP(3), \fIfl_print_trim\fP(3), \fIfl_print_trim_dynamic\fP(3), \fIfl_print_trim_dynamic_partial\fP(3), \fIfl_print_trim_dynamic_partial_raw\fP(3), \fIfl_print_trim_dynamic_partial_raw_safely\fP(3), \fIfl_print_trim_dynamic_partial_safely\fP(3), \fIfl_print_trim_dynamic_raw\fP(3), \fIfl_print_trim_dynamic_raw_safely\fP(3), \fIfl_print_trim_dynamic_safely\fP(3), \fIfl_print_trim_except\fP(3), \fIfl_print_trim_except_dynamic\fP(3), \fIfl_print_trim_except_dynamic_partial\fP(3), \fIfl_print_trim_except_dynamic_partial_raw\fP(3), \fIfl_print_trim_except_dynamic_partial_raw_safely\fP(3), \fIfl_print_trim_except_dynamic_partial_safely\fP(3), \fIfl_print_trim_except_dynamic_raw\fP(3), \fIfl_print_trim_except_dynamic_raw_safely\fP(3), \fIfl_print_trim_except_dynamic_safely\fP(3), \fIfl_print_trim_except_in\fP(3), \fIfl_print_trim_except_in_dynamic\fP(3), \fIfl_print_trim_except_in_dynamic_partial\fP(3), \fIfl_print_trim_except_in_dynamic_partial_raw\fP(3), \fIfl_print_trim_except_in_dynamic_partial_raw_safely\fP(3), \fIfl_print_trim_except_in_dynamic_partial_safely\fP(3), \fIfl_print_trim_except_in_dynamic_raw\fP(3), \fIfl_print_trim_except_in_dynamic_raw_safely\fP(3), \fIfl_print_trim_except_in_dynamic_safely\fP(3), \fIfl_print_trim_except_in_raw\fP(3), \fIfl_print_trim_except_in_raw_safely\fP(3), \fIfl_print_trim_except_in_safely\fP(3), \fIfl_print_trim_except_raw\fP(3), \fIfl_print_trim_except_raw_safely\fP(3), \fIfl_print_trim_except_safely\fP(3), \fIfl_print_trim_raw\fP(3), \fIfl_print_trim_raw_safely\fP(3), \fIfl_print_trim_safely\fP(3), \fIf_conversion_number_signed_print()\fP, \fIf_conversion_number_unsigned_print()\fP, \fIf_print_dynamic()\fP, \fIf_print_dynamic_raw()\fP, \fIf_print_dynamic_safely()\fP, \fIf_print_safely()\fP, \fIf_print_terminated()\fP, \fIfprintf()\fP, \fIfputc_unlocked()\fP, \fIsnprintf()\fP, \fIva_copy()\fP, \fIva_end()\fP, \fIva_start()\fP, \fIf_conversion_number_signed_print()\fP, \fIf_conversion_number_unsigned_print()\fP, \fIf_print_dynamic()\fP, \fIf_print_dynamic_raw()\fP, \fIf_print_dynamic_safely()\fP, \fIf_print_safely()\fP, \fIf_print_terminated()\fP
+.ad
+.hy
 .SH AUTHOR
 Written by Kevin Day.
 .SH COPYRIGHT
 .PP
-Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.
+Copyright \(co 2007-2024 Kevin Day, GNU LGPL Version 2.1 or later.

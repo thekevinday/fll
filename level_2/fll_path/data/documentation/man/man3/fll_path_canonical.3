@@ -1,4 +1,4 @@
-.TH fll_path_canonical "3" "July 2023" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
+.TH fll_path_canonical "3" "February 2024" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
 .SH "NAME"
 fll_path_canonical
 .SH SYNOPSIS
@@ -12,7 +12,7 @@ fll_path_canonical
 .fi
 .SH DESCRIPTION
 .PP
-Provides path-related functionality. Get the canonical (real) path for some path.
+Get the canonical (real) path for some path.
 .PP
 This does not check if the path exists or not. This processes the relative parts: './', '../', and extra '/'. This does not process symbolic links. This has a max size of F_string_t_size_d. This removes trailing slashes, but leaves the leading slash ('/' remains as-is, but '/a/' becomes '/a').
 .PP
@@ -37,8 +37,15 @@ Errors (with error bit) from: f_string_append().
 Errors (with error bit) from: f_string_append_assure().
 .br
 Errors (with error bit) from: f_string_dynamic_append_assure().
+.SH SEE ALSO
+.PP
+.nh
+.ad l
+\fIfll_path_canonical\fP(3), \fIf_path_current()\fP, \fIf_string_append()\fP, \fIf_string_append_assure()\fP, \fIf_string_dynamic_append_assure()\fP, \fIf_path_current()\fP, \fIf_string_append()\fP, \fIf_string_append_assure()\fP, \fIf_string_dynamic_append_assure()\fP
+.ad
+.hy
 .SH AUTHOR
 Written by Kevin Day.
 .SH COPYRIGHT
 .PP
-Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.
+Copyright \(co 2007-2024 Kevin Day, GNU LGPL Version 2.1 or later.

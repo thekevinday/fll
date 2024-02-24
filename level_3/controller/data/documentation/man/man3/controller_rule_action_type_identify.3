@@ -1,0 +1,36 @@
+.TH controller_rule_action_type_identify "3" "February 2024" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
+.SH "NAME"
+controller_rule_action_type_identify
+.SH SYNOPSIS
+.nf
+.B #include <program/controller.h>
+.sp
+\fBuint8_t controller_rule_action_type_identify\fP(
+    \fBconst f_string_static_t \fP\fIaction\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Identify the rule action code the given name represents.
+.SH PARAMETERS
+.TP
+.B action
+The string representing an rule action.
+
+.SH RETURN VALUE
+.PP
+The rule action type code on success.
+.br
+0 if name is unknown.
+.SH SEE ALSO
+.PP
+.nh
+.ad l
+\fIcontroller_control_payload_type_identify\fP(3), \fIcontroller_control_payload_type_name\fP(3), \fIcontroller_entry_action_type_identify\fP(3), \fIcontroller_entry_action_type_name\fP(3), \fIcontroller_main_delete\fP(3), \fIcontroller_rule_action_execute_type_identify\fP(3), \fIcontroller_rule_action_execute_type_name\fP(3), \fIcontroller_rule_action_type_identify\fP(3), \fIcontroller_rule_action_type_name\fP(3), \fIcontroller_rule_item_type_identify\fP(3), \fIcontroller_rule_item_type_name\fP(3), \fIcontroller_rule_setting_limit_type_identify\fP(3), \fIcontroller_rule_setting_limit_type_name\fP(3)
+.ad
+.hy
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2024 Kevin Day, GNU LGPL Version 2.1 or later.

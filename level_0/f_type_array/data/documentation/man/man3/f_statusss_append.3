@@ -1,0 +1,45 @@
+.TH f_statusss_append "3" "February 2024" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
+.SH "NAME"
+f_statusss_append
+.SH SYNOPSIS
+.nf
+.B #include <fll/level_0/type_array.h>
+.sp
+\fBf_status_t f_statusss_append\fP(
+    \fBconst f_statuss_t \fP\fIsource\fP,
+    \fBf_statusss_t     *\fP\fIdestination\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Append the single source statuss onto the destination.
+.SH PARAMETERS
+.TP
+.B source
+The source statuss to append.
+
+.TP
+.B destination
+The destination ranges the source is appended onto.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_data_not\fP on success, but there is nothing to append (size == 0).
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
+Errors (with error bit) from: f_memory_resize().
+.SH SEE ALSO
+.PP
+.nh
+.ad l
+\fIf_statuss_adjust\fP(3), \fIf_statuss_append\fP(3), \fIf_statuss_append_all\fP(3), \fIf_statuss_decimate_by\fP(3), \fIf_statuss_decrease_by\fP(3), \fIf_statuss_increase\fP(3), \fIf_statuss_increase_by\fP(3), \fIf_statuss_resize\fP(3), \fIf_statusss_adjust\fP(3), \fIf_statusss_append\fP(3), \fIf_statusss_append_all\fP(3), \fIf_statusss_decimate_by\fP(3), \fIf_statusss_decrease_by\fP(3), \fIf_statusss_increase\fP(3), \fIf_statusss_increase_by\fP(3), \fIf_statusss_resize\fP(3), \fIf_memory_resize()\fP
+.ad
+.hy
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2024 Kevin Day, GNU LGPL Version 2.1 or later.

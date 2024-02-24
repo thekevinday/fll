@@ -1,0 +1,36 @@
+.TH controller_print_help "3" "February 2024" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
+.SH "NAME"
+controller_print_help
+.SH SYNOPSIS
+.nf
+.B #include <program/controller.h>
+.sp
+\fBf_status_t controller_print_help\fP(
+    \fBcontroller_main_t *const \fP\fImain\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Print help.
+.SH PARAMETERS
+.TP
+.B main
+The main program data.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_output_not\fP on success, but no printing is performed.
+.SH SEE ALSO
+.PP
+.nh
+.ad l
+\fIcontroller_main\fP(3), \fIcontroller_print_copyright\fP(3), \fIcontroller_print_help\fP(3), \fIcontroller_main()\fP
+.ad
+.hy
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2024 Kevin Day, GNU LGPL Version 2.1 or later.

@@ -1,4 +1,4 @@
-.TH f_pipe_input_exists "3" "July 2023" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
+.TH f_pipe_input_exists "3" "February 2024" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
 .SH "NAME"
 f_pipe_input_exists
 .SH SYNOPSIS
@@ -11,7 +11,7 @@ f_pipe_input_exists
 .fi
 .SH DESCRIPTION
 .PP
-Provides pipe functionality. Identify whether or not the standard input pipe source contains piped data.
+Identify whether or not the standard input pipe source contains piped data.
 .SH RETURN VALUE
 .PP
 \fBF_true\fP if there is piped data.
@@ -19,8 +19,15 @@ Provides pipe functionality. Identify whether or not the standard input pipe sou
 \fBF_false\fP if there is no piped data.
 .br
 \fBF_file_stat\fP (with error bit) on stat() error.
+.SH SEE ALSO
+.PP
+.nh
+.ad l
+\fIf_pipe_debug_exists\fP(3), \fIf_pipe_error_exists\fP(3), \fIf_pipe_input_exists\fP(3), \fIf_pipe_warning_exists\fP(3), \fIfstat()\fP
+.ad
+.hy
 .SH AUTHOR
 Written by Kevin Day.
 .SH COPYRIGHT
 .PP
-Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.
+Copyright \(co 2007-2024 Kevin Day, GNU LGPL Version 2.1 or later.

@@ -52754,8 +52754,3 @@ U+FFE3
 U+FFE4
 U+FFE5
 U+FFE6
-.SH AUTHOR
-Written by Kevin Day.
-.SH COPYRIGHT
-.PP
-Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

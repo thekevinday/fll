@@ -1,4 +1,4 @@
-.TH fll_print_trim_except_safely "3" "July 2023" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
+.TH fll_print_trim_except_safely "3" "February 2024" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
 .SH "NAME"
 fll_print_trim_except_safely
 .SH SYNOPSIS
@@ -16,8 +16,6 @@ fll_print_trim_except_safely
 .SH DESCRIPTION
 .PP
 This is a variation of fl_print_trim_except_safely() that uses locking.
-.PP
-Errors (with error bit) from: fl_print_trim_except_safely().
 .SH PARAMETERS
 .TP
 .B string
@@ -42,8 +40,17 @@ The file stream to output to, including standard streams such as stdout and stde
 .SH RETURN VALUE
 .PP
 Success from: fl_print_trim_except_safely().
+.br
+Errors (with error bit) from: fl_print_trim_except_safely().
+.SH SEE ALSO
+.PP
+.nh
+.ad l
+\fIfll_print\fP(3), \fIfll_print_character\fP(3), \fIfll_print_character_safely\fP(3), \fIfll_print_dynamic\fP(3), \fIfll_print_dynamic_partial\fP(3), \fIfll_print_dynamic_partial_raw\fP(3), \fIfll_print_dynamic_partial_raw_safely\fP(3), \fIfll_print_dynamic_partial_safely\fP(3), \fIfll_print_dynamic_raw\fP(3), \fIfll_print_dynamic_raw_safely\fP(3), \fIfll_print_dynamic_safely\fP(3), \fIfll_print_except\fP(3), \fIfll_print_except_dynamic\fP(3), \fIfll_print_except_dynamic_partial\fP(3), \fIfll_print_except_dynamic_partial_raw\fP(3), \fIfll_print_except_dynamic_partial_raw_safely\fP(3), \fIfll_print_except_dynamic_partial_safely\fP(3), \fIfll_print_except_dynamic_raw\fP(3), \fIfll_print_except_dynamic_raw_safely\fP(3), \fIfll_print_except_dynamic_safely\fP(3), \fIfll_print_except_in\fP(3), \fIfll_print_except_in_dynamic\fP(3), \fIfll_print_except_in_dynamic_partial\fP(3), \fIfll_print_except_in_dynamic_partial_raw\fP(3), \fIfll_print_except_in_dynamic_partial_raw_safely\fP(3), \fIfll_print_except_in_dynamic_partial_safely\fP(3), \fIfll_print_except_in_dynamic_raw\fP(3), \fIfll_print_except_in_dynamic_raw_safely\fP(3), \fIfll_print_except_in_dynamic_safely\fP(3), \fIfll_print_except_in_raw\fP(3), \fIfll_print_except_in_raw_safely\fP(3), \fIfll_print_except_in_safely\fP(3), \fIfll_print_except_raw\fP(3), \fIfll_print_except_raw_safely\fP(3), \fIfll_print_except_safely\fP(3), \fIfll_print_format\fP(3), \fIfll_print_format_convert\fP(3), \fIfll_print_raw\fP(3), \fIfll_print_raw_safely\fP(3), \fIfll_print_raw_terminated\fP(3), \fIfll_print_safely\fP(3), \fIfll_print_safely_terminated\fP(3), \fIfll_print_string_va\fP(3), \fIfll_print_terminated\fP(3), \fIfll_print_trim\fP(3), \fIfll_print_trim_dynamic\fP(3), \fIfll_print_trim_dynamic_partial\fP(3), \fIfll_print_trim_dynamic_partial_raw\fP(3), \fIfll_print_trim_dynamic_partial_raw_safely\fP(3), \fIfll_print_trim_dynamic_partial_safely\fP(3), \fIfll_print_trim_dynamic_raw\fP(3), \fIfll_print_trim_dynamic_raw_safely\fP(3), \fIfll_print_trim_dynamic_safely\fP(3), \fIfll_print_trim_except\fP(3), \fIfll_print_trim_except_dynamic\fP(3), \fIfll_print_trim_except_dynamic_partial\fP(3), \fIfll_print_trim_except_dynamic_partial_raw\fP(3), \fIfll_print_trim_except_dynamic_partial_raw_safely\fP(3), \fIfll_print_trim_except_dynamic_partial_safely\fP(3), \fIfll_print_trim_except_dynamic_raw\fP(3), \fIfll_print_trim_except_dynamic_raw_safely\fP(3), \fIfll_print_trim_except_dynamic_safely\fP(3), \fIfll_print_trim_except_in\fP(3), \fIfll_print_trim_except_in_dynamic\fP(3), \fIfll_print_trim_except_in_dynamic_partial\fP(3), \fIfll_print_trim_except_in_dynamic_partial_raw\fP(3), \fIfll_print_trim_except_in_dynamic_partial_raw_safely\fP(3), \fIfll_print_trim_except_in_dynamic_partial_safely\fP(3), \fIfll_print_trim_except_in_dynamic_raw\fP(3), \fIfll_print_trim_except_in_dynamic_raw_safely\fP(3), \fIfll_print_trim_except_in_dynamic_safely\fP(3), \fIfll_print_trim_except_in_raw\fP(3), \fIfll_print_trim_except_in_raw_safely\fP(3), \fIfll_print_trim_except_in_safely\fP(3), \fIfll_print_trim_except_raw\fP(3), \fIfll_print_trim_except_raw_safely\fP(3), \fIfll_print_trim_except_safely\fP(3), \fIfll_print_trim_raw\fP(3), \fIfll_print_trim_raw_safely\fP(3), \fIfll_print_trim_safely\fP(3), \fIfl_print_trim_except_safely()\fP, \fIfl_print_trim_except_safely()\fP, \fIflockfile()\fP, \fIfunlockfile()\fP, \fIfl_print_trim_except_safely()\fP
+.ad
+.hy
 .SH AUTHOR
 Written by Kevin Day.
 .SH COPYRIGHT
 .PP
-Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.
+Copyright \(co 2007-2024 Kevin Day, GNU LGPL Version 2.1 or later.

@@ -1,4 +1,4 @@
-.TH fll_program_data_delete "3" "July 2023" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
+.TH fll_program_data_delete "3" "February 2024" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
 .SH "NAME"
 fll_program_data_delete
 .SH SYNOPSIS
@@ -12,10 +12,6 @@ fll_program_data_delete
 .SH DESCRIPTION
 .PP
 Delete any dynamic allocated data on the program data object.
-.PP
-
-.br
-\fBF_parameter\fP (with error bit) if a parameter is invalid.
 .SH PARAMETERS
 .TP
 .B data
@@ -25,9 +21,18 @@ The program data object.
 .PP
 \fBF_none\fP on success.
 .br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.br
 Errors (with error bit) from: f_console_parameters_delete().
+.SH SEE ALSO
+.PP
+.nh
+.ad l
+\fIfll_program_data_delete\fP(3), \fIfll_program_data_destroy\fP(3), \fIf_console_parameters_delete()\fP, \fIf_console_parameters_delete()\fP
+.ad
+.hy
 .SH AUTHOR
 Written by Kevin Day.
 .SH COPYRIGHT
 .PP
-Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.
+Copyright \(co 2007-2024 Kevin Day, GNU LGPL Version 2.1 or later.

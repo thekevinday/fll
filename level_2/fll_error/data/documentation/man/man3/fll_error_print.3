@@ -1,4 +1,4 @@
-.TH fll_error_print "3" "July 2023" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
+.TH fll_error_print "3" "February 2024" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
 .SH "NAME"
 fll_error_print
 .SH SYNOPSIS
@@ -14,7 +14,7 @@ fll_error_print
 .fi
 .SH DESCRIPTION
 .PP
-Provide functions commonly used by FLL based programs. Print generic error or warning messages.
+Print generic error or warning messages.
 .SH PARAMETERS
 .TP
 .B print
@@ -37,8 +37,15 @@ Set to F_true to print the fallback error message for unknown errors.
 \fBF_false\fP is returned on successful print of known errors.
 .br
 \fBF_true\fP is returned if the status code is unknown.
+.SH SEE ALSO
+.PP
+.nh
+.ad l
+\fIfll_error_file_print\fP(3), \fIfll_error_parameter_integer_print\fP(3), \fIfll_error_print\fP(3)
+.ad
+.hy
 .SH AUTHOR
 Written by Kevin Day.
 .SH COPYRIGHT
 .PP
-Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.
+Copyright \(co 2007-2024 Kevin Day, GNU LGPL Version 2.1 or later.

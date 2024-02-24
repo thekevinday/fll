@@ -1,4 +1,4 @@
-.TH fl_conversion_dynamic_to_signed_detect "3" "July 2023" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
+.TH fl_conversion_dynamic_to_signed_detect "3" "February 2024" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
 .SH "NAME"
 fl_conversion_dynamic_to_signed_detect
 .SH SYNOPSIS
@@ -15,16 +15,19 @@ fl_conversion_dynamic_to_signed_detect
 .PP
 Convert a series of positive or negative number characters into an f_number_signed_t.
 .PP
-Hexidecimals begin with either '0x' or '0X'.
+This will stop at one of the following: a non-digit.
 .br
-Duodecimals begin with either '0d' or '0D'.
+This will ignore NULL values.
 .br
-Octals begin with either '0o' or '0O'.
+This will process signed statuses (+/-).
 .br
-Binaries begin with either '0b' or '0B'.
+This will detect based types as follows:
+  - Hexidecimals begin with either '0x' or '0X'.
+  - Duodecimals begin with either '0d' or '0D'.
+  - Octals begin with either '0o' or '0O'.
+  - Binaries begin with either '0b' or '0B'.
+  - Decimal is used for all other cases.
 .br
-Decimal is used for all other cases.
-.PP
 Leading 0's and whitespace are ignored. Whitespace after the first digit is considered invalid.
 .PP
 This function is similar to strtoll(), but the behavior of error handling and special bases are different. In particular, octals are specified here with '0b' prefix or '0B' prefix instead of the ridiculous '0' prefix.
@@ -60,8 +63,15 @@ This will store the value of the converted string. This value is only changed on
 \fBF_number_underflow\fP (with error bit) on integer underflow.
 .br
 \fBF_parameter\fP (with error bit) if a parameter is invalid.
+.SH SEE ALSO
+.PP
+.nh
+.ad l
+\fIfl_conversion_dynamic_partial_to_signed\fP(3), \fIfl_conversion_dynamic_partial_to_signed_detect\fP(3), \fIfl_conversion_dynamic_partial_to_unsigned\fP(3), \fIfl_conversion_dynamic_partial_to_unsigned_detect\fP(3), \fIfl_conversion_dynamic_to_signed\fP(3), \fIfl_conversion_dynamic_to_signed_detect\fP(3), \fIfl_conversion_dynamic_to_unsigned\fP(3), \fIfl_conversion_dynamic_to_unsigned_detect\fP(3), \fIstrtoll()\fP
+.ad
+.hy
 .SH AUTHOR
 Written by Kevin Day.
 .SH COPYRIGHT
 .PP
-Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.
+Copyright \(co 2007-2024 Kevin Day, GNU LGPL Version 2.1 or later.

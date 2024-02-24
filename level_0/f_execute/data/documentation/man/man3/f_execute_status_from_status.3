@@ -1,4 +1,4 @@
-.TH f_execute_status_from_status "3" "July 2023" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
+.TH f_execute_status_from_status "3" "February 2024" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
 .SH "NAME"
 f_execute_status_from_status
 .SH SYNOPSIS
@@ -12,8 +12,6 @@ f_execute_status_from_status
 .SH DESCRIPTION
 .PP
 Convert from F_status_t to execute status.
-.PP
-F_execute_code_last is returned when there are no matching execute states.
 .SH PARAMETERS
 .TP
 .B status
@@ -22,8 +20,17 @@ The status to convert from. The execute status does not support flags and so fla
 .SH RETURN VALUE
 .PP
 The appropriate execute status code is returned on match.
+.br
+\fBF_execute_code_last\fP is returned when there are no matching execute states.
+.SH SEE ALSO
+.PP
+.nh
+.ad l
+\fIf_execute_status_from_status\fP(3), \fIf_execute_status_to_status\fP(3)
+.ad
+.hy
 .SH AUTHOR
 Written by Kevin Day.
 .SH COPYRIGHT
 .PP
-Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.
+Copyright \(co 2007-2024 Kevin Day, GNU LGPL Version 2.1 or later.

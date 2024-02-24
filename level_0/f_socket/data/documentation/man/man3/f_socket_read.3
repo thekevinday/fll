@@ -1,4 +1,4 @@
-.TH f_socket_read "3" "July 2023" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
+.TH f_socket_read "3" "February 2024" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
 .SH "NAME"
 f_socket_read
 .SH SYNOPSIS
@@ -33,6 +33,7 @@ The buffer to populate.
 (optional) The length of the buffer. This gets replaced with the value of a positive ssize_t representing the length read. Data may be lost if the amount of data read is larger than given buffer length. Set to NULL to not use.
 
 .SH RETURN VALUE
+.PP
 \fBF_none\fP on success.
 .br
 \fBF_access_denied\fP (with error bit) on access denied.
@@ -68,8 +69,15 @@ The buffer to populate.
 \fBF_time_out\fP (with error bit) if a timeout occurred.
 .br
 \fBF_failure\fP (with error bit) for any other error.
+.SH SEE ALSO
+.PP
+.nh
+.ad l
+\fIf_socket_accept\fP(3), \fIf_socket_bind\fP(3), \fIf_socket_bind_local\fP(3), \fIf_socket_connect\fP(3), \fIf_socket_create\fP(3), \fIf_socket_create_pair\fP(3), \fIf_socket_disconnect\fP(3), \fIf_socket_listen\fP(3), \fIf_socket_option_get\fP(3), \fIf_socket_option_set\fP(3), \fIf_socket_read\fP(3), \fIf_socket_read_message\fP(3), \fIf_socket_write\fP(3), \fIf_socket_write_message\fP(3), \fIrecvfrom()\fP
+.ad
+.hy
 .SH AUTHOR
 Written by Kevin Day.
 .SH COPYRIGHT
 .PP
-Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.
+Copyright \(co 2007-2024 Kevin Day, GNU LGPL Version 2.1 or later.

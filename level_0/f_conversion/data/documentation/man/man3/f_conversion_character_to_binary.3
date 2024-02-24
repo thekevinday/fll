@@ -1,4 +1,4 @@
-.TH f_conversion_character_to_binary "3" "July 2023" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
+.TH f_conversion_character_to_binary "3" "February 2024" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
 .SH "NAME"
 f_conversion_character_to_binary
 .SH SYNOPSIS
@@ -13,6 +13,8 @@ f_conversion_character_to_binary
 .SH DESCRIPTION
 .PP
 Convert a single character into the binary digit that it represents.
+.PP
+F_number (with error bit) if no conversion was made due to non-binary values being found. F_parameter (with error bit) if a parameter is invalid.
 .SH PARAMETERS
 .TP
 .B character
@@ -24,13 +26,16 @@ This will store the value of the converted character. This value is only changed
 
 .SH RETURN VALUE
 .PP
-\fBF_none\fP if character was converted to a binary.
-.br
-\fBF_number\fP (with error bit) if no conversion was made due to non-binary values being found.
-.br
-\fBF_parameter\fP (with error bit) if a parameter is invalid.
+F_none if character was converted to a binary.
+.SH SEE ALSO
+.PP
+.nh
+.ad l
+\fIf_conversion_character_is_binary\fP(3), \fIf_conversion_character_is_decimal\fP(3), \fIf_conversion_character_is_duodecimal\fP(3), \fIf_conversion_character_is_hexidecimal\fP(3), \fIf_conversion_character_is_octal\fP(3), \fIf_conversion_character_to_binary\fP(3), \fIf_conversion_character_to_decimal\fP(3), \fIf_conversion_character_to_duodecimal\fP(3), \fIf_conversion_character_to_hexidecimal\fP(3), \fIf_conversion_character_to_octal\fP(3), \fIf_conversion_number_signed_print\fP(3), \fIf_conversion_number_signed_to_string\fP(3), \fIf_conversion_number_unsigned_print\fP(3), \fIf_conversion_number_unsigned_to_string\fP(3)
+.ad
+.hy
 .SH AUTHOR
 Written by Kevin Day.
 .SH COPYRIGHT
 .PP
-Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.
+Copyright \(co 2007-2024 Kevin Day, GNU LGPL Version 2.1 or later.

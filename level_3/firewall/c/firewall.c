@@ -17,7 +17,7 @@ extern "C" {
 
     flockfile(file.stream);
 
-    fl_print_format("%rCopyright © 2007-2023 Kevin Day.%r", file.stream, f_string_eol_s, f_string_eol_s);
+    fl_print_format("%rCopyright © 2007-2024 Kevin Day.%r", file.stream, f_string_eol_s, f_string_eol_s);
 
     #ifndef _di_detailed_copyright_
       if (full) {

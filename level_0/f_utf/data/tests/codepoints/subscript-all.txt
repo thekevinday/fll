@@ -36,8 +36,3 @@ U+209A
 U+209B
 U+209C
 U+2C7C
-.SH AUTHOR
-Written by Kevin Day.
-.SH COPYRIGHT
-.PP
-Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

@@ -1,4 +1,4 @@
-.TH f_iki_content_is "3" "July 2023" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
+.TH f_iki_content_is "3" "February 2024" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
 .SH "NAME"
 f_iki_content_is
 .SH SYNOPSIS
@@ -12,36 +12,36 @@ f_iki_content_is
 .fi
 .SH DESCRIPTION
 .PP
-A string that is analogous to f_string_dynamic_t but intended for static-only uses.
+Determine if an content is a valid IKI content name.
 .PP
-The f_string_static_t type should never be directly allocated or deallocated.
-.PP
-A special macro_f_string_static_t_initialize() is provided for the special purpose of easily initialize a static string. A special macro_f_string_static_t_initialize2() is provided for the special purpose of easily initialize a static string with an identical used and size.
-.PP
-string: The string. size: Total amount of space available. used: Total number of space used.
-.sp
-.RS
-.nf
-\fB
-struct f_string_static_t {
-  f_string_t       \fIstring\fP;
-  f_array_length_t \fIsize\fP;
-  f_array_length_t \fIused\fP;
-};
-\fP
-.fi
-.RE
+The content does not include the wrapping quotes.
+.SH PARAMETERS
+.TP
+.B content
+The string to validate as an content name.
+
+.TP
+.B quote
+The quote character in use. This must be either a single (') or double (") quote.
+
 .SH RETURN VALUE
 .PP
-
-.br
 \fBF_true\fP on success and string is a valid content name.
 .br
 \fBF_false\fP on success and string is not a valid content name.
 .br
 \fBF_data_not\fP on success, but the content.used is 0.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.SH SEE ALSO
+.PP
+.nh
+.ad l
+\fIf_iki_content_is\fP(3), \fIf_iki_content_partial_is\fP(3), \fIf_iki_object_is\fP(3), \fIf_iki_object_partial_is\fP(3), \fIf_iki_read\fP(3)
+.ad
+.hy
 .SH AUTHOR
 Written by Kevin Day.
 .SH COPYRIGHT
 .PP
-Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.
+Copyright \(co 2007-2024 Kevin Day, GNU LGPL Version 2.1 or later.

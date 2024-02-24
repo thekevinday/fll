@@ -1,0 +1,55 @@
+.TH fss_basic_list_read_main "3" "February 2024" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
+.SH "NAME"
+fss_basic_list_read_main
+.SH SYNOPSIS
+.nf
+.B #include <program/fss_basic_list_read.h>
+.sp
+\fBf_status_t fss_basic_list_read_main\fP(
+    \fBfll_program_data_t *const     \fP\fImain\fP,
+    \fBconst f_console_arguments_t  *\fP\fIarguments\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Execute main program.
+.PP
+If main.signal is non-zero, then this blocks and handles the following signals:
+.br
+  - F_signal_abort
+.br
+  - F_signal_broken_pipe
+.br
+  - F_signal_hangup
+.br
+  - F_signal_interrupt
+.br
+  - F_signal_quit
+.br
+  - F_signal_termination
+.SH PARAMETERS
+.TP
+.B main
+The main program data.
+
+.TP
+.B arguments
+The parameters passed to the process.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+Status codes (with error bit) are returned on any problem.
+.SH SEE ALSO
+.PP
+.nh
+.ad l
+\fIfss_basic_list_read_main\fP(3), \fIfss_basic_list_read_print_copyright\fP(3), \fIfss_basic_list_read_print_help\fP(3)
+.ad
+.hy
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2024 Kevin Day, GNU LGPL Version 2.1 or later.

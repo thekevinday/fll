@@ -1,4 +1,4 @@
-.TH fl_directory_path_pop "3" "July 2023" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
+.TH fl_directory_path_pop "3" "February 2024" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
 .SH "NAME"
 fl_directory_path_pop
 .SH SYNOPSIS
@@ -30,8 +30,15 @@ The path to remove a single directory. This will only be NULL terminated if path
 \fBF_string_too_large\fP (with error bit) if appended string length is too large to store in the buffer.
 .br
 Errors (with error bit) from: f_utf_is_control().
+.SH SEE ALSO
+.PP
+.nh
+.ad l
+\fIfl_directory_clone\fP(3), \fIfl_directory_clone_content\fP(3), \fIfl_directory_copy\fP(3), \fIfl_directory_copy_content\fP(3), \fIfl_directory_create\fP(3), \fIfl_directory_list\fP(3), \fIfl_directory_path_pop\fP(3), \fIfl_directory_path_push\fP(3), \fIf_utf_is_control()\fP
+.ad
+.hy
 .SH AUTHOR
 Written by Kevin Day.
 .SH COPYRIGHT
 .PP
-Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.
+Copyright \(co 2007-2024 Kevin Day, GNU LGPL Version 2.1 or later.

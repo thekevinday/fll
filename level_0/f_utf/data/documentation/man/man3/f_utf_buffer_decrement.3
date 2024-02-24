@@ -1,4 +1,4 @@
-.TH f_utf_buffer_decrement "3" "July 2023" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
+.TH f_utf_buffer_decrement "3" "February 2024" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
 .SH "NAME"
 f_utf_buffer_decrement
 .SH SYNOPSIS
@@ -13,22 +13,24 @@ f_utf_buffer_decrement
 .fi
 .SH DESCRIPTION
 .PP
-A structure designating a start and stop range for some string.
+Continue to the previous character, based on step and character width.
 .PP
-In general, this project uses the start and stop position inclusively, meaning that a range of 0 to 1 would include positions 0 and position 1. Therefore, a range from 0 to 0 would be include position 0. Set start to some value larger than stop to designate that there is no range (such as start = 1, stop = 0).
+For navigating a range within the given buffer by a specific number of characters that could be of any width allowed by UTF-8.
 .PP
-start: the start position. stop: the stop position.
-.sp
-.RS
-.nf
-\fB
-struct f_string_range_t {
-  f_array_length_t \fIstart\fP;
-  f_array_length_t \fIstop\fP;
-};
-\fP
-.fi
-.RE
+The start position must be at the start of a valid UTF-8 block.
+.SH PARAMETERS
+.TP
+.B buffer
+The string to process.
+
+.TP
+.B range
+The start and stop positions to be incremented. The start position will be incremented by step.
+
+.TP
+.B step
+The number of steps to decrement the start position. The steps refer to characters and not integers. Essentially this number is considered against the width of every character found. (For ASCII each step would be sizeof(uint8_t), which is 1. (For UTF-8 character of width 3, each step would be (3 * sizeof(uint8_t)).
+
 .SH RETURN VALUE
 .PP
 \fBF_none\fP on success.
@@ -38,8 +40,19 @@ struct f_string_range_t {
 \fBF_none_eos\fP if the end of buffer is reached before all steps are completed.
 .br
 \fBF_data_not\fP if buffer is empty or out of range.
+.br
+\fBF_complete_not_utf_eos\fP (with error bit) if the end of buffer is reached before the complete UTF-8 character can be processed.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.SH SEE ALSO
+.PP
+.nh
+.ad l
+\fIf_utf_buffer_decrement\fP(3), \fIf_utf_buffer_increment\fP(3)
+.ad
+.hy
 .SH AUTHOR
 Written by Kevin Day.
 .SH COPYRIGHT
 .PP
-Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.
+Copyright \(co 2007-2024 Kevin Day, GNU LGPL Version 2.1 or later.

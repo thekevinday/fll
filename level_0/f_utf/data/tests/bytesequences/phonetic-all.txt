@@ -190,8 +190,3 @@
 14792381
 14792382
 14792383
-.SH AUTHOR
-Written by Kevin Day.
-.SH COPYRIGHT
-.PP
-Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

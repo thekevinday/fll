@@ -1,9 +1,9 @@
-.TH fll_fss_extended_write "3" "July 2023" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
+.TH fll_fss_extended_write "3" "February 2024" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
 .SH "NAME"
 fll_fss_extended_write
 .SH SYNOPSIS
 .nf
-.B #include <fll/level_2/fss.h>
+.B #include <fll/level_2/fss/extended.h>
 .sp
 \fBf_status_t fll_fss_extended_write\fP(
     \fBconst f_string_static_t   \fP\fIobject\fP,
@@ -56,8 +56,15 @@ Errors (with error bit) from: f_string_dynamic_increase().
 Errors (with error bit) from: fl_fss_extended_content_write().
 .br
 Errors (with error bit) from: fl_fss_extended_object_write().
+.SH SEE ALSO
+.PP
+.nh
+.ad l
+\fIfll_fss_extended_read\fP(3), \fIfll_fss_extended_write\fP(3), \fIf_string_dynamic_increase()\fP, \fIfl_fss_extended_content_write()\fP, \fIfl_fss_extended_object_write()\fP, \fIf_string_dynamic_increase()\fP, \fIfl_fss_extended_content_write()\fP, \fIfl_fss_extended_object_write()\fP
+.ad
+.hy
 .SH AUTHOR
 Written by Kevin Day.
 .SH COPYRIGHT
 .PP
-Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.
+Copyright \(co 2007-2024 Kevin Day, GNU LGPL Version 2.1 or later.

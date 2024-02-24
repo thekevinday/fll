@@ -1,9 +1,9 @@
-.TH fll_fss_basic_list_write "3" "July 2023" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
+.TH fll_fss_basic_list_write "3" "February 2024" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
 .SH "NAME"
 fll_fss_basic_list_write
 .SH SYNOPSIS
 .nf
-.B #include <fll/level_2/fss.h>
+.B #include <fll/level_2/fss/basic_list.h>
 .sp
 \fBf_status_t fll_fss_basic_list_write\fP(
     \fBconst f_string_static_t   \fP\fIobject\fP,
@@ -47,17 +47,22 @@ The buffer to write to.
 .br
 \fBF_data_not_eos\fP no data to write due start location being greater than or equal to buffer size.
 .br
-\fBF_data_not_stop\fP no data to write due start location being greater than stop location
-.br
-\fBF_parameter\fP (with error bit) if a parameter is invalid.
+\fBF_data_not_stop\fP no data to write due start location being greater than stop location F_parameter (with error bit) if a parameter is invalid.
 .br
 Errors (with error bit) from: f_string_dynamic_increase().
 .br
 Errors (with error bit) from: fl_fss_basic_list_content_write().
 .br
 Errors (with error bit) from: fl_fss_basic_list_object_write().
+.SH SEE ALSO
+.PP
+.nh
+.ad l
+\fIfll_fss_basic_list_read\fP(3), \fIfll_fss_basic_list_write\fP(3), \fIf_string_dynamic_increase()\fP, \fIfl_fss_basic_list_content_write()\fP, \fIfl_fss_basic_list_object_write()\fP, \fIf_string_dynamic_increase()\fP, \fIfl_fss_basic_list_content_write()\fP, \fIfl_fss_basic_list_object_write()\fP
+.ad
+.hy
 .SH AUTHOR
 Written by Kevin Day.
 .SH COPYRIGHT
 .PP
-Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.
+Copyright \(co 2007-2024 Kevin Day, GNU LGPL Version 2.1 or later.

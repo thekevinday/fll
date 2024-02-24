@@ -1,4 +1,4 @@
-.TH f_file_mode_from_string "3" "July 2023" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
+.TH f_file_mode_from_string "3" "February 2024" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
 .SH "NAME"
 f_file_mode_from_string
 .SH SYNOPSIS
@@ -32,10 +32,6 @@ This means that "chmod 1 some_directory" would not change the setuid/setgid/stic
 .PP
 Considering the behavior, assume that when "=" or a leading "0" is provided, this will change the setuid/setgid/sticky bits, otherwise it preserves those bits for directories.
 .PP
-the possibilities are a bit extensive and this needs additional review; remove this fixme when this review is completed.
-.PP
-apparently "u+g" is valid such that the mode from the group (g) is applied to the user (u) mode.
-.PP
 The flags F_file_mode_t_replace_* are used to designate which mask bits are to be replaced. For example F_file_mode_t_replace_owner_d would designate that the owner bits are to be replaced. A value of 0 means that there are no replacements being made.
 .PP
 Replacements replace the entire existing mode values where as "add" and "subtract" add or subtract modes, respectively, to the existing mode values.
@@ -65,8 +61,15 @@ The determined modes that are to be replaced, such as: F_file_mode_t_replace_own
 \fBF_syntax\fP (with error bit) if the string fails to follow the syntax rules.
 .br
 The parameters how, mode_normal, and mode_executable are all set to 0 on error.
+.SH SEE ALSO
+.PP
+.nh
+.ad l
+\fIf_file_access\fP(3), \fIf_file_access_at\fP(3), \fIf_file_clone\fP(3), \fIf_file_close\fP(3), \fIf_file_close_flush\fP(3), \fIf_file_copy\fP(3), \fIf_file_create\fP(3), \fIf_file_create_at\fP(3), \fIf_file_create_device\fP(3), \fIf_file_create_device_at\fP(3), \fIf_file_create_fifo\fP(3), \fIf_file_create_fifo_at\fP(3), \fIf_file_create_node\fP(3), \fIf_file_create_node_at\fP(3), \fIf_file_descriptor\fP(3), \fIf_file_exists\fP(3), \fIf_file_exists_at\fP(3), \fIf_file_flush\fP(3), \fIf_file_group_read\fP(3), \fIf_file_is\fP(3), \fIf_file_is_at\fP(3), \fIf_file_link\fP(3), \fIf_file_link_at\fP(3), \fIf_file_link_hard\fP(3), \fIf_file_link_hard_at\fP(3), \fIf_file_link_read\fP(3), \fIf_file_link_read_at\fP(3), \fIf_file_mode_determine\fP(3), \fIf_file_mode_from_string\fP(3), \fIf_file_mode_read\fP(3), \fIf_file_mode_read_at\fP(3), \fIf_file_mode_set\fP(3), \fIf_file_mode_set_at\fP(3), \fIf_file_mode_to_mode\fP(3), \fIf_file_name_base\fP(3), \fIf_file_name_directory\fP(3), \fIf_file_open\fP(3), \fIf_file_open_at\fP(3), \fIf_file_owner_read\fP(3), \fIf_file_read\fP(3), \fIf_file_read_block\fP(3), \fIf_file_read_until\fP(3), \fIf_file_remove\fP(3), \fIf_file_remove_at\fP(3), \fIf_file_rename\fP(3), \fIf_file_rename_at\fP(3), \fIf_file_role_change\fP(3), \fIf_file_role_change_at\fP(3), \fIf_file_seek\fP(3), \fIf_file_size\fP(3), \fIf_file_size_at\fP(3), \fIf_file_size_by_id\fP(3), \fIf_file_stat\fP(3), \fIf_file_stat_at\fP(3), \fIf_file_stat_by_id\fP(3), \fIf_file_stream_close\fP(3), \fIf_file_stream_open\fP(3), \fIf_file_stream_open_descriptor\fP(3), \fIf_file_stream_read\fP(3), \fIf_file_stream_read_block\fP(3), \fIf_file_stream_read_until\fP(3), \fIf_file_stream_reopen\fP(3), \fIf_file_stream_write\fP(3), \fIf_file_stream_write_block\fP(3), \fIf_file_stream_write_range\fP(3), \fIf_file_stream_write_until\fP(3), \fIf_file_touch\fP(3), \fIf_file_touch_at\fP(3), \fIf_file_type\fP(3), \fIf_file_type_at\fP(3), \fIf_file_umask_get\fP(3), \fIf_file_umask_set\fP(3), \fIf_file_write\fP(3), \fIf_file_write_block\fP(3), \fIf_file_write_range\fP(3), \fIf_file_write_until\fP(3)
+.ad
+.hy
 .SH AUTHOR
 Written by Kevin Day.
 .SH COPYRIGHT
 .PP
-Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.
+Copyright \(co 2007-2024 Kevin Day, GNU LGPL Version 2.1 or later.

@@ -1641,8 +1641,3 @@ U+1E4F6
 U+1E4F7
 U+1E4F8
 U+1E4F9
-.SH AUTHOR
-Written by Kevin Day.
-.SH COPYRIGHT
-.PP
-Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

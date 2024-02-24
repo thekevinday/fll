@@ -1,4 +1,4 @@
-.TH f_environment_set "3" "July 2023" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
+.TH f_environment_set "3" "February 2024" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
 .SH "NAME"
 f_environment_set
 .SH SYNOPSIS
@@ -40,8 +40,15 @@ Set to TRUE to replace value if name already exists. Set to FALSE to not replace
 \fBF_parameter\fP (with error bit) if name is an invalid string.
 .br
 \fBF_failure\fP (with error bit) on any other error.
+.SH SEE ALSO
+.PP
+.nh
+.ad l
+\fIf_environment_clear\fP(3), \fIf_environment_exists\fP(3), \fIf_environment_get\fP(3), \fIf_environment_get_all\fP(3), \fIf_environment_secure_is\fP(3), \fIf_environment_set\fP(3), \fIf_environment_unset\fP(3), \fIsetenv()\fP
+.ad
+.hy
 .SH AUTHOR
 Written by Kevin Day.
 .SH COPYRIGHT
 .PP
-Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.
+Copyright \(co 2007-2024 Kevin Day, GNU LGPL Version 2.1 or later.

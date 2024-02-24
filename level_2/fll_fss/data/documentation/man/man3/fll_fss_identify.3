@@ -1,4 +1,4 @@
-.TH fll_fss_identify "3" "July 2023" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
+.TH fll_fss_identify "3" "February 2024" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
 .SH "NAME"
 fll_fss_identify
 .SH SYNOPSIS
@@ -13,7 +13,7 @@ fll_fss_identify
 .fi
 .SH DESCRIPTION
 .PP
-Provide common FSS functions. Identify FSS type from a buffered string.
+Identify FSS type from a buffered string.
 .PP
 The operates on the assumption that the first character provided is the start of the line. This will process until the stop point or the end of the line. This stop point should always be after the end of the line, except when there is an error.
 .PP
@@ -52,8 +52,15 @@ Errors (with error bit) from: f_fll_ids_increase().
 Errors (with error bit) from: f_utf_is_whitespace().
 .br
 Errors (with error bit) from: fl_string_dynamic_partial_fll_identify().
+.SH SEE ALSO
+.PP
+.nh
+.ad l
+\fIfll_fss_identify\fP(3), \fIfll_fss_snatch\fP(3), \fIfll_fss_snatch_apart\fP(3), \fIfll_fss_snatch_map\fP(3), \fIfll_fss_snatch_map_apart\fP(3), \fIfll_fss_snatch_map_mash\fP(3), \fIfll_fss_snatch_map_mash_apart\fP(3), \fIfll_fss_snatch_map_together\fP(3), \fIfll_fss_snatch_mash\fP(3), \fIfll_fss_snatch_mash_apart\fP(3), \fIfll_fss_snatch_together\fP(3), \fIfl_string_dynamic_partial_fll_identify()\fP, \fIf_fll_ids_increase()\fP, \fIf_utf_is_whitespace()\fP, \fIfl_string_dynamic_partial_fll_identify()\fP, \fIf_fll_ids_increase()\fP, \fIf_utf_is_whitespace()\fP, \fIfl_string_dynamic_partial_fll_identify()\fP
+.ad
+.hy
 .SH AUTHOR
 Written by Kevin Day.
 .SH COPYRIGHT
 .PP
-Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.
+Copyright \(co 2007-2024 Kevin Day, GNU LGPL Version 2.1 or later.

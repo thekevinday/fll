@@ -1,4 +1,4 @@
-.TH fl_utf_string_compare "3" "July 2023" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
+.TH fl_utf_string_compare "3" "February 2024" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
 .SH "NAME"
 fl_utf_string_compare
 .SH SYNOPSIS
@@ -14,13 +14,7 @@ fl_utf_string_compare
 .fi
 .SH DESCRIPTION
 .PP
-Provides UTF-8 character manipulation and processing capabilities.
-.PP
-UTF-8 is handled within these functions via padded string characters (f_utf_string_t). Unlike f_string_t, these f_utf_string_t base functions force padding of ASCII or UTF-8 characters. With f_utf_string_t, a 1-byte wide ASCII character is stored as 4 bytes and a 4-byte wide UTF-8 character is stored as 4 bytes.
-.PP
-This simplifies traversing the strings at the cost of size vs f_string_t.
-.PP
-Because of the set width, it is generally safe to ignore invalid UTF-8 sequences. Invalid UTF-8 will be generally ignored here, where reasonably possible. Compare two UTF-8 strings, similar to strncmp().
+Compare two UTF-8 strings, similar to strncmp().
 .PP
 This does not stop on NULL. NULL characters are ignored.
 .SH PARAMETERS
@@ -47,8 +41,15 @@ Length of string2.
 \fBF_equal_to_not\fP when both strings do not equal.
 .br
 \fBF_parameter\fP (with error bit) if a parameter is invalid.
+.SH SEE ALSO
+.PP
+.nh
+.ad l
+\fIfl_utf_string_compare\fP(3), \fIfl_utf_string_compare_trim\fP(3), \fIfl_utf_string_dynamic_compare\fP(3), \fIfl_utf_string_dynamic_compare_trim\fP(3), \fIfl_utf_string_dynamic_partial_compare\fP(3), \fIfl_utf_string_dynamic_partial_compare_trim\fP(3), \fIfl_utf_string_dynamic_rip\fP(3), \fIfl_utf_string_dynamic_rip_nulless\fP(3), \fIfl_utf_string_dynamic_seek_line_to_char\fP(3), \fIfl_utf_string_dynamic_seek_line_until_graph\fP(3), \fIfl_utf_string_dynamic_seek_line_until_graph_non\fP(3), \fIfl_utf_string_dynamic_seek_to_char\fP(3), \fIfl_utf_string_rip\fP(3), \fIfl_utf_string_rip_nulless\fP(3), \fIfl_utf_string_seek_line_to_char\fP(3), \fIfl_utf_string_seek_line_until_graph\fP(3), \fIfl_utf_string_seek_line_until_graph_non\fP(3), \fIfl_utf_string_seek_to_char\fP(3)
+.ad
+.hy
 .SH AUTHOR
 Written by Kevin Day.
 .SH COPYRIGHT
 .PP
-Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.
+Copyright \(co 2007-2024 Kevin Day, GNU LGPL Version 2.1 or later.

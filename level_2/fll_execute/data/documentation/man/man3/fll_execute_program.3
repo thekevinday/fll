@@ -1,4 +1,4 @@
-.TH fll_execute_program "3" "July 2023" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
+.TH fll_execute_program "3" "February 2024" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
 .SH "NAME"
 fll_execute_program
 .SH SYNOPSIS
@@ -21,7 +21,11 @@ The program will be executed via a forked child process.
 .PP
 When the path has a slash "/" or the environment is to be cleared, then this does validate the path to the program. Otherwise, this does not validate the path to the program.
 .PP
-When the parameter.option has the FL_execute_parameter_option_exit_d bit set, then this calls exit() when the child process returns. Otherwise, this returns
+When the parameter.option has the FL_execute_parameter_option_exit_d bit set, then this calls exit() when the child process returns. Otherwise, this returns F_child and assigns the child's return code to result for the child process. The caller is expected to handle the appropriate exit procedures and memory deallocation for the child process when F_child is returned.
+.PP
+This returns F_capability, F_group, and F_user only by the child process and must be treated the same as F_child for the purposes of understanding what the current process is. These are essentialy F_child with explicit error codes that are returned instead of performing the desired execution.
+.PP
+This returns F_control_group, F_limit, F_processor, and F_schedule only by the parent process and represents that the child process could not be executed.
 .SH PARAMETERS
 .TP
 .B program
@@ -50,22 +54,6 @@ An array of strings representing the arguments.
 \fBF_child\fP on success and this is the child thread.
 .br
 \fBF_parent\fP on success and this is the parent thread (only happens when FL_execute_parameter_option_return_d is passed).
-.br
-\fBF_child\fP and assigns the child's return code to result for the child process. The caller is expected to handle the appropriate exit procedures and memory deallocation for the child process when
-.br
-\fBF_child\fP is returned.
-.PP
-This returns F_capability, F_group, and
-.br
-\fBF_user\fP only by the child process and must be treated the same as
-.br
-\fBF_child\fP for the purposes of understanding what the current process is. These are essentialy
-.br
-\fBF_child\fP with explicit error codes that are returned instead of performing the desired execution.
-.PP
-This returns F_control_group, F_limit, F_processor, and
-.br
-\fBF_schedule\fP only by the parent process and represents that the child process could not be executed.
 .br
 \fBF_capability\fP (with error bit) on failure to set capabilities in the child (only the child process returns this).
 .br
@@ -110,8 +98,15 @@ Errors (with error bit) from: f_string_dynamics_resize().
 Errors (with error bit) from: f_thread_signal_mask().
 .br
 Errors (with error bit) from: fl_environment_path_explode().
+.SH SEE ALSO
+.PP
+.nh
+.ad l
+\fIfll_execute_arguments_add\fP(3), \fIfll_execute_arguments_add_parameter\fP(3), \fIfll_execute_arguments_add_parameter_set\fP(3), \fIfll_execute_arguments_add_set\fP(3), \fIfll_execute_into\fP(3), \fIfll_execute_program\fP(3), \fIf_capability_process_set()\fP, \fIf_environment_get()\fP, \fIf_file_exists()\fP, \fIf_limit_process()\fP, \fIf_signal_mask()\fP, \fIf_string_append()\fP, \fIf_string_dynamic_resize()\fP, \fIf_string_dynamics_resize()\fP, \fIf_thread_signal_mask()\fP, \fIfl_environment_path_explode()\fP, \fIclose()\fP, \fIclearenv()\fP, \fIdup2()\fP, \fIexecv()\fP, \fIexecvp()\fP, \fIexit()\fP, \fIfork()\fP, \fIgetpid()\fP, \fImemcpy()\fP, \fInice()\fP, \fIpipe()\fP, \fIsetsid()\fP, \fIsched_setaffinity()\fP, \fIsched_setscheduler()\fP, \fIsetgid()\fP, \fIsetgroups()\fP, \fIsetuid()\fP, \fIstrnlen()\fP, \fIwaitpid()\fP, \fIf_capability_process_set()\fP, \fIf_environment_get()\fP, \fIf_file_exists()\fP, \fIf_limit_process()\fP, \fIf_signal_mask()\fP, \fIf_string_dynamic_append()\fP, \fIf_string_dynamics_resize()\fP, \fIf_thread_signal_mask()\fP, \fIfl_control_group_apply()\fP, \fIfl_environment_path_explode()\fP
+.ad
+.hy
 .SH AUTHOR
 Written by Kevin Day.
 .SH COPYRIGHT
 .PP
-Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.
+Copyright \(co 2007-2024 Kevin Day, GNU LGPL Version 2.1 or later.

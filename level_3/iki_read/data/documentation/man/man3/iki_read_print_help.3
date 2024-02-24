@@ -1,0 +1,39 @@
+.TH iki_read_print_help "3" "February 2024" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
+.SH "NAME"
+iki_read_print_help
+.SH SYNOPSIS
+.nf
+.B #include <program/iki_read.h>
+.sp
+\fBf_status_t iki_read_print_help\fP(
+    \fBconst f_file_t          \fP\fIfile\fP,
+    \fBconst f_color_context_t \fP\fIcontext\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Print help.
+.SH PARAMETERS
+.TP
+.B file
+The file to print to.
+
+.TP
+.B context
+The color context settings.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.SH SEE ALSO
+.PP
+.nh
+.ad l
+\fIiki_read_main\fP(3), \fIiki_read_print_copyright\fP(3), \fIiki_read_print_help\fP(3)
+.ad
+.hy
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2024 Kevin Day, GNU LGPL Version 2.1 or later.

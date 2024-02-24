@@ -1,4 +1,4 @@
-.TH fl_control_group_apply "3" "July 2023" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
+.TH fl_control_group_apply "3" "February 2024" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
 .SH "NAME"
 fl_control_group_apply
 .SH SYNOPSIS
@@ -13,11 +13,10 @@ fl_control_group_apply
 .SH DESCRIPTION
 .PP
 Apply the given control groups to the process represented by the PID.
-.PP
-Errors (with error bit) from: f_file_stream_open().
 .SH PARAMETERS
 .TP
 .B control_group
+The control group(s) to apply.
 
 .TP
 .B id
@@ -36,8 +35,17 @@ The PID of the process to apply the control group(s) to.
 \fBF_space_not\fP (with error bit) if a maximum resource limit is reached and there is not enough space.
 .br
 \fBF_failure\fP (with error bit) on any other error.
+.br
+Errors (with error bit) from: f_file_stream_open().
+.SH SEE ALSO
+.PP
+.nh
+.ad l
+\fIfl_control_group_apply\fP(3), \fIf_file_stream_open()\fP, \fIfprintf()\fP, \fIfflush()\fP, \fImemcpy()\fP, \fIunshare()\fP, \fIf_file_stream_close()\fP, \fIf_file_stream_open()\fP
+.ad
+.hy
 .SH AUTHOR
 Written by Kevin Day.
 .SH COPYRIGHT
 .PP
-Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.
+Copyright \(co 2007-2024 Kevin Day, GNU LGPL Version 2.1 or later.

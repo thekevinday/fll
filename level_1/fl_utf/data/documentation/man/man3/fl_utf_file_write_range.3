@@ -1,0 +1,73 @@
+.TH fl_utf_file_write_range "3" "February 2024" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
+.SH "NAME"
+fl_utf_file_write_range
+.SH SYNOPSIS
+.nf
+.B #include <fll/level_1/utf_file.h>
+.sp
+\fBf_status_t fl_utf_file_write_range\fP(
+    \fBconst f_file_t              \fP\fIfile\fP,
+    \fBconst f_utf_string_static_t \fP\fIbuffer\fP,
+    \fBconst f_string_range_t      \fP\fIrange\fP,
+    \fBf_array_length_t *const     \fP\fIwritten\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Write a given range within the destination.
+.SH PARAMETERS
+.TP
+.B file
+The file to write to. The file must already be open.
+
+.TP
+.B buffer
+The string to write to the file.
+
+.TP
+.B range
+An inclusive start an stop range within the destination to read.
+
+.TP
+.B written
+The total bytes written.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+\fBF_none_eos\fP on success but range.stop exceeded destination.used (only wrote up to destination.used).
+.br
+\fBF_none_stop\fP on success but no data was written (written == 0) (not an error and often happens if file type is not a regular file).
+.br
+\fBF_complete_not_utf_stop\fP if max write was reached but was unable to completely write a given UTF-8 block (incomplete UTF-8 is not written, not even partially).
+.br
+\fBF_block\fP (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
+.br
+\fBF_buffer\fP (with error bit) if the buffer is invalid.
+.br
+\fBF_file\fP (with error bit) if file descriptor is in an error state.
+.br
+\fBF_file_closed\fP (with error bit) if file is not open.
+.br
+\fBF_file_descriptor\fP (with error bit) if the file descriptor is invalid.
+.br
+\fBF_file_type_directory\fP (with error bit) if file descriptor represents a directory.
+.br
+\fBF_input_output\fP (with error bit) on I/O error.
+.br
+\fBF_interrupt\fP (with error bit) if interrupt was received.
+.br
+\fBF_parameter\fP (with error bit) if a parameter is invalid.
+.SH SEE ALSO
+.PP
+.nh
+.ad l
+\fIfl_utf_file_read\fP(3), \fIfl_utf_file_read_block\fP(3), \fIfl_utf_file_read_until\fP(3), \fIfl_utf_file_write\fP(3), \fIfl_utf_file_write_block\fP(3), \fIfl_utf_file_write_range\fP(3), \fIfl_utf_file_write_until\fP(3), \fIwrite()\fP
+.ad
+.hy
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2024 Kevin Day, GNU LGPL Version 2.1 or later.

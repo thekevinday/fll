@@ -1,4 +1,4 @@
-.TH f_environment_exists "3" "July 2023" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
+.TH f_environment_exists "3" "February 2024" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
 .SH "NAME"
 f_environment_exists
 .SH SYNOPSIS
@@ -17,7 +17,7 @@ The variable is copied into a new dynamically allocated string and is safe to al
 .SH PARAMETERS
 .TP
 .B name
-The name of the environment variable to get. The name string must not contain the '=' character. The name must be NULL terminated.
+The name of the environment variable to check the existence of. The name string must not contain the '=' character. The name must be NULL terminated.
 
 .SH RETURN VALUE
 .PP
@@ -26,8 +26,15 @@ The name of the environment variable to get. The name string must not contain th
 \fBF_true\fP on success and environment variable exists.
 .br
 \fBF_false\fP on success and environment variable does not exist.
+.SH SEE ALSO
+.PP
+.nh
+.ad l
+\fIf_environment_clear\fP(3), \fIf_environment_exists\fP(3), \fIf_environment_get\fP(3), \fIf_environment_get_all\fP(3), \fIf_environment_secure_is\fP(3), \fIf_environment_set\fP(3), \fIf_environment_unset\fP(3), \fIgetenv()\fP
+.ad
+.hy
 .SH AUTHOR
 Written by Kevin Day.
 .SH COPYRIGHT
 .PP
-Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.
+Copyright \(co 2007-2024 Kevin Day, GNU LGPL Version 2.1 or later.

@@ -1,0 +1,36 @@
+.TH fss_extended_list_write_main_delete "3" "February 2024" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
+.SH "NAME"
+fss_extended_list_write_main_delete
+.SH SYNOPSIS
+.nf
+.B #include <program/fss_extended_list_write.h>
+.sp
+\fBf_status_t fss_extended_list_write_main_delete\fP(
+    \fBfll_program_data_t  *\fP\fImain\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Deallocate main.
+.SH PARAMETERS
+.TP
+.B main
+The main program data.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.br
+Status codes (with error bit) are returned on any problem.
+.SH SEE ALSO
+.PP
+.nh
+.ad l
+\fIfss_extended_list_write_main_delete\fP(3), \fIfss_extended_list_write_main()\fP
+.ad
+.hy
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2024 Kevin Day, GNU LGPL Version 2.1 or later.

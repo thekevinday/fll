@@ -1,4 +1,4 @@
-.TH f_directory_open_at "3" "July 2023" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
+.TH f_directory_open_at "3" "February 2024" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
 .SH "NAME"
 f_directory_open_at
 .SH SYNOPSIS
@@ -71,8 +71,15 @@ The file descriptor. This is updated with the result of open() or openat().
 \fBF_read_only\fP (with error bit) if file is read-only.
 .br
 \fBF_space_not\fP (with error bit) if file system is out of space (or file system quota is reached).
+.SH SEE ALSO
+.PP
+.nh
+.ad l
+\fIf_directory_create\fP(3), \fIf_directory_create_at\fP(3), \fIf_directory_exists\fP(3), \fIf_directory_exists_at\fP(3), \fIf_directory_is\fP(3), \fIf_directory_is_at\fP(3), \fIf_directory_list\fP(3), \fIf_directory_open\fP(3), \fIf_directory_open_at\fP(3), \fIf_directory_remove\fP(3), \fIf_directory_remove_custom\fP(3), \fIf_directory_touch\fP(3), \fIf_directory_touch_at\fP(3), \fIopenat()\fP
+.ad
+.hy
 .SH AUTHOR
 Written by Kevin Day.
 .SH COPYRIGHT
 .PP
-Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.
+Copyright \(co 2007-2024 Kevin Day, GNU LGPL Version 2.1 or later.

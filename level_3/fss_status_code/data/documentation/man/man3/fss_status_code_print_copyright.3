@@ -1,0 +1,39 @@
+.TH fss_status_code_print_copyright "3" "February 2024" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
+.SH "NAME"
+fss_status_code_print_copyright
+.SH SYNOPSIS
+.nf
+.B #include <program/fss_status_code.h>
+.sp
+\fBf_status_t fss_status_code_print_copyright\fP(
+    \fBconst f_file_t \fP\fIfile\fP,
+    \fBconst bool     \fP\fIdetail\fP
+);
+.fi
+.SH DESCRIPTION
+.PP
+Print copyright.
+.SH PARAMETERS
+.TP
+.B file
+The file to print to.
+
+.TP
+.B detail
+If TRUE, then the detailed copyright is printed (unless di_detailed_copyright is set). If FALSE, then the short copyright is printed.
+
+.SH RETURN VALUE
+.PP
+\fBF_none\fP on success.
+.SH SEE ALSO
+.PP
+.nh
+.ad l
+\fIfss_status_code_main\fP(3), \fIfss_status_code_print_copyright\fP(3), \fIfss_status_code_print_help\fP(3)
+.ad
+.hy
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2024 Kevin Day, GNU LGPL Version 2.1 or later.

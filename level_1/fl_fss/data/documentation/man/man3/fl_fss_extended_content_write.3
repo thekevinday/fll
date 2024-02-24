@@ -1,9 +1,9 @@
-.TH fl_fss_extended_content_write "3" "July 2023" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
+.TH fl_fss_extended_content_write "3" "February 2024" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
 .SH "NAME"
 fl_fss_extended_content_write
 .SH SYNOPSIS
 .nf
-.B #include <fll/level_1/fss.h>
+.B #include <fll/level_1/fss/extended.h>
 .sp
 \fBf_status_t fl_fss_extended_content_write\fP(
     \fBconst f_string_static_t   \fP\fIcontent\fP,
@@ -57,7 +57,6 @@ The buffer where the content is written to.
 \fBF_data_not_stop\fP no data to write due start location being greater than stop location.
 .br
 \fBF_data_not_eos\fP no data to write due start location being greater than or equal to buffer size.
-
 .br
 \fBF_interrupt\fP (with error bit) if stopping due to an interrupt.
 .br
@@ -76,8 +75,15 @@ Errors (with error bit) from: f_string_dynamic_increase().
 Errors (with error bit) from: f_string_dynamic_increase_by().
 .br
 Errors (with error bit) from: f_utf_buffer_increment().
+.SH SEE ALSO
+.PP
+.nh
+.ad l
+\fIfl_fss_extended_content_read\fP(3), \fIfl_fss_extended_content_write\fP(3), \fIfl_fss_extended_object_read\fP(3), \fIfl_fss_extended_object_write\fP(3), \fIf_fss_is_space()\fP, \fIf_fss_skip_past_delimit()\fP, \fIf_fss_skip_past_space()\fP, \fIf_string_dynamic_increase()\fP, \fIf_string_dynamic_increase_by()\fP, \fIf_utf_buffer_increment()\fP, \fIf_fss_is_space()\fP, \fIf_fss_skip_past_delimit()\fP, \fIf_fss_skip_past_space()\fP, \fIf_string_dynamic_increase()\fP, \fIf_string_dynamic_increase_by()\fP, \fIf_utf_buffer_increment()\fP, \fIfl_fss_basic_object_write()\fP, \fIfl_fss_extended_object_write()\fP, \fIfl_fss_extended_content_write()\fP
+.ad
+.hy
 .SH AUTHOR
 Written by Kevin Day.
 .SH COPYRIGHT
 .PP
-Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.
+Copyright \(co 2007-2024 Kevin Day, GNU LGPL Version 2.1 or later.

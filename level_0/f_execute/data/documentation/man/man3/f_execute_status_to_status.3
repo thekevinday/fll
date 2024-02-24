@@ -1,4 +1,4 @@
-.TH f_execute_status_to_status "3" "July 2023" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
+.TH f_execute_status_to_status "3" "February 2024" "FLL - Featureless Linux Library 0.6.9" "Library Functions"
 .SH "NAME"
 f_execute_status_to_status
 .SH SYNOPSIS
@@ -22,8 +22,15 @@ An execute status number to convert. The execute status has no flags and is only
 The appropriate status code is returned on match (no bits, error or otherwise are set for the status code if there is no error).
 .br
 \fBF_known_not\fP (with error bit) if the given number has no known execute state to convert.
+.SH SEE ALSO
+.PP
+.nh
+.ad l
+\fIf_execute_status_from_status\fP(3), \fIf_execute_status_to_status\fP(3)
+.ad
+.hy
 .SH AUTHOR
 Written by Kevin Day.
 .SH COPYRIGHT
 .PP
-Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.
+Copyright \(co 2007-2024 Kevin Day, GNU LGPL Version 2.1 or later.
