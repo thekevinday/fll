@@ -151,6 +151,9 @@ extern "C" {
     else if (data.base == 8) {
       character_to_digit = f_conversion_character_to_octal;
     }
+    else {
+      return F_status_set_error(F_parameter);
+    }
 
     for (f_number_unsigned_t i = 0; i < length; ++i) {
 
@@ -244,6 +247,9 @@ extern "C" {
     }
     else if (data.base == 8) {
       character_to_digit = f_conversion_character_to_octal;
+    }
+    else {
+      return F_status_set_error(F_parameter);
     }
 
     for (f_number_unsigned_t i = 0; i < length; ++i) {
