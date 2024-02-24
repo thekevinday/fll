@@ -241,14 +241,9 @@ extern "C" {
  * @param ap
  *   The variable arguments list.
  * @param status
- *   The status is stored here rather then via the return.
+ *   (optional) Set to NULL to not use.
  *
- * @return
- *   This returns a string at either the start position (if nothing done or an error occurred) or at the character last processed.
- *   The caller is expected to increment past this if they wish to continue processing the string.
- *
- *   The status parameter will be set as follows:
- *
+ *   The status parameter will be set as follows on return:
  *     F_none on success.
  *
  *     F_output (with error bit) on failure to print to the output file.
@@ -269,6 +264,10 @@ extern "C" {
  *     Errors (with error bit) from: f_print_dynamic_safely().
  *     Errors (with error bit) from: f_print_safely().
  *     Errors (with error bit) from: f_print_terminated().
+ *
+ * @return
+ *   This returns a string at either the start position (if nothing done or an error occurred) or at the character last processed.
+ *   The caller is expected to increment past this if they wish to continue processing the string.
  *
  * @see fputc_unlocked()
  *

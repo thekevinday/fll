@@ -34,7 +34,13 @@ extern "C" {
       if (!stream) return 0;
     #endif // _di_level_1_parameter_checking_
 
-    return private_fl_print_format_convert(string, stream, ap, status);
+    if (status) {
+      return private_fl_print_format_convert(string, stream, ap, status);
+    }
+
+    f_status_t status_local = F_none;
+
+    return private_fl_print_format_convert(string, stream, ap, &status_local);
   }
 #endif // _di_fl_print_format_convert_
 
