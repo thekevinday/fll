@@ -1005,7 +1005,9 @@ extern "C" {
  *   The status is stored here rather then via the return.
  *
  * @return
- *   Result from: fl_print_format_convert().
+ *   Success from: fl_print_format_convert().
+ *
+ *   Errors (with error bit) from: fl_print_format_convert().
  *
  * @see flockfile()
  * @see funlockfile()
