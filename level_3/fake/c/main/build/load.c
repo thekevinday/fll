@@ -77,9 +77,6 @@ extern "C" {
       if (build_arguments->used > 1) {
         modes_custom.used = build_arguments->used - 1;
       }
-      else if (main->setting.modes.used) {
-        modes_custom.used = main->setting.modes.used;
-      }
     }
 
     f_string_static_t modes_custom_array[modes_custom.used];
@@ -91,11 +88,6 @@ extern "C" {
       if (build_arguments->used > 1) {
         for (; i < modes_custom.used; ++i) {
           modes_custom.array[i] = build_arguments->array[i + 1];
-        } // for
-      }
-      else if (main->setting.modes.used) {
-        for (; i < main->setting.modes.used; ++i) {
-          modes_custom.array[i] = main->setting.modes.array[i];
         } // for
       }
     }
