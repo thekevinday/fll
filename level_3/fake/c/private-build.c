@@ -850,9 +850,6 @@ const f_string_static_t fake_build_documentation_files_s = macro_f_string_static
           if (build_arguments->used > 1) {
             modes_custom.used = build_arguments->used - 1;
           }
-          else if (data_build.setting.modes.used) {
-            modes_custom.used = data_build.setting.modes.used;
-          }
         }
 
         f_string_static_t modes_custom_array[modes_custom.used];
@@ -864,11 +861,6 @@ const f_string_static_t fake_build_documentation_files_s = macro_f_string_static
           if (build_arguments->used > 1) {
             for (; i < modes_custom.used; ++i) {
               modes_custom.array[i] = build_arguments->array[i + 1];
-            } // for
-          }
-          else if (data_build.setting.modes.used) {
-            for (; i < data_build.setting.modes.used; ++i) {
-              modes_custom.array[i] = data_build.setting.modes.array[i];
             } // for
           }
         }
