@@ -98,7 +98,7 @@ flags -D_FORTIFY_SOURCE=3
 flags -Wl,-z,nodlopen -Wl,-z,noexecstack -Wl,-z,relro -Wl,-z,now
 flags-thread -pthread
 flags-clang -Wno-logical-op-parentheses
-flags-gcc -fstrict-flex-arrays=3
+flags-gcc_13 -fstrict-flex-arrays=3
 flags-test-fstack-protector-strong -Wall
 flags-fanalyzer -fanalyzer
 

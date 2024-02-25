@@ -55,7 +55,7 @@ defines_shared -Lbuild/libraries/shared
 
 flags -O2 -z now -g -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-parentheses -Wno-missing-braces
 flags-clang -Wno-logical-op-parentheses
-flags-gcc -fstrict-flex-arrays=3
+flags-gcc_13 -fstrict-flex-arrays=3
 flags-test-fstack-protector -Wall
 flags-coverage -O0 --coverage -fprofile-abs-path -fprofile-dir=build/coverage/
 
