@@ -29,7 +29,9 @@ Terminology:
   02) All patents associated are and must be royalty-free for unrestricted use and must not impose any restrictions on any third party's Implementation of this Standard in any way for any reason beyond those described in this license.
   03) There are not and there must not be any agreements or requirements for the execution of this license grant, including: NDA, grant, click-through, or any form of paperwork (including all non-paper forms of paperwork, such as digital forms).
   04) There are not and must not be any restrictions on the form of an Implementation of a Standard or Specification.
-  05) Implementations of the Standard or Specification may be under any license so long as that license
+  05) Implementations of the Standard or Specification may be under any license so long as that license:
+    a) Does not restrict, alter, or invalidate this license in any manner.
+    b) Does not impose any form of restrictions on the access to use, implement, extend, or deviate from anything allowed or otherwise granted by this license.
   06) This license shall prohibit any form of restricting any parties access to use, implement, extend, or deviate from this Standard unless:
     a) Restricted by this license.
     b) Unless there is a breach of license conditions.
