@@ -8,8 +8,8 @@
 #
 # This only accepts one argument, followed by these optional arguments:
 # 1) One of "Modes" from below.
-# 2) Optional, may be one of: +d, +l, +n, +V, +Q, +E, +N, +D, -X, --enable-shared, --enable-static, --disable-shared, --disable-static.
-# 3) Optional, may be one of: -w, --work.
+# 2) Optional, may be one of: +d, +l, +n, +V, +Q, +E, +N, +D, --enable-shared, --enable-static, --disable-shared, --disable-static.
+# 3) Optional, may be one of: -w, --work, -X.
 # 4) Optional, may be: clang.
 #
 # Modes:
@@ -145,6 +145,7 @@ if [[ ${1} == "individual" ]] ; then
 
   if [[ ${?} -eq 0 ]] ; then
     for i in f_type f_status f_memory f_type_array f_string f_utf f_abstruse f_account f_capability f_color f_compare f_console f_control_group f_conversion f_directory f_environment f_execute f_file f_fss f_iki f_limit f_network f_parse f_path f_pipe f_print f_random f_rip f_serialize f_signal f_socket f_status_string f_thread f_time fl_control_group fl_conversion fl_directory fl_environment fl_execute fl_fss fl_iki fl_path fl_print fl_status_string fl_utf_file fll_control_group fll_error fll_execute fll_file fll_fss fll_fss_status_string fll_iki fll_print fll_program ; do
+
       echo && echo "Processing ${i}." &&
 
       cd package/individual/${i}-${version}/ &&
