@@ -121,52 +121,52 @@ extern "C" {
               break;
 
             case f_abstruse_int8s_e:
-              macro_f_fss_payload_header_write_process_numbers_signed_d(data, state, internal, headers.array[internal.i].value.is.a_i8s, destinations->array[destinations->used].value);
+              macro_f_fss_payload_header_write_process_numbers_signed_d(data, state, internal, headers.array[internal.i].value.is.a_i8s, destinations);
 
               break;
 
             case f_abstruse_int16s_e:
-              macro_f_fss_payload_header_write_process_numbers_signed_d(data, state, internal, headers.array[internal.i].value.is.a_i16s, destinations->array[destinations->used].value);
+              macro_f_fss_payload_header_write_process_numbers_signed_d(data, state, internal, headers.array[internal.i].value.is.a_i16s, destinations);
 
               break;
 
             case f_abstruse_int32s_e:
-              macro_f_fss_payload_header_write_process_numbers_signed_d(data, state, internal, headers.array[internal.i].value.is.a_i32s, destinations->array[destinations->used].value);
+              macro_f_fss_payload_header_write_process_numbers_signed_d(data, state, internal, headers.array[internal.i].value.is.a_i32s, destinations);
 
               break;
 
             case f_abstruse_int64s_e:
-              macro_f_fss_payload_header_write_process_numbers_signed_d(data, state, internal, headers.array[internal.i].value.is.a_i64s, destinations->array[destinations->used].value);
+              macro_f_fss_payload_header_write_process_numbers_signed_d(data, state, internal, headers.array[internal.i].value.is.a_i64s, destinations);
 
               break;
 
             case f_abstruse_signeds_e:
-              macro_f_fss_payload_header_write_process_numbers_signed_d(data, state, internal, headers.array[internal.i].value.is.a_signeds, destinations->array[destinations->used].value);
+              macro_f_fss_payload_header_write_process_numbers_signed_d(data, state, internal, headers.array[internal.i].value.is.a_signeds, destinations);
 
               break;
 
             case f_abstruse_uint8s_e:
-              macro_f_fss_payload_header_write_process_numbers_unsigned_d(data, state, internal, headers.array[internal.i].value.is.a_u8s, destinations->array[destinations->used].value);
+              macro_f_fss_payload_header_write_process_numbers_unsigned_d(data, state, internal, headers.array[internal.i].value.is.a_u8s, destinations);
 
               break;
 
             case f_abstruse_uint16s_e:
-              macro_f_fss_payload_header_write_process_numbers_unsigned_d(data, state, internal, headers.array[internal.i].value.is.a_u16s, destinations->array[destinations->used].value);
+              macro_f_fss_payload_header_write_process_numbers_unsigned_d(data, state, internal, headers.array[internal.i].value.is.a_u16s, destinations);
 
               break;
 
             case f_abstruse_uint32s_e:
-              macro_f_fss_payload_header_write_process_numbers_unsigned_d(data, state, internal, headers.array[internal.i].value.is.a_u32s, destinations->array[destinations->used].value);
+              macro_f_fss_payload_header_write_process_numbers_unsigned_d(data, state, internal, headers.array[internal.i].value.is.a_u32s, destinations);
 
               break;
 
             case f_abstruse_uint64s_e:
-              macro_f_fss_payload_header_write_process_numbers_unsigned_d(data, state, internal, headers.array[internal.i].value.is.a_u64s, destinations->array[destinations->used].value);
+              macro_f_fss_payload_header_write_process_numbers_unsigned_d(data, state, internal, headers.array[internal.i].value.is.a_u64s, destinations);
 
               break;
 
             case f_abstruse_unsigneds_e:
-              macro_f_fss_payload_header_write_process_numbers_unsigned_d(data, state, internal, headers.array[internal.i].value.is.a_unsigneds, destinations->array[destinations->used].value);
+              macro_f_fss_payload_header_write_process_numbers_unsigned_d(data, state, internal, headers.array[internal.i].value.is.a_unsigneds, destinations);
 
               break;
 
@@ -349,6 +349,8 @@ extern "C" {
         macro_f_fss_payload_header_write_handle_error_d(destinations, state, internal);
       } // for
     }
+
+    if (F_status_is_error(state->status)) return;
 
     state->status = F_okay;
   }

@@ -32,13 +32,13 @@ extern "C" {
  *   This requires private_fl_payload_header_map_number_signed() from payload.c.
  *
  *   Parameters:
- *     - data:        The f_fss_payload_header_state_t pointer.
- *     - state:       The state passed directly from the fl_fss_payload_header_map() parameters.
- *     - internal:    The internal state, f_fss_payload_header_internal_t, created inside of fl_fss_payload_header_map().
- *     - numbers:     The is.a representing the array of signed numbers.
- *     - destination: The destination string to append to.
- *     - function:    The private signed/unsigned function to call.
- *     - cast:        The signed/unsigned structure to cast to.
+ *     - data:         The f_fss_payload_header_state_t pointer.
+ *     - state:        The state passed directly from the fl_fss_payload_header_map() parameters.
+ *     - internal:     The internal state, f_fss_payload_header_internal_t, created inside of fl_fss_payload_header_map().
+ *     - numbers:      The is.a representing the array of signed numbers.
+ *     - destinations: The destination strings to append to.
+ *     - function:     The private signed/unsigned function to call.
+ *     - cast:         The signed/unsigned structure to cast to.
  *
  * macro_f_fss_payload_header_write_process_numbers_signed_d:
  *   This wraps macro_f_fss_payload_header_write_process_numbers_d, passing the signed function and cast.
@@ -69,47 +69,57 @@ extern "C" {
       } \
     }
 
-  #define macro_f_fss_payload_header_write_process_numbers_d(data, state, internal, numbers, destination, function, cast) \
+  #define macro_f_fss_payload_header_write_process_numbers_d(data, state, internal, numbers, destinations, function, cast) \
     data->cache->used = 0; \
     \
-    for (internal.j = 0; internal.j < numbers.used; ++internal.j) { \
-      \
-      if (state->interrupt) { \
-        state->interrupt((void * const) state, (void * const) &internal); \
-        if (F_status_set_fine(state->status) == F_interrupt) break; \
-      } \
-      \
-      if (!(data->flag & f_fss_payload_header_map_flag_join_digits_e)) { \
-        data->cache->used = 0; \
-      } \
-      \
-      if (function(data, state, &internal, (cast) numbers.array[internal.j])) { \
-        data->cache->used = 0; \
+    if (!(data->flag & f_fss_payload_header_map_flag_join_digits_e)) { \
+      state->status = f_memory_array_increase_by(numbers.used, sizeof(f_string_map_t), (void **) &destinations->array, &destinations->used, &destinations->size); \
+    } \
+    \
+    if (F_status_is_error_not(state->status)) { \
+      for (internal.j = 0; internal.j < numbers.used; ++internal.j) { \
         \
-        break; \
-      } \
-      \
-      if (!(data->flag & f_fss_payload_header_map_flag_join_digits_e)) { \
-        if (data->cache->used && internal.j + 1 < numbers.used) { \
-          state->status = f_string_dynamic_append(f_fss_extended_open_s, &destination); \
-          if (F_status_is_error(state->status)) break; \
+        if (state->interrupt) { \
+          state->interrupt((void * const) state, (void * const) &internal); \
+          if (F_status_set_fine(state->status) == F_interrupt) break; \
         } \
         \
-        ++destinations->used; \
-      } \
-    } /* for */ \
-    \
-    if (data->cache->used && (data->flag & f_fss_payload_header_map_flag_join_digits_e)) { \
-      if (private_fl_payload_helper_header_map_destination_write_buffer(data, state, &internal, data->cache, destinations) == F_false) { \
-        ++destinations->used; \
+        if (!(data->flag & f_fss_payload_header_map_flag_join_digits_e)) { \
+          data->cache->used = 0; \
+        } \
+        \
+        if (function(data, state, &internal, (cast) numbers.array[internal.j])) { \
+          data->cache->used = 0; \
+          \
+          break; \
+        } \
+        \
+        if (!(data->flag & f_fss_payload_header_map_flag_join_digits_e)) { \
+          destinations->array[destinations->used].name.used = 0; \
+          destinations->array[destinations->used].value.used = 0; \
+          \
+          state->status = f_string_dynamic_append(headers.array[internal.i].key, &destinations->array[destinations->used].name); \
+          if (F_status_is_error(state->status)) break; \
+          \
+          state->status = f_string_dynamic_append(*data->cache, &destinations->array[destinations->used].value); \
+          if (F_status_is_error(state->status)) break; \
+          \
+          ++destinations->used; \
+        } \
+      } /* for */ \
+      \
+      if (data->cache->used && (data->flag & f_fss_payload_header_map_flag_join_digits_e)) { \
+        if (private_fl_payload_helper_header_map_destination_write_buffer(data, state, &internal, data->cache, destinations) == F_false) { \
+          ++destinations->used; \
+        } \
       } \
     }
 
-  #define macro_f_fss_payload_header_write_process_numbers_signed_d(data, state, internal, numbers, destination) \
-    macro_f_fss_payload_header_write_process_numbers_d(data, state, internal, numbers, destination, private_fl_payload_header_map_number_signed, f_number_signed_t)
+  #define macro_f_fss_payload_header_write_process_numbers_signed_d(data, state, internal, numbers, destinations) \
+    macro_f_fss_payload_header_write_process_numbers_d(data, state, internal, numbers, destinations, private_fl_payload_header_map_number_signed, f_number_signed_t)
 
-  #define macro_f_fss_payload_header_write_process_numbers_unsigned_d(data, state, internal, numbers, destination) \
-    macro_f_fss_payload_header_write_process_numbers_d(data, state, internal, numbers, destination, private_fl_payload_header_map_number_unsigned, f_number_unsigned_t)
+  #define macro_f_fss_payload_header_write_process_numbers_unsigned_d(data, state, internal, numbers, destinations) \
+    macro_f_fss_payload_header_write_process_numbers_d(data, state, internal, numbers, destinations, private_fl_payload_header_map_number_unsigned, f_number_unsigned_t)
 
   #define macro_f_fss_payload_header_write_process_dynamic_d(data, state, internal, dynamic) \
     if (dynamic.used || (data->flag & f_fss_payload_header_map_flag_null_dynamic_e)) { \
