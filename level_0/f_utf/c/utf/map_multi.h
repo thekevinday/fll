@@ -20,7 +20,7 @@ extern "C" {
  * A string map consisting of a name and multiple values.
  *
  * Properties:
- *   - name:  A string representing the map name.
+ *   - key:   A string representing the map key.
  *   - value: An array of strings representing the map value.
  */
 #ifndef _di_f_utf_string_map_multi_t_

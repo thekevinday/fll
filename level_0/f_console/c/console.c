@@ -33,9 +33,9 @@ extern "C" {
       } // for
 
       if (total) {
-        environment->array[environment->used].name.string = arguments.envp[i];
-        environment->array[environment->used].name.used = total;
-        environment->array[environment->used].name.size = 0;
+        environment->array[environment->used].key.string = arguments.envp[i];
+        environment->array[environment->used].key.used = total;
+        environment->array[environment->used].key.size = 0;
 
         if (arguments.envp[i][++total]) {
           environment->array[environment->used].value.string = arguments.envp[i] + total;

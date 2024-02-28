@@ -12,9 +12,9 @@ void test__f_string_mapss_append_all__works(void **state) {
   f_string_mapss_t source = f_string_mapss_t_initialize;
   f_string_mapss_t destination = f_string_mapss_t_initialize;
 
-  const f_string_static_t test_names[] = {
-    macro_f_string_static_t_initialize_1("test_name1", 0, 10),
-    macro_f_string_static_t_initialize_1("test_name2", 0, 10),
+  const f_string_static_t test_keys[] = {
+    macro_f_string_static_t_initialize_1("test_key1", 0, 9),
+    macro_f_string_static_t_initialize_1("test_key2", 0, 9),
   };
 
   const f_string_static_t test_values[] = {
@@ -41,11 +41,11 @@ void test__f_string_mapss_append_all__works(void **state) {
 
       for (i = 0; i < length_inner; ++i) {
 
-        status = f_string_dynamic_append(test_names[i], &source.array[source.used].array[i].name);
+        status = f_string_dynamic_append(test_keys[i], &source.array[source.used].array[i].key);
 
         assert_int_equal(status, F_okay);
-        assert_string_equal(source.array[source.used].array[i].name.string, test_names[i].string);
-        assert_int_equal(source.array[source.used].array[i].name.used, test_names[i].used);
+        assert_string_equal(source.array[source.used].array[i].key.string, test_keys[i].string);
+        assert_int_equal(source.array[source.used].array[i].key.used, test_keys[i].used);
 
         status = f_string_dynamic_append(test_values[i], &source.array[source.used].array[i].value);
 
@@ -68,10 +68,10 @@ void test__f_string_mapss_append_all__works(void **state) {
 
       for (f_number_unsigned_t i = 0; i < length_inner; ++i) {
 
-        assert_int_equal(destination.array[j].array[i].name.used, test_names[i].used);
+        assert_int_equal(destination.array[j].array[i].key.used, test_keys[i].used);
         assert_int_equal(destination.array[j].array[i].value.used, test_values[i].used);
 
-        assert_string_equal(destination.array[j].array[i].name.string, test_names[i].string);
+        assert_string_equal(destination.array[j].array[i].key.string, test_keys[i].string);
         assert_string_equal(destination.array[j].array[i].value.string, test_values[i].string);
       } // for
     } // for
@@ -81,7 +81,7 @@ void test__f_string_mapss_append_all__works(void **state) {
 
     for (f_number_unsigned_t i = 0; i < source.array[j].used; ++i) {
 
-      free((void *) source.array[j].array[i].name.string);
+      free((void *) source.array[j].array[i].key.string);
       free((void *) source.array[j].array[i].value.string);
     } // for
 
@@ -92,7 +92,7 @@ void test__f_string_mapss_append_all__works(void **state) {
 
     for (f_number_unsigned_t i = 0; i < destination.array[j].used; ++i) {
 
-      free((void *) destination.array[j].array[i].name.string);
+      free((void *) destination.array[j].array[i].key.string);
       free((void *) destination.array[j].array[i].value.string);
     } // for
 

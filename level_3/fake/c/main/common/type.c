@@ -195,7 +195,7 @@ extern "C" {
 
     f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &main->cache_arguments.array, &main->cache_arguments.used, &main->cache_arguments.size, &f_string_dynamics_delete_callback);
 
-    f_memory_array_resize(0, sizeof(f_char_t), (void **) &main->cache_map.name.string, &main->cache_map.name.used, &main->cache_map.name.size);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &main->cache_map.key.string, &main->cache_map.key.used, &main->cache_map.key.size);
     f_memory_array_resize(0, sizeof(f_char_t), (void **) &main->cache_map.value.string, &main->cache_map.value.used, &main->cache_map.value.size);
 
     f_iki_data_delete(&main->cache_iki);

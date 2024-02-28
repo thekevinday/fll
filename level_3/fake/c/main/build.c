@@ -166,12 +166,12 @@ extern "C" {
     fake_build_print_message_copying(&main->program.message, label);
 
     fake_string_dynamic_reset(&main->cache_2);
-    fake_string_dynamic_reset(&main->cache_map.name);
+    fake_string_dynamic_reset(&main->cache_map.key);
 
     main->setting.state.status = f_string_dynamic_append_nulless(source, &main->cache_2);
 
     if (F_status_is_error_not(main->setting.state.status)) {
-      main->setting.state.status = f_string_dynamic_append_nulless(destination, &main->cache_map.name);
+      main->setting.state.status = f_string_dynamic_append_nulless(destination, &main->cache_map.key);
     }
 
     if (F_status_is_error(main->setting.state.status)) {
@@ -188,7 +188,7 @@ extern "C" {
       fake_string_dynamic_reset(&main->cache_map.value);
 
       main->cache_2.used = source.used;
-      main->cache_map.name.used = destination.used;
+      main->cache_map.key.used = destination.used;
 
       main->setting.state.status = f_string_dynamic_append_nulless(files.array[i], &main->cache_2);
 
@@ -199,12 +199,12 @@ extern "C" {
       }
 
       main->cache_2.string[main->cache_2.used] = 0;
-      main->cache_map.name.string[main->cache_map.name.used] = 0;
+      main->cache_map.key.string[main->cache_map.key.used] = 0;
 
       main->setting.state.status = f_directory_is(main->cache_2);
 
       if (main->setting.state.status == F_true) {
-        main->setting.state.status = f_file_name_base(main->cache_2, &main->cache_map.name);
+        main->setting.state.status = f_file_name_base(main->cache_2, &main->cache_map.key);
 
         if (F_status_is_error(main->setting.state.status)) {
           fake_print_error(&main->program.error, macro_fake_f(f_file_name_base));
@@ -212,7 +212,7 @@ extern "C" {
           break;
         }
 
-        main->cache_map.name.string[main->cache_map.name.used] = 0;
+        main->cache_map.key.string[main->cache_map.key.used] = 0;
 
         fl_directory_do(main->cache_2, &main->cache_recurse_do);
         if (F_status_set_fine(main->setting.state.status) == F_interrupt) break;
@@ -226,7 +226,7 @@ extern "C" {
             main->setting.state.status = F_status_set_error(F_failure);
           }
 
-          fake_print_error_build_operation_file(&main->program.error, macro_fake_f(fl_directory_do), f_file_operation_copy_s, main->cache_2, main->cache_map.name, f_file_operation_to_s, F_true);
+          fake_print_error_build_operation_file(&main->program.error, macro_fake_f(fl_directory_do), f_file_operation_copy_s, main->cache_2, main->cache_map.key, f_file_operation_to_s, F_true);
 
           if (F_status_is_error(failed)) {
             main->setting.state.status = failed;
@@ -248,7 +248,7 @@ extern "C" {
           buffer.string = main->cache_2.string + perserve_offset;
           buffer.used = main->cache_2.used - perserve_offset;
 
-          main->setting.state.status = f_file_name_directory(buffer, &main->cache_map.name);
+          main->setting.state.status = f_file_name_directory(buffer, &main->cache_map.key);
 
           if (F_status_is_error(main->setting.state.status)) {
             fake_print_error(&main->program.error, macro_fake_f(f_file_name_directory));
@@ -256,10 +256,10 @@ extern "C" {
             break;
           }
 
-          main->setting.state.status = fl_directory_create(main->cache_map.name, F_file_mode_all_rwx_d);
+          main->setting.state.status = fl_directory_create(main->cache_map.key, F_file_mode_all_rwx_d);
 
           if (F_status_is_error(main->setting.state.status)) {
-            fake_print_error_file(&main->program.error, macro_fake_f(fl_directory_create), main->cache_map.name, f_file_operation_create_s, fll_error_file_type_directory_e);
+            fake_print_error_file(&main->program.error, macro_fake_f(fl_directory_create), main->cache_map.key, f_file_operation_create_s, fll_error_file_type_directory_e);
 
             break;
           }
@@ -273,7 +273,7 @@ extern "C" {
           }
         }
         else {
-          fake_string_dynamic_reset(&main->cache_map.name);
+          fake_string_dynamic_reset(&main->cache_map.key);
 
           main->setting.state.status = f_file_name_base(main->cache_2, &main->cache_map.value);
 
@@ -298,9 +298,9 @@ extern "C" {
 
         // Restore the destination path in cases where it is changed.
         if (!perserve_offset || perserve_offset >= main->cache_2.used) {
-          fake_string_dynamic_reset(&main->cache_map.name);
+          fake_string_dynamic_reset(&main->cache_map.key);
 
-          main->setting.state.status = f_string_dynamic_append_nulless(destination, &main->cache_map.name);
+          main->setting.state.status = f_string_dynamic_append_nulless(destination, &main->cache_map.key);
 
           if (F_status_is_error(main->setting.state.status)) {
             fake_print_error(&main->program.error, macro_fake_f(f_string_dynamic_append_nulless));

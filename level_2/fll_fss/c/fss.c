@@ -329,7 +329,7 @@ extern "C" {
 
         for (k = 0; k < values[j]->used; ++k) {
 
-          status = f_compare_dynamic_partial_trim_string(values[j]->array[k].name.string, buffer, values[j]->array[k].name.used, contents.array[i].array[0]);
+          status = f_compare_dynamic_partial_trim_string(values[j]->array[k].key.string, buffer, values[j]->array[k].key.used, contents.array[i].array[0]);
 
           if (F_status_is_error(status)) {
             f_memory_array_resize(0, sizeof(f_char_t), (void **) &name.string, &name.used, &name.size);
@@ -382,9 +382,9 @@ extern "C" {
           }
         }
 
-        map->name.string = name.string;
-        map->name.used = name.used;
-        map->name.size = name.size;
+        map->key.string = name.string;
+        map->key.used = name.used;
+        map->key.size = name.size;
 
         ++values[j]->used;
 
@@ -448,7 +448,7 @@ extern "C" {
 
         map_multi = &values[j]->array[values[j]->used];
 
-        status = f_string_dynamic_partial_append_nulless(buffer, contents.array[i].array[0], &map_multi->name);
+        status = f_string_dynamic_partial_append_nulless(buffer, contents.array[i].array[0], &map_multi->key);
         if (F_status_is_error(status)) return status;
 
         ++values[j]->used;
@@ -522,7 +522,7 @@ extern "C" {
 
         map = &values[j]->array[values[j]->used];
 
-        status = f_string_dynamic_partial_append_nulless(buffer, contents.array[i].array[0], &map->name);
+        status = f_string_dynamic_partial_append_nulless(buffer, contents.array[i].array[0], &map->key);
         if (F_status_is_error(status)) return status;
 
         ++values[j]->used;
@@ -596,7 +596,7 @@ extern "C" {
 
         for (k = 0; k < values[j]->used; ++k) {
 
-          status = f_compare_dynamic_partial_trim_string(values[j]->array[k].name.string, buffer, values[j]->array[k].name.used, contents.array[i].array[0]);
+          status = f_compare_dynamic_partial_trim_string(values[j]->array[k].key.string, buffer, values[j]->array[k].key.used, contents.array[i].array[0]);
 
           if (F_status_is_error(status)) {
             f_memory_array_resize(0, sizeof(f_char_t), (void **) &name.string, &name.used, &name.size);
@@ -628,9 +628,9 @@ extern "C" {
           }
 
           map_multi = &values[j]->array[values[j]->used];
-          map_multi->name.string = name.string;
-          map_multi->name.used = name.used;
-          map_multi->name.size = name.size;
+          map_multi->key.string = name.string;
+          map_multi->key.used = name.used;
+          map_multi->key.size = name.size;
 
           ++values[j]->used;
 
@@ -713,7 +713,7 @@ extern "C" {
 
         for (k = 0; k < values[j]->used; ++k) {
 
-          status = f_compare_dynamic_partial_trim_string(values[j]->array[k].name.string, buffer, values[j]->array[k].name.used, contents.array[i].array[0]);
+          status = f_compare_dynamic_partial_trim_string(values[j]->array[k].key.string, buffer, values[j]->array[k].key.used, contents.array[i].array[0]);
 
           if (F_status_is_error(status)) {
             f_memory_array_resize(0, sizeof(f_char_t), (void **) &name.string, &name.used, &name.size);
@@ -745,9 +745,9 @@ extern "C" {
 
           map = &values[j]->array[values[j]->used];
 
-          map->name.string = name.string;
-          map->name.used = name.used;
-          map->name.size = name.size;
+          map->key.string = name.string;
+          map->key.used = name.used;
+          map->key.size = name.size;
 
           ++values[j]->used;
 

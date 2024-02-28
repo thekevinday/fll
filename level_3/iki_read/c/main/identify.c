@@ -22,7 +22,7 @@ extern "C" {
           j = main->setting.replace.used - 1;
 
           do {
-            if (f_compare_dynamic_partial_string(main->setting.replace.array[j].name.string, main->setting.buffer, main->setting.replace.array[j].name.used, main->setting.data.vocabulary.array[i]) == F_equal_to) {
+            if (f_compare_dynamic_partial_string(main->setting.replace.array[j].key.string, main->setting.buffer, main->setting.replace.array[j].key.used, main->setting.data.vocabulary.array[i]) == F_equal_to) {
               main->setting.map_replaces[i] = j;
 
               break;

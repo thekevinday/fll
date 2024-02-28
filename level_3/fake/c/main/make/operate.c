@@ -644,7 +644,7 @@ extern "C" {
               for (k = 0; k < parameter->used; ++k) {
 
                 // Check against IKI variable list.
-                if (f_compare_dynamic_partial_dynamic(parameter->array[k].name, main->buffer, iki_data->content.array[j]) != F_equal_to) {
+                if (f_compare_dynamic_partial_dynamic(parameter->array[k].key, main->buffer, iki_data->content.array[j]) != F_equal_to) {
                   continue;
                 }
 

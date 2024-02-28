@@ -77,7 +77,7 @@ extern "C" {
         iki_read_print_data_wrap_append(&main->program.output, index);
       }
       else if (main->setting.flag & iki_read_main_flag_object_e) {
-        f_print_dynamic(main->setting.replace.array[main->setting.map_replaces[index]].name, main->program.output.to);
+        f_print_dynamic(main->setting.replace.array[main->setting.map_replaces[index]].key, main->program.output.to);
       }
       else {
         f_range_t range = macro_f_range_t_initialize_1(main->setting.data.variable.array[index].start, main->setting.data.content.array[index].start - 1);

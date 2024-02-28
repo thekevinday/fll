@@ -20,22 +20,22 @@ extern "C" {
  * A string map consisting of a name and multiple values.
  *
  * Properties:
- *   - name:  A string representing the map name.
+ *   - key:   A string representing the map key.
  *   - value: An array of strings representing the map value.
  */
 #ifndef _di_f_string_map_multi_t_
   typedef struct {
-    f_string_dynamic_t name;
+    f_string_dynamic_t key;
     f_string_dynamics_t value;
   } f_string_map_multi_t;
 
   #define f_string_map_multi_t_initialize { f_string_dynamic_t_initialize, f_string_dynamics_t_initialize }
 
-  #define macro_f_string_map_multi_t_initialize_1(name, value) { name, value }
+  #define macro_f_string_map_multi_t_initialize_1(key, value) { key, value }
 
-  #define macro_f_string_map_multi_t_clear(map) \
-    macro_f_string_dynamic_t_clear(map.name) \
-    macro_f_string_dynamics_t_clear(map.value)
+  #define macro_f_string_map_multi_t_clear(key) \
+    macro_f_string_dynamic_t_clear(key.name) \
+    macro_f_string_dynamics_t_clear(key.value)
 #endif // _di_f_string_map_multi_t_
 
 #ifdef __cplusplus

@@ -195,7 +195,7 @@ extern "C" {
           data_make->setting_make.parameter.used = 1;
 
           function_name = macro_fake_f(f_string_dynamic_append);
-          data_make->main->setting.state.status = f_string_dynamic_append(fake_make_setting_return_s, &data_make->setting_make.parameter.array[0].name);
+          data_make->main->setting.state.status = f_string_dynamic_append(fake_make_setting_return_s, &data_make->setting_make.parameter.array[0].key);
         }
 
         if (F_status_is_error_not(data_make->main->setting.state.status)) {
@@ -382,7 +382,7 @@ extern "C" {
 
       for (; i < define.used; ++i) {
 
-        if (fake_make_operate_validate_define_name(define.array[i].name) == F_true) {
+        if (fake_make_operate_validate_define_name(define.array[i].key) == F_true) {
           combined.used = 0;
 
           for (j = 0; j < define.array[i].value.used; ++j) {
@@ -398,7 +398,7 @@ extern "C" {
 
           if (F_status_is_error(data_make->main->setting.state.status)) break;
 
-          data_make->main->setting.state.status = f_environment_set(define.array[i].name, combined, F_true);
+          data_make->main->setting.state.status = f_environment_set(define.array[i].key, combined, F_true);
 
           if (F_status_is_error(data_make->main->setting.state.status)) {
             fake_print_error(&data_make->main->program.error, macro_fake_f(f_environment_set));
@@ -407,7 +407,7 @@ extern "C" {
           }
         }
         else {
-          fake_make_print_error_define_invalid_character(&data_make->main->program.error, define.array[i].name);
+          fake_make_print_error_define_invalid_character(&data_make->main->program.error, define.array[i].key);
 
           data_make->main->setting.state.status = F_status_set_error(F_failure);
 

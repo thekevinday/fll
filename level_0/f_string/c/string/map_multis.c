@@ -17,11 +17,11 @@ extern "C" {
 
       f_string_map_multi_t * const destination_inner = &destination->array[destination->used];
 
-      destination_inner->name.used = 0;
+      destination_inner->key.used = 0;
       destination_inner->value.used = 0;
 
-      if (source.name.used) {
-        status = private_f_string_append(source.name.string, source.name.used, &destination_inner->name);
+      if (source.key.used) {
+        status = private_f_string_append(source.key.string, source.key.used, &destination_inner->key);
         if (F_status_is_error(status)) return status;
       }
 
@@ -65,11 +65,11 @@ extern "C" {
       for (f_number_unsigned_t i = 0; i < source.used; ++i, ++destination->used) {
 
         destination_inner = &destination->array[destination->used];
-        destination_inner->name.used = 0;
+        destination_inner->key.used = 0;
         destination_inner->value.used = 0;
 
-        if (source.array[i].name.used) {
-          status = private_f_string_append(source.array[i].name.string, source.array[i].name.used, &destination_inner->name);
+        if (source.array[i].key.used) {
+          status = private_f_string_append(source.array[i].key.string, source.array[i].key.used, &destination_inner->key);
           if (F_status_is_error(status)) return status;
         }
 
@@ -104,8 +104,8 @@ extern "C" {
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
 
-        if (array[i].name.size && array[i].name.string) {
-          status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &array[i].name.string, &array[i].name.used, &array[i].name.size);
+        if (array[i].key.size && array[i].key.string) {
+          status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &array[i].key.string, &array[i].key.used, &array[i].key.size);
           if (F_status_is_error(status)) return status;
         }
 
@@ -138,8 +138,8 @@ extern "C" {
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
 
-        if (array[i].name.size && array[i].name.string) {
-          status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &array[i].name.string, &array[i].name.used, &array[i].name.size);
+        if (array[i].key.size && array[i].key.string) {
+          status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &array[i].key.string, &array[i].key.used, &array[i].key.size);
           if (F_status_is_error(status)) return status;
         }
 

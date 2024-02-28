@@ -15,7 +15,7 @@ extern "C" {
     // Reset the environment.
     for (f_number_unsigned_t i = 0; i < environment->used; ++i) {
 
-      environment->array[i].name.used = 0;
+      environment->array[i].key.used = 0;
       environment->array[i].value.used = 0;
     } // for
 

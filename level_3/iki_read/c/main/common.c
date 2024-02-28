@@ -291,7 +291,7 @@ extern "C" {
         // Replace any existing value so that each name exists only once.
         for (j = 0; j < main->setting.replace.used; ++j) {
 
-          if (f_compare_dynamic(main->program.parameters.arguments.array[index], main->setting.replace.array[j].name) == F_equal_to) {
+          if (f_compare_dynamic(main->program.parameters.arguments.array[index], main->setting.replace.array[j].key) == F_equal_to) {
             break;
           }
         } // for
@@ -299,8 +299,8 @@ extern "C" {
         at = j;
 
         // Static strings are being used, so if a dynamic string exists (size > 0), then de-allocate it.
-        if (main->setting.replace.array[at].name.size) {
-          main->setting.state.status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &main->setting.replace.array[at].name.string, &main->setting.replace.array[at].name.used, &main->setting.replace.array[at].name.size);
+        if (main->setting.replace.array[at].key.size) {
+          main->setting.state.status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &main->setting.replace.array[at].key.string, &main->setting.replace.array[at].key.used, &main->setting.replace.array[at].key.size);
         }
 
         if (F_status_is_error_not(main->setting.state.status) && main->setting.replace.array[at].value.size) {
@@ -317,9 +317,9 @@ extern "C" {
           return;
         }
 
-        main->setting.replace.array[at].name.string = main->program.parameters.arguments.array[index].string;
-        main->setting.replace.array[at].name.used = main->program.parameters.arguments.array[index].used;
-        main->setting.replace.array[at].name.size = 0;
+        main->setting.replace.array[at].key.string = main->program.parameters.arguments.array[index].string;
+        main->setting.replace.array[at].key.used = main->program.parameters.arguments.array[index].used;
+        main->setting.replace.array[at].key.size = 0;
 
         index = main->program.parameters.array[iki_read_parameter_replace_e].values.array[++i];
 

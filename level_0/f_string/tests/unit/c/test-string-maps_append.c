@@ -10,15 +10,15 @@ void test__f_string_maps_append__works(void **state) {
   f_string_map_t source = f_string_map_t_initialize;
   f_string_maps_t destination = f_string_maps_t_initialize;
 
-  const f_string_static_t test_name = macro_f_string_static_t_initialize_1("test_name", 0, 9);
+  const f_string_static_t test_key = macro_f_string_static_t_initialize_1("test_key", 0, 8);
   const f_string_static_t test_value = macro_f_string_static_t_initialize_1("test_value", 0, 10);
 
   {
-    f_status_t status = f_string_dynamic_append(test_name, &source.name);
+    f_status_t status = f_string_dynamic_append(test_key, &source.key);
 
     assert_int_equal(status, F_okay);
-    assert_string_equal(source.name.string, test_name.string);
-    assert_int_equal(source.name.used, test_name.used);
+    assert_string_equal(source.key.string, test_key.string);
+    assert_int_equal(source.key.used, test_key.used);
 
     status = f_string_dynamic_append(test_value, &source.value);
 
@@ -32,16 +32,16 @@ void test__f_string_maps_append__works(void **state) {
 
     assert_int_equal(status, F_okay);
     assert_int_equal(destination.used, 1);
-    assert_int_equal(destination.array[0].name.used, source.name.used);
+    assert_int_equal(destination.array[0].key.used, source.key.used);
     assert_int_equal(destination.array[0].value.used, source.value.used);
-    assert_string_equal(destination.array[0].name.string, source.name.string);
+    assert_string_equal(destination.array[0].key.string, source.key.string);
     assert_string_equal(destination.array[0].value.string, source.value.string);
   }
 
-  free((void *) source.name.string);
+  free((void *) source.key.string);
   free((void *) source.value.string);
 
-  free((void *) destination.array[0].name.string);
+  free((void *) destination.array[0].key.string);
   free((void *) destination.array[0].value.string);
 
   free((void *) destination.array);

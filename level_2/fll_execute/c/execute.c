@@ -211,7 +211,7 @@ extern "C" {
         clearenv();
 
         for (f_number_unsigned_t i = 0; i < environment->used; ++i) {
-          f_environment_set(environment->array[i].name, environment->array[i].value, F_true);
+          f_environment_set(environment->array[i].key, environment->array[i].value, F_true);
         } // for
       }
 
@@ -222,7 +222,7 @@ extern "C" {
         clearenv();
 
         for (f_number_unsigned_t i = 0; i < environment->used; ++i) {
-          f_environment_set(environment->array[i].name, environment->array[i].value, F_true);
+          f_environment_set(environment->array[i].key, environment->array[i].value, F_true);
         } // for
       }
 

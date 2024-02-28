@@ -301,7 +301,7 @@ extern "C" {
     // Reset the environment.
     for (f_number_unsigned_t i = 0; i < data_make->environment.used; ++i) {
 
-      data_make->environment.array[i].name.used = 0;
+      data_make->environment.array[i].key.used = 0;
       data_make->environment.array[i].value.used = 0;
     } // for
 

@@ -95,10 +95,10 @@ extern "C" {
         } \
         \
         if (!(data->flag & f_fss_payload_header_map_flag_join_digits_e)) { \
-          destinations->array[destinations->used].name.used = 0; \
+          destinations->array[destinations->used].key.used = 0; \
           destinations->array[destinations->used].value.used = 0; \
           \
-          state->status = f_string_dynamic_append(headers.array[internal.i].key, &destinations->array[destinations->used].name); \
+          state->status = f_string_dynamic_append(headers.array[internal.i].key, &destinations->array[destinations->used].key); \
           if (F_status_is_error(state->status)) break; \
           \
           state->status = f_string_dynamic_append(*data->cache, &destinations->array[destinations->used].value); \

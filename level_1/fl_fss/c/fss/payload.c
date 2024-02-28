@@ -78,16 +78,16 @@ extern "C" {
           if (F_status_set_fine(state->status) == F_interrupt) return;
         }
 
-        destinations->array[destinations->used].name.used = 0;
+        destinations->array[destinations->used].key.used = 0;
         destinations->array[destinations->used].value.used = 0;
 
         internal.range.start = 0;
         internal.range.stop = headers.array[internal.i].key.used ? headers.array[internal.i].key.used - 1 : 0;
 
-        private_fl_fss_basic_write(F_true, headers.array[internal.i].key, internal.quote, &internal.range, &destinations->array[destinations->used].name, state, (void * const) &internal);
+        private_fl_fss_basic_write(F_true, headers.array[internal.i].key, internal.quote, &internal.range, &destinations->array[destinations->used].key, state, (void * const) &internal);
 
         if (F_status_is_error_not(state->status)) {
-          state->status = f_string_dynamic_strip_null(&destinations->array[destinations->used].name);
+          state->status = f_string_dynamic_strip_null(&destinations->array[destinations->used].key);
         }
 
         if (F_status_is_error_not(state->status)) {
@@ -222,7 +222,7 @@ extern "C" {
               break;
 
             case f_abstruse_map_e:
-              if (headers.array[internal.i].value.is.a_map.name.used || headers.array[internal.i].value.is.a_map.value.used) {
+              if (headers.array[internal.i].value.is.a_map.key.used || headers.array[internal.i].value.is.a_map.value.used) {
                 if (private_fl_payload_header_map_map(data, state, &internal, &headers.array[internal.i].value.is.a_map, destinations) == F_false) {
                   ++destinations->used;
                 }
@@ -246,7 +246,7 @@ extern "C" {
               break;
 
             case f_abstruse_map_multi_e:
-              if (headers.array[internal.i].value.is.a_map_multi.name.used || headers.array[internal.i].value.is.a_map_multi.value.used || (data->flag & f_fss_payload_header_map_flag_null_map_multi_values_name_e)) {
+              if (headers.array[internal.i].value.is.a_map_multi.key.used || headers.array[internal.i].value.is.a_map_multi.value.used || (data->flag & f_fss_payload_header_map_flag_null_map_multi_values_name_e)) {
                 if (private_fl_payload_header_map_map_multi(data, state, &internal, &headers.array[internal.i].value.is.a_map_multi, destinations) == F_false) {
                   ++destinations->used;
                 }

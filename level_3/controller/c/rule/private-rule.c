@@ -1033,11 +1033,11 @@ extern "C" {
 
           for (j = 0; j < process->rule.environment.used; ++j) {
 
-            if (f_compare_dynamic(entry->define.array[i].name, process->rule.environment.array[j]) == F_equal_to) {
+            if (f_compare_dynamic(entry->define.array[i].key, process->rule.environment.array[j]) == F_equal_to) {
 
               for (k = 0; k < environment.used; ++k) {
 
-                if (f_compare_dynamic(entry->define.array[i].name, environment.array[k].name) == F_equal_to) {
+                if (f_compare_dynamic(entry->define.array[i].key, environment.array[k].name) == F_equal_to) {
 
                   environment.array[k].value.used = 0;
 
@@ -1074,11 +1074,11 @@ extern "C" {
 
         for (j = 0; j < process->rule.environment.used; ++j) {
 
-          if (f_compare_dynamic(process->rule.define.array[i].name, process->rule.environment.array[j]) == F_equal_to) {
+          if (f_compare_dynamic(process->rule.define.array[i].key, process->rule.environment.array[j]) == F_equal_to) {
 
             for (k = 0; k < environment.used; ++k) {
 
-              if (f_compare_dynamic(process->rule.define.array[i].name, environment.array[k].name) == F_equal_to) {
+              if (f_compare_dynamic(process->rule.define.array[i].key, environment.array[k].name) == F_equal_to) {
 
                 environment.array[k].value.used = 0;
 
@@ -2025,7 +2025,7 @@ extern "C" {
       // First check to see if the environment variable is overwritten by a "define".
       for (; i < process->rule.define.used; ++i) {
 
-        if (f_compare_dynamic_partial_string(process->rule.define.array[i].name.string, source, process->rule.define.array[i].name.used, content) == F_equal_to) {
+        if (f_compare_dynamic_partial_string(process->rule.define.array[i].key.string, source, process->rule.define.array[i].key.used, content) == F_equal_to) {
           status = f_string_dynamic_append(process->rule.define.array[i].value, destination);
           if (F_status_is_error(status)) return status;
 
@@ -2038,7 +2038,7 @@ extern "C" {
 
         for (i = 0; i < entry->define.used; ++i) {
 
-            if (f_compare_dynamic_partial_string(entry->define.array[i].name.string, source, entry->define.array[i].name.used, content) == F_equal_to) {
+            if (f_compare_dynamic_partial_string(entry->define.array[i].key.string, source, entry->define.array[i].key.used, content) == F_equal_to) {
             status = f_string_dynamic_append(entry->define.array[i].value, destination);
             if (F_status_is_error(status)) return status;
 
@@ -5884,8 +5884,8 @@ extern "C" {
 
     for (i = 0; i < rule.define.used; ++i) {
 
-      if (rule.define.array[i].name.used && rule.define.array[i].value.used) {
-        fl_print_format("    %Q %[=%] %Q%r", main->output.to, rule.define.array[i].name, main->context.set.important, main->context.set.important, rule.define.array[i].value, f_string_eol_s);
+      if (rule.define.array[i].key.used && rule.define.array[i].value.used) {
+        fl_print_format("    %Q %[=%] %Q%r", main->output.to, rule.define.array[i].key, main->context.set.important, main->context.set.important, rule.define.array[i].value, f_string_eol_s);
       }
     } // for
 

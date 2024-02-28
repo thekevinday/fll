@@ -94,8 +94,8 @@ extern "C" {
         break;
 
       case f_abstruse_map_e:
-        if (abstruse->is.a_map.name.size) {
-          return f_memory_array_resize(0, sizeof(f_char_t), (void **) &abstruse->is.a_map.name.string, &abstruse->is.a_map.name.used, &abstruse->is.a_map.name.size);
+        if (abstruse->is.a_map.key.size) {
+          return f_memory_array_resize(0, sizeof(f_char_t), (void **) &abstruse->is.a_map.key.string, &abstruse->is.a_map.key.used, &abstruse->is.a_map.key.size);
         }
 
         if (abstruse->is.a_map.value.size) {
@@ -112,8 +112,8 @@ extern "C" {
         break;
 
       case f_abstruse_map_multi_e:
-        if (abstruse->is.a_map_multi.name.size) {
-          return f_memory_array_resize(0, sizeof(f_char_t), (void **) &abstruse->is.a_map_multi.name.string, &abstruse->is.a_map_multi.name.used, &abstruse->is.a_map_multi.name.size);
+        if (abstruse->is.a_map_multi.key.size) {
+          return f_memory_array_resize(0, sizeof(f_char_t), (void **) &abstruse->is.a_map_multi.key.string, &abstruse->is.a_map_multi.key.used, &abstruse->is.a_map_multi.key.size);
         }
 
         if (abstruse->is.a_map_multi.value.size) {
@@ -262,8 +262,8 @@ extern "C" {
         break;
 
       case f_abstruse_map_e:
-        if (abstruse->is.a_map.name.size) {
-          return f_memory_array_adjust(0, sizeof(f_char_t), (void **) &abstruse->is.a_map.name.string, &abstruse->is.a_map.name.used, &abstruse->is.a_map.name.size);
+        if (abstruse->is.a_map.key.size) {
+          return f_memory_array_adjust(0, sizeof(f_char_t), (void **) &abstruse->is.a_map.key.string, &abstruse->is.a_map.key.used, &abstruse->is.a_map.key.size);
         }
 
         if (abstruse->is.a_map.value.size) {
@@ -280,8 +280,8 @@ extern "C" {
         break;
 
       case f_abstruse_map_multi_e:
-        if (abstruse->is.a_map_multi.name.size) {
-          return f_memory_array_adjust(0, sizeof(f_char_t), (void **) &abstruse->is.a_map_multi.name.string, &abstruse->is.a_map_multi.name.used, &abstruse->is.a_map_multi.name.size);
+        if (abstruse->is.a_map_multi.key.size) {
+          return f_memory_array_adjust(0, sizeof(f_char_t), (void **) &abstruse->is.a_map_multi.key.string, &abstruse->is.a_map_multi.key.used, &abstruse->is.a_map_multi.key.size);
         }
 
         if (abstruse->is.a_map_multi.value.size) {

@@ -17,24 +17,24 @@ extern "C" {
 #endif
 
 /**
- * A string map consisting of a name and value.
+ * A string map consisting of a key and value.
  *
  * Properties:
- *   - name:  A string representing the map name.
+ *   - key:   A string representing the map key.
  *   - value: A string representing the map value.
  */
 #ifndef _di_f_string_map_t_
   typedef struct {
-    f_string_dynamic_t name;
+    f_string_dynamic_t key;
     f_string_dynamic_t value;
   } f_string_map_t;
 
   #define f_string_map_t_initialize { f_string_dynamic_t_initialize, f_string_dynamic_t_initialize }
 
-  #define macro_f_string_map_t_initialize_1(name, value) { name, value }
+  #define macro_f_string_map_t_initialize_1(key, value) { key, value }
 
   #define macro_f_string_map_t_clear(map) \
-    macro_f_string_dynamic_t_clear(map.name) \
+    macro_f_string_dynamic_t_clear(map.key) \
     macro_f_string_dynamic_t_clear(map.value)
 #endif // _di_f_string_map_t_
 

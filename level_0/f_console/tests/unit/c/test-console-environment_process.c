@@ -77,25 +77,25 @@ void test__f_console_environment_process__works(void **state) {
 
     assert_int_equal(status, F_okay);
     assert_int_equal(maps.used, 5);
-    assert_int_equal(maps.array[0].name.used, 1);
+    assert_int_equal(maps.array[0].key.used, 1);
     assert_int_equal(maps.array[0].value.used, 1);
-    assert_int_equal(maps.array[1].name.used, 3);
+    assert_int_equal(maps.array[1].key.used, 3);
     assert_int_equal(maps.array[1].value.used, 5);
-    assert_int_equal(maps.array[2].name.used, 1);
+    assert_int_equal(maps.array[2].key.used, 1);
     assert_int_equal(maps.array[2].value.used, 5);
-    assert_int_equal(maps.array[3].name.used, 3);
+    assert_int_equal(maps.array[3].key.used, 3);
     assert_int_equal(maps.array[3].value.used, 6);
-    assert_int_equal(maps.array[4].name.used, 4);
+    assert_int_equal(maps.array[4].key.used, 4);
     assert_int_equal(maps.array[4].value.used, 0);
 
     // Construct NULL terminated strings to perform validation.
     for (uint8_t i = 0; i < 5; ++i) {
 
       {
-        char buffer[maps.array[i].name.used + 1];
+        char buffer[maps.array[i].key.used + 1];
 
-        memcpy(buffer, maps.array[i].name.string, sizeof(f_char_t) * maps.array[i].name.used);
-        buffer[maps.array[i].name.used] = 0;
+        memcpy(buffer, maps.array[i].key.string, sizeof(f_char_t) * maps.array[i].key.used);
+        buffer[maps.array[i].key.used] = 0;
 
         assert_string_equal(buffer, names[i]);
       }

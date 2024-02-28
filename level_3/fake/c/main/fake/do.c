@@ -26,14 +26,14 @@ extern "C" {
     if (flag & f_directory_recurse_do_flag_before_e) {
       if (flag & f_directory_recurse_do_flag_top_e) {
         if (recurse->state.code & fake_state_code_clone_e) {
-          fake_print_verbose_cloning(&local->main->program.message, *recurse->path_top, map->name);
+          fake_print_verbose_cloning(&local->main->program.message, *recurse->path_top, map->key);
 
-          recurse->state.status = f_file_clone(*recurse->path_top, map->name, F_file_default_size_write_d, f_file_stat_flag_group_e | f_file_stat_flag_owner_e | (f_directory_recurse_do_flag_dereference_e ? 0 : f_file_stat_flag_reference_e));
+          recurse->state.status = f_file_clone(*recurse->path_top, map->key, F_file_default_size_write_d, f_file_stat_flag_group_e | f_file_stat_flag_owner_e | (f_directory_recurse_do_flag_dereference_e ? 0 : f_file_stat_flag_reference_e));
         }
         else {
-          fake_print_verbose_copying(&local->main->program.message, *recurse->path_top, map->name);
+          fake_print_verbose_copying(&local->main->program.message, *recurse->path_top, map->key);
 
-          recurse->state.status = f_file_copy(*recurse->path_top, map->name, recurse->mode, F_file_default_size_write_d, f_directory_recurse_do_flag_dereference_e ? 0 : f_file_stat_flag_reference_e);
+          recurse->state.status = f_file_copy(*recurse->path_top, map->key, recurse->mode, F_file_default_size_write_d, f_directory_recurse_do_flag_dereference_e ? 0 : f_file_stat_flag_reference_e);
         }
 
         if (F_status_is_error(recurse->state.status)) {
@@ -48,7 +48,7 @@ extern "C" {
           fake_string_dynamic_reset(&recurse->path_cache);
 
           // Pre-populate the destination into the path cache.
-          recurse->state.status = f_string_dynamic_append_nulless(map->name, &recurse->path_cache);
+          recurse->state.status = f_string_dynamic_append_nulless(map->key, &recurse->path_cache);
 
           if (F_status_is_error_not(recurse->state.status)) {
             recurse->state.status = F_okay;

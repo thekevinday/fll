@@ -257,9 +257,9 @@ extern "C" {
     if (F_status_is_error_not(main->setting.state.status)) {
       for (; i < total; ++i) {
 
-        fake_string_dynamic_reset(&main->cache_map.name);
+        fake_string_dynamic_reset(&main->cache_map.key);
 
-        main->setting.state.status = f_string_dynamic_append_nulless(main->cache_arguments.array[total], &main->cache_map.name);
+        main->setting.state.status = f_string_dynamic_append_nulless(main->cache_arguments.array[total], &main->cache_map.key);
 
         if (F_status_is_error(main->setting.state.status)) {
           function = &macro_fake_f(f_string_dynamic_append_nulless);
@@ -269,7 +269,7 @@ extern "C" {
         }
 
         if (existing) {
-          main->setting.state.status = f_string_dynamic_append_assure(f_path_separator_s, &main->cache_map.name);
+          main->setting.state.status = f_string_dynamic_append_assure(f_path_separator_s, &main->cache_map.key);
 
           if (F_status_is_error(main->setting.state.status)) {
             function = &macro_fake_f(f_string_dynamic_append_assure);
@@ -278,7 +278,7 @@ extern "C" {
             break;
           }
 
-          main->setting.state.status = f_file_name_base(main->cache_arguments.array[i], &main->cache_map.name);
+          main->setting.state.status = f_file_name_base(main->cache_arguments.array[i], &main->cache_map.key);
 
           if (F_status_is_error(main->setting.state.status)) {
             function = &macro_fake_f(f_file_name_base);
@@ -305,10 +305,10 @@ extern "C" {
         }
         else if (main->setting.state.status == F_false) {
           if (clone) {
-            main->setting.state.status = f_file_clone(main->cache_arguments.array[i], main->cache_map.name, F_file_default_size_write_d, f_file_stat_flag_group_e | f_file_stat_flag_owner_e | (f_directory_recurse_do_flag_dereference_e ? 0 : f_file_stat_flag_reference_e));
+            main->setting.state.status = f_file_clone(main->cache_arguments.array[i], main->cache_map.key, F_file_default_size_write_d, f_file_stat_flag_group_e | f_file_stat_flag_owner_e | (f_directory_recurse_do_flag_dereference_e ? 0 : f_file_stat_flag_reference_e));
           }
           else {
-            main->setting.state.status = f_file_copy(main->cache_arguments.array[i], main->cache_map.name, main->cache_recurse_do.mode, F_file_default_size_write_d, f_directory_recurse_do_flag_dereference_e ? 0 : f_file_stat_flag_reference_e);
+            main->setting.state.status = f_file_copy(main->cache_arguments.array[i], main->cache_map.key, main->cache_recurse_do.mode, F_file_default_size_write_d, f_directory_recurse_do_flag_dereference_e ? 0 : f_file_stat_flag_reference_e);
           }
 
           if (F_status_is_error(main->setting.state.status)) {
@@ -319,7 +319,7 @@ extern "C" {
             break;
           }
 
-          fake_make_print_verbose_operate_copy(&main->program.message, clone, main->cache_arguments.array[i], main->cache_map.name);
+          fake_make_print_verbose_operate_copy(&main->program.message, clone, main->cache_arguments.array[i], main->cache_map.key);
         }
         else if (F_status_is_error(main->setting.state.status)) {
           function = &macro_fake_f(f_directory_is);
@@ -1290,7 +1290,7 @@ extern "C" {
       if (!result) {
         for (j = 0; j < data_make->setting_make.parameter.used; ++j) {
 
-          if (f_compare_dynamic(main->cache_arguments.array[i], data_make->setting_make.parameter.array[j].name) == F_equal_to) {
+          if (f_compare_dynamic(main->cache_arguments.array[i], data_make->setting_make.parameter.array[j].key) == F_equal_to) {
             result = 2;
 
             break;
@@ -1677,7 +1677,7 @@ extern "C" {
 
     for (; i < data_make->setting_make.parameter.used; ++i) {
 
-      if (f_compare_dynamic(main->cache_arguments.array[0], data_make->setting_make.parameter.array[i].name) == F_equal_to) {
+      if (f_compare_dynamic(main->cache_arguments.array[0], data_make->setting_make.parameter.array[i].key) == F_equal_to) {
         found = F_true;
 
         break;
@@ -1719,7 +1719,7 @@ extern "C" {
         return;
       }
 
-      main->setting.state.status = f_string_dynamic_append_nulless(main->cache_arguments.array[0], &data_make->setting_make.parameter.array[data_make->setting_make.parameter.used].name);
+      main->setting.state.status = f_string_dynamic_append_nulless(main->cache_arguments.array[0], &data_make->setting_make.parameter.array[data_make->setting_make.parameter.used].key);
 
       if (F_status_is_error(main->setting.state.status)) {
         fake_print_error(&main->program.error, macro_fake_f(f_string_dynamic_append_nulless));

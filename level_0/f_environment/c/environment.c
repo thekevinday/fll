@@ -89,17 +89,17 @@ extern char **environ;
     // Copy all environment variables over when a custom define is used.
     for (char **string = environ; *string; string++) {
 
-      map.name.string = 0;
+      map.key.string = 0;
       map.value.string = 0;
 
-      map.name.used = 0;
+      map.key.used = 0;
       map.value.used = 0;
 
       at = index(*string, f_string_ascii_equal_s.string[0]);
       if (!at || at == *string) continue;
 
-      map.name.string = *string;
-      map.name.used = at - *string;
+      map.key.string = *string;
+      map.key.used = at - *string;
 
       map.value.string = at + 1;
       map.value.used = strlen(at + 1);

@@ -16,17 +16,17 @@ extern "C" {
       f_status_t status = f_memory_array_increase(F_memory_default_allocation_small_d, sizeof(f_string_map_t), (void **) &environment->array, &environment->used, &environment->size);
       if (F_status_is_error(status)) return status;
 
-      environment->array[environment->used].name.used = 0;
+      environment->array[environment->used].key.used = 0;
       environment->array[environment->used].value.used = 0;
 
-      status = f_string_dynamic_append_nulless(name, &environment->array[environment->used].name);
+      status = f_string_dynamic_append_nulless(name, &environment->array[environment->used].key);
 
       if (F_status_is_error_not(status)) {
         status = f_environment_get(name, &environment->array[environment->used].value);
       }
 
       if (F_status_is_error(status) || status == F_data_not || status == F_exist_not) {
-        environment->array[environment->used].name.used = 0;
+        environment->array[environment->used].key.used = 0;
         environment->array[environment->used].value.used = 0;
 
         return status;
@@ -54,16 +54,16 @@ extern "C" {
 
     for (f_number_unsigned_t i = 0; i < names.used; ++i) {
 
-      environment->array[environment->used].name.used = 0;
+      environment->array[environment->used].key.used = 0;
       environment->array[environment->used].value.used = 0;
 
-      status = f_string_dynamic_append_nulless(names.array[i], &environment->array[environment->used].name);
+      status = f_string_dynamic_append_nulless(names.array[i], &environment->array[environment->used].key);
 
       if (F_status_is_error_not(status)) {
         status = f_environment_get(names.array[i], &environment->array[environment->used].value);
       }
       else {
-        environment->array[environment->used].name.used = 0;
+        environment->array[environment->used].key.used = 0;
         environment->array[environment->used].value.used = 0;
 
         return status;

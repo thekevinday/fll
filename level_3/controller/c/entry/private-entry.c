@@ -2313,10 +2313,10 @@ extern "C" {
       f_status_t status = f_memory_array_increase(controller_common_allocation_small_d, sizeof(f_string_map_t), (void **) &setting_maps->array, &setting_maps->used, &setting_maps->size);
       if (F_status_is_error(status)) return status;
 
-      setting_maps->array[setting_maps->used].name.used = 0;
+      setting_maps->array[setting_maps->used].key.used = 0;
       setting_maps->array[setting_maps->used].value.used = 0;
 
-      status = f_string_dynamic_partial_append_nulless(buffer, ranges.array[0], &setting_maps->array[setting_maps->used].name);
+      status = f_string_dynamic_partial_append_nulless(buffer, ranges.array[0], &setting_maps->array[setting_maps->used].key);
       if (F_status_is_error(status)) return status;
 
       status = f_string_dynamic_partial_append_nulless(buffer, ranges.array[1], &setting_maps->array[setting_maps->used].value);
@@ -2537,7 +2537,7 @@ extern "C" {
     fl_print_format("  %[%r%] {%r", global.main->output.to.stream, global.main->context.set.important, controller_define_s, global.main->context.set.important, f_string_eol_s);
 
     for (i = 0; i < entry->define.used; ++i) {
-      fl_print_format("    %Q %Q%r", global.main->output.to.stream, entry->define.array[i].name, entry->define.array[i].value, f_string_eol_s);
+      fl_print_format("    %Q %Q%r", global.main->output.to.stream, entry->define.array[i].key, entry->define.array[i].value, f_string_eol_s);
     } // for
 
     fl_print_format("  }%r", global.main->output.to.stream, f_string_eol_s, f_string_eol_s);
@@ -2547,7 +2547,7 @@ extern "C" {
     fl_print_format("  %[%r%] {%r", global.main->output.to.stream, global.main->context.set.important, controller_parameter_s, global.main->context.set.important, f_string_eol_s);
 
     for (i = 0; i < entry->parameter.used; ++i) {
-      fl_print_format("    %Q %Q%r", global.main->output.to.stream, entry->parameter.array[i].name, entry->parameter.array[i].value, f_string_eol_s);
+      fl_print_format("    %Q %Q%r", global.main->output.to.stream, entry->parameter.array[i].key, entry->parameter.array[i].value, f_string_eol_s);
     } // for
 
     fl_print_format("  }%r", global.main->output.to.stream, f_string_eol_s);
@@ -2563,7 +2563,7 @@ extern "C" {
 
       for (i = 0; i < entry->items.used; ++i) {
 
-        fl_print_format("%r%Q %Q %[%Q%] {%r", global.main->output.to.stream, f_string_eol_s, is_entry ? controller_Entry_s : controller_Exit_s, controller_Item_s, global.main->context.set.title, entry->items.array[i].name, global.main->context.set.title, f_string_eol_s);
+        fl_print_format("%r%Q %Q %[%Q%] {%r", global.main->output.to.stream, f_string_eol_s, is_entry ? controller_Entry_s : controller_Exit_s, controller_Item_s, global.main->context.set.title, entry->items.array[i].key, global.main->context.set.title, f_string_eol_s);
 
         for (j = 0; j < entry->items.array[i].actions.used; ++j) {
 
