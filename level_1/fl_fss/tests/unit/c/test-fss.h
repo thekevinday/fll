@@ -61,8 +61,18 @@
 #include "test-fss-extended_list_object_read.h"
 #include "test-fss-extended_list_object_write.h"
 #include "test-fss-payload_header_map.h"
+#include "test-fss-payload_header_map-abstruse_int8s.h"
+#include "test-fss-payload_header_map-abstruse_int16s.h"
+#include "test-fss-payload_header_map-abstruse_int32s.h"
+#include "test-fss-payload_header_map-abstruse_int64s.h"
 #include "test-fss-payload_header_map-abstruse_signed.h"
+#include "test-fss-payload_header_map-abstruse_signeds.h"
+#include "test-fss-payload_header_map-abstruse_uint8s.h"
+#include "test-fss-payload_header_map-abstruse_uint16s.h"
+#include "test-fss-payload_header_map-abstruse_uint32s.h"
+#include "test-fss-payload_header_map-abstruse_uint64s.h"
 #include "test-fss-payload_header_map-abstruse_unsigned.h"
+#include "test-fss-payload_header_map-abstruse_unsigneds.h"
 
 #ifdef __cplusplus
 extern "C" {

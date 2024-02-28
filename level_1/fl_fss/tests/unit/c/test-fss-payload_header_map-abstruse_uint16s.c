@@ -1,18 +1,18 @@
 #include "test-fss.h"
-#include "test-fss-payload_header_map-abstruse_signed.h"
+#include "test-fss-payload_header_map-abstruse_uint16s.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-void test__fl_fss_payload_header_map__abstruse_signed__works_combined(void **void_state) {
+void test__fl_fss_payload_header_map__abstruse_uint16s__works_combined(void **void_state) {
 
   // Note: Each line should probably be at max 255 characters.
   //       The payload begins with a digit on the first line representing the number of Content lines following the Object line.
   //       Following the digit is a single Object line.
   //       Following the Object line is a line for each Content designated by the first line (can be 0).
   //       Following this Content line (even if 0 lines) should be the end of the test file or the start of the next set for the next line in the headers file.
-  FILE *file_variables = data__file_open__named("variables", "payload", "combined-abstruse_signed");
+  FILE *file_variables = data__file_open__named("variables", "payload", "combined-abstruse_uint16s");
   FILE *file_headers = 0;
 
   assert_non_null(file_variables);
@@ -25,6 +25,7 @@ void test__fl_fss_payload_header_map__abstruse_signed__works_combined(void **voi
   f_string_dynamic_t cache = f_string_dynamic_t_initialize;
   f_string_maps_t destinations = f_string_maps_t_initialize;
   f_string_maps_t expects = f_string_maps_t_initialize;
+  f_uint16s_t *is_a = 0;
 
   {
     state.status = F_none;
@@ -36,24 +37,29 @@ void test__fl_fss_payload_header_map__abstruse_signed__works_combined(void **voi
       if (help__read_line_object(file_variables, &object)) break;
       if (help__read_line_contents__single(file_variables, &contents)) break;
 
-      state.status = f_memory_array_increase_by(contents.used, sizeof(f_abstruse_map_t), (void **) &headers.array, &headers.used, &headers.size);
+      state.status = f_memory_array_increase(state.step_small, sizeof(f_abstruse_map_t), (void **) &headers.array, &headers.used, &headers.size);
       assert_true(F_status_is_error_not(state.status));
 
-      for (f_number_unsigned_t i = 0; i < contents.used; ++i, ++headers.used) {
+      headers.array[0].key.used = 0;
+      headers.array[0].value.is.a_u16s.used = 0;
+      headers.array[0].value.type = f_abstruse_uint16s_e;
+      is_a = &headers.array[0].value.is.a_u16s;
 
-        const f_number_signed_t number = atoll(contents.array[i].string);
+      state.status = f_string_dynamic_append(object, &headers.array[headers.used].key);
+      assert_int_equal(state.status, F_okay);
+
+      state.status = f_memory_array_increase_by(contents.used, sizeof(f_number_signed_t), (void **) &is_a->array, &is_a->used, &is_a->size);
+      assert_true(F_status_is_error_not(state.status));
+
+      for (is_a->used = 0; is_a->used < contents.used; ) {
+
+        const f_number_signed_t number = atoll(contents.array[is_a->used].string);
 
         if (!number) {
-          assert_int_equal(contents.array[i].string[0], '0');
+          assert_int_equal(contents.array[is_a->used].string[0], '0');
         }
 
-        headers.array[headers.used].key.used = 0;
-
-        state.status = f_string_dynamic_append(object, &headers.array[headers.used].key);
-        assert_int_equal(state.status, F_okay);
-
-        headers.array[headers.used].value.type = f_abstruse_signed_e;
-        headers.array[headers.used].value.is.a_signed = number;
+        is_a->array[is_a->used++] = number;
       } // for
 
       if (object.string) free(object.string);
@@ -62,7 +68,9 @@ void test__fl_fss_payload_header_map__abstruse_signed__works_combined(void **voi
       object.used = 0;
       object.size = 0;
 
-      file_headers = data__file_open__named_at("headers", "payload", "combined-abstruse_signed", at);
+      ++headers.used;
+
+      file_headers = data__file_open__named_at("headers", "payload", "combined-abstruse_uint16s", at);
       assert_non_null(file_headers);
 
       help__read_line_object(file_headers, &object);

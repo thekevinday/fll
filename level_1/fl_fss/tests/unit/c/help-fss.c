@@ -83,13 +83,13 @@ uint8_t help__read_line_expects__single(FILE *file, const f_string_static_t obje
   for (f_number_unsigned_t i = 0; i < count; ++i, ++expects->used) {
 
     max = 255;
-    expects->array[expects->used].name.used = 0;
+    expects->array[expects->used].key.used = 0;
     expects->array[expects->used].value.used = 0;
 
-    status = f_string_dynamic_append(object, &expects->array[expects->used].name);
+    status = f_string_dynamic_append(object, &expects->array[expects->used].key);
     assert_true(F_status_is_error_not(status));
 
-    status = f_string_dynamic_terminate_after(&expects->array[expects->used].name);
+    status = f_string_dynamic_terminate_after(&expects->array[expects->used].key);
     assert_true(F_status_is_error_not(status));
 
     status = f_memory_array_increase_by(max, sizeof(f_string_t), (void **) &expects->array[expects->used].value.string, &expects->array[expects->used].value.used, &expects->array[expects->used].value.size);

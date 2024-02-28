@@ -80,10 +80,10 @@ void test__fl_fss_payload_header_map__abstruse_unsigned__works_combined(void **v
 
       for (f_number_unsigned_t i = 0; i < destinations.used; ++i) {
 
-        assert_int_equal(destinations.array[i].name.used, expects.array[i].name.used);
+        assert_int_equal(destinations.array[i].key.used, expects.array[i].key.used);
         assert_int_equal(destinations.array[i].value.used, expects.array[i].value.used);
 
-        assert_string_equal(destinations.array[i].name.string, expects.array[i].name.string);
+        assert_string_equal(destinations.array[i].key.string, expects.array[i].key.string);
         assert_string_equal(destinations.array[i].value.string, expects.array[i].value.string);
       } // for
 
