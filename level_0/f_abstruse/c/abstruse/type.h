@@ -48,8 +48,8 @@ extern "C" {
     f_string_maps_t       a_maps;
     f_string_map_multi_t  a_map_multi;
     f_string_map_multis_t a_map_multis;
-    f_quantity_t   a_quantity;
-    f_quantitys_t  a_quantitys;
+    f_quantity_t          a_quantity;
+    f_quantitys_t         a_quantitys;
     f_string_triple_t     a_triple;
     f_string_triples_t    a_triples;
     void *                a_void;
