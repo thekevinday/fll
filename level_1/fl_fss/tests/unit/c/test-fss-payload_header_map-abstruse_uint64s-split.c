@@ -1,18 +1,17 @@
 #include "test-fss.h"
-#include "test-fss-payload_header_map-abstruse_uint64s.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-void test__fl_fss_payload_header_map__abstruse_uint64s__works_combined(void **void_state) {
+void test__fl_fss_payload_header_map__abstruse_uint64s__works_split(void **void_state) {
 
   // Note: Each line should probably be at max 255 characters.
   //       The payload begins with a digit on the first line representing the number of Content lines following the Object line.
   //       Following the digit is a single Object line.
   //       Following the Object line is a line for each Content designated by the first line (can be 0).
   //       Following this Content line (even if 0 lines) should be the end of the test file or the start of the next set for the next line in the headers file.
-  FILE *file_variables = data__file_open__named("variables", "payload", "combined-abstruse_uint64s");
+  FILE *file_variables = data__file_open__named("variables", "payload", "abstruse_uint64s");
   FILE *file_headers = 0;
 
   assert_non_null(file_variables);
@@ -71,7 +70,7 @@ void test__fl_fss_payload_header_map__abstruse_uint64s__works_combined(void **vo
 
       ++headers.used;
 
-      file_headers = data__file_open__named_at("headers", "payload", "combined-abstruse_uint64s", at);
+      file_headers = data__file_open__named_at("headers", "payload", "split-abstruse_uint64s", at);
       assert_non_null(file_headers);
 
       help__read_line_object(file_headers, &object);

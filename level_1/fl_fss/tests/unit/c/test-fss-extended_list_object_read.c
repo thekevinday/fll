@@ -1,5 +1,4 @@
 #include "test-fss.h"
-#include "test-fss-extended_list_object_read.h"
 
 #ifdef __cplusplus
 extern "C" {

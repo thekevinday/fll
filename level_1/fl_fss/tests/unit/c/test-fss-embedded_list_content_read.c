@@ -1,5 +1,4 @@
 #include "test-fss.h"
-#include "test-fss-embedded_list_content_read.h"
 
 #ifdef __cplusplus
 extern "C" {

@@ -1,5 +1,4 @@
 #include "test-fss.h"
-#include "test-fss-payload_header_map.h"
 
 #ifdef __cplusplus
 extern "C" {

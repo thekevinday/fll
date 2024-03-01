@@ -1,5 +1,4 @@
 #include "test-fss.h"
-#include "test-fss-basic_list_object_write.h"
 
 #ifdef __cplusplus
 extern "C" {

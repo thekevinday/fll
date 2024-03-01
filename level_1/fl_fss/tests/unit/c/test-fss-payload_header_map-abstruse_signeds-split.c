@@ -1,18 +1,17 @@
 #include "test-fss.h"
-#include "test-fss-payload_header_map-abstruse_unsigneds.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-void test__fl_fss_payload_header_map__abstruse_unsigneds__works_combined(void **void_state) {
+void test__fl_fss_payload_header_map__abstruse_signeds__works_split(void **void_state) {
 
   // Note: Each line should probably be at max 255 characters.
   //       The payload begins with a digit on the first line representing the number of Content lines following the Object line.
   //       Following the digit is a single Object line.
   //       Following the Object line is a line for each Content designated by the first line (can be 0).
   //       Following this Content line (even if 0 lines) should be the end of the test file or the start of the next set for the next line in the headers file.
-  FILE *file_variables = data__file_open__named("variables", "payload", "combined-abstruse_unsigneds");
+  FILE *file_variables = data__file_open__named("variables", "payload", "abstruse_signeds");
   FILE *file_headers = 0;
 
   assert_non_null(file_variables);
@@ -25,7 +24,7 @@ void test__fl_fss_payload_header_map__abstruse_unsigneds__works_combined(void **
   f_string_dynamic_t cache = f_string_dynamic_t_initialize;
   f_string_maps_t destinations = f_string_maps_t_initialize;
   f_string_maps_t expects = f_string_maps_t_initialize;
-  f_number_unsigneds_t *is_a = 0;
+  f_number_signeds_t *is_a = 0;
 
   {
     state.status = F_none;
@@ -41,9 +40,9 @@ void test__fl_fss_payload_header_map__abstruse_unsigneds__works_combined(void **
       assert_true(F_status_is_error_not(state.status));
 
       headers.array[0].key.used = 0;
-      headers.array[0].value.is.a_unsigneds.used = 0;
-      headers.array[0].value.type = f_abstruse_unsigneds_e;
-      is_a = &headers.array[0].value.is.a_unsigneds;
+      headers.array[0].value.is.a_signeds.used = 0;
+      headers.array[0].value.type = f_abstruse_signeds_e;
+      is_a = &headers.array[0].value.is.a_signeds;
 
       state.status = f_string_dynamic_append(object, &headers.array[headers.used].key);
       assert_int_equal(state.status, F_okay);
@@ -70,7 +69,7 @@ void test__fl_fss_payload_header_map__abstruse_unsigneds__works_combined(void **
 
       ++headers.used;
 
-      file_headers = data__file_open__named_at("headers", "payload", "combined-abstruse_unsigneds", at);
+      file_headers = data__file_open__named_at("headers", "payload", "split-abstruse_signeds", at);
       assert_non_null(file_headers);
 
       help__read_line_object(file_headers, &object);
