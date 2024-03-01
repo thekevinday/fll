@@ -1105,7 +1105,7 @@ extern "C" {
       // The start quote may or may not need to be delimited in this case.
       if (destination->string[input_start] == quote_char) {
 
-        for (i = input_start + 1; i <= range->stop && i < object.used; ++i) {
+        for (i = input_start + macro_f_utf_byte_width(object.string[input_start]); i <= range->stop && i < object.used; i += macro_f_utf_byte_width(object.string[i])) {
 
           if (state->interrupt) {
             state->interrupt((void *) state, internal);
