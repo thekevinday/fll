@@ -4,7 +4,7 @@
 extern "C" {
 #endif
 
-uint8_t help__read_line_contents__single(FILE *file, f_string_dynamics_t * const contents) {
+uint8_t help__read_line_contents__single(FILE *file, f_string_dynamics_t * const contents, const uint8_t as_number) {
 
   size_t max = 255;
   char *line_string = 0;
@@ -22,7 +22,7 @@ uint8_t help__read_line_contents__single(FILE *file, f_string_dynamics_t * const
 
   const f_number_unsigned_t count = (f_number_unsigned_t) atoi(line_string);
 
-  if (!count) {
+  if (!count && as_number) {
     assert_int_equal(line_string[0], '0');
   }
 

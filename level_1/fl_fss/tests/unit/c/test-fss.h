@@ -38,6 +38,7 @@
 // Data includes.
 #include "data-fss.h"
 #include "help-fss.h"
+#include "help-fss-number.h"
 
 // Test includes.
 #include "test-fss-basic_content_read.h"
@@ -72,6 +73,7 @@
 #include "test-fss-payload_header_map-abstruse_signed-join.h"
 #include "test-fss-payload_header_map-abstruse_signeds-join.h"
 #include "test-fss-payload_header_map-abstruse_signeds-split.h"
+#include "test-fss-payload_header_map-abstruse_string-join.h"
 #include "test-fss-payload_header_map-abstruse_uint8s-join.h"
 #include "test-fss-payload_header_map-abstruse_uint8s-split.h"
 #include "test-fss-payload_header_map-abstruse_uint16s-join.h"

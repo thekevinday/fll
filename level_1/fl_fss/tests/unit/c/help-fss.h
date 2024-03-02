@@ -27,12 +27,14 @@ extern "C" {
  * @param contents
  *   The array of contents to use.
  *   Must not be NULL.
+ * @param as_number
+ *   Operate as a number, performing a check if the first character is '0' (the character and not NULL).
  *
  * @return
  *   F_true if there is no content left to read in the file.
  *   F_false otherwise.
  */
-uint8_t help__read_line_contents__single(FILE *file, f_string_dynamics_t * const contents);
+uint8_t help__read_line_contents__single(FILE *file, f_string_dynamics_t * const contents, const uint8_t as_number);
 
 /**
  * Load the expect lines from the given file.
