@@ -539,7 +539,7 @@ extern "C" {
               content_current = main->parameters.array[fss_extended_write_parameter_content_e].locations.array[j];
 
               if (i + 1 < main->parameters.array[fss_extended_write_parameter_object_e].values.used) {
-                if (content_current < object_current || content_current > object_next) break;
+                if (content_current < object_current || content_current >= object_next) break;
               }
 
               status = f_string_dynamics_increase_by(F_fss_default_allocation_step_d, &contents);
