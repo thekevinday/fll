@@ -44,7 +44,7 @@ build_sources_program test-fss-payload_header_map-abstruse_signeds-join.c test-f
 build_sources_program test-fss-payload_header_map-abstruse_signeds-split.c test-fss-payload_header_map-abstruse_unsigneds-split.c
 build_sources_program test-fss-payload_header_map-abstruse_string-join.c
 
-build_sources_program test-fss.c data-fss.c help-fss.c help-fss-number.c
+build_sources_program test-fss.c data-fss.c help-fss.c help-fss-payload.c
 
 build_script no
 build_shared yes

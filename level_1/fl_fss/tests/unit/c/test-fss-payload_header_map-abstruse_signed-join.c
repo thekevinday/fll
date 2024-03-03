@@ -6,10 +6,10 @@ extern "C" {
 
 void test__fl_fss_payload_header_map__abstruse_signed__works_join(void **void_state) {
 
-  help_number__test_payload("abstruse_signed", "join-abstruse_signed", f_fss_payload_header_map_flag_join_digits_e, test__fl_fss_payload_header_map__abstruse_signed__join_load_contents_at);
+  help_payload__test("abstruse_signed", "join-abstruse_signed", f_fss_payload_header_map_flag_join_digits_e, test__fl_fss_payload_header_map__abstruse_signed__join_load_contents);
 }
 
-void test__fl_fss_payload_header_map__abstruse_signed__join_load_contents_at(const f_string_static_t object, const f_string_dynamics_t contents, f_abstruse_maps_t * const headers, f_state_t * const state) {
+void test__fl_fss_payload_header_map__abstruse_signed__join_load_contents(const f_string_static_t object, const f_string_dynamics_t contents, f_abstruse_maps_t * const headers, f_state_t * const state) {
 
   for (f_number_unsigned_t i = 0; i < contents.used; ++i, ++headers->used) {
 

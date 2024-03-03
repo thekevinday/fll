@@ -29,6 +29,6 @@ extern void test__fl_fss_payload_header_map__abstruse_uint8s__works_join(void **
  * @param state
  *   The state parameter.
  */
-void test__fl_fss_payload_header_map__abstruse_uint8s__join_load_contents_at(const f_string_static_t object, const f_string_dynamics_t contents, f_abstruse_maps_t * const headers, f_state_t * const state);
+extern void test__fl_fss_payload_header_map__abstruse_uint8s__join_load_contents(const f_string_static_t object, const f_string_dynamics_t contents, f_abstruse_maps_t * const headers, f_state_t * const state);
 
 #endif // _TEST__FL_fss_payload_header_map__abstruse_uint8s_join_h

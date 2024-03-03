@@ -7,8 +7,8 @@
  *
  * Helper for the fss project tests.
  */
-#ifndef _HELP__FL_fss_number_h
-#define _HELP__FL_fss_number_h
+#ifndef _HELP__FL_fss_payload_h
+#define _HELP__FL_fss_payload_h
 
 #ifdef __cplusplus
 extern "C" {
@@ -23,13 +23,13 @@ extern "C" {
  *   The context name of the headers file for data__file_open__named_at().
  * @param flag
  *   The payload header state data flag.
- * @param load_contents_at
+ * @param load_contents
  *   A callback to perform the type-specific content loading translation of the number.
  */
-void help_number__test_payload(const f_string_t context_variables, const f_string_t context_headers, const uint64_t flag, void (*load_contents_at)(const f_string_static_t object, const f_string_dynamics_t contents, f_abstruse_maps_t * const headers, f_state_t * const state));
+void help_payload__test(const f_string_t context_variables, const f_string_t context_headers, const uint64_t flag, void (*load_contents)(const f_string_static_t object, const f_string_dynamics_t contents, f_abstruse_maps_t * const headers, f_state_t * const state));
 
 #ifdef __cplusplus
 } // extern "C"
 #endif
 
-#endif // _HELP__FL_fss_number_h
+#endif // _HELP__FL_fss_payload_h

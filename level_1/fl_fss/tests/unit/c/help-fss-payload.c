@@ -4,7 +4,7 @@
 extern "C" {
 #endif
 
-void help_number__test_payload(const f_string_t context_variables, const f_string_t context_headers, const uint64_t flag, void (*load_contents_at)(const f_string_static_t object, const f_string_dynamics_t contents, f_abstruse_maps_t * const headers, f_state_t * const state)) {
+void help_payload__test(const f_string_t context_variables, const f_string_t context_headers, const uint64_t flag, void (*load_contents)(const f_string_static_t object, const f_string_dynamics_t contents, f_abstruse_maps_t * const headers, f_state_t * const state)) {
 
   // Note: Each line should probably be at max 255 characters.
   //       The payload begins with a digit on the first line representing the number of Content lines following the Object line.
@@ -39,7 +39,7 @@ void help_number__test_payload(const f_string_t context_variables, const f_strin
       state.status = f_memory_array_increase(state.step_small, sizeof(f_abstruse_map_t), (void **) &headers.array, &headers.used, &headers.size);
       assert_true(F_status_is_error_not(state.status));
 
-      load_contents_at(object, contents, &headers, &state);
+      load_contents(object, contents, &headers, &state);
 
       if (object.string) free(object.string);
 

@@ -6,10 +6,10 @@ extern "C" {
 
 void test__fl_fss_payload_header_map__abstruse_int8s__works_join(void **void_state) {
 
-  help_number__test_payload("abstruse_int8s", "join-abstruse_int8s", f_fss_payload_header_map_flag_join_digits_e, test__fl_fss_payload_header_map__abstruse_int8s__join_load_contents_at);
+  help_payload__test("abstruse_int8s", "join-abstruse_int8s", f_fss_payload_header_map_flag_join_digits_e, test__fl_fss_payload_header_map__abstruse_int8s__join_load_contents);
 }
 
-void test__fl_fss_payload_header_map__abstruse_int8s__join_load_contents_at(const f_string_static_t object, const f_string_dynamics_t contents, f_abstruse_maps_t * const headers, f_state_t * const state) {
+void test__fl_fss_payload_header_map__abstruse_int8s__join_load_contents(const f_string_static_t object, const f_string_dynamics_t contents, f_abstruse_maps_t * const headers, f_state_t * const state) {
 
   f_int8s_t * const is_a = &headers->array[0].value.is.a_i8s;
 

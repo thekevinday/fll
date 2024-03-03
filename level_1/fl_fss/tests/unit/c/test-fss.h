@@ -38,7 +38,7 @@
 // Data includes.
 #include "data-fss.h"
 #include "help-fss.h"
-#include "help-fss-number.h"
+#include "help-fss-payload.h"
 
 // Test includes.
 #include "test-fss-basic_content_read.h"
