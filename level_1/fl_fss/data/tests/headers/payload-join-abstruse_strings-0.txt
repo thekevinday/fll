@@ -1,6 +1,3 @@
 a
-4
-0
-hello
-"some thing"
-3全#$⸙
+1
+"0 hello some thing 3全#$⸙ """

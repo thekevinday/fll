@@ -26,9 +26,12 @@ extern void test__fl_fss_payload_header_map__abstruse_uint8s__works_split(void *
  *   The contents parameter.
  * @param headers
  *   The headers parameter.
- * @param state
+* @param state
  *   The state parameter.
+ * @param extra
+ *   (optional) The extra parameter.
+ *   Set to NULL to not use.
  */
-extern void test__fl_fss_payload_header_map__abstruse_uint8s__split_load_contents(const f_string_static_t object, const f_string_dynamics_t contents, f_abstruse_maps_t * const headers, f_state_t * const state);
+extern void test__fl_fss_payload_header_map__abstruse_uint8s__split_load_contents(const f_string_static_t object, const f_string_dynamics_t contents, f_abstruse_maps_t * const headers, f_state_t * const state, void * extra);
 
 #endif // _TEST__FL_fss_payload_header_map__abstruse_uint8s_split_h

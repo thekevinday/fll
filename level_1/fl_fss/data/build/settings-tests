@@ -43,6 +43,7 @@ build_sources_program test-fss-payload_header_map-abstruse_signed-join.c test-fs
 build_sources_program test-fss-payload_header_map-abstruse_signeds-join.c test-fss-payload_header_map-abstruse_unsigneds-join.c
 build_sources_program test-fss-payload_header_map-abstruse_signeds-split.c test-fss-payload_header_map-abstruse_unsigneds-split.c
 build_sources_program test-fss-payload_header_map-abstruse_string-join.c
+build_sources_program test-fss-payload_header_map-abstruse_strings-join.c test-fss-payload_header_map-abstruse_strings-split.c
 
 build_sources_program test-fss.c data-fss.c help-fss.c help-fss-payload.c
 

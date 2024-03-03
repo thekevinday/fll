@@ -6,10 +6,10 @@ extern "C" {
 
 void test__fl_fss_payload_header_map__abstruse_int32s__works_split(void **void_state) {
 
-  help_payload__test("abstruse_int32s", "split-abstruse_int32s", 0, test__fl_fss_payload_header_map__abstruse_int32s__split_load_contents);
+  help_payload__test("abstruse_int32s", "split-abstruse_int32s", 0, test__fl_fss_payload_header_map__abstruse_int32s__split_load_contents, 0);
 }
 
-void test__fl_fss_payload_header_map__abstruse_int32s__split_load_contents(const f_string_static_t object, const f_string_dynamics_t contents, f_abstruse_maps_t * const headers, f_state_t * const state) {
+void test__fl_fss_payload_header_map__abstruse_int32s__split_load_contents(const f_string_static_t object, const f_string_dynamics_t contents, f_abstruse_maps_t * const headers, f_state_t * const state, void * extra) {
 
   f_int32s_t * const is_a = &headers->array[0].value.is.a_i32s;
 
