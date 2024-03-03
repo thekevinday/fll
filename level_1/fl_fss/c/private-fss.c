@@ -806,7 +806,7 @@ extern "C" {
     destination->string[destination->used++] = f_fss_placeholder_s.string[0];
     destination->string[destination->used++] = f_fss_placeholder_s.string[0];
 
-    // If there is an initial quote, then this must be quote and the existing quote must be delimited.
+    // If there is an initial quote, then this must be escaped.
     if (object.string[input_start] == quote_char) {
       quoted_is = F_true;
     }
@@ -992,14 +992,6 @@ extern "C" {
       else if (object.string[range->start] == quote_char) {
         item_first = range->start++;
 
-        // The very first quote, must be escaped, when quoting is disabled.
-        if (item_first == input_start) {
-          state->status = f_memory_array_increase(state->step_large, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
-          if (F_status_is_error(state->status)) break;
-
-          destination->string[used_start + 1] = f_fss_slash_s.string[0];
-        }
-
         f_fss_skip_past_delimit(object, range, state);
         if (F_status_is_error(state->status)) return;
 
@@ -1034,12 +1026,10 @@ extern "C" {
             break;
           }
 
-          if (item_first != input_start) {
-            state->status = f_memory_array_increase(state->step_large, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
-            if (F_status_is_error(state->status)) break;
+          state->status = f_memory_array_increase(state->step_large, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
+          if (F_status_is_error(state->status)) break;
 
-            destination->string[destination->used++] = f_fss_slash_s.string[0];
-          }
+          destination->string[destination->used++] = f_fss_slash_s.string[0];
 
           quoted_is = F_true;
         }
