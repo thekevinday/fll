@@ -1354,8 +1354,10 @@ extern "C" {
             private_fl_fss_basic_write(F_false, string_static, internal->quote, &internal->range, &destinations->array[destinations->used].value, state, (void * const) internal);
             if (F_status_is_error(state->status)) return F_true;
 
-            state->status = f_string_dynamic_append_assure(f_fss_extended_next_s, data->cache);
-            if (F_status_is_error(state->status)) return F_true;
+            if (internal->j + 1 < internal->l) {
+              state->status = f_string_dynamic_append_assure(f_fss_extended_next_s, &destinations->array[destinations->used].value);
+              if (F_status_is_error(state->status)) return F_true;
+            }
           }
           else if (data->flag & f_fss_payload_header_map_flag_null_string_e) {
             state->status = f_string_dynamic_append(internal->quote_null, &destinations->array[destinations->used].value);
