@@ -1,0 +1,31 @@
+name: Production - Run Tests
+
+on:
+  push:
+    branches: [ github ]
+
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: 'github'
+
+      - name: Add Dependencies
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y libcap-dev libcmocka-dev
+
+      - name: Run Tests Using GCC
+        run: |
+          cd $GITHUB_WORKSPACE
+          bash build/scripts/test.sh -p
+
+      - name: Run Tests Using CLang
+        run: |
+          cd $GITHUB_WORKSPACE
+          bash build/scripts/test.sh -p -c clang
