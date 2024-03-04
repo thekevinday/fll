@@ -9,7 +9,7 @@ build_name test-f_serialize
 
 version_major 0
 version_minor 6
-version_micro 9
+version_micro 10
 version_file major
 version_target major
 

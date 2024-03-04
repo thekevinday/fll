@@ -108,8 +108,8 @@ void test__f_iki_read__works(void **state) {
     macro_f_string_static_t_initialize("IKI Content:\"May have spaces\\\" and quotes.\"", 0, 43),
     macro_f_string_static_t_initialize("IKI Content:'May have spaces\\' and\" quotes.'", 0, 44),
     macro_f_string_static_t_initialize("IKI Content:\"May have spaces\\\" and' quotes.\"", 0, 44),
-    macro_f_string_static_t_initialize("url:'https://localhost/fake-0.6.9.tar.gz?query=xx&parameter=yyy%20' end.", 0, 72),
-    macro_f_string_static_t_initialize("url:\"https://localhost/fake-0.6.9.tar.gz?query=xx&parameter=yyy%20\" end.", 0, 72),
+    macro_f_string_static_t_initialize("url:'https://localhost/fake-0.6.10.tar.gz?query=xx&parameter=yyy%20' end.", 0, 72),
+    macro_f_string_static_t_initialize("url:\"https://localhost/fake-0.6.10.tar.gz?query=xx&parameter=yyy%20\" end.", 0, 72),
   };
 
   const f_array_length_t matches[] = {
