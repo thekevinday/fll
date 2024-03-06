@@ -1042,6 +1042,30 @@ extern "C" {
       }
       else if (object.string[range->start] != f_fss_delimit_placeholder_s.string[0]) {
         if (!quote_is) {
+          if (object.string[range->start] == f_string_ascii_quote_double_s.string[0] || object.string[range->start] == f_string_ascii_quote_single_s.string[0] || object.string[range->start] == f_string_ascii_grave_s.string[0]) {
+            item_first = range->start++;
+
+            status = f_fss_skip_past_delimit(state, object, range);
+            if (F_status_is_error(status)) return status;
+
+            if (range->start > range->stop || range->start >= object.used) {
+              quote_is = F_true;
+            }
+            else if (object.string[range->start] == object.string[item_first]) {
+              quote_is = F_true;
+            }
+            else {
+              status = f_fss_is_space(state, object, *range);
+              if (F_status_is_error(status)) break;
+
+              if (status == F_true) {
+                quote_is = F_true;
+              }
+            }
+
+            range->start = item_first;
+          }
+
           status = f_fss_is_space(state, object, *range);
           if (F_status_is_error(status)) break;
 
