@@ -60,6 +60,9 @@ int main(void) {
     cmocka_unit_test(test__fl_fss_extended_list_object_read__works),
 
     cmocka_unit_test(test__fl_fss_payload_header_map__returns_data_not),
+    cmocka_unit_test(test__fl_fss_payload_header_map__abstruse_dynamic__works_join),
+    cmocka_unit_test(test__fl_fss_payload_header_map__abstruse_dynamics__works_join),
+    cmocka_unit_test(test__fl_fss_payload_header_map__abstruse_dynamics__works_split),
     cmocka_unit_test(test__fl_fss_payload_header_map__abstruse_int8s__works_join),
     cmocka_unit_test(test__fl_fss_payload_header_map__abstruse_int8s__works_split),
     cmocka_unit_test(test__fl_fss_payload_header_map__abstruse_int16s__works_join),
@@ -68,6 +71,8 @@ int main(void) {
     cmocka_unit_test(test__fl_fss_payload_header_map__abstruse_int32s__works_split),
     cmocka_unit_test(test__fl_fss_payload_header_map__abstruse_int64s__works_join),
     cmocka_unit_test(test__fl_fss_payload_header_map__abstruse_int64s__works_split),
+    cmocka_unit_test(test__fl_fss_payload_header_map__abstruse_map__works_join),
+    cmocka_unit_test(test__fl_fss_payload_header_map__abstruse_map__works_split),
     cmocka_unit_test(test__fl_fss_payload_header_map__abstruse_signed__works_join),
     cmocka_unit_test(test__fl_fss_payload_header_map__abstruse_signeds__works_join),
     cmocka_unit_test(test__fl_fss_payload_header_map__abstruse_signeds__works_split),

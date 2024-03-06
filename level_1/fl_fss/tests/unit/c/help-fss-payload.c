@@ -67,11 +67,11 @@ void help_payload__test(const f_string_t context_variables, const f_string_t con
 
       for (f_number_unsigned_t i = 0; i < destinations.used; ++i) {
 
-        assert_int_equal(destinations.array[i].key.used, expects.array[i].key.used);
-        assert_int_equal(destinations.array[i].value.used, expects.array[i].value.used);
-
         assert_string_equal(destinations.array[i].key.string, expects.array[i].key.string);
         assert_string_equal(destinations.array[i].value.string, expects.array[i].value.string);
+
+        assert_int_equal(destinations.array[i].key.used, expects.array[i].key.used);
+        assert_int_equal(destinations.array[i].value.used, expects.array[i].value.used);
       } // for
 
       if (object.string) free(object.string);

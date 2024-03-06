@@ -81,7 +81,7 @@ extern "C" {
         destinations->array[destinations->used].key.used = 0;
         destinations->array[destinations->used].value.used = 0;
 
-        internal.range.start = 0;
+        internal.range.start = headers.array[internal.i].key.used ? 0 : 1;
         internal.range.stop = headers.array[internal.i].key.used ? headers.array[internal.i].key.used - 1 : 0;
 
         private_fl_fss_basic_write(F_true, headers.array[internal.i].key, internal.quote, &internal.range, &destinations->array[destinations->used].key, state, (void * const) &internal);

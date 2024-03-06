@@ -284,7 +284,6 @@ extern "C" {
     bool has_graph = F_false;
     bool do_prepend = prepend ? F_true : F_false;
 
-    f_number_unsigned_t i = 0;
     f_number_unsigned_t r = 0;
     f_number_unsigned_t slash_count = 0;
     f_number_unsigned_t start = 0;
@@ -490,9 +489,9 @@ extern "C" {
         state->status = f_memory_array_increase_by(width, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
         if (F_status_is_error(state->status)) break;
 
-        for (i = 0; i < width; ++i) {
-          destination->string[destination->used++] = content.string[range->start + i];
-        } // for
+        memcpy(destination->string + destination->used, content.string + range->start, width);
+
+        destination->used += width;
       }
 
       state->status = f_utf_buffer_increment(content, range, 1);
@@ -947,7 +946,6 @@ extern "C" {
 
     const f_number_unsigned_t destination_used = destination->used;
 
-    f_number_unsigned_t i = 0;
     f_number_unsigned_t slash_count = 0;
 
     bool ends_on_space = F_false;
@@ -1003,9 +1001,9 @@ extern "C" {
           state->status = f_memory_array_increase_by(width, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
           if (F_status_is_error(state->status)) break;
 
-          for (i = 0; i < width; ++i) {
-            destination->string[destination->used++] = object.string[range->start + i];
-          } // for
+          memcpy(destination->string + destination->used, object.string + range->start, width);
+
+          destination->used += width;
         }
       }
 
@@ -1092,9 +1090,9 @@ extern "C" {
         state->status = f_memory_array_increase_by(width, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
         if (F_status_is_error(state->status)) break;
 
-        for (i = 0; i < width; ++i) {
-          destination->string[destination->used++] = object.string[range->start + i];
-        } // for
+        memcpy(destination->string + destination->used, object.string + range->start, width);
+
+        destination->used += width;
       }
 
       state->status = f_utf_buffer_increment(object, range, 1);

@@ -81,7 +81,7 @@ extern "C" {
  */
 #ifndef _di_fss_write_setting_t_
   typedef struct {
-    uint16_t flag;
+    uint32_t flag;
 
     f_status_t status_signal;
     f_state_t state;

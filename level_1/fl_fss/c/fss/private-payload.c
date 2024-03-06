@@ -73,6 +73,11 @@ extern "C" {
           }
         }
       }
+      else if (destinations->array[destinations->used].value.used) {
+
+        // Remove the always added trailing extended next.
+        destinations->array[destinations->used].value.used -= f_fss_extended_next_s.used;
+      }
     }
     else {
       if (data->flag & f_fss_payload_header_map_flag_null_dynamic_e) {
@@ -135,8 +140,13 @@ extern "C" {
         data->cache->used -= f_fss_space_s.used;
       }
 
-      private_fl_fss_basic_write(F_false, *data->cache, 0, &internal->range, &destinations->array[destinations->used].value, state, (void * const) internal);
-      if (F_status_is_error(state->status)) return F_true;
+      if (data->cache->used) {
+        internal->range.start = 0;
+        internal->range.stop = data->cache->used - 1;
+
+        private_fl_fss_basic_write(F_false, *data->cache, 0, &internal->range, &destinations->array[destinations->used].value, state, (void * const) internal);
+        if (F_status_is_error(state->status)) return F_true;
+      }
     }
     else {
       if (map->key.used || (data->flag & f_fss_payload_header_map_flag_null_map_name_e)) {
@@ -266,8 +276,13 @@ extern "C" {
         data->cache->used -= f_fss_space_s.used;
       }
 
-      private_fl_fss_basic_write(F_false, *data->cache, 0, &internal->range, &destinations->array[destinations->used].value, state, (void * const) internal);
-      if (F_status_is_error(state->status)) return F_true;
+      if (data->cache->used) {
+        internal->range.start = 0;
+        internal->range.stop = data->cache->used - 1;
+
+        private_fl_fss_basic_write(F_false, *data->cache, 0, &internal->range, &destinations->array[destinations->used].value, state, (void * const) internal);
+        if (F_status_is_error(state->status)) return F_true;
+      }
     }
     else {
       if (map->key.used || (data->flag & f_fss_payload_header_map_flag_null_map_multi_name_e)) {
@@ -434,8 +449,13 @@ extern "C" {
           data->cache->used -= f_fss_space_s.used;
         }
 
-        private_fl_fss_basic_write(F_false, *data->cache, 0, &internal->range, &destinations->array[destinations->used].value, state, (void * const) internal);
-        if (F_status_is_error(state->status)) return F_true;
+        if (data->cache->used) {
+          internal->range.start = 0;
+          internal->range.stop = data->cache->used - 1;
+
+          private_fl_fss_basic_write(F_false, *data->cache, 0, &internal->range, &destinations->array[destinations->used].value, state, (void * const) internal);
+          if (F_status_is_error(state->status)) return F_true;
+        }
       }
       else if (data->flag & f_fss_payload_header_map_flag_join_map_multi_e) {
         data->cache->used = 0;
@@ -500,11 +520,16 @@ extern "C" {
             data->cache->used -= f_fss_space_s.used;
           }
 
-          private_fl_fss_basic_write(F_false, *data->cache, 0, &internal->range, &destinations->array[destinations->used].value, state, (void * const) internal);
-          if (F_status_is_error(state->status)) return F_true;
+          if (data->cache->used) {
+            internal->range.start = 0;
+            internal->range.stop = data->cache->used - 1;
 
-          state->status = f_string_dynamic_append_assure(f_fss_extended_next_s, &destinations->array[destinations->used].value);
-          if (F_status_is_error(state->status)) return F_true;
+            private_fl_fss_basic_write(F_false, *data->cache, 0, &internal->range, &destinations->array[destinations->used].value, state, (void * const) internal);
+            if (F_status_is_error(state->status)) return F_true;
+
+            state->status = f_string_dynamic_append_assure(f_fss_extended_next_s, &destinations->array[destinations->used].value);
+            if (F_status_is_error(state->status)) return F_true;
+          }
         } // for
 
         // Remove the always added trailing space.
@@ -703,8 +728,13 @@ extern "C" {
           data->cache->used -= f_fss_space_s.used;
         }
 
-        private_fl_fss_basic_write(F_false, *data->cache, 0, &internal->range, &destinations->array[destinations->used].value, state, (void * const) internal);
-        if (F_status_is_error(state->status)) return F_true;
+        if (data->cache->used) {
+          internal->range.start = 0;
+          internal->range.stop = data->cache->used - 1;
+
+          private_fl_fss_basic_write(F_false, *data->cache, 0, &internal->range, &destinations->array[destinations->used].value, state, (void * const) internal);
+          if (F_status_is_error(state->status)) return F_true;
+        }
       }
       else if (data->flag & f_fss_payload_header_map_flag_join_map_e) {
         data->cache->used = 0;
@@ -754,11 +784,16 @@ extern "C" {
             data->cache->used -= f_fss_space_s.used;
           }
 
-          private_fl_fss_basic_write(F_false, *data->cache, 0, &internal->range, &destinations->array[destinations->used].value, state, (void * const) internal);
-          if (F_status_is_error(state->status)) return F_true;
+          if (data->cache->used) {
+            internal->range.start = 0;
+            internal->range.stop = data->cache->used - 1;
 
-          state->status = f_string_dynamic_append_assure(f_fss_extended_next_s, &destinations->array[destinations->used].value);
-          if (F_status_is_error(state->status)) return F_true;
+            private_fl_fss_basic_write(F_false, *data->cache, 0, &internal->range, &destinations->array[destinations->used].value, state, (void * const) internal);
+            if (F_status_is_error(state->status)) return F_true;
+
+            state->status = f_string_dynamic_append_assure(f_fss_extended_next_s, &destinations->array[destinations->used].value);
+            if (F_status_is_error(state->status)) return F_true;
+          }
         } // for
 
         // Remove the always added trailing space.

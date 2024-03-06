@@ -936,9 +936,9 @@ extern "C" {
 
           destination->string[destination->used++] = quote_char;
 
-          for (i = 0; i < width; ++i) {
-            destination->string[destination->used++] = object.string[range->start + i];
-          } // for
+          memcpy(destination->string + destination->used, object.string + range->start, width);
+
+          destination->used += width;
         }
         else if ((flag & 0x1) && object.string[range->start] == f_fss_comment_s.string[0]) {
 
@@ -984,9 +984,9 @@ extern "C" {
             destination->string[destination->used++] = f_fss_slash_s.string[0];
           } // for
 
-          for (i = 0; i < width; ++i) {
-            destination->string[destination->used++] = object.string[range->start + i];
-          } // for
+          memcpy(destination->string + destination->used, object.string + range->start, width);
+
+          destination->used += width;
         }
       }
       else if (object.string[range->start] == quote_char) {
@@ -996,7 +996,6 @@ extern "C" {
         if (F_status_is_error(state->status)) return;
 
         if (range->start > range->stop || range->start >= object.used) {
-
           state->status = f_memory_array_increase(state->step_large, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
           if (F_status_is_error(state->status)) break;
 
@@ -1041,9 +1040,9 @@ extern "C" {
 
         destination->string[destination->used++] = quote_char;
 
-        for (i = 0; i < width; ++i) {
-          destination->string[destination->used++] = object.string[range->start + i];
-        } // for
+        memcpy(destination->string + destination->used, object.string + range->start, width);
+
+        destination->used += width;
       }
       else if (object.string[range->start] == f_fss_eol_s.string[0]) {
         state->status = F_status_set_error(F_okay_eol);
@@ -1052,6 +1051,28 @@ extern "C" {
       }
       else if (object.string[range->start] != f_fss_placeholder_s.string[0]) {
         if (!quoted_is) {
+          if (object.string[range->start] == f_string_ascii_quote_double_s.string[0] || object.string[range->start] == f_string_ascii_quote_single_s.string[0] || object.string[range->start] == f_string_ascii_grave_s.string[0]) {
+            item_first = range->start++;
+
+            f_fss_skip_past_delimit(object, range, state);
+            if (F_status_is_error(state->status)) return;
+
+            if (range->start > range->stop || range->start >= object.used) {
+              quoted_is = F_true;
+            }
+            else if (object.string[range->start] == object.string[item_first]) {
+              quoted_is = F_true;
+            }
+            else if (f_fss_is_space(object, *range, state) == F_true) {
+              quoted_is = F_true;
+            }
+            else if (F_status_is_error(state->status)) {
+              break;
+            }
+
+            range->start = item_first;
+          }
+
           if (f_fss_is_space(object, *range, state) == F_false) {
             if (F_status_is_error(state->status)) break;
           }
@@ -1065,9 +1086,9 @@ extern "C" {
         state->status = f_memory_array_increase_by(width, sizeof(f_char_t), (void **) &destination->string, &destination->used, &destination->size);
         if (F_status_is_error(state->status)) break;
 
-        for (i = 0; i < width; ++i) {
-          destination->string[destination->used++] = object.string[range->start + i];
-        } // for
+        memcpy(destination->string + destination->used, object.string + range->start, width);
+
+        destination->used += width;
       }
 
       state->status = f_utf_buffer_increment(object, range, 1);

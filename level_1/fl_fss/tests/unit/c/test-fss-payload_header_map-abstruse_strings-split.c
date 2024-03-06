@@ -19,8 +19,6 @@ void test__fl_fss_payload_header_map__abstruse_strings__split_load_contents(cons
 
   if (*strings) free(*strings);
 
-  //headers->array[0].value.is.a_strings = calloc(contents.used + 1, sizeof(f_string_t *));
-  //assert_int_not_equal(headers->array[0].value.is.a_strings, 0);
   *strings = calloc(contents.used + 1, sizeof(f_string_t *));
   assert_int_not_equal(*strings, 0);
 
