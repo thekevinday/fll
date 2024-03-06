@@ -1350,9 +1350,9 @@ extern "C" {
           status = f_string_dynamic_increase_by(width, destination);
           if (F_status_is_error(status)) break;
 
-          for (i = 0; i < width; ++i) {
-            destination->string[destination->used++] = object.string[range->start + i];
-          } // for
+          memcpy(destination->string + destination->used, object.string + range->start, width);
+
+          destination->used += width;
         }
       }
 
@@ -1444,9 +1444,9 @@ extern "C" {
         status = f_string_dynamic_increase_by(width, destination);
         if (F_status_is_error(status)) break;
 
-        for (i = 0; i < width; ++i) {
-          destination->string[destination->used++] = object.string[range->start + i];
-        } // for
+        memcpy(destination->string + destination->used, object.string + range->start, width);
+
+        destination->used += width;
       }
 
       status = f_utf_buffer_increment(object, range, 1);

@@ -916,9 +916,9 @@ extern "C" {
 
           destination->string[destination->used++] = quote_char;
 
-          for (i = 0; i < width; ++i) {
-            destination->string[destination->used++] = object.string[range->start + i];
-          } // for
+          memcpy(destination->string + destination->used, object.string + range->start, width);
+
+          destination->used += width;
         }
         else if ((flag & 0x1) && object.string[range->start] == f_fss_comment_s.string[0]) {
 
@@ -964,9 +964,9 @@ extern "C" {
             destination->string[destination->used++] = f_fss_delimit_slash_s.string[0];
           } // for
 
-          for (i = 0; i < width; ++i) {
-            destination->string[destination->used++] = object.string[range->start + i];
-          } // for
+          memcpy(destination->string + destination->used, object.string + range->start, width);
+
+          destination->used += width;
         }
       }
       else if (object.string[range->start] == quote_char) {
@@ -1031,9 +1031,9 @@ extern "C" {
 
         destination->string[destination->used++] = quote_char;
 
-        for (i = 0; i < width; ++i) {
-          destination->string[destination->used++] = object.string[range->start + i];
-        } // for
+        memcpy(destination->string + destination->used, object.string + range->start, width);
+
+        destination->used += width;
       }
       else if (object.string[range->start] == f_fss_eol_s.string[0]) {
         status = F_status_set_error(F_none_eol);
@@ -1055,9 +1055,9 @@ extern "C" {
         status = f_string_dynamic_increase_by(width, destination);
         if (F_status_is_error(status)) break;
 
-        for (i = 0; i < width; ++i) {
-          destination->string[destination->used++] = object.string[range->start + i];
-        } // for
+        memcpy(destination->string + destination->used, object.string + range->start, width);
+
+        destination->used += width;
       }
 
       status = f_utf_buffer_increment(object, range, 1);
