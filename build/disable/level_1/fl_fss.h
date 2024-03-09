@@ -1,5 +1,3 @@
-#define _di_f_fss_payload_header_internal_t_
-#define _di_f_fss_payload_header_state_t_
 #define _di_f_fss_payload_header_write_d_
 #define _di_fl_fss_basic_content_read_
 #define _di_fl_fss_basic_content_write_
@@ -22,4 +20,6 @@
 #define _di_fl_fss_extended_object_read_
 #define _di_fl_fss_extended_object_write_
 #define _di_fl_fss_payload_d_
+#define _di_fl_fss_payload_header_internal_t_
 #define _di_fl_fss_payload_header_map_
+#define _di_fl_fss_payload_header_state_t_

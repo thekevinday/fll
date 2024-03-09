@@ -91,6 +91,94 @@ extern "C" {
 #endif // _di_f_abstrusess_t_
 
 /**
+ * Delete the f_abstruse_t structure.
+ *
+ * This only de-allocates the following:
+ *   - a_u8s
+ *   - a_u16s
+ *   - a_u32s
+ *   - a_u64s
+ *   - a_i8s
+ *   - a_i16s
+ *   - a_i32s
+ *   - a_i64s
+ *   - a_signeds
+ *   - a_unsigneds
+ *   - a_static (as an f_string_dynamic_t, if size > 0).
+ *   - a_statics (as an f_string_dynamics_t, if size > 0).
+ *   - a_map
+ *   - a_maps
+ *   - a_map_multi
+ *   - a_map_multis
+ *   - a_quantitys
+ *   - a_ranges
+ *   - a_triple
+ *   - a_triples
+ *
+ * For all other types, the caller must handle de-allocation to avoid memory leaks.
+ * Provide and use a custom callback if special handling of deallocation is needed.
+ *
+ * @param abstruse
+ *   The abstruse to delete.
+ *
+ * @return
+ *   F_okay on success, including when nothing done due to no match against the type.
+ *
+ *   Errors (with error bit) from: f_memory_array_resize().
+ *   Errors (with error bit) from: f_memory_arrays_resize().
+ *
+ * @see f_memory_array_resize()
+ * @see f_memory_arrays_resize()
+ */
+#ifndef _di_f_abstruse_delete_
+  extern f_status_t f_abstruse_delete(f_abstruse_t * const abstruse);
+#endif // _di_f_abstruse_delete_
+
+/**
+ * Destroy the f_abstruse_t structure.
+ *
+ * This only de-allocates the following:
+ *   - a_u8s
+ *   - a_u16s
+ *   - a_u32s
+ *   - a_u64s
+ *   - a_i8s
+ *   - a_i16s
+ *   - a_i32s
+ *   - a_i64s
+ *   - a_signeds
+ *   - a_unsigneds
+ *   - a_static (as an f_string_dynamic_t, if size > 0).
+ *   - a_statics (as an f_string_dynamics_t, if size > 0).
+ *   - a_map
+ *   - a_maps
+ *   - a_map_multi
+ *   - a_map_multis
+ *   - a_quantitys
+ *   - a_ranges
+ *   - a_triple
+ *   - a_triples
+ *
+ * For all other types, the caller must handle de-allocation to avoid memory leaks.
+ * Provide and use a custom callback if special handling of deallocation is needed.
+ *
+ * @param abstruse
+ *   The abstruse to destroy.
+ *
+ * @return
+ *   F_okay on success, including when nothing done due to no match against the type.
+ *
+ *   Errors (with error bit) from: f_memory_array_adjust().
+ *   Errors (with error bit) from: f_memory_arrays_adjust().
+ *
+ * @see f_memory_array_adjust()
+ * @see f_memory_arrays_adjust()
+ */
+#ifndef _di_f_abstruse_destroy_
+  extern f_status_t f_abstruse_destroy(f_abstruse_t * const abstruse);
+#endif // _di_f_abstruse_destroy_
+
+/**
  * A callback intended to be passed to f_memory_arrays_resize() for an f_abstruses_t structure.
  *
  * This callback only de-allocates the following:

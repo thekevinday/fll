@@ -5,6 +5,30 @@
 extern "C" {
 #endif
 
+#ifndef _di_f_abstruse_map_delete_
+  f_status_t f_abstruse_map_delete(f_abstruse_map_t * const map) {
+
+    {
+      const f_status_t status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &map->key.string, &map->key.used, &map->key.size);
+      if (F_status_is_error(status)) return status;
+    }
+
+    return private_f_abstruses_delete_switch(&map->value);
+  }
+#endif // _di_f_abstruse_map_delete_
+
+#ifndef _di_f_abstruse_map_destroy_
+  f_status_t f_abstruse_map_destroy(f_abstruse_map_t * const map) {
+
+    {
+      const f_status_t status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &map->key.string, &map->key.used, &map->key.size);
+      if (F_status_is_error(status)) return status;
+    }
+
+    return private_f_abstruses_destroy_switch(&map->value);
+  }
+#endif // _di_f_abstruse_map_destroy_
+
 #ifndef _di_f_abstruse_maps_delete_callback_
   f_status_t f_abstruse_maps_delete_callback(const f_number_unsigned_t start, const f_number_unsigned_t stop, void * const void_array) {
 

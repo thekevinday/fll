@@ -5,6 +5,20 @@
 extern "C" {
 #endif
 
+#ifndef _di_f_abstruse_delete_
+  f_status_t f_abstruse_delete(f_abstruse_t * const abstruse) {
+
+    return private_f_abstruses_delete_switch(abstruse);
+  }
+#endif // _di_f_abstruse_delete_
+
+#ifndef _di_f_abstruse_destroy_
+  f_status_t f_abstruse_destroy(f_abstruse_t * const abstruse) {
+
+    return private_f_abstruses_destroy_switch(abstruse);
+  }
+#endif // _di_f_abstruse_destroy_
+
 #ifndef _di_f_abstruses_delete_callback_
   f_status_t f_abstruses_delete_callback(const f_number_unsigned_t start, const f_number_unsigned_t stop, void * const void_array) {
 

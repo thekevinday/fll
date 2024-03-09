@@ -14,11 +14,15 @@ void help_payload__test(const f_string_t context_variables, const f_string_t con
   FILE *file_variables = data__file_open__named("variables", "payload", context_variables);
   FILE *file_headers = 0;
 
+  if (!file_variables) {
+    printf("[  ERROR   ] --- Opening File: variables/payload-%s.txt returned NULL.\n", context_variables);
+  }
+
   assert_non_null(file_variables);
 
   f_abstruse_maps_t headers = f_abstruse_maps_t_initialize;
   f_state_t state = f_state_t_initialize;
-  f_fss_payload_header_state_t data = f_fss_payload_header_state_t_initialize;
+  fl_fss_payload_header_state_t data = fl_fss_payload_header_state_t_initialize;
   f_string_dynamic_t object = f_string_dynamic_t_initialize;
   f_string_dynamics_t contents = f_string_dynamics_t_initialize;
   f_string_dynamic_t cache = f_string_dynamic_t_initialize;
@@ -50,6 +54,11 @@ void help_payload__test(const f_string_t context_variables, const f_string_t con
       ++headers.used;
 
       file_headers = data__file_open__named_at("headers", "payload", context_headers, at);
+
+      if (!file_headers) {
+        printf("[  ERROR   ] --- Opening File: headers/payload-%s-%d.txt returned NULL.\n", context_headers, at);
+      }
+
       assert_non_null(file_headers);
 
       help__read_line_object(file_headers, &object);
@@ -66,6 +75,10 @@ void help_payload__test(const f_string_t context_variables, const f_string_t con
       assert_int_equal(destinations.used, expects.used);
 
       for (f_number_unsigned_t i = 0; i < destinations.used; ++i) {
+
+        if (destinations.array[i].key.used != expects.array[i].key.used || destinations.array[i].value.used != expects.array[i].value.used || strncmp(destinations.array[i].key.string, expects.array[i].key.string, expects.array[i].key.used) || strncmp(destinations.array[i].value.string, expects.array[i].value.string, expects.array[i].value.used)) {
+          printf("[  ERROR   ] --- Match failure: [%lu] key[%lu]='%s', value[%lu]='%s' vs expected key[%lu]='%s', value[%lu]='%s'\n", i, destinations.array[i].key.used, destinations.array[i].key.string, destinations.array[i].value.used, destinations.array[i].value.string, expects.array[i].key.used, expects.array[i].key.string, expects.array[i].value.used, expects.array[i].value.string);
+        }
 
         assert_string_equal(destinations.array[i].key.string, expects.array[i].key.string);
         assert_string_equal(destinations.array[i].value.string, expects.array[i].value.string);

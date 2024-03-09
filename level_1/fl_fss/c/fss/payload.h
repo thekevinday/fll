@@ -71,17 +71,17 @@ extern "C" {
  *   A state for providing flags and handling interrupts during long running operations.
  *   The state.handle() is optionally allowed.
  *   There is no "callbacks" structure.
- *   The data is required and set to f_fss_payload_header_state_t.
+ *   The data is required and set to fl_fss_payload_header_state_t.
  *   The data.cache must not be NULL.
  *
  *   The optional state->handle() is called on error and the handler may alter the status to not have an error bit step to prevent returning except for when there is an invalid parameter passed to this function.
- *   The second parameter is a f_fss_payload_header_internal_t.
+ *   The second parameter is a fl_fss_payload_header_internal_t.
  *   The second parameter to state->handle() is NULL on invalid paramter passed to this function.
  *
  *   When state.interrupt() returns, only F_interrupt and F_interrupt_not are processed.
  *   Error bit designates an error but must be passed along with F_interrupt.
  *   All other statuses are ignored.
- *   The second parameter is a f_fss_payload_header_internal_t.
+ *   The second parameter is a fl_fss_payload_header_internal_t.
  *
  *   Must not be NULL.
  *

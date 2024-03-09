@@ -1,4 +1,8 @@
+#define _di_f_abstruse_delete_
+#define _di_f_abstruse_destroy_
 #define _di_f_abstruse_e_
+#define _di_f_abstruse_map_delete_
+#define _di_f_abstruse_map_destroy_
 #define _di_f_abstruse_maps_delete_callback_
 #define _di_f_abstruse_maps_destroy_callback_
 #define _di_f_abstruse_mapss_delete_callback_

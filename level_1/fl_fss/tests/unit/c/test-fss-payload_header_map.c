@@ -8,7 +8,7 @@ void test__fl_fss_payload_header_map__parameter_checking(void **void_state) {
 
   const f_abstruse_maps_t headers = f_abstruse_maps_t_initialize;
   f_state_t state = f_state_t_initialize;
-  f_fss_payload_header_state_t data = f_fss_payload_header_state_t_initialize;
+  fl_fss_payload_header_state_t data = fl_fss_payload_header_state_t_initialize;
   f_string_dynamic_t cache = f_string_dynamic_t_initialize;
   f_string_maps_t destinations = f_string_maps_t_initialize;
 
@@ -57,7 +57,7 @@ void test__fl_fss_payload_header_map__returns_data_not(void **void_state) {
 
   const f_abstruse_maps_t headers = f_abstruse_maps_t_initialize;
   f_state_t state = f_state_t_initialize;
-  f_fss_payload_header_state_t data = f_fss_payload_header_state_t_initialize;
+  fl_fss_payload_header_state_t data = fl_fss_payload_header_state_t_initialize;
   f_string_dynamic_t cache = f_string_dynamic_t_initialize;
   f_string_maps_t destinations = f_string_maps_t_initialize;
 

@@ -100,8 +100,4 @@
 #define _di_f_fss_skip_past_delimit_
 #define _di_f_fss_skip_past_space_
 #define _di_f_fss_state_flag_e_
-#define _di_f_fss_status_codes_e_
-#define _di_f_fss_status_error_e_
-#define _di_f_fss_status_success_e_
-#define _di_f_fss_status_warning_e_
 #define _di_f_fss_type_s_

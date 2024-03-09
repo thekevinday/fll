@@ -23,7 +23,7 @@ extern "C" {
  * @param headers
  *   An abstruse map representing individual headers.
  * @param data
- *   The f_fss_payload_header_state_t pointer.
+ *   The fl_fss_payload_header_state_t pointer.
  *   This modifies data.cache.
  *   Must not be NULL.
  * @param state
@@ -41,7 +41,7 @@ extern "C" {
  *
  *   Must not be NULL.
  * @param internal
- *   The internal state, f_fss_payload_header_internal_t, created inside of fl_fss_payload_header_map().
+ *   The internal state, fl_fss_payload_header_internal_t, created inside of fl_fss_payload_header_map().
  *   Must not be NULL.
  * @param buffers
  *   The array of dynamic strings to read from.
@@ -66,7 +66,7 @@ extern "C" {
  * @see fl_fss_payload_header_map()
  */
 #if !defined(_di_fl_fss_payload_header_map_)
-  extern uint8_t private_fl_payload_header_map_dynamics(f_fss_payload_header_state_t * const data, f_state_t * const state, f_fss_payload_header_internal_t * const internal, f_string_statics_t * const buffers, f_string_maps_t * const destinations) F_attribute_visibility_internal_d;
+  extern uint8_t private_fl_payload_header_map_dynamics(fl_fss_payload_header_state_t * const data, f_state_t * const state, fl_fss_payload_header_internal_t * const internal, f_string_statics_t * const buffers, f_string_maps_t * const destinations) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fl_fss_payload_header_map_)
 
 /**
@@ -75,7 +75,7 @@ extern "C" {
  * This expects that the appropriate used and flag checks are performed prior to calling this.
  *
  * @param data
- *   The f_fss_payload_header_state_t pointer.
+ *   The fl_fss_payload_header_state_t pointer.
  *   Must not be NULL.
  * @param state
  *   The state passed directly from the fl_fss_payload_header_map() parameters.
@@ -89,7 +89,7 @@ extern "C" {
  *
  *   Must not be NULL.
  * @param internal
- *   The internal state, f_fss_payload_header_internal_t, created inside of fl_fss_payload_header_map().
+ *   The internal state, fl_fss_payload_header_internal_t, created inside of fl_fss_payload_header_map().
  *   Must not be NULL.
  * @param map
  *   The map to read from.
@@ -113,7 +113,7 @@ extern "C" {
  * @see fl_fss_payload_header_map()
  */
 #if !defined(_di_fl_fss_payload_header_map_)
-  extern uint8_t private_fl_payload_header_map_map(f_fss_payload_header_state_t * const data, f_state_t * const state, f_fss_payload_header_internal_t * const internal, f_string_map_t * const map, f_string_maps_t * const destinations) F_attribute_visibility_internal_d;
+  extern uint8_t private_fl_payload_header_map_map(fl_fss_payload_header_state_t * const data, f_state_t * const state, fl_fss_payload_header_internal_t * const internal, f_string_map_t * const map, f_string_maps_t * const destinations) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fl_fss_payload_header_map_)
 
 /**
@@ -122,7 +122,7 @@ extern "C" {
  * This expects that the appropriate used and flag checks are performed prior to calling this.
  *
  * @param data
- *   The f_fss_payload_header_state_t pointer.
+ *   The fl_fss_payload_header_state_t pointer.
  *   Must not be NULL.
  * @param state
  *   The state passed directly from the fl_fss_payload_header_map() parameters.
@@ -136,7 +136,7 @@ extern "C" {
  *
  *   Must not be NULL.
  * @param internal
- *   The internal state, f_fss_payload_header_internal_t, created inside of fl_fss_payload_header_map().
+ *   The internal state, fl_fss_payload_header_internal_t, created inside of fl_fss_payload_header_map().
  *   Must not be NULL.
  * @param map
  *   The map to read from.
@@ -160,7 +160,7 @@ extern "C" {
  * @see fl_fss_payload_header_map()
  */
 #if !defined(_di_fl_fss_payload_header_map_)
-  extern uint8_t private_fl_payload_header_map_map_multi(f_fss_payload_header_state_t * const data, f_state_t * const state, f_fss_payload_header_internal_t * const internal, f_string_map_multi_t * const map, f_string_maps_t * const destinations) F_attribute_visibility_internal_d;
+  extern uint8_t private_fl_payload_header_map_map_multi(fl_fss_payload_header_state_t * const data, f_state_t * const state, fl_fss_payload_header_internal_t * const internal, f_string_map_multi_t * const map, f_string_maps_t * const destinations) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fl_fss_payload_header_map_)
 
 /**
@@ -169,7 +169,7 @@ extern "C" {
  * This expects that the appropriate used and flag checks are performed prior to calling this.
  *
  * @param data
- *   The f_fss_payload_header_state_t pointer.
+ *   The fl_fss_payload_header_state_t pointer.
  *   Must not be NULL.
  * @param state
  *   The state passed directly from the fl_fss_payload_header_map() parameters.
@@ -183,7 +183,7 @@ extern "C" {
  *
  *   Must not be NULL.
  * @param internal
- *   The internal state, f_fss_payload_header_internal_t, created inside of fl_fss_payload_header_map().
+ *   The internal state, fl_fss_payload_header_internal_t, created inside of fl_fss_payload_header_map().
  *   Must not be NULL.
  * @param maps
  *   The maps to read from.
@@ -207,7 +207,7 @@ extern "C" {
  * @see fl_fss_payload_header_map()
  */
 #if !defined(_di_fl_fss_payload_header_maps_)
-  extern uint8_t private_fl_payload_header_map_map_multis(f_fss_payload_header_state_t * const data, f_state_t * const state, f_fss_payload_header_internal_t * const internal, f_string_map_multis_t * const maps, f_string_maps_t * const destinations) F_attribute_visibility_internal_d;
+  extern uint8_t private_fl_payload_header_map_map_multis(fl_fss_payload_header_state_t * const data, f_state_t * const state, fl_fss_payload_header_internal_t * const internal, f_string_map_multis_t * const maps, f_string_maps_t * const destinations) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fl_fss_payload_header_maps_)
 
 /**
@@ -216,7 +216,7 @@ extern "C" {
  * This expects that the appropriate used and flag checks are performed prior to calling this.
  *
  * @param data
- *   The f_fss_payload_header_state_t pointer.
+ *   The fl_fss_payload_header_state_t pointer.
  *   Must not be NULL.
  * @param state
  *   The state passed directly from the fl_fss_payload_header_map() parameters.
@@ -230,7 +230,7 @@ extern "C" {
  *
  *   Must not be NULL.
  * @param internal
- *   The internal state, f_fss_payload_header_internal_t, created inside of fl_fss_payload_header_map().
+ *   The internal state, fl_fss_payload_header_internal_t, created inside of fl_fss_payload_header_map().
  *   Must not be NULL.
  * @param maps
  *   The maps to read from.
@@ -254,7 +254,7 @@ extern "C" {
  * @see fl_fss_payload_header_map()
  */
 #if !defined(_di_fl_fss_payload_header_maps_)
-  extern uint8_t private_fl_payload_header_map_maps(f_fss_payload_header_state_t * const data, f_state_t * const state, f_fss_payload_header_internal_t * const internal, f_string_maps_t * const maps, f_string_maps_t * const destinations) F_attribute_visibility_internal_d;
+  extern uint8_t private_fl_payload_header_map_maps(fl_fss_payload_header_state_t * const data, f_state_t * const state, fl_fss_payload_header_internal_t * const internal, f_string_maps_t * const maps, f_string_maps_t * const destinations) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fl_fss_payload_header_maps_)
 
 /**
@@ -264,7 +264,7 @@ extern "C" {
  * If the number is not appended to data->cache, then nothing is appended to the destination value.
  *
  * @param data
- *   The f_fss_payload_header_state_t pointer.
+ *   The fl_fss_payload_header_state_t pointer.
  *   This caller must reset data.cache.used as needed.
  *   If data.cache.used is not 0, then this will append a space before adding the converted number.
  *   Must not be NULL.
@@ -279,7 +279,7 @@ extern "C" {
  *
  *   Must not be NULL.
  * @param internal
- *   The internal state, f_fss_payload_header_internal_t, created inside of fl_fss_payload_header_map().
+ *   The internal state, fl_fss_payload_header_internal_t, created inside of fl_fss_payload_header_map().
  *   Must not be NULL.
  * @param number
  *   The signed number.
@@ -295,7 +295,7 @@ extern "C" {
  * @see fl_fss_payload_header_map()
  */
 #if !defined(_di_fl_fss_payload_header_map_)
-  extern uint8_t private_fl_payload_header_map_number_signed(f_fss_payload_header_state_t * const data, f_state_t * const state, f_fss_payload_header_internal_t * const internal, const f_number_signed_t number) F_attribute_visibility_internal_d;
+  extern uint8_t private_fl_payload_header_map_number_signed(fl_fss_payload_header_state_t * const data, f_state_t * const state, fl_fss_payload_header_internal_t * const internal, const f_number_signed_t number) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fl_fss_payload_header_map_)
 
 /**
@@ -305,7 +305,7 @@ extern "C" {
  * If the number is not appended to data->cache, then nothing is appended to the destination value.
  *
  * @param data
- *   The f_fss_payload_header_state_t pointer.
+ *   The fl_fss_payload_header_state_t pointer.
  *   This caller must reset data.cache.used as needed.
  *   if data.cache.used is not 0, then this will append a space before adding the converted number.
  *
@@ -321,7 +321,7 @@ extern "C" {
  *
  *   Must not be NULL.
  * @param internal
- *   The internal state, f_fss_payload_header_internal_t, created inside of fl_fss_payload_header_map().
+ *   The internal state, fl_fss_payload_header_internal_t, created inside of fl_fss_payload_header_map().
  *   Must not be NULL.
  * @param number
  *   The unsigned number.
@@ -337,7 +337,7 @@ extern "C" {
  * @see fl_fss_payload_header_map()
  */
 #if !defined(_di_fl_fss_payload_header_map_)
-  extern uint8_t private_fl_payload_header_map_number_unsigned(f_fss_payload_header_state_t * const data, f_state_t * const state, f_fss_payload_header_internal_t * const internal, const f_number_unsigned_t number) F_attribute_visibility_internal_d;
+  extern uint8_t private_fl_payload_header_map_number_unsigned(fl_fss_payload_header_state_t * const data, f_state_t * const state, fl_fss_payload_header_internal_t * const internal, const f_number_unsigned_t number) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fl_fss_payload_header_map_)
 
 /**
@@ -348,7 +348,7 @@ extern "C" {
  * @param headers
  *   An abstruse map representing individual headers.
  * @param data
- *   The f_fss_payload_header_state_t pointer.
+ *   The fl_fss_payload_header_state_t pointer.
  *   This modifies data.cache.
  *   Must not be NULL.
  * @param state
@@ -365,7 +365,7 @@ extern "C" {
  *
  *   Must not be NULL.
  * @param internal
- *   The internal state, f_fss_payload_header_internal_t, created inside of fl_fss_payload_header_map().
+ *   The internal state, fl_fss_payload_header_internal_t, created inside of fl_fss_payload_header_map().
  *   Must not be NULL.
  * @param quantity
  *   The quantity to process.
@@ -389,7 +389,7 @@ extern "C" {
  * @see fl_fss_payload_header_map()
  */
 #if !defined(_di_fl_fss_payload_header_map_)
-  extern uint8_t private_fl_payload_header_map_quantity(f_fss_payload_header_state_t * const data, f_state_t * const state, f_fss_payload_header_internal_t * const internal, const f_quantity_t quantity, f_string_maps_t * const destinations) F_attribute_visibility_internal_d;
+  extern uint8_t private_fl_payload_header_map_quantity(fl_fss_payload_header_state_t * const data, f_state_t * const state, fl_fss_payload_header_internal_t * const internal, const f_quantity_t quantity, f_string_maps_t * const destinations) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fl_fss_payload_header_map_)
 
 /**
@@ -400,7 +400,7 @@ extern "C" {
  * @param headers
  *   An abstruse map representing individual headers.
  * @param data
- *   The f_fss_payload_header_state_t pointer.
+ *   The fl_fss_payload_header_state_t pointer.
  *   This modifies data.cache.
  *   Must not be NULL.
  * @param state
@@ -417,7 +417,7 @@ extern "C" {
  *
  *   Must not be NULL.
  * @param internal
- *   The internal state, f_fss_payload_header_internal_t, created inside of fl_fss_payload_header_map().
+ *   The internal state, fl_fss_payload_header_internal_t, created inside of fl_fss_payload_header_map().
  *   Must not be NULL.
  * @param quantity
  *   The quantity to process.
@@ -441,7 +441,7 @@ extern "C" {
  * @see fl_fss_payload_header_map()
  */
 #if !defined(_di_fl_fss_payload_header_map_)
-  extern uint8_t private_fl_payload_header_map_quantitys(f_fss_payload_header_state_t * const data, f_state_t * const state, f_fss_payload_header_internal_t * const internal, const f_quantitys_t quantitys, f_string_maps_t * const destinations) F_attribute_visibility_internal_d;
+  extern uint8_t private_fl_payload_header_map_quantitys(fl_fss_payload_header_state_t * const data, f_state_t * const state, fl_fss_payload_header_internal_t * const internal, const f_quantitys_t quantitys, f_string_maps_t * const destinations) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fl_fss_payload_header_map_)
 
 /**
@@ -452,7 +452,7 @@ extern "C" {
  * @param headers
  *   An abstruse map representing individual headers.
  * @param data
- *   The f_fss_payload_header_state_t pointer.
+ *   The fl_fss_payload_header_state_t pointer.
  *   This modifies data.cache.
  *   Must not be NULL.
  * @param state
@@ -469,7 +469,7 @@ extern "C" {
  *
  *   Must not be NULL.
  * @param internal
- *   The internal state, f_fss_payload_header_internal_t, created inside of fl_fss_payload_header_map().
+ *   The internal state, fl_fss_payload_header_internal_t, created inside of fl_fss_payload_header_map().
  *   Must not be NULL.
  * @param range
  *   The range to process.
@@ -493,7 +493,7 @@ extern "C" {
  * @see fl_fss_payload_header_map()
  */
 #if !defined(_di_fl_fss_payload_header_map_)
-  extern uint8_t private_fl_payload_header_map_range(f_fss_payload_header_state_t * const data, f_state_t * const state, f_fss_payload_header_internal_t * const internal, const f_range_t range, f_string_maps_t * const destinations) F_attribute_visibility_internal_d;
+  extern uint8_t private_fl_payload_header_map_range(fl_fss_payload_header_state_t * const data, f_state_t * const state, fl_fss_payload_header_internal_t * const internal, const f_range_t range, f_string_maps_t * const destinations) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fl_fss_payload_header_map_)
 
 /**
@@ -504,7 +504,7 @@ extern "C" {
  * @param headers
  *   An abstruse map representing individual headers.
  * @param data
- *   The f_fss_payload_header_state_t pointer.
+ *   The fl_fss_payload_header_state_t pointer.
  *   This modifies data.cache.
  *   Must not be NULL.
  * @param state
@@ -521,7 +521,7 @@ extern "C" {
  *
  *   Must not be NULL.
  * @param internal
- *   The internal state, f_fss_payload_header_internal_t, created inside of fl_fss_payload_header_map().
+ *   The internal state, fl_fss_payload_header_internal_t, created inside of fl_fss_payload_header_map().
  *   Must not be NULL.
  * @param range
  *   The range to process.
@@ -545,7 +545,7 @@ extern "C" {
  * @see fl_fss_payload_header_map()
  */
 #if !defined(_di_fl_fss_payload_header_map_)
-  extern uint8_t private_fl_payload_header_map_ranges(f_fss_payload_header_state_t * const data, f_state_t * const state, f_fss_payload_header_internal_t * const internal, const f_ranges_t ranges, f_string_maps_t * const destinations) F_attribute_visibility_internal_d;
+  extern uint8_t private_fl_payload_header_map_ranges(fl_fss_payload_header_state_t * const data, f_state_t * const state, fl_fss_payload_header_internal_t * const internal, const f_ranges_t ranges, f_string_maps_t * const destinations) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fl_fss_payload_header_map_)
 
 /**
@@ -556,7 +556,7 @@ extern "C" {
  * @param headers
  *   An abstruse map representing individual headers.
  * @param data
- *   The f_fss_payload_header_state_t pointer.
+ *   The fl_fss_payload_header_state_t pointer.
  *   This modifies data.cache.
  *   Must not be NULL.
  * @param state
@@ -573,7 +573,7 @@ extern "C" {
  *
  *   Must not be NULL.
  * @param internal
- *   The internal state, f_fss_payload_header_internal_t, created inside of fl_fss_payload_header_map().
+ *   The internal state, fl_fss_payload_header_internal_t, created inside of fl_fss_payload_header_map().
  *   Must not be NULL.
  * @param buffers
  *   The array of NULL terminated strings to read from.
@@ -598,7 +598,7 @@ extern "C" {
  * @see fl_fss_payload_header_map()
  */
 #if !defined(_di_fl_fss_payload_header_map_)
-  extern uint8_t private_fl_payload_header_map_strings(f_fss_payload_header_state_t * const data, f_state_t * const state, f_fss_payload_header_internal_t * const internal, f_string_t * const buffers, f_string_maps_t * const destinations) F_attribute_visibility_internal_d;
+  extern uint8_t private_fl_payload_header_map_strings(fl_fss_payload_header_state_t * const data, f_state_t * const state, fl_fss_payload_header_internal_t * const internal, f_string_t * const buffers, f_string_maps_t * const destinations) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fl_fss_payload_header_map_)
 
 /**
@@ -609,7 +609,7 @@ extern "C" {
  * @param headers
  *   An abstruse map representing individual headers.
  * @param data
- *   The f_fss_payload_header_state_t pointer.
+ *   The fl_fss_payload_header_state_t pointer.
  *   This modifies data.cache.
  *   Must not be NULL.
  * @param state
@@ -626,7 +626,7 @@ extern "C" {
  *
  *   Must not be NULL.
  * @param internal
- *   The internal state, f_fss_payload_header_internal_t, created inside of fl_fss_payload_header_map().
+ *   The internal state, fl_fss_payload_header_internal_t, created inside of fl_fss_payload_header_map().
  *   Must not be NULL.
  * @param triple
  *   The triple to process.
@@ -650,7 +650,7 @@ extern "C" {
  * @see fl_fss_payload_header_map()
  */
 #if !defined(_di_fl_fss_payload_header_map_)
-  extern uint8_t private_fl_payload_header_map_triple(f_fss_payload_header_state_t * const data, f_state_t * const state, f_fss_payload_header_internal_t * const internal, const f_string_triple_t triple, f_string_maps_t * const destinations) F_attribute_visibility_internal_d;
+  extern uint8_t private_fl_payload_header_map_triple(fl_fss_payload_header_state_t * const data, f_state_t * const state, fl_fss_payload_header_internal_t * const internal, const f_string_triple_t triple, f_string_maps_t * const destinations) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fl_fss_payload_header_map_)
 
 /**
@@ -661,7 +661,7 @@ extern "C" {
  * @param headers
  *   An abstruse map representing individual headers.
  * @param data
- *   The f_fss_payload_header_state_t pointer.
+ *   The fl_fss_payload_header_state_t pointer.
  *   This modifies data.cache.
  *   Must not be NULL.
  * @param state
@@ -678,7 +678,7 @@ extern "C" {
  *
  *   Must not be NULL.
  * @param internal
- *   The internal state, f_fss_payload_header_internal_t, created inside of fl_fss_payload_header_map().
+ *   The internal state, fl_fss_payload_header_internal_t, created inside of fl_fss_payload_header_map().
  *   Must not be NULL.
  * @param triple
  *   The triple to process.
@@ -702,7 +702,7 @@ extern "C" {
  * @see fl_fss_payload_header_map()
  */
 #if !defined(_di_fl_fss_payload_header_map_)
-  extern uint8_t private_fl_payload_header_map_triples(f_fss_payload_header_state_t * const data, f_state_t * const state, f_fss_payload_header_internal_t * const internal, const f_string_triples_t triples, f_string_maps_t * const destinations) F_attribute_visibility_internal_d;
+  extern uint8_t private_fl_payload_header_map_triples(fl_fss_payload_header_state_t * const data, f_state_t * const state, fl_fss_payload_header_internal_t * const internal, const f_string_triples_t triples, f_string_maps_t * const destinations) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fl_fss_payload_header_map_)
 
 #ifdef __cplusplus

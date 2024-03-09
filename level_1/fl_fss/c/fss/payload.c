@@ -23,8 +23,8 @@ extern "C" {
       }
     #endif // _di_level_1_parameter_checking_
 
-    f_fss_payload_header_state_t * const data = (f_fss_payload_header_state_t *) state->data;
-    f_fss_payload_header_internal_t internal = macro_f_fss_payload_header_internal_t_initialize_2(destinations, destinations->used);
+    fl_fss_payload_header_state_t * const data = (fl_fss_payload_header_state_t *) state->data;
+    fl_fss_payload_header_internal_t internal = macro_fl_fss_payload_header_internal_t_initialize_2(destinations, destinations->used);
 
     if (!data->cache) {
       state->status = F_status_set_error(F_parameter);

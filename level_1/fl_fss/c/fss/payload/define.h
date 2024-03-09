@@ -23,7 +23,7 @@ extern "C" {
  *   Parameters:
  *     - destinations: The destinations passed directly from the fl_fss_payload_header_map() parameters.
  *     - state:        The state passed directly from the fl_fss_payload_header_map() parameters.
- *     - internal:     The internal state, f_fss_payload_header_internal_t, created inside of fl_fss_payload_header_map().
+ *     - internal:     The internal state, fl_fss_payload_header_internal_t, created inside of fl_fss_payload_header_map().
  *
  * macro_f_fss_payload_header_write_process_numbers_d:
  *   Process the numbers array (either signed or unsigned), converting it to a string.
@@ -32,9 +32,9 @@ extern "C" {
  *   This requires private_fl_payload_header_map_number_signed() from payload.c.
  *
  *   Parameters:
- *     - data:         The f_fss_payload_header_state_t pointer.
+ *     - data:         The fl_fss_payload_header_state_t pointer.
  *     - state:        The state passed directly from the fl_fss_payload_header_map() parameters.
- *     - internal:     The internal state, f_fss_payload_header_internal_t, created inside of fl_fss_payload_header_map().
+ *     - internal:     The internal state, fl_fss_payload_header_internal_t, created inside of fl_fss_payload_header_map().
  *     - numbers:      The is.a representing the array of signed numbers.
  *     - destinations: The destination strings to append to.
  *     - function:     The private signed/unsigned function to call.

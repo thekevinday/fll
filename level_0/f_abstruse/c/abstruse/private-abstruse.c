@@ -94,11 +94,12 @@ extern "C" {
         break;
 
       case f_abstruse_map_e:
-        if (abstruse->is.a_map.key.size) {
-          return f_memory_array_resize(0, sizeof(f_char_t), (void **) &abstruse->is.a_map.key.string, &abstruse->is.a_map.key.used, &abstruse->is.a_map.key.size);
-        }
+        if (abstruse->is.a_map.key.size || abstruse->is.a_map.value.size) {
+          {
+            const f_status_t status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &abstruse->is.a_map.key.string, &abstruse->is.a_map.key.used, &abstruse->is.a_map.key.size);
+            if (F_status_is_error(status)) return status;
+          }
 
-        if (abstruse->is.a_map.value.size) {
           return f_memory_array_resize(0, sizeof(f_char_t), (void **) &abstruse->is.a_map.value.string, &abstruse->is.a_map.value.used, &abstruse->is.a_map.value.size);
         }
 
@@ -112,11 +113,12 @@ extern "C" {
         break;
 
       case f_abstruse_map_multi_e:
-        if (abstruse->is.a_map_multi.key.size) {
-          return f_memory_array_resize(0, sizeof(f_char_t), (void **) &abstruse->is.a_map_multi.key.string, &abstruse->is.a_map_multi.key.used, &abstruse->is.a_map_multi.key.size);
-        }
+        if (abstruse->is.a_map_multi.key.size || abstruse->is.a_map_multi.value.size) {
+          {
+            const f_status_t status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &abstruse->is.a_map_multi.key.string, &abstruse->is.a_map_multi.key.used, &abstruse->is.a_map_multi.key.size);
+            if (F_status_is_error(status)) return status;
+          }
 
-        if (abstruse->is.a_map_multi.value.size) {
           return f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &abstruse->is.a_map_multi.value.array, &abstruse->is.a_map_multi.value.used, &abstruse->is.a_map_multi.value.size, &f_string_dynamics_delete_callback);
         }
 
@@ -137,7 +139,7 @@ extern "C" {
         break;
 
       case f_abstruse_ranges_e:
-        if (abstruse->is.a_quantitys.size) {
+        if (abstruse->is.a_ranges.size) {
           return f_memory_array_resize(0, sizeof(f_range_t), (void **) &abstruse->is.a_ranges.array, &abstruse->is.a_ranges.used, &abstruse->is.a_ranges.size);
         }
 

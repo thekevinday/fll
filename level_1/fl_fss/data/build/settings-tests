@@ -42,6 +42,9 @@ build_sources_program test-fss-payload_header_map-abstruse_int32s-split.c test-f
 build_sources_program test-fss-payload_header_map-abstruse_int64s-join.c test-fss-payload_header_map-abstruse_uint64s-join.c
 build_sources_program test-fss-payload_header_map-abstruse_int64s-split.c test-fss-payload_header_map-abstruse_uint64s-split.c
 build_sources_program test-fss-payload_header_map-abstruse_map-join.c test-fss-payload_header_map-abstruse_map-split.c
+build_sources_program test-fss-payload_header_map-abstruse_map_multi-join.c test-fss-payload_header_map-abstruse_map_multi-split.c
+build_sources_program test-fss-payload_header_map-abstruse_map_multis-join.c test-fss-payload_header_map-abstruse_map_multis-split.c
+build_sources_program test-fss-payload_header_map-abstruse_maps-join.c test-fss-payload_header_map-abstruse_maps-split.c
 build_sources_program test-fss-payload_header_map-abstruse_signed-join.c test-fss-payload_header_map-abstruse_unsigned-join.c
 build_sources_program test-fss-payload_header_map-abstruse_signeds-join.c test-fss-payload_header_map-abstruse_unsigneds-join.c
 build_sources_program test-fss-payload_header_map-abstruse_signeds-split.c test-fss-payload_header_map-abstruse_unsigneds-split.c

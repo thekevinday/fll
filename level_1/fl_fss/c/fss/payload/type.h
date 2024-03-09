@@ -33,7 +33,7 @@ extern "C" {
  *   - destinations: The destinations map being appended to.
  *   - original:     The original destination used length.
  */
-#ifndef _di_f_fss_payload_header_internal_t_
+#ifndef _di_fl_fss_payload_header_internal_t_
   typedef struct {
     uint8_t quote;
     uint16_t step;
@@ -48,9 +48,9 @@ extern "C" {
     f_string_static_t quote_null;
     f_string_maps_t * const destinations;
     const f_number_unsigned_t original;
-  } f_fss_payload_header_internal_t;
+  } fl_fss_payload_header_internal_t;
 
-  #define f_fss_payload_header_internal_t_initialize { \
+  #define fl_fss_payload_header_internal_t_initialize { \
     0, \
     0, \
     0, \
@@ -65,7 +65,7 @@ extern "C" {
     0, \
   }
 
-  #define macro_f_fss_payload_header_internal_t_initialize_1(quote, step, i, j, k, l, m, range, conversion, destinations, quote_null, original) { \
+  #define macro_fl_fss_payload_header_internal_t_initialize_1(quote, step, i, j, k, l, m, range, conversion, destinations, quote_null, original) { \
     quote, \
     step, \
     i, \
@@ -80,7 +80,7 @@ extern "C" {
     original, \
   }
 
-  #define macro_f_fss_payload_header_internal_t_initialize_2(destinations, original) { \
+  #define macro_fl_fss_payload_header_internal_t_initialize_2(destinations, original) { \
     0, \
     0, \
     0, \
@@ -94,7 +94,7 @@ extern "C" {
     destinations, \
     original, \
   }
-#endif // _di_f_fss_payload_header_internal_t_
+#endif // _di_fl_fss_payload_header_internal_t_
 
 /**
  * A state structure for passing data to FSS Payload header functions.
@@ -106,38 +106,38 @@ extern "C" {
  *   - conversion: The conversion data.
  *   - cache:      A string cache to use reduce re-allocations on the destination strings (generally required to not be NULL).
  */
-#ifndef _di_f_fss_payload_header_state_t_
+#ifndef _di_fl_fss_payload_header_state_t_
   typedef struct {
     uint64_t flag;
     f_conversion_data_t conversion;
 
     f_string_dynamic_t *cache;
-  } f_fss_payload_header_state_t;
+  } fl_fss_payload_header_state_t;
 
-  #define f_fss_payload_header_state_t_initialize { \
+  #define fl_fss_payload_header_state_t_initialize { \
     0, \
     f_conversion_data_base_10_c, \
     0, \
   }
 
-  #define macro_f_fss_payload_header_state_t_initialize_1(flag, conversion, cache) { \
+  #define macro_fl_fss_payload_header_state_t_initialize_1(flag, conversion, cache) { \
     0, \
     conversion, \
     cache, \
   }
 
-  #define macro_f_fss_payload_header_state_t_initialize_2(flag, cache) { \
+  #define macro_fl_fss_payload_header_state_t_initialize_2(flag, cache) { \
     flag, \
     f_conversion_data_base_10_c, \
     cache, \
   }
 
-  #define macro_f_fss_payload_header_state_t_initialize_3(cache) { \
+  #define macro_fl_fss_payload_header_state_t_initialize_3(cache) { \
     0, \
     f_conversion_data_base_10_c, \
     cache, \
   }
-#endif // _di_f_fss_payload_header_state_t_
+#endif // _di_fl_fss_payload_header_state_t_
 
 #ifdef __cplusplus
 } // extern "C"
