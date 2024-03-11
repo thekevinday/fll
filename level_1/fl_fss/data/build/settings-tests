@@ -45,11 +45,17 @@ build_sources_program test-fss-payload_header_map-abstruse_map-join.c test-fss-p
 build_sources_program test-fss-payload_header_map-abstruse_map_multi-join.c test-fss-payload_header_map-abstruse_map_multi-split.c
 build_sources_program test-fss-payload_header_map-abstruse_map_multis-join.c test-fss-payload_header_map-abstruse_map_multis-split.c
 build_sources_program test-fss-payload_header_map-abstruse_maps-join.c test-fss-payload_header_map-abstruse_maps-split.c
+build_sources_program test-fss-payload_header_map-abstruse_quantity-join.c test-fss-payload_header_map-abstruse_quantity-split.c
+build_sources_program test-fss-payload_header_map-abstruse_quantitys-join.c test-fss-payload_header_map-abstruse_quantitys-split.c
+build_sources_program test-fss-payload_header_map-abstruse_range-join.c test-fss-payload_header_map-abstruse_range-split.c
+build_sources_program test-fss-payload_header_map-abstruse_ranges-join.c test-fss-payload_header_map-abstruse_ranges-split.c
 build_sources_program test-fss-payload_header_map-abstruse_signed-join.c test-fss-payload_header_map-abstruse_unsigned-join.c
 build_sources_program test-fss-payload_header_map-abstruse_signeds-join.c test-fss-payload_header_map-abstruse_unsigneds-join.c
 build_sources_program test-fss-payload_header_map-abstruse_signeds-split.c test-fss-payload_header_map-abstruse_unsigneds-split.c
 build_sources_program test-fss-payload_header_map-abstruse_string-join.c
 build_sources_program test-fss-payload_header_map-abstruse_strings-join.c test-fss-payload_header_map-abstruse_strings-split.c
+build_sources_program test-fss-payload_header_map-abstruse_triple-join.c test-fss-payload_header_map-abstruse_triple-split.c
+build_sources_program test-fss-payload_header_map-abstruse_triples-join.c test-fss-payload_header_map-abstruse_triples-split.c
 
 build_sources_program test-fss.c data-fss.c help-fss.c help-fss-payload.c
 

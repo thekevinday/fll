@@ -270,12 +270,7 @@ extern "C" {
               break;
 
             case f_abstruse_quantity_e:
-              if (!headers.array[internal.i].value.is.a_quantity.total || (data->flag & f_fss_payload_header_map_flag_null_quantity_e)) {
-                if (private_fl_payload_header_map_quantity(data, state, &internal, headers.array[internal.i].value.is.a_quantity, destinations) == F_false) {
-                  ++destinations->used;
-                }
-              }
-              else if (data->flag & f_fss_payload_header_map_flag_null_e) {
+              if (private_fl_payload_header_map_quantity(data, state, &internal, headers.array[internal.i].value.is.a_quantity, destinations) == F_false) {
                 ++destinations->used;
               }
 

@@ -50,7 +50,6 @@ extern "C" {
  *   - null_map_value:             Types of map and maps has empty strings (such as "") added for NULL values (used is 0) for the map value.
  *   - null_map_value_name:        An enumeration value representing both null_map_name and null_map_value keys being set.
  *   - null_maps:                  Types of map and maps have empty strings added (such as "") added for when null_map_key and null_map_value are not set and both map key and map value have NULL values (used is 0).
- *   - null_quantity:              Types of quantity and quantitys have empty strings added (such as "") for when start > stop, aka NULL quantitys.
  *   - null_quantitys:             Types of quantitys have empty strings added (such as "") added for when the array is empty.
  *   - null_range:                 Types of range and ranges have empty strings added (such as "") for when start > stop, aka NULL ranges.
  *   - null_ranges:                Types of ranges have empty strings added (such as "") added for when the array is empty.
@@ -93,18 +92,17 @@ extern "C" {
     f_fss_payload_header_map_flag_null_map_value_e             = 0x100000,
     f_fss_payload_header_map_flag_null_map_value_name_e        = 0x180000,
     f_fss_payload_header_map_flag_null_maps_e                  = 0x200000,
-    f_fss_payload_header_map_flag_null_quantity_e              = 0x400000,
-    f_fss_payload_header_map_flag_null_quantitys_e             = 0x800000,
-    f_fss_payload_header_map_flag_null_range_e                 = 0x1000000,
-    f_fss_payload_header_map_flag_null_ranges_e                = 0x2000000,
-    f_fss_payload_header_map_flag_null_string_e                = 0x4000000,
-    f_fss_payload_header_map_flag_null_strings_e               = 0x8000000,
-    f_fss_payload_header_map_flag_null_triple_e                = 0x10000000,
-    f_fss_payload_header_map_flag_null_triples_e               = 0x20000000,
-    f_fss_payload_header_map_flag_quote_double_e               = 0x40000000,
-    f_fss_payload_header_map_flag_quote_grave_e                = 0x80000000,
-    f_fss_payload_header_map_flag_quote_single_e               = 0x10000000,
-    f_fss_payload_header_map_flag_last_e                       = 0x20000000,
+    f_fss_payload_header_map_flag_null_quantitys_e             = 0x400000,
+    f_fss_payload_header_map_flag_null_range_e                 = 0x800000,
+    f_fss_payload_header_map_flag_null_ranges_e                = 0x1000000,
+    f_fss_payload_header_map_flag_null_string_e                = 0x2000000,
+    f_fss_payload_header_map_flag_null_strings_e               = 0x4000000,
+    f_fss_payload_header_map_flag_null_triple_e                = 0x8000000,
+    f_fss_payload_header_map_flag_null_triples_e               = 0x10000000,
+    f_fss_payload_header_map_flag_quote_double_e               = 0x20000000,
+    f_fss_payload_header_map_flag_quote_grave_e                = 0x40000000,
+    f_fss_payload_header_map_flag_quote_single_e               = 0x80000000,
+    f_fss_payload_header_map_flag_last_e                       = 0x100000000,
   }; // enum
 #endif // _di_f_fss_payload_header_map_flag_e_
 

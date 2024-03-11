@@ -147,15 +147,18 @@ extern "C" {
 
       case f_abstruse_triple_e:
         if (abstruse->is.a_triple.a.size) {
-          return f_memory_array_resize(0, sizeof(f_char_t), (void **) &abstruse->is.a_triple.a.string, &abstruse->is.a_triple.a.used, &abstruse->is.a_triple.a.size);
+          const f_status_t status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &abstruse->is.a_triple.a.string, &abstruse->is.a_triple.a.used, &abstruse->is.a_triple.a.size);
+          if (F_status_is_error(status)) return status;
         }
 
         if (abstruse->is.a_triple.b.size) {
-          return f_memory_array_resize(0, sizeof(f_char_t), (void **) &abstruse->is.a_triple.b.string, &abstruse->is.a_triple.b.used, &abstruse->is.a_triple.b.size);
+          const f_status_t status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &abstruse->is.a_triple.b.string, &abstruse->is.a_triple.b.used, &abstruse->is.a_triple.b.size);
+          if (F_status_is_error(status)) return status;
         }
 
         if (abstruse->is.a_triple.c.size) {
-          return f_memory_array_resize(0, sizeof(f_char_t), (void **) &abstruse->is.a_triple.c.string, &abstruse->is.a_triple.c.used, &abstruse->is.a_triple.c.size);
+          const f_status_t status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &abstruse->is.a_triple.c.string, &abstruse->is.a_triple.c.used, &abstruse->is.a_triple.c.size);
+          if (F_status_is_error(status)) return status;
         }
 
         break;

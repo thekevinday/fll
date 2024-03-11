@@ -71,6 +71,11 @@ void help_payload__test(const f_string_t context_variables, const f_string_t con
       } // for
 
       fl_fss_payload_header_map(headers, &destinations, &state);
+
+      if (state.status != F_okay || destinations.used != expects.used) {
+        printf("[  ERROR   ] --- Failure mapping: headers/payload-%s-%d.txt.\n", context_headers, at);
+      }
+
       assert_int_equal(state.status, F_okay);
       assert_int_equal(destinations.used, expects.used);
 
