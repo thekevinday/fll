@@ -18,8 +18,7 @@ extern "C" {
         if (length_old) {
           if (length_new < length_old) {
 
-            // uint8_t * is of a data size size of 1, casting it to uint8_t should result in a single-length increment.
-            // This is done to avoid problems with (void *) having arithmetic issues.
+            // Casting (void *) to (uint8_t *) should result in an increment of size 1 and avoids problems with (void *) having arithmetic issues.
             memset((void *) (((uint8_t *) *pointer) + length_new), 0, type_size * (length_old - length_new));
           }
         }
@@ -36,8 +35,6 @@ extern "C" {
           #ifndef _f_memory_NO_zeroing_on_larger_
             if (length_new > length_old) {
 
-              // uint8_t * is of a data size size of 1, casting it to bool should result in a single-length increment.
-              // This is done to avoid problems with (void *) having arithmetic issues.
               memset((void *) (((uint8_t *) new_pointer) + (type_size * length_old)), 0, type_size * (length_new - length_old));
             }
           #endif // _f_memory_NO_zeroing_on_larger_
@@ -88,8 +85,7 @@ extern "C" {
           #ifndef _f_memory_NO_zeroing_on_larger_
             if (length_new > length_old) {
 
-              // uint8_t * is of a data size size of 1, casting it to bool should result in a single-length increment.
-              // This is done to avoid problems with (void *) having arithmetic issues.
+              // Casting (void *) to (uint8_t *) should result in an increment of size 1 and avoids problems with (void *) having arithmetic issues.
               memset((void *) (((uint8_t *) new_pointer) + (type_size * length_old)), 0, type_size * (length_new - length_old));
             }
           #endif // _f_memory_NO_zeroing_on_larger_
