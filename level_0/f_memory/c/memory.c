@@ -132,8 +132,7 @@ extern "C" {
       }
     #endif // _f_memory_USE_posix_memalign_
 
-    // uint8_t * is of a data size of 1, casting it to uint8_t should result in a single-length increment.
-    // This is done to avoid problems with (void *) having arithmetic issues.
+    // Casting (void *) to (uint8_t *) should result in an increment of size 1 and avoids problems with (void *) having arithmetic issues.
     memset(((uint8_t *) *pointer), 0, length);
 
     return F_none;
