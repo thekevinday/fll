@@ -25,7 +25,7 @@ build_language c
 build_libraries -lc -lcmocka
 build_libraries-individual -lf_memory -lf_random
 
-build_sources_program test-random-get.c test-random-read.c test-random-seed.c test-random-seed_set.c
+build_sources_program test-random-array_shuffle.c test-random-get.c test-random-read.c test-random-seed.c test-random-seed_set.c
 build_sources_program test-random.c
 
 build_script no

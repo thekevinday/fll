@@ -4,7 +4,13 @@
 extern "C" {
 #endif
 
+int mock_unwrap = 0;
+
 ssize_t __wrap_getrandom(void *buf, size_t buflen, unsigned int flags) {
+
+  if (mock_unwrap) {
+    return __real_getrandom(buf, buflen, flags);
+  }
 
   const bool failure = mock_type(bool);
 
@@ -20,10 +26,20 @@ ssize_t __wrap_getrandom(void *buf, size_t buflen, unsigned int flags) {
 }
 
 long __wrap_random(void) {
+
+  if (mock_unwrap) {
+    return __real_random();
+  }
+
   return mock_type(long);
 }
 
 void __wrap_srandom(unsigned seed) {
+
+  if (mock_unwrap) {
+    return __real_srandom(seed);
+  }
+
   // Do nothing.
 }
 

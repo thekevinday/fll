@@ -2,4 +2,6 @@
 
 f_type
 f_status
+f_memory
+f_type_array
 f_string

@@ -29,6 +29,64 @@ extern "C" {
 #endif
 
 /**
+ * Re-organize an array in a random order by swapping the values.
+ *
+ * The standard behavior of this is to call getrandom().
+ *
+ * The behavior of this function might also be replaced with calls to other libraries that are highly security specialized.
+ * If this is done, the meaning behind the flags passed should not be changed.
+ *
+ * This calls the Linux-specific getrandom() by default.
+ * If this is not available or pure POSIX is desired, then the implementation must handle accessing the /dev/random and /dev/urandom themselves (or something equivalent).
+ *
+ * @param flag
+ *   The flags to be passed to getrandom().
+ *
+ *   Flag bits:
+ *     - F_random_seed_flag_block_not_d: Does not block when getting the bits.
+ *     - F_random_seed_flag_source_d:    Random data is taken from the random source, such as /dev/random and not the urandom source.
+ * @param total
+ *   The total number of index positions to randomize.
+ * @param size
+ *   The type size of the array represented in indexes.
+ * @param cache
+ *   A string used when allocating space when calling the getrandom() or similar.
+ *   This changes the length of the cache array as needed.
+ *
+ *   Must not be NULL.
+ * @param indexes
+ *   The array in which the index positions that must be cast to a (void *).
+ *   The index positions are determined by size parameter.
+ *   The first memory address given represents index 0.
+ *   The values at each index position are swapped.
+ *
+ *   This must only be the address to a standard array structure, such as those represented by the syntax "[]".
+ *
+ *   Must not be NULL.
+ *
+ * @return
+ *   F_okay on success.
+ *   F_data_not on success, but total is 0.
+ *
+ *   F_again (with error bit) when in non-blocking mode but reading entropy source would block (such as when the entropy source is busy).
+ *   F_buffer (with error bit) if the address represented by the buffer is outside accessible address space.
+ *   F_interrupt (with error bit) if stopping due to an interrupt.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_support_not (with error bit) if the running kernel does not support the getrandom() call.
+ *   F_too_small (with error bit) if size is too small.
+ *
+ *   Errors (with error bit) from: f_memory_array_increase_by().
+ *
+ * @see getrandom()
+ * @see memmove()
+ *
+ * @see f_memory_array_increase_by()
+ */
+#ifndef _di_f_random_array_shuffle_
+  extern f_status_t f_random_array_shuffle(const unsigned int flag, const f_number_unsigned_t total, const unsigned short size, f_string_dynamic_t * const cache, void * const indexes);
+#endif // _di_f_random_array_shuffle_
+
+/**
  * Set the destination string by reading from the random or urandom entropy source directly.
  *
  * The standard behavior of this is to call random().
@@ -45,6 +103,8 @@ extern "C" {
  *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see random()
  */
 #ifndef _di_f_random_get_
   extern f_status_t f_random_get(long * const destination);
@@ -91,6 +151,8 @@ extern "C" {
  *   F_interrupt (with error bit) if stopping due to an interrupt.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_support_not (with error bit) if the running kernel does not support the getrandom() call.
+ *
+ * @see getrandom()
  */
 #ifndef _di_f_random_read_
   extern f_status_t f_random_read(const unsigned int flag, const f_number_unsigned_t length, f_string_t * const destination, ssize_t * const total);
@@ -144,6 +206,8 @@ extern "C" {
  *   F_okay on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see srandom()
  */
 #ifndef _di_f_random_seed_set_
   extern f_status_t f_random_seed_set(unsigned int seed);

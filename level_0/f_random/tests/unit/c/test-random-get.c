@@ -1,11 +1,12 @@
 #include "test-random.h"
-#include "test-random-get.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 void test__f_random_get__works(void **state) {
+
+  mock_unwrap = 0;
 
   const long mocked_data = 1234;
 
@@ -23,6 +24,8 @@ void test__f_random_get__works(void **state) {
 }
 
 void test__f_random_get__parameter_checking(void **state) {
+
+  mock_unwrap = 0;
 
   {
     const f_status_t status = f_random_get(0);

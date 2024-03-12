@@ -32,7 +32,7 @@ build_indexer_arguments rcs
 build_language c
 
 build_libraries -lc
-build_libraries-individual -lf_memory -lf_string
+build_libraries-individual -lf_memory -lf_string -lf_type_array
 
 build_sources_library random.c
 

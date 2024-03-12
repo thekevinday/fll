@@ -1,11 +1,12 @@
 #include "test-random.h"
-#include "test-random-seed.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 void test__f_random_seed__fails(void **state) {
+
+  mock_unwrap = 0;
 
   int errnos[] = {
     EAGAIN,
@@ -33,11 +34,17 @@ void test__f_random_seed__fails(void **state) {
 
     const f_status_t status = f_random_seed(0);
 
+    if (status != F_status_set_error(statuss[i])) {
+      printf("[  ERROR   ] --- At index %d.\n", i);
+    }
+
     assert_int_equal(status, F_status_set_error(statuss[i]));
   } // for
 }
 
 void test__f_random_seed__works(void **state) {
+
+  mock_unwrap = 0;
 
   const f_number_unsigned_t length = 4;
 

@@ -1,11 +1,12 @@
 #include "test-random.h"
-#include "test-random-read.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 void test__f_random_read__fails(void **state) {
+
+  mock_unwrap = 0;
 
   int errnos[] = {
     EAGAIN,
@@ -37,6 +38,10 @@ void test__f_random_read__fails(void **state) {
 
     const f_status_t status = f_random_read(0, 4, &buffer_ptr, &total);
 
+    if (status != F_status_set_error(statuss[i])) {
+      printf("[  ERROR   ] --- At index %d, first loop.\n", i);
+    }
+
     assert_int_equal(status, F_status_set_error(statuss[i]));
   } // for
 
@@ -51,11 +56,17 @@ void test__f_random_read__fails(void **state) {
 
     const f_status_t status = f_random_read(0, 4, &buffer_ptr, 0);
 
+    if (status != F_status_set_error(statuss[i])) {
+      printf("[  ERROR   ] --- At index %d, second loop.\n", i);
+    }
+
     assert_int_equal(status, F_status_set_error(statuss[i]));
   } // for
 }
 
 void test__f_random_read__works(void **state) {
+
+  mock_unwrap = 0;
 
   const f_number_unsigned_t length = 4;
 
@@ -102,6 +113,8 @@ void test__f_random_read__works(void **state) {
 }
 
 void test__f_random_read__parameter_checking(void **state) {
+
+  mock_unwrap = 0;
 
   {
     const f_status_t status = f_random_read(0, 0, 0, 0);

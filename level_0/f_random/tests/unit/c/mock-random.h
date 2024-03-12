@@ -28,6 +28,12 @@ extern "C" {
 
 const static int mock_errno_generic = 32767;
 
+extern int mock_unwrap;
+
+extern ssize_t __real_getrandom(void *buf, size_t buflen, unsigned int flags);
+extern long __real_random(void);
+extern void __real_srandom(unsigned seed);
+
 extern ssize_t __wrap_getrandom(void *buf, size_t buflen, unsigned int flags);
 extern long __wrap_random(void);
 extern void __wrap_srandom(unsigned seed);

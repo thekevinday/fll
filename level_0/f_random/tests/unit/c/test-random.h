@@ -26,6 +26,7 @@
 #include "mock-random.h"
 
 // Test includes.
+#include "test-random-array_shuffle.h"
 #include "test-random-get.h"
 #include "test-random-read.h"
 #include "test-random-seed.h"
