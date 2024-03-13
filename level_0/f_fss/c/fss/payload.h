@@ -124,9 +124,11 @@ extern "C" {
  *   - name:      The header Content name Object (an optional string).
  *   - part:      The header Content part Object (an optional string).
  *   - payload:   The payload Object or signature Content payload Object.
+ *   - salt:      The header Content salt Object (an optional string).
  *   - signature: The signature Object.
  *   - size:      The header Content size Object (an optional string).
  *   - status:    The header Content status Object (an optional string).
+ *   - time:      The header Content time Object (an optional string).
  *   - total:     The header Content total Object (an optional string).
  *   - type:      The header Content type Object (an optional string).
  */
@@ -142,9 +144,11 @@ extern "C" {
   #define F_fss_payload_object_name_s      "name"
   #define F_fss_payload_object_part_s      "part"
   #define F_fss_payload_object_payload_s   "payload"
+  #define F_fss_payload_object_salt_s      "salt"
   #define F_fss_payload_object_signature_s "signature"
   #define F_fss_payload_object_size_s      "size"
   #define F_fss_payload_object_status_s    "status"
+  #define F_fss_payload_object_time_s      "time"
   #define F_fss_payload_object_total_s     "total"
   #define F_fss_payload_object_type_s      "type"
 
@@ -159,9 +163,11 @@ extern "C" {
   #define F_fss_payload_object_name_s_length      4
   #define F_fss_payload_object_part_s_length      4
   #define F_fss_payload_object_payload_s_length   7
+  #define F_fss_payload_object_salt_s_length      4
   #define F_fss_payload_object_signature_s_length 9
   #define F_fss_payload_object_size_s_length      4
   #define F_fss_payload_object_status_s_length    6
+  #define F_fss_payload_object_time_s_length      4
   #define F_fss_payload_object_total_s_length     5
   #define F_fss_payload_object_type_s_length      4
 
@@ -205,6 +211,10 @@ extern "C" {
     extern const f_string_static_t f_fss_payload_object_payload_s;
   #endif // _di_f_fss_payload_object_payload_s_
 
+  #ifndef _di_f_fss_payload_object_salt_s_
+    extern const f_string_static_t f_fss_payload_object_salt_s;
+  #endif // _di_f_fss_payload_object_salt_s_
+
   #ifndef _di_f_fss_payload_object_signature_s_
     extern const f_string_static_t f_fss_payload_object_signature_s;
   #endif // _di_f_fss_payload_object_signature_s_
@@ -216,6 +226,10 @@ extern "C" {
   #ifndef _di_f_fss_payload_object_status_s_
     extern const f_string_static_t f_fss_payload_object_status_s;
   #endif // _di_f_fss_payload_object_status_s_
+
+  #ifndef _di_f_fss_payload_object_time_s_
+    extern const f_string_static_t f_fss_payload_object_time_s;
+  #endif // _di_f_fss_payload_object_time_s_
 
   #ifndef _di_f_fss_payload_object_total_s_
     extern const f_string_static_t f_fss_payload_object_total_s;

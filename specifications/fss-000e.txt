@@ -1,7 +1,7 @@
 # fss-0002 iki-0000
 #
 # license open-standard-license-1.0
-# version 2024/01/01
+# version 2024/03/12
 #
 # This file (assumed to be named fss-000e.txt) can be more easily read using the following iki_read commands:
 #   iki_read fss-000e.txt +Q -w -rr EOF EOF FLL FLL -WWW character "'" "'" code '"' '"' italic '"' '"'
@@ -19,11 +19,14 @@ Featureless Settings Specification: 000e - Payload:
   The italic:"header"\:
   - The italic:"header"'s Content is of type code:"FSS-0001 (Extended)".
   - The italic:"header" is recommended to have the Objects italic:"length", italic:"status", italic:"part", italic:"total", and italic:"type".
+  - The italic:"header" is suggested to have the Objects italic:"salt" and italic:"time".
   - The recommended italic:"length" represents the size of the italic:"payload".
   - The recommended italic:"part" represents a single part of a set of packets for when the data being transmitted is split across multiple payloads.
   - The recommended italic:"status" represents status codes (such as success or failure) and multiple.
   - The recommended italic:"total" represents the total number of parts representing a complete data transmitted across multiple payloads.
   - The recommended italic:"type" represents the type of information being transmitted.
+  - The suggested italic:"salt" represents random arbitrary data to further assist in making packets more unique during compression.
+  - The suggested italic:"time" represents some form of time unit, such as a time stamp.
   - The Content for the recommended italic:"length" and italic:"status" are positive whole numbers (including zero) that may be in italic:"binary", italic:"octal", italic:"decimal", italic:"duodecimal", or italic:"hexidecimal" numerical format.
   - There may be multiple italic:"header" Object and associated Content but the behavior is not defined by this standard.
   - For guaranteed safe and compatible behavior, only a single italic:"header" Object and associated Content should be defined.

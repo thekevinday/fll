@@ -45,6 +45,10 @@ extern "C" {
     const f_string_static_t f_fss_payload_object_payload_s = macro_f_string_static_t_initialize_1(F_fss_payload_object_payload_s, 0, F_fss_payload_object_payload_s_length);
   #endif // _di_f_fss_payload_object_payload_s_
 
+  #ifndef _di_f_fss_payload_object_salt_s_
+    const f_string_static_t f_fss_payload_object_salt_s = macro_f_string_static_t_initialize_1(F_fss_payload_object_salt_s, 0, F_fss_payload_object_salt_s_length);
+  #endif // _di_f_fss_payload_object_salt_s_
+
   #ifndef _di_f_fss_payload_object_signature_s_
     const f_string_static_t f_fss_payload_object_signature_s = macro_f_string_static_t_initialize_1(F_fss_payload_object_signature_s, 0, F_fss_payload_object_signature_s_length);
   #endif // _di_f_fss_payload_object_signature_s_
@@ -56,6 +60,10 @@ extern "C" {
   #ifndef _di_f_fss_payload_object_status_s_
     const f_string_static_t f_fss_payload_object_status_s = macro_f_string_static_t_initialize_1(F_fss_payload_object_status_s, 0, F_fss_payload_object_status_s_length);
   #endif // _di_f_fss_payload_object_status_s_
+
+  #ifndef _di_f_fss_payload_object_time_s_
+    const f_string_static_t f_fss_payload_object_time_s = macro_f_string_static_t_initialize_1(F_fss_payload_object_time_s, 0, F_fss_payload_object_time_s_length);
+  #endif // _di_f_fss_payload_object_time_s_
 
   #ifndef _di_f_fss_payload_object_total_s_
     const f_string_static_t f_fss_payload_object_total_s = macro_f_string_static_t_initialize_1(F_fss_payload_object_total_s, 0, F_fss_payload_object_total_s_length);
