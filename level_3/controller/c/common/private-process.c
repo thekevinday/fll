@@ -43,7 +43,7 @@ extern "C" {
 #endif // _di_controller_pids_resize_
 
 #ifndef _di_controller_process_delete_simple_
-  void controller_process_delete_simple(controller_process_t * const process) {
+  void controller_process_delete_simple(controller_data_t * const process) {
 
     if (process->id_thread) {
       f_thread_signal_write(process->id_thread, F_signal_kill);
@@ -110,16 +110,16 @@ extern "C" {
       }
     } // for
 
-    status = f_memory_resize(processs->size, length, sizeof(controller_process_t), (void **) & processs->array);
+    status = f_memory_resize(processs->size, length, sizeof(controller_data_t), (void **) & processs->array);
     if (F_status_is_error(status)) return status;
 
     if (length) {
-      controller_process_t *process = 0;
+      controller_data_t *process = 0;
 
       // The lock must be initialized, but only once, so initialize immediately upon allocation.
       for (; processs->size < length; ++processs->size) {
 
-        status = f_memory_new(1, sizeof(controller_process_t), (void **) &processs->array[processs->size]);
+        status = f_memory_new(1, sizeof(controller_data_t), (void **) &processs->array[processs->size]);
 
         if (F_status_is_error_not(status)) {
           process = processs->array[processs->size];

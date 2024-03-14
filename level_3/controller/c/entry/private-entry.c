@@ -1288,7 +1288,7 @@ extern "C" {
               options_process |= controller_process_option_asynchronous_d;
             }
 
-            status = controller_rule_process_begin(*global, options_force, alias_rule, controller_entry_action_type_to_rule_action_type(entry_action->type), options_process, is_entry ? controller_process_type_entry_e : controller_process_type_exit_e, stack, *cache);
+            status = controller_rule_process_begin(*global, options_force, alias_rule, controller_entry_action_type_to_rule_action_type(entry_action->type), options_process, is_entry ? controller_data_type_entry_e : controller_data_type_exit_e, stack, *cache);
 
             if (F_status_set_fine(status) == F_memory_not || status == F_child || F_status_set_fine(status) == F_interrupt) {
               break;

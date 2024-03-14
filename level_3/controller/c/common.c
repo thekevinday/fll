@@ -33,6 +33,37 @@ extern "C" {
   const f_string_static_t controller_long_validate_s = macro_f_string_static_t_initialize_1(CONTROLLER_long_validate_s, 0, CONTROLLER_long_validate_s_length);
 #endif // _di_controller_parameter_d_
 
+#ifndef _di_controller_main_delete_
+  f_status_t controller_main_delete(controller_main_t * const main) {
+
+    if (!main) return F_status_set_error(F_parameter);
+
+    fll_program_data_delete(&main->program);
+    controller_setting_delete(&main->setting);
+
+    if (main->process) {
+      controller_process_delete(main->process);
+    }
+
+    return F_okay;
+  }
+#endif // _di_controller_main_delete_
+
+#ifndef _di_controller_control_delete_
+  f_status_t controller_control_delete(controller_control_t * const control) {
+
+    if (!main) return F_status_set_error(F_parameter);
+
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &control->cache_1.string, &control->cache_1.used, &control->cache_1.size);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &control->cache_2.string, &control->cache_2.used, &control->cache_2.size);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &control->cache_3.string, &control->cache_3.used, &control->cache_3.size);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &control->input.string, &control->input.used, &control->input.size);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &control->output.string, &control->output.used, &control->output.size);
+
+    return F_okay;
+  }
+#endif // _di_controller_control_delete_
+
 #ifndef _di_controller_control_payload_type_identify_
   uint8_t controller_control_payload_type_identify(const f_string_static_t payload) {
 
@@ -212,28 +243,33 @@ extern "C" {
   }
 #endif // _di_controller_entry_action_type_name_
 
-#ifndef _di_controller_main_delete_
-  f_status_t controller_main_delete(controller_main_t * const main) {
+#ifndef _di_controller_process_delete_
+  f_status_t controller_process_delete(controller_process_t * const process) {
 
-    f_console_parameters_delete(&main->program.parameters);
+    if (!process) return F_status_set_error(F_parameter);
 
-    f_memory_array_resize(0, sizeof(f_char_t), (void **) &main->program.reset.string, &main->program.reset.used, &main->program.reset.size);
-    f_memory_array_resize(0, sizeof(f_char_t), (void **) &main->program.error.string, &main->program.error.used, &main->program.error.size);
-    f_memory_array_resize(0, sizeof(f_char_t), (void **) &main->program.important.string, &main->program.important.used, &main->program.important.size);
-    f_memory_array_resize(0, sizeof(f_char_t), (void **) &main->program.normal.string, &main->program.normal.used, &main->program.normal.size);
-    f_memory_array_resize(0, sizeof(f_char_t), (void **) &main->program.normal_reset.string, &main->program.normal_reset.used, &main->program.normal_reset.size);
-    f_memory_array_resize(0, sizeof(f_char_t), (void **) &main->program.notable.string, &main->program.notable.used, &main->program.notable.size);
-    f_memory_array_resize(0, sizeof(f_char_t), (void **) &main->program.standout.string, &main->program.standout.used, &main->program.standout.size);
-    f_memory_array_resize(0, sizeof(f_char_t), (void **) &main->program.success.string, &main->program.success.used, &main->program.success.size);
-    f_memory_array_resize(0, sizeof(f_char_t), (void **) &main->program.title.string, &main->program.title.used, &main->program.title.size);
-    f_memory_array_resize(, sizeof(f_char_t), (void **) &main->program.warning.string, &main->program.warning.used, &main->program.warning.size0);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &process->name_entry.string, &process->name_entry.used, &process->name_entry.size);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &process->path_cgroup.string, &process->path_cgroup.used, &process->path_cgroup.size);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &process->path_control.string, &process->path_control.used, &process->path_control.size);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &process->path_current.string, &process->path_current.used, &process->path_current.size);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &process->path_pid.string, &process->path_pid.used, &process->path_pid.size);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &process->path_setting.string, &process->path_setting.used, &process->path_setting.size);
 
-    f_memory_array_resize(0, sizeof(f_char_t), (void **) &main->program.path_pid.string, &main->program.path_pid.used, &main->program.path_pid.size);
-    f_memory_array_resize(0, sizeof(f_char_t), (void **) &main->program.path_setting.string, &main->program.path_setting.used, &main->program.path_setting.size);
+    controller_control_delete(&process->control);
+
+    status = f_memory_arrays_resize(0, sizeof(f_string_map_t), (void **) &process->entry.define.array, &process->entry.define.used, &process->entry.define.size, &f_string_maps_delete_callback);
+    status = f_memory_arrays_resize(0, sizeof(f_string_map_t), (void **) &process->entry.parameter.array, &process->entry.parameter.used, &process->entry.parameter.size, &f_string_maps_delete_callback);
+    status = f_memory_arrays_resize(0, sizeof(f_string_map_t), (void **) &process->exit.define.array, &process->exit.define.used, &process->exit.define.size, &f_string_maps_delete_callback);
+    status = f_memory_arrays_resize(0, sizeof(f_string_map_t), (void **) &process->exit.parameter.array, &process->exit.parameter.used, &process->exit.parameter.size, &f_string_maps_delete_callback);
+
+    controller_entry_items_delete(&process->entry.items);
+    controller_entry_items_delete(&process->exit.items);
+
+    controller_rules_delete_simple(&process->rules);
 
     return F_okay;
   }
-#endif // _di_controller_main_delete_
+#endif // _di_controller_process_delete_
 
 #ifndef _di_controller_rule_action_type_identify_
   uint8_t controller_rule_action_type_identify(const f_string_static_t action) {
@@ -616,14 +652,17 @@ extern "C" {
 
     if (!setting) return F_status_set_error(F_parameter);
 
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &setting->path_pid.string, &setting->path_pid.used, &setting->path_pid.size);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &setting->path_setting.string, &setting->path_setting.used, &setting->path_setting.size);
+
     return F_okay;
   }
 #endif // _di_controller_setting_delete_
 
 #ifndef _di_controller_setting_load_
-  void controller_setting_load(const f_console_arguments_t arguments, fll_program_data_t * const main, controller_setting_t * const setting) {
+  f_status_t controller_setting_load(const f_console_arguments_t arguments, fll_program_data_t * const main) {
 
-    if (!main) return;
+    if (!main) return F_status_set_error(F_parameter);
 
     main->setting.state.step_small = controller_allocation_console_d;
 
@@ -706,19 +745,376 @@ extern "C" {
     if (main->program.parameters.array[controller_parameter_strip_invalid_e].result & f_console_result_found_e) {
       main->setting.flag |= controller_main_flag_strip_invalid_e;
     }
-  }
-#endif // _di_controller_setting_load_
-
-#ifndef _di_controller_setting_unload_
-  f_status_t controller_setting_unload(controller_main_t * const main) {
-
-    if (!main) return F_status_set_error(F_parameter);
-
-    controller_setting_delete(&main->setting);
 
     return F_okay;
   }
-#endif // _di_controller_setting_unload_
+#endif // _di_controller_setting_load_
+
+#ifndef _di_controller_entry_action_delete_
+  f_status_t controller_entry_action_delete(controller_entry_action_t * const action) {
+
+    if (!action) return F_status_set_error(F_parameter);
+
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &action->parameters.array, &action->parameters.used, &action->parameters.size, &f_string_dynamics_delete_callback);
+
+    return F_okay;
+  }
+#endif // _di_controller_entry_action_delete_
+
+#ifndef _di_controller_entry_actions_delete_
+  f_status_t controller_entry_actions_delete(controller_entry_actions_t * const actions) {
+
+    if (!actions) return F_status_set_error(F_parameter);
+
+    // @todo Determine if this should be replaced with a resize callback strategy.
+    actions->used = actions->size;
+
+    while (actions->used) {
+      controller_entry_action_delete(&actions->array[--actions->used]);
+    } // while
+
+    f_memory_array_resize(0, sizeof(controller_entry_action_t), (void **) &actions->array, &actions->used, &actions->size);
+
+    return F_okay;
+  }
+#endif // _di_controller_entry_actions_delete_
+
+#ifndef _di_controller_entry_actions_increase_by_
+  f_status_t controller_entry_actions_increase_by(const f_number_unsigned_t amount, controller_entry_actions_t * const actions) {
+
+    if (!actions) return F_status_set_error(F_parameter);
+
+    if (amount) {
+      if (actions->used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+
+      const f_number_unsigned_t length = actions->used + amount;
+
+      if (length > actions->size) {
+        const f_status_t status = f_memory_resize(actions->size, length, sizeof(controller_entry_action_t), (void **) & actions->array);
+
+        if (F_status_is_error_not(status)) {
+          actions->size = actions->used + amount;
+        }
+
+        return status;
+      }
+    }
+
+    return F_data_not;
+  }
+#endif // _di_controller_entry_actions_increase_by_
+
+#ifndef _di_controller_entry_item_delete_
+  f_status_t controller_entry_item_delete(controller_entry_item_t * const item) {
+
+    if (!item) return F_status_set_error(F_parameter);
+
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &item->name.string, &item->name.used, &item->name.size);
+
+    controller_entry_actions_delete(&item->actions);
+
+    return F_okay;
+  }
+#endif // _di_controller_entry_item_delete_
+
+#ifndef _di_controller_entry_items_delete_
+  f_status_t controller_entry_items_delete(controller_entry_items_t * const items) {
+
+    if (!items) return F_status_set_error(F_parameter);
+
+    // @todo Determine if this should be replaced with a resize callback strategy.
+    items->used = items->size;
+
+    while (items->used) {
+      controller_entry_item_delete(&items->array[--items->used]);
+    } // while
+
+    f_memory_array_resize(0, sizeof(controller_entry_item_t), (void **) &items->array, &items->used, &items->size);
+
+    return F_okay;
+  }
+#endif // _di_controller_entry_items_delete_
+
+#ifndef _di_controller_entry_items_increase_by_
+  f_status_t controller_entry_items_increase_by(const f_number_unsigned_t amount, controller_entry_items_t * const items) {
+
+    if (!items) return F_status_set_error(F_parameter);
+
+    if (amount) {
+      if (items->used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+
+      const f_number_unsigned_t length = items->used + amount;
+
+      if (length > items->size) {
+        const f_status_t status = f_memory_resize(items->size, length, sizeof(controller_entry_item_t), (void **) & items->array);
+
+        if (F_status_is_error_not(status)) {
+          items->size = items->used + amount;
+        }
+
+        return status;
+      }
+    }
+
+    return F_data_not;
+  }
+#endif // _di_controller_entry_items_increase_by_
+
+#ifndef _di_controller_rule_action_t_
+  const f_string_static_t controller_rule_action_method_string_extended_s = macro_f_string_static_t_initialize_1(CONTROLLER_rule_action_method_string_extended_s, 0, CONTROLLER_rule_action_method_string_extended_s_length);
+  const f_string_static_t controller_rule_action_method_string_extended_list_s = macro_f_string_static_t_initialize_1(CONTROLLER_rule_action_method_string_extended_list_s, 0, CONTROLLER_rule_action_method_string_extended_list_s_length);
+#endif // _di_controller_rule_action_t_
+
+#ifndef _di_controller_rule_action_delete_simple_
+  f_status_t controller_rule_action_delete_simple(controller_rule_action_t * const action) {
+
+    if (!action) return F_status_set_error(F_parameter);
+
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &action->parameters.array, &action->parameters.used, &action->parameters.size, &f_string_dynamics_delete_callback);
+
+    f_memory_array_resize(0, sizeof(f_iki_data_t), (void **) &action->ikis.array, &action->ikis.used, &action->ikis.size);
+
+    return F_okay;
+  }
+#endif // _di_controller_rule_action_delete_simple_
+
+#ifndef _di_controller_rule_actions_delete_simple_
+  f_status_t controller_rule_actions_delete_simple(controller_rule_actions_t * const actions) {
+
+    if (!actions) return F_status_set_error(F_parameter);
+
+    actions->used = actions->size;
+
+    while (actions->used) {
+      controller_rule_action_delete_simple(&actions->array[--actions->used]);
+    } // while
+
+    f_memory_delete(actions->size, sizeof(controller_rule_action_t), (void **) & actions->array);
+    actions->size = 0;
+
+    return F_okay;
+  }
+#endif // _di_controller_rule_actions_delete_simple_
+
+#ifndef _di_controller_rule_actions_increase_by_
+  f_status_t controller_rule_actions_increase_by(const f_number_unsigned_t amount, controller_rule_actions_t * const actions) {
+
+    if (!actions) return F_status_set_error(F_parameter);
+
+    if (amount) {
+      if (actions->used >= F_number_t_size_unsigned_d) return F_status_set_error(F_array_too_large);
+
+      const f_number_unsigned_t length = actions->used + amount;
+
+      if (length > actions->size) {
+        const f_status_t status = f_memory_resize(actions->size, length, sizeof(controller_rule_action_t), (void **) & actions->array);
+
+        if (F_status_is_error_not(status)) {
+          actions->size = actions->used + amount;
+        }
+
+        return status;
+      }
+    }
+
+    return F_data_not;
+  }
+#endif // _di_controller_rule_actions_increase_by_
+
+#ifndef _di_controller_rule_delete_
+  f_status_t controller_rule_delete(controller_rule_t * const rule) {
+
+    if (!rule) return F_status_set_error(F_parameter);
+
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &rule->engine.string, &rule->engine.used, &rule->engine.size);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &rule->name.string, &rule->name.used, &rule->name.size);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &rule->path.string, &rule->path.used, &rule->path.size);
+
+    f_memory_arrays_resize(0, sizeof(f_string_map_t), (void **) &rule->define.array, &rule->define.used, &rule->define.size, &f_string_maps_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_map_t), (void **) &rule->parameter.array, &rule->parameter.used, &rule->parameter.size, &f_string_maps_delete_callback);
+
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &rule->engine_arguments.array, &rule->engine_arguments.used, &rule->engine_arguments.size, &f_string_dynamics_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &rule->environment.array, &rule->environment.used, &rule->environment.size, &f_string_dynamics_delete_callback);
+
+    f_memory_array_resize(0, sizeof(int32_t), (void **) &rule->affinity.array, &rule->affinity.used, &rule->affinity.size);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &rule->cgroup.path.string, &rule->cgroup.path.used, &rule->cgroup.path.size);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &rule->cgroup.groups.array, &rule->cgroup.groups.used, &rule->cgroup.groups.size, &f_string_dynamics_delete_callback);
+    f_memory_array_resize(0, sizeof(int32_t), (void **) &rule->groups.array, &rule->groups.used, &rule->groups.size);
+    f_memory_array_resize(0, sizeof(f_limit_set_t), (void **) &rule->limits.array, &rule->limits.used, &rule->limits.size);
+
+    if (rule->capability) {
+      f_capability_delete(&rule->capability);
+    }
+
+    controller_rule_ons_delete(&rule->ons);
+    controller_rule_items_delete(&rule->items);
+
+    return F_okay;
+  }
+#endif // _di_controller_rule_delete_
+
+#ifndef _di_controller_rule_item_delete_
+  f_status_t controller_rule_item_delete(controller_rule_item_t * const item) {
+
+    if (!item) return F_status_set_error(F_parameter);
+
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &item->pid_file.string, &item->pid_file.used, &item->pid_file.size);
+
+    controller_rule_actions_delete(&item->actions);
+
+    return F_okay;
+  }
+#endif // _di_controller_rule_item_delete_
+
+#ifndef _di_controller_rule_items_delete_
+  f_status_t controller_rule_items_delete(controller_rule_items_t * const items) {
+
+    if (!items) return F_status_set_error(F_parameter);
+
+    items->used = items->size;
+
+    while (items->used) {
+      controller_rule_item_delete(&items->array[--items->used]);
+    } // while
+
+    f_memory_delete(items->size, sizeof(controller_rule_item_t), (void **) & items->array);
+    items->size = 0;
+
+    return F_okay;
+  }
+#endif // _di_controller_rule_items_delete_
+
+#ifndef _di_controller_rule_on_delete_
+  f_status_t controller_rule_on_delete(controller_rule_on_t * const on) {
+
+    if (!on) return F_status_set_error(F_parameter);
+
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &on->need.array, &on->need.used, &on->need.size, &f_string_dynamics_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &on->want.array, &on->want.used, &on->want.size, &f_string_dynamics_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &on->wish.array, &on->wish.used, &on->wish.size, &f_string_dynamics_delete_callback);
+
+    return F_okay;
+  }
+#endif // _di_controller_rule_on_delete_
+
+#ifndef _di_controller_rule_ons_delete_
+  f_status_t controller_rule_ons_delete(controller_rule_ons_t * const ons) {
+
+    if (!ons) return F_status_set_error(F_parameter);
+
+    ons->used = ons->size;
+
+    while (ons->used) {
+      controller_rule_on_delete(&ons->array[--ons->used]);
+    } // while
+
+    f_memory_delete(ons->size, sizeof(controller_rule_on_t), (void **) & ons->array);
+    ons->size = 0;
+
+    return F_okay;
+  }
+#endif // _di_controller_rule_ons_delete_
+
+#ifndef _di_controller_rule_ons_increase_
+  f_status_t controller_rule_ons_increase(controller_rule_ons_t * const ons) {
+
+    if (!ons) return F_status_set_error(F_parameter);
+
+    if (ons->used + 1 > ons->size) {
+      f_number_unsigned_t length = ons->used + controller_common_allocation_small_d;
+
+      if (length > F_number_t_size_unsigned_d) {
+        if (ons->used + 1 > F_number_t_size_unsigned_d) {
+          return F_status_set_error(F_array_too_large);
+        }
+
+        length = F_number_t_size_unsigned_d;
+      }
+
+      return controller_rule_ons_resize(length, ons);
+    }
+
+    return F_data_not;
+  }
+#endif // _di_controller_rule_ons_increase_
+
+#ifndef _di_controller_rule_ons_resize_
+  f_status_t controller_rule_ons_resize(const f_number_unsigned_t length, controller_rule_ons_t * const ons) {
+
+    if (!ons) return F_status_set_error(F_parameter);
+
+    for (f_number_unsigned_t i = length; i < ons->size; ++i) {
+      controller_rule_on_delete(&ons->array[i]);
+    } // for
+
+    const f_status_t status = f_memory_resize(ons->size, length, sizeof(controller_rule_on_t), (void **) & ons->array);
+    if (F_status_is_error(status)) return status;
+
+    ons->size = length;
+
+    if (ons->used > ons->size) {
+      ons->used = length;
+    }
+
+    return F_okay;
+  }
+#endif // _di_controller_rule_ons_resize_
+
+#ifndef _di_controller_rules_delete_
+  f_status_t controller_rules_delete(controller_rules_t * const rules) {
+
+    if (!rules) return F_status_set_error(F_parameter);
+
+    controller_rules_resize(0, rules);
+
+    return F_okay;
+  }
+#endif // _di_controller_rules_delete_
+
+#ifndef _di_controller_rules_increase_
+  f_status_t controller_rules_increase(controller_rules_t * const rules) {
+
+    if (!rules) return F_status_set_error(F_parameter);
+
+    if (rules->used + 1 > rules->size) {
+      f_number_unsigned_t length = rules->used + controller_common_allocation_small_d;
+
+      if (length > F_number_t_size_unsigned_d) {
+        if (rules->used + 1 > F_number_t_size_unsigned_d) {
+          return F_status_set_error(F_array_too_large);
+        }
+
+        length = F_number_t_size_unsigned_d;
+      }
+
+      return controller_rules_resize(length, rules);
+    }
+
+    return F_data_not;
+  }
+#endif // _di_controller_rules_increase_
+
+#ifndef _di_controller_rules_resize_
+  f_status_t controller_rules_resize(const f_number_unsigned_t length, controller_rules_t * const rules) {
+
+    if (!rules) return F_status_set_error(F_parameter);
+
+    for (f_number_unsigned_t i = length; i < rules->size; ++i) {
+      controller_rule_delete(&rules->array[i]);
+    } // for
+
+    const f_status_t status = f_memory_resize(rules->size, length, sizeof(controller_rule_t), (void **) & rules->array);
+    if (F_status_is_error(status)) return status;
+
+    rules->size = length;
+
+    if (rules->used > rules->size) {
+      rules->used = length;
+    }
+
+    return F_okay;
+  }
+#endif // _di_controller_rules_resize_
 
 #ifdef __cplusplus
 } // extern "C"

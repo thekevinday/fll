@@ -475,10 +475,10 @@ extern "C" {
  * setting: All loaded settings.
  * thread:  All thread related data.
  */
-#ifndef _di_controller_main_t_
+#ifndef _di_controller_main_old_t_
   typedef struct {
     controller_main_t *main;
-    controller_setting_t *setting;
+    controller_process_t *setting;
     controller_thread_t *thread;
   } controller_global_t;
 
@@ -489,7 +489,7 @@ extern "C" {
     setting, \
     thread, \
   }
-#endif // _di_controller_main_t_
+#endif // _di_controller_main_old_t_
 
 /**
  * A wrapper used for passing a set of entry processing and execution related data.
@@ -500,7 +500,7 @@ extern "C" {
 #ifndef _di_controller_main_entry_t_
   typedef struct {
     controller_global_t *global;
-    controller_setting_t *setting;
+    controller_process_t *setting;
   } controller_main_entry_t;
 
   #define controller_main_entry_t_initialize { 0, 0 }

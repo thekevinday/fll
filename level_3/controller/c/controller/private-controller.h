@@ -224,7 +224,7 @@ extern "C" {
  * @see fl_path_canonical()
  */
 #ifndef _di_controller_path_canonical_relative_
-  extern f_status_t controller_path_canonical_relative(const controller_setting_t * const global, const f_string_static_t source, f_string_dynamic_t * const destination) F_attribute_visibility_internal_d;
+  extern f_status_t controller_path_canonical_relative(const controller_process_t * const global, const f_string_static_t source, f_string_dynamic_t * const destination) F_attribute_visibility_internal_d;
 #endif // _di_controller_path_canonical_relative_
 
 /**
@@ -366,7 +366,7 @@ extern "C" {
  * @see nanosleep()
  */
 #ifndef _di_controller_time_sleep_nanoseconds_
-  extern int controller_time_sleep_nanoseconds(controller_main_t * const main, controller_setting_t * const setting, struct timespec time) F_attribute_visibility_internal_d;
+  extern int controller_time_sleep_nanoseconds(controller_main_t * const main, controller_process_t * const setting, struct timespec time) F_attribute_visibility_internal_d;
 #endif // _di_controller_time_sleep_nanoseconds_
 
 /**

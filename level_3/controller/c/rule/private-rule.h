@@ -232,7 +232,7 @@ extern "C" {
  *   On failure, the individual status for the rule is set to an appropriate error status.
  */
 #ifndef _di_controller_rule_execute_
-  extern f_status_t controller_rule_execute(const controller_global_t global, const uint8_t action, const uint8_t options, controller_process_t * const process) F_attribute_visibility_internal_d;
+  extern f_status_t controller_rule_execute(const controller_global_t global, const uint8_t action, const uint8_t options, controller_data_t * const process) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_execute_
 
 /**
@@ -266,7 +266,7 @@ extern "C" {
  * @see fll_execute_program()
  */
 #ifndef _di_controller_rule_execute_foreground_
-  extern f_status_t controller_rule_execute_foreground(const uint8_t type, const f_string_static_t program, const f_string_statics_t arguments, const uint8_t options, controller_execute_set_t * const execute_set, controller_process_t * const process) F_attribute_visibility_internal_d;
+  extern f_status_t controller_rule_execute_foreground(const uint8_t type, const f_string_static_t program, const f_string_statics_t arguments, const uint8_t options, controller_execute_set_t * const execute_set, controller_data_t * const process) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_execute_foreground_
 
 /**
@@ -308,7 +308,7 @@ extern "C" {
  * @see fll_execute_program()
  */
 #ifndef _di_controller_rule_execute_pid_with_
-  extern f_status_t controller_rule_execute_pid_with(const f_string_dynamic_t pid_file, const uint8_t type, const f_string_static_t program, const f_string_statics_t arguments, const uint8_t options, const uint8_t with, controller_execute_set_t * const execute_set, controller_process_t * const process) F_attribute_visibility_internal_d;
+  extern f_status_t controller_rule_execute_pid_with(const f_string_dynamic_t pid_file, const uint8_t type, const f_string_static_t program, const f_string_statics_t arguments, const uint8_t options, const uint8_t with, controller_execute_set_t * const execute_set, controller_data_t * const process) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_execute_pid_with_
 
 /**
@@ -331,7 +331,7 @@ extern "C" {
  *   -2 to designate exit due to signal/disabled thread.
  */
 #ifndef _di_controller_rule_execute_rerun_
-  extern int8_t controller_rule_execute_rerun(const uint8_t action, controller_process_t * const process, controller_rule_item_t * const item) F_attribute_visibility_internal_d;
+  extern int8_t controller_rule_execute_rerun(const uint8_t action, controller_data_t * const process, controller_rule_item_t * const item) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_execute_rerun_
 
 /**
@@ -352,7 +352,7 @@ extern "C" {
  *   @see controller_rule_expand_iki()
  */
 #ifndef _di_controller_rule_expand_
-  extern f_status_t controller_rule_expand(const controller_global_t global, const controller_rule_action_t action, controller_process_t * const process) F_attribute_visibility_internal_d;
+  extern f_status_t controller_rule_expand(const controller_global_t global, const controller_rule_action_t action, controller_data_t * const process) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_expand_
 
 /**
@@ -379,7 +379,7 @@ extern "C" {
  *   @see f_string_dynamic_append()
  */
 #ifndef _di_controller_rule_expand_iki_
-  extern f_status_t controller_rule_expand_iki(controller_process_t * const process, const f_string_static_t source, const f_range_t vocabulary, const f_range_t content, f_string_dynamic_t * const destination) F_attribute_visibility_internal_d;
+  extern f_status_t controller_rule_expand_iki(controller_data_t * const process, const f_string_static_t source, const f_range_t vocabulary, const f_range_t content, f_string_dynamic_t * const destination) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_expand_iki_
 
 /**
@@ -525,7 +525,7 @@ extern "C" {
  *   Errors (with error bit) from: controller_lock_write().
  */
 #ifndef _di_controller_rule_process_
-  extern f_status_t controller_rule_process(const controller_global_t global, controller_process_t * const process) F_attribute_visibility_internal_d;
+  extern f_status_t controller_rule_process(const controller_global_t global, controller_data_t * const process) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_process_
 
 /**
@@ -545,7 +545,7 @@ extern "C" {
  * @param options
  *   The process options to pass to the process.
  * @param type
- *   The process type, such as controller_process_type_entry_e.
+ *   The process type, such as controller_data_type_entry_e.
  * @param stack
  *   A stack representing the processes already running in this rule process dependency tree.
  *   This is used to prevent circular dependencies.
@@ -606,7 +606,7 @@ extern "C" {
  * @see controller_rule_process_begin()
  */
 #ifndef _di_controller_rule_process_do_
-  extern f_status_t controller_rule_process_do(const uint8_t options_force, controller_process_t * const process) F_attribute_visibility_internal_d;
+  extern f_status_t controller_rule_process_do(const uint8_t options_force, controller_data_t * const process) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_process_do_
 
 /**
@@ -718,7 +718,7 @@ extern "C" {
  * @see controller_path_canonical_relative()
  */
 #ifndef _di_controller_rule_setting_read_
-  extern f_status_t controller_rule_setting_read(const controller_global_t global, const bool is_normal, const controller_setting_t setting, controller_cache_t * const cache, controller_rule_t * const rule) F_attribute_visibility_internal_d;
+  extern f_status_t controller_rule_setting_read(const controller_global_t global, const bool is_normal, const controller_process_t setting, controller_cache_t * const cache, controller_rule_t * const rule) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_setting_read_
 
 /**

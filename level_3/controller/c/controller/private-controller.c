@@ -365,7 +365,7 @@ extern "C" {
 #endif // _di_controller_get_id_group_
 
 #ifndef _di_controller_path_canonical_relative_
-  f_status_t controller_path_canonical_relative(const controller_setting_t * const setting, const f_string_static_t source, f_string_dynamic_t * const destination) {
+  f_status_t controller_path_canonical_relative(const controller_process_t * const setting, const f_string_static_t source, f_string_dynamic_t * const destination) {
 
     {
       const f_status_t status = fl_path_canonical(source, destination);
@@ -754,7 +754,7 @@ extern "C" {
 #endif // _di_controller_time_seconds_
 
 #ifndef _di_controller_time_sleep_nanoseconds_
-  int controller_time_sleep_nanoseconds(controller_main_t * const main, controller_setting_t * const setting, struct timespec time) {
+  int controller_time_sleep_nanoseconds(controller_main_t * const main, controller_process_t * const setting, struct timespec time) {
 
     // When sleep is a second or more, instead wait for terminating signals if interruptible.
     if ((setting->flag & controller_setting_flag_interruptible_e) && time.tv_sec) {

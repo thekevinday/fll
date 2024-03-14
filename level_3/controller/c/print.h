@@ -27,7 +27,7 @@ extern "C" {
  *   F_output_not on success, but no printing is performed.
  */
 #ifndef _di_controller_print_help_
-  extern f_status_t controller_print_help(controller_setting_t * const setting, const fl_print_t print);
+  extern f_status_t controller_print_help(controller_process_t * const setting, const fl_print_t print);
 #endif // _di_controller_print_help_
 #ifdef __cplusplus
 } // extern "C"

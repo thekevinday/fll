@@ -36,7 +36,7 @@ extern "C" {
       if (global->thread->enabled != controller_thread_enabled_e) break;
 
       if (f_thread_lock_write_try(&global->thread->lock.process) == F_okay) {
-        controller_process_t *process = 0;
+        controller_data_t *process = 0;
 
         f_number_unsigned_t i = 0;
 
@@ -182,7 +182,7 @@ extern "C" {
 #endif // _di_controller_thread_is_enabled_
 
 #ifndef _di_controller_thread_is_enabled_process_
-  f_status_t controller_thread_is_enabled_process(controller_process_t * const process, controller_thread_t * const thread) {
+  f_status_t controller_thread_is_enabled_process(controller_data_t * const process, controller_thread_t * const thread) {
 
     return controller_thread_is_enabled_process_type(process->type, thread);
   }
@@ -191,12 +191,12 @@ extern "C" {
 #ifndef _di_controller_thread_is_enabled_process_type_
   f_status_t controller_thread_is_enabled_process_type(const uint8_t type, controller_thread_t * const thread) {
 
-    return controller_thread_is_enabled(type != controller_process_type_exit_e, thread);
+    return controller_thread_is_enabled(type != controller_data_type_exit_e, thread);
   }
 #endif // _di_controller_thread_is_enabled_process_type_
 
 #ifndef _di_controller_thread_main_
-  f_status_t controller_thread_main(controller_main_t * const main, controller_setting_t * const setting) {
+  f_status_t controller_thread_main(controller_main_t * const main, controller_process_t * const setting) {
 
     f_status_t status = F_okay;
 

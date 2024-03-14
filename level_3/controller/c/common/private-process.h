@@ -66,15 +66,15 @@ extern "C" {
  * stack:        A stack used to represent dependencies as Rule ID's to avoid circular rule dependencies (If Rule A waits on Rule B, then Rule B must not wait on Rule A).
  * state:        The state of the process.
  * status:       The last execution status of the process.
- * type:         The currently active process type (from the controller_process_type_*_e).
+ * type:         The currently active process type (from the controller_data_type_*_e).
  * wait:         A thread condition to tell a process waiting process that the rule has is done being processed.
  * wait_lock:    A mutex lock for working with "wait".
  *
  * main_data:    Used for passing the controller_main_t data to the process thread (to populate controller_global_t).
- * main_setting: Used for passing the controller_setting_t data to the process thread (to populate controller_global_t).
+ * main_setting: Used for passing the controller_process_t data to the process thread (to populate controller_global_t).
  * main_thread:  Used for passing the controller_thread_t data to the process thread (to populate controller_global_t).
  */
-#ifndef _di_controller_process_t_
+#ifndef _di_controller_data_t_
   #define controller_process_option_asynchronous_d 0x1
   #define controller_process_option_require_d      0x2
   #define controller_process_option_simulate_d     0x4
@@ -89,9 +89,9 @@ extern "C" {
   };
 
   enum {
-    controller_process_type_entry_e = 1,
-    controller_process_type_exit_e,
-    controller_process_type_control_e,
+    controller_data_type_entry_e = 1,
+    controller_data_type_exit_e,
+    controller_data_type_control_e,
   };
 
   typedef struct {
@@ -121,9 +121,9 @@ extern "C" {
     void *main_data;
     void *main_setting;
     void *main_thread;
-  } controller_process_t;
+  } controller_data_t;
 
-  #define controller_process_t_initialize { \
+  #define controller_data_t_initialize { \
     0, \
     0, \
     0, \
@@ -143,7 +143,7 @@ extern "C" {
     0, \
     0, \
   }
-#endif // _di_controller_process_t_
+#endif // _di_controller_data_t_
 
 /**
  * The Rule Processes.
@@ -156,7 +156,7 @@ extern "C" {
  */
 #ifndef _di_controller_processs_t_
   typedef struct {
-    controller_process_t **array;
+    controller_data_t **array;
 
     f_number_unsigned_t size;
     f_number_unsigned_t used;
@@ -223,7 +223,7 @@ extern "C" {
  * @see f_thread_mutex_delete()
  */
 #ifndef _di_controller_process_delete_simple_
-  extern void controller_process_delete_simple(controller_process_t * const process) F_attribute_visibility_internal_d;
+  extern void controller_process_delete_simple(controller_data_t * const process) F_attribute_visibility_internal_d;
 #endif // _di_controller_process_delete_simple_
 
 /**

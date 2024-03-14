@@ -88,9 +88,7 @@ extern "C" {
 /**
  * Execute main program.
  *
- * Be sure to call controller_main_delete() after executing this.
- *
- * If main.signal is non-zero, then this blocks and handles the following signals:
+ * If main.program.signal is non-zero, then this blocks and handles the following signals: @todo review and upadate this comment.
  *   - F_signal_abort
  *   - F_signal_broken_pipe
  *   - F_signal_hangup
@@ -99,22 +97,16 @@ extern "C" {
  *   - F_signal_termination
  *
  * @param main
- *   The main program data.
- * @param arguments
- *   The parameters passed to the process.
+ *   The main program and settings data.
  *
- * @return
- *   F_okay on success.
- *   F_child if this is a child process returning.
+ *   This alters main.setting.state.status:
+ *     F_okay on success.
+ *     F_child if this is a child process returning.
  *
- *   F_interrupt (with error bit) on receiving a process signal, such as an interrupt signal.
- *
- *   Status codes (with error bit) are returned on any problem.
- *
- * @see controller_main_delete()
+ *     F_interrupt (with error bit) on interrupt signal received.
  */
 #ifndef _di_controller_main_
-  extern f_status_t controller_main(controller_main_t * const main, const f_console_arguments_t arguments);
+  extern void controller_main(controller_main_t * const main);
 #endif // _di_controller_main_
 
 #ifdef __cplusplus

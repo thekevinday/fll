@@ -50,7 +50,7 @@ extern "C" {
 
       if (F_status_is_error_not(status) && global.thread->processs.array[global.thread->processs.used]) {
 
-        controller_process_t *process = global.thread->processs.array[global.thread->processs.used];
+        controller_data_t *process = global.thread->processs.array[global.thread->processs.used];
 
         status = controller_lock_write(is_normal, global.thread, &process->lock);
 
@@ -96,12 +96,12 @@ extern "C" {
 #ifndef _di_controller_process_prepare_process_type_
   f_status_t controller_process_prepare_process_type(const controller_global_t global, const uint8_t type, const uint8_t action, const f_string_static_t alias, f_number_unsigned_t *id) {
 
-    return controller_process_prepare(global, type != controller_process_type_exit_e, action, alias, id);
+    return controller_process_prepare(global, type != controller_data_type_exit_e, action, alias, id);
   }
 #endif // _di_controller_process_prepare_process_type_
 
 #ifndef _di_controller_process_wait_
-  f_status_t controller_process_wait(const controller_global_t global, controller_process_t * const process) {
+  f_status_t controller_process_wait(const controller_global_t global, controller_data_t * const process) {
 
     if (!controller_thread_is_enabled_process(process, global.thread)) {
       return F_status_set_error(F_interrupt);

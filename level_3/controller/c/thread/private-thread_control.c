@@ -27,7 +27,7 @@ extern "C" {
       // It seems that this function doesn't return to the calling thread for a forked child process, even with the "return 0;" below.
       // Deallocate as much as possible.
       controller_thread_delete_simple(global->thread);
-      controller_setting_delete_simple(global->setting);
+      controller_process_delete(global->setting);
       controller_main_delete(global->main);
     }
 

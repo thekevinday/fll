@@ -13,7 +13,7 @@ extern "C" {
 #endif
 
 #ifndef _di_controller_thread_process_
-  void controller_thread_process(const bool is_normal, controller_process_t * const process) {
+  void controller_thread_process(const bool is_normal, controller_data_t * const process) {
 
     {
       controller_thread_t *thread = (controller_thread_t *) process->main_thread;
@@ -29,11 +29,11 @@ extern "C" {
       // It seems that this function doesn't return to the calling thread for a forked child process, even with the "return 0;" below.
       // Deallocate as much as possible.
       controller_main_t *main = (controller_main_t *) process->main_data;
-      controller_setting_t *setting = (controller_setting_t *) process->main_setting;
+      controller_process_t *setting = (controller_process_t *) process->main_setting;
       controller_thread_t *thread = (controller_thread_t *) process->main_thread;
 
       controller_thread_delete_simple(thread);
-      controller_setting_delete_simple(setting);
+      controller_process_delete(setting);
       controller_main_delete(main);
 
       // According to the manpages, pthread_exit() calls exit(0), which is not good because a non-zero exit code may be returned.
@@ -57,7 +57,7 @@ extern "C" {
     struct timespec time;
 
     controller_entry_t *entry = 0;
-    controller_process_t *process = 0;
+    controller_data_t *process = 0;
 
     f_status_t status = F_okay;
     f_number_unsigned_t i = 0;
@@ -155,7 +155,7 @@ extern "C" {
       process = global.thread->processs.array[i];
 
       // Do not cancel exit processes, when not performing "execute" during exit.
-      if (process->type == controller_process_type_exit_e && global.thread->enabled != controller_thread_enabled_exit_execute_e) {
+      if (process->type == controller_data_type_exit_e && global.thread->enabled != controller_thread_enabled_exit_execute_e) {
         continue;
       }
 
@@ -188,7 +188,7 @@ extern "C" {
         process = global.thread->processs.array[i];
 
         // Do not wait for processes, when not performing "execute" during exit.
-        if (process->type == controller_process_type_exit_e && global.thread->enabled != controller_thread_enabled_exit_execute_e) {
+        if (process->type == controller_data_type_exit_e && global.thread->enabled != controller_thread_enabled_exit_execute_e) {
           continue;
         }
 
@@ -249,7 +249,7 @@ extern "C" {
       process = global.thread->processs.array[i];
 
       // Do not kill exit processes, when not performing "execute" during exit.
-      if (process->type == controller_process_type_exit_e && global.thread->enabled != controller_thread_enabled_exit_execute_e) continue;
+      if (process->type == controller_data_type_exit_e && global.thread->enabled != controller_thread_enabled_exit_execute_e) continue;
 
       if (process->id_thread) {
         if (process->childs.used) {
@@ -277,7 +277,7 @@ extern "C" {
         for (j = 0; j < process->childs.size; ++j) {
 
           // Do not kill exit processes, when not performing "execute" during exit.
-          if (process->type == controller_process_type_exit_e && global.thread->enabled != controller_thread_enabled_exit_execute_e) continue;
+          if (process->type == controller_data_type_exit_e && global.thread->enabled != controller_thread_enabled_exit_execute_e) continue;
 
           if (process->childs.array[j]) {
 
@@ -295,7 +295,7 @@ extern "C" {
         for (j = 0; j < process->path_pids.used; ++j) {
 
           // Do not kill exit processes, when not performing "execute" during exit.
-          if (process->type == controller_process_type_exit_e && global.thread->enabled != controller_thread_enabled_exit_execute_e) continue;
+          if (process->type == controller_data_type_exit_e && global.thread->enabled != controller_thread_enabled_exit_execute_e) continue;
 
           if (f_file_exists(process->path_pids.array[j], F_true) == F_true) {
             status = controller_file_pid_read(process->path_pids.array[j], &pid);
@@ -314,7 +314,7 @@ extern "C" {
       while (process->childs.used) {
 
         // Do not shrink below an exit processes, when not performing "execute" during exit.
-        if (process->type == controller_process_type_exit_e && global.thread->enabled != controller_thread_enabled_exit_execute_e) break;
+        if (process->type == controller_data_type_exit_e && global.thread->enabled != controller_thread_enabled_exit_execute_e) break;
         if (process->childs.array[j] > 0) break;
 
         --process->childs.used;
@@ -324,7 +324,7 @@ extern "C" {
       while (process->path_pids.used) {
 
         // Do not shrink below an exit processes, when not performing "execute" during exit.
-        if (process->type == controller_process_type_exit_e && global.thread->enabled != controller_thread_enabled_exit_execute_e) break;
+        if (process->type == controller_data_type_exit_e && global.thread->enabled != controller_thread_enabled_exit_execute_e) break;
         if (process->path_pids.array[j].used) break;
 
         --process->path_pids.used;
@@ -435,7 +435,7 @@ extern "C" {
 
     f_thread_cancel_state_set(PTHREAD_CANCEL_DEFERRED, 0);
 
-    controller_thread_process(F_true, (controller_process_t *) arguments);
+    controller_thread_process(F_true, (controller_data_t *) arguments);
 
     return 0;
   }
@@ -446,7 +446,7 @@ extern "C" {
 
     f_thread_cancel_state_set(PTHREAD_CANCEL_DEFERRED, 0);
 
-    controller_thread_process(F_false, (controller_process_t *) arguments);
+    controller_thread_process(F_false, (controller_data_t *) arguments);
 
     return 0;
   }

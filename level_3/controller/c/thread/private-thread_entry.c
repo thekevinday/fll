@@ -136,7 +136,7 @@ extern "C" {
       // It seems that this function doesn't return to the calling thread for a forked child process, even with the "return 0;" below.
       // Deallocate as much as possible.
       controller_thread_delete_simple(entry->global->thread);
-      controller_setting_delete_simple(entry->global->setting);
+      controller_process_delete(entry->global->setting);
       controller_main_delete(entry->global->main);
 
       // According to the manpages, pthread_exit() calls exit(0), which is not good because a non-zero exit code may be returned.
@@ -254,7 +254,7 @@ extern "C" {
       // It seems that this function doesn't return to the calling thread for a forked child process, even with the "return 0;" below.
       // Deallocate as much as possible.
       controller_thread_delete_simple(entry->global->thread);
-      controller_setting_delete_simple(entry->global->setting);
+      controller_process_delete(entry->global->setting);
       controller_main_delete(entry->global->main);
 
       return 0;

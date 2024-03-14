@@ -81,7 +81,7 @@ extern "C" {
  * @see controller_thread_is_enabled_process_type()
  */
 #ifndef _di_controller_thread_is_enabled_process_
-  extern f_status_t controller_thread_is_enabled_process(controller_process_t * const process, controller_thread_t * const thread) F_attribute_visibility_internal_d;
+  extern f_status_t controller_thread_is_enabled_process(controller_data_t * const process, controller_thread_t * const thread) F_attribute_visibility_internal_d;
 #endif // _di_controller_thread_is_enabled_process_
 
 /**
@@ -118,7 +118,7 @@ extern "C" {
  *   F_interrupt (with error bit) on receiving a process signal, such as an interrupt signal.
  */
 #ifndef _di_controller_thread_main_
-  extern f_status_t controller_thread_main(controller_main_t * const main, controller_setting_t * const setting) F_attribute_visibility_internal_d;
+  extern f_status_t controller_thread_main(controller_main_t * const main, controller_process_t * const setting) F_attribute_visibility_internal_d;
 #endif // _di_controller_thread_main_
 
 /***

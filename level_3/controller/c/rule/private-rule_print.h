@@ -116,7 +116,7 @@ extern "C" {
  *   The process to use.
  */
 #ifndef _di_controller_rule_item_print_error_execute_
-  extern void controller_rule_item_print_error_execute(const bool script_is, const f_string_static_t name, const f_status_t status, controller_process_t * const process) F_attribute_visibility_internal_d;
+  extern void controller_rule_item_print_error_execute(const bool script_is, const f_string_static_t name, const f_status_t status, controller_data_t * const process) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_item_print_error_execute_
 
 /**

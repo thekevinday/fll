@@ -80,7 +80,7 @@ extern "C" {
  * @see controller_lock_read()
  */
 #ifndef _di_controller_lock_read_process_
-  extern f_status_t controller_lock_read_process(controller_process_t * const process, controller_thread_t * const thread, f_thread_lock_t *lock) F_attribute_visibility_internal_d;
+  extern f_status_t controller_lock_read_process(controller_data_t * const process, controller_thread_t * const thread, f_thread_lock_t *lock) F_attribute_visibility_internal_d;
 #endif // _di_controller_lock_read_process_
 
 /**
@@ -156,7 +156,7 @@ extern "C" {
  * @see controller_lock_write_process_type()
  */
 #ifndef _di_controller_lock_write_process_
-  extern f_status_t controller_lock_write_process(controller_process_t * const process, controller_thread_t * const thread, f_thread_lock_t *lock) F_attribute_visibility_internal_d;
+  extern f_status_t controller_lock_write_process(controller_data_t * const process, controller_thread_t * const thread, f_thread_lock_t *lock) F_attribute_visibility_internal_d;
 #endif // _di_controller_lock_write_process_
 
 /**

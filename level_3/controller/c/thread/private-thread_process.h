@@ -24,7 +24,7 @@ extern "C" {
  * @see controller_rule_process_do()
  */
 #ifndef _di_controller_thread_process_
-  extern void controller_thread_process(const bool is_normal, controller_process_t * const process) F_attribute_visibility_internal_d;
+  extern void controller_thread_process(const bool is_normal, controller_data_t * const process) F_attribute_visibility_internal_d;
 #endif // _di_controller_thread_process_
 
 /**
@@ -61,7 +61,7 @@ extern "C" {
  *
  * @param arguments
  *   The thread arguments.
- *   Must be of type controller_process_t.
+ *   Must be of type controller_data_t.
  *
  * @return
  *   0, always.
@@ -77,7 +77,7 @@ extern "C" {
  *
  * @param arguments
  *   The thread arguments.
- *   Must be of type controller_process_t.
+ *   Must be of type controller_data_t.
  *
  * @return
  *   0, always.

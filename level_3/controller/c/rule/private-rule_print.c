@@ -78,7 +78,7 @@ extern "C" {
 #endif // _di_controller_rule_item_print_error_
 
 #ifndef _di_controller_rule_item_print_error_execute_
-  void controller_rule_item_print_error_execute(const bool script_is, const f_string_static_t name, const f_status_t status, controller_process_t * const process) {
+  void controller_rule_item_print_error_execute(const bool script_is, const f_string_static_t name, const f_status_t status, controller_data_t * const process) {
 
     if (((controller_main_t *) process->main_data)->error.verbosity != f_console_verbosity_quiet_e) {
       fl_print_t * const print = &((controller_main_t *) process->main_data)->error;

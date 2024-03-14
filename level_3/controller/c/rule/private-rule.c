@@ -944,7 +944,7 @@ extern "C" {
 #endif // _di_controller_rule_copy_
 
 #ifndef _di_controller_rule_execute_
-  f_status_t controller_rule_execute(const controller_global_t global, const uint8_t action, const uint8_t options, controller_process_t * const process) {
+  f_status_t controller_rule_execute(const controller_global_t global, const uint8_t action, const uint8_t options, controller_data_t * const process) {
 
     f_status_t status = F_okay;
     f_status_t success = F_false;
@@ -1021,10 +1021,10 @@ extern "C" {
       // When a "define" from the entry/exit is in the "environment", add it to the exported environments (and overwrite any existing environment variable of the same name).
       controller_entry_t *entry = 0;
 
-      if (process->type == controller_process_type_entry_e) {
+      if (process->type == controller_data_type_entry_e) {
         entry = &global.setting->entry;
       }
-      else if (process->type == controller_process_type_exit_e) {
+      else if (process->type == controller_data_type_exit_e) {
         entry = &global.setting->exit;
       }
 
@@ -1112,10 +1112,10 @@ extern "C" {
     else {
       controller_entry_t *entry = 0;
 
-      if (process->type == controller_process_type_entry_e) {
+      if (process->type == controller_data_type_entry_e) {
         entry = &global.setting->entry;
       }
-      else if (process->type == controller_process_type_exit_e) {
+      else if (process->type == controller_data_type_exit_e) {
         entry = &global.setting->exit;
       }
 
@@ -1393,7 +1393,7 @@ extern "C" {
 #endif // _di_controller_rule_execute_
 
 #ifndef _di_controller_rule_execute_foreground_
-  f_status_t controller_rule_execute_foreground(const uint8_t type, const f_string_static_t program, const f_string_statics_t arguments, const uint8_t options, controller_execute_set_t * const execute_set, controller_process_t * const process) {
+  f_status_t controller_rule_execute_foreground(const uint8_t type, const f_string_static_t program, const f_string_statics_t arguments, const uint8_t options, controller_execute_set_t * const execute_set, controller_data_t * const process) {
 
     f_status_t status = F_okay;
     f_status_t status_lock = F_okay;
@@ -1461,7 +1461,7 @@ extern "C" {
       {
         const struct timespec delay = controller_time_milliseconds(controller_thread_simulation_timeout_d);
 
-        if (controller_time_sleep_nanoseconds(main, (controller_setting_t *) process->main_setting, delay) == -1) {
+        if (controller_time_sleep_nanoseconds(main, (controller_process_t *) process->main_setting, delay) == -1) {
           status = F_status_set_error(F_interrupt);
         }
       }
@@ -1606,7 +1606,7 @@ extern "C" {
 #endif // _di_controller_rule_execute_foreground_
 
 #ifndef _di_controller_rule_execute_pid_with_
-  f_status_t controller_rule_execute_pid_with(const f_string_dynamic_t pid_file, const uint8_t type, const f_string_static_t program, const f_string_statics_t arguments, const uint8_t options, const uint8_t with, controller_execute_set_t * const execute_set, controller_process_t * const process) {
+  f_status_t controller_rule_execute_pid_with(const f_string_dynamic_t pid_file, const uint8_t type, const f_string_static_t program, const f_string_statics_t arguments, const uint8_t options, const uint8_t with, controller_execute_set_t * const execute_set, controller_data_t * const process) {
 
     f_status_t status = F_okay;
     f_status_t status_lock = F_okay;
@@ -1717,7 +1717,7 @@ extern "C" {
       {
         const struct timespec delay = controller_time_milliseconds(controller_thread_simulation_timeout_d);
 
-        if (controller_time_sleep_nanoseconds(main, (controller_setting_t *) process->main_setting, delay) == -1) {
+        if (controller_time_sleep_nanoseconds(main, (controller_process_t *) process->main_setting, delay) == -1) {
           status = F_status_set_error(F_interrupt);
         }
       }
@@ -1863,7 +1863,7 @@ extern "C" {
 #endif // _di_controller_rule_execute_pid_with_
 
 #ifndef _di_controller_rule_execute_rerun_
-  int8_t controller_rule_execute_rerun(const uint8_t action, controller_process_t * const process, controller_rule_item_t * const item) {
+  int8_t controller_rule_execute_rerun(const uint8_t action, controller_data_t * const process, controller_rule_item_t * const item) {
 
     const int result = WIFEXITED(process->result) ? WEXITSTATUS(process->result) : 0;
 
@@ -1900,7 +1900,7 @@ extern "C" {
         if (rerun_item->delay) {
           const struct timespec delay = controller_time_milliseconds(rerun_item->delay);
 
-          if (controller_time_sleep_nanoseconds(main, (controller_setting_t *) process->main_setting, delay) == -1) {
+          if (controller_time_sleep_nanoseconds(main, (controller_process_t *) process->main_setting, delay) == -1) {
             return -1;
           }
 
@@ -1929,7 +1929,7 @@ extern "C" {
 #endif // _di_controller_rule_execute_rerun_
 
 #ifndef _di_controller_rule_expand_
-  f_status_t controller_rule_expand(const controller_global_t global, const controller_rule_action_t action, controller_process_t * const process) {
+  f_status_t controller_rule_expand(const controller_global_t global, const controller_rule_action_t action, controller_data_t * const process) {
 
     process->cache.expanded.used = 0;
 
@@ -2012,7 +2012,7 @@ extern "C" {
 #endif // _di_controller_rule_expand_
 
 #ifndef _di_controller_rule_expand_iki_
-  f_status_t controller_rule_expand_iki(controller_process_t * const process, const f_string_static_t source, const f_range_t vocabulary, const f_range_t content, f_string_dynamic_t * const destination) {
+  f_status_t controller_rule_expand_iki(controller_data_t * const process, const f_string_static_t source, const f_range_t vocabulary, const f_range_t content, f_string_dynamic_t * const destination) {
 
     if (vocabulary.start > vocabulary.stop) return F_okay;
     if (content.start > content.stop) return F_okay;
@@ -2034,7 +2034,7 @@ extern "C" {
       } // for
 
       if (i == process->rule.define.used) {
-        controller_entry_t * const entry = process->type == controller_process_type_entry_e ? &((controller_setting_t *) process->main_setting)->entry : &((controller_setting_t *) process->main_setting)->exit;
+        controller_entry_t * const entry = process->type == controller_data_type_entry_e ? &((controller_process_t *) process->main_setting)->entry : &((controller_process_t *) process->main_setting)->exit;
 
         for (i = 0; i < entry->define.used; ++i) {
 
@@ -2083,7 +2083,7 @@ extern "C" {
       } // for
 
       if (i == process->rule.parameter.used) {
-        controller_entry_t * const entry = process->type == controller_process_type_entry_e ? &((controller_setting_t *) process->main_setting)->entry : &((controller_setting_t *) process->main_setting)->exit;
+        controller_entry_t * const entry = process->type == controller_data_type_entry_e ? &((controller_process_t *) process->main_setting)->entry : &((controller_process_t *) process->main_setting)->exit;
 
         for (i = 0; i < entry->parameter.used; ++i) {
 
@@ -2547,7 +2547,7 @@ extern "C" {
 #endif // _di_controller_rule_items_increase_by_
 
 #ifndef _di_controller_rule_process_
-  f_status_t controller_rule_process(const controller_global_t global, controller_process_t * const process) {
+  f_status_t controller_rule_process(const controller_global_t global, controller_data_t * const process) {
 
     switch (process->action) {
       case controller_rule_action_type_freeze_e:
@@ -2629,7 +2629,7 @@ extern "C" {
 
       bool found = F_false;
 
-      controller_process_t *dependency = 0;
+      controller_data_t *dependency = 0;
 
       uint8_t options_process = 0;
 
@@ -3113,7 +3113,7 @@ extern "C" {
     f_status_t status = F_okay;
     f_status_t status_lock = F_okay;
 
-    controller_process_t *process = 0;
+    controller_data_t *process = 0;
 
     status = controller_lock_read_process_type(type, global.thread, &global.thread->lock.process);
 
@@ -3126,7 +3126,7 @@ extern "C" {
     {
       f_number_unsigned_t at = 0;
 
-      status = controller_process_prepare(global, type != controller_process_type_exit_e, action, alias_rule, &at);
+      status = controller_process_prepare(global, type != controller_data_type_exit_e, action, alias_rule, &at);
 
       if (F_status_is_error(status)) {
         f_thread_unlock(&global.thread->lock.process);
@@ -3272,7 +3272,7 @@ extern "C" {
 
     if (F_status_is_error_not(status)) {
       if (process->action && (options_force & controller_process_option_asynchronous_d)) {
-        if (process->type == controller_process_type_exit_e) {
+        if (process->type == controller_data_type_exit_e) {
           status = f_thread_create(0, &process->id_thread, controller_thread_process_other, (void *) process);
         }
         else {
@@ -3332,11 +3332,11 @@ extern "C" {
 #endif // _di_controller_rule_process_begin_
 
 #ifndef _di_controller_rule_process_do_
-  f_status_t controller_rule_process_do(const uint8_t options_force, controller_process_t * const process) {
+  f_status_t controller_rule_process_do(const uint8_t options_force, controller_data_t * const process) {
 
     f_status_t status_lock = F_okay;
 
-    controller_global_t global = macro_controller_global_t_initialize_1((controller_main_t *) process->main_data, (controller_setting_t *) process->main_setting, (controller_thread_t *) process->main_thread);
+    controller_global_t global = macro_controller_global_t_initialize_1((controller_main_t *) process->main_data, (controller_process_t *) process->main_setting, (controller_thread_t *) process->main_thread);
 
     // The process and active locks shall be held for the duration of this processing (aside from switching between read to/from write).
     if (options_force & controller_process_option_asynchronous_d) {
@@ -3942,7 +3942,7 @@ extern "C" {
 #endif // _di_controller_rule_read_
 
 #ifndef _di_controller_rule_setting_read_
-  f_status_t controller_rule_setting_read(const controller_global_t global, const bool is_normal, const controller_setting_t setting, controller_cache_t * const cache, controller_rule_t * const rule) {
+  f_status_t controller_rule_setting_read(const controller_global_t global, const bool is_normal, const controller_process_t setting, controller_cache_t * const cache, controller_rule_t * const rule) {
 
     f_status_t status = F_okay;
     f_status_t status_return = F_okay;
@@ -6203,7 +6203,7 @@ extern "C" {
 
     // Vuild a list of what to wait for so that anything new after this point will not be waited for.
     const f_number_unsigned_t process_total = global.thread->processs.used;
-    controller_process_t *process_list[process_total];
+    controller_data_t *process_list[process_total];
 
     for (; i < process_total; ++i) {
       process_list[i] = global.thread->processs.array[i];
@@ -6388,7 +6388,7 @@ extern "C" {
 #ifndef _di_controller_rule_wait_all_process_type_
   f_status_t controller_rule_wait_all_process_type(const controller_global_t global, const uint8_t type, const bool required) {
 
-    return controller_rule_wait_all(global, type != controller_process_type_exit_e, required);
+    return controller_rule_wait_all(global, type != controller_data_type_exit_e, required);
   }
 #endif // _di_controller_rule_wait_all_process_type_
 

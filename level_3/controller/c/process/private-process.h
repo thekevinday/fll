@@ -134,7 +134,7 @@ extern "C" {
  * @see f_thread_condition_wait_timed()
  */
 #ifndef _di_controller_process_wait_
-  extern f_status_t controller_process_wait(const controller_global_t global, controller_process_t * const process) F_attribute_visibility_internal_d;
+  extern f_status_t controller_process_wait(const controller_global_t global, controller_data_t * const process) F_attribute_visibility_internal_d;
 #endif // _di_controller_process_wait_
 
 #ifdef __cplusplus
