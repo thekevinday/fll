@@ -215,16 +215,16 @@ extern "C" {
 /**
  * Fully deallocate all memory for the given process without caring about return status.
  *
- * @param process
- *   The process to deallocate.
+ * @param data
+ *   The data to deallocate.
  *
  * @see f_memory_array_resize()
  * @see f_thread_condition_delete()
  * @see f_thread_mutex_delete()
  */
-#ifndef _di_controller_process_delete_simple_
-  extern void controller_process_delete_simple(controller_data_t * const process) F_attribute_visibility_internal_d;
-#endif // _di_controller_process_delete_simple_
+#ifndef _di_controller_data_delete_simple_
+  extern void controller_data_delete_simple(controller_data_t * const data) F_attribute_visibility_internal_d;
+#endif // _di_controller_data_delete_simple_
 
 /**
  * Fully deallocate all memory for the given processs without caring about return status.
@@ -272,12 +272,12 @@ extern "C" {
  * @return
  *   F_okay on success.
  *
- *   Errors (with error bit) from: controller_process_delete_simple().
+ *   Errors (with error bit) from: controller_data_delete_simple().
  *   Errors (with error bit) from: f_memory_resize().
  *   Errors (with error bit) from: f_thread_condition_create().
  *   Errors (with error bit) from: f_thread_lock_create().
  *
- * @see controller_process_delete_simple()
+ * @see controller_data_delete_simple()
  * @see f_memory_resize()
  * @see f_thread_condition_create()
  * @see f_thread_lock_create()

@@ -23,7 +23,7 @@ extern "C" {
 
       controller_time(controller_thread_exit_ready_timeout_seconds_d, controller_thread_exit_ready_timeout_nanoseconds_d, &time);
 
-      error = sigtimedwait(&global->main->signal.set, &information, &time);
+      error = sigtimedwait(&global->main->program.signal.set, &information, &time);
 
       if (error == -1) {
         if (errno == EAGAIN) continue;
@@ -65,7 +65,7 @@ extern "C" {
 #endif // _di_controller_thread_signal_state_fss_
 
 #ifndef _di_controller_thread_signal_state_iki_
-  f_status_t controller_thread_signal_state_iki(void * const state, void * const internal) {
+  f_status_t controller_thread_signal_state_iki(f_state_t * const state, void * const internal) {
 
     if (!state || !state->custom) {
       return F_interrupt_not;

@@ -42,7 +42,7 @@ extern "C" {
       status = controller_lock_write(is_normal, global.thread, &global.thread->lock.process);
 
       if (F_status_is_error(status)) {
-        controller_lock_print_error_critical(global.main->error, F_status_set_fine(status), F_false, global.thread);
+        controller_lock_print_error_critical(global.main->program.error, F_status_set_fine(status), F_false, global.thread);
       }
       else {
         status = controller_processs_increase(&global.thread->processs);
@@ -55,7 +55,7 @@ extern "C" {
         status = controller_lock_write(is_normal, global.thread, &process->lock);
 
         if (F_status_is_error(status)) {
-          controller_lock_print_error_critical(global.main->error, F_status_set_fine(status), F_false, global.thread);
+          controller_lock_print_error_critical(global.main->program.error, F_status_set_fine(status), F_false, global.thread);
         }
         else {
           process->action = action;
@@ -143,7 +143,7 @@ extern "C" {
       status_lock = controller_lock_read_process(process, global.thread, &process->lock);
 
       if (F_status_is_error(status_lock)) {
-        controller_lock_print_error_critical(global.main->error, F_status_set_fine(status_lock), F_true, global.thread);
+        controller_lock_print_error_critical(global.main->program.error, F_status_set_fine(status_lock), F_true, global.thread);
 
         break;
       }

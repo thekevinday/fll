@@ -35,23 +35,23 @@ extern "C" {
     else if (*status != F_child) {
       *status = controller_entry_preprocess(*entry->global, F_true, cache);
 
-      if ((entry->global->main->parameters.array[controller_parameter_simulate_e].result & f_console_result_found_e) && (entry->global->main->parameters.array[controller_parameter_validate_e].result & f_console_result_found_e)) {
+      if ((entry->global->main->program.parameters.array[controller_parameter_simulate_e].result & f_console_result_found_e) && (entry->global->main->program.parameters.array[controller_parameter_validate_e].result & f_console_result_found_e)) {
         controller_entry_setting_validate(*entry->global, F_true, cache);
       }
     }
 
     if (F_status_is_error_not(*status) && *status != F_child) {
-      if (!(main->parameters.array[controller_parameter_validate_e].result & f_console_result_found_e) || (main->parameters.array[controller_parameter_simulate_e].result & f_console_result_found_e)) {
+      if (!(main->program.parameters.array[controller_parameter_validate_e].result & f_console_result_found_e) || (main->program.parameters.array[controller_parameter_simulate_e].result & f_console_result_found_e)) {
 
         if (entry->setting->entry.pid == controller_entry_pid_require_e && f_file_exists(entry->setting->path_pid, F_true) == F_true) {
-          if (main->error.verbosity > f_console_verbosity_quiet_e) {
-            controller_lock_print(main->error.to, entry->global->thread);
+          if (main->program.error.verbosity > f_console_verbosity_quiet_e) {
+            controller_lock_print(main->program.error.to, entry->global->thread);
 
-            fl_print_format("%r%[%QThe pid file '%]", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-            fl_print_format(f_string_format_Q_single_s.string, main->error.to, main->error.notable, entry->setting->path_pid, main->error.notable);
-            fl_print_format("%[' must not already exist.%]%r", main->error.to, main->error.context, main->error.context, f_string_eol_s);
+            fl_print_format("%r%[%QThe pid file '%]", main->program.error.to, f_string_eol_s, main->program.error.context, main->program.error.prefix, main->program.error.context);
+            fl_print_format(f_string_format_Q_single_s.string, main->program.error.to, main->program.error.notable, entry->setting->path_pid, main->program.error.notable);
+            fl_print_format("%[' must not already exist.%]%r", main->program.error.to, main->program.error.context, main->program.error.context, f_string_eol_s);
 
-            controller_unlock_print_flush(main->error.to, entry->global->thread);
+            controller_unlock_print_flush(main->program.error.to, entry->global->thread);
           }
 
           entry->setting->ready = controller_setting_ready_fail_e;
@@ -83,14 +83,14 @@ extern "C" {
               const f_status_t status_failsafe = controller_entry_process(entry->global, cache, F_true, F_true);
 
               if (F_status_is_error(status_failsafe)) {
-                if (main->error.verbosity > f_console_verbosity_quiet_e) {
-                  controller_lock_print(main->error.to, entry->global->thread);
+                if (main->program.error.verbosity > f_console_verbosity_quiet_e) {
+                  controller_lock_print(main->program.error.to, entry->global->thread);
 
-                  fl_print_format("%r%[%QFailed while processing requested failsafe item '%]", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-                  fl_print_format(f_string_format_Q_single_s.string, main->error.to, main->error.notable, entry->global->setting->entry.items.array[entry->global->setting->failsafe_item_id].name, main->error.notable);
-                  fl_print_format(f_string_format_sentence_end_quote_s.string, main->error.to, main->error.context, main->error.context, f_string_eol_s);
+                  fl_print_format("%r%[%QFailed while processing requested failsafe item '%]", main->program.error.to, f_string_eol_s, main->program.error.context, main->program.error.prefix, main->program.error.context);
+                  fl_print_format(f_string_format_Q_single_s.string, main->program.error.to, main->program.error.notable, entry->global->setting->entry.items.array[entry->global->setting->failsafe_item_id].name, main->program.error.notable);
+                  fl_print_format(f_string_format_sentence_end_quote_s.string, main->program.error.to, main->program.error.context, main->program.error.context, f_string_eol_s);
 
-                  controller_unlock_print_flush(main->error.to, entry->global->thread);
+                  controller_unlock_print_flush(main->program.error.to, entry->global->thread);
                 }
 
                 *status = F_status_set_error(F_failure);
@@ -118,14 +118,14 @@ extern "C" {
           }
         }
 
-        if (F_status_is_error_not(*status) && *status != F_child && entry->global->main->parameters.array[controller_parameter_validate_e].result == f_console_result_none_e && entry->global->setting->mode == controller_setting_mode_helper_e) {
+        if (F_status_is_error_not(*status) && *status != F_child && entry->global->main->program.parameters.array[controller_parameter_validate_e].result == f_console_result_none_e && entry->global->setting->mode == controller_setting_mode_helper_e) {
           struct timespec time;
           time.tv_sec = controller_thread_exit_helper_timeout_seconds_d;
           time.tv_nsec = controller_thread_exit_helper_timeout_nanoseconds_d;
 
           nanosleep(&time, 0);
 
-          controller_thread_process_cancel(*(entry->global), F_true, controller_thread_cancel_exit_e, 0);
+          controller_thread_process_cancel(*(entry->global), F_true, controller_thread_cancel_exit_e);
         }
       }
     }
@@ -140,7 +140,7 @@ extern "C" {
       controller_main_delete(entry->global->main);
 
       // According to the manpages, pthread_exit() calls exit(0), which is not good because a non-zero exit code may be returned.
-      if (main->child) exit(main->child);
+      if (main->program.child) exit(main->program.child);
 
       return 0;
     }
@@ -176,13 +176,13 @@ extern "C" {
     else if (*status != F_child) {
       *status = controller_entry_preprocess(*entry->global, F_false, cache);
 
-      if ((entry->global->main->parameters.array[controller_parameter_simulate_e].result & f_console_result_found_e) && (entry->global->main->parameters.array[controller_parameter_validate_e].result & f_console_result_found_e)) {
+      if ((entry->global->main->program.parameters.array[controller_parameter_simulate_e].result & f_console_result_found_e) && (entry->global->main->program.parameters.array[controller_parameter_validate_e].result & f_console_result_found_e)) {
         controller_entry_setting_validate(*entry->global, F_false, cache);
       }
     }
 
     if (F_status_is_error_not(*status) && *status != F_child && *status != F_file_found_not) {
-      if (!(main->parameters.array[controller_parameter_validate_e].result & f_console_result_found_e) || (main->parameters.array[controller_parameter_simulate_e].result & f_console_result_found_e)) {
+      if (!(main->program.parameters.array[controller_parameter_validate_e].result & f_console_result_found_e) || (main->program.parameters.array[controller_parameter_simulate_e].result & f_console_result_found_e)) {
 
         *status = controller_entry_process(entry->global, cache, F_false, F_false);
 
@@ -212,14 +212,14 @@ extern "C" {
             const f_status_t status_failsafe = controller_entry_process(entry->global, cache, F_true, F_false);
 
             if (F_status_is_error(status_failsafe)) {
-              if (main->error.verbosity > f_console_verbosity_quiet_e) {
-                controller_lock_print(main->error.to, entry->global->thread);
+              if (main->program.error.verbosity > f_console_verbosity_quiet_e) {
+                controller_lock_print(main->program.error.to, entry->global->thread);
 
-                fl_print_format("%r%[%QFailed while processing requested failsafe item '%]", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-                fl_print_format(f_string_format_Q_single_s.string, main->error.to, main->error.notable, entry->global->setting->entry.items.array[entry->global->setting->failsafe_item_id].name, main->error.notable);
-                fl_print_format(f_string_format_sentence_end_quote_s.string, main->error.to, main->error.context, main->error.context, f_string_eol_s);
+                fl_print_format("%r%[%QFailed while processing requested failsafe item '%]", main->program.error.to, f_string_eol_s, main->program.error.context, main->program.error.prefix, main->program.error.context);
+                fl_print_format(f_string_format_Q_single_s.string, main->program.error.to, main->program.error.notable, entry->global->setting->entry.items.array[entry->global->setting->failsafe_item_id].name, main->program.error.notable);
+                fl_print_format(f_string_format_sentence_end_quote_s.string, main->program.error.to, main->program.error.context, main->program.error.context, f_string_eol_s);
 
-                controller_unlock_print_flush(main->error.to, entry->global->thread);
+                controller_unlock_print_flush(main->program.error.to, entry->global->thread);
               }
 
               *status = F_status_set_error(F_failure);

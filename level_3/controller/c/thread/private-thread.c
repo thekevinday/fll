@@ -25,7 +25,7 @@ extern "C" {
 
     if (global->thread->enabled != controller_thread_enabled_e) return 0;
 
-    const struct timespec delay = controller_time_seconds((global->main->parameters.array[controller_parameter_simulate_e].result & f_console_result_found_e) ? controller_thread_cleanup_interval_short_d : controller_thread_cleanup_interval_long_d);
+    const struct timespec delay = controller_time_seconds((global->main->program.parameters.array[controller_parameter_simulate_e].result & f_console_result_found_e) ? controller_thread_cleanup_interval_short_d : controller_thread_cleanup_interval_long_d);
 
     f_status_t status = F_okay;
 
@@ -95,7 +95,7 @@ extern "C" {
               status = f_thread_lock_write(&process->lock);
 
               if (F_status_is_error(status)) {
-                controller_lock_print_error_critical(global->main->error, F_status_set_fine(status), F_false, global->thread);
+                controller_lock_print_error_critical(global->main->program.error, F_status_set_fine(status), F_false, global->thread);
 
                 f_thread_unlock(&process->active);
                 continue;
@@ -141,7 +141,7 @@ extern "C" {
 
           // Deallocate any rules in the space that is declared to be unused.
           if (i >= global->thread->processs.used) {
-            controller_rule_delete_simple(&process->rule);
+            controller_rule_delete(&process->rule);
           }
 
           f_thread_unlock(&process->active);
@@ -207,15 +207,15 @@ extern "C" {
     status = controller_lock_create(&thread.lock);
 
     if (F_status_is_error(status)) {
-      if (main->error.verbosity > f_console_verbosity_quiet_e) {
-        fll_error_print(main->error, status, "controller_lock_create", fll_error_file_flag_fallback_e);
+      if (main->program.error.verbosity > f_console_verbosity_quiet_e) {
+        fll_error_print(&main->program.error, status, "controller_lock_create", fll_error_file_flag_fallback_e);
       }
     }
     else {
       status = controller_processs_increase(&thread.processs);
 
       if (F_status_is_error(status)) {
-        controller_print_error(&thread, main->error, F_status_set_fine(status), "controller_processs_increase", F_true);
+        controller_print_error(&thread, main->program.error, F_status_set_fine(status), "controller_processs_increase", F_true);
       }
     }
 
@@ -226,23 +226,23 @@ extern "C" {
     if (F_status_is_error(status)) {
       thread.id_signal = 0;
 
-      if (main->error.verbosity > f_console_verbosity_quiet_e) {
-        controller_print_error(&thread, main->error, F_status_set_fine(status), "f_thread_create", F_true);
+      if (main->program.error.verbosity > f_console_verbosity_quiet_e) {
+        controller_print_error(&thread, main->program.error, F_status_set_fine(status), "f_thread_create", F_true);
       }
     }
     else {
-      if (main->parameters.array[controller_parameter_daemon_e].result & f_console_result_found_e) {
+      if (main->program.parameters.array[controller_parameter_daemon_e].result & f_console_result_found_e) {
         setting->ready = controller_setting_ready_done_e;
 
         if (f_file_exists(setting->path_pid, F_true) == F_true) {
-          if (main->error.verbosity > f_console_verbosity_quiet_e) {
-            controller_lock_print(main->error.to, &thread);
+          if (main->program.error.verbosity > f_console_verbosity_quiet_e) {
+            controller_lock_print(main->program.error.to, &thread);
 
-            fl_print_format("%r%[%QThe pid file '%]", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-            fl_print_format(f_string_format_Q_single_s.string, main->error.to, main->error.notable, setting->path_pid, main->error.notable);
-            fl_print_format("%[' must not already exist.%]%r", main->error.to, main->error.context, main->error.context, f_string_eol_s);
+            fl_print_format("%r%[%QThe pid file '%]", main->program.error.to, f_string_eol_s, main->program.error.context, main->program.error.prefix, main->program.error.context);
+            fl_print_format(f_string_format_Q_single_s.string, main->program.error.to, main->program.error.notable, setting->path_pid, main->program.error.notable);
+            fl_print_format("%[' must not already exist.%]%r", main->program.error.to, main->program.error.context, main->program.error.context, f_string_eol_s);
 
-            controller_unlock_print_flush(main->error.to, &thread);
+            controller_unlock_print_flush(main->program.error.to, &thread);
           }
 
           setting->ready = controller_setting_ready_abort_e;
@@ -255,8 +255,8 @@ extern "C" {
         status = f_thread_create(0, &thread.id_entry, &controller_thread_entry, (void *) &entry);
 
         if (F_status_is_error(status)) {
-          if (main->error.verbosity > f_console_verbosity_quiet_e) {
-            controller_print_error(&thread, main->error, F_status_set_fine(status), "f_thread_create", F_true);
+          if (main->program.error.verbosity > f_console_verbosity_quiet_e) {
+            controller_print_error(&thread, main->program.error, F_status_set_fine(status), "f_thread_create", F_true);
           }
         }
         else {
@@ -270,7 +270,7 @@ extern "C" {
 
     // Only make the rule and control threads available once any/all pre-processing and are completed.
     if (F_status_is_error_not(status) && status != F_failure && status != F_child && thread.enabled == controller_thread_enabled_e) {
-      if (!(main->parameters.array[controller_parameter_validate_e].result & f_console_result_found_e)) {
+      if (!(main->program.parameters.array[controller_parameter_validate_e].result & f_console_result_found_e)) {
 
         // Wait for the entry thread to complete before starting the rule thread.
         controller_thread_join(&thread.id_rule);
@@ -288,8 +288,8 @@ extern "C" {
           if (F_status_is_error(status)) {
             thread.id_cleanup = 0;
 
-            if (main->error.verbosity > f_console_verbosity_quiet_e) {
-              controller_print_error(&thread, main->error, F_status_set_fine(status), "f_thread_create", F_true);
+            if (main->program.error.verbosity > f_console_verbosity_quiet_e) {
+              controller_print_error(&thread, main->program.error, F_status_set_fine(status), "f_thread_create", F_true);
             }
           }
         }
@@ -302,13 +302,13 @@ extern "C" {
       return F_child;
     }
 
-    if (F_status_is_error_not(status) && status != F_failure && !(main->parameters.array[controller_parameter_validate_e].result & f_console_result_found_e) && controller_thread_is_enabled(F_true, &thread)) {
+    if (F_status_is_error_not(status) && status != F_failure && !(main->program.parameters.array[controller_parameter_validate_e].result & f_console_result_found_e) && controller_thread_is_enabled(F_true, &thread)) {
 
       if (setting->mode == controller_setting_mode_service_e) {
         controller_thread_join(&thread.id_signal);
       }
       else if (setting->mode == controller_setting_mode_helper_e) {
-        status = controller_rule_wait_all(global, F_true, F_false, 0);
+        status = controller_rule_wait_all(global, F_true, F_false);
       }
       else if (setting->mode == controller_setting_mode_program_e) {
         status = controller_rule_wait_all(global, F_true, F_false);
@@ -338,10 +338,10 @@ extern "C" {
     }
 
     if (F_status_set_fine(status) == F_interrupt) {
-      fll_program_print_signal_received(main->warning, thread.signal);
+      fll_program_print_signal_received(&main->program.warning, thread.signal);
 
-      if (main->output.verbosity != f_console_verbosity_quiet_e) {
-        fll_print_dynamic_raw(f_string_eol_s, main->output.to);
+      if (main->program.output.verbosity != f_console_verbosity_quiet_e) {
+        fll_print_dynamic_raw(f_string_eol_s, main->program.output.to);
       }
 
       return F_status_set_error(F_interrupt);

@@ -37,7 +37,7 @@ extern "C" {
       controller_main_delete(main);
 
       // According to the manpages, pthread_exit() calls exit(0), which is not good because a non-zero exit code may be returned.
-      if (main->child) exit(main->child);
+      if (main->program.child) exit(main->program.child);
     }
   }
 #endif // _di_controller_thread_process_
@@ -78,14 +78,14 @@ extern "C" {
     time.tv_sec = 0;
     time.tv_nsec = interval_nanoseconds;
 
-    if (global.setting->mode == controller_setting_mode_helper_e && global.main->parameters.array[controller_parameter_validate_e].result == f_console_result_none_e) {
+    if (global.setting->mode == controller_setting_mode_helper_e && global.main->program.parameters.array[controller_parameter_validate_e].result == f_console_result_none_e) {
       int value = 0;
       f_number_unsigned_t lapsed = 0;
 
       for (i = 0; i < global.thread->processs.used; ++i) {
 
         if (!global.thread->processs.array[i]) continue;
-        if (caller && i == caller->id) continue;
+        //if (caller && i == caller->id) continue; // @fixme "caller" disappeared at some point.
 
         process = global.thread->processs.array[i];
 
@@ -142,7 +142,7 @@ extern "C" {
       global.thread->id_signal = 0;
     }
 
-    if (global.setting->mode == controller_setting_mode_helper_e && global.main->parameters.array[controller_parameter_validate_e].result == f_console_result_none_e) {
+    if (global.setting->mode == controller_setting_mode_helper_e && global.main->program.parameters.array[controller_parameter_validate_e].result == f_console_result_none_e) {
       f_thread_mutex_unlock(&global.thread->lock.cancel);
 
       return;
@@ -362,8 +362,8 @@ extern "C" {
       f_status_t status = f_thread_create(0, &global->thread->id_entry, &controller_thread_exit, (void *) &entry);
 
       if (F_status_is_error(status)) {
-        if (global->main->error.verbosity > f_console_verbosity_quiet_e) {
-          controller_print_error(global->thread, global->main->error, F_status_set_fine(status), "f_thread_create", F_true);
+        if (global->main->program.error.verbosity > f_console_verbosity_quiet_e) {
+          controller_print_error(global->thread, global->main->program.error, F_status_set_fine(status), "f_thread_create", F_true);
         }
 
         if (F_status_is_error_not(f_thread_mutex_lock(&global->thread->lock.alert))) {

@@ -1,12 +1,11 @@
 #include "controller.h"
-#include "private-common.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#ifndef _di_controller_print_help_
-  f_status_t controller_print_help(fl_print_t * const print) {
+#ifndef _di_controller_print_message_help_
+  f_status_t controller_print_message_help(fl_print_t * const print) {
 
     if (!print || !print->custom) return F_status_set_error(F_output_not);
 
@@ -47,7 +46,7 @@ extern "C" {
 
     return F_okay;
   }
-#endif // _di_controller_print_help_
+#endif // _di_controller_print_message_help_
 
 #ifdef __cplusplus
 } // extern "C"

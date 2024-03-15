@@ -18,7 +18,7 @@ extern "C" {
       f_thread_mutex_lock(&thread->lock.print);
     }
 
-    fll_error_print(print, status, function, flag);
+    fll_error_print(&print, status, function, flag); // @fixme the print is a const and it is being passed as a pointer; the function needs to change.
 
     if (thread) {
       f_thread_mutex_unlock(&thread->lock.print);
@@ -37,7 +37,7 @@ extern "C" {
       f_thread_mutex_lock(&thread->lock.print);
     }
 
-    fll_error_file_print(print, status, function, flag, name, operation, type);
+    fll_error_file_print(&print, status, function, flag, name, operation, type); // @fixme the print is a const and it is being passed as a pointer; the function needs to change.
 
     if (thread) {
       f_thread_mutex_unlock(&thread->lock.print);

@@ -33,28 +33,28 @@ extern "C" {
 #ifndef _di_controller_entry_preprocess_print_simulate_setting_value_
   void controller_entry_preprocess_print_simulate_setting_value(const controller_global_t global, const bool is_entry, const f_string_static_t name, const f_string_static_t name_sub, const f_string_static_t value, const f_string_static_t suffix) {
 
-    if (global.main->error.verbosity != f_console_verbosity_debug_e && !(global.main->error.verbosity == f_console_verbosity_verbose_e && global.main->parameters.array[controller_parameter_simulate_e].result & f_console_result_found_e)) {
+    if (global.main->program.error.verbosity != f_console_verbosity_debug_e && !(global.main->program.error.verbosity == f_console_verbosity_verbose_e && global.main->program.parameters.array[controller_parameter_simulate_e].result & f_console_result_found_e)) {
       return;
     }
 
-    controller_lock_print(global.main->output.to, global.thread);
+    controller_lock_print(global.main->program.output.to, global.thread);
 
-    fl_print_format("%rProcessing %r item action '", global.main->output.to, f_string_eol_s, is_entry ? controller_entry_s : controller_exit_s);
+    fl_print_format("%rProcessing %r item action '", global.main->program.output.to, f_string_eol_s, is_entry ? controller_entry_s : controller_exit_s);
 
-    fl_print_format("%[%Q%]' setting ", global.main->output.to, global.main->context.set.title, name, global.main->context.set.title);
+    fl_print_format("%[%Q%]' setting ", global.main->program.output.to, global.main->program.context.set.title, name, global.main->program.context.set.title);
 
     if (name_sub.used) {
-      fl_print_format("'%[%Q%]'", global.main->output.to, global.main->context.set.notable, name_sub, global.main->context.set.notable);
+      fl_print_format("'%[%Q%]'", global.main->program.output.to, global.main->program.context.set.notable, name_sub, global.main->program.context.set.notable);
     }
     else {
-      fl_print_format("value", global.main->output.to);
+      fl_print_format("value", global.main->program.output.to);
     }
 
-    fl_print_format(" to '%[%Q%]", global.main->output.to, global.main->context.set.important, value, global.main->context.set.important);
+    fl_print_format(" to '%[%Q%]", global.main->program.output.to, global.main->program.context.set.important, value, global.main->program.context.set.important);
 
-    fl_print_format("'%Q.%r", global.main->output.to, suffix, f_string_eol_s);
+    fl_print_format("'%Q.%r", global.main->program.output.to, suffix, f_string_eol_s);
 
-    controller_unlock_print_flush(global.main->output.to, global.thread);
+    controller_unlock_print_flush(global.main->program.output.to, global.thread);
   }
 #endif // _di_controller_entry_preprocess_print_simulate_setting_value_
 
@@ -67,7 +67,7 @@ extern "C" {
     // fll_error_print() automatically locks, so manually handle only the mutex locking and flushing rather than calling controller_lock_print().
     f_thread_mutex_lock(&thread->lock.print);
 
-    fll_error_print(print, status, function, fallback);
+    fll_error_print(&print, status, function, fallback); // @fixme the print is a const and it is being passed as a pointer; the function needs to change.
 
     f_file_stream_lock(print.to);
 
@@ -116,7 +116,7 @@ extern "C" {
     // fll_error_file_print() automatically locks, so manually handle only the mutex locking and flushing rather than calling controller_lock_print().
     f_thread_mutex_lock(&thread->lock.print);
 
-    fll_error_file_print(print, status, function, flag, name, operation, type);
+    fll_error_file_print(&print, status, function, flag, name, operation, type); // @fixme the print is a const and it is being passed as a pointer; the function needs to change.
 
     f_file_stream_lock(print.to);
 
@@ -146,93 +146,93 @@ extern "C" {
 #ifndef _di_controller_entry_settings_read_print_setting_ignored_
   void controller_entry_settings_read_print_setting_ignored(const controller_global_t global, const bool is_entry, const controller_cache_t cache, const f_number_unsigned_t index) {
 
-    if (global.main->warning.verbosity != f_console_verbosity_debug_e) return;
+    if (global.main->program.warning.verbosity != f_console_verbosity_debug_e) return;
 
-    controller_lock_print(global.main->warning.to, global.thread);
+    controller_lock_print(global.main->program.warning.to, global.thread);
 
-    fl_print_format("%r%[%QThe %Q item setting '%]", global.main->warning.to, f_string_eol_s, global.main->warning.context, global.main->warning.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->warning.context);
-    fl_print_format(f_string_format_Q_single_s.string, global.main->warning.to, global.main->warning.notable, cache.action.name_action, global.main->warning.notable);
-    fl_print_format("%[' is being ignored.%]%r", global.main->warning.to, global.main->warning.context, global.main->warning.context, f_string_eol_s);
+    fl_print_format("%r%[%QThe %Q item setting '%]", global.main->program.warning.to, f_string_eol_s, global.main->program.warning.context, global.main->program.warning.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->program.warning.context);
+    fl_print_format(f_string_format_Q_single_s.string, global.main->program.warning.to, global.main->program.warning.notable, cache.action.name_action, global.main->program.warning.notable);
+    fl_print_format("%[' is being ignored.%]%r", global.main->program.warning.to, global.main->program.warning.context, global.main->program.warning.context, f_string_eol_s);
 
-    controller_entry_print_error_cache(is_entry, global.main->warning, cache.action);
+    controller_entry_print_error_cache(is_entry, global.main->program.warning, cache.action);
 
-    controller_unlock_print_flush(global.main->warning.to, global.thread);
+    controller_unlock_print_flush(global.main->program.warning.to, global.thread);
   }
 #endif // _di_controller_entry_settings_read_print_setting_ignored_
 
 #ifndef _di_controller_entry_settings_read_print_setting_requires_between_
   void controller_entry_settings_read_print_setting_requires_between(const controller_global_t global, const bool is_entry, const controller_cache_t cache, const f_number_unsigned_t minimum, const f_number_unsigned_t maximum) {
 
-    if (global.main->error.verbosity == f_console_verbosity_quiet_e) return;
+    if (global.main->program.error.verbosity == f_console_verbosity_quiet_e) return;
 
-    controller_lock_print(global.main->error.to, global.thread);
+    controller_lock_print(global.main->program.error.to, global.thread);
 
-    fl_print_format("%r%[%QThe %Q item setting '%]", global.main->error.to, f_string_eol_s, global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context);
-    fl_print_format(f_string_format_Q_single_s.string, global.main->error.to, global.main->error.notable, cache.action.name_action, global.main->error.notable);
-    fl_print_format("%[' requires at least %]", global.main->error.to, global.main->error.context, global.main->error.context);
-    fl_print_format("%[%un%]", global.main->error.to, global.main->error.notable, minimum, global.main->error.notable);
-    fl_print_format("%[ and at most %]", global.main->error.to, global.main->error.context, global.main->error.context);
-    fl_print_format("%[%un%]", global.main->error.to, global.main->error.notable, maximum, global.main->error.notable);
-    fl_print_format("%[ Content.%]%r", global.main->error.to, global.main->error.context, global.main->error.context, f_string_eol_s);
+    fl_print_format("%r%[%QThe %Q item setting '%]", global.main->program.error.to, f_string_eol_s, global.main->program.error.context, global.main->program.error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->program.error.context);
+    fl_print_format(f_string_format_Q_single_s.string, global.main->program.error.to, global.main->program.error.notable, cache.action.name_action, global.main->program.error.notable);
+    fl_print_format("%[' requires at least %]", global.main->program.error.to, global.main->program.error.context, global.main->program.error.context);
+    fl_print_format("%[%un%]", global.main->program.error.to, global.main->program.error.notable, minimum, global.main->program.error.notable);
+    fl_print_format("%[ and at most %]", global.main->program.error.to, global.main->program.error.context, global.main->program.error.context);
+    fl_print_format("%[%un%]", global.main->program.error.to, global.main->program.error.notable, maximum, global.main->program.error.notable);
+    fl_print_format("%[ Content.%]%r", global.main->program.error.to, global.main->program.error.context, global.main->program.error.context, f_string_eol_s);
 
-    controller_entry_print_error_cache(is_entry, global.main->error, cache.action);
+    controller_entry_print_error_cache(is_entry, global.main->program.error, cache.action);
 
-    controller_unlock_print_flush(global.main->error.to, global.thread);
+    controller_unlock_print_flush(global.main->program.error.to, global.thread);
   }
 #endif // _di_controller_entry_settings_read_print_setting_requires_between_
 
 #ifndef _di_controller_entry_settings_read_print_setting_requires_exactly_
   void controller_entry_settings_read_print_setting_requires_exactly(const controller_global_t global, const bool is_entry, const controller_cache_t cache, const f_number_unsigned_t total) {
 
-    if (global.main->error.verbosity == f_console_verbosity_quiet_e) return;
+    if (global.main->program.error.verbosity == f_console_verbosity_quiet_e) return;
 
-    controller_lock_print(global.main->error.to, global.thread);
+    controller_lock_print(global.main->program.error.to, global.thread);
 
-    fl_print_format("%r%[%QThe %Q item setting '%]", global.main->error.to, f_string_eol_s, global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context);
-    fl_print_format(f_string_format_Q_single_s.string, global.main->error.to, global.main->error.notable, cache.action.name_action, global.main->error.notable);
-    fl_print_format("%[' requires exactly %]", global.main->error.to, global.main->error.context, global.main->error.context);
-    fl_print_format("%[%un%]", global.main->error.to, global.main->error.notable, total, global.main->error.notable);
-    fl_print_format("%[ Content.%]%r", global.main->error.to, global.main->error.context, global.main->error.context, f_string_eol_s);
+    fl_print_format("%r%[%QThe %Q item setting '%]", global.main->program.error.to, f_string_eol_s, global.main->program.error.context, global.main->program.error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->program.error.context);
+    fl_print_format(f_string_format_Q_single_s.string, global.main->program.error.to, global.main->program.error.notable, cache.action.name_action, global.main->program.error.notable);
+    fl_print_format("%[' requires exactly %]", global.main->program.error.to, global.main->program.error.context, global.main->program.error.context);
+    fl_print_format("%[%un%]", global.main->program.error.to, global.main->program.error.notable, total, global.main->program.error.notable);
+    fl_print_format("%[ Content.%]%r", global.main->program.error.to, global.main->program.error.context, global.main->program.error.context, f_string_eol_s);
 
-    controller_entry_print_error_cache(is_entry, global.main->error, cache.action);
+    controller_entry_print_error_cache(is_entry, global.main->program.error, cache.action);
 
-    controller_unlock_print_flush(global.main->error.to, global.thread);
+    controller_unlock_print_flush(global.main->program.error.to, global.thread);
   }
 #endif // _di_controller_entry_settings_read_print_setting_requires_exactly_
 
 #ifndef _di_controller_entry_settings_read_print_setting_unknown_action_
   void controller_entry_settings_read_print_setting_unknown_action(const controller_global_t global, const bool is_entry, const controller_cache_t cache) {
 
-    if (global.main->warning.verbosity != f_console_verbosity_debug_e) return;
+    if (global.main->program.warning.verbosity != f_console_verbosity_debug_e) return;
 
-    controller_lock_print(global.main->warning.to, global.thread);
+    controller_lock_print(global.main->program.warning.to, global.thread);
 
-    fl_print_format("%r%[%QUnknown %r item setting '%]", global.main->warning.to, f_string_eol_s, global.main->warning.context, global.main->warning.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->warning.context);
-    fl_print_format(f_string_format_Q_single_s.string, global.main->warning.to, global.main->warning.notable, cache.action.name_action, global.main->warning.notable);
-    fl_print_format(f_string_format_sentence_end_quote_s.string, global.main->warning.to, global.main->warning.context, global.main->warning.context, f_string_eol_s);
+    fl_print_format("%r%[%QUnknown %r item setting '%]", global.main->program.warning.to, f_string_eol_s, global.main->program.warning.context, global.main->program.warning.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->program.warning.context);
+    fl_print_format(f_string_format_Q_single_s.string, global.main->program.warning.to, global.main->program.warning.notable, cache.action.name_action, global.main->program.warning.notable);
+    fl_print_format(f_string_format_sentence_end_quote_s.string, global.main->program.warning.to, global.main->program.warning.context, global.main->program.warning.context, f_string_eol_s);
 
-    controller_entry_print_error_cache(is_entry, global.main->warning, cache.action);
+    controller_entry_print_error_cache(is_entry, global.main->program.warning, cache.action);
 
-    controller_unlock_print_flush(global.main->warning.to, global.thread);
+    controller_unlock_print_flush(global.main->program.warning.to, global.thread);
   }
 #endif // _di_controller_entry_settings_read_print_setting_unknown_action_
 
 #ifndef _di_controller_entry_settings_read_print_setting_unknown_action_value_
   void controller_entry_settings_read_print_setting_unknown_action_value(const controller_global_t global, const bool is_entry, const controller_cache_t cache, const f_number_unsigned_t index) {
 
-    if (global.main->warning.verbosity != f_console_verbosity_debug_e) return;
+    if (global.main->program.warning.verbosity != f_console_verbosity_debug_e) return;
 
-    controller_lock_print(global.main->warning.to, global.thread);
+    controller_lock_print(global.main->program.warning.to, global.thread);
 
-    fl_print_format("%r%[%QThe %Q item setting '%]", global.main->warning.to, f_string_eol_s, global.main->warning.context, global.main->warning.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->warning.context);
-    fl_print_format(f_string_format_Q_single_s.string, global.main->warning.to, global.main->warning.notable, cache.action.name_action, global.main->warning.notable);
-    fl_print_format("%[' has an unknown value '%]", global.main->warning.to, global.main->warning.context, global.main->warning.context);
-    fl_print_format(f_string_format_Q_range_single_s.string, global.main->warning.to, global.main->warning.notable, cache.buffer_file, cache.content_actions.array[index].array[0], global.main->warning.notable);
-    fl_print_format(f_string_format_sentence_end_quote_s.string, global.main->warning.to, global.main->warning.context, global.main->warning.context, f_string_eol_s);
+    fl_print_format("%r%[%QThe %Q item setting '%]", global.main->program.warning.to, f_string_eol_s, global.main->program.warning.context, global.main->program.warning.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->program.warning.context);
+    fl_print_format(f_string_format_Q_single_s.string, global.main->program.warning.to, global.main->program.warning.notable, cache.action.name_action, global.main->program.warning.notable);
+    fl_print_format("%[' has an unknown value '%]", global.main->program.warning.to, global.main->program.warning.context, global.main->program.warning.context);
+    fl_print_format(f_string_format_Q_range_single_s.string, global.main->program.warning.to, global.main->program.warning.notable, cache.buffer_file, cache.content_actions.array[index].array[0], global.main->program.warning.notable);
+    fl_print_format(f_string_format_sentence_end_quote_s.string, global.main->program.warning.to, global.main->program.warning.context, global.main->program.warning.context, f_string_eol_s);
 
-    controller_entry_print_error_cache(is_entry, global.main->warning, cache.action);
+    controller_entry_print_error_cache(is_entry, global.main->program.warning, cache.action);
 
-    controller_unlock_print_flush(global.main->warning.to, global.thread);
+    controller_unlock_print_flush(global.main->program.warning.to, global.thread);
   }
 #endif // _di_controller_entry_settings_read_print_setting_unknown_action_value_
 

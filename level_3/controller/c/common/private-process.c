@@ -42,31 +42,31 @@ extern "C" {
   }
 #endif // _di_controller_pids_resize_
 
-#ifndef _di_controller_process_delete_simple_
-  void controller_process_delete_simple(controller_data_t * const process) {
+#ifndef _di_controller_data_delete_simple_
+  void controller_data_delete_simple(controller_data_t * const data) {
 
-    if (process->id_thread) {
-      f_thread_signal_write(process->id_thread, F_signal_kill);
-      f_thread_join(process->id_thread, 0);
+    if (data->id_thread) {
+      f_thread_signal_write(data->id_thread, F_signal_kill);
+      f_thread_join(data->id_thread, 0);
 
-      process->id_thread = 0;
+      data->id_thread = 0;
     }
 
-    f_thread_condition_delete(&process->wait);
+    f_thread_condition_delete(&data->wait);
 
-    controller_lock_delete_rw(&process->lock);
-    controller_lock_delete_rw(&process->active);
-    controller_lock_delete_mutex(&process->wait_lock);
+    controller_lock_delete_rw(&data->lock);
+    controller_lock_delete_rw(&data->active);
+    controller_lock_delete_mutex(&data->wait_lock);
 
-    controller_cache_delete_simple(&process->cache);
-    controller_pids_resize(0, &process->childs);
-    controller_rule_delete_simple(&process->rule);
+    controller_cache_delete_simple(&data->cache);
+    controller_pids_resize(0, &data->childs);
+    controller_rule_delete(&data->rule);
 
-    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &process->path_pids.array, &process->path_pids.used, &process->path_pids.size, &f_string_dynamics_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &data->path_pids.array, &data->path_pids.used, &data->path_pids.size, &f_string_dynamics_delete_callback);
 
-    f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &process->stack.array, &process->stack.used, &process->stack.size);
+    f_memory_array_resize(0, sizeof(f_number_unsigned_t), (void **) &data->stack.array, &data->stack.used, &data->stack.size);
   }
-#endif // _di_controller_process_delete_simple_
+#endif // _di_controller_data_delete_simple_
 
 #ifndef _di_controller_processs_delete_simple_
   void controller_processs_delete_simple(controller_processs_t * const processs) {
@@ -104,7 +104,7 @@ extern "C" {
     for (f_number_unsigned_t i = length; i < processs->size; ++i) {
 
       if (processs->array[i]) {
-        controller_process_delete_simple(processs->array[i]);
+        controller_data_delete_simple(processs->array[i]);
 
         f_memory_delete(1, sizeof(f_number_unsigned_t *), (void **) & processs->array[i]);
       }

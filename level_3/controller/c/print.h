@@ -15,20 +15,22 @@ extern "C" {
 /**
  * Print help.
  *
- * @param setting
- *   The main program settings.
- *
- *   This does not alter setting.state.status.
  * @param print
  *   The output structure to print to.
+ *
+ *   The print.custom is expected to be of type controller_main_t.
+ *
+ *   This does not alter print.custom.setting.state.status.
  *
  * @return
  *   F_okay on success.
  *   F_output_not on success, but no printing is performed.
+ *
+ *   F_output_not (with error bit) if a parameter is NULL.
  */
-#ifndef _di_controller_print_help_
-  extern f_status_t controller_print_help(controller_process_t * const setting, const fl_print_t print);
-#endif // _di_controller_print_help_
+#ifndef _di_controller_print_message_help_
+  extern f_status_t controller_print_message_help(fl_print_t * const print);
+#endif // _di_controller_print_message_help_
 #ifdef __cplusplus
 } // extern "C"
 #endif

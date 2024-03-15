@@ -19,7 +19,7 @@ extern "C" {
     // fll_error_print() automatically locks, so manually handle only the mutex locking and flushing rather than calling controller_lock_print().
     f_thread_mutex_lock(&thread->lock.print);
 
-    fll_error_print(print, status, function, fallback);
+    fll_error_print(&print, status, function, fallback); // @fixme the print is a const and it is being passed as a pointer; the function needs to change.
 
     f_file_stream_lock(print.to);
 
@@ -80,8 +80,8 @@ extern "C" {
 #ifndef _di_controller_rule_item_print_error_execute_
   void controller_rule_item_print_error_execute(const bool script_is, const f_string_static_t name, const f_status_t status, controller_data_t * const process) {
 
-    if (((controller_main_t *) process->main_data)->error.verbosity != f_console_verbosity_quiet_e) {
-      fl_print_t * const print = &((controller_main_t *) process->main_data)->error;
+    if (((controller_main_t *) process->main_data)->program.error.verbosity != f_console_verbosity_quiet_e) {
+      fl_print_t * const print = &((controller_main_t *) process->main_data)->program.error;
 
       controller_lock_print(print->to, (controller_thread_t *) process->main_thread);
 
@@ -364,13 +364,16 @@ extern "C" {
 #ifndef _di_controller_rule_setting_read_print_error_
   void controller_rule_setting_read_print_error(const fl_print_t print, const f_string_t message, const f_number_unsigned_t index, const f_number_unsigned_t line_item, controller_thread_t * const thread, controller_cache_t * const cache) {
 
+    if (!print.custom) return;
     if (print.verbosity == f_console_verbosity_quiet_e) return;
+
+    controller_main_t * const main = (controller_main_t *) print.custom;
 
     f_state_t state = f_state_t_initialize;
 
     // Get the current line number within the settings item.
     cache->action.line_item = line_item;
-    f_fss_count_lines(cache->buffer_item, cache->object_actions.array[index].start, &cache->action.line_item, &setting->state);
+    f_fss_count_lines(cache->buffer_item, cache->object_actions.array[index].start, &cache->action.line_item, &main->setting.state);
 
     cache->action.line_action = ++cache->action.line_item;
 
@@ -387,13 +390,16 @@ extern "C" {
 #ifndef _di_controller_rule_setting_read_print_error_with_range_
   void controller_rule_setting_read_print_error_with_range(const fl_print_t print, const f_string_t before, const f_range_t range, const f_string_t after, const f_number_unsigned_t index, const f_number_unsigned_t line_item, controller_thread_t * const thread, controller_cache_t * const cache) {
 
+    if (!print.custom) return;
     if (print.verbosity == f_console_verbosity_quiet_e) return;
+
+    controller_main_t * const main = (controller_main_t *) print.custom;
 
     f_state_t state = f_state_t_initialize;
 
     // Get the current line number within the settings item.
     cache->action.line_item = line_item;
-    f_fss_count_lines(cache->buffer_item, cache->object_actions.array[index].start, &cache->action.line_item, &setting->state);
+    f_fss_count_lines(cache->buffer_item, cache->object_actions.array[index].start, &cache->action.line_item, &main->setting.state);
 
     cache->action.line_action = ++cache->action.line_item;
 
@@ -412,81 +418,81 @@ extern "C" {
 #ifndef _di_controller_rule_setting_read_print_mapping_
   void controller_rule_setting_read_print_mapping(const controller_global_t global, const f_string_static_t name, const f_string_map_t map) {
 
-    if (global.main->error.verbosity != f_console_verbosity_debug_e) {
-      if (!(global.main->error.verbosity == f_console_verbosity_verbose_e && (global.main->parameters.array[controller_parameter_simulate_e].result & f_console_result_found_e))) {
+    if (global.main->program.error.verbosity != f_console_verbosity_debug_e) {
+      if (!(global.main->program.error.verbosity == f_console_verbosity_verbose_e && (global.main->program.parameters.array[controller_parameter_simulate_e].result & f_console_result_found_e))) {
         return;
       }
     }
 
-    controller_lock_print(global.main->output.to, global.thread);
+    controller_lock_print(global.main->program.output.to, global.thread);
 
-    fl_print_format("%rProcessing rule item action '%[%Q%]'", global.main->output.to, f_string_eol_s, global.main->context.set.title, name, global.main->context.set.title);
-    fl_print_format(" mapping '%[%Q%]'", global.main->output.to, global.main->context.set.important, map.name, global.main->context.set.important);
-    fl_print_format(" to value '%[%Q%]'.%r", global.main->output.to, global.main->context.set.important, map.value, global.main->context.set.important, f_string_eol_s);
+    fl_print_format("%rProcessing rule item action '%[%Q%]'", global.main->program.output.to, f_string_eol_s, global.main->program.context.set.title, name, global.main->program.context.set.title);
+    fl_print_format(" mapping '%[%Q%]'", global.main->program.output.to, global.main->program.context.set.important, map.name, global.main->program.context.set.important);
+    fl_print_format(" to value '%[%Q%]'.%r", global.main->program.output.to, global.main->program.context.set.important, map.value, global.main->program.context.set.important, f_string_eol_s);
 
-    controller_unlock_print_flush(global.main->output.to, global.thread);
+    controller_unlock_print_flush(global.main->program.output.to, global.thread);
   }
 #endif // _di_controller_rule_setting_read_print_mapping_
 
 #ifndef _di_controller_rule_setting_read_print_value_
   void controller_rule_setting_read_print_value(const controller_global_t global, const f_string_static_t name, const f_string_static_t name_sub, const f_string_static_t value, const f_string_t suffix) {
 
-    if (global.main->error.verbosity != f_console_verbosity_debug_e) {
-      if (!(global.main->error.verbosity == f_console_verbosity_verbose_e && (global.main->parameters.array[controller_parameter_simulate_e].result & f_console_result_found_e))) {
+    if (global.main->program.error.verbosity != f_console_verbosity_debug_e) {
+      if (!(global.main->program.error.verbosity == f_console_verbosity_verbose_e && (global.main->program.parameters.array[controller_parameter_simulate_e].result & f_console_result_found_e))) {
         return;
       }
     }
 
-    controller_lock_print(global.main->output.to, global.thread);
+    controller_lock_print(global.main->program.output.to, global.thread);
 
-    fl_print_format("%rProcessing rule item action '%[%Q%]' setting ", global.main->output.to, f_string_eol_s, global.main->context.set.title, name, global.main->context.set.title);
+    fl_print_format("%rProcessing rule item action '%[%Q%]' setting ", global.main->program.output.to, f_string_eol_s, global.main->program.context.set.title, name, global.main->program.context.set.title);
 
     if (name_sub.used) {
-      fl_print_format("'%[%Q%]'", global.main->output.to, global.main->context.set.notable, name_sub, global.main->context.set.notable);
+      fl_print_format("'%[%Q%]'", global.main->program.output.to, global.main->program.context.set.notable, name_sub, global.main->program.context.set.notable);
     }
     else {
-      f_print_terminated("value", global.main->output.to);
+      f_print_terminated("value", global.main->program.output.to);
     }
 
-    fl_print_format(" to '%[%Q%]'", global.main->output.to, global.main->context.set.important, value, global.main->context.set.important);
-    fl_print_format("%S.%r", global.main->output.to, suffix, f_string_eol_s);
+    fl_print_format(" to '%[%Q%]'", global.main->program.output.to, global.main->program.context.set.important, value, global.main->program.context.set.important);
+    fl_print_format("%S.%r", global.main->program.output.to, suffix, f_string_eol_s);
 
-    controller_unlock_print_flush(global.main->output.to, global.thread);
+    controller_unlock_print_flush(global.main->program.output.to, global.thread);
   }
 #endif // _di_controller_rule_setting_read_print_value_
 
 #ifndef _di_controller_rule_setting_read_print_values_
   void controller_rule_setting_read_print_values(const controller_global_t global, const f_string_static_t name, const f_number_unsigned_t index, controller_cache_t * const cache) {
 
-    if (global.main->error.verbosity != f_console_verbosity_debug_e) {
-      if (!(global.main->error.verbosity == f_console_verbosity_verbose_e && (global.main->parameters.array[controller_parameter_simulate_e].result & f_console_result_found_e))) {
+    if (global.main->program.error.verbosity != f_console_verbosity_debug_e) {
+      if (!(global.main->program.error.verbosity == f_console_verbosity_verbose_e && (global.main->program.parameters.array[controller_parameter_simulate_e].result & f_console_result_found_e))) {
         return;
       }
     }
 
-    controller_lock_print(global.main->output.to, global.thread);
+    controller_lock_print(global.main->program.output.to, global.thread);
 
-    fl_print_format("%rProcessing rule item action '%[%Q%]' setting value to", global.main->output.to, f_string_eol_s, global.main->context.set.title, name, global.main->context.set.title);
+    fl_print_format("%rProcessing rule item action '%[%Q%]' setting value to", global.main->program.output.to, f_string_eol_s, global.main->program.context.set.title, name, global.main->program.context.set.title);
 
     for (f_number_unsigned_t j = 0; j < cache->content_actions.array[index].used; ++j) {
 
-      fl_print_format(" '%[%/Q%]'", global.main->output.to, global.main->context.set.important, cache->buffer_item, cache->content_actions.array[index].array[j], global.main->context.set.important);
+      fl_print_format(" '%[%/Q%]'", global.main->program.output.to, global.main->program.context.set.important, cache->buffer_item, cache->content_actions.array[index].array[j], global.main->program.context.set.important);
 
       if (j + 2 == cache->content_actions.array[index].used) {
         if (cache->content_actions.array[index].used > 2) {
-          f_print_terminated(",", global.main->output.to);
+          f_print_terminated(",", global.main->program.output.to);
         }
 
-        f_print_terminated(" and", global.main->output.to);
+        f_print_terminated(" and", global.main->program.output.to);
       }
       else if (j + 1 < cache->content_actions.array[index].used) {
-        f_print_terminated(",", global.main->output.to);
+        f_print_terminated(",", global.main->program.output.to);
       }
     } // for
 
-    fl_print_format(".%r", global.main->output.to, f_string_eol_s);
+    fl_print_format(".%r", global.main->program.output.to, f_string_eol_s);
 
-    controller_unlock_print_flush(global.main->output.to, global.thread);
+    controller_unlock_print_flush(global.main->program.output.to, global.thread);
   }
 #endif // _di_controller_rule_setting_read_print_value_
 

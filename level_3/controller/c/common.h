@@ -348,35 +348,37 @@ extern "C" {
  * Flags passed to the main function or program.
  *
  * controller_main_flag_*_e:
- *   - none:          No flags set.
- *   - copyright:     Print copyright.
- *   - file_from:     Using a specified source file.
- *   - file_to:       Using a specified destination file.
- *   - header:        Enable printing of headers.
- *   - help:          Print help.
- *   - init:          Operate as an "init" program.
- *   - print_first:   When set, print new line to message output on program begin after loading settings.
- *   - print_last:    When set, print new line to message output on program end.
- *   - separate:      Enable printing of separators.
- *   - strip_invalid: Using strip invalid character mode.
- *   - verify:        Using verify mode.
- *   - version:       Print version.
+ *   - none:                   No flags set.
+ *   - copyright:              Print copyright.
+ *   - file_from:              Using a specified source file.
+ *   - file_to:                Using a specified destination file.
+ *   - header:                 Enable printing of headers.
+ *   - help:                   Print help.
+ *   - init:                   Operate as an "init" program.
+ *   - print_first:            When set, print new line to message output on program begin after loading settings.
+ *   - print_last:             When set, print new line to message output on program end.
+ *   - separate:               Enable printing of separators.
+ *   - strip_invalid:          Using strip invalid character mode.
+ *   - verify:                 Using verify mode.
+ *   - version:                Print version.
+ *   - version_copyright_help: A helper flag representing version, copyright, and help flag bits being set.
  */
 #ifndef _di_controller_main_flag_e_
   enum {
-    controller_main_flag_none_e          = 0x0,
-    controller_main_flag_copyright_e     = 0x1,
-    controller_main_flag_file_from_e     = 0x2,
-    controller_main_flag_file_to_e       = 0x4,
-    controller_main_flag_header_e        = 0x8,
-    controller_main_flag_help_e          = 0x10,
-    controller_main_flag_init_e          = 0x20,
-    controller_main_flag_print_first_e   = 0x40,
-    controller_main_flag_print_last_e    = 0x80,
-    controller_main_flag_separate_e      = 0x100,
-    controller_main_flag_strip_invalid_e = 0x200,
-    controller_main_flag_verify_e        = 0x400,
-    controller_main_flag_version_e       = 0x800,
+    controller_main_flag_none_e                   = 0x0,
+    controller_main_flag_copyright_e              = 0x1,
+    controller_main_flag_file_from_e              = 0x2,
+    controller_main_flag_file_to_e                = 0x4,
+    controller_main_flag_header_e                 = 0x8,
+    controller_main_flag_help_e                   = 0x10,
+    controller_main_flag_init_e                   = 0x20,
+    controller_main_flag_print_first_e            = 0x40,
+    controller_main_flag_print_last_e             = 0x80,
+    controller_main_flag_separate_e               = 0x100,
+    controller_main_flag_strip_invalid_e          = 0x200,
+    controller_main_flag_verify_e                 = 0x400,
+    controller_main_flag_version_e                = 0x800,
+    controller_main_flag_version_copyright_help_e = 0x811,
   }; // enum
 #endif // _di_controller_main_flag_e_
 
@@ -1627,7 +1629,7 @@ extern "C" {
  * @see fll_program_parameter_process_context()
  */
 #ifndef _di_controller_setting_load_
-  extern f_status_t controller_setting_load(const f_console_arguments_t arguments, fll_program_data_t * const main);
+  extern void controller_setting_load(const f_console_arguments_t arguments, controller_main_t * const main);
 #endif // _di_controller_setting_load_
 
 /**
