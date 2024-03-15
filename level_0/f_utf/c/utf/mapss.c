@@ -73,8 +73,8 @@ extern "C" {
         if (array[i].size && array[i].array) {
           for (j = 0; j < array[i].size; ++j) {
 
-            if (array[i].array[j].name.size && array[i].array[j].name.string) {
-              status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &array[i].array[j].name.string, &array[i].array[j].name.used, &array[i].array[j].name.size);
+            if (array[i].array[j].key.size && array[i].array[j].key.string) {
+              status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &array[i].array[j].key.string, &array[i].array[j].key.used, &array[i].array[j].key.size);
               if (F_status_is_error(status)) return status;
             }
 
@@ -107,8 +107,8 @@ extern "C" {
         if (array[i].size && array[i].array) {
           for (j = 0; j < array[i].size; ++j) {
 
-            if (array[i].array[j].name.size && array[i].array[j].name.string) {
-              status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &array[i].array[j].name.string, &array[i].array[j].name.used, &array[i].array[j].name.size);
+            if (array[i].array[j].key.size && array[i].array[j].key.string) {
+              status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &array[i].array[j].key.string, &array[i].array[j].key.used, &array[i].array[j].key.size);
               if (F_status_is_error(status)) return status;
             }
 

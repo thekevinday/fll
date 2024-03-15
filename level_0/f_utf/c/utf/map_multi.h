@@ -17,7 +17,7 @@ extern "C" {
 #endif
 
 /**
- * A string map consisting of a name and multiple values.
+ * A string map consisting of a key and multiple values.
  *
  * Properties:
  *   - key:   A string representing the map key.
@@ -25,16 +25,16 @@ extern "C" {
  */
 #ifndef _di_f_utf_string_map_multi_t_
   typedef struct {
-    f_utf_string_dynamic_t name;
+    f_utf_string_dynamic_t key;
     f_utf_string_dynamics_t value;
   } f_utf_string_map_multi_t;
 
   #define f_utf_string_map_multi_t_initialize { f_utf_string_dynamic_t_initialize, f_utf_string_dynamics_t_initialize }
 
-  #define macro_f_utf_string_map_multi_t_initialize_1(name, value) { name, value }
+  #define macro_f_utf_string_map_multi_t_initialize_1(key, value) { key, value }
 
   #define macro_f_utf_string_map_multi_t_clear(map) \
-    macro_f_utf_string_dynamic_t_clear(map.name) \
+    macro_f_utf_string_dynamic_t_clear(map.key) \
     macro_f_utf_string_dynamics_t_clear(map.value)
 #endif // _di_f_utf_string_map_multi_t_
 

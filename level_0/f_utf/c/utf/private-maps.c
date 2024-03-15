@@ -16,11 +16,11 @@ extern "C" {
 
       for (f_number_unsigned_t i = 0; i < source.used; ++i, ++destination->used) {
 
-        destination->array[destination->used].name.used = 0;
+        destination->array[destination->used].key.used = 0;
         destination->array[destination->used].value.used = 0;
 
-        if (source.array[i].name.used) {
-          status = private_f_utf_string_append(source.array[i].name.string, source.array[i].name.used, &destination->array[destination->used].name);
+        if (source.array[i].key.used) {
+          status = private_f_utf_string_append(source.array[i].key.string, source.array[i].key.used, &destination->array[destination->used].key);
           if (F_status_is_error(status)) return status;
         }
 

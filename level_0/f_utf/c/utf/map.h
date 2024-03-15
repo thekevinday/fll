@@ -25,16 +25,16 @@ extern "C" {
  */
 #ifndef _di_f_utf_string_map_t_
   typedef struct {
-    f_utf_string_dynamic_t name;
+    f_utf_string_dynamic_t key;
     f_utf_string_dynamic_t value;
   } f_utf_string_map_t;
 
   #define f_utf_string_map_t_initialize { f_utf_string_dynamic_t_initialize, f_utf_string_dynamic_t_initialize }
 
-  #define macro_f_utf_string_map_t_initialize_1(name, value) { name, value }
+  #define macro_f_utf_string_map_t_initialize_1(key, value) { key, value }
 
   #define macro_f_utf_string_map_t_clear(map) \
-    macro_f_utf_string_dynamic_t_clear(map.name) \
+    macro_f_utf_string_dynamic_t_clear(map.key) \
     macro_f_utf_string_dynamic_t_clear(map.value)
 #endif // _di_f_utf_string_map_t_
 

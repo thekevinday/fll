@@ -17,7 +17,7 @@ void test__f_utf_string_map_multis_append_all__works(void **state) {
     macro_f_utf_string_static_t_initialize_1((f_utf_string_t) "t\0\0\0e\0\0\0s\0\0\0t\0\0\0_\0\0\0v\0\0\0a\0\0\0l\0\0\0u\0\0\0e\0\0\02\0\0\0", 0, 11),
   };
 
-  const f_utf_string_static_t test_name = macro_f_utf_string_static_t_initialize_1((f_utf_string_t) "\0\0\0t\0\0\0e\0\0\0s\0\0\0t\0\0\0_\0\0\0n\0\0\0a\0\0\0m\0\0\0e", 0, 9);
+  const f_utf_string_static_t test_key = macro_f_utf_string_static_t_initialize_1((f_utf_string_t) "\0\0\0t\0\0\0e\0\0\0s\0\0\0t\0\0\0_\0\0\0n\0\0\0a\0\0\0m\0\0\0e", 0, 9);
   const f_utf_string_statics_t test_value = macro_f_utf_string_statics_t_initialize_1(test_value_array, 0, length_values);
 
   {
@@ -28,11 +28,11 @@ void test__f_utf_string_map_multis_append_all__works(void **state) {
 
     for (; source.used < length_inner; ++source.used) {
 
-      status = f_utf_string_dynamic_append(test_name, &source.array[source.used].name);
+      status = f_utf_string_dynamic_append(test_key, &source.array[source.used].key);
 
       assert_int_equal(status, F_okay);
-      assert_string_equal(source.array[source.used].name.string, test_name.string);
-      assert_int_equal(source.array[source.used].name.used, test_name.used);
+      assert_string_equal(source.array[source.used].key.string, test_key.string);
+      assert_int_equal(source.array[source.used].key.used, test_key.used);
 
       status = f_utf_string_dynamics_append_all(test_value, &source.array[source.used].value);
 
@@ -53,12 +53,12 @@ void test__f_utf_string_map_multis_append_all__works(void **state) {
 
     for (f_number_unsigned_t i = 0; i < length_inner; ++i) {
 
-      assert_int_equal(destination.array[i].name.used, source.array[i].name.used);
+      assert_int_equal(destination.array[i].key.used, source.array[i].key.used);
       assert_int_equal(destination.array[i].value.used, source.array[i].value.used);
       assert_int_equal(destination.array[i].value.array[0].used, source.array[i].value.array[0].used);
       assert_int_equal(destination.array[i].value.array[1].used, source.array[i].value.array[1].used);
 
-      assert_string_equal(destination.array[i].name.string, source.array[i].name.string);
+      assert_string_equal(destination.array[i].key.string, source.array[i].key.string);
       assert_string_equal(destination.array[i].value.array[0].string, source.array[i].value.array[0].string);
       assert_string_equal(destination.array[i].value.array[1].string, source.array[i].value.array[1].string);
     } // for
@@ -66,7 +66,7 @@ void test__f_utf_string_map_multis_append_all__works(void **state) {
 
   for (f_number_unsigned_t i = 0; i < source.used; ++i) {
 
-    free((void *) source.array[i].name.string);
+    free((void *) source.array[i].key.string);
     free((void *) source.array[i].value.array[0].string);
     free((void *) source.array[i].value.array[1].string);
     free((void *) source.array[i].value.array);
@@ -74,7 +74,7 @@ void test__f_utf_string_map_multis_append_all__works(void **state) {
 
   for (f_number_unsigned_t i = 0; i < destination.used; ++i) {
 
-    free((void *) destination.array[i].name.string);
+    free((void *) destination.array[i].key.string);
     free((void *) destination.array[i].value.array[0].string);
     free((void *) destination.array[i].value.array[1].string);
     free((void *) destination.array[i].value.array);

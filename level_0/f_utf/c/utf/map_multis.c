@@ -18,11 +18,11 @@ extern "C" {
       f_status_t status = f_memory_array_increase(F_memory_default_allocation_small_d, sizeof(f_utf_string_map_multi_t), (void **) &destination->array, &destination->used, &destination->size);
       if (F_status_is_error(status)) return status;
 
-      destination->array[destination->used].name.used = 0;
+      destination->array[destination->used].key.used = 0;
       destination->array[destination->used].value.used = 0;
 
-      if (source.name.used) {
-        status = private_f_utf_string_append(source.name.string, source.name.used, &destination->array[destination->used].name);
+      if (source.key.used) {
+        status = private_f_utf_string_append(source.key.string, source.key.used, &destination->array[destination->used].key);
         if (F_status_is_error(status)) return status;
       }
 
@@ -60,8 +60,8 @@ extern "C" {
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
 
-        if (array[i].name.size && array[i].name.string) {
-          status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &array[i].name.string, &array[i].name.used, &array[i].name.size);
+        if (array[i].key.size && array[i].key.string) {
+          status = f_memory_array_resize(0, sizeof(f_char_t), (void **) &array[i].key.string, &array[i].key.used, &array[i].key.size);
           if (F_status_is_error(status)) return status;
         }
 
@@ -94,8 +94,8 @@ extern "C" {
 
       for (f_number_unsigned_t i = start; i < stop; ++i) {
 
-        if (array[i].name.size && array[i].name.string) {
-          status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &array[i].name.string, &array[i].name.used, &array[i].name.size);
+        if (array[i].key.size && array[i].key.string) {
+          status = f_memory_array_adjust(0, sizeof(f_char_t), (void **) &array[i].key.string, &array[i].key.used, &array[i].key.size);
           if (F_status_is_error(status)) return status;
         }
 

@@ -29,11 +29,11 @@ void test__f_utf_string_mapss_append__works(void **state) {
 
     for (; source.used < length_inner; ++source.used) {
 
-      status = f_utf_string_dynamic_append(test_names[source.used], &source.array[source.used].name);
+      status = f_utf_string_dynamic_append(test_names[source.used], &source.array[source.used].key);
 
       assert_int_equal(status, F_okay);
-      assert_string_equal(source.array[source.used].name.string, test_names[source.used].string);
-      assert_int_equal(source.array[source.used].name.used, test_names[source.used].used);
+      assert_string_equal(source.array[source.used].key.string, test_names[source.used].string);
+      assert_int_equal(source.array[source.used].key.used, test_names[source.used].used);
 
       status = f_utf_string_dynamic_append(test_values[source.used], &source.array[source.used].value);
 
@@ -51,24 +51,24 @@ void test__f_utf_string_mapss_append__works(void **state) {
 
     for (f_number_unsigned_t i = 0; i < length_inner; ++i) {
 
-      assert_int_equal(destination.array[0].array[i].name.used, test_names[i].used);
+      assert_int_equal(destination.array[0].array[i].key.used, test_names[i].used);
       assert_int_equal(destination.array[0].array[i].value.used, test_values[i].used);
 
-      assert_string_equal(destination.array[0].array[i].name.string, test_names[i].string);
+      assert_string_equal(destination.array[0].array[i].key.string, test_names[i].string);
       assert_string_equal(destination.array[0].array[i].value.string, test_values[i].string);
     } // for
   }
 
   for (f_number_unsigned_t i = 0; i < source.used; ++i) {
 
-    free((void *) source.array[i].name.string);
+    free((void *) source.array[i].key.string);
     free((void *) source.array[i].value.string);
   } // for
 
 
   for (f_number_unsigned_t i = 0; i < destination.array[0].used; ++i) {
 
-    free((void *) destination.array[0].array[i].name.string);
+    free((void *) destination.array[0].array[i].key.string);
     free((void *) destination.array[0].array[i].value.string);
   } // for
 
