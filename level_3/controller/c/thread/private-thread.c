@@ -95,7 +95,7 @@ extern "C" {
               status = f_thread_lock_write(&process->lock);
 
               if (F_status_is_error(status)) {
-                controller_lock_print_error_critical(global->main->program.error, F_status_set_fine(status), F_false, global->thread);
+                controller_lock_print_error_critical(&global->main->program.error, F_status_set_fine(status), F_false, global->thread);
 
                 f_thread_unlock(&process->active);
                 continue;
@@ -173,11 +173,7 @@ extern "C" {
 #ifndef _di_controller_thread_is_enabled_
   f_status_t controller_thread_is_enabled(const bool is_normal, controller_thread_t * const thread) {
 
-    if (is_normal) {
-      return thread->enabled == controller_thread_enabled_e;
-    }
-
-    return thread->enabled;
+    return is_normal ? thread->enabled == controller_thread_enabled_e : thread->enabled;
   }
 #endif // _di_controller_thread_is_enabled_
 
@@ -215,7 +211,7 @@ extern "C" {
       status = controller_processs_increase(&thread.processs);
 
       if (F_status_is_error(status)) {
-        controller_print_error(&thread, main->program.error, F_status_set_fine(status), "controller_processs_increase", F_true);
+        controller_print_error(&thread, &main->program.error, F_status_set_fine(status), "controller_processs_increase", F_true);
       }
     }
 
@@ -227,7 +223,7 @@ extern "C" {
       thread.id_signal = 0;
 
       if (main->program.error.verbosity > f_console_verbosity_quiet_e) {
-        controller_print_error(&thread, main->program.error, F_status_set_fine(status), "f_thread_create", F_true);
+        controller_print_error(&thread, &main->program.error, F_status_set_fine(status), "f_thread_create", F_true);
       }
     }
     else {
@@ -256,7 +252,7 @@ extern "C" {
 
         if (F_status_is_error(status)) {
           if (main->program.error.verbosity > f_console_verbosity_quiet_e) {
-            controller_print_error(&thread, main->program.error, F_status_set_fine(status), "f_thread_create", F_true);
+            controller_print_error(&thread, &main->program.error, F_status_set_fine(status), "f_thread_create", F_true);
           }
         }
         else {
@@ -289,7 +285,7 @@ extern "C" {
             thread.id_cleanup = 0;
 
             if (main->program.error.verbosity > f_console_verbosity_quiet_e) {
-              controller_print_error(&thread, main->program.error, F_status_set_fine(status), "f_thread_create", F_true);
+              controller_print_error(&thread, &main->program.error, F_status_set_fine(status), "f_thread_create", F_true);
             }
           }
         }

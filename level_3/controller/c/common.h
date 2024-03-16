@@ -383,6 +383,31 @@ extern "C" {
 #endif // _di_controller_main_flag_e_
 
 /**
+ * Flags for fine-tuned print control.
+ *
+ * controller_print_flag_*_e:
+ *   - none:    No flags set.
+ *   - debug:   Stream is for debug printing.
+ *   - error:   Stream is for error printing.
+ *   - in:      Stream is a source file.
+ *   - message: Stream is for message printing.
+ *   - out:     Stream is a destination file.
+ *   - warning: Stream is for warning printing.
+ */
+#ifndef _di_controller_print_flag_e_
+  enum {
+    controller_print_flag_none_e    = 0x0,
+    controller_print_flag_debug_e   = 0x1,
+    controller_print_flag_error_e   = 0x2,
+    controller_print_flag_file_e    = 0x4,
+    controller_print_flag_in_e      = 0x8,
+    controller_print_flag_out_e     = 0x10,
+    controller_print_flag_message_e = 0x20,
+    controller_print_flag_warning_e = 0x40,
+  }; // enum
+#endif // _di_controller_print_flag_e_
+
+/**
  * The controller main program settings.
  *
  * This is passed to the program-specific main entry point to designate program settings.
@@ -1371,7 +1396,7 @@ extern "C" {
     { \
       fll_program_data_t_initialize, \
       controller_setting_t_initialize, \
-      controller_process_t_initialize, \
+      0, \
     }
 #endif // _di_controller_main_t_
 

@@ -43,46 +43,38 @@ extern "C" {
 #endif // _di_controller_thread_signal_
 
 #ifndef _di_controller_thread_signal_state_fss_
-  f_status_t controller_thread_signal_state_fss(f_state_t * const state, void * const internal) {
+  void controller_thread_signal_state_fss(f_state_t * const state, void * const internal) {
 
-    if (!state || !state->custom) {
-      return F_interrupt_not;
+    if (!state || !state->custom) return;
+
+    controller_global_t * const global = (controller_global_t *) state->custom;
+
+    /*if (!controller_thread_is_enabled(custom->is_normal, global->thread)) {
+      global->main->program.signal_received = F_signal_abort;
+      global->main->setting.state.status = F_status_set_error(F_interrupt);
     }
-
-    controller_state_interrupt_t *custom = (controller_state_interrupt_t *) state->custom;
-    controller_thread_t *thread = custom->thread;
-
-    if (!controller_thread_is_enabled(custom->is_normal, thread)) {
-      return F_status_set_error(F_interrupt);
-    }
-
-    if (thread->signal == F_signal_interrupt || thread->signal == F_signal_abort || thread->signal == F_signal_quit || thread->signal == F_signal_termination) {
-      return F_status_set_error(F_interrupt);
-    }
-
-    return F_interrupt_not;
+    else if (global->thread->signal == F_signal_interrupt || global->thread->signal == F_signal_abort || global->thread->signal == F_signal_quit || global->thread->signal == F_signal_termination) {
+      global->main->program.signal_received = F_signal_abort;
+      global->main->setting.state.status = F_status_set_error(F_interrupt);
+    }*/
   }
 #endif // _di_controller_thread_signal_state_fss_
 
 #ifndef _di_controller_thread_signal_state_iki_
-  f_status_t controller_thread_signal_state_iki(f_state_t * const state, void * const internal) {
+  void controller_thread_signal_state_iki(f_state_t * const state, void * const internal) {
 
-    if (!state || !state->custom) {
-      return F_interrupt_not;
+    if (!state || !state->custom) return;
+
+    controller_global_t * const global = (controller_global_t *) state->custom;
+
+    /*if (!controller_thread_is_enabled(custom->is_normal, global->thread)) {
+      global->main->program.signal_received = F_signal_abort;
+      global->main->setting.state.status = F_status_set_error(F_interrupt);
     }
-
-    controller_state_interrupt_t *custom = (controller_state_interrupt_t *) state->custom;
-    controller_thread_t *thread = custom->thread;
-
-    if (!controller_thread_is_enabled(custom->is_normal, thread)) {
-      return F_status_set_error(F_interrupt);
-    }
-
-    if (thread->signal == F_signal_interrupt || thread->signal == F_signal_abort || thread->signal == F_signal_quit || thread->signal == F_signal_termination) {
-      return F_status_set_error(F_interrupt);
-    }
-
-    return F_interrupt_not;
+    else if (global->thread->signal == F_signal_interrupt || global->thread->signal == F_signal_abort || global->thread->signal == F_signal_quit || global->thread->signal == F_signal_termination) {
+      global->main->program.signal_received = F_signal_abort;
+      global->main->setting.state.status = F_status_set_error(F_interrupt);
+    }*/
   }
 #endif // _di_controller_thread_signal_state_iki_
 

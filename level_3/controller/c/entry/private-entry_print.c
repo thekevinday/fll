@@ -15,17 +15,17 @@ extern "C" {
 #endif // _di_controller_entry_print_string_s_
 
 #ifndef _di_controller_entry_action_parameters_print_
-  void controller_entry_action_parameters_print(FILE * const stream, const controller_entry_action_t action) {
+  void controller_entry_action_parameters_print(fl_print_t * const print, const controller_entry_action_t action) {
 
     for (f_number_unsigned_t index = 0; ;) {
 
-      f_print_dynamic_safely(action.parameters.array[index], stream);
+      f_print_dynamic_safely(action.parameters.array[index], print->to);
 
       ++index;
 
       if (index == action.parameters.used) break;
 
-      f_print_dynamic_raw(f_string_space_s, stream);
+      f_print_dynamic_raw(f_string_space_s, print->to);
     } // for
   }
 #endif // _di_controller_entry_action_parameters_print_
@@ -59,87 +59,87 @@ extern "C" {
 #endif // _di_controller_entry_preprocess_print_simulate_setting_value_
 
 #ifndef _di_controller_entry_print_error_
-  void controller_entry_print_error(const bool is_entry, const fl_print_t print, const controller_cache_action_t cache, const f_status_t status, const f_string_t function, const bool fallback, controller_thread_t *thread) {
+  void controller_entry_print_error(const bool is_entry, fl_print_t * const print, const controller_cache_action_t cache, const f_status_t status, const f_string_t function, const bool fallback, controller_thread_t *thread) {
 
-    if (print.verbosity == f_console_verbosity_quiet_e) return;
+    if (print->verbosity == f_console_verbosity_quiet_e) return;
     if (status == F_interrupt) return;
 
     // fll_error_print() automatically locks, so manually handle only the mutex locking and flushing rather than calling controller_lock_print().
     f_thread_mutex_lock(&thread->lock.print);
 
-    fll_error_print(&print, status, function, fallback); // @fixme the print is a const and it is being passed as a pointer; the function needs to change.
+    fll_error_print(print, status, function, fallback);
 
-    f_file_stream_lock(print.to);
+    f_file_stream_lock(print->to);
 
     controller_entry_print_error_cache(is_entry, print, cache);
 
-    controller_unlock_print_flush(print.to, thread);
+    controller_unlock_print_flush(print->to, thread);
   }
 #endif // _di_controller_entry_print_error_
 
 #ifndef _di_controller_entry_print_error_cache_
-  void controller_entry_print_error_cache(const bool is_entry, const fl_print_t output, const controller_cache_action_t cache) {
+  void controller_entry_print_error_cache(const bool is_entry, fl_print_t * const print, const controller_cache_action_t cache) {
 
-    fl_print_format("%r%[%QWhile processing ", output.to, f_string_eol_s, output.context, output.prefix);
+    fl_print_format("%r%[%QWhile processing ", print->to, f_string_eol_s, print->context, print->prefix);
 
     if (cache.name_action.used) {
-      fl_print_format("action '%]", output.to, output.context);
-      fl_print_format(f_string_format_Q_single_s.string, output.to, output.notable, cache.name_action, output.notable);
-      fl_print_format("%[' on line%] ", output.to, output.context, output.context);
-      fl_print_format("%[%un%]", output.to, output.notable, cache.line_action, output.notable);
-      fl_print_format("%[ for ", output.to, output.context);
+      fl_print_format("action '%]", print->to, print->context);
+      fl_print_format(f_string_format_Q_single_s.string, print->to, print->notable, cache.name_action, print->notable);
+      fl_print_format("%[' on line%] ", print->to, print->context, print->context);
+      fl_print_format("%[%un%]", print->to, print->notable, cache.line_action, print->notable);
+      fl_print_format("%[ for ", print->to, print->context);
     }
 
     if (cache.name_item.used) {
-      fl_print_format("%r item '%]", output.to, is_entry ? controller_entry_s : controller_exit_s, output.context);
-      fl_print_format(f_string_format_Q_single_s.string, output.to, output.notable, cache.name_item, output.notable);
-      fl_print_format("%[' on line%] ", output.to, output.context, output.context);
-      fl_print_format("%[%un%]", output.to, output.notable, cache.line_item, output.notable);
-      fl_print_format("%[ for ", output.to, output.context);
+      fl_print_format("%r item '%]", print->to, is_entry ? controller_entry_s : controller_exit_s, print->context);
+      fl_print_format(f_string_format_Q_single_s.string, print->to, print->notable, cache.name_item, print->notable);
+      fl_print_format("%[' on line%] ", print->to, print->context, print->context);
+      fl_print_format("%[%un%]", print->to, print->notable, cache.line_item, print->notable);
+      fl_print_format("%[ for ", print->to, print->context);
     }
 
     if (cache.name_file.used) {
-      fl_print_format("%r file '%]", output.to, is_entry ? controller_entry_s : controller_exit_s, output.context);
-      fl_print_format("%[%Q%]%['", output.to, output.notable, cache.name_file, output.notable, output.context);
+      fl_print_format("%r file '%]", print->to, is_entry ? controller_entry_s : controller_exit_s, print->context);
+      fl_print_format("%[%Q%]%['", print->to, print->notable, cache.name_file, print->notable, print->context);
     }
 
-    fl_print_format(".%]%r", output.to, output.context, f_string_eol_s);
+    fl_print_format(".%]%r", print->to, print->context, f_string_eol_s);
   }
 #endif // _di_controller_entry_print_error_cache_
 
 #ifndef _di_controller_entry_print_error_file_
-  void controller_entry_print_error_file(const bool is_entry, const fl_print_t print, const controller_cache_action_t cache, const f_status_t status, const f_string_t function, const uint8_t flag, const f_string_static_t name, const f_string_static_t operation, const uint8_t type, controller_thread_t *thread) {
+  void controller_entry_print_error_file(const bool is_entry, fl_print_t * const print, const controller_cache_action_t cache, const f_status_t status, const f_string_t function, const uint8_t flag, const f_string_static_t name, const f_string_static_t operation, const uint8_t type, controller_thread_t *thread) {
 
-    if (print.verbosity == f_console_verbosity_quiet_e) return;
+    if (print->verbosity == f_console_verbosity_quiet_e) return;
     if (status == F_interrupt) return;
 
     // fll_error_file_print() automatically locks, so manually handle only the mutex locking and flushing rather than calling controller_lock_print().
     f_thread_mutex_lock(&thread->lock.print);
 
-    fll_error_file_print(&print, status, function, flag, name, operation, type); // @fixme the print is a const and it is being passed as a pointer; the function needs to change.
+    fll_error_file_print(print, status, function, flag, name, operation, type);
 
-    f_file_stream_lock(print.to);
+    f_file_stream_lock(print->to);
 
     controller_entry_print_error_cache(is_entry, print, cache);
 
-    controller_unlock_print_flush(print.to, thread);
+    controller_unlock_print_flush(print->to, thread);
   }
 #endif // _di_controller_entry_print_error_file_
 
 #ifndef _di_controller_entry_setting_read_print_error_with_range_
-  void controller_entry_setting_read_print_error_with_range(const bool is_entry, const fl_print_t print, const f_string_t before, const f_range_t range, const f_string_t after, controller_thread_t * const thread, controller_cache_t * const cache) {
+  void controller_entry_setting_read_print_error_with_range(const bool is_entry, fl_print_t * const print, const f_string_t before, const f_range_t range, const f_string_t after, controller_thread_t * const thread, controller_cache_t * const cache) {
 
-    if (print.verbosity == f_console_verbosity_quiet_e) return;
+    if (print->verbosity == f_console_verbosity_quiet_e) return;
 
-    controller_lock_print(print.to, thread);
+    controller_lock_print(print->to, thread);
 
-    fl_print_format("%r%[%Q%r setting%S '%]", print.to, f_string_eol_s, print.context, print.prefix, is_entry ? controller_Entry_s : controller_Exit_s, before, print.context);
-    fl_print_format(f_string_format_Q_range_single_s.string, print.to, print.notable, cache->buffer_file, range, print.notable);
-    fl_print_format("%['%S.%]%r", print.to, print.context, after, print.context, f_string_eol_s);
+    fl_print_format("%r%[%Q%r setting%S '%]", print->to, f_string_eol_s, print->context, print->prefix, is_entry ? controller_Entry_s : controller_Exit_s, before, print->context);
+    fl_print_format(f_string_format_Q_range_single_s.string, print->to, print->notable, cache->buffer_file, range, print->notable);
+    fl_print_format("%['%S.%]%r", print->to, print->context, after, print->context, f_string_eol_s);
 
     controller_entry_print_error_cache(is_entry, print, cache->action);
 
-    controller_unlock_print_flush(print.to, thread);
+    controller_unlock_print_flush(print->to, thread);
   }
 #endif // _di_controller_entry_setting_read_print_error_with_range_
 
@@ -154,7 +154,7 @@ extern "C" {
     fl_print_format(f_string_format_Q_single_s.string, global.main->program.warning.to, global.main->program.warning.notable, cache.action.name_action, global.main->program.warning.notable);
     fl_print_format("%[' is being ignored.%]%r", global.main->program.warning.to, global.main->program.warning.context, global.main->program.warning.context, f_string_eol_s);
 
-    controller_entry_print_error_cache(is_entry, global.main->program.warning, cache.action);
+    controller_entry_print_error_cache(is_entry, &global.main->program.warning, cache.action);
 
     controller_unlock_print_flush(global.main->program.warning.to, global.thread);
   }
@@ -175,7 +175,7 @@ extern "C" {
     fl_print_format("%[%un%]", global.main->program.error.to, global.main->program.error.notable, maximum, global.main->program.error.notable);
     fl_print_format("%[ Content.%]%r", global.main->program.error.to, global.main->program.error.context, global.main->program.error.context, f_string_eol_s);
 
-    controller_entry_print_error_cache(is_entry, global.main->program.error, cache.action);
+    controller_entry_print_error_cache(is_entry, &global.main->program.error, cache.action);
 
     controller_unlock_print_flush(global.main->program.error.to, global.thread);
   }
@@ -194,7 +194,7 @@ extern "C" {
     fl_print_format("%[%un%]", global.main->program.error.to, global.main->program.error.notable, total, global.main->program.error.notable);
     fl_print_format("%[ Content.%]%r", global.main->program.error.to, global.main->program.error.context, global.main->program.error.context, f_string_eol_s);
 
-    controller_entry_print_error_cache(is_entry, global.main->program.error, cache.action);
+    controller_entry_print_error_cache(is_entry, &global.main->program.error, cache.action);
 
     controller_unlock_print_flush(global.main->program.error.to, global.thread);
   }
@@ -211,7 +211,7 @@ extern "C" {
     fl_print_format(f_string_format_Q_single_s.string, global.main->program.warning.to, global.main->program.warning.notable, cache.action.name_action, global.main->program.warning.notable);
     fl_print_format(f_string_format_sentence_end_quote_s.string, global.main->program.warning.to, global.main->program.warning.context, global.main->program.warning.context, f_string_eol_s);
 
-    controller_entry_print_error_cache(is_entry, global.main->program.warning, cache.action);
+    controller_entry_print_error_cache(is_entry, &global.main->program.warning, cache.action);
 
     controller_unlock_print_flush(global.main->program.warning.to, global.thread);
   }
@@ -230,7 +230,7 @@ extern "C" {
     fl_print_format(f_string_format_Q_range_single_s.string, global.main->program.warning.to, global.main->program.warning.notable, cache.buffer_file, cache.content_actions.array[index].array[0], global.main->program.warning.notable);
     fl_print_format(f_string_format_sentence_end_quote_s.string, global.main->program.warning.to, global.main->program.warning.context, global.main->program.warning.context, f_string_eol_s);
 
-    controller_entry_print_error_cache(is_entry, global.main->program.warning, cache.action);
+    controller_entry_print_error_cache(is_entry, &global.main->program.warning, cache.action);
 
     controller_unlock_print_flush(global.main->program.warning.to, global.thread);
   }

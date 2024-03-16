@@ -49,7 +49,7 @@ extern "C" {
  * @see controller_rule_print_error_cache()
  */
 #ifndef _di_controller_rule_print_error_
-  extern void controller_rule_print_error(controller_thread_t * const thread, const fl_print_t print, const controller_cache_action_t cache, const f_status_t status, const f_string_t function, const bool fallback, const bool item) F_attribute_visibility_internal_d;
+  extern void controller_rule_print_error(controller_thread_t * const thread, fl_print_t * const print, const controller_cache_action_t cache, const f_status_t status, const f_string_t function, const bool fallback, const bool item) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_print_error_
 
 /**
@@ -74,7 +74,7 @@ extern "C" {
  * @see controller_rule_setting_read()
  */
 #ifndef _di_controller_rule_print_error_cache_
-  extern void controller_rule_print_error_cache(const fl_print_t print, const controller_cache_action_t cache, const bool item) F_attribute_visibility_internal_d;
+  extern void controller_rule_print_error_cache(fl_print_t * const print, const controller_cache_action_t cache, const bool item) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_print_error_cache_
 
 /**
@@ -97,7 +97,7 @@ extern "C" {
  * @see controller_rule_print_error_cache()
  */
 #ifndef _di_controller_rule_item_print_error_
-  extern void controller_rule_item_print_error(controller_thread_t * const thread, const fl_print_t print, const controller_cache_action_t cache, const bool item, const f_status_t status) F_attribute_visibility_internal_d;
+  extern void controller_rule_item_print_error(controller_thread_t * const thread, fl_print_t * const print, const controller_cache_action_t cache, const bool item, const f_status_t status) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_item_print_error_
 
 /**
@@ -128,7 +128,7 @@ extern "C" {
  *   The rule alias of the rule that is missing the pid file designation.
  */
 #ifndef _di_controller_rule_action_print_error_missing_pid_
-  extern void controller_rule_action_print_error_missing_pid(const fl_print_t print, const f_string_static_t alias) F_attribute_visibility_internal_d;
+  extern void controller_rule_action_print_error_missing_pid(fl_print_t * const print, const f_string_static_t alias) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_action_print_error_missing_pid_
 
 /**
@@ -145,7 +145,7 @@ extern "C" {
  *   A short explanation on why this is an error or warning.
  */
 #ifndef _di_controller_rule_item_print_error_need_want_wish_
-  extern void controller_rule_item_print_error_need_want_wish(const fl_print_t print, const f_string_static_t need_want_wish, const f_string_static_t value, const f_string_t why) F_attribute_visibility_internal_d;
+  extern void controller_rule_item_print_error_need_want_wish(fl_print_t * const print, const f_string_static_t need_want_wish, const f_string_static_t value, const f_string_t why) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_item_print_error_need_want_wish_
 
 /**
@@ -157,7 +157,7 @@ extern "C" {
  *   The rule alias of the rule that is not loaded.
  */
 #ifndef _di_controller_rule_item_print_error_rule_not_loaded_
-  extern void controller_rule_item_print_error_rule_not_loaded(const fl_print_t print, const f_string_static_t alias) F_attribute_visibility_internal_d;
+  extern void controller_rule_item_print_error_rule_not_loaded(fl_print_t * const print, const f_string_static_t alias) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_item_print_error_rule_not_loaded_
 
 /**
@@ -182,7 +182,7 @@ extern "C" {
  * @see controller_rule_setting_read()
  */
 #ifndef _di_controller_rule_setting_read_print_error_
-  extern void controller_rule_setting_read_print_error(const fl_print_t print, const f_string_t message, const f_number_unsigned_t index, const f_number_unsigned_t line_item, controller_thread_t * const thread, controller_cache_t * const cache) F_attribute_visibility_internal_d;
+  extern void controller_rule_setting_read_print_error(fl_print_t * const print, const f_string_t message, const f_number_unsigned_t index, const f_number_unsigned_t line_item, controller_thread_t * const thread, controller_cache_t * const cache) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_setting_read_print_error_
 
 /**
@@ -211,7 +211,7 @@ extern "C" {
  * @see controller_rule_setting_read()
  */
 #ifndef _di_controller_rule_setting_read_print_error_with_range_
-  extern void controller_rule_setting_read_print_error_with_range(const fl_print_t print, const f_string_t before, const f_range_t range, const f_string_t after, const f_number_unsigned_t index, const f_number_unsigned_t line_item, controller_thread_t * const thread, controller_cache_t * const cache) F_attribute_visibility_internal_d;
+  extern void controller_rule_setting_read_print_error_with_range(fl_print_t * const print, const f_string_t before, const f_range_t range, const f_string_t after, const f_number_unsigned_t index, const f_number_unsigned_t line_item, controller_thread_t * const thread, controller_cache_t * const cache) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_setting_read_print_error_with_range_
 
 /**

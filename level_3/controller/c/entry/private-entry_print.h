@@ -35,13 +35,13 @@ extern "C" {
 /**
  * Print all parameters for some action, separated by a space.
  *
- * @param stream
- *   The file stream to print to.
+ * @param print
+ *   The print to use.
  * @param action
  *   The entry action whose parameters will be printed.
  */
 #ifndef _di_controller_entry_action_parameters_print_
-  extern void controller_entry_action_parameters_print(FILE * const stream, const controller_entry_action_t action) F_attribute_visibility_internal_d;
+  extern void controller_entry_action_parameters_print(fl_print_t * const print, const controller_entry_action_t action) F_attribute_visibility_internal_d;
 #endif // _di_controller_entry_action_parameters_print_
 
 /**
@@ -91,7 +91,7 @@ extern "C" {
  * @see controller_entry_print_error_cache()
  */
 #ifndef _di_controller_entry_print_error_
-  extern void controller_entry_print_error(const bool is_entry, const fl_print_t print, const controller_cache_action_t cache, const f_status_t status, const f_string_t function, const bool fallback, controller_thread_t *thread) F_attribute_visibility_internal_d;
+  extern void controller_entry_print_error(const bool is_entry, fl_print_t * const print, const controller_cache_action_t cache, const f_status_t status, const f_string_t function, const bool fallback, controller_thread_t *thread) F_attribute_visibility_internal_d;
 #endif // _di_controller_entry_print_error_
 
 /**
@@ -104,7 +104,7 @@ extern "C" {
  * @param is_entry
  *   If TRUE, then this loads as an entry.
  *   If FALSE, then this loads as an exit.
- * @param output
+ * @param print
  *   Designates how printing is to be performed.
  * @param cache
  *   The action cache.
@@ -113,7 +113,7 @@ extern "C" {
  * @see controller_entry_read()
  */
 #ifndef _di_controller_entry_print_error_cache_
-  extern void controller_entry_print_error_cache(const bool is_entry, const fl_print_t output, const controller_cache_action_t cache) F_attribute_visibility_internal_d;
+  extern void controller_entry_print_error_cache(const bool is_entry, fl_print_t * const print, const controller_cache_action_t cache) F_attribute_visibility_internal_d;
 #endif // _di_controller_entry_print_error_cache_
 
 /**
@@ -147,7 +147,7 @@ extern "C" {
  * @see controller_entry_print_error_cache()
  */
 #ifndef _di_controller_entry_print_error_file_
-  extern void controller_entry_print_error_file(const bool is_entry, const fl_print_t print, const controller_cache_action_t cache, const f_status_t status, const f_string_t function, const uint8_t flag, const f_string_static_t name, const f_string_static_t operation, const uint8_t type, controller_thread_t *thread) F_attribute_visibility_internal_d;
+  extern void controller_entry_print_error_file(const bool is_entry, fl_print_t * const print, const controller_cache_action_t cache, const f_status_t status, const f_string_t function, const uint8_t flag, const f_string_static_t name, const f_string_static_t operation, const uint8_t type, controller_thread_t *thread) F_attribute_visibility_internal_d;
 #endif // _di_controller_entry_print_error_file_
 
 /**
@@ -175,7 +175,7 @@ extern "C" {
  * @see controller_entry_settings_read()
  */
 #ifndef _di_controller_entry_setting_read_print_error_with_range_
-  extern void controller_entry_setting_read_print_error_with_range(const bool is_entry, const fl_print_t print, const f_string_t before, const f_range_t range, const f_string_t after, controller_thread_t * const thread, controller_cache_t * const cache) F_attribute_visibility_internal_d;
+  extern void controller_entry_setting_read_print_error_with_range(const bool is_entry, fl_print_t * const print, const f_string_t before, const f_range_t range, const f_string_t after, controller_thread_t * const thread, controller_cache_t * const cache) F_attribute_visibility_internal_d;
 #endif // _di_controller_entry_setting_read_print_error_with_range_
 
 /**

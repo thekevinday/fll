@@ -32,7 +32,7 @@ extern "C" {
  * @see fll_error_print()
  */
 #ifndef _di_controller_print_error_
-  extern void controller_print_error(controller_thread_t * const thread, const fl_print_t print, const f_status_t status, const f_string_t function, const uint8_t flag) F_attribute_visibility_internal_d;
+  extern void controller_print_error(controller_thread_t * const thread, fl_print_t * const print, const f_status_t status, const f_string_t function, const uint8_t flag) F_attribute_visibility_internal_d;
 #endif // _di_controller_print_error_
 
 /**
@@ -61,7 +61,7 @@ extern "C" {
  * @see fll_error_file_print()
  */
 #ifndef _di_controller_print_error_file_
-  extern void controller_print_error_file(controller_thread_t * const thread, const fl_print_t print, const f_status_t status, const f_string_t function, const uint8_t flag, const f_string_static_t name, const f_string_static_t operation, const uint8_t type) F_attribute_visibility_internal_d;
+  extern void controller_print_error_file(controller_thread_t * const thread, fl_print_t * const print, const f_status_t status, const f_string_t function, const uint8_t flag, const f_string_static_t name, const f_string_static_t operation, const uint8_t type) F_attribute_visibility_internal_d;
 #endif // _di_controller_print_error_file_
 
 #ifdef __cplusplus

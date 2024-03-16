@@ -363,7 +363,7 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         if (global->main->program.error.verbosity > f_console_verbosity_quiet_e) {
-          controller_print_error(global->thread, global->main->program.error, F_status_set_fine(status), "f_thread_create", F_true);
+          controller_print_error(global->thread, &global->main->program.error, F_status_set_fine(status), "f_thread_create", F_true);
         }
 
         if (F_status_is_error_not(f_thread_mutex_lock(&global->thread->lock.alert))) {

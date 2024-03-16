@@ -60,7 +60,7 @@ extern "C" {
     }
 
     if (F_status_is_error(status)) {
-      controller_print_error(global.thread, global.main->program.error, F_status_set_fine(status), "f_string_dynamic_append", F_true);
+      controller_print_error(global.thread, &global.main->program.error, F_status_set_fine(status), "f_string_dynamic_append", F_true);
 
       return status;
     }
@@ -101,7 +101,7 @@ extern "C" {
       }
 
       if (global.main->program.error.verbosity > f_console_verbosity_quiet_e) {
-        controller_print_error_file(global.thread, global.main->program.error, F_status_set_fine(status), "f_file_stream_open", F_true, path, f_file_operation_open_s, fll_error_file_type_file_e);
+        controller_print_error_file(global.thread, &global.main->program.error, F_status_set_fine(status), "f_file_stream_open", F_true, path, f_file_operation_open_s, fll_error_file_type_file_e);
       }
     }
     else {
@@ -109,7 +109,7 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         if (global.main->program.error.verbosity > f_console_verbosity_quiet_e) {
-          controller_print_error_file(global.thread, global.main->program.error, F_status_set_fine(status), "f_file_stream_read", F_true, path, f_file_operation_read_s, fll_error_file_type_file_e);
+          controller_print_error_file(global.thread, &global.main->program.error, F_status_set_fine(status), "f_file_stream_read", F_true, path, f_file_operation_read_s, fll_error_file_type_file_e);
         }
       }
     }
@@ -124,12 +124,12 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         if (global.main->program.error.verbosity > f_console_verbosity_quiet_e) {
-          controller_print_error_file(global.thread, global.main->program.error, F_status_set_fine(status), "f_file_stat", F_true, path, f_file_operation_stat_s, fll_error_file_type_file_e);
+          controller_print_error_file(global.thread, &global.main->program.error, F_status_set_fine(status), "f_file_stat", F_true, path, f_file_operation_stat_s, fll_error_file_type_file_e);
         }
       }
       else {
         cache->timestamp.seconds = stat_file.st_ctim.tv_sec;
-        cache->timestamp.nanoseconds = stat_file.st_ctim.tv_nsec;
+        cache->timestamp.seconds_nano = stat_file.st_ctim.tv_nsec;
       }
     }
 
@@ -437,11 +437,11 @@ extern "C" {
           if (global->main->program.error.verbosity > f_console_verbosity_quiet_e) {
             controller_lock_print(global->main->program.error.to, global->thread);
 
-            controller_print_error_file(0, global->main->program.error, F_status_set_fine(status), "controller_file_pid_create", F_true, global->setting->path_pid, f_file_operation_create_s, fll_error_file_type_file_e);
+            controller_print_error_file(0, &global->main->program.error, F_status_set_fine(status), "controller_file_pid_create", F_true, global->setting->path_pid, f_file_operation_create_s, fll_error_file_type_file_e);
 
             f_file_stream_lock(global->main->program.error.to);
 
-            controller_entry_print_error_cache(is_entry, global->main->program.error, cache->action);
+            controller_entry_print_error_cache(is_entry, &global->main->program.error, cache->action);
 
             controller_unlock_print_flush(global->main->program.error.to, global->thread);
           }
@@ -458,10 +458,10 @@ extern "C" {
             fl_print_format("%[' could not be written because the destination is read only.%]%r", global->main->program.warning.to, global->main->program.warning.context, global->main->program.warning.context, f_string_eol_s);
           }
           else {
-            controller_print_error_file(0, global->main->program.warning, F_status_set_fine(status), "controller_file_pid_create", F_true, global->setting->path_pid, f_file_operation_create_s, fll_error_file_type_file_e);
+            controller_print_error_file(0, &global->main->program.warning, F_status_set_fine(status), "controller_file_pid_create", F_true, global->setting->path_pid, f_file_operation_create_s, fll_error_file_type_file_e);
           }
 
-          controller_entry_print_error_cache(is_entry, global->main->program.warning, cache->action);
+          controller_entry_print_error_cache(is_entry, &global->main->program.warning, cache->action);
 
           controller_unlock_print_flush(global->main->program.warning.to, global->thread);
         }
@@ -522,7 +522,7 @@ extern "C" {
 
     if (F_status_is_error(status)) {
       if (F_status_set_fine(status) == F_memory_not) {
-        controller_print_error(global->thread, global->main->program.error, F_status_set_fine(status), "f_socket_create", F_true);
+        controller_print_error(global->thread, &global->main->program.error, F_status_set_fine(status), "f_socket_create", F_true);
       }
       else if (global->main->program.output.verbosity == f_console_verbosity_debug_e) {
         controller_lock_print(global->main->program.output.to, global->thread);
@@ -543,13 +543,13 @@ extern "C" {
       status = f_file_remove(global->setting->path_control);
 
       if (F_status_set_fine(status) == F_memory_not) {
-        controller_print_error(global->thread, global->main->program.error, F_status_set_fine(status), "f_file_remove", F_true);
+        controller_print_error(global->thread, &global->main->program.error, F_status_set_fine(status), "f_file_remove", F_true);
 
         return status;
       }
     }
 
-    global->setting->control.server.name = global->setting->path_control.string;
+    global->setting->control.server.name = global->setting->path_control;
 
     status = f_socket_bind(&global->setting->control.server);
 
@@ -561,7 +561,7 @@ extern "C" {
       }
 
       if (F_status_set_fine(status) == F_memory_not) {
-        controller_print_error(global->thread, global->main->program.error, F_status_set_fine(status), "f_socket_bind", F_true);
+        controller_print_error(global->thread, &global->main->program.error, F_status_set_fine(status), "f_socket_bind", F_true);
       }
       else if (global->main->program.output.verbosity == f_console_verbosity_debug_e) {
         controller_lock_print(global->main->program.output.to, global->thread);
@@ -589,7 +589,7 @@ extern "C" {
         }
 
         if (F_status_set_fine(status) == F_memory_not) {
-          controller_print_error(global->thread, global->main->program.error, F_status_set_fine(status), "f_file_role_change", F_true);
+          controller_print_error(global->thread, &global->main->program.error, F_status_set_fine(status), "f_file_role_change", F_true);
         }
         else if (global->main->program.output.verbosity == f_console_verbosity_debug_e) {
           controller_lock_print(global->main->program.output.to, global->thread);
@@ -618,7 +618,7 @@ extern "C" {
         }
 
         if (F_status_set_fine(status) == F_memory_not) {
-          controller_print_error(global->thread, global->main->program.error, F_status_set_fine(status), "f_file_role_change", F_true);
+          controller_print_error(global->thread, &global->main->program.error, F_status_set_fine(status), "f_file_role_change", F_true);
         }
         else if (global->main->program.output.verbosity == f_console_verbosity_debug_e) {
           controller_lock_print(global->main->program.output.to, global->thread);
@@ -668,7 +668,7 @@ extern "C" {
       }
 
       if (global->main->program.error.verbosity > f_console_verbosity_quiet_e) {
-        controller_print_error(global->thread, global->main->program.error, F_status_set_fine(status), "f_thread_create", F_true);
+        controller_print_error(global->thread, &global->main->program.error, F_status_set_fine(status), "f_thread_create", F_true);
       }
     }
 

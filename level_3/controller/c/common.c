@@ -682,15 +682,15 @@ extern "C" {
     f_string_static_t * const args = main->program.parameters.arguments.array;
 
     if (main->process) {
-      main->process->control.server.address = main->process->control.address; // @fixme is this actually f_socket_address_t?
+      //main->process->control.server.address = main->process->control.address; // @fixme is this actually f_socket_address_t?
       main->process->control.server.domain = f_socket_protocol_family_local_e;
       main->process->control.server.type = f_socket_type_stream_e;
       main->process->control.server.length = sizeof(struct sockaddr_un);
 
-      memset(&main->process->control.server.address, 0, main->process->control.server.length);
+      //memset(&main->process->control.server.address, 0, main->process->control.server.length);
 
       if (main->program.parameters.remaining.used) {
-        main->setting.state.status = f_string_dynamic_append(arguments.argv[main->program.parameters.remaining.array[0]], &main->process->name_entry);
+        main->setting.state.status = f_string_dynamic_append(args[main->program.parameters.remaining.array[0]], &main->process->name_entry);
       }
       else {
         main->setting.state.status = f_string_dynamic_append(controller_default_s, &main->process->name_entry);
@@ -885,7 +885,7 @@ extern "C" {
 #ifndef _di_controller_rule_delete_
   void controller_rule_delete(controller_rule_t * const rule) {
 
-    if (!rule) return F_status_set_error(F_parameter);
+    if (!rule) return;
 
     f_memory_array_resize(0, sizeof(f_char_t), (void **) &rule->engine.string, &rule->engine.used, &rule->engine.size);
     f_memory_array_resize(0, sizeof(f_char_t), (void **) &rule->name.string, &rule->name.used, &rule->name.size);

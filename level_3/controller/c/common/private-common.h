@@ -162,6 +162,7 @@ extern "C" {
 
   #define CONTROLLER_Entry_s "Entry"
   #define CONTROLLER_Exit_s  "Exit"
+  #define CONTROLLER_Item_s  "Item"
 
   #define CONTROLLER_parameter_map_option_s ":option"
   #define CONTROLLER_parameter_map_value_s  ":value"

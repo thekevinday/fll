@@ -39,7 +39,7 @@ extern "C" {
  *   F_interrupt (with error bit) if interrupted.
  */
 #ifndef _di_controller_thread_signal_state_fss_
-  extern f_status_t controller_thread_signal_state_fss(f_state_t * const state, void * const internal) F_attribute_visibility_internal_d;
+  extern void controller_thread_signal_state_fss(f_state_t * const state, void * const internal);
 #endif // _di_controller_thread_signal_state_fss_
 
 /**
@@ -56,7 +56,7 @@ extern "C" {
  *   F_interrupt (with error bit) if interrupted.
  */
 #ifndef _di_controller_thread_signal_state_iki_
-  extern f_status_t controller_thread_signal_state_iki(f_state_t * const state, void * const internal) F_attribute_visibility_internal_d;
+  extern void controller_thread_signal_state_iki(f_state_t * const state, void * const internal);
 #endif // _di_controller_thread_signal_state_iki_
 
 /**

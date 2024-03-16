@@ -29,7 +29,7 @@ extern "C" {
  *   The thread data.
  */
 #ifndef _di_controller_lock_print_error_critical_
-  extern void controller_lock_print_error_critical(const fl_print_t print, const f_status_t status, const bool read, controller_thread_t *thread) F_attribute_visibility_internal_d;
+  extern void controller_lock_print_error_critical(fl_print_t * const print, const f_status_t status, const bool read, controller_thread_t *thread) F_attribute_visibility_internal_d;
 #endif // _di_controller_lock_print_error_critical_
 
 /**

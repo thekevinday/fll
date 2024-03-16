@@ -36,9 +36,9 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
   // When run as "init" by default, provide the default system-level init path.
   #ifdef _controller_as_init_
-    data.setting.as_init = F_true;
+    data.setting.flag |= controller_main_flag_init_e;
   #else
-    data.setting.as_init = F_false;
+    data.setting.flag &= ~controller_main_flag_init_e;
   #endif // _controller_as_init_
 
   controller_process_t process = controller_process_t_initialize;
@@ -73,10 +73,10 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
       memset(&id_signal, 0, sizeof(f_thread_id_t));
 
-      data.setting.state.status = f_thread_create(0, &id_signal, &controller_thread_signal, (void *) &data);
+      //data.setting.state.status = f_thread_create(0, &id_signal, &controller_thread_signal, (void *) &data); // @fixme
 
       if (F_status_is_error(data.setting.state.status)) {
-        controller_print_error(&data.program.error, macro_controller_f(f_thread_create));
+        //controller_print_error(thread, &data.program.error, macro_controller_f(f_thread_create)); // @fixme
       }
       else {
         {
@@ -100,8 +100,8 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
   fll_program_standard_set_down(&data.program);
 
   // When the child process exits, it must return the code to the parent so the parent knows how to handle the exit.
-  if (status == F_child) {
-    exit(data.child);
+  if (data.setting.state.status == F_child) {
+    exit(data.program.child);
   }
 
   return F_status_is_error(data.setting.state.status) ? 1 : 0;
