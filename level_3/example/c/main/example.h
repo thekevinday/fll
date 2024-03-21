@@ -46,7 +46,7 @@
 #include <fll/level_2/print.h>
 #include <fll/level_2/program.h>
 
-// Firewall includes.
+// Example includes.
 #include <program/example/main/common/define.h>
 #include <program/example/main/common/enumeration.h>
 #include <program/example/main/common/print.h>

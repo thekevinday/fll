@@ -49,7 +49,7 @@ build_sources_library main/example.c main/signal.c main/thread.c
 build_sources_program main/main.c
 
 build_sources_headers main/common.h main/common/define.h main/common/enumeration.h main/common/print.h main/common/string.h main/common/type.h
-build_sources_headers main/print/data.h  main/print/debug.h main/print/error.h main/print/message.h main/print/verbose.h main/print/warning.h
+build_sources_headers main/print/data.h main/print/debug.h main/print/error.h main/print/message.h main/print/verbose.h main/print/warning.h
 build_sources_headers main/example.h main/signal.h main/thread.h
 
 build_sources_documentation man
