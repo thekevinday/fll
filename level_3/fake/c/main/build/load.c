@@ -221,9 +221,6 @@ extern "C" {
     f_string_dynamics_t build_name = f_string_dynamics_t_initialize;
     f_string_dynamics_t build_script = f_string_dynamics_t_initialize;
     f_string_dynamics_t build_shared = f_string_dynamics_t_initialize;
-    f_string_dynamics_t build_sources_object = f_string_dynamics_t_initialize;
-    f_string_dynamics_t build_sources_object_shared = f_string_dynamics_t_initialize;
-    f_string_dynamics_t build_sources_object_static = f_string_dynamics_t_initialize;
     f_string_dynamics_t build_static = f_string_dynamics_t_initialize;
     f_string_dynamics_t has_path_standard = f_string_dynamics_t_initialize;
     f_string_dynamics_t path_headers = f_string_dynamics_t_initialize;
@@ -238,7 +235,11 @@ extern "C" {
     f_string_dynamics_t path_program_shared = f_string_dynamics_t_initialize;
     f_string_dynamics_t path_program_static = f_string_dynamics_t_initialize;
     f_string_dynamics_t path_sources = f_string_dynamics_t_initialize;
+    f_string_dynamics_t path_sources_headers = f_string_dynamics_t_initialize;
+    f_string_dynamics_t path_sources_library = f_string_dynamics_t_initialize;
     f_string_dynamics_t path_sources_object = f_string_dynamics_t_initialize;
+    f_string_dynamics_t path_sources_program = f_string_dynamics_t_initialize;
+    f_string_dynamics_t path_sources_script = f_string_dynamics_t_initialize;
     f_string_dynamics_t preserve_path_headers = f_string_dynamics_t_initialize;
     f_string_dynamics_t process_post = f_string_dynamics_t_initialize;
     f_string_dynamics_t process_pre = f_string_dynamics_t_initialize;
@@ -329,7 +330,11 @@ extern "C" {
       fake_build_setting_name_path_program_shared_s,
       fake_build_setting_name_path_program_static_s,
       fake_build_setting_name_path_sources_s,
+      fake_build_setting_name_path_sources_headers_s,
+      fake_build_setting_name_path_sources_library_s,
       fake_build_setting_name_path_sources_object_s,
+      fake_build_setting_name_path_sources_program_s,
+      fake_build_setting_name_path_sources_script_s,
       fake_build_setting_name_preserve_path_headers_s,
       fake_build_setting_name_process_post_s,
       fake_build_setting_name_process_pre_s,
@@ -372,9 +377,9 @@ extern "C" {
       &setting->build_sources_library,
       &setting->build_sources_library_shared,
       &setting->build_sources_library_static,
-      &build_sources_object,
-      &build_sources_object_shared,
-      &build_sources_object_static,
+      &setting->build_sources_object,
+      &setting->build_sources_object_shared,
+      &setting->build_sources_object_static,
       &setting->build_sources_program,
       &setting->build_sources_program_shared,
       &setting->build_sources_program_static,
@@ -421,7 +426,11 @@ extern "C" {
       &path_program_shared,
       &path_program_static,
       &path_sources,
+      &path_sources_headers,
+      &path_sources_library,
       &path_sources_object,
+      &path_sources_program,
+      &path_sources_script,
       &preserve_path_headers,
       &process_post,
       &process_pre,
@@ -450,26 +459,26 @@ extern "C" {
       F_false, // setting->build_libraries_static
       F_false, // build_name
       F_false, // setting->build_objects_library
-      F_false, // setting->build_objects_library_shar
-      F_false, // setting->build_objects_library_stat
+      F_false, // setting->build_objects_library_shared
+      F_false, // setting->build_objects_library_static
       F_false, // setting->build_objects_program
-      F_false, // setting->build_objects_program_shar
-      F_false, // setting->build_objects_program_stat
+      F_false, // setting->build_objects_program_shared
+      F_false, // setting->build_objects_program_static
       F_false, // build_script
       F_false, // build_shared
       F_false, // setting->build_sources_documentation
       F_false, // setting->build_sources_headers
-      F_false, // setting->build_sources_headers_shar
-      F_false, // setting->build_sources_headers_stat
+      F_false, // setting->build_sources_headers_shared
+      F_false, // setting->build_sources_headers_static
       F_false, // setting->build_sources_library
-      F_false, // setting->build_sources_library_shar
-      F_false, // setting->build_sources_library_stat
-      F_false, // build_sources_object
-      F_false, // build_sources_object_shared
-      F_false, // build_sources_object_static
+      F_false, // setting->build_sources_library_shared
+      F_false, // setting->build_sources_library_static
+      F_false, // setting->build_sources_object
+      F_false, // setting->build_sources_object_shared
+      F_false, // setting->build_sources_object_static
       F_false, // setting->build_sources_program
-      F_false, // setting->build_sources_program_shar
-      F_false, // setting->build_sources_program_stat
+      F_false, // setting->build_sources_program_shared
+      F_false, // setting->build_sources_program_static
       F_false, // setting->build_sources_script
       F_false, // setting->build_sources_setting
       F_false, // build_static
@@ -513,7 +522,11 @@ extern "C" {
       F_false, // path_program_shared
       F_false, // path_program_static
       F_false, // path_sources
+      F_false, // path_sources_headers
+      F_false, // path_sources_library
       F_false, // path_sources_object
+      F_false, // path_sources_program
+      F_false, // path_sources_script
       F_false, // preserve_path_headers
       F_false, // process_post
       F_false, // process_pre
@@ -548,7 +561,7 @@ extern "C" {
 
       f_string_dynamic_t settings_mode_names[fake_build_setting_total_d];
 
-      memset(settings_mode_names, 0, sizeof(f_string_statics_t) * fake_build_setting_total_d);
+      memset(settings_mode_names, 0, sizeof(f_string_static_t) * fake_build_setting_total_d);
 
       bool found = F_false;
 
@@ -668,9 +681,6 @@ extern "C" {
         fake_build_setting_name_build_name_s,
         fake_build_setting_name_build_script_s,
         fake_build_setting_name_build_shared_s,
-        fake_build_setting_name_build_sources_object_s,
-        fake_build_setting_name_build_sources_object_shared_s,
-        fake_build_setting_name_build_sources_object_static_s,
         fake_build_setting_name_build_static_s,
         fake_build_setting_name_has_path_standard_s,
         fake_build_setting_name_path_headers_s,
@@ -685,7 +695,11 @@ extern "C" {
         fake_build_setting_name_path_program_shared_s,
         fake_build_setting_name_path_program_static_s,
         fake_build_setting_name_path_sources_s,
+        fake_build_setting_name_path_sources_headers_s,
+        fake_build_setting_name_path_sources_library_s,
         fake_build_setting_name_path_sources_object_s,
+        fake_build_setting_name_path_sources_program_s,
+        fake_build_setting_name_path_sources_script_s,
         fake_build_setting_name_preserve_path_headers_s,
         fake_build_setting_name_process_post_s,
         fake_build_setting_name_process_pre_s,
@@ -711,9 +725,6 @@ extern "C" {
         &build_name,
         &build_script,
         &build_shared,
-        &build_sources_object,
-        &build_sources_object_shared,
-        &build_sources_object_static,
         &build_static,
         &has_path_standard,
         &path_headers,
@@ -728,7 +739,11 @@ extern "C" {
         &path_program_shared,
         &path_program_static,
         &path_sources,
+        &path_sources_headers,
+        &path_sources_library,
         &path_sources_object,
+        &path_sources_program,
+        &path_sources_script,
         &preserve_path_headers,
         &process_post,
         &process_pre,
@@ -754,9 +769,6 @@ extern "C" {
         0,                                           // build_name
         &setting->build_script,                      // build_script
         &setting->build_shared,                      // build_shared
-        0,                                           // build_sources_object
-        0,                                           // build_sources_object_shared
-        0,                                           // build_sources_object_static
         &setting->build_static,                      // build_static
         &setting->has_path_standard,                 // has_path_standard
         0,                                           // path_headers
@@ -771,7 +783,11 @@ extern "C" {
         0,                                           // path_program_shared
         0,                                           // path_program_static
         0,                                           // path_sources
+        0,                                           // path_sources_headers
+        0,                                           // path_sources_library
         0,                                           // path_sources_object
+        0,                                           // path_sources_program
+        0,                                           // path_sources_script
         &setting->preserve_path_headers,             // preserve_path_headers
         0,                                           // process_post
         0,                                           // process_pre
@@ -787,9 +803,6 @@ extern "C" {
         &setting->build_name,                        // build_name
         0,                                           // build_script
         0,                                           // build_shared
-        &setting->build_sources_object,              // build_sources_object
-        &setting->build_sources_object_shared,       // build_sources_object_shared
-        &setting->build_sources_object_static,       // build_sources_object_static
         0,                                           // build_static
         0,                                           // has_path_standard
         &setting->path_headers,                      // path_headers
@@ -804,7 +817,11 @@ extern "C" {
         &setting->path_program_shared,               // path_program_shared
         &setting->path_program_static,               // path_program_static
         &setting->path_sources,                      // path_sources
+        &setting->path_sources_headers,              // path_sources_headers
+        &setting->path_sources_library,              // path_sources_library
         &setting->path_sources_object,               // path_sources_object
+        &setting->path_sources_program,              // path_sources_program
+        &setting->path_sources_script,               // path_sources_script
         0,                                           // preserve_path_headers
         &setting->process_post,                      // process_post
         &setting->process_pre,                       // process_pre
@@ -830,9 +847,6 @@ extern "C" {
         settings_matches[7],  // build_name
         settings_matches[14], // build_script
         settings_matches[15], // build_shared
-        settings_matches[23], // build_sources_object
-        settings_matches[24], // build_sources_object_shared
-        settings_matches[25], // build_sources_object_static
         settings_matches[31], // build_static
         settings_matches[57], // has_path_standard
         settings_matches[60], // path_headers
@@ -847,23 +861,27 @@ extern "C" {
         settings_matches[69], // path_program_shared
         settings_matches[70], // path_program_static
         settings_matches[71], // path_sources
-        settings_matches[72], // path_sources_object
-        settings_matches[73], // preserve_path_headers
-        settings_matches[74], // process_post
-        settings_matches[75], // process_pre
-        settings_matches[76], // search_exclusive
-        settings_matches[77], // search_shared
-        settings_matches[78], // search_static
-        settings_matches[79], // version_file
-        settings_matches[80], // version_major
-        settings_matches[81], // version_major_prefix
-        settings_matches[82], // version_micro
-        settings_matches[83], // version_micro_prefix
-        settings_matches[84], // version_minor
-        settings_matches[85], // version_minor_prefix
-        settings_matches[86], // version_nano
-        settings_matches[87], // version_nano_prefix
-        settings_matches[88], // version_target
+        settings_matches[72], // path_sources_headers
+        settings_matches[73], // path_sources_library
+        settings_matches[74], // path_sources_object
+        settings_matches[75], // path_sources_program
+        settings_matches[76], // path_sources_script
+        settings_matches[77], // preserve_path_headers
+        settings_matches[78], // process_post
+        settings_matches[79], // process_pre
+        settings_matches[80], // search_exclusive
+        settings_matches[81], // search_shared
+        settings_matches[82], // search_static
+        settings_matches[83], // version_file
+        settings_matches[84], // version_major
+        settings_matches[85], // version_major_prefix
+        settings_matches[86], // version_micro
+        settings_matches[87], // version_micro_prefix
+        settings_matches[88], // version_minor
+        settings_matches[89], // version_minor_prefix
+        settings_matches[90], // version_nano
+        settings_matches[91], // version_nano_prefix
+        settings_matches[92], // version_target
       };
 
       const f_string_static_t settings_single_string_default[] = {
@@ -873,9 +891,6 @@ extern "C" {
         f_string_empty_s,                            // build_name
         f_string_empty_s,                            // build_script
         f_string_empty_s,                            // build_shared
-        f_string_empty_s,                            // build_sources_object
-        f_string_empty_s,                            // build_sources_object_shared
-        f_string_empty_s,                            // build_sources_object_static
         f_string_empty_s,                            // build_static
         fake_build_setting_default_yes_s,            // has_path_standard
         f_string_empty_s,                            // path_headers
@@ -889,8 +904,12 @@ extern "C" {
         fake_path_part_script_s,                     // path_program_script
         fake_path_part_shared_s,                     // path_program_shared
         fake_path_part_static_s,                     // path_program_static
-        main->setting.sources,                      // path_sources
+        main->setting.sources,                       // path_sources
+        f_string_empty_s,                            // path_sources_headers
+        f_string_empty_s,                            // path_sources_library
         f_string_empty_s,                            // path_sources_object
+        f_string_empty_s,                            // path_sources_program
+        f_string_empty_s,                            // path_sources_script
         f_string_empty_s,                            // preserve_path_headers
         f_string_empty_s,                            // process_post
         f_string_empty_s,                            // process_pre
@@ -922,9 +941,6 @@ extern "C" {
         0,                                           // build_name
         0,                                           // build_script
         0,                                           // build_shared
-        0,                                           // build_sources_object
-        0,                                           // build_sources_object_shared
-        0,                                           // build_sources_object_static
         0,                                           // build_static
         0,                                           // has_path_standard
         0,                                           // path_headers
@@ -939,7 +955,11 @@ extern "C" {
         0,                                           // path_program_shared
         0,                                           // path_program_static
         0,                                           // path_sources
+        0,                                           // path_sources_headers
+        0,                                           // path_sources_library
         0,                                           // path_sources_object
+        0,                                           // path_sources_program
+        0,                                           // path_sources_script
         0,                                           // preserve_path_headers
         0,                                           // process_post
         0,                                           // process_pre
@@ -965,9 +985,6 @@ extern "C" {
         0,                                           // build_name
         0,                                           // build_script
         0,                                           // build_shared
-        0,                                           // build_sources_object
-        0,                                           // build_sources_object_shared
-        0,                                           // build_sources_object_static
         0,                                           // build_static
         0,                                           // has_path_standard
         0,                                           // path_headers
@@ -982,7 +999,11 @@ extern "C" {
         0,                                           // path_program_shared
         0,                                           // path_program_static
         0,                                           // path_sources
+        0,                                           // path_sources_headers
+        0,                                           // path_sources_library
         0,                                           // path_sources_object
+        0,                                           // path_sources_program
+        0,                                           // path_sources_script
         0,                                           // preserve_path_headers
         0,                                           // process_post
         0,                                           // process_pre
@@ -1008,9 +1029,6 @@ extern "C" {
         f_string_empty_s,                            // build_name
         fake_common_setting_bool_yes_s,              // build_script
         fake_common_setting_bool_yes_s,              // build_shared
-        f_string_empty_s,                            // build_sources_object
-        f_string_empty_s,                            // build_sources_object_shared
-        f_string_empty_s,                            // build_sources_object_static
         fake_common_setting_bool_yes_s,              // build_static
         fake_common_setting_bool_yes_s,              // has_path_standard
         f_string_empty_s,                            // path_headers
@@ -1025,7 +1043,11 @@ extern "C" {
         f_string_empty_s,                            // path_program_shared
         f_string_empty_s,                            // path_program_static
         f_string_empty_s,                            // path_sources
+        f_string_empty_s,                            // path_sources_headers
+        f_string_empty_s,                            // path_sources_library
         f_string_empty_s,                            // path_sources_object
+        f_string_empty_s,                            // path_sources_program
+        f_string_empty_s,                            // path_sources_script
         fake_common_setting_bool_yes_s,              // preserve_path_headers
         f_string_empty_s,                            // process_post
         f_string_empty_s,                            // process_pre
@@ -1052,9 +1074,6 @@ extern "C" {
         3,                                           // build_name
         1,                                           // build_script
         1,                                           // build_shared
-        3,                                           // build_sources_object
-        3,                                           // build_sources_object_shared
-        3,                                           // build_sources_object_static
         1,                                           // build_static
         1,                                           // has_path_standard
         2,                                           // path_headers
@@ -1069,7 +1088,11 @@ extern "C" {
         2,                                           // path_program_shared
         2,                                           // path_program_static
         2,                                           // path_sources
+        2,                                           // path_sources_headers
+        2,                                           // path_sources_library
         2,                                           // path_sources_object
+        2,                                           // path_sources_program
+        2,                                           // path_sources_script
         1,                                           // preserve_path_headers
         3,                                           // process_post
         3,                                           // process_pre
@@ -1088,7 +1111,7 @@ extern "C" {
         5,                                           // version_target
       };
 
-      for (f_number_unsigned_t i = 0; i < 40; ++i) {
+      for (f_number_unsigned_t i = 0; i < 41; ++i) {
 
         // Assign the default for literal and path types.
         if (!settings_single_matches[i] && settings_single_destination[i]) {
@@ -1187,6 +1210,49 @@ extern "C" {
         }
       } // for
 
+      // Handle special defaults for path sources.
+      if (F_status_is_error_not(main->setting.state.status)) {
+
+        // [72] path_sources_headers.
+        if (!settings_matches[72]) {
+          setting->path_sources_headers.used = 0;
+
+          main->setting.state.status = f_string_dynamic_append_nulless(setting->path_sources, &setting->path_sources_headers);
+        }
+
+        // [73] path_sources_library.
+        if (!settings_matches[73] && F_status_is_error_not(main->setting.state.status)) {
+          setting->path_sources_library.used = 0;
+
+          main->setting.state.status = f_string_dynamic_append_nulless(setting->path_sources, &setting->path_sources_library);
+        }
+
+        // [74] path_sources_object.
+        if (!settings_matches[74] && F_status_is_error_not(main->setting.state.status)) {
+          setting->path_sources_object.used = 0;
+
+          main->setting.state.status = f_string_dynamic_append_nulless(setting->path_sources, &setting->path_sources_object);
+        }
+
+        // [75] path_sources_program.
+        if (!settings_matches[75] && F_status_is_error_not(main->setting.state.status)) {
+          setting->path_sources_program.used = 0;
+
+          main->setting.state.status = f_string_dynamic_append_nulless(setting->path_sources, &setting->path_sources_program);
+        }
+
+        // [76] path_sources_script.
+        if (!settings_matches[76] && F_status_is_error_not(main->setting.state.status)) {
+          setting->path_sources_script.used = 0;
+
+          main->setting.state.status = f_string_dynamic_append_nulless(setting->path_sources, &setting->path_sources_script);
+        }
+
+        if (F_status_is_error(main->setting.state.status)) {
+          fake_print_error(&main->program.error, macro_fake_f(f_string_dynamic_append_nulless));
+        }
+      }
+
       if (F_status_is_error_not(main->setting.state.status)) {
         if (checks && !setting->version_file) {
           setting->version_file = fake_build_version_micro_e;
@@ -1208,9 +1274,6 @@ extern "C" {
     f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &build_name.array, &build_name.used, &build_name.size, &f_string_dynamics_delete_callback);
     f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &build_script.array, &build_script.used, &build_script.size, &f_string_dynamics_delete_callback);
     f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &build_shared.array, &build_shared.used, &build_shared.size, &f_string_dynamics_delete_callback);
-    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &build_sources_object.array, &build_sources_object.used, &build_sources_object.size, &f_string_dynamics_delete_callback);
-    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &build_sources_object_shared.array, &build_sources_object_shared.used, &build_sources_object_shared.size, &f_string_dynamics_delete_callback);
-    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &build_sources_object_static.array, &build_sources_object_static.used, &build_sources_object_static.size, &f_string_dynamics_delete_callback);
     f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &build_static.array, &build_static.used, &build_static.size, &f_string_dynamics_delete_callback);
     f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &has_path_standard.array, &has_path_standard.used, &has_path_standard.size, &f_string_dynamics_delete_callback);
     f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &path_headers.array, &path_headers.used, &path_headers.size, &f_string_dynamics_delete_callback);
@@ -1225,7 +1288,11 @@ extern "C" {
     f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &path_program_shared.array, &path_program_shared.used, &path_program_shared.size, &f_string_dynamics_delete_callback);
     f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &path_program_static.array, &path_program_static.used, &path_program_static.size, &f_string_dynamics_delete_callback);
     f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &path_sources.array, &path_sources.used, &path_sources.size, &f_string_dynamics_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &path_sources_headers.array, &path_sources_headers.used, &path_sources_headers.size, &f_string_dynamics_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &path_sources_library.array, &path_sources_library.used, &path_sources_library.size, &f_string_dynamics_delete_callback);
     f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &path_sources_object.array, &path_sources_object.used, &path_sources_object.size, &f_string_dynamics_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &path_sources_program.array, &path_sources_program.used, &path_sources_program.size, &f_string_dynamics_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &path_sources_script.array, &path_sources_script.used, &path_sources_script.size, &f_string_dynamics_delete_callback);
     f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &preserve_path_headers.array, &preserve_path_headers.used, &preserve_path_headers.size, &f_string_dynamics_delete_callback);
     f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &process_post.array, &process_post.used, &process_post.size, &f_string_dynamics_delete_callback);
     f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &process_pre.array, &process_pre.used, &process_pre.size, &f_string_dynamics_delete_callback);
@@ -1242,6 +1309,10 @@ extern "C" {
     f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &version_nano.array, &version_nano.used, &version_nano.size, &f_string_dynamics_delete_callback);
     f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &version_nano_prefix.array, &version_nano_prefix.used, &version_nano_prefix.size, &f_string_dynamics_delete_callback);
     f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &version_target.array, &version_target.used, &version_target.size, &f_string_dynamics_delete_callback);
+
+    if (F_status_is_error_not(main->setting.state.status)) {
+      main->setting.state.status = F_okay;
+    }
   }
 #endif // _di_fake_build_load_setting_process_
 

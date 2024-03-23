@@ -295,7 +295,7 @@ extern "C" {
  * @see fake_string_dynamics_reset()
  */
 #ifndef _di_fake_build_path_source_string_
-  extern void fake_build_path_source_string(fake_data_t * const data, fake_build_data_t * const data_build, f_string_static_t * const setting_path_source, f_string_dynamic_t * const source);
+  extern void fake_build_path_source_string(fake_data_t * const data, fake_build_data_t * const data_build, const f_string_static_t * const setting_path_source, f_string_dynamic_t * const source);
 #endif // _di_fake_build_path_source_string_
 
 /**
@@ -313,6 +313,8 @@ extern "C" {
  *     Errors (with error bit) from: fll_execute_arguments_add()
  * @param data_build
  *   The build data.
+ * @param source_path
+ *   The source path to use, such as data_build.setting.path_sources.
  * @param generic
  *   The generic sources to add.
  * @param specific
@@ -321,11 +323,11 @@ extern "C" {
  * @see fll_execute_arguments_add()
  */
 #ifndef _di_fake_build_sources_add_
-  extern void fake_build_sources_add(fake_data_t * const data, fake_build_data_t * const data_build, const f_string_statics_t *generic, const f_string_statics_t *specific);
+  extern void fake_build_sources_add(fake_data_t * const data, fake_build_data_t * const data_build, const f_string_static_t * const source_path, const f_string_statics_t * const generic, const f_string_statics_t * const specific);
 #endif // _di_fake_build_sources_add_
 
 /**
- * Add the sources object to the execute arguments array.
+ * Add the sources objects to the execute arguments array.
  *
  * @param data
  *   The program data.
@@ -339,15 +341,13 @@ extern "C" {
  *     Errors (with error bit) from: fll_execute_arguments_add()
  * @param data_build
  *   The build data.
- * @param generic
- *   The generic sources to add.
- * @param specific
- *   The specific sources to add.
+ * @param file
+ *   The source object file to add.
  *
  * @see fll_execute_arguments_add()
  */
 #ifndef _di_fake_build_sources_object_add_
-  extern void fake_build_sources_object_add(fake_data_t * const data, fake_build_data_t * const data_build, const f_string_static_t *generic, const f_string_static_t *specific);
+  extern void fake_build_sources_object_add(fake_data_t * const data, fake_build_data_t * const data_build, const f_string_static_t * const file);
 #endif // _di_fake_build_sources_object_add_
 
 /**

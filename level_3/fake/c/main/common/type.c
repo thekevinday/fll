@@ -23,9 +23,6 @@ extern "C" {
     f_memory_array_resize(0, sizeof(f_char_t), (void **) &build_setting->build_compiler.string, &build_setting->build_compiler.used, &build_setting->build_compiler.size);
     f_memory_array_resize(0, sizeof(f_char_t), (void **) &build_setting->build_indexer.string, &build_setting->build_indexer.used, &build_setting->build_indexer.size);
     f_memory_array_resize(0, sizeof(f_char_t), (void **) &build_setting->build_name.string, &build_setting->build_name.used, &build_setting->build_name.size);
-    f_memory_array_resize(0, sizeof(f_char_t), (void **) &build_setting->build_sources_object.string, &build_setting->build_sources_object.used, &build_setting->build_sources_object.size);
-    f_memory_array_resize(0, sizeof(f_char_t), (void **) &build_setting->build_sources_object_shared.string, &build_setting->build_sources_object_shared.used, &build_setting->build_sources_object_shared.size);
-    f_memory_array_resize(0, sizeof(f_char_t), (void **) &build_setting->build_sources_object_static.string, &build_setting->build_sources_object_static.used, &build_setting->build_sources_object_static.size);
     f_memory_array_resize(0, sizeof(f_char_t), (void **) &build_setting->path_headers.string, &build_setting->path_headers.used, &build_setting->path_headers.size);
     f_memory_array_resize(0, sizeof(f_char_t), (void **) &build_setting->path_language.string, &build_setting->path_language.used, &build_setting->path_language.size);
     f_memory_array_resize(0, sizeof(f_char_t), (void **) &build_setting->path_library_script.string, &build_setting->path_library_script.used, &build_setting->path_library_script.size);
@@ -38,7 +35,11 @@ extern "C" {
     f_memory_array_resize(0, sizeof(f_char_t), (void **) &build_setting->path_program_shared.string, &build_setting->path_program_shared.used, &build_setting->path_program_shared.size);
     f_memory_array_resize(0, sizeof(f_char_t), (void **) &build_setting->path_program_static.string, &build_setting->path_program_static.used, &build_setting->path_program_static.size);
     f_memory_array_resize(0, sizeof(f_char_t), (void **) &build_setting->path_sources.string, &build_setting->path_sources.used, &build_setting->path_sources.size);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &build_setting->path_sources_headers.string, &build_setting->path_sources_headers.used, &build_setting->path_sources_headers.size);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &build_setting->path_sources_library.string, &build_setting->path_sources_library.used, &build_setting->path_sources_library.size);
     f_memory_array_resize(0, sizeof(f_char_t), (void **) &build_setting->path_sources_object.string, &build_setting->path_sources_object.used, &build_setting->path_sources_object.size);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &build_setting->path_sources_program.string, &build_setting->path_sources_program.used, &build_setting->path_sources_program.size);
+    f_memory_array_resize(0, sizeof(f_char_t), (void **) &build_setting->path_sources_script.string, &build_setting->path_sources_script.used, &build_setting->path_sources_script.size);
     f_memory_array_resize(0, sizeof(f_char_t), (void **) &build_setting->process_post.string, &build_setting->process_post.used, &build_setting->process_post.size);
     f_memory_array_resize(0, sizeof(f_char_t), (void **) &build_setting->process_pre.string, &build_setting->process_pre.used, &build_setting->process_pre.size);
     f_memory_array_resize(0, sizeof(f_char_t), (void **) &build_setting->version_major.string, &build_setting->version_major.used, &build_setting->version_major.size);
@@ -67,6 +68,9 @@ extern "C" {
     f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &build_setting->build_sources_library.array, &build_setting->build_sources_library.used, &build_setting->build_sources_library.size, &f_string_dynamics_delete_callback);
     f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &build_setting->build_sources_library_shared.array, &build_setting->build_sources_library_shared.used, &build_setting->build_sources_library_shared.size, &f_string_dynamics_delete_callback);
     f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &build_setting->build_sources_library_static.array, &build_setting->build_sources_library_static.used, &build_setting->build_sources_library_static.size, &f_string_dynamics_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &build_setting->build_sources_object.array, &build_setting->build_sources_object.used, &build_setting->build_sources_object.size, &f_string_dynamics_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &build_setting->build_sources_object_shared.array, &build_setting->build_sources_object_shared.used, &build_setting->build_sources_object_shared.size, &f_string_dynamics_delete_callback);
+    f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &build_setting->build_sources_object_static.array, &build_setting->build_sources_object_static.used, &build_setting->build_sources_object_static.size, &f_string_dynamics_delete_callback);
     f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &build_setting->build_sources_program.array, &build_setting->build_sources_program.used, &build_setting->build_sources_program.size, &f_string_dynamics_delete_callback);
     f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &build_setting->build_sources_program_shared.array, &build_setting->build_sources_program_shared.used, &build_setting->build_sources_program_shared.size, &f_string_dynamics_delete_callback);
     f_memory_arrays_resize(0, sizeof(f_string_dynamic_t), (void **) &build_setting->build_sources_program_static.array, &build_setting->build_sources_program_static.used, &build_setting->build_sources_program_static.size, &f_string_dynamics_delete_callback);

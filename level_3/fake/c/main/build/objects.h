@@ -17,7 +17,7 @@ extern "C" {
 #endif
 
 /**
- * Build static options that are needed when building a static library.
+ * Build static objects that are needed when building a static library.
  *
  * This is neither the "build_sources_object" nor the "build_sources_object_static" property.
  * Instead, this converts the "build_sources_library" and the "build_sources_library_static" into a static object file so that the indexer program (such as GNU ar) can combine these into a static file.

@@ -925,6 +925,9 @@ extern "C" {
         fake_build_setting_name_path_library_script_s,
         fake_build_setting_name_path_library_shared_s,
         fake_build_setting_name_path_library_static_s,
+        fake_build_setting_name_path_object_script_s,
+        fake_build_setting_name_path_object_shared_s,
+        fake_build_setting_name_path_object_static_s,
         fake_build_setting_name_path_program_script_s,
         fake_build_setting_name_path_program_shared_s,
         fake_build_setting_name_path_program_static_s,
@@ -945,6 +948,9 @@ extern "C" {
         data_make->setting_build.path_library_script,
         data_make->setting_build.path_library_shared,
         data_make->setting_build.path_library_static,
+        data_make->setting_build.path_object_script,
+        data_make->setting_build.path_object_shared,
+        data_make->setting_build.path_object_static,
         data_make->setting_build.path_program_script,
         data_make->setting_build.path_program_shared,
         data_make->setting_build.path_program_static,
@@ -956,7 +962,7 @@ extern "C" {
         data_make->setting_build.version_minor,
       };
 
-      for (i = 0; i < 17; ++i) {
+      for (i = 0; i < 20; ++i) {
 
         main->setting.state.status = f_compare_dynamic_partial_string(dynamic_name[i].string, main->buffer, dynamic_name[i].used, range_name);
 
@@ -982,6 +988,9 @@ extern "C" {
         fake_build_setting_name_build_sources_library_s,
         fake_build_setting_name_build_sources_library_shared_s,
         fake_build_setting_name_build_sources_library_static_s,
+        fake_build_setting_name_build_sources_object_s,
+        fake_build_setting_name_build_sources_object_shared_s,
+        fake_build_setting_name_build_sources_object_static_s,
         fake_build_setting_name_build_sources_program_s,
         fake_build_setting_name_build_sources_program_shared_s,
         fake_build_setting_name_build_sources_program_static_s,
@@ -991,6 +1000,9 @@ extern "C" {
         fake_build_setting_name_defines_library_s,
         fake_build_setting_name_defines_library_shared_s,
         fake_build_setting_name_defines_library_static_s,
+        fake_build_setting_name_defines_object_s,
+        fake_build_setting_name_defines_object_shared_s,
+        fake_build_setting_name_defines_object_static_s,
         fake_build_setting_name_defines_program_s,
         fake_build_setting_name_defines_program_shared_s,
         fake_build_setting_name_defines_program_static_s,
@@ -1001,6 +1013,9 @@ extern "C" {
         fake_build_setting_name_flags_library_s,
         fake_build_setting_name_flags_library_shared_s,
         fake_build_setting_name_flags_library_static_s,
+        fake_build_setting_name_flags_object_s,
+        fake_build_setting_name_flags_object_shared_s,
+        fake_build_setting_name_flags_object_static_s,
         fake_build_setting_name_flags_program_s,
         fake_build_setting_name_flags_program_shared_s,
         fake_build_setting_name_flags_program_static_s,
@@ -1021,6 +1036,9 @@ extern "C" {
         data_make->setting_build.build_sources_library,
         data_make->setting_build.build_sources_library_shared,
         data_make->setting_build.build_sources_library_static,
+        data_make->setting_build.build_sources_object,
+        data_make->setting_build.build_sources_object_shared,
+        data_make->setting_build.build_sources_object_static,
         data_make->setting_build.build_sources_program,
         data_make->setting_build.build_sources_program_shared,
         data_make->setting_build.build_sources_program_static,
@@ -1030,6 +1048,9 @@ extern "C" {
         data_make->setting_build.defines_library,
         data_make->setting_build.defines_library_shared,
         data_make->setting_build.defines_library_static,
+        data_make->setting_build.defines_object,
+        data_make->setting_build.defines_object_shared,
+        data_make->setting_build.defines_object_static,
         data_make->setting_build.defines_program,
         data_make->setting_build.defines_program_shared,
         data_make->setting_build.defines_program_static,
@@ -1040,6 +1061,9 @@ extern "C" {
         data_make->setting_build.flags_library,
         data_make->setting_build.flags_library_shared,
         data_make->setting_build.flags_library_static,
+        data_make->setting_build.flags_object,
+        data_make->setting_build.flags_object_shared,
+        data_make->setting_build.flags_object_static,
         data_make->setting_build.flags_program,
         data_make->setting_build.flags_program_shared,
         data_make->setting_build.flags_program_static,
@@ -1060,6 +1084,9 @@ extern "C" {
         0,                                         // build_sources_library
         0,                                         // build_sources_library_shared
         0,                                         // build_sources_library_static
+        0,                                         // build_sources_object
+        0,                                         // build_sources_object_shared
+        0,                                         // build_sources_object_static
         0,                                         // build_sources_program
         0,                                         // build_sources_program_shared
         0,                                         // build_sources_program_static
@@ -1069,6 +1096,9 @@ extern "C" {
         0,                                         // defines_library
         0,                                         // defines_library_shared
         0,                                         // defines_library_static
+        0,                                         // defines_object
+        0,                                         // defines_object_shared
+        0,                                         // defines_object_static
         0,                                         // defines_program
         0,                                         // defines_program_shared
         0,                                         // defines_program_static
@@ -1079,6 +1109,9 @@ extern "C" {
         0,                                         // flags_library
         0,                                         // flags_library_shared
         0,                                         // flags_library_static
+        0,                                         // flags_object
+        0,                                         // flags_object_shared
+        0,                                         // flags_object_static
         0,                                         // flags_program
         0,                                         // flags_program_shared
         0,                                         // flags_program_static
@@ -1090,7 +1123,7 @@ extern "C" {
 
       f_number_unsigned_t j = 0;
 
-      for (i = 0; i < 36; ++i) {
+      for (i = 0; i < 45; ++i) {
 
         main->setting.state.status = f_compare_dynamic_partial_string(dynamics_name[i].string, main->buffer, dynamics_name[i].used, range_name);
 

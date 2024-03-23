@@ -92,7 +92,11 @@ Settings Specification:
     - code:"path_program_shared": Must be a single valid path.
     - code:"path_program_static": Must be a single valid path.
     - code:"path_sources": Must only be a valid directory path or not specified.
+    - code:"path_sources_headers": Must only be a valid directory path or not specified.
+    - code:"path_sources_library": Must only be a valid directory path or not specified.
     - code:"path_sources_object": Must only be a valid directory path or not specified.
+    - code:"path_sources_program": Must only be a valid directory path or not specified.
+    - code:"path_sources_script": Must only be a valid directory path or not specified.
     - code:"preserve_path_headers": Must only be one of code:"yes" or code:"no".
     - code:"process_post": Only one bold:"Content", which must only be a valid filename.
     - code:"process_pre": Only one bold:"Content", which must only be a valid filename.

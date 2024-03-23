@@ -164,7 +164,11 @@ extern "C" {
   #define FAKE_build_setting_name_path_program_shared_s          "path_program_shared"
   #define FAKE_build_setting_name_path_program_static_s          "path_program_static"
   #define FAKE_build_setting_name_path_sources_s                 "path_sources"
+  #define FAKE_build_setting_name_path_sources_headers_s         "path_sources_headers"
+  #define FAKE_build_setting_name_path_sources_library_s         "path_sources_library"
   #define FAKE_build_setting_name_path_sources_object_s          "path_sources_object"
+  #define FAKE_build_setting_name_path_sources_program_s         "path_sources_program"
+  #define FAKE_build_setting_name_path_sources_script_s          "path_sources_script"
   #define FAKE_build_setting_name_preserve_path_headers_s        "preserve_path_headers"
   #define FAKE_build_setting_name_process_post_s                 "process_post"
   #define FAKE_build_setting_name_process_pre_s                  "process_pre"
@@ -260,7 +264,11 @@ extern "C" {
   #define FAKE_build_setting_name_path_program_shared_s_length          19
   #define FAKE_build_setting_name_path_program_static_s_length          19
   #define FAKE_build_setting_name_path_sources_s_length                 12
+  #define FAKE_build_setting_name_path_sources_headers_s_length         20
+  #define FAKE_build_setting_name_path_sources_library_s_length         20
   #define FAKE_build_setting_name_path_sources_object_s_length          19
+  #define FAKE_build_setting_name_path_sources_program_s_length         20
+  #define FAKE_build_setting_name_path_sources_script_s_length          19
   #define FAKE_build_setting_name_preserve_path_headers_s_length        21
   #define FAKE_build_setting_name_process_post_s_length                 12
   #define FAKE_build_setting_name_process_pre_s_length                  11
@@ -356,7 +364,11 @@ extern "C" {
   extern const f_string_static_t fake_build_setting_name_path_program_shared_s;
   extern const f_string_static_t fake_build_setting_name_path_program_static_s;
   extern const f_string_static_t fake_build_setting_name_path_sources_s;
+  extern const f_string_static_t fake_build_setting_name_path_sources_headers_s;
+  extern const f_string_static_t fake_build_setting_name_path_sources_library_s;
   extern const f_string_static_t fake_build_setting_name_path_sources_object_s;
+  extern const f_string_static_t fake_build_setting_name_path_sources_program_s;
+  extern const f_string_static_t fake_build_setting_name_path_sources_script_s;
   extern const f_string_static_t fake_build_setting_name_preserve_path_headers_s;
   extern const f_string_static_t fake_build_setting_name_process_post_s;
   extern const f_string_static_t fake_build_setting_name_process_pre_s;

@@ -39,7 +39,7 @@ extern "C" {
       return 0;
     }
 
-    fake_build_sources_add(data, data_build, &data_build->setting.build_sources_program, &data_build->setting.build_sources_program_shared);
+    fake_build_sources_add(data, data_build, &data_build->setting.path_sources_program, &data_build->setting.build_sources_program, &data_build->setting.build_sources_program_shared);
 
     if (F_status_is_error(main->setting.state.status)) {
       fake_print_error(&main->program.error, macro_fake_f(fake_build_sources_add));
@@ -135,7 +135,7 @@ extern "C" {
       return 0;
     }
 
-    fake_build_sources_add(data, data_build, &data_build->setting.build_sources_program, &data_build->setting.build_sources_program_static);
+    fake_build_sources_add(data, data_build, &data_build->setting.path_sources_program, &data_build->setting.build_sources_program, &data_build->setting.build_sources_program_static);
 
     if (F_status_is_error(main->setting.state.status)) {
       fake_print_error(&main->program.error, macro_fake_f(fake_build_sources_add));

@@ -39,7 +39,7 @@ extern "C" {
       return 0;
     }
 
-    fake_build_sources_add(data, data_build, &data_build->setting.build_sources_library, &data_build->setting.build_sources_library_shared);
+    fake_build_sources_add(data, data_build, &data_build->setting.path_sources_library, &data_build->setting.build_sources_library, &data_build->setting.build_sources_library_shared);
 
     if (F_status_is_error(main->setting.state.status)) {
       fake_print_error(&main->program.error, macro_fake_f(fake_build_sources_add));
@@ -427,6 +427,7 @@ extern "C" {
 
         for (j = 0; j < sources[i]->used; ++j) {
 
+          fake_string_dynamic_reset(&main->cache_1);
           fake_string_dynamic_reset(&main->cache_2);
 
           fake_build_get_file_name_without_extension(data, sources[i]->array[j], &main->cache_1);

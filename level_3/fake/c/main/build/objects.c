@@ -47,7 +47,7 @@ extern "C" {
         fake_string_dynamic_reset(&main->cache_2);
         fake_string_dynamic_reset(&main->cache_argument);
 
-        fake_build_path_source_string(data, data_build, &data_build->setting.path_sources, &main->cache_1);
+        fake_build_path_source_string(data, data_build, &data_build->setting.path_sources_library, &main->cache_1);
         if (F_status_is_error(main->setting.state.status)) break;
 
         main->setting.state.status = f_string_dynamic_append_nulless(sources[i]->array[j], &main->cache_1);

@@ -202,7 +202,6 @@ extern "C" {
  *
  *   - path_documents: The documents path.
  *   - path_licenses:  The licenses path.
- *   - path_sources:   The sources path.
  *
  *   - path_work_includes:         The includes work path.
  *   - path_work_libraries:        The libraries work path.
@@ -358,7 +357,7 @@ extern "C" {
  * Build settings data.
  *
  * Properties:
- *   - flag: Flags from data_build_setting_* (Not strictly part of the build settings file).
+ *   - flag: Flags from data_build_setting_* (Not strictly part of the build settings file and is not included in fake_build_setting_total_d).
  *
  *   - build_language: The build_language setting.
  *
@@ -379,9 +378,6 @@ extern "C" {
  *   - build_compiler:              The build_compiler setting.
  *   - build_indexer:               The build_indexer setting.
  *   - build_name:                  The build_name setting.
- *   - build_sources_object:        The build_sources_object setting.
- *   - build_sources_object_shared: The build_sources_object_shared setting.
- *   - build_sources_object_static: The build_sources_object_static setting.
  *   - path_headers:                The path_headers setting.
  *   - path_language:               The path_language setting.
  *   - path_library_script:         The path_library_script setting.
@@ -394,7 +390,11 @@ extern "C" {
  *   - path_program_shared:         The path_program_shared setting.
  *   - path_program_static:         The path_program_static setting.
  *   - path_sources:                The path_sources setting.
+ *   - path_sources_headers:        The path_sources_headers setting.
+ *   - path_sources_library:        The path_sources_library setting.
  *   - path_sources_object:         The path_sources_object setting.
+ *   - path_sources_program:        The path_sources_program setting.
+ *   - path_sources_script:         The path_sources_script setting.
  *   - process_post:                The process_post setting.
  *   - process_pre:                 The process_pre setting.
  *   - version_major:               The version_major setting.
@@ -423,6 +423,9 @@ extern "C" {
  *   - build_sources_library:        The build_sources_library setting.
  *   - build_sources_library_shared: The build_sources_library_shared setting.
  *   - build_sources_library_static: The build_sources_library_static setting.
+ *   - build_sources_object:        The build_sources_library setting.
+ *   - build_sources_object_shared: The build_sources_library_shared setting.
+ *   - build_sources_object_static: The build_sources_library_static setting.
  *   - build_sources_program:        The build_sources_program setting.
  *   - build_sources_program_shared: The build_sources_program_shared setting.
  *   - build_sources_program_static: The build_sources_program_static setting.
@@ -479,9 +482,6 @@ extern "C" {
     f_string_dynamic_t build_compiler;
     f_string_dynamic_t build_indexer;
     f_string_dynamic_t build_name;
-    f_string_dynamic_t build_sources_object;
-    f_string_dynamic_t build_sources_object_shared;
-    f_string_dynamic_t build_sources_object_static;
     f_string_dynamic_t path_headers;
     f_string_dynamic_t path_language;
     f_string_dynamic_t path_library_script;
@@ -494,7 +494,11 @@ extern "C" {
     f_string_dynamic_t path_program_shared;
     f_string_dynamic_t path_program_static;
     f_string_dynamic_t path_sources;
+    f_string_dynamic_t path_sources_headers;
+    f_string_dynamic_t path_sources_library;
     f_string_dynamic_t path_sources_object;
+    f_string_dynamic_t path_sources_program;
+    f_string_dynamic_t path_sources_script;
     f_string_dynamic_t process_post;
     f_string_dynamic_t process_pre;
     f_string_dynamic_t version_major;
@@ -523,6 +527,9 @@ extern "C" {
     f_string_dynamics_t build_sources_library;
     f_string_dynamics_t build_sources_library_shared;
     f_string_dynamics_t build_sources_library_static;
+    f_string_dynamics_t build_sources_object;
+    f_string_dynamics_t build_sources_object_shared;
+    f_string_dynamics_t build_sources_object_static;
     f_string_dynamics_t build_sources_program;
     f_string_dynamics_t build_sources_program_shared;
     f_string_dynamics_t build_sources_program_static;
@@ -599,6 +606,10 @@ extern "C" {
     f_string_dynamic_t_initialize, \
     f_string_dynamic_t_initialize, \
     f_string_dynamic_t_initialize, \
+    f_string_dynamic_t_initialize, \
+    f_string_dynamics_t_initialize, \
+    f_string_dynamics_t_initialize, \
+    f_string_dynamics_t_initialize, \
     f_string_dynamics_t_initialize, \
     f_string_dynamics_t_initialize, \
     f_string_dynamics_t_initialize, \
@@ -650,7 +661,7 @@ extern "C" {
     f_string_dynamics_t_initialize, \
   }
 
-  #define fake_build_setting_total_d 89
+  #define fake_build_setting_total_d 93
 #endif // _di_fake_build_setting_t_
 
 /**

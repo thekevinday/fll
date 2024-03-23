@@ -1,4 +1,4 @@
-.TH fake-settings "5" "March 2023" "FLL - Featureless Make 0.7.0" "File Formats"
+.TH fake-settings "5" "March 202" "FLL - Featureless Make 0.7.0" "File Formats"
 .SH NAME
 Featureless Make \- "settings" file.
 .SH SYNOPSIS
@@ -149,14 +149,14 @@ For specific details on the allowed formatting, see the settings.txt under the s
   A single source file used for generating an object file.
   The source file is located within the path designated by \fBpath_sources_object\fR.
   The built object does not get linked and therefore no linker arguments apply.
-  The built object file is named using the \fBbuild_name\fR with the \fB.o\fR extension.
+  The built object file is named using the \fBbuild_name\fR with the \fB.o\fR extension added.
   May include a relative sub\-path to each individual source file (such as: \fBlevel_0/a.c\fR).
 
 \- \fBbuild_sources_object_shared\fR:
   A single source file used for generating an object file.
   The source file is located within the path designated by \fBpath_sources_object\fR.
   The built object does not get linked and therefore no linker arguments apply.
-  The built object file is named using the \fBbuild_name\fR with the \fB.o\fR extension.
+  The built object file is named using the \fBbuild_name\fR with the \fB.o\fR extension added.
   May include a relative sub\-path to each individual source file (such as: \fBlevel_0/a.c\fR).
   These are applied to only shared builds.
 
@@ -164,8 +164,34 @@ For specific details on the allowed formatting, see the settings.txt under the s
   A single source file used for generating an object file.
   The source file is located within the path designated by \fBpath_sources_object\fR.
   The built object does not get linked and therefore no linker arguments apply.
-  The built object file is named using the \fBbuild_name\fR with the \fB.o\fR extension.
+  The built object file is named using the \fBbuild_name\fR with the \fB.o\fR extension added.
   May include a relative sub\-path to each individual source file (such as: \fBlevel_0/a.c\fR).
+  These are applied to only static builds.
+
+\- \fBbuild_sources_objects\fR\:
+  A collection of source files used for generating an object file with the same name as each source file.
+  The source files are located within the path designated by \fBpath_sources_objects\fR.
+  The built objects do not get linked and therefore no linker arguments apply.
+  The built object files are named using the same name as the file with the file extension changed to the \fB.o\fR extension.
+  May include a relative sub-path to each individual source file (such as: \fBlevel_0/a.c level_0/b.c\fR).
+  This is different from \fBbuild_sources_object\fR in that multiple files are supported and multiple object files are created.
+
+\- \fBbuild_sources_objects_shared\fR\:
+  A collection of source files used for generating an object file with the same name as each source file.
+  The source files are located within the path designated by \fBpath_sources_objects\f.
+  The built objects do not get linked and therefore no linker arguments apply.
+  The built object files are named using the same name as the file with the file extension changed to the \fB.o\fR extension.
+  May include a relative sub-path to each individual source file (such as: \fBlevel_0/a.c level_0/b.c\fR).
+  This is different from \fBbuild_sources_object\fR in that multiple files are supported and multiple object files are created.
+  These are applied to only shared builds.
+
+\- \fBbuild_sources_objects_static\fR\:
+  A collection of source files used for generating an object file with the same name as each source file.
+  The source files are located within the path designated by \fBpath_sources_objects\fR.
+  The built objects do not get linked and therefore no linker arguments apply.
+  The built object files are named using the same name as the file with the file extension changed to the \fB.o\fR extension.
+  May include a relative sub-path to each individual source file (such as: \fBlevel_0/a.c level_0/b.c\fR).
+  This is different from \fBbuild_sources_object\fR in that multiple files are supported and multiple object files are created.
   These are applied to only static builds.
 
 \- \fBbuild_sources_program\fR:
@@ -428,11 +454,29 @@ For specific details on the allowed formatting, see the settings.txt under the s
 
   This defaults to \fBsources\fR.
 
+\- \fBpath_sources_headers\fR:
+  A sub\-path representing where the header source files are found.
+  This is used by \fBbuild_sources_headers\fR.
+
+  This defaults to \fBsources\fR.
+
 \- \fBpath_sources_object\fR:
   A sub\-path representing where the object source files are found.
   This is used by \fBbuild_sources_object\fR.
 
   This defaults to \fBsources\fR.
+
+\- \fBpath_sources_program\fR:
+  A sub\-path representing where the program source files are found.
+  This is used by \fBbuild_sources_program\fR.
+
+  This defaults to \fBsources\fR.
+
+\- \fBpath_sources_script\fR:
+  A sub\-path representing where the script source files are found.
+  This is used by \fBbuild_sources_script\fR.
+
+  This defaults to \fBscript\fR.
 
 \- \fBpreserve_path_headers\fR:
   When this is \fByes\fR, then the relative directory structure in the source (as defined in \fBbuild_sources_headers\fR) is preserved.
@@ -644,7 +688,11 @@ Object names and their respective Content purpose/restrictions:
   \- \fBpath_program_shared\fR: Must be a single valid path.
   \- \fBpath_program_static\fR: Must be a single valid path.
   \- \fBpath_sources\fR: Must only be a valid directory path or not specified.
+  \- \fBpath_sources_headers\fR: Must only be a valid directory path or not specified.
+  \- \fBpath_sources_library\fR: Must only be a valid directory path or not specified.
   \- \fBpath_sources_object\fR: Must only be a valid directory path or not specified.
+  \- \fBpath_sources_program\fR: Must only be a valid directory path or not specified.
+  \- \fBpath_sources_script\fR: Must only be a valid directory path or not specified.
   \- \fBpreserve_path_headers\fR: Must only be one of \fByes\fR or \fBno\fR.
   \- \fBprocess_post\fR: Only one Content, which must only be a valid filename.
   \- \fBprocess_pre\fR: Only one Content, which must only be a valid filename.

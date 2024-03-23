@@ -550,7 +550,7 @@ extern "C" {
 #endif // _di_fake_build_get_file_name_without_extension_
 
 #ifndef _di_fake_build_objects_add_
-  void fake_build_objects_add(fake_data_t * const data, fake_build_data_t * const data_build, const f_string_static_t *path, const f_string_statics_t *generic, const f_string_statics_t *specific) {
+  void fake_build_objects_add(fake_data_t * const data, fake_build_data_t * const data_build, const f_string_static_t *path, const f_string_statics_t * const generic, const f_string_statics_t * const specific) {
 
     if (!data || !data->main || !data_build || !path || !generic || !specific) return;
 
@@ -635,7 +635,7 @@ extern "C" {
       fake_build_program_script(data, &data_build, mode, stage.file_program_script);
 
       if (data_build.setting.build_script) {
-        fake_build_path_source_string(data, &data_build, &data_build.setting.path_sources, &main->cache_argument);
+        fake_build_path_source_string(data, &data_build, &data_build.setting.path_sources_script, &main->cache_argument);
 
         if (F_status_is_error_not(main->setting.state.status)) {
           main->setting.state.status = f_string_dynamic_append_nulless(fake_path_part_script_s, &main->cache_argument);
@@ -650,7 +650,7 @@ extern "C" {
     }
     else {
       if (data_build.setting.build_sources_headers.used) {
-        fake_build_path_source_string(data, &data_build, &data_build.setting.path_sources, &main->cache_argument);
+        fake_build_path_source_string(data, &data_build, &data_build.setting.path_sources_headers, &main->cache_argument);
 
         if (F_status_is_error_not(main->setting.state.status)) {
           fake_string_dynamic_reset(&main->cache_1);
@@ -696,7 +696,7 @@ extern "C" {
       }
 
       if (data_build.setting.build_script) {
-        fake_build_path_source_string(data, &data_build, &data_build.setting.path_sources, &main->cache_argument);
+        fake_build_path_source_string(data, &data_build, &data_build.setting.path_sources_script, &main->cache_argument);
 
         if (F_status_is_error_not(main->setting.state.status)) {
           main->setting.state.status = f_string_dynamic_append_nulless(fake_path_part_script_s, &main->cache_argument);
@@ -719,7 +719,7 @@ extern "C" {
 #endif // _di_fake_build_operate_
 
 #ifndef _di_fake_build_path_source_string_
-  void fake_build_path_source_string(fake_data_t * const data, fake_build_data_t * const data_build, f_string_static_t * const setting_path_source, f_string_dynamic_t * const source) {
+  void fake_build_path_source_string(fake_data_t * const data, fake_build_data_t * const data_build, const f_string_static_t * const setting_path_source, f_string_dynamic_t * const source) {
 
     if (!data || !data->main || !data_build || !setting_path_source || !source) return;
     if (F_status_is_error(data->main->setting.state.status)) return;
@@ -730,6 +730,7 @@ extern "C" {
 
     main->setting.state.status = f_string_dynamic_append_nulless(*setting_path_source, source);
 
+    // @todo add additional languages, java, etc..?
     if (F_status_is_error_not(main->setting.state.status) && data_build->setting.has_path_standard) {
       if (data_build->setting.build_language == fake_build_language_c_e) {
         main->setting.state.status = f_string_dynamic_append_nulless(fake_build_language_c_s, source);
@@ -753,7 +754,7 @@ extern "C" {
 #endif // _di_fake_build_path_source_string_
 
 #ifndef _di_fake_build_sources_add_
-  void fake_build_sources_add(fake_data_t * const data, fake_build_data_t * const data_build, const f_string_statics_t *generic, const f_string_statics_t *specific) {
+  void fake_build_sources_add(fake_data_t * const data, fake_build_data_t * const data_build, const f_string_static_t * const source_path, const f_string_statics_t * const generic, const f_string_statics_t * const specific) {
 
     if (!data || !data->main || !data_build || !generic || !specific) return;
 
@@ -775,7 +776,7 @@ extern "C" {
 
         fake_string_dynamic_reset(&main->cache_argument);
 
-        fake_build_path_source_string(data, data_build, &data_build->setting.path_sources, &main->cache_argument);
+        fake_build_path_source_string(data, data_build, source_path, &main->cache_argument);
         if (F_status_is_error(main->setting.state.status)) return;
 
         main->setting.state.status = f_string_dynamic_append_nulless(sources[i]->array[j], &main->cache_argument);
@@ -796,11 +797,11 @@ extern "C" {
 #endif // _di_fake_build_sources_add_
 
 #ifndef _di_fake_build_sources_object_add_
-  void fake_build_sources_object_add(fake_data_t * const data, fake_build_data_t * const data_build, const f_string_static_t *generic, const f_string_static_t *specific) {
+  void fake_build_sources_object_add(fake_data_t * const data, fake_build_data_t * const data_build, const f_string_static_t * const file) {
 
-    if (!data || !data->main || !data_build || !generic || !specific) return;
+    if (!data || !data->main || !data_build || !file) return;
 
-    if (!generic->used && !specific->used) {
+    if (!file->used) {
       data->main->setting.state.status = F_okay;
 
       return;
@@ -813,7 +814,7 @@ extern "C" {
     fake_build_path_source_string(data, data_build, &data_build->setting.path_sources_object, &main->cache_argument);
     if (F_status_is_error(main->setting.state.status)) return;
 
-    main->setting.state.status = f_string_dynamic_append_nulless(specific->used ? *specific : *generic, &main->cache_argument);
+    main->setting.state.status = f_string_dynamic_append_nulless(*file, &main->cache_argument);
 
     if (F_status_is_error(main->setting.state.status)) {
       fake_print_error(&main->program.error, macro_fake_f(f_string_dynamic_append_nulless));

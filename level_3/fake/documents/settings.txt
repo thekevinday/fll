@@ -151,26 +151,29 @@ Settings Documentation:
     These are applied to only static builds.
 
   - code:"build_sources_object"\:
-    A single source file used for generating an object file.
-    The source file is located within the path designated by code:"path_sources_object".
-    The built object does not get linked and therefore no linker arguments apply.
-    The built object file is named using the code:"build_name" with the code:".o" extension.
-    May include a relative sub-path to each individual source file (such as: code:"level_0/a.c").
+    A collection of source files used for generating an object file with the same name as each source file.
+    The source files are located within the path designated by code:"path_sources_object".
+    The built objects do not get linked and therefore no linker arguments apply.
+    The built object files are named using the same name as the file with the file extension changed to the code:".o" extension.
+    May include a relative sub-path to each individual source file (such as: code:"level_0/a.c level_0/b.c").
+    This is different from code:"build_sources_object" in that multiple files are supported and multiple object files are created.
 
   - code:"build_sources_object_shared"\:
-    A single source file used for generating an object file.
-    The source file is located within the path designated by code:"path_sources_object".
-    The built object does not get linked and therefore no linker arguments apply.
-    The built object file is named using the code:"build_name" with the code:".o" extension.
-    May include a relative sub-path to each individual source file (such as: code:"level_0/a.c").
+    A collection of source files used for generating an object file with the same name as each source file.
+    The source files are located within the path designated by code:"path_sources_object".
+    The built objects do not get linked and therefore no linker arguments apply.
+    The built object files are named using the same name as the file with the file extension changed to the code:".o" extension.
+    May include a relative sub-path to each individual source file (such as: code:"level_0/a.c level_0/b.c").
+    This is different from code:"build_sources_object" in that multiple files are supported and multiple object files are created.
     These are applied to only shared builds.
 
   - code:"build_sources_object_static"\:
-    A single source file used for generating an object file.
-    The source file is located within the path designated by code:"path_sources_object".
-    The built object does not get linked and therefore no linker arguments apply.
-    The built object file is named using the code:"build_name" with the code:".o" extension.
-    May include a relative sub-path to each individual source file (such as: code:"level_0/a.c").
+    A collection of source files used for generating an object file with the same name as each source file.
+    The source files are located within the path designated by code:"path_sources_object".
+    The built objects do not get linked and therefore no linker arguments apply.
+    The built object files are named using the same name as the file with the file extension changed to the code:".o" extension.
+    May include a relative sub-path to each individual source file (such as: code:"level_0/a.c level_0/b.c").
+    This is different from code:"build_sources_object" in that multiple files are supported and multiple object files are created.
     These are applied to only static builds.
 
   - code:"build_sources_program"\:
@@ -433,9 +436,33 @@ Settings Documentation:
 
     This defaults to code:"sources".
 
+  - code:"path_sources_headers"\:
+    A sub-path representing where the header source files are found.
+    This is used by code:"build_sources_headers".
+
+    This defaults to code:"sources".
+
+  - code:"path_sources_library"\:
+    A sub-path representing where the library source files are found.
+    This is used by code:"build_sources_library".
+
+    This defaults to code:"sources".
+
   - code:"path_sources_object"\:
     A sub-path representing where the object source files are found.
     This is used by code:"build_sources_object".
+
+    This defaults to code:"sources".
+
+  - code:"path_sources_program"\:
+    A sub-path representing where the program source files are found.
+    This is used by code:"build_sources_program".
+
+    This defaults to code:"sources".
+
+  - code:"path_sources_script"\:
+    A sub-path representing where the script source files are found.
+    This is used by code:"build_sources_script".
 
     This defaults to code:"sources".
 
