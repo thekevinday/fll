@@ -595,7 +595,7 @@ extern "C" {
 
       f_string_dynamic_t settings_mode_names[fake_build_setting_total_d];
 
-      memset(settings_mode_names, 0, sizeof(f_string_statics_t) * fake_build_setting_total_d);
+      memset(settings_mode_names, 0, sizeof(f_string_static_t) * fake_build_setting_total_d);
 
       bool found = F_false;
 
